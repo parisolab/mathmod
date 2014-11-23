@@ -1,0 +1,43 @@
+/* XPM */
+/***************************************************************************
+ *   Copyright (C) 2005 by Abderrahman Taha                                *
+ *                                                                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
+ ***************************************************************************/
+static const char *fileprint[] = {
+"    16    14        6            1",
+". c #000000",
+"# c #848284",
+"a c #c6c3c6",
+"b c #ffff00",
+"c c #ffffff",
+"d c None",
+"ddddd.........dd",
+"dddd.cccccccc.dd",
+"dddd.c.....c.ddd",
+"ddd.cccccccc.ddd",
+"ddd.c.....c....d",
+"dd.cccccccc.a.a.",
+"d..........a.a..",
+".aaaaaaaaaa.a.a.",
+".............aa.",
+".aaaaaa###aa.a.d",
+".aaaaaabbbaa...d",
+".............a.d",
+"d.aaaaaaaaa.a.dd",
+"dd...........ddd"
+};
