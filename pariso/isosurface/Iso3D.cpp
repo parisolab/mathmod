@@ -659,7 +659,7 @@ ErrorMessage Iso3D::ParserIso()
             stdError.strError = Consts[j];
             stdError.strOrigine = ConstNames[j];
             return stdError;
-       }
+        }
         ConstValues[j] = Cstparser.Eval(&vals[3]);
         Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }

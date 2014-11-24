@@ -112,7 +112,8 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.frontcols[3][3] = objectproperties.frontcolsPar[3][3] = 1.0;
 
     for(int i=4; i<1100; i++)
-    {   /*
+    {
+        /*
            objectproperties.frontcols[i][0] = objectproperties.frontcolsPar[i%4][0];
            objectproperties.frontcols[i][1] = objectproperties.frontcolsPar[i%4][1];
            objectproperties.frontcols[i][2] = objectproperties.frontcolsPar[i%4][2];
