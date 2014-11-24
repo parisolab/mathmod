@@ -448,7 +448,8 @@ ErrorMessage  Par3D::parse_expression()
             myParserX[i].AddFunction(FunctNames[j], Fct[j]);
             myParserY[i].AddFunction(FunctNames[j], Fct[j]);
             myParserZ[i].AddFunction(FunctNames[j], Fct[j]);
-            myParserCND[i].AddFunction(FunctNames[j], Fct[j]);
+            if(expression_CND != "")
+                myParserCND[i].AddFunction(FunctNames[j], Fct[j]);
         }
     }
 
@@ -518,7 +519,7 @@ ErrorMessage  Par3D::parse_expression()
             }
 
         if(expression_CND != "")
-            if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
+            if ((stdError.iErrorIndex = myParserCND[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].cnd;
                 stdError.strOrigine = ParamStructs[index].index;
