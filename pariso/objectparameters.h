@@ -22,7 +22,8 @@
 #include <math.h>
 #include <string>
 
-struct ErrorMessage {
+struct ErrorMessage
+{
     int iErrorIndex;
     std::string strError;
     std::string strOrigine;

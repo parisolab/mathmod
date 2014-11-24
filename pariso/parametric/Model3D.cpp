@@ -304,13 +304,13 @@ ErrorMessage  Par3D::parse_expression()
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
     for(int j=0; j<Nb_constants; j++)
     {
-       if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-       {
+        if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+        {
             stdError.strError = Consts[j];
             stdError.strOrigine = ConstNames[j];
             return stdError;
-       }
-       Cstparser.AddConstant(ConstNames[j], Cstparser.Eval(vals));
+        }
+        Cstparser.AddConstant(ConstNames[j], Cstparser.Eval(vals));
     }
 
     if(Funct != "")
@@ -323,9 +323,9 @@ ErrorMessage  Par3D::parse_expression()
             {
                 if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
                 {
-                     stdError.strError = Consts[j];
-                     stdError.strOrigine = ConstNames[j];
-                     return stdError;
+                    stdError.strError = Consts[j];
+                    stdError.strOrigine = ConstNames[j];
+                    return stdError;
                 }
                 Fct[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             }
