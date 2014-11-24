@@ -53,8 +53,8 @@ public :
     Iso3D *IsoObjet;
     Par3D *ParObjet;
     int TypeFormule;
-   QMessageBox message;
-   ErrorMessage stError;
+    QMessageBox message;
+    ErrorMessage stError;
     GLfloat oldminx, oldminy,oldminz,oldmaxx, oldmaxy, oldmaxz;
 
 public:
