@@ -3144,6 +3144,37 @@
             "0"
         ]
     }
+},
+{
+    "Param3D": {
+        "Name": [
+            "HelicoidCatenoid"
+        ],
+        "Component": [
+            "HelicoidCatenoid"
+        ],
+        "Fx": [
+            "cos(2*t*pi)*sinh(v)*sin(u) + sin(2*t*pi)*cosh(v)*cos(u)"
+        ],
+        "Fy": [
+            "-cos(2*t*pi)*sinh(v)*cos(u) + sin(2*t*pi)*cosh(v)*sin(u)"
+        ],
+        "Fz": [
+            "3*(u*cos(2*t*pi) + v*sin(2*t*pi))"
+        ],
+        "Umax": [
+            "pi"
+        ],
+        "Umin": [
+            "-pi"
+        ],
+        "Vmax": [
+            "pi"
+        ],
+        "Vmin": [
+            "-pi"
+        ]
+    }
 }
 	]
 }
