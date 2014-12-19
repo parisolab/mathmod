@@ -34,8 +34,8 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     ControlH=700;
     GlwinW=780;
     GlwinH=700;
-    MaxTri=7000000;
-    MaxPt=3000000;
+    MaxTri=3000000;
+    MaxPt=2000000;
     MaxGrid=150;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
@@ -250,6 +250,24 @@ QStringList Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jp
     return lst;
 
 }
+
+void Parametersoptions::SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject)
+{
+    QJsonDocument document;
+    QJsonArray array = Collection["MathModels"].toArray();
+    array.append(CurrentJsonObject);
+    Collection["MathModels"] = array;
+    document.setObject(Collection);
+    QFile f( filecollection );
+    if ( f.open(QIODevice::ReadWrite | QIODevice::Text) )
+    {
+        QTextStream t( &f );
+        QString tmp = QString (document.toJson()).toLatin1();
+        t << tmp.toUtf8();
+        f.close();
+    }
+}
+
 void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 {
     if(argc >1)

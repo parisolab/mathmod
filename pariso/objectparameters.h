@@ -33,9 +33,10 @@ struct  ComponentInfos
 {
     int NbIso;
     int NbParametric;
-    int IsoPositions[1100];
-    int Parametricpositions[1100];
-    bool Hide[1100];
+    int IsoPositions[2200];
+    int IsoPts[2200];
+    int Parametricpositions[2200];
+    bool Hide[2200];
     int selectedComponent;
 
     bool ThereisCND;

@@ -60,6 +60,7 @@ public slots:
     void on_maxtri_valueChanged(int value);
     void on_maxpt_valueChanged(int value);
     void on_loadconfig_clicked();
+    void SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject);
     void on_save_clicked();
     void LoadConfig(QApplication &,int argc, char *argv[]);
     QStringList LoadCollectionModels(QJsonObject &JIso, jpariso &Jcollection, int argc);
