@@ -161,5 +161,8 @@ private slots:
     void on_TBordercheckBox_2_clicked(bool checked);
     void on_FCNDcheckBox_2_clicked(bool checked);
     void on_FNCNDcheckBox_2_clicked(bool checked);
+    void on_TimeStepScrollBar_valueChanged(int value);
+    void on_InitTButton_clicked();
+    void on_pushButton_2_clicked();
 };
 #endif
