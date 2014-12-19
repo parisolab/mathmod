@@ -88,6 +88,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     hauteur_fenetre = 650;
     stepMorph = 0;
     pace = (double)1/(double)30;
+    TimeFlow = -1;
     morph_activated = -1;
     AllComponentTraited = false;
 
@@ -414,9 +415,21 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
     const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
     int I, J, IJK;
 
-    pace = (double)1/(double)30;
     if(AllComponentTraited && morph_activated ==1)
+    {
+        if(TimeFlow == 1)
+        {
+            if(stepMorph < 0)
+            {
+                pace = std::abs(pace);
+            }
+            if(stepMorph > 1)
+            {
+                pace = -std::abs(pace);
+            }
+        }
         stepMorph += pace;
+    }
     vals[3]          = stepMorph;
 
     // Add constatntes definition and values to variables:
@@ -793,11 +806,23 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
     double vals2[] = {0,0};
     const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
 
-    pace = (double)1/(double)30;
     if(AllComponentTraited && morph_activated ==1)
+    {
+        if(TimeFlow == 1)
+        {
+            if(stepMorph < 0)
+            {
+                pace = std::abs(pace);
+            }
+            if(stepMorph > 1)
+            {
+                pace = -std::abs(pace);
+            }
+        }
         stepMorph += pace;
-    vals[3]          = stepMorph;
+    }
 
+    vals[3]          = stepMorph;
 
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
@@ -932,9 +957,21 @@ void Iso3D::EvalExpressionAtIndex(int IsoIndex)
     double vals2[] = {0,0};
     const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
 
-    pace = (double)1/(double)30;
     if(AllComponentTraited && morph_activated ==1)
-        stepMorph += pace;
+    {
+        if(TimeFlow == 1)
+        {
+            if(stepMorph < 0)
+            {
+                pace = std::abs(pace);
+            }
+            if(stepMorph > 1)
+            {
+                pace = -std::abs(pace);
+            }
+        }
+    stepMorph += pace;
+    }
     vals[3]          = stepMorph;
 
     xLocal[IsoIndex][0]=xSupParser[IsoIndex].Eval(vals);
@@ -1048,6 +1085,9 @@ void Iso3D::IsoBuild (
         {
             components->IsoPositions[2*fctnb       ] = l; //save the starting position of this component
             components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurface; //save the number of triangles of this component
+
+            components->IsoPts[2*fctnb       ] = NbVertexTmp;
+            components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
         }
         for ( i=0; i < NbTriangleIsoSurface ; ++i)
         {
@@ -1062,14 +1102,11 @@ void Iso3D::IsoBuild (
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
         ThreeTimesNbPolygnTmp     = 3*NbTriangleIsoSurfaceTmp;
 
-
-
         if(GridTable[fctnb] > 0)
         {
             nb_ligne = nb_colon = nb_depth = nblignetmp;
             EvalExpressionAtIndex(fctnb);
         }
-
     }
 
     //CND calculation for the triangles results:
@@ -1085,6 +1122,14 @@ void Iso3D::IsoBuild (
     *VertexNumberpt = NbVertexTmp;
 
 }
+
+int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
+{
+    for(int fctnb= 0; fctnb< Nb_implicitfunctions+1; fctnb++)
+        if( index <= components->IsoPts[2*fctnb +1] && index >= components->IsoPts[2*fctnb])
+            return fctnb;
+    return 30;
+}
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
@@ -1097,7 +1142,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             vals[0] = NormVertexTab[i*6+3];
             vals[1] = NormVertexTab[i*6+4];
             vals[2] = NormVertexTab[i*6+5];
-            WichPointVerifyCond[i] = (IsoConditionParser[0].Eval(vals) == 1);
+            WichPointVerifyCond[i] = (IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1);
         }
 
         int Aindex, Bindex, Cindex;
@@ -1148,6 +1193,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
             int Alfa;
+            int cnd = CNDtoUse(Aindex, components);
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
@@ -1162,7 +1208,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(IsoConditionParser[0].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(IsoConditionParser[cnd].Eval(Bprime) == 1 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1172,7 +1218,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!IsoConditionParser[0].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(!IsoConditionParser[cnd].Eval(Bprime) == 1 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1193,7 +1239,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(IsoConditionParser[0].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(IsoConditionParser[cnd].Eval(Cprime) == 1 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1203,7 +1249,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!IsoConditionParser[0].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(!IsoConditionParser[cnd].Eval(Cprime) == 1 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
