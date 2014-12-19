@@ -107,6 +107,7 @@ public :
     int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs;
     double stepMorph, pace;
     int morph_activated;
+    int TimeFlow;
     bool AllComponentTraited;
     double X_Start, X_End, X_Step,
            Y_Start, Y_End, Y_Step,
@@ -152,4 +153,5 @@ public :
     void stopcalculations();
     int HowManyIsosurface(std::string,int);
     int HowManyVariables(std::string, int);
+    int CNDtoUse(int index, struct ComponentInfos *components);
 };
