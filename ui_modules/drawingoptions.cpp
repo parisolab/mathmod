@@ -3086,7 +3086,9 @@ void DrawingOptions::UpdateDescription(int position)
 
             if(!MathmodRef->RootObjet.CurrentTreestruct.Cnd.empty())
             {
-                ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
+                position < MathmodRef->RootObjet.CurrentTreestruct.Cnd.size() ?
+                            ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(position)) :
+                            ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
                 ui.CndGroupBox->show();
             }
             else
@@ -4459,4 +4461,49 @@ void DrawingOptions::on_FCNDcheckBox_2_clicked(bool checked)
 void DrawingOptions::on_FNCNDcheckBox_2_clicked(bool checked)
 {
     on_FNCNDcheckBox_clicked(checked);
+}
+
+void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->ParObjet->pace = MathmodRef->ui.glWidget->IsoObjet->pace = (double)1/(double)value;
+}
+
+void DrawingOptions::on_InitTButton_clicked()
+{
+    MathmodRef->ui.glWidget->ParObjet->stepMorph = MathmodRef->ui.glWidget->IsoObjet->stepMorph = 0;
+}
+
+void DrawingOptions::on_pushButton_2_clicked()
+{
+    QJsonParseError err;
+    QString sortie;
+    QString script  = ui.ParamEdit->toPlainText().trimmed().replace("\n","").replace("\t","");
+    QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
+    if (err.error)
+    {
+        QMessageBox message ;
+        message.setWindowTitle("Error at : ");
+        sortie = (script);
+        int before, after;
+        if(sortie.length() > (err.offset +30))
+            after = 30;
+        else after = sortie.length() - err.offset;
+        sortie.truncate(err.offset +after);
+        if(err.offset-30 > 0)
+            before = 30;
+        else
+            before = 0;
+        sortie = sortie.remove(0,err.offset-before);
+        sortie.replace("\t", " ");
+        sortie.replace("\n", " ");
+        sortie.insert(before, " >>> Error <<< ");
+        message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
+                        "..." + sortie + "..."
+                       );
+        message.adjustSize () ;
+        message.exec();
+        return ;
+    }
+
+    Parameters->SaveToFile_CurentMathModel(doc.object());
 }

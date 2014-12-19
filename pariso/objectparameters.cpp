@@ -64,8 +64,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.gridcol[0]   = StaticColor[8];
     objectproperties.gridcol[1]   = StaticColor[9];
     objectproperties.gridcol[2]   = StaticColor[10];
-    objectproperties.gridcol[3]   = 1.0;
-
+    objectproperties.gridcol[3]   = .5;
     objectproperties.groundcol[0] = StaticColor[12];
     objectproperties.groundcol[1] = StaticColor[13];
     objectproperties.groundcol[2] = StaticColor[14];
@@ -149,7 +148,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.triangles          = -1;
     objectproperties.typedrawing    =  1;
     objectproperties.smoothpoly      = 1;
-    objectproperties.smoothline       =-1;
+    objectproperties.smoothline       = -1;
     objectproperties.anim                 =-1;
     objectproperties.morph              =-1;
     objectproperties.morphstep       =-1;
@@ -166,7 +165,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
 
     objectproperties.componentsinfos.DFTrianglesNotVerifyCND =
         objectproperties.componentsinfos.DFTrianglesVerifyCND =
-            objectproperties.componentsinfos.DMTrianglesBorderCND =
-                objectproperties.componentsinfos.DMTrianglesNotVerifyCND =
-                    objectproperties.componentsinfos.DMTrianglesVerifyCND = true;
+            objectproperties.componentsinfos.DMTrianglesBorderCND = true;
+    objectproperties.componentsinfos.DMTrianglesNotVerifyCND =
+         objectproperties.componentsinfos.DMTrianglesVerifyCND = false;
 }
