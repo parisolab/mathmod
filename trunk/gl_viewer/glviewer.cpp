@@ -653,19 +653,6 @@ static void DrawNormals(ObjectProperties *scene)
 
 static void DrawIsoCND(ObjectProperties *scene)
 {
-    if(scene->componentsinfos.DMTrianglesBorderCND)
-    {
-        glLineWidth(4);
-        glColor4f (1.0, 1.0, 1.0, 1.0);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(
-            GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesBorderCND,
-            GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glLineWidth(1);
-    }
 
     if(scene->componentsinfos.DMTrianglesVerifyCND)
     {
@@ -691,6 +678,20 @@ static void DrawIsoCND(ObjectProperties *scene)
             3*scene->componentsinfos.NbTrianglesNotVerifyCND,
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
+
+    if(scene->componentsinfos.DMTrianglesBorderCND)
+    {
+        glLineWidth(4);
+        glColor4f (1.0, 1.0, 1.0, 1.0);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesBorderCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
@@ -698,20 +699,6 @@ static void DrawIsoCND(ObjectProperties *scene)
 
 static void DrawParCND(ObjectProperties *scene)
 {
-    if(scene->componentsinfos.DMTrianglesBorderCND)
-    {
-        glLineWidth(4);
-        glColor4f (1.0, 1.0, 1.0, 1.0);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(
-            GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesBorderCND,
-            GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glLineWidth(1);
-    }
-
     if(scene->componentsinfos.DMTrianglesVerifyCND)
     {
         glLineWidth(1);
@@ -736,6 +723,20 @@ static void DrawParCND(ObjectProperties *scene)
             3*scene->componentsinfos.NbTrianglesNotVerifyCND,
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
+
+    if(scene->componentsinfos.DMTrianglesBorderCND)
+    {
+        glLineWidth(4);
+        glColor4f (1.0, 1.0, 1.0, 1.0);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesBorderCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
