@@ -264,7 +264,7 @@ OpenGlWidget::OpenGlWidget( QWidget *parent)
 
     latence = 10;
     val1 = val2 = val3 = 0.0;
-    nb_colone = nb_ligne = 25;
+    nb_colone = nb_ligne = 50;
     coupure_col = coupure_ligne = 0;
     isoline = isocolumn = isodepth = 26;
     cpisoline = cpisocolumn = cpisodepth = 0;
@@ -323,13 +323,15 @@ void OpenGlWidget::PrintInfos()
                     (GLubyte *)"Poly = ");
         glColor3f (1., 0.0, 0.);
         glRasterPos2i(-250, ref-20);
-        (LocalScene.typedrawing == 1) ?
+        //(LocalScene.typedrawing == 1) ?
         glCallLists(QString::number(LocalScene.PolyNumber/3).size(),
                     GL_UNSIGNED_BYTE,
-                    QString::number(LocalScene.PolyNumber/3).toLatin1()) :
+                    QString::number(LocalScene.PolyNumber/3).toLatin1()) ;
+        /*:
         glCallLists(QString::number(LocalScene.PolyNumber/4).size(),
                     GL_UNSIGNED_BYTE,
                     QString::number(LocalScene.PolyNumber/4).toLatin1()) ;
+                    */
     }
     if ( LocalScene.infosdetails[2] ==1)
     {
