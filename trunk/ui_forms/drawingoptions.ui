@@ -3817,7 +3817,7 @@ p, li { white-space: pre-wrap; }
                             <number>1</number>
                            </property>
                            <property name="value">
-                            <number>25</number>
+                            <number>50</number>
                            </property>
                            <property name="orientation">
                             <enum>Qt::Vertical</enum>
@@ -4748,7 +4748,7 @@ p, li { white-space: pre-wrap; }
                             <number>1</number>
                            </property>
                            <property name="value">
-                            <number>25</number>
+                            <number>50</number>
                            </property>
                            <property name="orientation">
                             <enum>Qt::Vertical</enum>
@@ -5395,7 +5395,7 @@ p, li { white-space: pre-wrap; }
                    <bool>false</bool>
                   </property>
                   <property name="headerHidden">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="expandsOnDoubleClick">
                    <bool>true</bool>

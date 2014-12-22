@@ -4423,42 +4423,17 @@ void DrawingOptions::UpdateGui(int argc)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_TCNDcheckBox_2_clicked(bool checked)
-{
-    on_TCNDcheckBox_clicked(checked);
-}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_TNCNDcheckBox_2_clicked(bool checked)
-{
-    on_TNCNDcheckBox_clicked(checked);
-}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_TBordercheckBox_2_clicked(bool checked)
-{
-    on_TBordercheckBox_clicked(checked);
-}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_FCNDcheckBox_2_clicked(bool checked)
-{
-    on_FCNDcheckBox_clicked(checked);
-}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_FNCNDcheckBox_2_clicked(bool checked)
-{
-    on_FNCNDcheckBox_clicked(checked);
-}
-
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
     ui.label_5->setText("1/"+QString::number(value));
     MathmodRef->ui.glWidget->ParObjet->pace = MathmodRef->ui.glWidget->IsoObjet->pace = (double)1/(double)value;
 }
-
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_InitTButton_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->stepMorph = MathmodRef->ui.glWidget->IsoObjet->stepMorph = 0;
 }
-
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_pushButton_2_clicked()
 {
     QJsonParseError err;
