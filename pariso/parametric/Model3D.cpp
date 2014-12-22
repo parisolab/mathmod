@@ -39,7 +39,7 @@ Par3D::Par3D()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres()
 {
-    nb_licol = 25;
+    nb_licol = 50;
     nb_ligne = nb_colone = nb_licol;
     largeur_fenetre = 620;
     hauteur_fenetre = 620;
