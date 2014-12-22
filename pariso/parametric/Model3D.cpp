@@ -89,15 +89,28 @@ void  Par3D::rotation4()
     if(tetaxy_ok == 1)    mat_rotation4D.xyrot(tetaxy);
     if(tetaxz_ok == 1)    mat_rotation4D.xzrot(tetaxz);
     if(tetayz_ok == 1)    mat_rotation4D.yzrot(tetayz);
-
-    if(tetaxw_ok == 1)    mat_rotation4D.xwrot(tetaxw);
-    if(tetayw_ok == 1)    mat_rotation4D.ywrot(tetayw);
-    if(tetazw_ok == 1)    mat_rotation4D.zwrot(tetazw);
-
+    if(param4D == 1)
+    {
+        if(tetaxw_ok == 1)    mat_rotation4D.xwrot(tetaxw);
+        if(tetayw_ok == 1)    mat_rotation4D.ywrot(tetayw);
+        if(tetazw_ok == 1)    mat_rotation4D.zwrot(tetazw);
+    }
 // On applique cette transformation a la matrice principale "mat"
     mat4D.mult(mat_rotation4D);
 }
-
+/*
+//++++++++++++++++++++++++++++++++++++++++
+void  Par3D::rotation3()
+{
+    mat_rotation4D.unit();
+    // Construction de la matrice de trnsformation
+    if(tetaxy_ok == 1)    mat_rotation4D.xyrot(tetaxy);
+    if(tetaxz_ok == 1)    mat_rotation4D.xzrot(tetaxz);
+    if(tetayz_ok == 1)    mat_rotation4D.yzrot(tetayz);
+// On applique cette transformation a la matrice principale "mat"
+    mat4D.mult(mat_rotation4D);
+}
+*/
 //+++++++++++++++++++++++++++++++++++++++++
 void  Par3D::boite_englobante4D(int idx)
 {
@@ -187,7 +200,8 @@ void Par3D::Anim_Rot4D (int idx)
     rotation4();
     calcul_points4(idx);         // On applique la rotation 4D
     boite_englobante4D(idx);
-    project_4D_to_3D(idx);
+    if(param4D == 1)
+        project_4D_to_3D(idx);
     Invert_boite_englobante4D(idx);
 }
 
@@ -206,11 +220,19 @@ void  Par3D::calcul_points4(int idx)
             tp2 = NormVertexTab[lndex + 4 + idx*6];
             tp3 = NormVertexTab[lndex + 5 + idx*6];
             tp4 = ExtraDimension[i*nb_ligne + j + idx];
-
-            NormVertexTab[lndex + 3 + idx*6] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo;
-            NormVertexTab[lndex + 4 + idx*6] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo;
-            NormVertexTab[lndex + 5 + idx*6] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo;
-            ExtraDimension[i*nb_ligne + j + idx] = mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo;
+            if(param4D == 1)
+            {
+                NormVertexTab[lndex + 3 + idx*6] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo;
+                NormVertexTab[lndex + 4 + idx*6] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo;
+                NormVertexTab[lndex + 5 + idx*6] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo;
+                ExtraDimension[i*nb_ligne + j + idx] = mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo;
+            }
+            else
+            {
+                NormVertexTab[lndex + 3 + idx*6] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xo;
+                NormVertexTab[lndex + 4 + idx*6] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yo;
+                NormVertexTab[lndex + 5 + idx*6] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zo;
+            }
             lndex += 6;
         }
 }
@@ -270,6 +292,8 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
             l+=6;
             if(param4D == 1)
                 ExtraDimension[j*nb_colone + i + (int)(NewPosition/6)] = myParserW[cmp].Eval(vals);
+            else
+                ExtraDimension[j*nb_colone + i + (int)(NewPosition/6)] = 1;
         }
     }
 }
@@ -1061,7 +1085,7 @@ void  Par3D:: ParamBuild(
     for(int fctnb= 0; fctnb< Nb_paramfunctions+1; fctnb++)
     {
         calcul_objet(fctnb*6*NbVertex, fctnb);
-        if(param4D == 1)
+        //if(param4D == 1)
         {
             Anim_Rot4D (fctnb*NbVertex);
         }
