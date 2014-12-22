@@ -94,6 +94,7 @@ public:
 public:
     Par3D();
     ~Par3D();
+    void Anim_Rot3D (int idx=0);
     void rotation4();
     void calcul_points4(int idx=0);
     void Anim_Rot4D (int idx=0);
