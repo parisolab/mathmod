@@ -919,21 +919,10 @@ void DrawingOptions::UpdateCurrentTreeObject()
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         ui.stackedProperties->setCurrentIndex(1);
-        ui.Formulas->setTabText(0, MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
+        ui.NameLabel->setText(MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"\n  ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
         ui.IsoComponent->clear();
         ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         UpdateDescription(0);
@@ -3144,6 +3133,7 @@ void DrawingOptions::on_updateButton_clicked()
         if(indexcurrentFormula != -1)
         {
             QJsonObject copyCurrentObject2 = MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].toObject();
+            //Cut the component at the index indexcurrentFormula :
             if((ui.isoNameEdit->toPlainText()).replace(" ", "") == "")
             {
                 array=copyCurrentObject2["Fxyz"].toArray();
@@ -3204,6 +3194,7 @@ void DrawingOptions::on_updateButton_clicked()
                 copyCurrentObject2.remove("Param4D");
                 copyCurrentObject["Iso3D"] = copyCurrentObject2;
             }
+            //Update the component at the index indexcurrentFormula;
             else if(
                 MathmodRef->RootObjet.CurrentTreestruct.Component.count() > 0 &&
                 indexcurrentFormula >-1 &&
@@ -3261,6 +3252,7 @@ void DrawingOptions::on_updateButton_clicked()
             }
             else
             {
+                //Add new component:
                 if(MathmodRef->RootObjet.CurrentTreestruct.Component[indexcurrentFormula].replace(" ", "") != (ui.isoNameEdit->toPlainText()).replace(" ", ""))
                 {
                     array=copyCurrentObject2["Component"].toArray();
@@ -4431,13 +4423,6 @@ void DrawingOptions::UpdateGui(int argc)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_ActivateCND_2_clicked(bool checked)
-{
-    ui.CNDgroupBox_2->setEnabled(checked);
-    MathmodRef->ui.glWidget->LocalScene.activarecnd = checked;
-    MathmodRef->ui.glWidget->update();
-}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_TCNDcheckBox_2_clicked(bool checked)
 {
     on_TCNDcheckBox_clicked(checked);
@@ -4465,6 +4450,7 @@ void DrawingOptions::on_FNCNDcheckBox_2_clicked(bool checked)
 
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
+    ui.label_5->setText("1/"+QString::number(value));
     MathmodRef->ui.glWidget->ParObjet->pace = MathmodRef->ui.glWidget->IsoObjet->pace = (double)1/(double)value;
 }
 

@@ -155,7 +155,6 @@ private slots:
     void on_ParamComponent_2_activated(int index);
     void on_updateParam_2_clicked();
     void on_Multiplier_clicked();
-    void on_ActivateCND_2_clicked(bool checked);
     void on_TCNDcheckBox_2_clicked(bool checked);
     void on_TNCNDcheckBox_2_clicked(bool checked);
     void on_TBordercheckBox_2_clicked(bool checked);
