@@ -922,7 +922,19 @@ void DrawingOptions::UpdateCurrentTreeObject()
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         ui.stackedProperties->setCurrentIndex(1);
-        ui.NameLabel->setText(MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"\n  ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
+        QString tmp = MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"\n  ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+" Cmp";
+        if(MathmodRef->RootObjet.CurrentTreestruct.Funct.count() > 0)
+            tmp += ";"+ QString::number(MathmodRef->RootObjet.CurrentTreestruct.Funct.count())+" Fct";
+
+        if(MathmodRef->RootObjet.CurrentTreestruct.Const.count() > 0)
+            tmp += ";"+  QString::number(MathmodRef->RootObjet.CurrentTreestruct.Const.count())+" Cst";
+
+        if(MathmodRef->RootObjet.CurrentTreestruct.Varu.count() > 0)
+            tmp += ";"+  QString::number(MathmodRef->RootObjet.CurrentTreestruct.Varu.count())+" Var";
+
+        tmp +=  ")" ;
+        ui.NameLabel->setText(tmp);
+
         ui.IsoComponent->clear();
         ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         UpdateDescription(0);
