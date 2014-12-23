@@ -5435,378 +5435,316 @@ p, li { white-space: pre-wrap; }
            <attribute name="toolTip">
             <string>Tree View</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_39">
+           <layout class="QGridLayout" name="gridLayout_34">
             <item row="0" column="0">
-             <widget class="QSplitter" name="splitter_6">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
+             <widget class="QGroupBox" name="groupBoxCND">
+              <property name="title">
+               <string>CND view controls:</string>
               </property>
-              <widget class="QWidget" name="layoutWidget1">
-               <layout class="QVBoxLayout" name="verticalLayout">
-                <item>
-                 <widget class="QGroupBox" name="groupBoxCND">
-                  <property name="title">
-                   <string>CND properties:</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                  <layout class="QGridLayout" name="gridLayout_43">
-                   <item row="0" column="0">
-                    <layout class="QVBoxLayout" name="verticalLayout_4">
-                     <property name="spacing">
-                      <number>2</number>
-                     </property>
-                     <item>
-                      <widget class="QCheckBox" name="ActivateCND">
-                       <property name="enabled">
-                        <bool>true</bool>
-                       </property>
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="palette">
-                        <palette>
-                         <active>
-                          <colorrole role="Base">
-                           <brush brushstyle="SolidPattern">
-                            <color alpha="255">
-                             <red>255</red>
-                             <green>255</green>
-                             <blue>255</blue>
-                            </color>
-                           </brush>
-                          </colorrole>
-                         </active>
-                         <inactive>
-                          <colorrole role="Base">
-                           <brush brushstyle="SolidPattern">
-                            <color alpha="255">
-                             <red>255</red>
-                             <green>255</green>
-                             <blue>255</blue>
-                            </color>
-                           </brush>
-                          </colorrole>
-                         </inactive>
-                         <disabled>
-                          <colorrole role="Base">
-                           <brush brushstyle="SolidPattern">
-                            <color alpha="255">
-                             <red>255</red>
-                             <green>170</green>
-                             <blue>0</blue>
-                            </color>
-                           </brush>
-                          </colorrole>
-                         </disabled>
-                        </palette>
-                       </property>
-                       <property name="text">
-                        <string>Activate CND(x,y,z,t) :</string>
-                       </property>
-                       <property name="checked">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QGroupBox" name="CNDgroupBox">
-                       <property name="title">
-                        <string/>
-                       </property>
-                       <layout class="QGridLayout" name="gridLayout_29">
-                        <property name="leftMargin">
-                         <number>2</number>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_43">
+               <item row="0" column="0">
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <property name="spacing">
+                  <number>2</number>
+                 </property>
+                 <item>
+                  <widget class="QCheckBox" name="ActivateCND">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Base">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Base">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Base">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>170</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="text">
+                    <string>Activate CND(x,y,z,t) :</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="CNDgroupBox">
+                   <property name="title">
+                    <string/>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_29">
+                    <property name="leftMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="spacing">
+                     <number>2</number>
+                    </property>
+                    <item row="0" column="0">
+                     <layout class="QGridLayout" name="gridLayout_8">
+                      <property name="spacing">
+                       <number>2</number>
+                      </property>
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="CNDTable">
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>25</height>
+                         </size>
                         </property>
-                        <property name="topMargin">
-                         <number>2</number>
+                        <property name="text">
+                         <string/>
                         </property>
-                        <property name="rightMargin">
-                         <number>2</number>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QLabel" name="Meshlabel">
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>25</height>
+                         </size>
                         </property>
-                        <property name="bottomMargin">
-                         <number>2</number>
+                        <property name="text">
+                         <string>Mesh </string>
                         </property>
-                        <property name="spacing">
-                         <number>2</number>
+                       </widget>
+                      </item>
+                      <item row="0" column="2">
+                       <widget class="QLabel" name="Colorlabel">
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>25</height>
+                         </size>
                         </property>
-                        <item row="0" column="0">
-                         <layout class="QGridLayout" name="gridLayout_8">
-                          <property name="spacing">
-                           <number>2</number>
-                          </property>
-                          <item row="0" column="0">
-                           <widget class="QLabel" name="CNDTable">
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>25</height>
-                             </size>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="0" column="1">
-                           <widget class="QLabel" name="Meshlabel">
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>25</height>
-                             </size>
-                            </property>
-                            <property name="text">
-                             <string>Mesh </string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="0" column="2">
-                           <widget class="QLabel" name="Colorlabel">
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>25</height>
-                             </size>
-                            </property>
-                            <property name="text">
-                             <string>Fil Triangles</string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="1" column="0">
-                           <widget class="QLabel" name="CNDlabel">
-                            <property name="text">
-                             <string>CND</string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="1" column="1">
-                           <widget class="QCheckBox" name="TCNDcheckBox">
-                            <property name="enabled">
-                             <bool>true</bool>
-                            </property>
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="checked">
-                             <bool>false</bool>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="1" column="2">
-                           <widget class="QCheckBox" name="FCNDcheckBox">
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="checked">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="2" column="0">
-                           <widget class="QLabel" name="CNDlabel_2">
-                            <property name="text">
-                             <string>!CND</string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="2" column="1">
-                           <widget class="QCheckBox" name="TNCNDcheckBox">
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="checked">
-                             <bool>false</bool>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="2" column="2">
-                           <widget class="QCheckBox" name="FNCNDcheckBox">
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="checked">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="3" column="0">
-                           <widget class="QLabel" name="Borderlabel">
-                            <property name="text">
-                             <string>Border</string>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="3" column="1">
-                           <widget class="QCheckBox" name="TBordercheckBox">
-                            <property name="text">
-                             <string/>
-                            </property>
-                            <property name="checked">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="TimeStepGroupBox">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="title">
-                   <string>TimeStep Controls:</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                  <layout class="QGridLayout" name="gridLayout_34">
-                   <item row="0" column="0">
-                    <layout class="QHBoxLayout" name="horizontalLayout_20">
-                     <item>
-                      <widget class="QLabel" name="label_4">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>60</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>Time Step =</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_5">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>40</width>
-                         <height>20</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>1/30</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QScrollBar" name="TimeStepScrollBar">
-                       <property name="minimum">
-                        <number>1</number>
-                       </property>
-                       <property name="maximum">
-                        <number>500</number>
-                       </property>
-                       <property name="sliderPosition">
-                        <number>30</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item row="1" column="0">
-                    <layout class="QHBoxLayout" name="horizontalLayout_21">
-                     <item>
-                      <widget class="QGroupBox" name="groupBox_5">
-                       <property name="title">
-                        <string>Time flow:</string>
-                       </property>
-                       <layout class="QGridLayout" name="gridLayout_6">
-                        <item row="0" column="0">
-                         <widget class="QRadioButton" name="RevertradioButton">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>100</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string>Revert</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QRadioButton" name="radioButton">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>100</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="text">
-                           <string>Continue</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="InitTButton">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="text">
-                        <string>Initialization (t=0)</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
+                        <property name="text">
+                         <string>Fil Triangles</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="CNDlabel">
+                        <property name="text">
+                         <string>CND</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QCheckBox" name="TCNDcheckBox">
+                        <property name="enabled">
+                         <bool>true</bool>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="checked">
+                         <bool>false</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="2">
+                       <widget class="QCheckBox" name="FCNDcheckBox">
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="checked">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="CNDlabel_2">
+                        <property name="text">
+                         <string>!CND</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QCheckBox" name="TNCNDcheckBox">
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="checked">
+                         <bool>false</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QCheckBox" name="FNCNDcheckBox">
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="checked">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="0">
+                       <widget class="QLabel" name="Borderlabel">
+                        <property name="text">
+                         <string>Border</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QCheckBox" name="TBordercheckBox">
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="checked">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </item>
             <item row="1" column="0">
+             <widget class="QGroupBox" name="TimeStepGroupBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="title">
+               <string>TimeStep Controls (t = t + TimeStep) :</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_6">
+               <item row="0" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_20">
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>80</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>TimeStep =</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>60</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>1/30</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QScrollBar" name="TimeStepScrollBar">
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>500</number>
+                   </property>
+                   <property name="sliderPosition">
+                    <number>30</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="InitTButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Initialization (t = 0)</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="0">
              <widget class="QGroupBox" name="groupBox_7">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -5821,10 +5759,38 @@ p, li { white-space: pre-wrap; }
                </size>
               </property>
               <property name="title">
-               <string>Rotational Plans :</string>
+               <string>Rotation controls :</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_26">
                <item row="0" column="0">
+                <widget class="QCheckBox" name="xyzcheckBox2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>41</width>
+                   <height>17</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>17</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>XYZ (mouse control)</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_25">
                  <property name="spacing">
                   <number>2</number>
@@ -5875,7 +5841,7 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </item>
-               <item row="1" column="0">
+               <item row="2" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_27">
                  <property name="spacing">
                   <number>2</number>
@@ -5926,7 +5892,7 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </item>
-               <item row="2" column="0">
+               <item row="3" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_29">
                  <property name="spacing">
                   <number>2</number>
@@ -5976,34 +5942,6 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                 </layout>
-               </item>
-               <item row="3" column="0">
-                <widget class="QCheckBox" name="xyzcheckBox2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>41</width>
-                   <height>17</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>17</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>XYZ (mouse control)</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
                </item>
                <item row="4" column="0">
                 <layout class="QHBoxLayout" name="horizontalLayout_31">

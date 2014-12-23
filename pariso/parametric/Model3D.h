@@ -78,7 +78,6 @@ public:
     std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100];
     double  v_inf[100], v_sup[100],u_inf[100],u_sup[100],dif_v[100],dif_u[100];
     double stepMorph, pace;
-    int TimeFlow;
     int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
     Matrix4D mat4D, mat_rotation4D, mat_rotation_save4D,
              mat_homothetie4D, mat_translation4D, mat_inversetranslation4D;
