@@ -72,6 +72,16 @@ struct  ObjectProperties
     int IndexCurrentFormula;
     int    border;
     int    anim;
+    int    animxyz;
+    int    animx;
+    int    animy;
+    int    animz;
+    float    animxValue;
+    float    animyValue;
+    float    animzValue;
+    float    animxValueStep;
+    float    animyValueStep;
+    float    animzValueStep;
     int    morph;
     int    morphstep;
     int    typedrawing;

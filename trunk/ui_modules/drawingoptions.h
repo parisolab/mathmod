@@ -158,5 +158,13 @@ private slots:
     void on_TimeStepScrollBar_valueChanged(int value);
     void on_InitTButton_clicked();
     void on_pushButton_2_clicked();
+    void on_xyhorizontalScrollBar2_valueChanged(int value);
+    void on_xzhorizontalScrollBar2_valueChanged(int value);
+    void on_yzhorizontalScrollBar2_valueChanged(int value);
+    void on_xycheckBox2_clicked();
+    void on_xzcheckBox2_clicked();
+    void on_yzcheckBox2_clicked();
+    void on_InitMatrix_2_clicked();
+    void on_xyzcheckBox2_clicked();
 };
 #endif
