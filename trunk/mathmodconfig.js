@@ -1,13 +1,13 @@
 {
     "IsoParam": {
-        "MaxGrid": 100,
-        "MaxPt": 3,
+        "MaxGrid": 150,
+        "MaxPt": 2,
         "MaxTri": 3
     },
     "WindowPosition": {
         "ControlX": 20,
         "ControlY": 20,
-        "GlwinX": 680,
+        "GlwinX": 580,
         "GlwinY": 20
     },
     "WindowSize": {

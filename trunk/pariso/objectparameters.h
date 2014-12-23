@@ -153,7 +153,7 @@ public:
     int maxtr;
     int maxpt;
 public:
-    ObjectParameters(int mp=20000000, int mt=30000000);
+    ObjectParameters(int mp=2000000, int mt=3000000);
 };
 
 #endif // OBJECTPARAMETERS_H
