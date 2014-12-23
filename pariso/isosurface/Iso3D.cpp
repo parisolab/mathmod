@@ -88,7 +88,6 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     hauteur_fenetre = 650;
     stepMorph = 0;
     pace = (double)1/(double)30;
-    TimeFlow = -1;
     morph_activated = -1;
     AllComponentTraited = false;
 
@@ -417,17 +416,6 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
 
     if(AllComponentTraited && morph_activated ==1)
     {
-        if(TimeFlow == 1)
-        {
-            if(stepMorph < 0)
-            {
-                pace = std::abs(pace);
-            }
-            if(stepMorph > 1)
-            {
-                pace = -std::abs(pace);
-            }
-        }
         stepMorph += pace;
     }
     vals[3]          = stepMorph;
@@ -808,17 +796,6 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
 
     if(AllComponentTraited && morph_activated ==1)
     {
-        if(TimeFlow == 1)
-        {
-            if(stepMorph < 0)
-            {
-                pace = std::abs(pace);
-            }
-            if(stepMorph > 1)
-            {
-                pace = -std::abs(pace);
-            }
-        }
         stepMorph += pace;
     }
 
@@ -959,17 +936,6 @@ void Iso3D::EvalExpressionAtIndex(int IsoIndex)
 
     if(AllComponentTraited && morph_activated ==1)
     {
-        if(TimeFlow == 1)
-        {
-            if(stepMorph < 0)
-            {
-                pace = std::abs(pace);
-            }
-            if(stepMorph > 1)
-            {
-                pace = -std::abs(pace);
-            }
-        }
     stepMorph += pace;
     }
     vals[3]          = stepMorph;

@@ -4511,7 +4511,5 @@ void DrawingOptions::on_pushButton_2_clicked()
         message.exec();
         return ;
     }
-
     Parameters->SaveToFile_CurentMathModel(doc.object());
 }
-

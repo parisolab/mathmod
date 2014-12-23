@@ -48,7 +48,6 @@ void Par3D::initialiser_parametres()
     latence = 30;
     stepMorph = 0;
     pace = (double)1/(double)30;
-    TimeFlow = 1; //revert
     coupure_col = coupure_ligne = 0;
     activeMorph = -1;
     ParConditionRequired = -1;
@@ -258,18 +257,6 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
 {
     double vals[] = {0,0,0};
     double iprime, jprime;
-
-    if(TimeFlow == 1)
-    {
-        if(stepMorph < 0)
-        {
-            pace = std::abs(pace);
-        }
-        if(stepMorph > 1)
-        {
-            pace = -std::abs(pace);
-        }
-    }
 
     if((cmp == 0) && (activeMorph == 1))
         stepMorph += pace;
