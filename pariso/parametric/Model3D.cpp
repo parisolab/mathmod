@@ -1085,7 +1085,7 @@ void  Par3D:: ParamBuild(
     for(int fctnb= 0; fctnb< Nb_paramfunctions+1; fctnb++)
     {
         calcul_objet(fctnb*6*NbVertex, fctnb);
-        //if(param4D == 1)
+        if(param4D == 1)
         {
             Anim_Rot4D (fctnb*NbVertex);
         }

@@ -827,21 +827,43 @@ static void draw(ObjectProperties *scene)
         glDepthMask(GL_FALSE);
 
     // Ratation (Animation):
-    if (scene->anim == 1)
-        glRotatef(scene->RotStrength,scene->axe_x,scene->axe_y,scene->axe_z);
-
-    // Axe :
-    //if (scene->axe == 1)
-    if (scene->infos == 1)
-        DrawAxe();
+    if (scene->anim == 1 && scene->animxyz == 1)
+    {
+        glRotatef(scene->RotStrength, scene->axe_x, scene->axe_y, scene->axe_z);
+    }
 
     // Plan:
     //if (scene->plan == 1)
+    //glLoadIdentity();
     if (scene->infos == 1)
         glCallList(scene->gridplanliste);
 
+    // Axe :
+    if (scene->infos == 1)
+        DrawAxe();
+
+    //glLoadIdentity();
     // Box:
     //if (scene->box == 1) glCallList(scene->boxliste);
+    glPushMatrix();
+
+    if (scene->anim == 1 && scene->animx == 1)
+    {
+        scene->animxValue += scene->animxValueStep;
+        glRotatef(scene->animxValue, 1.0, 0, 0);
+    }
+
+    if (scene->anim == 1 && scene->animy == 1)
+    {
+        scene->animyValue += scene->animyValueStep;
+        glRotatef(scene->animyValue, 0, 1.0, 0);
+    }
+
+    if (scene->anim == 1 && scene->animz == 1)
+    {
+        scene->animzValue += scene->animzValueStep;
+        glRotatef(scene->animzValue, 0, 0, 1.0);
+    }
 
     // Draw Filled Object:
     if(scene->fill == 1 && scene->typedrawing == 11)
@@ -873,6 +895,11 @@ static void draw(ObjectProperties *scene)
     //Draw Normales:
     if (scene->norm == 1 )
         DrawNormals(scene);
+
+
+
+
+    glPopMatrix();
 
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
