@@ -3972,6 +3972,52 @@ void DrawingOptions::createActions()
 }
 
 
+
+
+void DrawingOptions::on_xyzcheckBox2_clicked()
+{
+    MathmodRef->ui.glWidget->LocalScene.animxyz *= -1;
+}
+
+void DrawingOptions::on_xycheckBox2_clicked()
+{
+    MathmodRef->ui.glWidget->LocalScene.animx *= -1;
+}
+
+void DrawingOptions::on_xyhorizontalScrollBar2_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->LocalScene.animxValueStep =(float) value/4.0;
+}
+
+void DrawingOptions::on_xzcheckBox2_clicked()
+{
+    MathmodRef->ui.glWidget->LocalScene.animy *= -1;
+}
+
+void DrawingOptions::on_xzhorizontalScrollBar2_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->LocalScene.animyValueStep =(float) value/4.0;
+}
+
+void DrawingOptions::on_yzcheckBox2_clicked()
+{
+    MathmodRef->ui.glWidget->LocalScene.animz *= -1;
+}
+
+void DrawingOptions::on_yzhorizontalScrollBar2_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->LocalScene.animzValueStep =(float) value/4.0;
+}
+
+void DrawingOptions::on_InitMatrix_2_clicked()
+{
+    MathmodRef->ui.glWidget->LocalScene.RotStrength =
+    MathmodRef->ui.glWidget->LocalScene.animxValueStep =
+    MathmodRef->ui.glWidget->LocalScene.animyValueStep =
+    MathmodRef->ui.glWidget->LocalScene.animzValueStep = 0.0;
+}
+
+
 void DrawingOptions::on_xycheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxy_ok *= -1;
@@ -4085,7 +4131,7 @@ void DrawingOptions::on_uv_clicked()
 void DrawingOptions::on_InitMatrix_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->mat4D.unit();
-    MathmodRef->ParametricSurfaceProcess(3);
+    on_calculate_clicked();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -4468,3 +4514,4 @@ void DrawingOptions::on_pushButton_2_clicked()
 
     Parameters->SaveToFile_CurentMathModel(doc.object());
 }
+

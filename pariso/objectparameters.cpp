@@ -149,7 +149,14 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.typedrawing    =  1;
     objectproperties.smoothpoly      = 1;
     objectproperties.smoothline       = -1;
-    objectproperties.anim                 =-1;
+    objectproperties.anim                 = -1;
+    objectproperties.animx               = -1;
+    objectproperties.animy               = -1;
+    objectproperties.animz               = -1;
+    objectproperties.animxyz           =   1;
+    objectproperties.animxValue      = 0;
+    objectproperties.animyValue      = 0;
+    objectproperties.animzValue      = 0;
     objectproperties.morph              =-1;
     objectproperties.morphstep       =-1;
     objectproperties.norm                =-1;
