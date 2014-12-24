@@ -922,7 +922,7 @@ void DrawingOptions::UpdateCurrentTreeObject()
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         ui.stackedProperties->setCurrentIndex(1);
-        QString tmp = MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"\n  ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+" Cmp";
+        QString tmp = " ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+" Cmp";
         if(MathmodRef->RootObjet.CurrentTreestruct.Funct.count() > 0)
             tmp += ";"+ QString::number(MathmodRef->RootObjet.CurrentTreestruct.Funct.count())+" Fct";
 
@@ -934,7 +934,7 @@ void DrawingOptions::UpdateCurrentTreeObject()
 
         tmp +=  ")" ;
         ui.NameLabel->setText(tmp);
-
+        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
         ui.IsoComponent->clear();
         ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         UpdateDescription(0);
@@ -942,7 +942,8 @@ void DrawingOptions::UpdateCurrentTreeObject()
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject())
     {
         ui.ParamComponent->clear();
-        ui.colorgrid->setTabText(0, MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
+        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+        //ui.colorgrid->setTabText(0, MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
         ui.ParamComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         ui.stackedProperties->setCurrentIndex(2);
         UpdateDescription(0);
@@ -950,7 +951,8 @@ void DrawingOptions::UpdateCurrentTreeObject()
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
         ui.ParamComponent_2->clear();
-        ui.colorgrid_2->setTabText(0, MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
+        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+        //ui.colorgrid_2->setTabText(0, MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
         ui.ParamComponent_2->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         ui.stackedProperties->setCurrentIndex(3);
         UpdateDescription(0);
@@ -4476,6 +4478,7 @@ void DrawingOptions::UpdateGui(int argc)
     move(Parameters->ControlX,Parameters->ControlY);
     resize(Parameters->ControlW, Parameters->ControlH);
     ui.CndGroupBox->hide();
+    ui.NameLabel->hide();
     MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
     MathmodRef->resize(Parameters->GlwinW, Parameters->GlwinH);
 }
@@ -4524,4 +4527,18 @@ void DrawingOptions::on_pushButton_2_clicked()
         return ;
     }
     Parameters->SaveToFile_CurentMathModel(doc.object());
+}
+
+void DrawingOptions::on_pushButtonInfo_clicked()
+{
+    static int show = -1;
+    show *= -1;
+    show == 1 ? ui.NameLabel->show() : ui.NameLabel->hide();
+    show == -1 ? ui.pushButtonInfo->setText("Show infos") : ui.pushButtonInfo->setText("Hide infos");
+}
+
+void DrawingOptions::on_pushButton_3_clicked()
+{
+        ui.isoNameEdit->setText(ui.isoNameEdit->toPlainText() + "_01");
+        on_updateButton_clicked();
 }
