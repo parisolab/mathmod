@@ -3371,6 +3371,24 @@ void DrawingOptions::on_updateButton_clicked()
                 else
                     copyCurrentObject2.remove("Grid");
 
+
+                //Functions:
+                if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct->rowCount() > 0)
+                {
+                    array=copyCurrentObject2["Funct"].toArray();
+                    if(array.count() >0 && ui.tableWidget_Fct->rowCount() == array.count())
+                    {
+                        for(int i=0; i< ui.tableWidget_Fct->rowCount(); i++)
+                            if( (ui.tableWidget_Fct->item(i, 0))->text() != "")
+                                array.replace(i, (ui.tableWidget_Fct->item(i, 0))->text());
+                            else
+                                array.removeAt(i);
+                        copyCurrentObject2["Funct"] = array;
+                    }
+                }
+                else
+                    copyCurrentObject2.remove("Funct");
+
                 copyCurrentObject["Iso3D"] = copyCurrentObject2;
             }
             else
