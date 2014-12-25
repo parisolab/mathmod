@@ -18,7 +18,24 @@
 		"Iso3D": {
 			"Description": ["This example shows how to use defined functions"],
 			"Name": ["SchwarzFunction"],
-			"Funct": [" Schwarz1=cos(x) + cos(y) + cos(z)"],
+			"Varu": [" A=(u-4*sin(tm*pi/10))^2",
+			" B=(u-2*cos(tm*pi/10))^2",
+			"C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
+			" D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"],
+			"Fxyz": ["(Ax + By+ z*z - .6)
+		*min( Ax + By  + z*z - .6, z) +0.2",
+			"
+		Ax+ By + (z-.2)*(z-.2) - .6 ",
+			"
+		Cx + Dy  + (z-.2)*(z-.2) - .1
+		"],
+			"Cnd": ["(x^2 + y^2) > cos(t*pi)*5.0"],
+			"Const": [
+				"r = (1/4)*(1+3*sqrt(5))",
+				"a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
+				"c = (1/2)*sqrt(5-sqrt(5))"
+			],
+			"Funct": [" Schwarz1=cos(x) + cos(y) + cos(z)", " Schwarz2=cos(x) + cos(y)", " Schwarz3 = cos(x)"],
             "Component": [" SchwarzFunction"],
 			"Fxyz": [" Schwarz1(x,y,z,t)"],
 			"Xmin": ["-4"],
@@ -2091,20 +2108,57 @@
 					"0"
 				]
 			}
-		},		
-		{"Param3D":
-		{
-		"Description":["Description of the model"],
-		"Name":["Shell"],
-		"Component": ["Shell"],
-		"Cnd": ["(x^2 + y^2) > 2.0"],
-		"Fx":["1.2^v*(sin(u)^2*sin(v))"],
-		"Fy":["1.2^v*(sin(u)^2*cos(v))"],
-		"Fz":["1.2^v*(sin(u)*cos(u))"],
-		"Umin":["0"] , "Umax":["pi"],
-		"Vmin":["-pi/4"] , "Vmax":["5*pi/2"]
-		}},
-
+		},
+{
+    "Param3D": {
+        "Name": [
+            "Shell"
+        ],
+        "Cnd": [
+            "(x^2 + y^2) > 2.0"
+        ],
+        "Varu": [
+            " A=(u-4*sin(3.14/10))^2",
+            " B=(u-2*cos(3.14/10))^2",
+            " C=(u-2*sin(3.14)-4*sin(3.14/10))^2",
+            " D=(u-2*cos(3.14)-2*cos(3.14/10))^2"
+        ],
+        "Funct": [
+            " Schwarz1=cos(u)",
+            " Schwarz2=cos(u) + sin(v)"
+        ],
+        "Component": [
+            "Shell"
+        ],
+        "Const": [
+            "r = (1/4)*(1+3*sqrt(5))",
+            "a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
+            "c = (1/2)*sqrt(5-sqrt(5))"
+        ],
+        "Fx": [
+            "1.2^v*(sin(u)^2*sin(v))"
+        ],
+        "Fy": [
+            "1.2^v*(sin(u)^2*cos(v))"
+        ],
+        "Fz": [
+            "1.2^v*(sin(u)*cos(u))"
+        ],
+        "Umax": [
+            "pi"
+        ],
+        "Umin": [
+            "0"
+        ],
+        "Vmax": [
+            "5*pi/2"
+        ],
+        "Vmin": [
+            "-pi/4"
+        ]
+    }
+}
+,
 		{"Param3D":
 		{
 		"Description":["Description of the model"],

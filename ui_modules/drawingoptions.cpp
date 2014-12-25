@@ -922,6 +922,7 @@ void DrawingOptions::UpdateCurrentTreeObject()
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         ui.stackedProperties->setCurrentIndex(1);
+        /*
         QString tmp = " ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+" Cmp";
         if(MathmodRef->RootObjet.CurrentTreestruct.Funct.count() > 0)
             tmp += ";"+ QString::number(MathmodRef->RootObjet.CurrentTreestruct.Funct.count())+" Fct";
@@ -934,6 +935,7 @@ void DrawingOptions::UpdateCurrentTreeObject()
 
         tmp +=  ")" ;
         ui.NameLabel->setText(tmp);
+        */
         ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
         ui.IsoComponent->clear();
         ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
@@ -3028,12 +3030,65 @@ void DrawingOptions::UpdateDescription(int position)
             if(!MathmodRef->RootObjet.CurrentTreestruct.Cnd.empty())
             {
                 ui.CndUpdateEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
-                ui.CndGroupBox_2->show();
             }
             else
             {
                 ui.CndUpdateEdit_2->setText("");
-                ui.CndGroupBox_2->hide();
+            }
+
+            //Function:
+            if(!MathmodRef->RootObjet.CurrentTreestruct.Funct.empty())
+            {
+                ui.tableWidget_Fct_2->clearContents();
+                ui.tableWidget_Fct_2->setRowCount(0);
+                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Funct.size(); i++)
+                {
+                    ui.tableWidget_Fct_2->setRowCount(i+1);
+                    ui.tableWidget_Fct_2->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Funct.at(i)));
+                }
+            }
+            else
+            {
+                ui.tableWidget_Fct_2->clearContents();
+                ui.tableWidget_Fct_2->setRowCount(0);
+            }
+
+            //Constantes:
+            if(!MathmodRef->RootObjet.CurrentTreestruct.Const.empty())
+            {
+                ui.tableWidget_Cst_2->clearContents();
+                ui.tableWidget_Cst_2->setRowCount(0);
+                ui.tableWidget_Cst_2->setRowCount(1);
+                ui.tableWidget_Cst_2->setItem(0, 0, new QTableWidgetItem("pi = 3.14"));
+                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Const.size(); i++)
+                {
+                    ui.tableWidget_Cst_2->setRowCount(i+2);
+                    ui.tableWidget_Cst_2->setItem(i+1, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Const.at(i)));
+                }
+            }
+            else
+            {
+                ui.tableWidget_Cst_2->clearContents();
+                ui.tableWidget_Cst_2->setRowCount(0);
+                ui.tableWidget_Cst_2->setRowCount(1);
+                ui.tableWidget_Cst_2->setItem(0, 0, new QTableWidgetItem("pi = 3.14"));
+            }
+
+            //Variables:
+            if(!MathmodRef->RootObjet.CurrentTreestruct.Varu.empty())
+            {
+                ui.tableWidget_Var_2->clearContents();
+                ui.tableWidget_Var_2->setRowCount(0);
+                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Varu.size(); i++)
+                {
+                    ui.tableWidget_Var_2->setRowCount(i+1);
+                    ui.tableWidget_Var_2->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Varu.at(i)));
+                }
+            }
+            else
+            {
+                ui.tableWidget_Var_2->clearContents();
+                ui.tableWidget_Var_2->setRowCount(0);
             }
         }
         ui.stackedProperties->setCurrentIndex(2);
@@ -3092,14 +3147,68 @@ void DrawingOptions::UpdateDescription(int position)
                 position < MathmodRef->RootObjet.CurrentTreestruct.Cnd.size() ?
                             ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(position)) :
                             ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
-                ui.CndGroupBox->show();
             }
             else
             {
                 ui.CndUpdateEdit->setText("");
-                ui.CndGroupBox->hide();
+            }
+
+            //Function:
+            if(!MathmodRef->RootObjet.CurrentTreestruct.Funct.empty())
+            {
+                ui.tableWidget_Fct->clearContents();
+                ui.tableWidget_Fct->setRowCount(0);
+                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Funct.size(); i++)
+                {
+                    ui.tableWidget_Fct->setRowCount(i+1);
+                    ui.tableWidget_Fct->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Funct.at(i)));
+                }
+            }
+            else
+            {
+                ui.tableWidget_Fct->clearContents();
+                ui.tableWidget_Fct->setRowCount(0);
+            }
+
+            //Constantes:
+            if(!MathmodRef->RootObjet.CurrentTreestruct.Const.empty())
+            {
+                ui.tableWidget_Cst->clearContents();
+                ui.tableWidget_Cst->setRowCount(0);
+                ui.tableWidget_Cst->setRowCount(1);
+                ui.tableWidget_Cst->setItem(0, 0, new QTableWidgetItem("pi = 3.14"));
+                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Const.size(); i++)
+                {
+                    ui.tableWidget_Cst->setRowCount(i+2);
+                    ui.tableWidget_Cst->setItem(i+1, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Const.at(i)));
+                }
+            }
+            else
+            {
+                ui.tableWidget_Cst->clearContents();
+                ui.tableWidget_Cst->setRowCount(0);
+                ui.tableWidget_Cst->setRowCount(1);
+                ui.tableWidget_Cst->setItem(0, 0, new QTableWidgetItem("pi = 3.14"));
+            }
+
+            //Variables:
+            if(!MathmodRef->RootObjet.CurrentTreestruct.Varu.empty())
+            {
+                ui.tableWidget_Var->clearContents();
+                ui.tableWidget_Var->setRowCount(0);
+                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Varu.size(); i++)
+                {
+                    ui.tableWidget_Var->setRowCount(i+1);
+                    ui.tableWidget_Var->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Varu.at(i)));
+                }
+            }
+            else
+            {
+                ui.tableWidget_Var->clearContents();
+                ui.tableWidget_Var->setRowCount(0);
             }
         }
+
         ui.stackedProperties->setCurrentIndex(1);
     }
 
@@ -4477,8 +4586,8 @@ void DrawingOptions::UpdateGui(int argc)
     //Show the two windows of the application:
     move(Parameters->ControlX,Parameters->ControlY);
     resize(Parameters->ControlW, Parameters->ControlH);
-    ui.CndGroupBox->hide();
-    ui.NameLabel->hide();
+    //ui.CndGroupBox->hide();
+    //ui.NameLabel->hide();
     MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
     MathmodRef->resize(Parameters->GlwinW, Parameters->GlwinH);
 }
@@ -4526,15 +4635,18 @@ void DrawingOptions::on_pushButton_2_clicked()
         message.exec();
         return ;
     }
+
     Parameters->SaveToFile_CurentMathModel(doc.object());
 }
 
 void DrawingOptions::on_pushButtonInfo_clicked()
 {
+    /*
     static int show = -1;
     show *= -1;
     show == 1 ? ui.NameLabel->show() : ui.NameLabel->hide();
     show == -1 ? ui.pushButtonInfo->setText("Show infos") : ui.pushButtonInfo->setText("Hide infos");
+    */
 }
 
 void DrawingOptions::on_pushButton_3_clicked()
