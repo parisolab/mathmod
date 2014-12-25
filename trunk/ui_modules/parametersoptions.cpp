@@ -131,6 +131,61 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     return;
 }
 
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & js)
+{
+    QJsonParseError err;
+    QString sortie;
+
+    QFile JsonFile(JsonFileName);
+    if ( !JsonFile.exists())
+    {
+       QFile file2(":/mathmodcollection_empty.js");
+       file2.copy(JsonFileName);
+       QFile::setPermissions(JsonFileName, QFileDevice::WriteOther);
+    }
+
+    QFile file(JsonFileName);
+    if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t",""),&err);
+        if (err.error)
+        {
+            QMessageBox message ;
+            message.setWindowTitle("Error at : "+JsonFileName);
+            file.close();
+            file.open( QIODevice::ReadOnly | QIODevice::Text );
+            sortie = (file.readAll());
+            int before, after;
+            if(sortie.length() > (err.offset +30))
+                after = 30;
+            else after = sortie.length() - err.offset;
+            sortie.truncate(err.offset +after);
+            if(err.offset-30 > 0)
+                before = 30;
+            else
+                before = 0;
+            sortie = sortie.remove(0,err.offset-before);
+            sortie.replace("\t", " ");
+            sortie.replace("\n", " ");
+            sortie.insert(before, " >>> Error <<< ");
+            message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
+                            "..." + sortie + "..."
+                           );
+            message.adjustSize () ;
+            message.exec();
+            file.close();
+            return ;
+        }
+        js = doc.object();
+        file.close();
+    }
+    return;
+}
+
+
+
 void Parametersoptions::GuiUpdate()
 {
     QJsonObject isoparam = (JConfig)["IsoParam"].toObject();
@@ -253,18 +308,28 @@ QStringList Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jp
 
 void Parametersoptions::SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject)
 {
-    QJsonDocument document;
-    QJsonArray array = Collection["MathModels"].toArray();
-    array.append(CurrentJsonObject);
-    Collection["MathModels"] = array;
-    document.setObject(Collection);
-    QFile f( filecollection );
-    if ( f.open(QIODevice::ReadWrite | QIODevice::Text) )
+    QString fileName = QFileDialog::getSaveFileName(this,
+                       tr("Save to file"), "", tr("JSON Files (*.js)"));
+    if(fileName != "")
     {
-        QTextStream t( &f );
-        QString tmp = QString (document.toJson()).toLatin1();
-        t << tmp.toUtf8();
-        f.close();
+        QJsonObject collection;
+        ReadCollectionFile(fileName, collection);
+        QJsonDocument document;
+        if(collection["MathModels"].isArray())
+        {
+            QJsonArray array = collection["MathModels"].toArray();
+            array.append(CurrentJsonObject);
+            collection["MathModels"] = array;
+            document.setObject(collection);
+            QFile f( fileName );
+            if ( f.open(QIODevice::ReadWrite | QIODevice::Text) )
+            {
+                QTextStream t( &f );
+                QString tmp = QString (document.toJson()).toLatin1();
+                t << tmp.toUtf8();
+                f.close();
+            }
+        }
     }
 }
 

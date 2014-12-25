@@ -53,6 +53,7 @@ public:
 
 public slots:
     void ReadJsonFile(QString, QJsonObject &);
+    void ReadCollectionFile(QString, QJsonObject &);
     void SetStyleAndTheme(QApplication &, QString, QString);
     void slot_about_clicked();
     void GuiUpdate();
