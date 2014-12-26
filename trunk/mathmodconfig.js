@@ -1,6 +1,6 @@
 {
     "IsoParam": {
-        "MaxGrid": 100,
+        "MaxGrid": 150,
         "MaxPt": 2,
         "MaxTri": 3
     },

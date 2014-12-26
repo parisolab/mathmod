@@ -563,10 +563,10 @@
         <bool>false</bool>
        </property>
        <property name="headerHidden">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <attribute name="headerVisible">
-        <bool>false</bool>
+        <bool>true</bool>
        </attribute>
        <attribute name="headerCascadingSectionResizes">
         <bool>true</bool>
@@ -1612,33 +1612,15 @@ p, li { white-space: pre-wrap; }
                           <attribute name="title">
                            <string>Fct</string>
                           </attribute>
-                          <layout class="QGridLayout" name="gridLayout_46">
+                          <layout class="QGridLayout" name="gridLayout_41">
                            <item row="0" column="0">
                             <widget class="QTableWidget" name="tableWidget_Fct">
-                             <attribute name="horizontalHeaderVisible">
-                              <bool>false</bool>
-                             </attribute>
-                             <attribute name="horizontalHeaderCascadingSectionResizes">
-                              <bool>false</bool>
-                             </attribute>
-                             <attribute name="horizontalHeaderDefaultSectionSize">
-                              <number>300</number>
-                             </attribute>
-                             <attribute name="horizontalHeaderHighlightSections">
-                              <bool>true</bool>
-                             </attribute>
-                             <attribute name="horizontalHeaderMinimumSectionSize">
-                              <number>27</number>
-                             </attribute>
-                             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                              <bool>false</bool>
-                             </attribute>
                              <attribute name="horizontalHeaderStretchLastSection">
                               <bool>true</bool>
                              </attribute>
                              <column>
                               <property name="text">
-                               <string>Function</string>
+                               <string>Functions</string>
                               </property>
                              </column>
                             </widget>
@@ -1655,21 +1637,11 @@ p, li { white-space: pre-wrap; }
                              <attribute name="horizontalHeaderStretchLastSection">
                               <bool>true</bool>
                              </attribute>
-                             <row>
-                              <property name="text">
-                               <string>1</string>
-                              </property>
-                             </row>
                              <column>
                               <property name="text">
                                <string>Constante </string>
                               </property>
                              </column>
-                             <item row="0" column="0">
-                              <property name="text">
-                               <string>pi = 3.14</string>
-                              </property>
-                             </item>
                             </widget>
                            </item>
                           </layout>
@@ -3450,27 +3422,9 @@ p, li { white-space: pre-wrap; }
                        <attribute name="title">
                         <string>Fct</string>
                        </attribute>
-                       <layout class="QGridLayout" name="gridLayout_47">
+                       <layout class="QGridLayout" name="gridLayout_46">
                         <item row="0" column="0">
                          <widget class="QTableWidget" name="tableWidget_Fct_2">
-                          <attribute name="horizontalHeaderVisible">
-                           <bool>false</bool>
-                          </attribute>
-                          <attribute name="horizontalHeaderCascadingSectionResizes">
-                           <bool>false</bool>
-                          </attribute>
-                          <attribute name="horizontalHeaderDefaultSectionSize">
-                           <number>300</number>
-                          </attribute>
-                          <attribute name="horizontalHeaderHighlightSections">
-                           <bool>true</bool>
-                          </attribute>
-                          <attribute name="horizontalHeaderMinimumSectionSize">
-                           <number>27</number>
-                          </attribute>
-                          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                           <bool>false</bool>
-                          </attribute>
                           <attribute name="horizontalHeaderStretchLastSection">
                            <bool>true</bool>
                           </attribute>
@@ -3493,21 +3447,11 @@ p, li { white-space: pre-wrap; }
                           <attribute name="horizontalHeaderStretchLastSection">
                            <bool>true</bool>
                           </attribute>
-                          <row>
-                           <property name="text">
-                            <string>1</string>
-                           </property>
-                          </row>
                           <column>
                            <property name="text">
                             <string>Constante </string>
                            </property>
                           </column>
-                          <item row="0" column="0">
-                           <property name="text">
-                            <string>pi = 3.14</string>
-                           </property>
-                          </item>
                          </widget>
                         </item>
                        </layout>

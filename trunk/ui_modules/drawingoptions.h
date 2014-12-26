@@ -166,7 +166,9 @@ private slots:
     void on_yzcheckBox2_clicked();
     void on_InitMatrix_2_clicked();
     void on_xyzcheckBox2_clicked();
-    void on_pushButtonInfo_clicked();
+    //void on_pushButtonInfo_clicked();
     void on_pushButton_3_clicked();
+    void on_cut_2_clicked();
+    void on_pushButton_4_clicked();
 };
 #endif
