@@ -3058,20 +3058,16 @@ void DrawingOptions::UpdateDescription(int position)
             {
                 ui.tableWidget_Cst_2->clearContents();
                 ui.tableWidget_Cst_2->setRowCount(0);
-                ui.tableWidget_Cst_2->setRowCount(1);
-                ui.tableWidget_Cst_2->setItem(0, 0, new QTableWidgetItem("pi = 3.14"));
                 for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Const.size(); i++)
                 {
-                    ui.tableWidget_Cst_2->setRowCount(i+2);
-                    ui.tableWidget_Cst_2->setItem(i+1, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Const.at(i)));
+                    ui.tableWidget_Cst_2->setRowCount(i+1);
+                    ui.tableWidget_Cst_2->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Const.at(i)));
                 }
             }
             else
             {
                 ui.tableWidget_Cst_2->clearContents();
                 ui.tableWidget_Cst_2->setRowCount(0);
-                ui.tableWidget_Cst_2->setRowCount(1);
-                ui.tableWidget_Cst_2->setItem(0, 0, new QTableWidgetItem("pi = 3.14"));
             }
 
             //Variables:
@@ -3247,6 +3243,7 @@ void DrawingOptions::on_updateButton_clicked()
     //int i, j;
     QJsonObject copyCurrentObject = MathmodRef->RootObjet.CurrentJsonObject;
     QJsonArray array;
+
     if(copyCurrentObject["Iso3D"].isObject())
     {
         if(indexcurrentFormula != -1)
@@ -3307,6 +3304,57 @@ void DrawingOptions::on_updateButton_clicked()
                 }
                 else
                     copyCurrentObject2.remove("Cnd");
+
+                /************************************************************************************************/
+                //Variables:
+                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Var->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Var->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Var->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Varu"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Varu");
+
+
+                //Functions:
+                if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Fct->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Fct->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Fct->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Funct"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Funct");
+
+
+                //Constantes:
+                if(copyCurrentObject2["Const"].isArray() && ui.tableWidget_Cst->rowCount() > 0)
+                {
+                    QJsonArray array2;
+                    for(int i=0; i< ui.tableWidget_Cst->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Cst->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Cst->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Const"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Const");
+               /************************************************************************************************/
 
                 //Some keys cleaning..
                 copyCurrentObject2.remove("Param3D");
@@ -3475,7 +3523,7 @@ void DrawingOptions::on_updateButton_clicked()
                     else
                         copyCurrentObject2.remove("Grid");
 
-                    copyCurrentObject["Iso3D"] = copyCurrentObject2;
+                    //copyCurrentObject["Iso3D"] = copyCurrentObject2;
                 }
                 else
                 {
@@ -3533,10 +3581,60 @@ void DrawingOptions::on_updateButton_clicked()
                     }
                     else
                         copyCurrentObject2.remove("Grid");
-                    copyCurrentObject["Iso3D"] = copyCurrentObject2;
                 }
-            }
 
+                /************************************************************************************************/
+                //Variables:
+                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Var->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Var->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Var->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Varu"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Varu");
+
+
+                //Functions:
+                if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Fct->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Fct->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Fct->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Funct"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Funct");
+
+                //Constantes:
+                if(copyCurrentObject2["Const"].isArray() && ui.tableWidget_Cst->rowCount() > 0)
+                {
+                    QJsonArray array2;
+                    for(int i=0; i< ui.tableWidget_Cst->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Cst->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Cst->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Const"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Const");
+               /************************************************************************************************/
+
+           copyCurrentObject["Iso3D"] = copyCurrentObject2;
+          }
             //Some keys cleaning..
             copyCurrentObject.remove("Param3D");
             copyCurrentObject.remove("Param4D");
@@ -3547,7 +3645,8 @@ void DrawingOptions::on_updateButton_clicked()
             UpdateCurrentTreeObject();
         }
     }
-    else if(copyCurrentObject["Param3D"].isObject())
+    else
+    if(copyCurrentObject["Param3D"].isObject())
     {
         QJsonObject copyCurrentObject2 = MathmodRef->RootObjet.CurrentJsonObject["Param3D"].toObject();
         if(indexcurrentFormula != -1)
@@ -3600,9 +3699,6 @@ void DrawingOptions::on_updateButton_clicked()
                 else
                     copyCurrentObject2.remove("Grid");
 
-
-
-
                 if(copyCurrentObject2["Cnd"].isArray() && copyCurrentObject2["Cnd"].toArray().count() > indexcurrentFormula)
                 {
                     array=copyCurrentObject2["Cnd"].toArray();
@@ -3612,11 +3708,59 @@ void DrawingOptions::on_updateButton_clicked()
                 else
                     copyCurrentObject2.remove("Cnd");
 
+                /************************************************************************************************/
+                //Variables:
+                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
 
+                    for(int i=0; i< ui.tableWidget_Var_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
+                     }
 
+                     copyCurrentObject2["Varu"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Varu");
 
+                //Functions:
+                if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
 
+                    for(int i=0; i< ui.tableWidget_Fct_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Fct_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Fct_2->item(i, 0))->text());
+                     }
 
+                     copyCurrentObject2["Funct"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Funct");
+
+                //Constantes:
+                if(copyCurrentObject2["Const"].isArray() && ui.tableWidget_Cst_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
+                    for(int i=0; i< ui.tableWidget_Cst_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Cst_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Cst_2->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Const"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Const");
+               /************************************************************************************************/
+
+                //Some keys cleaning..
+                copyCurrentObject2.remove("Iso3D");
+                copyCurrentObject2.remove("Param4D");
+                copyCurrentObject["Param3D"] = copyCurrentObject2;
 
             }
             else if(
@@ -3663,8 +3807,6 @@ void DrawingOptions::on_updateButton_clicked()
                 else
                     copyCurrentObject2.remove("Grid");
 
-
-
                 if(copyCurrentObject2["Cnd"].isArray()  && copyCurrentObject2["Cnd"].toArray().count() > indexcurrentFormula)
                 {
                     array=copyCurrentObject2["Cnd"].toArray();
@@ -3674,8 +3816,56 @@ void DrawingOptions::on_updateButton_clicked()
                 else
                     copyCurrentObject2.remove("Cnd");
 
+                /************************************************************************************************/
+                //Variables:
+                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Var_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Varu"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Varu");
 
 
+                //Functions:
+                if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Fct_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Fct_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Fct_2->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Funct"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Funct");
+
+
+                //Constantes:
+                if(copyCurrentObject2["Const"].isArray() && ui.tableWidget_Cst_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
+                    for(int i=0; i< ui.tableWidget_Cst_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Cst_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Cst_2->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Const"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Const");
+               /************************************************************************************************/
 
                 copyCurrentObject["Param3D"] = copyCurrentObject2;
             }
@@ -3729,8 +3919,6 @@ void DrawingOptions::on_updateButton_clicked()
                     else
                         copyCurrentObject2.remove("Grid");
 
-
-
                     if(copyCurrentObject2["Cnd"].isArray())
                     {
                         array=copyCurrentObject2["Cnd"].toArray();
@@ -3740,9 +3928,7 @@ void DrawingOptions::on_updateButton_clicked()
                     else
                         copyCurrentObject2.remove("Cnd");
 
-
-
-                    copyCurrentObject["Param3D"] = copyCurrentObject2;
+                    //copyCurrentObject["Param3D"] = copyCurrentObject2;
                 }
                 else
                 {
@@ -3792,10 +3978,61 @@ void DrawingOptions::on_updateButton_clicked()
                     else
                         copyCurrentObject2.remove("Grid");
 
-                    copyCurrentObject["Param3D"] = copyCurrentObject2;
+                    //copyCurrentObject["Param3D"] = copyCurrentObject2;
                 }
-            }
 
+                /************************************************************************************************/
+                //Variables:
+                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Var_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Varu"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Varu");
+
+
+                //Functions:
+                if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
+
+                    for(int i=0; i< ui.tableWidget_Fct_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Fct_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Fct_2->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Funct"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Funct");
+
+
+                //Constantes:
+                if(copyCurrentObject2["Const"].isArray() && ui.tableWidget_Cst_2->rowCount() > 0)
+                {
+                    QJsonArray array2;
+                    for(int i=0; i< ui.tableWidget_Cst_2->rowCount(); i++)
+                    {
+                        if( (ui.tableWidget_Cst_2->item(i, 0))->text() != "")
+                            array2.append((ui.tableWidget_Cst_2->item(i, 0))->text());
+                     }
+
+                     copyCurrentObject2["Const"] = array2;
+                }
+                else
+                    copyCurrentObject2.remove("Const");
+               /************************************************************************************************/
+                copyCurrentObject["Param3D"] = copyCurrentObject2;
+            }
 
             //Some keys cleaning..
             copyCurrentObject.remove("Iso3D");
@@ -4037,7 +4274,10 @@ void DrawingOptions::on_updateButton_clicked()
             UpdateCurrentTreeObject();
         }
     }
-}
+
+
+
+    }
 
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_updateParam_clicked()
@@ -4686,18 +4926,29 @@ void DrawingOptions::on_pushButton_2_clicked()
     Parameters->SaveToFile_CurentMathModel(doc.object());
 }
 
-void DrawingOptions::on_pushButtonInfo_clicked()
-{
-    /*
-    static int show = -1;
-    show *= -1;
-    show == 1 ? ui.NameLabel->show() : ui.NameLabel->hide();
-    show == -1 ? ui.pushButtonInfo->setText("Show infos") : ui.pushButtonInfo->setText("Hide infos");
-    */
-}
-
 void DrawingOptions::on_pushButton_3_clicked()
 {
         ui.isoNameEdit->setText(ui.isoNameEdit->toPlainText() + "_01");
         on_updateButton_clicked();
+}
+
+void DrawingOptions::on_cut_2_clicked()
+{
+    if(ui.ParamComponent->count() > 1)
+    {
+        ui.paramNameEdit->setText("");
+        on_updateButton_clicked();
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Only one component in this mathematical model.");
+        msgBox.exec();
+    }
+}
+
+void DrawingOptions::on_pushButton_4_clicked()
+{
+    ui.paramNameEdit->setText(ui.paramNameEdit->toPlainText() + "_01");
+    on_updateButton_clicked();
 }
