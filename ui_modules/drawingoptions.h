@@ -128,6 +128,9 @@ public slots:
     void on_actionAbout_2_triggered();
     void LoadNewFileModels(bool upd=false);
     void on_actionLoad_json_script_triggered();
+    void on_red_ParIso_valueChanged(int value);
+    void on_green_ParIso_valueChanged(int value);
+    void on_blue_ParIso_valueChanged(int value);
     void Multiplier(int, int, int, QJsonObject &iso, int index =0);
     void UpdateGui(int);
 public:
@@ -170,5 +173,8 @@ private slots:
     void on_pushButton_3_clicked();
     void on_cut_2_clicked();
     void on_pushButton_4_clicked();
+    void on_color_5_activated(int index);
+    void on_transparence_ParIso_clicked(bool checked);
+    void on_transparent_ParIso_valueChanged(int value);
 };
 #endif

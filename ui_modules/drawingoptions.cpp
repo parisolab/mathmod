@@ -3237,6 +3237,71 @@ void DrawingOptions::on_transparence_2_clicked(bool checked)
     MathmodRef->ui.glWidget->transparence(checked);
 }
 
+void DrawingOptions::on_red_ParIso_valueChanged(int value)
+{
+    switch (CurrentFormulaType)
+    {
+    case 0:
+        break;
+    case 1:
+        MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->red(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
+        break;
+
+    default:
+        break;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++
+void DrawingOptions::on_green_ParIso_valueChanged(int value)
+{
+    switch (CurrentFormulaType)
+    {
+    case 0:
+        break;
+    case 1:
+        MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->green(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
+        break;
+
+    default:
+        break;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++
+void DrawingOptions::on_blue_ParIso_valueChanged(int value)
+{
+    switch (CurrentFormulaType)
+    {
+    case 0:
+        break;
+    case 1:
+        MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->blue(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
+        break;
+
+    default:
+        break;
+    }
+}
+
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_updateButton_clicked()
 {
@@ -4951,4 +5016,31 @@ void DrawingOptions::on_pushButton_4_clicked()
 {
     ui.paramNameEdit->setText(ui.paramNameEdit->toPlainText() + "_01");
     on_updateButton_clicked();
+}
+
+void DrawingOptions::on_color_5_activated(int index)
+{
+    MathmodRef->ui.glWidget->colorstypeParIso(index);
+}
+
+void DrawingOptions::on_transparence_ParIso_clicked(bool checked)
+{
+    MathmodRef->ui.glWidget->transparence(checked);
+}
+
+void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
+{
+    switch (CurrentFormulaType) {
+    case 1:
+        MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->transparency(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
+        break;
+    default:
+        break;
+    }
 }

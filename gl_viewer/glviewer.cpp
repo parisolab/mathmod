@@ -1491,6 +1491,11 @@ void OpenGlWidget::colorstype(int c)
     LocalScene.colortype = c;
 }
 
+void OpenGlWidget::colorstypeParIso(int c)
+{
+    LocalScene.colortype = LocalScene.colortypeParam = c;
+}
+
 void OpenGlWidget::colorstypeParam(int c)
 {
     LocalScene.colortypeParam = c;
