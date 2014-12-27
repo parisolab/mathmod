@@ -120,6 +120,7 @@ public slots:
     void jpg();
     void png();
     void colorstype(int);
+    void colorstypeParIso(int);
     void colorstypeParam(int);
     void SaveSceneAsOBJ(int);
 };
