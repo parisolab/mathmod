@@ -3469,6 +3469,14 @@ void DrawingOptions::on_updateButton_clicked()
                     copyCurrentObject2["Cnd"] = array;
                 }
                 else
+                    if(ui.CndUpdateEdit->toPlainText() != "")
+                    {
+                        array=copyCurrentObject2["Cnd"].toArray();
+                        for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
+                            array.append(ui.CndUpdateEdit->toPlainText());
+                        copyCurrentObject2["Cnd"] = array;
+                    }
+                else
                     copyCurrentObject2.remove("Cnd");
 
                 if(copyCurrentObject2["Grid"].isArray())
@@ -3577,6 +3585,14 @@ void DrawingOptions::on_updateButton_clicked()
                         copyCurrentObject2["Cnd"] = array;
                     }
                     else
+                        if(ui.CndUpdateEdit->toPlainText() != "")
+                        {
+                            array=copyCurrentObject2["Cnd"].toArray();
+                            for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
+                                array.append(ui.CndUpdateEdit->toPlainText());
+                            copyCurrentObject2["Cnd"] = array;
+                        }
+                        else
                         copyCurrentObject2.remove("Cnd");
 
                     if(copyCurrentObject2["Grid"].isArray())
@@ -3587,8 +3603,6 @@ void DrawingOptions::on_updateButton_clicked()
                     }
                     else
                         copyCurrentObject2.remove("Grid");
-
-                    //copyCurrentObject["Iso3D"] = copyCurrentObject2;
                 }
                 else
                 {
@@ -3636,7 +3650,15 @@ void DrawingOptions::on_updateButton_clicked()
                         copyCurrentObject2["Cnd"] = array;
                     }
                     else
-                        copyCurrentObject2.remove("Cnd");
+                        if(ui.CndUpdateEdit->toPlainText() != "")
+                        {
+                            array=copyCurrentObject2["Cnd"].toArray();
+                            for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
+                                array.append(ui.CndUpdateEdit->toPlainText());
+                            copyCurrentObject2["Cnd"] = array;
+                        }
+                        else
+                            copyCurrentObject2.remove("Cnd");
 
                     if(copyCurrentObject2["Grid"].isArray())
                     {
@@ -3879,6 +3901,14 @@ void DrawingOptions::on_updateButton_clicked()
                     copyCurrentObject2["Cnd"] = array;
                 }
                 else
+                    if(ui.CndUpdateEdit->toPlainText() != "")
+                    {
+                        array=copyCurrentObject2["Cnd"].toArray();
+                        for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
+                            array.append(ui.CndUpdateEdit->toPlainText());
+                        copyCurrentObject2["Cnd"] = array;
+                    }
+                    else
                     copyCurrentObject2.remove("Cnd");
 
                 /************************************************************************************************/
@@ -3991,6 +4021,14 @@ void DrawingOptions::on_updateButton_clicked()
                         copyCurrentObject2["Cnd"] = array;
                     }
                     else
+                        if(ui.CndUpdateEdit->toPlainText() != "")
+                        {
+                            array=copyCurrentObject2["Cnd"].toArray();
+                            for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
+                                array.append(ui.CndUpdateEdit->toPlainText());
+                            copyCurrentObject2["Cnd"] = array;
+                        }
+                        else
                         copyCurrentObject2.remove("Cnd");
 
                     //copyCurrentObject["Param3D"] = copyCurrentObject2;
@@ -4034,6 +4072,24 @@ void DrawingOptions::on_updateButton_clicked()
                     else
                         copyCurrentObject2.remove("Component");
 
+
+                    if(copyCurrentObject2["Cnd"].isArray())
+                    {
+                        array=copyCurrentObject2["Cnd"].toArray();
+                        array.append(ui.CndUpdateEdit_2->toPlainText());
+                        copyCurrentObject2["Cnd"] = array;
+                    }
+                    else
+                        if(ui.CndUpdateEdit->toPlainText() != "")
+                        {
+                            array=copyCurrentObject2["Cnd"].toArray();
+                            for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
+                                array.append(ui.CndUpdateEdit->toPlainText());
+                            copyCurrentObject2["Cnd"] = array;
+                        }
+                        else
+                        copyCurrentObject2.remove("Cnd");
+
                     if(copyCurrentObject2["Grid"].isArray())
                     {
                         array=copyCurrentObject2["Grid"].toArray();
@@ -4042,8 +4098,6 @@ void DrawingOptions::on_updateButton_clicked()
                     }
                     else
                         copyCurrentObject2.remove("Grid");
-
-                    //copyCurrentObject["Param3D"] = copyCurrentObject2;
                 }
 
                 /************************************************************************************************/
