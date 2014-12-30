@@ -25,7 +25,9 @@ static int NbPolyMin;
 static double * NormOriginaltmp;
 static Voxel *GridVoxelVarPt;
 static double *Results;
-
+static int TypeDrawin=6;
+static int TypeDrawinStep = 3;
+static int TypeDrawinNormStep = 0;
 static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
@@ -519,7 +521,7 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
 
                 for(int l=0; l<Nb_newvariables; l++)
                 {
-                    vals[6 + l*3] = vr[l*3+2][IsoIndex][k];
+                    vals[TypeDrawin + l*3] = vr[l*3+2][IsoIndex][k];
                 }
 
                 IJK = J+k;
@@ -547,9 +549,9 @@ void Iso3D::ConstructIsoNormale()
 
         ThreeTimesI   = i*3;
 
-        IndexFirstPoint      = 2*3*IsoSurfaceTriangleListe[ThreeTimesI        ]+ 6*NbVertexTmp +3;
-        IndexSecondPoint = 2*3*IsoSurfaceTriangleListe[ThreeTimesI+1   ]+ 6*NbVertexTmp +3;
-        IndexThirdPoint     = 2*3*IsoSurfaceTriangleListe[ThreeTimesI+2    ]+ 6*NbVertexTmp +3;
+        IndexFirstPoint      = TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI        ]+ TypeDrawin*NbVertexTmp +TypeDrawinStep;
+        IndexSecondPoint = TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI+1    ]+ TypeDrawin*NbVertexTmp +TypeDrawinStep;
+        IndexThirdPoint     = TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI+2    ]+ TypeDrawin*NbVertexTmp +TypeDrawinStep;
 
         pt1_x= NormVertexTab[IndexFirstPoint     ];
         pt1_y= NormVertexTab[IndexFirstPoint+1 ];
@@ -595,19 +597,19 @@ void Iso3D::SaveIsoGLMap()
 /// Recalculate the normals so we have one for each Point (like Pov Mesh) :
     for (i=0; i < NbPointIsoMap ; i++)
     {
-        ThreeTimesI = 6*i;
-        NormVertexTab[ 6*NbVertexTmp +ThreeTimesI    ] = 0;
-        NormVertexTab[ 6*NbVertexTmp +ThreeTimesI+1] = 0;
-        NormVertexTab[ 6*NbVertexTmp +ThreeTimesI+2] = 0;
+        ThreeTimesI = TypeDrawin*i;
+        NormVertexTab[ TypeDrawin*NbVertexTmp +ThreeTimesI    ] = 0;
+        NormVertexTab[ TypeDrawin*NbVertexTmp +ThreeTimesI+1] = 0;
+        NormVertexTab[ TypeDrawin*NbVertexTmp +ThreeTimesI+2] = 0;
     }
 
     for(i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI   = i*3;
 
-        IndexFirstPoint  = 2*3*IsoSurfaceTriangleListe[ThreeTimesI        ]+ 6*NbVertexTmp ;
-        IndexSecondPoint = 2*3*IsoSurfaceTriangleListe[ThreeTimesI+1]+ 6*NbVertexTmp ;
-        IndexThirdPoint  = 2*3*IsoSurfaceTriangleListe[ThreeTimesI+2   ]+ 6*NbVertexTmp ;
+        IndexFirstPoint  = TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI        ]+ TypeDrawin*NbVertexTmp + TypeDrawinNormStep ;
+        IndexSecondPoint = TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI+1]+ TypeDrawin*NbVertexTmp + TypeDrawinNormStep;
+        IndexThirdPoint  = TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI+2   ]+ TypeDrawin*NbVertexTmp  + TypeDrawinNormStep;
 
         NormVertexTab[IndexFirstPoint    ] += NormOriginaltmp[ThreeTimesI    ];
         NormVertexTab[IndexFirstPoint+1] += NormOriginaltmp[ThreeTimesI+1];
@@ -626,7 +628,7 @@ void Iso3D::SaveIsoGLMap()
 
     for (i=0; i < NbPointIsoMap  ; i++)
     {
-        ThreeTimesI = 6*i;
+        ThreeTimesI = TypeDrawin*i + TypeDrawinNormStep;
         scalar = (double)sqrt((NormVertexTab[ThreeTimesI  ]*NormVertexTab[ThreeTimesI  ]) +
                               (NormVertexTab[ThreeTimesI+1]*NormVertexTab[ThreeTimesI+1]) +
                               (NormVertexTab[ThreeTimesI+2]*NormVertexTab[ThreeTimesI+2]));
@@ -1105,9 +1107,9 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            vals[0] = NormVertexTab[i*6+3];
-            vals[1] = NormVertexTab[i*6+4];
-            vals[2] = NormVertexTab[i*6+5];
+            vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
+            vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
+            vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
             WichPointVerifyCond[i] = (IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1);
         }
 
@@ -1163,14 +1165,14 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
-                Bprime[0] = NormVertexTab[3+6*Aindex    ];
-                Bprime[1] = NormVertexTab[3+6*Aindex+1];
-                Bprime[2] = NormVertexTab[3+6*Aindex+2];
+                Bprime[0] = NormVertexTab[3+TypeDrawin*Aindex     + TypeDrawinNormStep ];
+                Bprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1 + TypeDrawinNormStep];
+                Bprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2 + TypeDrawinNormStep];
                 Bprime[3] = stepMorph;
 
-                DiffX = (NormVertexTab[3+6*Bindex  ] - NormVertexTab[3+6*Aindex  ])/20;
-                DiffY = (NormVertexTab[3+6*Bindex+1] - NormVertexTab[3+6*Aindex+1])/20;
-                DiffZ = (NormVertexTab[3+6*Bindex+2] - NormVertexTab[3+6*Aindex+2])/20;
+                DiffX = (NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
+                DiffY = (NormVertexTab[3+TypeDrawin*Bindex+1] + TypeDrawinNormStep - NormVertexTab[3+TypeDrawin*Aindex+1 + TypeDrawinNormStep])/20;
+                DiffZ = (NormVertexTab[3+TypeDrawin*Bindex+2 + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2 + TypeDrawinNormStep])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -1194,14 +1196,14 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
 
                 /// Cprime
-                Cprime[0] = NormVertexTab[3+6*Aindex    ];
-                Cprime[1] = NormVertexTab[3+6*Aindex+1];
-                Cprime[2] = NormVertexTab[3+6*Aindex+2];
+                Cprime[0] = NormVertexTab[3+TypeDrawin*Aindex    ];
+                Cprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1];
+                Cprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2];
                 Cprime[3] = stepMorph;
 
-                DiffX = (NormVertexTab[3+6*Cindex    ] - NormVertexTab[3+6*Aindex     ])/20;
-                DiffY = (NormVertexTab[3+6*Cindex+1] - NormVertexTab[3+6*Aindex+1])/20;
-                DiffZ = (NormVertexTab[3+6*Cindex+2] - NormVertexTab[3+6*Aindex+2])/20;
+                DiffX = (NormVertexTab[3+TypeDrawin*Cindex    ] - NormVertexTab[3+TypeDrawin*Aindex     ])/20;
+                DiffY = (NormVertexTab[3+TypeDrawin*Cindex+1] - NormVertexTab[3+TypeDrawin*Aindex+1])/20;
+                DiffZ = (NormVertexTab[3+TypeDrawin*Cindex+2] - NormVertexTab[3+TypeDrawin*Aindex+2])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -1230,21 +1232,21 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 //***********
 
                 //Add Bprime:
-                NormVertexTab[6*NbVertexTmp+3] = Bprime[0];
-                NormVertexTab[6*NbVertexTmp+4] = Bprime[1];
-                NormVertexTab[6*NbVertexTmp+5] = Bprime[2];
+                NormVertexTab[TypeDrawin*NbVertexTmp+3] = Bprime[0];
+                NormVertexTab[TypeDrawin*NbVertexTmp+4] = Bprime[1];
+                NormVertexTab[TypeDrawin*NbVertexTmp+5] = Bprime[2];
 
-                NormVertexTab[6*NbVertexTmp      ] = NormVertexTab[6*Bindex      ];
-                NormVertexTab[6*NbVertexTmp +1] = NormVertexTab[6*Bindex + 1];
-                NormVertexTab[6*NbVertexTmp +2] = NormVertexTab[6*Bindex + 2];
+                NormVertexTab[TypeDrawin*NbVertexTmp      ] = NormVertexTab[TypeDrawin*Bindex      ];
+                NormVertexTab[TypeDrawin*NbVertexTmp +1] = NormVertexTab[TypeDrawin*Bindex + 1];
+                NormVertexTab[TypeDrawin*NbVertexTmp +2] = NormVertexTab[TypeDrawin*Bindex + 2];
                 //Add Cprime:
-                NormVertexTab[6*NbVertexTmp+  9] = Cprime[0];
-                NormVertexTab[6*NbVertexTmp+10] = Cprime[1];
-                NormVertexTab[6*NbVertexTmp+11] = Cprime[2];
+                NormVertexTab[TypeDrawin*NbVertexTmp+  9] = Cprime[0];
+                NormVertexTab[TypeDrawin*NbVertexTmp+10] = Cprime[1];
+                NormVertexTab[TypeDrawin*NbVertexTmp+11] = Cprime[2];
 
-                NormVertexTab[6*NbVertexTmp +6] = NormVertexTab[6*Cindex      ];
-                NormVertexTab[6*NbVertexTmp +7] = NormVertexTab[6*Cindex + 1];
-                NormVertexTab[6*NbVertexTmp +8] = NormVertexTab[6*Cindex + 2];
+                NormVertexTab[TypeDrawin*NbVertexTmp +6] = NormVertexTab[TypeDrawin*Cindex      ];
+                NormVertexTab[TypeDrawin*NbVertexTmp +7] = NormVertexTab[TypeDrawin*Cindex + 1];
+                NormVertexTab[TypeDrawin*NbVertexTmp +8] = NormVertexTab[TypeDrawin*Cindex + 2];
                 NbVertexTmp += 2;
 
 
@@ -1536,15 +1538,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i] - factor * x_Step[isoindex];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k];
                     ///===========================================================///
-                    NormVertexTab[3+ 6*NbVertexTmp +index    ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[0] = NbPointIsoMap_local;
@@ -1570,14 +1572,14 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local ;
+                    index  = TypeDrawin*NbPointIsoMap_local ;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j] - factor * y_Step[isoindex];
                     vals[2] = zLocal[isoindex][k];
-                    NormVertexTab[3+ 6*NbVertexTmp +index    ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[8] = NbPointIsoMap_local;
@@ -1603,15 +1605,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k] - factor * z_Step[isoindex];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index    ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[3] = NbPointIsoMap_local;
@@ -1655,15 +1657,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
             {
                 // Edge Point computation and  save in IsoPointMap
                 factor = (IsoValue - IsoValue_1)/rapport;
-                index  = 6*NbPointIsoMap_local;
+                index  = TypeDrawin*NbPointIsoMap_local;
 
                 vals[0] = xLocal[isoindex][i] - factor * x_Step[isoindex];
                 vals[1] = yLocal[isoindex][j];
                 vals[2] = zLocal[isoindex][k];
 
-                NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                 // save The reference to this point
                 GridVoxelVarPt[JK].Edge_Points[0] = NbPointIsoMap_local;
@@ -1697,15 +1699,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j] - factor * y_Step[isoindex];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[8] = NbPointIsoMap_local;
@@ -1730,15 +1732,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k] - factor * z_Step[isoindex];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[3] = NbPointIsoMap_local;
@@ -1782,15 +1784,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j] - factor * y_Step[isoindex];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[8] = NbPointIsoMap_local;
@@ -1826,15 +1828,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k] - factor * z_Step[isoindex];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[3] = NbPointIsoMap_local;
@@ -1884,15 +1886,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
 
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i] - factor * x_Step[isoindex];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -1916,15 +1918,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
-                index  = 6*NbPointIsoMap_local;
+                index  = TypeDrawin*NbPointIsoMap_local;
 
                 vals[0] = xLocal[isoindex][i];
                 vals[1] = yLocal[isoindex][j] - factor * y_Step[isoindex];
                 vals[2] = zLocal[isoindex][k];
 
-                NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                 // save The reference to this point
                 GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[8] = NbPointIsoMap_local;
@@ -1960,15 +1962,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k] - factor * z_Step[isoindex];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[3] = NbPointIsoMap_local;
@@ -2007,15 +2009,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
 
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i] - factor * x_Step[isoindex];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maximumgrid+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -2052,15 +2054,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k] - factor * z_Step[isoindex];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maximumgrid+k].Edge_Points[3] = NbPointIsoMap_local;
@@ -2106,15 +2108,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i] - factor * x_Step[isoindex];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maximumgrid].Edge_Points[0] = NbPointIsoMap_local;
@@ -2141,15 +2143,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j] - factor * y_Step[isoindex];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maximumgrid].Edge_Points[8] = NbPointIsoMap_local;
@@ -2174,15 +2176,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
-                index  = 6*NbPointIsoMap_local;
+                index  = TypeDrawin*NbPointIsoMap_local;
 
                 vals[0] = xLocal[isoindex][i];
                 vals[1] = yLocal[isoindex][j];
                 vals[2] = zLocal[isoindex][k] - factor * z_Step[isoindex];
 
-                NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                 // save The reference to this point
                 GridVoxelVarPt[i*maxgrscalemaxgr+j*maximumgrid].Edge_Points[3] = NbPointIsoMap_local;
@@ -2231,15 +2233,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
 
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i] - factor * x_Step[isoindex];
                     vals[1] = yLocal[isoindex][j];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maximumgrid+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -2276,15 +2278,15 @@ void Iso3D::PointEdgeComputation(int isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 6*NbPointIsoMap_local;
+                    index  = TypeDrawin*NbPointIsoMap_local;
 
                     vals[0] = xLocal[isoindex][i];
                     vals[1] = yLocal[isoindex][j] - factor * y_Step[isoindex];
                     vals[2] = zLocal[isoindex][k];
 
-                    NormVertexTab[3+ 6*NbVertexTmp +index  ] = vals[0];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+1] = vals[1];
-                    NormVertexTab[3+ 6*NbVertexTmp +index+2] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index  ] = vals[0];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1] = vals[1];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2] = vals[2];
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maximumgrid+k].Edge_Points[8] = NbPointIsoMap_local;
