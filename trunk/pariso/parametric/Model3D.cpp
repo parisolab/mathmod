@@ -22,6 +22,8 @@
 static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
+static int TypeDrawin=10;
+static int TypeDrawinNormStep = 4;
 
 //+++++++++++++++++++++++++++++++++++++++++
 Par3D::~Par3D()
@@ -127,16 +129,16 @@ void  Par3D::boite_englobante4D(int idx)
     for (int i=0; i < nb_ligne; i++)
         for (int j=0; j < nb_colone; j++)
         {
-            if(MINX > NormVertexTab[IDX + 3 + idx*6] ) MINX = NormVertexTab[IDX + 3 + idx*6];
-            if(MINY > NormVertexTab[IDX + 4 + idx*6] ) MINY = NormVertexTab[IDX + 4 + idx*6];
-            if(MINZ > NormVertexTab[IDX + 5 + idx*6] ) MINZ = NormVertexTab[IDX + 5 + idx*6];
+            if(MINX > NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep] ) MINX = NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep];
+            if(MINY > NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep] ) MINY = NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep];
+            if(MINZ > NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep] ) MINZ = NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep];
             if(MINW > ExtraDimension[i*nb_ligne + j + idx] ) MINW = ExtraDimension[i*nb_ligne + j + idx];
 
-            if(MAXX < NormVertexTab[IDX + 3 + idx*6] ) MAXX = NormVertexTab[IDX + 3 + idx*6];
-            if(MAXY < NormVertexTab[IDX + 4 + idx*6] ) MAXY = NormVertexTab[IDX + 4 + idx*6];
-            if(MAXZ < NormVertexTab[IDX + 5 + idx*6] ) MAXZ = NormVertexTab[IDX + 5 + idx*6];
+            if(MAXX < NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep] ) MAXX = NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep];
+            if(MAXY < NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep] ) MAXY = NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep];
+            if(MAXZ < NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep] ) MAXZ = NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep];
             if(MAXW < ExtraDimension[i*nb_ligne + j + idx] ) MAXW = ExtraDimension[i*nb_ligne + j + idx];
-            IDX +=6;
+            IDX +=TypeDrawin;
         }
 
     DIFX = MAXX - MINX ;
@@ -168,11 +170,11 @@ void  Par3D::boite_englobante4D(int idx)
     for (int i=0; i < nb_ligne   ; i++)
         for (int j=0; j < nb_colone   ; j++)
         {
-            NormVertexTab[IDX + 3 + idx*6]= (NormVertexTab[IDX + 3 + idx*6] + decalage_xo)/DIFMAXIMUM ;
-            NormVertexTab[IDX + 4 + idx*6] = (NormVertexTab[IDX + 4 + idx*6] + decalage_yo)/DIFMAXIMUM ;
-            NormVertexTab[IDX + 5 + idx*6] = (NormVertexTab[IDX + 5 + idx*6] + decalage_zo)/DIFMAXIMUM ;
+            NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep]= (NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_xo)/DIFMAXIMUM ;
+            NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_yo)/DIFMAXIMUM ;
+            NormVertexTab[IDX + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 5 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_zo)/DIFMAXIMUM ;
             ExtraDimension[i*nb_ligne + j + idx] = (ExtraDimension[i*nb_ligne + j + idx] + decalage_wo)/DIFMAXIMUM ;
-            IDX +=6;
+            IDX +=TypeDrawin;
         }
 }
 
@@ -186,10 +188,10 @@ void  Par3D::Invert_boite_englobante4D(int idx)
     for (int i=0; i < nb_ligne   ; i++)
         for (int j=0; j < nb_colone   ; j++)
         {
-            NormVertexTab[IDX + 3 + idx*6] = (NormVertexTab[IDX + 3 + idx*6]*DIFMAXIMUM -  decalage_xo);
-            NormVertexTab[IDX + 4 + idx*6] = (NormVertexTab[IDX + 4 + idx*6]*DIFMAXIMUM -  decalage_yo);
-            NormVertexTab[IDX + 5 + idx*6] = (NormVertexTab[IDX + 5 + idx*6]*DIFMAXIMUM -  decalage_zo);
-            IDX +=6;
+            NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep]*DIFMAXIMUM -  decalage_xo);
+            NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep]*DIFMAXIMUM -  decalage_yo);
+            NormVertexTab[IDX + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 5 + idx*TypeDrawin+ TypeDrawinNormStep]*DIFMAXIMUM -  decalage_zo);
+            IDX +=TypeDrawin;
         }
 }
 
@@ -215,24 +217,24 @@ void  Par3D::calcul_points4(int idx)
     for (i=0; i < nb_ligne  ; i++)
         for (j=0; j < nb_colone   ; j++)
         {
-            tp1 = NormVertexTab[lndex + 3 + idx*6];
-            tp2 = NormVertexTab[lndex + 4 + idx*6];
-            tp3 = NormVertexTab[lndex + 5 + idx*6];
+            tp1 = NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep];
+            tp2 = NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep];
+            tp3 = NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep];
             tp4 = ExtraDimension[i*nb_ligne + j + idx];
             if(param4D == 1)
             {
-                NormVertexTab[lndex + 3 + idx*6] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo;
-                NormVertexTab[lndex + 4 + idx*6] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo;
-                NormVertexTab[lndex + 5 + idx*6] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo;
+                NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo;
+                NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo;
+                NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo;
                 ExtraDimension[i*nb_ligne + j + idx] = mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo;
             }
             else
             {
-                NormVertexTab[lndex + 3 + idx*6] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xo;
-                NormVertexTab[lndex + 4 + idx*6] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yo;
-                NormVertexTab[lndex + 5 + idx*6] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zo;
+                NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xo;
+                NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yo;
+                NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zo;
             }
-            lndex += 6;
+            lndex += TypeDrawin;
         }
 }
 
@@ -245,10 +247,10 @@ void  Par3D::project_4D_to_3D(int idx)
         for (int j=0; j < nb_colone  ; ++j)
         {
             c4 = 1/(ExtraDimension[i*nb_ligne + j + idx] - 2);
-            NormVertexTab[I + 3 + idx*6] *= c4;
-            NormVertexTab[I + 4 + idx*6] *= c4;
-            NormVertexTab[I + 5 + idx*6] *= c4;
-            I += 6;
+            NormVertexTab[I + 3 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
+            NormVertexTab[I + 4 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
+            NormVertexTab[I + 5 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
+            I += TypeDrawin;
         }
 }
 
@@ -273,14 +275,14 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
             iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
             vals[0]=jprime;
             vals[1]=iprime;
-            NormVertexTab[l+3+NewPosition] = myParserX[cmp].Eval(vals);
-            NormVertexTab[l+4+NewPosition] = myParserY[cmp].Eval(vals);
-            NormVertexTab[l+5+NewPosition] = myParserZ[cmp].Eval(vals);
-            l+=6;
+            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals);
+            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals);
+            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);
+            l+=TypeDrawin;
             if(param4D == 1)
-                ExtraDimension[j*nb_colone + i + (int)(NewPosition/6)] = myParserW[cmp].Eval(vals);
+                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
             else
-                ExtraDimension[j*nb_colone + i + (int)(NewPosition/6)] = 1;
+                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = 1;
         }
     }
 }
@@ -728,22 +730,35 @@ void Par3D::BorderCalculation(int NewPosition)
         {
             if(VerifCND[i*(nb_colone)+j] != VerifCND[i*(nb_colone)+j+1])
             {
-                Border[k + 0] = (NormVertexTab[(i*(nb_colone)+j)*6+3+NewPosition] + NormVertexTab[(i*(nb_colone)+j+1)*6+3+NewPosition])/2;
-                Border[k + 1] = (NormVertexTab[(i*(nb_colone)+j)*6+4+NewPosition] + NormVertexTab[(i*(nb_colone)+j+1)*6+4+NewPosition])/2;
-                Border[k + 2] = (NormVertexTab[(i*(nb_colone)+j)*6+5+NewPosition] + NormVertexTab[(i*(nb_colone)+j+1)*6+5+NewPosition])/2;
+                Border[k + 0] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(nb_colone)+j+1)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 1] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(nb_colone)+j+1)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 2] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(nb_colone)+j+1)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep])/2;
                 k += 3;
             }
 
             if(VerifCND[i*(nb_colone)+j] != VerifCND[(i+1)*(nb_colone)+j])
             {
-                Border[k + 0] = (NormVertexTab[(i*(nb_colone)+j)*6+3+NewPosition] + NormVertexTab[((i+1)*(nb_colone)+j)*6+3+NewPosition])/2;
-                Border[k + 1] = (NormVertexTab[(i*(nb_colone)+j)*6+4+NewPosition] + NormVertexTab[((i+1)*(nb_colone)+j)*6+4+NewPosition])/2;
-                Border[k + 2] = (NormVertexTab[(i*(nb_colone)+j)*6+5+NewPosition] + NormVertexTab[((i+1)*(nb_colone)+j)*6+5+NewPosition])/2;
+                Border[k + 0] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(nb_colone)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 1] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(nb_colone)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 2] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(nb_colone)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep])/2;
                 k += 3;
             }
         }
 
 }
+///+++++++++++++++++++++++++++++++++++++++++
+void Par3D::CalculateColorsPoints()
+{
+    for(int i= 0; i < NbVertexTmp; i++)
+    {
+        NormVertexTab[i*TypeDrawin    ] = 0.97;
+        NormVertexTab[i*TypeDrawin+1] = 0.1;
+        NormVertexTab[i*TypeDrawin+2] = 0.1;
+        NormVertexTab[i*TypeDrawin+3] = 0.7;
+    }
+}
+
+
 
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
@@ -755,9 +770,9 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            vals[0] = NormVertexTab[i*6+3];
-            vals[1] = NormVertexTab[i*6+4];
-            vals[2] = NormVertexTab[i*6+5];
+            vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
+            vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
+            vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
             WichPointVerifyCond[i] = (myParserCND[0].Eval(vals) == 1);
         }
 
@@ -812,14 +827,14 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
-                Bprime[0] = NormVertexTab[3+6*Aindex    ];
-                Bprime[1] = NormVertexTab[3+6*Aindex+1];
-                Bprime[2] = NormVertexTab[3+6*Aindex+2];
+                Bprime[0] = NormVertexTab[3+TypeDrawin*Aindex    + TypeDrawinNormStep];
+                Bprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
+                Bprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
                 Bprime[3] = stepMorph;
 
-                DiffX = (NormVertexTab[3+6*Bindex  ] - NormVertexTab[3+6*Aindex  ])/20;
-                DiffY = (NormVertexTab[3+6*Bindex+1] - NormVertexTab[3+6*Aindex+1])/20;
-                DiffZ = (NormVertexTab[3+6*Bindex+2] - NormVertexTab[3+6*Aindex+2])/20;
+                DiffX = (NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
+                DiffY = (NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
+                DiffZ = (NormVertexTab[3+TypeDrawin*Bindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -843,14 +858,14 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
 
                 /// Cprime
-                Cprime[0] = NormVertexTab[3+6*Aindex    ];
-                Cprime[1] = NormVertexTab[3+6*Aindex+1];
-                Cprime[2] = NormVertexTab[3+6*Aindex+2];
+                Cprime[0] = NormVertexTab[3+TypeDrawin*Aindex    + TypeDrawinNormStep];
+                Cprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
+                Cprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
                 Cprime[3] = stepMorph;
 
-                DiffX = (NormVertexTab[3+6*Cindex    ] - NormVertexTab[3+6*Aindex     ])/20;
-                DiffY = (NormVertexTab[3+6*Cindex+1] - NormVertexTab[3+6*Aindex+1])/20;
-                DiffZ = (NormVertexTab[3+6*Cindex+2] - NormVertexTab[3+6*Aindex+2])/20;
+                DiffX = (NormVertexTab[3+TypeDrawin*Cindex    + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex     + TypeDrawinNormStep])/20;
+                DiffY = (NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
+                DiffZ = (NormVertexTab[3+TypeDrawin*Cindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -879,21 +894,21 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 //***********
 
                 //Add Bprime:
-                NormVertexTab[6*NbVertexTmp+3] = Bprime[0];
-                NormVertexTab[6*NbVertexTmp+4] = Bprime[1];
-                NormVertexTab[6*NbVertexTmp+5] = Bprime[2];
+                NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = Bprime[0];
+                NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = Bprime[1];
+                NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = Bprime[2];
 
-                NormVertexTab[6*NbVertexTmp      ] = NormVertexTab[6*Bindex      ];
-                NormVertexTab[6*NbVertexTmp +1] = NormVertexTab[6*Bindex + 1];
-                NormVertexTab[6*NbVertexTmp +2] = NormVertexTab[6*Bindex + 2];
+                NormVertexTab[TypeDrawin*NbVertexTmp      + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex      + TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 2+ TypeDrawinNormStep];
                 //Add Cprime:
-                NormVertexTab[6*NbVertexTmp+  9] = Cprime[0];
-                NormVertexTab[6*NbVertexTmp+10] = Cprime[1];
-                NormVertexTab[6*NbVertexTmp+11] = Cprime[2];
+                NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = Cprime[0];
+                NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
+                NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = Cprime[2];
 
-                NormVertexTab[6*NbVertexTmp +6] = NormVertexTab[6*Cindex      ];
-                NormVertexTab[6*NbVertexTmp +7] = NormVertexTab[6*Cindex + 1];
-                NormVertexTab[6*NbVertexTmp +8] = NormVertexTab[6*Cindex + 2];
+                NormVertexTab[TypeDrawin*NbVertexTmp +     TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex      + TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 2+ TypeDrawinNormStep];
                 NbVertexTmp += 2;
 
 
@@ -1071,13 +1086,13 @@ void  Par3D:: ParamBuild(
 
     for(int fctnb= 0; fctnb< Nb_paramfunctions+1; fctnb++)
     {
-        calcul_objet(fctnb*6*NbVertex, fctnb);
+        calcul_objet(fctnb*TypeDrawin*NbVertex, fctnb);
         if(param4D == 1)
         {
             Anim_Rot4D (fctnb*NbVertex);
         }
 
-        calcul_Norm(fctnb*6*NbVertex);
+        calcul_Norm(fctnb*TypeDrawin*NbVertex);
         make_PolyIndexMin( fctnb,  IsoPos);  //Before
         make_PolyIndexTri( fctnb,  IsoPos);
 
@@ -1097,6 +1112,8 @@ void  Par3D:: ParamBuild(
 
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
+
+    CalculateColorsPoints();
 
 // 3) Nb Poly & Vertex :
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
@@ -1164,55 +1181,55 @@ void  Par3D::make_PolyIndexTri(int NewPo, int IsoPos)
 void  Par3D::calcul_Norm(int NewPosition)
 {
 //calculate Normals
-    int        i, j, deplacement = 6*nb_colone;
+    int        i, j, deplacement = TypeDrawin*nb_colone;
     double caa, bab, cab, baa, ba, ca;
 
     for (i=0; i < nb_ligne -1  ; i++)
         for (j=0; j < nb_colone -1  ; j++)
         {
-            caa = NormVertexTab[(i+1)*deplacement+j*6+4+NewPosition] - NormVertexTab[i*deplacement +j*6+4+NewPosition];
-            bab = NormVertexTab[i*deplacement+(j+1)*6+5+NewPosition] - NormVertexTab[i*deplacement +j*6+5+NewPosition];
-            cab = NormVertexTab[(i+1)*deplacement+j*6+5+NewPosition] - NormVertexTab[i*deplacement +j*6+5+NewPosition];
-            baa = NormVertexTab[i*deplacement+(j+1)*6+4+NewPosition] - NormVertexTab[i*deplacement +j*6+4+NewPosition];
-            ba   = NormVertexTab[i*deplacement+(j+1)*6+3+NewPosition] - NormVertexTab[i*deplacement +j*6+3+NewPosition];
-            ca   = NormVertexTab[(i+1)*deplacement+j*6+3+NewPosition] - NormVertexTab[i*deplacement +j*6+3+NewPosition];
+            caa = NormVertexTab[(i+1)*deplacement+j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep];
+            bab = NormVertexTab[i*deplacement+(j+1)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+5+NewPosition+ TypeDrawinNormStep];
+            cab = NormVertexTab[(i+1)*deplacement+j*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+5+NewPosition+ TypeDrawinNormStep];
+            baa = NormVertexTab[i*deplacement+(j+1)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep];
+            ba   = NormVertexTab[i*deplacement+(j+1)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+3+NewPosition+ TypeDrawinNormStep];
+            ca   = NormVertexTab[(i+1)*deplacement+j*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+3+NewPosition+ TypeDrawinNormStep];
 
-            NormVertexTab[i*deplacement +j*6     +NewPosition] = caa*bab  - cab*baa;
-            NormVertexTab[i*deplacement +j*6 +1+NewPosition] = cab*ba    - ca*bab;
-            NormVertexTab[i*deplacement +j*6 +2+NewPosition] = ca*baa    - caa*ba;
+            NormVertexTab[i*deplacement +j*TypeDrawin     +NewPosition+ TypeDrawinNormStep] = caa*bab  - cab*baa;
+            NormVertexTab[i*deplacement +j*TypeDrawin +1+NewPosition+ TypeDrawinNormStep] = cab*ba    - ca*bab;
+            NormVertexTab[i*deplacement +j*TypeDrawin +2+NewPosition+ TypeDrawinNormStep] = ca*baa    - caa*ba;
 
             double b4 = (double)sqrt(
-                            (NormVertexTab[i*deplacement +j*6  +NewPosition]*NormVertexTab[i*deplacement +j*6      +NewPosition]) +
-                            (NormVertexTab[i*deplacement +j*6+1+NewPosition]*NormVertexTab[i*deplacement +j*6+1+NewPosition]) +
-                            (NormVertexTab[i*deplacement +j*6+2+NewPosition]*NormVertexTab[i*deplacement +j*6+2+NewPosition]));
+                            (NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep]*NormVertexTab[i*deplacement +j*TypeDrawin      +NewPosition+ TypeDrawinNormStep]) +
+                            (NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]*NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]) +
+                            (NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]*NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]));
 
             if( b4 < 0.00000001)  b4 = 0.00000001;
 
 //Normalise:
-            NormVertexTab[i*deplacement +j*6    +NewPosition]/=b4;
-            NormVertexTab[i*deplacement +j*6+1+NewPosition]/=b4;
-            NormVertexTab[i*deplacement +j*6+2+NewPosition]/=b4;
+            NormVertexTab[i*deplacement +j*TypeDrawin    +NewPosition+ TypeDrawinNormStep]/=b4;
+            NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]/=b4;
+            NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]/=b4;
         }
 
     i = nb_ligne -1;
     for (j=0; j < nb_colone -1   ; j++)
     {
-        NormVertexTab[i*deplacement +j*6    +NewPosition] = NormVertexTab[(i-1)*deplacement +j*6    +NewPosition];
-        NormVertexTab[i*deplacement +j*6+1+NewPosition] = NormVertexTab[(i-1)*deplacement +j*6+1+NewPosition];
-        NormVertexTab[i*deplacement +j*6+2+NewPosition] = NormVertexTab[(i-1)*deplacement +j*6+2+NewPosition];
+        NormVertexTab[i*deplacement +j*TypeDrawin    +NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin    +NewPosition+ TypeDrawinNormStep];
+        NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
+        NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
     }
 
     j =nb_colone -1;
     for (i=0; i < nb_ligne -1  ; i++)
     {
-        NormVertexTab[i*deplacement +j*6    +NewPosition] = NormVertexTab[i*deplacement +(j-1)*6    +NewPosition];
-        NormVertexTab[i*deplacement +j*6+1+NewPosition] = NormVertexTab[i*deplacement +(j-1)*6+1+NewPosition];
-        NormVertexTab[i*deplacement +j*6+2+NewPosition] = NormVertexTab[i*deplacement +(j-1)*6+2+NewPosition];
+        NormVertexTab[i*deplacement +j*TypeDrawin    +NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin    +NewPosition+ TypeDrawinNormStep];
+        NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
+        NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
     }
 
     i = nb_ligne -1;
     j =nb_colone -1;
-    NormVertexTab[i*deplacement +j*6  +NewPosition]    = NormVertexTab[(i-1)*deplacement +(j-1)*6    +NewPosition];
-    NormVertexTab[i*deplacement +j*6+1+NewPosition]  = NormVertexTab[(i-1)*deplacement +(j-1)*6+1+NewPosition];
-    NormVertexTab[i*deplacement +j*6+2+NewPosition]  = NormVertexTab[(i-1)*deplacement +(j-1)*6+2+NewPosition];
+    NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep]    = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin    +NewPosition+ TypeDrawinNormStep];
+    NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
+    NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
 }

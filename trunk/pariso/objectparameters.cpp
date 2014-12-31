@@ -38,7 +38,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     MaximumNumberPoints              = maxpoints;
     MaximumNumberTriangles         = maxtriangles;
 
-    objectproperties.ArrayNorVer_localPt               = new float              [6*MaximumNumberPoints     ];
+    objectproperties.ArrayNorVer_localPt               = new float              [10*MaximumNumberPoints     ];
     objectproperties.ArrayNorVerExtra_localPt      = new float              [MaximumNumberPoints     ];
     objectproperties.PolyIndices_localPt                = new unsigned int [4*MaximumNumberTriangles ]; //size is 4*MaximumNumberTriangles because of parametric surface
     objectproperties.PolyIndices_localPtMin          = new unsigned int [5*MaximumNumberTriangles];
