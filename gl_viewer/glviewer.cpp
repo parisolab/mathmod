@@ -22,7 +22,9 @@
 #include <QFileDialog>
 #include "glviewer.h"
 #include "raster.h"
-
+static int TypeDrawin=10;
+//static int TypeDrawinStep = 3;
+static int TypeDrawinNormStep = 4;
 int FistTimecalibrate =-1;
 
 void OpenGlWidget::axeOk()
@@ -377,7 +379,7 @@ void OpenGlWidget::PrintInfos()
 static int staticaction = 0;
 
 static void DrawPariso (ObjectProperties *scene)
-{
+{/*
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
@@ -413,6 +415,7 @@ static void DrawPariso (ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
+
     //Draw mesh polygons for isosurfaces:
     //if (scene->typedrawing == 1 && scene->isobox == 1)
     {
@@ -427,15 +430,16 @@ static void DrawPariso (ObjectProperties *scene)
             for (int j = 0; j < polysize; j++)
             {
                 int actualpointindice = scene->PolyIndices_localPtMin[startpl];
-                glVertex3f(scene->ArrayNorVer_localPt[6*actualpointindice+3],
-                           scene->ArrayNorVer_localPt[6*actualpointindice+4],
-                           scene->ArrayNorVer_localPt[6*actualpointindice+5]);
+                glVertex3f(scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3  + TypeDrawinNormStep],
+                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4  + TypeDrawinNormStep],
+                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5  + TypeDrawinNormStep]);
                 startpl++;
             }
             glEnd();
         }
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
+    */
 }
 
 static void DrawIso (ObjectProperties *scene)
@@ -638,17 +642,18 @@ static void DrawAxe()
 
 static void DrawNormals(ObjectProperties *scene)
 {
+    int j =  0;
     glColor4f (0.8, 0., 0.7, 1.0);
     for (unsigned int i=0; i< scene->PolyNumber; i+=4)
     {
-        int j = 6*scene->PolyIndices_localPt[i];
+        j =   TypeDrawin*scene->PolyIndices_localPt[i];
         glBegin( GL_LINES );
-        glVertex3f(scene->ArrayNorVer_localPt[j+3],
-                   scene->ArrayNorVer_localPt[j+4],
-                   scene->ArrayNorVer_localPt[j+5]);
-        glVertex3f(scene->ArrayNorVer_localPt[j+3]+40*scene->ArrayNorVer_localPt[j  ],
-                   scene->ArrayNorVer_localPt[j+4]+40*scene->ArrayNorVer_localPt[j+1],
-                   scene->ArrayNorVer_localPt[j+5]+40*scene->ArrayNorVer_localPt[j+2]);
+        glVertex3f(scene->ArrayNorVer_localPt[j+3  + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+4  + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+5  + TypeDrawinNormStep]);
+        glVertex3f(scene->ArrayNorVer_localPt[j+3  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j    + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+4  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j+1  + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+5  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j+2  + TypeDrawinNormStep]);
         glEnd();
     }
 }
@@ -766,9 +771,9 @@ static void DrawMinimalTopology (ObjectProperties *scene)
         {
             int actualpointindice = scene->PolyIndices_localPtMin[startpl];
             glVertex3f(
-                scene->ArrayNorVer_localPt[6*actualpointindice+3],
-                scene->ArrayNorVer_localPt[6*actualpointindice+4],
-                scene->ArrayNorVer_localPt[6*actualpointindice+5]
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5 + TypeDrawinNormStep]
             );
             startpl++;
         }
@@ -791,9 +796,9 @@ static void DrawMeshParametric(ObjectProperties *scene)
         {
             int actualpointindice = scene->PolyIndices_localPtMin[startpl];
             glVertex3f(
-                scene->ArrayNorVer_localPt[6*actualpointindice+3],
-                scene->ArrayNorVer_localPt[6*actualpointindice+4],
-                scene->ArrayNorVer_localPt[6*actualpointindice+5]
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5 + TypeDrawinNormStep]
             );
             startpl++;
         }
@@ -927,9 +932,9 @@ void OpenGlWidget::SaveSceneAsOBJ(int CurrentFormulaType)
         // save vertices:
         for (i=0; i< LocalScene.VertxNumber; i++)
         {
-            (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[6*i+3]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[6*i+4]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[6*i+5]<<"\n";
+            (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
         }
 
         // save faces:
@@ -984,7 +989,7 @@ void OpenGlWidget::initializeGL()
         count =1;
     }
     PutObjectInsideCube();
-    glInterleavedArrays (GL_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
+    glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
     InitGlParameters();
 }
 
@@ -1022,7 +1027,7 @@ void OpenGlWidget::paintGL()
             );
 
             ParObjet->ParamBuild(
-                &(LocalScene.ArrayNorVer_localPt[6*(LocalScene.VertxNumberTmp1)]),
+                &(LocalScene.ArrayNorVer_localPt[TypeDrawin*(LocalScene.VertxNumberTmp1)]),
                 LocalScene.ArrayNorVer_localPt,
                 &(LocalScene.PolyIndices_localPt[LocalScene.PolyNumberTmp1]),
                 &LocalScene.PolyNumberTmp2,
@@ -1224,13 +1229,13 @@ void OpenGlWidget::PutObjectInsideCube()
     {
         for (i=0; i< LocalScene.VertxNumber; i++)
         {
-            if (minx >LocalScene.ArrayNorVer_localPt[6*i+3])  minx = LocalScene.ArrayNorVer_localPt[6*i+3];
-            if (miny >LocalScene.ArrayNorVer_localPt[6*i+4])  miny = LocalScene.ArrayNorVer_localPt[6*i+4];
-            if (minz >LocalScene.ArrayNorVer_localPt[6*i+5])  minz = LocalScene.ArrayNorVer_localPt[6*i+5];
+            if (minx >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep])  minx = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep];
+            if (miny >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep])  miny = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep];
+            if (minz >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep])  minz = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep];
 
-            if (maxx <LocalScene.ArrayNorVer_localPt[6*i+3])  maxx = LocalScene.ArrayNorVer_localPt[6*i+3];
-            if (maxy <LocalScene.ArrayNorVer_localPt[6*i+4])  maxy = LocalScene.ArrayNorVer_localPt[6*i+4];
-            if (maxz <LocalScene.ArrayNorVer_localPt[6*i+5])  maxz = LocalScene.ArrayNorVer_localPt[6*i+5];
+            if (maxx <LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep])  maxx = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep];
+            if (maxy <LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep])  maxy = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep];
+            if (maxz <LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep])  maxz = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep];
         }
         FistTimecalibrate = -1;
 
@@ -1256,9 +1261,9 @@ void OpenGlWidget::PutObjectInsideCube()
 
     for (i=0; i< LocalScene.VertxNumber; i++)
     {
-        LocalScene.ArrayNorVer_localPt[6*i+3] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[6*i+3] + decalage_xo)/difMaximum;
-        LocalScene.ArrayNorVer_localPt[6*i+4] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[6*i+4] + decalage_yo)/difMaximum;
-        LocalScene.ArrayNorVer_localPt[6*i+5] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[6*i+5] + decalage_zo)/difMaximum;
+        LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep] + decalage_xo)/difMaximum;
+        LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep] + decalage_yo)/difMaximum;
+        LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep] + decalage_zo)/difMaximum;
     }
 }
 
