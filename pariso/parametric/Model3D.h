@@ -113,6 +113,7 @@ public:
     int  HowManyVariables(std::string, int);
     ErrorMessage parse_expression();
     void CNDCalculation(int, struct ComponentInfos *);
+    void CalculateColorsPoints();
     void ParamBuild(float * , float * ,unsigned int *, unsigned int *,
                     unsigned int *, int  IsoPos=0,
                     ComponentInfos *components = NULL,

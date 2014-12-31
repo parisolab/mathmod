@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "mathmod.h"
 
-
+static int TypeDrawin= 10;
 
 MathMod::~MathMod()
 {
@@ -337,7 +337,7 @@ void MathMod::ProcessParisoSurface()
     }
 
     (ui.glWidget)->ParObjet->ParamBuild(
-        &((ui.glWidget)->LocalScene.ArrayNorVer_localPt[6*((ui.glWidget)->LocalScene.VertxNumberTmp1)]),
+        &((ui.glWidget)->LocalScene.ArrayNorVer_localPt[TypeDrawin*((ui.glWidget)->LocalScene.VertxNumberTmp1)]),
         (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
         &((ui.glWidget)->LocalScene.PolyIndices_localPt[(ui.glWidget)->LocalScene.PolyNumberTmp1]),
         &(ui.glWidget)->LocalScene.PolyNumberTmp2,

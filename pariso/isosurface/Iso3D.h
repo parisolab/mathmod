@@ -154,4 +154,5 @@ public :
     int HowManyIsosurface(std::string,int);
     int HowManyVariables(std::string, int);
     int CNDtoUse(int index, struct ComponentInfos *components);
+    void CalculateColorsPoints();
 };
