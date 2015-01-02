@@ -66,16 +66,17 @@ public:
            DIFX,DIFY,DIFZ,DIFW,
            DIFMAXIMUM;
 
-    FunctionParser * myParserX, * myParserY,* myParserZ, *Fct;
+    FunctionParser * myParserX, * myParserY,* myParserZ, *Fct, *RgbtParser;
     FunctionParser myParserW[100],myParserCND[100],
                    myParserUmin[100], myParserUmax[100],
                    myParserVmin[100], myParserVmax[100],
                    Var[20], Cstparser;
     ParStruct ParamStructs[100];
-    int Nb_paramfunctions, Nb_functs;
+    int Nb_paramfunctions, Nb_functs, Nb_rgbts;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
-        Varu, Const, Funct, Grid;
-    std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100];
+        Varu, Const, Funct, Rgbt, Grid;
+    std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100],
+    RgbtNames[100], Rgbts[100];
     double  v_inf[100], v_sup[100],u_inf[100],u_sup[100],dif_v[100],dif_u[100];
     double stepMorph, pace;
     int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
@@ -113,7 +114,7 @@ public:
     int  HowManyVariables(std::string, int);
     ErrorMessage parse_expression();
     void CNDCalculation(int, struct ComponentInfos *);
-    void CalculateColorsPoints();
+    void CalculateColorsPoints(struct ComponentInfos *);
     void ParamBuild(float * , float * ,unsigned int *, unsigned int *,
                     unsigned int *, int  IsoPos=0,
                     ComponentInfos *components = NULL,

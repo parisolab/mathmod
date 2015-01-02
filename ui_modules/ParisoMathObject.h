@@ -127,19 +127,7 @@ public :
 public :
     ParisoMathObject();
     ~ParisoMathObject();
-    QStringList LoadScript (QString);
     void ReadJsonFile(QString, QJsonObject &);
-    int LookForIsosurfaceEquation(QString);
-    int LookForParametricEquation(QString);
-    int FindIsoStruct (QString);
-    int FindParamStruct (QString);
-    int MapIsoStruct (QString);
-    void MapParamTable (QString, int);
-    void MapIsoTable(QString, int);
-    QString MapFunction (QString,QString);
-    void MapBondary (QString,QString);
-    void  MapBondary (QString, QString, int);
-    void RegisterScript (QString);
     QStringList ParObject();
     QStringList IsoObject();
 };

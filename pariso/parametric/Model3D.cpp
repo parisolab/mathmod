@@ -302,6 +302,9 @@ void Par3D::initparser(int N)
     delete[] Fct;
     Fct = new FunctionParser[N];
 
+    delete[] RgbtParser;
+    RgbtParser = new FunctionParser[N];
+
     for(int i=0; i<N; i++)
     {
         myParserX[i].AddConstant("pi", 3.14159265);
@@ -309,6 +312,7 @@ void Par3D::initparser(int N)
         myParserZ[i].AddConstant("pi", 3.14159265);
         myParserCND[i].AddConstant("pi", 3.14159265);
         Fct[i].AddConstant("pi", 3.14159265);
+        RgbtParser[i].AddConstant("pi", 3.14159265);
     }
 }
 
@@ -349,7 +353,7 @@ ErrorMessage  Par3D::parse_expression()
             }
         }
 
-        //initparser(100);
+      //initparser(100);
         for(int i=0; i<Nb_functs; i++)
         {
             for(int j=0; j<i; j++)
@@ -366,6 +370,41 @@ ErrorMessage  Par3D::parse_expression()
     {
         Nb_functs =0;
     }
+
+
+    //Colors
+    if(Rgbt!= "")
+    {
+        Nb_rgbts = HowManyVariables(Rgbt, 3);
+
+        for(int i=0; i<Nb_rgbts; i++)
+        {
+            for(int j=0; j<Nb_constants; j++)
+            {
+                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+                {
+                    stdError.strError = Consts[j];
+                    stdError.strOrigine = ConstNames[j];
+                    return stdError;
+                }
+                RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            }
+        }
+
+        // Parse
+        for(int i=0; i<Nb_rgbts; i++)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z")) >= 0)
+            {
+                stdError.strError = Rgbts[i];
+                stdError.strOrigine = RgbtNames[i];
+                return stdError;
+            }
+      }
+    else
+    {
+        Nb_rgbts =0;
+    }
+
 
     if(Varu != "")
     {
@@ -575,6 +614,11 @@ int Par3D::HowManyVariables(std::string NewVariables, int type)
                 FunctNames[Nb_variables] = tmp2.substr(0,jpos);
                 Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
+            else if(type == 3)
+            {
+                RgbtNames[Nb_variables] = tmp2.substr(0,jpos);
+                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
             NewVariables = tmp2;
             Nb_variables++;
@@ -597,6 +641,11 @@ int Par3D::HowManyVariables(std::string NewVariables, int type)
             {
                 FunctNames[Nb_variables] = tmp2.substr(0, jpos);
                 Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
+            else if(type == 3)
+            {
+                RgbtNames[Nb_variables] = tmp2.substr(0, jpos);
+                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
             NewVariables = "";
             Nb_variables++;
@@ -747,15 +796,26 @@ void Par3D::BorderCalculation(int NewPosition)
 
 }
 ///+++++++++++++++++++++++++++++++++++++++++
-void Par3D::CalculateColorsPoints()
+void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    for(int i= 0; i < NbVertexTmp; i++)
+    double val[3];
+    if(Nb_rgbts >=4)
     {
-        NormVertexTab[i*TypeDrawin    ] = 0.97;
-        NormVertexTab[i*TypeDrawin+1] = 0.1;
-        NormVertexTab[i*TypeDrawin+2] = 0.1;
-        NormVertexTab[i*TypeDrawin+3] = 0.7;
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            val[0]= NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
+            val[1]= NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
+            val[2]= NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+            NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
+            NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
+            NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
+        }
+        components->ThereisRGBA = true;
     }
+    else
+        components->ThereisRGBA = false;
+
 }
 
 
@@ -888,7 +948,6 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                     }
                 }
 
-
                 //***********
                 //Add points:
                 //***********
@@ -901,6 +960,12 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NormVertexTab[TypeDrawin*NbVertexTmp      + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex      + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 2+ TypeDrawinNormStep];
+
+                NormVertexTab[TypeDrawin*NbVertexTmp     ] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +1] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +2] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +3] = 1.0;
+
                 //Add Cprime:
                 NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = Cprime[0];
                 NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
@@ -909,8 +974,13 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NormVertexTab[TypeDrawin*NbVertexTmp +     TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex      + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 2+ TypeDrawinNormStep];
-                NbVertexTmp += 2;
 
+                NormVertexTab[TypeDrawin*NbVertexTmp      + TypeDrawin] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +1 + TypeDrawin] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +2 + TypeDrawin] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +3 + TypeDrawin] = 1.0;
+
+                NbVertexTmp += 2;
 
                 //***********
                 //Add triangles:
@@ -1103,7 +1173,6 @@ void  Par3D:: ParamBuild(
         }
     }
 
-
     // Save Number of Polys and vertex :
     NbVertexTmp                   = (Nb_paramfunctions+1)*(nb_ligne)*(nb_colone);
     NbTriangleIsoSurfaceTmp = (Nb_paramfunctions+1)*NbPolygn;
@@ -1113,7 +1182,7 @@ void  Par3D:: ParamBuild(
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
-    CalculateColorsPoints();
+    CalculateColorsPoints(components);
 
 // 3) Nb Poly & Vertex :
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;

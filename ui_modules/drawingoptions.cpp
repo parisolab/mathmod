@@ -92,75 +92,6 @@ void DrawingOptions::on_ChangeGrid_clicked()
     MathmodRef->slot_checkBox73_clicked();
 }
 
-//+++++++++++++++++++++++++++++++++++++++
-int DrawingOptions::Parametric_choice_activated(const QString &arg1)
-{
-    int indextable = MathmodRef->RootObjet.LookForParametricEquation(arg1);
-    int TypeParam = 1;
-    if(indextable >=0)
-    {
-        ui.ParamEdit->setText(MathmodRef->RootObjet.ParamTable[indextable].text);
-        MathmodRef->ui.glWidget->ParObjet->expression_X = MathmodRef->RootObjet.ParamTable[indextable].fx.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->expression_Y = MathmodRef->RootObjet.ParamTable[indextable].fy.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->expression_Z = MathmodRef->RootObjet.ParamTable[indextable].fz.toStdString();
-        if(MathmodRef->RootObjet.ParamTable[indextable].fw != "")
-        {
-            TypeParam = -1;
-            MathmodRef->ui.glWidget->ParObjet->expression_W = MathmodRef->RootObjet.ParamTable[indextable].fw.toStdString();
-        }
-        if(MathmodRef->RootObjet.ParamTable[indextable].Cnd != "")
-        {
-            MathmodRef->ui.glWidget->ParObjet->expression_CND = MathmodRef->RootObjet.ParamTable[indextable].Cnd.toStdString();
-        }
-        else
-            MathmodRef->ui.glWidget->ParObjet->expression_CND = "";
-        MathmodRef->ui.glWidget->ParObjet->inf_u   = MathmodRef->RootObjet.ParamTable[indextable].umin.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->inf_v   = MathmodRef->RootObjet.ParamTable[indextable].vmin.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->sup_u = MathmodRef->RootObjet.ParamTable[indextable].umax.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->sup_v = MathmodRef->RootObjet.ParamTable[indextable].vmax.toStdString();
-        // Update the current parametric struct:
-        MathmodRef->RootObjet.CurrentParamStruct = MathmodRef->RootObjet.ParamTable[indextable];
-        CurrentFormulaType = 1;
-        // Process the new surface:
-        MathmodRef->ParametricSurfaceProcess(TypeParam);
-        return(1);
-    }
-    else
-        return(0);
-}
-
-//+++++++++++++++++++++++++++++++++++++++
-int DrawingOptions::Iso_choice_activated(const QString &arg1)
-{
-    int indextable = MathmodRef->RootObjet.LookForIsosurfaceEquation(arg1);
-    if(indextable >=0)
-    {
-        ui.ParamEdit->setText(MathmodRef->RootObjet.IsoTable[indextable].text);
-        MathmodRef->ui.glWidget->IsoObjet->ImplicitFunction = MathmodRef->RootObjet.IsoTable[indextable].fxyz.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->Condition = MathmodRef->RootObjet.IsoTable[indextable].Cnd.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->Varu     = MathmodRef->RootObjet.IsoTable[indextable].Varu.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->Const  = MathmodRef->RootObjet.IsoTable[indextable].Const.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->Funct  = MathmodRef->RootObjet.IsoTable[indextable].Funct.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->Grid  = MathmodRef->RootObjet.IsoTable[indextable].Grid.toStdString();
-
-        MathmodRef->ui.glWidget->IsoObjet->XlimitSup = MathmodRef->RootObjet.IsoTable[indextable].xmax.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->YlimitSup = MathmodRef->RootObjet.IsoTable[indextable].ymax.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->ZlimitSup = MathmodRef->RootObjet.IsoTable[indextable].zmax.toStdString();
-
-        MathmodRef->ui.glWidget->IsoObjet->XlimitInf = MathmodRef->RootObjet.IsoTable[indextable].xmin.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->YlimitInf = MathmodRef->RootObjet.IsoTable[indextable].ymin.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->ZlimitInf = MathmodRef->RootObjet.IsoTable[indextable].zmin.toStdString();
-
-        //Update the current parametric struct
-        MathmodRef->RootObjet.CurrentIsoStruct = MathmodRef->RootObjet.IsoTable[indextable];
-        CurrentFormulaType = 2;
-        /// process the new surface
-        MathmodRef->ProcessNewIsoSurface( );
-        return(1);
-    }
-    else
-        return(0);
-}
 //+++++++++++++++++++++++++++++++++++++
 void DrawingOptions::AddModel(QString model, int where)
 {
@@ -1038,6 +969,19 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
         MathmodRef->ui.glWidget->IsoObjet->Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+        // Colors
+        lst = QObj["Colors"].toArray();
+        result = "";
+        for(j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        MathmodRef->ui.glWidget->IsoObjet->Rgbt = result.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+
         // Grid
         lst = QObj["Grid"].toArray();
         result = "";
@@ -1311,6 +1255,21 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
         MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+
+        // Colors
+        lst = QObj["Colors"].toArray();
+        result = "";
+        for(j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+
+
         // Grid
         lst = QObj["Grid"].toArray();
         result = "";
@@ -1516,6 +1475,18 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
         MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+        // RGBT
+        lst = QObj["Colors"].toArray();
+        result = "";
+        for(j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
         // Grid
         lst = QObj["Grid"].toArray();
         result = "";
@@ -1641,6 +1612,19 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace(" ","");
             MathmodRef->ui.glWidget->IsoObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
+
+            // Colors
+            lst = QObj["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->IsoObjet->Rgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 
             // Grid
             lst = QObj["Grid"].toArray();
@@ -1917,6 +1901,19 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+            // Colors
+            lst = QObj["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+
             // Grid
             lst = QObj["Grid"].toArray();
             result = "";
@@ -1929,11 +1926,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjet->Grid = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
-
-
-
-
-
 
             // Component
             lst = QObj["Component"].toArray();
@@ -2128,6 +2120,19 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
+
+            // Colors
+            lst = QObj["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 
             // Grid
             lst = QObj["Grid"].toArray();

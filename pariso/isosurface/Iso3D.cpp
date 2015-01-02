@@ -125,6 +125,11 @@ int Iso3D::HowManyVariables(std::string NewVariables, int type)
                 FunctNames[Nb_variables] = tmp2.substr(0,jpos);
                 Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
+            else if(type == 3)
+            {
+                RgbtNames[Nb_variables] = tmp2.substr(0,jpos);
+                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
             NewVariables = tmp2;
             Nb_variables++;
@@ -147,6 +152,11 @@ int Iso3D::HowManyVariables(std::string NewVariables, int type)
             {
                 FunctNames[Nb_variables] = tmp2.substr(0, jpos);
                 Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
+            else if(type == 3)
+            {
+                RgbtNames[Nb_variables] = tmp2.substr(0, jpos);
+                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
             NewVariables = "";
             Nb_variables++;
@@ -403,6 +413,11 @@ void Iso3D::InitParser()
     for(int i=0; i<50; i++)
     {
         Fct[i].AddConstant("pi", 3.14159265);
+    }
+
+    for(int i=0; i<50; i++)
+    {
+        RgbtParser[i].AddConstant("pi", 3.14159265);
     }
 }
 
@@ -666,6 +681,8 @@ ErrorMessage Iso3D::ParserIso()
         ConstValues[j] = Cstparser.Eval(&vals[3]);
         Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
+
+
     if(Funct != "")
     {
         Nb_functs = HowManyVariables(Funct, 2);
@@ -700,6 +717,31 @@ ErrorMessage Iso3D::ParserIso()
     {
         Nb_functs =0;
     }
+
+
+    if(Rgbt != "")
+    {
+        Nb_rgbts = HowManyVariables(Rgbt, 3);
+
+        for(int i=0; i<Nb_rgbts; i++)
+        {
+            for(int j=0; j<Nb_constants; j++)
+            {
+                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+                {
+                    stdError.strError = Consts[j];
+                    stdError.strOrigine = ConstNames[j];
+                    return stdError;
+                }
+                RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            }
+        }
+    }
+    else
+    {
+        Nb_rgbts =0;
+    }
+
 
     if(Varu != "")
     {
@@ -802,6 +844,19 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
     }
 
     vals[3]          = stepMorph;
+
+
+
+
+    // Parse
+    if(Rgbt!= "" && Nb_rgbts == 4)
+    for(int i=0; i<Nb_rgbts; i++)
+        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z")) >= 0)
+        {
+            stdError.strError = Rgbts[i];
+            stdError.strOrigine = RgbtNames[i];
+            return stdError;
+        }
 
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
@@ -927,6 +982,14 @@ void Iso3D::initparser(int N)
     for(int i=0; i<50; i++)
     {
         Fct[i].AddConstant("pi", 3.14159265);
+    }
+
+
+    delete[] RgbtParser;
+    RgbtParser = new FunctionParser[50];
+    for(int i=0; i<50; i++)
+    {
+        RgbtParser[i].AddConstant("pi", 3.14159265);
     }
 }
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1080,7 +1143,7 @@ void Iso3D::IsoBuild (
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
-    //CalculateColorsPoints();
+    CalculateColorsPoints(components);
 
     // Save Number of Polys and vertex :
     *PolyNumber = 3*NbTriangleIsoSurfaceTmp;
@@ -1101,18 +1164,41 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
     return 30;
 }
 
+/*
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints()
 {
     for(int i= 0; i < NbVertexTmp; i++)
     {
-        NormVertexTab[i*TypeDrawin  ] = 0.07;
-        NormVertexTab[i*TypeDrawin+1] = 0.05;
-        NormVertexTab[i*TypeDrawin+2] = 0.91;
-        NormVertexTab[i*TypeDrawin+3] = 0.7;
+        NormVertexTab[i*TypeDrawin    ] = std::cos(NormVertexTab[i*TypeDrawin + 7]*3.);
+        NormVertexTab[i*TypeDrawin+1] = std::sin(NormVertexTab[i*TypeDrawin  + 8]*2.);
+        NormVertexTab[i*TypeDrawin+2] = std::cos(NormVertexTab[i*TypeDrawin  + 7]*3.)*std::sin(NormVertexTab[i*TypeDrawin  + 8]*4.)* std::cos(NormVertexTab[i*TypeDrawin  + 9]*4.);
+        NormVertexTab[i*TypeDrawin+3] = 1.0;//std::abs(std::cos(NormVertexTab[i*TypeDrawin + 7])* std::cos(NormVertexTab[i*TypeDrawin  + 8]));
     }
 }
+*/
 
+///+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
+{
+    double val[3];
+    if(Nb_rgbts >=4)
+    {
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            val[0]= NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
+            val[1]= NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
+            val[2]= NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+            NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
+            NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
+            NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
+        }
+        components->ThereisRGBA = true;
+    }
+    else
+        components->ThereisRGBA = false;
+}
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
@@ -1240,7 +1326,6 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                     }
                 }
 
-
                 //***********
                 //Add points:
                 //***********
@@ -1250,19 +1335,30 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = Bprime[1];
                 NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = Bprime[2];
 
-                NormVertexTab[TypeDrawin*NbVertexTmp   + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex      + TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp   + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex        + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 2+ TypeDrawinNormStep];
+
+                NormVertexTab[TypeDrawin*NbVertexTmp     ] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +1] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +2] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +3] = 1.0;
+
                 //Add Cprime:
                 NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = Cprime[0];
                 NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
                 NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = Cprime[2];
 
-                NormVertexTab[TypeDrawin*NbVertexTmp +   TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp +   TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex        + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 2+ TypeDrawinNormStep];
-                NbVertexTmp += 2;
 
+                NormVertexTab[TypeDrawin*NbVertexTmp      + TypeDrawin] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +1 + TypeDrawin] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +2 + TypeDrawin] = 1.0;
+                NormVertexTab[TypeDrawin*NbVertexTmp +3 + TypeDrawin] = 1.0;
+
+                NbVertexTmp += 2;
 
                 //***********
                 //Add triangles:
