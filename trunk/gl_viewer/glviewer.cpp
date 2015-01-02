@@ -376,173 +376,6 @@ void OpenGlWidget::PrintInfos()
     glEnable(GL_DEPTH_TEST);
 }
 
-static int staticaction = 0;
-
-static void DrawPariso (ObjectProperties *scene)
-{/*
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(scene->polyfactor, scene->polyunits);
-    unsigned int  *strtinparam = &(scene->PolyIndices_localPt[scene->PolyNumberTmp1]);
-    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
-    {
-        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
-        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
-
-        glDrawElements(GL_QUADS ,4*scene->componentsinfos.Parametricpositions[2*i +1], GL_UNSIGNED_INT,
-                       &(strtinparam[scene->componentsinfos.Parametricpositions[2*i]]));
-    }
-
-    for(int i=0; i< scene->componentsinfos.NbIso; i++)
-    {
-        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
-        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
-        glDrawElements(GL_TRIANGLES, 3*scene->componentsinfos.IsoPositions[2*i +1], GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
-    }
-
-    glDisable(GL_COLOR_MATERIAL);
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-
-    //Draw mesh quads for parametric surfaces:
-    //if (scene->line == 1)
-    {
-        glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(GL_QUADS, scene->PolyNumberTmp2, GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[scene->PolyNumberTmp1]));
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
-
-
-    //Draw mesh polygons for isosurfaces:
-    //if (scene->typedrawing == 1 && scene->isobox == 1)
-    {
-        glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-        int startpl = 0;
-        for (unsigned int i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
-        {
-            int polysize       =  scene->PolyIndices_localPtMin[startpl++];
-            glBegin(GL_POLYGON);
-            for (int j = 0; j < polysize; j++)
-            {
-                int actualpointindice = scene->PolyIndices_localPtMin[startpl];
-                glVertex3f(scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3  + TypeDrawinNormStep],
-                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4  + TypeDrawinNormStep],
-                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5  + TypeDrawinNormStep]);
-                startpl++;
-            }
-            glEnd();
-        }
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
-    */
-}
-
-static void DrawIso (ObjectProperties *scene)
-{
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(scene->polyfactor, scene->polyunits);
-
-    for(int i=0; i< scene->componentsinfos.NbIso; i++)
-    {
-        //if(i != scene->IndexCurrentFormula)
-        {
-            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
-            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
-            if(scene->componentsinfos.ThereisCND)
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
-                    );
-
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );
-            }
-            // There is no condition:
-            else
-                //if(i != scene->IndexCurrentFormula)
-                glDrawElements(
-                    GL_TRIANGLES,
-                    3*scene->componentsinfos.IsoPositions[2*i+1],
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
-                );
-
-        }
-    }
-
-    glDisable(GL_COLOR_MATERIAL);
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-}
-
-static void DrawParametric (ObjectProperties *scene)
-{
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(scene->polyfactor, scene->polyunits);
-
-    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
-    {
-        //if(i != scene->IndexCurrentFormula)
-        {
-            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
-            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
-            if(scene->componentsinfos.ThereisCND)
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
-                    );
-
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );
-            }
-
-            // There is no condition:
-            else
-                //if(i != scene->IndexCurrentFormula)
-
-                glDrawElements(
-                    GL_TRIANGLES,
-                    3*scene->componentsinfos.Parametricpositions[2*i+1],
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
-                );
-        }
-    }
-
-    glDisable(GL_COLOR_MATERIAL);
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-}
-
 
 static void DrawAxe()
 {
@@ -658,13 +491,236 @@ static void DrawNormals(ObjectProperties *scene)
     }
 }
 
+
+static int staticaction = 0;
+/*
+static void DrawPariso (ObjectProperties *scene)
+{
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonOffset(scene->polyfactor, scene->polyunits);
+    unsigned int  *strtinparam = &(scene->PolyIndices_localPt[scene->PolyNumberTmp1]);
+    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    {
+        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
+        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
+
+        glDrawElements(GL_QUADS ,4*scene->componentsinfos.Parametricpositions[2*i +1], GL_UNSIGNED_INT,
+                       &(strtinparam[scene->componentsinfos.Parametricpositions[2*i]]));
+    }
+
+    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    {
+        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
+        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
+        glDrawElements(GL_TRIANGLES, 3*scene->componentsinfos.IsoPositions[2*i +1], GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
+    }
+
+    glDisable(GL_COLOR_MATERIAL);
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+
+    //Draw mesh quads for parametric surfaces:
+    //if (scene->line == 1)
+    {
+        glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(GL_QUADS, scene->PolyNumberTmp2, GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[scene->PolyNumberTmp1]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+
+
+    //Draw mesh polygons for isosurfaces:
+    //if (scene->typedrawing == 1 && scene->isobox == 1)
+    {
+        glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+        int startpl = 0;
+        for (unsigned int i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+        {
+            int polysize       =  scene->PolyIndices_localPtMin[startpl++];
+            glBegin(GL_POLYGON);
+            for (int j = 0; j < polysize; j++)
+            {
+                int actualpointindice = scene->PolyIndices_localPtMin[startpl];
+                glVertex3f(scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3  + TypeDrawinNormStep],
+                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4  + TypeDrawinNormStep],
+                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5  + TypeDrawinNormStep]);
+                startpl++;
+            }
+            glEnd();
+        }
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+}
+*/
+
+static void DrawIso (ObjectProperties *scene)
+{
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+
+    glPolygonOffset(scene->polyfactor, scene->polyunits);
+
+    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    {
+        //if(i != scene->IndexCurrentFormula)
+        {
+            if(!scene->componentsinfos.ThereisRGBA)
+            {
+                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
+            }
+            if(scene->componentsinfos.ThereisCND)
+            {
+                if(scene->componentsinfos.DFTrianglesVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[0])
+                    );
+
+                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                    );
+            }
+            // There is no condition:
+            else
+                //if(i != scene->IndexCurrentFormula)
+            {
+                //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                glDrawElements(
+                    GL_TRIANGLES,
+                    3*scene->componentsinfos.IsoPositions[2*i+1],
+                    GL_UNSIGNED_INT,
+                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
+                );
+
+            }
+
+        }
+    }
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
+
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+}
+
+static void DrawParametric (ObjectProperties *scene)
+{
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+
+    glPolygonOffset(scene->polyfactor, scene->polyunits);
+    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    {
+        //if(i != scene->IndexCurrentFormula)
+        {
+            if(!scene->componentsinfos.ThereisRGBA)
+            {
+                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
+            }
+            if(scene->componentsinfos.ThereisCND)
+            {
+                if(scene->componentsinfos.DFTrianglesVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[0])
+                    );
+
+                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                    );
+            }
+
+            // There is no condition:
+            else
+                //if(i != scene->IndexCurrentFormula)
+
+                glDrawElements(
+                    GL_TRIANGLES,
+                    3*scene->componentsinfos.Parametricpositions[2*i+1],
+                    GL_UNSIGNED_INT,
+                    &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
+                );
+        }
+    }
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
+
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+}
+
+
+void OpenGlWidget::initializeGL()
+{
+    static int count =0;
+    if(count == 0)
+    {
+        boxok();
+        count =1;
+    }
+    PutObjectInsideCube();
+    glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
+    InitGlParameters();
+}
+
+void OpenGlWidget::InitGlParameters()
+{
+    /// For drawing Filled Polygones :
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glEnable(GL_NORMALIZE);
+    glFrontFace (GL_CCW);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
+    glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
+    glMaterialf (GL_FRONT, GL_SHININESS, 35.0);
+    glMaterialf (GL_BACK, GL_SHININESS, 35.0);
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
+    InitFont();
+}
+
+
 static void DrawIsoCND(ObjectProperties *scene)
 {
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+    else
+        glDisable(GL_COLOR_MATERIAL);
 
     if(scene->componentsinfos.DMTrianglesVerifyCND)
     {
         glLineWidth(1);
-        glColor4f (1.0, 0.0, 0.0, 1.0);
+        glColor4f (1.0, 0.0, 0.0, 0.5);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
@@ -691,8 +747,8 @@ static void DrawIsoCND(ObjectProperties *scene)
 
     if(scene->componentsinfos.DMTrianglesBorderCND)
     {
-        glLineWidth(4);
-        glColor4f (1.0, 1.0, 1.0, 1.0);
+        glLineWidth(6);
+        glColor4f (1.0, 1.0, 1.0, 0.7);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
@@ -702,14 +758,22 @@ static void DrawIsoCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
 }
 
 static void DrawParCND(ObjectProperties *scene)
 {
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+    else
+        glDisable(GL_COLOR_MATERIAL);
+
     if(scene->componentsinfos.DMTrianglesVerifyCND)
     {
         glLineWidth(1);
-        glColor4f (1.0, 0.0, 0.0, 1.0);
+        glColor4f (1.0, 0.0, 0.0, 0.7);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
@@ -737,7 +801,7 @@ static void DrawParCND(ObjectProperties *scene)
     if(scene->componentsinfos.DMTrianglesBorderCND)
     {
         glLineWidth(4);
-        glColor4f (1.0, 1.0, 1.0, 1.0);
+        glColor4f (1.0, 1.0, 1.0, 0.5);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
@@ -747,11 +811,15 @@ static void DrawParCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
+
 }
 
 static void DrawMeshIso(ObjectProperties *scene)
 {
-    glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
+    glColor4f (scene->gridcol[0], 2*scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glDrawElements(GL_TRIANGLES, scene->PolyNumber, GL_UNSIGNED_INT, scene->PolyIndices_localPt);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -870,9 +938,11 @@ static void draw(ObjectProperties *scene)
         glRotatef(scene->animzValue, 0, 0, 1.0);
     }
 
+    /*
     // Draw Filled Object:
     if(scene->fill == 1 && scene->typedrawing == 11)
         DrawPariso(scene);
+        */
 
     if (scene->fill == 1 && scene->typedrawing == -1)
         DrawParametric(scene);
@@ -900,9 +970,6 @@ static void draw(ObjectProperties *scene)
     //Draw Normales:
     if (scene->norm == 1 )
         DrawNormals(scene);
-
-
-
 
     glPopMatrix();
 
@@ -978,34 +1045,6 @@ void OpenGlWidget::SaveSceneAsOBJ(int CurrentFormulaType)
             }
         }
     }
-}
-
-void OpenGlWidget::initializeGL()
-{
-    static int count =0;
-    if(count == 0)
-    {
-        boxok();
-        count =1;
-    }
-    PutObjectInsideCube();
-    glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
-    InitGlParameters();
-}
-
-void OpenGlWidget::InitGlParameters()
-{
-    /// For drawing Filled Polygones :
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    glEnable(GL_NORMALIZE);
-    glFrontFace (GL_CCW);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
-    glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
-    glMaterialf (GL_FRONT, GL_SHININESS, 35.0);
-    glMaterialf (GL_BACK, GL_SHININESS, 35.0);
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-    InitFont();
 }
 
 void OpenGlWidget::paintGL()

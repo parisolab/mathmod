@@ -50,9 +50,7 @@ public slots:
     void colorsoptions();
     void on_xyzg_valueChanged(int);
     void on_ChangeGrid_clicked();
-    int on_choice_activated(const QString &);
-    int Parametric_choice_activated(const QString &);
-    int Iso_choice_activated(const QString &);
+    int    on_choice_activated(const QString &);
     void LoadK3DSurfScript (QString filename, int type);
     void slot_comboBox18_3_activated(const QString &arg1);
     void slot_checkBox_clicked();
