@@ -40,6 +40,7 @@ struct  ComponentInfos
     int selectedComponent;
 
     bool ThereisCND;
+    bool ThereisRGBA;
 
     int NbTrianglesVerifyCND;
     bool DMTrianglesVerifyCND;

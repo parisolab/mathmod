@@ -87,7 +87,7 @@ public :
     int NbTriangleIsoSurface, IsoConditionRequired,NbPointIsoMapCND,
         ThreeTimesNbPolygnTmp;
     int i,j,k,l;
-    FunctionParser * implicitFunctionParser, *Fct;
+    FunctionParser * implicitFunctionParser, *Fct, *RgbtParser;
     FunctionParser IsoConditionParser[1100],
                    xSupParser[1100], xInfParser[1100],
                    ySupParser[1100], yInfParser[1100],
@@ -99,12 +99,13 @@ public :
         ZlimitSup, ZlimitInf, Grid,
         Const, Consts[50], ConstNames[50],
         Varu, Varus[20], VarName[20],
-        Funct, Functs[50], FunctNames[50];
+        Funct, Functs[50], FunctNames[50],
+        Rgbt, Rgbts[50], RgbtNames[50];
     double ConstValues[50];
 
     ImplicitStruct ImplicitStructs[1100];
     int GridTable[1100];
-    int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs;
+    int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts;
     double stepMorph, pace;
     int morph_activated;
     int TimeFlow;
@@ -154,5 +155,5 @@ public :
     int HowManyIsosurface(std::string,int);
     int HowManyVariables(std::string, int);
     int CNDtoUse(int index, struct ComponentInfos *components);
-    void CalculateColorsPoints();
+    void CalculateColorsPoints(struct ComponentInfos *components);
 };
