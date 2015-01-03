@@ -14,38 +14,59 @@
 			"Zmax": [" 4"]
 		}
 	},
-	{
-		"Iso3D": {
-			"Description": ["This example shows how to use defined functions"],
-			"Name": ["SchwarzFunction"],
-			"Varu": [" A=(u-4*sin(tm*pi/10))^2",
-			" B=(u-2*cos(tm*pi/10))^2",
-			"C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
-			" D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"],
-			"Fxyz": ["(Ax + By+ z*z - .6)
-		*min( Ax + By  + z*z - .6, z) +0.2",
-			"
-		Ax+ By + (z-.2)*(z-.2) - .6 ",
-			"
-		Cx + Dy  + (z-.2)*(z-.2) - .1
-		"],
-			"Cnd": ["(x^2 + y^2) > cos(t*pi)*5.0"],
-			"Const": [
-				"r = (1/4)*(1+3*sqrt(5))",
-				"a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
-				"c = (1/2)*sqrt(5-sqrt(5))"
-			],
-			"Funct": [" Schwarz1=cos(x) + cos(y) + cos(z)", " Schwarz2=cos(x) + cos(y)", " Schwarz3 = cos(x)"],
-            "Component": [" SchwarzFunction"],
-			"Fxyz": [" Schwarz1(x,y,z,t)"],
-			"Xmin": ["-4"],
-			"Xmax": [" 4"],
-			"Ymin": ["-4"],
-			"Ymax": [" 4"],
-			"Zmin": ["-4"],
-			"Zmax": [" 4"]
-		}
-	},
+{
+    "Iso3D": {
+        "Colors": [
+            "R=cos(x*pi)*cos(z*pi)",
+            "G=cos(y*pi)*cos(x*pi)",
+            "B=cos(y*pi)*cos(z*pi)",
+            "T=1"
+        ],
+        "Component": [
+            " SchwarzFunction"
+        ],
+        "Const": [
+            "r = (1/4)*(1+3*sqrt(5))",
+            "a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
+            "c = (1/2)*sqrt(5-sqrt(5))"
+        ],
+        "Funct": [
+            " Schwarz1=cos(x) + cos(y) + cos(z)",
+            " Schwarz2=cos(x) + cos(y)",
+            " Schwarz3 = cos(x)"
+        ],
+        "Fxyz": [
+            " Schwarz1(x,y,z,t)"
+        ],
+        "Name": [
+            "SchwarzFunction"
+        ],
+        "Varu": [
+            " A=(u-4*sin(tm*pi/10))^2",
+            " B=(u-2*cos(tm*pi/10))^2",
+            "C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
+            " D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"
+        ],
+        "Xmax": [
+            " 4"
+        ],
+        "Xmin": [
+            "-4"
+        ],
+        "Ymax": [
+            " 4"
+        ],
+        "Ymin": [
+            "-4"
+        ],
+        "Zmax": [
+            " 4"
+        ],
+        "Zmin": [
+            "-4"
+        ]
+    }
+},
 	{
 		"Iso3D": {
 			"Description": ["This is a Description"],
@@ -996,20 +1017,24 @@
 			"Zmax": [" 1.7"]
 		}
 	},
-	{
-		"Iso3D": {
-			"Description": ["This is a Description"],
-			"Name": ["Sinus"],
-			"Component": ["Sinus"],
-			"Fxyz": ["sin(pi*((x)^2+(y)^2))/2 +z"],
-			"Xmin": ["-1"],
-			"Xmax": [" 1"],
-			"Ymin": ["-1"],
-			"Ymax": [" 1"],
-			"Zmin": ["-1"],
-			"Zmax": [" 1"]
-		}
-	},
+{
+    "Iso3D": {
+        "Name": ["Sinus"],
+        "Colors": ["R=cos(30*x*pi)",
+            "G=cos(30*y*pi)",
+            "B=cos(4*z*pi)",
+            "T=1.0"],
+        "Component": ["Sinus"],
+        "Fxyz": ["sin(3*pi*((x)^2+(y)^2))/10+z"],
+        "Xmax": ["1"],
+        "Xmin": ["-1"],
+        "Ymax": ["1"],
+        "Ymin": ["-1"],
+        "Zmax": ["1"],
+        "Zmin": ["-1"]
+    }
+}
+,
 	{
 		"Iso3D": {
 			"Description": ["This is a Description"],
