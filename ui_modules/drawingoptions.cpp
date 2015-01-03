@@ -4875,10 +4875,11 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
 {
     QString Minx, Miny, Minz, Maxx, Maxy, Maxz;
     QString Difx, Dify, Difz;
-    QString componentName, fct;
+    QString componentName, fct, cnd;
     QJsonArray    oldminx, oldminy, oldminz,
                   oldmaxx, oldmaxy, oldmaxz,
-                  oldcmpname, oldfxyz;
+                  oldcmpname, oldfxyz, oldcnd;
+    bool cndb=false;
 
     oldminx = iso["Iso3D"].toObject()["Xmin"].toArray();
     oldminy = iso["Iso3D"].toObject()["Ymin"].toArray();
@@ -4890,6 +4891,9 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
 
     oldcmpname = iso["Iso3D"].toObject()["Component"].toArray();
     oldfxyz = iso["Iso3D"].toObject()["Fxyz"].toArray();
+
+    if((cndb = (iso["Iso3D"].toObject()["Cnd"].isArray())))
+        cnd = ( oldcnd = iso["Iso3D"].toObject()["Cnd"].toArray())[index].toString();
 
     componentName = oldcmpname[index].toString();
     fct = oldfxyz[index].toString();
@@ -4920,7 +4924,12 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
                 oldmaxz.append(Minz+"+"+QString::number(k+1)+"*"+Difz);
 
                 oldcmpname.append(componentName+QString::number(l));
+
                 oldfxyz.append(fct);
+
+                if(cndb)
+                    oldcnd.append(cnd);
+
                 l++;
             }
 
@@ -4934,6 +4943,8 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
 
     oldcmpname.removeAt(index);
     oldfxyz.removeAt(index);
+    if(cndb)
+        oldcnd.removeAt(index);
 
     QJsonObject tmp = iso["Iso3D"].toObject();
     tmp["Xmin"] = oldminx;
@@ -4944,7 +4955,8 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
     tmp["Zmax"] = oldmaxz;
     tmp["Component"] = oldcmpname;
     tmp["Fxyz"] = oldfxyz;
-
+    if(cndb)
+        tmp["Cnd"] = oldcnd;
     iso["Iso3D"] = tmp;
 }
 
