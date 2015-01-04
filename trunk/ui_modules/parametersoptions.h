@@ -28,6 +28,10 @@
 #include <QJsonObject>
 #include <QStyleFactory>
 
+struct ListeModelTexture{
+    QStringList listeModels;
+    QStringList listeTextures;
+};
 
 class Parametersoptions: public QWidget
 {
@@ -64,7 +68,7 @@ public slots:
     void SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject);
     void on_save_clicked();
     void LoadConfig(QApplication &,int argc, char *argv[]);
-    QStringList LoadCollectionModels(QJsonObject &JIso, jpariso &Jcollection, int argc);
+    ListeModelTexture LoadCollectionModels(QJsonObject &JIso, jpariso &Jcollection, int argc);
 
 private slots:
     void on_comboBox_2_activated(const QString &arg1);

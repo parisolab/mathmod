@@ -68,7 +68,15 @@
     }
 },
 	{
-		"Iso3D": {
+		"Texture":{
+		"Name": "Lines4",
+		"Colors":[
+			"R=cos(x*pi)",
+			"G=sin(y*pi)",
+			"B=cos(z*pi)",
+			"T=1"]
+		},
+		"Iso3D": {	
 			"Description": ["This is a Description"],
 			"Name": ["Moon"],
 			"Component": ["GravityPlan",
@@ -3419,6 +3427,58 @@
             "-6"
         ]
     }
+}
+],
+"TexturesList":[
+{
+	"Texture":{
+		"Name": "Lines1",
+		"Colors":[
+			"R=cos(7*x*pi)*cos(z*pi)",
+			"G=cos(7*y*pi)*cos(x*pi)",
+			"B=cos(7*y*pi)*cos(z*pi)",
+			"T=1"]
+	}
+},
+{
+	"Texture":{
+		"Name": "Lines2",
+		"Colors":[
+			"R=sin(7*x*pi)",
+			"G=sin(7*y*pi)",
+			"B=cos(7*z*pi)",
+			"T=1"]
+	}
+},
+{
+	"Texture":{
+		"Name": "Lines3",
+		"Colors":[
+			"R=cos(7*x*pi)*sin(z*pi)",
+			"G=sin(x*pi)*cos(7*y*pi)",
+			"B=sin(y*pi)*cos(7*z*pi)",
+			"T=1"]
+	}
+},
+{
+	"Texture":{
+		"Name": "Lines4",
+		"Colors":[
+			"R=cos(7*x*y*pi)",
+			"G=sin(7*y*z*pi)",
+			"B=sin(7*z*x*pi)",
+			"T=1"]
+	}
+},
+{
+    "Texture": {
+        "Colors": [
+            "R=cos(2*x*y*pi)",
+            "G=sin(2*y*z*pi)",
+            "B=sin(2*z*x*pi)",
+            "T=1.0"],
+            "Name": "Lines5"
+        }
 }
 ]
 }
