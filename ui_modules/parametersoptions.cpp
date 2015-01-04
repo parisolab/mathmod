@@ -254,7 +254,7 @@ void Parametersoptions::on_loadconfig_clicked()
     GuiUpdate();
 }
 
-QStringList Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jpariso &pariso, int argc)
+ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jpariso &pariso, int argc)
 {
 
     QFile fconllect(filecollection);
@@ -266,8 +266,24 @@ QStringList Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jp
     Jcollection = Collection;
     QJsonArray array = Collection["MathModels"].toArray();
     QStringList lst;
+    QJsonArray array2 = pariso.JTextures = Collection["TexturesList"].toArray();
+    QStringList lst_2;
     QString a;
     QJsonObject jsobj;
+
+
+    for(int i=0; i< array2.size(); i++)
+    {
+        if((array2[i].toObject())["Texture"].isObject())
+        {
+            jsobj = (array2[i].toObject())["Texture"].toObject();
+            a = (jsobj)["Name"].toString();
+            lst_2.append(a);
+        }
+    }
+
+    lst_2.insert(0, "Textures ("+QString::number(lst_2.count())+")");
+
 
     for(int i=0; i< array.size(); i++)
     {
@@ -302,7 +318,10 @@ QStringList Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jp
 
     lst.insert(0, "Examples ("+QString::number(lst.count())+")");
 
-    return lst;
+    ListeModelTexture str;
+    str.listeModels = lst;
+    str.listeTextures = lst_2;
+    return str;
 
 }
 

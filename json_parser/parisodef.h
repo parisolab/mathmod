@@ -38,6 +38,7 @@ public:
 //private:
     QList<jpar> JPar;
     QList<jiso> JIso;
+    QJsonArray JTextures;
 };
 
 
