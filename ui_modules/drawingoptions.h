@@ -85,7 +85,7 @@ public slots:
     void on_transparent_3_valueChanged(int value);
     void on_transparence_3_toggled(bool checked);
     int JSON_choice_activated(const QString &);
-    void ShowJsonModel(const QJsonObject &);
+    void ShowJsonModel(const QJsonObject &, int textureIndex=-1);
     void AddObjectToMySelectionTree();
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);
@@ -174,5 +174,6 @@ private slots:
     void on_color_5_activated(int index);
     void on_transparence_ParIso_clicked(bool checked);
     void on_transparent_ParIso_valueChanged(int value);
+    void on_comboBoxTexture_activated(int index);
 };
 #endif

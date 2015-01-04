@@ -894,12 +894,19 @@ void DrawingOptions::UpdateCurrentTreeObject()
         ui.stackedProperties->setCurrentIndex(0);
 }
 
-void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
+void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 {
     int j;
     QString result;
     QJsonArray lst;
     QJsonObject QObj;
+    QJsonObject QTextureObj;
+
+    if(textureIndex != -1)
+        QTextureObj = MathmodRef->pariso.JTextures[textureIndex].toObject()["Texture"].toObject();
+    else if(Jobj["Texture"].isObject())
+        QTextureObj = Jobj["Texture"].toObject();
+
 
     if(Jobj["Iso3D"].isObject())
     {
@@ -970,7 +977,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
         // Colors
-        lst = QObj["Colors"].toArray();
+        lst = QTextureObj["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -979,6 +986,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+
         MathmodRef->ui.glWidget->IsoObjet->Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 
@@ -1257,7 +1265,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
 
 
         // Colors
-        lst = QObj["Colors"].toArray();
+        lst = QTextureObj["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -1475,8 +1483,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj)
         MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
-        // RGBT
-        lst = QObj["Colors"].toArray();
+        // Colors
+        lst = QTextureObj["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -1544,6 +1552,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     QJsonArray array = JSONMathModels["MathModels"].toArray();
     QJsonArray lst;
     QJsonObject QObj;
+
     for(i=0; i< array.size(); i++)
         if((array[i].toObject())["Iso3D"].isObject()  &&
                 (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"].toArray()[0].toString() == arg1)
@@ -1614,7 +1623,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
             // Colors
-            lst = QObj["Colors"].toArray();
+            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
             result = "";
             for(j=0; j < lst.size()-1; j++)
                 result += lst[j].toString() + ";";
@@ -1902,7 +1911,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
             // Colors
-            lst = QObj["Colors"].toArray();
+            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
             result = "";
             for(j=0; j < lst.size()-1; j++)
                 result += lst[j].toString() + ";";
@@ -2122,7 +2131,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
             // Colors
-            lst = QObj["Colors"].toArray();
+            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
             result = "";
             for(j=0; j < lst.size()-1; j++)
                 result += lst[j].toString() + ";";
@@ -4997,13 +5006,15 @@ void DrawingOptions::UpdateGui(int argc)
     ui.linecolumn_2->setMaximum(sqr);
     ui.linecolumn_3->setMaximum(sqr);
 
-    QStringList lst = Parameters->LoadCollectionModels(
-                          JSONMathModels,
-                          MathmodRef->pariso,
-                          argc);
+    ListeModelTexture LstModelTexture =
+                            (Parameters->LoadCollectionModels(
+                            JSONMathModels,
+                            MathmodRef->pariso,
+                            argc));
 
     //Load the script containing isosurface and parametric formulas:
-    ui.choice->insertItems(0, lst);
+    ui.choice->insertItems(0, LstModelTexture.listeModels);
+    ui.comboBoxTexture->insertItems(0, LstModelTexture.listeTextures);
     AddListModels();
 
     //Show the two windows of the application:
@@ -5114,4 +5125,25 @@ void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
     default:
         break;
     }
+}
+
+void DrawingOptions::on_comboBoxTexture_activated(int index)
+{
+    QJsonObject tmp;
+
+    tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    /*
+    tmp["Iso3D"].toObject()["Texture"].toObject()["Colors"].toArray()[2] = "0.5";
+    QJsonObject tmp2 =  tmp["Iso3D"].toObject()["Texture"].toObject();
+    tmp2 = MathmodRef->pariso.JTextures[index].toObject()["Texture"].toObject();
+    tmp["Iso3D"].toObject()["Texture"] = tmp2;
+    */
+
+    if(index > 0)
+    {
+        ShowJsonModel(tmp, index-1);
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        UpdateCurrentTreeObject();
+    }
+    return;
 }
