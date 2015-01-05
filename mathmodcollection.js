@@ -14,69 +14,51 @@
 			"Zmax": [" 4"]
 		}
 	},
-{
-    "Iso3D": {
-        "Colors": [
-            "R=cos(x*pi)*cos(z*pi)",
-            "G=cos(y*pi)*cos(x*pi)",
-            "B=cos(y*pi)*cos(z*pi)",
-            "T=1"
-        ],
-        "Component": [
-            " SchwarzFunction"
-        ],
-        "Const": [
-            "r = (1/4)*(1+3*sqrt(5))",
-            "a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
-            "c = (1/2)*sqrt(5-sqrt(5))"
-        ],
-        "Funct": [
-            " Schwarz1=cos(x) + cos(y) + cos(z)",
-            " Schwarz2=cos(x) + cos(y)",
-            " Schwarz3 = cos(x)"
-        ],
-        "Fxyz": [
-            " Schwarz1(x,y,z,t)"
-        ],
-        "Name": [
-            "SchwarzFunction"
-        ],
-        "Varu": [
-            " A=(u-4*sin(tm*pi/10))^2",
-            " B=(u-2*cos(tm*pi/10))^2",
-            "C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
-            " D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"
-        ],
-        "Xmax": [
-            " 4"
-        ],
-        "Xmin": [
-            "-4"
-        ],
-        "Ymax": [
-            " 4"
-        ],
-        "Ymin": [
-            "-4"
-        ],
-        "Zmax": [
-            " 4"
-        ],
-        "Zmin": [
-            "-4"
-        ]
-    }
-},
 	{
-		"Texture":{
-		"Name": "Lines4",
-		"Colors":[
-			"R=cos(x*pi)",
+		"Texture": {
+			"Colors": [
+				"R=cos((x*x +y*y)*pi)*cos(x*pi)",
+				"G=cos((y*y +z*z)*pi)*cos(y*pi)",
+				"B=cos((x*x+z*z)*pi)*cos(z*pi)",
+				"T=1"
+			],
+			"Name": "Lines8"
+		},
+		"Iso3D": {
+			"Colors": ["R=cos(x*pi)*cos(z*pi)",
+			"G=cos(y*pi)*cos(x*pi)",
+			"B=cos(y*pi)*cos(z*pi)",
+			"T=1"],
+			"Component": [" SchwarzFunction"],
+			"Const": ["r = (1/4)*(1+3*sqrt(5))",
+			"a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
+			"c = (1/2)*sqrt(5-sqrt(5))"],
+			"Funct": [" Schwarz1=cos(x) + cos(y) + cos(z)",
+			" Schwarz2=cos(x) + cos(y)",
+			" Schwarz3 = cos(x)"],
+			"Fxyz": [" Schwarz1(x,y,z,t)"],
+			"Name": ["SchwarzFunction"],
+			"Varu": [" A=(u-4*sin(tm*pi/10))^2",
+			" B=(u-2*cos(tm*pi/10))^2",
+			"C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
+			" D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"],
+			"Xmax": [" 4"],
+			"Xmin": ["-4"],
+			"Ymax": [" 4"],
+			"Ymin": ["-4"],
+			"Zmax": [" 4"],
+			"Zmin": ["-4"]
+		}
+	},
+	{
+		"Texture": {
+			"Name": "Lines4",
+			"Colors": ["R=cos(x*pi)",
 			"G=sin(y*pi)",
 			"B=cos(z*pi)",
 			"T=1"]
 		},
-		"Iso3D": {	
+		"Iso3D": {
 			"Description": ["This is a Description"],
 			"Name": ["Moon"],
 			"Component": ["GravityPlan",
@@ -110,6 +92,15 @@
 		}
 	},
 	{
+		"Texture": {
+			"Colors": [
+				"R=cos((x*x +y*y +z*z)*pi)",
+				"G=cos((x*x +y*y +z*z)*pi)*cos(x*pi)",
+				"B=sin(y*pi)*cos(x*pi)",
+				"T=1"
+			],
+			"Name": "Lines6"
+		},
 		"Iso3D": {
 			"Description": ["This is a Description"],
 			"Name": ["Moon2"],
@@ -177,6 +168,14 @@
 		}
 	},
 	{
+		"Texture":{
+			"Name": "Lines4",
+			"Colors":[
+				"R=cos(7*x*y*pi)",
+				"G=sin(7*y*z*pi)",
+				"B=sin(7*z*x*pi)",
+				"T=1"]
+		},
 		"Iso3D": {
 			"Description": ["This is a Description"],
 			"Name": ["BlackHole"],
@@ -251,33 +250,15 @@
 	},
 	{
 		"Iso3D": {
-			"Component": [
-				"fallingdrop"
-			],
-			"Fxyz": [
-				"-((z-6*(1-cos(sqrt(x^2+y^2)-t*2*pi))/sqrt(x^2+y^2+4))*(2*(x^2+y^2)+(z-40*sin((t+0.19)*pi)+1)^2-10)-1000)"
-			],
-			"Name": [
-				"FallingDrop"
-			],
-			"Xmax": [
-				"20"
-			],
-			"Xmin": [
-				"-20"
-			],
-			"Ymax": [
-				"20"
-			],
-			"Ymin": [
-				"-20"
-			],
-			"Zmax": [
-				"50"
-			],
-			"Zmin": [
-				"-1"
-			]
+			"Component": ["fallingdrop"],
+			"Fxyz": ["-((z-6*(1-cos(sqrt(x^2+y^2)-t*2*pi))/sqrt(x^2+y^2+4))*(2*(x^2+y^2)+(z-40*sin((t+0.19)*pi)+1)^2-10)-1000)"],
+			"Name": ["FallingDrop"],
+			"Xmax": ["20"],
+			"Xmin": ["-20"],
+			"Ymax": ["20"],
+			"Ymin": ["-20"],
+			"Zmax": ["50"],
+			"Zmin": ["-1"]
 		}
 	},
 	{
@@ -461,7 +442,7 @@
 			"-1.1"]
 		}
 	},
-{
+	{
 		"Iso3D": {
 			"Description ": [""],
 			"Name": ["Cayley_1"],
@@ -493,87 +474,41 @@
 	},
 	{
 		"Iso3D": {
-			"Name": [
-				"Nordstrand"
-			],
-			"Cnd": [
-				"((x-.1)^2+(y-.1)^2+(z-.1)^2)>1"
-			],
-			"Component": [
-				" Nordstrand"
-			],
-			"Fxyz": [
-				"  25*(x^3*(y+z)+y^3*(x+z)+z^3*(x+y))+50*(x^2*y^2+x^2*z^2+y^2*z^2)-125*(x^2*y*z+y^2*x*z+z^2*x*y)+60*x*y*z-4*(x*y+x*z+y*z)"
-			],
-			"Xmax": [
-				" 1.1"
-			],
-			"Xmin": [
-				"-1.1"
-			],
-			"Ymax": [
-				" 1.1"
-			],
-			"Ymin": [
-				"-1.1"
-			],
-			"Zmax": [
-				" 1.1"
-			],
-			"Zmin": [
-				"-1.1"
-			]
+			"Name": ["Nordstrand"],
+			"Cnd": ["((x-.1)^2+(y-.1)^2+(z-.1)^2)>1"],
+			"Component": [" Nordstrand"],
+			"Fxyz": ["  25*(x^3*(y+z)+y^3*(x+z)+z^3*(x+y))+50*(x^2*y^2+x^2*z^2+y^2*z^2)-125*(x^2*y*z+y^2*x*z+z^2*x*y)+60*x*y*z-4*(x*y+x*z+y*z)"],
+			"Xmax": [" 1.1"],
+			"Xmin": ["-1.1"],
+			"Ymax": [" 1.1"],
+			"Ymin": ["-1.1"],
+			"Zmax": [" 1.1"],
+			"Zmin": ["-1.1"]
 		}
 	},
 	{
 		"Iso3D": {
-			"Cnd": [
-				"(x^2 + y^2 + z^2) > 100"
-			],
-			"Component": [
-				"Togliatti"
-			],
-			"Const": [
-				" w=1.3"
-			],
-			"Fxyz": [
-				"64*(x -w)*(x^4 - 4*w*x^3 -10*x^2*y^2 - 4*x^2*w^2 + 16*w^3*x - 20*w*x*y^2 + 5*y^4 + 16*w^4 - 20*y^2*w^2) -5*sqrt(5 - sqrt(5))*(2*z - sqrt(5 - sqrt(5))*w)*(4*(x^2 + y^2 - z^2) + (1 + 3*sqrt(5))*w^2)^2"
-			],
-			"Name": [
-				"Togliatti"
-			],
-			"Xmax": [
-				"10"
-			],
-			"Xmin": [
-				"-10"
-			],
-			"Ymax": [
-				"10"
-			],
-			"Ymin": [
-				"-10"
-			],
-			"Zmax": [
-				"10"
-			],
-			"Zmin": [
-				"-10"
-			]
+			"Cnd": ["(x^2 + y^2 + z^2) > 100"],
+			"Component": ["Togliatti"],
+			"Const": [" w=1.3"],
+			"Fxyz": ["64*(x -w)*(x^4 - 4*w*x^3 -10*x^2*y^2 - 4*x^2*w^2 + 16*w^3*x - 20*w*x*y^2 + 5*y^4 + 16*w^4 - 20*y^2*w^2) -5*sqrt(5 - sqrt(5))*(2*z - sqrt(5 - sqrt(5))*w)*(4*(x^2 + y^2 - z^2) + (1 + 3*sqrt(5))*w^2)^2"],
+			"Name": ["Togliatti"],
+			"Xmax": ["10"],
+			"Xmin": ["-10"],
+			"Ymax": ["10"],
+			"Ymin": ["-10"],
+			"Zmax": ["10"],
+			"Zmin": ["-10"]
 		}
 	},
 	{
 		"Iso3D": {
 			"Name": ["Dervish"],
-			"Cnd": [
-            "(x^2+y^2+z^2)>15"
-			],
-			"Const": [
-				"r = (1/4)*(1+3*sqrt(5))",
-				"a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
-				"c = (1/2)*sqrt(5-sqrt(5))"
-			],
-            "Component": [" Dervish"],
+			"Cnd": ["(x^2+y^2+z^2)>15"],
+			"Const": ["r = (1/4)*(1+3*sqrt(5))",
+			"a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
+			"c = (1/2)*sqrt(5-sqrt(5))"],
+			"Component": [" Dervish"],
 			"Fxyz": [" a*(x-z)*(cos((2*pi)/5)*x-sin((2*pi)/5)*y-z) *(cos((4*pi)/5)*x-sin((4*pi)/5)*y-z) *(cos((6*pi)/5)*x-sin((6*pi)/5)*y-z) *(cos((8*pi)/5)*x-sin((8*pi)/5)*y-z)  + (1-c*z)*(x^2+y^2-1+r*z^2)^2"],
 			"Xmin": ["-4"],
 			"Xmax": [" 4"],
@@ -585,306 +520,137 @@
 	},
 	{
 		"Iso3D": {
-			"Cnd": [
-				"(x^2+y^2+z^2)>9"
-			],
-			"Component": [
-				"Barth-sextic"
-			],
-			"Const": [
-				" w=1.0",
-				" phi=(1/2)*(1+sqrt(5))"
-			],
-			"Fxyz": [
-				"4*(phi^2*x^2-y^2)*(phi^2*y^2-z^2)*(phi^2*z^2-x^2)-(1+2*phi)*(x^2+y^2+z^2-w^2)^2*w^2"
-			],
-			"Name": [
-				"Barth-sextic"
-			],
-			"Xmax": [
-				"3"
-			],
-			"Xmin": [
-				"-3"
-			],
-			"Ymax": [
-				"3"
-			],
-			"Ymin": [
-				"-3"
-			],
-			"Zmax": [
-				"3"
-			],
-			"Zmin": [
-				"-3"
-			]
+			"Cnd": ["(x^2+y^2+z^2)>9"],
+			"Component": ["Barth-sextic"],
+			"Const": [" w=1.0",
+			" phi=(1/2)*(1+sqrt(5))"],
+			"Fxyz": ["4*(phi^2*x^2-y^2)*(phi^2*y^2-z^2)*(phi^2*z^2-x^2)-(1+2*phi)*(x^2+y^2+z^2-w^2)^2*w^2"],
+			"Name": ["Barth-sextic"],
+			"Xmax": ["3"],
+			"Xmin": ["-3"],
+			"Ymax": ["3"],
+			"Ymin": ["-3"],
+			"Zmax": ["3"],
+			"Zmin": ["-3"]
 		}
 	},
 	{
 		"Iso3D": {
-			"Cnd": [
-				"(x^2+y^2+z^2)>25"
-			],
-			"Component": [
-				"Labs-Septic"
-			],
-			"Const": [
-				" w = 1.0",
-				"a1 = -(12/7)*(-0.14010685)^2 -(384/49)*(-0.14010685) -(8/7)",
-				"a2 = -(32/7)*(-0.14010685)^2 +(24/49)*(-0.14010685)  -4",
-				"a3 = -4*(-0.14010685)^2 +(24/49)*(-0.14010685)  -4",
-				"a4 = -(8/7)*(-0.14010685)^2 +(8/49)*(-0.14010685)  -8/7",
-				"a5 = 49*(-0.14010685)^2 -7*(-0.14010685)  +50"
-			],
-			"Fxyz": [
-				"(x*(x^6-3*7*x^4*y^2+5*7*x^2*y^4-7*y^6)+7*z*((x^2+y^2)^3-2^3*z^2*(x^2+y^2)^2+2^4*z^4*(x^2+y^2))-2^6*z^7)-((z+a5*w)*((z+w)*(x^2+y^2)+a1*z^3+a2*z^2*w+a3*z*w^2+a4*w^3)^2)"
-			],
-			"Name": [
-				"Labs-Septic"
-			],
-			"Xmax": [
-				"5"
-			],
-			"Xmin": [
-				"-5"
-			],
-			"Ymax": [
-				"5"
-			],
-			"Ymin": [
-				"-5"
-			],
-			"Zmax": [
-				"5"
-			],
-			"Zmin": [
-				"-5"
-			]
+			"Cnd": ["(x^2+y^2+z^2)>25"],
+			"Component": ["Labs-Septic"],
+			"Const": [" w = 1.0",
+			"a1 = -(12/7)*(-0.14010685)^2 -(384/49)*(-0.14010685) -(8/7)",
+			"a2 = -(32/7)*(-0.14010685)^2 +(24/49)*(-0.14010685)  -4",
+			"a3 = -4*(-0.14010685)^2 +(24/49)*(-0.14010685)  -4",
+			"a4 = -(8/7)*(-0.14010685)^2 +(8/49)*(-0.14010685)  -8/7",
+			"a5 = 49*(-0.14010685)^2 -7*(-0.14010685)  +50"],
+			"Fxyz": ["(x*(x^6-3*7*x^4*y^2+5*7*x^2*y^4-7*y^6)+7*z*((x^2+y^2)^3-2^3*z^2*(x^2+y^2)^2+2^4*z^4*(x^2+y^2))-2^6*z^7)-((z+a5*w)*((z+w)*(x^2+y^2)+a1*z^3+a2*z^2*w+a3*z*w^2+a4*w^3)^2)"],
+			"Name": ["Labs-Septic"],
+			"Xmax": ["5"],
+			"Xmin": ["-5"],
+			"Ymax": ["5"],
+			"Ymin": ["-5"],
+			"Zmax": ["5"],
+			"Zmin": ["-5"]
 		}
 	},
-	{ 
-		"Iso3D": { 
-			"Cnd": [ 
-				"(x^2+y^2+z^2)>25" 
-			], 
-			"Component": [ 
-				"Endraß-Octic" 
-			], 
-			"Const": [ 
-				" w = 1.0", 
-				"a1 = 1.0", 
-				"a2 = 1.0", 
-				"a3 = 1.0", 
-				"a4 = -1.0" 
-			], 
-			"Fxyz": [ 
-				"64 * (x^2 - w^2)*(y^2 - w^2)*((x + y)^2 -2*w^2)*((x - y)^2 -2*w^2)  - (-4*(1 + a1*2^(1/2))*(x^2 + y^2)^2 + 
+	{
+		"Iso3D": {
+			"Cnd": ["(x^2+y^2+z^2)>25"],
+			"Component": ["Endraß-Octic"],
+			"Const": [" w = 1.0",
+			"a1 = 1.0",
+			"a2 = 1.0",
+			"a3 = 1.0",
+			"a4 = -1.0"],
+			"Fxyz": ["64 * (x^2 - w^2)*(y^2 - w^2)*((x + y)^2 -2*w^2)*((x - y)^2 -2*w^2)  - (-4*(1 + a1*2^(1/2))*(x^2 + y^2)^2 + 
 			 (8*(2 + a2*2^(1/2))*z^2 + 2*(2 + a3*7*2^(1/2))*w^2 )* (x^2 + y^2) - 
-			 16*z^4+ 8*(1 + a4*2*2^(1/2))*z^2*w^2 - (1 + 12*2^(1/2))*w^4)^2" 
-			], 
-			"Name": [ 
-				"Endraß-Octic" 
-			], 
-			"Xmax": [ 
-				"5" 
-			], 
-			"Xmin": [ 
-				"-5" 
-			], 
-			"Ymax": [ 
-				"5" 
-			], 
-			"Ymin": [ 
-				"-5" 
-			], 
-			"Zmax": [ 
-				"5" 
-			], 
-			"Zmin": [ 
-				"-5" 
-			] 
-		} 
-	},
-	{ 
-		"Iso3D": { 
-			"Component": [ 
-			" SartiOctic" 
-			], 
-			"Fxyz": [ 
-			"-1728*x^4*y^2*z^2+928.0*z^4*x^4+9024.0*z^2*x^4+928.0*z^4*y^4+9024.0*z^2*y^4+9024.0*x^2*y^2+2720.0*x^4*y^4-1728*x^2*z^2-1728*y^2*z^2-1728*x^4*y^2-1728*x^2*y^4-1728*x^2*z^4-1728*y^2*z^4-576*x^6*y^2-576*x^6*z^2-576*x^2*y^6-576*x^2*z^6-576*y^6*z^2+9024.0*z^4*x^2*y^2-24960.0*z^2*x^2*y^2-1728*x^2*y^4*z^2+2720.0*z^4+112.0*z^8-576*z^2+928.0*x^4+112.0*x^8+928.0*y^4+112.0*y^8-576*x^2-576*y^2-576*x^6-576*y^6-576*z^6+112.0-576*y^2*z^6" 
-			], 
-			"Name": [ 
-			"SartiOctic" 
-			], 
-			"Xmax": [ 
-			"5.6" 
-			], 
-			"Xmin": [ 
-			"-5.6" 
-			], 
-			"Ymax": [ 
-			"5.6" 
-			], 
-			"Ymin": [ 
-			"-5.6" 
-			], 
-			"Zmax": [ 
-			"5.6" 
-			], 
-			"Zmin": [ 
-			"-5.6" 
-			] 
-		} 
-	},
-	{
-		"Iso3D": {
-			"Cnd": [
-				"(x^2+y^2+z^2)>9"
-			],
-			"Component": [
-				"Breske-Nonic"
-			],
-			"Fxyz": [
-				"(2*x^7-42*x^5*y^2+70*x^3*y^4-14*x*y^6-14*x^6+70*x^4*y^2+70*x^2*y^4-14*y^6+28*x^5+56*x^3*y^2+28*x*y^4-84*x^2*y^2+28*y^4-42*x^3-42*x*y^2+14*x^2-14*y^2+14*x) + 
-				0.5* (64*z^7-112*z^5+56*z^3-7*z+5)"
-			],
-			"Name": [
-				"Breske-Nonic"
-			],
-			"Xmax": [
-				"3"
-			],
-			"Xmin": [
-				"-3"
-			],
-			"Ymax": [
-				"3"
-			],
-			"Ymin": [
-				"-3"
-			],
-			"Zmax": [
-				"3"
-			],
-			"Zmin": [
-				"-3"
-			]
+			 16*z^4+ 8*(1 + a4*2*2^(1/2))*z^2*w^2 - (1 + 12*2^(1/2))*w^4)^2"],
+			"Name": ["Endraß-Octic"],
+			"Xmax": ["5"],
+			"Xmin": ["-5"],
+			"Ymax": ["5"],
+			"Ymin": ["-5"],
+			"Zmax": ["5"],
+			"Zmin": ["-5"]
 		}
 	},
 	{
 		"Iso3D": {
-			"Cnd": [
-				"(x^2+y^2+z^2)> (1+sqrt(5))+0.2"
-			],
-			"Component": [
-				"Barth-Dedic"
-			],
-			"Const": [
-				" w  = 1.0",
-				" phi= (1+sqrt(5))/2"
-			],
-			"Fxyz": [
-				"8*(Ax-phi^4*Ay)*(Ay-phi^4*Az)*(Az-phi^4*Ax)*(Bx+By+Bz-2*(Ax*Ay+Ax*Az+Ay*Az)) + (3+5*phi)*(Ax+Ay+Az-w^2)^2 * (Ax+Ay+Az- (2-phi)*w^2)^2 * w^2"],
-			"Name": [
-				"Barth-Dedic"
-			],
-			"Varu": [
-				" A  = u^2",
-				" B  = u^4"
-			],
-			"Xmax": [
-				"sqrt(1+sqrt(5))"
-			],
-			"Xmin": [
-				"-sqrt(1+sqrt(5))"
-			],
-			"Ymax": [
-				"sqrt(1+sqrt(5))"
-			],
-			"Ymin": [
-				"-sqrt(1+sqrt(5))"
-			],
-			"Zmax": [
-				"sqrt(1+sqrt(5))"
-			],
-			"Zmin": [
-				"-sqrt(1+sqrt(5))"
-			]
+			"Component": [" SartiOctic"],
+			"Fxyz": ["-1728*x^4*y^2*z^2+928.0*z^4*x^4+9024.0*z^2*x^4+928.0*z^4*y^4+9024.0*z^2*y^4+9024.0*x^2*y^2+2720.0*x^4*y^4-1728*x^2*z^2-1728*y^2*z^2-1728*x^4*y^2-1728*x^2*y^4-1728*x^2*z^4-1728*y^2*z^4-576*x^6*y^2-576*x^6*z^2-576*x^2*y^6-576*x^2*z^6-576*y^6*z^2+9024.0*z^4*x^2*y^2-24960.0*z^2*x^2*y^2-1728*x^2*y^4*z^2+2720.0*z^4+112.0*z^8-576*z^2+928.0*x^4+112.0*x^8+928.0*y^4+112.0*y^8-576*x^2-576*y^2-576*x^6-576*y^6-576*z^6+112.0-576*y^2*z^6"],
+			"Name": ["SartiOctic"],
+			"Xmax": ["5.6"],
+			"Xmin": ["-5.6"],
+			"Ymax": ["5.6"],
+			"Ymin": ["-5.6"],
+			"Zmax": ["5.6"],
+			"Zmin": ["-5.6"]
 		}
 	},
 	{
 		"Iso3D": {
-			"Cnd": [
-				"(x^2+y^2+z^2)>13"
-			],
-			"Component": [
-				"Sarti-Dodecic"
-			],
-			"Const": [
-				" w  = 1.0"
-			],
-			"Fxyz": [
-				"243*(33*sqrt(5)*(((Ax*Ay+Az*w^2)^2*(Ax*Az+Ay*w^2)-(Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)^2)+((Ax*Az+Ay*w^2)^2*(Ax*w^2+Ay*Az)-(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)^2)+((Ax*w^2+Ay*Az)^2*(Ax*Ay+Az*w^2)-(Ax*w^2+Ay*Az)*(Ax*Ay+Az*w^2)^2))+19*(((Ax*Ay+Az*w^2)^2*(Ax*Az+Ay*w^2)+(Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)^2)+((Ax*Az+Ay*w^2)^2*(Ax*w^2+Ay*Az)+(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)^2)+((Ax*w^2+Ay*Az)^2*(Ax*Ay+Az*w^2)+(Ax*w^2+Ay*Az)*(Ax*Ay+Az*w^2)^2))+10*((Ax*Ay+Az*w^2)^3+(Ax*Az+Ay*w^2)^3+(Ax*w^2+Ay*Az)^3)-14*(Bx+By+Bz+w^4)*((Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)+(Ax*Ay+Az*w^2)*(Ax*w^2+Ay*Az)+(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az))+2*(Bx+By+Bz+w^4)^2*((Ax*Ay+Az*w^2)+(Ax*Az+Ay*w^2)+(Ax*w^2+Ay*Az))-6*(Bx+By+Bz+w^4)*((Ax*Ay+Az*w^2)^2+(Ax*Az+Ay*w^2)^2+(Ax*w^2+Ay*Az)^2)-352*(x*y*z*w)^2*((Ax*Ay+Az*w^2)+(Ax*Az+Ay*w^2)+(Ax*w^2+Ay*Az))+336*(x*y*z*w)^2*(Bx+By+Bz+w^4)+48*((Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)))-22*(Ax+Ay+Az+w^2)^6"
-			],
-			"Name": [
-				"SartiDodecic"
-			],
-			"Varu": [
-				" A  = u^2",
-				" B  = u^4"
-			],
-			"Xmax": [
-				"3.7"
-			],
-			"Xmin": [
-				"-3.7"
-			],
-			"Ymax": [
-				"3.7"
-			],
-			"Ymin": [
-				"-3.7"
-			],
-			"Zmax": [
-				"3.7"
-			],
-			"Zmin": [
-				"-3.7"
-			]
+			"Cnd": ["(x^2+y^2+z^2)>9"],
+			"Component": ["Breske-Nonic"],
+			"Fxyz": ["(2*x^7-42*x^5*y^2+70*x^3*y^4-14*x*y^6-14*x^6+70*x^4*y^2+70*x^2*y^4-14*y^6+28*x^5+56*x^3*y^2+28*x*y^4-84*x^2*y^2+28*y^4-42*x^3-42*x*y^2+14*x^2-14*y^2+14*x) + 
+				0.5* (64*z^7-112*z^5+56*z^3-7*z+5)"],
+			"Name": ["Breske-Nonic"],
+			"Xmax": ["3"],
+			"Xmin": ["-3"],
+			"Ymax": ["3"],
+			"Ymin": ["-3"],
+			"Zmax": ["3"],
+			"Zmin": ["-3"]
 		}
 	},
-{
-    "Iso3D": {
-        "Name": [
-            "Scherk"
-        ],
-        "Component": [
-            "Scherk"
-        ],
-        "Fxyz": [
-            "sinh(x)*sinh(y) - sin(z)"
-        ],
-        "Xmax": [
-            " 3"
-        ],
-        "Xmin": [
-            "-3 "
-        ],
-        "Ymax": [
-            " 3"
-        ],
-        "Ymin": [
-            "-3 "
-        ],
-        "Zmax": [
-            " 5*pi/2"
-        ],
-        "Zmin": [
-            "-5*pi/2 "
-        ]
-    }
-},
+	{
+		"Iso3D": {
+			"Cnd": ["(x^2+y^2+z^2)> (1+sqrt(5))+0.2"],
+			"Component": ["Barth-Dedic"],
+			"Const": [" w  = 1.0",
+			" phi= (1+sqrt(5))/2"],
+			"Fxyz": ["8*(Ax-phi^4*Ay)*(Ay-phi^4*Az)*(Az-phi^4*Ax)*(Bx+By+Bz-2*(Ax*Ay+Ax*Az+Ay*Az)) + (3+5*phi)*(Ax+Ay+Az-w^2)^2 * (Ax+Ay+Az- (2-phi)*w^2)^2 * w^2"],
+			"Name": ["Barth-Dedic"],
+			"Varu": [" A  = u^2",
+			" B  = u^4"],
+			"Xmax": ["sqrt(1+sqrt(5))"],
+			"Xmin": ["-sqrt(1+sqrt(5))"],
+			"Ymax": ["sqrt(1+sqrt(5))"],
+			"Ymin": ["-sqrt(1+sqrt(5))"],
+			"Zmax": ["sqrt(1+sqrt(5))"],
+			"Zmin": ["-sqrt(1+sqrt(5))"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Cnd": ["(x^2+y^2+z^2)>13"],
+			"Component": ["Sarti-Dodecic"],
+			"Const": [" w  = 1.0"],
+			"Fxyz": ["243*(33*sqrt(5)*(((Ax*Ay+Az*w^2)^2*(Ax*Az+Ay*w^2)-(Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)^2)+((Ax*Az+Ay*w^2)^2*(Ax*w^2+Ay*Az)-(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)^2)+((Ax*w^2+Ay*Az)^2*(Ax*Ay+Az*w^2)-(Ax*w^2+Ay*Az)*(Ax*Ay+Az*w^2)^2))+19*(((Ax*Ay+Az*w^2)^2*(Ax*Az+Ay*w^2)+(Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)^2)+((Ax*Az+Ay*w^2)^2*(Ax*w^2+Ay*Az)+(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)^2)+((Ax*w^2+Ay*Az)^2*(Ax*Ay+Az*w^2)+(Ax*w^2+Ay*Az)*(Ax*Ay+Az*w^2)^2))+10*((Ax*Ay+Az*w^2)^3+(Ax*Az+Ay*w^2)^3+(Ax*w^2+Ay*Az)^3)-14*(Bx+By+Bz+w^4)*((Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)+(Ax*Ay+Az*w^2)*(Ax*w^2+Ay*Az)+(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az))+2*(Bx+By+Bz+w^4)^2*((Ax*Ay+Az*w^2)+(Ax*Az+Ay*w^2)+(Ax*w^2+Ay*Az))-6*(Bx+By+Bz+w^4)*((Ax*Ay+Az*w^2)^2+(Ax*Az+Ay*w^2)^2+(Ax*w^2+Ay*Az)^2)-352*(x*y*z*w)^2*((Ax*Ay+Az*w^2)+(Ax*Az+Ay*w^2)+(Ax*w^2+Ay*Az))+336*(x*y*z*w)^2*(Bx+By+Bz+w^4)+48*((Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)))-22*(Ax+Ay+Az+w^2)^6"],
+			"Name": ["SartiDodecic"],
+			"Varu": [" A  = u^2",
+			" B  = u^4"],
+			"Xmax": ["3.7"],
+			"Xmin": ["-3.7"],
+			"Ymax": ["3.7"],
+			"Ymin": ["-3.7"],
+			"Zmax": ["3.7"],
+			"Zmin": ["-3.7"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Name": ["Scherk"],
+			"Component": ["Scherk"],
+			"Fxyz": ["sinh(x)*sinh(y) - sin(z)"],
+			"Xmax": [" 3"],
+			"Xmin": ["-3 "],
+			"Ymax": [" 3"],
+			"Ymin": ["-3 "],
+			"Zmax": [" 5*pi/2"],
+			"Zmin": ["-5*pi/2 "]
+		}
+	},
 	{
 		"Iso3D": {
 			"Description": ["This is a Description"],
@@ -927,20 +693,20 @@
 			"Zmax": [" 1"]
 		}
 	},
-        {
-            "Iso3D": {
-                "Description": ["This is a Description"],
-                "Name": ["Devil"],
-                "Component": ["Devil Surface"],
-                "Fxyz": ["x^4+2*x^2*z^2-0.36*x^2-y^4+0.25*y^2+z^4"],
-                "Xmin": ["-1"],
-                "Xmax": [" 1"],
-                "Ymin": ["-1"],
-                "Ymax": [" 1"],
-                "Zmin": ["-1"],
-                "Zmax": [" 1"]
-            }
-        },
+	{
+		"Iso3D": {
+			"Description": ["This is a Description"],
+			"Name": ["Devil"],
+			"Component": ["Devil Surface"],
+			"Fxyz": ["x^4+2*x^2*z^2-0.36*x^2-y^4+0.25*y^2+z^4"],
+			"Xmin": ["-1"],
+			"Xmax": [" 1"],
+			"Ymin": ["-1"],
+			"Ymax": [" 1"],
+			"Zmin": ["-1"],
+			"Zmax": [" 1"]
+		}
+	},
 	{
 		"Iso3D": {
 			"Description": ["This is a Description"],
@@ -1025,24 +791,23 @@
 			"Zmax": [" 1.7"]
 		}
 	},
-{
-    "Iso3D": {
-        "Name": ["Sinus"],
-        "Colors": ["R=cos(30*x*pi)",
-            "G=cos(30*y*pi)",
-            "B=cos(4*z*pi)",
-            "T=1.0"],
-        "Component": ["Sinus"],
-        "Fxyz": ["sin(3*pi*((x)^2+(y)^2))/10+z"],
-        "Xmax": ["1"],
-        "Xmin": ["-1"],
-        "Ymax": ["1"],
-        "Ymin": ["-1"],
-        "Zmax": ["1"],
-        "Zmin": ["-1"]
-    }
-}
-,
+	{
+		"Iso3D": {
+			"Name": ["Sinus"],
+			"Colors": ["R=cos(30*x*pi)",
+			"G=cos(30*y*pi)",
+			"B=cos(4*z*pi)",
+			"T=1.0"],
+			"Component": ["Sinus"],
+			"Fxyz": ["sin(3*pi*((x)^2+(y)^2))/10+z"],
+			"Xmax": ["1"],
+			"Xmin": ["-1"],
+			"Ymax": ["1"],
+			"Ymin": ["-1"],
+			"Zmax": ["1"],
+			"Zmin": ["-1"]
+		}
+	},
 	{
 		"Iso3D": {
 			"Description": ["This is a Description"],
@@ -1325,54 +1090,34 @@
 	},
 	{
 		"Iso3D": {
-			"Name": [
-				"BouncingBall2"
-			],
-			"Component": [
-				"SphereIso",
-				"ThickWalls",
-				"TransparentWall"
-			],
-			"Fxyz": [
-				"((x-(abs(((t*2.5)%16)-8)-4))^2+(y-(abs(((t*2.9)%16)-8)-4))^2+(z-(4.4-((((t*1.2)%4)-2)^2)))^2-0.8)",
-				"(z+.407)*(y-4.9)*(y+4.9)*(x+4.9)",
-				"(x-4.9)"
-			],
-			"Grid": [
-				"25",
-				"15",
-				"5"
-			],
-			"Xmax": [
-				"4.81",
-				"4.91",
-				"4.92"
-			],
-			"Xmin": [
-				"-4.81",
-				"-4.91",
-				"4.88"
-			],
-			"Ymax": [
-				"4.81",
-				"4.91",
-				"4.91"
-			],
-			"Ymin": [
-				"-4.81",
-				"-4.91",
-				"-4.91"
-			],
-			"Zmax": [
-				"5.5",
-				"5.5",
-				"5.5"
-			],
-			"Zmin": [
-				"-.5",
-				"-.41",
-				"-.41"
-			]
+			"Name": ["BouncingBall2"],
+			"Component": ["SphereIso",
+			"ThickWalls",
+			"TransparentWall"],
+			"Fxyz": ["((x-(abs(((t*2.5)%16)-8)-4))^2+(y-(abs(((t*2.9)%16)-8)-4))^2+(z-(4.4-((((t*1.2)%4)-2)^2)))^2-0.8)",
+			"(z+.407)*(y-4.9)*(y+4.9)*(x+4.9)",
+			"(x-4.9)"],
+			"Grid": ["25",
+			"15",
+			"5"],
+			"Xmax": ["4.81",
+			"4.91",
+			"4.92"],
+			"Xmin": ["-4.81",
+			"-4.91",
+			"4.88"],
+			"Ymax": ["4.81",
+			"4.91",
+			"4.91"],
+			"Ymin": ["-4.81",
+			"-4.91",
+			"-4.91"],
+			"Zmax": ["5.5",
+			"5.5",
+			"5.5"],
+			"Zmin": ["-.5",
+			"-.41",
+			"-.41"]
 		}
 	},
 	{
@@ -1634,9 +1379,8 @@
 
 		{"Iso3D":
 		{
-		"Description":["
-			To make thick and closed Schwarz Isosurface,
-			we use the two formulas described above: "],
+		"Description":["TomakethickandclosedSchwarzIsosurface,
+			weusethetwoformulasdescribedabove: "],
 		"Name":["CloseIso_2"],
 		"Component": ["CloseIso_2"],
 		"Fxyz":["if((x^10+y^10+z^10<3*(3.5^10)),
@@ -1661,22 +1405,64 @@
 { 
 "Iso3D": { 
 "Cnd": [ 
-" (sqrt(x^2 + y ^2 + z ^2)) < 8" 
+"(sqrt(x^2+y^2+z^2))<8" 
 ], 
 "Component": [ 
 "DiamondLatice" 
 ], 
 "Const": [ 
-"T = 1", 
-"G = -1" 
+"T=1", 
+"G=-1" 
 ], 
 "Funct": [ 
-"df=(cos(x)*sin(y)*sin(z) + cos(x)*cos(y)*cos(z) - sin(x)*sin(y)*cos(z) - sin(x)*cos(y)*sin(z))", 
-"R=sqrt(( cos(x)*sin(y)*sin(z) + cos(x)*cos(y)*cos(z) - sin(x)*sin(y)*cos(z) - sin(x)*cos(y)*sin(z))^2 + ( cos(y)*sin(z)*sin(x) + cos(y)*cos(z)*cos(x) - sin(y)*sin(z)*cos(x) - sin(y)*cos(z)*sin(x))^2 + ( cos(z)*sin(x)*sin(y) + cos(z)*cos(x)*cos(y) - sin(z)*sin(x)*cos(y) - sin(z)*cos(x)*sin(y))^2)", 
-"Diamond=(sin(x)*sin(y)*sin(z) + sin(x)*cos(y)*cos(z) + cos(x)*sin(y)*cos(z) + cos(x)*cos(y)*sin(z))" 
+"df=(cos(x)*sin(y)*sin(z)+cos(x)*cos(y)*cos(z)-sin(x)*sin(y)*cos(z)-sin(x)*cos(y)*sin(z))", 
+"R=sqrt((cos(x)*sin(y)*sin(z)+cos(x)*cos(y)*cos(z)-sin(x)*sin(y)*cos(z)-sin(x)*cos(y)*sin(z))^2+(cos(y)*sin(z)*sin(x)+cos(y)*cos(z)*cos(x)-sin(y)*sin(z)*cos(x)-sin(y)*cos(z)*sin(x))^2+(cos(z)*sin(x)*sin(y)+cos(z)*cos(x)*cos(y)-sin(z)*sin(x)*cos(y)-sin(z)*cos(x)*sin(y))^2)", 
+"Diamond=(sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z))" 
 ], 
 "Fxyz": [ 
-"Diamond(x-df(x,y,z,t)*T/R(x,y,z,t), y - df(y,z,x,t)*T/R(x,y,z,t), z - df(z,x,y,t)*T/R(x,y,z,t) ,t)* Diamond(x-df(x,y,z,t)*G/R(x,y,z,t), y - df(y,z,x,t)*G/R(x,y,z,t), z - df(z,x,y,t)*G/R(x,y,z,t) ,t)" 
+"Diamond(x-df(x,
+			y,
+			z,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			t)*Diamond(x-df(x,
+			y,
+			z,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			t)" 
 ], 
 "Name": [ 
 "DiamondLatice" 
@@ -1704,22 +1490,64 @@
 { 
 "Iso3D": { 
 "Cnd": [ 
-" (sqrt(x^2 + y ^2 + z ^2)) < 8" 
+"(sqrt(x^2+y^2+z^2))<8" 
 ], 
 "Component": [ 
 "GyroidLatice" 
 ], 
 "Const": [ 
-"T = 1", 
-"G = -1" 
+"T=1", 
+"G=-1" 
 ], 
 "Funct": [ 
-"R=sqrt( (-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2 )", 
+"R=sqrt((-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2)", 
 "df=(-sin(x)*sin(y)+cos(x)*cos(z))", 
-"Gyroid=(cos(x) * sin(y) + cos(y) * sin(z) + cos(z) * sin(x))" 
+"Gyroid=(cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x))" 
 ], 
 "Fxyz": [ 
-"Gyroid(x-df(x,y,z,t)*T/R(x,y,z,t), y - df(y,z,x,t)*T/R(x,y,z,t), z - df(z,x,y,t)*T/R(x,y,z,t) ,t)* Gyroid(x-df(x,y,z,t)*G/R(x,y,z,t), y - df(y,z,x,t)*G/R(x,y,z,t), z - df(z,x,y,t)*G/R(x,y,z,t) ,t)" 
+"Gyroid(x-df(x,
+			y,
+			z,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			t)*Gyroid(x-df(x,
+			y,
+			z,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			t)" 
 ], 
 "Name": [ 
 "GyroidLatice" 
@@ -1747,22 +1575,73 @@
 {
     "Iso3D": {
         "Cnd": [
-            " (sqrt(x^2 + y ^2 + z ^2)) < 9"
+            "(sqrt(x^2+y^2+z^2))<9"
         ],
         "Component": [
             "NeoviusLatice"
         ],
         "Const": [
-            "T = .3",
-            "G = -.3"
+            "T=.3",
+            "G=-.3"
         ],
         "Funct": [
-            "df=(-3*sin(x) -4*sin(x)*cos(y)*cos(z))",
-            "R=sqrt( df(x,y,z,t)^2 + df(y,z,x,t)^2 + df(z,y,x,t)^2)",
+            "df=(-3*sin(x)-4*sin(x)*cos(y)*cos(z))",
+            "R=sqrt(df(x,
+			y,
+			z,
+			t)^2+df(y,
+			z,
+			x,
+			t)^2+df(z,
+			y,
+			x,
+			t)^2)",
             "Neovius=(3*(cos(x)+cos(y)+cos(z))+4*cos(x)*cos(y)*cos(z))"
         ],
         "Fxyz": [
-            "Neovius(x-df(x,y,z,t)*T/R(x,y,z,t),  y - df(y,z,x,t)*T/R(x,y,z,t),  z - df(z,x,y,t)*T/R(x,y,z,t) ,t)*  Neovius(x-df(x,y,z,t)*G/R(x,y,z,t),  y - df(y,z,x,t)*G/R(x,y,z,t),  z - df(z,x,y,t)*G/R(x,y,z,t) ,t)"
+            "Neovius(x-df(x,
+			y,
+			z,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			t)*Neovius(x-df(x,
+			y,
+			z,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			t)"
         ],
         "Name": [
             "NeoviusLatice"
@@ -1793,22 +1672,73 @@
 "LinoidLatice" 
 ], 
 "Cnd": [ 
-" (sqrt(x^2 + y ^2 + z ^2)) < 3" 
+"(sqrt(x^2+y^2+z^2))<3" 
 ], 
 "Component": [ 
 "LinoidLatice" 
 ], 
 "Const": [ 
-"T = .05", 
-"G = -.05" 
+"T=.05", 
+"G=-.05" 
 ], 
 "Funct": [ 
-"df=((1/2)*(2*cos(2*x)*cos(y)*sin(z) + sin(2*y)*cos(z)*cos(x) - sin(2*z)*sin(x)*sin(y)) -(1/2)*(-2*sin(2*x)*cos(2*y) - 2*cos(2*z)*sin(2*x)))", 
-"R=sqrt( df(x,y,z,t)^2 + df(y,z,x,t)^2 + df(z,y,x,t)^2)", 
-"Linoid=((1/2)*(sin(2*x)*cos(y)*sin(z) + sin(2*y)*cos(z)*sin(x)+ sin(2*z)*cos(x)*sin(y)) -(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0.15)" 
+"df=((1/2)*(2*cos(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*cos(x)-sin(2*z)*sin(x)*sin(y))-(1/2)*(-2*sin(2*x)*cos(2*y)-2*cos(2*z)*sin(2*x)))", 
+"R=sqrt(df(x,
+			y,
+			z,
+			t)^2+df(y,
+			z,
+			x,
+			t)^2+df(z,
+			y,
+			x,
+			t)^2)", 
+"Linoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0.15)" 
 ], 
 "Fxyz": [ 
-"Linoid(x-df(x,y,z,t)*T/R(x,y,z,t), y - df(y,z,x,t)*T/R(x,y,z,t), z - df(z,x,y,t)*T/R(x,y,z,t) ,t)* Linoid(x-df(x,y,z,t)*G/R(x,y,z,t), y - df(y,z,x,t)*G/R(x,y,z,t), z - df(z,x,y,t)*G/R(x,y,z,t) ,t)" 
+"Linoid(x-df(x,
+			y,
+			z,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*T/R(x,
+			y,
+			z,
+			t),
+			t)*Linoid(x-df(x,
+			y,
+			z,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			y-df(y,
+			z,
+			x,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			z-df(z,
+			x,
+			y,
+			t)*G/R(x,
+			y,
+			z,
+			t),
+			t)" 
 ], 
 "Xmax": [ 
 "3" 
@@ -1836,7 +1766,7 @@
 "Lidinoid"
 ],
 "Description": [
-"Sven Lidin and Stefan Larsson"
+"SvenLidinandStefanLarsson"
 ],
 "Fxyz": [
 "-((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0.15)"
@@ -1872,29 +1802,29 @@
         "Component": [
             "G_SkeletalGraph"
         ],
-        "Description ": [
-            "Gyroid Skeletal Graph"
+        "Description": [
+            "GyroidSkeletalGraph"
         ],
         "Fxyz": [
             "cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)+0.08*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+1.47"
         ],
         "Xmax": [
-            " 2.75*pi"
+            "2.75*pi"
         ],
         "Xmin": [
-            "-0.25*pi "
+            "-0.25*pi"
         ],
         "Ymax": [
-            " 2.75*pi"
+            "2.75*pi"
         ],
         "Ymin": [
-            "-0.25*pi "
+            "-0.25*pi"
         ],
         "Zmax": [
-            " 2.75*pi"
+            "2.75*pi"
         ],
         "Zmin": [
-            "-0.25*pi "
+            "-0.25*pi"
         ]
     }
 },
@@ -1906,29 +1836,29 @@
         "Component": [
             "D_SkeletalGraph"
         ],
-        "Description ": [
-            "Diamond Skeletal Graph"
+        "Description": [
+            "DiamondSkeletalGraph"
         ],
         "Fxyz": [
             "sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-0.07*(cos(4*x)+cos(4*y)+cos(4*z))+1.17"
         ],
         "Xmax": [
-            " 2.75*pi"
+            "2.75*pi"
         ],
         "Xmin": [
-            "-0.25*pi "
+            "-0.25*pi"
         ],
         "Ymax": [
-            " 2.75*pi"
+            "2.75*pi"
         ],
         "Ymin": [
-            "-0.25*pi "
+            "-0.25*pi"
         ],
         "Zmax": [
-            " 2.75*pi"
+            "2.75*pi"
         ],
         "Zmin": [
-            "-0.25*pi "
+            "-0.25*pi"
         ]
     }
 },
@@ -1940,29 +1870,29 @@
         "Component": [
             "P_SkeletalGraph"
         ],
-        "Description ": [
-            "Schwarz (Primitive) Skeletal Graph"
+        "Description": [
+            "Schwarz(Primitive)SkeletalGraph"
         ],
         "Fxyz": [
             "cos(x)+cos(y)+cos(z)+0.51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1.47"
         ],
         "Xmax": [
-            " 4*pi"
+            "4*pi"
         ],
         "Xmin": [
-            "0 "
+            "0"
         ],
         "Ymax": [
-            " 4*pi"
+            "4*pi"
         ],
         "Ymin": [
-            "0 "
+            "0"
         ],
         "Zmax": [
-            " 4*pi"
+            "4*pi"
         ],
         "Zmin": [
-            "0 "
+            "0"
         ]
     }
 },
@@ -1974,36 +1904,36 @@
         "Component": [
             "W_SkeletalGraph"
         ],
-        "Description ": [
-            "iWP Skeletal Graph"
+        "Description": [
+            "iWPSkeletalGraph"
         ],
         "Fxyz": [
             "cos(2*x)+cos(2*y)+cos(2*z)-1.95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2.8"
         ],
         "Xmax": [
-            " 4*pi"
+            "4*pi"
         ],
         "Xmin": [
-            "0 "
+            "0"
         ],
         "Ymax": [
-            " 4*pi"
+            "4*pi"
         ],
         "Ymin": [
-            "0 "
+            "0"
         ],
         "Zmax": [
-            " 4*pi"
+            "4*pi"
         ],
         "Zmin": [
-            "0 "
+            "0"
         ]
     }
 },
 {
     "Iso3D": {
         "Description": [
-            "Constructive Solid Geometry (CSG) with mathematics"
+            "ConstructiveSolidGeometry(CSG)withmathematics"
         ],
         "Name": [
             "CSGSpheres"
@@ -2015,9 +1945,12 @@
         ],
 
         "Fxyz": [
-            "((x-0.7)*(x-0.7)+y*y+z*z-1)*min((x-0.7)*(x-0.7)+y*y+z*z-1,(x+0.3)*(x+0.3)+y*y+z*z-1)+0.02",
-            "min((x-4.7)*(x-4.7)+y*y+z*z-1,(x-3.5)*(x-3.5)+y*y+z*z-1)",
-            "max((x-0.7)*(x-0.7)+y*y+z*z-1,(x-2.)*(x-2.)+y*y+z*z-1)"
+            "((x-0.7)*(x-0.7)+y*y+z*z-1)*min((x-0.7)*(x-0.7)+y*y+z*z-1,
+			(x+0.3)*(x+0.3)+y*y+z*z-1)+0.02",
+            "min((x-4.7)*(x-4.7)+y*y+z*z-1,
+			(x-3.5)*(x-3.5)+y*y+z*z-1)",
+            "max((x-0.7)*(x-0.7)+y*y+z*z-1,
+			(x-2.)*(x-2.)+y*y+z*z-1)"
         ],
         "Xmax": [
             "0.5",
@@ -2065,14 +1998,29 @@
             "b=1",
             "c=-1",
             "d=4",
-            "R=(a^2 + b^2 + c^2)"
+            "R=(a^2+b^2+c^2)"
         ],
         "Funct": [
-            "Torus = ((sqrt(x*x+y*y)-3)^2 + z*z -1)",
-            "P = (a*x+b*y+c*z+d)"
+            "Torus=((sqrt(x*x+y*y)-3)^2+z*z-1)",
+            "P=(a*x+b*y+c*z+d)"
         ],
         "Fxyz": [
-            "Torus(x,y,z+1,t)*Torus(x-2*P(x,y,z,t)*a/R,y-2*P(x,y,z,t)*b/R,z+1-2*P(x,y,z,t)*c/R,t)",
+            "Torus(x,
+			y,
+			z+1,
+			t)*Torus(x-2*P(x,
+			y,
+			z,
+			t)*a/R,
+			y-2*P(x,
+			y,
+			z,
+			t)*b/R,
+			z+1-2*P(x,
+			y,
+			z,
+			t)*c/R,
+			t)",
             "y+4-z"
         ],
         "Xmax": [
@@ -2100,13 +2048,27 @@
             "-4"
         ],
        "Description": [
-"Given an isosurface (F) and a Plan (P) , we can define a new isosurface (G) that is the 'mirrored' projection of (F), by using the formula:G(x,y,z) = F(x - 2*P(x,y,z)*a/R, y - 2*P(x,y,z)*b/R, z - 2*P(x,y,z)*c/R) Where : P(x,y,z) = ax+by+cz+d (Equation of the Plan) R = (a^2 + b^2 + c^2)This example shows the result for a Torus (F) and a Plan (P=y-z+4) "
+"Givenanisosurface(F)andaPlan(P),
+			wecandefineanewisosurface(G)thatisthe'mirrored'projectionof(F),
+			byusingtheformula: G(x,
+			y,
+			z)=F(x-2*P(x,
+			y,
+			z)*a/R,
+			y-2*P(x,
+			y,
+			z)*b/R,
+			z-2*P(x,
+			y,
+			z)*c/R)Where: P(x,
+			y,
+			z)=ax+by+cz+d(EquationofthePlan)R=(a^2+b^2+c^2)ThisexampleshowstheresultforaTorus(F)andaPlan(P=y-z+4)"
         ]
     }
 },
 {"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Klein"],
 		"Component":["Klein_1","Klein_2"],
 		"Fx":["4*(1-cos(u)/2)*cos(u)*cos(v)+6*cos(u)*(1+sin(u))","4*(1-cos(u)/2)*cos(v+pi)+6*cos(u)*(1+sin(u))"],
@@ -2118,12 +2080,14 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Klein_1"],
 		"Component": ["Klein_1"],
-		"Funct": [" KleinFunction=(3*(1+sin(v))+2*(1-cos(v)/2)*cos(u))*cos(v)"],
-		"Const": [" T1=2"],
-		"Fx":["KleinFunction(u,v,t)"],
+		"Funct": ["KleinFunction=(3*(1+sin(v))+2*(1-cos(v)/2)*cos(u))*cos(v)"],
+		"Const": ["T1=2"],
+		"Fx":["KleinFunction(u,
+			v,
+			t)"],
 		"Fy":["(4+2*(1-cos(v)/2)*cos(u))*sin(v)"],
 		"Fz":["-2*(1-cos(v)/2)*sin(u)"],
 		"Umin":["0"] , "Umax":["2*pi"],
@@ -2132,7 +2096,7 @@
 
 		{"Param4D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["4DTorus"],
 		"Component": ["4DTorus"],
 		"Fx":["sin(u)"],
@@ -2146,7 +2110,7 @@
 		{
 			"Param4D": {
 				"Description": [
-					"Description of the model"
+					"Descriptionofthemodel"
 				],
                 "Component":["4DTorus4D","4DPTorus","4DCliffordTorus"],
 				"Fw": [
@@ -2200,25 +2164,25 @@
             "Shell"
         ],
         "Cnd": [
-            "(x^2 + y^2) > 2.0"
+            "(x^2+y^2)>2.0"
         ],
         "Varu": [
-            " A=(u-4*sin(3.14/10))^2",
-            " B=(u-2*cos(3.14/10))^2",
-            " C=(u-2*sin(3.14)-4*sin(3.14/10))^2",
-            " D=(u-2*cos(3.14)-2*cos(3.14/10))^2"
+            "A=(u-4*sin(3.14/10))^2",
+            "B=(u-2*cos(3.14/10))^2",
+            "C=(u-2*sin(3.14)-4*sin(3.14/10))^2",
+            "D=(u-2*cos(3.14)-2*cos(3.14/10))^2"
         ],
         "Funct": [
-            " Schwarz1=cos(u)",
-            " Schwarz2=cos(u) + sin(v)"
+            "Schwarz1=cos(u)",
+            "Schwarz2=cos(u)+sin(v)"
         ],
         "Component": [
             "Shell"
         ],
         "Const": [
-            "r = (1/4)*(1+3*sqrt(5))",
-            "a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
-            "c = (1/2)*sqrt(5-sqrt(5))"
+            "r=(1/4)*(1+3*sqrt(5))",
+            "a=-(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
+            "c=(1/2)*sqrt(5-sqrt(5))"
         ],
         "Fx": [
             "1.2^v*(sin(u)^2*sin(v))"
@@ -2246,7 +2210,7 @@
 ,
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Torus"],
 		"Component": ["Torus"],
 		"Fx":["(1+0.5*cos(u))*cos(v)"],
@@ -2258,7 +2222,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Cosinus"],
 		"Component": ["Cosinus"],
 		"Fx":["u"],
@@ -2270,7 +2234,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Moebius"],
 		"Component": ["Moebius"],
 		"Fx":["cos(v)+u*cos(v/2)*cos(v)"],
@@ -2282,7 +2246,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Riemann"],
 		"Component": ["Riemann"],
 		"Fx":["u*v"],
@@ -2294,7 +2258,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Klein_2"],
 		"Component": ["Klein_2"],
 		"Fx":["(2+cos(v/2)*sin(u)-sin(v/2)*sin(2*u))*cos(v)"],
@@ -2306,7 +2270,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Henneberg"],
 		"Component": ["Henneberg"],
 		"Fx":["2*sinh(u)*cos(v)-(2/3)*sinh(3*u)*cos(3*v)"],
@@ -2318,7 +2282,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Enneper"],
 		"Component": ["Enneper"],
 		"Fx":["u-u^3/3+u*v^2"],
@@ -2330,7 +2294,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Helix"],
 		"Component": ["Helix"],
 		"Fx":["(1-0.1*cos(v))*cos(u)"],
@@ -2342,7 +2306,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Hexaedron"],
 		"Component": ["Hexaedron"],
 		"Fx":["cos(v)^3*cos(u)^3"],
@@ -2354,7 +2318,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere"],
 		"Component": ["Sphere"],
 		"Fx":["cos(u)*cos(v)"],
@@ -2366,7 +2330,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Catalan"],
 		"Component": ["Catalan"],
 		"Fx":["u-sin(u)*cosh(v)"],
@@ -2378,7 +2342,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Toupie"],
 		"Component": ["Toupie"],
 		"Fx":["(abs(u)-1)^2*cos(v)"],
@@ -2390,7 +2354,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Trumpet"],
 		"Component": ["Trumpet"],
 		"Fx":["cos(u)*sin(v)"],
@@ -2402,7 +2366,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Bonbon"],
 		"Component": ["Bonbon"],
 		"Fx":["u"],
@@ -2414,7 +2378,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Kuen"],
 		"Component": ["Kuen"],
 		"Fx":["(2*(cos(u)+u*sin(u))*sin(v))/(1+u^2*sin(v)^2)"],
@@ -2426,7 +2390,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Catenoid"],
 		"Component": ["Catenoid"],
 		"Fx":["2*cosh(v/2)*cos(u)"],
@@ -2438,7 +2402,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Shoe"],
 		"Component": ["Shoe"],
 		"Fx":["u"],
@@ -2450,7 +2414,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Helicoidal"],
 		"Component": ["Helicoidal"],
 		"Fx":["sinh(v)*sin(u)"],
@@ -2462,7 +2426,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Cresent"],
 		"Component": ["Cresent"],
 		"Fx":["(2+sin(2*pi*u)*sin(2*pi*v))*sin(3*pi*v)"],
@@ -2474,7 +2438,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
         "Name":["HyperbolicHelicoid"],
         "Component": ["HyperbolicHelicoid"],
 		"Fx":["(sinh(v)*cos(3*u))/(1+cosh(u)*cosh(v))"],
@@ -2486,7 +2450,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Roman"],
 		"Component": ["Roman"],
 		"Fx":["1/2*sin(2*u)*sin(v)^2"],
@@ -2498,7 +2462,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Snake"],
 		"Component": ["Snake"],
 		"Fx":["1.2*(1-v/(2*pi))*cos(3*v)*(1+cos(u))+3*cos(3*v)"],
@@ -2510,7 +2474,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Horn"],
 		"Component": ["Horn"],
 		"Fx":["(2+u*cos(v))*sin(2*pi*u)"],
@@ -2522,7 +2486,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Fresnel_1"],
 		"Component": ["Fresnel_1"],
 		"Fx":["cos(u)*cos(v)/(-2.*sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0.941/6.+0.374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1.309/6.*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1.221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)+pi)/3.)+0.8)"],
@@ -2534,7 +2498,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Steiner"],
 		"Component": ["Steiner"],
 		"Fx":["(sin(2*u)*cos(v)*cos(v))"],
@@ -2546,7 +2510,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Cross_cap"],
 		"Component": ["Cross_cap"],
 		"Fx":["(sin(u)*sin(2*v)/2)"],
@@ -2558,7 +2522,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Fresnel_2"],
 		"Component": ["Fresnel_2"],
 		"Fx":["cos(u)*cos(v)/(-2.*sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0.941/6.+0.374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1.309/6.*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1.221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3.)+0.8)"],
@@ -2570,7 +2534,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Cliffordtorus"],
 		"Component": ["Cliffordtorus"],
 		"Fx":["cos(u+v)/(sqrt(2.)+cos(v-u))"],
@@ -2582,7 +2546,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Stereosphere"],
 		"Component": ["Stereosphere"],
 		"Fx":["2.*u/(u*u+v*v+1.)"],
@@ -2594,7 +2558,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Enneper_2"],
 		"Component": ["Enneper_2"],
 		"Fx":["u*cos(v)-u^3/3*cos(3*v)"],
@@ -2606,7 +2570,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Maeder's_Owl"],
 		"Component": ["Maeder's_Owl"],
 		"Fx":["v*cos(u)-0.5*v^2*cos(2*u)"],
@@ -2618,7 +2582,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Boy"],
 		"Component": ["Boy"],
 		"Fx":["2/3*(cos(u)*cos(2*v)+sqrt(2)*sin(u)*cos(v))*cos(u)/(sqrt(2)-sin(2*u)*sin(3*v))"],
@@ -2630,7 +2594,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Dini"],
 		"Component": ["Dini"],
 		"Fx":["cos(u)*sin(v)"],
@@ -2642,7 +2606,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["EightSurface"],
 		"Component": ["EightSurface"],
 		"Fx":["cos(u)*sin(2*v)"],
@@ -2654,7 +2618,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Hellipticparaboloid"],
 		"Component": ["Hellipticparaboloid"],
 		"Fx":["v*2*cos(u)"],
@@ -2666,7 +2630,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Plan"],
 		"Component": ["Plan"],
 		"Fx":["u"],
@@ -2678,7 +2642,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Apple"],
 		"Component": ["Apple"],
 		"Fx":["cos(u)*(4+3.8*cos(v))"],
@@ -2690,7 +2654,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Drop"],
 		"Component": ["Drop"],
 		"Fx":["u*cos(v)"],
@@ -2702,7 +2666,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Cone"],
 		"Component": ["Cone"],
 		"Fx":["u*cos(v)"],
@@ -2714,7 +2678,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Kinky_Torus"],
 		"Component": ["Kinky_Torus"],
 		"Fx":["1/cosh(u)-cos(v)"],
@@ -2726,7 +2690,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Kidney"],
 		"Component": ["Kidney"],
 		"Fx":["cos(u)*(3*cos(v)-cos(3*v))"],
@@ -2738,7 +2702,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Triaxial_Hexatorus"],
 		"Component": ["Triaxial_Hexatorus"],
 		"Fx":["sin(u)/(sqrt(2)+cos(v))"],
@@ -2750,7 +2714,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Limpet_Torus"],
 		"Component": ["Limpet_Torus"],
 		"Fx":["cos(u)/(sqrt(2)+sin(v))"],
@@ -2762,7 +2726,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Twisted_Triaxial"],
 		"Component": ["Twisted_Triaxial"],
 		"Fx":["(1-sqrt(u*u+v*v)/sqrt(2*pi*pi))*cos(u)*cos(v)+sqrt(u*u+v*v)/sqrt(2*pi*pi)*sin(u)*sin(v)"],
@@ -2774,7 +2738,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Snail"],
 		"Component": ["Snail"],
 		"Fx":["u*cos(v)*sin(u)"],
@@ -2786,19 +2750,19 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Implicit_Lemniscape"],
 		"Component": ["Implicit_Lemniscape"],
 		"Fx":["cos(v)*sqrt(abs(sin(2*u)))*cos(u)"],
 		"Fy":["cos(v)*sqrt(abs(sin(2*u)))*sin(u)"],
-		"Fz":["(cos(v)*sqrt(abs(sin(2*u)))*cos(u))^2 - (cos(v)*sqrt(abs(sin(2*u)))*sin(u))^2 + 2*(cos(v)*sqrt(abs(sin(2*u)))*cos(u))*(cos(v)*sqrt(abs(sin(2*u)))*sin(u))*(tan(v)^2)"],
+		"Fz":["(cos(v)*sqrt(abs(sin(2*u)))*cos(u))^2-(cos(v)*sqrt(abs(sin(2*u)))*sin(u))^2+2*(cos(v)*sqrt(abs(sin(2*u)))*cos(u))*(cos(v)*sqrt(abs(sin(2*u)))*sin(u))*(tan(v)^2)"],
 		"Umin":["0"] , "Umax":["pi"],
 		"Vmin":["0"] , "Vmax":["pi"]
 		}},
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Bent_Horns"],
 		"Component": ["Bent_Horns"],
 		"Fx":["(2+cos(u))*(v/3-sin(v))"],
@@ -2810,7 +2774,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Folium"],
 		"Component": ["Folium"],
 		"Fx":["cos(u)*(2*v/pi-tanh(v))"],
@@ -2822,7 +2786,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Heart"],
 		"Component": ["Heart"],
 		"Fx":["cos(u)*(4*sqrt(1-v^2)*sin(abs(u))^abs(u))"],
@@ -2834,7 +2798,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Cube"],
 		"Component": ["Cube"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)"],
@@ -2846,7 +2810,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Prism"],
 		"Component": ["Prism"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(3*v/4))^500+abs(sin(3*v/4))^500)^(-1/260)*(abs(cos(4*u/4))^200+abs(sin(4*u/4))^200)^(-1/200)"],
@@ -2858,7 +2822,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Hexagon"],
 		"Component": ["Hexagon"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(4*u/4))^300+abs(sin(4*u/4))^300)^(-1/300)*(abs(cos(6*v/4))^400+abs(sin(6*v/4))^400)^(-1/1000)"],
@@ -2870,7 +2834,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Cone"],
 		"Component": ["Cone"],
 		"Fx":["u*cos(v)"],
@@ -2882,7 +2846,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Diamond"],
 		"Component": ["Diamond"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(4*u/4))^1+abs(sin(4*u/4))^1)^(-1/1)*(abs(cos(4*v/4))^1+abs(sin(4*v/4))^1)^(-1/1)"],
@@ -2894,7 +2858,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Star"],
 		"Component": ["Star"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(1*u/4))^0.5+abs(sin(1*u/4))^0.5)^(-1/0.3)*(abs(cos(5*v/4))^1.7+abs(sin(5*v/4))^1.7)^(-1/0.1)"],
@@ -2906,7 +2870,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Star_7"],
 		"Component": ["Star_7"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(7*v/4))^1.7+abs(sin(7*v/4))^1.7)^(-1/0.2)*(abs(cos(7*u/4))^1.7+abs(sin(7*u/4))^1.7)^(-1/0.2)"],
@@ -2918,7 +2882,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Shape_8"],
 		"Component": ["Shape_8"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(3*u/4))^100+abs(sin(3*u/4))^100)^(-1/100)*(abs(cos(2*v/4))^0.3+abs(sin(2*v/4))^0.2)^(-1/0.7)"],
@@ -2930,7 +2894,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Shape_9"],
 		"Component": ["Shape_9"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(2*u/4))^10+abs(sin(2*u/4))^10)^(-1/10)*(abs(cos(8*v/4))^100+abs(sin(8*v/4))^30)^(-1/60)"],
@@ -2942,7 +2906,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Shape_10"],
 		"Component": ["Shape_10"],
 		"Fx":["cos(u)*cos(v)*(abs(cos(3*u/4))^1+abs(sin(3*u/4))^1)^(-1/1)*(abs(cos(6*v/4))^1+abs(sin(6*v/4))^1)^(-1/1)"],
@@ -2954,7 +2918,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_1"],
 		"Component": ["Sphere_1"],
 		"Fx":["cos(u)*cos(v)"],
@@ -2966,7 +2930,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_2"],
 		"Component": ["Sphere_2"],
 		"Fx":["cos(u)*cos(v)"],
@@ -2978,7 +2942,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_3"],
 		"Component": ["Sphere_3"],
 		"Fx":["cos(u)*cos(v)"],
@@ -2990,7 +2954,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_4"],
 		"Component": ["Sphere_4"],
 		"Fx":["cos(u)*cos(v)"],
@@ -3002,7 +2966,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_5"],
 		"Component": ["Sphere_5"],
 		"Fx":["cos(u)*cos(v)*sin(v)"],
@@ -3014,7 +2978,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_6"],
 		"Component": ["Sphere_6"],
 		"Fx":["cos(u)*cos(v)*sin(u)"],
@@ -3026,7 +2990,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_7"],
 		"Component": ["Sphere_7"],
 		"Fx":["cos(u)*cos(v)*sin(u)"],
@@ -3038,7 +3002,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_8"],
 		"Component": ["Sphere_8"],
 		"Fx":["cos(u)*cos(v)*sin(u)"],
@@ -3050,7 +3014,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_9"],
 		"Component": ["Sphere_9"],
 		"Fx":["cos(u)*cos(v)*sin(u)"],
@@ -3062,7 +3026,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Sphere_10"],
 		"Component": ["Sphere_10"],
 		"Fx":["cos(u)*cos(v)*sin(u)*sin(v)*sin(v)*sin(v)"],
@@ -3074,7 +3038,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Curve"],
 		"Component": ["Curve"],
 		"Fx":["cos(2*u)"],
@@ -3086,7 +3050,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Helice_Curve"],
 		"Component": ["Helice_Curve"],
 		"Fx":["sin(u)"],
@@ -3098,7 +3062,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Pseudo_Sphere"],
 		"Component": ["Pseudo_Sphere"],
 		"Fx":["cos(u)*cos(v)+sin((sin(u)+1)*2*pi)"],
@@ -3110,7 +3074,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Pseudo_Catenoid"],
 		"Component": ["Pseudo_Catenoid"],
 		"Fx":["2.2*(2*cosh(v/2)*cos(u))"],
@@ -3122,7 +3086,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Pseudo_Helix"],
 		"Component": ["Pseudo_Helix"],
 		"Fx":["0.717627*((1-0.1*cos(v))*cos(u)*cos(((1-0.1*cos(v))*sin(u)--1.1)*2*pi*0.2/2.2)-0.1*(sin(v)+u/1.7-10)*sin(((1-0.1*cos(v))*sin(u)--1.1)*2*pi*0.2/2.2))"],
@@ -3134,7 +3098,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Pseudo_Cone"],
 		"Component": ["Pseudo_Cone"],
 		"Fx":["u*cos(v)"],
@@ -3146,7 +3110,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Pseudo_Hexagon"],
 		"Component": ["Pseudo_Hexagon"],
 		"Fx":["1.7*(cos(u)*cos(v)*(abs(cos(4*u/4))^300+abs(sin(4*u/4))^300)^(-1/300)*(abs(cos(6*v/4))^400+abs(sin(6*v/4))^400)^(-1/1000))"],
@@ -3158,7 +3122,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Pseudo_Cube"],
 		"Component": ["Pseudo_Cube"],
 		"Fx":["0.848528*(cos(u)*cos(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)*cos((1.6*(sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100))--1.6)*2*pi*0.3/3.2)-cos(u)*sin(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)*sin((1.6*(sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100))--1.6)*2*pi*0.3/3.2))"],
@@ -3170,7 +3134,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Pseudo_Torus"],
 		"Component": ["Pseudo_Torus"],
 		"Fx":["(1+0.5*cos(u))*cos(v)"],
@@ -3182,7 +3146,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Hurricane"],
 		"Component": ["Hurricane"],
 		"Fx":["1*(2*cosh(v/2)*cos(u)*cos((2.1*(2*cosh(v/2)*sin(u)*sin((2*cosh(v/2)*cos(u)--5.01836)*2*pi*0/10.0367)+2*(v)*cos((2*cosh(v/2)*cos(u)--5.01836)*2*pi*0/10.0367))--13.1947)*2*pi*1.5/26.3894)-2.1*(2*cosh(v/2)*sin(u)*cos((2*cosh(v/2)*cos(u)--5.01836)*2*pi*0/10.0367)-2*(v)*sin((2*cosh(v/2)*cos(u)--5.01836)*2*pi*0/10.0367))*sin((2.1*(2*cosh(v/2)*sin(u)*sin((2*cosh(v/2)*cos(u)--5.01836)*2*pi*0/10.0367)+2*(v)*cos((2*cosh(v/2)*cos(u)--5.01836)*2*pi*0/10.0367))--13.1947)*2*pi*1.5/26.3894))"],
@@ -3194,7 +3158,7 @@
 
 		{"Param3D":
 		{
-		"Description":["Description of the model"],
+		"Description":["Descriptionofthemodel"],
 		"Name":["Breather"],
 		"Component": ["Breather"],
 		"Fx":["(2*sqrt(0.84)*cosh(0.4*u)*(-(sqrt(0.84)*cos(v)*cos(sqrt(0.84)*v))-sin(v)*sin(sqrt(0.84)*v)))/(0.4*((sqrt(0.84)*cosh(0.4*u))^2+(0.4*sin(sqrt(0.84)*v))^2))"],
@@ -3207,24 +3171,63 @@
 {
     "Param3D": {
 	"Description":[
-		"	Making 'Thick' parametric surfaces:
-			We can give some thickness to a parametric surface (F) by defining a 
-			second parametric surface (G) with the formula: 
-			'Gx': ('Fx(u,v,t) + T*n1(u,v,t)/R(u,v,t)')
-			'Gy': ('Fy(u,v,t) + T*n2(u,v,t)/R(u,v,t)') 
-			'Gz': ('Fz(u,v,t) + T*n3(u,v,t)/R(u,v,t)') 
-			Where T = Thickness value; 
-			'n1 = (a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))', 
-			'n2 = (a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))', 
-			'n3 = (a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))', 
-			'R = sqrt(n1(u,v,t)^2 + n2(u,v,t)^2 + n3(u,v,t)^2)'
-			' a1 = dFx/du', 
-			' a2 = dFy/du', 
-			' a3 = dFz/du', 
-			' b1 = dFx/dv', 
-			' b2 = dFy/dv', 
-			' b3 = dFz/dv'
-		"
+		"Making'Thick'parametricsurfaces: Wecangivesomethicknesstoaparametricsurface(F)bydefiningasecondparametricsurface(G)withtheformula: 'Gx': ('Fx(u,
+			v,
+			t)+T*n1(u,
+			v,
+			t)/R(u,
+			v,
+			t)')'Gy': ('Fy(u,
+			v,
+			t)+T*n2(u,
+			v,
+			t)/R(u,
+			v,
+			t)')'Gz': ('Fz(u,
+			v,
+			t)+T*n3(u,
+			v,
+			t)/R(u,
+			v,
+			t)')WhereT=Thicknessvalue;'n1=(a2(u,
+			v,
+			t)*b3(u,
+			v,
+			t)-a3(u,
+			v,
+			t)*b2(u,
+			v,
+			t))',
+			'n2=(a3(u,
+			v,
+			t)*b1(u,
+			v,
+			t)-a1(u,
+			v,
+			t)*b3(u,
+			v,
+			t))',
+			'n3=(a1(u,
+			v,
+			t)*b2(u,
+			v,
+			t)-a2(u,
+			v,
+			t)*b1(u,
+			v,
+			t))',
+			'R=sqrt(n1(u,
+			v,
+			t)^2+n2(u,
+			v,
+			t)^2+n3(u,
+			v,
+			t)^2)''a1=dFx/du',
+			'a2=dFy/du',
+			'a3=dFz/du',
+			'b1=dFx/dv',
+			'b2=dFy/dv',
+			'b3=dFz/dv'"
 		],
         "Name": [
             "ThickParametricTorus"
@@ -3237,34 +3240,94 @@
             "T=1.3"
         ],
         "Funct": [
-            "Fx = (1+0.5*cos(u))*cos(v)",
-            "Fy = (1+0.5*cos(u))*sin(v)",
-            "Fz = 0.5*sin(u)",
-            "a1 = (-0.5*sin(u)*cos(v))",
-            "a2 = (-0.5*sin(u)*sin(v))",
-            "a3 = (0.5*cos(u))",
-            "b1 = (-(1+0.5*cos(u))*sin(v))",
-            "b2 = ((1+0.5*cos(u))*cos(v))",
-            "b3 = 0",
-            "n1 = (a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))",
-            "n2 = (a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))",
-            "n3 = (a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))",
-            "R = sqrt(n1(u,v,t)^2 + n2(u,v,t)^2 + n3(u,v,t)^2)",
-            "Gx = Fx(u,v,t) + T*n1(u,v,t)/R(u,v,t)",
-            "Gy = Fy(u,v,t) + T*n2(u,v,t)/R(u,v,t)",
-            "Gz = Fz(u,v,t) + T*n3(u,v,t)/R(u,v,t)"
+            "Fx=(1+0.5*cos(u))*cos(v)",
+            "Fy=(1+0.5*cos(u))*sin(v)",
+            "Fz=0.5*sin(u)",
+            "a1=(-0.5*sin(u)*cos(v))",
+            "a2=(-0.5*sin(u)*sin(v))",
+            "a3=(0.5*cos(u))",
+            "b1=(-(1+0.5*cos(u))*sin(v))",
+            "b2=((1+0.5*cos(u))*cos(v))",
+            "b3=0",
+            "n1=(a2(u,
+			v,
+			t)*b3(u,
+			v,
+			t)-a3(u,
+			v,
+			t)*b2(u,
+			v,
+			t))",
+            "n2=(a3(u,
+			v,
+			t)*b1(u,
+			v,
+			t)-a1(u,
+			v,
+			t)*b3(u,
+			v,
+			t))",
+            "n3=(a1(u,
+			v,
+			t)*b2(u,
+			v,
+			t)-a2(u,
+			v,
+			t)*b1(u,
+			v,
+			t))",
+            "R=sqrt(n1(u,
+			v,
+			t)^2+n2(u,
+			v,
+			t)^2+n3(u,
+			v,
+			t)^2)",
+            "Gx=Fx(u,
+			v,
+			t)+T*n1(u,
+			v,
+			t)/R(u,
+			v,
+			t)",
+            "Gy=Fy(u,
+			v,
+			t)+T*n2(u,
+			v,
+			t)/R(u,
+			v,
+			t)",
+            "Gz=Fz(u,
+			v,
+			t)+T*n3(u,
+			v,
+			t)/R(u,
+			v,
+			t)"
         ],
         "Fx": [
-            "Fx(u,v,t)",
-            "Gx(u,v,t)"
+            "Fx(u,
+			v,
+			t)",
+            "Gx(u,
+			v,
+			t)"
         ],
         "Fy": [
-            "Fy(u,v,t)",
-            "Gy(u,v,t)"
+            "Fy(u,
+			v,
+			t)",
+            "Gy(u,
+			v,
+			t)"
         ],
         "Fz": [
-            "Fz(u,v,t)",
-            "Gz(u,v,t)"
+            "Fz(u,
+			v,
+			t)",
+            "Gz(u,
+			v,
+			t)"
         ],
         "Umax": [
             "2*pi",
@@ -3293,13 +3356,13 @@
             "HelicoidCatenoid"
         ],
         "Fx": [
-            "cos(2*t*pi)*sinh(v)*sin(u) + sin(2*t*pi)*cosh(v)*cos(u)"
+            "cos(2*t*pi)*sinh(v)*sin(u)+sin(2*t*pi)*cosh(v)*cos(u)"
         ],
         "Fy": [
-            "-cos(2*t*pi)*sinh(v)*cos(u) + sin(2*t*pi)*cosh(v)*sin(u)"
+            "-cos(2*t*pi)*sinh(v)*cos(u)+sin(2*t*pi)*cosh(v)*sin(u)"
         ],
         "Fz": [
-            "3*(u*cos(2*t*pi) + v*sin(2*t*pi))"
+            "3*(u*cos(2*t*pi)+v*sin(2*t*pi))"
         ],
         "Umax": [
             "pi"
@@ -3334,21 +3397,21 @@
         ],
         "Fx": [
             "2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2",
-            "((a*(1-v/(2*pi))*(1+cos(u)) + c) * cos(n*v))*6 + 4",
+            "((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4",
             "2^v*(sin(u)*cos(u))/35",
             "1.2^v*(sin(u)^2*sin(v))+2"
         ],
         "Fy": [
             "2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2",
-            "((a*(1-v/(2*pi))*(1+cos(u)) + c) * sin(n*v))*6+ 4",
+            "((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4",
             "2^v*(sin(u)^2*sin(v))/35-4",
             "1.2^v*(sin(u)*cos(u))+5"
         ],
         "Fz": [
             "1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)",
-            "(b*v/(2*pi) + a*(1-v/(2*pi)) * sin(u))*6 - 6",
+            "(b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6",
             "2^v*(sin(u)^2*cos(v))/35-12",
-            "1.2^v*(sin(u)^2*cos(v)) -12"
+            "1.2^v*(sin(u)^2*cos(v))-12"
         ],
         "Umax": [
             "6*pi",
@@ -3382,7 +3445,7 @@
             "ModelsIntersection"
         ],
         "Cnd": [
-            "((x^2+y^2)>.4) & (x-y-1.5*z<0)",
+            "((x^2+y^2)>.4)&(x-y-1.5*z<0)",
             "1>0",
             "1>0"
         ],
@@ -3394,7 +3457,7 @@
         "Fxyz": [
             "cos(x-4*sin(t*pi))+cos(y)+cos(z)",
             "-(x^2+y^2)+.39",
-            "x-y-1.5*z -.01"
+            "x-y-1.5*z-.01"
         ],
         "Xmax": [
             "4+4*sin(t*pi)",
@@ -3479,6 +3542,39 @@
             "T=1.0"],
             "Name": "Lines5"
         }
+},
+{
+    "Texture": {
+        "Colors": [
+            "R=cos((x*x +y*y +z*z)*pi)",
+            "G=cos((x*x +y*y +z*z)*pi)*cos(x*pi)",
+            "B=sin(y*pi)*cos(x*pi)",
+            "T=1"
+        ],
+        "Name": "Lines6"
+    }
+},
+{
+    "Texture": {
+        "Colors": [
+            "R=cos((x*x +y*y +z*z)*pi)*sin(x*pi)",
+            "G=cos((x*x +y*y +z*z)*pi)*sin(y*pi)",
+            "B=cos((x*x +y*y +z*z)*pi)*sin(z*pi)",
+            "T=1"
+        ],
+        "Name": "Lines7"
+    }
+},
+{
+    "Texture": {
+        "Colors": [
+            "R=cos((x*x +y*y)*pi)*cos(x*pi)",
+            "G=cos((y*y +z*z)*pi)*cos(y*pi)",
+            "B=cos((x*x+z*z)*pi)*cos(z*pi)",
+            "T=1"
+        ],
+        "Name": "Lines8"
+    }
 }
 ]
 }
