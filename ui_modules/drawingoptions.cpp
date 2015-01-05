@@ -5130,17 +5130,14 @@ void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
 void DrawingOptions::on_comboBoxTexture_activated(int index)
 {
     QJsonObject tmp;
-
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
-    /*
-    tmp["Iso3D"].toObject()["Texture"].toObject()["Colors"].toArray()[2] = "0.5";
-    QJsonObject tmp2 =  tmp["Iso3D"].toObject()["Texture"].toObject();
-    tmp2 = MathmodRef->pariso.JTextures[index].toObject()["Texture"].toObject();
-    tmp["Iso3D"].toObject()["Texture"] = tmp2;
-    */
 
     if(index > 0)
     {
+        QJsonDocument document;
+        document.setObject(MathmodRef->pariso.JTextures[index - 1].toObject());
+        ui.textureEdit->setText(QString (document.toJson()));
+
         ShowJsonModel(tmp, index-1);
         ui.ObjectClasseCurrent->takeTopLevelItem(0);
         UpdateCurrentTreeObject();
