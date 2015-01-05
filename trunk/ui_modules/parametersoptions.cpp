@@ -282,7 +282,7 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
         }
     }
 
-    lst_2.insert(0, "Textures ("+QString::number(lst_2.count())+")");
+    lst_2.insert(0, "Textures List ("+QString::number(lst_2.count())+")");
 
 
     for(int i=0; i< array.size(); i++)
