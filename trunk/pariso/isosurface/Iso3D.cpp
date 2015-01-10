@@ -851,7 +851,7 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
     // Parse
     if(Rgbt!= "" && Nb_rgbts == 4)
     for(int i=0; i<Nb_rgbts; i++)
-        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z")) >= 0)
+        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t")) >= 0)
         {
             stdError.strError = Rgbts[i];
             stdError.strOrigine = RgbtNames[i];
@@ -1164,24 +1164,11 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
     return 30;
 }
 
-/*
-///+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::CalculateColorsPoints()
-{
-    for(int i= 0; i < NbVertexTmp; i++)
-    {
-        NormVertexTab[i*TypeDrawin    ] = std::cos(NormVertexTab[i*TypeDrawin + 7]*3.);
-        NormVertexTab[i*TypeDrawin+1] = std::sin(NormVertexTab[i*TypeDrawin  + 8]*2.);
-        NormVertexTab[i*TypeDrawin+2] = std::cos(NormVertexTab[i*TypeDrawin  + 7]*3.)*std::sin(NormVertexTab[i*TypeDrawin  + 8]*4.)* std::cos(NormVertexTab[i*TypeDrawin  + 9]*4.);
-        NormVertexTab[i*TypeDrawin+3] = 1.0;//std::abs(std::cos(NormVertexTab[i*TypeDrawin + 7])* std::cos(NormVertexTab[i*TypeDrawin  + 8]));
-    }
-}
-*/
-
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    double val[3];
+    double val[4];
+    val[3] = stepMorph;
     if(Nb_rgbts >=4)
     {
         for(int i= 0; i < NbVertexTmp; i++)
