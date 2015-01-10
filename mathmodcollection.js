@@ -16,12 +16,10 @@
 	},
 	{
 		"Texture": {
-			"Colors": [
-				"R=cos((x*x +y*y)*pi)*cos(x*pi)",
-				"G=cos((y*y +z*z)*pi)*cos(y*pi)",
-				"B=cos((x*x+z*z)*pi)*cos(z*pi)",
-				"T=1"
-			],
+			"Colors": ["R=cos((x*x +y*y)*pi)*cos(x*pi)",
+			"G=cos((y*y +z*z)*pi)*cos(y*pi)",
+			"B=cos((x*x+z*z)*pi)*cos(z*pi)",
+			"T=1"],
 			"Name": "Lines8"
 		},
 		"Iso3D": {
@@ -93,12 +91,10 @@
 	},
 	{
 		"Texture": {
-			"Colors": [
-				"R=cos((x*x +y*y +z*z)*pi)",
-				"G=cos((x*x +y*y +z*z)*pi)*cos(x*pi)",
-				"B=sin(y*pi)*cos(x*pi)",
-				"T=1"
-			],
+			"Colors": ["R=cos((x*x +y*y +z*z)*pi)",
+			"G=cos((x*x +y*y +z*z)*pi)*cos(x*pi)",
+			"B=sin(y*pi)*cos(x*pi)",
+			"T=1"],
 			"Name": "Lines6"
 		},
 		"Iso3D": {
@@ -168,13 +164,12 @@
 		}
 	},
 	{
-		"Texture":{
+		"Texture": {
 			"Name": "Lines4",
-			"Colors":[
-				"R=cos(7*x*y*pi)",
-				"G=sin(7*y*z*pi)",
-				"B=sin(7*z*x*pi)",
-				"T=1"]
+			"Colors": ["R=cos(7*x*y*pi)",
+			"G=sin(7*y*z*pi)",
+			"B=sin(7*z*x*pi)",
+			"T=1"]
 		},
 		"Iso3D": {
 			"Description": ["This is a Description"],
@@ -3546,8 +3541,8 @@
 {
     "Texture": {
         "Colors": [
-            "R=cos((x*x +y*y +z*z)*pi)",
-            "G=cos((x*x +y*y +z*z)*pi)*cos(x*pi)",
+            "R=cos((x*x+y*y+z*z)*pi)",
+            "G=cos((x*x+y*y+z*z)*pi)*cos(x*pi)",
             "B=sin(y*pi)*cos(x*pi)",
             "T=1"
         ],
@@ -3557,9 +3552,9 @@
 {
     "Texture": {
         "Colors": [
-            "R=cos((x*x +y*y +z*z)*pi)*sin(x*pi)",
-            "G=cos((x*x +y*y +z*z)*pi)*sin(y*pi)",
-            "B=cos((x*x +y*y +z*z)*pi)*sin(z*pi)",
+            "R=cos((x*x+y*y+z*z)*pi)*sin(x*pi)",
+            "G=cos((x*x+y*y+z*z)*pi)*sin(y*pi)",
+            "B=cos((x*x+y*y+z*z)*pi)*sin(z*pi)",
             "T=1"
         ],
         "Name": "Lines7"
@@ -3568,8 +3563,8 @@
 {
     "Texture": {
         "Colors": [
-            "R=cos((x*x +y*y)*pi)*cos(x*pi)",
-            "G=cos((y*y +z*z)*pi)*cos(y*pi)",
+            "R=cos((x*x+y*y)*pi)*cos(x*pi)",
+            "G=cos((y*y+z*z)*pi)*cos(y*pi)",
             "B=cos((x*x+z*z)*pi)*cos(z*pi)",
             "T=1"
         ],
