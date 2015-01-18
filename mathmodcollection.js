@@ -22,11 +22,7 @@
 			"T=1"],
 			"Name": "Lines8"
 		},
-		"Iso3D": {
-			"Colors": ["R=cos(x*pi)*cos(z*pi)",
-			"G=cos(y*pi)*cos(x*pi)",
-			"B=cos(y*pi)*cos(z*pi)",
-			"T=1"],
+        "Iso3D": {
 			"Component": [" SchwarzFunction"],
 			"Const": ["r = (1/4)*(1+3*sqrt(5))",
 			"a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
@@ -2061,6 +2057,75 @@
         ]
     }
 },
+        {
+        "Iso3D": {
+        "Name": [
+        "CheckerTexture"
+        ],
+        "Component": [
+        "Sphere",
+        "Cube",
+        "Schwarz",
+        "Sinus"
+        ],
+        "Funct": [
+        "Radius=sqrt(x*x+y*y+z*z)",
+        "Theta=atan(y/x)",
+        "Phi=acos(z/sqrt(x*x+y*y+z*z))"
+        ],
+        "Fxyz": [
+        "x*x+y*y+z*z-36",
+        "(x+14)^100+y^100+z^100-6*10^77",
+        "cos(x/1.5)+cos((y+16)/1.5)+cos(z/1.5)",
+        "sin(2*pi*(((x+14)/4)^2+((y+14)/4)^2))/8+z/4"
+        ],
+        "Xmax": [
+        "6",
+        "-8",
+        "6",
+        "-9"
+        ],
+        "Xmin": [
+        "-6",
+        "-20",
+        "-6",
+        "-19"
+        ],
+        "Ymax": [
+        "6",
+        "6",
+        "-10",
+        "-9"
+        ],
+        "Ymin": [
+        "-6",
+        "-6",
+        "-22",
+        "-19"
+        ],
+        "Zmax": [
+        "6",
+        "6",
+        "6",
+        "4"
+        ],
+        "Zmin": [
+        "-6",
+        "-6",
+        "-6",
+        "-4"
+        ]
+        },
+        "Texture": {
+        "Colors": [
+        "R=(int(abs(x)) + int(abs(y)) + int(abs(z)) )%2",
+        "G=.1",
+        "B=1",
+        "T=1"
+        ],
+        "Name": "Checker"
+        }
+        },
 {"Param3D":
 		{
 		"Description":["Descriptionofthemodel"],
@@ -3569,7 +3634,16 @@
             "T=1"
         ],
         "Name": "Lines8"
-    }
+    },
+            "Texture": {
+            "Colors": [
+            "R=(int(abs(x)) + int(abs(y)) + int(abs(z)) )%2",
+            "G=.1",
+            "B=1",
+            "T=1"
+            ],
+            "Name": "Checker"
+            }
 }
 ]
 }
