@@ -794,18 +794,25 @@ ErrorMessage Iso3D::ParserIso()
     else
         IsoConditionRequired = -1;
 
+    //Add defined constantes:
+    for(int j=0; j<Nb_constants; j++)
+        if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+        {
+            stdError.strError = Consts[j];
+            stdError.strOrigine = ConstNames[j];
+            return stdError;
+        }
+
+    //For Solid Texture :
+    for(int i=0; i<4; i++)
+        for(int j=0; j<Nb_constants; j++)
+            RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
 
     //Add defined constantes:
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
         for(int j=0; j<Nb_constants; j++)
         {
-            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-            {
-                stdError.strError = Consts[j];
-                stdError.strOrigine = ConstNames[j];
-                return stdError;
-            }
             implicitFunctionParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             if(Condition != "")
                 IsoConditionParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
@@ -819,6 +826,10 @@ ErrorMessage Iso3D::ParserIso()
     }
 
     // Add defined functions :
+    for(int i=0; i<4; i++)
+        for(int j=0; j<Nb_functs; j++)
+            RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
         for(int j=0; j<Nb_functs; j++)
@@ -1322,7 +1333,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = Bprime[1];
                 NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = Bprime[2];
 
-                NormVertexTab[TypeDrawin*NbVertexTmp   + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex        + TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp     + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex      + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 2+ TypeDrawinNormStep];
 
@@ -1336,7 +1347,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
                 NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = Cprime[2];
 
-                NormVertexTab[TypeDrawin*NbVertexTmp +   TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex        + TypeDrawinNormStep];
+                NormVertexTab[TypeDrawin*NbVertexTmp +     TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex      + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 2+ TypeDrawinNormStep];
 
