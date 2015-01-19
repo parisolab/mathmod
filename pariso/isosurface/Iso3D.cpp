@@ -25,8 +25,8 @@ static int NbPolyMin;
 static float * NormOriginaltmp;
 static Voxel *GridVoxelVarPt;
 static double *Results;
+
 static int TypeDrawin=10;
-//static int TypeDrawinStep = 3;
 static int TypeDrawinNormStep = 4;
 static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
@@ -130,6 +130,11 @@ int Iso3D::HowManyVariables(std::string NewVariables, int type)
                 RgbtNames[Nb_variables] = tmp2.substr(0,jpos);
                 Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
+            else if(type == 4)
+            {
+                VRgbtNames[Nb_variables] = tmp2.substr(0,jpos);
+                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
             NewVariables = tmp2;
             Nb_variables++;
@@ -158,6 +163,12 @@ int Iso3D::HowManyVariables(std::string NewVariables, int type)
                 RgbtNames[Nb_variables] = tmp2.substr(0, jpos);
                 Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
+            else if(type == 4)
+            {
+                VRgbtNames[Nb_variables] = tmp2.substr(0, jpos);
+                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
+
             NewVariables = "";
             Nb_variables++;
         }
@@ -419,6 +430,12 @@ void Iso3D::InitParser()
     {
         RgbtParser[i].AddConstant("pi", 3.14159265);
     }
+
+    for(int i=0; i<50; i++)
+    {
+        VRgbtParser[i].AddConstant("pi", 3.14159265);
+    }
+
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -743,6 +760,34 @@ ErrorMessage Iso3D::ParserIso()
     }
 
 
+
+    if(VRgbt != "")
+    {
+        Nb_vrgbts = HowManyVariables(VRgbt, 4);
+
+        for(int i=0; i<Nb_vrgbts; i++)
+        {
+            for(int j=0; j<Nb_constants; j++)
+            {
+                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+                {
+                    stdError.strError = Consts[j];
+                    stdError.strOrigine = ConstNames[j];
+                    return stdError;
+                }
+                VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            }
+        }
+    }
+    else
+    {
+        Nb_vrgbts =0;
+    }
+
+
+
+
+
     if(Varu != "")
     {
         Nb_newvariables = HowManyVariables(Varu, 0);
@@ -795,24 +840,45 @@ ErrorMessage Iso3D::ParserIso()
         IsoConditionRequired = -1;
 
     //Add defined constantes:
-    for(int j=0; j<Nb_constants; j++)
-        if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-        {
-            stdError.strError = Consts[j];
-            stdError.strOrigine = ConstNames[j];
-            return stdError;
-        }
 
     //For Solid Texture :
     for(int i=0; i<4; i++)
         for(int j=0; j<Nb_constants; j++)
+        {
+            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+            {
+                stdError.strError = Consts[j];
+                stdError.strOrigine = ConstNames[j];
+                return stdError;
+            }
             RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+        }
+
+
+    //For Solid Texture :
+    for(int i=0; i<4; i++)
+        for(int j=0; j<Nb_constants; j++)
+        {
+            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+            {
+                stdError.strError = Consts[j];
+                stdError.strOrigine = ConstNames[j];
+                return stdError;
+            }
+            VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+        }
 
     //Add defined constantes:
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
         for(int j=0; j<Nb_constants; j++)
         {
+            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+            {
+                stdError.strError = Consts[j];
+                stdError.strOrigine = ConstNames[j];
+                return stdError;
+            }
             implicitFunctionParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             if(Condition != "")
                 IsoConditionParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
@@ -829,6 +895,11 @@ ErrorMessage Iso3D::ParserIso()
     for(int i=0; i<4; i++)
         for(int j=0; j<Nb_functs; j++)
             RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+
+    // Add defined functions :
+    for(int i=0; i<4; i++)
+        for(int j=0; j<Nb_functs; j++)
+            VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
 
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
@@ -866,6 +937,16 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
         {
             stdError.strError = Rgbts[i];
             stdError.strOrigine = RgbtNames[i];
+            return stdError;
+        }
+
+    // Parse
+    if(VRgbt!= "" && (Nb_vrgbts % 5) ==0)
+    for(int i=0; i<Nb_vrgbts; i++)
+        if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
+        {
+            stdError.strError = VRgbts[i];
+            stdError.strOrigine = VRgbtNames[i];
             return stdError;
         }
 
@@ -1001,6 +1082,13 @@ void Iso3D::initparser(int N)
     for(int i=0; i<50; i++)
     {
         RgbtParser[i].AddConstant("pi", 3.14159265);
+    }
+
+    delete[] VRgbtParser;
+    VRgbtParser = new FunctionParser[50];
+    for(int i=0; i<50; i++)
+    {
+        VRgbtParser[i].AddConstant("pi", 3.14159265);
     }
 }
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1431,7 +1519,6 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
                 NbPolyMinimalTopology++;
             }
-
         }
 
         //***********

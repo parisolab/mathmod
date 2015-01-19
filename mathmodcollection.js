@@ -43,6 +43,42 @@
 			"Zmax": [" 4"],
 			"Zmin": ["-4"]
 		}
+            ,
+                "Pigment": {
+                  "Gradient": "x*y",
+                  "Colors": [
+                      {
+                        "Color":{
+                            "Vrgba":["V=0.1", "R=1", "G=0", "B=1", "A=1"],
+                            "Name":"Red"
+                        }
+                      },
+                      {
+                        "Color":{
+                            "Vrgba":["V=0.3", "R=1", "G=0", "B=1", "A=1"],
+                            "Name":"Red"
+                        }
+                      },
+                      {
+                        "Color":{
+                            "Vrgba":["V=0.6", "R=1", "G=0", "B=1", "A=1"],
+                            "Name":"Red"
+                        }
+                      },
+                      {
+                        "Color":{
+                            "Vrgba":["V=0.6", "R=1", "G=0", "B=1", "A=1"],
+                            "Name":"Red"
+                        }
+                      },
+                      {
+                        "Color":{
+                            "Vrgba":["V=0.8", "R=1", "G=0", "B=1", "A=1"],
+                            "Name":"Red"
+                        }
+                      }
+                  ]
+                }
 	},
 	{
 		"Texture": {

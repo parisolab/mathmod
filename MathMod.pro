@@ -17,7 +17,8 @@ HEADERS    = ui_modules/drawingoptions.h \
              json_parser/jiso.h \
              json_parser/jpar.h \
              screenshot/video.h \
-             ui_modules/parametersoptions.h
+             ui_modules/parametersoptions.h \
+    pariso/commun.h
 
 SOURCES    = ui_modules/drawingoptions.cpp \
              ui_modules/colorsoptions.cpp \

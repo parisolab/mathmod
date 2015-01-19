@@ -990,6 +990,31 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->IsoObjet->Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 
+
+        // Pigment
+        QJsonArray tmp;
+        lst =  Jobj["Pigment"].toObject()["Colors"].toArray();
+        result = "";
+        for(j=0; j < lst.size(); j++)
+        {
+            tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
+            for(int k=0; k < tmp.count(); k++)
+            {
+                    result += tmp[k].toString() + ";";
+            }
+        }
+
+
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
+
+
+
+
+
         // Grid
         lst = QObj["Grid"].toArray();
         result = "";
@@ -1276,6 +1301,26 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+
+
+        // Pigment
+        QJsonArray tmp;
+        lst =  Jobj["Pigment"].toObject()["Colors"].toArray();
+        result = "";
+        for(j=0; j < lst.size(); j++)
+        {
+            tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
+            for(int k=0; k < tmp.count(); k++)
+            {
+                    result += tmp[k].toString() + ";";
+            }
+        }
+
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
 
 
         // Grid
@@ -1622,7 +1667,26 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ui.glWidget->IsoObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
-            // Colors
+            // Pigment
+            QJsonArray tmp;
+            lst =  (array[i].toObject())["Pigment"].toObject()["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size(); j++)
+            {
+                tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
+                for(int k=0; k < tmp.count(); k++)
+                {
+                        result += tmp[k].toString() + ";";
+                }
+            }
+
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
+
+            // Texture:
             lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
             result = "";
             for(j=0; j < lst.size()-1; j++)
