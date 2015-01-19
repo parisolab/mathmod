@@ -21,9 +21,7 @@
 #include <iostream>
 #include <string.h>
 #include <cmath>
-#include  "../../fparser/fparser.h"
 #include "../objectparameters.h"
-
 
 
 
@@ -87,7 +85,7 @@ public :
     int NbTriangleIsoSurface, IsoConditionRequired,NbPointIsoMapCND,
         ThreeTimesNbPolygnTmp;
     int i,j,k,l;
-    FunctionParser * implicitFunctionParser, *Fct, *RgbtParser;
+    FunctionParser * implicitFunctionParser, *Fct, *RgbtParser, *VRgbtParser;
     FunctionParser IsoConditionParser[1100],
                    xSupParser[1100], xInfParser[1100],
                    ySupParser[1100], yInfParser[1100],
@@ -100,12 +98,13 @@ public :
         Const, Consts[50], ConstNames[50],
         Varu, Varus[20], VarName[20],
         Funct, Functs[50], FunctNames[50],
-        Rgbt, Rgbts[50], RgbtNames[50];
+        Rgbt, Rgbts[50], RgbtNames[50],
+        VRgbt, VRgbts[50], VRgbtNames[50];
     double ConstValues[50];
 
     ImplicitStruct ImplicitStructs[1100];
     int GridTable[1100];
-    int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts;
+    int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts;
     double stepMorph, pace;
     int morph_activated;
     int TimeFlow;

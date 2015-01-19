@@ -17,12 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
-#include <iostream>
-#include <string>
-#include <cmath>
+
 #include <map>
 #include <vector>
-#include "../../fparser/fparser.h"
 #include "../objectparameters.h"
 #include "ND/Matrix4D.h"
 
