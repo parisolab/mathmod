@@ -19,11 +19,13 @@
  ***************************************************************************/
 #include "Model3D.h"
 
+
+
+static int TypeDrawin=10;
+static int TypeDrawinNormStep = 4;
 static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
-static int TypeDrawin=10;
-static int TypeDrawinNormStep = 4;
 
 //+++++++++++++++++++++++++++++++++++++++++
 Par3D::~Par3D()

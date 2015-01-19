@@ -66,6 +66,7 @@ struct IsoStruct
     QString Cnd;
     QString Grid;
     QString RGBT;
+    QString VRGBT;
     QString fxyz;
     QString xmin;
     QString xmax;
@@ -88,6 +89,7 @@ struct TreeStruct
     QStringList Grid;
     QStringList Cnd;
     QStringList RGBT;
+    QStringList VRGBT;
     QString       text;
 
     QStringList fxyz;

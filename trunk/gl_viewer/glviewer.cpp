@@ -22,8 +22,8 @@
 #include <QFileDialog>
 #include "glviewer.h"
 #include "raster.h"
+
 static int TypeDrawin=10;
-//static int TypeDrawinStep = 3;
 static int TypeDrawinNormStep = 4;
 int FistTimecalibrate =-1;
 
@@ -705,6 +705,12 @@ void OpenGlWidget::InitGlParameters()
     glMaterialf (GL_FRONT, GL_SHININESS, 35.0);
     glMaterialf (GL_BACK, GL_SHININESS, 35.0);
     glEnable(GL_DEPTH_TEST);
+/*
+    glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
+    //glBlendEquation( GL_FUNC_ADD );
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+*/
+
     glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
     InitFont();
 }
