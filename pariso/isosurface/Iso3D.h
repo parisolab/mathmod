@@ -85,7 +85,7 @@ public :
     int NbTriangleIsoSurface, IsoConditionRequired,NbPointIsoMapCND,
         ThreeTimesNbPolygnTmp;
     int i,j,k,l;
-    FunctionParser * implicitFunctionParser, *Fct, *RgbtParser, *VRgbtParser;
+    FunctionParser * implicitFunctionParser, *Fct, *RgbtParser, *VRgbtParser, *GradientParser;
     FunctionParser IsoConditionParser[1100],
                    xSupParser[1100], xInfParser[1100],
                    ySupParser[1100], yInfParser[1100],
@@ -99,7 +99,8 @@ public :
         Varu, Varus[20], VarName[20],
         Funct, Functs[50], FunctNames[50],
         Rgbt, Rgbts[50], RgbtNames[50],
-        VRgbt, VRgbts[50], VRgbtNames[50];
+        VRgbt, VRgbts[50], VRgbtNames[50],
+        Gradient;
     double ConstValues[50];
 
     ImplicitStruct ImplicitStructs[1100];
