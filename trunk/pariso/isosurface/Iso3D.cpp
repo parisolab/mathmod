@@ -436,6 +436,7 @@ void Iso3D::InitParser()
         VRgbtParser[i].AddConstant("pi", 3.14159265);
     }
 
+    GradientParser->AddConstant("pi", 3.14159265);
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -764,6 +765,16 @@ ErrorMessage Iso3D::ParserIso()
     if(VRgbt != "")
     {
         Nb_vrgbts = HowManyVariables(VRgbt, 4);
+        for(int j=0; j<Nb_constants; j++)
+        {
+            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+            {
+                stdError.strError = Consts[j];
+                stdError.strOrigine = ConstNames[j];
+                return stdError;
+            }
+            GradientParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
+        }
 
         for(int i=0; i<Nb_vrgbts; i++)
         {
@@ -856,7 +867,8 @@ ErrorMessage Iso3D::ParserIso()
 
 
     //For Solid Texture :
-    for(int i=0; i<4; i++)
+    if(VRgbt != "")
+    {
         for(int j=0; j<Nb_constants; j++)
         {
             if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
@@ -865,9 +877,21 @@ ErrorMessage Iso3D::ParserIso()
                 stdError.strOrigine = ConstNames[j];
                 return stdError;
             }
-            VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-        }
+            GradientParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
+         }
 
+        for(int i=0; i<4; i++)
+            for(int j=0; j<Nb_constants; j++)
+            {
+                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+                {
+                    stdError.strError = Consts[j];
+                    stdError.strOrigine = ConstNames[j];
+                    return stdError;
+                }
+                VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            }
+    }
     //Add defined constantes:
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
@@ -892,14 +916,21 @@ ErrorMessage Iso3D::ParserIso()
     }
 
     // Add defined functions :
-    for(int i=0; i<4; i++)
-        for(int j=0; j<Nb_functs; j++)
-            RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+    if(Rgbt != "")
+        for(int i=0; i<4; i++)
+            for(int j=0; j<Nb_functs; j++)
+                RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
 
     // Add defined functions :
-    for(int i=0; i<4; i++)
+    if(VRgbt != "")
+    {
         for(int j=0; j<Nb_functs; j++)
-            VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+            GradientParser->AddFunction(FunctNames[j], Fct[j]);
+
+        for(int i=0; i<4; i++)
+            for(int j=0; j<Nb_functs; j++)
+                VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+    }
 
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
@@ -942,13 +973,22 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
 
     // Parse
     if(VRgbt!= "" && (Nb_vrgbts % 5) ==0)
-    for(int i=0; i<Nb_vrgbts; i++)
-        if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
+    {
+        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
         {
-            stdError.strError = VRgbts[i];
-            stdError.strOrigine = VRgbtNames[i];
+            stdError.strError = Gradient;
+            stdError.strOrigine = Gradient;
             return stdError;
         }
+
+        for(int i=0; i<Nb_vrgbts; i++)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
+            {
+                stdError.strError = VRgbts[i];
+                stdError.strOrigine = VRgbtNames[i];
+                return stdError;
+            }
+    }
 
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
@@ -1090,6 +1130,10 @@ void Iso3D::initparser(int N)
     {
         VRgbtParser[i].AddConstant("pi", 3.14159265);
     }
+
+    delete GradientParser;
+    GradientParser = new FunctionParser;
+    GradientParser->AddConstant("pi", 3.14159265);
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::EvalExpressionAtIndex(int IsoIndex)

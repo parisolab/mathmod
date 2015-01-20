@@ -993,6 +993,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         // Pigment
         QJsonArray tmp;
+        QString strtmp = Jobj["Pigment"].toObject()["Gradient"].toString();
+
         lst =  Jobj["Pigment"].toObject()["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size(); j++)
@@ -1004,12 +1006,17 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             }
         }
 
+        strtmp.replace("\n","");
+        strtmp.replace("\t","");
+        strtmp.replace(" ","");
 
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        MathmodRef->ui.glWidget->IsoObjet->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
+
 
 
 
@@ -1305,6 +1312,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         // Pigment
         QJsonArray tmp;
+        QString strgradient = Jobj["Pigment"].toObject()["Gradient"].toString();
         lst =  Jobj["Pigment"].toObject()["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size(); j++)
@@ -1316,9 +1324,15 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             }
         }
 
+        strgradient.replace("\n","");
+        strgradient.replace("\t","");
+        strgradient.replace(" ","");
+
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+
+        MathmodRef->ui.glWidget->IsoObjet->Gradient = strgradient.toStdString();
         MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
 
@@ -1669,6 +1683,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             // Pigment
             QJsonArray tmp;
+            QString strtmp = (array[i].toObject())["Pigment"].toObject()["Gradient"].toString();
             lst =  (array[i].toObject())["Pigment"].toObject()["Colors"].toArray();
             result = "";
             for(j=0; j < lst.size(); j++)
@@ -1680,9 +1695,16 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 }
             }
 
+
+            strtmp.replace("\n","");
+            strtmp.replace("\t","");
+            strtmp.replace(" ","");
+
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
+
+            MathmodRef->ui.glWidget->IsoObjet->Gradient = strtmp.toStdString();
             MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
 

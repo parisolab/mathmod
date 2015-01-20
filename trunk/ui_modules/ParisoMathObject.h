@@ -90,6 +90,7 @@ struct TreeStruct
     QStringList Cnd;
     QStringList RGBT;
     QStringList VRGBT;
+    QStringList Gradient;
     QString       text;
 
     QStringList fxyz;
