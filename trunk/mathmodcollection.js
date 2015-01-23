@@ -286,7 +286,72 @@
 			"Ymin": ["-20"],
 			"Zmax": ["50"],
 			"Zmin": ["-1"]
-		}
+        },
+            "Pigment": {
+                "Colors": [
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=.20",
+                                "R=.90",
+                                "G=.9",
+                                "B=.40",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=0.3",
+                                "R=1",
+                                "G=.1",
+                                "B=.31",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=0.6",
+                                "R=1",
+                                "G=.7",
+                                "B=1",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=0.6",
+                                "R=1",
+                                "G=0.3",
+                                "B=.1",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=0.8",
+                                "R=.15",
+                                "G=.6",
+                                "B=.1",
+                                "A=1"
+                            ]
+                        }
+                    }
+                ],
+                "Gradient": "3*cos((x*x +y*y)*pi)*cos(x*y*pi)*cos((x*y +z*z)*pi)*cos(z*y*pi)"
+            }
 	},
 	{
 		"Iso3D": {
@@ -1285,7 +1350,72 @@
 			"Ymax": [" 2"],
 			"Zmin": ["-2"],
 			"Zmax": [" 2"]
-		}
+        },
+            "Pigment": {
+                "Colors": [
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=.20",
+                                "R=.90",
+                                "G=.9",
+                                "B=.40",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=0.3",
+                                "R=1",
+                                "G=.1",
+                                "B=.31",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=0.6",
+                                "R=1",
+                                "G=.7",
+                                "B=1",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=0.6",
+                                "R=1",
+                                "G=0.3",
+                                "B=.1",
+                                "A=1"
+                            ]
+                        }
+                    },
+                    {
+                        "Color": {
+                            "Name": "Red",
+                            "Vrgba": [
+                                "V=1",
+                                "R=.15",
+                                "G=.6",
+                                "B=.1",
+                                "A=1"
+                            ]
+                        }
+                    }
+                ],
+                "Gradient": "3*cos((x*x *z)*pi)*cos(y*y*z*pi)*cos((y *x)*pi)*cos(z*y*x*pi)"
+            }
 	},
 	{
 		"Iso3D": {
@@ -2162,6 +2292,106 @@
         "Name": "Checker"
         }
         },
+{
+    "Iso3D": {
+        "Component": [
+            "DuplinPigment"
+        ],
+        "Fxyz": [
+            "-49.95*((x/2.34)^4+(y*Ax - z*Bx)^4+ (y*Bx + z*Ax)^4) + ((-99.95)* ((x/2.34)^2 * (y*Ax - z*Bx)^2+(x/2.34)^2 * (y*Bx + z*Ax)^2+(y*Ax - z*Bx)^2 * (y*Bx + z*Ax)^2))+ (141.12* (((x/2.34))-1))*(((x/2.34))^2 +(y*Ax - z*Bx)^2+(y*Bx + z*Ax)^2)+ (128 *(x/2.34))* (-4 +2 * (x/2.34)) + 262.4 * (y*Ax - z*Bx)^2 + 256"
+        ],
+        "Name": [
+            "DuplinPigment"
+        ],
+        "Varu": [
+            "A=cos(0.575383*(u/0.6))",
+            "B=sin(0.575383*(u/0.6))"
+        ],
+        "Xmax": [
+            " 2.5*3.9*0.6"
+        ],
+        "Xmin": [
+            "-2*3.9*0.6"
+        ],
+        "Ymax": [
+            " 2"
+        ],
+        "Ymin": [
+            "-2"
+        ],
+        "Zmax": [
+            " 2"
+        ],
+        "Zmin": [
+            "-2"
+        ]
+    },
+    "Pigment": {
+        "Colors": [
+            {
+                "Color": {
+                    "Name": "Red",
+                    "Vrgba": [
+                        "V=.20",
+                        "R=.4",
+                        "G=.4",
+                        "B=.70",
+                        "A=1"
+                    ]
+                }
+            },
+            {
+                "Color": {
+                    "Name": "Red",
+                    "Vrgba": [
+                        "V=0.3",
+                        "R=1",
+                        "G=.1",
+                        "B=.31",
+                        "A=1"
+                    ]
+                }
+            },
+            {
+                "Color": {
+                    "Name": "Red",
+                    "Vrgba": [
+                        "V=0.6",
+                        "R=.51",
+                        "G=.17",
+                        "B=1",
+                        "A=1"
+                    ]
+                }
+            },
+            {
+                "Color": {
+                    "Name": "Red",
+                    "Vrgba": [
+                        "V=0.6",
+                        "R=1",
+                        "G=0.3",
+                        "B=.1",
+                        "A=1"
+                    ]
+                }
+            },
+            {
+                "Color": {
+                    "Name": "Red",
+                    "Vrgba": [
+                        "V=1",
+                        "R=.915",
+                        "G=.17",
+                        "B=.1",
+                        "A=1"
+                    ]
+                }
+            }
+        ],
+        "Gradient": "3*cos((x*x+ y*y)*pi)*sin((y*y +z*z)*pi)"
+    }
+},
 {"Param3D":
 		{
 		"Description":["Descriptionofthemodel"],
