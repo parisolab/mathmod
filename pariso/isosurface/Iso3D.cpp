@@ -1310,9 +1310,37 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    double val[4];
+    double tmp, ValCol[100], val[4];
     val[3] = stepMorph;
-    if(Nb_rgbts >=4)
+    if(VRgbt != "" && (Nb_vrgbts %5)==0 )
+    {
+        components->ThereisRGBA = true;
+        for(int i=0; i<Nb_vrgbts && i<100; i++)
+        {
+            ValCol[i] = VRgbtParser[i].Eval(val);
+        }
+
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            val[0]= NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ];
+            val[1]= NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ];
+            val[2]= NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ];
+            tmp  = GradientParser->Eval(val);
+
+            int c= (int)tmp;
+            tmp = std::abs(tmp - (double)c);
+            for (int j=0; j < Nb_vrgbts && j < 100; j+=5)
+                if(tmp < ValCol[j])
+                {
+                    NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
+                    NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
+                    NormVertexTab[i*TypeDrawin+2] = ValCol[j+3];
+                    NormVertexTab[i*TypeDrawin+3] = ValCol[j+4];
+                    j = 100;
+                }
+        }
+    }
+    else if(Nb_rgbts >= 4)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
