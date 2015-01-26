@@ -71,6 +71,7 @@ struct  Voxel
 class Iso3D
 {
 public :
+    PerlinNoise3D* noise;
     ErrorMessage stdError;
     int   *     IsoSurfaceTriangleListe;
     bool *     WichPointVerifyCond;
@@ -100,7 +101,7 @@ public :
         Funct, Functs[50], FunctNames[50],
         Rgbt, Rgbts[50], RgbtNames[50],
         VRgbt, VRgbts[50], VRgbtNames[50],
-        Gradient;
+        Gradient, Noise;
     double ConstValues[50];
 
     ImplicitStruct ImplicitStructs[1100];

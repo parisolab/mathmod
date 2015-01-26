@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,44 +17,5 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
-#ifndef PARISODEF_H
-#define PARISODEF_H
 
-#include <math.h>
-#include <stdlib.h>
-#include <string>
-#include <iostream>
-#include <QStringList>
-#include <qthread.h>
-#include "jiso.h"
-#include "jpar.h"
-
-class jpariso
-{
-public:
-    jpariso();
-    ~jpariso();
-
-//private:
-    QList<jpar> JPar;
-    QList<jiso> JIso;
-    QJsonArray JTextures;
-    QJsonArray JPigments;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#endif // PARISODEF_H
-
-
+#include "commun.h"

@@ -267,11 +267,15 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
     QJsonArray array = Collection["MathModels"].toArray();
     QStringList lst;
     QJsonArray array2 = pariso.JTextures = Collection["TexturesList"].toArray();
-    QStringList lst_2;
+
+    QJsonArray array3 = pariso.JPigments = Collection["PigmentsList"].toArray();
+
+    QStringList lst_2, lst_3;
     QString a;
     QJsonObject jsobj;
 
 
+    // Textures List:
     for(int i=0; i< array2.size(); i++)
     {
         if((array2[i].toObject())["Texture"].isObject())
@@ -281,8 +285,20 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
             lst_2.append(a);
         }
     }
-
     lst_2.insert(0, "Textures List ("+QString::number(lst_2.count())+")");
+
+
+    // Pigments List:
+    for(int i=0; i< array3.size(); i++)
+    {
+        if((array3[i].toObject())["Pigment"].isObject())
+        {
+            jsobj = (array3[i].toObject())["Pigment"].toObject();
+            a = (jsobj)["Name"].toString();
+            lst_3.append(a);
+        }
+    }
+    lst_3.insert(0, "PigmentsList ("+QString::number(lst_3.count())+")");
 
 
     for(int i=0; i< array.size(); i++)
@@ -319,10 +335,10 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
     lst.insert(0, "Examples ("+QString::number(lst.count())+")");
 
     ListeModelTexture str;
-    str.listeModels = lst;
-    str.listeTextures = lst_2;
+    str.listeModels     = lst;
+    str.listeTextures   = lst_2;
+    str.listePigments = lst_3;
     return str;
-
 }
 
 void Parametersoptions::SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject)

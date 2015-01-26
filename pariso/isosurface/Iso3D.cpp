@@ -73,6 +73,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
         Results             = new double[maximumgrid*maximumgrid*maximumgrid];
         staticaction     *= -1;
     }
+    noise = new PerlinNoise3D(4,4,4);
     NbPointIsoMap = 0;
     NbTriangleIsoSurface = 0;
     IsoConditionRequired = -1;
@@ -1310,6 +1311,7 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
+
     double tmp, ValCol[100], val[4];
     val[3] = stepMorph;
     if(VRgbt != "" && (Nb_vrgbts %5)==0 )
@@ -1322,15 +1324,23 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ];
-            val[1]= NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ];
-            val[2]= NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ];
+            if(Noise != "")
+                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ];
+
             tmp  = GradientParser->Eval(val);
 
             int c= (int)tmp;
             tmp = std::abs(tmp - (double)c);
             for (int j=0; j < Nb_vrgbts && j < 100; j+=5)
-                if(tmp < ValCol[j])
+                if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
                     NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
@@ -1344,9 +1354,17 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
-            val[1]= NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
-            val[2]= NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+            if(Noise != "")
+                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+
             NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
             NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
             NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);

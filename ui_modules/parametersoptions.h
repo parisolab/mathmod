@@ -31,6 +31,7 @@
 struct ListeModelTexture{
     QStringList listeModels;
     QStringList listeTextures;
+    QStringList listePigments;
 };
 
 class Parametersoptions: public QWidget

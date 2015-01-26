@@ -122,7 +122,8 @@ public slots:
     void colorstype(int);
     void colorstypeParIso(int);
     void colorstypeParam(int);
-    void SaveSceneAsOBJ(int);
+    void SaveSceneAsObjPoly();
+    void SaveSceneAsObjTrian();
 };
 
 #endif
