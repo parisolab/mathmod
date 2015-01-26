@@ -175,5 +175,7 @@ private slots:
     void on_transparence_ParIso_clicked(bool checked);
     void on_transparent_ParIso_valueChanged(int value);
     void on_comboBoxTexture_activated(int index);
+    void on_comboBoxPigment_activated(int index);
+    void on_actionTrianglesWavefront_obj_triggered();
 };
 #endif

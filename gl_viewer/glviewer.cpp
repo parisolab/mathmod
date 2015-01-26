@@ -987,7 +987,7 @@ static void draw(ObjectProperties *scene)
 }
 
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void OpenGlWidget::SaveSceneAsOBJ(int CurrentFormulaType)
+void OpenGlWidget::SaveSceneAsObjPoly()
 {
     int startpl = 0;
     int actualpointindice;
@@ -1011,10 +1011,6 @@ void OpenGlWidget::SaveSceneAsOBJ(int CurrentFormulaType)
         }
 
         // save faces:
-        if(CurrentFormulaType == 2)
-        {
-            if (LocalScene.line != 1)
-            {
                 for (i = 0; i < LocalScene.NbPolygnNbVertexPtMin; i++)
                 {
                     int polysize       =  LocalScene.PolyIndices_localPtMin[startpl++];
@@ -1027,9 +1023,32 @@ void OpenGlWidget::SaveSceneAsOBJ(int CurrentFormulaType)
                     }
                     (stream) <<"\n";
                 }
-            }
-            else
-            {
+    }
+}
+
+
+
+///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void OpenGlWidget::SaveSceneAsObjTrian()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+                       tr("Save OBJ file"), "", tr("OBJ Files (*.obj)"));
+
+    QFile data(fileName);
+    if (data.open(QFile::ReadWrite | QFile::Truncate))
+    {
+        unsigned int i;
+        QTextStream stream(&data);
+        stream.setRealNumberNotation(QTextStream::FixedNotation);
+        stream.setRealNumberPrecision(3);
+        // save vertices:
+        for (i=0; i< LocalScene.VertxNumber; i++)
+        {
+            (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
+        }
+
                 for (i = 0; i < LocalScene.PolyNumber ; i+=3)
                 {
 
@@ -1037,21 +1056,10 @@ void OpenGlWidget::SaveSceneAsOBJ(int CurrentFormulaType)
                              <<LocalScene.PolyIndices_localPt[i + 1] +1<<"  "\
                              <<LocalScene.PolyIndices_localPt[i + 2] +1<<"\n";
                 }
-            }
-        }
-        else if(CurrentFormulaType == 1)
-        {
-            for (i = 0; i < LocalScene.PolyNumber ; i+=4)
-            {
-
-                (stream) <<"f "<<"  "   <<LocalScene.PolyIndices_localPt[i       ] +1<<"  "\
-                         <<LocalScene.PolyIndices_localPt[i + 1] +1<<"  "\
-                         <<LocalScene.PolyIndices_localPt[i + 2] +1<<"  "\
-                         <<LocalScene.PolyIndices_localPt[i + 3] +1<<"\n";
-            }
-        }
     }
 }
+
+
 
 void OpenGlWidget::paintGL()
 {

@@ -91,6 +91,8 @@ struct TreeStruct
     QStringList RGBT;
     QStringList VRGBT;
     QStringList Gradient;
+
+    QString       Noise;
     QString       text;
 
     QStringList fxyz;

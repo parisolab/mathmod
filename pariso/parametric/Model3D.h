@@ -20,6 +20,9 @@
 
 #include <map>
 #include <vector>
+#include <iostream>
+#include <string.h>
+#include <cmath>
 #include "../objectparameters.h"
 #include "ND/Matrix4D.h"
 
@@ -45,6 +48,7 @@ struct   ParStruct
 class Par3D /*: public ObjectParameters*/
 {
 public:
+    PerlinNoise3D* noise;
     ErrorMessage stdError;
     float* NormVertexTab;
     float* ExtraDimension;
@@ -63,17 +67,18 @@ public:
            DIFX,DIFY,DIFZ,DIFW,
            DIFMAXIMUM;
 
-    FunctionParser * myParserX, * myParserY,* myParserZ, *Fct, *RgbtParser;
+    FunctionParser * myParserX, * myParserY,* myParserZ, *Fct, *RgbtParser, *VRgbtParser, *GradientParser;
     FunctionParser myParserW[100],myParserCND[100],
                    myParserUmin[100], myParserUmax[100],
                    myParserVmin[100], myParserVmax[100],
                    Var[20], Cstparser;
     ParStruct ParamStructs[100];
-    int Nb_paramfunctions, Nb_functs, Nb_rgbts;
+    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const, Funct, Rgbt, Grid;
     std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100],
-    RgbtNames[100], Rgbts[100];
+    RgbtNames[100], Rgbts[100], VRgbt, VRgbts[100], VRgbtNames[100],
+    Gradient, Noise;
     double  v_inf[100], v_sup[100],u_inf[100],u_sup[100],dif_v[100],dif_u[100];
     double stepMorph, pace;
     int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
