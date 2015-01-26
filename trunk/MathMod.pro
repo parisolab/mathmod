@@ -38,7 +38,8 @@ SOURCES    = ui_modules/drawingoptions.cpp \
              json_parser/jiso.cpp \
              json_parser/jpar.cpp \
              screenshot/video.cpp \
-             ui_modules/parametersoptions.cpp
+             ui_modules/parametersoptions.cpp \
+    pariso/commun.cpp
 
 FORMS      = ui_forms/drawingoptions.ui \
              ui_forms/colorsoptions.ui \

@@ -43,6 +43,7 @@ Par3D::Par3D()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres()
 {
+    noise = new PerlinNoise3D(4, 4, 4);
     nb_licol = 50;
     nb_ligne = nb_colone = nb_licol;
     largeur_fenetre = 620;
@@ -307,6 +308,12 @@ void Par3D::initparser(int N)
     delete[] RgbtParser;
     RgbtParser = new FunctionParser[N];
 
+    delete[] VRgbtParser;
+    VRgbtParser = new FunctionParser[N];
+
+    delete GradientParser;
+    GradientParser = new FunctionParser();
+
     for(int i=0; i<N; i++)
     {
         myParserX[i].AddConstant("pi", 3.14159265);
@@ -315,7 +322,9 @@ void Par3D::initparser(int N)
         myParserCND[i].AddConstant("pi", 3.14159265);
         Fct[i].AddConstant("pi", 3.14159265);
         RgbtParser[i].AddConstant("pi", 3.14159265);
+        VRgbtParser[i].AddConstant("pi", 3.14159265);
     }
+    GradientParser->AddConstant("pi", 3.14159265);
 }
 
 
@@ -392,20 +401,52 @@ ErrorMessage  Par3D::parse_expression()
                 RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             }
         }
-
-        // Parse
-        for(int i=0; i<Nb_rgbts; i++)
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z")) >= 0)
-            {
-                stdError.strError = Rgbts[i];
-                stdError.strOrigine = RgbtNames[i];
-                return stdError;
-            }
       }
     else
     {
         Nb_rgbts =0;
     }
+
+
+    //Texture:
+    if(VRgbt != "")
+    {
+        Nb_vrgbts = HowManyVariables(VRgbt, 4);
+        for(int j=0; j<Nb_constants; j++)
+        {
+            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+            {
+                stdError.strError = Consts[j];
+                stdError.strOrigine = ConstNames[j];
+                return stdError;
+            }
+            GradientParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
+        }
+
+        for(int i=0; i<Nb_vrgbts; i++)
+        {
+            for(int j=0; j<Nb_constants; j++)
+            {
+                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+                {
+                    stdError.strError = Consts[j];
+                    stdError.strOrigine = ConstNames[j];
+                    return stdError;
+                }
+                VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            }
+        }
+    }
+    else
+    {
+        Nb_vrgbts =0;
+    }
+
+
+
+
+
+
 
 
     if(Varu != "")
@@ -499,6 +540,26 @@ ErrorMessage  Par3D::parse_expression()
         }
     }
 
+
+
+    // Add defined functions :
+    if(Rgbt != "")
+        for(int i=0; i<4; i++)
+            for(int j=0; j<Nb_functs; j++)
+                RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+
+    // Add defined functions :
+    if(VRgbt != "")
+    {
+        for(int j=0; j<Nb_functs; j++)
+            GradientParser->AddFunction(FunctNames[j], Fct[j]);
+
+        for(int i=0; i<4; i++)
+            for(int j=0; j<Nb_functs; j++)
+                VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+    }
+
+
     // Add defined functions :
     for(int i=0; i<Nb_paramfunctions+1; i++)
     {
@@ -511,6 +572,59 @@ ErrorMessage  Par3D::parse_expression()
                 myParserCND[i].AddFunction(FunctNames[j], Fct[j]);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Parse
+    if(Rgbt!= "")
+    for(int i=0; i<Nb_rgbts; i++)
+        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z")) >= 0)
+        {
+            stdError.strError = Rgbts[i];
+            stdError.strOrigine = RgbtNames[i];
+            return stdError;
+        }
+
+
+    // Parse
+    if(VRgbt!= "" && (Nb_vrgbts % 5) ==0)
+    {
+        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
+        {
+            stdError.strError = Gradient;
+            stdError.strOrigine = Gradient;
+            return stdError;
+        }
+
+        for(int i=0; i<Nb_vrgbts; i++)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
+            {
+                stdError.strError = VRgbts[i];
+                stdError.strOrigine = VRgbtNames[i];
+                return stdError;
+            }
+    }
+
+
+
+
+
+
+
+
 
     for(int index=0; index< Nb_paramfunctions + 1; index++)
     {
@@ -621,6 +735,11 @@ int Par3D::HowManyVariables(std::string NewVariables, int type)
                 RgbtNames[Nb_variables] = tmp2.substr(0,jpos);
                 Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
+            else if(type == 4)
+            {
+                VRgbtNames[Nb_variables] = tmp2.substr(0,jpos);
+                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
             NewVariables = tmp2;
             Nb_variables++;
@@ -648,6 +767,11 @@ int Par3D::HowManyVariables(std::string NewVariables, int type)
             {
                 RgbtNames[Nb_variables] = tmp2.substr(0, jpos);
                 Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+            }
+            else if(type == 4)
+            {
+                VRgbtNames[Nb_variables] = tmp2.substr(0, jpos);
+                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
             }
             NewVariables = "";
             Nb_variables++;
@@ -800,14 +924,58 @@ void Par3D::BorderCalculation(int NewPosition)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    double val[3];
-    if(Nb_rgbts >=4)
+    double tmp, ValCol[100], val[4];
+    val[3] = stepMorph;
+    if(VRgbt != "" && (Nb_vrgbts %5)==0 )
+    {
+        components->ThereisRGBA = true;
+        for(int i=0; i<Nb_vrgbts && i<100; i++)
+        {
+            ValCol[i] = VRgbtParser[i].Eval(val);
+        }
+
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            if(Noise != "")
+                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ];
+            tmp  = GradientParser->Eval(val);
+
+            int c= (int)tmp;
+            tmp = std::abs(tmp - (double)c);
+            for (int j=0; j < Nb_vrgbts && j < 100; j+=5)
+                if(tmp <= ValCol[j])
+                {
+                    NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
+                    NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
+                    NormVertexTab[i*TypeDrawin+2] = ValCol[j+3];
+                    NormVertexTab[i*TypeDrawin+3] = ValCol[j+4];
+                    j = 100;
+                }
+        }
+    }
+    else if(Nb_rgbts >= 4)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
-            val[1]= NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
-            val[2]= NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+            if(Noise != "")
+                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+
             NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
             NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
             NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
@@ -817,10 +985,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     }
     else
         components->ThereisRGBA = false;
-
 }
-
-
 
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
