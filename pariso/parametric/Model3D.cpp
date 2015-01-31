@@ -937,9 +937,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
         for(int i= 0; i < NbVertexTmp; i++)
         {
             if(Noise != "")
-                tmp = PerlinNoise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
             else
                 tmp =1.0;
 
@@ -966,9 +966,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
         for(int i= 0; i < NbVertexTmp; i++)
         {
             if(Noise != "")
-                tmp = PerlinNoise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
             else
                 tmp =1.0;
 
