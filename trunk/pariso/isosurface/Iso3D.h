@@ -71,7 +71,6 @@ struct  Voxel
 class Iso3D
 {
 public :
-    PerlinNoise3D* noise;
     ErrorMessage stdError;
     int   *     IsoSurfaceTriangleListe;
     bool *     WichPointVerifyCond;
