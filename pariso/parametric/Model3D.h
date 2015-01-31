@@ -48,7 +48,6 @@ struct   ParStruct
 class Par3D /*: public ObjectParameters*/
 {
 public:
-    PerlinNoise3D* noise;
     ErrorMessage stdError;
     float* NormVertexTab;
     float* ExtraDimension;

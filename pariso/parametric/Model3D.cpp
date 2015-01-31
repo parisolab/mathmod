@@ -43,7 +43,6 @@ Par3D::Par3D()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres()
 {
-    noise = new PerlinNoise3D(4, 4, 4);
     nb_licol = 50;
     nb_ligne = nb_colone = nb_licol;
     largeur_fenetre = 620;
@@ -925,6 +924,7 @@ void Par3D::BorderCalculation(int NewPosition)
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
     double tmp, ValCol[100], val[4];
+    ImprovedNoise* PerlinNoise = new ImprovedNoise(4., 4., 4.);
     val[3] = stepMorph;
     if(VRgbt != "" && (Nb_vrgbts %5)==0 )
     {
@@ -937,7 +937,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
         for(int i= 0; i < NbVertexTmp; i++)
         {
             if(Noise != "")
-                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                tmp = PerlinNoise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
             else
@@ -966,7 +966,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
         for(int i= 0; i < NbVertexTmp; i++)
         {
             if(Noise != "")
-                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                tmp = PerlinNoise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
             else
