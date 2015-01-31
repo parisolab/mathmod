@@ -73,7 +73,6 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
         Results             = new double[maximumgrid*maximumgrid*maximumgrid];
         staticaction     *= -1;
     }
-    noise = new PerlinNoise3D(4,4,4);
     NbPointIsoMap = 0;
     NbTriangleIsoSurface = 0;
     IsoConditionRequired = -1;
@@ -1311,7 +1310,7 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-
+    ImprovedNoise* PerlinNoise = new ImprovedNoise(4., 4., 4.);
     double tmp, ValCol[100], val[4];
     val[3] = stepMorph;
     if(VRgbt != "" && (Nb_vrgbts %5)==0 )
@@ -1325,9 +1324,22 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
         for(int i= 0; i < NbVertexTmp; i++)
         {
             if(Noise != "")
+                /*
                 tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+
+                //float FractalNoise3D(float x, float y, float z, int octNum, float frq, float amp)
+                tmp = PerlinNoise.FractalNoise3D(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ],
+                        4,
+                        0.5,
+                        1.5);
+            */
+                tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
             else
                 tmp =1.0;
 
@@ -1355,9 +1367,18 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
         for(int i= 0; i < NbVertexTmp; i++)
         {
             if(Noise != "")
-                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+            /*
+            tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+
+            tmp = PerlinNoise.noise(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
+            */
+            tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
             else
                 tmp =1.0;
 
