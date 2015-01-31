@@ -1293,11 +1293,59 @@
 			"Zmax": [" 2"]
 		}
 	},
+        {
+
+                "Iso3D": {
+                    "Component": [
+                        "Texture_Duplin"
+                    ],
+                    "Varu": [
+                        "A=cos(0.9589716*u)",
+                        "B=sin(0.9589716*u)"
+                    ],
+                    "Fxyz": [
+                        "-49.95*((x/2.34)^4+(y*Ax - z*Bx)^4+ (y*Bx + z*Ax)^4) +
+                        (-99.95)* ((x/2.34)^2 * (y*Ax - z*Bx)^2+(x/2.34)^2 * (y*Bx + z*Ax)^2+(y*Ax - z*Bx)^2 * (y*Bx + z*Ax)^2)+
+                        (141.12* (x/2.34-1))*((x/2.34)^2 +(y*Ax - z*Bx)^2+(y*Bx + z*Ax)^2)+
+                        (54.7 *x)* (-4 +0.8547 * x) + 262.4 * (y*Ax - z*Bx)^2 + 256"
+                    ],
+                    "Name": [
+                        "Texture_Duplin"
+                    ],
+                    "Xmax": [
+                        " 2.5*3.9*0.6"
+                    ],
+                    "Xmin": [
+                        "-2*3.9*0.6"
+                    ],
+                    "Ymax": [
+                        " 2"
+                    ],
+                    "Ymin": [
+                        "-2"
+                    ],
+                    "Zmax": [
+                        " 2"
+                    ],
+                    "Zmin": [
+                        "-2"
+                    ]
+                },
+                "Texture": {
+                    "Colors": [
+                        "R=1",
+                        "G=0.8*abs(cos(2*(z*z+(y+1)*(y+1)+x*x)))",
+                        "B=0.5+0.3*abs(cos(2*(z*z +x*x +y*y)))",
+                        "T=1"
+                    ],
+                    "Name": "Granit"
+                }
+    },
 	{
 
             "Iso3D": {
                 "Component": [
-                    "Noise_pseudo_Duplin"
+                    "Noise_Duplin"
                 ],
                 "Varu": [
                     "A=cos(0.9589716*u)",
@@ -1310,7 +1358,7 @@
                     (54.7 *x)* (-4 +0.8547 * x) + 262.4 * (y*Ax - z*Bx)^2 + 256"
                 ],
                 "Name": [
-                    "pseudo_Duplin"
+                    "Noise_Duplin"
                 ],
                 "Xmax": [
                     " 2.5*3.9*0.6"
@@ -1331,22 +1379,21 @@
                     "-2"
                 ]
             },
-    "Noise": "True",
-    "Texture": {
-        "Colors": [
-            "R=1",
-            "G=0.6*abs(cos(2*(z*z+(y+1)*(y+1)+x*x)))",
-            "B=0.5+0.3*abs(cos(2.5*(z*z +x*x +y*y)))",
-            "T=1"
-        ],
-        "Name": "Granit"
-    }			
+            "Noise": "true",
+            "Texture": {
+                "Colors": [
+                    "R=1",
+                    "G=0.8*abs(cos(2*(z*z+(y+1)*(y+1)+x*x)))",
+                    "B=0.5+0.3*abs(cos(2*(z*z +x*x +y*y)))",
+                    "T=1"
+                ],
+                "Name": "Granit"
+            }
 },
 {
-
             "Iso3D": {
                 "Component": [
-                    "Pigment_pseudo_Duplin"
+                    "Pigment_Duplin"
                 ],
                 "Varu": [
                     "A=cos(0.9589716*u)",
@@ -1359,7 +1406,7 @@
                     (54.7 *x)* (-4 +0.8547 * x) + 262.4 * (y*Ax - z*Bx)^2 + 256"
                 ],
                 "Name": [
-                    "pseudo_Duplin"
+                    "Pigment_Duplin"
                 ],
                 "Xmax": [
                     " 2.5*3.9*0.6"
@@ -1380,8 +1427,6 @@
                     "-2"
                 ]
             },
-
-
 		"Pigment": {
 			"Colors": [{
 				"Color": {
