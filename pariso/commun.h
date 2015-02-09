@@ -25,6 +25,23 @@
 #include "../fparser/fparser.h"
 
 
+struct NoiseParemeters
+{
+    int Octaves;
+    float Lacunarity ;
+    float Gain;
+    float WindowSize;
+    float shiftX;
+    float ShiftY;
+    float ShiftZ;
+    float * IndexPoint;
+    int NoiseType; // 0 :Texture ; 1 : Pigments
+    FunctionParser *RgbtParser;
+    FunctionParser *VRgbtParser, *GradientParser;
+    int Nb_vrgbts;
+    int NoiseShape; //Nothing = 0, Granit = 1, Wood= 2, Clouds= 3...
+};
+
 struct ErrorMessage
 {
     int iErrorIndex;
@@ -55,6 +72,7 @@ struct  ComponentInfos
 
     int NbTrianglesBorderCND;
     bool DMTrianglesBorderCND;
+    NoiseParemeters NoiseParam;
 };
 
 
@@ -228,9 +246,9 @@ static int permutation[256] = { 151,160,137,91,90,15,
                                      grad(p[BB+1], x-1, y-1, z-1 ))));
    }
 
-   float fade(float t)
+   float fade(float f)
    {
-       return t * t * (3.0 - 2.0 * t);
+       return f * f * f * (f * (f * 6 - 15) + 10); // t * t * (3.0 - 2.0 * t);
    }
 
 
@@ -247,15 +265,15 @@ static int permutation[256] = { 151,160,137,91,90,15,
       return ((h&1) == 0 ? u : -u) + ((h&2) == 0 ? v : -v);
    }
 
-   float FractalNoise3D(float x, float y, float z, int octNum, float frq, float amp)
+   float FractalNoise3D(float x, float y, float z, int octNum, float lacunarity , float gain)
    {
-       float gain = 1.0f;
-       float sum = 0.0f;
+       float freq = 1.0, amp = 1.0, sum = 0;
 
        for(int i = 0; i < octNum; i++)
        {
-           sum +=  noise(x*gain/frq, y*gain/frq, z*gain/frq) * amp/gain;
-           gain *= 1.0f;
+           sum +=  noise(x*freq, y*freq, z*freq) * amp;
+           freq *= lacunarity;
+           amp *= gain;
        }
        return sum;
    }

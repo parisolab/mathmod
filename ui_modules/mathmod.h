@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -54,6 +54,8 @@ public slots:
     void smoothline();
     void Mesh();
     void slot_triangles_clicked();
+    void ParseIso();
+    void ParsePar();
 public:
     Ui::MathMod ui;
     int xyzactivated, isomesh, uvactivated, uvactivated4D;

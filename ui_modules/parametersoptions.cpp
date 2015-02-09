@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -34,8 +34,8 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     ControlH=700;
     GlwinW=780;
     GlwinH=700;
-    MaxTri=3000000;
-    MaxPt=2000000;
+    MaxTri=2000000;
+    MaxPt=1800000;
     MaxGrid=150;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
@@ -211,7 +211,6 @@ void Parametersoptions::GuiUpdate()
         ui.groupBox->show();
     else
         ui.groupBox->hide();
-
 }
 
 void Parametersoptions::on_maxgri_valueChanged(int value)
@@ -398,8 +397,11 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 
     QFile fconf(fileconfig);
     if(fconf.exists())
+       ReadJsonFile(fileconfig, JConfig);
+    else
+       ReadJsonFile(":/mathmodconfig.js", JConfig);
+
     {
-        ReadJsonFile(fileconfig, JConfig);
         if(JConfig["IsoParam"].isObject())
         {
             IsoParam = JConfig["IsoParam"].toObject();

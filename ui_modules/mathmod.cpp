@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -168,12 +168,10 @@ void MathMod::zg_valueChanged( int cl)
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
     else (ui.glWidget)->updateGL();
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::ParametricSurfaceProcess(int type)
-{
-    (type == 3) ? (ui.glWidget)->ParObjet->param4D =  1:
-            (ui.glWidget)->ParObjet->param4D = -1;
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::ParsePar()
+{
     //Initparametricpage();
     stError = (ui.glWidget)->ParObjet->parse_expression();
     if(stError.iErrorIndex >= 0)
@@ -200,6 +198,15 @@ void MathMod::ParametricSurfaceProcess(int type)
         message.exec();
         return;
     }
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::ParametricSurfaceProcess(int type)
+{
+    (type == 3) ? (ui.glWidget)->ParObjet->param4D =  1:
+            (ui.glWidget)->ParObjet->param4D = -1;
+
+    ParsePar();
 
     (ui.glWidget)->ParObjet->ParamBuild((ui.glWidget)->LocalScene.ArrayNorVer_localPt,
                                         (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
@@ -217,8 +224,9 @@ void MathMod::ParametricSurfaceProcess(int type)
     (ui.glWidget)->initializeGL();
     (ui.glWidget)->updateGL();
 }
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::ProcessNewIsoSurface( )
+void MathMod::ParseIso()
 {
     /// process the new surface
     stError = (ui.glWidget)->IsoObjet->ParserIso();
@@ -246,9 +254,13 @@ void MathMod::ProcessNewIsoSurface( )
         message.exec();
         return;
     }
+}
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::ProcessNewIsoSurface( )
+{
 
-
+    ParseIso();
 
     (ui.glWidget)->IsoObjet->IsoBuild(
         (ui.glWidget)->LocalScene.ArrayNorVer_localPt,

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -1163,8 +1163,16 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
         CurrentFormulaType = 2;
         /// process the new surface
+        if(textureIndex == -1)
+        {
         if(MathmodRef->RootObjet.CurrentTreestruct.fxyz.count() > 0)
             MathmodRef->ProcessNewIsoSurface( );
+        }
+        else
+        {
+            MathmodRef->ParseIso();
+            textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(1) : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
+        }
     }
     else if(Jobj["Param3D"].isObject())
     {
@@ -1410,8 +1418,17 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
         CurrentFormulaType = 1;
         /// process the new surface
-        MathmodRef->ParametricSurfaceProcess(1);
+        if(textureIndex == -1)
+        {
+            MathmodRef->ParametricSurfaceProcess(1);
+        }
+        else
+        {
+            MathmodRef->ParsePar();
+            textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+        }
     }
+
     else if(Jobj["Param4D"].isObject())
     {
         QObj = Jobj["Param4D"].toObject();
@@ -1666,8 +1683,17 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
         CurrentFormulaType = 3;
+
         /// process the new surface
-        MathmodRef->ParametricSurfaceProcess(3);
+        if(textureIndex == -1)
+        {
+            MathmodRef->ParametricSurfaceProcess(3);
+        }
+        else
+        {
+            MathmodRef->ParsePar();
+            textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+        }
     }
 }
 
@@ -5259,6 +5285,8 @@ void DrawingOptions::UpdateGui(int argc)
     //ui.NameLabel->hide();
     MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
     MathmodRef->resize(Parameters->GlwinW, Parameters->GlwinH);
+    //Pigment/texture
+    ui.textureEdit->hide();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -5388,7 +5416,7 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
     {
         QJsonDocument document;
         document.setObject(MathmodRef->pariso.JPigments[index - 1].toObject());
-        ui.PigmentEdit->setText(QString (document.toJson()));
+        ui.textureEdit->setText(QString (document.toJson()));
 
         ShowJsonModel(tmp, 1000+index-1);
         ui.ObjectClasseCurrent->takeTopLevelItem(0);
@@ -5400,4 +5428,76 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
 void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjTrian();
+}
+
+void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves = value;
+    ui.OctavesLabel->setText("Octaves = "+QString::number(value));
+    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape == 10)
+    {
+        MathmodRef->ui.glWidget->CalculateColorsPoints();
+    }
+    else
+    {
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
+    }
+}
+
+void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = (float)value/10.0;
+    ui.LacunarityLabel->setText("Lacunarity = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity));
+    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape == 10)
+    {
+        MathmodRef->ui.glWidget->CalculateColorsPoints();
+    }
+    else
+    {
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
+    }
+}
+
+void DrawingOptions::on_GainScrollBar_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = (float)value/10.0;
+    ui.GainLabel->setText("Gain = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain));
+    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape == 10)
+    {
+        MathmodRef->ui.glWidget->CalculateColorsPoints();
+    }
+    else
+    {
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
+    }
+}
+
+void DrawingOptions::on_ShowtextureScript_clicked()
+{
+    static int show = 1;
+    show *= -1;
+    if(show == 1)
+    {
+        ui.textureEdit->show();
+        ui.ShowtextureScript->setText("Hide Script");
+    }
+    else
+    {
+        ui.textureEdit->hide();
+        ui.ShowtextureScript->setText("Show Script");
+    }
+}
+
+void DrawingOptions::on_TurbulenceCheckBox_clicked()
+{
+    static int state = -1;
+    state *= -1;
+    if(state == 1)
+    {
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 10;
+    }
+    else
+    {
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
+    }
 }

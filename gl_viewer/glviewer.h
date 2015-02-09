@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -47,7 +47,6 @@ public :
     int isoline, isocolumn, isodepth,
         cpisoline, cpisocolumn, cpisodepth, TypeTriangle;
     QTimer        * timer;
-    double hauteur_fenetre;
     double Axe_x, Axe_y, Axe_z, angle, val1, val2, val3, old_x, old_y, old_z;
     ObjectProperties  LocalScene;
     Iso3D *IsoObjet;
@@ -56,7 +55,7 @@ public :
     QMessageBox message;
     ErrorMessage stError;
     GLfloat oldminx, oldminy,oldminz,oldmaxx, oldmaxy, oldmaxz;
-
+    ImprovedNoise* PerlinNoise;
 public:
     OpenGlWidget( QWidget *parent=0);
     ~OpenGlWidget();
@@ -124,6 +123,9 @@ public slots:
     void colorstypeParam(int);
     void SaveSceneAsObjPoly();
     void SaveSceneAsObjTrian();
+    void CalculateColorsPoints(void);
+    void CalculateTexturePoints(int type);
+    void CalculatePigmentPoints(int type);
 };
 
 #endif
