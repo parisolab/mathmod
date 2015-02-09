@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -169,6 +169,10 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.quality_image = 50;
     objectproperties.colortype = 0;
     objectproperties.colortypeParam = 0;
+
+    objectproperties.componentsinfos.NoiseParam.Octaves = 4;
+    objectproperties.componentsinfos.NoiseParam.Lacunarity = 0.5;
+    objectproperties.componentsinfos.NoiseParam.Gain = 0.5;
 
     objectproperties.componentsinfos.DFTrianglesNotVerifyCND =
         objectproperties.componentsinfos.DFTrianglesVerifyCND =

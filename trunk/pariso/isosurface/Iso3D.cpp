@@ -1,5 +1,5 @@
 /***************************************************************************
-*   Copyright (C) 2014 by Abderrahman Taha                                *
+*   Copyright (C) 2015 by Abderrahman Taha                                *
 *                                                                         *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -1284,7 +1284,37 @@ void Iso3D::IsoBuild (
     }
 
     //CND calculation for the triangles results:
+
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
+
+    // Pigment, Texture and Noise :
+    if(VRgbt != "" && (Nb_vrgbts %5)==0 )
+    {
+        components->ThereisRGBA = true;
+        components->NoiseParam.NoiseType = 0; //Pigments
+        components->NoiseParam.VRgbtParser = VRgbtParser;
+        components->NoiseParam.GradientParser = GradientParser;
+        components->NoiseParam.Nb_vrgbts = Nb_vrgbts;
+    }
+    else if(Nb_rgbts >= 4)
+    {
+        components->ThereisRGBA = true;
+        components->NoiseParam.NoiseType = 1; //Texture
+        components->NoiseParam.RgbtParser = RgbtParser;
+    }
+    else
+    {
+        components->ThereisRGBA = false;
+        components->NoiseParam.NoiseType = -1; //No Pigments or texture
+    }
+
+    if(components->NoiseParam.NoiseShape != 10)
+    {
+        if(Noise != "")
+           components->NoiseParam.NoiseShape = 1;
+        else
+           components->NoiseParam.NoiseShape = 0;
+    }
 
     CalculateColorsPoints(components);
 
@@ -1313,9 +1343,9 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
     ImprovedNoise* PerlinNoise = new ImprovedNoise(4., 4., 4.);
     double tmp, ValCol[100], val[4];
     val[3] = stepMorph;
-    if(VRgbt != "" && (Nb_vrgbts %5)==0 )
+
+    if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        components->ThereisRGBA = true;
         for(int i=0; i<Nb_vrgbts && i<100; i++)
         {
             ValCol[i] = VRgbtParser[i].Eval(val);
@@ -1323,29 +1353,17 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            if(Noise != "")
-                /*
-                tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
-
-                //float FractalNoise3D(float x, float y, float z, int octNum, float frq, float amp)
-                tmp = PerlinNoise.FractalNoise3D(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ],
-                        4,
-                        0.5,
-                        1.5);
-            */
-                tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
+            if(components->NoiseParam.NoiseShape != 0)
+                tmp = PerlinNoise->Marble(
+                        NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ], 4);
             else
                 tmp =1.0;
 
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ];
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
             tmp  = GradientParser->Eval(val);
 
@@ -1362,20 +1380,11 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
                 }
         }
     }
-    else if(Nb_rgbts >= 4)
+    else if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 1)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
             if(Noise != "")
-            /*
-            tmp = noise->lookup(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                    NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                    NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
-
-            tmp = PerlinNoise.noise(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                    NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                    NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ]);
-            */
             tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
                     NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
                     NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
@@ -1391,11 +1400,13 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
             NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
         }
-        components->ThereisRGBA = true;
     }
-    else
-        components->ThereisRGBA = false;
+
+    delete PerlinNoise;
 }
+
+
+
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {

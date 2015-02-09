@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -918,8 +918,81 @@ void Par3D::BorderCalculation(int NewPosition)
                 k += 3;
             }
         }
-
 }
+
+
+///+++++++++++++++++++++++++++++++++++++++++
+void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
+{
+    ImprovedNoise* PerlinNoise = new ImprovedNoise(4., 4., 4.);
+    double tmp, ValCol[100], val[4];
+    val[3] = stepMorph;
+
+    if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
+    {
+        for(int i=0; i<Nb_vrgbts && i<100; i++)
+        {
+            ValCol[i] = VRgbtParser[i].Eval(val);
+        }
+
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            if(components->NoiseParam.NoiseShape != 0)
+                tmp = PerlinNoise->Marble(
+                        NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ],
+                        NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ], 4);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+
+            tmp  = GradientParser->Eval(val);
+
+            int c= (int)tmp;
+            tmp = std::abs(tmp - (double)c);
+            for (int j=0; j < Nb_vrgbts && j < 100; j+=5)
+                if(tmp <= ValCol[j])
+                {
+                    NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
+                    NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
+                    NormVertexTab[i*TypeDrawin+2] = ValCol[j+3];
+                    NormVertexTab[i*TypeDrawin+3] = ValCol[j+4];
+                    j = 100;
+                }
+        }
+    }
+    else if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 1)
+    {
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            if(Noise != "")
+            tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
+                    NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+
+            NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
+            NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
+            NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
+        }
+    }
+
+    delete PerlinNoise;
+}
+
+
+
+
+/*
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
@@ -986,6 +1059,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     else
         components->ThereisRGBA = false;
 }
+*/
 
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
@@ -1348,6 +1422,43 @@ void  Par3D:: ParamBuild(
 
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
+
+
+
+
+
+
+
+
+
+    // Pigment, Texture and Noise :
+    if(VRgbt != "" && (Nb_vrgbts %5)==0 )
+    {
+        components->ThereisRGBA = true;
+        components->NoiseParam.NoiseType = 0; //Pigments
+        components->NoiseParam.VRgbtParser = VRgbtParser;
+        components->NoiseParam.GradientParser = GradientParser;
+        components->NoiseParam.Nb_vrgbts = Nb_vrgbts;
+    }
+    else if(Nb_rgbts >= 4)
+    {
+        components->ThereisRGBA = true;
+        components->NoiseParam.NoiseType = 1; //Texture
+        components->NoiseParam.RgbtParser = RgbtParser;
+    }
+    else
+    {
+        components->ThereisRGBA = false;
+        components->NoiseParam.NoiseType = -1; //No Pigments or texture
+    }
+
+    if(components->NoiseParam.NoiseShape != 10)
+    {
+        if(Noise != "")
+           components->NoiseParam.NoiseShape = 1;
+        else
+           components->NoiseParam.NoiseShape = 0;
+    }
 
     CalculateColorsPoints(components);
 
