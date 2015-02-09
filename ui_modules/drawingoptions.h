@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Abderrahman Taha                                *
+ *   Copyright (C) 2015 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -177,5 +177,10 @@ private slots:
     void on_comboBoxTexture_activated(int index);
     void on_comboBoxPigment_activated(int index);
     void on_actionTrianglesWavefront_obj_triggered();
+    void on_OctavesScrollBar_valueChanged(int value);
+    void on_LacunarityScrollBar_valueChanged(int value);
+    void on_GainScrollBar_valueChanged(int value);
+    void on_ShowtextureScript_clicked();
+    void on_TurbulenceCheckBox_clicked();
 };
 #endif
