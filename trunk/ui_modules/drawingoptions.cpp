@@ -5474,7 +5474,7 @@ void DrawingOptions::on_GainScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_ShowtextureScript_clicked()
 {
-    static int show = 1;
+    static int show = -1;
     show *= -1;
     if(show == 1)
     {
