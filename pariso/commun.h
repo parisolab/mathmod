@@ -37,9 +37,10 @@ struct NoiseParemeters
     float * IndexPoint;
     int NoiseType; // 0 :Texture ; 1 : Pigments
     FunctionParser *RgbtParser;
-    FunctionParser *VRgbtParser, *GradientParser;
+    FunctionParser *VRgbtParser, *GradientParser, *NoiseParser;
     int Nb_vrgbts;
     int NoiseShape; //Nothing = 0, Granit = 1, Wood= 2, Clouds= 3...
+    int NoiseActive;
 };
 
 struct ErrorMessage
@@ -48,6 +49,8 @@ struct ErrorMessage
     std::string strError;
     std::string strOrigine;
 };
+
+
 
 struct  ComponentInfos
 {
@@ -168,12 +171,208 @@ struct  ObjectProperties
     double axe_x, axe_y, axe_z, ScalCoeff, view_rotx, view_roty, view_rotz;
 };
 
+
+
 static inline float tinyrnd()
 {
     static unsigned trand = 0;
     trand = 1664525u * trand + 1013904223u;
     return (float) trand / 4294967296.0f;
 }
+
+class CellNoise
+{
+    /// <summary>
+    /// Generates Cell Noise
+    /// </summary>
+    /// <param name="input">The location at which the cell noise function should be evaluated at.</param>
+    /// <param name="seed">The seed for the noise function</param>
+    /// <param name="distanceFunc">The function used to calculate the distance between two points. Several of these are defined as statics on the WorleyNoise class.</param>
+    /// <param name="distanceArray">An array which will store the distances computed by the Worley noise function.
+    /// The length of the array determines how many distances will be computed.</param>
+    /// <param name="combineDistancesFunc">The function used to color the location. The color takes the populated distanceArray
+    /// param and returns a float which is the greyscale value outputed by the worley noise function.</param>
+    /// <returns>The color worley noise returns at the input position</returns>
+public :
+    float rd[3], featurePoint[4];
+    float CellNoiseFunc(float x, float y, float z, int seed, int type=2, int CombineDist=0)
+    {
+        //Declare some values for later use
+        uint lastRandom, numberFeaturePoints;
+        float randomDiff[4];
+        int cubeX, cubeY, cubeZ;
+        float distanceArray[9];
+        float color = 0;
+
+        //Initialize values in distance array to large values
+        for (int i = 0; i < 9; i++)
+            distanceArray[i] = 6666;
+
+        //1. Determine which cube the evaluation point is in
+        int evalCubeX = (int)floor(x);
+        int evalCubeY = (int)floor(y);
+        int evalCubeZ = (int)floor(z);
+
+        for (int i = -1; i < 2; ++i)
+            for (int j = -1; j < 2; ++j)
+                for (int k = -1; k < 2; ++k)
+                {
+                    cubeX = evalCubeX + i;
+                    cubeY = evalCubeY + j;
+                    cubeZ = evalCubeZ + k;
+
+                    //2. Generate a reproducible random number generator for the cube
+                    lastRandom = lcgRandom(hash((uint)(cubeX + seed), (uint)(cubeY), (uint)(cubeZ)));
+                    //3. Determine how many feature points are in the cube
+                    numberFeaturePoints = probLookup(lastRandom);
+                    //4. Randomly place the feature points in the cube
+                    for (uint l = 0; l < numberFeaturePoints; ++l)
+                    {
+                        lastRandom = lcgRandom(lastRandom);
+                        randomDiff[0] = (float)lastRandom / 0x100000000;
+
+                        lastRandom = lcgRandom(lastRandom);
+                        randomDiff[1] = (float)lastRandom / 0x100000000;
+
+                        lastRandom = lcgRandom(lastRandom);
+                        randomDiff[2] = (float)lastRandom / 0x100000000;
+
+                        featurePoint[0] = randomDiff[0] + (float)cubeX;
+                        featurePoint[1] = randomDiff[1] + (float)cubeY;
+                        featurePoint[2] = randomDiff[2] + (float)cubeZ;
+
+                        //5. Find the feature point closest to the evaluation point.
+                        //This is done by inserting the distances to the feature points into a sorted list
+                        if(type == 1)
+                            insert(distanceArray, ManhattanDistanceFunc(x, y, z, featurePoint[0], featurePoint[1], featurePoint[2]));
+                        else if(type == 2 || type == 4)
+                            insert(distanceArray, EuclidianDistanceFunc(x, y, z, featurePoint[0], featurePoint[1], featurePoint[2]));
+                        else if(type == 3 || type == 5)
+                            insert(distanceArray, ChebyshevDistanceFunc(x, y, z, featurePoint[0], featurePoint[1], featurePoint[2]));                
+                    }
+                    //6. Check the neighboring cubes to ensure their are no closer evaluation points.
+                    // This is done by repeating steps 1 through 5 above for each neighboring cube
+                }
+
+        if(CombineDist ==1)
+            color = distanceArray[1] - distanceArray[0]; //combineDistancesFunc(distanceArray);
+        else if(CombineDist ==2)
+            color = distanceArray[2] - distanceArray[0];
+        else
+            color = distanceArray[0];
+
+        if(color < 0) color = 0;
+        if(color > 1) color = 1;
+        return color;
+    }
+
+    float EuclidianDistanceFunc(float x1,float y1, float z1, float x2, float y2, float z2)
+    {
+        return (x1 - x2) * (x1 - x2) +
+                  (y1 - y2) * (y1 - y2) +
+                  (z1 - z2) * (z1 - z2);
+    }
+
+    float ManhattanDistanceFunc(float x1,float y1, float z1, float x2, float y2, float z2)
+    {
+        float tmp = std::abs(x1 - x2) + std::abs(y1 - y2) +std:: abs(z1 - z2);
+        return tmp;
+    }
+
+    float ChebyshevDistanceFunc(float x1,float y1, float z1, float x2, float y2, float z2)
+    {
+        float diff[3];
+        diff[0] = x1 - x2;
+        diff[1] = y1 - y2;
+        diff[2] = z1 - z2;
+        return std::max(std::max(std::abs(diff[0]), std::abs(diff[1])), std::abs(diff[2]));
+    }
+
+    /// <summary>
+    /// Given a uniformly distributed random number this function returns the number of feature points in a given cube.
+    /// </summary>
+    /// <param name="value">a uniformly distributed random number</param>
+    /// <returns>The number of feature points in a cube.</returns>
+    // Generated using mathmatica with "AccountingForm[N[Table[CDF[PoissonDistribution[4], i], {i, 1, 9}], 20]*2^32]"
+    int probLookup(uint value)
+    {
+        if (value < 393325350U) return 1;
+        if (value < 1022645910U) return 2;
+        if (value < 1861739990U) return 3;
+        if (value < 2700834071U) return 4;
+        if (value < 3372109335U) return 5;
+        if (value < 3819626178U) return 6;
+        if (value < 4075350088U) return 7;
+        if (value < 4203212043U) return 8;
+        return 9;
+    }
+
+    /// <summary>
+    /// Inserts value into array using insertion sort. If the value is greater than the largest value in the array
+    /// it will not be added to the array.
+    /// </summary>
+    /// <param name="arr">The array to insert the value into.</param>
+    /// <param name="value">The value to insert into the array.</param>
+    ///
+    void insert(float* arr, float value)
+    {
+        float temp;
+        for (int i = 8; i >= 0; i--)
+        {
+            if (value > arr[i]) break;
+            temp = arr[i];
+            arr[i] = value;
+            if(i == 0)
+            {
+                rd[0] =  featurePoint[0];
+                rd[1] =  featurePoint[1];
+                rd[2] =  featurePoint[2];
+            }
+            if (i < 8) arr[i + 1] = temp;
+        }
+    }
+
+    /// <summary>
+    /// LCG Random Number Generator.
+    /// LCG: http://en[3]ikipedia.org/wiki/Linear_congruential_generator
+    /// </summary>
+    /// <param name="lastValue">The last value calculated by the lcg or a seed</param>
+    /// <returns>A new random number</returns>
+    int lcgRandom(int lastValue)
+    {
+        return (int)((1103515245u * lastValue + 12345u) % 0x100000000u);
+    }
+
+
+    /// <summary>
+    /// Constant used in FNV hash function.
+    /// FNV hash: http://isthe.com/chongo/tech/comp/fnv/#FNV-source
+    /// </summary>
+    const static uint OFFSET_BASIS = 2166136261U;
+    /// <summary>
+    /// Constant used in FNV hash function
+    /// FNV hash: http://isthe.com/chongo/tech/comp/fnv/#FNV-source
+    /// </summary>
+     const static uint FNV_PRIME = 16777619U;
+    /// <summary>
+    /// Hashes three integers into a single integer using FNV hash.
+    /// FNV hash: http://isthe.com/chongo/tech/comp/fnv/#FNV-source
+    /// </summary>
+    /// <returns>hash value</returns>
+    int hash(int i, int j, int k)
+    {
+        return (int)((((((OFFSET_BASIS ^ (int)i) * FNV_PRIME) ^ (int)j) * FNV_PRIME) ^ (int)k) * FNV_PRIME);
+    }
+};
+
+
+
+
+
+
+
+
+
 
 #define MAGIC_SCALE 1.5707963f
 
@@ -254,7 +453,7 @@ static int permutation[256] = { 151,160,137,91,90,15,
 
    float lerp(float t, float a, float b)
    {
-       return a + t * (b - a);
+       return a + t*(b - a);
    }
 
    float grad(int hash, float x, float y, float z)

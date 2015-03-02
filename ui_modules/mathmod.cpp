@@ -170,7 +170,7 @@ void MathMod::zg_valueChanged( int cl)
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::ParsePar()
+int MathMod::ParsePar()
 {
     //Initparametricpage();
     stError = (ui.glWidget)->ParObjet->parse_expression();
@@ -196,8 +196,9 @@ void MathMod::ParsePar()
                        );
         message.adjustSize () ;
         message.exec();
-        return;
+        return -1;
     }
+    return 1;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -206,7 +207,8 @@ void MathMod::ParametricSurfaceProcess(int type)
     (type == 3) ? (ui.glWidget)->ParObjet->param4D =  1:
             (ui.glWidget)->ParObjet->param4D = -1;
 
-    ParsePar();
+    int result = ParsePar();
+    if(result == -1) return;
 
     (ui.glWidget)->ParObjet->ParamBuild((ui.glWidget)->LocalScene.ArrayNorVer_localPt,
                                         (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
@@ -226,7 +228,7 @@ void MathMod::ParametricSurfaceProcess(int type)
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::ParseIso()
+int MathMod::ParseIso()
 {
     /// process the new surface
     stError = (ui.glWidget)->IsoObjet->ParserIso();
@@ -252,15 +254,17 @@ void MathMod::ParseIso()
                        );
         message.adjustSize () ;
         message.exec();
-        return;
+        return -1;
     }
+    return 1;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ProcessNewIsoSurface( )
 {
 
-    ParseIso();
+    int result = ParseIso();
+    if(result == -1) return;
 
     (ui.glWidget)->IsoObjet->IsoBuild(
         (ui.glWidget)->LocalScene.ArrayNorVer_localPt,
