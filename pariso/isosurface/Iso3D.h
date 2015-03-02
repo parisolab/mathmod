@@ -85,7 +85,7 @@ public :
     int NbTriangleIsoSurface, IsoConditionRequired,NbPointIsoMapCND,
         ThreeTimesNbPolygnTmp;
     int i,j,k,l;
-    FunctionParser * implicitFunctionParser, *Fct, *RgbtParser, *VRgbtParser, *GradientParser;
+    FunctionParser * implicitFunctionParser, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser;
     FunctionParser IsoConditionParser[1100],
                    xSupParser[1100], xInfParser[1100],
                    ySupParser[1100], yInfParser[1100],
@@ -102,7 +102,6 @@ public :
         VRgbt, VRgbts[50], VRgbtNames[50],
         Gradient, Noise;
     double ConstValues[50];
-
     ImplicitStruct ImplicitStructs[1100];
     int GridTable[1100];
     int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts;
@@ -127,6 +126,8 @@ public :
     int NbVertex;
     unsigned int NbPolygn;
     unsigned int NbPolygnNbVertex[2];
+    float Lacunarity, Gain;
+    int Octaves;
 
 public :
     Iso3D(int, int, int);
@@ -156,4 +157,6 @@ public :
     int HowManyVariables(std::string, int);
     int CNDtoUse(int index, struct ComponentInfos *components);
     void CalculateColorsPoints(struct ComponentInfos *components);
+    ErrorMessage InitNoiseParser();
+    //double Turbulence(const double* p);
 };

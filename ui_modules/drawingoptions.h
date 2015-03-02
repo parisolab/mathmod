@@ -182,5 +182,6 @@ private slots:
     void on_GainScrollBar_valueChanged(int value);
     void on_ShowtextureScript_clicked();
     void on_TurbulenceCheckBox_clicked();
+    void on_pushButton_5_clicked();
 };
 #endif

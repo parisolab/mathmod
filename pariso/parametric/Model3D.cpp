@@ -261,6 +261,8 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
 {
     double vals[] = {0,0,0};
     double iprime, jprime;
+    float tmp=0;
+    CellNoise CellNoiseexample;
 
     if((cmp == 0) && (activeMorph == 1))
         stepMorph += pace;
@@ -277,9 +279,17 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
             iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
             vals[0]=jprime;
             vals[1]=iprime;
-            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals);
-            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals);
-            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);
+
+            tmp = CellNoiseexample.CellNoiseFunc(
+                        vals[0],
+                        vals[1],
+                        0,
+                        4,2);
+
+            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals) - tmp;
+            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals) - tmp;
+            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals) - tmp;
+
             l+=TypeDrawin;
             if(param4D == 1)
                 ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
@@ -937,11 +947,25 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 
         for(int i= 0; i < NbVertexTmp; i++)
         {
+            /*
             if(components->NoiseParam.NoiseShape != 0)
                 tmp = PerlinNoise->Marble(
                         NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ],
                         NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ], 4);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+*/
+            val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
+            val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
+            val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+
+            if(Noise != "")
+                tmp  = NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -968,10 +992,29 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
+            /*
             if(Noise != "")
             tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
                     NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
                     NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
+            else
+                tmp =1.0;
+
+            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
+            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
+            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+
+            NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
+            NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
+            NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
+            */
+            val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
+            val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
+            val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+
+            if(Noise != "")
+                tmp  = NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -1423,14 +1466,6 @@ void  Par3D:: ParamBuild(
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
-
-
-
-
-
-
-
-
     // Pigment, Texture and Noise :
     if(VRgbt != "" && (Nb_vrgbts %5)==0 )
     {
@@ -1452,13 +1487,10 @@ void  Par3D:: ParamBuild(
         components->NoiseParam.NoiseType = -1; //No Pigments or texture
     }
 
-    if(components->NoiseParam.NoiseShape != 10)
-    {
-        if(Noise != "")
-           components->NoiseParam.NoiseShape = 1;
-        else
-           components->NoiseParam.NoiseShape = 0;
-    }
+    if(Noise == "")
+        components->NoiseParam.NoiseShape = 0;
+    else
+        components->NoiseParam.NoiseShape = 1;
 
     CalculateColorsPoints(components);
 

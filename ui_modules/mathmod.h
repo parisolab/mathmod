@@ -54,8 +54,8 @@ public slots:
     void smoothline();
     void Mesh();
     void slot_triangles_clicked();
-    void ParseIso();
-    void ParsePar();
+    int ParseIso();
+    int ParsePar();
 public:
     Ui::MathMod ui;
     int xyzactivated, isomesh, uvactivated, uvactivated4D;
