@@ -37,31 +37,37 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
     if(type == 1)
     {
-        //IsoObjet->ParserIso();
         LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjet->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjet->NoiseParser;
+        IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
-        //ParObjet->parse_expression();
         LocalScene.componentsinfos.NoiseParam.RgbtParser = ParObjet->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjet->NoiseParser;
+        ParObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
 
     for(unsigned int i =0; i < LocalScene.VertxNumber; i++)
     {
-        if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0)
-            tmp = PerlinNoise->FractalNoise3D(
-                    difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo,
-                    difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo,
-                    difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo,
-                    LocalScene.componentsinfos.NoiseParam.Octaves,
-                    LocalScene.componentsinfos.NoiseParam.Lacunarity,
-                    LocalScene.componentsinfos.NoiseParam.Gain);
-        else
-            tmp =1.0;
+        val[0]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
+        val[1]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
+        val[2]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
 
-        val[0]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
-        val[1]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
-        val[2]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
+         if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
+         {
+            tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
+         }
+        else
+         {
+            tmp =1.0;
+         }
+
+
+
+            val[0] *= tmp;
+            val[1] *= tmp;
+            val[2] *= tmp;
 
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin     ] = LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val);
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val);
@@ -78,17 +84,19 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     LocalScene.componentsinfos.NoiseParam.NoiseType = 0; //Pigments
     if(type == 1)
     {
-        //IsoObjet->ParserIso();
         LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjet->VRgbtParser;
         LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjet->GradientParser;
         LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjet->Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjet->NoiseParser;
+        IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
-        //ParObjet->parse_expression();
         LocalScene.componentsinfos.NoiseParam.VRgbtParser = ParObjet->VRgbtParser;
         LocalScene.componentsinfos.NoiseParam.GradientParser = ParObjet->GradientParser;
         LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjet->Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjet->NoiseParser;
+        ParObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
 
     for(int i=0; i<LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && i<100; i++)
@@ -98,20 +106,18 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
 
     for(unsigned int i= 0; i < LocalScene.VertxNumber; i++)
     {
-        if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0)
-            tmp = PerlinNoise->FractalNoise3D(
-                    difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo,
-                    difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo,
-                    difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo,
-                    LocalScene.componentsinfos.NoiseParam.Octaves,
-                    LocalScene.componentsinfos.NoiseParam.Lacunarity,
-                    LocalScene.componentsinfos.NoiseParam.Gain);
+        val[0]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
+        val[1]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
+        val[2]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
+
+        if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
+            tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
         else
             tmp =1.0;
 
-        val[0]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
-        val[1]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
-        val[2]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
+        val[0] *= tmp;
+        val[1] *= tmp;
+        val[2] *= tmp;
 
         tmp  = LocalScene.componentsinfos.NoiseParam.GradientParser->Eval(val);
 
@@ -140,20 +146,18 @@ void OpenGlWidget::CalculateColorsPoints()
         LocalScene.componentsinfos.ThereisRGBA = true;
         for(unsigned int i =0; i < LocalScene.VertxNumber; i++)
         {
-            if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0)
-                tmp = PerlinNoise->FractalNoise3D(
-                        difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo,
-                        difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo,
-                        difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo,
-                        LocalScene.componentsinfos.NoiseParam.Octaves,
-                        LocalScene.componentsinfos.NoiseParam.Lacunarity,
-                        LocalScene.componentsinfos.NoiseParam.Gain);
+            val[0]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
+            val[1]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
+            val[2]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
+
+             if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
+                tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
-            val[1]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
-            val[2]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
+                val[0] *= tmp;
+                val[1] *= tmp;
+                val[2] *= tmp;
 
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin     ] = LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val);
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val);
@@ -163,7 +167,7 @@ void OpenGlWidget::CalculateColorsPoints()
     }
 
     // Second case : Texture
-    else if(LocalScene.componentsinfos.NoiseParam.NoiseType == 0)
+    else if(LocalScene.componentsinfos.NoiseParam.NoiseType != 0)
     {
         LocalScene.componentsinfos.ThereisRGBA = true;
         for(int i=0; i<LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && i<100; i++)
@@ -173,20 +177,18 @@ void OpenGlWidget::CalculateColorsPoints()
 
         for(unsigned int i= 0; i < LocalScene.VertxNumber; i++)
         {
-            if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0)
-                tmp = PerlinNoise->FractalNoise3D(
-                        difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo,
-                        difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo,
-                        difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo,
-                        LocalScene.componentsinfos.NoiseParam.Octaves,
-                        LocalScene.componentsinfos.NoiseParam.Lacunarity,
-                        LocalScene.componentsinfos.NoiseParam.Gain);
+            val[0]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
+            val[1]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
+            val[2]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
+
+            if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
+                tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
-            val[1]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
-            val[2]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
+            val[0] *= tmp;
+            val[1] *= tmp;
+            val[2] *= tmp;
 
             tmp  = LocalScene.componentsinfos.NoiseParam.GradientParser->Eval(val);
 

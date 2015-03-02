@@ -173,6 +173,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.componentsinfos.NoiseParam.Octaves = 4;
     objectproperties.componentsinfos.NoiseParam.Lacunarity = 0.5;
     objectproperties.componentsinfos.NoiseParam.Gain = 0.5;
+    objectproperties.componentsinfos.NoiseParam.NoiseActive = 1;
 
     objectproperties.componentsinfos.DFTrianglesNotVerifyCND =
         objectproperties.componentsinfos.DFTrianglesVerifyCND =

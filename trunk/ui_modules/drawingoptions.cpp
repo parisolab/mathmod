@@ -853,20 +853,6 @@ void DrawingOptions::UpdateCurrentTreeObject()
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         ui.stackedProperties->setCurrentIndex(1);
-        /*
-        QString tmp = " ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+" Cmp";
-        if(MathmodRef->RootObjet.CurrentTreestruct.Funct.count() > 0)
-            tmp += ";"+ QString::number(MathmodRef->RootObjet.CurrentTreestruct.Funct.count())+" Fct";
-
-        if(MathmodRef->RootObjet.CurrentTreestruct.Const.count() > 0)
-            tmp += ";"+  QString::number(MathmodRef->RootObjet.CurrentTreestruct.Const.count())+" Cst";
-
-        if(MathmodRef->RootObjet.CurrentTreestruct.Varu.count() > 0)
-            tmp += ";"+  QString::number(MathmodRef->RootObjet.CurrentTreestruct.Varu.count())+" Var";
-
-        tmp +=  ")" ;
-        ui.NameLabel->setText(tmp);
-        */
         ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
         ui.IsoComponent->clear();
         ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
@@ -876,7 +862,6 @@ void DrawingOptions::UpdateCurrentTreeObject()
     {
         ui.ParamComponent->clear();
         ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
-        //ui.colorgrid->setTabText(0, MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
         ui.ParamComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         ui.stackedProperties->setCurrentIndex(2);
         UpdateDescription(0);
@@ -885,7 +870,6 @@ void DrawingOptions::UpdateCurrentTreeObject()
     {
         ui.ParamComponent_2->clear();
         ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
-        //ui.colorgrid_2->setTabText(0, MathmodRef->RootObjet.CurrentTreestruct.name.at(0)+"("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.count())+")");
         ui.ParamComponent_2->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         ui.stackedProperties->setCurrentIndex(3);
         UpdateDescription(0);
@@ -987,8 +971,20 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->IsoObjet->Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+        //Noise:
+        QString noise = "";
+        noise = Jobj["Noise"].toString();
+        MathmodRef->ui.glWidget->IsoObjet->Noise = noise.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
+
         // Colors
+        QString noise1 = "";
+        noise1 = QTextureObj["Noise"].toString();
         lst = QTextureObj["Colors"].toArray();
+        noise1.replace("\n","");
+        noise1.replace("\t","");
+        noise1.replace(" ","");
+
         result = "";
         for(j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -1000,12 +996,17 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         MathmodRef->ui.glWidget->IsoObjet->Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
-
+        if(noise == "")
+        {
+            MathmodRef->ui.glWidget->IsoObjet->Noise = noise1.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
+        }
 
         // Pigment
+        QString noise2 = "";
         QJsonArray tmp;
         QString strtmp = QPigmentObj["Gradient"].toString();
-
+        noise2 = QPigmentObj["Noise"].toString();
         lst =  QPigmentObj["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size(); j++)
@@ -1020,6 +1021,11 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         strtmp.replace("\n","");
         strtmp.replace("\t","");
         strtmp.replace(" ","");
+
+        noise2.replace("\n","");
+        noise2.replace("\t","");
+        noise2.replace(" ","");
+
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
@@ -1027,13 +1033,11 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->IsoObjet->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
-
-        //Noise:
-        result = "";
-        result = Jobj["Noise"].toString();
-        MathmodRef->ui.glWidget->IsoObjet->Noise = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
-
+        if(noise == "" && noise1 == "")
+        {
+            MathmodRef->ui.glWidget->IsoObjet->Noise = noise2.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
+        }
         // Grid
         lst = QObj["Grid"].toArray();
         result = "";
@@ -1170,7 +1174,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
         else
         {
-            MathmodRef->ParseIso();
+            int result = MathmodRef->ParseIso();
+            if(result == -1) return;
             textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(1) : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
         }
     }
@@ -1321,7 +1326,22 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
 
+        //Noise:
+        QString noise = "";
+        noise = Jobj["Noise"].toString();
+        noise.replace("\n","");
+        noise.replace("\t","");
+        noise.replace(" ","");
+        MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
+
         // Colors
+        QString noise1 = "";
+        noise1 =  QTextureObj["Noise"].toString();
+        noise1.replace("\n","");
+        noise1.replace("\t","");
+        noise1.replace(" ","");
+
         lst = QTextureObj["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size()-1; j++)
@@ -1331,11 +1351,22 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+
         MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
-
+        if(noise == "")
+        {
+            MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
+        }
 
         // Pigment
+        QString noise2 = "";
+        noise2 =  QPigmentObj["Noise"].toString();
+        noise2.replace("\n","");
+        noise2.replace("\t","");
+        noise2.replace(" ","");
+
         QJsonArray tmp;
         QString strgradient = QPigmentObj["Gradient"].toString();
         lst =  QPigmentObj["Colors"].toArray();
@@ -1360,14 +1391,11 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->ParObjet->Gradient = strgradient.toStdString();
         MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
-
-
-        //Noise:
-        result = "";
-        result = Jobj["Noise"].toString();
-        MathmodRef->ui.glWidget->ParObjet->Noise = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
-
+        if(noise == "" && noise1 == "")
+        {
+            MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
+        }
 
         // Grid
         lst = QObj["Grid"].toArray();
@@ -1424,7 +1452,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
         else
         {
-            MathmodRef->ParsePar();
+            int result = MathmodRef->ParsePar();
+            if(result == -1) return;
             textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
         }
     }
@@ -1588,7 +1617,22 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+        //Noise:
+        QString noise = "";
+        noise = Jobj["Noise"].toString();
+        noise.replace("\n","");
+        noise.replace("\t","");
+        noise.replace(" ","");
+        MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
+
         // Colors
+        QString noise1 = "";
+        noise1 =  QTextureObj["Noise"].toString();
+        noise1.replace("\n","");
+        noise1.replace("\t","");
+        noise1.replace(" ","");
+
         lst = QTextureObj["Colors"].toArray();
         result = "";
         for(j=0; j < lst.size()-1; j++)
@@ -1600,8 +1644,19 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+        if(noise == "")
+        {
+            MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
+        }
 
         // Pigment
+        QString noise2 = "";
+        noise2 =  QPigmentObj["Noise"].toString();
+        noise2.replace("\n","");
+        noise2.replace("\t","");
+        noise2.replace(" ","");
+
         QJsonArray tmp;
         QString strgradient = QPigmentObj["Gradient"].toString();
         lst =  QPigmentObj["Colors"].toArray();
@@ -1626,14 +1681,11 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->ParObjet->Gradient = strgradient.toStdString();
         MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
-
-
-        //Noise:
-        result = "";
-        result = Jobj["Noise"].toString();
-        MathmodRef->ui.glWidget->ParObjet->Noise = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
-
+        if(noise == "" && noise1 == "")
+        {
+            MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
+        }
 
         // Grid
         lst = QObj["Grid"].toArray();
@@ -1691,7 +1743,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
         else
         {
-            MathmodRef->ParsePar();
+            int result = MathmodRef->ParsePar();
+            if(result == -1) return;
             textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
         }
     }
@@ -1776,7 +1829,45 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ui.glWidget->IsoObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+
+            //Noise:
+            QString noise = "";
+            noise = (array[i].toObject())["Noise"].toString();
+            MathmodRef->ui.glWidget->IsoObjet->Noise = noise.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
+
+
+            // Texture:
+            QString noise1 = "";
+            noise1 = (array[i].toObject())["Texture"].toObject()["Noise"].toString();
+            noise1.replace("\n","");
+            noise1.replace("\t","");
+
+
+            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->IsoObjet->Rgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+
+            if(noise == "")
+            {
+                MathmodRef->ui.glWidget->IsoObjet->Noise = noise1.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
+            }
+
             // Pigment
+            QString noise2 = "";
+            noise2 = (array[i].toObject())["Texture"].toObject()["Noise"].toString();
+            noise2.replace("\n","");
+            noise2.replace("\t","");
+
             QJsonArray tmp;
             QString strtmp = (array[i].toObject())["Pigment"].toObject()["Gradient"].toString();
             lst =  (array[i].toObject())["Pigment"].toObject()["Colors"].toArray();
@@ -1801,27 +1892,11 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ui.glWidget->IsoObjet->VRgbt = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
 
-
-
-            //Noise:
-            result = "";
-            result = (array[i].toObject())["Noise"].toString();
-            MathmodRef->ui.glWidget->IsoObjet->Noise = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
-
-
-            // Texture:
-            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjet->Rgbt = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+            if(noise == "" && noise1 == "")
+            {
+                MathmodRef->ui.glWidget->IsoObjet->Noise = noise2.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
+            }
 
             // Grid
             lst = QObj["Grid"].toArray();
@@ -2098,6 +2173,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+
+
+
+/*
             // Colors
             lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
             result = "";
@@ -2144,6 +2223,91 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result = (array[i].toObject())["Noise"].toString();
             MathmodRef->ui.glWidget->ParObjet->Noise = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
+*/
+
+
+
+
+
+
+
+
+
+
+
+            //Noise:
+            QString noise = "";
+            noise = (array[i].toObject())["Noise"].toString();
+            MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
+
+            // Texture:
+            QString noise1 = "";
+            noise1 = (array[i].toObject())["Texture"].toObject()["Noise"].toString();
+            noise1.replace("\n","");
+            noise1.replace("\t","");
+
+
+            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+
+            if(noise == "")
+            {
+                MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
+            }
+
+            // Pigment
+            QString noise2 = "";
+            noise2 = (array[i].toObject())["Texture"].toObject()["Noise"].toString();
+            noise2.replace("\n","");
+            noise2.replace("\t","");
+
+            QJsonArray tmp;
+            QString strtmp = (array[i].toObject())["Pigment"].toObject()["Gradient"].toString();
+            lst =  (array[i].toObject())["Pigment"].toObject()["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size(); j++)
+            {
+                tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
+                for(int k=0; k < tmp.count(); k++)
+                {
+                        result += tmp[k].toString() + ";";
+                }
+            }
+
+            strtmp.replace("\n","");
+            strtmp.replace("\t","");
+            strtmp.replace(" ","");
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+
+            MathmodRef->ui.glWidget->ParObjet->Gradient = strtmp.toStdString();
+            MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
+
+            if(noise == "" && noise1 == "")
+            {
+                MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
+            }
+
+
+
+
+
+
+
 
 
 
@@ -2354,6 +2518,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
+/*
             // Colors
             lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
             result = "";
@@ -2400,7 +2565,69 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result = (array[i].toObject())["Noise"].toString();
             MathmodRef->ui.glWidget->ParObjet->Noise = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
+*/
 
+
+
+            //Noise:
+            QString noise = "";
+            noise = (array[i].toObject())["Noise"].toString();
+            MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
+
+            // Texture:
+            QString noise1 = "";
+            noise1 = (array[i].toObject())["Texture"].toObject()["Noise"].toString();
+            noise1.replace("\n","");
+            noise1.replace("\t","");
+            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
+            if(noise == "")
+            {
+                MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
+            }
+
+            // Pigment
+            QString noise2 = "";
+            noise2 = (array[i].toObject())["Texture"].toObject()["Noise"].toString();
+            noise2.replace("\n","");
+            noise2.replace("\t","");
+            QJsonArray tmp;
+            QString strtmp = (array[i].toObject())["Pigment"].toObject()["Gradient"].toString();
+            lst =  (array[i].toObject())["Pigment"].toObject()["Colors"].toArray();
+            result = "";
+            for(j=0; j < lst.size(); j++)
+            {
+                tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
+                for(int k=0; k < tmp.count(); k++)
+                {
+                        result += tmp[k].toString() + ";";
+                }
+            }
+            strtmp.replace("\n","");
+            strtmp.replace("\t","");
+            strtmp.replace(" ","");
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->ParObjet->Gradient = strtmp.toStdString();
+            MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
+            if(noise == "" && noise1 == "")
+            {
+                MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
+            }
 
 
             // Grid
@@ -5432,44 +5659,26 @@ void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 
 void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves = value;
-    ui.OctavesLabel->setText("Octaves = "+QString::number(value));
-    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape == 10)
-    {
-        MathmodRef->ui.glWidget->CalculateColorsPoints();
-    }
-    else
-    {
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
-    }
+    int Octaves = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves = value;
+    MathmodRef->ui.glWidget->IsoObjet->Octaves = Octaves;
+    ui.OctavesLabel->setText("Octaves = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves));
+    on_pushButton_5_clicked();
 }
 
 void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = (float)value/10.0;
+    float Lacunarity = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = (float)value/10.0;
+    MathmodRef->ui.glWidget->IsoObjet->Lacunarity = Lacunarity;
     ui.LacunarityLabel->setText("Lacunarity = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity));
-    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape == 10)
-    {
-        MathmodRef->ui.glWidget->CalculateColorsPoints();
-    }
-    else
-    {
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
-    }
+    on_pushButton_5_clicked();
 }
 
 void DrawingOptions::on_GainScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = (float)value/10.0;
+    float Gain = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = (float)value/10.0;
+    MathmodRef->ui.glWidget->IsoObjet->Gain = Gain;
     ui.GainLabel->setText("Gain = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain));
-    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape == 10)
-    {
-        MathmodRef->ui.glWidget->CalculateColorsPoints();
-    }
-    else
-    {
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
-    }
+    on_pushButton_5_clicked();
 }
 
 void DrawingOptions::on_ShowtextureScript_clicked()
@@ -5490,14 +5699,51 @@ void DrawingOptions::on_ShowtextureScript_clicked()
 
 void DrawingOptions::on_TurbulenceCheckBox_clicked()
 {
-    static int state = -1;
-    state *= -1;
-    if(state == 1)
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseActive *= -1;
+        on_pushButton_5_clicked();
+}
+
+void DrawingOptions::on_pushButton_5_clicked()
+{
+    QJsonParseError err;
+    QString sortie;
+    QString script  = ui.textureEdit->toPlainText().trimmed().replace("\n","").replace("\t","");
+    QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
+    if (err.error)
     {
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 10;
+        QMessageBox message ;
+        message.setWindowTitle("Error at : ");
+        sortie = (script);
+        int before, after;
+        if(sortie.length() > (err.offset +30))
+            after = 30;
+        else after = sortie.length() - err.offset;
+        sortie.truncate(err.offset +after);
+        if(err.offset-30 > 0)
+            before = 30;
+        else
+            before = 0;
+        sortie = sortie.remove(0,err.offset-before);
+        sortie.replace("\t", " ");
+        sortie.replace("\n", " ");
+        sortie.insert(before, " >>> Error <<< ");
+        message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
+                        "..." + sortie + "..."
+                       );
+        message.adjustSize () ;
+        message.exec();
+        return;
+    }
+
+    QJsonObject tmp = doc.object();
+    if(tmp["Texture"].isObject())
+    {
+        MathmodRef->pariso.JTextures[ui.comboBoxTexture->currentIndex() - 1] = doc.object() ;
+        on_comboBoxTexture_activated(ui.comboBoxTexture->currentIndex());
     }
     else
     {
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseShape = 0;
+        MathmodRef->pariso.JPigments[ui.comboBoxPigment->currentIndex() - 1] = doc.object();
+        on_comboBoxPigment_activated(ui.comboBoxPigment->currentIndex());
     }
 }

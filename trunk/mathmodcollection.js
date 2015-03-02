@@ -22,9 +22,9 @@
 				"B=1.72*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 				"T=1"
 			],
-			"Name": "Granit_4"
+        "Noise": "NoiseP(x,y,z,4,1.1,1)",
+        "Name": "Granit_4"
 		},
-		"Noise": "True",
 		"Iso3D": {
 			"Component": [" SchwarzFunction"],
 			"Const": ["r = (1/4)*(1+3*sqrt(5))",
@@ -3898,7 +3898,8 @@
 			"R=cos(7*x*pi)*cos(z*pi)",
 			"G=cos(7*y*pi)*cos(x*pi)",
 			"B=cos(7*y*pi)*cos(z*pi)",
-			"T=1"]
+            "T=1"],
+            "Noise": "NoiseW(x,y,z,1,2,0)"
 	}
 },
 {
@@ -3908,17 +3909,20 @@
 			"R=sin(7*x*pi)",
 			"G=sin(7*y*pi)",
 			"B=cos(7*z*pi)",
-			"T=1"]
+            "T=1"],
+            "Noise": "NoiseW(x,y,z,1,2,0)"
 	}
 },
 {
 	"Texture":{
 		"Name": "Lines3",
-		"Colors":[
-			"R=cos(7*x*pi)*sin(z*pi)",
-			"G=sin(x*pi)*cos(7*y*pi)",
-			"B=sin(y*pi)*cos(7*z*pi)",
-			"T=1"]
+                "Colors": [
+                    "R=1.5*cos(x*pi)*sin(z*pi)",
+                    "G=1.5*sin(x*pi)*cos(y*pi)",
+                    "B=1.5*sin(y*pi)*cos(z*pi)",
+                    "T=1"
+                ],
+            "Noise": "NoiseW(x,y,z,1,2,0)"
 	}
 },
 {
@@ -3928,7 +3932,8 @@
 			"R=cos(7*x*y*pi)",
 			"G=sin(7*y*z*pi)",
 			"B=sin(7*z*x*pi)",
-			"T=1"]
+            "T=1"],
+            "Noise": "NoiseW(x,y,z,1,3,0)"
 	}
 },
 {
@@ -3938,7 +3943,8 @@
             "G=sin(2*y*z*pi)",
             "B=sin(2*z*x*pi)",
             "T=1.0"],
-            "Name": "Lines5"
+            "Name": "Lines5",
+            "Noise": "NoiseW(x,y,z,1,2,0)"
         }
 },
 {
@@ -3949,7 +3955,8 @@
             "B=sin(y*pi)*cos(x*pi)",
             "T=1"
         ],
-        "Name": "Lines6"
+        "Name": "Lines6",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 {
@@ -3960,7 +3967,8 @@
             "B=cos((x*x+y*y+z*z)*pi)*sin(z*pi)",
             "T=1"
         ],
-        "Name": "Lines7"
+        "Name": "Lines7",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 {
@@ -3971,7 +3979,8 @@
             "B=cos((x*x+z*z)*pi)*cos(z*pi)",
             "T=1"
         ],
-        "Name": "Lines8"
+        "Name": "Lines8",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 {
@@ -3982,7 +3991,8 @@
             "B=1",
             "T=1"
         ],
-        "Name": "Checker"
+        "Name": "Checker",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 {
@@ -3993,7 +4003,8 @@
             "B=0.5+0.3*abs(cos(6*z*z*x*y*pi))",
             "T=1"
         ],
-        "Name": "Granit_1"
+        "Name": "Granit_1",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 {
@@ -4004,7 +4015,8 @@
             "B=0.5+0.2*abs(cos(3*cos(pi*(x*x+y*y+z*z))))",
             "T=1"
         ],
-        "Name": "Granit_2"
+        "Name": "Granit_2",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 {
@@ -4015,7 +4027,8 @@
             "B=0.8601*abs(cos(x*x+y*y+z*z)*cos(x*x+y*y+z*z)*sin(x*x+y*y+z*z))",
             "T=1"
         ],
-        "Name": "Granit_3"
+        "Name": "Granit_3",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 {
@@ -4026,11 +4039,22 @@
             "B=2*0.8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
             "T=1"
         ],
-        "Name": "Granit_4"
+        "Name": "WorleyNoise",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
-}
-
-
+},
+{
+    "Texture": {
+        "Colors": [
+            "R=2*.41",
+             "G=2*0.81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+             "B=2*0.8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+             "T=1"
+             ],
+        "Name": "PerlinNoise",
+        "Noise": "NoiseP(x,y,z,Octaves,Lacunarity,Gain)"
+        }
+    }
 ],
     "PigmentsList":[
     {
@@ -4100,7 +4124,8 @@
                 }
             }
         ],
-        "Gradient": "3*cos((x*x+y*y)*pi)*sin((y*y+z*z)*pi)"
+        "Gradient": "3*cos((x*x+y*y)*pi)*sin((y*y+z*z)*pi)",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
 },
 
@@ -4169,7 +4194,8 @@
                     }
                 }
             ],
-            "Gradient": "3*atan((x*x *y*z)*pi)*cos(y*y*z*pi)"
+            "Gradient": "3*atan((x*x *y*z)*pi)*cos(y*y*z*pi)",
+            "Noise": "NoiseW(x,y,z,1,2,0)"
         }
     },
      {
@@ -4237,7 +4263,8 @@
                     }
                 }
             ],
-            "Gradient": "sin(x*30) + sin(y*30)"
+            "Gradient": "sin(x*30) + sin(y*30)",
+            "Noise": "NoiseW(x,y,z,1,2,0)"
         }
    },
    {
@@ -4305,7 +4332,8 @@
                 }
             }
         ],
-        "Gradient": "7*cos(pi*(x*x +y *y))*cos(y*z)*cos(pi*(y*y * x*x))*cos((z*z + x*x)*pi) *(cos(x) * sin(y) * cos(y) * sin(z*z + x*y) - cos(z) * sin(x))"
+        "Gradient": "7*cos(pi*(x*x +y *y))*cos(y*z)*cos(pi*(y*y * x*x))*cos((z*z + x*x)*pi) *(cos(x) * sin(y) * cos(y) * sin(z*z + x*y) - cos(z) * sin(x))",
+        "Noise": "NoiseW(x,y,z,1,2,0)"
     }
    } ,
    {
@@ -4373,7 +4401,8 @@
                     }
                 ],
                 "Gradient": "3*cos(x*x +y *y)*cos(y*z- y*x)*(cos(x*y*z) + sin(x*y*z))",
-                "Name": "Pigment_4"
+                "Name": "Pigment_5",
+                "Noise": "NoiseW(x,y,z,1,2,0)"
             }
         }
 ]
