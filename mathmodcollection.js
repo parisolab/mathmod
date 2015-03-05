@@ -2464,6 +2464,53 @@
         "Gradient": "3*cos((x*x+y*y)*pi)*sin((y*y+z*z)*pi)"
     }
 },
+
+
+        {
+            "Iso3D": {
+                "Component": [
+                    "Schwarz"
+                ],
+                "Fxyz": [
+                    "Ax+Ay+Az-NoiseW(x,y,z,1,2,0)"
+                ],
+                "Name": [
+                    "CellNoiseSchwarz"
+                ],
+                "Varu": [
+                    "A=cos(u)"
+                ],
+                "Xmax": [
+                    "4"
+                ],
+                "Xmin": [
+                    "-4"
+                ],
+                "Ymax": [
+                    "4"
+                ],
+                "Ymin": [
+                    "-4"
+                ],
+                "Zmax": [
+                    "4"
+                ],
+                "Zmin": [
+                    "-4"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R=2*.41",
+                    "G=2*0.81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+                    "B=2*0.8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+                    "T=1"
+                ],
+                "Name": "WorleyNoise",
+                "Noise": "NoiseW(x,y,z,1,2,0)"
+            }
+        },
+
 {"Param3D":
 		{
 		"Description":["Descriptionofthemodel"],

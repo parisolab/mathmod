@@ -262,7 +262,6 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
     double vals[] = {0,0,0};
     double iprime, jprime;
     float tmp=0;
-    CellNoise CellNoiseexample;
 
     if((cmp == 0) && (activeMorph == 1))
         stepMorph += pace;
@@ -279,13 +278,6 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
             iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
             vals[0]=jprime;
             vals[1]=iprime;
-
-            tmp = CellNoiseexample.CellNoiseFunc(
-                        vals[0],
-                        vals[1],
-                        0,
-                        4,2);
-
             NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals) - tmp;
             NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals) - tmp;
             NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals) - tmp;
