@@ -27,6 +27,32 @@ static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 
+
+CellNoise *NoiseFunction2 = new CellNoise();
+ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
+
+double TurbulenceWorley2(const double* p)
+{
+    return NoiseFunction2->CellNoiseFunc(
+                p[0],
+                p[1],
+                p[2],
+                (int)p[3],
+                (int)p[4],
+                (int)p[5]);
+}
+
+double TurbulencePerlin2(const double* p)
+{
+    return PNoise2->FractalNoise3D(
+                p[0],
+                p[1],
+                p[2],
+                (int)p[3],
+                p[4],
+                p[5]);
+}
+
 //+++++++++++++++++++++++++++++++++++++++++
 Par3D::~Par3D()
 {
@@ -70,6 +96,15 @@ void Par3D::initialiser_parametres()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parseur()
 {
+    NoiseParser->AddConstant("pi", 3.14159265);
+    NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
+    NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+
+    NoiseShapeParser->AddConstant("pi", 3.14159265);
+    NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
+    NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+
     for(int i=0; i<100; i++)
     {
         myParserUmin[i].AddConstant   ("pi", 3.14159265);
@@ -80,6 +115,18 @@ void Par3D::initialiser_parseur()
         myParserY[i].AddConstant("pi", 3.14159265);
         myParserZ[i].AddConstant("pi", 3.14159265);
         myParserCND[i].AddConstant("pi", 3.14159265);
+
+        myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
 }
 
@@ -294,6 +341,7 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initparser(int N)
 {
+
     delete[] myParserX;
     myParserX = new FunctionParser[N];
 
@@ -314,6 +362,21 @@ void Par3D::initparser(int N)
 
     delete GradientParser;
     GradientParser = new FunctionParser();
+    GradientParser->AddConstant("pi", 3.14159265);
+
+    delete NoiseParser;
+    NoiseParser = new FunctionParser;
+    NoiseParser->AddConstant("pi", 3.14159265);
+    NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
+    NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+
+
+    delete NoiseShapeParser;
+    NoiseShapeParser = new FunctionParser;
+    NoiseShapeParser->AddConstant("pi", 3.14159265);
+    NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
+    NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
     for(int i=0; i<N; i++)
     {
@@ -321,11 +384,23 @@ void Par3D::initparser(int N)
         myParserY[i].AddConstant("pi", 3.14159265);
         myParserZ[i].AddConstant("pi", 3.14159265);
         myParserCND[i].AddConstant("pi", 3.14159265);
+
+        myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
         Fct[i].AddConstant("pi", 3.14159265);
         RgbtParser[i].AddConstant("pi", 3.14159265);
         VRgbtParser[i].AddConstant("pi", 3.14159265);
     }
-    GradientParser->AddConstant("pi", 3.14159265);
 }
 
 
@@ -501,22 +576,6 @@ ErrorMessage  Par3D::parse_expression()
     else
         ParConditionRequired = -1;
 
-    FunctionParser tmp;
-    tmp.AddConstant   ("pi", 3.14159265);
-    // Add defined functions :
-    for(int i=0; i<Nb_paramfunctions+1; i++)
-    {
-        myParserX[i]= tmp ;
-        myParserY[i]= tmp ;
-        myParserZ[i]= tmp ;
-        myParserCND[i]= tmp ;
-        myParserUmin[i]= tmp ;
-        myParserUmax[i]= tmp ;
-        myParserVmin[i]= tmp ;
-        myParserVmax[i]= tmp ;
-    }
-
-
 
     //Add defined constantes:
     for(int i=0; i<Nb_paramfunctions+1; i++)
@@ -619,12 +678,22 @@ ErrorMessage  Par3D::parse_expression()
             }
     }
 
+    if(Noise != "")
+        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t")) >= 0)
+        {
+            stdError.strError = Noise;
+            stdError.strOrigine = Noise;
+            return stdError;
+        }
 
 
-
-
-
-
+    if(NoiseShape != "")
+        if ((stdError.iErrorIndex = NoiseShapeParser->Parse(NoiseShape,"x,y,z,t")) >= 0)
+        {
+            stdError.strError = NoiseShape;
+            stdError.strOrigine = NoiseShape;
+            return stdError;
+        }
 
 
     for(int index=0; index< Nb_paramfunctions + 1; index++)
@@ -923,10 +992,40 @@ void Par3D::BorderCalculation(int NewPosition)
 }
 
 
+
+///+++++++++++++++++++++++++++++++++++++++++
+void Par3D::CalculateNoiseShapePoints(int NewPosition)
+{
+    double tmp, val[4];
+    int I =0;
+    val[3] = stepMorph;
+    NoiseShape = "NoiseW(x,y,z,1,2,0)";
+    NoiseShapeParser->Parse(NoiseShape, "x,y,z,t");
+    if(NoiseShape != "")
+        for(int j=0; j < nb_ligne   ; j++)
+        for(int i= 0; i < nb_colone; i++)
+        {
+            val[0]= NormVertexTab[I  + 3 + TypeDrawinNormStep +NewPosition ];
+            val[1]= NormVertexTab[I  + 4 + TypeDrawinNormStep +NewPosition ];
+            val[2]= NormVertexTab[I  + 5 + TypeDrawinNormStep +NewPosition ];
+
+            tmp  = NoiseShapeParser->Eval(val);
+
+            NormVertexTab[I + 3 + TypeDrawinNormStep +NewPosition ] *= tmp;
+            NormVertexTab[I + 4 + TypeDrawinNormStep +NewPosition ] *= tmp;
+            NormVertexTab[I + 5 + TypeDrawinNormStep +NewPosition ] *= tmp;
+
+            I += TypeDrawin;
+        }
+}
+
+
+
+
+
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    ImprovedNoise* PerlinNoise = new ImprovedNoise(4., 4., 4.);
     double tmp, ValCol[100], val[4];
     val[3] = stepMorph;
 
@@ -939,19 +1038,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            /*
-            if(components->NoiseParam.NoiseShape != 0)
-                tmp = PerlinNoise->Marble(
-                        NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ], 4);
-            else
-                tmp =1.0;
-
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
-*/
             val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
@@ -984,23 +1070,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            /*
-            if(Noise != "")
-            tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                    NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                    NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
-            else
-                tmp =1.0;
-
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
-
-            NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
-            NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
-            NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
-            NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
-            */
             val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
@@ -1020,8 +1089,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
         }
     }
-
-    delete PerlinNoise;
 }
 
 
@@ -1433,6 +1500,7 @@ void  Par3D:: ParamBuild(
     for(int fctnb= 0; fctnb< Nb_paramfunctions+1; fctnb++)
     {
         calcul_objet(fctnb*TypeDrawin*NbVertex, fctnb);
+        //CalculateNoiseShapePoints(fctnb*TypeDrawin*NbVertex);
         if(param4D == 1)
         {
             Anim_Rot4D (fctnb*NbVertex);

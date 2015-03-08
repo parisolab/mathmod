@@ -66,7 +66,7 @@ public:
            DIFX,DIFY,DIFZ,DIFW,
            DIFMAXIMUM;
 
-    FunctionParser * myParserX, * myParserY,* myParserZ, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser;
+    FunctionParser * myParserX, * myParserY,* myParserZ, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
     FunctionParser myParserW[100],myParserCND[100],
                    myParserUmin[100], myParserUmax[100],
                    myParserVmin[100], myParserVmax[100],
@@ -77,7 +77,7 @@ public:
         Varu, Const, Funct, Rgbt, Grid;
     std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100],
     RgbtNames[100], Rgbts[100], VRgbt, VRgbts[100], VRgbtNames[100],
-    Gradient, Noise;
+    Gradient, Noise, NoiseShape;
     double  v_inf[100], v_sup[100],u_inf[100],u_sup[100],dif_v[100],dif_u[100];
     double stepMorph, pace;
     int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
@@ -116,6 +116,7 @@ public:
     ErrorMessage parse_expression();
     void CNDCalculation(int, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
+    void CalculateNoiseShapePoints(int);
     void ParamBuild(float * , float * ,unsigned int *, unsigned int *,
                     unsigned int *, int  IsoPos=0,
                     ComponentInfos *components = NULL,
