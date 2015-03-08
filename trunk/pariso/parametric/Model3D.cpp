@@ -42,6 +42,7 @@ double TurbulenceWorley2(const double* p)
                 (int)p[5]);
 }
 
+//+++++++++++++++++++++++++++++++++++++++++
 double TurbulencePerlin2(const double* p)
 {
     return PNoise2->FractalNoise3D(
@@ -260,8 +261,8 @@ void  Par3D::calcul_points4(int idx)
 {
     int i,j;
     double tp1, tp2, tp3, tp4;
-// Changement de coordonnees des points selon les
-// angles angex et angley
+    // Changement de coordonnees des points selon les
+    // angles angex et angley
     int lndex =0;
     for (i=0; i < nb_ligne  ; i++)
         for (j=0; j < nb_colone   ; j++)
@@ -308,7 +309,6 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
 {
     double vals[] = {0,0,0};
     double iprime, jprime;
-    float tmp=0;
 
     if((cmp == 0) && (activeMorph == 1))
         stepMorph += pace;
@@ -325,9 +325,9 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
             iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
             vals[0]=jprime;
             vals[1]=iprime;
-            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals) - tmp;
-            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals) - tmp;
-            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals) - tmp;
+            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals);
+            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals);
+            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);
 
             l+=TypeDrawin;
             if(param4D == 1)
@@ -341,7 +341,6 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initparser(int N)
 {
-
     delete[] myParserX;
     myParserX = new FunctionParser[N];
 
@@ -369,8 +368,6 @@ void Par3D::initparser(int N)
     NoiseParser->AddConstant("pi", 3.14159265);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
-
-
 
     delete NoiseShapeParser;
     NoiseShapeParser = new FunctionParser;
