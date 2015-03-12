@@ -5660,7 +5660,7 @@ void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 {
     int Octaves = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves = value;
-    MathmodRef->ui.glWidget->IsoObjet->Octaves = Octaves;
+    MathmodRef->ui.glWidget->IsoObjet->Octaves = MathmodRef->ui.glWidget->ParObjet->Octaves = Octaves;
     ui.OctavesLabel->setText("Octaves = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves));
     on_pushButton_5_clicked();
 }
@@ -5668,7 +5668,7 @@ void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 {
     float Lacunarity = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = (float)value/10.0;
-    MathmodRef->ui.glWidget->IsoObjet->Lacunarity = Lacunarity;
+    MathmodRef->ui.glWidget->IsoObjet->Lacunarity = MathmodRef->ui.glWidget->ParObjet->Lacunarity = Lacunarity;
     ui.LacunarityLabel->setText("Lacunarity = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity));
     on_pushButton_5_clicked();
 }
@@ -5676,7 +5676,7 @@ void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 void DrawingOptions::on_GainScrollBar_valueChanged(int value)
 {
     float Gain = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = (float)value/10.0;
-    MathmodRef->ui.glWidget->IsoObjet->Gain = Gain;
+    MathmodRef->ui.glWidget->IsoObjet->Gain = MathmodRef->ui.glWidget->ParObjet->Gain = Gain;
     ui.GainLabel->setText("Gain = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain));
     on_pushButton_5_clicked();
 }
