@@ -92,6 +92,7 @@ void Par3D::initialiser_parametres()
     mat_translation4D                 = Matrix4D();
     mat_inversetranslation4D    = Matrix4D();
     mat4D.unit();
+    Lacunarity = 0.5; Gain = 1.0; Octaves = 4;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -100,7 +101,9 @@ void Par3D::initialiser_parseur()
     NoiseParser->AddConstant("pi", 3.14159265);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
-
+    NoiseParser->AddConstant("Lacunarity", Lacunarity);
+    NoiseParser->AddConstant("Gain", Gain);
+    NoiseParser->AddConstant("Octaves", Octaves);
 
     NoiseShapeParser->AddConstant("pi", 3.14159265);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
@@ -368,6 +371,9 @@ void Par3D::initparser(int N)
     NoiseParser->AddConstant("pi", 3.14159265);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+    NoiseParser->AddConstant("Lacunarity", Lacunarity);
+    NoiseParser->AddConstant("Gain", Gain);
+    NoiseParser->AddConstant("Octaves", Octaves);
 
     delete NoiseShapeParser;
     NoiseShapeParser = new FunctionParser;
