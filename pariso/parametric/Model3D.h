@@ -91,7 +91,8 @@ public:
     unsigned int NbPolygn;
     int NbVertex;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
-
+    float Lacunarity, Gain;
+    int Octaves;
 public:
     Par3D();
     ~Par3D();
