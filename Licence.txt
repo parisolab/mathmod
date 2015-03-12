@@ -1,8 +1,6 @@
 Copyright © 2015 Abderrahman Taha (taha_ab@yahoo.fr)
 
-    =========================
-         MathMod 3.0 (2015/03/04)
-    =========================
+
 FaceBook: https://www.facebook.com/pages/MathMod/529510253833102
 Twitter :https://twitter.com/parisolab
 Offical Website: http://k3dsurf.sourceforge.net/
