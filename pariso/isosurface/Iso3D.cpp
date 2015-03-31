@@ -461,14 +461,29 @@ void Iso3D::InitParser()
     for(int i=0; i<50; i++)
     {
         RgbtParser[i].AddConstant("pi", 3.14159265);
+        RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
+        RgbtParser[i].AddConstant("Gain", Gain);
+        RgbtParser[i].AddConstant("Octaves", Octaves);
+        RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+        RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
     for(int i=0; i<50; i++)
     {
         VRgbtParser[i].AddConstant("pi", 3.14159265);
+        VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
+        VRgbtParser[i].AddConstant("Gain", Gain);
+        VRgbtParser[i].AddConstant("Octaves", Octaves);
+        VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+        VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
     GradientParser->AddConstant("pi", 3.14159265);
+    GradientParser->AddConstant("Lacunarity", Lacunarity);
+    GradientParser->AddConstant("Gain", Gain);
+    GradientParser->AddConstant("Octaves", Octaves);
+    GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
+    GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
 }
 
 
@@ -815,6 +830,11 @@ ErrorMessage Iso3D::ParserIso()
                     return stdError;
                 }
                 RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
+                RgbtParser[i].AddConstant("Gain", Gain);
+                RgbtParser[i].AddConstant("Octaves", Octaves);
+                RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+                RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
             }
         }
     }
@@ -825,6 +845,10 @@ ErrorMessage Iso3D::ParserIso()
 
 
 
+
+
+
+    //For Solid Texture :
     if(VRgbt != "")
     {
         Nb_vrgbts = HowManyVariables(VRgbt, 4);
@@ -839,6 +863,12 @@ ErrorMessage Iso3D::ParserIso()
             GradientParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
         }
 
+        GradientParser->AddConstant("Lacunarity", Lacunarity);
+        GradientParser->AddConstant("Gain", Gain);
+        GradientParser->AddConstant("Octaves", Octaves);
+        GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
+        GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
+
         for(int i=0; i<Nb_vrgbts; i++)
         {
             for(int j=0; j<Nb_constants; j++)
@@ -850,6 +880,11 @@ ErrorMessage Iso3D::ParserIso()
                     return stdError;
                 }
                 VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
+                VRgbtParser[i].AddConstant("Gain", Gain);
+                VRgbtParser[i].AddConstant("Octaves", Octaves);
+                VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+                VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
             }
         }
     }
@@ -857,6 +892,8 @@ ErrorMessage Iso3D::ParserIso()
     {
         Nb_vrgbts =0;
     }
+
+
 
     if(Noise != "")
     {
@@ -919,7 +956,7 @@ ErrorMessage Iso3D::ParserIso()
         IsoConditionRequired = -1;
 
     //Add defined constantes:
-
+/*
     //For Solid Texture :
     for(int i=0; i<4; i++)
         for(int j=0; j<Nb_constants; j++)
@@ -960,6 +997,10 @@ ErrorMessage Iso3D::ParserIso()
                 VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             }
     }
+ */
+
+
+
     //Add defined constantes:
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
@@ -987,17 +1028,29 @@ ErrorMessage Iso3D::ParserIso()
     if(Rgbt != "")
         for(int i=0; i<4; i++)
             for(int j=0; j<Nb_functs; j++)
+            {
                 RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+                RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+                RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+            }
 
     // Add defined functions :
     if(VRgbt != "")
     {
         for(int j=0; j<Nb_functs; j++)
+        {
             GradientParser->AddFunction(FunctNames[j], Fct[j]);
+            GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
+            GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
+        }
 
         for(int i=0; i<4; i++)
             for(int j=0; j<Nb_functs; j++)
+            {
                 VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+                VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+                VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+            }
     }
 
 
@@ -1209,6 +1262,12 @@ void Iso3D::initparser(int N)
     for(int i=0; i<50; i++)
     {
         RgbtParser[i].AddConstant("pi", 3.14159265);
+        RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
+        RgbtParser[i].AddConstant("Gain", Gain);
+        RgbtParser[i].AddConstant("Octaves", Octaves);
+        RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+        RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+
     }
 
     delete[] VRgbtParser;
@@ -1216,11 +1275,21 @@ void Iso3D::initparser(int N)
     for(int i=0; i<50; i++)
     {
         VRgbtParser[i].AddConstant("pi", 3.14159265);
+        VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
+        VRgbtParser[i].AddConstant("Gain", Gain);
+        VRgbtParser[i].AddConstant("Octaves", Octaves);
+        VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+        VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
     delete GradientParser;
     GradientParser = new FunctionParser;
     GradientParser->AddConstant("pi", 3.14159265);
+    GradientParser->AddConstant("Lacunarity", Lacunarity);
+    GradientParser->AddConstant("Gain", Gain);
+    GradientParser->AddConstant("Octaves", Octaves);
+    GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
+    GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::EvalExpressionAtIndex(int IsoIndex)
