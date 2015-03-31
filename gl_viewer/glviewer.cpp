@@ -72,7 +72,7 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin     ] = LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val);
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val);
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val);
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = 1.0;
+        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val);
      }
 }
 
@@ -162,7 +162,7 @@ void OpenGlWidget::CalculateColorsPoints()
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin     ] = LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val);
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val);
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val);
-            LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = 1.0;
+            LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val);
          }
     }
 
@@ -207,39 +207,7 @@ void OpenGlWidget::CalculateColorsPoints()
     }
     updateGL();
 }
-/*
-///+++++++++++++++++++++++++++++++++++++++++
-void OpenGlWidget::CalculateColorsPoints()
-{
-    double      tmp, val[4];
 
-    IsoObjet->ParserIso();
-    for(unsigned int i =0; i < LocalScene.VertxNumber; i++)
-    {
-        tmp = PerlinNoise->FractalNoise3D(
-                difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo,
-                difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo,
-                difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo,
-                NoiseParam.Iteration,
-                NoiseParam.Frequency,
-                NoiseParam.Amplitude);
-
-        val[0]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep]/hauteur_fenetre -decalage_xo;
-        val[1]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
-        val[2]= tmp*difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
-
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin     ] = IsoObjet->RgbtParser[0].Eval(val);
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = IsoObjet->RgbtParser[1].Eval(val);
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = IsoObjet->RgbtParser[2].Eval(val);
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = 1.0;
-    }
-
-
-    //initializeGL();
-    updateGL();
-}
-
-*/
 void OpenGlWidget::axeOk()
 {
     LocalScene.axe *= -1;
@@ -1108,7 +1076,9 @@ static void draw(ObjectProperties *scene)
 
             glEnable (GL_LINE_SMOOTH);
             glEnable (GL_BLEND);
+            //glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
             glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            //glBlendFunc (GL_ONE, GL_ONE);
             glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
     }
 
