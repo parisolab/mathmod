@@ -31,6 +31,7 @@
 
 int main(int argc, char *argv[])
 {
+    //QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
     QApplication app(argc, argv);
     Parametersoptions Parameters;
     Parameters.MainApp = &app;

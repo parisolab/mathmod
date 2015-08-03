@@ -1646,7 +1646,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!IsoConditionParser[cnd].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(!(IsoConditionParser[cnd].Eval(Bprime) == 1) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1677,7 +1677,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!IsoConditionParser[cnd].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(!(IsoConditionParser[cnd].Eval(Cprime) == 1) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
