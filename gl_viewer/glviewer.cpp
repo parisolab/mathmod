@@ -17,11 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
-
 #include <QTextStream>
 #include <QFileDialog>
 #include "glviewer.h"
 #include "raster.h"
+
 
 static int TypeDrawin=10;
 static int TypeDrawinNormStep = 4;
@@ -205,7 +205,7 @@ void OpenGlWidget::CalculateColorsPoints()
                 }
         }
     }
-    updateGL();
+    update();
 }
 
 void OpenGlWidget::axeOk()
@@ -223,6 +223,26 @@ void OpenGlWidget::normOk()
 void OpenGlWidget::infosOk()
 {
     LocalScene.infos *= -1;
+    update();
+}
+
+void OpenGlWidget::smoothline()
+{
+    LocalScene.smoothline *= -1;
+    /// For drawing Lines :
+    if(LocalScene.smoothline == 1)
+    {
+        glEnable (GL_LINE_SMOOTH);
+        glEnable (GL_BLEND);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+    }
+    else
+    {
+        glDisable(GL_LINE_SMOOTH);
+        glDisable(GL_BLEND);
+    };
+
     update();
 }
 
@@ -1425,12 +1445,7 @@ void OpenGlWidget::DrawGridPlan()
 
 void OpenGlWidget::timerEvent(QTimerEvent*)
 {
-    updateGL();
-}
-
-void OpenGlWidget::update()
-{
-    updateGL();
+    update();
 }
 
 OpenGlWidget::~OpenGlWidget()
@@ -1691,7 +1706,7 @@ void OpenGlWidget::mouseMoveEvent( QMouseEvent *e )
     }
     old_y = e->y();
     old_x = e->x();
-    updateGL();
+    update();
 }
 
 void OpenGlWidget::png()

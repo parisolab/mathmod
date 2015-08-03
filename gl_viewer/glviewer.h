@@ -62,7 +62,6 @@ public:
     void initializeGL();
     void resizeGL(int, int);
     void paintGL();
-    void update();
     void timerEvent( QTimerEvent * );
     void mousePressEvent( QMouseEvent *);
     void mouseMoveEvent( QMouseEvent *);
@@ -102,6 +101,7 @@ public slots:
     void normOk();
     void infosOk();
     void boxOk();
+    void smoothline();
     void lineOk();
     void DrawPlan();
     void DrawGridPlan();

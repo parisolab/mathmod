@@ -56,42 +56,27 @@ void MathMod::resizeEvent( QResizeEvent  *e )
 void MathMod::fill()
 {
     (ui.glWidget)->FillOk();
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::iso_infos()
 {
     (ui.glWidget)->infosOk();
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
-
 
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::smoothline()
 {
-    (ui.glWidget)->LocalScene.smoothline *= -1;
-    /// For drawing Lines :
-    if((ui.glWidget)->LocalScene.smoothline == 1)
-    {
-        glEnable (GL_LINE_SMOOTH);
-        glEnable (GL_BLEND);
-        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    }
-    else
-    {
-        glDisable(GL_LINE_SMOOTH);
-        glDisable(GL_BLEND);
-    };
-
-    updateGL();
+    (ui.glWidget)->smoothline();
+    (ui.glWidget)->update();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::updateGL()
 {
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::draw_norm_clicked()
@@ -108,7 +93,7 @@ void MathMod::linecolumn_valueChanged( int cl)
     if(uvactivated  == 1)
         ParametricSurfaceProcess(1);
     else
-        (ui.glWidget)->updateGL();
+        (ui.glWidget)->update();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -120,7 +105,7 @@ void MathMod::linecolumn_valueChanged_2( int cl)
     if(uvactivated4D  == 1)
         ParametricSurfaceProcess(3);
     else
-        (ui.glWidget)->updateGL();
+        (ui.glWidget)->update();
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::Initparametricpage()
@@ -136,7 +121,7 @@ void MathMod::xyzg_valueChanged( int cl)
     (ui.glWidget)-> isoline =(ui.glWidget)->isocolumn = (ui.glWidget)->isodepth = cl;
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->updateGL();
+    else (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -146,7 +131,7 @@ void MathMod::xg_valueChanged( int cl)
     (ui.glWidget)-> isoline = cl;
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->updateGL();
+    else (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -156,7 +141,7 @@ void MathMod::yg_valueChanged( int cl)
     (ui.glWidget)->isocolumn =  cl;
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->updateGL();
+    else (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -166,7 +151,7 @@ void MathMod::zg_valueChanged( int cl)
     (ui.glWidget)->isodepth = cl;
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->updateGL();
+    else (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -224,7 +209,7 @@ void MathMod::ParametricSurfaceProcess(int type)
                                        );
     (ui.glWidget)->LocalScene.typedrawing = -1;
     (ui.glWidget)->initializeGL();
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -278,7 +263,7 @@ void MathMod::ProcessNewIsoSurface( )
         (ui.glWidget)->LocalScene.WichPointVerifyCond);
     (ui.glWidget)->initializeGL();
     (ui.glWidget)->LocalScene.typedrawing = 1;
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -370,7 +355,7 @@ void MathMod::ProcessParisoSurface()
     (ui.glWidget)->LocalScene.VertxNumber= (ui.glWidget)->LocalScene.VertxNumberTmp1  + (ui.glWidget)->LocalScene.VertxNumberTmp2;
 
     (ui.glWidget)->initializeGL();
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++
@@ -403,12 +388,12 @@ void MathMod::slot_uv4D_clicked()
 void MathMod::slot_triangles_clicked()
 {
     (ui.glWidget)->LocalScene.triangles *= -1;
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++
 void MathMod::Mesh()
 {
     (ui.glWidget)->LocalScene.mesh *= -1;
-    (ui.glWidget)->updateGL();
+    (ui.glWidget)->update();
 }
