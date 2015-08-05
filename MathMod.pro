@@ -18,7 +18,9 @@ HEADERS   = ui_modules/drawingoptions.h \
             json_parser/jpar.h \
             screenshot/video.h \
             ui_modules/parametersoptions.h \
-			pariso/commun.h
+			pariso/commun.h \
+    pariso/isosurface/isotransformation.h \
+    pariso/parametric/paratransformation.h
 
 SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/colorsoptions.cpp \
@@ -39,7 +41,9 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             json_parser/jpar.cpp \
             screenshot/video.cpp \
             ui_modules/parametersoptions.cpp \
-			pariso/commun.cpp
+			pariso/commun.cpp \
+    pariso/isosurface/isotransformation.cpp \
+    pariso/parametric/paratransformation.cpp
 
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/colorsoptions.ui \
