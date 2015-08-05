@@ -17,3 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
+
+#include "isotransformation.h"
+
+    void IsoTransformation::Scalx(float, float, float)
+    {
+    }
+    void IsoTransformation::Scaly(float, float, float)
+    {
+    }
+    void IsoTransformation::Scalz(float, float, float)
+    {
+    }
