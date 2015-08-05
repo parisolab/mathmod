@@ -23,3 +23,12 @@
 
 #endif // PARATRANSFORMATION
 
+
+
+class ParTransformation
+{
+public:
+    void Scalx(float, float, float);
+    void Scaly(float, float, float);
+    void Scalz(float, float, float);
+};
