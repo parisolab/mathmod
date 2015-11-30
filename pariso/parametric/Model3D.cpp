@@ -118,6 +118,7 @@ void Par3D::initialiser_parseur()
         myParserX[i].AddConstant("pi", 3.14159265);
         myParserY[i].AddConstant("pi", 3.14159265);
         myParserZ[i].AddConstant("pi", 3.14159265);
+        myParserW[i].AddConstant("pi", 3.14159265);
         myParserCND[i].AddConstant("pi", 3.14159265);
 
         myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
@@ -128,6 +129,9 @@ void Par3D::initialiser_parseur()
 
         myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
         myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -353,6 +357,9 @@ void Par3D::initparser(int N)
     delete[] myParserZ;
     myParserZ = new FunctionParser[N];
 
+    delete[] myParserW;
+    myParserW = new FunctionParser[N];
+
     delete[] Fct;
     Fct = new FunctionParser[N];
 
@@ -386,6 +393,7 @@ void Par3D::initparser(int N)
         myParserX[i].AddConstant("pi", 3.14159265);
         myParserY[i].AddConstant("pi", 3.14159265);
         myParserZ[i].AddConstant("pi", 3.14159265);
+        myParserW[i].AddConstant("pi", 3.14159265);
         myParserCND[i].AddConstant("pi", 3.14159265);
 
         myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
@@ -396,6 +404,9 @@ void Par3D::initparser(int N)
 
         myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+        myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
         myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -600,6 +611,7 @@ ErrorMessage  Par3D::parse_expression()
             myParserX[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             myParserY[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             myParserZ[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            myParserW[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
         }
     }
 
@@ -631,6 +643,7 @@ ErrorMessage  Par3D::parse_expression()
             myParserX[i].AddFunction(FunctNames[j], Fct[j]);
             myParserY[i].AddFunction(FunctNames[j], Fct[j]);
             myParserZ[i].AddFunction(FunctNames[j], Fct[j]);
+            myParserW[i].AddFunction(FunctNames[j], Fct[j]);
             if(expression_CND != "")
                 myParserCND[i].AddFunction(FunctNames[j], Fct[j]);
         }
