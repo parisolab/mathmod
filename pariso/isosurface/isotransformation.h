@@ -22,14 +22,22 @@
 #define ISOTRANSFORMATION
 
 #endif // ISOTRANSFORMATION
-
-
+#include <QtCore>
+#include "../commun.h"
 
 
 class IsoTransformation
 {
+public:
+    int scalex, scaley, scalez;
+    int twistx, twisty, twistz;
+    FunctionParser ExpressionEvaluator,implicitFunctionParser[1100];
+    std::string Funct, Functs[50], FunctNames[50];
+    double Xamplitude[1100], Yamplitude[1100], Zamplitude[1100];
   public:
-      void Scalx(float, float, float);
-      void Scaly(float, float, float);
-      void Scalz(float, float, float);
+    //void IsoTransformation(FunctionParser);
+    QString Twistx(QString);
+    QString Twisty(QString);
+    QString Twistz(QString);
+    void AddFunctionParser(FunctionParser);
 };
