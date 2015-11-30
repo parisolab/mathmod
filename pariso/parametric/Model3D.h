@@ -66,8 +66,8 @@ public:
            DIFX,DIFY,DIFZ,DIFW,
            DIFMAXIMUM;
 
-    FunctionParser * myParserX, * myParserY,* myParserZ, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser myParserW[100],myParserCND[100],
+    FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
+    FunctionParser myParserCND[100],
                    myParserUmin[100], myParserUmax[100],
                    myParserVmin[100], myParserVmax[100],
                    Var[20], Cstparser;
