@@ -22,7 +22,7 @@
 #include <string.h>
 #include <cmath>
 #include "../objectparameters.h"
-
+//#include "isotransformation.h"
 
 
 
@@ -91,6 +91,7 @@ public :
                    ySupParser[1100], yInfParser[1100],
                    zSupParser[1100], zInfParser[1100],
                    Var[20], Cstparser;
+    double Xamplitude[1100], Yamplitude[1100], Zamplitude[1100];
     std::string ImplicitFunction, Condition,
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
@@ -100,7 +101,7 @@ public :
         Funct, Functs[50], FunctNames[50],
         Rgbt, Rgbts[50], RgbtNames[50],
         VRgbt, VRgbts[50], VRgbtNames[50],
-        Gradient, Noise;
+        Gradient, Noise, varliste;
     double ConstValues[50];
     ImplicitStruct ImplicitStructs[1100];
     int GridTable[1100];
@@ -158,5 +159,4 @@ public :
     int CNDtoUse(int index, struct ComponentInfos *components);
     void CalculateColorsPoints(struct ComponentInfos *components);
     ErrorMessage InitNoiseParser();
-    //double Turbulence(const double* p);
 };

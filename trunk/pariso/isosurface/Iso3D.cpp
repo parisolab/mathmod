@@ -56,8 +56,6 @@ double TurbulencePerlin(const double* p)
                 p[4],
                 p[5]);
 }
-
-
 /// +++++++++++++++++++++++++++++++++++++++++
 void Iso3D::stopcalculations()
 {
@@ -760,7 +758,7 @@ ErrorMessage Iso3D::InitNoiseParser()
 ErrorMessage Iso3D::ParserIso()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    std::string varliste = "x,y,z,t";
+    varliste = "x,y,z,t";
 
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
 
@@ -1189,9 +1187,9 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
         yLocal[IsoIndex][0]=ySupParser[IsoIndex].Eval(vals);
         zLocal[IsoIndex][0]=zSupParser[IsoIndex].Eval(vals);
 
-        x_Step[IsoIndex] = /*x_Step[IsoIndex] = */(xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
-        y_Step[IsoIndex] = /*y_Step[IsoIndex] =*/ (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-        z_Step[IsoIndex] = /*z_Step[IsoIndex] = */(zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+        x_Step[IsoIndex] = (Xamplitude[IsoIndex] = (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals)))/(limitX-1);
+        y_Step[IsoIndex] = (Yamplitude[IsoIndex] = (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals)))/(limitY-1);
+        z_Step[IsoIndex] = (Zamplitude[IsoIndex] = (zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals)))/(limitZ-1);
 
         for (int i= 1; i < limitX; i++)  xLocal[IsoIndex][i] = xLocal[IsoIndex][i-1] - x_Step[IsoIndex];
         for (int j= 1; j < limitY; j++) yLocal[IsoIndex][j] = yLocal[IsoIndex][j-1] - y_Step[IsoIndex];
