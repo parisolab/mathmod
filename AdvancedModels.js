@@ -1,5 +1,707 @@
 {
 	"MathModels": [{
+		"Param3D": {
+			"Component": ["Bottle shape"],
+			"Description ": ["Bottle shape surface (found by Robert Israel) by Abderrahman Taha 14/12/2015"],
+			"Fx": [" (-2/15)*(cos(u)*(3*cos(v)-30*sin(u) + 90*cos(u)^4*sin(u) -60*cos(u)^6*sin(u) +5*cos(u)*cos(v)*sin(u))) "],
+			"Fy": [" (-1/15)*sin(u)*(3*cos(v)-3*cos(u)^2*cos(v)-48*cos(u)^4*cos(v)+48*cos(u)^6 *cos(v)-60*sin(u)+5*cos(u)*cos(v)*sin(u)-5*cos(u)^3*cos(v)*sin(u) -80*cos(u)^5*cos(v)*sin(u)+80*cos(u)^7*cos(v)*sin(u) ) "],
+			"Fz": [" (2/15)*(3+5*cos(u)*sin(u))*sin(v) "],
+			"Name": ["Bottle shape"],
+			"Umax": ["pi"],
+			"Umin": ["0"],
+			"Vmax": ["2*pi"],
+			"Vmin": ["0"]
+		},
+		"Texture": {
+			"Colors": ["R=.9",
+			"G=.8*abs(cos((pi*(x*x+y*y+z*z))))",
+			"B=.6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
+			"T=1"],
+			"Name": "Dream",
+			"Noise": "NoiseW(2*x,2*y,2*z,8,1,0)"
+		}
+	},
+	{
+		"Param3D": {
+			"Description ": ["Richmond polar parametric-2.0 surface by Abderrahman Taha 14/12/2015"],
+			"Name": ["Richmond polar_2"],
+			"Component": ["RichmondPolar"],
+			"Fx": ["-cos(v)/(2*u) - u^3*cos(3*v)/6"],
+			"Fy": ["-sin(v)/(2*u) + u^3*sin(3*v)/6"],
+			"Fz": ["u*cos(v)*sin(v)"],
+			"Umax": ["1.3"],
+			"Umin": ["0.3"],
+			"Vmax": ["2*pi"],
+			"Vmin": ["0"]
+		},
+		"Texture": {
+			"Colors": ["R=.9",
+			"G=.8*abs(cos((pi*(x*x+y*y+z*z))))",
+			"B=.6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
+			"T=1"],
+			"Name": "Dream",
+			"Noise": "NoiseW(4*x,4*y,4*z,8,1,0)"
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Schwarz P Sphere-1.0 by Abderrahman Taha 13/12/2015"],
+			"Name": ["Schwarz P Sphere_2"],
+			"Component": ["Schwarz P Sphere"],
+			"Const": ["M=1",
+			"N=10"],
+			"Funct": ["Iso=cos(x)+cos(y)+cos(z)",
+			"Iso4= (Iso(x+sin(x)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
+			"Iso5= (Iso(x-sin(x)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
+			"TickIso2= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+			"SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+			"isoCondition_0=(x^2-4.8^2)",
+			"isoCondition_1=(x^2-4.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,SchwarzP(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["18"],
+			"Xmin": ["-18"],
+			"Ymax": ["18"],
+			"Ymin": ["-18"],
+			"Zmax": ["18"],
+			"Zmin": ["-18"]
+		}
+	},
+	{
+		"Param3D": {
+			"Description ": ["Under Sea by Abderrahman Taha 12/12/2015"],
+			"Name": ["Under The Sea"],
+			"Component": ["UnderSea"],
+			"Const": ["M=2",
+			"N=5"],
+			"Fx": ["u*cos(v)"],
+			"Fy": ["u*sin(v)"],
+			"Fz": ["exp(-u*u) * (sin(M*pi*(u)) -u*cos(N*v))"],
+			"Umax": ["2"],
+			"Umin": ["0"],
+			"Vmax": ["2*pi"],
+			"Vmin": ["0"]
+		},
+		"Texture": {
+			"Colors": ["R=1.5*.41",
+			"G=2*0.81*abs(cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
+			"B=2*0.8601*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
+			"T=1"],
+			"Name": "WorleyNoise",
+			"Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,0.1)"
+		}
+	},
+	{
+		"Iso3D": {
+			"Name": ["HexaGrid Torus_2"],
+			"Component": ["HexaGrid Torus"],
+			"Const": ["N=3"],
+			"Description ": [" HexaGrid Torus_2 by Aberrahman Taha 11/12/2015. Reference: PG_HexaGridCylinder 12/2012 Gerd Platl"],
+			"Funct": ["HexaGrid=-0.55-88*(sqrt(x*x+y*y)-2)^2 -cos( 8*z) -cos(14*atan2(y,x) -4*z) -cos(14*atan2(y,x) +4*z) -0.6*( cos( 28*atan2(y,x)) +cos(12*z -14*atan2(y,x)) +cos(12*z +14*atan2(y,x)))"],
+			"Fxyz": ["HexaGrid((sqrt(x*x+z*z)-4),y,N*atan2(z,x),t)"],
+			"Xmax": [" 6.2"],
+			"Xmin": ["-6.2 "],
+			"Ymax": ["4.5"],
+			"Ymin": ["-4.5"],
+			"Zmax": [" 6.2"],
+			"Zmin": ["-6.2"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description ": [" HexaGrid Torus by Aberrahman Taha 11/12/2015. Reference: PG_HexaGridCylinder3 12/2012 Gerd Platl, http://k3dsurf.s4.bizhat.com/viewtopic.php… "],
+			"Name": ["HexaGrid Torus"],
+			"Component": ["HexaGrid Torus"],
+			"Funct": ["HexaGrid=-0.5-88*(sqrt(x*x+y*y)-2)^2-cos( 8*z)-cos(14*atan2(y,x) -4*z)-cos(14*atan2(y,x) +4*z)-0.12*( cos( 28*atan2(y,x))+cos(12*z -14*atan2(y,x))+cos(12*z +14*atan2(y,x)))"],
+			"Fxyz": ["HexaGrid((sqrt(x*x+z*z)-4),y,3*atan2(z,x),t)"],
+			"Xmax": [" 6.2"],
+			"Xmin": ["-6.2 "],
+			"Ymax": [" 4.5"],
+			"Ymin": ["-4.5 "],
+			"Zmax": [" 6.2"],
+			"Zmin": ["-6.2 "]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Menger L4 Schwarz -1.0 by Abderrahman Taha 11/12/2015"],
+			"Name": ["Menger_4 SchwarzP"],
+			"Component": ["Menger SchwarzP"],
+			"Fxyz": ["if(-(Dx+Dy+Dz-1.02)*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx*(Cy+Cz)+Cz*Cy)=0)*((Bx*(By+Bz)+Bz*By)=0)*((Ax*(Ay+Az)+Az*Ay)=0)),(cos(254.469*(x+Ex*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(y+Ey*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(z+Ez*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez))))*(cos(254.469*(x-Ex*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(y-Ey*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(z-Ez*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"],
+			"Varu": ["A=((abs(u-2/3)<1/81)+(abs(u-20/27)<1/81)+(abs(u-16/27)<1/81)+(abs(u-8/9)<1/81)+(abs(u-26/27)<1/81)+(abs(u-22/27)<1/81)+(abs(u-4/9)<1/81)+(abs(u-14/27)<1/81)+(abs(u-10/27)<1/81)+(abs(u+2/3)<1/81)+(abs(u+16/27)<1/81)+(abs(u+20/27)<1/81)+(abs(u+4/9)<1/81)+(abs(u+10/27)<1/81)+(abs(u+14/27)<1/81)+(abs(u+8/9)<1/81)+(abs(u+22/27)<1/81)+(abs(u+26/27)<1/81)+(abs(u)<1/81)+(abs(u-2/27)<1/81)+(abs(u+2/27)<1/81)+(abs(u-2/9)<1/81)+(abs(u-8/27)<1/81)+(abs(u-4/27)<1/81)+(abs(u+2/9)<1/81)+(abs(u+4/27)<1/81)+(abs(u+8/27)<1/81))",
+			"B=((abs(u-2/3)<1/27)+(abs(u-8/9)<1/27)+(abs(u-4/9)<1/27)+(abs(u+2/3)<1/27)+(abs(u+4/9)<1/27)+(abs(u+8/9)<1/27)+(abs(u)<1/27)+(abs(u-2/9)<1/27)+(abs(u+2/9)<1/27))",
+			"C=((abs(u-2/3)<1/9)+(abs(u+2/3)<1/9)+(abs(u)<1/9))",
+			"D=u^600",
+			"E=sin(254.469*u)"],
+			"Xmax": ["1.0005"],
+			"Xmin": ["0.3333"],
+			"Ymax": ["1.0005"],
+			"Ymin": ["0.3333"],
+			"Zmax": ["1.0005"],
+			"Zmin": ["0.3333"]
+		},
+		"Texture": {
+			"Colors": ["R=.6*sqrt(4*x^40+y^4+z^4)",
+			"G=.3*sqrt(x^4+y^4+4*z^20)",
+			"B=.4*sqrt(x^4+4*y^20+z^4)",
+			"T=1"],
+			"Name": "Granit_2",
+			"Noise": "1"
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Skeletal SchwarzP Tori-2.0 by Abderrahman Taha 10/12/2015"],
+			"Name": ["Skeletal SchwarzP Tori_2"],
+			"Component": ["Skeletal SchwarzP Tori"],
+			"Const": ["M=.2",
+			"N=15",
+			"T=1",
+			"S=pi"],
+			"Funct": ["Iso=cos(x)+cos(y)+cos(z)",
+			"Iso2= (Iso(x+t*sin(x)*1.2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+t*sin(y)*1.2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+t*sin(z)*1.2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
+			"SchwarzP= (-Iso2(x,y,z,t))",
+			"isoCondition_0=((x-S)^2-2^2)",
+			"isoCondition_1=((x-S)^2-.01^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,SchwarzP(x,y,z,-1),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["30"],
+			"Xmin": ["-30"],
+			"Ymax": ["30"],
+			"Ymin": ["-30"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Skeletal SchwarzP Tori-1.0 by Abderrahman Taha 10/12/2015"],
+			"Name": ["Skeletal SchwarzP Tori"],
+			"Component": ["Skeletal SchwarzP Tori"],
+			"Const": ["M=.1",
+			"N=15",
+			"T=1.2",
+			"S=5"],
+			"Funct": ["Iso=cos(x)+cos(y)+cos(z)",
+			"Iso2= (Iso(x+t*sin(x)*1.2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+t*sin(y)*1.2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+t*sin(z)*1.2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
+			"SchwarzP= (-Iso2(x,y,z,t))",
+			"isoCondition_0=((x-S)^2-2.4^2)",
+			"isoCondition_1=((x-S)^2-1.4^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,-SchwarzP(x,y,z,-1),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["30"],
+			"Xmin": ["-30"],
+			"Ymax": ["30"],
+			"Ymin": ["-30"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Schwarz P Tori-1.0 by Abderrahman Taha 10/12/2015"],
+			"Name": ["Schwarz P Tori"],
+			"Component": ["Schwarz P Tori"],
+			"Const": ["M=.1",
+			"N=15"],
+			"Funct": ["Iso=cos(x)+cos(y)+cos(z)",
+			"Iso4= (Iso(x+sin(x)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
+			"Iso5= (Iso(x-sin(x)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*.4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
+			"TickIso2= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+			"SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+			"isoCondition_0=(x^2-3.2^2)",
+			"isoCondition_1=(x^2-3^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,SchwarzP(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["27"],
+			"Xmin": ["-27"],
+			"Ymax": ["27"],
+			"Ymin": ["-27"],
+			"Zmax": ["12"],
+			"Zmin": ["-12"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["G_Skeletal Tori-1.0 by Abderrahman Taha 09/12/2015"],
+			"Name": ["G_Skeletal Tori"],
+			"Component": ["G_Skeletal Tori"],
+			"Const": ["M=4",
+			"N=10",
+			"P=.4"],
+			"Funct": ["G_Skeletal =cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)+0.08*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+1",
+			"isoCondition_0=((x-pi)^2-(pi-P+.3)^2)",
+			"isoCondition_1=((x-pi)^2-(pi-P)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,G_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["30"],
+			"Xmin": ["-30"],
+			"Ymax": ["30"],
+			"Ymin": ["-30"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["D_Skeletal Tori-1.0 by Abderrahman Taha 08/12/2015"],
+			"Name": ["D_Skeletal Tori"],
+			"Component": ["D_Skeletal Tori"],
+			"Const": ["M=4",
+			"N=8",
+			"P=.3"],
+			"Funct": ["D_Skeletal =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-0.07*(cos(4*x)+cos(4*y)+cos(4*z))+.95",
+			"isoCondition_0=((x-pi)^2-(pi-P+.01)^2)",
+			"isoCondition_1=((x-pi)^2-(pi-P)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,D_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["30"],
+			"Xmin": ["-30"],
+			"Ymax": ["30"],
+			"Ymin": ["-30"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["D_Skeletal Sphere-1.0 by Abderrahman Taha 08/12/2015"],
+			"Name": ["D_Skeletal Sphere"],
+			"Component": ["D_Skeletal Sphere"],
+			"Const": ["M=4",
+			"N=8",
+			"P=.3"],
+			"Funct": ["D_Skeletal =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-0.07*(cos(4*x)+cos(4*y)+cos(4*z))+.95",
+			"isoCondition_0=((x-pi)^2-(pi-P+.01)^2)",
+			"isoCondition_1=((x-pi)^2-(pi-P)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,D_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["19"],
+			"Xmin": ["-19"],
+			"Ymax": ["19"],
+			"Ymin": ["-19"],
+			"Zmax": ["19"],
+			"Zmin": ["-19"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["P_Skeletal Sphere-1.0 by Abderrahman Taha 08/12/2015"],
+			"Name": ["P_Skeletal Sphere"],
+			"Component": ["P_Skeletal Sphere"],
+			"Const": ["M=4",
+			"N=10",
+			"P=.7"],
+			"Funct": ["P_Skeletal =cos(x)+cos(y)+cos(z)+0.51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1.2",
+			"isoCondition_0=((x-pi)^2-(pi-P+.01)^2)",
+			"isoCondition_1=((x-pi)^2-(pi-P)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,P_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["19"],
+			"Xmin": ["-19"],
+			"Ymax": ["19"],
+			"Ymin": ["-19"],
+			"Zmax": ["19"],
+			"Zmin": ["-19"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["P_Skeletal Tori-1.0 by Abderrahman Taha 08/12/2015"],
+			"Name": ["P_Skeletal Tori"],
+			"Component": ["P_Skeletal Tori"],
+			"Const": ["M=1",
+			"N=10",
+			"P=7"],
+			"Funct": ["P_Skeletal=cos(x)+cos(y)+cos(z)+0.51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1.2",
+			"isoCondition_0=((x-pi)^2-(pi +.05)^2)",
+			"isoCondition_1=((x-pi)^2-(pi)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,P_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["30"],
+			"Xmin": ["-30"],
+			"Ymax": ["30"],
+			"Ymin": ["-30"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["W_Skeletal Cylinder-1.0 by Abderrahman Taha 07/12/2015"],
+			"Name": ["W_Skeletal Cylinder"],
+			"Component": ["W_Skeletal Cylinder"],
+			"Const": ["M=1",
+			"N=8",
+			"P=4"],
+			"Funct": ["W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-1.95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2.8",
+			"isoCondition_0=(x^2-(pi+.5)^2)",
+			"isoCondition_1=(x^2-(pi+.3)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,W_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["11"],
+			"Xmin": ["-11"],
+			"Ymax": ["26"],
+			"Ymin": ["-26"],
+			"Zmax": ["11"],
+			"Zmin": ["-11"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["W_Skeletal Tori-1.0 by Abderrahman Taha 07/12/2015"],
+			"Name": ["W_Skeletal Tori"],
+			"Component": ["W_Skeletal Tori"],
+			"Const": ["M=1",
+			"N=10",
+			"P=7"],
+			"Funct": ["W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-1.95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2.8",
+			"isoCondition_0=(x^2-(pi+.5)^2)",
+			"isoCondition_1=(x^2-(pi+.3)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,W_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["26"],
+			"Xmin": ["-26"],
+			"Ymax": ["26"],
+			"Ymin": ["-26"],
+			"Zmax": ["12"],
+			"Zmin": ["-12"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["W_Skeletal Sphere-2.0 by Abderrahman Taha 07/12/2015"],
+			"Name": ["W_Skeletal Sphere"],
+			"Component": ["W_Skeletal Sphere"],
+			"Const": ["M=1",
+			"N=10",
+			"P=7"],
+			"Funct": ["W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-1.95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2.8",
+			"isoCondition_0=(x^2-(pi+.5)^2)",
+			"isoCondition_1=(x^2-(pi+.3)^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,W_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),P*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["16"],
+			"Xmin": ["-16"],
+			"Ymax": ["16"],
+			"Ymin": ["-16"],
+			"Zmax": ["16"],
+			"Zmin": ["-16"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Diamond Sphere-1.0 by Abderrahman Taha 07/12/2015"],
+			"Name": ["Diamond Sphere"],
+			"Component": ["Diamond Sphere"],
+			"Const": ["N=8",
+			"M=4"],
+			"Funct": ["Diamond =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
+			"isoCondition_0=(x^2-2.2^2)",
+			"isoCondition_1=(x^2-2^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Diamond(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["15"],
+			"Xmin": ["-15"],
+			"Ymax": ["15"],
+			"Ymin": ["-15"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Neovius Sphere-1.0 by Abderrahman Taha 05/12/2015"],
+			"Name": ["Neovius Sphere"],
+			"Component": ["Neovius Sphere"],
+			"Const": ["N=10",
+			"M=4"],
+			"Funct": ["Neovius =3*(cos(x)+cos(y)+cos(z))+7*cos(x)*cos(y)*cos(z)",
+			"isoCondition_0=(x^2-2.2^2)",
+			"isoCondition_1=(x^2-1.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Neovius(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),10*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["15"],
+			"Xmin": ["-15"],
+			"Ymax": ["15"],
+			"Ymin": ["-15"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Neovius Tori-1.0 by Abderrahman Taha 06/12/2015"],
+			"Name": ["Neovius Tori"],
+			"Component": ["Neovius Tori"],
+			"Const": ["M=1",
+			"N=10"],
+			"Funct": ["Neovius=3*(cos(x)+cos(y)+cos(z))+7*cos(x)*cos(y)*cos(z)",
+			"isoCondition_0=(x^2-2.4^2)",
+			"isoCondition_1=(x^2-1.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Neovius(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["25"],
+			"Xmin": ["-25"],
+			"Ymax": ["25"],
+			"Ymin": ["-25"],
+			"Zmax": ["10.5"],
+			"Zmin": ["-10.5"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Name": ["Diamond Tori"],
+			"Description": ["Diamond Tori-1.0 by Abderrahman Taha 06/12/2015"],
+			"Component": ["Diamond Tori"],
+			"Const": ["M=1",
+			"N=10"],
+			"Funct": ["Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
+			"isoCondition_0=(x^2-2.2^2)",
+			"isoCondition_1=(x^2-1.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Diamond(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["25"],
+			"Xmin": ["-25"],
+			"Ymax": ["25"],
+			"Ymin": ["-25"],
+			"Zmax": ["10.5"],
+			"Zmin": ["-10.5"]
+		}
+	},
+	{
+		"Param3D": {
+			"Description ": ["Sleeping bugs-2.0 by Abderrahman Taha 06/12/2015"],
+			"Name": ["Sleeping bugs"],
+			"Component": ["Sleeping Bugs"],
+			"Const": ["cu=0.001",
+			"cv=0.001",
+			"N=3"],
+			"Funct": ["Tickness= .4*(-.5*(abs(sin(15*u)*cos(15*v)))^9 + .35*((sin(2*N*u))))",
+			"Fx=-cos(u+v)/(sqrt(2.)+cos(v-u))",
+			"Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
+			"Fz=sin(u+v)/(sqrt(2.)+cos(v-u))",
+			"DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
+			"DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
+			"DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
+			"DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
+			"DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
+			"DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+			"n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+			"n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+			"n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+			"R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+			"Gx=Fx(u,v,t)+Tickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
+			"Gy=Fy(u,v,t)+Tickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
+			"Gz=Fz(u,v,t)+Tickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
+			"Fx": ["Gx(u,v,t)"],
+			"Fy": ["Gy(u,v,t)"],
+			"Fz": ["Gz(u,v,t)"],
+			"Umax": ["pi"],
+			"Umin": ["0"],
+			"Vmax": ["2*pi"],
+			"Vmin": ["0"]
+		},
+		"Texture": {
+			"Colors": ["R=.9",
+			"G=0.81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))+.3",
+			"B=0.8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+			"T=1"],
+			"Name": "WorleyNoise",
+			"Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,0.1)"
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Gyroid Tori-1.0 by Abderrahman Taha 06/12/2015"],
+			"Name": ["Gyroid Tori"],
+			"Component": ["Gyroid Tori"],
+			"Const": ["N=10"],
+			"Funct": ["Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
+			"isoCondition_0=(x^2-2.2^2)",
+			"isoCondition_1=(x^2-1.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Gyroid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"],
+			"Xmax": ["25"],
+			"Xmin": ["-25"],
+			"Ymax": ["25"],
+			"Ymin": ["-25"],
+			"Zmax": ["10.5"],
+			"Zmin": ["-10.5"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Gyroid Sphere-2.0 by Abderrahman Taha 05/12/2015"],
+			"Name": ["Gyroid Sphere"],
+			"Component": ["Gyroid Sphere"],
+			"Const": ["N=18"],
+			"Funct": ["Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
+			"isoCondition_0=(x^2-2.2^2)",
+			"isoCondition_1=(x^2-1.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Gyroid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),10*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["15"],
+			"Xmin": ["-15"],
+			"Ymax": ["15"],
+			"Ymin": ["-15"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Gyroid Sphere-1.0 by Abderrahman Taha 05/12/2015"],
+			"Name": ["Gyroid Sphere"],
+			"Component": ["Gyroid Sphere"],
+			"Const": ["N=18"],
+			"Funct": ["Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
+			"isoCondition_0=(x^2-2.2^2)",
+			"isoCondition_1=(x^2-1.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Gyroid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),10*pi*atan2(y, sqrt(x*x+y*y+z*z)),N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["15"],
+			"Xmin": ["-15"],
+			"Ymax": ["15"],
+			"Ymin": ["-15"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Schwarz Cylinder-1.0 by Abderrahman Taha 05/12/2015"],
+			"Name": ["Schwarz Cylinder"],
+			"Component": ["Schwarz Cylinder"],
+			"Const": ["N=8"],
+			"Funct": ["Schwarz=cos(x) + cos(y) + cos(z)",
+			"isoCondition_0=(x^2-3.2^2)",
+			"isoCondition_1=(x^2-2.6^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,-Schwarz(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+z*z)-12),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["15"],
+			"Xmin": ["-15"],
+			"Ymax": ["25"],
+			"Ymin": ["-25"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Lidinoid Sphere-1.0 by Abderrahman Taha 05/12/2015"],
+			"Name": ["Lidinoid Sphere"],
+			"Component": ["Lidinoid Sphere"],
+			"Const": ["N=8"],
+			"Funct": ["Lidinoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0.15)",
+			"isoCondition_0=(x^2-2.6^2)",
+			"isoCondition_1=(x^2-2.4^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,-Lidinoid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
+			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-12),10*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)",
+			"isoTransform3=-isoTransform((sqrt(x*x+y*y+z*z)-12),y,N*atan2(z,x),t)"],
+			"Fxyz": ["-isoTransform2(x,y,z,t)"],
+			"Xmax": ["15"],
+			"Xmin": ["-15"],
+			"Ymax": ["15"],
+			"Ymin": ["-15"],
+			"Zmax": ["15"],
+			"Zmin": ["-15"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Lidinoid Torus-1.0 by Abderrahman Taha 02/12/2015"],
+			"Name": ["Lidinoid Torus"],
+			"Component": ["Neovius Torus_1"],
+			"Const": ["N=8"],
+			"Funct": ["Lidinoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0.15)",
+			"isoCondition_0=(x^2+z^2-2.6^2)",
+			"isoCondition_1=(x^2+z^2-2.4^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,-Lidinoid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))"],
+			"Fxyz": ["isoTransform((sqrt(x*x+y*y)-7),N*atan2(y,x),z,t)"],
+			"Xmax": ["10"],
+			"Xmin": ["-10"],
+			"Ymax": ["10"],
+			"Ymin": ["-10"],
+			"Zmax": ["2.5"],
+			"Zmin": ["-2.5"]
+		}
+	},
+	{
+		"Param4D": {
+			"Name": ["4D Tube"],
+			"Description": ["4D Tube by Abderrahman Taha 03/12/2015"],
+			"Component": ["4DTube"],
+			"Fw": [".3*(sin(v)+cos(4*u))"],
+			"Fx": ["cos(u)"],
+			"Fy": ["sin(u)"],
+			"Fz": [".3*(cos(v)+sin(4*u))"],
+			"Umax": ["pi"],
+			"Umin": ["-pi"],
+			"Vmax": ["pi"],
+			"Vmin": ["-pi"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Name": ["Double Twist Neovius Torus"],
+			"Component": ["Neovius Torus"],
+			"Description": ["Double Twist Neovius Torus by Abderrahman Taha 02/12/2015"],
+			"Funct": ["Iso=3*(cos(x)+cos(y)+cos(z))+4*cos(x)*cos(y)*cos(z)",
+			"isoCondition_0=(x^2+(z/9)^2-3.2^2)",
+			"isoCondition_1=(x^2+(z/9)^2-3^2)",
+			"isoTransform_1=if(isoCondition_0(x,y,z,t)<0,Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
+			"isoTransform_2=if(isoCondition_0(x,y,z,t)<0,-Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
+			"isoTransform_3 = isoTransform_2((sqrt(x*x+y*y)-3),atan2(y,x),z,t)"],
+			"Fxyz": ["isoTransform_3(x, (sqrt(y*y+z*z)-8) , 3*atan2(z,y),t)"],
+			"Xmax": ["6"],
+			"Xmin": ["-6"],
+			"Ymax": ["14"],
+			"Ymin": ["-14"],
+			"Zmax": ["14"],
+			"Zmin": ["-14"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Neovius Torus-1.0 by Abderrahman Taha 02/12/2015"],
+			"Name": ["Neovius Torus"],
+			"Component": ["Neovius Torus_1"],
+			"Const": ["N=12"],
+			"Funct": ["Iso=3*(cos(x)+cos(y)+cos(z))+4*cos(x)*cos(y)*cos(z)",
+			"isoCondition_0=(x^2+z^2-3.2^2)",
+			"isoCondition_1=(x^2+z^2-3^2)",
+			"isoTransform=if(isoCondition_0(x,y,z,t)<0,-Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))"],
+			"Fxyz": ["isoTransform((sqrt(x*x+y*y)-7),N*atan2(y,x),z,t)"],
+			"Xmax": ["10"],
+			"Xmin": ["-10"],
+			"Ymax": ["10"],
+			"Ymin": ["-10"],
+			"Zmax": ["3.5"],
+			"Zmin": ["-3.5"]
+		}
+	},
+	{
 		"Iso3D": {
 			"Description": ["Vase-3.0 by Abderrahman Taha 30/11/2015"],
 			"Name": ["Vase"],
