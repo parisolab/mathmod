@@ -1,6 +1,68 @@
 {
 	"MathModels": [{
 		"Iso3D": {
+			"Description": ["Perlin Schwarz_01 by Abderrahman Taha 26/12/2015."],
+			"Name": ["Perlin Schwarz"],
+			"Component": ["PerlinSchwarz"],
+			"Funct": ["Schwarz=cos(x)+cos(y)+cos(z)"],
+			"Fxyz": ["Schwarz(x,y,z,t)-NoiseP(x,y,z,4,11,.1)"],
+			"Xmax": ["4"],
+			"Xmin": ["-4"],
+			"Ymax": ["4"],
+			"Ymin": ["-4"],
+			"Zmax": ["4"],
+			"Zmin": ["-4"]
+		},
+		"Texture": {
+			"Colors": ["R=.82",
+			"G=1.62*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+			"B=1.72*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+			"T=1"],
+			"Name": "Perlin",
+			"Noise": "NoiseP(x,y,z,4,11,.1)"
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Wired Torus_01 by Abderrahman Taha 26/12/2015. The mesh formula is from the PovRay team: http://www.povray.org/ "],
+			"Name": ["Wired Torus_01"],
+			"Component": ["Wired Torus"],
+			"Const": ["A=.2",
+			"B=.2",
+			"C=1",
+			"D=.04",
+			"E=1",
+			"th=pi/A",
+			"ph=pi/B"],
+			"Funct": ["r=(x%(A*2))",
+			"r=abs(if(r(x,y,z,t)<0,r(x,y,z,t)+A,r(x,y,z,t)-A))*C",
+			"r2=(y-cos(z*ph)*D)*E",
+			"temp=-sqrt(r2(x,y,z,t)*r2(x,y,z,t)+r(x,y,z,t)*r(x,y,z,t))",
+			"r=((x-A)%(A*2))",
+			"r=abs(if(r(x,y,z,t)<0,r(x,y,z,t)+A,r(x,y,z,t)-A))*C",
+			"r2=(y+cos(z*ph)*D)*E",
+			"temp=max(-sqrt(r2(x,y,z,t)*r2(x,y,z,t)+r(x,y,z,t)*r(x,y,z,t)),temp(x,y,z,t))",
+			"r=(z%(B*2))",
+			"r=abs(if(r(x,y,z,t)<0,r(x,y,z,t)+B,r(x,y,z,t)-B))*C",
+			"r2=(y+cos(x*th)*D)*E",
+			"temp=max(-sqrt(r2(x,y,z,t)*r2(x,y,z,t)+r(x,y,z,t)*r(x,y,z,t)),temp(x,y,z,t))",
+			"r=((z-B)%(B*2))",
+			"r=abs(if(r(x,y,z,t)<0,r(x,y,z,t)+B,r(x,y,z,t)-B))*C",
+			"r2=(y-cos(x*th)*D)*E",
+			"fmesh0=(-max(-sqrt(r2(x,y,z,t)*r2(x,y,z,t)+r(x,y,z,t)*r(x,y,z,t)),temp(x,y,z,t)))",
+			"fmesh1=-fmesh0(atan2(y,x),sqrt(x*x+y*y)-1,z,t)+0.03",
+			"fmesh2=fmesh1(sqrt(x*x+z*z)-2,y,atan2(z,x),t)"],
+			"Fxyz": ["fmesh2(x,y,z,t)"],
+			"Xmax": ["3.1"],
+			"Xmin": ["-3.1"],
+			"Ymax": ["1.1"],
+			"Ymin": ["-1.1"],
+			"Zmax": ["3.1"],
+			"Zmin": ["-3.1"]
+		}
+	},
+	{
+		"Iso3D": {
 			"Description": ["Wired Sphere-01 by Abderrahman Taha 25/12/2015. The mesh formula is from the PovRay team: http://www.povray.org/ "],
 			"Name": ["Wired Sphere_01"],
 			"Component": ["Wired Sphere"],
