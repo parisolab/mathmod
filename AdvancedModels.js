@@ -2310,8 +2310,6 @@ Menger Sponge Level 3 made out of the skeletal graph of Schwarz's D surface"],
 			"Description ": ["Virus by Abderrahman Taha 25/10/2015"],
 			"Name": ["Virus"],
 			"Component": ["Virus"],
-			"Const": ["cu=0.00001",
-			"cv=0.00001"],
 			"Funct": ["Thickness= -.3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1.8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1.9)^5.5)",
 			"n1= (-(cos(u))*(cos(u)*cos(v)))",
 			"n2= ((cos(u))*(-sin(v)*cos(u)))",
@@ -2330,6 +2328,14 @@ Menger Sponge Level 3 made out of the skeletal graph of Schwarz's D surface"],
 			"Umin": ["-pi/2"],
 			"Vmax": ["pi"],
 			"Vmin": ["-pi"]
+		},
+		"Texture": {
+			"Colors": ["R=.9",
+			"G=1.5*abs(cos((x*x+y*y+z*z)/3)*sin((x*x+y*y+z*z)/3))",
+			"B=.2*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
+			"T=1"],
+			"Name": "WorleyNoise",
+			"Noise": "NoiseW(8*x,8*y,8*z,4,2,0)+NoiseW(8*x,8*y,8*z,4,12,0.1)"
 		}
 	},
 	{
