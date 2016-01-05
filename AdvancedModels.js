@@ -1,6 +1,49 @@
 {
 	"MathModels": [{
 		"Iso3D": {
+			"Description": ["Interlocked Torus-01 by Abderrahman Taha 22/12/2015. The Helix formula is from the PovRay team: http://www.povray.org/ "],
+			"Name": ["Interlocked Torus_01"],
+			"Component": ["Interlocked Torus"],
+			"Const": ["A = 4",
+			"B = 1",
+			"C = .5",
+			"D = 1",
+			"E = 1",
+			"F = 1",
+			"G = 30"],
+			"Funct": ["X = x",
+			"Z = z",
+			"r = sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t))",
+			"X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),0.001,X(x,y,z,t))",
+			"th = atan2(Z(x,y,z,t), X(x,y,z,t))",
+			"th = ((th(x,y,z,t) * A + y * B * A) % (2*pi))",
+			"th = if (th(x,y,z,t) < 0,        th(x,y,z,t)+2*pi, th(x,y,z,t))",
+			"Z = (th(x,y,z,t) - pi) / E / (B * A)",
+			"X = r(x,y,z,t) - D",
+			"Z = if ((F = 1 | G = 0)=0, X(x,y,z,t) * sin(G * pi/180) + Z(x,y,z,t) * cos(G * pi/180) , Z(x,y,z,t))",
+			"X = if ((F = 1 | G = 0)=0, X(x,y,z,t) * cos(G * pi/180) - Z(x,y,z,t) * sin(G * pi/180) , X(x,y,z,t))",
+			"r2 = if (F = 1,        sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t)),                if ((F = 0)=0,                        pow((pow(abs(X(x,y,z,t)), 2/F) + pow(abs(Z(x,y,z,t)), 2/F)), F *.5),                        if (abs(X(x,y,z,t)) > abs(Z(x,y,z,t)) ,                     abs(X(x,y,z,t)) ,   abs(Z(x,y,z,t))            )    )          )",
+			"r3 = if((D + r(x,y,z,t)) < r2(x,y,z,t) , (D + r(x,y,z,t)) , r2(x,y,z,t))",
+			"helix = (-C + r3(x,y,z,t))"],
+			"Fxyz": ["-helix(sqrt(x*x+y*y)-3,2*atan2(y,x),z,t)"],
+			"Xmax": ["5"],
+			"Xmin": ["-5"],
+			"Ymax": ["5"],
+			"Ymin": ["-5"],
+			"Zmax": ["2"],
+			"Zmin": ["-2"]
+		},
+		"Texture": {
+			"Colors": ["R=.9",
+			"G=0.81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))+.3",
+			"B=0.8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+			"T=1"],
+			"Name": "WorleyNoise",
+			"Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,0.1)"
+		}
+	},
+	{
+		"Iso3D": {
 			"Description": ["Perlin Schwarz_01 by Abderrahman Taha 26/12/2015."],
 			"Name": ["Perlin Schwarz"],
 			"Component": ["PerlinSchwarz"],
