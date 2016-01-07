@@ -1,6 +1,60 @@
 {
 	"MathModels": [{
 		"Iso3D": {
+			"Description": ["Wall Pattern Sphere-01 by Abderrahman Taha 05/01/2016. The f_hex_y formula is from the PovRay team: http://www.povray.org/ "],
+			"Name": ["Wall Pattern Sphere-01"],
+			"Component": ["f_hex_y"],
+			"Funct": ["x1=abs((abs(x) % sqrt(3.0))-sqrt(3.0)/2)",
+			"y1 = abs((abs(y) % 3)-1.5)",
+			"x2=sqrt(3.0)/2-x1(x,y,z,t)",
+			"y2=1.5-y1(x,y,z,t)",
+			"x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
+			"y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
+			"th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
+			"th = if (th(x,y,z,t) < 0, th(x,y,z,t)+2*pi, th(x,y,z,t))",
+			"f_hex_y = if(th(x,y,z,t)<pi/6, y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
+			"f_hex_y_1=if(z*z-.01 < 0,f_hex_y(sin(x),1.3*sin(y),2*z,0),1)-.1",
+			"Cylinder=-f_hex_y_1(x,4.3*atan2(z,y),sqrt(y*y+z*z)-1.5,t)",
+			"Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),4.5*atan2(z,y),sqrt(y*y+z*z+x*x)-4.5,t)",
+			"Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-4,z,t)"],
+			"Fxyz": ["Sphere(x,y,z,t)"],
+			"Xmax": ["4.6"],
+			"Xmin": ["-4.6"],
+			"Ymax": ["4.6"],
+			"Ymin": ["-4.6"],
+			"Zmax": ["4.6"],
+			"Zmin": ["-4.6"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Wall Pattern Torus-01 by Abderrahman Taha 05/01/2016. The f_hex_y formula is from the PovRay team: http://www.povray.org/ "],
+			"Name": ["Wall Pattern Torus-01"],
+			"Component": ["f_hex_y"],
+			"Funct": ["x1=abs((abs(x) % sqrt(3.0))-sqrt(3.0)/2)",
+			"y1 = abs((abs(y) % 3)-1.5)",
+			"x2=sqrt(3.0)/2-x1(x,y,z,t)",
+			"y2=1.5-y1(x,y,z,t)",
+			"x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
+			"y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
+			"th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
+			"th = if (th(x,y,z,t) < 0, th(x,y,z,t)+2*pi, th(x,y,z,t))",
+			"f_hex_y = if(th(x,y,z,t)<pi/6, y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
+			"f_hex_y_1=if(z*z-.01 < 0,f_hex_y(sin(x),1.3*sin(y),2*z,0),1)-.1",
+			"Cylinder=-f_hex_y_1(x,4.3*atan2(z,y),sqrt(y*y+z*z)-1.5,t)",
+			"Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),4.3*atan2(z,y),sqrt(y*y+z*z+x*x)-4.5,t)",
+			"Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-4,z,t)"],
+			"Fxyz": ["Torus(x,y,z,t)"],
+			"Xmax": ["6"],
+			"Xmin": ["-6"],
+			"Ymax": ["6"],
+			"Ymin": ["-6"],
+			"Zmax": ["1.6"],
+			"Zmin": ["-1.6"]
+		}
+	},
+	{
+		"Iso3D": {
 			"Description": ["Interlocked Torus-01 by Abderrahman Taha 22/12/2015. The Helix formula is from the PovRay team: http://www.povray.org/ "],
 			"Name": ["Interlocked Torus_01"],
 			"Component": ["Interlocked Torus"],
