@@ -1,6 +1,34 @@
 {
 	"MathModels": [{
 		"Iso3D": {
+			"Description": ["The Dome-1.0 by Abderrahman Taha 12/01/2015"],
+			"Name": ["The Dome"],
+			"Component": ["Dome"],
+			"Const": ["cx=0.001",
+			"cy=0.001",
+			"cz=0.001"],
+			"Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)",
+			"Scherk2=Scherk(10*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-16),10*atan2(z,y),t)",
+			"Tickness2=(.6)",
+			"IsoExterior=Scherk2(x,y,z,t)",
+			"DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
+			"DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
+			"DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
+			"Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
+			"Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
+			"Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
+			"TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"],
+			"Fxyz": ["if((sqrt(x*x+y*y+z*z)-24)<0,TickIsoExterior(x,y,z,t),1)"],
+			"Xmax": ["18"],
+			"Xmin": ["-18"],
+			"Ymax": ["27"],
+			"Ymin": ["-27"],
+			"Zmax": ["27"],
+			"Zmin": ["-27"]
+		}
+	},
+	{
+		"Iso3D": {
 			"Name": ["Wall Pattern Torus-03"],
 			"Description": ["Wall Pattern Torus-03 by Abderrahman Taha 10/01/2016"],
 			"Component": ["f_hex_y"],
