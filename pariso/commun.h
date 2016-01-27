@@ -105,6 +105,7 @@ struct  ObjectProperties
     float    animxValueStep;
     float    animyValueStep;
     float    animzValueStep;
+    int   slider;
     int    morph;
     int    morphstep;
     int    typedrawing;

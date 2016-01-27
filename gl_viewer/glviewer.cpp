@@ -1474,7 +1474,7 @@ void OpenGlWidget::PutObjectInsideCube()
     //static double decalage_xo, decalage_yo, decalage_zo, difMaximum;
 
     unsigned int i;
-    if(LocalScene.morph != 1 || (LocalScene.morph == 1 && FistTimecalibrate ==1))
+    if((LocalScene.morph != 1 || (LocalScene.morph == 1 && FistTimecalibrate ==1))   && LocalScene.slider != 1)
     {
         for (i=0; i< LocalScene.VertxNumber; i++)
         {

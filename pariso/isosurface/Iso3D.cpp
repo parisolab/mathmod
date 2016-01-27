@@ -1,5 +1,5 @@
 /***************************************************************************
-*   Copyright (C) 2015 by Abderrahman Taha                                *
+*   Copyright (C) 2016 by Abderrahman Taha                                *
 *                                                                         *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -19,6 +19,7 @@
 ***************************************************************************/
 #include "TableMap.h"
 #include "Iso3D.h"
+#include "povfunctions.cpp"
 
 static unsigned int *IndexPolyTabMin;
 static int NbPolyMin;
@@ -117,6 +118,12 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     morph_activated = -1;
     AllComponentTraited = false;
 
+    //Add predefined constatnts:
+    for(int i=0;i<20;i++)
+    {
+        SliderNames[i]= "Slid"+i ;
+        SliderValues[i] = 1;
+    }
     Lacunarity = 0.5; Gain = 1.0; Octaves = 4;
     InitParser();
     stError = ParserIso();
@@ -780,7 +787,6 @@ ErrorMessage Iso3D::ParserIso()
     if(Funct != "")
     {
         Nb_functs = HowManyVariables(Funct, 2);
-
         for(int i=0; i<Nb_functs; i++)
         {
             for(int j=0; j<Nb_constants; j++)
@@ -792,6 +798,12 @@ ErrorMessage Iso3D::ParserIso()
                     return stdError;
                 }
                 Fct[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            }
+
+            //Add predefined constatnts:
+            for(int k=0; k<20; k++)
+            {
+                Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
         }
 
@@ -900,6 +912,13 @@ ErrorMessage Iso3D::ParserIso()
         NoiseParser->AddConstant("Lacunarity", Lacunarity);
         NoiseParser->AddConstant("Gain", Gain);
         NoiseParser->AddConstant("Octaves", Octaves);
+
+        //Add predefined constatnts:
+        for(int k=0; k<20; k++)
+        {
+            NoiseParser->AddConstant(SliderNames[k], SliderValues[k]);
+        }
+
     }
 
     if(Varu != "")
@@ -918,6 +937,14 @@ ErrorMessage Iso3D::ParserIso()
                 }
                 Var[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             }
+
+
+            //Add predefined constatnts:
+            for(int k=0; k<20; k++)
+            {
+                Var[i].AddConstant(SliderNames[k], SliderValues[k]);
+            }
+
         }
 
         for(int i=0; i<Nb_newvariables; i++)
@@ -954,52 +981,6 @@ ErrorMessage Iso3D::ParserIso()
         IsoConditionRequired = -1;
 
     //Add defined constantes:
-/*
-    //For Solid Texture :
-    for(int i=0; i<4; i++)
-        for(int j=0; j<Nb_constants; j++)
-        {
-            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-            {
-                stdError.strError = Consts[j];
-                stdError.strOrigine = ConstNames[j];
-                return stdError;
-            }
-            RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-        }
-
-
-    //For Solid Texture :
-    if(VRgbt != "")
-    {
-        for(int j=0; j<Nb_constants; j++)
-        {
-            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-            {
-                stdError.strError = Consts[j];
-                stdError.strOrigine = ConstNames[j];
-                return stdError;
-            }
-            GradientParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
-         }
-
-        for(int i=0; i<4; i++)
-            for(int j=0; j<Nb_constants; j++)
-            {
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            }
-    }
- */
-
-
-
-    //Add defined constantes:
     for(int i=0; i<Nb_implicitfunctions+1; i++)
     {
         for(int j=0; j<Nb_constants; j++)
@@ -1019,6 +1000,20 @@ ErrorMessage Iso3D::ParserIso()
             xInfParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             yInfParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             zInfParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+        }
+
+        //Add predefined constatnts:
+        for(int k=0; k<20; k++)
+        {
+            implicitFunctionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            if(Condition != "")
+                IsoConditionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            xSupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            ySupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            zSupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            xInfParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            yInfParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            zInfParser[i].AddConstant(SliderNames[k], SliderValues[k]);
         }
     }
 
@@ -1063,6 +1058,10 @@ ErrorMessage Iso3D::ParserIso()
             IsoConditionParser[i].AddFunction(FunctNames[j], Fct[j]);
         }
         implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+        implicitFunctionParser[i].AddFunction("fhelix1",fhelix1, 10);
+        implicitFunctionParser[i].AddFunction("fhelix2",fhelix2, 10);
+        implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
+        implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -1253,6 +1252,12 @@ void Iso3D::initparser(int N)
     for(int i=0; i<50; i++)
     {
         Fct[i].AddConstant("pi", 3.14159265);
+        Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+        Fct[i].AddFunction("fhelix1",fhelix1, 10);
+        Fct[i].AddFunction("fhelix2",fhelix2, 10);
+        Fct[i].AddFunction("f_hex_y",f_hex_y, 4);
+        Fct[i].AddFunction("fmesh",fmesh, 8);
+        Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
     delete[] RgbtParser;
