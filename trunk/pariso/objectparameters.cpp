@@ -157,6 +157,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.animxValue      = 0;
     objectproperties.animyValue      = 0;
     objectproperties.animzValue      = 0;
+    objectproperties.slider                =-1;
     objectproperties.morph              =-1;
     objectproperties.morphstep       =-1;
     objectproperties.norm                =-1;
