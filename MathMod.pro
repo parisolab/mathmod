@@ -43,7 +43,8 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/parametersoptions.cpp \
 			pariso/commun.cpp \
     pariso/isosurface/isotransformation.cpp \
-    pariso/parametric/paratransformation.cpp
+    pariso/parametric/paratransformation.cpp \
+    pariso/isosurface/povfunctions.cpp
 
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/colorsoptions.ui \
