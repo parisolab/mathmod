@@ -93,6 +93,12 @@ void Par3D::initialiser_parametres()
     mat_inversetranslation4D    = Matrix4D();
     mat4D.unit();
     Lacunarity = 0.5; Gain = 1.0; Octaves = 4;
+    //Add predefined constatnts:
+    for(int i=0;i<20;i++)
+    {
+        SliderNames[i]= "Slid"+i ;
+        SliderValues[i] = 1;
+    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -452,6 +458,12 @@ ErrorMessage  Par3D::parse_expression()
                 }
                 Fct[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             }
+
+            //Add predefined constatnts:
+            for(int k=0; k<20; k++)
+            {
+                Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
+            }
         }
 
       //initparser(100);
@@ -532,13 +544,6 @@ ErrorMessage  Par3D::parse_expression()
         Nb_vrgbts =0;
     }
 
-
-
-
-
-
-
-
     if(Varu != "")
     {
         Nb_newvariables = HowManyVariables(Varu, 0);
@@ -554,6 +559,12 @@ ErrorMessage  Par3D::parse_expression()
                     return stdError;
                 }
                 Var[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            }
+
+            //Add predefined constatnts:
+            for(int k=0; k<20; k++)
+            {
+                Var[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
         }
 
@@ -613,9 +624,22 @@ ErrorMessage  Par3D::parse_expression()
             myParserZ[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             myParserW[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
         }
+
+
+        //Add predefined constatnts:
+        for(int k=0; k<20; k++)
+        {
+            if(expression_CND != "")
+                myParserCND[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserUmax[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserVmin[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserVmax[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserX[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserY[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserZ[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserW[i].AddConstant(SliderNames[k], SliderValues[k]);
+        }
     }
-
-
 
     // Add defined functions :
     if(Rgbt != "")
@@ -648,20 +672,6 @@ ErrorMessage  Par3D::parse_expression()
                 myParserCND[i].AddFunction(FunctNames[j], Fct[j]);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Parse
@@ -702,7 +712,6 @@ ErrorMessage  Par3D::parse_expression()
             return stdError;
         }
 
-
     if(NoiseShape != "")
         if ((stdError.iErrorIndex = NoiseShapeParser->Parse(NoiseShape,"x,y,z,t")) >= 0)
         {
@@ -710,7 +719,6 @@ ErrorMessage  Par3D::parse_expression()
             stdError.strOrigine = NoiseShape;
             return stdError;
         }
-
 
     for(int index=0; index< Nb_paramfunctions + 1; index++)
     {

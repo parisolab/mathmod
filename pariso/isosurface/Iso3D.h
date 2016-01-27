@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2015 by Abderrahman Taha                                *
+ *   Copyright (C) 2016 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -97,12 +97,14 @@ public :
         YlimitSup, YlimitInf,
         ZlimitSup, ZlimitInf, Grid,
         Const, Consts[50], ConstNames[50],
+        SliderNames[50],
         Varu, Varus[20], VarName[20],
         Funct, Functs[50], FunctNames[50],
         Rgbt, Rgbts[50], RgbtNames[50],
         VRgbt, VRgbts[50], VRgbtNames[50],
         Gradient, Noise, varliste;
     double ConstValues[50];
+    double SliderValues[50];
     ImplicitStruct ImplicitStructs[1100];
     int GridTable[1100];
     int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts;
