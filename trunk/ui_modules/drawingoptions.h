@@ -28,6 +28,7 @@
 #include "about.h"
 #include "parametersoptions.h"
 #include "colorsoptions.h"
+#include "sliderparam.h"
 #include <QMainWindow>
 
 class DrawingOptions : public QMainWindow
@@ -39,6 +40,7 @@ public:
     ~DrawingOptions();
     MathMod*  MathmodRef;
     About ab;
+    SlidersForm sliderconf;
     QTreeWidgetItem *IsolistItemRef;
     Parametersoptions * Parameters;
     void AddListModels(bool b=false);
@@ -140,6 +142,7 @@ public slots:
     void on_actionColors_triggered();
     void on_anim_clicked();
     void on_morph_clicked();
+    void update_slider_param();
 private slots:
     void on_actionSmooth_2_clicked();
     void on_Infos_clicked();
