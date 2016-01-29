@@ -46,6 +46,9 @@ public:
     void AddListModels(bool b=false);
     void Run_JsonObject_activeted();
     void keyPressEvent ( QKeyEvent *);
+    Ui::DrawingOptions ui;
+    QJsonObject JSONMathModels;
+
 public slots:
     void editorwin();
     void videoplay();
@@ -133,10 +136,7 @@ public slots:
     void on_blue_ParIso_valueChanged(int value);
     void Multiplier(int, int, int, QJsonObject &iso, int index =0);
     void UpdateGui(int);
-public:
-    Ui::DrawingOptions ui;
-    QJsonObject JSONMathModels;
-public slots:
+    void ShowSliders(const QJsonObject &);
     void on_actionScreenshot_triggered();
     void on_actionEditor_triggered();
     void on_actionColors_triggered();
