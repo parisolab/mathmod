@@ -24,7 +24,7 @@
 static int indexcurrentFormula=-1;
 static int CurrentFormulaType =-1; //0:Pariso; 1:Parametric; 2:Isosurface
 QTreeWidgetItem *MyselectionItemReference;
-
+QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
 
 
 //+++++++++++++++++++++++++++++++++++++++
@@ -876,7 +876,414 @@ void DrawingOptions::UpdateCurrentTreeObject()
         ui.stackedProperties->setCurrentIndex(0);
 }
 
-QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
+
+void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
+{
+    QString result;
+    QJsonArray lst;
+    QJsonObject QObj;
+
+    if(Jobj["Sliders"].isObject())
+    {
+    ui.ScriptTabWidget->insertTab(4,ui.tab_22,"Sliders" );
+
+    QObj = Jobj["Sliders"].toObject();
+
+    // Min
+    lst = QObj["Min"].toArray();
+    result = "";
+    for(int j=0; j < lst.size()-1; j++)
+        result += lst[j].toString() + ";";
+    if(lst.size() >= 1)
+        result += lst[lst.size()-1].toString();
+    result.replace("\n","");
+    result.replace("\t","");
+    result.replace(" ","");
+    qlstmin = result.split(";", QString::SkipEmptyParts);
+
+    // Max
+    lst = QObj["Max"].toArray();
+    result = "";
+    for(int j=0; j < lst.size()-1; j++)
+        result += lst[j].toString() + ";";
+    if(lst.size() >= 1)
+        result += lst[lst.size()-1].toString();
+    result.replace("\n","");
+    result.replace("\t","");
+    result.replace(" ","");
+    qlstmax = result.split(";", QString::SkipEmptyParts);
+
+    // Position
+    lst = QObj["Position"].toArray();
+    result = "";
+    for(int j=0; j < lst.size()-1; j++)
+        result += lst[j].toString() + ";";
+    if(lst.size() >= 1)
+        result += lst[lst.size()-1].toString();
+    result.replace("\n","");
+    result.replace("\t","");
+    result.replace(" ","");
+    qlstPos = result.split(";", QString::SkipEmptyParts);
+    for (int i = 0; i < qlstPos.size(); ++i)
+        MathmodRef->ui.glWidget->IsoObjet->SliderValues[i] =
+        MathmodRef->ui.glWidget->ParObjet->SliderValues[i] =
+                qlstPos.at(i).toDouble();
+
+    // Name
+    lst = QObj["Name"].toArray();
+    result = "";
+    for(int j=0; j < lst.size()-1; j++)
+        result += lst[j].toString() + ";";
+    if(lst.size() >= 1)
+        result += lst[lst.size()-1].toString();
+    result.replace("\n","");
+    result.replace("\t","");
+    result.replace(" ","");
+    qlstnames = result.split(";", QString::SkipEmptyParts);
+    for (int i = 0; i < qlstnames.size(); ++i)
+        MathmodRef->ui.glWidget->IsoObjet->SliderNames[i] =
+        MathmodRef->ui.glWidget->ParObjet->SliderNames[i] =
+                qlstnames.at(i).toStdString();
+
+    // Step
+    lst = QObj["Step"].toArray();
+    result = "";
+    for(int j=0; j < lst.size()-1; j++)
+        result += lst[j].toString() + ";";
+    if(lst.size() >= 1)
+        result += lst[lst.size()-1].toString();
+    result.replace("\n","");
+    result.replace("\t","");
+    result.replace(" ","");
+    qlstStep = result.split(";", QString::SkipEmptyParts);
+
+    ui.groupBox_9->hide();
+    ui.groupBox_10->hide();
+    ui.groupBox_11->hide();
+    ui.groupBox_12->hide();
+    ui.groupBox_13->hide();
+    ui.groupBox_14->hide();
+    ui.groupBox_15->hide();
+    ui.groupBox_16->hide();
+    ui.groupBox_17->hide();
+    ui.groupBox_18->hide();
+    ui.groupBox_19->hide();
+    ui.groupBox_20->hide();
+    ui.groupBox_21->hide();
+    ui.groupBox_22->hide();
+    ui.groupBox_23->hide();
+    ui.groupBox_24->hide();
+    ui.groupBox_25->hide();
+    ui.groupBox_26->hide();
+    ui.groupBox_27->hide();
+    ui.groupBox_28->hide();
+    ui.PredefinedSets->hide();
+
+    if(qlstPos.size() <= qlstnames.size())
+    {
+        ui.PredefinedSets->clear();
+        ui.PredefinedSets->hide();
+     }
+    else
+    {
+        ui.PredefinedSets->clear();
+        int NbSets = qlstPos.size() / qlstnames.size();
+        QStringList qlist;
+        qlist += "Predefined Sets";
+        for(int i=1; i< NbSets+1; i++)
+        {
+            qlist  += "Set_"+QString::number(i);
+        }
+        ui.PredefinedSets->addItems(qlist);
+        ui.PredefinedSets->show();
+    }
+
+    if(qlstnames.size() >= 1)
+    {
+    ui.C1ScrollBar->setMaximum(qlstmax.at(0).toDouble());
+    ui.C1ScrollBar->setMinimum(qlstmin.at(0).toDouble());
+    ui.C1ScrollBar->setSingleStep(qlstStep.at(0).toDouble());
+    ui.C1ScrollBar->setPageStep(qlstStep.at(0).toDouble());
+    ui.C1ScrollBar->blockSignals(true);
+    ui.C1ScrollBar->setSliderPosition(qlstPos.at(0).toDouble());
+    ui.C1ScrollBar->blockSignals(false);
+    ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0)+"("+ qlstStep.at(0) +")");
+    ui.C1labelMin->setText(qlstmin.at(0));
+    ui.C1labelMax->setText(qlstmax.at(0));
+    ui.groupBox_9->show();
+    }
+
+    if(qlstnames.size() >= 2)
+    {
+    ui.C2ScrollBar->setMaximum(qlstmax.at(1).toDouble());
+    ui.C2ScrollBar->setMinimum(qlstmin.at(1).toDouble());
+    ui.C2ScrollBar->setSingleStep(qlstStep.at(1).toDouble());
+    ui.C2ScrollBar->setPageStep(qlstStep.at(1).toDouble());
+    ui.C2ScrollBar->blockSignals(true);
+    ui.C2ScrollBar->setSliderPosition(qlstPos.at(1).toDouble());
+    ui.C2ScrollBar->blockSignals(false);
+    ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1)+"("+ qlstStep.at(1) +")");
+    ui.C2labelMin->setText(qlstmin.at(1));
+    ui.C2labelMax->setText(qlstmax.at(1));
+        ui.groupBox_10->show();
+    }
+    if(qlstnames.size() >= 3)
+    {
+    ui.C3ScrollBar->setMaximum(qlstmax.at(2).toDouble());
+    ui.C3ScrollBar->setMinimum(qlstmin.at(2).toDouble());
+    ui.C3ScrollBar->setSingleStep(qlstStep.at(2).toDouble());
+    ui.C3ScrollBar->setPageStep(qlstStep.at(2).toDouble());
+    ui.C3ScrollBar->blockSignals(true);
+    ui.C3ScrollBar->setSliderPosition(qlstPos.at(2).toDouble());
+    ui.C3ScrollBar->blockSignals(false);
+    ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2)+"("+ qlstStep.at(2) +")");
+    ui.C3labelMin->setText(qlstmin.at(2));
+    ui.C3labelMax->setText(qlstmax.at(2));
+        ui.groupBox_11->show();
+    }
+    if(qlstnames.size() >= 4)
+    {
+    ui.C4ScrollBar->setMaximum(qlstmax.at(3).toDouble());
+    ui.C4ScrollBar->setMinimum(qlstmin.at(3).toDouble());
+    ui.C4ScrollBar->setSingleStep(qlstStep.at(3).toDouble());
+    ui.C4ScrollBar->setPageStep(qlstStep.at(3).toDouble());
+    ui.C4ScrollBar->blockSignals(true);
+    ui.C4ScrollBar->setSliderPosition(qlstPos.at(3).toDouble());
+    ui.C4ScrollBar->blockSignals(false);
+    ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3)+"("+ qlstStep.at(3) +")");
+    ui.C4labelMin->setText(qlstmin.at(3));
+    ui.C4labelMax->setText(qlstmax.at(3));
+        ui.groupBox_12->show();
+    }
+    if(qlstnames.size() >= 5)
+    {
+    ui.C5ScrollBar->setMaximum(qlstmax.at(4).toDouble());
+    ui.C5ScrollBar->setMinimum(qlstmin.at(4).toDouble());
+    ui.C5ScrollBar->setSingleStep(qlstStep.at(4).toDouble());
+    ui.C5ScrollBar->setPageStep(qlstStep.at(4).toDouble());
+    ui.C5ScrollBar->blockSignals(true);
+    ui.C5ScrollBar->setSliderPosition(qlstPos.at(4).toDouble());
+    ui.C5ScrollBar->blockSignals(false);
+    ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4)+"("+ qlstStep.at(4) +")");
+    ui.C5labelMin->setText(qlstmin.at(4));
+    ui.C5labelMax->setText(qlstmax.at(4));
+        ui.groupBox_13->show();
+    }
+
+    if(qlstnames.size() >= 6)
+    {
+    ui.C6ScrollBar->setMaximum(qlstmax.at(5).toDouble());
+    ui.C6ScrollBar->setMinimum(qlstmin.at(5).toDouble());
+    ui.C6ScrollBar->setSingleStep(qlstStep.at(5).toDouble());
+    ui.C6ScrollBar->setPageStep(qlstStep.at(5).toDouble());
+    ui.C6ScrollBar->blockSignals(true);
+    ui.C6ScrollBar->setSliderPosition(qlstPos.at(5).toDouble());
+    ui.C6ScrollBar->blockSignals(false);
+    ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5)+"("+ qlstStep.at(5) +")");
+    ui.C6labelMin->setText(qlstmin.at(5));
+    ui.C6labelMax->setText(qlstmax.at(5));
+        ui.groupBox_14->show();
+    }
+    if(qlstnames.size() >= 7)
+    {
+    ui.C7ScrollBar->setMaximum(qlstmax.at(6).toDouble());
+    ui.C7ScrollBar->setMinimum(qlstmin.at(6).toDouble());
+    ui.C7ScrollBar->setSingleStep(qlstStep.at(6).toDouble());
+    ui.C7ScrollBar->setPageStep(qlstStep.at(6).toDouble());
+    ui.C7ScrollBar->blockSignals(true);
+    ui.C7ScrollBar->setSliderPosition(qlstPos.at(6).toDouble());
+    ui.C7ScrollBar->blockSignals(false);
+    ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6)+"("+ qlstStep.at(6) +")");
+    ui.C7labelMin->setText(qlstmin.at(6));
+    ui.C7labelMax->setText(qlstmax.at(6));
+        ui.groupBox_15->show();
+    }
+    if(qlstnames.size() >= 8)
+    {
+    ui.C8ScrollBar->setMaximum(qlstmax.at(7).toDouble());
+    ui.C8ScrollBar->setMinimum(qlstmin.at(7).toDouble());
+    ui.C8ScrollBar->setSingleStep(qlstStep.at(7).toDouble());
+    ui.C8ScrollBar->setPageStep(qlstStep.at(7).toDouble());
+    ui.C8ScrollBar->blockSignals(true);
+    ui.C8ScrollBar->setSliderPosition(qlstPos.at(7).toDouble());
+    ui.C8ScrollBar->blockSignals(false);
+    ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7)+"("+ qlstStep.at(7) +")");
+    ui.C8labelMin->setText(qlstmin.at(7));
+    ui.C8labelMax->setText(qlstmax.at(7));
+        ui.groupBox_16->show();
+    }
+    if(qlstnames.size() >= 9)
+    {
+    ui.C9ScrollBar->setMaximum(qlstmax.at(8).toDouble());
+    ui.C9ScrollBar->setMinimum(qlstmin.at(8).toDouble());
+    ui.C9ScrollBar->setSingleStep(qlstStep.at(8).toDouble());
+    ui.C9ScrollBar->setPageStep(qlstStep.at(8).toDouble());
+    ui.C9ScrollBar->blockSignals(true);
+    ui.C9ScrollBar->setSliderPosition(qlstPos.at(8).toDouble());
+    ui.C9ScrollBar->blockSignals(false);
+    ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8)+"("+ qlstStep.at(8) +")");
+    ui.C9labelMin->setText(qlstmin.at(8));
+    ui.C9labelMax->setText(qlstmax.at(8));
+        ui.groupBox_17->show();
+    }
+    if(qlstnames.size() >= 10)
+    {
+    ui.C10ScrollBar->setMaximum(qlstmax.at(9).toDouble());
+    ui.C10ScrollBar->setMinimum(qlstmin.at(9).toDouble());
+    ui.C10ScrollBar->setSingleStep(qlstStep.at(9).toDouble());
+    ui.C10ScrollBar->setPageStep(qlstStep.at(9).toDouble());
+    ui.C10ScrollBar->blockSignals(true);
+    ui.C10ScrollBar->setSliderPosition(qlstPos.at(9).toDouble());
+    ui.C10ScrollBar->blockSignals(false);
+    ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9)+"("+ qlstStep.at(9) +")");
+    ui.C10labelMin->setText(qlstmin.at(9));
+    ui.C10labelMax->setText(qlstmax.at(9));
+        ui.groupBox_18->show();
+    }
+    if(qlstnames.size() >= 11)
+    {
+    ui.C11ScrollBar->setMaximum(qlstmax.at(10).toDouble());
+    ui.C11ScrollBar->setMinimum(qlstmin.at(10).toDouble());
+    ui.C11ScrollBar->setSingleStep(qlstStep.at(10).toDouble());
+    ui.C11ScrollBar->setPageStep(qlstStep.at(10).toDouble());
+    ui.C11ScrollBar->blockSignals(true);
+    ui.C11ScrollBar->setSliderPosition(qlstPos.at(10).toDouble());
+    ui.C11ScrollBar->blockSignals(false);
+    ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10)+"("+ qlstStep.at(10) +")");
+    ui.C11labelMin->setText(qlstmin.at(10));
+    ui.C11labelMax->setText(qlstmax.at(10));
+        ui.groupBox_19->show();
+    }
+    if(qlstnames.size() >= 12)
+    {
+    ui.C12ScrollBar->setMaximum(qlstmax.at(11).toDouble());
+    ui.C12ScrollBar->setMinimum(qlstmin.at(11).toDouble());
+    ui.C12ScrollBar->setSingleStep(qlstStep.at(11).toDouble());
+    ui.C12ScrollBar->setPageStep(qlstStep.at(11).toDouble());
+    ui.C12ScrollBar->blockSignals(true);
+    ui.C12ScrollBar->setSliderPosition(qlstPos.at(11).toDouble());
+    ui.C12ScrollBar->blockSignals(false);
+    ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11)+"("+ qlstStep.at(11) +")");
+    ui.C12labelMin->setText(qlstmin.at(11));
+    ui.C12labelMax->setText(qlstmax.at(11));
+        ui.groupBox_20->show();
+    }
+    if(qlstnames.size() >= 13)
+    {
+    ui.C13ScrollBar->setMaximum(qlstmax.at(12).toDouble());
+    ui.C13ScrollBar->setMinimum(qlstmin.at(12).toDouble());
+    ui.C13ScrollBar->setSingleStep(qlstStep.at(12).toDouble());
+    ui.C13ScrollBar->setPageStep(qlstStep.at(12).toDouble());
+    ui.C13ScrollBar->blockSignals(true);
+    ui.C13ScrollBar->setSliderPosition(qlstPos.at(12).toDouble());
+    ui.C13ScrollBar->blockSignals(false);
+    ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12)+"("+ qlstStep.at(12) +")");
+    ui.C13labelMin->setText(qlstmin.at(12));
+    ui.C13labelMax->setText(qlstmax.at(12));
+        ui.groupBox_21->show();
+    }
+    if(qlstnames.size() >= 14)
+    {
+    ui.C14ScrollBar->setMaximum(qlstmax.at(13).toDouble());
+    ui.C14ScrollBar->setMinimum(qlstmin.at(13).toDouble());
+    ui.C14ScrollBar->setSingleStep(qlstStep.at(13).toDouble());
+    ui.C14ScrollBar->setPageStep(qlstStep.at(13).toDouble());
+    ui.C14ScrollBar->blockSignals(true);
+    ui.C14ScrollBar->setSliderPosition(qlstPos.at(13).toDouble());
+    ui.C14ScrollBar->blockSignals(false);
+    ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13)+"("+ qlstStep.at(13) +")");
+    ui.C14labelMin->setText(qlstmin.at(13));
+    ui.C14labelMax->setText(qlstmax.at(13));
+        ui.groupBox_22->show();
+    }
+    if(qlstnames.size() >= 15)
+    {
+    ui.C15ScrollBar->setMaximum(qlstmax.at(14).toDouble());
+    ui.C15ScrollBar->setMinimum(qlstmin.at(14).toDouble());
+    ui.C15ScrollBar->setSingleStep(qlstStep.at(14).toDouble());
+    ui.C15ScrollBar->setPageStep(qlstStep.at(14).toDouble());
+    ui.C15ScrollBar->blockSignals(true);
+    ui.C15ScrollBar->setSliderPosition(qlstPos.at(14).toDouble());
+    ui.C15ScrollBar->blockSignals(false);
+    ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14)+"("+ qlstStep.at(14) +")");
+    ui.C15labelMin->setText(qlstmin.at(14));
+    ui.C15labelMax->setText(qlstmax.at(14));
+        ui.groupBox_23->show();
+    }
+    if(qlstnames.size() >= 16)
+    {
+    ui.C16ScrollBar->setMaximum(qlstmax.at(15).toDouble());
+    ui.C16ScrollBar->setMinimum(qlstmin.at(15).toDouble());
+    ui.C16ScrollBar->setSingleStep(qlstStep.at(15).toDouble());
+    ui.C16ScrollBar->setPageStep(qlstStep.at(15).toDouble());
+    ui.C16ScrollBar->blockSignals(true);
+    ui.C16ScrollBar->setSliderPosition(qlstPos.at(15).toDouble());
+    ui.C16ScrollBar->blockSignals(false);
+    ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15)+"("+ qlstStep.at(15) +")");
+    ui.C16labelMin->setText(qlstmin.at(15));
+    ui.C16labelMax->setText(qlstmax.at(15));
+        ui.groupBox_24->show();
+    }
+    if(qlstnames.size() >= 17)
+    {
+    ui.C17ScrollBar->setMaximum(qlstmax.at(16).toDouble());
+    ui.C17ScrollBar->setMinimum(qlstmin.at(16).toDouble());
+    ui.C17ScrollBar->setSingleStep(qlstStep.at(16).toDouble());
+    ui.C17ScrollBar->setPageStep(qlstStep.at(16).toDouble());
+    ui.C17ScrollBar->blockSignals(true);
+    ui.C17ScrollBar->setSliderPosition(qlstPos.at(16).toDouble());
+    ui.C17ScrollBar->blockSignals(false);
+    ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16)+"("+ qlstStep.at(16) +")");
+    ui.C17labelMin->setText(qlstmin.at(16));
+    ui.C17labelMax->setText(qlstmax.at(16));
+        ui.groupBox_25->show();
+    }
+    if(qlstnames.size() >= 18)
+    {
+    ui.C18ScrollBar->setMaximum(qlstmax.at(17).toDouble());
+    ui.C18ScrollBar->setMinimum(qlstmin.at(17).toDouble());
+    ui.C18ScrollBar->setSingleStep(qlstStep.at(17).toDouble());
+    ui.C18ScrollBar->setPageStep(qlstStep.at(17).toDouble());
+    ui.C18ScrollBar->blockSignals(true);
+    ui.C18ScrollBar->setSliderPosition(qlstPos.at(17).toDouble());
+    ui.C18ScrollBar->blockSignals(false);
+    ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17)+"("+ qlstStep.at(17) +")");
+    ui.C18labelMin->setText(qlstmin.at(17));
+    ui.C18labelMax->setText(qlstmax.at(17));
+        ui.groupBox_26->show();
+    }
+    if(qlstnames.size() >= 19)
+    {
+    ui.C19ScrollBar->setMaximum(qlstmax.at(18).toDouble());
+    ui.C19ScrollBar->setMinimum(qlstmin.at(18).toDouble());
+    ui.C19ScrollBar->setSingleStep(qlstStep.at(18).toDouble());
+    ui.C19ScrollBar->setPageStep(qlstStep.at(18).toDouble());
+    ui.C19ScrollBar->blockSignals(true);
+    ui.C19ScrollBar->setSliderPosition(qlstPos.at(18).toDouble());
+    ui.C19ScrollBar->blockSignals(false);
+    ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18)+"("+ qlstStep.at(18) +")");
+    ui.C19labelMin->setText(qlstmin.at(18));
+    ui.C19labelMax->setText(qlstmax.at(18));
+        ui.groupBox_27->show();
+    }
+    if(qlstnames.size() >= 20)
+    {
+    ui.C20ScrollBar->setMaximum(qlstmax.at(19).toDouble());
+    ui.C20ScrollBar->setMinimum(qlstmin.at(19).toDouble());
+    ui.C20ScrollBar->setSingleStep(qlstStep.at(19).toDouble());
+    ui.C20ScrollBar->setPageStep(qlstStep.at(19).toDouble());
+    ui.C20ScrollBar->blockSignals(true);
+    ui.C20ScrollBar->setSliderPosition(qlstPos.at(19).toDouble());
+    ui.C20ScrollBar->blockSignals(false);
+    ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19)+"("+ qlstStep.at(19) +")");
+    ui.C20labelMin->setText(qlstmin.at(19));
+    ui.C20labelMax->setText(qlstmax.at(19));
+        ui.groupBox_28->show();
+    }
+}
+else
+   ui.ScriptTabWidget->removeTab(4);
+}
 
 void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 {
@@ -902,406 +1309,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             QPigmentObj = Jobj["Pigment"].toObject();
     }
 
-    if(Jobj["Sliders"].isObject())
-       {
-        ui.ScriptTabWidget->insertTab(4,ui.tab_22,"Sliders" );
-
-        QObj = Jobj["Sliders"].toObject();
-
-        // Min
-        lst = QObj["Min"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        qlstmin = result.split(";", QString::SkipEmptyParts);
-
-        // Max
-        lst = QObj["Max"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        qlstmax = result.split(";", QString::SkipEmptyParts);
-
-        // Position
-        lst = QObj["Position"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        qlstPos = result.split(";", QString::SkipEmptyParts);
-        for (int i = 0; i < qlstPos.size(); ++i)
-            MathmodRef->ui.glWidget->IsoObjet->SliderValues[i] =
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[i] =
-                    qlstPos.at(i).toDouble();
-
-        // Name
-        lst = QObj["Name"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        qlstnames = result.split(";", QString::SkipEmptyParts);
-        for (int i = 0; i < qlstnames.size(); ++i)
-            MathmodRef->ui.glWidget->IsoObjet->SliderNames[i] =
-            MathmodRef->ui.glWidget->ParObjet->SliderNames[i] =
-                    qlstnames.at(i).toStdString();
-
-        // Step
-        lst = QObj["Step"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        qlstStep = result.split(";", QString::SkipEmptyParts);
-
-        ui.groupBox_9->hide();
-        ui.groupBox_10->hide();
-        ui.groupBox_11->hide();
-        ui.groupBox_12->hide();
-        ui.groupBox_13->hide();
-        ui.groupBox_14->hide();
-        ui.groupBox_15->hide();
-        ui.groupBox_16->hide();
-        ui.groupBox_17->hide();
-        ui.groupBox_18->hide();
-        ui.groupBox_19->hide();
-        ui.groupBox_20->hide();
-        ui.groupBox_21->hide();
-        ui.groupBox_22->hide();
-        ui.groupBox_23->hide();
-        ui.groupBox_24->hide();
-        ui.groupBox_25->hide();
-        ui.groupBox_26->hide();
-        ui.groupBox_27->hide();
-        ui.groupBox_28->hide();
-        ui.PredefinedSets->hide();
-
-        if(qlstPos.size() <= qlstnames.size())
-        {
-            ui.PredefinedSets->clear();
-            ui.PredefinedSets->hide();
-         }
-        else
-        {
-            ui.PredefinedSets->clear();
-            int NbSets = qlstPos.size() / qlstnames.size();
-            QStringList qlist;
-            qlist += "Predefined Sets";
-            for(int i=1; i< NbSets+1; i++)
-            {
-                qlist  += "Set_"+QString::number(i);
-            }
-            ui.PredefinedSets->addItems(qlist);
-            ui.PredefinedSets->show();
-        }
-
-        if(qlstnames.size() >= 1)
-        {
-        ui.C1ScrollBar->setMaximum(qlstmax.at(0).toDouble());
-        ui.C1ScrollBar->setMinimum(qlstmin.at(0).toDouble());
-        ui.C1ScrollBar->setSingleStep(qlstStep.at(0).toDouble());
-        ui.C1ScrollBar->setPageStep(qlstStep.at(0).toDouble());
-        ui.C1ScrollBar->blockSignals(true);
-        ui.C1ScrollBar->setSliderPosition(qlstPos.at(0).toDouble());
-        ui.C1ScrollBar->blockSignals(false);
-        ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0)+"("+ qlstStep.at(0) +")");
-        ui.C1labelMin->setText(qlstmin.at(0));
-        ui.C1labelMax->setText(qlstmax.at(0));
-        ui.groupBox_9->show();
-        }
-
-        if(qlstnames.size() >= 2)
-        {
-        ui.C2ScrollBar->setMaximum(qlstmax.at(1).toDouble());
-        ui.C2ScrollBar->setMinimum(qlstmin.at(1).toDouble());
-        ui.C2ScrollBar->setSingleStep(qlstStep.at(1).toDouble());
-        ui.C2ScrollBar->setPageStep(qlstStep.at(1).toDouble());
-        ui.C2ScrollBar->blockSignals(true);
-        ui.C2ScrollBar->setSliderPosition(qlstPos.at(1).toDouble());
-        ui.C2ScrollBar->blockSignals(false);
-        ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1)+"("+ qlstStep.at(1) +")");
-        ui.C2labelMin->setText(qlstmin.at(1));
-        ui.C2labelMax->setText(qlstmax.at(1));
-            ui.groupBox_10->show();
-        }
-        if(qlstnames.size() >= 3)
-        {
-        ui.C3ScrollBar->setMaximum(qlstmax.at(2).toDouble());
-        ui.C3ScrollBar->setMinimum(qlstmin.at(2).toDouble());
-        ui.C3ScrollBar->setSingleStep(qlstStep.at(2).toDouble());
-        ui.C3ScrollBar->setPageStep(qlstStep.at(2).toDouble());
-        ui.C3ScrollBar->blockSignals(true);
-        ui.C3ScrollBar->setSliderPosition(qlstPos.at(2).toDouble());
-        ui.C3ScrollBar->blockSignals(false);
-        ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2)+"("+ qlstStep.at(2) +")");
-        ui.C3labelMin->setText(qlstmin.at(2));
-        ui.C3labelMax->setText(qlstmax.at(2));
-            ui.groupBox_11->show();
-        }
-        if(qlstnames.size() >= 4)
-        {
-        ui.C4ScrollBar->setMaximum(qlstmax.at(3).toDouble());
-        ui.C4ScrollBar->setMinimum(qlstmin.at(3).toDouble());
-        ui.C4ScrollBar->setSingleStep(qlstStep.at(3).toDouble());
-        ui.C4ScrollBar->setPageStep(qlstStep.at(3).toDouble());
-        ui.C4ScrollBar->blockSignals(true);
-        ui.C4ScrollBar->setSliderPosition(qlstPos.at(3).toDouble());
-        ui.C4ScrollBar->blockSignals(false);
-        ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3)+"("+ qlstStep.at(3) +")");
-        ui.C4labelMin->setText(qlstmin.at(3));
-        ui.C4labelMax->setText(qlstmax.at(3));
-            ui.groupBox_12->show();
-        }
-        if(qlstnames.size() >= 5)
-        {
-        ui.C5ScrollBar->setMaximum(qlstmax.at(4).toDouble());
-        ui.C5ScrollBar->setMinimum(qlstmin.at(4).toDouble());
-        ui.C5ScrollBar->setSingleStep(qlstStep.at(4).toDouble());
-        ui.C5ScrollBar->setPageStep(qlstStep.at(4).toDouble());
-        ui.C5ScrollBar->blockSignals(true);
-        ui.C5ScrollBar->setSliderPosition(qlstPos.at(4).toDouble());
-        ui.C5ScrollBar->blockSignals(false);
-        ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4)+"("+ qlstStep.at(4) +")");
-        ui.C5labelMin->setText(qlstmin.at(4));
-        ui.C5labelMax->setText(qlstmax.at(4));
-            ui.groupBox_13->show();
-        }
-
-        if(qlstnames.size() >= 6)
-        {
-        ui.C6ScrollBar->setMaximum(qlstmax.at(5).toDouble());
-        ui.C6ScrollBar->setMinimum(qlstmin.at(5).toDouble());
-        ui.C6ScrollBar->setSingleStep(qlstStep.at(5).toDouble());
-        ui.C6ScrollBar->setPageStep(qlstStep.at(5).toDouble());
-        ui.C6ScrollBar->blockSignals(true);
-        ui.C6ScrollBar->setSliderPosition(qlstPos.at(5).toDouble());
-        ui.C6ScrollBar->blockSignals(false);
-        ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5)+"("+ qlstStep.at(5) +")");
-        ui.C6labelMin->setText(qlstmin.at(5));
-        ui.C6labelMax->setText(qlstmax.at(5));
-            ui.groupBox_14->show();
-        }
-        if(qlstnames.size() >= 7)
-        {
-        ui.C7ScrollBar->setMaximum(qlstmax.at(6).toDouble());
-        ui.C7ScrollBar->setMinimum(qlstmin.at(6).toDouble());
-        ui.C7ScrollBar->setSingleStep(qlstStep.at(6).toDouble());
-        ui.C7ScrollBar->setPageStep(qlstStep.at(6).toDouble());
-        ui.C7ScrollBar->blockSignals(true);
-        ui.C7ScrollBar->setSliderPosition(qlstPos.at(6).toDouble());
-        ui.C7ScrollBar->blockSignals(false);
-        ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6)+"("+ qlstStep.at(6) +")");
-        ui.C7labelMin->setText(qlstmin.at(6));
-        ui.C7labelMax->setText(qlstmax.at(6));
-            ui.groupBox_15->show();
-        }
-        if(qlstnames.size() >= 8)
-        {
-        ui.C8ScrollBar->setMaximum(qlstmax.at(7).toDouble());
-        ui.C8ScrollBar->setMinimum(qlstmin.at(7).toDouble());
-        ui.C8ScrollBar->setSingleStep(qlstStep.at(7).toDouble());
-        ui.C8ScrollBar->setPageStep(qlstStep.at(7).toDouble());
-        ui.C8ScrollBar->blockSignals(true);
-        ui.C8ScrollBar->setSliderPosition(qlstPos.at(7).toDouble());
-        ui.C8ScrollBar->blockSignals(false);
-        ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7)+"("+ qlstStep.at(7) +")");
-        ui.C8labelMin->setText(qlstmin.at(7));
-        ui.C8labelMax->setText(qlstmax.at(7));
-            ui.groupBox_16->show();
-        }
-        if(qlstnames.size() >= 9)
-        {
-        ui.C9ScrollBar->setMaximum(qlstmax.at(8).toDouble());
-        ui.C9ScrollBar->setMinimum(qlstmin.at(8).toDouble());
-        ui.C9ScrollBar->setSingleStep(qlstStep.at(8).toDouble());
-        ui.C9ScrollBar->setPageStep(qlstStep.at(8).toDouble());
-        ui.C9ScrollBar->blockSignals(true);
-        ui.C9ScrollBar->setSliderPosition(qlstPos.at(8).toDouble());
-        ui.C9ScrollBar->blockSignals(false);
-        ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8)+"("+ qlstStep.at(8) +")");
-        ui.C9labelMin->setText(qlstmin.at(8));
-        ui.C9labelMax->setText(qlstmax.at(8));
-            ui.groupBox_17->show();
-        }
-        if(qlstnames.size() >= 10)
-        {
-        ui.C10ScrollBar->setMaximum(qlstmax.at(9).toDouble());
-        ui.C10ScrollBar->setMinimum(qlstmin.at(9).toDouble());
-        ui.C10ScrollBar->setSingleStep(qlstStep.at(9).toDouble());
-        ui.C10ScrollBar->setPageStep(qlstStep.at(9).toDouble());
-        ui.C10ScrollBar->blockSignals(true);
-        ui.C10ScrollBar->setSliderPosition(qlstPos.at(9).toDouble());
-        ui.C10ScrollBar->blockSignals(false);
-        ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9)+"("+ qlstStep.at(9) +")");
-        ui.C10labelMin->setText(qlstmin.at(9));
-        ui.C10labelMax->setText(qlstmax.at(9));
-            ui.groupBox_18->show();
-        }
-        if(qlstnames.size() >= 11)
-        {
-        ui.C11ScrollBar->setMaximum(qlstmax.at(10).toDouble());
-        ui.C11ScrollBar->setMinimum(qlstmin.at(10).toDouble());
-        ui.C11ScrollBar->setSingleStep(qlstStep.at(10).toDouble());
-        ui.C11ScrollBar->setPageStep(qlstStep.at(10).toDouble());
-        ui.C11ScrollBar->blockSignals(true);
-        ui.C11ScrollBar->setSliderPosition(qlstPos.at(10).toDouble());
-        ui.C11ScrollBar->blockSignals(false);
-        ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10)+"("+ qlstStep.at(10) +")");
-        ui.C11labelMin->setText(qlstmin.at(10));
-        ui.C11labelMax->setText(qlstmax.at(10));
-            ui.groupBox_19->show();
-        }
-        if(qlstnames.size() >= 12)
-        {
-        ui.C12ScrollBar->setMaximum(qlstmax.at(11).toDouble());
-        ui.C12ScrollBar->setMinimum(qlstmin.at(11).toDouble());
-        ui.C12ScrollBar->setSingleStep(qlstStep.at(11).toDouble());
-        ui.C12ScrollBar->setPageStep(qlstStep.at(11).toDouble());
-        ui.C12ScrollBar->blockSignals(true);
-        ui.C12ScrollBar->setSliderPosition(qlstPos.at(11).toDouble());
-        ui.C12ScrollBar->blockSignals(false);
-        ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11)+"("+ qlstStep.at(11) +")");
-        ui.C12labelMin->setText(qlstmin.at(11));
-        ui.C12labelMax->setText(qlstmax.at(11));
-            ui.groupBox_20->show();
-        }
-        if(qlstnames.size() >= 13)
-        {
-        ui.C13ScrollBar->setMaximum(qlstmax.at(12).toDouble());
-        ui.C13ScrollBar->setMinimum(qlstmin.at(12).toDouble());
-        ui.C13ScrollBar->setSingleStep(qlstStep.at(12).toDouble());
-        ui.C13ScrollBar->setPageStep(qlstStep.at(12).toDouble());
-        ui.C13ScrollBar->blockSignals(true);
-        ui.C13ScrollBar->setSliderPosition(qlstPos.at(12).toDouble());
-        ui.C13ScrollBar->blockSignals(false);
-        ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12)+"("+ qlstStep.at(12) +")");
-        ui.C13labelMin->setText(qlstmin.at(12));
-        ui.C13labelMax->setText(qlstmax.at(12));
-            ui.groupBox_21->show();
-        }
-        if(qlstnames.size() >= 14)
-        {
-        ui.C14ScrollBar->setMaximum(qlstmax.at(13).toDouble());
-        ui.C14ScrollBar->setMinimum(qlstmin.at(13).toDouble());
-        ui.C14ScrollBar->setSingleStep(qlstStep.at(13).toDouble());
-        ui.C14ScrollBar->setPageStep(qlstStep.at(13).toDouble());
-        ui.C14ScrollBar->blockSignals(true);
-        ui.C14ScrollBar->setSliderPosition(qlstPos.at(13).toDouble());
-        ui.C14ScrollBar->blockSignals(false);
-        ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13)+"("+ qlstStep.at(13) +")");
-        ui.C14labelMin->setText(qlstmin.at(13));
-        ui.C14labelMax->setText(qlstmax.at(13));
-            ui.groupBox_22->show();
-        }
-        if(qlstnames.size() >= 15)
-        {
-        ui.C15ScrollBar->setMaximum(qlstmax.at(14).toDouble());
-        ui.C15ScrollBar->setMinimum(qlstmin.at(14).toDouble());
-        ui.C15ScrollBar->setSingleStep(qlstStep.at(14).toDouble());
-        ui.C15ScrollBar->setPageStep(qlstStep.at(14).toDouble());
-        ui.C15ScrollBar->blockSignals(true);
-        ui.C15ScrollBar->setSliderPosition(qlstPos.at(14).toDouble());
-        ui.C15ScrollBar->blockSignals(false);
-        ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14)+"("+ qlstStep.at(14) +")");
-        ui.C15labelMin->setText(qlstmin.at(14));
-        ui.C15labelMax->setText(qlstmax.at(14));
-            ui.groupBox_23->show();
-        }
-        if(qlstnames.size() >= 16)
-        {
-        ui.C16ScrollBar->setMaximum(qlstmax.at(15).toDouble());
-        ui.C16ScrollBar->setMinimum(qlstmin.at(15).toDouble());
-        ui.C16ScrollBar->setSingleStep(qlstStep.at(15).toDouble());
-        ui.C16ScrollBar->setPageStep(qlstStep.at(15).toDouble());
-        ui.C16ScrollBar->blockSignals(true);
-        ui.C16ScrollBar->setSliderPosition(qlstPos.at(15).toDouble());
-        ui.C16ScrollBar->blockSignals(false);
-        ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15)+"("+ qlstStep.at(15) +")");
-        ui.C16labelMin->setText(qlstmin.at(15));
-        ui.C16labelMax->setText(qlstmax.at(15));
-            ui.groupBox_24->show();
-        }
-        if(qlstnames.size() >= 17)
-        {
-        ui.C17ScrollBar->setMaximum(qlstmax.at(16).toDouble());
-        ui.C17ScrollBar->setMinimum(qlstmin.at(16).toDouble());
-        ui.C17ScrollBar->setSingleStep(qlstStep.at(16).toDouble());
-        ui.C17ScrollBar->setPageStep(qlstStep.at(16).toDouble());
-        ui.C17ScrollBar->blockSignals(true);
-        ui.C17ScrollBar->setSliderPosition(qlstPos.at(16).toDouble());
-        ui.C17ScrollBar->blockSignals(false);
-        ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16)+"("+ qlstStep.at(16) +")");
-        ui.C17labelMin->setText(qlstmin.at(16));
-        ui.C17labelMax->setText(qlstmax.at(16));
-            ui.groupBox_25->show();
-        }
-        if(qlstnames.size() >= 18)
-        {
-        ui.C18ScrollBar->setMaximum(qlstmax.at(17).toDouble());
-        ui.C18ScrollBar->setMinimum(qlstmin.at(17).toDouble());
-        ui.C18ScrollBar->setSingleStep(qlstStep.at(17).toDouble());
-        ui.C18ScrollBar->setPageStep(qlstStep.at(17).toDouble());
-        ui.C18ScrollBar->blockSignals(true);
-        ui.C18ScrollBar->setSliderPosition(qlstPos.at(17).toDouble());
-        ui.C18ScrollBar->blockSignals(false);
-        ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17)+"("+ qlstStep.at(17) +")");
-        ui.C18labelMin->setText(qlstmin.at(17));
-        ui.C18labelMax->setText(qlstmax.at(17));
-            ui.groupBox_26->show();
-        }
-        if(qlstnames.size() >= 19)
-        {
-        ui.C19ScrollBar->setMaximum(qlstmax.at(18).toDouble());
-        ui.C19ScrollBar->setMinimum(qlstmin.at(18).toDouble());
-        ui.C19ScrollBar->setSingleStep(qlstStep.at(18).toDouble());
-        ui.C19ScrollBar->setPageStep(qlstStep.at(18).toDouble());
-        ui.C19ScrollBar->blockSignals(true);
-        ui.C19ScrollBar->setSliderPosition(qlstPos.at(18).toDouble());
-        ui.C19ScrollBar->blockSignals(false);
-        ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18)+"("+ qlstStep.at(18) +")");
-        ui.C19labelMin->setText(qlstmin.at(18));
-        ui.C19labelMax->setText(qlstmax.at(18));
-            ui.groupBox_27->show();
-        }
-        if(qlstnames.size() >= 20)
-        {
-        ui.C20ScrollBar->setMaximum(qlstmax.at(19).toDouble());
-        ui.C20ScrollBar->setMinimum(qlstmin.at(19).toDouble());
-        ui.C20ScrollBar->setSingleStep(qlstStep.at(19).toDouble());
-        ui.C20ScrollBar->setPageStep(qlstStep.at(19).toDouble());
-        ui.C20ScrollBar->blockSignals(true);
-        ui.C20ScrollBar->setSliderPosition(qlstPos.at(19).toDouble());
-        ui.C20ScrollBar->blockSignals(false);
-        ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19)+"("+ qlstStep.at(19) +")");
-        ui.C20labelMin->setText(qlstmin.at(19));
-        ui.C20labelMax->setText(qlstmax.at(19));
-            ui.groupBox_28->show();
-        }
-    }
-    else
-       ui.ScriptTabWidget->removeTab(4);
+    ShowSliders(Jobj);
 
     if(Jobj["Iso3D"].isObject())
     {
@@ -2161,9 +2169,11 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     QJsonObject QObj;
 
     for(i=0; i< array.size(); i++)
+    {
         if((array[i].toObject())["Iso3D"].isObject()  &&
                 (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"].toArray()[0].toString() == arg1)
         {
+            ShowSliders(array[i].toObject());
             // Fxyz
             lst = QObj["Fxyz"].toArray();
             result = "";
@@ -2429,6 +2439,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
         else if((array[i].toObject())["Param3D"].isObject()     &&
                 (QObj = (array[i].toObject())["Param3D"].toObject())["Name"].toArray()[0].toString() == arg1)
         {
+            ShowSliders(array[i].toObject());
             // Fx
             lst = QObj["Fx"].toArray();
             result = "";
@@ -2758,10 +2769,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ParametricSurfaceProcess(1);
             return(1);
         }
-
         else if((array[i].toObject())["Param4D"].isObject()     &&
                 (QObj = (array[i].toObject())["Param4D"].toObject())["Name"].toArray()[0].toString() == arg1)
         {
+            ShowSliders(array[i].toObject());
             // Fx
             lst = QObj["Fx"].toArray();
             result = "";
@@ -3077,7 +3088,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ParametricSurfaceProcess(3);
             return(3);
         }
-
+    }
     return(0);
 }
 //+++++++++++++++++++++++++++++++++++++++
