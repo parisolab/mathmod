@@ -104,7 +104,7 @@ public :
         VRgbt, VRgbts[50], VRgbtNames[50],
         Gradient, Noise, varliste;
     double ConstValues[50];
-    double SliderValues[50];
+    double SliderValues[5000];
     ImplicitStruct ImplicitStructs[1100];
     int GridTable[1100];
     int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts;
