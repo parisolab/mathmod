@@ -22,6 +22,7 @@
 #include <qmessagebox.h>
 
 static int indexcurrentFormula=-1;
+static int indexcurrentSet=-1;
 static int CurrentFormulaType =-1; //0:Pariso; 1:Parametric; 2:Isosurface
 QTreeWidgetItem *MyselectionItemReference;
 QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
@@ -885,7 +886,8 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
     if(Jobj["Sliders"].isObject())
     {
-    ui.ScriptTabWidget->insertTab(4,ui.tab_22,"Sliders" );
+    if(!ui.ScriptTabWidget->isTabEnabled(4))
+        ui.ScriptTabWidget->insertTab(4,ui.tab_22,"Sliders" );
 
     QObj = Jobj["Sliders"].toObject();
 
@@ -2583,69 +2585,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
-
-
-
-
-/*
-            // Colors
-            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
-
-            // Pigment
-            QJsonArray tmp;
-            QString strtmp = (array[i].toObject())["Pigment"].toObject()["Gradient"].toString();
-            lst =  (array[i].toObject())["Pigment"].toObject()["Colors"].toArray();
-            result = "";
-            for(j=0; j < lst.size(); j++)
-            {
-                tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
-                for(int k=0; k < tmp.count(); k++)
-                {
-                        result += tmp[k].toString() + ";";
-                }
-            }
-
-            strtmp.replace("\n","");
-            strtmp.replace("\t","");
-            strtmp.replace(" ","");
-
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-
-            MathmodRef->ui.glWidget->ParObjet->Gradient = strtmp.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
-
-
-
-            //Noise:
-            result = "";
-            result = (array[i].toObject())["Noise"].toString();
-            MathmodRef->ui.glWidget->ParObjet->Noise = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
-*/
-
-
-
-
-
-
-
-
-
-
-
             //Noise:
             QString noise = "";
             noise = (array[i].toObject())["Noise"].toString();
@@ -2712,15 +2651,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
             }
-
-
-
-
-
-
-
-
-
 
             // Grid
             lst = QObj["Grid"].toArray();
@@ -2928,57 +2858,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
-
-/*
-            // Colors
-            lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
-
-            // Pigment
-            QJsonArray tmp;
-            QString strtmp = (array[i].toObject())["Pigment"].toObject()["Gradient"].toString();
-            lst =  (array[i].toObject())["Pigment"].toObject()["Colors"].toArray();
-            result = "";
-            for(j=0; j < lst.size(); j++)
-            {
-                tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
-                for(int k=0; k < tmp.count(); k++)
-                {
-                        result += tmp[k].toString() + ";";
-                }
-            }
-
-            strtmp.replace("\n","");
-            strtmp.replace("\t","");
-            strtmp.replace(" ","");
-
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-
-            MathmodRef->ui.glWidget->ParObjet->Gradient = strtmp.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
-
-
-
-            //Noise:
-            result = "";
-            result = (array[i].toObject())["Noise"].toString();
-            MathmodRef->ui.glWidget->ParObjet->Noise = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Noise = result;
-*/
-
-
 
             //Noise:
             QString noise = "";
@@ -6461,6 +6340,7 @@ void DrawingOptions::on_C20ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_PredefinedSets_activated(int index)
 {
+    indexcurrentSet = index;
     if(index >0)
     {
         int size = qlstnames.size();
@@ -7151,4 +7031,87 @@ void DrawingOptions::update_slider_param()
     else
         MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
     MathmodRef->ui.glWidget->LocalScene.slider = -1;
+}
+
+void DrawingOptions::on_AddSetButton_clicked()
+{
+    QJsonArray array2;
+    QJsonObject tmp, tmp2;
+
+    tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    tmp2 = tmp ["Sliders"].toObject();
+    array2 = tmp2["Position"].toArray();
+    int size= qlstnames.size();
+
+    if(size >=1)
+        array2.append(QString::number(ui.C1ScrollBar->sliderPosition()));
+    if(size >=2)
+        array2.append(QString::number(ui.C2ScrollBar->sliderPosition()));
+    if(size >=3)
+        array2.append(QString::number(ui.C3ScrollBar->sliderPosition()));
+    if(size >=4)
+        array2.append(QString::number(ui.C4ScrollBar->sliderPosition()));
+    if(size >=5)
+        array2.append(QString::number(ui.C5ScrollBar->sliderPosition()));
+    if(size >=6)
+        array2.append(QString::number(ui.C6ScrollBar->sliderPosition()));
+    if(size >=7)
+        array2.append(QString::number(ui.C7ScrollBar->sliderPosition()));
+    if(size >=8)
+        array2.append(QString::number(ui.C8ScrollBar->sliderPosition()));
+    if(size >=9)
+        array2.append(QString::number(ui.C9ScrollBar->sliderPosition()));
+    if(size >=10)
+        array2.append(QString::number(ui.C10ScrollBar->sliderPosition()));
+    if(size >=11)
+        array2.append(QString::number(ui.C11ScrollBar->sliderPosition()));
+    if(size >=12)
+        array2.append(QString::number(ui.C12ScrollBar->sliderPosition()));
+    if(size >=13)
+        array2.append(QString::number(ui.C13ScrollBar->sliderPosition()));
+    if(size >=14)
+        array2.append(QString::number(ui.C14ScrollBar->sliderPosition()));
+    if(size >=15)
+        array2.append(QString::number(ui.C15ScrollBar->sliderPosition()));
+    if(size >=16)
+        array2.append(QString::number(ui.C16ScrollBar->sliderPosition()));
+    if(size >=17)
+        array2.append(QString::number(ui.C17ScrollBar->sliderPosition()));
+    if(size >=18)
+        array2.append(QString::number(ui.C18ScrollBar->sliderPosition()));
+    if(size >=19)
+        array2.append(QString::number(ui.C19ScrollBar->sliderPosition()));
+    if(size >=20)
+        array2.append(QString::number(ui.C20ScrollBar->sliderPosition()));
+
+    tmp2["Position"] = array2;
+    tmp["Sliders"] = tmp2;
+    // Draw here
+    ShowJsonModel(tmp);
+    ui.ObjectClasseCurrent->takeTopLevelItem(0);
+    UpdateCurrentTreeObject();
+}
+
+void DrawingOptions::on_CutSetButton_clicked()
+{
+    int size2= qlstPos.size();
+    int size= qlstnames.size();
+    if(size2 >= 2*size)
+    {
+        QJsonArray array2;
+        QJsonObject tmp, tmp2;
+
+        tmp = MathmodRef->RootObjet.CurrentJsonObject;
+        tmp2 = tmp ["Sliders"].toObject();
+        array2 = tmp2["Position"].toArray();
+        for(int i=0; i<size; i++)
+            array2.removeAt((indexcurrentSet-1)*size);
+
+        tmp2["Position"] = array2;
+        tmp["Sliders"] = tmp2;
+        // Draw here
+        ShowJsonModel(tmp);
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        UpdateCurrentTreeObject();
+    }
 }

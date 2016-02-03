@@ -227,5 +227,7 @@ private slots:
     void on_C3toolButton_clicked();
     void on_C2toolButton_clicked();
     void on_C1toolButton_clicked();
+    void on_AddSetButton_clicked();
+    void on_CutSetButton_clicked();
 };
 #endif

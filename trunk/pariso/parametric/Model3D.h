@@ -79,7 +79,7 @@ public:
     RgbtNames[100], Rgbts[100], VRgbt, VRgbts[100], VRgbtNames[100],
     Gradient, Noise, NoiseShape, SliderNames[50];
     double  v_inf[100], v_sup[100],u_inf[100],u_sup[100],dif_v[100],dif_u[100];
-    double SliderValues[50];
+    double SliderValues[5000];
     double stepMorph, pace;
     int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
     Matrix4D mat4D, mat_rotation4D, mat_rotation_save4D,
