@@ -1283,8 +1283,11 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         ui.groupBox_28->show();
     }
 }
-else
-   ui.ScriptTabWidget->removeTab(4);
+    else
+    {
+        if(ui.ScriptTabWidget->isTabEnabled(4))
+            ui.ScriptTabWidget->removeTab(4);
+    }
 }
 
 void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)

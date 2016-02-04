@@ -121,7 +121,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     //Add predefined constatnts:
     for(int i=0;i<20;i++)
     {
-        SliderNames[i]= "Slid"+i ;
+        SliderNames[i]= "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
     Lacunarity = 0.5; Gain = 1.0; Octaves = 4;

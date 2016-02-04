@@ -96,7 +96,7 @@ void Par3D::initialiser_parametres()
     //Add predefined constatnts:
     for(int i=0;i<20;i++)
     {
-        SliderNames[i]= "Slid"+i ;
+        SliderNames[i] = "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
 }
@@ -617,6 +617,7 @@ ErrorMessage  Par3D::parse_expression()
             if(expression_CND != "")
                 myParserCND[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             myParserUmax[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            myParserUmin[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             myParserVmin[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             myParserVmax[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             myParserX[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
@@ -631,6 +632,7 @@ ErrorMessage  Par3D::parse_expression()
         {
             if(expression_CND != "")
                 myParserCND[i].AddConstant(SliderNames[k], SliderValues[k]);
+            myParserUmin[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserUmax[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserVmin[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserVmax[i].AddConstant(SliderNames[k], SliderValues[k]);
