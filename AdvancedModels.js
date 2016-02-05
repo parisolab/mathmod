@@ -1,6 +1,39 @@
 {
 	"MathModels": [{
 		"Param3D": {
+			"Description ": ["Spiky Fresnel-01 by Abderrahman Taha 5/02/2015"],
+			"Name": ["Spiky Fresnel"],
+			"Component": ["SpikyFresnel"],
+			"Const": ["cu=0.001",
+			"cv=0.001"],
+			"Funct": ["Tickness= -.3*(abs(sin(25*u)*cos(27*v)))^(3*sin(17*u-15*v))^2",
+			"Fx=(cos(u)*cos(v)/(-2.*sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0.941/6.+0.374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1.309/6.*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1.221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3.)+0.8))",
+			"Fy= sin(v)/(-2.*sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0.941/6.+0.374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1.309/6.*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1.221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3.)+0.8)",
+			"Fz= sin(u)*cos(v)/(-2.*sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0.941/6.+0.374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1.309/6.*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1.221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0.965/3.-0.935/3.*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3.)+0.8)",
+			"DFxu= ((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
+			"DFxv= ((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
+			"DFyu= ((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
+			"DFyv= ((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
+			"DFzu= ((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
+			"DFzv= ((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+			"n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+			"n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+			"n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+			"R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+			"Gx=Fx(u,v,t)+Tickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
+			"Gy=Fy(u,v,t)+Tickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
+			"Gz=Fz(u,v,t)+Tickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
+			"Fx": ["Gx(u,v,t)"],
+			"Fy": ["-Gy(u,v,t)"],
+			"Fz": ["Gz(u,v,t)"],
+			"Umax": ["2*pi"],
+			"Umin": ["0"],
+			"Vmax": ["pi/2"],
+			"Vmin": ["-pi/2"]
+		}
+	},
+	{
+		"Param3D": {
 			"Name": ["Exotic flower"],
 			"Component": ["ExoticFlower"],
 			"Const": ["cu=0.001",
