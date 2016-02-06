@@ -1,5 +1,39 @@
 {
 	"MathModels": [{
+		"Param3D": {
+			"Description ": ["Inka Star by Abderrahman Taha 06/02/2016"],
+			"Name": ["Inka Star"],
+			"Component": ["InkaStar"],
+			"Const": ["cu=0.001",
+			"cv=0.001",
+			"N=2"],
+			"Funct": ["Thickness= ((sin(15*u)*cos(15*u)))^5 + (sin(5*N*v))",
+			"Fx=-cos(u+v)/(sqrt(2.)+cos(v-u))",
+			"Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
+			"Fz=sin(u+v)/(sqrt(2.)+cos(v-u))",
+			"DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
+			"DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
+			"DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
+			"DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
+			"DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
+			"DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+			"n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+			"n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+			"n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+			"R=(sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2))^2",
+			"Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
+			"Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
+			"Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
+			"Fx": ["Gx(u,v,t)"],
+			"Fy": ["Gy(u,v,t)"],
+			"Fz": ["Gz(u,v,t)"],
+			"Umax": ["pi"],
+			"Umin": ["0"],
+			"Vmax": ["2*pi"],
+			"Vmin": ["0"]
+		}
+	},
+	{
 		"Iso3D": {
 			"Description": ["Strapped Torus (implicit version) by Abderrahman Taha 06/02/2016"],
 			"Name": ["Strapped Torus"],
