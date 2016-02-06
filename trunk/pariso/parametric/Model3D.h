@@ -72,7 +72,7 @@ public:
                    myParserVmin[100], myParserVmax[100],
                    Var[20], Cstparser;
     ParStruct ParamStructs[100];
-    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts;
+    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const, Funct, Rgbt, Grid;
     std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100],
