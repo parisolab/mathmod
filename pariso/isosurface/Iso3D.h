@@ -107,7 +107,7 @@ public :
     double SliderValues[5000];
     ImplicitStruct ImplicitStructs[1100];
     int GridTable[1100];
-    int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts;
+    int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders;
     double stepMorph, pace;
     int morph_activated;
     int TimeFlow;

@@ -84,6 +84,7 @@ void Par3D::initialiser_parametres()
     ParConditionRequired = -1;
     tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
     tetazw_ok = tetaxy_ok =  tetaxz_ok = tetayz_ok = tetaxw_ok = tetayw_ok =  param4D = -1;
+    Nb_Sliders = -1;
     // initialisation des matrices 4D
     mat4D                                     = Matrix4D();
     mat_rotation4D                      = Matrix4D();
@@ -460,7 +461,7 @@ ErrorMessage  Par3D::parse_expression()
             }
 
             //Add predefined constatnts:
-            for(int k=0; k<20; k++)
+            for(int k=0; k<Nb_Sliders; k++)
             {
                 Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
@@ -562,7 +563,7 @@ ErrorMessage  Par3D::parse_expression()
             }
 
             //Add predefined constatnts:
-            for(int k=0; k<20; k++)
+            for(int k=0; k<Nb_Sliders; k++)
             {
                 Var[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
@@ -628,7 +629,7 @@ ErrorMessage  Par3D::parse_expression()
 
 
         //Add predefined constatnts:
-        for(int k=0; k<20; k++)
+        for(int k=0; k<Nb_Sliders; k++)
         {
             if(expression_CND != "")
                 myParserCND[i].AddConstant(SliderNames[k], SliderValues[k]);

@@ -101,6 +101,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     NbPointIsoMap = 0;
     NbTriangleIsoSurface = 0;
     IsoConditionRequired = -1;
+    Nb_Sliders = -1;
     Cstparser.AddConstant("pi", 3.14159265);
     ImplicitFunction =  "cos(x) + cos(y) + cos(z)";
     XlimitSup = "4";
@@ -801,7 +802,7 @@ ErrorMessage Iso3D::ParserIso()
             }
 
             //Add predefined constatnts:
-            for(int k=0; k<20; k++)
+            for(int k=0; k<Nb_Sliders; k++)
             {
                 Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
@@ -914,7 +915,7 @@ ErrorMessage Iso3D::ParserIso()
         NoiseParser->AddConstant("Octaves", Octaves);
 
         //Add predefined constatnts:
-        for(int k=0; k<20; k++)
+        for(int k=0; k<Nb_Sliders; k++)
         {
             NoiseParser->AddConstant(SliderNames[k], SliderValues[k]);
         }
@@ -940,7 +941,7 @@ ErrorMessage Iso3D::ParserIso()
 
 
             //Add predefined constatnts:
-            for(int k=0; k<20; k++)
+            for(int k=0; k<Nb_Sliders; k++)
             {
                 Var[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
@@ -1003,7 +1004,7 @@ ErrorMessage Iso3D::ParserIso()
         }
 
         //Add predefined constatnts:
-        for(int k=0; k<20; k++)
+        for(int k=0; k<Nb_Sliders; k++)
         {
             implicitFunctionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             if(Condition != "")

@@ -946,6 +946,8 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         MathmodRef->ui.glWidget->IsoObjet->SliderNames[i] =
         MathmodRef->ui.glWidget->ParObjet->SliderNames[i] =
                 qlstnames.at(i).toStdString();
+    MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
+    MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  qlstnames.size();
 
     // Step
     lst = QObj["Step"].toArray();
@@ -1285,6 +1287,8 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 }
     else
     {
+        MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
+        MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  -1;
         if(ui.ScriptTabWidget->isTabEnabled(4))
             ui.ScriptTabWidget->removeTab(4);
     }
