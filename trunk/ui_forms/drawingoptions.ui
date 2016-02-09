@@ -652,7 +652,7 @@
            <bool>true</bool>
           </property>
           <property name="tabBarAutoHide">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">

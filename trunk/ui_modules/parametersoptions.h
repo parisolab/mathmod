@@ -43,6 +43,7 @@ public:
     QString fullpath;
     QString filecollection;
     QString fileconfig;
+    QString advancedmodels;
     QJsonObject JConfig, Collection, IsoParam;
     QPalette mypalette, mypalette2, darkpalette;
     QApplication * MainApp;

@@ -39,6 +39,7 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxGrid=150;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
+    advancedmodels = "advancedmodels.js";
 
     darkpalette.setColor(QPalette::Window, QColor(53,53,53));
     darkpalette.setColor(QPalette::WindowText, QColor(255,255,255));
@@ -376,6 +377,16 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             argv1 +="/";
         filecollection = argv1 + filecollection;
         fileconfig       = argv1 + fileconfig;
+        advancedmodels = argv1 + advancedmodels;
+    }
+
+
+    QFile advancedmodelsfile(advancedmodels);
+    if(!advancedmodelsfile.exists() && (argc >1))
+    {
+        QFile file2(":/advancedmodels.js");
+        file2.copy(advancedmodels);
+        QFile::setPermissions(advancedmodels, QFileDevice::WriteOther);
     }
 
     QFile mathmodfile(filecollection);
