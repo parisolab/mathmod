@@ -72,6 +72,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     indexcurrentFormula = -1;
     IsolistItemRef = 0;
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
+    connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
 }
 
 //+++++++++++++++++++++++++++++++++++++++
@@ -877,6 +878,32 @@ void DrawingOptions::UpdateCurrentTreeObject()
         ui.stackedProperties->setCurrentIndex(0);
 }
 
+void DrawingOptions::HideSliders()
+{
+    ui.groupBox_9->hide();
+    ui.groupBox_10->hide();
+    ui.groupBox_11->hide();
+    ui.groupBox_12->hide();
+    ui.groupBox_13->hide();
+    ui.groupBox_14->hide();
+    ui.groupBox_15->hide();
+    ui.groupBox_16->hide();
+    ui.groupBox_17->hide();
+    ui.groupBox_18->hide();
+    ui.groupBox_19->hide();
+    ui.groupBox_20->hide();
+    ui.groupBox_21->hide();
+    ui.groupBox_22->hide();
+    ui.groupBox_23->hide();
+    ui.groupBox_24->hide();
+    ui.groupBox_25->hide();
+    ui.groupBox_26->hide();
+    ui.groupBox_27->hide();
+    ui.groupBox_28->hide();
+    ui.PredefinedSets->clear();
+    ui.PredefinedSets->addItem("Predefined Sets");
+    //ui.PredefinedSet->hide();
+}
 
 void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 {
@@ -886,9 +913,10 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
     if(Jobj["Sliders"].isObject())
     {
+        /*
     if(!ui.ScriptTabWidget->isTabEnabled(4))
         ui.ScriptTabWidget->insertTab(4,ui.tab_22,"Sliders" );
-
+        */
     QObj = Jobj["Sliders"].toObject();
 
     // Min
@@ -949,6 +977,10 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
     MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  qlstnames.size();
 
+    ui.ParametersList->clear();
+    ui.ParametersList->addItem("Parameters List");
+    ui.ParametersList->addItems(qlstnames);
+
     // Step
     lst = QObj["Step"].toArray();
     result = "";
@@ -961,32 +993,12 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     result.replace(" ","");
     qlstStep = result.split(";", QString::SkipEmptyParts);
 
-    ui.groupBox_9->hide();
-    ui.groupBox_10->hide();
-    ui.groupBox_11->hide();
-    ui.groupBox_12->hide();
-    ui.groupBox_13->hide();
-    ui.groupBox_14->hide();
-    ui.groupBox_15->hide();
-    ui.groupBox_16->hide();
-    ui.groupBox_17->hide();
-    ui.groupBox_18->hide();
-    ui.groupBox_19->hide();
-    ui.groupBox_20->hide();
-    ui.groupBox_21->hide();
-    ui.groupBox_22->hide();
-    ui.groupBox_23->hide();
-    ui.groupBox_24->hide();
-    ui.groupBox_25->hide();
-    ui.groupBox_26->hide();
-    ui.groupBox_27->hide();
-    ui.groupBox_28->hide();
-    ui.PredefinedSets->hide();
+    //Hide all sliders
+    HideSliders();
 
     if(qlstPos.size() <= qlstnames.size())
     {
-        ui.PredefinedSets->clear();
-        ui.PredefinedSets->hide();
+        //ui.PredefinedSet->hide();
      }
     else
     {
@@ -999,7 +1011,7 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
             qlist  += "Set_"+QString::number(i);
         }
         ui.PredefinedSets->addItems(qlist);
-        ui.PredefinedSets->show();
+        //ui.PredefinedSet->show();
     }
 
     if(qlstnames.size() >= 1)
@@ -1289,8 +1301,11 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     {
         MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
         MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  -1;
+        HideSliders();
+        /*
         if(ui.ScriptTabWidget->isTabEnabled(4))
             ui.ScriptTabWidget->removeTab(4);
+            */
     }
 }
 
@@ -5811,7 +5826,9 @@ void DrawingOptions::UpdateGui(int argc)
     MathmodRef->resize(Parameters->GlwinW, Parameters->GlwinH);
     //Pigment/texture
     ui.textureEdit->hide();
-    ui.ScriptTabWidget->removeTab(4);
+    //Hide all sliders
+    HideSliders();
+    //ui.ScriptTabWidget->removeTab(4);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -6727,6 +6744,10 @@ void DrawingOptions::update_slider_param()
         ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0)+"("+ qlstStep.at(0) +")");
         ui.C1labelMin->setText(qlstmin.at(0));
         ui.C1labelMax->setText(qlstmax.at(0));
+
+        MathmodRef->ui.glWidget->IsoObjet->SliderNames[0] =
+        MathmodRef->ui.glWidget->ParObjet->SliderNames[0] =
+                qlstnames.at(0).toStdString();
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[0] =
         MathmodRef->ui.glWidget->ParObjet->SliderValues[0] =
                 qlstPos.at(0).toDouble();
@@ -7221,4 +7242,98 @@ void DrawingOptions::on_CutSetButton_clicked()
         ui.ObjectClasseCurrent->takeTopLevelItem(0);
         UpdateCurrentTreeObject();
     }
+}
+
+void DrawingOptions::on_AddParam_clicked()
+{
+    addnewparam.ui.NameEdit->setText("NewParamName");
+    addnewparam.ui.MaxEdit->setText("50");
+    addnewparam.ui.MinEdit->setText("0");
+    addnewparam.ui.StepEdit->setText("1");
+    addnewparam.ui.PosEdit->setText("10");
+    addnewparam.show();
+}
+
+void DrawingOptions::on_CutParam_clicked()
+{
+    int index = ui.ParametersList->currentIndex();
+    if(index > 0)
+    {
+        QJsonArray array2;
+        QJsonObject tmp, tmp2;
+        int names, position;
+        tmp = MathmodRef->RootObjet.CurrentJsonObject;
+        tmp2 = tmp ["Sliders"].toObject();
+
+        array2 = tmp2["Name"].toArray();
+        names = array2.size();
+        array2.removeAt(index-1);
+        tmp2["Name"] = array2;
+
+        array2 = tmp2["Max"].toArray();
+        array2.removeAt(index-1);
+        tmp2["Max"] = array2;
+
+        array2 = tmp2["Min"].toArray();
+        array2.removeAt(index-1);
+        tmp2["Min"] = array2;
+
+        array2 = tmp2["Step"].toArray();
+        array2.removeAt(index-1);
+        tmp2["Step"] = array2;
+
+        array2 = tmp2["Position"].toArray();
+        position = array2.size();
+        for(int i=0; i*names < position; i++)
+            array2.removeAt(index-1 + i*names);
+        tmp2["Position"] = array2;
+
+        tmp["Sliders"] = tmp2;
+        // Draw here
+        ShowJsonModel(tmp);
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        UpdateCurrentTreeObject();
+    }
+}
+
+void DrawingOptions::add_new_param()
+{
+    QJsonArray array2;
+    QJsonObject tmp, tmp2;
+    int names, position;
+    tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    tmp2 = tmp ["Sliders"].toObject();
+
+    array2 = tmp2["Name"].toArray();
+    names = array2.empty()? 0: array2.size();
+    array2.append(addnewparam.ui.NameEdit->text());
+    tmp2["Name"] = array2;
+
+    array2 = tmp2["Position"].toArray();
+    position = array2.empty()? 0: array2.size();
+    if(names == 0)
+        array2.append(addnewparam.ui.PosEdit->text());
+    else
+        for(int i=1; i*names <= position; i++)
+            array2.insert(i*names, addnewparam.ui.PosEdit->text());
+
+    tmp2["Position"] = array2;
+
+    array2 = tmp2["Max"].toArray();
+    array2.append(addnewparam.ui.MaxEdit->text());
+    tmp2["Max"] = array2;
+
+    array2 = tmp2["Min"].toArray();
+    array2.append(addnewparam.ui.MinEdit->text());
+    tmp2["Min"] = array2;
+
+    array2 = tmp2["Step"].toArray();
+    array2.append(addnewparam.ui.StepEdit->text());
+    tmp2["Step"] = array2;
+
+    tmp["Sliders"] = tmp2;
+    // Draw here
+    ShowJsonModel(tmp);
+    ui.ObjectClasseCurrent->takeTopLevelItem(0);
+    UpdateCurrentTreeObject();
 }
