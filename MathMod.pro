@@ -21,7 +21,8 @@ HEADERS   = ui_modules/drawingoptions.h \
 			pariso/commun.h \
     pariso/isosurface/isotransformation.h \
     pariso/parametric/paratransformation.h \
-    ui_modules/sliderparam.h
+    ui_modules/sliderparam.h \
+    ui_modules/addparam.h
 
 SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/colorsoptions.cpp \
@@ -46,7 +47,8 @@ SOURCES   = ui_modules/drawingoptions.cpp \
     pariso/isosurface/isotransformation.cpp \
     pariso/parametric/paratransformation.cpp \
     pariso/isosurface/povfunctions.cpp \
-    ui_modules/sliderparam.cpp
+    ui_modules/sliderparam.cpp \
+    ui_modules/addparam.cpp
 
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/colorsoptions.ui \
@@ -54,7 +56,8 @@ FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/mathmod.ui \
             ui_forms/editor.ui \
             ui_forms/parametersoptions.ui \
-    ui_forms/sliderparam.ui
+    ui_forms/sliderparam.ui \
+    ui_forms/addparam.ui
 			 
 RC_FILE 	= mm.rc
 RESOURCES  += myressources.qrc
