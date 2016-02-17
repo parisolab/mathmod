@@ -902,7 +902,8 @@ void DrawingOptions::HideSliders()
     ui.groupBox_28->hide();
     ui.PredefinedSets->clear();
     ui.PredefinedSets->addItem("Predefined Sets");
-    //ui.PredefinedSet->hide();
+    ui.ParametersList->clear();
+    ui.ParametersList->addItem("Parameters List");
 }
 
 void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
@@ -913,10 +914,9 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
     if(Jobj["Sliders"].isObject())
     {
-        /*
-    if(!ui.ScriptTabWidget->isTabEnabled(4))
-        ui.ScriptTabWidget->insertTab(4,ui.tab_22,"Sliders" );
-        */
+    //Hide all sliders
+    HideSliders();
+
     QObj = Jobj["Sliders"].toObject();
 
     // Min
@@ -978,7 +978,7 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  qlstnames.size();
 
     ui.ParametersList->clear();
-    ui.ParametersList->addItem("Parameters List");
+    ui.ParametersList->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
     ui.ParametersList->addItems(qlstnames);
 
     // Step
@@ -993,9 +993,6 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     result.replace(" ","");
     qlstStep = result.split(";", QString::SkipEmptyParts);
 
-    //Hide all sliders
-    HideSliders();
-
     if(qlstPos.size() <= qlstnames.size())
     {
         //ui.PredefinedSet->hide();
@@ -1005,13 +1002,12 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         ui.PredefinedSets->clear();
         int NbSets = qlstPos.size() / qlstnames.size();
         QStringList qlist;
-        qlist += "Predefined Sets";
+        qlist += "Predefined Sets (" + QString::number(NbSets) + ")";
         for(int i=1; i< NbSets+1; i++)
         {
             qlist  += "Set_"+QString::number(i);
         }
         ui.PredefinedSets->addItems(qlist);
-        //ui.PredefinedSet->show();
     }
 
     if(qlstnames.size() >= 1)
@@ -1302,10 +1298,6 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
         MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  -1;
         HideSliders();
-        /*
-        if(ui.ScriptTabWidget->isTabEnabled(4))
-            ui.ScriptTabWidget->removeTab(4);
-            */
     }
 }
 
@@ -7246,7 +7238,7 @@ void DrawingOptions::on_CutSetButton_clicked()
 
 void DrawingOptions::on_AddParam_clicked()
 {
-    addnewparam.ui.NameEdit->setText("NewParamName");
+    addnewparam.ui.NameEdit->setText("ParamName");
     addnewparam.ui.MaxEdit->setText("50");
     addnewparam.ui.MinEdit->setText("0");
     addnewparam.ui.StepEdit->setText("1");
