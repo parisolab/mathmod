@@ -992,12 +992,13 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     result.replace("\t","");
     result.replace(" ","");
     qlstStep = result.split(";", QString::SkipEmptyParts);
-
+   /*
     if(qlstPos.size() <= qlstnames.size())
     {
         //ui.PredefinedSet->hide();
      }
-    else
+     */
+    if(qlstPos.size() >= qlstnames.size())
     {
         ui.PredefinedSets->clear();
         int NbSets = qlstPos.size() / qlstnames.size();
