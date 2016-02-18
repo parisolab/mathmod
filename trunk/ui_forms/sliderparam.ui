@@ -7,14 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>201</width>
-    <height>178</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
+    <widget class="QComboBox" name="ParametersComboBox">
+     <item>
+      <property name="text">
+       <string>  Parameters List</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="0">
     <widget class="QLabel" name="MinLabel">
      <property name="frameShape">
       <enum>QFrame::Box</enum>
@@ -24,10 +33,10 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
     <widget class="QLineEdit" name="MinEdit"/>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QLabel" name="MaxLabel">
      <property name="frameShape">
       <enum>QFrame::Box</enum>
@@ -37,10 +46,10 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="1">
     <widget class="QLineEdit" name="MaxEdit"/>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QLabel" name="PosLabel">
      <property name="frameShape">
       <enum>QFrame::Box</enum>
@@ -50,10 +59,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QLineEdit" name="PosEdit"/>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QLabel" name="StepLabel">
      <property name="frameShape">
       <enum>QFrame::Box</enum>
@@ -63,10 +72,10 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="1">
     <widget class="QLineEdit" name="StepEdit"/>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QPushButton" name="SaveButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">

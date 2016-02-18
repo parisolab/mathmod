@@ -643,7 +643,7 @@
            <enum>QTabWidget::Triangular</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>4</number>
           </property>
           <property name="elideMode">
            <enum>Qt::ElideLeft</enum>
