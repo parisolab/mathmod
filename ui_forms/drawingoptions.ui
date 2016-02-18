@@ -5542,91 +5542,102 @@ p, li { white-space: pre-wrap; }
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>51</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="title">
                <string/>
               </property>
               <layout class="QGridLayout" name="gridLayout_70">
+               <property name="leftMargin">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>2</number>
+               </property>
+               <property name="rightMargin">
+                <number>2</number>
+               </property>
+               <property name="bottomMargin">
+                <number>2</number>
+               </property>
+               <property name="spacing">
+                <number>2</number>
+               </property>
                <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_20">
+                <widget class="QComboBox" name="PredefinedSets">
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>350</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="currentText">
+                  <string>Predefined Sets</string>
+                 </property>
                  <item>
-                  <widget class="QComboBox" name="PredefinedSets">
-                   <property name="minimumSize">
-                    <size>
-                     <width>150</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>350</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="layoutDirection">
-                    <enum>Qt::LeftToRight</enum>
-                   </property>
-                   <property name="currentText">
-                    <string>Predefined Sets</string>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Predefined Sets</string>
-                    </property>
-                   </item>
-                  </widget>
+                  <property name="text">
+                   <string>Predefined Sets</string>
+                  </property>
                  </item>
-                 <item>
-                  <widget class="QPushButton" name="AddSetButton">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>31</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>11</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Add</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="CutSetButton">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>31</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>11</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Cut</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="AddSetButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Add</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="CutSetButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Cut</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
@@ -5662,91 +5673,102 @@ p, li { white-space: pre-wrap; }
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>51</height>
+                <height>16777215</height>
                </size>
               </property>
               <property name="title">
                <string/>
               </property>
               <layout class="QGridLayout" name="gridLayout_71">
+               <property name="leftMargin">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>2</number>
+               </property>
+               <property name="rightMargin">
+                <number>2</number>
+               </property>
+               <property name="bottomMargin">
+                <number>2</number>
+               </property>
+               <property name="spacing">
+                <number>2</number>
+               </property>
                <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_30">
+                <widget class="QComboBox" name="ParametersList">
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>350</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="currentText">
+                  <string>Parameters List</string>
+                 </property>
                  <item>
-                  <widget class="QComboBox" name="ParametersList">
-                   <property name="minimumSize">
-                    <size>
-                     <width>150</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>350</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="layoutDirection">
-                    <enum>Qt::LeftToRight</enum>
-                   </property>
-                   <property name="currentText">
-                    <string>Parameters List</string>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Parameters List</string>
-                    </property>
-                   </item>
-                  </widget>
+                  <property name="text">
+                   <string>Parameters List</string>
+                  </property>
                  </item>
-                 <item>
-                  <widget class="QPushButton" name="AddParam">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>31</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>11</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Add</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="CutParam">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>40</width>
-                     <height>31</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>11</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>Cut</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="AddParam">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Add</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="CutParam">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Cut</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
