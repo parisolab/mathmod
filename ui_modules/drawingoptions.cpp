@@ -72,6 +72,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     indexcurrentFormula = -1;
     IsolistItemRef = 0;
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
+    connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
 }
 
@@ -904,6 +905,8 @@ void DrawingOptions::HideSliders()
     ui.PredefinedSets->addItem("Predefined Sets");
     ui.ParametersList->clear();
     ui.ParametersList->addItem("Parameters List");
+    sliderconf.ui.ParametersComboBox->clear();
+    sliderconf.ui.ParametersComboBox->addItem("Parameters List");
 }
 
 void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
@@ -980,6 +983,10 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     ui.ParametersList->clear();
     ui.ParametersList->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
     ui.ParametersList->addItems(qlstnames);
+
+    sliderconf.ui.ParametersComboBox->clear();
+    sliderconf.ui.ParametersComboBox->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
+    sliderconf.ui.ParametersComboBox->addItems(qlstnames);
 
     // Step
     lst = QObj["Step"].toArray();
@@ -6524,6 +6531,9 @@ void DrawingOptions::on_C20toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[19]);
     sliderconf.ui.StepEdit->setText(qlstStep[19]);
     sliderconf.ui.PosEdit->setText(qlstPos[19]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(20);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6534,6 +6544,9 @@ void DrawingOptions::on_C19toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[18]);
     sliderconf.ui.StepEdit->setText(qlstStep[18]);
     sliderconf.ui.PosEdit->setText(qlstPos[18]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(19);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6544,6 +6557,9 @@ void DrawingOptions::on_C18toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[17]);
     sliderconf.ui.StepEdit->setText(qlstStep[17]);
     sliderconf.ui.PosEdit->setText(qlstPos[17]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(18);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6554,6 +6570,9 @@ void DrawingOptions::on_C17toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[16]);
     sliderconf.ui.StepEdit->setText(qlstStep[16]);
     sliderconf.ui.PosEdit->setText(qlstPos[16]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(17);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6564,6 +6583,9 @@ void DrawingOptions::on_C16toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[15]);
     sliderconf.ui.StepEdit->setText(qlstStep[15]);
     sliderconf.ui.PosEdit->setText(qlstPos[15]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(16);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6574,6 +6596,9 @@ void DrawingOptions::on_C15toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[14]);
     sliderconf.ui.StepEdit->setText(qlstStep[14]);
     sliderconf.ui.PosEdit->setText(qlstPos[14]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(15);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6584,6 +6609,9 @@ void DrawingOptions::on_C14toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[13]);
     sliderconf.ui.StepEdit->setText(qlstStep[13]);
     sliderconf.ui.PosEdit->setText(qlstPos[13]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(14);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6594,6 +6622,9 @@ void DrawingOptions::on_C13toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[12]);
     sliderconf.ui.StepEdit->setText(qlstStep[12]);
     sliderconf.ui.PosEdit->setText(qlstPos[12]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(13);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6604,6 +6635,9 @@ void DrawingOptions::on_C12toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[11]);
     sliderconf.ui.StepEdit->setText(qlstStep[11]);
     sliderconf.ui.PosEdit->setText(qlstPos[11]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(12);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6614,6 +6648,9 @@ void DrawingOptions::on_C11toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[10]);
     sliderconf.ui.StepEdit->setText(qlstStep[10]);
     sliderconf.ui.PosEdit->setText(qlstPos[10]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(11);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6624,6 +6661,9 @@ void DrawingOptions::on_C10toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[9]);
     sliderconf.ui.StepEdit->setText(qlstStep[9]);
     sliderconf.ui.PosEdit->setText(qlstPos[9]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(10);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6634,6 +6674,9 @@ void DrawingOptions::on_C9toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[8]);
     sliderconf.ui.StepEdit->setText(qlstStep[8]);
     sliderconf.ui.PosEdit->setText(qlstPos[8]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(9);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6644,6 +6687,9 @@ void DrawingOptions::on_C8toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[7]);
     sliderconf.ui.StepEdit->setText(qlstStep[7]);
     sliderconf.ui.PosEdit->setText(qlstPos[7]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(8);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6654,6 +6700,9 @@ void DrawingOptions::on_C7toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[6]);
     sliderconf.ui.StepEdit->setText(qlstStep[6]);
     sliderconf.ui.PosEdit->setText(qlstPos[6]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(7);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6664,6 +6713,9 @@ void DrawingOptions::on_C6toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[5]);
     sliderconf.ui.StepEdit->setText(qlstStep[5]);
     sliderconf.ui.PosEdit->setText(qlstPos[5]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(6);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6674,6 +6726,9 @@ void DrawingOptions::on_C5toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[4]);
     sliderconf.ui.StepEdit->setText(qlstStep[4]);
     sliderconf.ui.PosEdit->setText(qlstPos[4]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(5);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6684,6 +6739,9 @@ void DrawingOptions::on_C4toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[3]);
     sliderconf.ui.StepEdit->setText(qlstStep[3]);
     sliderconf.ui.PosEdit->setText(qlstPos[3]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(4);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6694,6 +6752,9 @@ void DrawingOptions::on_C3toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[2]);
     sliderconf.ui.StepEdit->setText(qlstStep[2]);
     sliderconf.ui.PosEdit->setText(qlstPos[2]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(3);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6704,6 +6765,9 @@ void DrawingOptions::on_C2toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[1]);
     sliderconf.ui.StepEdit->setText(qlstStep[1]);
     sliderconf.ui.PosEdit->setText(qlstPos[1]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(2);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -6714,6 +6778,9 @@ void DrawingOptions::on_C1toolButton_clicked()
     sliderconf.ui.MinEdit->setText(qlstmin[0]);
     sliderconf.ui.StepEdit->setText(qlstStep[0]);
     sliderconf.ui.PosEdit->setText(qlstPos[0]);
+    sliderconf.ui.ParametersComboBox->blockSignals(true);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(1);
+    sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
 
@@ -7329,4 +7396,20 @@ void DrawingOptions::add_new_param()
     ShowJsonModel(tmp);
     ui.ObjectClasseCurrent->takeTopLevelItem(0);
     UpdateCurrentTreeObject();
+}
+
+void DrawingOptions::update_infos_param(int index)
+{
+    switch(index)
+    {
+        case 1 : on_C1toolButton_clicked();
+                      break;
+        case 2 : on_C2toolButton_clicked();
+                      break;
+        case 3 : on_C3toolButton_clicked();
+                      break;
+        case 4 : on_C4toolButton_clicked();
+                      break;
+    }
+
 }
