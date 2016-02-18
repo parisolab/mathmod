@@ -7410,6 +7410,38 @@ void DrawingOptions::update_infos_param(int index)
                       break;
         case 4 : on_C4toolButton_clicked();
                       break;
+        case 5 : on_C5toolButton_clicked();
+                      break;
+        case 6 : on_C6toolButton_clicked();
+                      break;
+        case 7 : on_C7toolButton_clicked();
+                      break;
+        case 8 : on_C8toolButton_clicked();
+                      break;
+        case 9 : on_C9toolButton_clicked();
+                      break;
+        case 10 : on_C10toolButton_clicked();
+                      break;
+        case 11 : on_C11toolButton_clicked();
+                      break;
+        case 12 : on_C12toolButton_clicked();
+                      break;
+        case 13 : on_C13toolButton_clicked();
+                      break;
+        case 14 : on_C14toolButton_clicked();
+                      break;
+        case 15 : on_C15toolButton_clicked();
+                      break;
+        case 16 : on_C16toolButton_clicked();
+                      break;
+        case 17 : on_C17toolButton_clicked();
+                      break;
+        case 18 : on_C18toolButton_clicked();
+                      break;
+        case 19 : on_C19toolButton_clicked();
+                      break;
+        case 20 : on_C20toolButton_clicked();
+                      break;
     }
 
 }
