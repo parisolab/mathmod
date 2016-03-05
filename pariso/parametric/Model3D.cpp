@@ -1204,6 +1204,20 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
             vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
             WichPointVerifyCond[i] = (myParserCND[0].Eval(vals) == 1);
+            if(WichPointVerifyCond[i])
+            {
+                NormVertexTab[i*TypeDrawin      ] = 0.1;
+                NormVertexTab[i*TypeDrawin  +1] = 0.9;
+                NormVertexTab[i*TypeDrawin  +2] = 0.0;
+                NormVertexTab[i*TypeDrawin  +3] = 1.0;
+            }
+            else
+            {
+                NormVertexTab[i*TypeDrawin      ] = 0.9;
+                NormVertexTab[i*TypeDrawin  +1] = 0.1;
+                NormVertexTab[i*TypeDrawin  +2] = 0.0;
+                NormVertexTab[i*TypeDrawin  +3] = 1.0;
+            }
         }
 
         int Aindex, Bindex, Cindex;
@@ -1482,7 +1496,16 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
 
     }
     else
+    {
         components->ThereisCND = false;
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            NormVertexTab[i*TypeDrawin    ] = 0.5;
+            NormVertexTab[i*TypeDrawin+1] = 0.6;
+            NormVertexTab[i*TypeDrawin+2] = 0.8;
+            NormVertexTab[i*TypeDrawin+3] = 1.0;
+        }
+    }
 }
 
 
