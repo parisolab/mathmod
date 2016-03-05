@@ -23,6 +23,16 @@ double maxim(double p1, double p2)
     return p1 > p2 ? p1 : p2;
 }
 
+
+double p_skeletal_int(const double* pp)
+{
+    double  cx, cy,cz;
+    cx=cos(pp[0]);
+    cy=cos(pp[1]);
+    cz=cos(pp[2]);
+    return(cx+cy+cz+0.51*(cx*cy+cy*cz+cz*cx)+1.2);
+}
+
 double f_hex_y(const double* pp)
 {
     double x1,y1,x2,y2, th, pi;
