@@ -118,7 +118,6 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     pace = (double)1/(double)30;
     morph_activated = -1;
     AllComponentTraited = false;
-
     //Add predefined constatnts:
     for(int i=0;i<20;i++)
     {
@@ -1062,6 +1061,7 @@ ErrorMessage Iso3D::ParserIso()
         implicitFunctionParser[i].AddFunction("fhelix1",fhelix1, 10);
         implicitFunctionParser[i].AddFunction("fhelix2",fhelix2, 10);
         implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
+        implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
@@ -1257,6 +1257,7 @@ void Iso3D::initparser(int N)
         Fct[i].AddFunction("fhelix1",fhelix1, 10);
         Fct[i].AddFunction("fhelix2",fhelix2, 10);
         Fct[i].AddFunction("f_hex_y",f_hex_y, 4);
+        Fct[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         Fct[i].AddFunction("fmesh",fmesh, 8);
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
@@ -1561,8 +1562,6 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
     }
 }
 
-
-
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
@@ -1576,6 +1575,20 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
             vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
             WichPointVerifyCond[i] = (IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1);
+            if(WichPointVerifyCond[i])
+            {
+                NormVertexTab[i*TypeDrawin      ] = 0.1;
+                NormVertexTab[i*TypeDrawin  +1] = 0.9;
+                NormVertexTab[i*TypeDrawin  +2] = 0.0;
+                NormVertexTab[i*TypeDrawin  +3] = 1.0;
+            }
+            else
+            {
+                NormVertexTab[i*TypeDrawin      ] = 0.9;
+                NormVertexTab[i*TypeDrawin  +1] = 0.1;
+                NormVertexTab[i*TypeDrawin  +2] = 0.0;
+                NormVertexTab[i*TypeDrawin  +3] = 1.0;
+            }
         }
         int Aindex, Bindex, Cindex;
         int nbtriangle = NbTriangleIsoSurfaceTmp;
@@ -1853,7 +1866,17 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
 
     }
     else
+    {
         components->ThereisCND = false;
+
+        for(int i= 0; i < NbVertexTmp; i++)
+        {
+            NormVertexTab[i*TypeDrawin    ] = 0.5;
+            NormVertexTab[i*TypeDrawin+1] = 0.6;
+            NormVertexTab[i*TypeDrawin+2] = 0.8;
+            NormVertexTab[i*TypeDrawin+3] = 1.0;
+        }
+      }
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 Iso3D::~Iso3D()
