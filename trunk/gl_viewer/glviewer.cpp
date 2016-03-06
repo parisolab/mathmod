@@ -1127,7 +1127,7 @@ static void draw(ObjectProperties *scene)
         DrawIso(scene);
 
     // Draw Mesh Object:
-    if (scene->triangles == 1 && scene->typedrawing == 1)
+    if (scene->triangles == 1 /*&& scene->typedrawing == 1*/)
         DrawMeshIso(scene);
 
     if (scene->mesh == 1 && scene->typedrawing == -1)
