@@ -1218,7 +1218,7 @@
 			"Zmax": [" 2"],
 			"Zmin": ["-2"]
 		},
-		"Noise": "true",
+		"Noise": "",
 		"Texture": {
 			"Colors": ["R=1",
 			"G=0$DOT$8*abs(cos(2*(z*z+(y+1)*(y+1)+x*x)))",
