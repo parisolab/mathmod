@@ -3725,6 +3725,98 @@
 	}
 },
 {
+		"Param3D": {
+			"Description": [
+				"Super Formula by Abderrahman Taha 06/03/2016"
+			],
+			"Name": [
+				"Super Formula"
+			],
+			"Component": [
+				"SuperFormula"
+			],
+			"Const": [
+				"A1=50",
+				"B1=1",
+				"M1=7",
+				"N11=0$DOT$2",
+				"N21=1$DOT$7",
+				"N31=1$DOT$7",
+				"A2=50",
+				"B2=1",
+				"M2=7",
+				"N12=0$DOT$2",
+				"N22=1$DOT$7",
+				"N32=1$DOT$7"
+			],
+			"Funct": [
+				"Ru= (abs(cos(M1*u/4)*50/A1)^N21+abs(sin(M1*u/4)*50/B1)^N31)^(-1/N11)",
+				"Rv= (abs(cos(M2*v/4)*50/A2)^N22+abs(sin(M2*v/4)*50/B2)^N32)^(-1/N12)"
+			],
+			"Fx": [
+				"cos(u)*cos(v)*Ru(u,v,t)*Rv(u,v,t)"
+			],
+			"Fy": [
+				"sin(u)*Ru(u,v,t)"
+			],
+			"Fz": [
+				"cos(u)*sin(v)*Ru(u,v,t)*Rv(u,v,t)"
+			],
+			"Umax": [
+				"pi/2"
+			],
+			"Umin": [
+				"-pi/2"
+			],
+			"Vmax": [
+				"2*pi"
+			],
+			"Vmin": [
+				"0"
+			]
+		},
+		"Sliders": {
+			"Max": [
+				"100",
+				"100",
+				"100",
+				"100"
+			],
+			"Min": [
+				"1",
+				"1",
+				"1",
+				"1"
+			],
+			"Name": [
+				"A1",
+				"A2",
+				"B2",
+				"B1"
+			],
+			"Position": [
+				"50",
+				"50",
+				"50",
+				"50",
+				"54",
+				"47",
+				"47",
+				"45",
+				"54",
+				"45",
+				"45",
+				"47"
+			],
+			"Step": [
+				"1",
+				"1",
+				"1",
+				"1"
+			]
+		}
+	},
+{
 	"Param3D": {
 		"Name": ["Breather Noise"],
 		"Component": ["BreatherNoise"],
