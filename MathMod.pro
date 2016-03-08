@@ -61,7 +61,6 @@ FORMS     = ui_forms/drawingoptions.ui \
 			 
 RC_FILE 	= mm.rc
 RESOURCES  += myressources.qrc
-LIBS += -lopengl32
 QT         += opengl widgets
 
 OTHER_FILES += \
