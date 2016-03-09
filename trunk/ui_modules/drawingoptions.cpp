@@ -3007,7 +3007,7 @@ void DrawingOptions::Run_JsonObject_activeted()
 {
     QJsonParseError err;
     QString sortie;
-    QString script  = ui.ParamEdit->toPlainText().trimmed().replace("\n","").replace("\t","");
+    QString script  = ui.ParamEdit->toPlainText().trimmed().replace("\n","").replace("\t","").replace("DOTSYMBOL",Parameters->dotsymbol.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
@@ -5847,7 +5847,7 @@ void DrawingOptions::on_pushButton_2_clicked()
 {
     QJsonParseError err;
     QString sortie;
-    QString script  = ui.ParamEdit->toPlainText().trimmed().replace("\n","").replace("\t","");
+    QString script  = ui.ParamEdit->toPlainText().trimmed().replace("\n","").replace("\t","").replace("DOTSYMBOL",Parameters->dotsymbol.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
@@ -6022,7 +6022,7 @@ void DrawingOptions::on_pushButton_5_clicked()
 {
     QJsonParseError err;
     QString sortie;
-    QString script  = ui.textureEdit->toPlainText().trimmed().replace("\n","").replace("\t","");
+    QString script  = ui.textureEdit->toPlainText().trimmed().replace("\n","").replace("\t","").replace("DOTSYMBOL",Parameters->dotsymbol.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
