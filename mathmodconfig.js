@@ -10,6 +10,9 @@
         "GlwinX": 580,
         "GlwinY": 20
     },
+    "Localization": {
+        "DotSymbol": "."
+    },
     "WindowSize": {
         "ControlH": 700,
         "ControlW": 538,
@@ -19,12 +22,12 @@
 
     "Styles": {
         "StylesPredefined": [ "Default", "Fusion", "Windows","WindowsXp"],
-        "StyleUsed": "Default"
+        "StyleUsed": "Fusion"
     },
 
     "Themes": {
         "ThemesPredefined": [ "Default", "Dark", "MyTheme"],
-        "ThemeUsed": "Default",
+        "ThemeUsed": "Dark",
         "MyTheme": {
             "Window":[53,53,53],
             "WindowText":[255, 255, 255],

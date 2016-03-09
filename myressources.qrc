@@ -55,5 +55,7 @@
         <file>images/Tree.png</file>
         <file>mathmodcollection_empty.js</file>
         <file>advancedmodels.js</file>
+        <file>advancedmodels_2.js</file>
+        <file>mathmodcollection_2.js</file>
     </qresource>
 </RCC>

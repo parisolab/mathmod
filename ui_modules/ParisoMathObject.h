@@ -118,8 +118,8 @@ struct TreeStruct
 class ParisoMathObject
 {
 public :
-    IsoStruct  IsoTable[1000];
-    ParamStruct ParamTable[1000];
+    IsoStruct  IsoTable[10000];
+    ParamStruct ParamTable[10000];
 
     int NbIsoStruct;
     int NbParamStruct;
@@ -128,6 +128,7 @@ public :
     QJsonObject CurrentJsonObject;
     QJsonArray MyJsonObjectSelection;
     TreeStruct CurrentTreestruct;
+    QString dotsymbol;
 
 public :
     ParisoMathObject();
