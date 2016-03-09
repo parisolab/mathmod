@@ -140,7 +140,7 @@
              </palette>
             </property>
             <property name="text">
-             <string>MaxGrid=300</string>
+             <string>MaxGrid=500</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>

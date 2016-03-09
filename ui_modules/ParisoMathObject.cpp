@@ -25,6 +25,7 @@
 ParisoMathObject::ParisoMathObject()
 {
     NbIsoStruct = NbParamStruct = 0;
+    dotsymbol = ".";
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
@@ -49,10 +50,10 @@ void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject & js)
     QFile file(JsonFile);
     if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
-        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t",""),&err);
+        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t","").replace("DOTSYMBOL", dotsymbol.toStdString().c_str()),&err);
         if (err.error)
         {
-            QMessageBox message ;
+            QMessageBox message;
             message.setWindowTitle("Error at : "+JsonFile);
             file.close();
             file.open( QIODevice::ReadOnly | QIODevice::Text );

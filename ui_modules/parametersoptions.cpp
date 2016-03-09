@@ -37,6 +37,7 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxTri=2000000;
     MaxPt=1800000;
     MaxGrid=150;
+    dotsymbol =".";
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
     advancedmodels = "advancedmodels.js";
@@ -53,10 +54,6 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     darkpalette.setColor(QPalette::BrightText, QColor(255, 0, 0));
     darkpalette.setColor(QPalette::Highlight, QColor(142,45,197).lighter());
     darkpalette.setColor(QPalette::HighlightedText, QColor(0,0,0));
-
-
-
-
     this->setWindowFlags( Qt::WindowStaysOnTopHint );
     ui.setupUi(this);
 }
@@ -97,7 +94,7 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     QFile file(JsonFile);
     if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
-        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t",""),&err);
+        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t","").replace("DOTSYMBOL",dotsymbol.toStdString().c_str()),&err);
         if (err.error)
         {
             QMessageBox message ;
@@ -150,7 +147,7 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & j
     QFile file(JsonFileName);
     if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
-        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t",""),&err);
+        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t","").replace("DOTSYMBOL",dotsymbol.toStdString().c_str()),&err);
         if (err.error)
         {
             QMessageBox message ;
@@ -381,22 +378,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
     }
 
 
-    QFile advancedmodelsfile(advancedmodels);
-    if(!advancedmodelsfile.exists() && (argc >1))
-    {
-        QFile file2(":/advancedmodels.js");
-        file2.copy(advancedmodels);
-        QFile::setPermissions(advancedmodels, QFileDevice::WriteOther);
-    }
-
-    QFile mathmodfile(filecollection);
-    if(!mathmodfile.exists() && (argc >1))
-    {
-        QFile file2(":/mathmodcollection.js");
-        file2.copy(filecollection);
-        QFile::setPermissions(filecollection, QFileDevice::WriteOther);
-    }
-
     QFile mathmodfileconfig(fileconfig);
     if(!mathmodfileconfig.exists() && (argc >1))
     {
@@ -413,6 +394,13 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
        ReadJsonFile(":/mathmodconfig.js", JConfig);
 
     {
+        if(JConfig["Localization"].isObject())
+        {
+            QJsonObject tmp;
+            tmp = JConfig["Localization"].toObject();
+            dotsymbol = tmp["DotSymbol"].toString();
+        }
+
         if(JConfig["IsoParam"].isObject())
         {
             IsoParam = JConfig["IsoParam"].toObject();
@@ -474,6 +462,53 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         }
     }
     fullpath = fileconfig;
+
+
+    QFile advancedmodelsfile(advancedmodels);
+    if(!advancedmodelsfile.exists() && (argc >1))
+    {
+        QFile file2(":/advancedmodels_2.js");
+        QString str;
+        file2.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream stream(&file2);
+        str.append(stream.readAll());
+        str.replace("DOTSYMBOL",  dotsymbol.toStdString().c_str());
+
+        QFile file(advancedmodels);
+        if (!file.open(QIODevice::WriteOnly)) {
+            std::cerr << "Cannot open file for writing: "
+                      << qPrintable(file.errorString()) << std::endl;
+            return;
+        }
+        QTextStream out(&file);
+        out << str << endl;
+        file.close();
+        file.copy(advancedmodels);
+        QFile::setPermissions(advancedmodels, QFileDevice::WriteOther);
+    }
+
+    QFile mathmodfile(filecollection);
+    if(!mathmodfile.exists() && (argc >1))
+    {
+        QFile file2(":/mathmodcollection_2.js");
+        QString str;
+        file2.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream stream(&file2);
+        str.append(stream.readAll());
+        str.replace("DOTSYMBOL",  dotsymbol.toStdString().c_str());
+
+        QFile file(filecollection);
+        if (!file.open(QIODevice::WriteOnly)) {
+            std::cerr << "Cannot open file for writing: "
+                      << qPrintable(file.errorString()) << std::endl;
+            return;
+        }
+        QTextStream out(&file);
+        out << str << endl;
+        file.close();
+        file.copy(filecollection);
+        QFile::setPermissions(filecollection, QFileDevice::WriteOther);
+    }
 }
 void Parametersoptions::on_save_clicked()
 {
