@@ -467,7 +467,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
     QFile advancedmodelsfile(advancedmodels);
     if(!advancedmodelsfile.exists() && (argc >1))
     {
-        QFile file2(":/advancedmodels_2.js");
+        QFile file2(":/advancedmodels.js");
         QString str;
         file2.open(QIODevice::ReadOnly | QIODevice::Text);
         QTextStream stream(&file2);
@@ -490,13 +490,12 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
     QFile mathmodfile(filecollection);
     if(!mathmodfile.exists() && (argc >1))
     {
-        QFile file2(":/mathmodcollection_2.js");
+        QFile file2(":/mathmodcollection.js");
         QString str;
         file2.open(QIODevice::ReadOnly | QIODevice::Text);
         QTextStream stream(&file2);
         str.append(stream.readAll());
         str.replace("DOTSYMBOL",  dotsymbol.toStdString().c_str());
-
         QFile file(filecollection);
         if (!file.open(QIODevice::WriteOnly)) {
             std::cerr << "Cannot open file for writing: "
