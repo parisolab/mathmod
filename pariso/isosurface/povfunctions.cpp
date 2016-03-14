@@ -37,7 +37,7 @@ double f_hex_y(const double* pp)
 {
     double x1,y1,x2,y2, th, pi;
     double p[10];
-    pi=3.14159265;
+    pi=((double)314159265/(double)100000000);
     for(int i=0; i<4;i++)
         p[i] = pp[i];
     x1=fabs(fmod(fabs(p[0]) , sqrt(3.0))-sqrt(3.0)/2);
@@ -66,7 +66,7 @@ double fmesh(const double* pp) // 40
     double th, ph, r, r2, temp, pi;
     double p[10];
 
-    pi=3.14159265;
+    pi=((double)314159265/(double)100000000);
 
     for(int i=0; i<10;i++)
         p[i] = pp[i];
@@ -108,7 +108,7 @@ double  fhelix1(const double* pp)
 
     double r, r2, r3, temp, th, ph, x2, pi;
     double p[10];
-    pi=3.14159265;
+    pi=((double)314159265/(double)100000000);
     for(int i=0; i<10;i++)
         p[i] = pp[i];
     r = sqrt(p[0] * p[0] + p[2] * p[2]);
