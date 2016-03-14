@@ -47,7 +47,7 @@
            ExpressionEvaluator.Parse(angle, "t");
            tmp = ExpressionEvaluator.Eval(vals);
     
-           tmp *= twistx*2*3.14159265/scalex;
+           tmp *= twistx*2*((double)314159265/(double)100000000)/scalex;
            angle = QString::number(tmp)+"*x";
     
            after_1 = "(y*cos("+angle+") - z*sin("+angle+"))";
