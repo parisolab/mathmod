@@ -1,94 +1,122 @@
 {
 	"MathModels": [{
 		"Param3D": {
-			"Description": [
-				"Super Formula by Abderrahman Taha 06/03/2016"
-			],
-			"Name": [
-				"Super Formula"
-			],
-			"Component": [
-				"SuperFormula"
-			],
-			"Const": [
-				"A1=50",
-				"B1=1",
-				"M1=7",
-				"N11=0DOTSYMBOL2",
-				"N21=1DOTSYMBOL7",
-				"N31=1DOTSYMBOL7",
-				"A2=50",
-				"B2=1",
-				"M2=7",
-				"N12=0DOTSYMBOL2",
-				"N22=1DOTSYMBOL7",
-				"N32=1DOTSYMBOL7"
-			],
-			"Funct": [
-				"Ru= (abs(cos(M1*u/4)*50/A1)^N21+abs(sin(M1*u/4)*50/B1)^N31)^(-1/N11)",
-				"Rv= (abs(cos(M2*v/4)*50/A2)^N22+abs(sin(M2*v/4)*50/B2)^N32)^(-1/N12)"
-			],
-			"Fx": [
-				"cos(u)*cos(v)*Ru(u,v,t)*Rv(u,v,t)"
-			],
-			"Fy": [
-				"sin(u)*Ru(u,v,t)"
-			],
-			"Fz": [
-				"cos(u)*sin(v)*Ru(u,v,t)*Rv(u,v,t)"
-			],
-			"Umax": [
-				"pi/2"
-			],
-			"Umin": [
-				"-pi/2"
-			],
-			"Vmax": [
-				"2*pi"
-			],
-			"Vmin": [
-				"0"
-			]
+			"Description": ["Super Formula by Abderrahman Taha 12/03/2016"],
+			"Name": ["Super Formula"],
+			"Cnd": ["sqrt(x*x+y*y)>S"],
+			"Component": ["SuperFormula"],
+			"Const": ["A1=50",
+			"B1=1",
+			"M1=9",
+			"N11=25",
+			"N21=1DOTSYMBOL7",
+			"N31=1DOTSYMBOL7",
+			"A2=50",
+			"B2=1",
+			"M2=9",
+			"N12=20",
+			"N22=1DOTSYMBOL7",
+			"N32=1DOTSYMBOL7",
+			"S=0DOTSYMBOL41"],
+			"Funct": ["Ru=(abs(cos(M1*u/4)*50/A1)^N21+abs(sin(M1*u/4)*50/B1)^N31)^(-100/N11)",
+			"Rv=(abs(cos(M2*v/4)*50/A2)^N22+abs(sin(M2*v/4)*50/B2)^N32)^(-100/N12)"],
+			"Fx": ["-cos(u)*cos(v)*Ru(u,v,t)*Rv(u,v,t)"],
+			"Fy": ["cos(u)*sin(v)*Ru(u,v,t)*Rv(u,v,t)"],
+			"Fz": ["sin(u)*Ru(u,v,t)"],
+			"Umax": ["pi/2"],
+			"Umin": ["-pi/2"],
+			"Vmax": ["2*pi"],
+			"Vmin": ["0"]
 		},
 		"Sliders": {
-			"Max": [
-				"100",
-				"100",
-				"100",
-				"100"
-			],
-			"Min": [
-				"1",
-				"1",
-				"1",
-				"1"
-			],
-			"Name": [
-				"A1",
-				"A2",
-				"B2",
-				"B1"
-			],
-			"Position": [
-				"50",
-				"50",
-				"50",
-				"50",
-				"54",
-				"47",
-				"47",
-				"45",
-				"54",
-				"45",
-				"45",
-				"47"
-			],
-			"Step": [
-				"1",
-				"1",
-				"1",
-				"1"
-			]
+			"Max": ["100",
+			"100",
+			"100",
+			"100",
+			"20",
+			"20",
+			"100",
+			"100"],
+			"Min": ["1",
+			"1",
+			"1",
+			"1",
+			"0",
+			"0",
+			"1",
+			"1"],
+			"Name": ["A1",
+			"A2",
+			"B2",
+			"B1",
+			"M1",
+			"M2",
+			"N11",
+			"N12"],
+			"Position": ["50",
+			"50",
+			"50",
+			"50",
+			"9",
+			"9",
+			"20",
+			"20",
+			"54",
+			"47",
+			"44",
+			"51",
+			"8",
+			"10",
+			"16",
+			"51",
+			"52",
+			"45",
+			"53",
+			"38",
+			"15",
+			"16",
+			"39",
+			"84",
+			"55",
+			"55",
+			"55",
+			"58",
+			"10",
+			"17",
+			"44",
+			"100",
+			"54",
+			"53",
+			"75",
+			"48",
+			"8",
+			"10",
+			"16",
+			"51",
+			"54",
+			"48",
+			"56",
+			"56",
+			"16",
+			"16",
+			"100",
+			"100",
+			"50",
+			"53",
+			"61",
+			"46",
+			"7",
+			"10",
+			"29",
+			"46"],
+			"Step": ["1",
+			"1",
+			"1",
+			"1",
+			"1",
+			"1",
+			"1",
+			"1"]
 		}
 	},
 	{
@@ -161,11 +189,11 @@
 			"R2=15",
 			"H=4"],
 			"Funct": ["Iso=cos(x)+cos(y)+cos(z)",
-			"Ray=DOTSYMBOL1*H*x/sqrt(x*x+y*y+z*z)",
-			"Iso4= (Iso(x+Ray(sin(x),sin(y),sin(z),t),y+Ray(sin(y),sin(x),sin(z),t), z+Ray(sin(z),sin(y),sin(x),t),t))",
-			"Iso5= (Iso(x-Ray(sin(x),sin(y),sin(z),t),y-Ray(sin(y),sin(x),sin(z),t), z-Ray(sin(z),sin(y),sin(x),t),t))",
+			"R=0DOTSYMBOL1*H*x/sqrt(x*x+y*y+z*z)",
+			"Iso4= (Iso(x+R(sin(x),sin(y),sin(z),t),y+R(sin(y),sin(x),sin(z),t), z+R(sin(z),sin(y),sin(x),t),t))",
+			"Iso5= (Iso(x-R(sin(x),sin(y),sin(z),t),y-R(sin(y),sin(x),sin(z),t), z-R(sin(z),sin(y),sin(x),t),t))",
 			"SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-			"isoTransform=if(x*x<10DOTSYMBOL24,SchwarzP(x,y,z,t),1)+DOTSYMBOL1*M*exp(x*x-9)",
+			"isoTransform=if(x*x<10DOTSYMBOL24,SchwarzP(x,y,z,t),1)+0DOTSYMBOL1*M*exp(x*x-9)",
 			"isoTransform2=isoTransform((sqrt(x*x+z*z)-R1),y,N1*atan2(z,x),t)"],
 			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R2),N2*atan2(y,x),z,t)"],
 			"Xmax": ["27"],
@@ -292,7 +320,7 @@
 			"P=5",
 			"R=15"],
 			"Funct": ["P_Skeletal=cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL2",
-			"isoCondition_0=((x-pi)^2-(pi +DOTSYMBOL05)^2)",
+			"isoCondition_0=((x-pi)^2-(pi +0DOTSYMBOL05)^2)",
 			"isoCondition_1=((x-pi)^2-(pi)^2)",
 			"isoTransform=if(isoCondition_0(x,y,z,t)<0,P_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
 			"isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"],
