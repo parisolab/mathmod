@@ -118,8 +118,8 @@ struct TreeStruct
 class ParisoMathObject
 {
 public :
-    IsoStruct  IsoTable[1000];
-    ParamStruct ParamTable[1000];
+    IsoStruct  IsoTable[2000];
+    ParamStruct ParamTable[2000];
 
     int NbIsoStruct;
     int NbParamStruct;
