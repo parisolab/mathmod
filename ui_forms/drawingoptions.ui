@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MathMod-4.1</string>
+   <string>MathMod-4.1(Win64)</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -5796,7 +5796,7 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>314</width>
+                 <width>291</width>
                  <height>964</height>
                 </rect>
                </property>
