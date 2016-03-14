@@ -64,9 +64,8 @@ RESOURCES  += myressources.qrc
 QT         += opengl widgets
 
 OTHER_FILES += \
-            mathmodconf.js \
             mathmodcollection.js \
-			mathmodconfig.js
+            mathmodconfig.js
 
 # install
 target.path    = $TARGET
