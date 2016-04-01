@@ -22,7 +22,7 @@
 #include <qmessagebox.h>
 
 static int indexcurrentFormula=-1;
-static int indexcurrentSet=-1;
+static int indexcurrentSet=0;
 static int CurrentFormulaType =-1; //0:Pariso; 1:Parametric; 2:Isosurface
 QTreeWidgetItem *MyselectionItemReference;
 QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
@@ -6378,23 +6378,56 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0+(index-1)*size)+"("+ qlstStep.at(0) +")");
             ui.C1ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C1ScrollBar->setMaximum(qlstmax.at(0+(index-1)*size).toDouble());
+                ui.C1ScrollBar->setMinimum(qlstmin.at(0+(index-1)*size).toDouble());
+                ui.C1ScrollBar->setSingleStep(qlstStep.at(0+(index-1)*size).toDouble());
+
+                ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0+(index-1)*size)+"("+ qlstStep.at(0+(index-1)*size) +")");
+                ui.C1labelMin->setText(qlstmin.at(0+(index-1)*size));
+                ui.C1labelMax->setText(qlstmax.at(0+(index-1)*size));
+            }
             ui.C1ScrollBar->setSliderPosition(qlstPos.at(0+(index-1)*size).toDouble());
             ui.C1ScrollBar->blockSignals(false);
         }
+
         if(size >=2)
         {
             ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1+(index-1)*size)+"("+ qlstStep.at(1) +")");
             ui.C2ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C2ScrollBar->setMaximum(qlstmax.at(1+(index-1)*size).toDouble());
+                ui.C2ScrollBar->setMinimum(qlstmin.at(1+(index-1)*size).toDouble());
+                ui.C2ScrollBar->setSingleStep(qlstStep.at(1+(index-1)*size).toDouble());
+
+                ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1+(index-1)*size)+"("+ qlstStep.at(1+(index-1)*size) +")");
+                ui.C2labelMin->setText(qlstmin.at(1+(index-1)*size));
+                ui.C2labelMax->setText(qlstmax.at(1+(index-1)*size));
+            }
             ui.C2ScrollBar->setSliderPosition(qlstPos.at(1+(index-1)*size).toDouble());
             ui.C2ScrollBar->blockSignals(false);
         }
+
         if(size >=3)
         {
             ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2+(index-1)*size)+"("+ qlstStep.at(2) +")");
             ui.C3ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C3ScrollBar->setMaximum(qlstmax.at(2+(index-1)*size).toDouble());
+                ui.C3ScrollBar->setMinimum(qlstmin.at(2+(index-1)*size).toDouble());
+                ui.C3ScrollBar->setSingleStep(qlstStep.at(2+(index-1)*size).toDouble());
+
+                ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2+(index-1)*size)+"("+ qlstStep.at(2+(index-1)*size) +")");
+                ui.C3labelMin->setText(qlstmin.at(2+(index-1)*size));
+                ui.C3labelMax->setText(qlstmax.at(2+(index-1)*size));
+            }
             ui.C3ScrollBar->setSliderPosition(qlstPos.at(2+(index-1)*size).toDouble());
             ui.C3ScrollBar->blockSignals(false);
         }
+
         if(size >=4)
         {
             ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3+(index-1)*size)+"("+ qlstStep.at(3) +")");
@@ -6402,6 +6435,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C4ScrollBar->setSliderPosition(qlstPos.at(3+(index-1)*size).toDouble());
             ui.C4ScrollBar->blockSignals(false);
         }
+
         if(size >=5)
         {
             ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4+(index-1)*size)+"("+ qlstStep.at(4) +")");
@@ -6409,6 +6443,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C5ScrollBar->setSliderPosition(qlstPos.at(4+(index-1)*size).toDouble());
             ui.C5ScrollBar->blockSignals(false);
         }
+
         if(size >=6)
         {
             ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5+(index-1)*size)+"("+ qlstStep.at(5) +")");
@@ -6416,6 +6451,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C6ScrollBar->setSliderPosition(qlstPos.at(5+(index-1)*size).toDouble());
             ui.C6ScrollBar->blockSignals(false);
         }
+
         if(size >=7)
         {
             ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6+(index-1)*size)+"("+ qlstStep.at(6) +")");
@@ -6423,6 +6459,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C7ScrollBar->setSliderPosition(qlstPos.at(6+(index-1)*size).toDouble());
             ui.C7ScrollBar->blockSignals(false);
         }
+
         if(size >=8)
         {
             ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7+(index-1)*size)+"("+ qlstStep.at(7) +")");
@@ -6430,6 +6467,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C8ScrollBar->setSliderPosition(qlstPos.at(7+(index-1)*size).toDouble());
             ui.C8ScrollBar->blockSignals(false);
         }
+
         if(size >=9)
         {
             ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8+(index-1)*size)+"("+ qlstStep.at(8) +")");
@@ -6444,6 +6482,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C10ScrollBar->setSliderPosition(qlstPos.at(9+(index-1)*size).toDouble());
             ui.C10ScrollBar->blockSignals(false);
         }
+
         if(size >=11)
         {
             ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10+(index-1)*size)+"("+ qlstStep.at(10) +")");
@@ -6451,6 +6490,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C11ScrollBar->setSliderPosition(qlstPos.at(10+(index-1)*size).toDouble());
             ui.C11ScrollBar->blockSignals(false);
         }
+
         if(size >=12)
         {
             ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11+(index-1)*size)+"("+ qlstStep.at(11) +")");
@@ -6458,6 +6498,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C12ScrollBar->setSliderPosition(qlstPos.at(11+(index-1)*size).toDouble());
             ui.C12ScrollBar->blockSignals(false);
         }
+
         if(size >=13)
         {
             ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12+(index-1)*size)+"("+ qlstStep.at(12) +")");
@@ -6465,6 +6506,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C13ScrollBar->setSliderPosition(qlstPos.at(12+(index-1)*size).toDouble());
             ui.C13ScrollBar->blockSignals(false);
         }
+
         if(size >=14)
         {
             ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13+(index-1)*size)+"("+ qlstStep.at(13) +")");
@@ -6472,6 +6514,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C14ScrollBar->setSliderPosition(qlstPos.at(13+(index-1)*size).toDouble());
             ui.C14ScrollBar->blockSignals(false);
         }
+
         if(size >=15)
         {
             ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14+(index-1)*size)+"("+ qlstStep.at(14) +")");
@@ -6479,6 +6522,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C15ScrollBar->setSliderPosition(qlstPos.at(14+(index-1)*size).toDouble());
             ui.C15ScrollBar->blockSignals(false);
         }
+
         if(size >=16)
         {
             ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15+(index-1)*size)+"("+ qlstStep.at(15) +")");
@@ -6486,6 +6530,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C16ScrollBar->setSliderPosition(qlstPos.at(15+(index-1)*size).toDouble());
             ui.C16ScrollBar->blockSignals(false);
         }
+
         if(size >=17)
         {
             ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16+(index-1)*size)+"("+ qlstStep.at(16) +")");
@@ -6493,6 +6538,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C17ScrollBar->setSliderPosition(qlstPos.at(16+(index-1)*size).toDouble());
             ui.C17ScrollBar->blockSignals(false);
         }
+
         if(size >=18)
         {
             ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17+(index-1)*size)+"("+ qlstStep.at(17) +")");
@@ -6500,6 +6546,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C18ScrollBar->setSliderPosition(qlstPos.at(17+(index-1)*size).toDouble());
             ui.C18ScrollBar->blockSignals(false);
         }
+
         if(size >=19)
         {
             ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18+(index-1)*size)+"("+ qlstStep.at(18) +")");
@@ -6507,6 +6554,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             ui.C19ScrollBar->setSliderPosition(qlstPos.at(18+(index-1)*size).toDouble());
             ui.C19ScrollBar->blockSignals(false);
         }
+
         if(size >=20)
         {
             ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19+(index-1)*size)+"("+ qlstStep.at(19) +")");
@@ -6526,11 +6574,12 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
 
 void DrawingOptions::on_C20toolButton_clicked()
 {
+     int range = (indexcurrentSet <1) ? 19 : (indexcurrentSet-1)*qlstnames.size() + 19;
     sliderconf.currentSlider=19;
-    sliderconf.ui.MaxEdit->setText(qlstmax[19]);
-    sliderconf.ui.MinEdit->setText(qlstmin[19]);
-    sliderconf.ui.StepEdit->setText(qlstStep[19]);
-    sliderconf.ui.PosEdit->setText(qlstPos[19]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(20);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6539,11 +6588,12 @@ void DrawingOptions::on_C20toolButton_clicked()
 
 void DrawingOptions::on_C19toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 18 : (indexcurrentSet-1)*qlstnames.size() + 18;
     sliderconf.currentSlider=18;
-    sliderconf.ui.MaxEdit->setText(qlstmax[18]);
-    sliderconf.ui.MinEdit->setText(qlstmin[18]);
-    sliderconf.ui.StepEdit->setText(qlstStep[18]);
-    sliderconf.ui.PosEdit->setText(qlstPos[18]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(19);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6552,11 +6602,12 @@ void DrawingOptions::on_C19toolButton_clicked()
 
 void DrawingOptions::on_C18toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 17 : (indexcurrentSet-1)*qlstnames.size() + 17;
     sliderconf.currentSlider=17;
-    sliderconf.ui.MaxEdit->setText(qlstmax[17]);
-    sliderconf.ui.MinEdit->setText(qlstmin[17]);
-    sliderconf.ui.StepEdit->setText(qlstStep[17]);
-    sliderconf.ui.PosEdit->setText(qlstPos[17]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(18);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6565,11 +6616,12 @@ void DrawingOptions::on_C18toolButton_clicked()
 
 void DrawingOptions::on_C17toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 16 : (indexcurrentSet-1)*qlstnames.size() + 16;
     sliderconf.currentSlider=16;
-    sliderconf.ui.MaxEdit->setText(qlstmax[16]);
-    sliderconf.ui.MinEdit->setText(qlstmin[16]);
-    sliderconf.ui.StepEdit->setText(qlstStep[16]);
-    sliderconf.ui.PosEdit->setText(qlstPos[16]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(17);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6578,11 +6630,12 @@ void DrawingOptions::on_C17toolButton_clicked()
 
 void DrawingOptions::on_C16toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 15 : (indexcurrentSet-1)*qlstnames.size() + 15;
     sliderconf.currentSlider=15;
-    sliderconf.ui.MaxEdit->setText(qlstmax[15]);
-    sliderconf.ui.MinEdit->setText(qlstmin[15]);
-    sliderconf.ui.StepEdit->setText(qlstStep[15]);
-    sliderconf.ui.PosEdit->setText(qlstPos[15]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(16);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6591,11 +6644,12 @@ void DrawingOptions::on_C16toolButton_clicked()
 
 void DrawingOptions::on_C15toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 14 : (indexcurrentSet-1)*qlstnames.size() + 14;
     sliderconf.currentSlider=14;
-    sliderconf.ui.MaxEdit->setText(qlstmax[14]);
-    sliderconf.ui.MinEdit->setText(qlstmin[14]);
-    sliderconf.ui.StepEdit->setText(qlstStep[14]);
-    sliderconf.ui.PosEdit->setText(qlstPos[14]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(15);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6604,11 +6658,12 @@ void DrawingOptions::on_C15toolButton_clicked()
 
 void DrawingOptions::on_C14toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 13 : (indexcurrentSet-1)*qlstnames.size() + 13;
     sliderconf.currentSlider=13;
-    sliderconf.ui.MaxEdit->setText(qlstmax[13]);
-    sliderconf.ui.MinEdit->setText(qlstmin[13]);
-    sliderconf.ui.StepEdit->setText(qlstStep[13]);
-    sliderconf.ui.PosEdit->setText(qlstPos[13]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(14);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6617,11 +6672,12 @@ void DrawingOptions::on_C14toolButton_clicked()
 
 void DrawingOptions::on_C13toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 12 : (indexcurrentSet-1)*qlstnames.size() + 12;
     sliderconf.currentSlider=12;
-    sliderconf.ui.MaxEdit->setText(qlstmax[12]);
-    sliderconf.ui.MinEdit->setText(qlstmin[12]);
-    sliderconf.ui.StepEdit->setText(qlstStep[12]);
-    sliderconf.ui.PosEdit->setText(qlstPos[12]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(13);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6630,11 +6686,12 @@ void DrawingOptions::on_C13toolButton_clicked()
 
 void DrawingOptions::on_C12toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 11 : (indexcurrentSet-1)*qlstnames.size() + 11;
     sliderconf.currentSlider=11;
-    sliderconf.ui.MaxEdit->setText(qlstmax[11]);
-    sliderconf.ui.MinEdit->setText(qlstmin[11]);
-    sliderconf.ui.StepEdit->setText(qlstStep[11]);
-    sliderconf.ui.PosEdit->setText(qlstPos[11]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(12);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6643,11 +6700,12 @@ void DrawingOptions::on_C12toolButton_clicked()
 
 void DrawingOptions::on_C11toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 10 : (indexcurrentSet-1)*qlstnames.size() + 10;
     sliderconf.currentSlider=10;
-    sliderconf.ui.MaxEdit->setText(qlstmax[10]);
-    sliderconf.ui.MinEdit->setText(qlstmin[10]);
-    sliderconf.ui.StepEdit->setText(qlstStep[10]);
-    sliderconf.ui.PosEdit->setText(qlstPos[10]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(11);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6656,11 +6714,12 @@ void DrawingOptions::on_C11toolButton_clicked()
 
 void DrawingOptions::on_C10toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 9 : (indexcurrentSet-1)*qlstnames.size() + 9;
     sliderconf.currentSlider=9;
-    sliderconf.ui.MaxEdit->setText(qlstmax[9]);
-    sliderconf.ui.MinEdit->setText(qlstmin[9]);
-    sliderconf.ui.StepEdit->setText(qlstStep[9]);
-    sliderconf.ui.PosEdit->setText(qlstPos[9]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(10);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6669,11 +6728,12 @@ void DrawingOptions::on_C10toolButton_clicked()
 
 void DrawingOptions::on_C9toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 8 : (indexcurrentSet-1)*qlstnames.size() + 8;
     sliderconf.currentSlider=8;
-    sliderconf.ui.MaxEdit->setText(qlstmax[8]);
-    sliderconf.ui.MinEdit->setText(qlstmin[8]);
-    sliderconf.ui.StepEdit->setText(qlstStep[8]);
-    sliderconf.ui.PosEdit->setText(qlstPos[8]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(9);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6682,11 +6742,12 @@ void DrawingOptions::on_C9toolButton_clicked()
 
 void DrawingOptions::on_C8toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 7 : (indexcurrentSet-1)*qlstnames.size() + 7;
     sliderconf.currentSlider=7;
-    sliderconf.ui.MaxEdit->setText(qlstmax[7]);
-    sliderconf.ui.MinEdit->setText(qlstmin[7]);
-    sliderconf.ui.StepEdit->setText(qlstStep[7]);
-    sliderconf.ui.PosEdit->setText(qlstPos[7]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(8);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6695,11 +6756,12 @@ void DrawingOptions::on_C8toolButton_clicked()
 
 void DrawingOptions::on_C7toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 6 : (indexcurrentSet-1)*qlstnames.size() + 6;
     sliderconf.currentSlider=6;
-    sliderconf.ui.MaxEdit->setText(qlstmax[6]);
-    sliderconf.ui.MinEdit->setText(qlstmin[6]);
-    sliderconf.ui.StepEdit->setText(qlstStep[6]);
-    sliderconf.ui.PosEdit->setText(qlstPos[6]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(7);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6708,11 +6770,12 @@ void DrawingOptions::on_C7toolButton_clicked()
 
 void DrawingOptions::on_C6toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 5 : (indexcurrentSet-1)*qlstnames.size() + 5;
     sliderconf.currentSlider=5;
-    sliderconf.ui.MaxEdit->setText(qlstmax[5]);
-    sliderconf.ui.MinEdit->setText(qlstmin[5]);
-    sliderconf.ui.StepEdit->setText(qlstStep[5]);
-    sliderconf.ui.PosEdit->setText(qlstPos[5]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(6);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6721,11 +6784,12 @@ void DrawingOptions::on_C6toolButton_clicked()
 
 void DrawingOptions::on_C5toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 4 : (indexcurrentSet-1)*qlstnames.size() + 4;
     sliderconf.currentSlider=4;
-    sliderconf.ui.MaxEdit->setText(qlstmax[4]);
-    sliderconf.ui.MinEdit->setText(qlstmin[4]);
-    sliderconf.ui.StepEdit->setText(qlstStep[4]);
-    sliderconf.ui.PosEdit->setText(qlstPos[4]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(5);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6734,11 +6798,12 @@ void DrawingOptions::on_C5toolButton_clicked()
 
 void DrawingOptions::on_C4toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 3 : (indexcurrentSet-1)*qlstnames.size() + 3;
     sliderconf.currentSlider=3;
-    sliderconf.ui.MaxEdit->setText(qlstmax[3]);
-    sliderconf.ui.MinEdit->setText(qlstmin[3]);
-    sliderconf.ui.StepEdit->setText(qlstStep[3]);
-    sliderconf.ui.PosEdit->setText(qlstPos[3]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(4);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6747,11 +6812,12 @@ void DrawingOptions::on_C4toolButton_clicked()
 
 void DrawingOptions::on_C3toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 2 : (indexcurrentSet-1)*qlstnames.size() + 2;
     sliderconf.currentSlider=2;
-    sliderconf.ui.MaxEdit->setText(qlstmax[2]);
-    sliderconf.ui.MinEdit->setText(qlstmin[2]);
-    sliderconf.ui.StepEdit->setText(qlstStep[2]);
-    sliderconf.ui.PosEdit->setText(qlstPos[2]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(3);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6760,11 +6826,12 @@ void DrawingOptions::on_C3toolButton_clicked()
 
 void DrawingOptions::on_C2toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 1 : (indexcurrentSet-1)*qlstnames.size() + 1;
     sliderconf.currentSlider=1;
-    sliderconf.ui.MaxEdit->setText(qlstmax[1]);
-    sliderconf.ui.MinEdit->setText(qlstmin[1]);
-    sliderconf.ui.StepEdit->setText(qlstStep[1]);
-    sliderconf.ui.PosEdit->setText(qlstPos[1]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(2);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -6773,11 +6840,12 @@ void DrawingOptions::on_C2toolButton_clicked()
 
 void DrawingOptions::on_C1toolButton_clicked()
 {
+    int range = (indexcurrentSet <1) ? 0 : (indexcurrentSet-1)*qlstnames.size() + 0;
     sliderconf.currentSlider=0;
-    sliderconf.ui.MaxEdit->setText(qlstmax[0]);
-    sliderconf.ui.MinEdit->setText(qlstmin[0]);
-    sliderconf.ui.StepEdit->setText(qlstStep[0]);
-    sliderconf.ui.PosEdit->setText(qlstPos[0]);
+    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
+    sliderconf.ui.MinEdit->setText(qlstmin[range]);
+    sliderconf.ui.StepEdit->setText(qlstStep[range]);
+    sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
     sliderconf.ui.ParametersComboBox->setCurrentIndex(1);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
@@ -7223,57 +7291,163 @@ void DrawingOptions::update_slider_param()
 
 void DrawingOptions::on_AddSetButton_clicked()
 {
-    QJsonArray array2;
+    QJsonArray array2, array3, array4, array5;
     QJsonObject tmp, tmp2;
 
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     tmp2 = tmp ["Sliders"].toObject();
     array2 = tmp2["Position"].toArray();
+    array3 = tmp2["Min"].toArray();
+    array4 = tmp2["Max"].toArray();
+    array5 = tmp2["Step"].toArray();
     int size= qlstnames.size();
 
     if(size >=1)
+    {
         array2.append(QString::number(ui.C1ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C1ScrollBar->minimum()));
+        array4.append(QString::number(ui.C1ScrollBar->maximum()));
+        array5.append(QString::number(ui.C1ScrollBar->singleStep()));
+    }
     if(size >=2)
+    {
         array2.append(QString::number(ui.C2ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C2ScrollBar->minimum()));
+        array4.append(QString::number(ui.C2ScrollBar->maximum()));
+        array5.append(QString::number(ui.C2ScrollBar->singleStep()));
+    }
     if(size >=3)
+    {
         array2.append(QString::number(ui.C3ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C3ScrollBar->minimum()));
+        array4.append(QString::number(ui.C3ScrollBar->maximum()));
+        array5.append(QString::number(ui.C3ScrollBar->singleStep()));
+    }
     if(size >=4)
+    {
         array2.append(QString::number(ui.C4ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C4ScrollBar->minimum()));
+        array4.append(QString::number(ui.C4ScrollBar->maximum()));
+        array5.append(QString::number(ui.C4ScrollBar->singleStep()));
+    }
     if(size >=5)
+    {
         array2.append(QString::number(ui.C5ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C5ScrollBar->minimum()));
+        array4.append(QString::number(ui.C5ScrollBar->maximum()));
+        array5.append(QString::number(ui.C5ScrollBar->singleStep()));
+    }
     if(size >=6)
+    {
         array2.append(QString::number(ui.C6ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C6ScrollBar->minimum()));
+        array4.append(QString::number(ui.C6ScrollBar->maximum()));
+        array5.append(QString::number(ui.C6ScrollBar->singleStep()));
+    }
     if(size >=7)
+    {
         array2.append(QString::number(ui.C7ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C7ScrollBar->minimum()));
+        array4.append(QString::number(ui.C7ScrollBar->maximum()));
+        array5.append(QString::number(ui.C7ScrollBar->singleStep()));
+    }
     if(size >=8)
+    {
         array2.append(QString::number(ui.C8ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C8ScrollBar->minimum()));
+        array4.append(QString::number(ui.C8ScrollBar->maximum()));
+        array5.append(QString::number(ui.C8ScrollBar->singleStep()));
+    }
     if(size >=9)
+    {
         array2.append(QString::number(ui.C9ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C9ScrollBar->minimum()));
+        array4.append(QString::number(ui.C9ScrollBar->maximum()));
+        array5.append(QString::number(ui.C9ScrollBar->singleStep()));
+    }
     if(size >=10)
+    {
         array2.append(QString::number(ui.C10ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C10ScrollBar->minimum()));
+        array4.append(QString::number(ui.C10ScrollBar->maximum()));
+        array5.append(QString::number(ui.C10ScrollBar->singleStep()));
+    }
     if(size >=11)
+    {
         array2.append(QString::number(ui.C11ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C11ScrollBar->minimum()));
+        array4.append(QString::number(ui.C11ScrollBar->maximum()));
+        array5.append(QString::number(ui.C11ScrollBar->singleStep()));
+    }
     if(size >=12)
+    {
         array2.append(QString::number(ui.C12ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C12ScrollBar->minimum()));
+        array4.append(QString::number(ui.C12ScrollBar->maximum()));
+        array5.append(QString::number(ui.C12ScrollBar->singleStep()));
+    }
     if(size >=13)
+    {
         array2.append(QString::number(ui.C13ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C13ScrollBar->minimum()));
+        array4.append(QString::number(ui.C13ScrollBar->maximum()));
+        array5.append(QString::number(ui.C13ScrollBar->singleStep()));
+    }
     if(size >=14)
+    {
         array2.append(QString::number(ui.C14ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C14ScrollBar->minimum()));
+        array4.append(QString::number(ui.C14ScrollBar->maximum()));
+        array5.append(QString::number(ui.C14ScrollBar->singleStep()));
+    }
     if(size >=15)
+    {
         array2.append(QString::number(ui.C15ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C15ScrollBar->minimum()));
+        array4.append(QString::number(ui.C15ScrollBar->maximum()));
+        array5.append(QString::number(ui.C15ScrollBar->singleStep()));
+    }
     if(size >=16)
+    {
         array2.append(QString::number(ui.C16ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C16ScrollBar->minimum()));
+        array4.append(QString::number(ui.C16ScrollBar->maximum()));
+        array5.append(QString::number(ui.C16ScrollBar->singleStep()));
+    }
     if(size >=17)
+    {
         array2.append(QString::number(ui.C17ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C17ScrollBar->minimum()));
+        array4.append(QString::number(ui.C17ScrollBar->maximum()));
+        array5.append(QString::number(ui.C17ScrollBar->singleStep()));
+    }
     if(size >=18)
+    {
         array2.append(QString::number(ui.C18ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C18ScrollBar->minimum()));
+        array4.append(QString::number(ui.C18ScrollBar->maximum()));
+        array5.append(QString::number(ui.C18ScrollBar->singleStep()));
+    }
     if(size >=19)
+    {
         array2.append(QString::number(ui.C19ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C19ScrollBar->minimum()));
+        array4.append(QString::number(ui.C19ScrollBar->maximum()));
+        array5.append(QString::number(ui.C19ScrollBar->singleStep()));
+    }
     if(size >=20)
+    {
         array2.append(QString::number(ui.C20ScrollBar->sliderPosition()));
+        array3.append(QString::number(ui.C20ScrollBar->minimum()));
+        array4.append(QString::number(ui.C20ScrollBar->maximum()));
+        array5.append(QString::number(ui.C20ScrollBar->singleStep()));
+    }
 
     tmp2["Position"] = array2;
-    tmp["Sliders"] = tmp2;
+    tmp2["Min"]        = array3;
+    tmp2["Max"]       = array4;
+    tmp2["Step"]      = array5;
+    tmp["Sliders"]    = tmp2;
     // Draw here
     ShowJsonModel(tmp);
     ui.ObjectClasseCurrent->takeTopLevelItem(0);
@@ -7286,16 +7460,33 @@ void DrawingOptions::on_CutSetButton_clicked()
     int size= qlstnames.size();
     if(size2 >= 2*size)
     {
-        QJsonArray array2;
+        QJsonArray array2, array3, array4, array5;
         QJsonObject tmp, tmp2;
 
         tmp = MathmodRef->RootObjet.CurrentJsonObject;
         tmp2 = tmp ["Sliders"].toObject();
+
         array2 = tmp2["Position"].toArray();
         for(int i=0; i<size; i++)
             array2.removeAt((indexcurrentSet-1)*size);
 
-        tmp2["Position"] = array2;
+        array3 = tmp2["Min"].toArray();
+        for(int i=0; i<size; i++)
+            array3.removeAt((indexcurrentSet-1)*size);
+
+        array4 = tmp2["Max"].toArray();
+        for(int i=0; i<size; i++)
+            array4.removeAt((indexcurrentSet-1)*size);
+
+        array5 = tmp2["Step"].toArray();
+        for(int i=0; i<size; i++)
+            array5.removeAt((indexcurrentSet-1)*size);
+
+        tmp2["Position"]  = array2;
+        tmp2["Min"]         = array3;
+        tmp2["Max"]        = array4;
+        tmp2["Step"]       = array5;
+
         tmp["Sliders"] = tmp2;
         // Draw here
         ShowJsonModel(tmp);
@@ -7331,15 +7522,21 @@ void DrawingOptions::on_CutParam_clicked()
         tmp2["Name"] = array2;
 
         array2 = tmp2["Max"].toArray();
-        array2.removeAt(index-1);
+        position = array2.size();
+        for(int i=0; i*names < position; i++)
+            array2.removeAt(index-1 + i*names);
         tmp2["Max"] = array2;
 
         array2 = tmp2["Min"].toArray();
-        array2.removeAt(index-1);
+        position = array2.size();
+        for(int i=0; i*names < position; i++)
+            array2.removeAt(index-1 + i*names);
         tmp2["Min"] = array2;
 
         array2 = tmp2["Step"].toArray();
-        array2.removeAt(index-1);
+        position = array2.size();
+        for(int i=0; i*names < position; i++)
+            array2.removeAt(index-1 + i*names);
         tmp2["Step"] = array2;
 
         array2 = tmp2["Position"].toArray();
@@ -7376,20 +7573,38 @@ void DrawingOptions::add_new_param()
     else
         for(int i=1; i*names <= position; i++)
             array2.insert(i*names, addnewparam.ui.PosEdit->text());
-
     tmp2["Position"] = array2;
 
+
     array2 = tmp2["Max"].toArray();
-    array2.append(addnewparam.ui.MaxEdit->text());
+    position = array2.empty()? 0: array2.size();
+    if(names == 0)
+        array2.append(addnewparam.ui.MaxEdit->text());
+    else
+        for(int i=1; i*names <= position; i++)
+            array2.insert(i*names, addnewparam.ui.MaxEdit->text());
     tmp2["Max"] = array2;
 
+
     array2 = tmp2["Min"].toArray();
-    array2.append(addnewparam.ui.MinEdit->text());
+    position = array2.empty()? 0: array2.size();
+    if(names == 0)
+        array2.append(addnewparam.ui.MinEdit->text());
+    else
+        for(int i=1; i*names <= position; i++)
+            array2.insert(i*names, addnewparam.ui.MinEdit->text());
     tmp2["Min"] = array2;
 
+
     array2 = tmp2["Step"].toArray();
-    array2.append(addnewparam.ui.StepEdit->text());
+    position = array2.empty()? 0: array2.size();
+    if(names == 0)
+        array2.append(addnewparam.ui.StepEdit->text());
+    else
+        for(int i=1; i*names <= position; i++)
+            array2.insert(i*names, addnewparam.ui.StepEdit->text());
     tmp2["Step"] = array2;
+
 
     tmp["Sliders"] = tmp2;
     // Draw here
