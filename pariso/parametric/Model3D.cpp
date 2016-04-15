@@ -1058,6 +1058,17 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     double tmp, ValCol[100], val[4];
     val[3] = stepMorph;
 
+   static int recalculate = 1;
+
+    if((activeMorph == 1) &&   (recalculate !=1))
+    {
+        return;
+    }
+    if(activeMorph == 1)
+        recalculate = -1;
+    else
+        recalculate = 1;
+
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
         for(int i=0; i<Nb_vrgbts && i<100; i++)
@@ -1500,6 +1511,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
     else
     {
         components->ThereisCND = false;
+        /*
         for(int i= 0; i < NbVertexTmp; i++)
         {
             NormVertexTab[i*TypeDrawin    ] = 0.5;
@@ -1507,6 +1519,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             NormVertexTab[i*TypeDrawin+2] = 0.8;
             NormVertexTab[i*TypeDrawin+3] = 1.0;
         }
+        */
     }
 }
 
