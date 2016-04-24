@@ -7661,3 +7661,8 @@ void DrawingOptions::update_infos_param(int index)
     }
 
 }
+
+void DrawingOptions::on_actionFrames_triggered()
+{
+    MathmodRef->frames_clicked();
+}

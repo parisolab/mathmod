@@ -40,8 +40,8 @@ videoplayer::videoplayer(QImage buffer)
     //QLabel * text = new QLabel( "Image quality:", groupBox,0);
     //text->setGeometry( QRect( 3, 5, 150, 16 ) );
     pushScreenshot = new QPushButton("pushScreenshot", groupBox );
-    pushScreenshot->setGeometry( QRect( 250, 2, 50, 20 ) );
-    pushScreenshot->setText( tr( "Save" ) );
+    pushScreenshot->setGeometry( QRect( 250, 2, 75, 18 ) );
+    pushScreenshot->setText( tr( "Save Screen" ) );
 }
 
 videoplayer::~videoplayer()
