@@ -141,6 +141,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.fill                      = 1;
     objectproperties.line                   = 1;
     objectproperties.infos                 = 1;
+    objectproperties.frame               = -1;
     objectproperties.infosdetails[0]  = objectproperties.infosdetails[1] = objectproperties.infosdetails[2] = 1;
     objectproperties.axe                   = 1;
     objectproperties.box                   = 1;

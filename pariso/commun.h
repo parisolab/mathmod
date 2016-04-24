@@ -123,6 +123,7 @@ struct  ObjectProperties
     int    interior;
     int    exterior;
     int    infos;
+    int    frame;
     int    infosdetails[10];
     int    line;
     int    axe;

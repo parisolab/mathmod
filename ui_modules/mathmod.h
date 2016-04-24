@@ -56,6 +56,7 @@ public slots:
     void slot_triangles_clicked();
     int ParseIso();
     int ParsePar();
+    void frames_clicked();
 public:
     Ui::MathMod ui;
     int xyzactivated, isomesh, uvactivated, uvactivated4D;

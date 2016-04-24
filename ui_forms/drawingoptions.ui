@@ -8728,6 +8728,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionColors"/>
    <addaction name="separator"/>
    <addaction name="actionOpenGL"/>
+   <addaction name="separator"/>
+   <addaction name="actionFrames"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -8906,6 +8908,22 @@ p, li { white-space: pre-wrap; }
   <action name="actionTrianglesWavefront_obj">
    <property name="text">
     <string>TrianglesWavefront.obj</string>
+   </property>
+  </action>
+  <action name="actionFrames">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/win/player_play.png</normaloff>
+     <normalon>:/images/win/stop.png</normalon>:/images/win/player_play.png</iconset>
+   </property>
+   <property name="text">
+    <string>Frames</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frames Shots&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>
