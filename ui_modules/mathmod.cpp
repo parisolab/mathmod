@@ -78,10 +78,17 @@ void MathMod::updateGL()
 {
     (ui.glWidget)->update();
 }
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::draw_norm_clicked()
 {
     (ui.glWidget)->normOk();
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::frames_clicked()
+{
+    (ui.glWidget)->FramesShot();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -107,6 +114,7 @@ void MathMod::linecolumn_valueChanged_2( int cl)
     else
         (ui.glWidget)->update();
 }
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::Initparametricpage()
 {

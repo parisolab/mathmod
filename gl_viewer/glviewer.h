@@ -49,6 +49,7 @@ public :
     QTimer        * timer;
     double Axe_x, Axe_y, Axe_z, angle, val1, val2, val3, old_x, old_y, old_z;
     ObjectProperties  LocalScene;
+    QString FramesDir;
     Iso3D *IsoObjet;
     Par3D *ParObjet;
     int TypeFormule;
@@ -77,6 +78,8 @@ public:
     void PutObjectInsideCube();
     void Add(ObjectParameters *);
     void screenshot();
+    void FramesShot();
+    void FramesSave();
     QImage Copyscreenshot();
 public:
     GLThread glt;

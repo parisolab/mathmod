@@ -236,5 +236,6 @@ private slots:
     void HideSliders();
     void on_AddParam_clicked();
     void on_CutParam_clicked();
+    void on_actionFrames_triggered();
 };
 #endif

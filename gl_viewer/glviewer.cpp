@@ -494,6 +494,7 @@ OpenGlWidget::OpenGlWidget( QWidget *parent)
     cpisoline = cpisocolumn = cpisodepth = 0;
     IDGlWindow        = NBGlWindow;
     LocalScene.VertxNumber      = 0;
+    FramesDir = "/home";
     hauteur_fenetre= 620;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
@@ -1326,6 +1327,7 @@ void OpenGlWidget::paintGL()
     }
     draw(&LocalScene);
     if (LocalScene.infos == 1)  PrintInfos();
+    if (LocalScene.morph == 1 && LocalScene.frame == 1)  FramesSave();
 }
 
 void OpenGlWidget::DrawPlan()
@@ -1726,6 +1728,32 @@ void OpenGlWidget::screenshot()
     QImage image = grabFrameBuffer();
     if(LocalScene.png_ok == 1) image.save("GLscreenshot.png", "PNG" , LocalScene.quality_image);
     if(LocalScene.bmp_ok == 1) image.save("GLscreenshot.bmp", "BMP" , LocalScene.quality_image);
+}
+
+void OpenGlWidget::FramesShot()
+{
+    LocalScene.frame *= -1;
+    if(LocalScene.frame == 1)
+    {
+        FramesDir        = QFileDialog::getExistingDirectory(this,
+                                tr("Choose Or Create Directory"),
+                                FramesDir,
+                                QFileDialog::DontResolveSymlinks);
+        if(FramesDir != "" && !FramesDir.endsWith("/"))
+            FramesDir +="/";
+    }
+}
+
+void OpenGlWidget::FramesSave()
+{
+    static int Index =0;
+    if(LocalScene.frame == 1)
+    {
+        QImage image = grabFrameBuffer();
+        QString FileName = FramesDir+QString("%1").arg(Index, 5, 10, QChar('0'))+".png";
+        Index +=1;
+        image.save(FileName, "PNG" , 1);
+    }
 }
 
 QImage OpenGlWidget::Copyscreenshot()
