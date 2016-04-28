@@ -6746,7 +6746,7 @@
 	{
 		"Param3D": {
 			"Description ": ["Virus by Abderrahman Taha 25/10/2015"],
-			"Name": ["Virus"],
+			"Name": ["Virus_2"],
 			"Component": ["Virus"],
 			"Funct": ["Thickness= -DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
 			"n1= (-(cos(u))*(cos(u)*cos(v)))",
