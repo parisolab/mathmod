@@ -682,7 +682,7 @@ ErrorMessage  Par3D::parse_expression()
     // Parse
     if(Rgbt!= "")
     for(int i=0; i<Nb_rgbts; i++)
-        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v")) >= 0)
+        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,grid")) >= 0)
         {
             stdError.strError = Rgbts[i];
             stdError.strOrigine = RgbtNames[i];
@@ -1056,7 +1056,7 @@ void Par3D::CalculateNoiseShapePoints(int NewPosition)
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
     int Jprime;
-    double tmp, ValCol[100], val[6];
+    double tmp, ValCol[100], val[9];
     val[3] = stepMorph;
 
    static int recalculate = 1;
@@ -1115,12 +1115,16 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
+            val[7] = (double)i;
+            val[8] = (double)(nb_colone);
             Jprime = (i)/(nb_ligne);
-            val[4] = (double)Jprime/(double)(nb_ligne) ;
+            val[6] = (double)Jprime;
+            val[4] = val[6]/(double)(nb_ligne) ;
             val[4] = val[4] * dif_v[0]  + v_inf[0];
 
             Jprime = (i) %  (nb_colone);
-            val[3] = (double)Jprime/(double)(nb_colone) ;
+            val[5] =  (double)Jprime;
+            val[3] = val[5]/(double)(nb_colone) ;
             val[3] = val[3] * dif_u[0]  + u_inf[0];
 
             if(Noise != "")
