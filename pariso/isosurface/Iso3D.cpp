@@ -102,7 +102,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     NbTriangleIsoSurface = 0;
     IsoConditionRequired = -1;
     Nb_Sliders = -1;
-    Cstparser.AddConstant("pi", ((double)314159265/(double)100000000));
+    Cstparser.AddConstant("pi", PI);
     ImplicitFunction =  "cos(x) + cos(y) + cos(z)";
     XlimitSup = "4";
     YlimitSup = "4";
