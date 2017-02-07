@@ -1,6 +1,30 @@
 {
 	"MathModels": [{
 		"Iso3D": {
+			"Component": ["PrettyBall_1"],
+			"Description": ["PrettyBall_2 by Abderrahman Taha 28/10/2015"],
+			"Fxyz": ["if( (x)*(x)+y*y+z*z<64 ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -.6 ,1)  + exp(((x)*(x)+y*y+z*z-64)/3)"],
+			"Name": ["Pretty Ball"],
+			"Varu": ["Cos = cos(u)",
+			"Sin = sin(u)"],
+			"Xmax": ["8"],
+			"Xmin": ["-8"],
+			"Ymax": ["8"],
+			"Ymin": ["-8"],
+			"Zmax": ["8"],
+			"Zmin": ["-8"]
+		},
+		"Texture": {
+			"Colors": ["R=.73",
+			"G=1.8*abs(cos((x*x+y*y+z*z)/2.3) *sin((x*x+y*y+z*z)/2.3))",
+			"B=2*abs(cos((x*x+y*y+z*z)/2.3) *cos((x*x+y*y+z*z)/2.3) *sin((x*x+y*y+z*z)/2.3))",
+			"T=1"],
+			"Name": "WorleyNoise",
+			"Noise": ".5*NoiseW(x,y,z,4,2,0)"
+		}
+	},
+	{
+		"Iso3D": {
 			"Description": ["P_Skeletal Sphere by Abderrahman Taha 08/12/2015"],
 			"Name": ["P_Skeletal Sphere_3"],
 			"Component": ["P_Skeletal Sphere"],
