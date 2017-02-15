@@ -39,5 +39,6 @@ public:
     QString Twistx(QString);
     QString Twisty(QString);
     QString Twistz(QString);
-    void AddFunctionParser(FunctionParser);
+    void Twist();
+
 };
