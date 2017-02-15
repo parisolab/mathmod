@@ -20,9 +20,9 @@
 
     #include "isotransformation.h"
 
-/*
 
-    void IsoTransformation::IsoTransformation()
+
+    void IsoTransformation::Twist()
     {
         scalex = scaley = scalez=1;
         twistx = twisty = twistz = 0;
@@ -30,6 +30,7 @@
     
     QString IsoTransformation::Twistx(QString ImplicitFunction)
     {
+        /*
         double vals[2]={0,0};
         QString after_1, after_2, angle, XlimitSup, XlimitInf;
         double tmp;
@@ -60,13 +61,16 @@
            ImplicitFunction.replace(QChar('u'), after_1);
            ImplicitFunction.replace(QChar('v'), after_2);
        }
+              */
        return ImplicitFunction;
+
     }
     
-    QString IsoTransformation::Twisty(QString)
+    QString IsoTransformation::Twisty(QString ImplicitFunction)
     {
+        return ImplicitFunction;
     }
-    QString IsoTransformation::Twistz(QString)
+    QString IsoTransformation::Twistz(QString ImplicitFunction)
     {
+        return ImplicitFunction;
     }
-*/
