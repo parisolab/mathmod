@@ -174,33 +174,33 @@ static inline float tinyrnd()
 
 class CellNoise
 {
-    public :
-        float rd[3], featurePoint[4];
-        const static uint OFFSET_BASIS = 2166136261U;
-        const static uint FNV_PRIME = 16777619U;
+public :
+    float rd[3], featurePoint[4];
+    const static uint OFFSET_BASIS = 2166136261U;
+    const static uint FNV_PRIME = 16777619U;
 
-        float CellNoiseFunc(float, float, float, int, int type=2, int Dist=0);
-        float EuclidianDistanceFunc(float ,float , float , float , float , float);
-        float ManhattanDistanceFunc(float ,float , float , float , float , float);
-        float ChebyshevDistanceFunc(float ,float , float , float , float , float);
-        int probLookup(uint );
-        void insert(float* , float );
-        int lcgRandom(int );
-        int hash(int , int , int );
+    float CellNoiseFunc(float, float, float, int, int type=2, int Dist=0);
+    float EuclidianDistanceFunc(float ,float , float , float , float , float);
+    float ManhattanDistanceFunc(float ,float , float , float , float , float);
+    float ChebyshevDistanceFunc(float ,float , float , float , float , float);
+    int probLookup(uint );
+    void insert(float* , float );
+    int lcgRandom(int );
+    int hash(int , int , int );
 };
 
- class ImprovedNoise
- {
-   public:
-   int passes;
-   float correction;
-   ImprovedNoise(float, float, float);
-   float noise(float, float, float);
-   float fade(float);
-   float lerp(float, float, float);
-   float grad(int, float, float, float);
-   float FractalNoise3D(float, float, float, int, float , float);
-   float Marble(float, float, float,int);
-   float lookup(float, float, float);
+class ImprovedNoise
+{
+public:
+    int passes;
+    float correction;
+    ImprovedNoise(float, float, float);
+    float noise(float, float, float);
+    float fade(float);
+    float lerp(float, float, float);
+    float grad(int, float, float, float);
+    float FractalNoise3D(float, float, float, int, float , float);
+    float Marble(float, float, float,int);
+    float lookup(float, float, float);
 };
 
