@@ -139,9 +139,9 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & j
     QFile JsonFile(JsonFileName);
     if ( !JsonFile.exists())
     {
-       QFile file2(":/mathmodcollection_empty.js");
-       file2.copy(JsonFileName);
-       QFile::setPermissions(JsonFileName, QFileDevice::WriteOther);
+        QFile file2(":/mathmodcollection_empty.js");
+        file2.copy(JsonFileName);
+        QFile::setPermissions(JsonFileName, QFileDevice::WriteOther);
     }
 
     QFile file(JsonFileName);
@@ -389,9 +389,9 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 
     QFile fconf(fileconfig);
     if(fconf.exists())
-       ReadJsonFile(fileconfig, JConfig);
+        ReadJsonFile(fileconfig, JConfig);
     else
-       ReadJsonFile(":/mathmodconfig.js", JConfig);
+        ReadJsonFile(":/mathmodconfig.js", JConfig);
 
     {
         if(JConfig["Localization"].isObject())
@@ -475,7 +475,8 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         str.replace("DOTSYMBOL",  dotsymbol.toStdString().c_str());
 
         QFile file(advancedmodels);
-        if (!file.open(QIODevice::WriteOnly)) {
+        if (!file.open(QIODevice::WriteOnly))
+        {
             std::cerr << "Cannot open file for writing: "
                       << qPrintable(file.errorString()) << std::endl;
             return;
@@ -497,7 +498,8 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         str.append(stream.readAll());
         str.replace("DOTSYMBOL",  dotsymbol.toStdString().c_str());
         QFile file(filecollection);
-        if (!file.open(QIODevice::WriteOnly)) {
+        if (!file.open(QIODevice::WriteOnly))
+        {
             std::cerr << "Cannot open file for writing: "
                       << qPrintable(file.errorString()) << std::endl;
             return;
