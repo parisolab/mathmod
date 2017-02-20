@@ -34,7 +34,7 @@ public:
     FunctionParser ExpressionEvaluator,implicitFunctionParser[1100];
     std::string Funct, Functs[50], FunctNames[50];
     double Xamplitude[1100], Yamplitude[1100], Zamplitude[1100];
-  public:
+public:
     //void IsoTransformation(FunctionParser);
     QString Twistx(QString);
     QString Twisty(QString);
