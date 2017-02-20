@@ -917,395 +917,395 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
     if(Jobj["Sliders"].isObject())
     {
-    //Hide all sliders
-    HideSliders();
+        //Hide all sliders
+        HideSliders();
 
-    QObj = Jobj["Sliders"].toObject();
+        QObj = Jobj["Sliders"].toObject();
 
-    // Min
-    lst = QObj["Min"].toArray();
-    result = "";
-    for(int j=0; j < lst.size()-1; j++)
-        result += lst[j].toString() + ";";
-    if(lst.size() >= 1)
-        result += lst[lst.size()-1].toString();
-    result.replace("\n","");
-    result.replace("\t","");
-    result.replace(" ","");
-    qlstmin = result.split(";", QString::SkipEmptyParts);
+        // Min
+        lst = QObj["Min"].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        qlstmin = result.split(";", QString::SkipEmptyParts);
 
-    // Max
-    lst = QObj["Max"].toArray();
-    result = "";
-    for(int j=0; j < lst.size()-1; j++)
-        result += lst[j].toString() + ";";
-    if(lst.size() >= 1)
-        result += lst[lst.size()-1].toString();
-    result.replace("\n","");
-    result.replace("\t","");
-    result.replace(" ","");
-    qlstmax = result.split(";", QString::SkipEmptyParts);
+        // Max
+        lst = QObj["Max"].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        qlstmax = result.split(";", QString::SkipEmptyParts);
 
-    // Position
-    lst = QObj["Position"].toArray();
-    result = "";
-    for(int j=0; j < lst.size()-1; j++)
-        result += lst[j].toString() + ";";
-    if(lst.size() >= 1)
-        result += lst[lst.size()-1].toString();
-    result.replace("\n","");
-    result.replace("\t","");
-    result.replace(" ","");
-    qlstPos = result.split(";", QString::SkipEmptyParts);
-    for (int i = 0; i < qlstPos.size(); ++i)
-        MathmodRef->ui.glWidget->IsoObjet->SliderValues[i] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[i] =
-                qlstPos.at(i).toDouble();
+        // Position
+        lst = QObj["Position"].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        qlstPos = result.split(";", QString::SkipEmptyParts);
+        for (int i = 0; i < qlstPos.size(); ++i)
+            MathmodRef->ui.glWidget->IsoObjet->SliderValues[i] =
+                MathmodRef->ui.glWidget->ParObjet->SliderValues[i] =
+                    qlstPos.at(i).toDouble();
 
-    // Name
-    lst = QObj["Name"].toArray();
-    result = "";
-    for(int j=0; j < lst.size()-1; j++)
-        result += lst[j].toString() + ";";
-    if(lst.size() >= 1)
-        result += lst[lst.size()-1].toString();
-    result.replace("\n","");
-    result.replace("\t","");
-    result.replace(" ","");
-    qlstnames = result.split(";", QString::SkipEmptyParts);
-    for (int i = 0; i < qlstnames.size(); ++i)
-        MathmodRef->ui.glWidget->IsoObjet->SliderNames[i] =
-        MathmodRef->ui.glWidget->ParObjet->SliderNames[i] =
-                qlstnames.at(i).toStdString();
-    MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
-    MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  qlstnames.size();
+        // Name
+        lst = QObj["Name"].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        qlstnames = result.split(";", QString::SkipEmptyParts);
+        for (int i = 0; i < qlstnames.size(); ++i)
+            MathmodRef->ui.glWidget->IsoObjet->SliderNames[i] =
+                MathmodRef->ui.glWidget->ParObjet->SliderNames[i] =
+                    qlstnames.at(i).toStdString();
+        MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
+            MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  qlstnames.size();
 
-    ui.ParametersList->clear();
-    ui.ParametersList->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
-    ui.ParametersList->addItems(qlstnames);
+        ui.ParametersList->clear();
+        ui.ParametersList->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
+        ui.ParametersList->addItems(qlstnames);
 
-    sliderconf.ui.ParametersComboBox->clear();
-    sliderconf.ui.ParametersComboBox->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
-    sliderconf.ui.ParametersComboBox->addItems(qlstnames);
+        sliderconf.ui.ParametersComboBox->clear();
+        sliderconf.ui.ParametersComboBox->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
+        sliderconf.ui.ParametersComboBox->addItems(qlstnames);
 
-    // Step
-    lst = QObj["Step"].toArray();
-    result = "";
-    for(int j=0; j < lst.size()-1; j++)
-        result += lst[j].toString() + ";";
-    if(lst.size() >= 1)
-        result += lst[lst.size()-1].toString();
-    result.replace("\n","");
-    result.replace("\t","");
-    result.replace(" ","");
-    qlstStep = result.split(";", QString::SkipEmptyParts);
-   /*
-    if(qlstPos.size() <= qlstnames.size())
-    {
-        //ui.PredefinedSet->hide();
-     }
-     */
-    if(qlstPos.size() >= qlstnames.size())
-    {
-        ui.PredefinedSets->clear();
-        int NbSets = qlstPos.size() / qlstnames.size();
-        QStringList qlist;
-        qlist += "Predefined Sets (" + QString::number(NbSets) + ")";
-        for(int i=1; i< NbSets+1; i++)
+        // Step
+        lst = QObj["Step"].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        qlstStep = result.split(";", QString::SkipEmptyParts);
+        /*
+         if(qlstPos.size() <= qlstnames.size())
+         {
+             //ui.PredefinedSet->hide();
+          }
+          */
+        if(qlstPos.size() >= qlstnames.size())
         {
-            qlist  += "Set_"+QString::number(i);
+            ui.PredefinedSets->clear();
+            int NbSets = qlstPos.size() / qlstnames.size();
+            QStringList qlist;
+            qlist += "Predefined Sets (" + QString::number(NbSets) + ")";
+            for(int i=1; i< NbSets+1; i++)
+            {
+                qlist  += "Set_"+QString::number(i);
+            }
+            ui.PredefinedSets->addItems(qlist);
         }
-        ui.PredefinedSets->addItems(qlist);
-    }
 
-    if(qlstnames.size() >= 1)
-    {
-    ui.C1ScrollBar->blockSignals(true);
-    ui.C1ScrollBar->setMaximum(qlstmax.at(0).toDouble());
-    ui.C1ScrollBar->setMinimum(qlstmin.at(0).toDouble());
-    ui.C1ScrollBar->setSingleStep(qlstStep.at(0).toDouble());
-    ui.C1ScrollBar->setPageStep(qlstStep.at(0).toDouble());
-    ui.C1ScrollBar->setSliderPosition(qlstPos.at(0).toDouble());
-    ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0)+"("+ qlstStep.at(0) +")");
-    ui.C1labelMin->setText(qlstmin.at(0));
-    ui.C1labelMax->setText(qlstmax.at(0));
-    ui.C1ScrollBar->blockSignals(false);
-    ui.groupBox_9->show();
-    }
+        if(qlstnames.size() >= 1)
+        {
+            ui.C1ScrollBar->blockSignals(true);
+            ui.C1ScrollBar->setMaximum(qlstmax.at(0).toDouble());
+            ui.C1ScrollBar->setMinimum(qlstmin.at(0).toDouble());
+            ui.C1ScrollBar->setSingleStep(qlstStep.at(0).toDouble());
+            ui.C1ScrollBar->setPageStep(qlstStep.at(0).toDouble());
+            ui.C1ScrollBar->setSliderPosition(qlstPos.at(0).toDouble());
+            ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0)+"("+ qlstStep.at(0) +")");
+            ui.C1labelMin->setText(qlstmin.at(0));
+            ui.C1labelMax->setText(qlstmax.at(0));
+            ui.C1ScrollBar->blockSignals(false);
+            ui.groupBox_9->show();
+        }
 
-    if(qlstnames.size() >= 2)
-    {
-    ui.C2ScrollBar->blockSignals(true);
-    ui.C2ScrollBar->setMaximum(qlstmax.at(1).toDouble());
-    ui.C2ScrollBar->setMinimum(qlstmin.at(1).toDouble());
-    ui.C2ScrollBar->setSingleStep(qlstStep.at(1).toDouble());
-    ui.C2ScrollBar->setPageStep(qlstStep.at(1).toDouble());
-    ui.C2ScrollBar->setSliderPosition(qlstPos.at(1).toDouble());
-    ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1)+"("+ qlstStep.at(1) +")");
-    ui.C2labelMin->setText(qlstmin.at(1));
-    ui.C2labelMax->setText(qlstmax.at(1));
-    ui.C2ScrollBar->blockSignals(false);
-        ui.groupBox_10->show();
-    }
-    if(qlstnames.size() >= 3)
-    {
+        if(qlstnames.size() >= 2)
+        {
+            ui.C2ScrollBar->blockSignals(true);
+            ui.C2ScrollBar->setMaximum(qlstmax.at(1).toDouble());
+            ui.C2ScrollBar->setMinimum(qlstmin.at(1).toDouble());
+            ui.C2ScrollBar->setSingleStep(qlstStep.at(1).toDouble());
+            ui.C2ScrollBar->setPageStep(qlstStep.at(1).toDouble());
+            ui.C2ScrollBar->setSliderPosition(qlstPos.at(1).toDouble());
+            ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1)+"("+ qlstStep.at(1) +")");
+            ui.C2labelMin->setText(qlstmin.at(1));
+            ui.C2labelMax->setText(qlstmax.at(1));
+            ui.C2ScrollBar->blockSignals(false);
+            ui.groupBox_10->show();
+        }
+        if(qlstnames.size() >= 3)
+        {
 
-    ui.C3ScrollBar->blockSignals(true);
-    ui.C3ScrollBar->setMaximum(qlstmax.at(2).toDouble());
-    ui.C3ScrollBar->setMinimum(qlstmin.at(2).toDouble());
-    ui.C3ScrollBar->setSingleStep(qlstStep.at(2).toDouble());
-    ui.C3ScrollBar->setPageStep(qlstStep.at(2).toDouble());
-    ui.C3ScrollBar->setSliderPosition(qlstPos.at(2).toDouble());
-    ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2)+"("+ qlstStep.at(2) +")");
-    ui.C3labelMin->setText(qlstmin.at(2));
-    ui.C3labelMax->setText(qlstmax.at(2));
-    ui.C3ScrollBar->blockSignals(false);
-        ui.groupBox_11->show();
-    }
-    if(qlstnames.size() >= 4)
-    {
-    ui.C4ScrollBar->blockSignals(true);
-    ui.C4ScrollBar->setMaximum(qlstmax.at(3).toDouble());
-    ui.C4ScrollBar->setMinimum(qlstmin.at(3).toDouble());
-    ui.C4ScrollBar->setSingleStep(qlstStep.at(3).toDouble());
-    ui.C4ScrollBar->setPageStep(qlstStep.at(3).toDouble());
-    ui.C4ScrollBar->setSliderPosition(qlstPos.at(3).toDouble());
-    ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3)+"("+ qlstStep.at(3) +")");
-    ui.C4labelMin->setText(qlstmin.at(3));
-    ui.C4labelMax->setText(qlstmax.at(3));
-    ui.C4ScrollBar->blockSignals(false);
-        ui.groupBox_12->show();
-    }
-    if(qlstnames.size() >= 5)
-    {
-    ui.C5ScrollBar->blockSignals(true);
-    ui.C5ScrollBar->setMaximum(qlstmax.at(4).toDouble());
-    ui.C5ScrollBar->setMinimum(qlstmin.at(4).toDouble());
-    ui.C5ScrollBar->setSingleStep(qlstStep.at(4).toDouble());
-    ui.C5ScrollBar->setPageStep(qlstStep.at(4).toDouble());
-    ui.C5ScrollBar->setSliderPosition(qlstPos.at(4).toDouble());
-    ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4)+"("+ qlstStep.at(4) +")");
-    ui.C5labelMin->setText(qlstmin.at(4));
-    ui.C5labelMax->setText(qlstmax.at(4));
-    ui.C5ScrollBar->blockSignals(false);
-        ui.groupBox_13->show();
-    }
+            ui.C3ScrollBar->blockSignals(true);
+            ui.C3ScrollBar->setMaximum(qlstmax.at(2).toDouble());
+            ui.C3ScrollBar->setMinimum(qlstmin.at(2).toDouble());
+            ui.C3ScrollBar->setSingleStep(qlstStep.at(2).toDouble());
+            ui.C3ScrollBar->setPageStep(qlstStep.at(2).toDouble());
+            ui.C3ScrollBar->setSliderPosition(qlstPos.at(2).toDouble());
+            ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2)+"("+ qlstStep.at(2) +")");
+            ui.C3labelMin->setText(qlstmin.at(2));
+            ui.C3labelMax->setText(qlstmax.at(2));
+            ui.C3ScrollBar->blockSignals(false);
+            ui.groupBox_11->show();
+        }
+        if(qlstnames.size() >= 4)
+        {
+            ui.C4ScrollBar->blockSignals(true);
+            ui.C4ScrollBar->setMaximum(qlstmax.at(3).toDouble());
+            ui.C4ScrollBar->setMinimum(qlstmin.at(3).toDouble());
+            ui.C4ScrollBar->setSingleStep(qlstStep.at(3).toDouble());
+            ui.C4ScrollBar->setPageStep(qlstStep.at(3).toDouble());
+            ui.C4ScrollBar->setSliderPosition(qlstPos.at(3).toDouble());
+            ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3)+"("+ qlstStep.at(3) +")");
+            ui.C4labelMin->setText(qlstmin.at(3));
+            ui.C4labelMax->setText(qlstmax.at(3));
+            ui.C4ScrollBar->blockSignals(false);
+            ui.groupBox_12->show();
+        }
+        if(qlstnames.size() >= 5)
+        {
+            ui.C5ScrollBar->blockSignals(true);
+            ui.C5ScrollBar->setMaximum(qlstmax.at(4).toDouble());
+            ui.C5ScrollBar->setMinimum(qlstmin.at(4).toDouble());
+            ui.C5ScrollBar->setSingleStep(qlstStep.at(4).toDouble());
+            ui.C5ScrollBar->setPageStep(qlstStep.at(4).toDouble());
+            ui.C5ScrollBar->setSliderPosition(qlstPos.at(4).toDouble());
+            ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4)+"("+ qlstStep.at(4) +")");
+            ui.C5labelMin->setText(qlstmin.at(4));
+            ui.C5labelMax->setText(qlstmax.at(4));
+            ui.C5ScrollBar->blockSignals(false);
+            ui.groupBox_13->show();
+        }
 
-    if(qlstnames.size() >= 6)
-    {
-    ui.C6ScrollBar->blockSignals(true);
-    ui.C6ScrollBar->setMaximum(qlstmax.at(5).toDouble());
-    ui.C6ScrollBar->setMinimum(qlstmin.at(5).toDouble());
-    ui.C6ScrollBar->setSingleStep(qlstStep.at(5).toDouble());
-    ui.C6ScrollBar->setPageStep(qlstStep.at(5).toDouble());
-    ui.C6ScrollBar->setSliderPosition(qlstPos.at(5).toDouble());
-    ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5)+"("+ qlstStep.at(5) +")");
-    ui.C6labelMin->setText(qlstmin.at(5));
-    ui.C6labelMax->setText(qlstmax.at(5));
-    ui.C6ScrollBar->blockSignals(false);
-        ui.groupBox_14->show();
+        if(qlstnames.size() >= 6)
+        {
+            ui.C6ScrollBar->blockSignals(true);
+            ui.C6ScrollBar->setMaximum(qlstmax.at(5).toDouble());
+            ui.C6ScrollBar->setMinimum(qlstmin.at(5).toDouble());
+            ui.C6ScrollBar->setSingleStep(qlstStep.at(5).toDouble());
+            ui.C6ScrollBar->setPageStep(qlstStep.at(5).toDouble());
+            ui.C6ScrollBar->setSliderPosition(qlstPos.at(5).toDouble());
+            ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5)+"("+ qlstStep.at(5) +")");
+            ui.C6labelMin->setText(qlstmin.at(5));
+            ui.C6labelMax->setText(qlstmax.at(5));
+            ui.C6ScrollBar->blockSignals(false);
+            ui.groupBox_14->show();
+        }
+        if(qlstnames.size() >= 7)
+        {
+            ui.C7ScrollBar->blockSignals(true);
+            ui.C7ScrollBar->setMaximum(qlstmax.at(6).toDouble());
+            ui.C7ScrollBar->setMinimum(qlstmin.at(6).toDouble());
+            ui.C7ScrollBar->setSingleStep(qlstStep.at(6).toDouble());
+            ui.C7ScrollBar->setPageStep(qlstStep.at(6).toDouble());
+            ui.C7ScrollBar->setSliderPosition(qlstPos.at(6).toDouble());
+            ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6)+"("+ qlstStep.at(6) +")");
+            ui.C7labelMin->setText(qlstmin.at(6));
+            ui.C7labelMax->setText(qlstmax.at(6));
+            ui.C7ScrollBar->blockSignals(false);
+            ui.groupBox_15->show();
+        }
+        if(qlstnames.size() >= 8)
+        {
+            ui.C8ScrollBar->blockSignals(true);
+            ui.C8ScrollBar->setMaximum(qlstmax.at(7).toDouble());
+            ui.C8ScrollBar->setMinimum(qlstmin.at(7).toDouble());
+            ui.C8ScrollBar->setSingleStep(qlstStep.at(7).toDouble());
+            ui.C8ScrollBar->setPageStep(qlstStep.at(7).toDouble());
+            ui.C8ScrollBar->setSliderPosition(qlstPos.at(7).toDouble());
+            ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7)+"("+ qlstStep.at(7) +")");
+            ui.C8labelMin->setText(qlstmin.at(7));
+            ui.C8labelMax->setText(qlstmax.at(7));
+            ui.C8ScrollBar->blockSignals(false);
+            ui.groupBox_16->show();
+        }
+        if(qlstnames.size() >= 9)
+        {
+            ui.C9ScrollBar->blockSignals(true);
+            ui.C9ScrollBar->setMaximum(qlstmax.at(8).toDouble());
+            ui.C9ScrollBar->setMinimum(qlstmin.at(8).toDouble());
+            ui.C9ScrollBar->setSingleStep(qlstStep.at(8).toDouble());
+            ui.C9ScrollBar->setPageStep(qlstStep.at(8).toDouble());
+            ui.C9ScrollBar->setSliderPosition(qlstPos.at(8).toDouble());
+            ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8)+"("+ qlstStep.at(8) +")");
+            ui.C9labelMin->setText(qlstmin.at(8));
+            ui.C9labelMax->setText(qlstmax.at(8));
+            ui.C9ScrollBar->blockSignals(false);
+            ui.groupBox_17->show();
+        }
+        if(qlstnames.size() >= 10)
+        {
+            ui.C10ScrollBar->blockSignals(true);
+            ui.C10ScrollBar->setMaximum(qlstmax.at(9).toDouble());
+            ui.C10ScrollBar->setMinimum(qlstmin.at(9).toDouble());
+            ui.C10ScrollBar->setSingleStep(qlstStep.at(9).toDouble());
+            ui.C10ScrollBar->setPageStep(qlstStep.at(9).toDouble());
+            ui.C10ScrollBar->setSliderPosition(qlstPos.at(9).toDouble());
+            ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9)+"("+ qlstStep.at(9) +")");
+            ui.C10labelMin->setText(qlstmin.at(9));
+            ui.C10labelMax->setText(qlstmax.at(9));
+            ui.C10ScrollBar->blockSignals(false);
+            ui.groupBox_18->show();
+        }
+        if(qlstnames.size() >= 11)
+        {
+            ui.C11ScrollBar->blockSignals(true);
+            ui.C11ScrollBar->setMaximum(qlstmax.at(10).toDouble());
+            ui.C11ScrollBar->setMinimum(qlstmin.at(10).toDouble());
+            ui.C11ScrollBar->setSingleStep(qlstStep.at(10).toDouble());
+            ui.C11ScrollBar->setPageStep(qlstStep.at(10).toDouble());
+            ui.C11ScrollBar->setSliderPosition(qlstPos.at(10).toDouble());
+            ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10)+"("+ qlstStep.at(10) +")");
+            ui.C11labelMin->setText(qlstmin.at(10));
+            ui.C11labelMax->setText(qlstmax.at(10));
+            ui.C11ScrollBar->blockSignals(false);
+            ui.groupBox_19->show();
+        }
+        if(qlstnames.size() >= 12)
+        {
+            ui.C12ScrollBar->blockSignals(true);
+            ui.C12ScrollBar->setMaximum(qlstmax.at(11).toDouble());
+            ui.C12ScrollBar->setMinimum(qlstmin.at(11).toDouble());
+            ui.C12ScrollBar->setSingleStep(qlstStep.at(11).toDouble());
+            ui.C12ScrollBar->setPageStep(qlstStep.at(11).toDouble());
+            ui.C12ScrollBar->setSliderPosition(qlstPos.at(11).toDouble());
+            ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11)+"("+ qlstStep.at(11) +")");
+            ui.C12labelMin->setText(qlstmin.at(11));
+            ui.C12labelMax->setText(qlstmax.at(11));
+            ui.C12ScrollBar->blockSignals(false);
+            ui.groupBox_20->show();
+        }
+        if(qlstnames.size() >= 13)
+        {
+            ui.C13ScrollBar->blockSignals(true);
+            ui.C13ScrollBar->setMaximum(qlstmax.at(12).toDouble());
+            ui.C13ScrollBar->setMinimum(qlstmin.at(12).toDouble());
+            ui.C13ScrollBar->setSingleStep(qlstStep.at(12).toDouble());
+            ui.C13ScrollBar->setPageStep(qlstStep.at(12).toDouble());
+            ui.C13ScrollBar->setSliderPosition(qlstPos.at(12).toDouble());
+            ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12)+"("+ qlstStep.at(12) +")");
+            ui.C13labelMin->setText(qlstmin.at(12));
+            ui.C13labelMax->setText(qlstmax.at(12));
+            ui.C13ScrollBar->blockSignals(false);
+            ui.groupBox_21->show();
+        }
+        if(qlstnames.size() >= 14)
+        {
+            ui.C14ScrollBar->blockSignals(true);
+            ui.C14ScrollBar->setMaximum(qlstmax.at(13).toDouble());
+            ui.C14ScrollBar->setMinimum(qlstmin.at(13).toDouble());
+            ui.C14ScrollBar->setSingleStep(qlstStep.at(13).toDouble());
+            ui.C14ScrollBar->setPageStep(qlstStep.at(13).toDouble());
+            ui.C14ScrollBar->setSliderPosition(qlstPos.at(13).toDouble());
+            ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13)+"("+ qlstStep.at(13) +")");
+            ui.C14labelMin->setText(qlstmin.at(13));
+            ui.C14labelMax->setText(qlstmax.at(13));
+            ui.C14ScrollBar->blockSignals(false);
+            ui.groupBox_22->show();
+        }
+        if(qlstnames.size() >= 15)
+        {
+            ui.C15ScrollBar->blockSignals(true);
+            ui.C15ScrollBar->setMaximum(qlstmax.at(14).toDouble());
+            ui.C15ScrollBar->setMinimum(qlstmin.at(14).toDouble());
+            ui.C15ScrollBar->setSingleStep(qlstStep.at(14).toDouble());
+            ui.C15ScrollBar->setPageStep(qlstStep.at(14).toDouble());
+            ui.C15ScrollBar->setSliderPosition(qlstPos.at(14).toDouble());
+            ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14)+"("+ qlstStep.at(14) +")");
+            ui.C15labelMin->setText(qlstmin.at(14));
+            ui.C15labelMax->setText(qlstmax.at(14));
+            ui.C15ScrollBar->blockSignals(false);
+            ui.groupBox_23->show();
+        }
+        if(qlstnames.size() >= 16)
+        {
+            ui.C16ScrollBar->blockSignals(true);
+            ui.C16ScrollBar->setMaximum(qlstmax.at(15).toDouble());
+            ui.C16ScrollBar->setMinimum(qlstmin.at(15).toDouble());
+            ui.C16ScrollBar->setSingleStep(qlstStep.at(15).toDouble());
+            ui.C16ScrollBar->setPageStep(qlstStep.at(15).toDouble());
+            ui.C16ScrollBar->setSliderPosition(qlstPos.at(15).toDouble());
+            ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15)+"("+ qlstStep.at(15) +")");
+            ui.C16labelMin->setText(qlstmin.at(15));
+            ui.C16labelMax->setText(qlstmax.at(15));
+            ui.C16ScrollBar->blockSignals(false);
+            ui.groupBox_24->show();
+        }
+        if(qlstnames.size() >= 17)
+        {
+            ui.C17ScrollBar->blockSignals(true);
+            ui.C17ScrollBar->setMaximum(qlstmax.at(16).toDouble());
+            ui.C17ScrollBar->setMinimum(qlstmin.at(16).toDouble());
+            ui.C17ScrollBar->setSingleStep(qlstStep.at(16).toDouble());
+            ui.C17ScrollBar->setPageStep(qlstStep.at(16).toDouble());
+            ui.C17ScrollBar->setSliderPosition(qlstPos.at(16).toDouble());
+            ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16)+"("+ qlstStep.at(16) +")");
+            ui.C17labelMin->setText(qlstmin.at(16));
+            ui.C17labelMax->setText(qlstmax.at(16));
+            ui.C17ScrollBar->blockSignals(false);
+            ui.groupBox_25->show();
+        }
+        if(qlstnames.size() >= 18)
+        {
+            ui.C18ScrollBar->blockSignals(true);
+            ui.C18ScrollBar->setMaximum(qlstmax.at(17).toDouble());
+            ui.C18ScrollBar->setMinimum(qlstmin.at(17).toDouble());
+            ui.C18ScrollBar->setSingleStep(qlstStep.at(17).toDouble());
+            ui.C18ScrollBar->setPageStep(qlstStep.at(17).toDouble());
+            ui.C18ScrollBar->setSliderPosition(qlstPos.at(17).toDouble());
+            ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17)+"("+ qlstStep.at(17) +")");
+            ui.C18labelMin->setText(qlstmin.at(17));
+            ui.C18labelMax->setText(qlstmax.at(17));
+            ui.C18ScrollBar->blockSignals(false);
+            ui.groupBox_26->show();
+        }
+        if(qlstnames.size() >= 19)
+        {
+            ui.C19ScrollBar->blockSignals(true);
+            ui.C19ScrollBar->setMaximum(qlstmax.at(18).toDouble());
+            ui.C19ScrollBar->setMinimum(qlstmin.at(18).toDouble());
+            ui.C19ScrollBar->setSingleStep(qlstStep.at(18).toDouble());
+            ui.C19ScrollBar->setPageStep(qlstStep.at(18).toDouble());
+            ui.C19ScrollBar->setSliderPosition(qlstPos.at(18).toDouble());
+            ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18)+"("+ qlstStep.at(18) +")");
+            ui.C19labelMin->setText(qlstmin.at(18));
+            ui.C19labelMax->setText(qlstmax.at(18));
+            ui.C19ScrollBar->blockSignals(false);
+            ui.groupBox_27->show();
+        }
+        if(qlstnames.size() >= 20)
+        {
+            ui.C20ScrollBar->blockSignals(true);
+            ui.C20ScrollBar->setMaximum(qlstmax.at(19).toDouble());
+            ui.C20ScrollBar->setMinimum(qlstmin.at(19).toDouble());
+            ui.C20ScrollBar->setSingleStep(qlstStep.at(19).toDouble());
+            ui.C20ScrollBar->setPageStep(qlstStep.at(19).toDouble());
+            ui.C20ScrollBar->setSliderPosition(qlstPos.at(19).toDouble());
+            ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19)+"("+ qlstStep.at(19) +")");
+            ui.C20labelMin->setText(qlstmin.at(19));
+            ui.C20labelMax->setText(qlstmax.at(19));
+            ui.C20ScrollBar->blockSignals(false);
+            ui.groupBox_28->show();
+        }
     }
-    if(qlstnames.size() >= 7)
-    {
-    ui.C7ScrollBar->blockSignals(true);
-    ui.C7ScrollBar->setMaximum(qlstmax.at(6).toDouble());
-    ui.C7ScrollBar->setMinimum(qlstmin.at(6).toDouble());
-    ui.C7ScrollBar->setSingleStep(qlstStep.at(6).toDouble());
-    ui.C7ScrollBar->setPageStep(qlstStep.at(6).toDouble());
-    ui.C7ScrollBar->setSliderPosition(qlstPos.at(6).toDouble());
-    ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6)+"("+ qlstStep.at(6) +")");
-    ui.C7labelMin->setText(qlstmin.at(6));
-    ui.C7labelMax->setText(qlstmax.at(6));
-    ui.C7ScrollBar->blockSignals(false);
-        ui.groupBox_15->show();
-    }
-    if(qlstnames.size() >= 8)
-    {
-    ui.C8ScrollBar->blockSignals(true);
-    ui.C8ScrollBar->setMaximum(qlstmax.at(7).toDouble());
-    ui.C8ScrollBar->setMinimum(qlstmin.at(7).toDouble());
-    ui.C8ScrollBar->setSingleStep(qlstStep.at(7).toDouble());
-    ui.C8ScrollBar->setPageStep(qlstStep.at(7).toDouble());
-    ui.C8ScrollBar->setSliderPosition(qlstPos.at(7).toDouble());
-    ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7)+"("+ qlstStep.at(7) +")");
-    ui.C8labelMin->setText(qlstmin.at(7));
-    ui.C8labelMax->setText(qlstmax.at(7));
-    ui.C8ScrollBar->blockSignals(false);
-        ui.groupBox_16->show();
-    }
-    if(qlstnames.size() >= 9)
-    {
-    ui.C9ScrollBar->blockSignals(true);
-    ui.C9ScrollBar->setMaximum(qlstmax.at(8).toDouble());
-    ui.C9ScrollBar->setMinimum(qlstmin.at(8).toDouble());
-    ui.C9ScrollBar->setSingleStep(qlstStep.at(8).toDouble());
-    ui.C9ScrollBar->setPageStep(qlstStep.at(8).toDouble());
-    ui.C9ScrollBar->setSliderPosition(qlstPos.at(8).toDouble());
-    ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8)+"("+ qlstStep.at(8) +")");
-    ui.C9labelMin->setText(qlstmin.at(8));
-    ui.C9labelMax->setText(qlstmax.at(8));
-    ui.C9ScrollBar->blockSignals(false);
-        ui.groupBox_17->show();
-    }
-    if(qlstnames.size() >= 10)
-    {
-    ui.C10ScrollBar->blockSignals(true);
-    ui.C10ScrollBar->setMaximum(qlstmax.at(9).toDouble());
-    ui.C10ScrollBar->setMinimum(qlstmin.at(9).toDouble());
-    ui.C10ScrollBar->setSingleStep(qlstStep.at(9).toDouble());
-    ui.C10ScrollBar->setPageStep(qlstStep.at(9).toDouble());
-    ui.C10ScrollBar->setSliderPosition(qlstPos.at(9).toDouble());
-    ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9)+"("+ qlstStep.at(9) +")");
-    ui.C10labelMin->setText(qlstmin.at(9));
-    ui.C10labelMax->setText(qlstmax.at(9));
-    ui.C10ScrollBar->blockSignals(false);
-        ui.groupBox_18->show();
-    }
-    if(qlstnames.size() >= 11)
-    {
-    ui.C11ScrollBar->blockSignals(true);
-    ui.C11ScrollBar->setMaximum(qlstmax.at(10).toDouble());
-    ui.C11ScrollBar->setMinimum(qlstmin.at(10).toDouble());
-    ui.C11ScrollBar->setSingleStep(qlstStep.at(10).toDouble());
-    ui.C11ScrollBar->setPageStep(qlstStep.at(10).toDouble());
-    ui.C11ScrollBar->setSliderPosition(qlstPos.at(10).toDouble());
-    ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10)+"("+ qlstStep.at(10) +")");
-    ui.C11labelMin->setText(qlstmin.at(10));
-    ui.C11labelMax->setText(qlstmax.at(10));
-    ui.C11ScrollBar->blockSignals(false);
-        ui.groupBox_19->show();
-    }
-    if(qlstnames.size() >= 12)
-    {
-    ui.C12ScrollBar->blockSignals(true);
-    ui.C12ScrollBar->setMaximum(qlstmax.at(11).toDouble());
-    ui.C12ScrollBar->setMinimum(qlstmin.at(11).toDouble());
-    ui.C12ScrollBar->setSingleStep(qlstStep.at(11).toDouble());
-    ui.C12ScrollBar->setPageStep(qlstStep.at(11).toDouble());
-    ui.C12ScrollBar->setSliderPosition(qlstPos.at(11).toDouble());
-    ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11)+"("+ qlstStep.at(11) +")");
-    ui.C12labelMin->setText(qlstmin.at(11));
-    ui.C12labelMax->setText(qlstmax.at(11));
-    ui.C12ScrollBar->blockSignals(false);
-        ui.groupBox_20->show();
-    }
-    if(qlstnames.size() >= 13)
-    {
-    ui.C13ScrollBar->blockSignals(true);
-    ui.C13ScrollBar->setMaximum(qlstmax.at(12).toDouble());
-    ui.C13ScrollBar->setMinimum(qlstmin.at(12).toDouble());
-    ui.C13ScrollBar->setSingleStep(qlstStep.at(12).toDouble());
-    ui.C13ScrollBar->setPageStep(qlstStep.at(12).toDouble());
-    ui.C13ScrollBar->setSliderPosition(qlstPos.at(12).toDouble());
-    ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12)+"("+ qlstStep.at(12) +")");
-    ui.C13labelMin->setText(qlstmin.at(12));
-    ui.C13labelMax->setText(qlstmax.at(12));
-    ui.C13ScrollBar->blockSignals(false);
-        ui.groupBox_21->show();
-    }
-    if(qlstnames.size() >= 14)
-    {
-    ui.C14ScrollBar->blockSignals(true);
-    ui.C14ScrollBar->setMaximum(qlstmax.at(13).toDouble());
-    ui.C14ScrollBar->setMinimum(qlstmin.at(13).toDouble());
-    ui.C14ScrollBar->setSingleStep(qlstStep.at(13).toDouble());
-    ui.C14ScrollBar->setPageStep(qlstStep.at(13).toDouble());
-    ui.C14ScrollBar->setSliderPosition(qlstPos.at(13).toDouble());
-    ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13)+"("+ qlstStep.at(13) +")");
-    ui.C14labelMin->setText(qlstmin.at(13));
-    ui.C14labelMax->setText(qlstmax.at(13));
-    ui.C14ScrollBar->blockSignals(false);
-    ui.groupBox_22->show();
-    }
-    if(qlstnames.size() >= 15)
-    {
-    ui.C15ScrollBar->blockSignals(true);
-    ui.C15ScrollBar->setMaximum(qlstmax.at(14).toDouble());
-    ui.C15ScrollBar->setMinimum(qlstmin.at(14).toDouble());
-    ui.C15ScrollBar->setSingleStep(qlstStep.at(14).toDouble());
-    ui.C15ScrollBar->setPageStep(qlstStep.at(14).toDouble());
-    ui.C15ScrollBar->setSliderPosition(qlstPos.at(14).toDouble());
-    ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14)+"("+ qlstStep.at(14) +")");
-    ui.C15labelMin->setText(qlstmin.at(14));
-    ui.C15labelMax->setText(qlstmax.at(14));
-    ui.C15ScrollBar->blockSignals(false);
-        ui.groupBox_23->show();
-    }
-    if(qlstnames.size() >= 16)
-    {
-    ui.C16ScrollBar->blockSignals(true);
-    ui.C16ScrollBar->setMaximum(qlstmax.at(15).toDouble());
-    ui.C16ScrollBar->setMinimum(qlstmin.at(15).toDouble());
-    ui.C16ScrollBar->setSingleStep(qlstStep.at(15).toDouble());
-    ui.C16ScrollBar->setPageStep(qlstStep.at(15).toDouble());
-    ui.C16ScrollBar->setSliderPosition(qlstPos.at(15).toDouble());
-    ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15)+"("+ qlstStep.at(15) +")");
-    ui.C16labelMin->setText(qlstmin.at(15));
-    ui.C16labelMax->setText(qlstmax.at(15));
-    ui.C16ScrollBar->blockSignals(false);
-        ui.groupBox_24->show();
-    }
-    if(qlstnames.size() >= 17)
-    {
-    ui.C17ScrollBar->blockSignals(true);
-    ui.C17ScrollBar->setMaximum(qlstmax.at(16).toDouble());
-    ui.C17ScrollBar->setMinimum(qlstmin.at(16).toDouble());
-    ui.C17ScrollBar->setSingleStep(qlstStep.at(16).toDouble());
-    ui.C17ScrollBar->setPageStep(qlstStep.at(16).toDouble());
-    ui.C17ScrollBar->setSliderPosition(qlstPos.at(16).toDouble());
-    ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16)+"("+ qlstStep.at(16) +")");
-    ui.C17labelMin->setText(qlstmin.at(16));
-    ui.C17labelMax->setText(qlstmax.at(16));
-    ui.C17ScrollBar->blockSignals(false);
-        ui.groupBox_25->show();
-    }
-    if(qlstnames.size() >= 18)
-    {
-    ui.C18ScrollBar->blockSignals(true);
-    ui.C18ScrollBar->setMaximum(qlstmax.at(17).toDouble());
-    ui.C18ScrollBar->setMinimum(qlstmin.at(17).toDouble());
-    ui.C18ScrollBar->setSingleStep(qlstStep.at(17).toDouble());
-    ui.C18ScrollBar->setPageStep(qlstStep.at(17).toDouble());
-    ui.C18ScrollBar->setSliderPosition(qlstPos.at(17).toDouble());
-    ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17)+"("+ qlstStep.at(17) +")");
-    ui.C18labelMin->setText(qlstmin.at(17));
-    ui.C18labelMax->setText(qlstmax.at(17));
-    ui.C18ScrollBar->blockSignals(false);
-        ui.groupBox_26->show();
-    }
-    if(qlstnames.size() >= 19)
-    {
-    ui.C19ScrollBar->blockSignals(true);
-    ui.C19ScrollBar->setMaximum(qlstmax.at(18).toDouble());
-    ui.C19ScrollBar->setMinimum(qlstmin.at(18).toDouble());
-    ui.C19ScrollBar->setSingleStep(qlstStep.at(18).toDouble());
-    ui.C19ScrollBar->setPageStep(qlstStep.at(18).toDouble());
-    ui.C19ScrollBar->setSliderPosition(qlstPos.at(18).toDouble());
-    ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18)+"("+ qlstStep.at(18) +")");
-    ui.C19labelMin->setText(qlstmin.at(18));
-    ui.C19labelMax->setText(qlstmax.at(18));
-    ui.C19ScrollBar->blockSignals(false);
-    ui.groupBox_27->show();
-    }
-    if(qlstnames.size() >= 20)
-    {
-    ui.C20ScrollBar->blockSignals(true);
-    ui.C20ScrollBar->setMaximum(qlstmax.at(19).toDouble());
-    ui.C20ScrollBar->setMinimum(qlstmin.at(19).toDouble());
-    ui.C20ScrollBar->setSingleStep(qlstStep.at(19).toDouble());
-    ui.C20ScrollBar->setPageStep(qlstStep.at(19).toDouble());
-    ui.C20ScrollBar->setSliderPosition(qlstPos.at(19).toDouble());
-    ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19)+"("+ qlstStep.at(19) +")");
-    ui.C20labelMin->setText(qlstmin.at(19));
-    ui.C20labelMax->setText(qlstmax.at(19));
-    ui.C20ScrollBar->blockSignals(false);
-    ui.groupBox_28->show();
-    }
-}
     else
     {
         MathmodRef->ui.glWidget->IsoObjet->Nb_Sliders =
-        MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  -1;
+            MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  -1;
         HideSliders();
     }
 }
@@ -1447,7 +1447,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
             for(int k=0; k < tmp.count(); k++)
             {
-                    result += tmp[k].toString() + ";";
+                result += tmp[k].toString() + ";";
             }
         }
 
@@ -1602,8 +1602,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         /// process the new surface
         if(textureIndex == -1)
         {
-        if(MathmodRef->RootObjet.CurrentTreestruct.fxyz.count() > 0)
-            MathmodRef->ProcessNewIsoSurface( );
+            if(MathmodRef->RootObjet.CurrentTreestruct.fxyz.count() > 0)
+                MathmodRef->ProcessNewIsoSurface( );
         }
         else
         {
@@ -1809,7 +1809,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
             for(int k=0; k < tmp.count(); k++)
             {
-                    result += tmp[k].toString() + ";";
+                result += tmp[k].toString() + ";";
             }
         }
 
@@ -2099,7 +2099,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
             for(int k=0; k < tmp.count(); k++)
             {
-                    result += tmp[k].toString() + ";";
+                result += tmp[k].toString() + ";";
             }
         }
 
@@ -2312,7 +2312,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
                 for(int k=0; k < tmp.count(); k++)
                 {
-                        result += tmp[k].toString() + ";";
+                    result += tmp[k].toString() + ";";
                 }
             }
 
@@ -2654,7 +2654,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
                 for(int k=0; k < tmp.count(); k++)
                 {
-                        result += tmp[k].toString() + ";";
+                    result += tmp[k].toString() + ";";
                 }
             }
 
@@ -2924,7 +2924,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
                 for(int k=0; k < tmp.count(); k++)
                 {
-                        result += tmp[k].toString() + ";";
+                    result += tmp[k].toString() + ";";
                 }
             }
             strtmp.replace("\n","");
@@ -3955,8 +3955,8 @@ void DrawingOptions::UpdateDescription(int position)
             if(!MathmodRef->RootObjet.CurrentTreestruct.Cnd.empty())
             {
                 position < MathmodRef->RootObjet.CurrentTreestruct.Cnd.size() ?
-                            ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(position)) :
-                            ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
+                ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(position)) :
+                ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
             }
             else
             {
@@ -4194,9 +4194,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Var->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Var->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Varu"] = array2;
+                    copyCurrentObject2["Varu"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Varu");
@@ -4211,9 +4211,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Fct->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Fct->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Funct"] = array2;
+                    copyCurrentObject2["Funct"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Funct");
@@ -4227,13 +4227,13 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Cst->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Cst->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Const"] = array2;
+                    copyCurrentObject2["Const"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Const");
-               /************************************************************************************************/
+                /************************************************************************************************/
 
                 //Some keys cleaning..
                 copyCurrentObject2.remove("Param3D");
@@ -4282,14 +4282,13 @@ void DrawingOptions::on_updateButton_clicked()
                     array.replace(indexcurrentFormula, ui.CndUpdateEdit->toPlainText());
                     copyCurrentObject2["Cnd"] = array;
                 }
-                else
-                    if(ui.CndUpdateEdit->toPlainText() != "")
-                    {
-                        array=copyCurrentObject2["Cnd"].toArray();
-                        for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
-                            array.append(ui.CndUpdateEdit->toPlainText());
-                        copyCurrentObject2["Cnd"] = array;
-                    }
+                else if(ui.CndUpdateEdit->toPlainText() != "")
+                {
+                    array=copyCurrentObject2["Cnd"].toArray();
+                    for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
+                        array.append(ui.CndUpdateEdit->toPlainText());
+                    copyCurrentObject2["Cnd"] = array;
+                }
                 else
                     copyCurrentObject2.remove("Cnd");
 
@@ -4312,9 +4311,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Var->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Var->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Varu"] = array2;
+                    copyCurrentObject2["Varu"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Varu");
@@ -4329,9 +4328,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Fct->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Fct->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Funct"] = array2;
+                    copyCurrentObject2["Funct"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Funct");
@@ -4345,9 +4344,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Cst->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Cst->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Const"] = array2;
+                    copyCurrentObject2["Const"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Const");
@@ -4398,15 +4397,14 @@ void DrawingOptions::on_updateButton_clicked()
                         array.append(ui.CndUpdateEdit->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
+                    else if(ui.CndUpdateEdit->toPlainText() != "")
+                    {
+                        array=copyCurrentObject2["Cnd"].toArray();
+                        for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
+                            array.append(ui.CndUpdateEdit->toPlainText());
+                        copyCurrentObject2["Cnd"] = array;
+                    }
                     else
-                        if(ui.CndUpdateEdit->toPlainText() != "")
-                        {
-                            array=copyCurrentObject2["Cnd"].toArray();
-                            for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
-                                array.append(ui.CndUpdateEdit->toPlainText());
-                            copyCurrentObject2["Cnd"] = array;
-                        }
-                        else
                         copyCurrentObject2.remove("Cnd");
 
                     if(copyCurrentObject2["Grid"].isArray())
@@ -4463,16 +4461,15 @@ void DrawingOptions::on_updateButton_clicked()
                         array.insert(indexcurrentFormula, ui.CndUpdateEdit->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
+                    else if(ui.CndUpdateEdit->toPlainText() != "")
+                    {
+                        array=copyCurrentObject2["Cnd"].toArray();
+                        for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
+                            array.append(ui.CndUpdateEdit->toPlainText());
+                        copyCurrentObject2["Cnd"] = array;
+                    }
                     else
-                        if(ui.CndUpdateEdit->toPlainText() != "")
-                        {
-                            array=copyCurrentObject2["Cnd"].toArray();
-                            for(int i=0; i<copyCurrentObject2["Fxyz"].toArray().count(); i++)
-                                array.append(ui.CndUpdateEdit->toPlainText());
-                            copyCurrentObject2["Cnd"] = array;
-                        }
-                        else
-                            copyCurrentObject2.remove("Cnd");
+                        copyCurrentObject2.remove("Cnd");
 
                     if(copyCurrentObject2["Grid"].isArray())
                     {
@@ -4494,9 +4491,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Var->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Var->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Varu"] = array2;
+                    copyCurrentObject2["Varu"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Varu");
@@ -4511,9 +4508,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Fct->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Fct->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Funct"] = array2;
+                    copyCurrentObject2["Funct"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Funct");
@@ -4526,16 +4523,16 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Cst->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Cst->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Const"] = array2;
+                    copyCurrentObject2["Const"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Const");
-               /************************************************************************************************/
+                /************************************************************************************************/
 
-           copyCurrentObject["Iso3D"] = copyCurrentObject2;
-          }
+                copyCurrentObject["Iso3D"] = copyCurrentObject2;
+            }
             //Some keys cleaning..
             copyCurrentObject.remove("Param3D");
             copyCurrentObject.remove("Param4D");
@@ -4546,8 +4543,7 @@ void DrawingOptions::on_updateButton_clicked()
             UpdateCurrentTreeObject();
         }
     }
-    else
-    if(copyCurrentObject["Param3D"].isObject())
+    else if(copyCurrentObject["Param3D"].isObject())
     {
         QJsonObject copyCurrentObject2 = MathmodRef->RootObjet.CurrentJsonObject["Param3D"].toObject();
         if(indexcurrentFormula != -1)
@@ -4619,9 +4615,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Varu"] = array2;
+                    copyCurrentObject2["Varu"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Varu");
@@ -4635,9 +4631,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Fct_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Fct_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Funct"] = array2;
+                    copyCurrentObject2["Funct"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Funct");
@@ -4650,13 +4646,13 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Cst_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Cst_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Const"] = array2;
+                    copyCurrentObject2["Const"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Const");
-               /************************************************************************************************/
+                /************************************************************************************************/
 
                 //Some keys cleaning..
                 copyCurrentObject2.remove("Iso3D");
@@ -4714,15 +4710,14 @@ void DrawingOptions::on_updateButton_clicked()
                     array.replace(indexcurrentFormula, ui.CndUpdateEdit_2->toPlainText());
                     copyCurrentObject2["Cnd"] = array;
                 }
+                else if(ui.CndUpdateEdit->toPlainText() != "")
+                {
+                    array=copyCurrentObject2["Cnd"].toArray();
+                    for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
+                        array.append(ui.CndUpdateEdit->toPlainText());
+                    copyCurrentObject2["Cnd"] = array;
+                }
                 else
-                    if(ui.CndUpdateEdit->toPlainText() != "")
-                    {
-                        array=copyCurrentObject2["Cnd"].toArray();
-                        for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
-                            array.append(ui.CndUpdateEdit->toPlainText());
-                        copyCurrentObject2["Cnd"] = array;
-                    }
-                    else
                     copyCurrentObject2.remove("Cnd");
 
                 /************************************************************************************************/
@@ -4735,9 +4730,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Varu"] = array2;
+                    copyCurrentObject2["Varu"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Varu");
@@ -4752,9 +4747,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Fct_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Fct_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Funct"] = array2;
+                    copyCurrentObject2["Funct"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Funct");
@@ -4768,13 +4763,13 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Cst_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Cst_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Const"] = array2;
+                    copyCurrentObject2["Const"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Const");
-               /************************************************************************************************/
+                /************************************************************************************************/
 
                 copyCurrentObject["Param3D"] = copyCurrentObject2;
             }
@@ -4834,15 +4829,14 @@ void DrawingOptions::on_updateButton_clicked()
                         array.append(ui.CndUpdateEdit_2->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
+                    else if(ui.CndUpdateEdit->toPlainText() != "")
+                    {
+                        array=copyCurrentObject2["Cnd"].toArray();
+                        for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
+                            array.append(ui.CndUpdateEdit->toPlainText());
+                        copyCurrentObject2["Cnd"] = array;
+                    }
                     else
-                        if(ui.CndUpdateEdit->toPlainText() != "")
-                        {
-                            array=copyCurrentObject2["Cnd"].toArray();
-                            for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
-                                array.append(ui.CndUpdateEdit->toPlainText());
-                            copyCurrentObject2["Cnd"] = array;
-                        }
-                        else
                         copyCurrentObject2.remove("Cnd");
 
                     //copyCurrentObject["Param3D"] = copyCurrentObject2;
@@ -4893,15 +4887,14 @@ void DrawingOptions::on_updateButton_clicked()
                         array.append(ui.CndUpdateEdit_2->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
+                    else if(ui.CndUpdateEdit->toPlainText() != "")
+                    {
+                        array=copyCurrentObject2["Cnd"].toArray();
+                        for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
+                            array.append(ui.CndUpdateEdit->toPlainText());
+                        copyCurrentObject2["Cnd"] = array;
+                    }
                     else
-                        if(ui.CndUpdateEdit->toPlainText() != "")
-                        {
-                            array=copyCurrentObject2["Cnd"].toArray();
-                            for(int i=0; i<copyCurrentObject2["Fx"].toArray().count(); i++)
-                                array.append(ui.CndUpdateEdit->toPlainText());
-                            copyCurrentObject2["Cnd"] = array;
-                        }
-                        else
                         copyCurrentObject2.remove("Cnd");
 
                     if(copyCurrentObject2["Grid"].isArray())
@@ -4924,9 +4917,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Varu"] = array2;
+                    copyCurrentObject2["Varu"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Varu");
@@ -4941,9 +4934,9 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Fct_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Fct_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Funct"] = array2;
+                    copyCurrentObject2["Funct"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Funct");
@@ -4957,13 +4950,13 @@ void DrawingOptions::on_updateButton_clicked()
                     {
                         if( (ui.tableWidget_Cst_2->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Cst_2->item(i, 0))->text());
-                     }
+                    }
 
-                     copyCurrentObject2["Const"] = array2;
+                    copyCurrentObject2["Const"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Const");
-               /************************************************************************************************/
+                /************************************************************************************************/
                 copyCurrentObject["Param3D"] = copyCurrentObject2;
             }
 
@@ -5210,7 +5203,7 @@ void DrawingOptions::on_updateButton_clicked()
 
 
 
-    }
+}
 
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_updateParam_clicked()
@@ -5355,9 +5348,9 @@ void DrawingOptions::on_yzhorizontalScrollBar2_valueChanged(int value)
 void DrawingOptions::on_InitMatrix_2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.RotStrength =
-    MathmodRef->ui.glWidget->LocalScene.animxValueStep =
-    MathmodRef->ui.glWidget->LocalScene.animyValueStep =
-    MathmodRef->ui.glWidget->LocalScene.animzValueStep = 0.0;
+        MathmodRef->ui.glWidget->LocalScene.animxValueStep =
+            MathmodRef->ui.glWidget->LocalScene.animyValueStep =
+                MathmodRef->ui.glWidget->LocalScene.animzValueStep = 0.0;
 }
 
 
@@ -5807,10 +5800,10 @@ void DrawingOptions::UpdateGui(int argc)
     ui.linecolumn_3->setMaximum(sqr);
 
     ListeModelTexture LstModelTexture =
-                            (Parameters->LoadCollectionModels(
-                            JSONMathModels,
-                            MathmodRef->pariso,
-                            argc));
+        (Parameters->LoadCollectionModels(
+             JSONMathModels,
+             MathmodRef->pariso,
+             argc));
 
     //Load the script containing isosurface and parametric formulas:
     ui.choice->insertItems(0, LstModelTexture.listeModels);
@@ -5881,8 +5874,8 @@ void DrawingOptions::on_pushButton_2_clicked()
 
 void DrawingOptions::on_pushButton_3_clicked()
 {
-        ui.isoNameEdit->setText(ui.isoNameEdit->toPlainText() + "_01");
-        on_updateButton_clicked();
+    ui.isoNameEdit->setText(ui.isoNameEdit->toPlainText() + "_01");
+    on_updateButton_clicked();
 }
 
 void DrawingOptions::on_cut_2_clicked()
@@ -5918,7 +5911,8 @@ void DrawingOptions::on_transparence_ParIso_clicked(bool checked)
 
 void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
 {
-    switch (CurrentFormulaType) {
+    switch (CurrentFormulaType)
+    {
     case 1:
         MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
         break;
@@ -6015,8 +6009,8 @@ void DrawingOptions::on_ShowtextureScript_clicked()
 
 void DrawingOptions::on_TurbulenceCheckBox_clicked()
 {
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseActive *= -1;
-        on_pushButton_5_clicked();
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseActive *= -1;
+    on_pushButton_5_clicked();
 }
 
 void DrawingOptions::on_pushButton_5_clicked()
@@ -6069,8 +6063,8 @@ void DrawingOptions::on_C1ScrollBar_valueChanged(int value)
     double pos;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[0]=
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[0]=
-            value;
+              MathmodRef->ui.glWidget->ParObjet->SliderValues[0]=
+                  value;
     ui.C1label->setText(qlstnames.at(0) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6084,8 +6078,8 @@ void DrawingOptions::on_C2ScrollBar_valueChanged(int value)
     double pos;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[1]=
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[1]=
-            value;
+              MathmodRef->ui.glWidget->ParObjet->SliderValues[1]=
+                  value;
     ui.C2label->setText(qlstnames.at(1) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6099,8 +6093,8 @@ void DrawingOptions::on_C3ScrollBar_valueChanged(int value)
     double pos;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[2]=
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[2]=
-            value;
+              MathmodRef->ui.glWidget->ParObjet->SliderValues[2]=
+                  value;
     ui.C3label->setText(qlstnames.at(2) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6114,8 +6108,8 @@ void DrawingOptions::on_C4ScrollBar_valueChanged(int value)
     double pos;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[3]=
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[3]=
-            value;
+              MathmodRef->ui.glWidget->ParObjet->SliderValues[3]=
+                  value;
     ui.C4label->setText(qlstnames.at(3) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6130,7 +6124,7 @@ void DrawingOptions::on_C5ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[4]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[4]=
-              value;
+                  value;
     ui.C5label->setText(qlstnames.at(4) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6145,7 +6139,7 @@ void DrawingOptions::on_C6ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[5]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[5]=
-              value;
+                  value;
     ui.C6label->setText(qlstnames.at(5) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6160,7 +6154,7 @@ void DrawingOptions::on_C7ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[6]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[6]=
-              value;
+                  value;
     ui.C7label->setText(qlstnames.at(6) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6175,7 +6169,7 @@ void DrawingOptions::on_C8ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[7]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[7]=
-              value;
+                  value;
     ui.C8label->setText(qlstnames.at(7) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6190,7 +6184,7 @@ void DrawingOptions::on_C9ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[8]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[8]=
-              value;
+                  value;
     ui.C9label->setText(qlstnames.at(8) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6205,7 +6199,7 @@ void DrawingOptions::on_C10ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[9]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[9]=
-              value;
+                  value;
     ui.C10label->setText(qlstnames.at(9) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6220,7 +6214,7 @@ void DrawingOptions::on_C11ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[10]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[10]=
-              value;
+                  value;
     ui.C11label->setText(qlstnames.at(10) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6235,7 +6229,7 @@ void DrawingOptions::on_C12ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[11]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[11]=
-              value;
+                  value;
     ui.C12label->setText(qlstnames.at(11) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6250,7 +6244,7 @@ void DrawingOptions::on_C13ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[12]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[12]=
-              value;
+                  value;
     ui.C13label->setText(qlstnames.at(12) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6265,7 +6259,7 @@ void DrawingOptions::on_C14ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[13]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[13]=
-              value;
+                  value;
     ui.C14label->setText(qlstnames.at(13) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6279,7 +6273,7 @@ void DrawingOptions::on_C15ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[14]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[14]=
-              value;
+                  value;
     ui.C15label->setText(qlstnames.at(14) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6294,7 +6288,7 @@ void DrawingOptions::on_C16ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[15]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[15]=
-              value;
+                  value;
     ui.C16label->setText(qlstnames.at(15) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6309,7 +6303,7 @@ void DrawingOptions::on_C17ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[16]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[16]=
-              value;
+                  value;
     ui.C17label->setText(qlstnames.at(16) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6324,7 +6318,7 @@ void DrawingOptions::on_C18ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[17]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[17]=
-              value;
+                  value;
     ui.C18label->setText(qlstnames.at(17) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6339,7 +6333,7 @@ void DrawingOptions::on_C19ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[18]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[18]=
-              value;
+                  value;
     ui.C19label->setText(qlstnames.at(18) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6354,7 +6348,7 @@ void DrawingOptions::on_C20ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     pos = MathmodRef->ui.glWidget->IsoObjet->SliderValues[19]=
               MathmodRef->ui.glWidget->ParObjet->SliderValues[19]=
-              value;
+                  value;
     ui.C20label->setText(qlstnames.at(19) + " = " +QString::number(pos));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -6372,7 +6366,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         MathmodRef->ui.glWidget->LocalScene.slider = 1;
         for (int i = 0; i < size; ++i)
             MathmodRef->ui.glWidget->IsoObjet->SliderValues[i] =
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[i] =
+                MathmodRef->ui.glWidget->ParObjet->SliderValues[i] =
                     qlstPos.at(i+(index-1)*size).toDouble();
 
         if(size >=1)
@@ -6575,7 +6569,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
 
 void DrawingOptions::on_C20toolButton_clicked()
 {
-     int range = (indexcurrentSet <1) ? 19 : (indexcurrentSet-1)*qlstnames.size() + 19;
+    int range = (indexcurrentSet <1) ? 19 : (indexcurrentSet-1)*qlstnames.size() + 19;
     sliderconf.currentSlider=19;
     sliderconf.ui.MaxEdit->setText(qlstmax[range]);
     sliderconf.ui.MinEdit->setText(qlstmin[range]);
@@ -6875,10 +6869,10 @@ void DrawingOptions::update_slider_param()
         ui.C1ScrollBar->blockSignals(false);
 
         MathmodRef->ui.glWidget->IsoObjet->SliderNames[0] =
-        MathmodRef->ui.glWidget->ParObjet->SliderNames[0] =
+            MathmodRef->ui.glWidget->ParObjet->SliderNames[0] =
                 qlstnames.at(0).toStdString();
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[0] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[0] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[0] =
                 qlstPos.at(0).toDouble();
     }
     if(SliderIndex==1)
@@ -6899,7 +6893,7 @@ void DrawingOptions::update_slider_param()
         ui.C2labelMax->setText(qlstmax.at(1));
         ui.C2ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[1] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[1] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[1] =
                 qlstPos.at(1).toDouble();
     }
     if(SliderIndex==2)
@@ -6920,7 +6914,7 @@ void DrawingOptions::update_slider_param()
         ui.C3labelMax->setText(qlstmax.at(2));
         ui.C3ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[2] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[2] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[2] =
                 qlstPos.at(2).toDouble();
     }
     if(SliderIndex==3)
@@ -6941,7 +6935,7 @@ void DrawingOptions::update_slider_param()
         ui.C4labelMax->setText(qlstmax.at(3));
         ui.C4ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[3] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[3] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[3] =
                 qlstPos.at(3).toDouble();
     }
     if(SliderIndex==4)
@@ -6962,7 +6956,7 @@ void DrawingOptions::update_slider_param()
         ui.C5labelMax->setText(qlstmax.at(4));
         ui.C5ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[4] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[4] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[4] =
                 qlstPos.at(4).toDouble();
     }
     if(SliderIndex==5)
@@ -6983,7 +6977,7 @@ void DrawingOptions::update_slider_param()
         ui.C6labelMax->setText(qlstmax.at(5));
         ui.C6ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[5] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[5] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[5] =
                 qlstPos.at(5).toDouble();
     }
     if(SliderIndex==6)
@@ -7004,7 +6998,7 @@ void DrawingOptions::update_slider_param()
         ui.C7labelMax->setText(qlstmax.at(6));
         ui.C7ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[6] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[6] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[6] =
                 qlstPos.at(6).toDouble();
     }
     if(SliderIndex==7)
@@ -7025,7 +7019,7 @@ void DrawingOptions::update_slider_param()
         ui.C8labelMax->setText(qlstmax.at(7));
         ui.C8ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[7] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[7] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[7] =
                 qlstPos.at(7).toDouble();
     }
     if(SliderIndex==8)
@@ -7046,7 +7040,7 @@ void DrawingOptions::update_slider_param()
         ui.C9labelMax->setText(qlstmax.at(8));
         ui.C9ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[8] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[8] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[8] =
                 qlstPos.at(8).toDouble();
     }
     if(SliderIndex==9)
@@ -7067,7 +7061,7 @@ void DrawingOptions::update_slider_param()
         ui.C10labelMax->setText(qlstmax.at(9));
         ui.C10ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[9] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[9] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[9] =
                 qlstPos.at(9).toDouble();
     }
     if(SliderIndex==10)
@@ -7088,7 +7082,7 @@ void DrawingOptions::update_slider_param()
         ui.C11labelMax->setText(qlstmax.at(10));
         ui.C11ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[10] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[10] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[10] =
                 qlstPos.at(10).toDouble();
     }
     if(SliderIndex==11)
@@ -7109,7 +7103,7 @@ void DrawingOptions::update_slider_param()
         ui.C12labelMax->setText(qlstmax.at(11));
         ui.C12ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[11] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[11] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[11] =
                 qlstPos.at(11).toDouble();
     }
     if(SliderIndex==12)
@@ -7130,7 +7124,7 @@ void DrawingOptions::update_slider_param()
         ui.C13labelMax->setText(qlstmax.at(12));
         ui.C13ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[12] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[12] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[12] =
                 qlstPos.at(12).toDouble();
     }
     if(SliderIndex==13)
@@ -7151,7 +7145,7 @@ void DrawingOptions::update_slider_param()
         ui.C14labelMax->setText(qlstmax.at(13));
         ui.C14ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[13] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[13] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[13] =
                 qlstPos.at(13).toDouble();
     }
     if(SliderIndex==14)
@@ -7172,7 +7166,7 @@ void DrawingOptions::update_slider_param()
         ui.C15labelMax->setText(qlstmax.at(14));
         ui.C15ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[14] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[14] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[14] =
                 qlstPos.at(14).toDouble();
     }
     if(SliderIndex==15)
@@ -7193,7 +7187,7 @@ void DrawingOptions::update_slider_param()
         ui.C16labelMax->setText(qlstmax.at(15));
         ui.C16ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[15] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[15] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[15] =
                 qlstPos.at(15).toDouble();
     }
     if(SliderIndex==16)
@@ -7214,7 +7208,7 @@ void DrawingOptions::update_slider_param()
         ui.C17labelMax->setText(qlstmax.at(16));
         ui.C17ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[16] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[16] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[16] =
                 qlstPos.at(16).toDouble();
     }
     if(SliderIndex==17)
@@ -7235,7 +7229,7 @@ void DrawingOptions::update_slider_param()
         ui.C18labelMax->setText(qlstmax.at(17));
         ui.C18ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[17] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[17] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[17] =
                 qlstPos.at(17).toDouble();
     }
     if(SliderIndex==18)
@@ -7256,7 +7250,7 @@ void DrawingOptions::update_slider_param()
         ui.C19labelMax->setText(qlstmax.at(18));
         ui.C19ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[18] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[18] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[18] =
                 qlstPos.at(18).toDouble();
     }
     if(SliderIndex==19)
@@ -7277,7 +7271,7 @@ void DrawingOptions::update_slider_param()
         ui.C20labelMax->setText(qlstmax.at(19));
         ui.C20ScrollBar->blockSignals(false);
         MathmodRef->ui.glWidget->IsoObjet->SliderValues[19] =
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[19] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[19] =
                 qlstPos.at(19).toDouble();
     }
 
@@ -7618,46 +7612,66 @@ void DrawingOptions::update_infos_param(int index)
 {
     switch(index)
     {
-        case 1 : on_C1toolButton_clicked();
-                      break;
-        case 2 : on_C2toolButton_clicked();
-                      break;
-        case 3 : on_C3toolButton_clicked();
-                      break;
-        case 4 : on_C4toolButton_clicked();
-                      break;
-        case 5 : on_C5toolButton_clicked();
-                      break;
-        case 6 : on_C6toolButton_clicked();
-                      break;
-        case 7 : on_C7toolButton_clicked();
-                      break;
-        case 8 : on_C8toolButton_clicked();
-                      break;
-        case 9 : on_C9toolButton_clicked();
-                      break;
-        case 10 : on_C10toolButton_clicked();
-                      break;
-        case 11 : on_C11toolButton_clicked();
-                      break;
-        case 12 : on_C12toolButton_clicked();
-                      break;
-        case 13 : on_C13toolButton_clicked();
-                      break;
-        case 14 : on_C14toolButton_clicked();
-                      break;
-        case 15 : on_C15toolButton_clicked();
-                      break;
-        case 16 : on_C16toolButton_clicked();
-                      break;
-        case 17 : on_C17toolButton_clicked();
-                      break;
-        case 18 : on_C18toolButton_clicked();
-                      break;
-        case 19 : on_C19toolButton_clicked();
-                      break;
-        case 20 : on_C20toolButton_clicked();
-                      break;
+    case 1 :
+        on_C1toolButton_clicked();
+        break;
+    case 2 :
+        on_C2toolButton_clicked();
+        break;
+    case 3 :
+        on_C3toolButton_clicked();
+        break;
+    case 4 :
+        on_C4toolButton_clicked();
+        break;
+    case 5 :
+        on_C5toolButton_clicked();
+        break;
+    case 6 :
+        on_C6toolButton_clicked();
+        break;
+    case 7 :
+        on_C7toolButton_clicked();
+        break;
+    case 8 :
+        on_C8toolButton_clicked();
+        break;
+    case 9 :
+        on_C9toolButton_clicked();
+        break;
+    case 10 :
+        on_C10toolButton_clicked();
+        break;
+    case 11 :
+        on_C11toolButton_clicked();
+        break;
+    case 12 :
+        on_C12toolButton_clicked();
+        break;
+    case 13 :
+        on_C13toolButton_clicked();
+        break;
+    case 14 :
+        on_C14toolButton_clicked();
+        break;
+    case 15 :
+        on_C15toolButton_clicked();
+        break;
+    case 16 :
+        on_C16toolButton_clicked();
+        break;
+    case 17 :
+        on_C17toolButton_clicked();
+        break;
+    case 18 :
+        on_C18toolButton_clicked();
+        break;
+    case 19 :
+        on_C19toolButton_clicked();
+        break;
+    case 20 :
+        on_C20toolButton_clicked();
+        break;
     }
 
 }

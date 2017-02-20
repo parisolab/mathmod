@@ -21,12 +21,12 @@
 
 #include "paratransformation.h"
 
-    void ParTransformation::Scalx(float, float, float)
-    {
-    }
-    void ParTransformation::Scaly(float, float, float)
-    {
-    }
-    void ParTransformation::Scalz(float, float, float)
-    {
-    }
+void ParTransformation::Scalx(float, float, float)
+{
+}
+void ParTransformation::Scaly(float, float, float)
+{
+}
+void ParTransformation::Scalz(float, float, float)
+{
+}
