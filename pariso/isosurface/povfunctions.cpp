@@ -38,7 +38,7 @@ double f_hex_y(const double* pp)
     double x1,y1,x2,y2, th, pi;
     double p[10];
     pi=((double)314159265/(double)100000000);
-    for(int i=0; i<4;i++)
+    for(int i=0; i<4; i++)
         p[i] = pp[i];
     x1=fabs(fmod(fabs(p[0]) , sqrt(3.0))-sqrt(3.0)/2);
     y1=fabs(fmod(fabs(p[1]) , 3)-1.5);
@@ -68,7 +68,7 @@ double fmesh(const double* pp) // 40
 
     pi=((double)314159265/(double)100000000);
 
-    for(int i=0; i<10;i++)
+    for(int i=0; i<10; i++)
         p[i] = pp[i];
 
     th = pi / p[3];
@@ -109,7 +109,7 @@ double  fhelix1(const double* pp)
     double r, r2, r3, temp, th, ph, x2, pi;
     double p[10];
     pi=((double)314159265/(double)100000000);
-    for(int i=0; i<10;i++)
+    for(int i=0; i<10; i++)
         p[i] = pp[i];
     r = sqrt(p[0] * p[0] + p[2] * p[2]);
     if ((p[0] == 0) && (p[2] == 0))
@@ -139,7 +139,7 @@ double  fhelix1(const double* pp)
             r2 = pow((pow(fabs(p[0]), temp) + pow(fabs(p[2]), temp)), p[8] *.5);
         }
         else
-             fabs(p[0]) > fabs(p[2]) ? r2 = fabs(p[0]) : r2 = fabs(p[2]);
+            fabs(p[0]) > fabs(p[2]) ? r2 = fabs(p[0]) : r2 = fabs(p[2]);
     }
     (p[6] + r) < r2 ? r3 = (p[6] + r) : r3 = r2;
     return (-p[5] + r3);
@@ -149,7 +149,7 @@ double fhelix2(const double* pp) // 26
 {
     double th, ph, x2, z2, r2, temp;
     double p[10];
-    for(int i=0; i<10;i++)
+    for(int i=0; i<10; i++)
         p[i] = pp[i];
     /* helical shape  for (minor radius>major radius  *
      *    cross section   p[5] same as NFUNCTION = 6      */

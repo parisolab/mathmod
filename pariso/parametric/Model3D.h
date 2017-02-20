@@ -76,8 +76,8 @@ public:
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const, Funct, Rgbt, Grid;
     std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100],
-    RgbtNames[100], Rgbts[100], VRgbt, VRgbts[100], VRgbtNames[100],
-    Gradient, Noise, NoiseShape, SliderNames[50];
+        RgbtNames[100], Rgbts[100], VRgbt, VRgbts[100], VRgbtNames[100],
+        Gradient, Noise, NoiseShape, SliderNames[50];
     double  v_inf[100], v_sup[100],u_inf[100],u_sup[100],dif_v[100],dif_u[100];
     double SliderValues[5000];
     double stepMorph, pace;
