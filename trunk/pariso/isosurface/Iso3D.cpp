@@ -39,23 +39,23 @@ ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 double TurbulenceWorley(const double* p)
 {
     return NoiseFunction->CellNoiseFunc(
-                p[0],
-                p[1],
-                p[2],
-                (int)p[3],
-                (int)p[4],
-                (int)p[5]);
+               p[0],
+               p[1],
+               p[2],
+               (int)p[3],
+               (int)p[4],
+               (int)p[5]);
 }
 
 double TurbulencePerlin(const double* p)
 {
     return PNoise->FractalNoise3D(
-                p[0],
-                p[1],
-                p[2],
-                (int)p[3],
-                p[4],
-                p[5]);
+               p[0],
+               p[1],
+               p[2],
+               (int)p[3],
+               p[4],
+               p[5]);
 }
 /// +++++++++++++++++++++++++++++++++++++++++
 void Iso3D::stopcalculations()
@@ -119,12 +119,14 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     morph_activated = -1;
     AllComponentTraited = false;
     //Add predefined constatnts:
-    for(int i=0;i<20;i++)
+    for(int i=0; i<20; i++)
     {
         SliderNames[i]= "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
-    Lacunarity = 0.5; Gain = 1.0; Octaves = 4;
+    Lacunarity = 0.5;
+    Gain = 1.0;
+    Octaves = 4;
     InitParser();
     stError = ParserIso();
 }
@@ -534,7 +536,7 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
 
     // Noise Parser:
     for(int j=0; j<Nb_constants; j++)
-    NoiseParser->AddConstant(ConstNames[j], ConstValues[j]);
+        NoiseParser->AddConstant(ConstNames[j], ConstValues[j]);
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
@@ -618,13 +620,13 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
 
                 IJK = J+k;
 
-/*
-                tmp = CellNoiseexample.CellNoiseFunc(
-                            vals[0],
-                            vals[1],
-                            vals[2],
-                            4,2);
-*/
+                /*
+                                tmp = CellNoiseexample.CellNoiseFunc(
+                                            vals[0],
+                                            vals[1],
+                                            vals[2],
+                                            4,2);
+                */
 
                 Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
                 GridVoxelVarPt[IJK].Signature   = 0; // Signature initialisation
@@ -639,10 +641,10 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
 void Iso3D::ConstructIsoNormale()
 {
     float val1, val2, val3, val4, val5, val6,
-           pt1_x, pt1_y, pt1_z,
-           pt2_x, pt2_y, pt2_z,
-           pt3_x, pt3_y, pt3_z,
-           scalar;
+          pt1_x, pt1_y, pt1_z,
+          pt2_x, pt2_y, pt2_z,
+          pt3_x, pt3_y, pt3_z,
+          scalar;
     int ThreeTimesI, IndexFirstPoint, IndexSecondPoint, IndexThirdPoint;
 
     for(i = 0; i<NbTriangleIsoSurface; ++i)
@@ -678,8 +680,8 @@ void Iso3D::ConstructIsoNormale()
         NormOriginaltmp[ThreeTimesI+2] = val6*val4 - val1*val5;
 
         scalar = (double)sqrt((NormOriginaltmp[ThreeTimesI    ]*NormOriginaltmp[ThreeTimesI     ]) +
-                                           (NormOriginaltmp[ThreeTimesI+1]*NormOriginaltmp[ThreeTimesI +1]) +
-                                           (NormOriginaltmp[ThreeTimesI+2]*NormOriginaltmp[ThreeTimesI+2]));
+                              (NormOriginaltmp[ThreeTimesI+1]*NormOriginaltmp[ThreeTimesI +1]) +
+                              (NormOriginaltmp[ThreeTimesI+2]*NormOriginaltmp[ThreeTimesI+2]));
 
         if(scalar < 0.000000001)  scalar  = 0.000000001;
         (NormOriginaltmp[ThreeTimesI    ]/=scalar);
@@ -756,7 +758,7 @@ ErrorMessage Iso3D::InitNoiseParser()
         {
             stdError.strError = Noise;
             stdError.strOrigine = Noise;
-         }
+        }
     }
     return stdError;
 }
@@ -1090,13 +1092,13 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
 
     // Parse
     if(Rgbt!= "" && Nb_rgbts == 4)
-    for(int i=0; i<Nb_rgbts; i++)
-        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t")) >= 0)
-        {
-            stdError.strError = Rgbts[i];
-            stdError.strOrigine = RgbtNames[i];
-            return stdError;
-        }
+        for(int i=0; i<Nb_rgbts; i++)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t")) >= 0)
+            {
+                stdError.strError = Rgbts[i];
+                stdError.strOrigine = RgbtNames[i];
+                return stdError;
+            }
 
     // Parse
     if(VRgbt!= "" && (Nb_vrgbts % 5) ==0)
@@ -1305,7 +1307,7 @@ void Iso3D::EvalExpressionAtIndex(int IsoIndex)
 
     if(AllComponentTraited && morph_activated ==1)
     {
-    stepMorph += pace;
+        stepMorph += pace;
     }
     vals[3]          = stepMorph;
 
@@ -1876,7 +1878,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             NormVertexTab[i*TypeDrawin+2] = 0.8;
             NormVertexTab[i*TypeDrawin+3] = 1.0;
         }
-      }
+    }
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 Iso3D::~Iso3D()
