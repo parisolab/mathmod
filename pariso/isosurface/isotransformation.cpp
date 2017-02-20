@@ -18,59 +18,59 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
 
-    #include "isotransformation.h"
+#include "isotransformation.h"
 
 
 
-    void IsoTransformation::Twist()
+void IsoTransformation::Twist()
+{
+    scalex = scaley = scalez=1;
+    twistx = twisty = twistz = 0;
+}
+
+QString IsoTransformation::Twistx(QString ImplicitFunction)
+{
+    /*
+    double vals[2]={0,0};
+    QString after_1, after_2, angle, XlimitSup, XlimitInf;
+    double tmp;
+
+    for(int j=0; j<Nb_functs; j++)
     {
-        scalex = scaley = scalez=1;
-        twistx = twisty = twistz = 0;
+        implicitFunctionParser[i].AddFunction(FunctNames[j], Fct[j]);
     }
-    
-    QString IsoTransformation::Twistx(QString ImplicitFunction)
+
+
+
+    if(twistx != 0  ||  scalex !=1)
     {
-        /*
-        double vals[2]={0,0};
-        QString after_1, after_2, angle, XlimitSup, XlimitInf;
-        double tmp;
+       angle = "1/("+XlimitSup+"-"+XlimitInf+")";
+       ExpressionEvaluator.Parse(angle, "t");
+       tmp = ExpressionEvaluator.Eval(vals);
 
-        for(int j=0; j<Nb_functs; j++)
-        {
-            implicitFunctionParser[i].AddFunction(FunctNames[j], Fct[j]);
-        }
+       tmp *= twistx*2*((double)314159265/(double)100000000)/scalex;
+       angle = QString::number(tmp)+"*x";
 
+       after_1 = "(y*cos("+angle+") - z*sin("+angle+"))";
+       after_2 = "(y*sin("+angle+") + z*cos("+angle+"))";
 
+       ImplicitFunction = ImplicitFunction_save;
 
-        if(twistx != 0  ||  scalex !=1)
-        {
-           angle = "1/("+XlimitSup+"-"+XlimitInf+")";
-           ExpressionEvaluator.Parse(angle, "t");
-           tmp = ExpressionEvaluator.Eval(vals);
-    
-           tmp *= twistx*2*((double)314159265/(double)100000000)/scalex;
-           angle = QString::number(tmp)+"*x";
-    
-           after_1 = "(y*cos("+angle+") - z*sin("+angle+"))";
-           after_2 = "(y*sin("+angle+") + z*cos("+angle+"))";
-    
-           ImplicitFunction = ImplicitFunction_save;
-    
-           ImplicitFunction.replace(QChar('y'), "u");
-           ImplicitFunction.replace(QChar('z'), "v");
-           ImplicitFunction.replace(QChar('u'), after_1);
-           ImplicitFunction.replace(QChar('v'), after_2);
-       }
-              */
-       return ImplicitFunction;
-
+       ImplicitFunction.replace(QChar('y'), "u");
+       ImplicitFunction.replace(QChar('z'), "v");
+       ImplicitFunction.replace(QChar('u'), after_1);
+       ImplicitFunction.replace(QChar('v'), after_2);
     }
-    
-    QString IsoTransformation::Twisty(QString ImplicitFunction)
-    {
-        return ImplicitFunction;
-    }
-    QString IsoTransformation::Twistz(QString ImplicitFunction)
-    {
-        return ImplicitFunction;
-    }
+          */
+    return ImplicitFunction;
+
+}
+
+QString IsoTransformation::Twisty(QString ImplicitFunction)
+{
+    return ImplicitFunction;
+}
+QString IsoTransformation::Twistz(QString ImplicitFunction)
+{
+    return ImplicitFunction;
+}
