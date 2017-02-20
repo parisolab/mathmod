@@ -85,7 +85,7 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val);
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val);
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val);
-     }
+    }
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -171,7 +171,7 @@ void OpenGlWidget::CalculateColorsPoints()
             val[4] = (double)Jprime/(double)(ParObjet->nb_ligne) ;
             val[4] = val[4] * ParObjet->dif_v[0]  + ParObjet->v_inf[0];
 
-             if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
+            if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
                 tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
             else
                 tmp =1.0;
@@ -186,7 +186,7 @@ void OpenGlWidget::CalculateColorsPoints()
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val);
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val);
             LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val);
-         }
+        }
     }
 
     // Second case : Texture
@@ -1087,12 +1087,12 @@ static void draw(ObjectProperties *scene)
         glRotatef(-29,1.0,-1.0,0.0);
         staticaction += 1;
 
-            glEnable (GL_LINE_SMOOTH);
-            glEnable (GL_BLEND);
-            //glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
-            glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            //glBlendFunc (GL_ONE, GL_ONE);
-            glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+        glEnable (GL_LINE_SMOOTH);
+        glEnable (GL_BLEND);
+        //glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        //glBlendFunc (GL_ONE, GL_ONE);
+        glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
     }
 
     // Blend Effect activation:
@@ -1205,18 +1205,18 @@ void OpenGlWidget::SaveSceneAsObjPoly()
         }
 
         // save faces:
-                for (i = 0; i < LocalScene.NbPolygnNbVertexPtMin; i++)
-                {
-                    int polysize       =  LocalScene.PolyIndices_localPtMin[startpl++];
-                    (stream) <<"f";
-                    for (int j = 0; j < polysize; j++)
-                    {
-                        actualpointindice = LocalScene.PolyIndices_localPtMin[startpl] +1;
-                        (stream) <<"  "<<actualpointindice;
-                        startpl++;
-                    }
-                    (stream) <<"\n";
-                }
+        for (i = 0; i < LocalScene.NbPolygnNbVertexPtMin; i++)
+        {
+            int polysize       =  LocalScene.PolyIndices_localPtMin[startpl++];
+            (stream) <<"f";
+            for (int j = 0; j < polysize; j++)
+            {
+                actualpointindice = LocalScene.PolyIndices_localPtMin[startpl] +1;
+                (stream) <<"  "<<actualpointindice;
+                startpl++;
+            }
+            (stream) <<"\n";
+        }
     }
 }
 
@@ -1243,13 +1243,13 @@ void OpenGlWidget::SaveSceneAsObjTrian()
                      <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
         }
 
-                for (i = 0; i < LocalScene.PolyNumber ; i+=3)
-                {
+        for (i = 0; i < LocalScene.PolyNumber ; i+=3)
+        {
 
-                    (stream) <<"f "<<"  "   <<LocalScene.PolyIndices_localPt[i       ] +1<<"  "\
-                             <<LocalScene.PolyIndices_localPt[i + 1] +1<<"  "\
-                             <<LocalScene.PolyIndices_localPt[i + 2] +1<<"\n";
-                }
+            (stream) <<"f "<<"  "   <<LocalScene.PolyIndices_localPt[i       ] +1<<"  "\
+                     <<LocalScene.PolyIndices_localPt[i + 1] +1<<"  "\
+                     <<LocalScene.PolyIndices_localPt[i + 2] +1<<"\n";
+        }
     }
 }
 
@@ -1736,9 +1736,9 @@ void OpenGlWidget::FramesShot()
     if(LocalScene.frame == 1)
     {
         FramesDir        = QFileDialog::getExistingDirectory(this,
-                                tr("Choose Or Create Directory"),
-                                FramesDir,
-                                QFileDialog::DontResolveSymlinks);
+                           tr("Choose Or Create Directory"),
+                           FramesDir,
+                           QFileDialog::DontResolveSymlinks);
         if(FramesDir != "" && !FramesDir.endsWith("/"))
             FramesDir +="/";
     }
