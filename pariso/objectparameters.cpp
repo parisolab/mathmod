@@ -181,5 +181,5 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
         objectproperties.componentsinfos.DFTrianglesVerifyCND =
             objectproperties.componentsinfos.DMTrianglesBorderCND = true;
     objectproperties.componentsinfos.DMTrianglesNotVerifyCND =
-         objectproperties.componentsinfos.DMTrianglesVerifyCND = false;
+        objectproperties.componentsinfos.DMTrianglesVerifyCND = false;
 }

@@ -34,24 +34,24 @@ ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
 double TurbulenceWorley2(const double* p)
 {
     return NoiseFunction2->CellNoiseFunc(
-                p[0],
-                p[1],
-                p[2],
-                (int)p[3],
-                (int)p[4],
-                (int)p[5]);
+               p[0],
+               p[1],
+               p[2],
+               (int)p[3],
+               (int)p[4],
+               (int)p[5]);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
 double TurbulencePerlin2(const double* p)
 {
     return PNoise2->FractalNoise3D(
-                p[0],
-                p[1],
-                p[2],
-                (int)p[3],
-                p[4],
-                p[5]);
+               p[0],
+               p[1],
+               p[2],
+               (int)p[3],
+               p[4],
+               p[5]);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -93,9 +93,11 @@ void Par3D::initialiser_parametres()
     mat_translation4D                 = Matrix4D();
     mat_inversetranslation4D    = Matrix4D();
     mat4D.unit();
-    Lacunarity = 0.5; Gain = 1.0; Octaves = 4;
+    Lacunarity = 0.5;
+    Gain = 1.0;
+    Octaves = 4;
     //Add predefined constatnts:
-    for(int i=0;i<20;i++)
+    for(int i=0; i<20; i++)
     {
         SliderNames[i] = "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
@@ -468,7 +470,7 @@ ErrorMessage  Par3D::parse_expression()
             }
         }
 
-      //initparser(100);
+        //initparser(100);
         for(int i=0; i<Nb_functs; i++)
         {
             for(int j=0; j<i; j++)
@@ -505,7 +507,7 @@ ErrorMessage  Par3D::parse_expression()
                 RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
             }
         }
-      }
+    }
     else
     {
         Nb_rgbts =0;
@@ -681,13 +683,13 @@ ErrorMessage  Par3D::parse_expression()
 
     // Parse
     if(Rgbt!= "")
-    for(int i=0; i<Nb_rgbts; i++)
-        if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,grid")) >= 0)
-        {
-            stdError.strError = Rgbts[i];
-            stdError.strOrigine = RgbtNames[i];
-            return stdError;
-        }
+        for(int i=0; i<Nb_rgbts; i++)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,grid")) >= 0)
+            {
+                stdError.strError = Rgbts[i];
+                stdError.strOrigine = RgbtNames[i];
+                return stdError;
+            }
 
 
     // Parse
@@ -1032,20 +1034,20 @@ void Par3D::CalculateNoiseShapePoints(int NewPosition)
     NoiseShapeParser->Parse(NoiseShape, "x,y,z,t");
     if(NoiseShape != "")
         for(int j=0; j < nb_ligne   ; j++)
-        for(int i= 0; i < nb_colone; i++)
-        {
-            val[0]= NormVertexTab[I  + 3 + TypeDrawinNormStep +NewPosition ];
-            val[1]= NormVertexTab[I  + 4 + TypeDrawinNormStep +NewPosition ];
-            val[2]= NormVertexTab[I  + 5 + TypeDrawinNormStep +NewPosition ];
+            for(int i= 0; i < nb_colone; i++)
+            {
+                val[0]= NormVertexTab[I  + 3 + TypeDrawinNormStep +NewPosition ];
+                val[1]= NormVertexTab[I  + 4 + TypeDrawinNormStep +NewPosition ];
+                val[2]= NormVertexTab[I  + 5 + TypeDrawinNormStep +NewPosition ];
 
-            tmp  = NoiseShapeParser->Eval(val);
+                tmp  = NoiseShapeParser->Eval(val);
 
-            NormVertexTab[I + 3 + TypeDrawinNormStep +NewPosition ] *= tmp;
-            NormVertexTab[I + 4 + TypeDrawinNormStep +NewPosition ] *= tmp;
-            NormVertexTab[I + 5 + TypeDrawinNormStep +NewPosition ] *= tmp;
+                NormVertexTab[I + 3 + TypeDrawinNormStep +NewPosition ] *= tmp;
+                NormVertexTab[I + 4 + TypeDrawinNormStep +NewPosition ] *= tmp;
+                NormVertexTab[I + 5 + TypeDrawinNormStep +NewPosition ] *= tmp;
 
-            I += TypeDrawin;
-        }
+                I += TypeDrawin;
+            }
 }
 
 
@@ -1059,7 +1061,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     double tmp, ValCol[100], val[9];
     val[3] = stepMorph;
 
-   static int recalculate = 1;
+    static int recalculate = 1;
 
     if((activeMorph == 1) &&   (recalculate !=1))
     {
