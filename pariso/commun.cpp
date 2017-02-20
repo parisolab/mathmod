@@ -24,19 +24,19 @@
 
 static int p[512];
 static int permutation[256] = { 151,160,137,91,90,15,
-131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
-190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
-88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
-77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
-102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
-135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
-5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
-223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
-129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
-251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
-49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
-138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
-};
+                                131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
+                                190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
+                                88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
+                                77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
+                                102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
+                                135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
+                                5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
+                                223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
+                                129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
+                                251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
+                                49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+                                138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
+                              };
 
 
 float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, int CombineDist)
@@ -99,8 +99,8 @@ float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, in
 float CellNoise::EuclidianDistanceFunc(float x1,float y1, float z1, float x2, float y2, float z2)
 {
     return (x1 - x2) * (x1 - x2) +
-              (y1 - y2) * (y1 - y2) +
-              (z1 - z2) * (z1 - z2);
+           (y1 - y2) * (y1 - y2) +
+           (z1 - z2) * (z1 - z2);
 }
 
 float CellNoise::ManhattanDistanceFunc(float x1,float y1, float z1, float x2, float y2, float z2)
@@ -169,98 +169,99 @@ ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
         correction += factor*factor;
     correction = 1.0f / std::sqrt(correction);
 
-   for (int i=0; i < 256 ; i++)
-       p[256+i] = p[i] = permutation[i];
+    for (int i=0; i < 256 ; i++)
+        p[256+i] = p[i] = permutation[i];
 
-   for (int i = 0; i < 256; i++)
-   {
-       int k = tinyrnd()*(256 - i) + i;
+    for (int i = 0; i < 256; i++)
+    {
+        int k = tinyrnd()*(256 - i) + i;
 
-       int l = p[i];
+        int l = p[i];
 
-       p[i] = p[k];
-       p[k] = l;
-       p[i + 256] = p[i];
-   }
+        p[i] = p[k];
+        p[k] = l;
+        p[i + 256] = p[i];
+    }
 }
 
- float ImprovedNoise::noise(float x, float y, float z)
+float ImprovedNoise::noise(float x, float y, float z)
 {
-  int X = (int)std::floor(x) & 255,
-      Y = (int)std::floor(y) & 255,
-      Z = (int)std::floor(z) & 255;
-  x -= std::floor(x);
-  y -= std::floor(y);
-  z -= std::floor(z);
-  float u = fade(x),
-         v = fade(y),
-         w = fade(z);
-  int A = p[X  ]+Y, AA = p[A]+Z, AB = p[A+1]+Z,
-      B = p[X+1]+Y, BA = p[B]+Z, BB = p[B+1]+Z;
+    int X = (int)std::floor(x) & 255,
+        Y = (int)std::floor(y) & 255,
+        Z = (int)std::floor(z) & 255;
+    x -= std::floor(x);
+    y -= std::floor(y);
+    z -= std::floor(z);
+    float u = fade(x),
+          v = fade(y),
+          w = fade(z);
+    int A = p[X  ]+Y, AA = p[A]+Z, AB = p[A+1]+Z,
+        B = p[X+1]+Y, BA = p[B]+Z, BB = p[B+1]+Z;
 
-  return lerp(w, lerp(v, lerp(u, grad(p[AA  ], x  , y  , z   ),
-                                 grad(p[BA  ], x-1, y  , z   )),
-                         lerp(u, grad(p[AB  ], x  , y-1, z   ),
-                                 grad(p[BB  ], x-1, y-1, z   ))),
-                 lerp(v, lerp(u, grad(p[AA+1], x  , y  , z-1 ),
-                                 grad(p[BA+1], x-1, y  , z-1 )),
-                         lerp(u, grad(p[AB+1], x  , y-1, z-1 ),
-                                 grad(p[BB+1], x-1, y-1, z-1 ))));
+    return lerp(w, lerp(v, lerp(u, grad(p[AA  ], x  , y  , z   ),
+                                grad(p[BA  ], x-1, y  , z   )),
+                        lerp(u, grad(p[AB  ], x  , y-1, z   ),
+                             grad(p[BB  ], x-1, y-1, z   ))),
+                lerp(v, lerp(u, grad(p[AA+1], x  , y  , z-1 ),
+                             grad(p[BA+1], x-1, y  , z-1 )),
+                     lerp(u, grad(p[AB+1], x  , y-1, z-1 ),
+                          grad(p[BB+1], x-1, y-1, z-1 ))));
 }
 
 float ImprovedNoise::fade(float f)
 {
-   return f * f * f * (f * (f * 6 - 15) + 10); // t * t * (3.0 - 2.0 * t);
+    return f * f * f * (f * (f * 6 - 15) + 10); // t * t * (3.0 - 2.0 * t);
 }
 
 
 float ImprovedNoise::lerp(float t, float a, float b)
 {
-   return a + t*(b - a);
+    return a + t*(b - a);
 }
 
 float ImprovedNoise::grad(int hash, float x, float y, float z)
 {
-  int h = hash & 15;                      // CONVERT LO 4 BITS OF HASH CODE
-  float u = h<8 ? x : y,                 // INTO 12 GRADIENT DIRECTIONS.
-         v = h<4 ? y : h==12||h==14 ? x : z;
-  return ((h&1) == 0 ? u : -u) + ((h&2) == 0 ? v : -v);
+    int h = hash & 15;                      // CONVERT LO 4 BITS OF HASH CODE
+    float u = h<8 ? x : y,                 // INTO 12 GRADIENT DIRECTIONS.
+          v = h<4 ? y : h==12||h==14 ? x : z;
+    return ((h&1) == 0 ? u : -u) + ((h&2) == 0 ? v : -v);
 }
 
 float ImprovedNoise::FractalNoise3D(float x, float y, float z, int octNum, float lacunarity , float gain)
 {
-   float freq = 1.0, amp = 1.0, sum = 0;
+    float freq = 1.0, amp = 1.0, sum = 0;
 
-   for(int i = 0; i < octNum; i++)
-   {
-       sum +=  noise(x*freq, y*freq, z*freq) * amp;
-       freq *= lacunarity;
-       amp *= gain;
-   }
-   return sum;
+    for(int i = 0; i < octNum; i++)
+    {
+        sum +=  noise(x*freq, y*freq, z*freq) * amp;
+        freq *= lacunarity;
+        amp *= gain;
+    }
+    return sum;
 }
 
 float ImprovedNoise::Marble(float x, float y, float z,int octNum)
 {
-   float t = 0;
-   float factor = 1.0;
-   for (int pass = 0 ; pass < octNum; pass++, factor *= MAGIC_SCALE) {
-       float r = 1.0f / factor;
-       t += noise(x*r,y*r,z*r) * factor;
-   }
+    float t = 0;
+    float factor = 1.0;
+    for (int pass = 0 ; pass < octNum; pass++, factor *= MAGIC_SCALE)
+    {
+        float r = 1.0f / factor;
+        t += noise(x*r,y*r,z*r) * factor;
+    }
 
-   return t * correction;
+    return t * correction;
 }
 
 float ImprovedNoise::lookup(float x, float y, float z)
 {
-   float t = 0;
-   float factor = 1.0;
-   for (int pass = 0 ; pass < passes; pass++, factor *= MAGIC_SCALE)
-   {
-       float r = 1.0 / factor;
-       t += noise(x*r, y*r,z*r) * factor;
-   }
+    float t = 0;
+    float factor = 1.0;
+    for (int pass = 0 ; pass < passes; pass++, factor *= MAGIC_SCALE)
+    {
+        float r = 1.0 / factor;
+        t += noise(x*r, y*r,z*r) * factor;
+    }
 
-   return t * correction;
+    return t * correction;
 }
