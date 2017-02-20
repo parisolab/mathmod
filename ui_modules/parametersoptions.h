@@ -28,7 +28,8 @@
 #include <QJsonObject>
 #include <QStyleFactory>
 
-struct ListeModelTexture{
+struct ListeModelTexture
+{
     QStringList listeModels;
     QStringList listeTextures;
     QStringList listePigments;
