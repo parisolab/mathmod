@@ -1,5 +1,25 @@
 {
 	"MathModels": [{
+		"Iso3D": {
+			"Description": ["Scherk Torus 01 by Abderrahman Taha 22/02/2017"],
+			"Name": ["Scherk_Torus_01"],
+			"Component": ["Scherk"],
+			"Const": ["N=10",
+			"R=8"],
+			"Funct": ["Scherk0=-((x*y-z)*(x*y-z)-.4)",
+			"Scherk1=if(abs(x)<3 & abs(y)<3, Scherk0(sinh(x),sinh(y),sin(z),t), 0)",
+			"Scherk2=Scherk1(x*cos(t)-y*sin(t),x*sin(t)+y*cos(t),z,t)",
+			"Torus = Scherk2( (sqrt(x*x+z*z)-R) , y,  N*atan2(z,x),t)"],
+			"Fxyz": ["Torus(x,y,z,t)"],
+			"Xmax": [" 11"],
+			"Xmin": ["-11 "],
+			"Ymax": [" 3.5"],
+			"Ymin": ["-3.5 "],
+			"Zmax": [" 11"],
+			"Zmin": ["-11 "]
+		}
+	},
+	{
 		"Param3D": {
 			"Description": ["Twisted Strip by Abderrahman Taha 11/05/2016"],
 			"Name": ["Twisted Strip"],
