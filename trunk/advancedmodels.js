@@ -6,15 +6,15 @@
 			"Component": ["Scherk"],
 			"Const": ["N=10",
 			"R=8"],
-			"Funct": ["Scherk0=-((x*y-z)*(x*y-z)-.4)",
+			"Funct": ["Scherk0=-((x*y-z)*(x*y-z)-0DOTSYMBOL4)",
 			"Scherk1=if(abs(x)<3 & abs(y)<3, Scherk0(sinh(x),sinh(y),sin(z),t), 0)",
 			"Scherk2=Scherk1(x*cos(t)-y*sin(t),x*sin(t)+y*cos(t),z,t)",
 			"Torus = Scherk2( (sqrt(x*x+z*z)-R) , y,  N*atan2(z,x),t)"],
 			"Fxyz": ["Torus(x,y,z,t)"],
 			"Xmax": [" 11"],
 			"Xmin": ["-11 "],
-			"Ymax": [" 3.5"],
-			"Ymin": ["-3.5 "],
+			"Ymax": [" 3DOTSYMBOL5"],
+			"Ymin": ["-3DOTSYMBOL5 "],
 			"Zmax": [" 11"],
 			"Zmin": ["-11 "]
 		}
