@@ -81,11 +81,11 @@ private slots:
 
     void on_comboBox_activated(const QString &arg1);
 
-    void on_red_2_valueChanged(int value);
+    void onred_2valueChanged(int value);
 
-    void on_green_2_valueChanged(int value);
+    void ongreen_2valueChanged(int value);
 
-    void on_blue_2_valueChanged(int value);
+    void onblue_2valueChanged(int value);
 
     void on_TestConfig_clicked();
 

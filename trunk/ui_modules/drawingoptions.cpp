@@ -39,19 +39,19 @@ void DrawingOptions::editorwin()
 void DrawingOptions::colorsoptions()
 {
     ColorsOptions *colorwindow = new ColorsOptions();
-    connect( colorwindow->ui.color_2, SIGNAL(activated(int)), this, SLOT(on_color_2_activated(int)));
-    connect( colorwindow->ui.red_2, SIGNAL(valueChanged(int)), this, SLOT(on_red_2_valueChanged(int)));
-    connect( colorwindow->ui.green_2, SIGNAL(valueChanged(int)), this, SLOT(on_green_2_valueChanged(int)));
-    connect( colorwindow->ui.blue_2, SIGNAL(valueChanged(int)), this, SLOT(on_blue_2_valueChanged(int)));
-    connect( colorwindow->ui.transparent_2, SIGNAL(valueChanged(int)), this, SLOT(on_transparent_2_valueChanged(int)));
-    connect( colorwindow->ui.transparence_2, SIGNAL(clicked(bool)), this, SLOT(on_transparence_2_clicked(bool)));
+    connect( colorwindow->ui.color_2, SIGNAL(activated(int)), this, SLOT(oncolor_2activated(int)));
+    connect( colorwindow->ui.red_2, SIGNAL(valueChanged(int)), this, SLOT(onred_2valueChanged(int)));
+    connect( colorwindow->ui.green_2, SIGNAL(valueChanged(int)), this, SLOT(ongreen_2valueChanged(int)));
+    connect( colorwindow->ui.blue_2, SIGNAL(valueChanged(int)), this, SLOT(onblue_2valueChanged(int)));
+    connect( colorwindow->ui.transparent_2, SIGNAL(valueChanged(int)), this, SLOT(ontransparent_2valueChanged(int)));
+    connect( colorwindow->ui.transparence_2, SIGNAL(clicked(bool)), this, SLOT(ontransparence_2clicked(bool)));
 
-    connect( colorwindow->ui.color_3, SIGNAL(activated(int)), this, SLOT(on_color_3_activated(int)));
-    connect( colorwindow->ui.red_3, SIGNAL(valueChanged(int)), this, SLOT(on_red_3_valueChanged(int)));
-    connect( colorwindow->ui.green_3, SIGNAL(valueChanged(int)), this, SLOT(on_green_3_valueChanged(int)));
-    connect( colorwindow->ui.blue_3, SIGNAL(valueChanged(int)), this, SLOT(on_blue_3_valueChanged(int)));
-    connect( colorwindow->ui.transparent_3, SIGNAL(valueChanged(int)), this, SLOT(on_transparent_3_valueChanged(int)));
-    connect( colorwindow->ui.transparence_3, SIGNAL(clicked(bool)), this, SLOT(on_transparence_3_toggled(bool)));
+    connect( colorwindow->ui.color_3, SIGNAL(activated(int)), this, SLOT(oncolor_3activated(int)));
+    connect( colorwindow->ui.red_3, SIGNAL(valueChanged(int)), this, SLOT(onred_3valueChanged(int)));
+    connect( colorwindow->ui.green_3, SIGNAL(valueChanged(int)), this, SLOT(ongreen_3valueChanged(int)));
+    connect( colorwindow->ui.blue_3, SIGNAL(valueChanged(int)), this, SLOT(onblue_3valueChanged(int)));
+    connect( colorwindow->ui.transparent_3, SIGNAL(valueChanged(int)), this, SLOT(ontransparent_3valueChanged(int)));
+    connect( colorwindow->ui.transparence_3, SIGNAL(clicked(bool)), this, SLOT(ontransparence_3toggled(bool)));
     colorwindow->show();
 }
 
@@ -4021,32 +4021,32 @@ void DrawingOptions::UpdateDescription(int position)
     MathmodRef->ui.glWidget->update();
 }
 
-void DrawingOptions::on_color_2_activated(int index)
+void DrawingOptions::oncolor_2activated(int index)
 {
     MathmodRef->ui.glWidget->colorstype(index);
 }
 
-void DrawingOptions::on_red_2_valueChanged(int value)
+void DrawingOptions::onred_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->red(value, indexcurrentFormula);
 }
 
-void DrawingOptions::on_green_2_valueChanged(int value)
+void DrawingOptions::ongreen_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->green(value, indexcurrentFormula);
 }
 
-void DrawingOptions::on_blue_2_valueChanged(int value)
+void DrawingOptions::onblue_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->blue(value, indexcurrentFormula);
 }
 
-void DrawingOptions::on_transparent_2_valueChanged(int value)
+void DrawingOptions::ontransparent_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->transparency(value, indexcurrentFormula);
 }
 
-void DrawingOptions::on_transparence_2_clicked(bool checked)
+void DrawingOptions::ontransparence_2clicked(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
@@ -5224,37 +5224,37 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_color_3_activated(int index)
+void DrawingOptions::oncolor_3activated(int index)
 {
     MathmodRef->ui.glWidget->colorstypeParam(index);
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_red_3_valueChanged(int value)
+void DrawingOptions::onred_3valueChanged(int value)
 {
     MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_green_3_valueChanged(int value)
+void DrawingOptions::ongreen_3valueChanged(int value)
 {
     MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_blue_3_valueChanged(int value)
+void DrawingOptions::onblue_3valueChanged(int value)
 {
     MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_transparent_3_valueChanged(int value)
+void DrawingOptions::ontransparent_3valueChanged(int value)
 {
     MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_transparence_3_toggled(bool checked)
+void DrawingOptions::ontransparence_3toggled(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
@@ -5419,34 +5419,34 @@ void DrawingOptions::on_linecolumn_3_valueChanged(int value)
     MathmodRef->linecolumn_valueChanged_2(value);
 }
 
-void DrawingOptions::on_color_4_activated(int index)
+void DrawingOptions::oncolor_4activated(int index)
 {
     MathmodRef->ui.glWidget->colorstypeParam(index);
 }
 
-void DrawingOptions::on_red_4_valueChanged(int value)
+void DrawingOptions::onred_4valueChanged(int value)
 {
     MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
 }
 
-void DrawingOptions::on_green_4_valueChanged(int value)
+void DrawingOptions::ongreen_4valueChanged(int value)
 {
     MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
 }
 
-void DrawingOptions::on_blue_4_valueChanged(int value)
+void DrawingOptions::onblue_4valueChanged(int value)
 {
     MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_transparent_4_valueChanged(int value)
+void DrawingOptions::ontransparent_4valueChanged(int value)
 {
     MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_transparence_4_toggled(bool checked)
+void DrawingOptions::ontransparence_4toggled(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }

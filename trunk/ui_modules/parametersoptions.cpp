@@ -603,7 +603,7 @@ void Parametersoptions::on_comboBox_activated(const QString &arg1)
     ui.ColorsButton->setPalette(tmp);
 }
 
-void Parametersoptions::on_red_2_valueChanged(int value)
+void Parametersoptions::onred_2valueChanged(int value)
 {
     QString choice = ui.comboBox->currentText();
     QJsonArray tmp = ((JConfig["Themes"].toObject())["MyTheme"].toObject())[choice].toArray();
@@ -616,7 +616,7 @@ void Parametersoptions::on_red_2_valueChanged(int value)
     on_comboBox_activated(choice);
 }
 
-void Parametersoptions::on_green_2_valueChanged(int value)
+void Parametersoptions::ongreen_2valueChanged(int value)
 {
     QString choice = ui.comboBox->currentText();
     QJsonArray tmp = ((JConfig["Themes"].toObject())["MyTheme"].toObject())[choice].toArray();
@@ -629,7 +629,7 @@ void Parametersoptions::on_green_2_valueChanged(int value)
     on_comboBox_activated(choice);
 }
 
-void Parametersoptions::on_blue_2_valueChanged(int value)
+void Parametersoptions::onblue_2valueChanged(int value)
 {
     QString choice = ui.comboBox->currentText();
     QJsonArray tmp = ((JConfig["Themes"].toObject())["MyTheme"].toObject())[choice].toArray();
