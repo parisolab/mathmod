@@ -66,48 +66,48 @@
 		}
 	},
 	{
-		{
-			"Iso3D": {
-				"Description": ["Set of Spheres animation v02 by Abderrahman Taha 09/03/2017"],
-				"Name": ["SetofSpheres_02"],
-				"Component": ["SetSpheres"],
-				"Const": ["Step1=0.41",
-				"Step2=0.41",
-				"R00=0.035"],
-				"Funct": ["Sphere = (x*x+y*y+ z*z-R00)",
-				"Sphere1 = Sphere(x,(abs(y)%Step1)-Step1/2,z,t)",
-				"Sphere2 = -Sphere1((abs(x)%Step2)-Step2/2,y,z,t)",
-				"Plan = Sphere2(x , y, z - 0.7*(sin(2*t+( (x - ( (abs(x)%Step2)-Step2/2)-7)^2+(y -((abs(y)%Step1)-Step1/2)-7)^2)/4 )),t)"],
-				"Fxyz": ["Plan(x,y,z,t)"],
-				"Xmax": [" 13.93"],
-				"Xmin": ["0"],
-				"Ymax": [" 13.93"],
-				"Ymin": ["0"],
-				"Zmax": [" 1"],
-				"Zmin": ["-1"]
-			}
-		},
-		{
-			"Iso3D": {
-				"Description": ["Set of Spheres animation by Abderrahman Taha 08/03/2017"],
-				"Name": ["SetOfSpheres"],
-				"Component": ["SetSpheres"],
-				"Const": ["Step1=0.4",
-				"Step2=0.4",
-				"R00=0.031"],
-				"Funct": ["Sphere = (x*x+y*y+ z*z-R00)",
-				"Sphere1 = Sphere(x,y,(abs(z)%Step1) -Step1/2,t)",
-				"Sphere2 = - Sphere1((abs(x)%Step2) -Step2/2,y,z,t)",
-				"Plan = Sphere2(x,0.7* (sin(2*t+ ( (x)^2+(z)^2)/4 )) +y,z,t)"],
-				"Fxyz": ["Plan(x,z,y,t)"],
-				"Xmax": [" 6.8"],
-				"Xmin": ["-6.4"],
-				"Ymax": [" 6.8"],
-				"Ymin": ["-6.4"],
-				"Zmax": [" 1.6"],
-				"Zmin": ["-1.6"]
-			}
-		},
+		"Iso3D": {
+			"Description": ["Set of Spheres animation v02 by Abderrahman Taha 09/03/2017"],
+			"Name": ["SetofSpheres_02"],
+			"Component": ["SetSpheres"],
+			"Const": ["Step1=0.41",
+			"Step2=0.41",
+			"R00=0.035"],
+			"Funct": ["Sphere = (x*x+y*y+ z*z-R00)",
+			"Sphere1 = Sphere(x,(abs(y)%Step1)-Step1/2,z,t)",
+			"Sphere2 = -Sphere1((abs(x)%Step2)-Step2/2,y,z,t)",
+			"Plan = Sphere2(x , y, z - 0.7*(sin(2*t+( (x - ( (abs(x)%Step2)-Step2/2)-7)^2+(y -((abs(y)%Step1)-Step1/2)-7)^2)/4 )),t)"],
+			"Fxyz": ["Plan(x,y,z,t)"],
+			"Xmax": [" 13.93"],
+			"Xmin": ["0"],
+			"Ymax": [" 13.93"],
+			"Ymin": ["0"],
+			"Zmax": [" 1"],
+			"Zmin": ["-1"]
+		}
+	},
+	{
+		"Iso3D": {
+			"Description": ["Set of Spheres animation by Abderrahman Taha 08/03/2017"],
+			"Name": ["SetOfSpheres"],
+			"Component": ["SetSpheres"],
+			"Const": ["Step1=0.4",
+			"Step2=0.4",
+			"R00=0.031"],
+			"Funct": ["Sphere = (x*x+y*y+ z*z-R00)",
+			"Sphere1 = Sphere(x,y,(abs(z)%Step1) -Step1/2,t)",
+			"Sphere2 = - Sphere1((abs(x)%Step2) -Step2/2,y,z,t)",
+			"Plan = Sphere2(x,0.7* (sin(2*t+ ( (x)^2+(z)^2)/4 )) +y,z,t)"],
+			"Fxyz": ["Plan(x,z,y,t)"],
+			"Xmax": [" 6.8"],
+			"Xmin": ["-6.4"],
+			"Ymax": [" 6.8"],
+			"Ymin": ["-6.4"],
+			"Zmax": [" 1.6"],
+			"Zmin": ["-1.6"]
+		}
+	},
+	{
 		"Iso3D": {
 			"Description": ["Twisted Torus 01 by Abderrahman Taha 26/02/2017"],
 			"Name": ["TwistedTorus"],
