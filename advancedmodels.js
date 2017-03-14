@@ -761,7 +761,7 @@
 	},
 	{
 		"Param3D": {
-			"Description ": ["Multi-sided Torus by Abderrahman Taha 27/03/2016"],
+			"Description ": ["Multi-sided Torus by Abderrahman Taha (Update) 01/03/2017"],
 			"Name": ["Multi-sided Torus_4"],
 			"Component": ["MultiSidedTorus "],
 			"Const": ["N=9",
@@ -769,9 +769,9 @@
 			"R=15"],
 			"Funct": ["F1 = (R3 + (R/(10*N))*cos(u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*cos(u/N+v))",
 			"F2 = ((R/(10*N))*sin(u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*sin(u/N+v))"],
-			"Fx": ["-sin(u)*F1(u,v,t)"],
-			"Fy": ["cos(u)*F1(u,v,t) "],
-			"Fz": ["F2(u,v,t)"],
+			"Fx": ["-sin(u)*F1(u+t,v,t)"],
+			"Fy": ["cos(u)*F1(u+t,v,t) "],
+			"Fz": ["F2(u+t,v,t)"],
 			"Umax": ["pi"],
 			"Umin": ["-pi"],
 			"Vmax": ["pi"],
@@ -5024,66 +5024,6 @@
 			"Umin": ["0"],
 			"Vmax": ["2*pi"],
 			"Vmin": ["0"]
-		}
-	},
-	{
-		"Param3D": {
-			"Description ": ["Multi-sided Torus by Abderrahman Taha 13/10/2015"],
-			"Name": ["Multi-sided Torus_1"],
-			"Component": ["MultiSidedTorus "],
-			"Const": ["N=15",
-			"R3=3",
-			"R=1DOTSYMBOL5",
-			"r=R/N"],
-			"Funct": ["F1 = (R3 + r*cos(u/N+(r-R)/r*v)+(R-r)*cos(u/N+v))",
-			"F2 = (r*sin(u/N+(r-R)/r*v)+(R-r)*sin(u/N+v))"],
-			"Fx": ["sin(u)*F1(u,v,t)"],
-			"Fy": ["cos(u)*F1(u,v,t) "],
-			"Fz": ["F2(u,v,t)"],
-			"Umax": ["pi"],
-			"Umin": ["-pi"],
-			"Vmax": ["pi"],
-			"Vmin": ["-pi"]
-		}
-	},
-	{
-		"Param3D": {
-			"Description ": ["Multi-sided Torus by Abderrahman Taha 13/10/2015"],
-			"Name": ["Multi-sided Torus_2"],
-			"Component": ["MultiSidedTorus "],
-			"Const": ["N=10",
-			"R3=3",
-			"R=1DOTSYMBOL5",
-			"r=R/N"],
-			"Funct": ["F1 = (R3 + r*cos(u/N+(r-R)/r*v)+(R-r)*cos(u/N+v))",
-			"F2 = (r*sin(u/N+(r-R)/r*v)+(R-r)*sin(u/N+v))"],
-			"Fx": ["sin(u)*F1(u,v,t)"],
-			"Fy": ["cos(u)*F1(u,v,t) "],
-			"Fz": ["F2(u,v,t)"],
-			"Umax": ["pi"],
-			"Umin": ["-pi"],
-			"Vmax": ["pi"],
-			"Vmin": ["-pi"]
-		}
-	},
-	{
-		"Param3D": {
-			"Description ": ["Multi-sided Torus by Abderrahman Taha 13/10/2015"],
-			"Name": ["Multi-sided Torus_3"],
-			"Component": ["MultiSidedTorus "],
-			"Const": ["N=5",
-			"R3=3",
-			"R=1DOTSYMBOL5",
-			"r=R/N"],
-			"Funct": ["F1 = (R3 + r*cos(u/N+(r-R)/r*v)+(R-r)*cos(u/N+v))",
-			"F2 = (r*sin(u/N+(r-R)/r*v)+(R-r)*sin(u/N+v))"],
-			"Fx": ["sin(u)*F1(u,v,t)"],
-			"Fy": ["cos(u)*F1(u,v,t) "],
-			"Fz": ["F2(u,v,t)"],
-			"Umax": ["pi"],
-			"Umin": ["-pi"],
-			"Vmax": ["pi"],
-			"Vmin": ["-pi"]
 		}
 	},
 	{
