@@ -5507,27 +5507,34 @@
 			"-3DOTSYMBOL5"]
 		}
 	},
-	{
-		"Iso3D": {
-			"Description": ["Octahedron of Octahedrons by Abderrahman Taha 27/11/2015"],
-			"Name": ["Octahedron of Octahedrons10"],
-			"Component": ["OctahedronOfOctahedrons"],
-			"Const": ["N=7"],
-			"Funct": ["Octahedron=(abs(x)+abs(y)+abs(z))-(1/(2*N))",
-			"Octahedr = ( (abs(x-DOTSYMBOL5)+abs(y-DOTSYMBOL5)+abs(z-DOTSYMBOL5))-(1/2))",
-			"Octahedr1 = ( (abs(x-DOTSYMBOL5)+abs(y-DOTSYMBOL5)+abs(z-DOTSYMBOL5))-(1/2-1/(N)) )"],
-			"Fxyz": ["if(Octahedr(x,y,z,t)<0 & Octahedr1(x,y,z,t)>0, Octahedron((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "],
-			"Xmax": ["1"],
-			"Xmin": ["0"],
-			"Ymax": ["1"],
-			"Ymin": ["0"],
-			"Zmax": ["1"],
-			"Zmin": ["0"]
-		}
+{
+	"Iso3D": {
+		"Description": ["Octahedron of Octahedra by Abderrahman Taha 04/03/2017"],
+		"Name": ["OctahedronOfOctahedra"],
+		"Component": ["OctahedronOfOctahedra"],
+		"Const": ["N=7"],
+		"Funct": ["Octahedron=(abs(x)+abs(y)+abs(z))-(1/(2*N))",
+		"Octahedr = ( (abs(x-DOTSYMBOL5)+abs(y-DOTSYMBOL5)+abs(z-DOTSYMBOL5))-(1/2))",
+		"Octahedr1 = ( (abs(x-DOTSYMBOL5)+abs(y-DOTSYMBOL5)+abs(z-DOTSYMBOL5))-(1/2-1/(N)) )"],
+		"Fxyz": ["if(Octahedr(x,y,z,t)<0 & Octahedr1(x,y,z,t)>0, Octahedron((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "],
+		"Xmax": ["1"],
+		"Xmin": ["0"],
+		"Ymax": ["1"],
+		"Ymin": ["0"],
+		"Zmax": ["1"],
+		"Zmin": ["0"]
 	},
+	"Sliders": {
+		"Max": ["50"],
+		"Min": ["0"],
+		"Name": ["N"],
+		"Position": ["7"],
+		"Step": ["1"]
+	}
+},
 	{
 		"Iso3D": {
-			"Description": ["Cube of Octahedrons by Abderrahman Taha 27/11/2015"],
+			"Description": ["Cube of Octahedra by Abderrahman Taha 27/11/2015"],
 			"Name": ["Cube of Octahedrons"],
 			"Component": [" CubeOctahedrons"],
 			"Const": ["N=20"],
