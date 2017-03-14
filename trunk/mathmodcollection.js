@@ -5544,11 +5544,11 @@
 	},
 	{
 		"Iso3D": {
+			"Description": ["Cube of Spheres (update) by Abderrahman Taha 03/03/2017"],
 			"Name": ["Cube of Spheres"],
-			"Description": ["Cube of Spheres by Abderrahman Taha 27/11/2015"],
 			"Component": [" CubeSpheres"],
-			"Const": ["N=20"],
-			"Funct": ["Sphere=sqrt(x*x+y*y+z*z)-1/(2*N)"],
+			"Const": ["N=5"],
+			"Funct": ["Sphere=sqrt(x*x+y*y+z*z)-1/(2*N+0DOTSYMBOL001)"],
 			"Fxyz": ["if((((x < 1/N | x>(1-1/N)) | (y < 1/N | y>(1-1/N)) | (z < 1/N | z>(1-1/N)))), Sphere((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "],
 			"Xmax": ["1"],
 			"Xmin": ["0"],
@@ -5556,6 +5556,13 @@
 			"Ymin": ["0"],
 			"Zmax": ["1"],
 			"Zmin": ["0"]
+		},
+		"Sliders": {
+			"Max": ["20"],
+			"Min": ["0"],
+			"Name": ["N"],
+			"Position": ["5"],
+			"Step": ["1"]
 		}
 	},
 	{
@@ -5566,10 +5573,10 @@
 			"Const": ["cu=0DOTSYMBOL0001",
 			"cv=0DOTSYMBOL0001",
 			"N=2"],
-			"Funct": ["Thickness=DOTSYMBOL4*sin(2*N*v)^100 + DOTSYMBOL4*sin(N*v-u)^100",
-			"Fx=(N/2+1+ DOTSYMBOL6*cos(u))*cos(v)",
-			"Fy=DOTSYMBOL6*sin(u)",
-			"Fz=(N/2+1+ DOTSYMBOL6*cos(u))*sin(v)",
+			"Funct": ["Thickness=0DOTSYMBOL4*sin(2*N*v)^100 + 0DOTSYMBOL4*sin(N*v-u)^100",
+			"Fx=(N/2+1+ 0DOTSYMBOL6*cos(u))*cos(v)",
+			"Fy=0DOTSYMBOL6*sin(u)",
+			"Fz=(N/2+1+ 0DOTSYMBOL6*cos(u))*sin(v)",
 			"DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
 			"DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
 			"DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
@@ -5592,9 +5599,9 @@
 			"Vmin": ["0"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL9",
-			"G=DOTSYMBOL8*abs(cos((pi*(x*x+y*y+z*z))))",
-			"B=DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
+			"Colors": ["R=0DOTSYMBOL9",
+			"G=0DOTSYMBOL8*abs(cos((pi*(x*x+y*y+z*z))))",
+			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
 			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
@@ -5614,8 +5621,8 @@
 			"DFz=-sin(z)",
 			"Rapport=sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z))",
 			"Iso3=(Iso(x+sin(x)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-			"Iso4=(Iso(x+sin(x)*DOTSYMBOL4/Rapport(x,y,z,t),y+sin(y)*DOTSYMBOL4/Rapport(x,y,z,t),z+sin(z)*DOTSYMBOL4/Rapport(x,y,z,t),t))",
-			"Iso5=(Iso(x-sin(x)*DOTSYMBOL4/Rapport(x,y,z,t),y-sin(y)*DOTSYMBOL4/Rapport(x,y,z,t),z-sin(z)*DOTSYMBOL4/Rapport(x,y,z,t),t))",
+			"Iso4=(Iso(x+sin(x)*0DOTSYMBOL4/Rapport(x,y,z,t),y+sin(y)*0DOTSYMBOL4/Rapport(x,y,z,t),z+sin(z)*0DOTSYMBOL4/Rapport(x,y,z,t),t))",
+			"Iso5=(Iso(x-sin(x)*0DOTSYMBOL4/Rapport(x,y,z,t),y-sin(y)*0DOTSYMBOL4/Rapport(x,y,z,t),z-sin(z)*0DOTSYMBOL4/Rapport(x,y,z,t),t))",
 			"ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
 			"isoCondition=(x^2+z^2-28)",
 			"isoTransform_1=if(isoCondition(x,y,z,t)<0,ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
