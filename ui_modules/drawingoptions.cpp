@@ -7567,7 +7567,7 @@ void DrawingOptions::add_new_param()
         array2.append(addnewparam.ui.PosEdit->text());
     else
         for(int i=1; i*names <= position; i++)
-            array2.insert(i*names, addnewparam.ui.PosEdit->text());
+            array2.insert(i*names+i-1, addnewparam.ui.PosEdit->text());
     tmp2["Position"] = array2;
 
 
@@ -7577,7 +7577,7 @@ void DrawingOptions::add_new_param()
         array2.append(addnewparam.ui.MaxEdit->text());
     else
         for(int i=1; i*names <= position; i++)
-            array2.insert(i*names, addnewparam.ui.MaxEdit->text());
+            array2.insert(i*names+i-1, addnewparam.ui.MaxEdit->text());
     tmp2["Max"] = array2;
 
 
@@ -7587,7 +7587,7 @@ void DrawingOptions::add_new_param()
         array2.append(addnewparam.ui.MinEdit->text());
     else
         for(int i=1; i*names <= position; i++)
-            array2.insert(i*names, addnewparam.ui.MinEdit->text());
+            array2.insert(i*names+i-1, addnewparam.ui.MinEdit->text());
     tmp2["Min"] = array2;
 
 
@@ -7597,7 +7597,7 @@ void DrawingOptions::add_new_param()
         array2.append(addnewparam.ui.StepEdit->text());
     else
         for(int i=1; i*names <= position; i++)
-            array2.insert(i*names, addnewparam.ui.StepEdit->text());
+            array2.insert(i*names+i-1, addnewparam.ui.StepEdit->text());
     tmp2["Step"] = array2;
 
 
