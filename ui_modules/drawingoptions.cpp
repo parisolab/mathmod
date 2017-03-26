@@ -7519,25 +7519,25 @@ void DrawingOptions::on_CutParam_clicked()
         array2 = tmp2["Max"].toArray();
         position = array2.size();
         for(int i=0; i*names < position; i++)
-            array2.removeAt(index-1 + i*names);
+            array2.removeAt(index-1-i + i*names);
         tmp2["Max"] = array2;
 
         array2 = tmp2["Min"].toArray();
         position = array2.size();
         for(int i=0; i*names < position; i++)
-            array2.removeAt(index-1 + i*names);
+            array2.removeAt(index-1-i + i*names);
         tmp2["Min"] = array2;
 
         array2 = tmp2["Step"].toArray();
         position = array2.size();
         for(int i=0; i*names < position; i++)
-            array2.removeAt(index-1 + i*names);
+            array2.removeAt(index-1 -i+ i*names);
         tmp2["Step"] = array2;
 
         array2 = tmp2["Position"].toArray();
         position = array2.size();
         for(int i=0; i*names < position; i++)
-            array2.removeAt(index-1 + i*names);
+            array2.removeAt(index-1 -i+ i*names);
         tmp2["Position"] = array2;
 
         tmp["Sliders"] = tmp2;
