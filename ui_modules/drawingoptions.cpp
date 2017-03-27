@@ -1008,7 +1008,7 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         if(qlstPos.size() >= qlstnames.size())
         {
             ui.PredefinedSets->clear();
-            int NbSets = qlstPos.size() / qlstnames.size();
+            int NbSets = (qlstPos.size()==0 || qlstnames.size()==0) ? 0 : qlstPos.size() / qlstnames.size();
             QStringList qlist;
             qlist += "Predefined Sets (" + QString::number(NbSets) + ")";
             for(int i=1; i< NbSets+1; i++)
@@ -6850,7 +6850,33 @@ void DrawingOptions::on_C1toolButton_clicked()
 void DrawingOptions::update_slider_param()
 {
     int SliderIndex=sliderconf.currentSlider;
-    if(SliderIndex==0)
+    if(SliderIndex >=0 && SliderIndex <= 19)
+    {
+        qlstmax[SliderIndex] = sliderconf.ui.MaxEdit->text();
+        qlstmin[SliderIndex] = sliderconf.ui.MinEdit->text();
+        qlstStep[SliderIndex] = sliderconf.ui.StepEdit->text();
+        qlstPos[SliderIndex] = sliderconf.ui.PosEdit->text();
+
+        ui.C1ScrollBar->blockSignals(true);
+        ui.C1ScrollBar->setMaximum(qlstmax.at(SliderIndex).toDouble());
+        ui.C1ScrollBar->setMinimum(qlstmin.at(SliderIndex).toDouble());
+        ui.C1ScrollBar->setSingleStep(qlstStep.at(SliderIndex).toDouble());
+        ui.C1ScrollBar->setPageStep(qlstStep.at(SliderIndex).toDouble());
+        ui.C1ScrollBar->setSliderPosition(qlstPos.at(SliderIndex).toDouble());
+        ui.C1label->setText(qlstnames.at(SliderIndex) + " = " +qlstPos.at(SliderIndex)+"("+ qlstStep.at(SliderIndex) +")");
+        ui.C1labelMin->setText(qlstmin.at(SliderIndex));
+        ui.C1labelMax->setText(qlstmax.at(SliderIndex));
+        ui.C1ScrollBar->blockSignals(false);
+
+        MathmodRef->ui.glWidget->IsoObjet->SliderNames[SliderIndex] =
+            MathmodRef->ui.glWidget->ParObjet->SliderNames[SliderIndex] =
+                qlstnames.at(SliderIndex).toStdString();
+        MathmodRef->ui.glWidget->IsoObjet->SliderValues[SliderIndex] =
+            MathmodRef->ui.glWidget->ParObjet->SliderValues[SliderIndex] =
+                qlstPos.at(SliderIndex).toDouble();
+    }
+/*
+    if(SliderIndex=0)
     {
         qlstmax[0] = sliderconf.ui.MaxEdit->text();
         qlstmin[0] = sliderconf.ui.MinEdit->text();
@@ -7274,7 +7300,7 @@ void DrawingOptions::update_slider_param()
             MathmodRef->ui.glWidget->ParObjet->SliderValues[19] =
                 qlstPos.at(19).toDouble();
     }
-
+*/
     //Draw
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     if(CurrentFormulaType==2)
