@@ -7674,7 +7674,7 @@ void DrawingOptions::update_infos_param(int index)
         on_C20toolButton_clicked();
         break;
     }
-
+    sliderconf.currentSlider = index -1;
 }
 
 void DrawingOptions::on_actionFrames_triggered()
