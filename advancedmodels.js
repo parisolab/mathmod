@@ -1,6 +1,40 @@
 {
 	"MathModels": [{
 		"Param3D": {
+			"Component": ["TwistedStrip"],
+			"Const": ["N=6",
+			"M=5",
+			"R=14"],
+			"Description": ["Twisted_Strip by Abderrahman Taha 15/03/2017"],
+			"Fx": ["cos(v)+(R/10)*u*cos(N*v+M*sin(t+v))*cos(v)"],
+			"Fy": ["sin(v)+(R/10)*u*cos(N*v+M*sin(t+v))*sin(v)"],
+			"Fz": ["(R/10)*u*sin(N*v+M*sin(t+v))"],
+			"Name": ["Twisted_Strip_02"],
+			"Umax": ["0DOTSYMBOL4"],
+			"Umin": ["-0DOTSYMBOL4"],
+			"Vmax": ["2*pi"],
+			"Vmin": ["0"]
+		},
+		"Sliders": {
+			"Max": ["15",
+			"15",
+			"30"],
+			"Min": ["0",
+			"0",
+			"0"],
+			"Name": ["N",
+			"M",
+			"R"],
+			"Position": ["6",
+			"5",
+			"14"],
+			"Step": ["1",
+			"1",
+			"1"]
+		}
+	},
+	{
+		"Param3D": {
 			"Description ": ["Inka_Sun and Twisted_Toroids v02 by Abderrahman Taha 10/03/2017"],
 			"Name": ["Inka Sun_02"],
 			"Component": ["Inka Sun_1",
