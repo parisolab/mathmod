@@ -6328,7 +6328,7 @@
 			"Component": ["Drope",
 			"Torus"],
 			"Fxyz": ["z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey)",
-			"(sqrt((x-Sx*exp(Ex+Ey))^2 + (y-Cy*exp(Ex+Ey))^2) -1)^2 +(z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey))^2 -DOTSYMBOL1"],
+			"(sqrt((x-Sx*exp(Ex+Ey))^2 + (y-Cy*exp(Ex+Ey))^2) -1)^2 +(z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey))^2 -0DOTSYMBOL1"],
 			"Varu": ["S=1DOTSYMBOL5*u*sin(2*tm)",
 			"C=2*u*cos(3*tm)",
 			"E=-u*u"],
@@ -6352,9 +6352,9 @@
 			"Name": ["Lobs"],
 			"Component": ["Lobs1",
 			"Lobs2"],
-			"Const": ["cu=0DOTSYMBOL001",
-			"cv=0DOTSYMBOL001"],
-			"Funct": ["Thickness1=if( t = 1, if ( (sin(13*v-7*u))<DOTSYMBOL4,-1, 3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63),if ( (sin(13*v-7*u))>DOTSYMBOL4,-1,3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63))",
+			"Const": ["cu=0DOTSYMBOL01",
+			"cv=0DOTSYMBOL01"],
+			"Funct": ["Thickness1=if( t = 1, if ( (sin(13*v-7*u))<0DOTSYMBOL4,-1, 3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63),if ( (sin(13*v-7*u))>0DOTSYMBOL4,-1,3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -6395,7 +6395,7 @@
 			"Sphere2"],
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001"],
-			"Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))>DOTSYMBOL35,-1,DOTSYMBOL6*sin(v)),if ( abs(sin(4*u-v))<DOTSYMBOL35,-1,0))",
+			"Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))>0DOTSYMBOL35,-1,0DOTSYMBOL6*sin(v)),if ( abs(sin(4*u-v))<0DOTSYMBOL35,-1,0))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -6428,7 +6428,7 @@
 			"0"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL5*cos(5*(x*x+y*y))",
+			"Colors": ["R=0DOTSYMBOL5*cos(5*(x*x+y*y))",
 			"G=0DOTSYMBOL5*cos(5*(x*x+y*y+z*z))",
 			"B=0DOTSYMBOL5*cos(5*(x*x+y*y+z*z))",
 			"T=1"],
@@ -6482,7 +6482,7 @@
 			"ThickWalls",
 			"TransparentWall"],
 			"Fxyz": ["((x-(abs(((t*2DOTSYMBOL5)%16)-8)-4))^2+(y-(abs(((t*2DOTSYMBOL9)%16)-8)-4))^2+(z-(4DOTSYMBOL4-((((t*1DOTSYMBOL2)%4)-2)^2)))^2-0DOTSYMBOL8)",
-			"(z+DOTSYMBOL407)*(y-4DOTSYMBOL9)*(y+4DOTSYMBOL9)*(x+4DOTSYMBOL9)",
+			"(z+0DOTSYMBOL407)*(y-4DOTSYMBOL9)*(y+4DOTSYMBOL9)*(x+4DOTSYMBOL9)",
 			"(x-4DOTSYMBOL9)"],
 			"Grid": ["25",
 			"15",
@@ -6502,9 +6502,9 @@
 			"Zmax": ["5DOTSYMBOL5",
 			"5DOTSYMBOL5",
 			"5DOTSYMBOL5"],
-			"Zmin": ["-DOTSYMBOL5",
-			"-DOTSYMBOL41",
-			"-DOTSYMBOL41"]
+			"Zmin": ["-0DOTSYMBOL5",
+			"-0DOTSYMBOL41",
+			"-0DOTSYMBOL41"]
 		}
 	},
 	{
@@ -6522,7 +6522,7 @@
 			"Vmin": ["-pi"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL91",
+			"Colors": ["R=0DOTSYMBOL91",
 			"G=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"B=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"T=1"],
@@ -6568,7 +6568,7 @@
 			"Vmin": ["-pi"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL91",
+			"Colors": ["R=0DOTSYMBOL91",
 			"G=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"B=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"T=1"],
@@ -6591,7 +6591,7 @@
 			"Vmin": ["-pi"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL91",
+			"Colors": ["R=0DOTSYMBOL91",
 			"G=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"B=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"T=1"],
@@ -6622,7 +6622,7 @@
 			"-pi"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL91",
+			"Colors": ["R=0DOTSYMBOL91",
 			"G=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"B=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
 			"T=1"],
@@ -6634,7 +6634,7 @@
 		"Iso3D": {
 			"Description": ["Contour lines by Abderrahman Taha 01/11/2015"],
 			"Name": ["Contour lines_1"],
-			"Cnd": ["(z-DOTSYMBOL25)*(z+DOTSYMBOL25)*(z-DOTSYMBOL5)*(z+DOTSYMBOL5)*(z-DOTSYMBOL75)*(z+DOTSYMBOL75)*(z-1)*(z+1)*(z-1DOTSYMBOL5)*(z+1DOTSYMBOL5)*(z-1DOTSYMBOL25)*(z+1DOTSYMBOL25)>0"],
+			"Cnd": ["(z-0DOTSYMBOL25)*(z+0DOTSYMBOL25)*(z-0DOTSYMBOL5)*(z+0DOTSYMBOL5)*(z-0DOTSYMBOL75)*(z+0DOTSYMBOL75)*(z-1)*(z+1)*(z-1DOTSYMBOL5)*(z+1DOTSYMBOL5)*(z-1DOTSYMBOL25)*(z+1DOTSYMBOL25)>0"],
 			"Component": ["Drope"],
 			"Fxyz": ["z-4*x*exp(-x^2-y^2)"],
 			"Xmax": ["2"],
@@ -6649,23 +6649,23 @@
 		"Param3D": {
 			"Description": ["Double Helical curve by Abderrahman Taha 01/11/2015"],
 			"Name": ["Double Helical curve"],
-			"Cnd": ["sqrt(z^2+y^2)-DOTSYMBOL200001>0",
+			"Cnd": ["sqrt(z^2+y^2)-0DOTSYMBOL200001>0",
 			"1"],
 			"Component": ["Cosinus",
 			"Cylinder"],
 			"Fx": ["u",
 			"v"],
 			"Fy": ["v",
-			"DOTSYMBOL2*sin(pi*u)"],
+			"0DOTSYMBOL2*sin(pi*u)"],
 			"Fz": ["-sin(5*pi*u)/5",
-			"DOTSYMBOL2*cos(pi*u)"],
+			"0DOTSYMBOL2*cos(pi*u)"],
 			"Umax": ["1",
 			"1"],
 			"Umin": ["-1",
 			"-1"],
-			"Vmax": ["DOTSYMBOL5",
+			"Vmax": ["0DOTSYMBOL5",
 			"1"],
-			"Vmin": ["-DOTSYMBOL5",
+			"Vmin": ["-0DOTSYMBOL5",
 			"-1"]
 		}
 	},
@@ -6750,9 +6750,9 @@
 			"0"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL7*sqrt(4*x^40+y^4+z^4)",
-			"G=DOTSYMBOL4*sqrt(x^4+y^4+4*z^20)",
-			"B=DOTSYMBOL5*sqrt(x^4+4*y^20+z^4)",
+			"Colors": ["R=0DOTSYMBOL7*sqrt(4*x^40+y^4+z^4)",
+			"G=0DOTSYMBOL4*sqrt(x^4+y^4+4*z^20)",
+			"B=0DOTSYMBOL5*sqrt(x^4+4*y^20+z^4)",
 			"T=1"],
 			"Name": "Granit_2",
 			"Noise": "1"
@@ -6791,7 +6791,7 @@
 			"Vmin": ["0"]
 		},
 		"Texture": {
-			"Colors": ["R=1DOTSYMBOL5*DOTSYMBOL41",
+			"Colors": ["R=1DOTSYMBOL5*0DOTSYMBOL41",
 			"G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
 			"T=1"],
@@ -6816,8 +6816,8 @@
 			"zmax=8",
 			"zmin=-8"],
 			"Funct": ["Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-			"Thickness=(DOTSYMBOL9)",
-			"Thickness2=(DOTSYMBOL4)",
+			"Thickness=(0DOTSYMBOL9)",
+			"Thickness2=(0DOTSYMBOL4)",
 			"DFx=((Iso(x,y,z,t)-Iso(x+cx,y,z,t))/cx)",
 			"DFy=((Iso(x,y,z,t)-Iso(x,y+cy,z,t))/cy)",
 			"DFz=((Iso(x,y,z,t)-Iso(x,y,z+cz,t))/cz)",
@@ -6875,7 +6875,7 @@
 			"Description ": ["Virus by Abderrahman Taha 25/10/2015"],
 			"Name": ["Virus_2"],
 			"Component": ["Virus"],
-			"Funct": ["Thickness= -DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
+			"Funct": ["Thickness= -0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
 			"n1= (-(cos(u))*(cos(u)*cos(v)))",
 			"n2= ((cos(u))*(-sin(v)*cos(u)))",
 			"n3= ((-sin(u)*cos(v))*(cos(u)*cos(v))-(-sin(u)*sin(v))*(-sin(v)*cos(u)))",
@@ -6895,9 +6895,9 @@
 			"Vmin": ["-pi"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL9",
+			"Colors": ["R=0DOTSYMBOL9",
 			"G=1DOTSYMBOL5*abs(cos((x*x+y*y+z*z)/3)*sin((x*x+y*y+z*z)/3))",
-			"B=DOTSYMBOL2*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
+			"B=0DOTSYMBOL2*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
 			"T=1"],
 			"Name": "WorleyNoise",
 			"Noise": "NoiseW(8*x,8*y,8*z,4,2,0)+NoiseW(8*x,8*y,8*z,4,12,0DOTSYMBOL1)"
@@ -6977,28 +6977,28 @@
 			"Name": ["The Beginning"],
 			"Component": ["TheBeginning1",
 			"TheBeginning2"],
-			"Funct": ["tail=x^2+y^2+z^2-DOTSYMBOL1*t",
+			"Funct": ["tail=x^2+y^2+z^2-0DOTSYMBOL1*t",
 			"tail2=(x+sin(5*pi*y/20))^2 + (y/10)^2 + (z)^2 - 1",
 			"tail3=tail2(x*30,y*30-30,z*30,1)"],
 			"Fxyz": ["-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,4,2,0)+NoiseW(6*x,6*y,6*z,4,0,0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *tail(x,y,z,1)",
 			"tail3(x*cos(-pi/4)-y*sin(-pi/4),x*sin(-pi/4)+y*cos(-pi/4),z,t)"],
 			"Xmax": ["1",
-			"-DOTSYMBOL5"],
+			"-0DOTSYMBOL5"],
 			"Xmin": ["-1",
 			"-1"],
 			"Ymax": ["1",
 			"1DOTSYMBOL4"],
 			"Ymin": ["-1",
-			"DOTSYMBOL5"],
+			"0DOTSYMBOL5"],
 			"Zmax": ["1",
-			"DOTSYMBOL1"],
+			"0DOTSYMBOL1"],
 			"Zmin": ["-1",
-			"-DOTSYMBOL1"]
+			"-0DOTSYMBOL1"]
 		},
 		"Texture": {
-			"Colors": ["R=DOTSYMBOL6",
+			"Colors": ["R=0DOTSYMBOL6",
 			"G=2DOTSYMBOL4*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
-			"B=DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+			"B=0DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
 			"Noise": "NoiseW(2*x,2*y,2*z,4,0,0)+NoiseW(2*x,2*y,2*z,2,0,0)"
@@ -7014,7 +7014,7 @@
 			"N1=16",
 			"N2=11",
 			"N3=6"],
-			"Funct": ["Thickness= (DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^7 + DOTSYMBOL2*((sin(N3*u))))",
+			"Funct": ["Thickness= (0DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^7 + 0DOTSYMBOL2*((sin(N3*u))))",
 			"Fx=-(abs(u)-1)^2 * cos(v)",
 			"Fy=u",
 			"Fz=(abs(u)-1)^2 * sin(v)",
@@ -7050,7 +7050,7 @@
 			"N1=12",
 			"N2=7",
 			"N3=5"],
-			"Funct": ["Thickness= (DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^6 + DOTSYMBOL01*((sin(N3*u))))",
+			"Funct": ["Thickness= (0DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
 			"Fx=-(abs(u)-1)^2 * cos(v)",
 			"Fy=u",
 			"Fz=(abs(u)-1)^2 * sin(v)",
@@ -7086,7 +7086,7 @@
 			"N1=12",
 			"N2=7",
 			"N3=5"],
-			"Funct": ["Thickness= -(DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^6 + DOTSYMBOL01*((sin(N3*u))))",
+			"Funct": ["Thickness= -(0DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
 			"Fx=-(abs(u)-1)^2 * cos(v)",
 			"Fy=u",
 			"Fz=(abs(u)-1)^2 * sin(v)",
@@ -7122,7 +7122,7 @@
 			"cz=0DOTSYMBOL00001"],
 			"Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)",
 			"Scherk2=Scherk(x,(sqrt(y*y+z*z)-16),z,t)",
-			"Thickness2=(DOTSYMBOL6)",
+			"Thickness2=(0DOTSYMBOL6)",
 			"IsoExterior=Scherk2(x,y,z,t)",
 			"DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
 			"DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
