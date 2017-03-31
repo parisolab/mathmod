@@ -220,6 +220,7 @@
 			"0"]
 		},
 		"Sliders": {
+			"SetNames": ["TwistedTori","InkaSun","InkaSun2"],
 			"Max": ["15",
 			"3",
 			"15",
