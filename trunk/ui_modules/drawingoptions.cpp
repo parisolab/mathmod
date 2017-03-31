@@ -1005,15 +1005,30 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
              //ui.PredefinedSet->hide();
           }
           */
+            QStringList qlist;
         if(qlstPos.size() >= qlstnames.size())
         {
             ui.PredefinedSets->clear();
             int NbSets = (qlstPos.size()==0 || qlstnames.size()==0) ? 0 : qlstPos.size() / qlstnames.size();
-            QStringList qlist;
             qlist += "Predefined Sets (" + QString::number(NbSets) + ")";
-            for(int i=1; i< NbSets+1; i++)
+            if( QObj["SetNames"].isArray()   && (lst = QObj["SetNames"].toArray()).size())
             {
-                qlist  += "Set_"+QString::number(i);
+                result = "";
+                for(int j=0; j < lst.size()-1; j++)
+                    result += lst[j].toString() + ";";
+                if(lst.size() >= 1)
+                    result += lst[lst.size()-1].toString();
+                result.replace("\n","");
+                result.replace("\t","");
+                result.replace(" ","");
+                qlist += result.split(";", QString::SkipEmptyParts);
+            }
+            else
+            {
+                for(int i=1; i< NbSets+1; i++)
+                {
+                    qlist  += "Set_"+QString::number(i);
+                }
             }
             ui.PredefinedSets->addItems(qlist);
         }
@@ -7287,16 +7302,25 @@ void DrawingOptions::update_slider_param()
 
 void DrawingOptions::on_AddSetButton_clicked()
 {
-    QJsonArray array2, array3, array4, array5;
+    QJsonArray array1, array2, array3, array4, array5;
     QJsonObject tmp, tmp2;
 
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     tmp2 = tmp ["Sliders"].toObject();
+
     array2 = tmp2["Position"].toArray();
     array3 = tmp2["Min"].toArray();
     array4 = tmp2["Max"].toArray();
     array5 = tmp2["Step"].toArray();
     int size= qlstnames.size();
+
+    if(tmp2["SetNames"].isArray())
+    {
+        array1 = tmp2["SetNames"].toArray();
+        array1.append("NewSetName");
+    }
+    else
+        tmp2.remove("SetNames");
 
     if(size >=1)
     {
@@ -7439,6 +7463,13 @@ void DrawingOptions::on_AddSetButton_clicked()
         array5.append(QString::number(ui.C20ScrollBar->singleStep()));
     }
 
+    if(tmp2["SetNames"].isArray())
+    {
+        tmp2["SetNames"] = array1;
+    }
+    else
+        tmp2.remove("SetNames");
+
     tmp2["Position"] = array2;
     tmp2["Min"]        = array3;
     tmp2["Max"]       = array4;
@@ -7456,11 +7487,17 @@ void DrawingOptions::on_CutSetButton_clicked()
     int size= qlstnames.size();
     if(size2 >= 2*size)
     {
-        QJsonArray array2, array3, array4, array5;
+        QJsonArray array1, array2, array3, array4, array5;
         QJsonObject tmp, tmp2;
 
         tmp = MathmodRef->RootObjet.CurrentJsonObject;
         tmp2 = tmp ["Sliders"].toObject();
+
+        if(tmp2["SetNames"].isArray())
+        {
+            array1 = tmp2["SetNames"].toArray();
+            array1.removeAt(indexcurrentSet-1);
+        }
 
         array2 = tmp2["Position"].toArray();
         for(int i=0; i<size; i++)
@@ -7477,6 +7514,13 @@ void DrawingOptions::on_CutSetButton_clicked()
         array5 = tmp2["Step"].toArray();
         for(int i=0; i<size; i++)
             array5.removeAt((indexcurrentSet-1)*size);
+
+        if(tmp2["SetNames"].isArray())
+        {
+            tmp2["SetNames"]  = array1;
+        }
+        else
+            tmp2.remove("SetNames");
 
         tmp2["Position"]  = array2;
         tmp2["Min"]         = array3;
