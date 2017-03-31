@@ -6588,10 +6588,11 @@
 	},
 	{
 		"Iso3D": {
+			"Description": ["Pseudo Duplin_2 by Abderrahman Taha 30/03/2017"],
+			"Name": ["Pseudo Duplin_2"],
 			"Component": ["PseudoDuplin"],
 			"Const": ["Th1= 0DOTSYMBOL9",
 			"Th2= 0DOTSYMBOL4"],
-			"Description": ["Pseudo Duplin_2 by Abderrahman Taha 30/03/2017"],
 			"Funct": ["Iso=cos(x)+cos(y)+cos(z)",
 			"DFx=(-sin(x))",
 			"DFy=(-sin(y))",
@@ -6607,7 +6608,6 @@
 			"isoTransform_2=if(isoCondition(x/4,y/4,z/4,t)>0,ThickIso2(4*x,2*y,2*z,t),1)+0DOTSYMBOL05*exp((ThickIso2(4*x,2*y,2*z,t)+isoCondition(x/4,y/4,z/4,t))/300)",
 			"isoTransform_6=isoTransform_2(x,y*cos( 0DOTSYMBOL4944*(x))-z*sin( 0DOTSYMBOL4944*(x)),y*sin( 0DOTSYMBOL4944*(x))+z*cos( 0DOTSYMBOL4944*(x)),t)"],
 			"Fxyz": ["-isoTransform_6(x/2,y,z,t)"],
-			"Name": ["Pseudo Duplin_2"],
 			"Xmax": ["18"],
 			"Xmin": ["-16"],
 			"Ymax": ["8"],
