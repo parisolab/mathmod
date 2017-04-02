@@ -9,6 +9,8 @@
 			"R=14",
 			"R1=20",
 			"r0=19",
+			"P=3",
+			"MM=6",
 			"dv=0.001"],
 			"Funct": ["Fx = ((R1/10)*cos(v)+(R/10)*u*cos(N*v+M*sin(t+v))*cos(v))",
 			"Fy = ((R1/10)*sin(v)+(R/10)*u*cos(N*v+M*sin(t+v))*sin(v))",
@@ -16,11 +18,9 @@
 			"DFxv = -(R1/10)*sin(v) + (R/10)*u*(-(N+M*cos(t+v))*sin(N*v+M*sin(t+v))*cos(v)    - cos(N*v+M*sin(t+v))*sin(v))",
 			"DFyv = (R1/10)*cos(v) + (R/10)*u*(-(N+M*cos(t+v))*sin(N*v+M*sin(t+v))*sin(v)    + cos(N*v+M*sin(t+v))*cos(v))",
 			"DFzv =  (R/10)*u*( (N+M*cos(t+v))* cos(N*v+M*sin(t+v)) )",
-			"Rapp0 = sqrt(DFxv(u,v,t)^2 + DFyv(u,v,t)^2 + DFzv(u,v,t)^2)",
 			"DFxv2 = (DFxv(u,v+dv,t) - DFxv(u,v,t))/dv",
 			"DFyv2 = (DFyv(u,v+dv,t) - DFyv(u,v,t))/dv",
 			"DFzv2 = (DFzv(u,v+dv,t) - DFzv(u,v,t))/dv",
-			"Rapp1 = sqrt(DFxv2(u,v,t)^2 + DFyv2(u,v,t)^2 + DFzv2(u,v,t)^2)",
 			"Rapp = (u/sqrt(u*u+v*v+t*t))",
 			"Nx = Rapp(DFxv2(u,v,t),DFyv2(u,v,t),DFzv2(u,v,t))",
 			"Ny = Rapp(DFyv2(u,v,t),DFxv2(u,v,t),DFzv2(u,v,t))",
@@ -146,6 +146,14 @@
 			"1",
 			"1",
 			"1"]
+		},
+		"Texture": {
+			"Colors": ["R= if(int(i)%MM>P & int(i)%MM<P+2 ,.8,.8) ",
+			"G= if(int(i)%MM>P & int(i)%MM<P+2 ,.8,.1) ",
+			"B= if(int(i)%MM>P & int(i)%MM<P+2,.8,.1) ",
+			"T= 1 "],
+			"Name": "Rings",
+			"Noise": "1"
 		}
 	},
 	{
@@ -220,7 +228,9 @@
 			"0"]
 		},
 		"Sliders": {
-			"SetNames": ["TwistedTori","InkaSun","InkaSun2"],
+			"SetNames": ["TwistedTori",
+			"InkaSun",
+			"InkaSun2"],
 			"Max": ["15",
 			"3",
 			"15",
@@ -497,6 +507,14 @@
 			"Umin": ["0"],
 			"Vmax": ["2*pi"],
 			"Vmin": ["0"]
+		},
+		"Texture": {
+			"Colors": ["R= if(abs(7*u)%pi/2& abs(7*v)%pi/3,.6,1) ",
+			"G= if(abs(7*u)%pi/2| abs(7*v)%pi/3,.8,.4) ",
+			"B= if(abs(7*u)%pi/2| abs(7*v)%pi/3,.6,.1) ",
+			"T=1"],
+			"Name": "Candy",
+			"Noise": "1"
 		}
 	},
 	{
