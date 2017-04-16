@@ -17,6 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
 ***************************************************************************/
+#define PI ((double)314159265/(double)100000000)
 
 double maxim(double p1, double p2)
 {
@@ -37,7 +38,7 @@ double f_hex_y(const double* pp)
 {
     double x1,y1,x2,y2, th, pi;
     double p[10];
-    pi=((double)314159265/(double)100000000);
+    pi=PI;
     for(int i=0; i<4; i++)
         p[i] = pp[i];
     x1=fabs(fmod(fabs(p[0]) , sqrt(3.0))-sqrt(3.0)/2);
@@ -66,7 +67,7 @@ double fmesh(const double* pp) // 40
     double th, ph, r, r2, temp, pi;
     double p[10];
 
-    pi=((double)314159265/(double)100000000);
+    pi=PI;
 
     for(int i=0; i<10; i++)
         p[i] = pp[i];
@@ -108,7 +109,7 @@ double  fhelix1(const double* pp)
 
     double r, r2, r3, temp, th, ph, x2, pi;
     double p[10];
-    pi=((double)314159265/(double)100000000);
+    pi=PI;
     for(int i=0; i<10; i++)
         p[i] = pp[i];
     r = sqrt(p[0] * p[0] + p[2] * p[2]);
