@@ -107,28 +107,28 @@ void Par3D::initialiser_parametres()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parseur()
 {
-    NoiseParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    NoiseShapeParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
     for(int i=0; i<100; i++)
     {
-        myParserUmin[i].AddConstant   ("pi", ((double)314159265/(double)100000000));
-        myParserUmax[i].AddConstant   ("pi", ((double)314159265/(double)100000000));
-        myParserVmin[i].AddConstant   ("pi", ((double)314159265/(double)100000000));
-        myParserVmax[i].AddConstant   ("pi", ((double)314159265/(double)100000000));
-        myParserX[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserY[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserZ[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserW[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserCND[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        myParserUmin[i].AddConstant   ("pi", PI);
+        myParserUmax[i].AddConstant   ("pi", PI);
+        myParserVmin[i].AddConstant   ("pi", PI);
+        myParserVmax[i].AddConstant   ("pi", PI);
+        myParserX[i].AddConstant("pi", PI);
+        myParserY[i].AddConstant("pi", PI);
+        myParserZ[i].AddConstant("pi", PI);
+        myParserW[i].AddConstant("pi", PI);
+        myParserCND[i].AddConstant("pi", PI);
 
         myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -380,12 +380,12 @@ void Par3D::initparser(int N)
 
     delete GradientParser;
     GradientParser = new FunctionParser();
-    GradientParser->AddConstant("pi", ((double)314159265/(double)100000000));
-    Cstparser.AddConstant("pi", ((double)314159265/(double)100000000));
+    GradientParser->AddConstant("pi", PI);
+    Cstparser.AddConstant("pi", PI);
 
     delete NoiseParser;
     NoiseParser = new FunctionParser;
-    NoiseParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
@@ -394,17 +394,17 @@ void Par3D::initparser(int N)
 
     delete NoiseShapeParser;
     NoiseShapeParser = new FunctionParser;
-    NoiseShapeParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
     for(int i=0; i<N; i++)
     {
-        myParserX[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserY[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserZ[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserW[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        myParserCND[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        myParserX[i].AddConstant("pi", PI);
+        myParserY[i].AddConstant("pi", PI);
+        myParserZ[i].AddConstant("pi", PI);
+        myParserW[i].AddConstant("pi", PI);
+        myParserCND[i].AddConstant("pi", PI);
 
         myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -421,9 +421,9 @@ void Par3D::initparser(int N)
         myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-        Fct[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        RgbtParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        VRgbtParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        Fct[i].AddConstant("pi", PI);
+        RgbtParser[i].AddConstant("pi", PI);
+        VRgbtParser[i].AddConstant("pi", PI);
     }
 }
 
@@ -563,7 +563,7 @@ ErrorMessage  Par3D::parse_expression()
                     return stdError;
                 }
                 Var[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-                Var[i].AddConstant("pi", ((double)314159265/(double)100000000));
+                Var[i].AddConstant("pi", PI);
             }
 
             //Add predefined constatnts:
