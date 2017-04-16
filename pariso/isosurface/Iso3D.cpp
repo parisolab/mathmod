@@ -87,8 +87,8 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     MaximumNumberPoints                = maxpts; //20000000;
     MaximumNumberTriangles           = maxtri; //30000000;
     NbPolygonImposedLimit               = MaximumNumberTriangles;
-    IsoSurfaceTriangleListe                 = new int[3*MaximumNumberTriangles];
-    NormOriginaltmp                            = new float[3*MaximumNumberTriangles];
+    IsoSurfaceTriangleListe                = new int[3*MaximumNumberTriangles];
+    NormOriginaltmp                          = new float[3*MaximumNumberTriangles];
     maximumgrid = gridmax;
 
     /// Things to do one time...
@@ -440,34 +440,34 @@ void Iso3D::InitParser()
     initparser(1100);
     for(int i=0; i<1100; i++)
     {
-        implicitFunctionParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        IsoConditionParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        xSupParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        ySupParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        zSupParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        xInfParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        yInfParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
-        zInfParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        implicitFunctionParser[i].AddConstant("pi", PI);
+        IsoConditionParser[i].AddConstant("pi", PI);
+        xSupParser[i].AddConstant("pi", PI);
+        ySupParser[i].AddConstant("pi", PI);
+        zSupParser[i].AddConstant("pi", PI);
+        xInfParser[i].AddConstant("pi", PI);
+        yInfParser[i].AddConstant("pi", PI);
+        zInfParser[i].AddConstant("pi", PI);
     }
 
-    NoiseParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
     for(int i=0; i<20; i++)
     {
-        Var[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        Var[i].AddConstant("pi", PI);
     }
 
     for(int i=0; i<50; i++)
     {
-        Fct[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        Fct[i].AddConstant("pi", PI);
     }
 
     for(int i=0; i<50; i++)
     {
-        RgbtParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        RgbtParser[i].AddConstant("pi", PI);
         RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
         RgbtParser[i].AddConstant("Gain", Gain);
         RgbtParser[i].AddConstant("Octaves", Octaves);
@@ -477,7 +477,7 @@ void Iso3D::InitParser()
 
     for(int i=0; i<50; i++)
     {
-        VRgbtParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        VRgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
         VRgbtParser[i].AddConstant("Gain", Gain);
         VRgbtParser[i].AddConstant("Octaves", Octaves);
@@ -485,7 +485,7 @@ void Iso3D::InitParser()
         VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
-    GradientParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    GradientParser->AddConstant("pi", PI);
     GradientParser->AddConstant("Lacunarity", Lacunarity);
     GradientParser->AddConstant("Gain", Gain);
     GradientParser->AddConstant("Octaves", Octaves);
@@ -750,7 +750,7 @@ ErrorMessage Iso3D::InitNoiseParser()
         NoiseParser->AddConstant("Lacunarity", Lacunarity);
         NoiseParser->AddConstant("Gain", Gain);
         NoiseParser->AddConstant("Octaves", Octaves);
-        NoiseParser->AddConstant("pi", ((double)314159265/(double)100000000));
+        NoiseParser->AddConstant("pi", PI);
         NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
         NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
 
@@ -1241,20 +1241,20 @@ void Iso3D::initparser(int N)
 {
     delete NoiseParser;
     NoiseParser = new FunctionParser;
-    NoiseParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    NoiseParser->AddConstant("pi", PI);
 
     delete[] implicitFunctionParser;
     implicitFunctionParser = new FunctionParser[N];
     for(int i=0; i<N; i++)
     {
-        implicitFunctionParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        implicitFunctionParser[i].AddConstant("pi", PI);
     }
 
     delete[] Fct;
     Fct = new FunctionParser[50];
     for(int i=0; i<50; i++)
     {
-        Fct[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        Fct[i].AddConstant("pi", PI);
         Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         Fct[i].AddFunction("fhelix1",fhelix1, 10);
         Fct[i].AddFunction("fhelix2",fhelix2, 10);
@@ -1268,7 +1268,7 @@ void Iso3D::initparser(int N)
     RgbtParser = new FunctionParser[50];
     for(int i=0; i<50; i++)
     {
-        RgbtParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        RgbtParser[i].AddConstant("pi", PI);
         RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
         RgbtParser[i].AddConstant("Gain", Gain);
         RgbtParser[i].AddConstant("Octaves", Octaves);
@@ -1281,7 +1281,7 @@ void Iso3D::initparser(int N)
     VRgbtParser = new FunctionParser[50];
     for(int i=0; i<50; i++)
     {
-        VRgbtParser[i].AddConstant("pi", ((double)314159265/(double)100000000));
+        VRgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
         VRgbtParser[i].AddConstant("Gain", Gain);
         VRgbtParser[i].AddConstant("Octaves", Octaves);
@@ -1291,7 +1291,7 @@ void Iso3D::initparser(int N)
 
     delete GradientParser;
     GradientParser = new FunctionParser;
-    GradientParser->AddConstant("pi", ((double)314159265/(double)100000000));
+    GradientParser->AddConstant("pi", PI);
     GradientParser->AddConstant("Lacunarity", Lacunarity);
     GradientParser->AddConstant("Gain", Gain);
     GradientParser->AddConstant("Octaves", Octaves);
