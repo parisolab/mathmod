@@ -36,9 +36,8 @@ double p_skeletal_int(const double* pp)
 
 double f_hex_y(const double* pp)
 {
-    double x1,y1,x2,y2, th, pi;
+    double x1,y1,x2,y2, th;
     double p[10];
-    pi=PI;
     for(int i=0; i<4; i++)
         p[i] = pp[i];
     x1=fabs(fmod(fabs(p[0]) , sqrt(3.0))-sqrt(3.0)/2);
@@ -53,27 +52,25 @@ double f_hex_y(const double* pp)
     if ((x1==0)&&(y1==0))
         p[0]=0.000001;
     th=atan2(y1,x1);
-    if (th<pi/6)
+    if (th<PI/6)
         return(y1);
     else
     {
-        y1=-sin(pi/3)*x1+cos(pi/3)*y1;
+        y1=-sin(PI/3)*x1+cos(PI/3)*y1;
         return(fabs(y1));
     }
 }
 
 double fmesh(const double* pp) // 40
 {
-    double th, ph, r, r2, temp, pi;
+    double th, ph, r, r2, temp;
     double p[10];
-
-    pi=PI;
 
     for(int i=0; i<10; i++)
         p[i] = pp[i];
 
-    th = pi / p[3];
-    ph = pi/ p[4];
+    th = PI / p[3];
+    ph = PI/ p[4];
     r = fmod(p[0], p[3] * 2);
     if (r < 0)
         r += p[3] * 2;
@@ -107,19 +104,18 @@ double fmesh(const double* pp) // 40
 double  fhelix1(const double* pp)
 {
 
-    double r, r2, r3, temp, th, ph, x2, pi;
+    double r, r2, r3, temp, th, ph, x2;
     double p[10];
-    pi=PI;
     for(int i=0; i<10; i++)
         p[i] = pp[i];
     r = sqrt(p[0] * p[0] + p[2] * p[2]);
     if ((p[0] == 0) && (p[2] == 0))
         p[0] = 0.000001;
     th = atan2(p[2], p[0]);
-    th = fmod(th * p[3] + p[1] * p[4] * p[3], 2*pi);
+    th = fmod(th * p[3] + p[1] * p[4] * p[3], 2*PI);
     if (th < 0)
-        th += 2*pi;
-    p[2] = (th - pi) / p[7] / (p[4] * p[3]);
+        th += 2*PI;
+    p[2] = (th - PI) / p[7] / (p[4] * p[3]);
 
     p[0] = r - p[6];
     if (p[8] == 1)
@@ -128,8 +124,8 @@ double  fhelix1(const double* pp)
     {
         if (p[9] != 0)
         {
-            th = cos(p[9] * pi/180);
-            ph = sin(p[9] * pi/180);
+            th = cos(p[9] * PI/180);
+            ph = sin(p[9] * PI/180);
             x2 = p[0] * th - p[2] * ph;
             p[2] = p[0] * ph + p[2] * th;
             p[0] = x2;
