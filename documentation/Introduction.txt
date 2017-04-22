@@ -1,0 +1,17 @@
+Chapter 1. Introduction
+
+	MathMod is a mathematical modelling software that generate 3D and 4D surfaces by using 
+	mathematical equations such as parametric and implicit functions.
+	You can plot different functions simultaneously and combine them to build new functions.
+	You can also animate and morph your models by using the time parameter
+
+	MathMod three different types of surfaces:
+		Implicit surfaces, where the x, y and z coordinates are related by an expression (i.e:F(x,y,z)=0)
+		3D Parametric surfaces, where the x, y and z components are specified as functions of two independent variables u and v.
+		4D Parametric surfaces, where the x, y, z and w components are specified as functions of two independent variables u and v.
+		
+
+	MathMod also provides some visual features:
+		You can study a model in detail by rotating it to any angle and zooming in. 
+		MathMod enables you to switch the mesh and fill on or off, smooth surfaces and display normals.
+		MathMod can also be used to generate animations that showcase how the model morphs as it is given new parameters to work with.
