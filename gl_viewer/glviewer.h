@@ -73,7 +73,7 @@ public:
     void InitGlParameters();
     void boxok();
     void initbox();
-    void memoryallocation(int, int, int);
+    int memoryallocation(int, int, int);
     void calculateObject();
     void PutObjectInsideCube();
     void Add(ObjectParameters *);
