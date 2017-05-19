@@ -343,12 +343,24 @@ void OpenGlWidget::restarttimer(int newlatence)
     }
 }
 
-void OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
+int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
 {
-    //memoryallocation("Both");
-    LocalScene                = (new ObjectParameters(maxpts, maxtri))->objectproperties;
-    IsoObjet = new Iso3D(maxtri,  maxpts,  gridmax);
-    ParObjet = new Par3D();
+    //memoryallocation
+    try
+    {
+        LocalScene                = (new ObjectParameters(maxpts, maxtri))->objectproperties;
+        IsoObjet = new Iso3D(maxtri,  maxpts,  gridmax);
+        ParObjet = new Par3D();
+        return 1;
+    }
+    catch(std::bad_alloc&)
+    {
+        message.setText("Error at Memory Allocation.\n In mathmodconfig.js: \n"
+                        " (MaxGrid, MaxPt, MaxTri)=( "+QString::number(gridmax)+", "+QString::number(maxpts/1000000.0,'g',  6)+", "+QString::number(maxtri/1000000.0,'g',  6)+" )");
+        message.adjustSize () ;
+        message.exec();
+        return -1;
+    }
 }
 
 void OpenGlWidget::calculateObject()

@@ -31,8 +31,10 @@ MathMod::MathMod(QWidget *parent, int maxtri, int maxpts, int gridmax)
 {
     ui.setupUi(this);
     xyzactivated = uvactivated = uvactivated4D= 1;
-    (ui.glWidget)->memoryallocation(maxtri, maxpts, gridmax);
-    (ui.glWidget)->calculateObject();
+    if((ui.glWidget)->memoryallocation(maxtri, maxpts, gridmax)==1)
+        (ui.glWidget)->calculateObject();
+    else
+        exit(0);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
