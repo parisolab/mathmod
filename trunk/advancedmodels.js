@@ -1499,7 +1499,7 @@
 	{
 		"Param3D": {
 			"Description ": ["Under Sea by Abderrahman Taha 25/03/2016"],
-			"Name": ["Under The Sea"],
+			"Name": ["Under The Sea_03"],
 			"Component": ["UnderSea"],
 			"Const": ["M=9",
 			"N=6",
@@ -3012,7 +3012,7 @@
 	{
 		"Param3D": {
 			"Description ": ["Under Sea by Abderrahman Taha 12/12/2015"],
-			"Name": ["Under The Sea"],
+			"Name": ["Under The Sea_02"],
 			"Component": ["UnderSea"],
 			"Const": ["M=2",
 			"N=5"],
@@ -6384,7 +6384,7 @@
 	{
 		"Param3D": {
 			"Description ": ["Under Sea by Abderrahman Taha 02/10/2015"],
-			"Name": ["Under The Sea"],
+			"Name": ["Under The Sea_01"],
 			"Component": ["UnderSea"],
 			"Fx": ["u*cos(v)"],
 			"Fy": ["u*sin(v)"],
