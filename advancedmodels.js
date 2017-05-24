@@ -408,15 +408,15 @@
 	},
 	{
 		"Param3D": {
+			"Description": ["Twisted_Strip by Abderrahman Taha 15/03/2017"],
+			"Name": ["Twisted_Strip_02"],
 			"Component": ["TwistedStrip"],
 			"Const": ["N=6",
 			"M=5",
 			"R=14"],
-			"Description": ["Twisted_Strip by Abderrahman Taha 15/03/2017"],
 			"Fx": ["cos(v)+(R/10)*u*cos(N*v+M*sin(t+v))*cos(v)"],
 			"Fy": ["sin(v)+(R/10)*u*cos(N*v+M*sin(t+v))*sin(v)"],
 			"Fz": ["(R/10)*u*sin(N*v+M*sin(t+v))"],
-			"Name": ["Twisted_Strip_02"],
 			"Umax": ["0DOTSYMBOL4"],
 			"Umin": ["-0DOTSYMBOL4"],
 			"Vmax": ["2*pi"],
