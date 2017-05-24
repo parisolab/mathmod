@@ -34,9 +34,9 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     ControlH=700;
     GlwinW=780;
     GlwinH=700;
-    MaxTri=2000000;
-    MaxPt=1800000;
-    MaxGrid=150;
+    MaxTri=300000;
+    MaxPt=150000;
+    MaxGrid=80;
     dotsymbol =".";
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
