@@ -355,8 +355,7 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
     }
     catch(std::bad_alloc&)
     {
-        message.setText("Error at Memory Allocation.\n In mathmodconfig.js: \n"
-                        " (MaxGrid, MaxPt, MaxTri)=( "+QString::number(gridmax)+", "+QString::number(maxpts/1000000.0,'g',  6)+", "+QString::number(maxtri/1000000.0,'g',  6)+" )");
+        message.setText("Not enough memory available to complete this operation.\n Parameters in mathmodconfig.js are too high : \n (MaxGrid, MaxPt, MaxTri)=( "+QString::number(gridmax)+", "+QString::number(maxpts/1000000.0,'g',  6)+", "+QString::number(maxtri/1000000.0,'g',  6)+" )");
         message.adjustSize () ;
         message.exec();
         return -1;
