@@ -92,6 +92,7 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     }
 
     QFile file(JsonFile);
+    //QFileDevice::Permissions p = file.permissions();
     if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
         QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t","").replace("DOTSYMBOL",dotsymbol.toStdString().c_str()),&err);
@@ -141,7 +142,7 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & j
     {
         QFile file2(":/mathmodcollection_empty.js");
         file2.copy(JsonFileName);
-        QFile::setPermissions(JsonFileName, QFileDevice::WriteOther);
+        QFile::setPermissions(JsonFileName, QFileDevice::ReadOther| QFileDevice::WriteOther);
     }
 
     QFile file(JsonFileName);
@@ -383,7 +384,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
     {
         QFile file3(":/mathmodconfig.js");
         file3.copy(fileconfig);
-        QFile::setPermissions(fileconfig, QFileDevice::WriteOther);
+        QFile::setPermissions(fileconfig, QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
 
 
@@ -485,7 +486,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         out << str << endl;
         file.close();
         file.copy(advancedmodels);
-        QFile::setPermissions(advancedmodels, QFileDevice::WriteOther);
+        QFile::setPermissions(advancedmodels, QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
 
     QFile mathmodfile(filecollection);
@@ -503,12 +504,12 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             std::cerr << "Cannot open file for writing: "
                       << qPrintable(file.errorString()) << std::endl;
             return;
-        }
+        };
         QTextStream out(&file);
         out << str << endl;
         file.close();
         file.copy(filecollection);
-        QFile::setPermissions(filecollection, QFileDevice::WriteOther);
+        QFile::setPermissions(filecollection, QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
 }
 void Parametersoptions::on_save_clicked()
