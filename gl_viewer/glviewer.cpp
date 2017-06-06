@@ -463,30 +463,21 @@ void OpenGlWidget::keyPressEvent ( QKeyEvent * e )
 
 void OpenGlWidget::resizeGL( int newwidth, int newheight)
 {
-    int tmp, starth, startw;
-
+    int tmp;
+    Wresult = newwidth;
+    Hresult = newheight;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-
     if (newwidth > newheight)
-    {
         tmp = newwidth;
-        starth=(newwidth-newheight)/6;
-        startw=0;
-    }
     else
-    {
         tmp = newheight;
-        startw = (newheight-newwidth)/6;
-        starth=0;
-    }
     glViewport(0, 0,tmp, tmp);
-    glFrustum(-250+startw, 250+startw, -250+starth, 250+starth, 340.0, 3000.0 );
+    float k=6;
+    glFrustum(-newwidth/k, newwidth/k,-newheight/k, newheight/k,250.0, 3000.0 );
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef( 0.0, 0.0, -800.0 );
-    heightresult =tmp/2;
-    widthresult = 250+starth;
+    glTranslatef( 0.0, 0.0, -1000.0 );
 }
 
 OpenGlWidget::OpenGlWidget( QWidget *parent)
@@ -506,7 +497,7 @@ OpenGlWidget::OpenGlWidget( QWidget *parent)
     IDGlWindow        = NBGlWindow;
     LocalScene.VertxNumber      = 0;
     FramesDir = "/home";
-    hauteur_fenetre= 620;
+    hauteur_fenetre=700;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     NBGlWindow++;
@@ -525,40 +516,37 @@ void OpenGlWidget::FillOk()
 
 void OpenGlWidget::PrintInfos()
 {
-    static int ref = heightresult-110;
     (LocalScene.typedrawing == 1) ?
     nbl = QString::number(isoline-cpisoline)+"x"+QString::number(isocolumn-cpisocolumn)+"x"+QString::number(isodepth-cpisodepth) :
           nbl = QString::number(nb_ligne-coupure_ligne)+"x"+QString::number(nb_colone-coupure_col)+" = "+QString::number((nb_ligne-coupure_ligne)*(nb_colone-coupure_col));
-
     glDisable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    glOrtho(-315, 315, -heightresult, heightresult,-1,1);
+    glOrtho(0,Wresult, Hresult, 0,-1,1);
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();
     if ( LocalScene.infosdetails[0] ==1)
     {
         glColor3f (0., 1.0, 0.);
-        glRasterPos2i(-310, ref);
+        glRasterPos2i(10, 20);
         glCallLists(strlen("Grid = "),
                     GL_UNSIGNED_BYTE,
                     (GLubyte *)"Grid = ");
         glColor3f (1., 0.0, 0.);
-        glRasterPos2i(-250, ref);
+        glRasterPos2i(80,20);
         glCallLists(nbl.size(),GL_UNSIGNED_BYTE,nbl.toLatin1());
     }
-
     if ( LocalScene.infosdetails[1] ==1)
     {
         glColor3f (0., 1.0, 0.);
-        glRasterPos2i(-310, ref-20);
+        glRasterPos2i(10, 40);
         glCallLists(strlen("Poly = "),
                     GL_UNSIGNED_BYTE,
                     (GLubyte *)"Poly = ");
         glColor3f (1., 0.0, 0.);
-        glRasterPos2i(-250, ref-20);
+        glRasterPos2i(80, 40);
         //(LocalScene.typedrawing == 1) ?
         glCallLists(QString::number(LocalScene.PolyNumber/3).size(),
                     GL_UNSIGNED_BYTE,
@@ -574,12 +562,12 @@ void OpenGlWidget::PrintInfos()
         if (LocalScene.typedrawing == 1)
         {
             glColor3f (0., 1.0, 0.);
-            glRasterPos2i(-310, ref-40);
+            glRasterPos2i(10, 60);
             glCallLists(strlen("Vertx= "),
                         GL_UNSIGNED_BYTE,
                         (GLubyte *)"Vertx= ");
             glColor3f (1., 0.0, 0.);
-            glRasterPos2i(-250, ref-40);
+            glRasterPos2i(80, 60);
             glCallLists(QString::number(LocalScene.VertxNumber).size(),
                         GL_UNSIGNED_BYTE,
                         QString::number(LocalScene.VertxNumber).toLatin1()) ;
@@ -588,19 +576,19 @@ void OpenGlWidget::PrintInfos()
     if (LocalScene.anim == 1)
     {
         glColor3f (0., 1.0, 0.);
-        glRasterPos2i(-310, ref-60);
+        glRasterPos2i(10, 80);
         glCallLists(strlen("Anim ="),GL_UNSIGNED_BYTE, (GLubyte *)"Anim =");
         glColor3f (1., 0.0, 0.);
-        glRasterPos2i(-250, ref-60);
+        glRasterPos2i(80, 80);
         glCallLists(strlen("On"),GL_UNSIGNED_BYTE, (GLubyte *)"On");
     }
     if (LocalScene.morph == 1)
     {
         glColor3f (0., 1.0, 0.);
-        glRasterPos2i(-310, ref-80);
-        glCallLists(strlen("Morph ="),GL_UNSIGNED_BYTE, (GLubyte *)"Morph =");
+        glRasterPos2i(10, 100);
+        glCallLists(strlen("Morph="),GL_UNSIGNED_BYTE, (GLubyte *)"Morph=");
         glColor3f (1., 0.0, 0.);
-        glRasterPos2i(-250, ref-80);
+        glRasterPos2i(80, 100);
         glCallLists(strlen("On"),GL_UNSIGNED_BYTE, (GLubyte *)"On");
     }
     glMatrixMode(GL_PROJECTION);
