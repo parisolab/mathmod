@@ -142,7 +142,7 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & j
     {
         QFile file2(":/mathmodcollection_empty.js");
         file2.copy(JsonFileName);
-        QFile::setPermissions(JsonFileName, QFileDevice::ReadOther| QFileDevice::WriteOther);
+        QFile::setPermissions(JsonFileName, QFileDevice::ReadOwner| QFileDevice::WriteOwner);
     }
 
     QFile file(JsonFileName);
