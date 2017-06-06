@@ -121,7 +121,7 @@ GLubyte rasters[][13] =
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x8f, 0xf1, 0x60, 0x00, 0x00, 0x00}
 };
 
-static int heightresult, widthresult;
+static int Wresult, Hresult;
 static double anglefinal=0;
 static QString nbl="", nbc, nbd;
 
