@@ -6442,6 +6442,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3+(index-1)*size)+"("+ qlstStep.at(3) +")");
             ui.C4ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C4ScrollBar->setMaximum(qlstmax.at(3+(index-1)*size).toDouble());
+                ui.C4ScrollBar->setMinimum(qlstmin.at(3+(index-1)*size).toDouble());
+                ui.C4ScrollBar->setSingleStep(qlstStep.at(3+(index-1)*size).toDouble());
+
+                ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3+(index-1)*size)+"("+ qlstStep.at(3+(index-1)*size) +")");
+                ui.C4labelMin->setText(qlstmin.at(3+(index-1)*size));
+                ui.C4labelMax->setText(qlstmax.at(3+(index-1)*size));
+            }
             ui.C4ScrollBar->setSliderPosition(qlstPos.at(3+(index-1)*size).toDouble());
             ui.C4ScrollBar->blockSignals(false);
         }
@@ -6450,6 +6460,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4+(index-1)*size)+"("+ qlstStep.at(4) +")");
             ui.C5ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C5ScrollBar->setMaximum(qlstmax.at(4+(index-1)*size).toDouble());
+                ui.C5ScrollBar->setMinimum(qlstmin.at(4+(index-1)*size).toDouble());
+                ui.C5ScrollBar->setSingleStep(qlstStep.at(4+(index-1)*size).toDouble());
+
+                ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4+(index-1)*size)+"("+ qlstStep.at(4+(index-1)*size) +")");
+                ui.C5labelMin->setText(qlstmin.at(4+(index-1)*size));
+                ui.C5labelMax->setText(qlstmax.at(4+(index-1)*size));
+            }
             ui.C5ScrollBar->setSliderPosition(qlstPos.at(4+(index-1)*size).toDouble());
             ui.C5ScrollBar->blockSignals(false);
         }
@@ -6458,6 +6478,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5+(index-1)*size)+"("+ qlstStep.at(5) +")");
             ui.C6ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C6ScrollBar->setMaximum(qlstmax.at(5+(index-1)*size).toDouble());
+                ui.C6ScrollBar->setMinimum(qlstmin.at(5+(index-1)*size).toDouble());
+                ui.C6ScrollBar->setSingleStep(qlstStep.at(5+(index-1)*size).toDouble());
+
+                ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5+(index-1)*size)+"("+ qlstStep.at(5+(index-1)*size) +")");
+                ui.C6labelMin->setText(qlstmin.at(5+(index-1)*size));
+                ui.C6labelMax->setText(qlstmax.at(5+(index-1)*size));
+            }
             ui.C6ScrollBar->setSliderPosition(qlstPos.at(5+(index-1)*size).toDouble());
             ui.C6ScrollBar->blockSignals(false);
         }
@@ -6466,6 +6496,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6+(index-1)*size)+"("+ qlstStep.at(6) +")");
             ui.C7ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C7ScrollBar->setMaximum(qlstmax.at(6+(index-1)*size).toDouble());
+                ui.C7ScrollBar->setMinimum(qlstmin.at(6+(index-1)*size).toDouble());
+                ui.C7ScrollBar->setSingleStep(qlstStep.at(6+(index-1)*size).toDouble());
+
+                ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6+(index-1)*size)+"("+ qlstStep.at(6+(index-1)*size) +")");
+                ui.C7labelMin->setText(qlstmin.at(6+(index-1)*size));
+                ui.C7labelMax->setText(qlstmax.at(6+(index-1)*size));
+            }
             ui.C7ScrollBar->setSliderPosition(qlstPos.at(6+(index-1)*size).toDouble());
             ui.C7ScrollBar->blockSignals(false);
         }
@@ -6474,6 +6514,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7+(index-1)*size)+"("+ qlstStep.at(7) +")");
             ui.C8ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C8ScrollBar->setMaximum(qlstmax.at(7+(index-1)*size).toDouble());
+                ui.C8ScrollBar->setMinimum(qlstmin.at(7+(index-1)*size).toDouble());
+                ui.C8ScrollBar->setSingleStep(qlstStep.at(7+(index-1)*size).toDouble());
+
+                ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7+(index-1)*size)+"("+ qlstStep.at(7+(index-1)*size) +")");
+                ui.C8labelMin->setText(qlstmin.at(7+(index-1)*size));
+                ui.C8labelMax->setText(qlstmax.at(7+(index-1)*size));
+            }
             ui.C8ScrollBar->setSliderPosition(qlstPos.at(7+(index-1)*size).toDouble());
             ui.C8ScrollBar->blockSignals(false);
         }
@@ -6482,6 +6532,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8+(index-1)*size)+"("+ qlstStep.at(8) +")");
             ui.C9ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C9ScrollBar->setMaximum(qlstmax.at(8+(index-1)*size).toDouble());
+                ui.C9ScrollBar->setMinimum(qlstmin.at(8+(index-1)*size).toDouble());
+                ui.C9ScrollBar->setSingleStep(qlstStep.at(8+(index-1)*size).toDouble());
+
+                ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8+(index-1)*size)+"("+ qlstStep.at(8+(index-1)*size) +")");
+                ui.C9labelMin->setText(qlstmin.at(8+(index-1)*size));
+                ui.C9labelMax->setText(qlstmax.at(8+(index-1)*size));
+            }
             ui.C9ScrollBar->setSliderPosition(qlstPos.at(8+(index-1)*size).toDouble());
             ui.C9ScrollBar->blockSignals(false);
         }
@@ -6489,6 +6549,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9+(index-1)*size)+"("+ qlstStep.at(9) +")");
             ui.C10ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C10ScrollBar->setMaximum(qlstmax.at(9+(index-1)*size).toDouble());
+                ui.C10ScrollBar->setMinimum(qlstmin.at(9+(index-1)*size).toDouble());
+                ui.C10ScrollBar->setSingleStep(qlstStep.at(9+(index-1)*size).toDouble());
+
+                ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9+(index-1)*size)+"("+ qlstStep.at(9+(index-1)*size) +")");
+                ui.C10labelMin->setText(qlstmin.at(9+(index-1)*size));
+                ui.C10labelMax->setText(qlstmax.at(9+(index-1)*size));
+            }
             ui.C10ScrollBar->setSliderPosition(qlstPos.at(9+(index-1)*size).toDouble());
             ui.C10ScrollBar->blockSignals(false);
         }
@@ -6497,6 +6567,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10+(index-1)*size)+"("+ qlstStep.at(10) +")");
             ui.C11ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C11ScrollBar->setMaximum(qlstmax.at(10+(index-1)*size).toDouble());
+                ui.C11ScrollBar->setMinimum(qlstmin.at(10+(index-1)*size).toDouble());
+                ui.C11ScrollBar->setSingleStep(qlstStep.at(10+(index-1)*size).toDouble());
+
+                ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10+(index-1)*size)+"("+ qlstStep.at(10+(index-1)*size) +")");
+                ui.C11labelMin->setText(qlstmin.at(10+(index-1)*size));
+                ui.C11labelMax->setText(qlstmax.at(10+(index-1)*size));
+            }
             ui.C11ScrollBar->setSliderPosition(qlstPos.at(10+(index-1)*size).toDouble());
             ui.C11ScrollBar->blockSignals(false);
         }
@@ -6505,6 +6585,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11+(index-1)*size)+"("+ qlstStep.at(11) +")");
             ui.C12ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C12ScrollBar->setMaximum(qlstmax.at(11+(index-1)*size).toDouble());
+                ui.C12ScrollBar->setMinimum(qlstmin.at(11+(index-1)*size).toDouble());
+                ui.C12ScrollBar->setSingleStep(qlstStep.at(11+(index-1)*size).toDouble());
+
+                ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11+(index-1)*size)+"("+ qlstStep.at(11+(index-1)*size) +")");
+                ui.C12labelMin->setText(qlstmin.at(11+(index-1)*size));
+                ui.C12labelMax->setText(qlstmax.at(11+(index-1)*size));
+            }
             ui.C12ScrollBar->setSliderPosition(qlstPos.at(11+(index-1)*size).toDouble());
             ui.C12ScrollBar->blockSignals(false);
         }
@@ -6513,6 +6603,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12+(index-1)*size)+"("+ qlstStep.at(12) +")");
             ui.C13ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C13ScrollBar->setMaximum(qlstmax.at(12+(index-1)*size).toDouble());
+                ui.C13ScrollBar->setMinimum(qlstmin.at(12+(index-1)*size).toDouble());
+                ui.C13ScrollBar->setSingleStep(qlstStep.at(12+(index-1)*size).toDouble());
+
+                ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12+(index-1)*size)+"("+ qlstStep.at(12+(index-1)*size) +")");
+                ui.C13labelMin->setText(qlstmin.at(12+(index-1)*size));
+                ui.C13labelMax->setText(qlstmax.at(12+(index-1)*size));
+            }
             ui.C13ScrollBar->setSliderPosition(qlstPos.at(12+(index-1)*size).toDouble());
             ui.C13ScrollBar->blockSignals(false);
         }
@@ -6521,6 +6621,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13+(index-1)*size)+"("+ qlstStep.at(13) +")");
             ui.C14ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C14ScrollBar->setMaximum(qlstmax.at(13+(index-1)*size).toDouble());
+                ui.C14ScrollBar->setMinimum(qlstmin.at(13+(index-1)*size).toDouble());
+                ui.C14ScrollBar->setSingleStep(qlstStep.at(13+(index-1)*size).toDouble());
+
+                ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13+(index-1)*size)+"("+ qlstStep.at(13+(index-1)*size) +")");
+                ui.C14labelMin->setText(qlstmin.at(13+(index-1)*size));
+                ui.C14labelMax->setText(qlstmax.at(13+(index-1)*size));
+            }
             ui.C14ScrollBar->setSliderPosition(qlstPos.at(13+(index-1)*size).toDouble());
             ui.C14ScrollBar->blockSignals(false);
         }
@@ -6529,6 +6639,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14+(index-1)*size)+"("+ qlstStep.at(14) +")");
             ui.C15ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C15ScrollBar->setMaximum(qlstmax.at(14+(index-1)*size).toDouble());
+                ui.C15ScrollBar->setMinimum(qlstmin.at(14+(index-1)*size).toDouble());
+                ui.C15ScrollBar->setSingleStep(qlstStep.at(14+(index-1)*size).toDouble());
+
+                ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14+(index-1)*size)+"("+ qlstStep.at(14+(index-1)*size) +")");
+                ui.C15labelMin->setText(qlstmin.at(14+(index-1)*size));
+                ui.C15labelMax->setText(qlstmax.at(14+(index-1)*size));
+            }
             ui.C15ScrollBar->setSliderPosition(qlstPos.at(14+(index-1)*size).toDouble());
             ui.C15ScrollBar->blockSignals(false);
         }
@@ -6537,6 +6657,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15+(index-1)*size)+"("+ qlstStep.at(15) +")");
             ui.C16ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C16ScrollBar->setMaximum(qlstmax.at(15+(index-1)*size).toDouble());
+                ui.C16ScrollBar->setMinimum(qlstmin.at(15+(index-1)*size).toDouble());
+                ui.C16ScrollBar->setSingleStep(qlstStep.at(15+(index-1)*size).toDouble());
+
+                ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15+(index-1)*size)+"("+ qlstStep.at(15+(index-1)*size) +")");
+                ui.C16labelMin->setText(qlstmin.at(15+(index-1)*size));
+                ui.C16labelMax->setText(qlstmax.at(15+(index-1)*size));
+            }
             ui.C16ScrollBar->setSliderPosition(qlstPos.at(15+(index-1)*size).toDouble());
             ui.C16ScrollBar->blockSignals(false);
         }
@@ -6545,6 +6675,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16+(index-1)*size)+"("+ qlstStep.at(16) +")");
             ui.C17ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C17ScrollBar->setMaximum(qlstmax.at(16+(index-1)*size).toDouble());
+                ui.C17ScrollBar->setMinimum(qlstmin.at(16+(index-1)*size).toDouble());
+                ui.C17ScrollBar->setSingleStep(qlstStep.at(16+(index-1)*size).toDouble());
+
+                ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16+(index-1)*size)+"("+ qlstStep.at(16+(index-1)*size) +")");
+                ui.C17labelMin->setText(qlstmin.at(16+(index-1)*size));
+                ui.C17labelMax->setText(qlstmax.at(16+(index-1)*size));
+            }
             ui.C17ScrollBar->setSliderPosition(qlstPos.at(16+(index-1)*size).toDouble());
             ui.C17ScrollBar->blockSignals(false);
         }
@@ -6553,6 +6693,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17+(index-1)*size)+"("+ qlstStep.at(17) +")");
             ui.C18ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C18ScrollBar->setMaximum(qlstmax.at(17+(index-1)*size).toDouble());
+                ui.C18ScrollBar->setMinimum(qlstmin.at(17+(index-1)*size).toDouble());
+                ui.C18ScrollBar->setSingleStep(qlstStep.at(17+(index-1)*size).toDouble());
+
+                ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17+(index-1)*size)+"("+ qlstStep.at(17+(index-1)*size) +")");
+                ui.C18labelMin->setText(qlstmin.at(17+(index-1)*size));
+                ui.C18labelMax->setText(qlstmax.at(17+(index-1)*size));
+            }
             ui.C18ScrollBar->setSliderPosition(qlstPos.at(17+(index-1)*size).toDouble());
             ui.C18ScrollBar->blockSignals(false);
         }
@@ -6561,6 +6711,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18+(index-1)*size)+"("+ qlstStep.at(18) +")");
             ui.C19ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C19ScrollBar->setMaximum(qlstmax.at(18+(index-1)*size).toDouble());
+                ui.C19ScrollBar->setMinimum(qlstmin.at(18+(index-1)*size).toDouble());
+                ui.C19ScrollBar->setSingleStep(qlstStep.at(18+(index-1)*size).toDouble());
+
+                ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18+(index-1)*size)+"("+ qlstStep.at(18+(index-1)*size) +")");
+                ui.C19labelMin->setText(qlstmin.at(18+(index-1)*size));
+                ui.C19labelMax->setText(qlstmax.at(18+(index-1)*size));
+            }
             ui.C19ScrollBar->setSliderPosition(qlstPos.at(18+(index-1)*size).toDouble());
             ui.C19ScrollBar->blockSignals(false);
         }
@@ -6569,6 +6729,16 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         {
             ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19+(index-1)*size)+"("+ qlstStep.at(19) +")");
             ui.C20ScrollBar->blockSignals(true);
+            if(qlstmin.size() > qlstnames.size())
+            {
+                ui.C20ScrollBar->setMaximum(qlstmax.at(19+(index-1)*size).toDouble());
+                ui.C20ScrollBar->setMinimum(qlstmin.at(19+(index-1)*size).toDouble());
+                ui.C20ScrollBar->setSingleStep(qlstStep.at(19+(index-1)*size).toDouble());
+
+                ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19+(index-1)*size)+"("+ qlstStep.at(19+(index-1)*size) +")");
+                ui.C20labelMin->setText(qlstmin.at(19+(index-1)*size));
+                ui.C20labelMax->setText(qlstmax.at(19+(index-1)*size));
+            }
             ui.C20ScrollBar->setSliderPosition(qlstPos.at(19+(index-1)*size).toDouble());
             ui.C20ScrollBar->blockSignals(false);
         }
