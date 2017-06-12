@@ -463,21 +463,16 @@ void OpenGlWidget::keyPressEvent ( QKeyEvent * e )
 
 void OpenGlWidget::resizeGL( int newwidth, int newheight)
 {
-    int tmp;
     Wresult = newwidth;
     Hresult = newheight;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    if (newwidth > newheight)
-        tmp = newwidth;
-    else
-        tmp = newheight;
-    glViewport(0, 0,tmp, tmp);
+    glViewport(0, 0, newwidth, newheight);
     float k=6;
-    glFrustum(-newwidth/k, newwidth/k,-newheight/k, newheight/k,250.0, 3000.0 );
+    glFrustum(-newwidth/k, newwidth/k, -newheight/k , newheight/k, 250.0, 3000.0 );
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef( 0.0, 0.0, -1000.0 );
+    glTranslatef( 0.0, 0, -1000.0 );
 }
 
 OpenGlWidget::OpenGlWidget( QWidget *parent)
