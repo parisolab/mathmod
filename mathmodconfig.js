@@ -17,7 +17,7 @@
         "ControlH": 700,
         "ControlW": 538,
         "GlwinH": 700,
-        "GlwinW": 780
+        "GlwinW": 700
     },
 
     "Styles": {
