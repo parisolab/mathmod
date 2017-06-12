@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>558</width>
-    <height>713</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MathMod-5.0</string>
+   <string>MathMod-5.1</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -191,6 +191,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -233,6 +234,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -295,7 +297,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>8</pointsize>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -335,7 +337,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>8</pointsize>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -372,6 +374,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -408,6 +411,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -444,6 +448,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -483,6 +488,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="toolTip">
@@ -651,7 +657,7 @@
           <property name="movable">
            <bool>true</bool>
           </property>
-          <property name="tabBarAutoHide" stdset="0">
+          <property name="tabBarAutoHide">
            <bool>true</bool>
           </property>
           <widget class="QWidget" name="tab">
@@ -5796,7 +5802,7 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>291</width>
+                 <width>314</width>
                  <height>964</height>
                 </rect>
                </property>
