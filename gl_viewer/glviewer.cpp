@@ -416,6 +416,7 @@ void OpenGlWidget::stopRendering()
 
 void OpenGlWidget::resizeEvent(QResizeEvent *evt)
 {
+    glPushMatrix();
     glt.resizeViewport(evt->size());
     glPopMatrix();
 }
@@ -466,7 +467,6 @@ void OpenGlWidget::resizeGL( int newwidth, int newheight)
 {
     Wresult = newwidth;
     Hresult = newheight;
-    glPushMatrix();
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, newwidth, newheight);
