@@ -1114,7 +1114,7 @@ static void draw(ObjectProperties *scene)
     //glLoadIdentity();
     // Box:
     //if (scene->box == 1) glCallList(scene->boxliste);
-    //glPushMatrix();
+    glPushMatrix();
 
     if (scene->anim == 1 && scene->animx == 1)
     {
@@ -1167,7 +1167,7 @@ static void draw(ObjectProperties *scene)
     if (scene->norm == 1 )
         DrawNormals(scene);
 
-    //glPopMatrix();
+    glPopMatrix();
 
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
