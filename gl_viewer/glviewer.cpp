@@ -28,7 +28,389 @@ static int TypeDrawinNormStep = 4;
 int FistTimecalibrate =-1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo, decalage_zo;
 
-///+++++++++++++++++++++++++++++++++++++++++
+///++++++++++++++++++++++++++++++++++++++++
+
+static void UpdateParColorliste (ObjectProperties *scene)
+{
+    for(int i = 0; i < scene->componentsinfos.NbParametric; i++)
+    {
+        glDeleteLists(scene->ParColorliste[i],1);
+        scene->ParColorliste[i] = glGenLists(1);
+    }
+    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    {
+        glNewList(scene->ParColorliste[i], GL_COMPILE);
+        {
+            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
+        }
+        glEndList();
+    }
+}
+
+static void DrawParametricListe(ObjectProperties *scene)
+{
+    glDeleteLists(scene->FillParliste, 1);
+    scene->FillParliste = glGenLists(1);
+    glNewList(scene->FillParliste, GL_COMPILE );
+    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    {
+
+        if(!scene->componentsinfos.ThereisRGBA)
+             glCallList(scene->ParColorliste[i]);
+
+         if(!scene->componentsinfos.ThereisCND)
+            glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.Parametricpositions[2*i+1],
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
+            );
+    }
+    glEndList();
+}
+
+static void DrawParametric_cache (ObjectProperties *scene)
+{
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+
+    glPolygonOffset(scene->polyfactor, scene->polyunits);
+    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    {
+            if(!scene->componentsinfos.ThereisRGBA)
+             glCallList(scene->ParColorliste[i]);
+
+            if(scene->componentsinfos.ThereisCND)
+            {
+                if(scene->componentsinfos.DFTrianglesVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[0])
+                    );
+
+                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                    );
+            }
+        }
+
+    glCallList(scene->FillParliste);
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+}
+
+static void DrawParametric (ObjectProperties *scene)
+{
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+
+    glPolygonOffset(scene->polyfactor, scene->polyunits);
+    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    {
+        //if(i != scene->IndexCurrentFormula)
+        {
+            if(!scene->componentsinfos.ThereisRGBA)
+            {
+                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
+            }
+            if(scene->componentsinfos.ThereisCND)
+            {
+                if(scene->componentsinfos.DFTrianglesVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[0])
+                    );
+
+                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                    );
+            }
+
+            // There is no condition:
+            else
+                //if(i != scene->IndexCurrentFormula)
+
+                glDrawElements(
+                    GL_TRIANGLES,
+                    3*scene->componentsinfos.Parametricpositions[2*i+1],
+                    GL_UNSIGNED_INT,
+                    &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
+                );
+        }
+    }
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
+
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+}
+
+static void DrawMeshIsoListe(ObjectProperties *scene)
+{
+    glDeleteLists(scene->MeshIsoliste, 1);
+    scene->MeshIsoliste = glGenLists(1);
+    glNewList(scene->MeshIsoliste, GL_COMPILE );
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glDrawElements(GL_TRIANGLES, scene->PolyNumber, GL_UNSIGNED_INT, scene->PolyIndices_localPt);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glEndList();
+}
+
+static void DrawMeshIso_cache(ObjectProperties *scene)
+{
+    glCallList(scene->MeshIsoliste);
+}
+
+static void UpdateIsoColorliste (ObjectProperties *scene)
+{
+    for(int i = 0; i < scene->componentsinfos.NbIso; i++)
+    {
+        glDeleteLists(scene->IsoColorliste[i],1);
+        scene->IsoColorliste[i] = glGenLists(1);
+    }
+    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    {
+        glNewList(scene->IsoColorliste[i], GL_COMPILE);
+        {
+            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
+        }
+        glEndList();
+    }
+}
+
+static void DrawFillIsoliste (ObjectProperties *scene)
+{
+    glDeleteLists(scene->FillIsoliste,1);
+    scene->FillIsoliste = glGenLists(1);
+    glNewList(scene->FillIsoliste, GL_COMPILE);
+    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    {
+        if(!scene->componentsinfos.ThereisRGBA)
+             glCallList(scene->IsoColorliste[i]);
+
+        if(!scene->componentsinfos.ThereisCND)
+            glDrawElements(
+                GL_TRIANGLES,
+                3*scene->componentsinfos.IsoPositions[2*i+1],
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
+    }
+    glEndList();
+}
+
+static void DrawIso_cache (ObjectProperties *scene)
+{
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+
+    glPolygonOffset(scene->polyfactor, scene->polyunits);
+
+    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    {
+            if(!scene->componentsinfos.ThereisRGBA)
+                glCallList(scene->IsoColorliste[i]);
+
+            if(scene->componentsinfos.ThereisCND)
+            {
+                if(scene->componentsinfos.DFTrianglesVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[0])
+                    );
+
+                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                    );
+            }
+    }
+    glCallList(scene->FillIsoliste);
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+}
+
+
+static void DrawIso (ObjectProperties *scene)
+{
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glEnable(GL_COLOR_MATERIAL);
+
+    glPolygonOffset(scene->polyfactor, scene->polyunits);
+
+    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    {
+        //if(i != scene->IndexCurrentFormula)
+        {
+            if(!scene->componentsinfos.ThereisRGBA)
+            {
+                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
+            }
+            if(scene->componentsinfos.ThereisCND)
+            {
+                if(scene->componentsinfos.DFTrianglesVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[0])
+                    );
+
+                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                    );
+            }
+            // There is no condition:
+            else
+                //if(i != scene->IndexCurrentFormula)
+            {
+                //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                glDrawElements(
+                    GL_TRIANGLES,
+                    3*scene->componentsinfos.IsoPositions[2*i+1],
+                    GL_UNSIGNED_INT,
+                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
+                );
+
+            }
+
+        }
+    }
+
+    if(scene->componentsinfos.ThereisRGBA)
+        glDisable(GL_COLOR_MATERIAL);
+
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+}
+
+
+static void DrawMinimalTopologyListe(ObjectProperties *scene)
+{
+    glDeleteLists(scene->MeshIsoMinimalTopliste, 1);
+    scene->MeshIsoMinimalTopliste = glGenLists(1);
+    glNewList(scene->MeshIsoMinimalTopliste, GL_COMPILE );
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    int startpl = 0;
+    for (unsigned int i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+    {
+        int polysize       =  scene->PolyIndices_localPtMin[startpl++];
+        glBegin(GL_POLYGON);
+        for (int j = 0; j < polysize; j++)
+        {
+            int actualpointindice = scene->PolyIndices_localPtMin[startpl];
+            glVertex3f(
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5 + TypeDrawinNormStep]
+            );
+            startpl++;
+        }
+        glEnd();
+    }
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glEndList();
+}
+
+static void DrawMinimalTopology_cache (ObjectProperties *scene)
+{
+    glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
+    glCallList(scene->MeshIsoMinimalTopliste);
+}
+
+static void DrawMeshParametric_cache (ObjectProperties *scene)
+{
+    glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
+    glCallList(scene->MeshParliste);
+}
+
+static void DrawMeshParametricListe(ObjectProperties *scene)
+{
+    glDeleteLists(scene->MeshParliste, 1);
+    scene->MeshParliste = glGenLists(1);
+    glNewList(scene->MeshParliste, GL_COMPILE );
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    int startpl = 0;
+    for (unsigned int i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+    {
+        int polysize       =  scene->PolyIndices_localPtMin[startpl++];
+        glBegin(GL_POLYGON);
+        for (int j = 0; j < polysize; j++)
+        {
+            int actualpointindice = scene->PolyIndices_localPtMin[startpl];
+            glVertex3f(
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
+                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5 + TypeDrawinNormStep]
+            );
+            startpl++;
+        }
+        glEnd();
+    }
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glEndList();
+}
+
+
+static void DrawIsoPar (ObjectProperties *scene)
+{
+    if (scene->typedrawing == 1)
+        DrawFillIsoliste(scene);
+    if (scene->typedrawing == -1)
+        DrawParametricListe(scene);
+}
+
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
     double tmp, val[6];
@@ -86,6 +468,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val);
         LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val);
     }
+    //reinisialize Filled polygones with the new texture
+    if(LocalScene.activateGlCache)
+        DrawIsoPar(&LocalScene);
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -145,6 +530,9 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
                 j = 100;
             }
     }
+    //reinisialize Filled polygones with the new texture
+    if(LocalScene.activateGlCache)
+        DrawIsoPar(&LocalScene);
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -228,6 +616,9 @@ void OpenGlWidget::CalculateColorsPoints()
                 }
         }
     }
+    //reinisialize Filled polygones with the new texture
+    if(LocalScene.activateGlCache)
+        DrawIsoPar(&LocalScene);
     update();
 }
 
@@ -692,7 +1083,7 @@ static void DrawAxe()
     glLineWidth(0.9);
 }
 
-static void DrawNormals(ObjectProperties *scene)
+static void DrawNormals_cache(ObjectProperties *scene)
 {
     int j =  0;
     glColor4f (0.8, 0., 0.7, 1.0);
@@ -710,6 +1101,23 @@ static void DrawNormals(ObjectProperties *scene)
     }
 }
 
+static void DrawNormals(ObjectProperties *scene)
+{
+    int j =  0;
+    glColor4f (0.8, 0., 0.7, 1.0);
+    for (unsigned int i=0; i< scene->PolyNumber; i+=4)
+    {
+        j =   TypeDrawin*scene->PolyIndices_localPt[i];
+        glBegin( GL_LINES );
+        glVertex3f(scene->ArrayNorVer_localPt[j+3  + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+4  + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+5  + TypeDrawinNormStep]);
+        glVertex3f(scene->ArrayNorVer_localPt[j+3  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j    + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+4  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j+1  + TypeDrawinNormStep],
+                   scene->ArrayNorVer_localPt[j+5  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j+2  + TypeDrawinNormStep]);
+        glEnd();
+    }
+}
 
 static int staticaction = 0;
 /*
@@ -777,128 +1185,22 @@ static void DrawPariso (ObjectProperties *scene)
 }
 */
 
-static void DrawIso (ObjectProperties *scene)
+void OpenGlWidget::CreateGlLists()
 {
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_POLYGON_OFFSET_FILL);
-
-    if(scene->componentsinfos.ThereisRGBA)
-        glEnable(GL_COLOR_MATERIAL);
-
-    glPolygonOffset(scene->polyfactor, scene->polyunits);
-
-    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    if (LocalScene.typedrawing == 1)
     {
-        //if(i != scene->IndexCurrentFormula)
-        {
-            if(!scene->componentsinfos.ThereisRGBA)
-            {
-                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
-                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
-            }
-            if(scene->componentsinfos.ThereisCND)
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
-                    );
-
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );
-            }
-            // There is no condition:
-            else
-                //if(i != scene->IndexCurrentFormula)
-            {
-                //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                glDrawElements(
-                    GL_TRIANGLES,
-                    3*scene->componentsinfos.IsoPositions[2*i+1],
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
-                );
-
-            }
-
-        }
+        DrawMeshIsoListe(&LocalScene);
+        UpdateIsoColorliste(&LocalScene);
+        DrawFillIsoliste(&LocalScene);
+        DrawMinimalTopologyListe(&LocalScene);
     }
-
-    if(scene->componentsinfos.ThereisRGBA)
-        glDisable(GL_COLOR_MATERIAL);
-
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-}
-
-static void DrawParametric (ObjectProperties *scene)
-{
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_POLYGON_OFFSET_FILL);
-
-    if(scene->componentsinfos.ThereisRGBA)
-        glEnable(GL_COLOR_MATERIAL);
-
-    glPolygonOffset(scene->polyfactor, scene->polyunits);
-    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    if (LocalScene.typedrawing == -1)
     {
-        //if(i != scene->IndexCurrentFormula)
-        {
-            if(!scene->componentsinfos.ThereisRGBA)
-            {
-                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
-                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
-            }
-            if(scene->componentsinfos.ThereisCND)
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
-                    );
-
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );
-            }
-
-            // There is no condition:
-            else
-                //if(i != scene->IndexCurrentFormula)
-
-                glDrawElements(
-                    GL_TRIANGLES,
-                    3*scene->componentsinfos.Parametricpositions[2*i+1],
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
-                );
-        }
+        DrawMeshParametricListe(&LocalScene);
+        UpdateParColorliste(&LocalScene);
+        DrawParametricListe(&LocalScene);
     }
-
-    if(scene->componentsinfos.ThereisRGBA)
-        glDisable(GL_COLOR_MATERIAL);
-
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
 }
-
 
 void OpenGlWidget::initializeGL()
 {
@@ -906,30 +1208,137 @@ void OpenGlWidget::initializeGL()
     if(count == 0)
     {
         boxok();
+        InitFont();
+        InitGlParameters();
         count =1;
     }
     PutObjectInsideCube();
     glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
-    InitGlParameters();
+    if(LocalScene.activateGlCache)
+        CreateGlLists();
+    //else
+        //InitGlParameters();
 }
 
 void OpenGlWidget::InitGlParameters()
 {
+    static int k=0;
+    if(k==0)
+    {
     /// For drawing Filled Polygones :
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glEnable(GL_NORMALIZE);
     glFrontFace (GL_CCW);
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
     glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
-    glMaterialf (GL_FRONT, GL_SHININESS, 35.0);
-    glMaterialf (GL_BACK, GL_SHININESS, 35.0);
+
+    glMaterialfv(GL_FRONT, GL_SPECULAR,LocalScene.specReflection);
+    glMaterialfv(GL_BACK, GL_SPECULAR, LocalScene.specReflection);
+
+    glMateriali(GL_FRONT, GL_SHININESS,110);
+    glMateriali(GL_BACK, GL_SHININESS, 110);
     glEnable(GL_DEPTH_TEST);
+
     glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-    InitFont();
+    k+=1;
+    }
+    //reisialize IsoColors listes Filled
+    if(LocalScene.activateGlCache)
+    {
+        if (LocalScene.typedrawing == 1)
+            UpdateIsoColorliste(&LocalScene);
+        if (LocalScene.typedrawing == -1)
+            UpdateParColorliste(&LocalScene);
+    }
+}
+
+static void DrawIsoCND_cache(ObjectProperties *scene)
+{
+    if(scene->componentsinfos.DMTrianglesVerifyCND)
+    {
+        glLineWidth(1);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesVerifyCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[0]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
+
+    if(scene->componentsinfos.DMTrianglesNotVerifyCND)
+    {
+        glLineWidth(1);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesNotVerifyCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
+
+    if(scene->componentsinfos.DMTrianglesBorderCND)
+    {
+        glLineWidth(4);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesBorderCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
+}
+
+static void DrawIsoCND(ObjectProperties *scene)
+{
+    if(scene->componentsinfos.DMTrianglesVerifyCND)
+    {
+        glLineWidth(1);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesVerifyCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[0]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
+
+    if(scene->componentsinfos.DMTrianglesNotVerifyCND)
+    {
+        glLineWidth(1);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesNotVerifyCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
+
+    if(scene->componentsinfos.DMTrianglesBorderCND)
+    {
+        glLineWidth(4);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.NbTrianglesBorderCND,
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1);
+    }
 }
 
 
-static void DrawIsoCND(ObjectProperties *scene)
+
+static void DrawParCND_cache(ObjectProperties *scene)
 {
     if(scene->componentsinfos.DMTrianglesVerifyCND)
     {
@@ -1176,6 +1585,107 @@ static void draw(ObjectProperties *scene)
     glFlush();
 }
 
+static void draw_cache(ObjectProperties *scene)
+{
+    //scene->typedrawing = 1;
+    scene->box =1;
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if (staticaction < 1)
+    {
+        glRotatef(270,1.0,0.0,0.0);
+        glRotatef(225,0.0,0.0,1.0);
+        glRotatef(-29,1.0,-1.0,0.0);
+        staticaction += 1;
+
+        glEnable (GL_LINE_SMOOTH);
+        glEnable (GL_BLEND);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+    }
+
+    // Blend Effect activation:
+    if (scene->transparency == 1)
+        glDepthMask(GL_FALSE);
+
+    // Ratation (Animation):
+    if (scene->anim == 1 && scene->animxyz == 1)
+    {
+        glRotatef(scene->RotStrength, scene->axe_x, scene->axe_y, scene->axe_z);
+    }
+
+    // Plan:
+    //if (scene->plan == 1)
+    //glLoadIdentity();
+    if (scene->infos == 1)
+        glCallList(scene->gridplanliste);
+
+    // Axe :
+    if (scene->infos == 1)
+        DrawAxe();
+
+    //glLoadIdentity();
+    // Box:
+    //if (scene->box == 1) glCallList(scene->boxliste);
+    glPushMatrix();
+
+    if (scene->anim == 1 && scene->animx == 1)
+    {
+        scene->animxValue += scene->animxValueStep;
+        glRotatef(scene->animxValue, 1.0, 0, 0);
+    }
+
+    if (scene->anim == 1 && scene->animy == 1)
+    {
+        scene->animyValue += scene->animyValueStep;
+        glRotatef(scene->animyValue, 0, 1.0, 0);
+    }
+
+    if (scene->anim == 1 && scene->animz == 1)
+    {
+        scene->animzValue += scene->animzValueStep;
+        glRotatef(scene->animzValue, 0, 0, 1.0);
+    }
+
+    if (scene->fill == 1 && scene->typedrawing == -1)
+        DrawParametric_cache(scene);
+
+    if (scene->fill == 1 && scene->typedrawing == 1)
+        DrawIso_cache(scene);
+
+    // Draw Mesh Object:
+    if (scene->triangles == 1 && scene->typedrawing == 1)
+        DrawMeshIso_cache(scene);
+
+    if (scene->mesh == 1 && scene->typedrawing == -1)
+        DrawMeshParametric_cache(scene);
+
+    // Draw Minimal topology for isosurfaces:
+    if (scene->mesh == 1  && scene->typedrawing == 1)
+        DrawMinimalTopology_cache(scene);
+
+    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && scene->typedrawing == 1)
+        DrawIsoCND_cache(scene);
+
+    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && scene->typedrawing == -1)
+        DrawParCND_cache(scene);
+
+    //Draw Normales:
+    if (scene->norm == 1 )
+        DrawNormals_cache(scene);
+
+    glPopMatrix();
+
+    if (scene->transparency == 1)
+        glDepthMask(GL_TRUE);
+
+    // Draw the scene:
+    glFlush();
+}
+
+
+
+
+
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void OpenGlWidget::SaveSceneAsObjPoly()
 {
@@ -1321,7 +1831,10 @@ void OpenGlWidget::paintGL()
         }
         initializeGL();
     }
-    draw(&LocalScene);
+    if(LocalScene.activateGlCache)
+        draw_cache(&LocalScene);
+    else
+        draw(&LocalScene);
     if (LocalScene.infos == 1)  PrintInfos();
     if (LocalScene.morph == 1 && LocalScene.frame == 1)  FramesSave();
 }
@@ -1352,6 +1865,7 @@ void OpenGlWidget::DrawPlan()
 
 void OpenGlWidget::DrawGridPlan()
 {
+    /*
     GLuint list;
 
     list = glGenLists(1);
@@ -1431,6 +1945,7 @@ void OpenGlWidget::DrawGridPlan()
 
     glEndList();
     LocalScene.gridplanliste = list;
+    */
 }
 
 void OpenGlWidget::timerEvent(QTimerEvent*)
@@ -1581,8 +2096,9 @@ void OpenGlWidget::boxok()
     glVertex3f(600.0,525.0, -350);
     glVertex3f(-600.0,525.0, -350);
     glEnd();
-    glLineWidth(0.9);
+    glLineWidth(4.18);
     glEndList();
+
 }
 
 void OpenGlWidget::mouseReleaseEvent( QMouseEvent *)
@@ -1778,24 +2294,20 @@ void OpenGlWidget::transparency(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcols[currentposition][3] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcols[currentposition][3]  = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 2:
         LocalScene.gridcol[3] = (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[3] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::transparencypar(int cl, int currentposition)
@@ -1804,24 +2316,20 @@ void OpenGlWidget::transparencypar(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcolsPar[currentposition][3] = (cl/255.) ;
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcolsPar[currentposition][3] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 2:
         LocalScene.gridcol[3] = (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[3] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::red(int cl, int currentposition)
@@ -1830,24 +2338,20 @@ void OpenGlWidget::red(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcols[currentposition][0] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcols[currentposition][0]  =  (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 2:
         LocalScene.gridcol[0] =  (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[0] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::redpar(int cl, int currentposition)
@@ -1856,24 +2360,20 @@ void OpenGlWidget::redpar(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcolsPar[currentposition][0] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcolsPar[currentposition][0] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 2:
         LocalScene.gridcol[0] =  (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[0] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::green(int cl, int currentposition)
@@ -1882,24 +2382,20 @@ void OpenGlWidget::green(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcols[currentposition][1] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcols[currentposition][1]  = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 2:
         LocalScene.gridcol[1] = (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[1] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1], LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::greenpar(int cl, int currentposition)
@@ -1908,24 +2404,20 @@ void OpenGlWidget::greenpar(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcolsPar[currentposition][1] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcolsPar[currentposition][1] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 2:
         LocalScene.gridcol[1] = (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[1] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1], LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::blue(int cl, int currentposition)
@@ -1934,24 +2426,20 @@ void OpenGlWidget::blue(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcols[currentposition][2] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcols[currentposition][2]  = (cl/255.);
-        InitGlParameters();//valueChanged();
-        update();
         break;
     case 2:
         LocalScene.gridcol[2] = (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[2] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::bluepar(int cl, int currentposition)
@@ -1960,24 +2448,20 @@ void OpenGlWidget::bluepar(int cl, int currentposition)
     {
     case 1:
         LocalScene.frontcolsPar[currentposition][2] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 0:
         LocalScene.backcolsPar[currentposition][2] = (cl/255.);
-        InitGlParameters();
-        update();
         break;
     case 2:
         LocalScene.gridcol[2] = (cl/255.);
-        update();
         break;
     case 3:
         LocalScene.groundcol[2] = (cl/255.);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        update();
         break;
     };
+    InitGlParameters();
+    update();
 }
 
 void OpenGlWidget::transparence(bool trs)
@@ -1986,8 +2470,54 @@ void OpenGlWidget::transparence(bool trs)
     if (trs)
     {
         glEnable(GL_BLEND);
-        glBlendFunc (GL_SRC_ALPHA, GL_ONE/*_MINUS_SRC_ALPHA*/);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE);
     }
     else glDisable(GL_BLEND);
+    InitGlParameters();
+    update();
+}
+
+void OpenGlWidget::redSpec(int cl)
+{
+    LocalScene.specReflection[0] =  (cl/100.0);
+}
+
+void OpenGlWidget::greenSpec(int cl)
+{
+    LocalScene.specReflection[1] =  (cl/100.0);
+}
+
+void OpenGlWidget::blueSpec(int cl)
+{
+    LocalScene.specReflection[2] =  (cl/100.0);
+}
+
+void OpenGlWidget::transSpec(int cl)
+{
+    LocalScene.specReflection[3] =  (cl/100.0);
+    InitSpecularParameters();
+}
+
+void OpenGlWidget::Shininess(int cl)
+{
+    LocalScene.shininess =  cl;
+    InitSpecularParameters();
+}
+
+void OpenGlWidget::InitSpecularParameters()
+{
+    /// For drawing Filled Polygones :
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glEnable(GL_NORMALIZE);
+    glFrontFace (GL_CCW);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
+    glMaterialfv(GL_BACK , GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
+
+    glMaterialfv(GL_FRONT, GL_SPECULAR, LocalScene.specReflection);
+    glMaterialfv(GL_BACK , GL_SPECULAR, LocalScene.specReflection);
+
+    glMateriali(GL_FRONT, GL_SHININESS, LocalScene.shininess);
+    glMateriali(GL_BACK , GL_SHININESS, LocalScene.shininess);
+    glEnable(GL_DEPTH_TEST);
     update();
 }
