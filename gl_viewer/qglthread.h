@@ -43,7 +43,6 @@ private:
     bool doResize;
     int w;
     int h;
-    int rotAngle;
     OpenGlWidget *glw;
 };
 #endif // GLWidget_h
