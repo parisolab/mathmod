@@ -40,7 +40,6 @@ class OpenGlWidget : public QGLWidget
 {
     Q_OBJECT
 public :
-
     int btgauche, btdroit, btmilieu, latence,
         nb_ligne, nb_colone, coupure_col, coupure_ligne,
         IDGlWindow;
@@ -61,6 +60,7 @@ public:
     OpenGlWidget( QWidget *parent=0);
     ~OpenGlWidget();
     void initializeGL();
+    void CreateGlLists();
     void resizeGL(int, int);
     void paintGL();
     void timerEvent( QTimerEvent * );
@@ -71,6 +71,8 @@ public:
     virtual   void run();
     void valueChanged();
     void InitGlParameters();
+    void InitSpecularParameters();
+    void Shininess(int);
     void boxok();
     void initbox();
     int memoryallocation(int, int, int);
@@ -117,6 +119,10 @@ public slots:
     void greenpar(int, int currentposition=0);
     void bluepar(int, int currentposition=0);
     void transparence(bool);
+    void redSpec(int);
+    void greenSpec(int);
+    void blueSpec(int);
+    void transSpec(int);
     void quality(int);
     void bmp();
     void jpg();

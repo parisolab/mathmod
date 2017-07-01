@@ -271,8 +271,8 @@ void MathMod::ProcessNewIsoSurface( )
         &((ui.glWidget)->LocalScene.componentsinfos),
         (ui.glWidget)->LocalScene.Typetriangles,
         (ui.glWidget)->LocalScene.WichPointVerifyCond);
-    (ui.glWidget)->initializeGL();
     (ui.glWidget)->LocalScene.typedrawing = 1;
+    (ui.glWidget)->initializeGL();
     (ui.glWidget)->update();
 }
 
@@ -346,7 +346,6 @@ void MathMod::ProcessParisoSurface()
         message.exec();
         return;
     }
-
     (ui.glWidget)->ParObjet->ParamBuild(
         &((ui.glWidget)->LocalScene.ArrayNorVer_localPt[TypeDrawin*((ui.glWidget)->LocalScene.VertxNumberTmp1)]),
         (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
@@ -360,7 +359,6 @@ void MathMod::ProcessParisoSurface()
         (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
         &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin)
     );
-
     (ui.glWidget)->LocalScene.PolyNumber = (ui.glWidget)->LocalScene.PolyNumberTmp1 + (ui.glWidget)->LocalScene.PolyNumberTmp2;
     (ui.glWidget)->LocalScene.VertxNumber= (ui.glWidget)->LocalScene.VertxNumberTmp1  + (ui.glWidget)->LocalScene.VertxNumberTmp2;
 
@@ -405,5 +403,22 @@ void MathMod::slot_triangles_clicked()
 void MathMod::Mesh()
 {
     (ui.glWidget)->LocalScene.mesh *= -1;
+    (ui.glWidget)->update();
+}
+
+//++++++++++++++++++++++++++++++++++++++++
+void MathMod::activateteGlCacheOption(bool state)
+{
+    (ui.glWidget)->LocalScene.activateGlCache= state;
+    (ui.glWidget)->update();
+}
+
+//++++++++++++++++++++++++++++++++++++++++
+void MathMod::updateGLspectrale(float *spec)
+{
+    (ui.glWidget)->LocalScene.specReflection[0]= spec[0];
+    (ui.glWidget)->LocalScene.specReflection[1]= spec[1];
+    (ui.glWidget)->LocalScene.specReflection[2]= spec[2];
+    (ui.glWidget)->LocalScene.specReflection[3]= spec[3];
     (ui.glWidget)->update();
 }
