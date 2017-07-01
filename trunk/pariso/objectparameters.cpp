@@ -70,6 +70,8 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.groundcol[2] = StaticColor[14];
     objectproperties.groundcol[3] = 1.0;
 
+    //objectproperties.specReflection[0] = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2; objectproperties.specReflection[3] = 1.0;
+
     objectproperties.backcol[0]   = objectproperties.backcols[0][0]   = objectproperties.backcolsPar[0][0]   = StaticColor[0];
     objectproperties.backcol[1]   = objectproperties.backcols[0][1]   = objectproperties.backcolsPar[0][1]   = StaticColor[1];
     objectproperties.backcol[2]   = objectproperties.backcols[0][2]   = objectproperties.backcolsPar[0][2]   = StaticColor[2];
@@ -112,17 +114,6 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
 
     for(int i=4; i<1100; i++)
     {
-        /*
-           objectproperties.frontcols[i][0] = objectproperties.frontcolsPar[i%4][0];
-           objectproperties.frontcols[i][1] = objectproperties.frontcolsPar[i%4][1];
-           objectproperties.frontcols[i][2] = objectproperties.frontcolsPar[i%4][2];
-           objectproperties.frontcols[i][3] = objectproperties.frontcolsPar[i%4][3];
-
-           objectproperties.backcols[i][0] = objectproperties.backcolsPar[i%4][0];
-           objectproperties.backcols[i][1] = objectproperties.backcolsPar[i%4][1];
-           objectproperties.backcols[i][2] = objectproperties.backcolsPar[i%4][2];
-           objectproperties.backcols[i][3] = objectproperties.backcolsPar[i%4][3];
-           */
         objectproperties.frontcols[i][0] = objectproperties.frontcolsPar[0][0];
         objectproperties.frontcols[i][1] = objectproperties.frontcolsPar[0][1];
         objectproperties.frontcols[i][2] = objectproperties.frontcolsPar[0][2];
@@ -132,41 +123,43 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
         objectproperties.backcols[i][1] = objectproperties.backcolsPar[0][1];
         objectproperties.backcols[i][2] = objectproperties.backcolsPar[0][2];
         objectproperties.backcols[i][3] = objectproperties.backcolsPar[0][3];
-
     }
-
     objectproperties.border              = 1;
     objectproperties.mesh                = 1;
-    objectproperties.activarecnd     = true;
-    objectproperties.fill                      = 1;
-    objectproperties.line                   = 1;
-    objectproperties.infos                 = 1;
+    objectproperties.activarecnd         = true;
+    objectproperties.activateGlCache     = true;
+    objectproperties.specReflection[0]   = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2;
+    objectproperties.specReflection[3]   = 1.0;
+    objectproperties.shininess           = 110;
+    objectproperties.fill                = 1;
+    objectproperties.line                = 1;
+    objectproperties.infos               = 1;
     objectproperties.frame               = -1;
     objectproperties.infosdetails[0]  = objectproperties.infosdetails[1] = objectproperties.infosdetails[2] = 1;
-    objectproperties.axe                   = 1;
-    objectproperties.box                   = 1;
+    objectproperties.axe                 = 1;
+    objectproperties.box                 = 1;
     objectproperties.isobox              = 1;
-    objectproperties.triangles          = -1;
-    objectproperties.typedrawing    =  1;
-    objectproperties.smoothpoly      = 1;
-    objectproperties.smoothline       = -1;
-    objectproperties.anim                 = -1;
+    objectproperties.triangles           = -1;
+    objectproperties.typedrawing         =  1;
+    objectproperties.smoothpoly          = 1;
+    objectproperties.smoothline          = -1;
+    objectproperties.anim                = -1;
     objectproperties.animx               = -1;
     objectproperties.animy               = -1;
     objectproperties.animz               = -1;
-    objectproperties.animxyz           =   1;
-    objectproperties.animxValue      = 0;
-    objectproperties.animyValue      = 0;
-    objectproperties.animzValue      = 0;
-    objectproperties.slider                =-1;
-    objectproperties.morph              =-1;
-    objectproperties.morphstep       =-1;
+    objectproperties.animxyz             = 1;
+    objectproperties.animxValue          = 0;
+    objectproperties.animyValue          = 0;
+    objectproperties.animzValue          = 0;
+    objectproperties.slider              =-1;
+    objectproperties.morph               =-1;
+    objectproperties.morphstep           =-1;
     objectproperties.norm                =-1;
-    objectproperties.plan                  = 1;
-    objectproperties.front                  = 1;
-    objectproperties.back                 = 1;
-    objectproperties.transparency   =-1;
-    objectproperties.png_ok = 1;
+    objectproperties.plan                = 1;
+    objectproperties.front               = 1;
+    objectproperties.back                = 1;
+    objectproperties.transparency        =-1;
+    objectproperties.png_ok              = 1;
     objectproperties.jpg_ok = objectproperties.bmp_ok = -1;
     objectproperties.quality_image = 50;
     objectproperties.colortype = 0;

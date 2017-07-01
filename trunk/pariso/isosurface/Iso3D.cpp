@@ -1601,7 +1601,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
             Cindex = IndexPolyTab[3*i + 2];
             //Init this triangle type to 1:
             TypeIsoSurfaceTriangleListeCND[i] = 1;
-            int TypeTriangle;
+            int TypeTriangle = -1;
             if(WichPointVerifyCond[Aindex] && !WichPointVerifyCond[Bindex] && !WichPointVerifyCond[Cindex])
                 TypeTriangle = 0;
             else if(!WichPointVerifyCond[Aindex] && WichPointVerifyCond[Bindex] && WichPointVerifyCond[Cindex])
@@ -1850,7 +1850,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         //Copy the new index in the original one:
         memcpy(IndexPolyTab, NewIndexPolyTab, 3*(M + l + k)*sizeof(unsigned int));
         NbTriangleIsoSurfaceTmp = M + l + k;
-        delete (NewIndexPolyTab);
+        delete[] (NewIndexPolyTab);
 
         components->NbTrianglesVerifyCND = k;
         components->NbTrianglesNotVerifyCND = l;

@@ -52,6 +52,7 @@ public:
     QJsonObject JSONMathModels;
 
 public slots:
+    void updateGlOptions();
     void editorwin();
     void videoplay();
     void colorsoptions();
@@ -237,5 +238,11 @@ private slots:
     void on_AddParam_clicked();
     void on_CutParam_clicked();
     void on_actionFrames_triggered();
+    void on_red_Specular_valueChanged(int);
+    void SetSpecularValues(float *);
+    void on_green_Specular_valueChanged(int);
+    void on_blue_Specular_valueChanged(int);
+    void on_transparent_Specular_valueChanged(int);
+    void on_ShininessScrollBar_valueChanged(int value);
 };
 #endif

@@ -14,12 +14,16 @@
         "DotSymbol": "."
     },
     "WindowSize": {
-        "ControlH": 700,
+        "ControlH": 750,
         "ControlW": 538,
-        "GlwinH": 700,
-        "GlwinW": 700
+        "GlwinH": 750,
+        "GlwinW": 750
     },
-
+    "OpenGlConfig": {
+        "AtivateGlCache": true,
+        "GL_SPECULAR": [50, 50, 50, 100],
+        "GL_SHININESS": 110
+    },
     "Styles": {
         "StylesPredefined": [ "Default", "Fusion", "Windows","WindowsXp"],
         "StyleUsed": "Fusion"
