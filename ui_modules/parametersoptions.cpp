@@ -38,10 +38,10 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxPt=150000;
     MaxGrid=80;
     dotsymbol =".";
+    ActivateGlCache = false;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
     advancedmodels = "advancedmodels.js";
-
     darkpalette.setColor(QPalette::Window, QColor(53,53,53));
     darkpalette.setColor(QPalette::WindowText, QColor(255,255,255));
     darkpalette.setColor(QPalette::Base, QColor(15,15,15));
@@ -432,16 +432,30 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             GlwinH = tmp["GlwinH"].toDouble();
         }
 
+        if(JConfig["OpenGlConfig"].isObject() )
+        {
+            QJsonObject tmp;
+            tmp= JConfig["OpenGlConfig"].toObject();
+            ActivateGlCache = tmp["AtivateGlCache"].toBool();
+        }
+
+        if(JConfig["OpenGlConfig"].isObject() )
+        {
+            QJsonObject tmp;
+            tmp= JConfig["OpenGlConfig"].toObject();
+            Specular[0] = (tmp["GL_SPECULAR"].toArray())[0].toDouble()/100.0;
+            Specular[1] = (tmp["GL_SPECULAR"].toArray())[1].toDouble()/100.0;
+            Specular[2] = (tmp["GL_SPECULAR"].toArray())[2].toDouble()/100.0;
+            Specular[3] = (tmp["GL_SPECULAR"].toArray())[3].toDouble()/100.0;
+        }
+
         if(JConfig["Themes"].isObject() and JConfig["Styles"].isObject() )
         {
             QJsonObject tmp1, tmp2, MyTheme;
             tmp2= JConfig["Styles"].toObject();
             QString style = tmp2["StyleUsed"].toString();
-
             tmp1 = JConfig["Themes"].toObject();
             QString theme = tmp1["ThemeUsed"].toString();
-
-
             if(theme == "MyTheme")
             {
                 MyTheme = tmp1["MyTheme"].toObject();

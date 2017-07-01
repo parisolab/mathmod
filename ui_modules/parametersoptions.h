@@ -57,6 +57,8 @@ public:
     int ControlH;
     int GlwinW;
     int GlwinH;
+    bool ActivateGlCache;
+    float Specular[4];
     int MaxTri, MaxPt, MaxGrid;
 
 public slots:

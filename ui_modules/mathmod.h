@@ -36,6 +36,8 @@ public:
     void ParametricSurfaceProcess(int type = 1);
     void Initparametricpage();
     void updateGL();
+    void activateteGlCacheOption(bool);
+    void updateGLspectrale(float *);
 public slots:
     void fill();
     void iso_infos();
