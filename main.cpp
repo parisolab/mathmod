@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     drawingopt.MathmodRef = &mm;
     mm.Parent = &drawingopt;
 
+    drawingopt.updateGlOptions();
     //GUI update according to the config file:
     drawingopt.UpdateGui(argc);
 

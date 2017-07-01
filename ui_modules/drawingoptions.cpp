@@ -5801,7 +5801,11 @@ void DrawingOptions::on_Multiplier_clicked()
     ui.ycomboBox->setCurrentIndex(0);
     ui.zcomboBox->setCurrentIndex(0);
 }
-
+void DrawingOptions::updateGlOptions()
+{
+   MathmodRef->activateteGlCacheOption(Parameters->ActivateGlCache);
+   MathmodRef->updateGLspectrale(Parameters->Specular);
+}
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::UpdateGui(int argc)
 {
@@ -5825,6 +5829,9 @@ void DrawingOptions::UpdateGui(int argc)
     ui.comboBoxTexture->insertItems(0, LstModelTexture.listeTextures);
     ui.comboBoxPigment->insertItems(0, LstModelTexture.listePigments);
     AddListModels();
+
+    //OpenGl specular:
+    SetSpecularValues(Parameters->Specular);
 
     //Show the two windows of the application:
     move(Parameters->ControlX,Parameters->ControlY);
@@ -7894,4 +7901,93 @@ void DrawingOptions::update_infos_param(int index)
 void DrawingOptions::on_actionFrames_triggered()
 {
     MathmodRef->frames_clicked();
+}
+
+void DrawingOptions::SetSpecularValues(float *spec)
+{
+    ui.red_Specular->blockSignals(true);
+    ui.red_Specular->setSliderPosition((int)(spec[0]*100));
+    ui.red_Specular->blockSignals(false);
+
+    ui.green_Specular->blockSignals(true);
+    ui.green_Specular->setSliderPosition((int)(spec[1]*100));
+    ui.green_Specular->blockSignals(false);
+
+    ui.blue_Specular->blockSignals(true);
+    ui.blue_Specular->setSliderPosition((int)(spec[2]*100));
+    ui.blue_Specular->blockSignals(false);
+
+    ui.transparent_Specular->blockSignals(true);
+    ui.transparent_Specular->setSliderPosition((int)(spec[3]*100));
+    ui.transparent_Specular->blockSignals(false);
+}
+
+void DrawingOptions::on_red_Specular_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->redSpec(value);
+    if(ui.GcheckBox->isChecked())
+    {
+        ui.green_Specular->blockSignals(true);
+        ui.green_Specular->setSliderPosition(value);
+        ui.green_Specular->blockSignals(false);
+        MathmodRef->ui.glWidget->greenSpec(value);
+    }
+    if(ui.BcheckBox->isChecked())
+    {
+        ui.blue_Specular->blockSignals(true);
+        ui.blue_Specular->setSliderPosition(value);
+        ui.blue_Specular->blockSignals(false);
+        MathmodRef->ui.glWidget->blueSpec(value);
+    }
+    MathmodRef->ui.glWidget->InitSpecularParameters();
+}
+
+void DrawingOptions::on_green_Specular_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->greenSpec(value);
+    if(ui.RcheckBox->isChecked())
+    {
+        ui.red_Specular->blockSignals(true);
+        ui.red_Specular->setSliderPosition(value);
+        ui.red_Specular->blockSignals(false);
+        MathmodRef->ui.glWidget->redSpec(value);
+    }
+    if(ui.BcheckBox->isChecked())
+    {
+        ui.blue_Specular->blockSignals(true);
+        ui.blue_Specular->setSliderPosition(value);
+        ui.blue_Specular->blockSignals(false);
+        MathmodRef->ui.glWidget->blueSpec(value);
+    }
+    MathmodRef->ui.glWidget->InitSpecularParameters();
+}
+
+void DrawingOptions::on_blue_Specular_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->blueSpec(value);
+    if(ui.GcheckBox->isChecked())
+    {
+        ui.green_Specular->blockSignals(true);
+        ui.green_Specular->setSliderPosition(value);
+        ui.green_Specular->blockSignals(false);
+        MathmodRef->ui.glWidget->greenSpec(value);
+    }
+    if(ui.RcheckBox->isChecked())
+    {
+        ui.red_Specular->blockSignals(true);
+        ui.red_Specular->setSliderPosition(value);
+        ui.red_Specular->blockSignals(false);
+        MathmodRef->ui.glWidget->redSpec(value);
+    }
+    MathmodRef->ui.glWidget->InitSpecularParameters();
+}
+
+void DrawingOptions::on_transparent_Specular_valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->transSpec(value);
+}
+
+void DrawingOptions::on_ShininessScrollBar_valueChanged(int value)
+{
+   MathmodRef->ui.glWidget->Shininess(value);
 }
