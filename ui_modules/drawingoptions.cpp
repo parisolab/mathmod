@@ -5804,6 +5804,13 @@ void DrawingOptions::on_Multiplier_clicked()
 void DrawingOptions::updateGlOptions()
 {
    MathmodRef->activateteGlCacheOption(Parameters->ActivateGlCache);
+   if(!Parameters->ActivateGlCache)
+   {
+        ui.GlcacheCheckBox->blockSignals(true);
+        ui.GlcacheCheckBox->setChecked(false);
+        ui.GlcacheCheckBox->blockSignals(false);
+   }
+
    MathmodRef->updateGLspectrale(Parameters->Specular);
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -7990,4 +7997,9 @@ void DrawingOptions::on_transparent_Specular_valueChanged(int value)
 void DrawingOptions::on_ShininessScrollBar_valueChanged(int value)
 {
    MathmodRef->ui.glWidget->Shininess(value);
+}
+
+void DrawingOptions::on_GlcacheCheckBox_clicked(bool checked)
+{
+MathmodRef->ui.glWidget->toggleGlCache(checked);
 }

@@ -410,7 +410,6 @@ void MathMod::Mesh()
 void MathMod::activateteGlCacheOption(bool state)
 {
     (ui.glWidget)->LocalScene.activateGlCache= state;
-    (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++
