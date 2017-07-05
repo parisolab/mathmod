@@ -76,6 +76,10 @@ public:
     void boxok();
     void initbox();
     int memoryallocation(int, int, int);
+    void VBOmemoryallocation();
+    void deleteAllListes();
+    void toggleGlCache(bool);
+    void deleteVBO();
     void calculateObject();
     void PutObjectInsideCube();
     void Add(ObjectParameters *);

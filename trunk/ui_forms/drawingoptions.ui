@@ -4915,7 +4915,7 @@ p, li { white-space: pre-wrap; }
           </widget>
           <widget class="QWidget" name="tab_20">
            <attribute name="title">
-            <string>Texture</string>
+            <string>Appearance</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_34">
             <item row="0" column="0">
@@ -5530,7 +5530,7 @@ p, li { white-space: pre-wrap; }
                <attribute name="title">
                 <string>OpenGL</string>
                </attribute>
-               <layout class="QGridLayout" name="gridLayout_74">
+               <layout class="QGridLayout" name="gridLayout_75">
                 <item row="0" column="0">
                  <widget class="QGroupBox" name="SpecularGroupBox">
                   <property name="sizePolicy">
@@ -5929,6 +5929,25 @@ p, li { white-space: pre-wrap; }
                  </widget>
                 </item>
                 <item row="2" column="0">
+                 <widget class="QGroupBox" name="GLCache">
+                  <property name="title">
+                   <string>OpenGL Cache Activation:</string>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_74">
+                   <item row="0" column="0">
+                    <widget class="QCheckBox" name="GlcacheCheckBox">
+                     <property name="text">
+                      <string>GL Memory Cache</string>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item row="3" column="0">
                  <spacer name="verticalSpacer_7">
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
