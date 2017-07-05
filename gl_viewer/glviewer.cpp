@@ -23,12 +23,13 @@
 #include "raster.h"
 
 
+#define BUFFER_OFFSET(i) ((float *)(i))
+
 static int TypeDrawin=10;
 static int TypeDrawinNormStep = 4;
 int FistTimecalibrate =-1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo, decalage_zo;
 
-///++++++++++++++++++++++++++++++++++++++++
 
 static void UpdateParColorliste (ObjectProperties *scene)
 {
@@ -308,11 +309,16 @@ static void DrawIso (ObjectProperties *scene)
                         &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
                     );
             }
-            // There is no condition:
             else
-                //if(i != scene->IndexCurrentFormula)
             {
-                //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+/*
+
+glDrawElements(GL_TRIANGLES, 3*scene->componentsinfos.IsoPositions[2*i+1], GL_UNSIGNED_INT,
+        (uint *)0+(scene->componentsinfos.IsoPositions[2*i]));
+
+
+*/
                 glDrawElements(
                     GL_TRIANGLES,
                     3*scene->componentsinfos.IsoPositions[2*i+1],
@@ -321,13 +327,10 @@ static void DrawIso (ObjectProperties *scene)
                 );
 
             }
-
         }
     }
-
     if(scene->componentsinfos.ThereisRGBA)
         glDisable(GL_COLOR_MATERIAL);
-
     glDisable(GL_POLYGON_OFFSET_FILL);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
@@ -732,6 +735,60 @@ void OpenGlWidget::restarttimer(int newlatence)
         timer->stop();
         timer->start( latence);
     }
+}
+
+void OpenGlWidget::VBOmemoryallocation()
+{
+    /*
+    static int stat=0;
+    static uint previous=0;
+
+    if(stat ==0)
+    {
+    glDeleteBuffersARB(1, &LocalScene.vboId_ArrayNorVer_localPt);
+    glDeleteBuffersARB(1, &LocalScene.vboId_PolyIndices_localPt);
+    LocalScene.vboId_ArrayNorVer_localPt = LocalScene.vboId_PolyIndices_localPt = 0;
+
+    glGenBuffersARB(1, &LocalScene.vboId_ArrayNorVer_localPt);
+    glBindBufferARB(GL_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVer_localPt);
+    glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(float)*10*LocalScene.VertxNumber,LocalScene.ArrayNorVer_localPt, GL_STATIC_DRAW_ARB);
+
+
+    glGenBuffersARB(1, &LocalScene.vboId_PolyIndices_localPt);
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_PolyIndices_localPt);
+    glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, sizeof(uint)*4*LocalScene.PolyNumber/3, LocalScene.PolyIndices_localPt, GL_STATIC_DRAW_ARB);
+
+    glBindBufferARB(GL_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVer_localPt);
+
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(4, GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(0));   //The starting point of texcoords, 24 bytes away
+
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glNormalPointer(GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(16));   //The starting point of normals, 12 bytes away
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(28));   //The starting point of the VBO, for the vertices
+
+    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_PolyIndices_localPt);
+    stat +=1;
+    previous = LocalScene.VertxNumber;
+    }
+
+    else
+    {
+
+    if(LocalScene.VertxNumber > previous)
+    {
+        glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(float)*10*LocalScene.VertxNumber,LocalScene.ArrayNorVer_localPt, GL_STATIC_DRAW_ARB);
+        previous = LocalScene.VertxNumber;
+    }
+    else
+        glBufferSubDataARB(GL_ARRAY_BUFFER_ARB,0, sizeof(float)*10*LocalScene.VertxNumber,LocalScene.ArrayNorVer_localPt);
+
+    glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, sizeof(uint)*4*LocalScene.PolyNumber/3, LocalScene.PolyIndices_localPt, GL_STATIC_DRAW_ARB);
+
+    }
+*/
 }
 
 int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
@@ -1202,6 +1259,32 @@ void OpenGlWidget::CreateGlLists()
     }
 }
 
+void OpenGlWidget::deleteAllListes()
+{
+    for(int i = 0; i < LocalScene.componentsinfos.NbParametric; i++)
+    {
+        glDeleteLists(LocalScene.ParColorliste[i],1);
+    }
+    glDeleteLists(LocalScene.FillParliste, 1);
+    glDeleteLists(LocalScene.MeshIsoliste, 1);
+    for(int i = 0; i < LocalScene.componentsinfos.NbIso; i++)
+    {
+        glDeleteLists(LocalScene.IsoColorliste[i],1);
+    }
+    glDeleteLists(LocalScene.FillIsoliste,1);
+    glDeleteLists(LocalScene.MeshIsoMinimalTopliste, 1);
+    glDeleteLists(LocalScene.MeshParliste, 1);
+}
+
+void OpenGlWidget::toggleGlCache(bool cache)
+{
+    LocalScene.activateGlCache = cache;
+    if(LocalScene.activateGlCache)
+        CreateGlLists();
+    else
+        deleteAllListes();
+}
+
 void OpenGlWidget::initializeGL()
 {
     static int count =0;
@@ -1210,16 +1293,153 @@ void OpenGlWidget::initializeGL()
         boxok();
         InitFont();
         InitGlParameters();
+/*
+        glGenBuffersARB(1, &LocalScene.vboId_ArrayNorVer_localPt);
+        glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVer_localPt);
+
+        glGenBuffersARB(1, &LocalScene.vboId_ArrayNorVerExtra_localPt);
+        glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVerExtra_localPt);
+*/
+
+
+        glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
         count =1;
+
+
+
+
     }
+    //LocalScene.vboId_ArrayNorVer_localPt = createVBO(LocalScene.PolyIndices_localPt, sizeof(LocalScene.PolyIndices_localPt), GL_ELEMENT_ARRAY_BUFFER_ARB, GL_STATIC_DRAW_ARB);
     PutObjectInsideCube();
-    glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
     if(LocalScene.activateGlCache)
         CreateGlLists();
-    //else
-        //InitGlParameters();
-}
+/*
+if(!LocalScene.activateGlCache)
+    VBOmemoryallocation();
 
+    glDeleteBuffers(1, &LocalScene.vboId_ArrayNorVer_localPt);
+    glDeleteBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
+    LocalScene.vboId_ArrayNorVer_localPt = LocalScene.vboId_PolyIndices_localPt = 0;
+
+      glGenBuffers(1, &LocalScene.vboId_ArrayNorVer_localPt);
+      glBindBuffer(GL_ARRAY_BUFFER, LocalScene.vboId_ArrayNorVer_localPt);
+      glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*20000,LocalScene.ArrayNorVer_localPt, GL_STATIC_DRAW);
+
+
+      glGenBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, LocalScene.vboId_PolyIndices_localPt);
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*4*20000, LocalScene.PolyIndices_localPt, GL_STATIC_DRAW);
+
+      glBindBuffer(GL_ARRAY_BUFFER, LocalScene.vboId_ArrayNorVer_localPt);
+
+      glEnableClientState(GL_COLOR_ARRAY);
+      glColorPointer(4, GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(0));   //The starting point of texcoords, 24 bytes away
+
+      glEnableClientState(GL_NORMAL_ARRAY);
+      glNormalPointer(GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(16));   //The starting point of normals, 12 bytes away
+
+      glEnableClientState(GL_VERTEX_ARRAY);
+      glVertexPointer(3, GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(28));   //The starting point of the VBO, for the vertices
+
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, LocalScene.vboId_PolyIndices_localPt);
+
+*/
+
+
+}
+/*
+void OpenGlWidget::InitGlParameters()
+{
+    struct MyVertex
+    {
+      float c1, c2, c3, c4;        //Color
+      float nx, ny, nz;            //Normal
+      float x, y, z;               //Vertex
+    };
+
+    MyVertex pvertex[3];
+    //VERTEX 0
+    pvertex[0].x = 0.0;
+    pvertex[0].y = 0.0;
+    pvertex[0].z = 0.0;
+    pvertex[0].nx = 0.0;
+    pvertex[0].ny = 0.0;
+    pvertex[0].nz = 1.0;
+    pvertex[0].s0 = 0.0;
+    pvertex[0].t0 = 0.0;
+    //VERTEX 1
+    pvertex[1].x = 1.0;
+    pvertex[1].y = 0.0;
+    pvertex[1].z = 0.0;
+    pvertex[1].nx = 0.0;
+    pvertex[1].ny = 0.0;
+    pvertex[1].nz = 1.0;
+    pvertex[1].s0 = 1.0;
+    pvertex[1].t0 = 0.0;
+    //VERTEX 2
+    pvertex[2].x = 0.0;
+    pvertex[2].y = 1.0;
+    pvertex[2].z = 0.0;
+    pvertex[2].nx = 0.0;
+    pvertex[2].ny = 0.0;
+    pvertex[2].nz = 1.0;
+    pvertex[2].s0 = 0.0;
+    pvertex[2].t0 = 1.0;
+
+    glGenBuffers(1, LocalScene.vboId_ArrayNorVer_localPt);
+    glBindBuffer(GL_ARRAY_BUFFER, LocalScene.vboId_ArrayNorVer_localPt);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex)*3, LocalScene.ArrayNorVer_localPt, GL_STATIC_DRAW);
+
+
+                glDrawElements(
+                    GL_TRIANGLES,
+                    3*scene->componentsinfos.IsoPositions[2*i+1],
+                    GL_UNSIGNED_INT,
+                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
+                );
+
+
+
+    ushort pindices[3];
+    pindices[0] = 0;
+    pindices[1] = 1;
+    pindices[2] = 2;
+
+  glGenBuffers(1, VertexVBOID);
+  glBindBuffer(GL_ARRAY_BUFFER, VertexVBOID);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(MyVertex)*3, &pvertex[0].x, GL_STATIC_DRAW);
+
+  ushort pindices[3];
+  pindices[0] = 0;
+  pindices[1] = 1;
+  pindices[2] = 2;
+
+  glGenBuffers(1, &IndexVBOID);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexVBOID);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ushort)*3, pindices, GL_STATIC_DRAW);
+
+  //Define this somewhere in your header file
+  define BUFFER_OFFSET(i) ((char *)NULL + (i));
+
+  glBindBuffer(GL_ARRAY_BUFFER, VertexVBOID);
+  glEnableVertexAttribArray(0);    //We like submitting vertices on stream 0 for no special reason
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(MyVertex), BUFFER_OFFSET(0));   //The starting point of the VBO, for the vertices
+  glEnableVertexAttribArray(1);    //We like submitting normals on stream 1 for no special reason
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(MyVertex), BUFFER_OFFSET(12));     //The starting point of normals, 12 bytes away
+  glEnableVertexAttribArray(2);    //We like submitting texcoords on stream 2 for no special reason
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(MyVertex), BUFFER_OFFSET(24));   //The starting point of texcoords, 24 bytes away
+
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexVBOID);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexVBOID);
+    //To render, we can either use glDrawElements or glDrawRangeElements
+    //The is the number of indices. 3 indices needed to make a single triangle
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));   //The starting point of the IBO
+    //0 and 3 are the first and last vertices
+    //glDrawRangeElements(GL_TRIANGLES, 0, 3, 3, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));   //The starting point of the IBO
+    //glDrawRangeElements may or may not give a performance advantage over glDrawElements
+  }
+
+*/
 void OpenGlWidget::InitGlParameters()
 {
     static int k=0;
@@ -1235,8 +1455,8 @@ void OpenGlWidget::InitGlParameters()
     glMaterialfv(GL_FRONT, GL_SPECULAR,LocalScene.specReflection);
     glMaterialfv(GL_BACK, GL_SPECULAR, LocalScene.specReflection);
 
-    glMateriali(GL_FRONT, GL_SHININESS,110);
-    glMateriali(GL_BACK, GL_SHININESS, 110);
+    glMateriali(GL_FRONT, GL_SHININESS,LocalScene.shininess);
+    glMateriali(GL_BACK, GL_SHININESS, LocalScene.shininess);
     glEnable(GL_DEPTH_TEST);
 
     glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
@@ -1548,12 +1768,12 @@ static void draw(ObjectProperties *scene)
     if(scene->fill == 1 && scene->typedrawing == 11)
         DrawPariso(scene);
         */
-
+    if (scene->fill == 1 && scene->typedrawing == 1)
+        DrawIso(scene);
     if (scene->fill == 1 && scene->typedrawing == -1)
         DrawParametric(scene);
 
-    if (scene->fill == 1 && scene->typedrawing == 1)
-        DrawIso(scene);
+
 
     // Draw Mesh Object:
     if (scene->triangles == 1 /*&& scene->typedrawing == 1*/)
@@ -1955,11 +2175,18 @@ void OpenGlWidget::timerEvent(QTimerEvent*)
 
 OpenGlWidget::~OpenGlWidget()
 {
+    //glDeleteBuffers(1, &LocalScene.vboId_ArrayNorVer_localPt);
+    //glDeleteBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
     delete(timer);
     delete ParObjet;
     delete IsoObjet;
 }
 
+void OpenGlWidget::deleteVBO()
+{
+    //glDeleteBuffers(1, &LocalScene.vboId_ArrayNorVer_localPt);
+    //glDeleteBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
+}
 void OpenGlWidget::initbox()
 {
     oldminx = 999999999;

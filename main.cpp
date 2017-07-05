@@ -29,6 +29,7 @@
 #endif
 
 
+
 int main(int argc, char *argv[])
 {
     //QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
@@ -49,6 +50,12 @@ int main(int argc, char *argv[])
     drawingopt.updateGlOptions();
     //GUI update according to the config file:
     drawingopt.UpdateGui(argc);
+
+
+
+
+    //atexit(mm.ui.glWidget->deleteVBO);
+
 
     mm.show();
     drawingopt.show();

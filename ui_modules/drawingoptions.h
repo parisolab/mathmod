@@ -244,5 +244,6 @@ private slots:
     void on_blue_Specular_valueChanged(int);
     void on_transparent_Specular_valueChanged(int);
     void on_ShininessScrollBar_valueChanged(int value);
+    void on_GlcacheCheckBox_clicked(bool checked);
 };
 #endif
