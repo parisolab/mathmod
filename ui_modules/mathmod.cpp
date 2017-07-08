@@ -255,9 +255,8 @@ int MathMod::ParseIso()
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::ProcessNewIsoSurface( )
+void MathMod::ProcessNewIsoSurface()
 {
-
     int result = ParseIso();
     if(result == -1) return;
 

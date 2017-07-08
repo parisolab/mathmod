@@ -49,26 +49,24 @@ static void UpdateParColorliste (ObjectProperties *scene)
     }
 }
 
-static void DrawParametricListe(ObjectProperties *scene)
+static void UpdateFillParliste (ObjectProperties *scene)
 {
-    glDeleteLists(scene->FillParliste, 1);
-    scene->FillParliste = glGenLists(1);
-    glNewList(scene->FillParliste, GL_COMPILE );
+    for(int i = 0; i < scene->componentsinfos.NbParametric; i++)
+    {
+        glDeleteLists(scene->FillParliste[i],1);
+        scene->FillParliste[i] = glGenLists(1);
+    }
     for(int i=0; i< scene->componentsinfos.NbParametric; i++)
     {
-
-        if(!scene->componentsinfos.ThereisRGBA)
-             glCallList(scene->ParColorliste[i]);
-
-         if(!scene->componentsinfos.ThereisCND)
-            glDrawElements(
-            GL_TRIANGLES,
-            3*scene->componentsinfos.Parametricpositions[2*i+1],
-            GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
-            );
+        glNewList(scene->FillParliste[i], GL_COMPILE);
+           glDrawElements(
+           GL_TRIANGLES,
+           3*scene->componentsinfos.Parametricpositions[2*i+1],
+           GL_UNSIGNED_INT,
+           &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
+           );
+        glEndList();
     }
-    glEndList();
 }
 
 static void DrawParametric_cache (ObjectProperties *scene)
@@ -84,7 +82,11 @@ static void DrawParametric_cache (ObjectProperties *scene)
     for(int i=0; i< scene->componentsinfos.NbParametric; i++)
     {
             if(!scene->componentsinfos.ThereisRGBA)
-             glCallList(scene->ParColorliste[i]);
+            {
+                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
+            }
+             //glCallList(scene->ParColorliste[i]);
 
             if(scene->componentsinfos.ThereisCND)
             {
@@ -104,9 +106,11 @@ static void DrawParametric_cache (ObjectProperties *scene)
                         &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
                     );
             }
+            else
+                glCallList(scene->FillParliste[i]);
         }
 
-    glCallList(scene->FillParliste);
+    //glCallList(scene->FillParliste);
     if(scene->componentsinfos.ThereisRGBA)
         glDisable(GL_COLOR_MATERIAL);
     glDisable(GL_POLYGON_OFFSET_FILL);
@@ -186,6 +190,7 @@ static void DrawMeshIsoListe(ObjectProperties *scene)
 
 static void DrawMeshIso_cache(ObjectProperties *scene)
 {
+    glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glCallList(scene->MeshIsoliste);
 }
 
@@ -207,25 +212,28 @@ static void UpdateIsoColorliste (ObjectProperties *scene)
     }
 }
 
-static void DrawFillIsoliste (ObjectProperties *scene)
+static void UpdateFillIsoliste (ObjectProperties *scene)
 {
-    glDeleteLists(scene->FillIsoliste,1);
-    scene->FillIsoliste = glGenLists(1);
-    glNewList(scene->FillIsoliste, GL_COMPILE);
+    for(int i = 0; i < scene->componentsinfos.NbIso; i++)
+    {
+        glDeleteLists(scene->FillIsoliste[i],1);
+        scene->FillIsoliste[i] = glGenLists(1);
+    }
     for(int i=0; i< scene->componentsinfos.NbIso; i++)
     {
-        if(!scene->componentsinfos.ThereisRGBA)
-             glCallList(scene->IsoColorliste[i]);
-
-        if(!scene->componentsinfos.ThereisCND)
-            glDrawElements(
-                GL_TRIANGLES,
-                3*scene->componentsinfos.IsoPositions[2*i+1],
-                GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
+        glNewList(scene->FillIsoliste[i], GL_COMPILE);
+        {
+                glDrawElements(
+                    GL_TRIANGLES,
+                    3*scene->componentsinfos.IsoPositions[2*i+1],
+                    GL_UNSIGNED_INT,
+                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
+        }
+        glEndList();
     }
-    glEndList();
 }
+
+
 
 static void DrawIso_cache (ObjectProperties *scene)
 {
@@ -241,7 +249,11 @@ static void DrawIso_cache (ObjectProperties *scene)
     for(int i=0; i< scene->componentsinfos.NbIso; i++)
     {
             if(!scene->componentsinfos.ThereisRGBA)
-                glCallList(scene->IsoColorliste[i]);
+            {
+                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
+                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
+            }
+                //glCallList(scene->IsoColorliste[i]);
 
             if(scene->componentsinfos.ThereisCND)
             {
@@ -261,15 +273,16 @@ static void DrawIso_cache (ObjectProperties *scene)
                         &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
                     );
             }
+            else
+                glCallList(scene->FillIsoliste[i]);
     }
-    glCallList(scene->FillIsoliste);
+    //glCallList(scene->FillIsoliste);
     if(scene->componentsinfos.ThereisRGBA)
         glDisable(GL_COLOR_MATERIAL);
     glDisable(GL_POLYGON_OFFSET_FILL);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 }
-
 
 static void DrawIso (ObjectProperties *scene)
 {
@@ -284,7 +297,6 @@ static void DrawIso (ObjectProperties *scene)
 
     for(int i=0; i< scene->componentsinfos.NbIso; i++)
     {
-        //if(i != scene->IndexCurrentFormula)
         {
             if(!scene->componentsinfos.ThereisRGBA)
             {
@@ -311,21 +323,12 @@ static void DrawIso (ObjectProperties *scene)
             }
             else
             {
-
-/*
-
-glDrawElements(GL_TRIANGLES, 3*scene->componentsinfos.IsoPositions[2*i+1], GL_UNSIGNED_INT,
-        (uint *)0+(scene->componentsinfos.IsoPositions[2*i]));
-
-
-*/
                 glDrawElements(
                     GL_TRIANGLES,
                     3*scene->componentsinfos.IsoPositions[2*i+1],
                     GL_UNSIGNED_INT,
                     &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
                 );
-
             }
         }
     }
@@ -335,7 +338,6 @@ glDrawElements(GL_TRIANGLES, 3*scene->componentsinfos.IsoPositions[2*i+1], GL_UN
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 }
-
 
 static void DrawMinimalTopologyListe(ObjectProperties *scene)
 {
@@ -409,9 +411,9 @@ static void DrawMeshParametricListe(ObjectProperties *scene)
 static void DrawIsoPar (ObjectProperties *scene)
 {
     if (scene->typedrawing == 1)
-        DrawFillIsoliste(scene);
+        UpdateFillIsoliste(scene);
     if (scene->typedrawing == -1)
-        DrawParametricListe(scene);
+        UpdateFillParliste(scene);
 }
 
 void OpenGlWidget::CalculateTexturePoints(int type)
@@ -974,7 +976,7 @@ void OpenGlWidget::PrintInfos()
     glLoadIdentity();
     if ( LocalScene.infosdetails[0] ==1)
     {
-        glColor3f (0., 1.0, 0.);
+        glColor3f (0.0, 1.0, 0.0);
         glRasterPos2i(10, 20);
         glCallLists(strlen("Grid = "),
                     GL_UNSIGNED_BYTE,
@@ -985,12 +987,12 @@ void OpenGlWidget::PrintInfos()
     }
     if ( LocalScene.infosdetails[1] ==1)
     {
-        glColor3f (0., 1.0, 0.);
+        glColor3f (0.0, 1.0, 0.0);
         glRasterPos2i(10, 40);
         glCallLists(strlen("Poly = "),
                     GL_UNSIGNED_BYTE,
                     (GLubyte *)"Poly = ");
-        glColor3f (1., 0.0, 0.);
+        glColor3f (1.0, 0.0, 0.0);
         glRasterPos2i(80, 40);
         //(LocalScene.typedrawing == 1) ?
         glCallLists(QString::number(LocalScene.PolyNumber/3).size(),
@@ -1006,12 +1008,12 @@ void OpenGlWidget::PrintInfos()
     {
         if (LocalScene.typedrawing == 1)
         {
-            glColor3f (0., 1.0, 0.);
+            glColor3f (0.0, 1.0, 0.0);
             glRasterPos2i(10, 60);
             glCallLists(strlen("Vertx= "),
                         GL_UNSIGNED_BYTE,
                         (GLubyte *)"Vertx= ");
-            glColor3f (1., 0.0, 0.);
+            glColor3f (1.0, 0.0, 0.0);
             glRasterPos2i(80, 60);
             glCallLists(QString::number(LocalScene.VertxNumber).size(),
                         GL_UNSIGNED_BYTE,
@@ -1020,19 +1022,19 @@ void OpenGlWidget::PrintInfos()
     }
     if (LocalScene.anim == 1)
     {
-        glColor3f (0., 1.0, 0.);
+        glColor3f (0.0, 1.0, 0.0);
         glRasterPos2i(10, 80);
         glCallLists(strlen("Anim ="),GL_UNSIGNED_BYTE, (GLubyte *)"Anim =");
-        glColor3f (1., 0.0, 0.);
+        glColor3f (1.0, 0.0, 0.0);
         glRasterPos2i(80, 80);
         glCallLists(strlen("On"),GL_UNSIGNED_BYTE, (GLubyte *)"On");
     }
     if (LocalScene.morph == 1)
     {
-        glColor3f (0., 1.0, 0.);
+        glColor3f (0.0, 1.0, 0.0);
         glRasterPos2i(10, 100);
         glCallLists(strlen("Morph="),GL_UNSIGNED_BYTE, (GLubyte *)"Morph=");
-        glColor3f (1., 0.0, 0.);
+        glColor3f (1.0, 0.0, 0.0);
         glRasterPos2i(80, 100);
         glCallLists(strlen("On"),GL_UNSIGNED_BYTE, (GLubyte *)"On");
     }
@@ -1048,13 +1050,13 @@ static void DrawAxe()
 {
     glLineWidth(1);
     glBegin( GL_LINES );
-    glColor3f (1., 0., 0.);
+    glColor3f (1.0, 0.0, 0.0);
     glVertex3f( 400.0, 0.0, 0.0);
     glVertex3f(   0.0, 0.0, 0.0);
-    glColor3f (0., 1., 0.);
+    glColor3f (0.0, 1.0, 0.0);
     glVertex3f(0.0, 400.0, 0.0);
     glVertex3f(0.0,   0.0, 0.0);
-    glColor3f (0., 0., 1.);
+    glColor3f (0.0, 0.0, 1.0);
     glVertex3f(0.0, 0.0, 400.0);
     glVertex3f(0.0, 0.0,   0.0);
     glEnd();
@@ -1073,7 +1075,7 @@ static void DrawAxe()
     glEnd();
 
     glBegin(GL_TRIANGLE_FAN);
-    glColor3f (0.0, 1., 0.);
+    glColor3f (0.0, 1.0, 0.0);
     glVertex3f(0.0, 400.0, 0.0);
     glVertex3f(10.0, 380.0, 0.0);
     glVertex3f(0.0, 380.0, 10.0);
@@ -1109,7 +1111,7 @@ static void DrawAxe()
     glVertex3f(380.0, 10.0, 0.0);
     glEnd();
 
-    glColor3f (1., 0., 0.);
+    glColor3f (1.0, 0.0, 0.0);
     glRasterPos3i(410, 10, 10);
     glCallLists(strlen("X"),GL_UNSIGNED_BYTE,"X");
 
@@ -1117,24 +1119,24 @@ static void DrawAxe()
     glTranslatef(410.0, 4.0, 4.0);
     glTranslatef(-410.0, -4.0, -4.0);
 
-    glColor3f (0., 1., 0.);
+    glColor3f (0.0, 1.0, 0.0);
     glRasterPos3i(10, 410, 10);
     glCallLists(strlen("Y"),
                 GL_UNSIGNED_BYTE,
                 "Y");
 
-    glColor3f (1., 1., 0.);
+    glColor3f (1.0, 1.0, 0.0);
     glTranslatef(4.0, 410.0, 4.0);
     glTranslatef(-4.0, -410.0, -4.0);
 
-    glColor3f (0., 0., 1.);
+    glColor3f (0.0, 0.0, 1.0);
     glRasterPos3i(10, 10, 410);
     //printString("Z");
     glCallLists(strlen("Z"),
                 GL_UNSIGNED_BYTE,
                 "Z");
 
-    glColor3f (0., 0.7, 0.7);
+    glColor3f (0.0, 0.7, 0.7);
     glTranslatef(4.0, 4.0, 410.0);
     glTranslatef(-4.0, -4.0, -410.0);
     glLineWidth(0.9);
@@ -1246,16 +1248,17 @@ void OpenGlWidget::CreateGlLists()
 {
     if (LocalScene.typedrawing == 1)
     {
+        DrawMinimalTopologyListe(&LocalScene);
         DrawMeshIsoListe(&LocalScene);
         UpdateIsoColorliste(&LocalScene);
-        DrawFillIsoliste(&LocalScene);
-        DrawMinimalTopologyListe(&LocalScene);
+        UpdateFillIsoliste(&LocalScene);
     }
     if (LocalScene.typedrawing == -1)
     {
         DrawMeshParametricListe(&LocalScene);
         UpdateParColorliste(&LocalScene);
-        DrawParametricListe(&LocalScene);
+        //DrawParametricListe(&LocalScene);
+        UpdateFillParliste(&LocalScene);
     }
 }
 
@@ -1264,16 +1267,17 @@ void OpenGlWidget::deleteAllListes()
     for(int i = 0; i < LocalScene.componentsinfos.NbParametric; i++)
     {
         glDeleteLists(LocalScene.ParColorliste[i],1);
+        glDeleteLists(LocalScene.FillParliste[i], 1);
     }
-    glDeleteLists(LocalScene.FillParliste, 1);
+    glDeleteLists(LocalScene.MeshParliste, 1);
+
     glDeleteLists(LocalScene.MeshIsoliste, 1);
     for(int i = 0; i < LocalScene.componentsinfos.NbIso; i++)
     {
         glDeleteLists(LocalScene.IsoColorliste[i],1);
+        glDeleteLists(LocalScene.FillIsoliste[i],1);
     }
-    glDeleteLists(LocalScene.FillIsoliste,1);
     glDeleteLists(LocalScene.MeshIsoMinimalTopliste, 1);
-    glDeleteLists(LocalScene.MeshParliste, 1);
 }
 
 void OpenGlWidget::toggleGlCache(bool cache)
@@ -1283,40 +1287,49 @@ void OpenGlWidget::toggleGlCache(bool cache)
         CreateGlLists();
     else
         deleteAllListes();
+    update();
 }
 
 void OpenGlWidget::initializeGL()
 {
     static int count =0;
-    if(count == 0)
+    if(count <2)
     {
+        /// For drawing Filled Polygones :
+        glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+        glEnable(GL_NORMALIZE);
+        glFrontFace (GL_CCW);
+        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
+        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
+
+        glMaterialfv(GL_FRONT, GL_SPECULAR,LocalScene.specReflection);
+        glMaterialfv(GL_BACK, GL_SPECULAR, LocalScene.specReflection);
+
+        glMateriali(GL_FRONT, GL_SHININESS,LocalScene.shininess);
+        glMateriali(GL_BACK, GL_SHININESS, LocalScene.shininess);
+        glEnable(GL_DEPTH_TEST);
+
+        glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
+
+
+
+
+
+
         boxok();
         InitFont();
-        InitGlParameters();
-/*
-        glGenBuffersARB(1, &LocalScene.vboId_ArrayNorVer_localPt);
-        glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVer_localPt);
-
-        glGenBuffersARB(1, &LocalScene.vboId_ArrayNorVerExtra_localPt);
-        glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVerExtra_localPt);
-*/
-
-
+        //InitGlParameters();
         glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
         count =1;
-
-
-
-
     }
-    //LocalScene.vboId_ArrayNorVer_localPt = createVBO(LocalScene.PolyIndices_localPt, sizeof(LocalScene.PolyIndices_localPt), GL_ELEMENT_ARRAY_BUFFER_ARB, GL_STATIC_DRAW_ARB);
+
     PutObjectInsideCube();
-    if(LocalScene.activateGlCache)
+    if(LocalScene.VertxNumber !=0 && LocalScene.activateGlCache)
         CreateGlLists();
 }
-
 void OpenGlWidget::InitGlParameters()
 {
+    /*
     static int k=0;
     if(k==0)
     {
@@ -1337,6 +1350,7 @@ void OpenGlWidget::InitGlParameters()
     glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
     k+=1;
     }
+    */
     //reisialize IsoColors listes Filled
     if(LocalScene.activateGlCache)
     {
@@ -1574,8 +1588,6 @@ static void DrawMeshParametric(ObjectProperties *scene)
 
 static void draw(ObjectProperties *scene)
 {
-
-    //scene->typedrawing = 1;
     scene->box =1;
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (staticaction < 1)
@@ -1604,8 +1616,6 @@ static void draw(ObjectProperties *scene)
     }
 
     // Plan:
-    //if (scene->plan == 1)
-    //glLoadIdentity();
     if (scene->infos == 1)
         glCallList(scene->gridplanliste);
 
@@ -1746,7 +1756,7 @@ static void draw_cache(ObjectProperties *scene)
         DrawIso_cache(scene);
 
     // Draw Mesh Object:
-    if (scene->triangles == 1 /*&& scene->typedrawing == 1*/)
+    if (scene->triangles == 1 && scene->typedrawing == 1)
         DrawMeshIso_cache(scene);
 
     if (scene->mesh == 1 && scene->typedrawing == -1)
@@ -1924,10 +1934,13 @@ void OpenGlWidget::paintGL()
         }
         initializeGL();
     }
+    if(LocalScene.VertxNumber != 0)
+    {
     if(LocalScene.activateGlCache)
         draw_cache(&LocalScene);
     else
         draw(&LocalScene);
+    }
     if (LocalScene.infos == 1)  PrintInfos();
     if (LocalScene.morph == 1 && LocalScene.frame == 1)  FramesSave();
 }
@@ -2127,7 +2140,7 @@ void OpenGlWidget::boxok()
     LocalScene.gridplanliste = glGenLists(1);
     glNewList(LocalScene.gridplanliste, GL_COMPILE );
     glLineWidth(1);
-    glColor3f (0.8, 0., 0.7);
+    glColor3f (0.8, 0.0, 0.7);
     glBegin( GL_LINES );
     glVertex3f(-150.0, 600.0, -350);
     glVertex3f(-150.0,-600.0, -350);

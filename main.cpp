@@ -42,25 +42,17 @@ int main(int argc, char *argv[])
     MathMod mm(0, Parameters.MaxTri, Parameters.MaxPt, Parameters.MaxGrid);
     DrawingOptions drawingopt;
 
-    //save references of each other:
+    //save references:
     drawingopt.Parameters = &Parameters;
     drawingopt.MathmodRef = &mm;
     mm.Parent = &drawingopt;
-
     drawingopt.updateGlOptions();
-    //GUI update according to the config file:
+    //GUI update:
     drawingopt.UpdateGui(argc);
-
-
-
-
-    //atexit(mm.ui.glWidget->deleteVBO);
-
-
     mm.show();
     drawingopt.show();
     if(drawingopt.IsolistItemRef != 0)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
-    //drawingopt.Run_JsonObject_activeted();
+   drawingopt.on_choice_activated("4DMathModels");
     return app.exec();
 }
