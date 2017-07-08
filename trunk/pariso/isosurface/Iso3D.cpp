@@ -110,7 +110,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     XlimitInf   = "-4";
     YlimitInf   = "-4";
     ZlimitInf   = "-4";
-    nb_ligne = nb_colon = nb_depth = 26;
+    nb_ligne = nb_colon = nb_depth = 40;
     IsoMesh = -1;
     IsoInfos = 1; /// To show infos
     hauteur_fenetre = 650;
@@ -1372,7 +1372,7 @@ void Iso3D::IsoBuild (
     bool *typeCND
 )
 {
-    int    ThreeTimesI, l, NbTriangleIsoSurfaceTmp, nblignetmp=26;
+    int    ThreeTimesI, l, NbTriangleIsoSurfaceTmp, nblignetmp=40;
     PreviousSizeMinimalTopology = 0;
     NbPolyMinimalTopology = 0;
     ThreeTimesNbPolygnTmp=0;
