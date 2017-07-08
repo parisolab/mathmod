@@ -66,7 +66,6 @@ QT         += opengl widgets
 OTHER_FILES += \
             mathmodcollection.js \
             mathmodconfig.js
-LIBS +=-lopengl32
 # install
 target.path    = $TARGET
 sources.files  = $$SOURCES $$HEADERS $$RESOURCES $$FORMS mathmod.pro

@@ -939,7 +939,7 @@ OpenGlWidget::OpenGlWidget( QWidget *parent)
     val1 = val2 = val3 = 0.0;
     nb_colone = nb_ligne = 50;
     coupure_col = coupure_ligne = 0;
-    isoline = isocolumn = isodepth = 26;
+    isoline = isocolumn = isodepth = 40;
     cpisoline = cpisocolumn = cpisodepth = 0;
     IDGlWindow        = NBGlWindow;
     LocalScene.VertxNumber      = 0;
