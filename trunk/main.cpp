@@ -53,6 +53,6 @@ int main(int argc, char *argv[])
     drawingopt.show();
     if(drawingopt.IsolistItemRef != 0)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
-   drawingopt.on_choice_activated("4DMathModels");
+   drawingopt.on_choice_activated("CloseIso_2");
     return app.exec();
 }
