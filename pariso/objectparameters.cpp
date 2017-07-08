@@ -45,7 +45,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.BorderPoints                           = new float              [3*MaximumNumberPoints     ];
     objectproperties.Typetriangles                           = new int                  [MaximumNumberTriangles];
     objectproperties.WichPointVerifyCond             = new bool              [MaximumNumberPoints];
-
+    objectproperties.VertxNumber = objectproperties.PolyNumber = objectproperties.NbPolygnNbVertexPtMin = 0;
     objectproperties.RotStrength    = 0;
     objectproperties.zminim           = -350.0;
     objectproperties.polyfactor       = 1.0;
