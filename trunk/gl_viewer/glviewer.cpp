@@ -69,6 +69,78 @@ static void UpdateFillParliste (ObjectProperties *scene)
     }
 }
 
+static void UpdateCNDParliste (ObjectProperties *scene)
+{
+    if(scene->componentsinfos.ThereisCND)
+    {
+        for(int i = 0; i < scene->componentsinfos.NbParametric; i++)
+        {
+            glDeleteLists(scene->CNDverifyParliste[i],1);
+            scene->CNDverifyParliste[i] = glGenLists(1);
+
+            glDeleteLists(scene->CNDnotverifyParliste[i],1);
+            scene->CNDnotverifyParliste[i] = glGenLists(1);
+        }
+
+        for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+        {
+            glNewList(scene->CNDverifyParliste[i], GL_COMPILE);
+                glDrawElements(
+                GL_TRIANGLES,
+                3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[0])
+            );
+            glEndList();
+
+            glNewList(scene->CNDnotverifyParliste[i], GL_COMPILE);
+                glDrawElements(
+                GL_TRIANGLES,
+                3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                );
+            glEndList();
+        }
+    }
+}
+
+static void UpdateCNDIsoliste (ObjectProperties *scene)
+{
+    if(scene->componentsinfos.ThereisCND)
+    {
+        for(int i = 0; i < scene->componentsinfos.NbIso; i++)
+        {
+            glDeleteLists(scene->CNDverifyIsoliste[i],1);
+            scene->CNDverifyIsoliste[i] = glGenLists(1);
+
+            glDeleteLists(scene->CNDnotverifyIsoliste[i],1);
+            scene->CNDnotverifyIsoliste[i] = glGenLists(1);
+        }
+
+        for(int i=0; i< scene->componentsinfos.NbIso; i++)
+        {
+            glNewList(scene->CNDverifyIsoliste[i], GL_COMPILE);
+                glDrawElements(
+                GL_TRIANGLES,
+                3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[0])
+            );
+            glEndList();
+
+            glNewList(scene->CNDnotverifyIsoliste[i], GL_COMPILE);
+                glDrawElements(
+                GL_TRIANGLES,
+                3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                );
+            glEndList();
+        }
+    }
+}
+
 static void DrawParametric_cache (ObjectProperties *scene)
 {
     glEnable(GL_LIGHTING);
@@ -91,20 +163,23 @@ static void DrawParametric_cache (ObjectProperties *scene)
             if(scene->componentsinfos.ThereisCND)
             {
                 if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glDrawElements(
+                    glCallList(scene->CNDverifyParliste[i]);
+                  /*  glDrawElements(
                         GL_TRIANGLES,
                         3*(scene->componentsinfos.NbTrianglesVerifyCND),
                         GL_UNSIGNED_INT,
                         &(scene->PolyIndices_localPt[0])
-                    );
+                    );*/
 
                 if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glCallList(scene->CNDnotverifyParliste[i]);
+                    /*
                     glDrawElements(
                         GL_TRIANGLES,
                         3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
                         GL_UNSIGNED_INT,
                         &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );
+                    );*/
             }
             else
                 glCallList(scene->FillParliste[i]);
@@ -258,20 +333,24 @@ static void DrawIso_cache (ObjectProperties *scene)
             if(scene->componentsinfos.ThereisCND)
             {
                 if(scene->componentsinfos.DFTrianglesVerifyCND)
+                    glCallList(scene->CNDverifyIsoliste[i]);
+                    /*
                     glDrawElements(
                         GL_TRIANGLES,
                         3*(scene->componentsinfos.NbTrianglesVerifyCND),
                         GL_UNSIGNED_INT,
                         &(scene->PolyIndices_localPt[0])
-                    );
+                    );*/
 
                 if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                    glCallList(scene->CNDnotverifyIsoliste[i]);
+                    /*
                     glDrawElements(
                         GL_TRIANGLES,
                         3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
                         GL_UNSIGNED_INT,
                         &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );
+                    );*/
             }
             else
                 glCallList(scene->FillIsoliste[i]);
@@ -411,9 +490,15 @@ static void DrawMeshParametricListe(ObjectProperties *scene)
 static void DrawIsoPar (ObjectProperties *scene)
 {
     if (scene->typedrawing == 1)
+    {
         UpdateFillIsoliste(scene);
+        UpdateCNDIsoliste(scene);
+    }
     if (scene->typedrawing == -1)
+    {
         UpdateFillParliste(scene);
+        UpdateCNDParliste(scene);
+    }
 }
 
 void OpenGlWidget::CalculateTexturePoints(int type)
@@ -1252,13 +1337,14 @@ void OpenGlWidget::CreateGlLists()
         DrawMeshIsoListe(&LocalScene);
         UpdateIsoColorliste(&LocalScene);
         UpdateFillIsoliste(&LocalScene);
+        UpdateCNDIsoliste(&LocalScene);
     }
     if (LocalScene.typedrawing == -1)
     {
         DrawMeshParametricListe(&LocalScene);
         UpdateParColorliste(&LocalScene);
-        //DrawParametricListe(&LocalScene);
         UpdateFillParliste(&LocalScene);
+        UpdateCNDParliste(&LocalScene);
     }
 }
 
@@ -1267,7 +1353,12 @@ void OpenGlWidget::deleteAllListes()
     for(int i = 0; i < LocalScene.componentsinfos.NbParametric; i++)
     {
         glDeleteLists(LocalScene.ParColorliste[i],1);
-        glDeleteLists(LocalScene.FillParliste[i], 1);
+        glDeleteLists(LocalScene.FillParliste[i],1);
+        if(LocalScene.componentsinfos.ThereisCND)
+        {
+            glDeleteLists(LocalScene.CNDnotverifyParliste[i],1);
+            glDeleteLists(LocalScene.CNDverifyParliste[i],1);
+        }
     }
     glDeleteLists(LocalScene.MeshParliste, 1);
 
@@ -1276,6 +1367,11 @@ void OpenGlWidget::deleteAllListes()
     {
         glDeleteLists(LocalScene.IsoColorliste[i],1);
         glDeleteLists(LocalScene.FillIsoliste[i],1);
+        if(LocalScene.componentsinfos.ThereisCND)
+        {
+            glDeleteLists(LocalScene.CNDnotverifyIsoliste[i],1);
+            glDeleteLists(LocalScene.CNDverifyIsoliste[i],1);
+        }
     }
     glDeleteLists(LocalScene.MeshIsoMinimalTopliste, 1);
 }

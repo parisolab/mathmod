@@ -42,6 +42,7 @@ class Parametersoptions: public QWidget
 public:
     Parametersoptions(QWidget *parent = 0);
     QString dotsymbol;
+    QString model;
     QString fullpath;
     QString filecollection;
     QString fileconfig;

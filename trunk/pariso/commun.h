@@ -149,10 +149,14 @@ struct  ObjectProperties
     unsigned int   MeshIsoliste;
     unsigned int   MeshIsoMinimalTopliste;
     unsigned int   MeshParliste;
+    unsigned int   IsoColorliste[10000];
     unsigned int   ParColorliste[10000];
     unsigned int   FillIsoliste[10000];
     unsigned int   FillParliste[10000];
-    unsigned int   IsoColorliste[10000];
+    unsigned int   CNDverifyIsoliste[10000];
+    unsigned int   CNDverifyParliste[10000];
+    unsigned int   CNDnotverifyIsoliste[10000];
+    unsigned int   CNDnotverifyParliste[10000];
     float          boxlimits[18];
     int            ColorOrTexture[10];
     float  *morefloatpt[10];
