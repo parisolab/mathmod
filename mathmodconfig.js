@@ -20,18 +20,20 @@
         "GlwinW": 750
     },
     "OpenGlConfig": {
-        "AtivateGlCache": true,
+        "AtivateGlCache": false,
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_SHININESS": 110
     },
     "Styles": {
-        "StylesPredefined": [ "Default", "Fusion", "Windows","WindowsXp"],
-        "StyleUsed": "Fusion"
+        "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
+        "UsedStyle": "Fusion"
     },
-
+    "StartOptions": {
+        "Model": "CloseIso_2"
+    },
     "Themes": {
-        "ThemesPredefined": [ "Default", "Dark", "MyTheme"],
-        "ThemeUsed": "Dark",
+        "PredefinedThemes": [ "Default", "Dark", "MyTheme"],
+        "UsedTheme": "Dark",
         "MyTheme": {
             "Window":[53,53,53],
             "WindowText":[255, 255, 255],
@@ -47,5 +49,4 @@
             "HighlightedText":[0, 0, 0]
         }
     }
-
-    }
+}
