@@ -38,6 +38,7 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxPt=150000;
     MaxGrid=80;
     dotsymbol =".";
+    model = "CloseIso_2";
     ActivateGlCache = false;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
@@ -201,10 +202,10 @@ void Parametersoptions::GuiUpdate()
     ui.maxptLabel->setText("MaxPt="+ QString::number(mg)+"M");
     ui.maxpt->setValue(mg);
     //Styles:
-    QString Style = ((JConfig["Styles"].toObject())["StyleUsed"].toString());
+    QString Style = ((JConfig["Styles"].toObject())["UsedStyle"].toString());
     ui.comboBox_2->setCurrentText(Style);
     //Theme:
-    QString theme = ((JConfig["Themes"].toObject())["ThemeUsed"].toString());
+    QString theme = ((JConfig["Themes"].toObject())["UsedTheme"].toString());
     ui.comboBox_3->setCurrentText(theme);
     if(theme == "MyTheme")
         ui.groupBox->show();
@@ -402,6 +403,13 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             dotsymbol = tmp["DotSymbol"].toString();
         }
 
+        if(JConfig["StartOptions"].isObject())
+        {
+            QJsonObject tmp;
+            tmp = JConfig["StartOptions"].toObject();
+            model = tmp["Model"].toString();
+        }
+
         if(JConfig["IsoParam"].isObject())
         {
             IsoParam = JConfig["IsoParam"].toObject();
@@ -453,9 +461,9 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         {
             QJsonObject tmp1, tmp2, MyTheme;
             tmp2= JConfig["Styles"].toObject();
-            QString style = tmp2["StyleUsed"].toString();
+            QString style = tmp2["UsedStyle"].toString();
             tmp1 = JConfig["Themes"].toObject();
-            QString theme = tmp1["ThemeUsed"].toString();
+            QString theme = tmp1["UsedTheme"].toString();
             if(theme == "MyTheme")
             {
                 MyTheme = tmp1["MyTheme"].toObject();
@@ -543,14 +551,14 @@ void Parametersoptions::on_save_clicked()
 void Parametersoptions::on_comboBox_2_activated(const QString &arg1)
 {
     QJsonObject style = JConfig["Styles"].toObject();
-    style["StyleUsed"] = arg1;
+    style["UsedStyle"] = arg1;
     JConfig["Styles"] = style;
 }
 
 void Parametersoptions::on_comboBox_3_activated(const QString &arg1)
 {
     QJsonObject style = JConfig["Themes"].toObject();
-    style["ThemeUsed"] = arg1;
+    style["UsedTheme"] = arg1;
     JConfig["Themes"] = style;
     if(arg1 == "MyTheme")
         //ui.groupBox->setEnabled(true);
@@ -663,10 +671,10 @@ void Parametersoptions::on_TestConfig_clicked()
     {
         QJsonObject tmp1, tmp2, MyTheme;
         tmp2= JConfig["Styles"].toObject();
-        QString style = tmp2["StyleUsed"].toString();
+        QString style = tmp2["UsedStyle"].toString();
 
         tmp1 = JConfig["Themes"].toObject();
-        QString theme = tmp1["ThemeUsed"].toString();
+        QString theme = tmp1["UsedTheme"].toString();
 
 
         if(theme == "MyTheme")
