@@ -6511,7 +6511,7 @@
 		},
 		"Texture": {
 			"Colors": ["R=if((x*x+y*y+z*z)>0DOTSYMBOL81,DOTSYMBOL95*cos((x*x+y*y+z*z)/1DOTSYMBOL7), 0DOTSYMBOL2)",
-			"G=if((x*x+y*y+z*z)>0DOTSYMBOL8, 0DOTSYMBOL8*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/DOTSYMBOL3), 0DOTSYMBOL5*sin((x*x+y*y+z*z)*9))",
+			"G=if((x*x+y*y+z*z)>0DOTSYMBOL8, 0DOTSYMBOL8*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/0DOTSYMBOL3), 0DOTSYMBOL5*sin((x*x+y*y+z*z)*9))",
 			"B=if((x*x+y*y+z*z)<DOTSYMBOL8,(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+ 0DOTSYMBOL4, 0DOTSYMBOL1)",
 			"T=1"],
 			"Name": "WorleyNoise",
