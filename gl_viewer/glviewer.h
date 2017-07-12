@@ -31,8 +31,8 @@
 #include <qpixmap.h>
 #include <QResizeEvent>
 #include <QMessageBox>
-
 #include "../pariso/isosurface/Iso3D.h"
+#include "../pariso/isosurface/isothread.h"
 #include "../pariso/parametric/Model3D.h"
 #include "qglthread.h"
 
@@ -50,6 +50,7 @@ public :
     ObjectProperties  LocalScene;
     QString FramesDir;
     Iso3D *IsoObjet;
+    IsoThread *IsoObjetThread;
     Par3D *ParObjet;
     int TypeFormule;
     QMessageBox message;
@@ -93,6 +94,11 @@ public:
     void stopRendering();
     void resizeEvent(QResizeEvent *evt);
     void closeEvent(QCloseEvent *evt);
+    void startWorkInAThread();
+public:
+    void startCalculations();
+    void stopCalculations();
+
 signals:
 
 public slots:
