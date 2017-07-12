@@ -59,6 +59,7 @@ public slots:
     int ParseIso();
     int ParsePar();
     void frames_clicked();
+    void UpdateFrame();
 public:
     Ui::MathMod ui;
     int xyzactivated, isomesh, uvactivated, uvactivated4D;
