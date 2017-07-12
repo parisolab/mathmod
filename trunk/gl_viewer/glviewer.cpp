@@ -510,9 +510,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjet->RgbtParser;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjet->NoiseParser;
-        IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjetThread->IsoObjet->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->NoiseParser;
+        IsoObjetThread->IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
@@ -571,11 +571,11 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     LocalScene.componentsinfos.NoiseParam.NoiseType = 0; //Pigments
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjet->VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjet->GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjet->Nb_vrgbts;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjet->NoiseParser;
-        IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjetThread->IsoObjet->VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjetThread->IsoObjet->GradientParser;
+        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjetThread->IsoObjet->Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->NoiseParser;
+        IsoObjetThread->IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
@@ -884,7 +884,7 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
     try
     {
         LocalScene                = (new ObjectParameters(maxpts, maxtri))->objectproperties;
-        IsoObjet = new Iso3D(maxtri,  maxpts,  gridmax);
+        IsoObjetThread = new IsoThread(new Iso3D(maxtri,  maxpts,  gridmax));
         ParObjet = new Par3D();
         return 1;
     }
@@ -900,7 +900,7 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
 void OpenGlWidget::calculateObject()
 {
     LocalScene.typedrawing = 1;
-    stError = IsoObjet->ParserIso();
+    stError = IsoObjetThread->IsoObjet->ParserIso();
     if(stError.iErrorIndex >= 0)
     {
         int before, after;
@@ -924,7 +924,7 @@ void OpenGlWidget::calculateObject()
         message.exec();
         return;
     }
-    IsoObjet->IsoBuild
+    IsoObjetThread->IsoObjet->IsoBuild
     (
         LocalScene.ArrayNorVer_localPt,
         LocalScene.PolyIndices_localPt,
@@ -947,6 +947,17 @@ void OpenGlWidget::stopRendering()
 {
     glt.stop();
     glt.wait();
+}
+
+void OpenGlWidget::startCalculations()
+{
+    IsoObjetThread->start();
+}
+
+void OpenGlWidget::stopCalculations()
+{
+    IsoObjetThread->stop();
+    IsoObjetThread->wait();
 }
 
 void OpenGlWidget::resizeEvent(QResizeEvent *evt)
@@ -974,7 +985,7 @@ void OpenGlWidget::anim()
 void OpenGlWidget::morph()
 {
     LocalScene.morph *= -1;
-    IsoObjet->morph_activated = ParObjet->activeMorph = LocalScene.morph;
+    IsoObjetThread->IsoObjet->morph_activated = ParObjet->activeMorph = LocalScene.morph;
     if (LocalScene.morph == 1)
         timer->start( latence);
     else if(LocalScene.anim == -1)
@@ -1011,6 +1022,18 @@ void OpenGlWidget::resizeGL( int newwidth, int newheight)
     glLoadIdentity();
     glTranslatef( 0.0, 0, -1000.0 );
 }
+
+
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void OpenGlWidget::startWorkInAThread()
+{/*
+    //WorkerThread *workerThread = new WorkerThread(this);
+    connect(IsoObjetThread, SIGNAL(resultReady(QString)), this, SLOT(handleResults(QString)));
+    connect(IsoObjetThread, SIGNAL(finished()), IsoObjetThread, SLOT(deleteLater()));
+    IsoObjetThread->start();
+    */
+}
+
 
 OpenGlWidget::OpenGlWidget( QWidget *parent)
     : QGLWidget( parent),
@@ -1966,7 +1989,7 @@ void OpenGlWidget::paintGL()
     {
         if(LocalScene.typedrawing == 11)
         {
-            IsoObjet->IsoBuild(
+            IsoObjetThread->IsoObjet->IsoBuild(
                 LocalScene.ArrayNorVer_localPt,
                 LocalScene.PolyIndices_localPt,
                 &LocalScene.PolyNumberTmp1,
@@ -2015,7 +2038,7 @@ void OpenGlWidget::paintGL()
         }
         else if(LocalScene.typedrawing == 1)
         {
-            IsoObjet->IsoBuild
+            IsoObjetThread->IsoObjet->IsoBuild
             (
                 LocalScene.ArrayNorVer_localPt,
                 LocalScene.PolyIndices_localPt,
@@ -2161,7 +2184,7 @@ OpenGlWidget::~OpenGlWidget()
     //glDeleteBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
     delete(timer);
     delete ParObjet;
-    delete IsoObjet;
+    delete IsoObjetThread->IsoObjet;
 }
 
 void OpenGlWidget::deleteVBO()
