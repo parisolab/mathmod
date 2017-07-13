@@ -52,10 +52,7 @@ void IsoThread::update()
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void IsoThread::run()
 {
-    QString result;
-    /* expensive or blocking operation  */
     BuildIso();
-    emit resultReady(result);
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void IsoThread::BuildIso()
@@ -71,10 +68,4 @@ void IsoThread::BuildIso()
             LocalScene->Typetriangles,
             LocalScene->WichPointVerifyCond);
 }
-/*
-void IsoThread::resultReady(const QString &s)
-{
 
-
-}
-*/

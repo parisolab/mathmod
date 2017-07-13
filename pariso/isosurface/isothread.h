@@ -35,9 +35,12 @@ public:
     void anim();
     void morph();
     void update();
-    void run();
+    //void run();
     void stop();
     void BuildIso();
+
+    void run() Q_DECL_OVERRIDE;
+
 
 public:
     bool doRendering;
@@ -46,7 +49,5 @@ public:
     int h;
     Iso3D *IsoObjet;
     ObjectProperties*  LocalScene;
-signals:
-    void resultReady(const QString &s);
 };
 #endif // ISOTHREAD_H
