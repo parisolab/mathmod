@@ -265,12 +265,12 @@ void MathMod::ProcessNewIsoSurface()
 {
     int result = ParseIso();
     if(result == -1) return;
-/*
+
     (ui.glWidget)->IsoObjetThread->LocalScene = &((ui.glWidget)->LocalScene);
     connect((ui.glWidget)->IsoObjetThread, SIGNAL(finished()),this , SLOT(UpdateFrame()));
     (ui.glWidget)->IsoObjetThread->start();
-*/
 
+/*
     (ui.glWidget)->IsoObjetThread->IsoObjet->IsoBuild(
         (ui.glWidget)->LocalScene.ArrayNorVer_localPt,
         (ui.glWidget)->LocalScene.PolyIndices_localPt,
@@ -285,7 +285,7 @@ void MathMod::ProcessNewIsoSurface()
     (ui.glWidget)->LocalScene.typedrawing = 1;
     (ui.glWidget)->initializeGL();
     (ui.glWidget)->update();
-
+*/
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
