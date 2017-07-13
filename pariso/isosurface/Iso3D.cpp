@@ -32,6 +32,7 @@ static int TypeDrawinNormStep = 4;
 static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
+static int ThreadNumber=1;
 
 CellNoise *NoiseFunction = new CellNoise();
 ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
@@ -500,7 +501,7 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double vals2[] = {0,0};
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
-    const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
+    const int limitX = nb_ligne/ThreadNumber, limitY = nb_colon, limitZ = nb_depth;
     int I, J, IJK;
 
     if(AllComponentTraited && morph_activated ==1)
@@ -545,7 +546,7 @@ void Iso3D::VoxelEvaluation(int IsoIndex)
     yLocal[IsoIndex][0]=ySupParser[IsoIndex].Eval(vals);
     zLocal[IsoIndex][0]=zSupParser[IsoIndex].Eval(vals);
 
-    x_Step[IsoIndex] = /*x_Step[IsoIndex] = */(xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
+    x_Step[IsoIndex] = /*x_Step[IsoIndex] = */(xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(nb_ligne-1);
     y_Step[IsoIndex] = /*y_Step[IsoIndex] = */(yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
     z_Step[IsoIndex] = /*z_Step[IsoIndex] = */(zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
@@ -1078,7 +1079,7 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double vals2[] = {0,0};
-    const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
+    const int limitX = nb_ligne/ThreadNumber, limitY = nb_colon, limitZ = nb_depth;
 
     if(AllComponentTraited && morph_activated ==1)
     {
@@ -1189,11 +1190,11 @@ ErrorMessage Iso3D::ParseExpression(std::string VariableListe)
         yLocal[IsoIndex][0]=ySupParser[IsoIndex].Eval(vals);
         zLocal[IsoIndex][0]=zSupParser[IsoIndex].Eval(vals);
 
-        x_Step[IsoIndex] = (Xamplitude[IsoIndex] = (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals)))/(limitX-1);
+        x_Step[IsoIndex] = (Xamplitude[IsoIndex] = (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals)))/(nb_ligne-1);
         y_Step[IsoIndex] = (Yamplitude[IsoIndex] = (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals)))/(limitY-1);
         z_Step[IsoIndex] = (Zamplitude[IsoIndex] = (zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals)))/(limitZ-1);
 
-        for (int i= 1; i < limitX; i++)  xLocal[IsoIndex][i] = xLocal[IsoIndex][i-1] - x_Step[IsoIndex];
+        for (int i= 1; i < limitX; i++) xLocal[IsoIndex][i] = xLocal[IsoIndex][i-1] - x_Step[IsoIndex];
         for (int j= 1; j < limitY; j++) yLocal[IsoIndex][j] = yLocal[IsoIndex][j-1] - y_Step[IsoIndex];
         for (int k= 1; k < limitZ; k++) zLocal[IsoIndex][k] = zLocal[IsoIndex][k-1] - z_Step[IsoIndex];
 
@@ -1303,7 +1304,7 @@ void Iso3D::EvalExpressionAtIndex(int IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double vals2[] = {0,0};
-    const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
+    const int limitX = nb_ligne/ThreadNumber, limitY = nb_colon, limitZ = nb_depth;
 
     if(AllComponentTraited && morph_activated ==1)
     {
@@ -1315,7 +1316,7 @@ void Iso3D::EvalExpressionAtIndex(int IsoIndex)
     yLocal[IsoIndex][0]=ySupParser[IsoIndex].Eval(vals);
     zLocal[IsoIndex][0]=zSupParser[IsoIndex].Eval(vals);
 
-    x_Step[IsoIndex] =  (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
+    x_Step[IsoIndex] =  (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(nb_ligne-1);
     y_Step[IsoIndex] =  (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
     z_Step[IsoIndex] =  (zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
@@ -1405,7 +1406,6 @@ void Iso3D::IsoBuild (
             EvalExpressionAtIndex(fctnb);
         }
         //++++++++++++++++++
-
         VoxelEvaluation(fctnb);
         PointEdgeComputation(fctnb);
         SignatureComputation();
@@ -1888,14 +1888,15 @@ Iso3D::~Iso3D()
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 void Iso3D::SetMiniMmeshStruct()
 {
-    int Index, iter, nbpl, iterpl, lnew;
+    int Index, iter, nbpl, iterpl, lnew,limitX;
     int I, J, IJK;
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
 
     lnew = 0;
     NbPolyMin = 0;
+    limitX = nb_ligne/ThreadNumber;
     /// Copy Index Polygons :
-    for(i=0; i < nb_ligne-1 - CutLigne; i++)
+    for(i=0; i < limitX-1 - CutLigne; i++)
     {
         I  = i*maxgrscalemaxgr;
         for(j=0; j < nb_colon-1 - CutColon; j++)
@@ -1952,16 +1953,16 @@ void Iso3D::SetMiniMmeshStruct()
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 void Iso3D::ConstructIsoSurface()
 {
-    int IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint;
+    int IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
     int I, J, IJK;
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
 
     NbTriangleIsoSurface = 0;
     NbPointIsoMapCND = 0;
     NbTriangleIsoSurface = 0;
-
+    limitX = nb_ligne/ThreadNumber;
     //if(IsoConditionRequired != 1 )
-    for(i=0; i < nb_ligne-1 - CutLigne; i++)
+    for(i=0; i < limitX-1 - CutLigne; i++)
     {
         I   = i*maxgrscalemaxgr;
         for(j=0; j < nb_colon-1 - CutColon; j++)
