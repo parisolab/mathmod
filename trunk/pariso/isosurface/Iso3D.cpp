@@ -187,13 +187,16 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
         workerthreads[nbthreads].nb_depth = nb_depth;
         workerthreads[nbthreads].maximumgrid = gridmax;
         workerthreads[nbthreads].iStart   = nbthreads*tmp;
-        workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+        if(nbthreads == (WorkerThreadsNumber-1))
+            workerthreads[nbthreads].iFinish = nb_ligne;
+        else
+            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+        //workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
         workerthreads[nbthreads].MyIndex = nbthreads;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         //workerthreads[nbthreads].xlocal = new double[NbComponent*600];
     }
     static int staticaction = 1;
-
     /// Things to do one time...
     if(staticaction == 1)
     {
