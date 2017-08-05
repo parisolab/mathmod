@@ -29,24 +29,15 @@ class Iso3D;
 
 class IsoThread : public QThread
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     IsoThread(Iso3D *);
-    void anim();
-    void morph();
-    void update();
-    //void run();
-    void stop();
     void BuildIso();
-
     void run() Q_DECL_OVERRIDE;
-
+public  slots:
+    void stopthread();
 
 public:
-    bool doRendering;
-    bool doResize;
-    int w;
-    int h;
     Iso3D *IsoObjet;
     ObjectProperties*  LocalScene;
 };

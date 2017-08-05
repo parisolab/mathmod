@@ -5295,27 +5295,7 @@
 			"Zmax": ["15"],
 			"Zmin": ["-15"]
 		}
-	},
-	{
-		"Iso3D": {
-			"Description": ["Gyroid Sphere by Abderrahman Taha 05/12/2015"],
-			"Name": ["Gyroid Sphere"],
-			"Component": ["Gyroid Sphere"],
-			"Const": ["N=18"],
-			"Funct": ["Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-			"isoCondition_0=(x^2-2DOTSYMBOL2^2)",
-			"isoCondition_1=(x^2-1DOTSYMBOL6^2)",
-			"isoTransform=if(isoCondition_0(x,y,z,t)<0,Gyroid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
-			"isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),10*pi*atan2(y, sqrt(x*x+y*y+z*z)),N*atan2(z,x),t)"],
-			"Fxyz": ["-isoTransform2(x,y,z,t)"],
-			"Xmax": ["15"],
-			"Xmin": ["-15"],
-			"Ymax": ["15"],
-			"Ymin": ["-15"],
-			"Zmax": ["15"],
-			"Zmin": ["-15"]
-		}
-	},
+    },
 	{
 		"Iso3D": {
 			"Description": ["Schwarz Cylinder by Abderrahman Taha 05/12/2015"],

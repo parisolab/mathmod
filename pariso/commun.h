@@ -141,7 +141,7 @@ struct  ObjectProperties
     int     quality_image;
     int     colortype;
     int     colortypeParam;
-    unsigned int   texture[1100];
+    unsigned int   texture[100];
     unsigned int   axeliste;
     unsigned int   boxliste;
     unsigned int   planliste;
@@ -165,11 +165,11 @@ struct  ObjectProperties
     int    shininess;
     float  frontcol[4];
     float  backcol[4];
-    float  frontcols[1100][4];
-    float  backcols[1100][4];
+    float  frontcols[100][4];
+    float  backcols[100][4];
     float red[4];
-    float  frontcolsPar[1100][4];
-    float  backcolsPar[1100][4];
+    float  frontcolsPar[100][4];
+    float  backcolsPar[100][4];
     float  gridcol[4];
     float  groundcol[4];
     float  polyfactor;

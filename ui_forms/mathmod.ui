@@ -41,10 +41,6 @@
   <property name="windowTitle">
    <string>MathMod: Math for Fun</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../icon/catenoid_mini_16x16.png</normaloff>../icon/catenoid_mini_16x16.png</iconset>
-  </property>
   <property name="dockWindowsMovable" stdset="0">
    <bool>true</bool>
   </property>
