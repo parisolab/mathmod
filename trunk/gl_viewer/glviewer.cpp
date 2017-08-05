@@ -59,12 +59,12 @@ static void UpdateFillParliste (ObjectProperties *scene)
     for(int i=0; i< scene->componentsinfos.NbParametric; i++)
     {
         glNewList(scene->FillParliste[i], GL_COMPILE);
-           glDrawElements(
-           GL_TRIANGLES,
-           3*scene->componentsinfos.Parametricpositions[2*i+1],
-           GL_UNSIGNED_INT,
-           &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
-           );
+        glDrawElements(
+            GL_TRIANGLES,
+            3*scene->componentsinfos.Parametricpositions[2*i+1],
+            GL_UNSIGNED_INT,
+            &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
+        );
         glEndList();
     }
 }
@@ -85,7 +85,7 @@ static void UpdateCNDParliste (ObjectProperties *scene)
         for(int i=0; i< scene->componentsinfos.NbParametric; i++)
         {
             glNewList(scene->CNDverifyParliste[i], GL_COMPILE);
-                glDrawElements(
+            glDrawElements(
                 GL_TRIANGLES,
                 3*(scene->componentsinfos.NbTrianglesVerifyCND),
                 GL_UNSIGNED_INT,
@@ -94,12 +94,12 @@ static void UpdateCNDParliste (ObjectProperties *scene)
             glEndList();
 
             glNewList(scene->CNDnotverifyParliste[i], GL_COMPILE);
-                glDrawElements(
+            glDrawElements(
                 GL_TRIANGLES,
                 3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
                 GL_UNSIGNED_INT,
                 &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                );
+            );
             glEndList();
         }
     }
@@ -121,7 +121,7 @@ static void UpdateCNDIsoliste (ObjectProperties *scene)
         for(int i=0; i< scene->componentsinfos.NbIso; i++)
         {
             glNewList(scene->CNDverifyIsoliste[i], GL_COMPILE);
-                glDrawElements(
+            glDrawElements(
                 GL_TRIANGLES,
                 3*(scene->componentsinfos.NbTrianglesVerifyCND),
                 GL_UNSIGNED_INT,
@@ -130,12 +130,12 @@ static void UpdateCNDIsoliste (ObjectProperties *scene)
             glEndList();
 
             glNewList(scene->CNDnotverifyIsoliste[i], GL_COMPILE);
-                glDrawElements(
+            glDrawElements(
                 GL_TRIANGLES,
                 3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
                 GL_UNSIGNED_INT,
                 &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                );
+            );
             glEndList();
         }
     }
@@ -153,37 +153,37 @@ static void DrawParametric_cache (ObjectProperties *scene)
     glPolygonOffset(scene->polyfactor, scene->polyunits);
     for(int i=0; i< scene->componentsinfos.NbParametric; i++)
     {
-            if(!scene->componentsinfos.ThereisRGBA)
-            {
-                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
-                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
-            }
-             //glCallList(scene->ParColorliste[i]);
-
-            if(scene->componentsinfos.ThereisCND)
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glCallList(scene->CNDverifyParliste[i]);
-                  /*  glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
-                    );*/
-
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
-                    glCallList(scene->CNDnotverifyParliste[i]);
-                    /*
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );*/
-            }
-            else
-                glCallList(scene->FillParliste[i]);
+        if(!scene->componentsinfos.ThereisRGBA)
+        {
+            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
         }
+        //glCallList(scene->ParColorliste[i]);
+
+        if(scene->componentsinfos.ThereisCND)
+        {
+            if(scene->componentsinfos.DFTrianglesVerifyCND)
+                glCallList(scene->CNDverifyParliste[i]);
+            /*  glDrawElements(
+                  GL_TRIANGLES,
+                  3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                  GL_UNSIGNED_INT,
+                  &(scene->PolyIndices_localPt[0])
+              );*/
+
+            if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                glCallList(scene->CNDnotverifyParliste[i]);
+            /*
+            glDrawElements(
+                GL_TRIANGLES,
+                3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+            );*/
+        }
+        else
+            glCallList(scene->FillParliste[i]);
+    }
 
     //glCallList(scene->FillParliste);
     if(scene->componentsinfos.ThereisRGBA)
@@ -298,11 +298,11 @@ static void UpdateFillIsoliste (ObjectProperties *scene)
     {
         glNewList(scene->FillIsoliste[i], GL_COMPILE);
         {
-                glDrawElements(
-                    GL_TRIANGLES,
-                    3*scene->componentsinfos.IsoPositions[2*i+1],
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
+            glDrawElements(
+                GL_TRIANGLES,
+                3*scene->componentsinfos.IsoPositions[2*i+1],
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
         }
         glEndList();
     }
@@ -323,37 +323,37 @@ static void DrawIso_cache (ObjectProperties *scene)
 
     for(int i=0; i< scene->componentsinfos.NbIso; i++)
     {
-            if(!scene->componentsinfos.ThereisRGBA)
-            {
-                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
-                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
-            }
-                //glCallList(scene->IsoColorliste[i]);
+        if(!scene->componentsinfos.ThereisRGBA)
+        {
+            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
+        }
+        //glCallList(scene->IsoColorliste[i]);
 
-            if(scene->componentsinfos.ThereisCND)
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glCallList(scene->CNDverifyIsoliste[i]);
-                    /*
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
-                    );*/
+        if(scene->componentsinfos.ThereisCND)
+        {
+            if(scene->componentsinfos.DFTrianglesVerifyCND)
+                glCallList(scene->CNDverifyIsoliste[i]);
+            /*
+            glDrawElements(
+                GL_TRIANGLES,
+                3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[0])
+            );*/
 
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
-                    glCallList(scene->CNDnotverifyIsoliste[i]);
-                    /*
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );*/
-            }
-            else
-                glCallList(scene->FillIsoliste[i]);
+            if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                glCallList(scene->CNDnotverifyIsoliste[i]);
+            /*
+            glDrawElements(
+                GL_TRIANGLES,
+                3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+            );*/
+        }
+        else
+            glCallList(scene->FillIsoliste[i]);
     }
     //glCallList(scene->FillIsoliste);
     if(scene->componentsinfos.ThereisRGBA)
@@ -510,9 +510,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjetThread->IsoObjet->RgbtParser;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->NoiseParser;
-        IsoObjetThread->IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjetThread->IsoObjet->workerthreads[0].RgbtParser;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->workerthreads[0].NoiseParser;
+        IsoObjetThread->IsoObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
@@ -571,11 +571,11 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     LocalScene.componentsinfos.NoiseParam.NoiseType = 0; //Pigments
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjetThread->IsoObjet->VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjetThread->IsoObjet->GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjetThread->IsoObjet->Nb_vrgbts;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->NoiseParser;
-        IsoObjetThread->IsoObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjetThread->IsoObjet->workerthreads[0].VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjetThread->IsoObjet->workerthreads[0].GradientParser;
+        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjetThread->IsoObjet->workerthreads[0].Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->workerthreads[0].NoiseParser;
+        IsoObjetThread->IsoObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
@@ -788,12 +788,12 @@ void InitFont()
     //glShadeModel (GL_FLAT);
     makeRasterFont();
 }
-
+/*
 void OpenGlWidget::start()
 {
     // QThread::start();
 }
-
+*/
 void OpenGlWidget::run()
 {
 }
@@ -875,7 +875,7 @@ void OpenGlWidget::VBOmemoryallocation()
     glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, sizeof(uint)*4*LocalScene.PolyNumber/3, LocalScene.PolyIndices_localPt, GL_STATIC_DRAW_ARB);
 
     }
-*/
+    */
 }
 
 int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
@@ -900,7 +900,7 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
 void OpenGlWidget::calculateObject()
 {
     LocalScene.typedrawing = 1;
-    stError = IsoObjetThread->IsoObjet->ParserIso();
+    stError = IsoObjetThread->IsoObjet->workerthreads[0].ParserIso();
     if(stError.iErrorIndex >= 0)
     {
         int before, after;
@@ -924,6 +924,10 @@ void OpenGlWidget::calculateObject()
         message.exec();
         return;
     }
+    else
+        for(int nbthreads=1; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber; nbthreads++)
+            IsoObjetThread->IsoObjet->workerthreads[nbthreads].ParserIso();
+
     IsoObjetThread->IsoObjet->IsoBuild
     (
         LocalScene.ArrayNorVer_localPt,
@@ -949,6 +953,7 @@ void OpenGlWidget::stopRendering()
     glt.wait();
 }
 
+/*
 void OpenGlWidget::startCalculations()
 {
     IsoObjetThread->start();
@@ -956,10 +961,10 @@ void OpenGlWidget::startCalculations()
 
 void OpenGlWidget::stopCalculations()
 {
-    IsoObjetThread->stop();
-    IsoObjetThread->wait();
+    IsoObjetThread->stopthread();
+    IsoObjetThread->wait(15000);
 }
-
+*/
 void OpenGlWidget::resizeEvent(QResizeEvent *evt)
 {
     glPushMatrix();
@@ -985,11 +990,15 @@ void OpenGlWidget::anim()
 void OpenGlWidget::morph()
 {
     LocalScene.morph *= -1;
-    IsoObjetThread->IsoObjet->morph_activated = ParObjet->activeMorph = LocalScene.morph;
+    FistTimecalibrate *= -1;
+    for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber; nbthreads++)
+        IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated =  LocalScene.morph;
+    ParObjet->activeMorph = LocalScene.morph;
     if (LocalScene.morph == 1)
         timer->start( latence);
     else if(LocalScene.anim == -1)
         stoptimer();
+    //initbox();
 }
 
 void OpenGlWidget::keyPressEvent ( QKeyEvent * e )
@@ -1026,12 +1035,13 @@ void OpenGlWidget::resizeGL( int newwidth, int newheight)
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void OpenGlWidget::startWorkInAThread()
-{/*
-    //WorkerThread *workerThread = new WorkerThread(this);
-    connect(IsoObjetThread, SIGNAL(resultReady(QString)), this, SLOT(handleResults(QString)));
-    connect(IsoObjetThread, SIGNAL(finished()), IsoObjetThread, SLOT(deleteLater()));
-    IsoObjetThread->start();
-    */
+{
+    /*
+       //WorkerThread *workerThread = new WorkerThread(this);
+       connect(IsoObjetThread, SIGNAL(resultReady(QString)), this, SLOT(handleResults(QString)));
+       connect(IsoObjetThread, SIGNAL(finished()), IsoObjetThread, SLOT(deleteLater()));
+       IsoObjetThread->start();
+       */
 }
 
 
@@ -1409,7 +1419,7 @@ void OpenGlWidget::toggleGlCache(bool cache)
     update();
 }
 
-void OpenGlWidget::initializeGL()
+void OpenGlWidget::initialize_GL()
 {
     static int count =0;
     if(count <2)
@@ -1431,45 +1441,25 @@ void OpenGlWidget::initializeGL()
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
 
 
-
-
-
-
         boxok();
         InitFont();
-        //InitGlParameters();
         glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
-        count =1;
+        count +=1;
     }
 
     PutObjectInsideCube();
     if(LocalScene.VertxNumber !=0 && LocalScene.activateGlCache)
         CreateGlLists();
 }
+
+void OpenGlWidget::UpdateGL()
+{
+    initialize_GL();
+    update();
+}
+
 void OpenGlWidget::InitGlParameters()
 {
-    /*
-    static int k=0;
-    if(k==0)
-    {
-    /// For drawing Filled Polygones :
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    glEnable(GL_NORMALIZE);
-    glFrontFace (GL_CCW);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
-    glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
-
-    glMaterialfv(GL_FRONT, GL_SPECULAR,LocalScene.specReflection);
-    glMaterialfv(GL_BACK, GL_SPECULAR, LocalScene.specReflection);
-
-    glMateriali(GL_FRONT, GL_SHININESS,LocalScene.shininess);
-    glMateriali(GL_BACK, GL_SHININESS, LocalScene.shininess);
-    glEnable(GL_DEPTH_TEST);
-
-    glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
-    k+=1;
-    }
-    */
     //reisialize IsoColors listes Filled
     if(LocalScene.activateGlCache)
     {
@@ -2051,14 +2041,14 @@ void OpenGlWidget::paintGL()
                 LocalScene.WichPointVerifyCond
             );
         }
-        initializeGL();
+        initialize_GL();
     }
     if(LocalScene.VertxNumber != 0)
     {
-    if(LocalScene.activateGlCache)
-        draw_cache(&LocalScene);
-    else
-        draw(&LocalScene);
+        if(LocalScene.activateGlCache)
+            draw_cache(&LocalScene);
+        else
+            draw(&LocalScene);
     }
     if (LocalScene.infos == 1)  PrintInfos();
     if (LocalScene.morph == 1 && LocalScene.frame == 1)  FramesSave();
@@ -2208,12 +2198,9 @@ void OpenGlWidget::PutObjectInsideCube()
             maxx =-999999999,   maxy =-999999999, maxz =-999999999,
             difX, difY, difZ;
 
-    //static double decalage_xo, decalage_yo, decalage_zo, difMaximum;
-
-    unsigned int i;
     if((LocalScene.morph != 1 || (LocalScene.morph == 1 && FistTimecalibrate ==1))   && LocalScene.slider != 1)
     {
-        for (i=0; i< LocalScene.VertxNumber; i++)
+        for (unsigned int i=0; i< LocalScene.VertxNumber; i++)
         {
             if (minx >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep])  minx = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep];
             if (miny >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep])  miny = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep];
@@ -2224,7 +2211,6 @@ void OpenGlWidget::PutObjectInsideCube()
             if (maxz <LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep])  maxz = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep];
         }
         FistTimecalibrate = -1;
-
         difX = maxx - minx;
         difY = maxy - miny;
         difZ = maxz - minz;
@@ -2246,7 +2232,7 @@ void OpenGlWidget::PutObjectInsideCube()
         decalage_zo = -(minz +maxz)/2;
     }
 
-    for (i=0; i< LocalScene.VertxNumber; i++)
+    for (unsigned int i=0; i< LocalScene.VertxNumber; i++)
     {
         LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep] + decalage_xo)/difMaximum;
         LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep] = hauteur_fenetre*(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep] + decalage_yo)/difMaximum;
@@ -2330,7 +2316,6 @@ void OpenGlWidget::boxok()
     glEnd();
     glLineWidth(4.18);
     glEndList();
-
 }
 
 void OpenGlWidget::mouseReleaseEvent( QMouseEvent *)
@@ -2430,7 +2415,6 @@ void OpenGlWidget::mouseMoveEvent( QMouseEvent *e )
             tmp[13] =  (m31 * d34 + m33 * d41 + m34 * d13) * invDet;
             tmp[14] = -(m31 * d24 + m32 * d41 + m34 * d12) * invDet;
             tmp[15] =  (m31 * d23 - m32 * d13 + m33 * d12) * invDet;
-
             memcpy(LocalScene.matrixInverse, tmp, 16*sizeof(GLdouble));
         }
         double ax,ay;

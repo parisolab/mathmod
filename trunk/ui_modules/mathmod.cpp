@@ -33,7 +33,7 @@ MathMod::MathMod(QWidget *parent, int maxtri, int maxpts, int gridmax)
     xyzactivated = uvactivated = uvactivated4D= 1;
     if((ui.glWidget)->memoryallocation(maxtri, maxpts, gridmax)!=1)
         //(ui.glWidget)->calculateObject();
-    //else
+        //else
         exit(0);
 }
 
@@ -127,6 +127,9 @@ void MathMod::Initparametricpage()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::xyzg_valueChanged( int cl)
 {
+    int maxnbthreads = (ui.glWidget)->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
+    for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+        (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].nb_depth  = (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].nb_colon = (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].nb_ligne = cl;
     (ui.glWidget)->IsoObjetThread->IsoObjet->nb_depth  = (ui.glWidget)->IsoObjetThread->IsoObjet->nb_colon = (ui.glWidget)->IsoObjetThread->IsoObjet->nb_ligne = cl;
     (ui.glWidget)-> isoline =(ui.glWidget)->isocolumn = (ui.glWidget)->isodepth = cl;
     // process the new surface
@@ -137,6 +140,9 @@ void MathMod::xyzg_valueChanged( int cl)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::xg_valueChanged( int cl)
 {
+    int maxnbthreads = (ui.glWidget)->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
+    for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+        (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].nb_ligne = cl;
     (ui.glWidget)->IsoObjetThread->IsoObjet->nb_ligne = cl;
     (ui.glWidget)-> isoline = cl;
     // process the new surface
@@ -147,6 +153,9 @@ void MathMod::xg_valueChanged( int cl)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::yg_valueChanged( int cl)
 {
+    int maxnbthreads = (ui.glWidget)->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
+    for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+        (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].nb_colon =  cl;
     (ui.glWidget)->IsoObjetThread->IsoObjet->nb_colon =  cl;
     (ui.glWidget)->isocolumn =  cl;
     // process the new surface
@@ -157,6 +166,9 @@ void MathMod::yg_valueChanged( int cl)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::zg_valueChanged( int cl)
 {
+    int maxnbthreads = (ui.glWidget)->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
+    for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+        (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].nb_depth  = cl;
     (ui.glWidget)->IsoObjetThread->IsoObjet->nb_depth  = cl;
     (ui.glWidget)->isodepth = cl;
     // process the new surface
@@ -218,7 +230,7 @@ void MathMod::ParametricSurfaceProcess(int type)
                                         &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin)
                                        );
     (ui.glWidget)->LocalScene.typedrawing = -1;
-    (ui.glWidget)->initializeGL();
+    (ui.glWidget)->initialize_GL();
     (ui.glWidget)->update();
 }
 
@@ -226,7 +238,8 @@ void MathMod::ParametricSurfaceProcess(int type)
 int MathMod::ParseIso()
 {
     /// process the new surface
-    stError = (ui.glWidget)->IsoObjetThread->IsoObjet->ParserIso();
+    int maxnbthreads = (ui.glWidget)->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
+    stError = (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[0].ParserIso();
     if(stError.iErrorIndex >= 0)
     {
         message.setTextFormat(Qt::RichText);
@@ -251,48 +264,40 @@ int MathMod::ParseIso()
         message.exec();
         return -1;
     }
+    else
+        for(int nbthreds=1; nbthreds < maxnbthreads ; nbthreds++)
+            (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].ParserIso();
     return 1;
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::UpdateFrame()
 {
     (ui.glWidget)->LocalScene.typedrawing = 1;
-    (ui.glWidget)->initializeGL();
+    (ui.glWidget)->initialize_GL();
     (ui.glWidget)->update();
 }
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ProcessNewIsoSurface()
 {
-    int result = ParseIso();
-    if(result == -1) return;
+    if(!(ui.glWidget)->IsoObjetThread->IsoObjet->isRunning())
+    {
+        int result = ParseIso();
+        if(result == -1) return;
 
-    (ui.glWidget)->IsoObjetThread->LocalScene = &((ui.glWidget)->LocalScene);
-    connect((ui.glWidget)->IsoObjetThread, SIGNAL(finished()),this , SLOT(UpdateFrame()));
-    (ui.glWidget)->IsoObjetThread->start();
-
-/*
-    (ui.glWidget)->IsoObjetThread->IsoObjet->IsoBuild(
-        (ui.glWidget)->LocalScene.ArrayNorVer_localPt,
-        (ui.glWidget)->LocalScene.PolyIndices_localPt,
-        &(ui.glWidget)->LocalScene.PolyNumber,
-        &((ui.glWidget)->LocalScene.VertxNumber),
-        (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
-        &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin),
-        &((ui.glWidget)->LocalScene.componentsinfos),
-        (ui.glWidget)->LocalScene.Typetriangles,
-        (ui.glWidget)->LocalScene.WichPointVerifyCond);
-
-    (ui.glWidget)->LocalScene.typedrawing = 1;
-    (ui.glWidget)->initializeGL();
-    (ui.glWidget)->update();
-*/
+        (ui.glWidget)->IsoObjetThread->IsoObjet->LocalScene = &((ui.glWidget)->LocalScene);
+        connect((ui.glWidget)->IsoObjetThread->IsoObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
+        (ui.glWidget)->IsoObjetThread->IsoObjet->start(QThread::LowPriority);
+    }
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ProcessParisoSurface()
 {
+    int maxnbthreads = (ui.glWidget)->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     /// process the new surface
-    stError = (ui.glWidget)->IsoObjetThread->IsoObjet->ParserIso();
+    stError = (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[0].ParserIso();
     if(stError.iErrorIndex >= 0)
     {
         message.setTextFormat(Qt::RichText);
@@ -317,6 +322,9 @@ void MathMod::ProcessParisoSurface()
         message.exec();
         return;
     }
+    else
+        for(int nbthreds=1; nbthreds < maxnbthreads ; nbthreds++)
+            (ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].ParserIso();
 
     (ui.glWidget)->LocalScene.typedrawing = 11;
 
@@ -374,7 +382,7 @@ void MathMod::ProcessParisoSurface()
     (ui.glWidget)->LocalScene.PolyNumber = (ui.glWidget)->LocalScene.PolyNumberTmp1 + (ui.glWidget)->LocalScene.PolyNumberTmp2;
     (ui.glWidget)->LocalScene.VertxNumber= (ui.glWidget)->LocalScene.VertxNumberTmp1  + (ui.glWidget)->LocalScene.VertxNumberTmp2;
 
-    (ui.glWidget)->initializeGL();
+    (ui.glWidget)->initialize_GL();
     (ui.glWidget)->update();
 }
 

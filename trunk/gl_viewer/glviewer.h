@@ -60,7 +60,7 @@ public :
 public:
     OpenGlWidget( QWidget *parent=0);
     ~OpenGlWidget();
-    void initializeGL();
+    void initialize_GL();
     void CreateGlLists();
     void resizeGL(int, int);
     void paintGL();
@@ -96,15 +96,15 @@ public:
     void closeEvent(QCloseEvent *evt);
     void startWorkInAThread();
 public:
-    void startCalculations();
-    void stopCalculations();
+    //void startCalculations();
+    //void stopCalculations();
 
 signals:
 
 public slots:
     void anim();
     void morph();
-    void start();
+    //void start();
     void starttimer();
     void stoptimer();
     bool timeractif();
@@ -145,6 +145,8 @@ public slots:
     void CalculateColorsPoints(void);
     void CalculateTexturePoints(int type);
     void CalculatePigmentPoints(int type);
+
+    void UpdateGL();
 };
 
 #endif
