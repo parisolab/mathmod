@@ -28,6 +28,12 @@
 
 #define MAGIC_SCALE 1.5707963f
 
+static const int NbTextures=30;
+static const int NbComponent=21;
+static const int NbVariables = 20;
+static const int NbConstantes = 30;
+static const int NbDefinedFunctions = 30;
+static const int NbMaxGrid = 600;  // Should use the defined value in mathmodconfig.js
 
 
 struct NoiseParemeters
@@ -59,10 +65,9 @@ struct  ComponentInfos
 {
     int NbIso;
     int NbParametric;
-    int IsoPositions[2200];
-    int IsoPts[2200];
-    int Parametricpositions[2200];
-    bool Hide[2200];
+    int IsoPositions[2*NbComponent + 1];
+    int IsoPts[2*NbComponent + 1];
+    int Parametricpositions[2*NbComponent + 1];
     int selectedComponent;
     bool ThereisCND;
     bool ThereisRGBA;
@@ -141,7 +146,6 @@ struct  ObjectProperties
     int     quality_image;
     int     colortype;
     int     colortypeParam;
-    unsigned int   texture[100];
     unsigned int   axeliste;
     unsigned int   boxliste;
     unsigned int   planliste;
@@ -149,14 +153,14 @@ struct  ObjectProperties
     unsigned int   MeshIsoliste;
     unsigned int   MeshIsoMinimalTopliste;
     unsigned int   MeshParliste;
-    unsigned int   IsoColorliste[10000];
-    unsigned int   ParColorliste[10000];
-    unsigned int   FillIsoliste[10000];
-    unsigned int   FillParliste[10000];
-    unsigned int   CNDverifyIsoliste[10000];
-    unsigned int   CNDverifyParliste[10000];
-    unsigned int   CNDnotverifyIsoliste[10000];
-    unsigned int   CNDnotverifyParliste[10000];
+    unsigned int   IsoColorliste[NbComponent];
+    unsigned int   ParColorliste[NbComponent];
+    unsigned int   FillIsoliste[NbComponent];
+    unsigned int   FillParliste[NbComponent];
+    unsigned int   CNDverifyIsoliste[NbComponent];
+    unsigned int   CNDverifyParliste[NbComponent];
+    unsigned int   CNDnotverifyIsoliste[NbComponent];
+    unsigned int   CNDnotverifyParliste[NbComponent];
     float          boxlimits[18];
     int            ColorOrTexture[10];
     float  *morefloatpt[10];
@@ -165,11 +169,11 @@ struct  ObjectProperties
     int    shininess;
     float  frontcol[4];
     float  backcol[4];
-    float  frontcols[100][4];
-    float  backcols[100][4];
+    float  frontcols[NbComponent][4];
+    float  backcols[NbComponent][4];
     float red[4];
-    float  frontcolsPar[100][4];
-    float  backcolsPar[100][4];
+    float  frontcolsPar[NbComponent][4];
+    float  backcolsPar[NbComponent][4];
     float  gridcol[4];
     float  groundcol[4];
     float  polyfactor;
