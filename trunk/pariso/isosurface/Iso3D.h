@@ -26,12 +26,6 @@
 //#include "../commun.h"
 
 
-static const int NbTextures=30;
-static const int NbComponent=21;
-static const int NbVariables = 20;
-static const int NbConstantes = 30;
-static const int NbDefinedFunctions = 30;
-static const int MaxGrid = 600;  // Should use the defined value in mathmodconfig.js
 /*
 
 
@@ -104,13 +98,13 @@ public :
     double ConstValues[NbConstantes];
     float Lacunarity, Gain;
     int Octaves, CurrentIso;
-    double xLocal[NbComponent][MaxGrid],yLocal[NbComponent][MaxGrid], zLocal[NbComponent][MaxGrid];
+    double xLocal[NbComponent][NbMaxGrid],yLocal[NbComponent][NbMaxGrid], zLocal[NbComponent][NbMaxGrid];
     //double *xlocal;
     double X_Start, X_End, X_Step,
            Y_Start, Y_End, Y_Step,
            Z_Start, Z_End, Z_Step;
     double x_Step[NbComponent], y_Step[NbComponent], z_Step[NbComponent];
-    double  vr[3*NbComponent][NbComponent][MaxGrid];//3* because each varu can be used for x,y or z
+    double  vr[3*NbComponent][NbComponent][NbMaxGrid];//3* because each varu can be used for x,y or z
     ImplicitStruct ImplicitStructs[NbComponent];
     ErrorMessage stdError;
     double SliderValues[5000];

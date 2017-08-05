@@ -31,9 +31,6 @@ class IsoTransformation
 public:
     int scalex, scaley, scalez;
     int twistx, twisty, twistz;
-    FunctionParser ExpressionEvaluator,implicitFunctionParser[100];
-    std::string Funct, Functs[50], FunctNames[50];
-    double Xamplitude[100], Yamplitude[100], Zamplitude[100];
 public:
     //void IsoTransformation(FunctionParser);
     QString Twistx(QString);
