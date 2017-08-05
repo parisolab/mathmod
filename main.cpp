@@ -49,10 +49,10 @@ int main(int argc, char *argv[])
     drawingopt.updateGlOptions();
     //GUI update:
     drawingopt.UpdateGui(argc);
-    mm.show();
-    drawingopt.show();
     if(drawingopt.IsolistItemRef != 0)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
-   drawingopt.on_choice_activated(Parameters.model);
+    mm.show();
+    drawingopt.show();
+    drawingopt.on_choice_activated(Parameters.model);
     return app.exec();
 }

@@ -24,30 +24,14 @@
 IsoThread::IsoThread(Iso3D *iso)
     : QThread(), IsoObjet(iso)
 {
-    doRendering = true;
-}
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void IsoThread::stop()
-{
-    doRendering = false;
-}
 
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void IsoThread::anim()
-{
-    //IsoObjet->anim();
 }
-
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void IsoThread::morph()
+void IsoThread::stopthread()
 {
-    //IsoObjet->morph();
-}
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void IsoThread::update()
-{
-    //IsoObjet->update();
+    this->quit();
+    //QThread::wait(20000);
+    //this->sleep(20);
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void IsoThread::run()
@@ -58,14 +42,13 @@ void IsoThread::run()
 void IsoThread::BuildIso()
 {
     IsoObjet->IsoBuild(
-            LocalScene->ArrayNorVer_localPt,
-            LocalScene->PolyIndices_localPt,
-            &LocalScene->PolyNumber,
-            &(LocalScene->VertxNumber),
-            LocalScene->PolyIndices_localPtMin,
-            &(LocalScene->NbPolygnNbVertexPtMin),
-            &(LocalScene->componentsinfos),
-            LocalScene->Typetriangles,
-            LocalScene->WichPointVerifyCond);
+        LocalScene->ArrayNorVer_localPt,
+        LocalScene->PolyIndices_localPt,
+        &LocalScene->PolyNumber,
+        &(LocalScene->VertxNumber),
+        LocalScene->PolyIndices_localPtMin,
+        &(LocalScene->NbPolygnNbVertexPtMin),
+        &(LocalScene->componentsinfos),
+        LocalScene->Typetriangles,
+        LocalScene->WichPointVerifyCond);
 }
-

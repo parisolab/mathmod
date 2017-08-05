@@ -1,3 +1,4 @@
+
 /***************************************************************************
  *   Copyright (C) 2017 by Abderrahman Taha                                *
  *                                                                         *
@@ -22,11 +23,15 @@
 #include <string.h>
 #include <cmath>
 #include "../objectparameters.h"
-//#include "isotransformation.h"
+//#include "../commun.h"
 
 
-
-
+static const int NbTextures=30;
+static const int NbComponent=21;
+static const int NbVariables = 20;
+static const int NbConstantes = 30;
+static const int NbDefinedFunctions = 30;
+static const int MaxGrid = 600;  // Should use the defined value in mathmodconfig.js
 /*
 
 
@@ -68,97 +73,111 @@ struct  Voxel
     int NbEdgePoint;
 };
 
-class Iso3D
+
+class IsoWorkerThread : public QThread
 {
 public :
-    ErrorMessage stdError;
-    int   *     IsoSurfaceTriangleListe;
-    bool *     WichPointVerifyCond;
-    int *     TypeIsoSurfaceTriangleListeCND;
-    float *     NormVertexTab;
-    unsigned int *  IndexPolyTab;
-    double IsoNormOriginal[2*3*1];
-    double AxeArrayOriginal[3][1100];  // 3D Axes X, y and Z with 50 points
 
-    int MaximumNumberPoints, MaximumNumberTriangles,MaximumNumberTrianglesMin, maximumgrid;
-    int NbPointIsoMap;
-    int NbTriangleIsoSurface, IsoConditionRequired,NbPointIsoMapCND,
-        ThreeTimesNbPolygnTmp;
-    int i,j,k,l;
     FunctionParser * implicitFunctionParser, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser;
-    FunctionParser IsoConditionParser[1100],
-                   xSupParser[1100], xInfParser[1100],
-                   ySupParser[1100], yInfParser[1100],
-                   zSupParser[1100], zInfParser[1100],
-                   Var[20], Cstparser;
-    double Xamplitude[1100], Yamplitude[1100], Zamplitude[1100];
+    FunctionParser IsoConditionParser[NbComponent],
+                   xSupParser[NbComponent], xInfParser[NbComponent],
+                   ySupParser[NbComponent], yInfParser[NbComponent],
+                   zSupParser[NbComponent], zInfParser[NbComponent],
+                   Var[NbVariables], Cstparser;
+    int   nb_ligne, nb_colon, nb_depth;
+    int GridTable[NbComponent];
+    bool AllComponentTraited;
+    int morph_activated, maximumgrid;
+    double stepMorph, pace;
     std::string ImplicitFunction, Condition,
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
         ZlimitSup, ZlimitInf, Grid,
-        Const, Consts[50], ConstNames[50],
+        Const, Consts[NbConstantes], ConstNames[NbConstantes],
         SliderNames[50],
-        Varu, Varus[20], VarName[20],
-        Funct, Functs[50], FunctNames[50],
-        Rgbt, Rgbts[50], RgbtNames[50],
-        VRgbt, VRgbts[50], VRgbtNames[50],
+        Varu, Varus[NbVariables], VarName[NbVariables],
+        Funct, Functs[NbDefinedFunctions], FunctNames[NbDefinedFunctions],
+        Rgbt, Rgbts[NbTextures], RgbtNames[NbTextures],
+        VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
         Gradient, Noise, varliste;
-    double ConstValues[50];
-    double SliderValues[5000];
-    ImplicitStruct ImplicitStructs[1100];
-    int GridTable[1100];
-    int Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders;
-    double stepMorph, pace;
-    int morph_activated;
-    int TimeFlow;
-    bool AllComponentTraited;
+    int IsoConditionRequired, Nb_implicitfunctions, Nb_newvariables, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders;
+    double ConstValues[NbConstantes];
+    float Lacunarity, Gain;
+    int Octaves, CurrentIso;
+    double xLocal[NbComponent][MaxGrid],yLocal[NbComponent][MaxGrid], zLocal[NbComponent][MaxGrid];
+    //double *xlocal;
     double X_Start, X_End, X_Step,
            Y_Start, Y_End, Y_Step,
            Z_Start, Z_End, Z_Step;
-    double x_Step[1100], y_Step[1100], z_Step[1100];
-    int   nb_ligne, nb_colon, nb_depth,
-          CutLigne, CutColon, CutDepth;
+    double x_Step[NbComponent], y_Step[NbComponent], z_Step[NbComponent];
+    double  vr[3*NbComponent][NbComponent][MaxGrid];//3* because each varu can be used for x,y or z
+    ImplicitStruct ImplicitStructs[NbComponent];
+    ErrorMessage stdError;
+    double SliderValues[5000];
+    double Xamplitude[NbComponent], Yamplitude[NbComponent], Zamplitude[NbComponent];
+    int iStart, iFinish;
+    int TimeFlow;
+    int  IsoMesh, IsoInfos, NbTriangleUsed, hauteur_fenetre, NbVertex;
+    unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
 
-    int  IsoMesh, IsoInfos, NbTriangleUsed, hauteur_fenetre;
-    double xLocal[1100][500], yLocal[1100][500], zLocal[1100][500];
 
-    double  vr[60][1100][500];//60-> because we have 20 varu and each can be used for x,y or z
-    //2000-> the max isosurface to calculate;
-    // 500-> the maximum grid supported (for now)
-    int NbPolygonImposedLimit ;
-    int NbVertex;
-    unsigned int NbPolygn;
-    unsigned int NbPolygnNbVertex[2];
-    float Lacunarity, Gain;
-    int Octaves;
+
+
+public :
+    void IsoCompute(int);
+    void VoxelEvaluation(int);
+    void EvalExpressionAtIndex(int);
+    void deleteparsers();
+    void allocateparsers(int N);
+    inline ErrorMessage ParseExpression(std::string);
+    int HowManyIsosurface(std::string,int);
+    int HowManyVariables(std::string, int);
+    ErrorMessage InitNoiseParser();
+    ErrorMessage ParserIso();
+    inline   void InitParser();
+    void initparser(int N);
+    void run() Q_DECL_OVERRIDE;
+    IsoWorkerThread();
+    ~IsoWorkerThread();
+};
+
+
+
+class Iso3D  : public QThread
+{
+public :
+    ObjectProperties *LocalScene;
+    IsoWorkerThread *workerthreads;
+    int   nb_ligne, nb_colon, nb_depth;
+    int WorkerThreadsNumber;
+    int   *     IsoSurfaceTriangleListe;
+    bool *     WichPointVerifyCond;
+    int *     TypeIsoSurfaceTriangleListeCND;
+    float*     NormVertexTab;
+    unsigned int *  IndexPolyTab;
+    int NbTriangleIsoSurface,NbPointIsoMap;
 
 public :
     Iso3D(int, int, int);
     ~Iso3D();
-    inline   void VoxelEvaluation(int);
-    inline   void PointEdgeComputation(int);
     inline   void DrawIsoSurface();
-    inline   void InitParser();
     inline   void InitParameter();
     inline   void SignatureComputation();
     inline   void ConstructIsoSurface();
     inline void ConstructIsoNormale();
-    inline ErrorMessage ParseExpression(std::string);
-    inline void EvalExpressionAtIndex(int);
+    inline   void PointEdgeComputation(int,int);
+    inline   void PointEdgeComputation2(int,int);
     void MinimalMeshObjFile();
     inline void CNDCalculation(int, struct ComponentInfos *);
-/// FOR GL Window :
-    ErrorMessage ParserIso();
-    void initparser(int N);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
     void SaveIsoGLMap();
     int  setmaxgridto(int);
     void SetMinimuMmeshSize(double);
     void SetMiniMmeshStruct();
     void stopcalculations();
-    int HowManyIsosurface(std::string,int);
-    int HowManyVariables(std::string, int);
     int CNDtoUse(int index, struct ComponentInfos *components);
     void CalculateColorsPoints(struct ComponentInfos *components);
-    ErrorMessage InitNoiseParser();
+    void BuildIso();
+    void UpdateThredsNumber(int);
+    void run() Q_DECL_OVERRIDE;
 };
