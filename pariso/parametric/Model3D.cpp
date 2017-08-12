@@ -1630,7 +1630,7 @@ void  ParWorkerThread::calcul_objet(int cmp)
     double iprime, jprime;
     int NewPosition =  cmp*TypeDrawin*(nb_ligne)*(nb_colone);
 
-    if((cmp == 0) && (activeMorph == 1))
+    if(/*(cmp == 0) &&*/ (activeMorph == 1))
         stepMorph += pace;
 
     vals[2]          = stepMorph;
