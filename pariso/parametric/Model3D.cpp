@@ -1661,6 +1661,14 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
     }
 }
 
+///+++++++++++++++++++++++++++++++++++++++++
+void Par3D::stopcalculations(bool calculation)
+{
+    StopCalculations = calculation;
+    for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        workerthreads[nbthreads].StopCalculations = StopCalculations;
+}
+
 //++++++++++++++++++++++++++++++++++++
 void  Par3D::ParamBuild(
     float *NormVertexTabPt,

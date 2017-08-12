@@ -71,6 +71,7 @@ public :
     unsigned int NbPolygnNbVertex[2], nbBorderPts, param4D, CurrentPar;
     float Lacunarity, Gain;
     int Octaves;
+    bool StopCalculations;
 
 public :
     void ParCompute(int);
@@ -98,7 +99,7 @@ public:
     unsigned int *IndexPolyTab;
     unsigned int *IndexPolyTabMin;
     float *Border;
-    bool *WichPointVerifyCond;
+    bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
 
@@ -144,5 +145,6 @@ public:
 
     void BuildPar();
     void UpdateThredsNumber(int);
+    void stopcalculations(bool);
     void run() Q_DECL_OVERRIDE;
 };
