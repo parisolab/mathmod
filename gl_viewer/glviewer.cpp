@@ -516,9 +516,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
     }
     else
     {
-        LocalScene.componentsinfos.NoiseParam.RgbtParser = ParObjet->RgbtParser;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjet->NoiseParser;
-        ParObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.RgbtParser = ParObjetThread->ParObjet->workerthreads[0].RgbtParser;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjetThread->ParObjet->workerthreads[0].NoiseParser;
+        ParObjetThread->ParObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
 
     for(unsigned int i =0; i < LocalScene.VertxNumber; i++)
@@ -529,13 +529,13 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
         if(type != 1)
         {
-            Jprime = (i) %  (ParObjet->nb_colone);
-            val[3] = (double)Jprime/(double)(ParObjet->nb_colone) ;
-            val[3] = val[3] * ParObjet->dif_u[0]  + ParObjet->u_inf[0];
+            Jprime = (i) %  (ParObjetThread->ParObjet->nb_colone);
+            val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_colone) ;
+            val[3] = val[3] * ParObjetThread->ParObjet->workerthreads[0].dif_u[0]  + ParObjetThread->ParObjet->workerthreads[0].u_inf[0];
 
-            Jprime = (i)/(ParObjet->nb_ligne);
-            val[4] = (double)Jprime/(double)(ParObjet->nb_ligne) ;
-            val[4] = val[4] * ParObjet->dif_v[0]  + ParObjet->v_inf[0];
+            Jprime = (i)/(ParObjetThread->ParObjet->nb_ligne);
+            val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_ligne) ;
+            val[4] = val[4] * ParObjetThread->ParObjet->workerthreads[0].dif_v[0]  + ParObjetThread->ParObjet->workerthreads[0].v_inf[0];
         }
 
         if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
@@ -579,11 +579,11 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     }
     else
     {
-        LocalScene.componentsinfos.NoiseParam.VRgbtParser = ParObjet->VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam.GradientParser = ParObjet->GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjet->Nb_vrgbts;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjet->NoiseParser;
-        ParObjet->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.VRgbtParser = ParObjetThread->ParObjet->workerthreads[0].VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam.GradientParser = ParObjetThread->ParObjet->workerthreads[0].GradientParser;
+        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjetThread->ParObjet->workerthreads[0].Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjetThread->ParObjet->workerthreads[0].NoiseParser;
+        ParObjetThread->ParObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
 
     for(int i=0; i<LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && i<100; i++)
@@ -641,13 +641,13 @@ void OpenGlWidget::CalculateColorsPoints()
             val[1]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
             val[2]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
 
-            Jprime = (i) %  (ParObjet->nb_colone);
-            val[3] = (double)Jprime/(double)(ParObjet->nb_colone) ;
-            val[3] = val[3] * ParObjet->dif_u[0]  + ParObjet->u_inf[0];
+            Jprime = (i) %  (ParObjetThread->ParObjet->nb_colone);
+            val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_colone) ;
+            val[3] = val[3] * ParObjetThread->ParObjet->workerthreads[0].dif_u[0]  + ParObjetThread->ParObjet->workerthreads[0].u_inf[0];
 
-            Jprime = (i)/(ParObjet->nb_ligne);
-            val[4] = (double)Jprime/(double)(ParObjet->nb_ligne) ;
-            val[4] = val[4] * ParObjet->dif_v[0]  + ParObjet->v_inf[0];
+            Jprime = (i)/(ParObjetThread->ParObjet->nb_ligne);
+            val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_ligne) ;
+            val[4] = val[4] * ParObjetThread->ParObjet->workerthreads[0].dif_v[0]  + ParObjetThread->ParObjet->workerthreads[0].v_inf[0];
 
             if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
                 tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
@@ -885,7 +885,7 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
     {
         LocalScene                = (new ObjectParameters(maxpts, maxtri))->objectproperties;
         IsoObjetThread = new IsoThread(new Iso3D(maxtri,  maxpts,  gridmax));
-        ParObjet = new Par3D();
+        ParObjetThread = new ParThread(new Par3D(maxpts));
         return 1;
     }
     catch(std::bad_alloc&)
@@ -993,7 +993,7 @@ void OpenGlWidget::morph()
     FistTimecalibrate *= -1;
     for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber; nbthreads++)
         IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated =  LocalScene.morph;
-    ParObjet->activeMorph = LocalScene.morph;
+    ParObjetThread->ParObjet->workerthreads[0].activeMorph = LocalScene.morph;
     if (LocalScene.morph == 1)
         timer->start( latence);
     else if(LocalScene.anim == -1)
@@ -1991,7 +1991,7 @@ void OpenGlWidget::paintGL()
                 LocalScene.WichPointVerifyCond
             );
 
-            ParObjet->ParamBuild(
+            ParObjetThread->ParObjet->ParamBuild(
                 &(LocalScene.ArrayNorVer_localPt[TypeDrawin*(LocalScene.VertxNumberTmp1)]),
                 LocalScene.ArrayNorVer_localPt,
                 &(LocalScene.PolyIndices_localPt[LocalScene.PolyNumberTmp1]),
@@ -2011,7 +2011,7 @@ void OpenGlWidget::paintGL()
         }
         else if(LocalScene.typedrawing == -1)
         {
-            ParObjet->ParamBuild
+            ParObjetThread->ParObjet->ParamBuild
             (
                 LocalScene.ArrayNorVer_localPt,
                 LocalScene.ArrayNorVerExtra_localPt,
@@ -2173,7 +2173,7 @@ OpenGlWidget::~OpenGlWidget()
     //glDeleteBuffers(1, &LocalScene.vboId_ArrayNorVer_localPt);
     //glDeleteBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
     delete(timer);
-    delete ParObjet;
+    delete ParObjetThread->ParObjet;
     delete IsoObjetThread->IsoObjet;
 }
 
