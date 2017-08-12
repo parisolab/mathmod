@@ -361,52 +361,6 @@ void  Par3D::project_4D_to_3D(int idx)
         }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++
-void  ParWorkerThread::calcul_objet(int cmp)
-{
-    double vals[] = {0,0,0};
-    double iprime, jprime;
-    int NewPosition =  cmp*TypeDrawin*(nb_ligne)*(nb_colone);
-
-    if((cmp == 0) && (activeMorph == 1))
-        stepMorph += pace;
-
-    vals[2]          = stepMorph;
-    int tmp = nb_ligne/WorkerThreadsNumber;
-    iStart   = MyIndex*tmp;
-    if(MyIndex == (WorkerThreadsNumber-1))
-        iFinish = nb_ligne;
-    else
-        iFinish = (MyIndex+1)*tmp;
-
-    int l=TypeDrawin*iStart*nb_colone;
-
-    for(int j=iStart; j < iFinish   ; j++)
-    {
-        jprime = (double)j/(double)(nb_ligne -1 ) ;
-        jprime = jprime * dif_u[cmp]  + u_inf[cmp] ;
-        for (int i=0; i < nb_colone   ; i++)
-        {
-            iprime = (double)i/(double)(nb_colone-1 ) ;
-            iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
-            vals[0]=jprime;
-            vals[1]=iprime;
-            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals);
-            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals);
-            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);
-
-            l+=TypeDrawin;
-            if(param4D == 1)
-                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
-            else
-                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = 1;
-        }
-    }
-}
-
-
-
-
 //+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::allocateparser(int N)
 {
@@ -1669,6 +1623,51 @@ void Par3D::stopcalculations(bool calculation)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
+//+++++++++++++++++++++++++++++++++++++++++++
+void  ParWorkerThread::calcul_objet(int cmp)
+{
+    double vals[] = {0,0,0};
+    double iprime, jprime;
+    int NewPosition =  cmp*TypeDrawin*(nb_ligne)*(nb_colone);
+
+    if((cmp == 0) && (activeMorph == 1))
+        stepMorph += pace;
+
+    vals[2]          = stepMorph;
+    int tmp = nb_ligne/WorkerThreadsNumber;
+    iStart   = MyIndex*tmp;
+    if(MyIndex == (WorkerThreadsNumber-1))
+        iFinish = nb_ligne;
+    else
+        iFinish = (MyIndex+1)*tmp;
+
+    int l=TypeDrawin*iStart*nb_colone;
+
+    for(int j=iStart; j < iFinish   ; j++)
+    {
+        jprime = (double)j/(double)(nb_ligne -1 ) ;
+        jprime = jprime * dif_u[cmp]  + u_inf[cmp] ;
+        for (int i=0; i < nb_colone   ; i++)
+        {
+            iprime = (double)i/(double)(nb_colone-1 ) ;
+            iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
+            vals[0]=jprime;
+            vals[1]=iprime;
+
+            if(StopCalculations)
+                return;
+            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals);
+            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals);
+            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);
+            l+=TypeDrawin;
+            if(param4D == 1)
+                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
+            else
+                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = 1;
+        }
+    }
+}
+
 //++++++++++++++++++++++++++++++++++++
 void  Par3D::ParamBuild(
     float *NormVertexTabPt,
@@ -1702,6 +1701,8 @@ void  Par3D::ParamBuild(
     if(typeCND != NULL)
         WichPointVerifyCond = typeCND;
 
+    stopcalculations(false);
+
     for(int fctnb= 0; fctnb< workerthreads[0].Nb_paramfunctions+1; fctnb++)
     {
 
@@ -1714,8 +1715,9 @@ void  Par3D::ParamBuild(
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].wait();
 
+        if(StopCalculations)
+            return;
 
-        //calcul_objet( fctnb);
         if(param4D == 1)
         {
             Anim_Rot4D (fctnb*NbVertex);
