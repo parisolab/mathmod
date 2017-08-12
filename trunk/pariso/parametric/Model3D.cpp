@@ -27,6 +27,8 @@ static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 
+static float*     NormVertexTab;
+static float*     ExtraDimension;
 
 CellNoise *NoiseFunction2 = new CellNoise();
 ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
@@ -60,39 +62,17 @@ Par3D::~Par3D()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-Par3D::Par3D()
+ParWorkerThread::ParWorkerThread()
 {
-    initparser(100);
-    initialiser_parametres();
-    initialiser_parseur();
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
-void Par3D::initialiser_parametres()
-{
-    nb_licol = 50;
-    nb_ligne = nb_colone = nb_licol;
-    largeur_fenetre = 620;
-    hauteur_fenetre = 620;
     mesh = 1;
     infos =1;
     latence = 30;
     stepMorph = 0;
     pace = (double)1/(double)30;
-    coupure_col = coupure_ligne = 0;
     activeMorph = -1;
     ParConditionRequired = -1;
-    tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
-    tetazw_ok = tetaxy_ok =  tetaxz_ok = tetayz_ok = tetaxw_ok = tetayw_ok =  param4D = -1;
     Nb_Sliders = -1;
-    // initialisation des matrices 4D
-    mat4D                                     = Matrix4D();
-    mat_rotation4D                      = Matrix4D();
-    mat_rotation_save4D           = Matrix4D();
-    mat_homothetie4D               = Matrix4D();
-    mat_translation4D                 = Matrix4D();
-    mat_inversetranslation4D    = Matrix4D();
-    mat4D.unit();
+
     Lacunarity = 0.5;
     Gain = 1.0;
     Octaves = 4;
@@ -102,10 +82,71 @@ void Par3D::initialiser_parametres()
         SliderNames[i] = "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
+
+    allocateparser(NbComponent);
+
+    initialiser_parseur();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::initialiser_parseur()
+Par3D::Par3D(int maxpoints)
+{
+    initialiser_parametres();
+    NormVertexTab  = new float [10*maxpoints];
+    ExtraDimension = new float [maxpoints];
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::run()
+{
+    ParCompute(CurrentPar);
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::ParCompute(int fctnb)
+{
+        calcul_objet(fctnb);
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void Par3D::initialiser_parametres()
+{
+    nb_licol = 50;
+    nb_ligne = nb_colone = nb_licol;
+    largeur_fenetre = 620;
+    hauteur_fenetre = 620;
+    coupure_col = coupure_ligne = 0;
+    tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
+    tetazw_ok = tetaxy_ok =  tetaxz_ok = tetayz_ok = tetaxw_ok = tetayw_ok =  param4D = -1;
+    // initialisation des matrices 4D
+    mat4D                                     = Matrix4D();
+    mat_rotation4D                      = Matrix4D();
+    mat_rotation_save4D           = Matrix4D();
+    mat_homothetie4D               = Matrix4D();
+    mat_translation4D                 = Matrix4D();
+    mat_inversetranslation4D    = Matrix4D();
+    mat4D.unit();
+
+    WorkerThreadsNumber = 4;
+    workerthreads = new ParWorkerThread[WorkerThreadsNumber];
+    int tmp = (nb_ligne/WorkerThreadsNumber);
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
+    {
+        workerthreads[nbthreads].nb_ligne = nb_ligne;
+        workerthreads[nbthreads].nb_colone = nb_colone;
+        workerthreads[nbthreads].MyIndex = nbthreads;
+        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+
+        workerthreads[nbthreads].iStart   = nbthreads*tmp;
+        if(nbthreads == (WorkerThreadsNumber-1))
+            workerthreads[nbthreads].iFinish = nb_ligne;
+        else
+            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::initialiser_parseur()
 {
     NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
@@ -118,7 +159,7 @@ void Par3D::initialiser_parseur()
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-    for(int i=0; i<100; i++)
+    for(int i=0; i<NbComponent; i++)
     {
         myParserUmin[i].AddConstant   ("pi", PI);
         myParserUmax[i].AddConstant   ("pi", PI);
@@ -321,17 +362,26 @@ void  Par3D::project_4D_to_3D(int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::calcul_objet(int NewPosition,  int cmp)
+void  ParWorkerThread::calcul_objet(int cmp)
 {
     double vals[] = {0,0,0};
     double iprime, jprime;
+    int NewPosition =  cmp*TypeDrawin*(nb_ligne)*(nb_colone);
 
     if((cmp == 0) && (activeMorph == 1))
         stepMorph += pace;
 
     vals[2]          = stepMorph;
-    int l=0;
-    for(int j=0; j < nb_ligne   ; j++)
+    int tmp = nb_ligne/WorkerThreadsNumber;
+    iStart   = MyIndex*tmp;
+    if(MyIndex == (WorkerThreadsNumber-1))
+        iFinish = nb_ligne;
+    else
+        iFinish = (MyIndex+1)*tmp;
+
+    int l=TypeDrawin*iStart*nb_colone;
+
+    for(int j=iStart; j < iFinish   ; j++)
     {
         jprime = (double)j/(double)(nb_ligne -1 ) ;
         jprime = jprime * dif_u[cmp]  + u_inf[cmp] ;
@@ -354,8 +404,36 @@ void  Par3D::calcul_objet(int NewPosition,  int cmp)
     }
 }
 
+
+
+
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::initparser(int N)
+void ParWorkerThread::allocateparser(int N)
+{
+    myParserX = new FunctionParser[N];
+
+    myParserY = new FunctionParser[N];
+
+    myParserZ = new FunctionParser[N];
+
+    myParserW = new FunctionParser[N];
+
+    Fct = new FunctionParser[NbDefinedFunctions];
+
+    RgbtParser = new FunctionParser[NbTextures];
+
+    VRgbtParser = new FunctionParser[NbTextures];
+
+    GradientParser = new FunctionParser();
+    NoiseParser = new FunctionParser;
+
+    NoiseShapeParser = new FunctionParser;
+}
+
+
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::initparser(int N)
 {
     delete[] myParserX;
     myParserX = new FunctionParser[N];
@@ -370,13 +448,13 @@ void Par3D::initparser(int N)
     myParserW = new FunctionParser[N];
 
     delete[] Fct;
-    Fct = new FunctionParser[N];
+    Fct = new FunctionParser[NbDefinedFunctions];
 
     delete[] RgbtParser;
-    RgbtParser = new FunctionParser[N];
+    RgbtParser = new FunctionParser[NbTextures];
 
     delete[] VRgbtParser;
-    VRgbtParser = new FunctionParser[N];
+    VRgbtParser = new FunctionParser[NbTextures];
 
     delete GradientParser;
     GradientParser = new FunctionParser();
@@ -420,20 +498,28 @@ void Par3D::initparser(int N)
 
         myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+    }
 
-        Fct[i].AddConstant("pi", PI);
+
+    for(int i=0; i<NbTextures; i++)
+    {
         RgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("pi", PI);
+    }
+
+    for(int i=0; i<NbDefinedFunctions; i++)
+    {
+        Fct[i].AddConstant("pi", PI);
     }
 }
 
 
-ErrorMessage  Par3D::parse_expression()
+ErrorMessage  ParWorkerThread::parse_expression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     std::string varliste = "x,y,z,t";
 
-    initparser(100);
+    initparser(NbComponent);
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
     for(int j=0; j<Nb_constants; j++)
     {
@@ -470,7 +556,7 @@ ErrorMessage  Par3D::parse_expression()
             }
         }
 
-        //initparser(100);
+
         for(int i=0; i<Nb_functs; i++)
         {
             for(int j=0; j<i; j++)
@@ -804,7 +890,7 @@ ErrorMessage  Par3D::parse_expression()
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-int Par3D::HowManyVariables(std::string NewVariables, int type)
+int ParWorkerThread::HowManyVariables(std::string NewVariables, int type)
 {
     std::string tmp, tmp2,tmp3;
     int position =0, jpos;
@@ -882,7 +968,7 @@ int Par3D::HowManyVariables(std::string NewVariables, int type)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-int Par3D::HowManyParamSurface(std::string ParamFct, int type)
+int ParWorkerThread::HowManyParamSurface(std::string ParamFct, int type)
 {
     std::string tmp, tmp2;
     int position =0, jpos;
@@ -1029,54 +1115,47 @@ void Par3D::CalculateNoiseShapePoints(int NewPosition)
 {
     double tmp, val[4];
     int I =0;
-    val[3] = stepMorph;
-    NoiseShape = "NoiseW(x,y,z,1,2,0)";
-    NoiseShapeParser->Parse(NoiseShape, "x,y,z,t");
-    if(NoiseShape != "")
+    val[3] = workerthreads[0].stepMorph;
+    workerthreads[0].NoiseShape = "NoiseW(x,y,z,1,2,0)";
+    workerthreads[0].NoiseShapeParser->Parse(workerthreads[0].NoiseShape, "x,y,z,t");
+    if(workerthreads[0].NoiseShape != "")
         for(int j=0; j < nb_ligne   ; j++)
             for(int i= 0; i < nb_colone; i++)
             {
                 val[0]= NormVertexTab[I  + 3 + TypeDrawinNormStep +NewPosition ];
                 val[1]= NormVertexTab[I  + 4 + TypeDrawinNormStep +NewPosition ];
                 val[2]= NormVertexTab[I  + 5 + TypeDrawinNormStep +NewPosition ];
-
-                tmp  = NoiseShapeParser->Eval(val);
-
+                tmp  = workerthreads[0].NoiseShapeParser->Eval(val);
                 NormVertexTab[I + 3 + TypeDrawinNormStep +NewPosition ] *= tmp;
                 NormVertexTab[I + 4 + TypeDrawinNormStep +NewPosition ] *= tmp;
                 NormVertexTab[I + 5 + TypeDrawinNormStep +NewPosition ] *= tmp;
-
                 I += TypeDrawin;
             }
 }
-
-
-
-
 
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
     int Jprime;
     double tmp, ValCol[100], val[9];
-    val[3] = stepMorph;
+    val[3] = workerthreads[0].stepMorph;
 
     static int recalculate = 1;
 
-    if((activeMorph == 1) &&   (recalculate !=1))
+    if((workerthreads[0].activeMorph == 1) &&   (recalculate !=1))
     {
         return;
     }
-    if(activeMorph == 1)
+    if(workerthreads[0].activeMorph == 1)
         recalculate = -1;
     else
         recalculate = 1;
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(int i=0; i<Nb_vrgbts && i<100; i++)
+        for(int i=0; i<workerthreads[0].Nb_vrgbts && i<100; i++)
         {
-            ValCol[i] = VRgbtParser[i].Eval(val);
+            ValCol[i] = workerthreads[0].VRgbtParser[i].Eval(val);
         }
 
         for(int i= 0; i < NbVertexTmp; i++)
@@ -1085,8 +1164,8 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            if(Noise != "")
-                tmp  = NoiseParser->Eval(val);
+            if(workerthreads[0].Noise != "")
+                tmp  = workerthreads[0].NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -1094,11 +1173,11 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            tmp  = GradientParser->Eval(val);
+            tmp  = workerthreads[0].GradientParser->Eval(val);
 
             int c= (int)tmp;
             tmp = std::abs(tmp - (double)c);
-            for (int j=0; j < Nb_vrgbts && j < 100; j+=5)
+            for (int j=0; j < workerthreads[0].Nb_vrgbts && j < 100; j+=5)
                 if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
@@ -1122,15 +1201,15 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             Jprime = (i)/(nb_ligne);
             val[6] = (double)Jprime;
             val[4] = val[6]/(double)(nb_ligne) ;
-            val[4] = val[4] * dif_v[0]  + v_inf[0];
+            val[4] = val[4] * workerthreads[0].dif_v[0]  + workerthreads[0].v_inf[0];
 
             Jprime = (i) %  (nb_colone);
             val[5] =  (double)Jprime;
             val[3] = val[5]/(double)(nb_colone) ;
-            val[3] = val[3] * dif_u[0]  + u_inf[0];
+            val[3] = val[3] * workerthreads[0].dif_u[0]  + workerthreads[0].u_inf[0];
 
-            if(Noise != "")
-                tmp  = NoiseParser->Eval(val);
+            if(workerthreads[0].Noise != "")
+                tmp  = workerthreads[0].NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -1140,10 +1219,10 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[3]*= tmp;
             val[4]*= tmp;
 
-            NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
-            NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
-            NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
-            NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
+            NormVertexTab[i*TypeDrawin  ] = workerthreads[0].RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin+1] = workerthreads[0].RgbtParser[1].Eval(val);
+            NormVertexTab[i*TypeDrawin+2] = workerthreads[0].RgbtParser[2].Eval(val);
+            NormVertexTab[i*TypeDrawin+3] = workerthreads[0].RgbtParser[3].Eval(val);
         }
     }
 }
@@ -1224,16 +1303,16 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
     double vals[4];
-    vals[3] = stepMorph;
+    vals[3] = workerthreads[0].stepMorph;
 
-    if (ParConditionRequired == 1)
+    if (workerthreads[0].ParConditionRequired == 1)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
             vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
             vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
             vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
-            WichPointVerifyCond[i] = (myParserCND[0].Eval(vals) == 1);
+            WichPointVerifyCond[i] = (workerthreads[0].myParserCND[0].Eval(vals) == 1);
             if(WichPointVerifyCond[i])
             {
                 NormVertexTab[i*TypeDrawin      ] = 0.1;
@@ -1304,7 +1383,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Bprime[0] = NormVertexTab[3+TypeDrawin*Aindex    + TypeDrawinNormStep];
                 Bprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
                 Bprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
-                Bprime[3] = stepMorph;
+                Bprime[3] = workerthreads[0].stepMorph;
 
                 DiffX = (NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
                 DiffY = (NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
@@ -1312,7 +1391,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(myParserCND[0].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(workerthreads[0].myParserCND[0].Eval(Bprime) == 1 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1322,7 +1401,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!(myParserCND[0].Eval(Bprime) == 1) && (Alfa < 20))
+                    while(!(workerthreads[0].myParserCND[0].Eval(Bprime) == 1) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1335,7 +1414,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Cprime[0] = NormVertexTab[3+TypeDrawin*Aindex    + TypeDrawinNormStep];
                 Cprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
                 Cprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
-                Cprime[3] = stepMorph;
+                Cprime[3] = workerthreads[0].stepMorph;
 
                 DiffX = (NormVertexTab[3+TypeDrawin*Cindex    + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex     + TypeDrawinNormStep])/20;
                 DiffY = (NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
@@ -1343,7 +1422,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(myParserCND[0].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(workerthreads[0].myParserCND[0].Eval(Cprime) == 1 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1353,7 +1432,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!(myParserCND[0].Eval(Cprime) == 1) && (Alfa < 20))
+                    while(!(workerthreads[0].myParserCND[0].Eval(Cprime) == 1) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1514,7 +1593,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         components->NbTrianglesNotVerifyCND = l;
         components->NbTrianglesBorderCND = M;
 
-        for(int fctnb= 0; fctnb< Nb_paramfunctions+1; fctnb++)
+        for(int fctnb= 0; fctnb< workerthreads[0].Nb_paramfunctions+1; fctnb++)
         {
             if(components != NULL)
             {
@@ -1523,27 +1602,67 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         }
 
         components->ThereisCND = true;
-
     }
     else
     {
         components->ThereisCND = false;
-        /*
-        for(int i= 0; i < NbVertexTmp; i++)
-        {
-            NormVertexTab[i*TypeDrawin    ] = 0.5;
-            NormVertexTab[i*TypeDrawin+1] = 0.6;
-            NormVertexTab[i*TypeDrawin+2] = 0.8;
-            NormVertexTab[i*TypeDrawin+3] = 1.0;
-        }
-        */
     }
 }
 
-
+//++++++++++++++++++++++++++++++++++++
+void Par3D::BuildPar()
+{
+    ParamBuild(
+                    LocalScene->ArrayNorVer_localPt,
+                    LocalScene->ArrayNorVerExtra_localPt,
+                    LocalScene->PolyIndices_localPt,
+                    &LocalScene->PolyNumber,
+                    &(LocalScene->VertxNumber),
+                    0,
+                    &(LocalScene->componentsinfos),
+                    LocalScene->Typetriangles,
+                    LocalScene->WichPointVerifyCond,
+                    LocalScene->PolyIndices_localPtMin,
+                    &(LocalScene->NbPolygnNbVertexPtMin)
+                );
+}
 
 //++++++++++++++++++++++++++++++++++++
-void  Par3D:: ParamBuild(
+void Par3D::run()
+{
+  BuildPar();
+}
+
+//++++++++++++++++++++++++++++++++++++
+ParWorkerThread::~ParWorkerThread()
+{
+
+}
+
+//++++++++++++++++++++++++++++++++++++
+void Par3D::UpdateThredsNumber(int NewThreadsNumber)
+{
+    delete[] workerthreads;
+    WorkerThreadsNumber = NewThreadsNumber;
+    int tmp = nb_ligne/WorkerThreadsNumber;
+    workerthreads = new ParWorkerThread[WorkerThreadsNumber];
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
+    {
+        workerthreads[nbthreads].nb_ligne = nb_ligne;
+        workerthreads[nbthreads].nb_colone = nb_colone;
+        workerthreads[nbthreads].MyIndex = nbthreads;
+        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+
+        workerthreads[nbthreads].iStart   = nbthreads*tmp;
+        if(workerthreads[nbthreads].MyIndex == (WorkerThreadsNumber-1))
+            workerthreads[nbthreads].iFinish = nb_ligne;
+        else
+            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+    }
+}
+
+//++++++++++++++++++++++++++++++++++++
+void  Par3D::ParamBuild(
     float *NormVertexTabPt,
     float *ExtraDimensionPt,
     unsigned int *IndexPolyTabPt,
@@ -1563,15 +1682,11 @@ void  Par3D:: ParamBuild(
     PreviousSizeMinimalTopology =0;
 
     NbVertex  = (nb_ligne)*(nb_colone);
-    NbPolygn = 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-
-    NormVertexTab = NormVertexTabPt;
     IndexPolyTab = IndexPolyTabPt;
-    ExtraDimension = ExtraDimensionPt;
     IndexPolyTabMin = IndexPolyTabMinPt;
 
     if(components != NULL)
-        components->NbParametric = Nb_paramfunctions+1;
+        components->NbParametric = workerthreads[0].Nb_paramfunctions+1;
 
     if(TriangleListeCND != NULL)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
@@ -1579,10 +1694,20 @@ void  Par3D:: ParamBuild(
     if(typeCND != NULL)
         WichPointVerifyCond = typeCND;
 
-    for(int fctnb= 0; fctnb< Nb_paramfunctions+1; fctnb++)
+    for(int fctnb= 0; fctnb< workerthreads[0].Nb_paramfunctions+1; fctnb++)
     {
-        calcul_objet(fctnb*TypeDrawin*NbVertex, fctnb);
-        //CalculateNoiseShapePoints(fctnb*TypeDrawin*NbVertex);
+
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+            workerthreads[nbthreads].CurrentPar = fctnb;
+
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+            workerthreads[nbthreads].start();
+
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+            workerthreads[nbthreads].wait();
+
+
+        //calcul_objet( fctnb);
         if(param4D == 1)
         {
             Anim_Rot4D (fctnb*NbVertex);
@@ -1594,34 +1719,34 @@ void  Par3D:: ParamBuild(
 
         if(components != NULL)
         {
-            components->Parametricpositions[2*fctnb          ]  = fctnb*6*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1)  /*+  IsoPos*/; //save the starting position of this component
-            components->Parametricpositions[2*fctnb     + 1] = 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1); //save the number of Polygones of this component
+            components->Parametricpositions[2*fctnb  ]  = fctnb*6*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1)  /*+  IsoPos*/; //save the starting position of this component
+            components->Parametricpositions[2*fctnb+1] = 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1); //save the number of Polygones of this component
         }
     }
 
     // Save Number of Polys and vertex :
-    NbVertexTmp                   = (Nb_paramfunctions+1)*(nb_ligne)*(nb_colone);
-    NbTriangleIsoSurfaceTmp = (Nb_paramfunctions+1)*NbPolygn;
-    NbPolyMinimalTopology    = (Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-    PreviousSizeMinimalTopology = 5*(Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+    NbVertexTmp                 = (workerthreads[0].Nb_paramfunctions+1)*(nb_ligne)*(nb_colone);
+    NbTriangleIsoSurfaceTmp     = (workerthreads[0].Nb_paramfunctions+1)*2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+    NbPolyMinimalTopology       = (workerthreads[0].Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+    PreviousSizeMinimalTopology = 5*(workerthreads[0].Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
 
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
     // Pigment, Texture and Noise :
-    if(VRgbt != "" && (Nb_vrgbts %5)==0 )
+    if(workerthreads[0].VRgbt != "" && (workerthreads[0].Nb_vrgbts %5)==0 )
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments
-        components->NoiseParam.VRgbtParser = VRgbtParser;
-        components->NoiseParam.GradientParser = GradientParser;
-        components->NoiseParam.Nb_vrgbts = Nb_vrgbts;
+        components->NoiseParam.VRgbtParser = workerthreads[0].VRgbtParser;
+        components->NoiseParam.GradientParser = workerthreads[0].GradientParser;
+        components->NoiseParam.Nb_vrgbts = workerthreads[0].Nb_vrgbts;
     }
-    else if(Nb_rgbts >= 4)
+    else if(workerthreads[0].Nb_rgbts >= 4)
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 1; //Texture
-        components->NoiseParam.RgbtParser = RgbtParser;
+        components->NoiseParam.RgbtParser = workerthreads[0].RgbtParser;
     }
     else
     {
@@ -1629,7 +1754,7 @@ void  Par3D:: ParamBuild(
         components->NoiseParam.NoiseType = -1; //No Pigments or texture
     }
 
-    if(Noise == "")
+    if(workerthreads[0].Noise == "")
         components->NoiseParam.NoiseShape = 0;
     else
         components->NoiseParam.NoiseShape = 1;
@@ -1640,6 +1765,9 @@ void  Par3D:: ParamBuild(
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
+
+    memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
+    memcpy(ExtraDimensionPt, ExtraDimension, NbVertexTmp*sizeof(float));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++

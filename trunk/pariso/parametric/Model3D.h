@@ -27,7 +27,6 @@
 #include "ND/Matrix4D.h"
 
 using std::string;
-static const int gridscal =1000;
 
 struct   ParStruct
 {
@@ -41,63 +40,84 @@ struct   ParStruct
     std::string vmin;
     std::string vmax;
     std::string grid;
-    int          index;
+    int  index;
 };
 
+class ParWorkerThread : public QThread
+{
+public :
+    ErrorMessage stdError;
+    int nb_ligne, nb_colone;
+    int coupure_col, nb_licol, coupure_ligne;
+
+    FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
+    FunctionParser myParserCND[3*NbComponent],
+                   myParserUmin[3*NbComponent], myParserUmax[3*NbComponent],
+                   myParserVmin[3*NbComponent], myParserVmax[3*NbComponent],
+                   Var[NbVariables], Cstparser;
+    ParStruct ParamStructs[3*NbComponent];
+    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders;
+    std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
+        Varu, Const,  Rgbt, Grid;
+    std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
+        RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
+        Gradient, Noise, NoiseShape, SliderNames[50];
+    double  v_inf[3*NbComponent], v_sup[3*NbComponent],u_inf[3*NbComponent],u_sup[3*NbComponent],dif_v[3*NbComponent],dif_u[3*NbComponent];
+    double SliderValues[5000];
+    double stepMorph, pace;
+    int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
+    int mesh, box,infos, latence, ParConditionRequired;
+    int iStart, iFinish, MyIndex, WorkerThreadsNumber;
+    unsigned int NbPolygnNbVertex[2], nbBorderPts, param4D, CurrentPar;
+    float Lacunarity, Gain;
+    int Octaves;
+
+public :
+    void ParCompute(int);
+    void initialiser_parseur();
+    void initparser(int);
+    void calcul_objet(int component =0);
+    int  HowManyParamSurface(std::string, int);
+    int  HowManyVariables(std::string, int);
+    ErrorMessage parse_expression();
+    void allocateparser(int);
+    void run() Q_DECL_OVERRIDE;
+    ParWorkerThread();
+    ~ParWorkerThread();
+};
+
+
 /** The representation of a 3D model */
-class Par3D /*: public ObjectParameters*/
+class Par3D   : public QThread
 {
 public:
-    ErrorMessage stdError;
-    float* NormVertexTab;
-    float* ExtraDimension;
+    ObjectProperties *LocalScene;
+    ParWorkerThread *workerthreads;
+    //float* NormVertexTab;
+    //float* ExtraDimension;
     unsigned int *IndexPolyTab;
-    //unsigned int IndexPolyTab_2[30*000000];
     unsigned int *IndexPolyTabMin;
     float *Border;
     bool *WichPointVerifyCond;
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
 
-    int nb_ligne, nb_colone;
+    int nb_ligne, nb_colone, NbVertex, WorkerThreadsNumber;
     int coupure_col, nb_licol, coupure_ligne;
+
     double MINX,MINY,MINZ,MINW,
            MAXX,MAXY,MAXZ,MAXW,
            DIFX,DIFY,DIFZ,DIFW,
            DIFMAXIMUM;
-
-    FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser myParserCND[100],
-                   myParserUmin[100], myParserUmax[100],
-                   myParserVmin[100], myParserVmax[100],
-                   Var[20], Cstparser;
-    ParStruct ParamStructs[100];
-    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders;
-    std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
-        Varu, Const, Funct, Rgbt, Grid;
-    std::string VarName[100], Varus[100], ConstNames[100], Consts[100], FunctNames[100], Functs[100],
-        RgbtNames[100], Rgbts[100], VRgbt, VRgbts[100], VRgbtNames[100],
-        Gradient, Noise, NoiseShape, SliderNames[50];
-    double  v_inf[100], v_sup[100],u_inf[100],u_sup[100],dif_v[100],dif_u[100];
-    double SliderValues[5000];
-    double stepMorph, pace;
-    int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
     Matrix4D mat4D, mat_rotation4D, mat_rotation_save4D,
              mat_homothetie4D, mat_translation4D, mat_inversetranslation4D;
     double tetaxy, tetaxz, tetayz, tetaxw, tetayw, tetazw;
 
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
     int   largeur_fenetre,hauteur_fenetre;
-    int mesh, box,infos, latence, ParConditionRequired;
-    unsigned int NbPolygn;
-    int NbVertex;
-    unsigned int NbPolygnNbVertex[2], nbBorderPts;
-    float Lacunarity, Gain;
-    int Octaves;
 public:
-    Par3D();
+    Par3D(int);
     ~Par3D();
-    void Anim_Rot3D (int idx=0);
     void rotation4();
     void calcul_points4(int idx=0);
     void Anim_Rot4D (int idx=0);
@@ -105,17 +125,11 @@ public:
     void Invert_boite_englobante4D(int idx=0);
     void boite_englobante4D(int index=0);
     void initialiser_parametres();
-    void initialiser_parseur();
-    void initparser(int);
-    void calcul_objet(int i =0, int component =0);
     void calcul_Norm(int i=0);
     void BorderCalculation(int i=0);
     void make_PolyIndex(int i=0, int  IsoPos=0);
     void make_PolyIndexTri(int i=0, int  IsoPos=0);
     void make_PolyIndexMin(int i=0, int  IsoPos=0);
-    int  HowManyParamSurface(std::string, int);
-    int  HowManyVariables(std::string, int);
-    ErrorMessage parse_expression();
     void CNDCalculation(int, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void CalculateNoiseShapePoints(int);
@@ -126,4 +140,9 @@ public:
                     bool *typeCND = NULL,
                     unsigned int *IndexPolyTabMinPt = NULL,
                     unsigned  int *NbPolyMinPt = NULL);
+
+
+    void BuildPar();
+    void UpdateThredsNumber(int);
+    void run() Q_DECL_OVERRIDE;
 };

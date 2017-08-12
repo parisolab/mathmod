@@ -15,59 +15,30 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
+ *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
 
-#ifndef mathmod_H
-#define mathmod_H
-#include <qmessagebox.h>
-#include "ui_mathmod.h"
-#include "../ui_modules/ParisoMathObject.h"
-#include "../json_parser/parisodef.h"
-class MathMod : public QWidget
+#ifndef PARTHREAD_H
+#define PARTHREAD_H
+
+#include <QThread>
+#include <QTime>
+#include "../objectparameters.h"
+class GLThread;
+class Par3D;
+
+class ParThread : public QThread
 {
     Q_OBJECT
+public:
+    ParThread(Par3D *);
+    void BuildPar();
+    void run() Q_DECL_OVERRIDE;
+public  slots:
+    void stopthread();
 
 public:
-    MathMod(QWidget *,  int, int, int);
-    ~MathMod();
-    void keyPressEvent ( QKeyEvent *);
-    void resizeEvent( QResizeEvent  *);
-    void ParametricSurfaceProcess(int type = 1);
-    void Initparametricpage();
-    void updateGL();
-    void activateteGlCacheOption(bool);
-    void updateGLspectrale(float *);
-public slots:
-    void fill();
-    void iso_infos();
-    void draw_norm_clicked();
-    void linecolumn_valueChanged(int);
-    void linecolumn_valueChanged_2(int);
-    void ProcessNewIsoSurface();
-    void ProcessParisoSurface();
-    void xyzg_valueChanged(int);
-    void xg_valueChanged(int);
-    void yg_valueChanged(int);
-    void zg_valueChanged(int);
-    void slot_checkBox73_clicked();
-    void slot_uv_clicked();
-    void slot_uv4D_clicked();
-    void smoothline();
-    void Mesh();
-    void slot_triangles_clicked();
-    int ParseIso();
-    int ParsePar();
-    void frames_clicked();
-    //void UpdateFrame();
-public:
-    Ui::MathMod ui;
-    int xyzactivated, isomesh, uvactivated, uvactivated4D;
-    ParisoMathObject RootObjet;
-    jpariso pariso;
-    QWidget* Parent;
-    QMessageBox message;
-    ErrorMessage stError;
+    Par3D *ParObjet;
+    ObjectProperties*  LocalScene;
 };
-
-#endif
+#endif // PARTHREAD_H

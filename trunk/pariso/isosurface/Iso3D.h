@@ -109,69 +109,66 @@ public :
     ErrorMessage stdError;
     double SliderValues[5000];
     double Xamplitude[NbComponent], Yamplitude[NbComponent], Zamplitude[NbComponent];
-    int iStart, iFinish;
-    int TimeFlow;
+
+    int TimeFlow, iStart, iFinish;
     int  IsoMesh, IsoInfos, NbTriangleUsed, hauteur_fenetre, NbVertex;
     unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
+    bool StopCalculations;
+    public :
+        void IsoCompute(int);
+        void VoxelEvaluation(int);
+        void EvalExpressionAtIndex(int);
+        void deleteparsers();
+        void allocateparsers(int N);
+        inline ErrorMessage ParseExpression(std::string);
+        int HowManyIsosurface(std::string,int);
+        int HowManyVariables(std::string, int);
+        ErrorMessage InitNoiseParser();
+        ErrorMessage ParserIso();
+        inline   void InitParser();
+        void initparser(int N);
+        void run() Q_DECL_OVERRIDE;
+        IsoWorkerThread();
+        ~IsoWorkerThread();
+    };
 
 
 
+    class Iso3D  : public QThread
+    {
+    public :
+        ObjectProperties *LocalScene;
+        IsoWorkerThread *workerthreads;
+        int   nb_ligne, nb_colon, nb_depth;
+        int WorkerThreadsNumber;
+        int   *     IsoSurfaceTriangleListe;
+        bool *     WichPointVerifyCond, StopCalculations;
+        int *     TypeIsoSurfaceTriangleListeCND;
+        unsigned int *  IndexPolyTab;
+        int NbTriangleIsoSurface,NbPointIsoMap;
 
-public :
-    void IsoCompute(int);
-    void VoxelEvaluation(int);
-    void EvalExpressionAtIndex(int);
-    void deleteparsers();
-    void allocateparsers(int N);
-    inline ErrorMessage ParseExpression(std::string);
-    int HowManyIsosurface(std::string,int);
-    int HowManyVariables(std::string, int);
-    ErrorMessage InitNoiseParser();
-    ErrorMessage ParserIso();
-    inline   void InitParser();
-    void initparser(int N);
-    void run() Q_DECL_OVERRIDE;
-    IsoWorkerThread();
-    ~IsoWorkerThread();
-};
-
-
-
-class Iso3D  : public QThread
-{
-public :
-    ObjectProperties *LocalScene;
-    IsoWorkerThread *workerthreads;
-    int   nb_ligne, nb_colon, nb_depth;
-    int WorkerThreadsNumber;
-    int   *     IsoSurfaceTriangleListe;
-    bool *     WichPointVerifyCond;
-    int *     TypeIsoSurfaceTriangleListeCND;
-    float*     NormVertexTab;
-    unsigned int *  IndexPolyTab;
-    int NbTriangleIsoSurface,NbPointIsoMap;
-
-public :
-    Iso3D(int, int, int);
-    ~Iso3D();
-    inline   void DrawIsoSurface();
-    inline   void InitParameter();
-    inline   void SignatureComputation();
-    inline   void ConstructIsoSurface();
-    inline void ConstructIsoNormale();
-    inline   void PointEdgeComputation(int,int);
-    inline   void PointEdgeComputation2(int,int);
-    void MinimalMeshObjFile();
-    inline void CNDCalculation(int, struct ComponentInfos *);
-    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
-    void SaveIsoGLMap();
-    int  setmaxgridto(int);
-    void SetMinimuMmeshSize(double);
-    void SetMiniMmeshStruct();
-    void stopcalculations();
-    int CNDtoUse(int index, struct ComponentInfos *components);
-    void CalculateColorsPoints(struct ComponentInfos *components);
-    void BuildIso();
-    void UpdateThredsNumber(int);
-    void run() Q_DECL_OVERRIDE;
-};
+    public :
+        Iso3D(int, int, int);
+        ~Iso3D();
+        inline   void DrawIsoSurface();
+        inline   void InitParameter();
+        inline   void SignatureComputation();
+        inline   void ConstructIsoSurface();
+        inline void ConstructIsoNormale();
+        inline   void PointEdgeComputation(int,int);
+        inline   void PointEdgeComputation2(int,int);
+        void MinimalMeshObjFile();
+        inline void CNDCalculation(int, struct ComponentInfos *);
+        void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
+        void SaveIsoGLMap();
+        int  setmaxgridto(int);
+        void SetMinimuMmeshSize(double);
+        void SetMiniMmeshStruct();
+        void stopcalculations();
+        int CNDtoUse(int index, struct ComponentInfos *components);
+        void CalculateColorsPoints(struct ComponentInfos *components);
+        void BuildIso();
+        void UpdateThredsNumber(int);
+        void stopcalculations(bool);
+        void run() Q_DECL_OVERRIDE;
+    };

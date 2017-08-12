@@ -33,6 +33,7 @@
 #include <QMessageBox>
 #include "../pariso/isosurface/Iso3D.h"
 #include "../pariso/isosurface/isothread.h"
+#include "../pariso/parametric/parthread.h"
 #include "../pariso/parametric/Model3D.h"
 #include "qglthread.h"
 
@@ -49,9 +50,10 @@ public :
     double Axe_x, Axe_y, Axe_z, angle, val1, val2, val3, old_x, old_y, old_z;
     ObjectProperties  LocalScene;
     QString FramesDir;
-    Iso3D *IsoObjet;
+    //Iso3D *IsoObjet;
     IsoThread *IsoObjetThread;
-    Par3D *ParObjet;
+    //Par3D *ParObjet;
+    ParThread *ParObjetThread;
     int TypeFormule;
     QMessageBox message;
     ErrorMessage stError;
