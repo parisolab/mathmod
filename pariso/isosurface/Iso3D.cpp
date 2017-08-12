@@ -34,7 +34,7 @@ static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 static int Gridmax=0;
-
+static float*     NormVertexTab;
 CellNoise *NoiseFunction = new CellNoise();
 ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 
@@ -155,16 +155,21 @@ void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
     delete[] workerthreads;
     WorkerThreadsNumber = NewThreadsNumber;
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber];
+    int tmp = (nb_ligne/WorkerThreadsNumber);
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].nb_ligne = nb_ligne;
         workerthreads[nbthreads].nb_colon = nb_colon;
         workerthreads[nbthreads].nb_depth = nb_depth;
+        workerthreads[nbthreads].MyIndex  = nbthreads;
         workerthreads[nbthreads].maximumgrid = Gridmax;
-        workerthreads[nbthreads].iStart   = nbthreads*(workerthreads[nbthreads].nb_ligne/WorkerThreadsNumber);
-        workerthreads[nbthreads].iFinish = (nbthreads+1)*(workerthreads[nbthreads].nb_ligne/WorkerThreadsNumber);
-        workerthreads[nbthreads].MyIndex = nbthreads;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+
+        workerthreads[nbthreads].iStart   = nbthreads*tmp;
+        if(nbthreads == (WorkerThreadsNumber-1))
+            workerthreads[nbthreads].iFinish = nb_ligne;
+        else
+            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
     }
 }
 
@@ -186,15 +191,14 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
         workerthreads[nbthreads].nb_colon = nb_colon;
         workerthreads[nbthreads].nb_depth = nb_depth;
         workerthreads[nbthreads].maximumgrid = gridmax;
+        workerthreads[nbthreads].MyIndex = nbthreads;
+        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber
+                ;
         workerthreads[nbthreads].iStart   = nbthreads*tmp;
         if(nbthreads == (WorkerThreadsNumber-1))
             workerthreads[nbthreads].iFinish = nb_ligne;
         else
             workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
-        //workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
-        workerthreads[nbthreads].MyIndex = nbthreads;
-        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
-        //workerthreads[nbthreads].xlocal = new double[NbComponent*600];
     }
     static int staticaction = 1;
     /// Things to do one time...
@@ -204,7 +208,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
         Results             = new float[gridmax*gridmax*gridmax];
         staticaction     *= -1;
     }
-    NormVertexTab = new float [10*maxpts];
+    NormVertexTab  = new float [10*maxpts];
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -513,8 +517,8 @@ int IsoWorkerThread::HowManyIsosurface(std::string ImplicitFct, int type)
 ///+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::InitParser()
 {
-    allocateparsers(21);
-    for(int i=0; i<21; i++)
+    allocateparsers(NbComponent);
+    for(int i=0; i<NbComponent; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
         IsoConditionParser[i].AddConstant("pi", PI);
@@ -670,7 +674,8 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                 {
                     vals[6 + l*3] = vr[l*3+2][IsoIndex][k];
                 }
-
+                if(StopCalculations)
+                    return;
                 IJK = J+k;
                 Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
                 GridVoxelVarPt[IJK].Signature   = 0; // Signature initialisation
@@ -814,7 +819,7 @@ ErrorMessage IsoWorkerThread::ParserIso()
 
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
 
-    initparser(21);
+    initparser(NbComponent);
 
     //Evaluates defined constantes:
     for(int j=0; j<Nb_constants; j++)
@@ -1296,8 +1301,8 @@ void IsoWorkerThread::allocateparsers(int N)
         implicitFunctionParser[i].AddConstant("pi", PI);
     }
 
-    Fct = new FunctionParser[50];
-    for(int i=0; i<50; i++)
+    Fct = new FunctionParser[NbDefinedFunctions];
+    for(int i=0; i<NbDefinedFunctions; i++)
     {
         Fct[i].AddConstant("pi", PI);
         Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -1309,8 +1314,8 @@ void IsoWorkerThread::allocateparsers(int N)
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
-    RgbtParser = new FunctionParser[50];
-    for(int i=0; i<50; i++)
+    RgbtParser = new FunctionParser[NbTextures];
+    for(int i=0; i<NbTextures; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
         RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1321,8 +1326,8 @@ void IsoWorkerThread::allocateparsers(int N)
 
     }
 
-    VRgbtParser = new FunctionParser[50];
-    for(int i=0; i<50; i++)
+    VRgbtParser = new FunctionParser[NbTextures];
+    for(int i=0; i<NbTextures; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1411,11 +1416,20 @@ void IsoWorkerThread::EvalExpressionAtIndex(int IsoIndex)
         }
     }
 }
+
 ///+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::IsoCompute(int fctnb)
 {
     (fctnb == 0) ? AllComponentTraited = true : AllComponentTraited = false;
     VoxelEvaluation(fctnb);
+}
+
+///+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::stopcalculations(bool calculation)
+{
+    StopCalculations = calculation;
+    for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1450,6 +1464,8 @@ void Iso3D::IsoBuild (
     if(typeCND != NULL)
         WichPointVerifyCond = typeCND;
 
+    stopcalculations(false);
+
     // generate Isosurface for all the implicit formulas
     for(int fctnb= 0; fctnb< workerthreads[0].Nb_implicitfunctions+1; fctnb++)
     {
@@ -1462,6 +1478,8 @@ void Iso3D::IsoBuild (
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].wait();
 
+        if(StopCalculations)
+            return;
         PointEdgeComputation(fctnb, 0);
         SignatureComputation();
         ConstructIsoSurface();

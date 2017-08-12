@@ -23,7 +23,8 @@ HEADERS   = ui_modules/drawingoptions.h \
     pariso/parametric/paratransformation.h \
     ui_modules/sliderparam.h \
     ui_modules/addparam.h \
-    pariso/isosurface/isothread.h
+    pariso/isosurface/isothread.h \
+    pariso/parametric/parthread.h
 
 SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/colorsoptions.cpp \
@@ -50,7 +51,8 @@ SOURCES   = ui_modules/drawingoptions.cpp \
     pariso/isosurface/povfunctions.cpp \
     ui_modules/sliderparam.cpp \
     ui_modules/addparam.cpp \
-    pariso/isosurface/isothread.cpp
+    pariso/isosurface/isothread.cpp \
+    pariso/parametric/parthread.cpp
 
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/colorsoptions.ui \

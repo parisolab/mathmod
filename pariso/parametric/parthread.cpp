@@ -17,27 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
-#include "isothread.h"
-#include "Iso3D.h"
+#include "parthread.h"
+#include "Model3D.h"
 
 
-IsoThread::IsoThread(Iso3D *iso)
-    : QThread(), IsoObjet(iso)
+ParThread::ParThread(Par3D *par)
+    : QThread(), ParObjet(par)
 {
 
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void IsoThread::stopthread()
+void ParThread::stopthread()
 {
     this->quit();
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void IsoThread::run()
+void ParThread::run()
 {
-    BuildIso();
+    BuildPar();
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void IsoThread::BuildIso()
+void ParThread::BuildPar()
 {
-    IsoObjet->BuildIso();
+    ParObjet->BuildPar();
 }

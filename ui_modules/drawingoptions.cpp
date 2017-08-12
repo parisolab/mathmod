@@ -981,8 +981,10 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         for (int i = 0; i < qlstPos.size(); ++i)
         {
             for(int nbthreds=0; nbthreds < MaxThreads ; nbthreds++)
+            {
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[i] = qlstPos.at(i).toDouble();
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[i] = qlstPos.at(i).toDouble();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[i] = qlstPos.at(i).toDouble();
+            }
         }
 
         // Name
@@ -1000,15 +1002,18 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         for (int i = 0; i < qlstnames.size(); ++i)
         {
             for(int nbthreds=0; nbthreds < MaxThreads ; nbthreds++)
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderNames[i] = qlstnames.at(i).toStdString();
-            MathmodRef->ui.glWidget->ParObjet->SliderNames[i] =
+            {
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderNames[i] =
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderNames[i] =
                 qlstnames.at(i).toStdString();
+            }
         }
         for(int nbthreds=0; nbthreds < MaxThreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].Nb_Sliders = qlstnames.size();
-        MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  qlstnames.size();
-
-
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].Nb_Sliders =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Nb_Sliders =
+            qlstnames.size();
+        }
 
         ui.ParametersList->clear();
         ui.ParametersList->addItem("Parameters List  ("+QString::number(qlstnames.size())+")");
@@ -1350,9 +1355,10 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     else
     {
         for(int nbthreds=0; nbthreds < MaxThreads ; nbthreds++)
+        {
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].Nb_Sliders =  -1;
-
-        MathmodRef->ui.glWidget->ParObjet->Nb_Sliders =  -1;
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Nb_Sliders =  -1;
+        }
         HideSliders();
     }
 }
@@ -1673,6 +1679,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             int result = MathmodRef->ParseIso();
             if(result == -1) return;
             textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(1) : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
+            MathmodRef->ui.glWidget->update();
         }
     }
     else if(Jobj["Param3D"].isObject())
@@ -1688,7 +1695,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_X = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_X = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
         // Fy
@@ -1700,8 +1708,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             result += lst[lst.size()-1].toString();
         result.replace("\n","");
         result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_Y = result.toStdString();
+        result.replace(" ","");for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Y = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
         // Fz
@@ -1714,7 +1722,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_Z = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Z = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
         // inf_u
@@ -1727,7 +1736,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->inf_u = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_u = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
 
         // sup_u
@@ -1740,7 +1750,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->sup_u = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_u = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
 
         // inf_v
@@ -1753,7 +1764,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->inf_v = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_v = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
 
         // sup_v
@@ -1766,7 +1778,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->sup_v = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_v = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
 
         // Varu
@@ -1779,7 +1792,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Varu = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Varu = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
         // Cnd
@@ -1792,7 +1806,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_CND= result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_CND = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
 
         // Const
@@ -1805,7 +1820,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Const = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Const = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
 
         // Funct
@@ -1818,7 +1834,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
 
@@ -1828,7 +1845,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         noise.replace("\n","");
         noise.replace("\t","");
         noise.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
 
         // Colors
@@ -1848,11 +1866,13 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
 
-        MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
         if(noise == "")
         {
-            MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise1.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
         }
 
@@ -1884,12 +1904,16 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
 
-        MathmodRef->ui.glWidget->ParObjet->Gradient = strgradient.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Gradient = strgradient.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].VRgbt = result.toStdString();
+
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
         if(noise == "" && noise1 == "")
         {
-            MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise2.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
         }
 
@@ -1903,7 +1927,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Grid = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Grid = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
         // Component
@@ -1951,6 +1976,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             int result = MathmodRef->ParsePar();
             if(result == -1) return;
             textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+            MathmodRef->ui.glWidget->update();
         }
     }
 
@@ -1967,7 +1993,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_X = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_X = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
         // Fy
@@ -1980,7 +2007,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_Y = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Y = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
         // Fz
@@ -1993,7 +2021,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_Z = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Z = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
         //Fw
@@ -2006,7 +2035,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_W = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_W = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.fw = result.split(";", QString::SkipEmptyParts);
 
         // inf_u
@@ -2019,7 +2049,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->inf_u = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_u = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
 
         // sup_u
@@ -2032,7 +2063,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->sup_u = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_u = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
 
         // inf_v
@@ -2045,7 +2077,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->inf_v = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_v = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
 
         // sup_v
@@ -2058,7 +2091,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->sup_v = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_v = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
 
         // Varu
@@ -2071,7 +2105,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Varu = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Varu = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
         // Const
@@ -2084,7 +2119,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Const = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Const = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
 
         // Cnd
@@ -2097,7 +2133,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->expression_CND= result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_CND= result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
 
         // Funct
@@ -2110,7 +2147,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Funct = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
         //Noise:
@@ -2119,7 +2157,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         noise.replace("\n","");
         noise.replace("\t","");
         noise.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
 
         // Colors
@@ -2138,11 +2177,13 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
         if(noise == "")
         {
-            MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise1.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
         }
 
@@ -2174,12 +2215,17 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
 
-        MathmodRef->ui.glWidget->ParObjet->Gradient = strgradient.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Gradient = strgradient.toStdString();
+
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].VRgbt = result.toStdString();
+
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
         if(noise == "" && noise1 == "")
         {
-            MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise2.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
         }
 
@@ -2193,7 +2239,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjet->Grid = result.toStdString();
+        for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Grid = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
         // Component
@@ -2242,6 +2289,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             int result = MathmodRef->ParsePar();
             if(result == -1) return;
             textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+            MathmodRef->ui.glWidget->update();
         }
     }
 }
@@ -2559,7 +2607,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_X = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_X = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
             // Fy
@@ -2572,7 +2621,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_Y = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Y = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
 
@@ -2586,7 +2636,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_Z = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Z = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
             // inf_u
@@ -2599,7 +2650,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->inf_u = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_u = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
 
             // sup_u
@@ -2612,7 +2664,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->sup_u = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_u = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
 
             // inf_v
@@ -2625,7 +2678,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->inf_v = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_v = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
 
             // sup_v
@@ -2638,7 +2692,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->sup_v = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_v = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
 
             // Varu
@@ -2651,7 +2706,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Varu = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Varu = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
             // Const
@@ -2664,7 +2720,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Const = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Const = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
 
             // Cnd
@@ -2677,7 +2734,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_CND= result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_CND= result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
 
             // Funct
@@ -2690,12 +2748,16 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
             //Noise:
             QString noise = "";
             noise = (array[i].toObject())["Noise"].toString();
-            MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise.toStdString();
+
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
 
             // Texture:
@@ -2714,12 +2776,14 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Rgbt = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 
             if(noise == "")
             {
-                MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+                for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise1.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
             }
 
@@ -2749,13 +2813,18 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
 
-            MathmodRef->ui.glWidget->ParObjet->Gradient = strtmp.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Gradient = strtmp.toStdString();
+
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].VRgbt = result.toStdString();
+
             MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
 
             if(noise == "" && noise1 == "")
             {
-                MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+                for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise2.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
             }
 
@@ -2769,7 +2838,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Grid = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Grid = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
             // Component
@@ -2820,7 +2890,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_X = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_X = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
             // Fy
@@ -2833,7 +2904,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_Y = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Y = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
             // Fz
@@ -2846,7 +2918,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_Z = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_Z = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
             // Fw
@@ -2859,7 +2932,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_W = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_W = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fw = result.split(";", QString::SkipEmptyParts);
 
             // inf_u
@@ -2872,7 +2946,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->inf_u = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_u = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
 
             // sup_u
@@ -2885,7 +2960,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->sup_u = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_u = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
 
             // inf_v
@@ -2898,7 +2974,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->inf_v = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].inf_v = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
 
             // sup_v
@@ -2911,7 +2988,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->sup_v = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].sup_v = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
 
             // Varu
@@ -2924,7 +3002,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Varu = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Varu = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
             // Const
@@ -2937,7 +3016,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Const = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Const = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
 
             // Cnd
@@ -2950,7 +3030,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->expression_CND= result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].expression_CND= result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
 
             // Funct
@@ -2963,13 +3044,16 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Funct = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Funct = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
             //Noise:
             QString noise = "";
             noise = (array[i].toObject())["Noise"].toString();
-            MathmodRef->ui.glWidget->ParObjet->Noise = noise.toStdString();
+
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
 
             // Texture:
@@ -2986,11 +3070,14 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Rgbt = result.toStdString();
+
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Rgbt = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
             if(noise == "")
             {
-                MathmodRef->ui.glWidget->ParObjet->Noise = noise1.toStdString();
+                for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise1.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
             }
 
@@ -3017,12 +3104,17 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Gradient = strtmp.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->VRgbt = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Gradient = strtmp.toStdString();
+
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].VRgbt = result.toStdString();
+
             MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
             if(noise == "" && noise1 == "")
             {
-                MathmodRef->ui.glWidget->ParObjet->Noise = noise2.toStdString();
+                for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Noise = noise2.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
             }
 
@@ -3037,7 +3129,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjet->Grid = result.toStdString();
+            for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Grid = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
             // Component
@@ -5447,62 +5540,62 @@ void DrawingOptions::on_InitMatrix_2_clicked()
 
 void DrawingOptions::on_xycheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxy_ok *= -1;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetaxy_ok *= -1;
 }
 
 void DrawingOptions::on_xyhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxy = value/4.0;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetaxy = value/4.0;
 }
 
 void DrawingOptions::on_xzcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxz_ok *= -1;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetaxz_ok *= -1;
 }
 
 void DrawingOptions::on_xzhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxz = value/4.0;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetaxz = value/4.0;
 }
 
 void DrawingOptions::on_yzcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayz_ok *= -1;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetayz_ok *= -1;
 }
 
 void DrawingOptions::on_yzhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayz = value/4.0;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetayz = value/4.0;
 }
 
 void DrawingOptions::on_xwcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxw_ok *= -1;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetaxw_ok *= -1;
 }
 
 void DrawingOptions::on_xwhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxw = value/4.0;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetaxw = value/4.0;
 }
 
 void DrawingOptions::on_ywcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayw_ok *= -1;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetayw_ok *= -1;
 }
 
 void DrawingOptions::on_ywhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayw = value/4.0;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetayw = value/4.0;
 }
 
 void DrawingOptions::on_zwcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetazw_ok *= -1;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetazw_ok *= -1;
 }
 
 void DrawingOptions::on_zwhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetazw = value/4.0;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->tetazw = value/4.0;
 }
 
 void DrawingOptions::on_linecolumn_3_valueChanged(int value)
@@ -5557,7 +5650,7 @@ void DrawingOptions::on_uv_clicked()
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_InitMatrix_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->mat4D.unit();
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->mat4D.unit();
     on_calculate_clicked();
 }
 
@@ -5935,17 +6028,21 @@ void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     ui.label_5->setText("1/"+QString::number(value));
-    MathmodRef->ui.glWidget->ParObjet->pace  = (double)1/(double)value;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+    {
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].pace  = (double)1/(double)value;
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].pace = (double)1/(double)value;
+    }
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_InitTButton_clicked()
 {
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
-    MathmodRef->ui.glWidget->ParObjet->stepMorph = 0;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+    {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].stepMorph = 0;
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].stepMorph = 0;
+    }
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_pushButton_2_clicked()
@@ -6083,8 +6180,10 @@ void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     int Octaves = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves = value;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+    {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].Octaves = Octaves;
-    MathmodRef->ui.glWidget->ParObjet->Octaves = Octaves;
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Octaves = Octaves;
+    }
     ui.OctavesLabel->setText("Octaves = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves));
     on_pushButton_5_clicked();
 }
@@ -6094,8 +6193,10 @@ void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     float Lacunarity = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = (float)value/10.0;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+    {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].Lacunarity = Lacunarity;
-    MathmodRef->ui.glWidget->ParObjet->Lacunarity = Lacunarity;
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Lacunarity = Lacunarity;
+    }
     ui.LacunarityLabel->setText("Lacunarity = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity));
     on_pushButton_5_clicked();
 }
@@ -6105,8 +6206,10 @@ void DrawingOptions::on_GainScrollBar_valueChanged(int value)
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     float Gain = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = (float)value/10.0;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
+    {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].Gain = Gain;
-    MathmodRef->ui.glWidget->ParObjet->Gain = Gain;
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].Gain = Gain;
+    }
     ui.GainLabel->setText("Gain = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain));
     on_pushButton_5_clicked();
 }
@@ -6180,13 +6283,14 @@ void DrawingOptions::on_pushButton_5_clicked()
 
 void DrawingOptions::on_C1ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[0]=value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[0]= value;
-    ui.C1label->setText(qlstnames.at(0) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[0] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[0] = value;
+    }
+    ui.C1label->setText(qlstnames.at(0) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6196,13 +6300,14 @@ void DrawingOptions::on_C1ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C2ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[1] = value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[1] = value;
-    ui.C2label->setText(qlstnames.at(1) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[1] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[1] = value;
+    }
+    ui.C2label->setText(qlstnames.at(1) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6212,13 +6317,14 @@ void DrawingOptions::on_C2ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C3ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[2]= value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[2]= value;
-    ui.C3label->setText(qlstnames.at(2) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[2] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[2] = value;
+    }
+    ui.C3label->setText(qlstnames.at(2) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6228,13 +6334,14 @@ void DrawingOptions::on_C3ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C4ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[3]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[3]= value;
-    ui.C4label->setText(qlstnames.at(3) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[3] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[3] = value;
+    }
+    ui.C4label->setText(qlstnames.at(3) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6244,13 +6351,14 @@ void DrawingOptions::on_C4ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C5ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[4]=value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[4]= value;
-    ui.C5label->setText(qlstnames.at(4) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[4] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[4] = value;
+    }
+    ui.C5label->setText(qlstnames.at(4) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6260,13 +6368,14 @@ void DrawingOptions::on_C5ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C6ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[5]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[5]=value;
-    ui.C6label->setText(qlstnames.at(5) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[5] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[5] = value;
+    }
+    ui.C6label->setText(qlstnames.at(5) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6276,13 +6385,14 @@ void DrawingOptions::on_C6ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C7ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[6]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[6]=value;
-    ui.C7label->setText(qlstnames.at(6) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[6] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[6] = value;
+    }
+    ui.C7label->setText(qlstnames.at(6) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6292,13 +6402,14 @@ void DrawingOptions::on_C7ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C8ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[7]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[7]= value;
-    ui.C8label->setText(qlstnames.at(7) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[7] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[7] = value;
+    }
+    ui.C8label->setText(qlstnames.at(7) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6308,13 +6419,14 @@ void DrawingOptions::on_C8ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C9ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[8]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[8]=value;
-    ui.C9label->setText(qlstnames.at(8) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[8] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[8] = value;
+    }
+    ui.C9label->setText(qlstnames.at(8) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6324,13 +6436,14 @@ void DrawingOptions::on_C9ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C10ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[9]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[9]= value;
-    ui.C10label->setText(qlstnames.at(9) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[9] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[9] = value;
+    }
+    ui.C10label->setText(qlstnames.at(9) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6340,13 +6453,14 @@ void DrawingOptions::on_C10ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C11ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[10]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[10]=value;
-    ui.C11label->setText(qlstnames.at(10) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[10] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[10] = value;
+    }
+    ui.C11label->setText(qlstnames.at(10) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6356,13 +6470,14 @@ void DrawingOptions::on_C11ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C12ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[11]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[11]= value;
-    ui.C12label->setText(qlstnames.at(11) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[11] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[11] = value;
+    }
+    ui.C12label->setText(qlstnames.at(11) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6372,13 +6487,14 @@ void DrawingOptions::on_C12ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C13ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[12]=value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[12]=value;
-    ui.C13label->setText(qlstnames.at(12) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[12] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[12] = value;
+    }
+    ui.C13label->setText(qlstnames.at(12) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6388,13 +6504,14 @@ void DrawingOptions::on_C13ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C14ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[13]=value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[13]=value;
-    ui.C14label->setText(qlstnames.at(13) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[13] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[13] = value;
+    }
+    ui.C14label->setText(qlstnames.at(13) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6403,13 +6520,14 @@ void DrawingOptions::on_C14ScrollBar_valueChanged(int value)
 }
 void DrawingOptions::on_C15ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[14]=value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[14]=value;
-    ui.C15label->setText(qlstnames.at(14) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[14] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[14] = value;
+    }
+    ui.C15label->setText(qlstnames.at(14) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6419,13 +6537,14 @@ void DrawingOptions::on_C15ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C16ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[15]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[15]=value;
-    ui.C16label->setText(qlstnames.at(15) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[15] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[15] = value;
+    }
+    ui.C16label->setText(qlstnames.at(15) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6435,13 +6554,14 @@ void DrawingOptions::on_C16ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C17ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[16]=value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[16]= value;
-    ui.C17label->setText(qlstnames.at(16) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[16] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[16] = value;
+    }
+    ui.C17label->setText(qlstnames.at(16) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6451,13 +6571,14 @@ void DrawingOptions::on_C17ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C18ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[17]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[17]=value;
-    ui.C18label->setText(qlstnames.at(17) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[17] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[17] = value;
+    }
+    ui.C18label->setText(qlstnames.at(17) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6467,13 +6588,14 @@ void DrawingOptions::on_C18ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C19ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[18]=value;
-    pos = MathmodRef->ui.glWidget->ParObjet->SliderValues[18]=value;
-    ui.C19label->setText(qlstnames.at(18) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[18] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[18] = value;
+    }
+    ui.C19label->setText(qlstnames.at(18) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6483,13 +6605,14 @@ void DrawingOptions::on_C19ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_C20ScrollBar_valueChanged(int value)
 {
-    double pos;
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[19]=value;
-    pos =MathmodRef->ui.glWidget->ParObjet->SliderValues[19]=value;
-    ui.C20label->setText(qlstnames.at(19) + " = " +QString::number(pos));
+    {
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[19] =
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[19] = value;
+    }
+    ui.C20label->setText(qlstnames.at(19) + " = " +QString::number(value));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -6508,8 +6631,10 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         for (int i = 0; i < size; ++i)
         {
             for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
-            MathmodRef->ui.glWidget->ParObjet->SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
+            {
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[i] =
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
+            }
         }
 
         if(size >=1)
@@ -7184,12 +7309,16 @@ void DrawingOptions::update_slider_param()
         ui.C1ScrollBar->blockSignals(false);
 
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderNames[0] = qlstnames.at(0).toStdString();
-        MathmodRef->ui.glWidget->ParObjet->SliderNames[0] = qlstnames.at(0).toStdString();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderNames[0] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderNames[0] = qlstnames.at(0).toStdString();
+        }
 
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[0] = qlstPos.at(0).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[0] = qlstPos.at(0).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[0] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[0] = qlstPos.at(0).toDouble();
+        }
     }
     if(SliderIndex==1)
     {
@@ -7210,8 +7339,10 @@ void DrawingOptions::update_slider_param()
         ui.C2ScrollBar->blockSignals(false);
 
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[1] = qlstPos.at(1).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[1] = qlstPos.at(1).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[1] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[1] = qlstPos.at(1).toDouble();
+        }
 
     }
     if(SliderIndex==2)
@@ -7232,8 +7363,10 @@ void DrawingOptions::update_slider_param()
         ui.C3labelMax->setText(qlstmax.at(2));
         ui.C3ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[2] = qlstPos.at(2).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[2] = qlstPos.at(2).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[2] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[2] = qlstPos.at(2).toDouble();
+        }
     }
     if(SliderIndex==3)
     {
@@ -7253,8 +7386,10 @@ void DrawingOptions::update_slider_param()
         ui.C4labelMax->setText(qlstmax.at(3));
         ui.C4ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[3] = qlstPos.at(3).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[3] = qlstPos.at(3).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[3] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[3] = qlstPos.at(3).toDouble();
+        }
     }
     if(SliderIndex==4)
     {
@@ -7274,8 +7409,10 @@ void DrawingOptions::update_slider_param()
         ui.C5labelMax->setText(qlstmax.at(4));
         ui.C5ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[4] = qlstPos.at(4).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[4] = qlstPos.at(4).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[4] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[4] = qlstPos.at(4).toDouble();
+        }
     }
     if(SliderIndex==5)
     {
@@ -7295,8 +7432,10 @@ void DrawingOptions::update_slider_param()
         ui.C6labelMax->setText(qlstmax.at(5));
         ui.C6ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[5] = qlstPos.at(5).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[5] = qlstPos.at(5).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[5] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[5] = qlstPos.at(5).toDouble();
+        }
     }
     if(SliderIndex==6)
     {
@@ -7316,8 +7455,10 @@ void DrawingOptions::update_slider_param()
         ui.C7labelMax->setText(qlstmax.at(6));
         ui.C7ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[6] = qlstPos.at(6).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[6] = qlstPos.at(6).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[6] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[6] = qlstPos.at(6).toDouble();
+        }
     }
     if(SliderIndex==7)
     {
@@ -7337,8 +7478,10 @@ void DrawingOptions::update_slider_param()
         ui.C8labelMax->setText(qlstmax.at(7));
         ui.C8ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[7] = qlstPos.at(7).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[7] = qlstPos.at(7).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[7] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[7] = qlstPos.at(7).toDouble();
+        }
     }
     if(SliderIndex==8)
     {
@@ -7358,8 +7501,10 @@ void DrawingOptions::update_slider_param()
         ui.C9labelMax->setText(qlstmax.at(8));
         ui.C9ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[8] = qlstPos.at(8).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[8] = qlstPos.at(8).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[8] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[8] = qlstPos.at(8).toDouble();
+        }
     }
     if(SliderIndex==9)
     {
@@ -7379,8 +7524,10 @@ void DrawingOptions::update_slider_param()
         ui.C10labelMax->setText(qlstmax.at(9));
         ui.C10ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[9] = qlstPos.at(9).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[9] = qlstPos.at(9).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[9] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[9] = qlstPos.at(9).toDouble();
+        }
     }
     if(SliderIndex==10)
     {
@@ -7400,8 +7547,10 @@ void DrawingOptions::update_slider_param()
         ui.C11labelMax->setText(qlstmax.at(10));
         ui.C11ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[10] = qlstPos.at(10).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[10] = qlstPos.at(10).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[10] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[10] = qlstPos.at(10).toDouble();
+        }
     }
     if(SliderIndex==11)
     {
@@ -7421,8 +7570,10 @@ void DrawingOptions::update_slider_param()
         ui.C12labelMax->setText(qlstmax.at(11));
         ui.C12ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[11] = qlstPos.at(11).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[11] = qlstPos.at(11).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[11] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[11] = qlstPos.at(11).toDouble();
+        }
     }
     if(SliderIndex==12)
     {
@@ -7442,8 +7593,10 @@ void DrawingOptions::update_slider_param()
         ui.C13labelMax->setText(qlstmax.at(12));
         ui.C13ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[12] = qlstPos.at(12).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[12] = qlstPos.at(12).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[12] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[12] = qlstPos.at(12).toDouble();
+        }
     }
     if(SliderIndex==13)
     {
@@ -7463,8 +7616,10 @@ void DrawingOptions::update_slider_param()
         ui.C14labelMax->setText(qlstmax.at(13));
         ui.C14ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[13] = qlstPos.at(13).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[13] = qlstPos.at(13).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[13] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[13] = qlstPos.at(13).toDouble();
+        }
     }
     if(SliderIndex==14)
     {
@@ -7484,8 +7639,10 @@ void DrawingOptions::update_slider_param()
         ui.C15labelMax->setText(qlstmax.at(14));
         ui.C15ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[14] = qlstPos.at(14).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[14] = qlstPos.at(14).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[14] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[14] = qlstPos.at(14).toDouble();
+        }
     }
     if(SliderIndex==15)
     {
@@ -7505,8 +7662,10 @@ void DrawingOptions::update_slider_param()
         ui.C16labelMax->setText(qlstmax.at(15));
         ui.C16ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[15] = qlstPos.at(15).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[15] = qlstPos.at(15).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[15] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[15] = qlstPos.at(15).toDouble();
+        }
     }
     if(SliderIndex==16)
     {
@@ -7526,8 +7685,10 @@ void DrawingOptions::update_slider_param()
         ui.C17labelMax->setText(qlstmax.at(16));
         ui.C17ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[16] = qlstPos.at(16).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[16] = qlstPos.at(16).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[16] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[16] = qlstPos.at(16).toDouble();
+        }
     }
     if(SliderIndex==17)
     {
@@ -7547,8 +7708,10 @@ void DrawingOptions::update_slider_param()
         ui.C18labelMax->setText(qlstmax.at(17));
         ui.C18ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[17] = qlstPos.at(17).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[17] = qlstPos.at(17).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[17] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[17] = qlstPos.at(17).toDouble();
+        }
     }
     if(SliderIndex==18)
     {
@@ -7568,8 +7731,10 @@ void DrawingOptions::update_slider_param()
         ui.C19labelMax->setText(qlstmax.at(18));
         ui.C19ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[18] = qlstPos.at(18).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[18] = qlstPos.at(18).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[18] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[18] = qlstPos.at(18).toDouble();
+        }
     }
     if(SliderIndex==19)
     {
@@ -7589,8 +7754,10 @@ void DrawingOptions::update_slider_param()
         ui.C20labelMax->setText(qlstmax.at(19));
         ui.C20ScrollBar->blockSignals(false);
         for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[19] = qlstPos.at(19).toDouble();
-        MathmodRef->ui.glWidget->ParObjet->SliderValues[19] = qlstPos.at(19).toDouble();
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].SliderValues[19] =
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].SliderValues[19] = qlstPos.at(19).toDouble();
+        }
     }
 
     //Draw
@@ -8135,5 +8302,6 @@ void DrawingOptions::on_StopThreadButton_clicked()
 void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->UpdateThredsNumber(value);
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->UpdateThredsNumber(value);
     ui.ThreadgroupBox->setTitle("Threads Number: ( "+QString::number(value)+" )");
 }
