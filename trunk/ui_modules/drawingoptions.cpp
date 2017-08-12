@@ -8288,20 +8288,16 @@ void DrawingOptions::on_GlcacheCheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->toggleGlCache(checked);
 }
-/*
-void DrawingOptions::on_StopThreadButton_clicked()
-{
-
-
-   connect(ui.StopThreadButton, SIGNAL(clicked(bool)),MathmodRef->ui.glWidget->IsoObjetThread , SLOT(stop());
-
-   //MathmodRef->ui.glWidget->stopCalculations();
-}
-*/
 
 void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->UpdateThredsNumber(value);
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->UpdateThredsNumber(value);
     ui.ThreadgroupBox->setTitle("Threads Number: ( "+QString::number(value)+" )");
+}
+
+void DrawingOptions::on_StopCalculationsButton_clicked()
+{
+   MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->stopcalculations(true);
+   MathmodRef->ui.glWidget->ParObjetThread->ParObjet->stopcalculations(true);
 }
