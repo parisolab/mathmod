@@ -166,6 +166,7 @@ struct  ObjectProperties
     float  *morefloatpt[10];
     float  morefloat[10];
     float  specReflection[4];
+    int    threads[3];
     int    shininess;
     float  frontcol[4];
     float  backcol[4];

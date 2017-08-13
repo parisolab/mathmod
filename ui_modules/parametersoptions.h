@@ -60,6 +60,8 @@ public:
     int GlwinH;
     bool ActivateGlCache;
     float Specular[4];
+    int Threads[3];
+    int Shininess;
     int MaxTri, MaxPt, MaxGrid;
 
 public slots:

@@ -1,6 +1,6 @@
 {
     "IsoParam": {
-        "MaxGrid": 100,
+        "MaxGrid": 200,
         "MaxPt": 1,
         "MaxTri": 2
     },
@@ -23,6 +23,11 @@
         "AtivateGlCache": false,
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_SHININESS": 110
+    },
+    "ThreadsConfig": {
+        "ThreadsNumber": 4,
+        "MinThreadsNumber": 1,
+        "MaxThreadsNumber": 64
     },
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
