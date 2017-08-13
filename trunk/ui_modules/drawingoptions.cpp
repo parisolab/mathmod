@@ -5979,8 +5979,9 @@ void DrawingOptions::updateGlOptions()
         ui.GlcacheCheckBox->setChecked(false);
         ui.GlcacheCheckBox->blockSignals(false);
     }
-
     MathmodRef->updateGLspectrale(Parameters->Specular);
+    MathmodRef->updateGLshininess(Parameters->Shininess);
+    MathmodRef->updateThreads(Parameters->Threads);
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::UpdateGui(int argc)
@@ -6006,8 +6007,14 @@ void DrawingOptions::UpdateGui(int argc)
     ui.comboBoxPigment->insertItems(0, LstModelTexture.listePigments);
     AddListModels();
 
+    //OpenGl threads:
+    SetThreadValues(Parameters->Threads);
+
     //OpenGl specular:
     SetSpecularValues(Parameters->Specular);
+
+    //OpenGl shininess:
+    SetShininessValue(Parameters->Shininess);
 
     //Show the two windows of the application:
     move(Parameters->ControlX,Parameters->ControlY);
@@ -8214,6 +8221,22 @@ void DrawingOptions::SetSpecularValues(float *spec)
     ui.transparent_Specular->blockSignals(false);
 }
 
+void DrawingOptions::SetThreadValues(int *thread)
+{
+    ui.ThreadNumberScrollBar->blockSignals(true);
+    ui.ThreadNumberScrollBar->setSliderPosition(thread[0]);
+    ui.ThreadNumberScrollBar->setMinimum(thread[1]);
+    ui.ThreadNumberScrollBar->setMaximum(thread[2]);
+    ui.ThreadgroupBox->setTitle("Threads: "+ QString::number(ui.ThreadNumberScrollBar->minimum())  +"  <  "+QString::number(thread[0])+"  <  "+ QString::number(ui.ThreadNumberScrollBar->maximum()));
+    ui.ThreadNumberScrollBar->blockSignals(false);
+}
+
+void DrawingOptions::SetShininessValue(int shin)
+{
+    ui.ShininessScrollBar->blockSignals(true);
+    ui.ShininessScrollBar->setSliderPosition(shin);
+    ui.ShininessScrollBar->blockSignals(false);
+}
 void DrawingOptions::on_red_Specular_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->redSpec(value);
@@ -8293,7 +8316,7 @@ void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->UpdateThredsNumber(value);
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->UpdateThredsNumber(value);
-    ui.ThreadgroupBox->setTitle("Threads Number: ( "+QString::number(value)+" )");
+    ui.ThreadgroupBox->setTitle("Threads: "+ QString::number(ui.ThreadNumberScrollBar->minimum())  +"  <  "+QString::number(value)+"  <  "+ QString::number(ui.ThreadNumberScrollBar->maximum()));
 }
 
 void DrawingOptions::on_StopCalculationsButton_clicked()
