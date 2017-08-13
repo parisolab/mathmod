@@ -102,10 +102,8 @@ public:
     bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
-
     int nb_ligne, nb_colone, NbVertex, WorkerThreadsNumber;
-    int coupure_col, nb_licol, coupure_ligne;
-
+    int coupure_col, coupure_ligne;
     double MINX,MINY,MINZ,MINW,
            MAXX,MAXY,MAXZ,MAXW,
            DIFX,DIFY,DIFZ,DIFW,

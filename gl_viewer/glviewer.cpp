@@ -785,15 +785,9 @@ void makeRasterFont()
 
 void InitFont()
 {
-    //glShadeModel (GL_FLAT);
     makeRasterFont();
 }
-/*
-void OpenGlWidget::start()
-{
-    // QThread::start();
-}
-*/
+
 void OpenGlWidget::run()
 {
 }
@@ -897,51 +891,6 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
     }
 }
 
-void OpenGlWidget::calculateObject()
-{
-    LocalScene.typedrawing = 1;
-    stError = IsoObjetThread->IsoObjet->workerthreads[0].ParserIso();
-    if(stError.iErrorIndex >= 0)
-    {
-        int before, after;
-        QString sortie = QString::fromStdString(stError.strError);
-        if(sortie.length() > (stError.iErrorIndex +30))
-            after = 30;
-        else after = sortie.length() - stError.iErrorIndex;
-        sortie.truncate(stError.iErrorIndex +after);
-        if(stError.iErrorIndex-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,stError.iErrorIndex - before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, ">> Error <<");
-        message.setText("Error at position: " + QString::number(stError.iErrorIndex) + "\n\n***********\n" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
-        return;
-    }
-    else
-        for(int nbthreads=1; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber; nbthreads++)
-            IsoObjetThread->IsoObjet->workerthreads[nbthreads].ParserIso();
-
-    IsoObjetThread->IsoObjet->IsoBuild
-    (
-        LocalScene.ArrayNorVer_localPt,
-        LocalScene.PolyIndices_localPt,
-        &(LocalScene.PolyNumber),
-        &(LocalScene.VertxNumber),
-        LocalScene.PolyIndices_localPtMin,
-        &(LocalScene.NbPolygnNbVertexPtMin),
-        &(LocalScene.componentsinfos),
-        LocalScene.Typetriangles,
-        LocalScene.WichPointVerifyCond
-    );
-}
-
 void OpenGlWidget::startRendering()
 {
     glt.start();
@@ -953,18 +902,6 @@ void OpenGlWidget::stopRendering()
     glt.wait();
 }
 
-/*
-void OpenGlWidget::startCalculations()
-{
-    IsoObjetThread->start();
-}
-
-void OpenGlWidget::stopCalculations()
-{
-    IsoObjetThread->stopthread();
-    IsoObjetThread->wait(15000);
-}
-*/
 void OpenGlWidget::resizeEvent(QResizeEvent *evt)
 {
     glPushMatrix();
@@ -1034,19 +971,7 @@ void OpenGlWidget::resizeGL( int newwidth, int newheight)
     glTranslatef( 0.0, 0, -1000.0 );
 }
 
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void OpenGlWidget::startWorkInAThread()
-{
-    /*
-       //WorkerThread *workerThread = new WorkerThread(this);
-       connect(IsoObjetThread, SIGNAL(resultReady(QString)), this, SLOT(handleResults(QString)));
-       connect(IsoObjetThread, SIGNAL(finished()), IsoObjetThread, SLOT(deleteLater()));
-       IsoObjetThread->start();
-       */
-}
-
-
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 OpenGlWidget::OpenGlWidget( QWidget *parent)
     : QGLWidget( parent),
       glt(this)
@@ -2080,90 +2005,7 @@ void OpenGlWidget::DrawPlan()
     glEndList();
 }
 
-void OpenGlWidget::DrawGridPlan()
-{
-    /*
-    GLuint list;
 
-    list = glGenLists(1);
-    glNewList( list, GL_COMPILE );
-
-    glLineWidth(1);
-    glColor3f (0.8, 0., 0.7);
-    glBegin( GL_LINES );
-    glVertex3f(-150.0, 600.0, -350);
-    glVertex3f(-150.0,-600.0, -350);
-    glVertex3f(0.0, 600.0, -350);
-    glVertex3f(0.0,-600.0, -350);
-
-    glVertex3f(150.0, 600.0, -350);
-    glVertex3f(150.0,-600.0, -350);
-    glVertex3f(600.0, -150.0, -350);
-    glVertex3f(-600.0,-150.0, -350);
-
-    glVertex3f(600.0, 0.0, -350);
-    glVertex3f(-600.0, 0.0, -350);
-    glVertex3f(600.0, 150.0, -350);
-    glVertex3f(-600.0, 150.0, -350);
-
-    glVertex3f(-75.0, 600.0, -350);
-    glVertex3f(-75.0,-600.0, -350);
-    glVertex3f(-225.0, 600.0, -350);
-    glVertex3f(-225.0,-600.0, -350);
-    glVertex3f(-300.0, 600.0, -350);
-    glVertex3f(-300.0,-600.0, -350);
-    glVertex3f(-375.0, 600.0, -350);
-    glVertex3f(-375.0,-600.0, -350);
-    glVertex3f(-450.0, 600.0, -350);
-    glVertex3f(-450.0,-600.0, -350);
-    glVertex3f(-525.0, 600.0, -350);
-    glVertex3f(-525.0,-600.0, -350);
-
-    glVertex3f(75.0, 600.0, -350);
-    glVertex3f(75.0,-600.0, -350);
-    glVertex3f(225.0, 600.0, -350);
-    glVertex3f(225.0,-600.0, -350);
-    glVertex3f(300.0, 600.0, -350);
-    glVertex3f(300.0,-600.0, -350);
-    glVertex3f(375.0, 600.0, -350);
-    glVertex3f(375.0,-600.0, -350);
-    glVertex3f(450.0, 600.0, -350);
-    glVertex3f(450.0,-600.0, -350);
-    glVertex3f(525.0, 600.0, -350);
-    glVertex3f(525.0,-600.0, -350);
-
-    glVertex3f(600.0,-75.0, -350);
-    glVertex3f(-600.0,-75.0, -350);
-    glVertex3f(600.0,-225.0, -350);
-    glVertex3f(-600.0,-225.0, -350);
-    glVertex3f(600.0,-300.0, -350);
-    glVertex3f(-600.0,-300.0, -350);
-    glVertex3f(600.0,-375.0, -350);
-    glVertex3f(-600.0,-375.0, -350);
-    glVertex3f(600.0,-450.0, -350);
-    glVertex3f(-600.0,-450.0, -350);
-    glVertex3f(600.0,-525.0, -350);
-    glVertex3f(-600.0,-525.0, -350);
-
-    glVertex3f(600.0,75.0, -350);
-    glVertex3f(-600.0,75.0, -350);
-    glVertex3f(600.0,225.0, -350);
-    glVertex3f(-600.0,225.0, -350);
-    glVertex3f(600.0,300.0, -350);
-    glVertex3f(-600.0,300.0, -350);
-    glVertex3f(600.0,375.0, -350);
-    glVertex3f(-600.0,375.0, -350);
-    glVertex3f(600.0,450.0, -350);
-    glVertex3f(-600.0,450.0, -350);
-    glVertex3f(600.0,525.0, -350);
-    glVertex3f(-600.0,525.0, -350);
-    glEnd();
-    glLineWidth(0.9);
-
-    glEndList();
-    LocalScene.gridplanliste = list;
-    */
-}
 
 void OpenGlWidget::timerEvent(QTimerEvent*)
 {

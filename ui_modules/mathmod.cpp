@@ -95,7 +95,6 @@ void MathMod::frames_clicked()
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueChanged( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_licol  = cl;
     (ui.glWidget)->ParObjetThread->ParObjet->nb_colone = (ui.glWidget)->nb_colone = cl;
     (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
 
@@ -114,7 +113,6 @@ void MathMod::linecolumn_valueChanged( int cl)
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueChanged_2( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_licol  = cl;
     (ui.glWidget)->ParObjetThread->ParObjet->nb_colone = (ui.glWidget)->nb_colone = cl;
     (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
     if(uvactivated4D  == 1)

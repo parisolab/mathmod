@@ -111,8 +111,7 @@ void ParWorkerThread::ParCompute(int fctnb)
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres()
 {
-    nb_licol = 50;
-    nb_ligne = nb_colone = nb_licol;
+    nb_ligne = nb_colone = 50;
     largeur_fenetre = 620;
     hauteur_fenetre = 620;
     coupure_col = coupure_ligne = 0;
@@ -1630,7 +1629,7 @@ void  ParWorkerThread::calcul_objet(int cmp)
     double iprime, jprime;
     int NewPosition =  cmp*TypeDrawin*(nb_ligne)*(nb_colone);
 
-    if(/*(cmp == 0) &&*/ (activeMorph == 1))
+    if(activeMorph == 1)
         stepMorph += pace;
 
     vals[2]          = stepMorph;
