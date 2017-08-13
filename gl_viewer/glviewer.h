@@ -50,9 +50,7 @@ public :
     double Axe_x, Axe_y, Axe_z, angle, val1, val2, val3, old_x, old_y, old_z;
     ObjectProperties  LocalScene;
     QString FramesDir;
-    //Iso3D *IsoObjet;
     IsoThread *IsoObjetThread;
-    //Par3D *ParObjet;
     ParThread *ParObjetThread;
     int TypeFormule;
     QMessageBox message;
@@ -83,7 +81,6 @@ public:
     void deleteAllListes();
     void toggleGlCache(bool);
     void deleteVBO();
-    void calculateObject();
     void PutObjectInsideCube();
     void Add(ObjectParameters *);
     void screenshot();
@@ -96,17 +93,10 @@ public:
     void stopRendering();
     void resizeEvent(QResizeEvent *evt);
     void closeEvent(QCloseEvent *evt);
-    void startWorkInAThread();
-public:
-    //void startCalculations();
-    //void stopCalculations();
-
-signals:
 
 public slots:
     void anim();
     void morph();
-    //void start();
     void starttimer();
     void stoptimer();
     bool timeractif();
@@ -121,7 +111,6 @@ public slots:
     void smoothline();
     void lineOk();
     void DrawPlan();
-    void DrawGridPlan();
     void transparency(int, int currentposition=0);
     void red(int, int currentposition=0);
     void green(int, int currentposition=0);
@@ -147,7 +136,6 @@ public slots:
     void CalculateColorsPoints(void);
     void CalculateTexturePoints(int type);
     void CalculatePigmentPoints(int type);
-
     void UpdateGL();
 };
 
