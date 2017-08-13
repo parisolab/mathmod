@@ -240,6 +240,8 @@ private slots:
     void on_actionFrames_triggered();
     void on_red_Specular_valueChanged(int);
     void SetSpecularValues(float *);
+    void SetShininessValue(int);
+    void SetThreadValues(int *);
     void on_green_Specular_valueChanged(int);
     void on_blue_Specular_valueChanged(int);
     void on_transparent_Specular_valueChanged(int);

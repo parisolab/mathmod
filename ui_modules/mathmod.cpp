@@ -473,3 +473,23 @@ void MathMod::updateGLspectrale(float *spec)
     (ui.glWidget)->LocalScene.specReflection[3]= spec[3];
     (ui.glWidget)->update();
 }
+
+//++++++++++++++++++++++++++++++++++++++++
+void MathMod::updateThreads(int *thr)
+{
+    (ui.glWidget)->LocalScene.threads[0]= thr[0];
+    (ui.glWidget)->LocalScene.threads[1]= thr[1];
+    (ui.glWidget)->LocalScene.threads[2]= thr[2];
+    if(thr[0] > 0)
+    {
+        (ui.glWidget)->IsoObjetThread->IsoObjet->UpdateThredsNumber(thr[0]);
+        (ui.glWidget)->ParObjetThread->ParObjet->UpdateThredsNumber(thr[0]);
+    }
+}
+
+//++++++++++++++++++++++++++++++++++++++++
+void MathMod::updateGLshininess(int shin)
+{
+    (ui.glWidget)->LocalScene.shininess=shin;
+    (ui.glWidget)->update();
+}

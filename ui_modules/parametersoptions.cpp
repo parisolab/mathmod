@@ -40,6 +40,9 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     dotsymbol =".";
     model = "CloseIso_2";
     ActivateGlCache = false;
+    Shininess = 110;
+    Specular[0] = Specular[1] = Specular[2] = 0.5; Specular[3] = 1.0;
+    Threads[0] = 4; Threads[1] = 1; Threads[2] = 32;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
     advancedmodels = "advancedmodels.js";
@@ -451,10 +454,28 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         {
             QJsonObject tmp;
             tmp= JConfig["OpenGlConfig"].toObject();
-            Specular[0] = (tmp["GL_SPECULAR"].toArray())[0].toDouble()/100.0;
-            Specular[1] = (tmp["GL_SPECULAR"].toArray())[1].toDouble()/100.0;
-            Specular[2] = (tmp["GL_SPECULAR"].toArray())[2].toDouble()/100.0;
-            Specular[3] = (tmp["GL_SPECULAR"].toArray())[3].toDouble()/100.0;
+            Shininess = tmp["GL_SHININESS"].toInt();
+        }
+
+        if(JConfig["OpenGlConfig"].isObject() )
+        {
+            QJsonObject tmp;
+            tmp= JConfig["OpenGlConfig"].toObject();
+            if(tmp["GL_SPECULAR"].isArray())
+            {
+                Specular[0] = (tmp["GL_SPECULAR"].toArray())[0].toDouble()/100.0;
+                Specular[1] = (tmp["GL_SPECULAR"].toArray())[1].toDouble()/100.0;
+                Specular[2] = (tmp["GL_SPECULAR"].toArray())[2].toDouble()/100.0;
+                Specular[3] = (tmp["GL_SPECULAR"].toArray())[3].toDouble()/100.0;
+            }
+        }
+
+        if(JConfig["ThreadsConfig"].isObject())
+        {
+            QJsonObject tmp = JConfig["ThreadsConfig"].toObject();
+            Threads[0] = tmp["ThreadsNumber"].toInt();
+            Threads[1] = tmp["MinThreadsNumber"].toInt();
+            Threads[2] = tmp["MaxThreadsNumber"].toInt();
         }
 
         if(JConfig["Themes"].isObject() and JConfig["Styles"].isObject() )
