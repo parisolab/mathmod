@@ -212,6 +212,7 @@ int MathMod::ParsePar()
     else
         for(int nbthreds=1; nbthreds < maxnbthreads ; nbthreds++)
             (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreds].parse_expression();
+        //(ui.glWidget)->ParObjetThread->ParObjet->DeepThreadCopy2((ui.glWidget)->ParObjetThread->ParObjet->workerthreads);
     return 1;
 }
 
