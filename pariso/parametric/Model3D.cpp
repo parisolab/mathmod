@@ -84,8 +84,8 @@ ParWorkerThread::ParWorkerThread()
     }
 
     allocateparser(NbComponent);
-
     initialiser_parseur();
+    //stdError = parse_expression();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -472,8 +472,8 @@ ErrorMessage  ParWorkerThread::parse_expression()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     std::string varliste = "x,y,z,t";
 
-    initparser(NbComponent);
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
+    initparser(NbComponent);
     for(int j=0; j<Nb_constants; j++)
     {
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
@@ -842,7 +842,36 @@ ErrorMessage  ParWorkerThread::parse_expression()
     return stdError;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++
+void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
+{
+    /* VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
+            RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
+            Gradient, Noise, NoiseShape, SliderNames[50]; */
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
+    {
+        WorkerThreadsTmp[nbthreads].expression_X = workerthreads[0].expression_X;
+        WorkerThreadsTmp[nbthreads].expression_Y = workerthreads[0].expression_Y;
+        WorkerThreadsTmp[nbthreads].expression_Z = workerthreads[0].expression_Z;
+        WorkerThreadsTmp[nbthreads].expression_W = workerthreads[0].expression_W;
+        WorkerThreadsTmp[nbthreads].expression_CND = workerthreads[0].expression_CND;
+        WorkerThreadsTmp[nbthreads].inf_u  = workerthreads[0].inf_u;
+        WorkerThreadsTmp[nbthreads].sup_u  = workerthreads[0].sup_u;
+        WorkerThreadsTmp[nbthreads].inf_v  = workerthreads[0].inf_v;
+        WorkerThreadsTmp[nbthreads].sup_v  = workerthreads[0].sup_v;
+        WorkerThreadsTmp[nbthreads].Varu   = workerthreads[0].Varu;
+        WorkerThreadsTmp[nbthreads].Const  = workerthreads[0].Const;
+        WorkerThreadsTmp[nbthreads].Rgbt   = workerthreads[0].Rgbt;
+        WorkerThreadsTmp[nbthreads].Grid   = workerthreads[0].Grid;
+        WorkerThreadsTmp[nbthreads].Const  = workerthreads[0].Const;
+        WorkerThreadsTmp[nbthreads].Funct  = workerthreads[0].Funct;
+        WorkerThreadsTmp[nbthreads].Rgbt   = workerthreads[0].Rgbt;
+        WorkerThreadsTmp[nbthreads].VRgbt  = workerthreads[0].VRgbt;
+        WorkerThreadsTmp[nbthreads].Varu   = workerthreads[0].Varu;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
 int ParWorkerThread::HowManyVariables(std::string NewVariables, int type)
 {
     std::string tmp, tmp2,tmp3;
@@ -1595,10 +1624,14 @@ ParWorkerThread::~ParWorkerThread()
 //++++++++++++++++++++++++++++++++++++
 void Par3D::UpdateThredsNumber(int NewThreadsNumber)
 {
-    delete[] workerthreads;
+
     WorkerThreadsNumber = NewThreadsNumber;
+    ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber];
+    DeepThreadCopy(workerthreadstmp);
+
+    delete[] workerthreads;
+    workerthreads = workerthreadstmp;
     int tmp = nb_ligne/WorkerThreadsNumber;
-    workerthreads = new ParWorkerThread[WorkerThreadsNumber];
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].nb_ligne = nb_ligne;
