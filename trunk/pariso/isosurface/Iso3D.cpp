@@ -140,7 +140,7 @@ IsoWorkerThread::IsoWorkerThread()
     Octaves = 4;
     //initparser(100);
     InitParser();
-    stError = ParserIso();
+    //stError = ParserIso();
 }
 
 IsoWorkerThread::~IsoWorkerThread()
@@ -177,7 +177,7 @@ void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
 Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
 {
     IsoSurfaceTriangleListe                = new int[3*maxtri];
-    NormOriginaltmp                          = new float[3*maxtri];
+    NormOriginaltmp                        = new float[3*maxtri];
     Gridmax = gridmax;
     WorkerThreadsNumber = 4;
     NbTriangleIsoSurface = 0;
@@ -535,17 +535,17 @@ void IsoWorkerThread::InitParser()
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    for(int i=0; i<20; i++)
+    for(int i=0; i<NbVariables; i++)
     {
         Var[i].AddConstant("pi", PI);
     }
 
-    for(int i=0; i<50; i++)
+    for(int i=0; i<NbDefinedFunctions; i++)
     {
         Fct[i].AddConstant("pi", PI);
     }
 
-    for(int i=0; i<50; i++)
+    for(int i=0; i<NbTextures; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
         RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -555,7 +555,7 @@ void IsoWorkerThread::InitParser()
         RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
-    for(int i=0; i<50; i++)
+    for(int i=0; i<NbTextures; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1637,7 +1637,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
             val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
 
-            NormVertexTab[i*TypeDrawin    ] = workerthreads[0].RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin  ] = workerthreads[0].RgbtParser[0].Eval(val);
             NormVertexTab[i*TypeDrawin+1] = workerthreads[0].RgbtParser[1].Eval(val);
             NormVertexTab[i*TypeDrawin+2] = workerthreads[0].RgbtParser[2].Eval(val);
             NormVertexTab[i*TypeDrawin+3] = workerthreads[0].RgbtParser[3].Eval(val);

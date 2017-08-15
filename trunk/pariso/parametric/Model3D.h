@@ -139,10 +139,9 @@ public:
                     bool *typeCND = NULL,
                     unsigned int *IndexPolyTabMinPt = NULL,
                     unsigned  int *NbPolyMinPt = NULL);
-
-
     void BuildPar();
     void UpdateThredsNumber(int);
     void stopcalculations(bool);
+    void DeepThreadCopy(ParWorkerThread *);
     void run() Q_DECL_OVERRIDE;
 };

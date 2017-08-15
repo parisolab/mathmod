@@ -104,7 +104,7 @@ public :
            Y_Start, Y_End, Y_Step,
            Z_Start, Z_End, Z_Step;
     double x_Step[NbComponent], y_Step[NbComponent], z_Step[NbComponent];
-    double  vr[3*NbComponent][NbComponent][NbMaxGrid];//3* because each varu can be used for x,y or z
+    double  vr[3*NbVariables][NbComponent][NbMaxGrid];//3* because each varu can be used for x,y or z
     ImplicitStruct ImplicitStructs[NbComponent];
     ErrorMessage stdError;
     double SliderValues[5000];
@@ -131,8 +131,6 @@ public :
         IsoWorkerThread();
         ~IsoWorkerThread();
     };
-
-
 
     class Iso3D  : public QThread
     {
