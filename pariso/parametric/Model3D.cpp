@@ -64,9 +64,6 @@ Par3D::~Par3D()
 //+++++++++++++++++++++++++++++++++++++++++
 ParWorkerThread::ParWorkerThread()
 {
-    mesh = 1;
-    infos =1;
-    latence = 30;
     stepMorph = 0;
     pace = (double)1/(double)30;
     activeMorph = -1;
@@ -82,10 +79,8 @@ ParWorkerThread::ParWorkerThread()
         SliderNames[i] = "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
-
-    allocateparser(NbComponent);
+    allocateparser();
     initialiser_parseur();
-    //stdError = parse_expression();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -361,15 +356,15 @@ void  Par3D::project_4D_to_3D(int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::allocateparser(int N)
+void ParWorkerThread::allocateparser()
 {
-    myParserX = new FunctionParser[N];
+    myParserX = new FunctionParser[NbComponent];
 
-    myParserY = new FunctionParser[N];
+    myParserY = new FunctionParser[NbComponent];
 
-    myParserZ = new FunctionParser[N];
+    myParserZ = new FunctionParser[NbComponent];
 
-    myParserW = new FunctionParser[N];
+    myParserW = new FunctionParser[NbComponent];
 
     Fct = new FunctionParser[NbDefinedFunctions];
 
@@ -377,28 +372,41 @@ void ParWorkerThread::allocateparser(int N)
 
     VRgbtParser = new FunctionParser[NbTextures];
 
-    GradientParser = new FunctionParser();
+    GradientParser = new FunctionParser;
     NoiseParser = new FunctionParser;
 
     NoiseShapeParser = new FunctionParser;
 }
 
-
-
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::initparser(int N)
+void ParWorkerThread::deleteparsers()
 {
     delete[] myParserX;
-    myParserX = new FunctionParser[N];
+    delete[] myParserY;
+    delete[] myParserZ;
+    delete[] myParserW;
+    delete[] Fct;
+    delete[] RgbtParser;
+    delete[] VRgbtParser;
+    delete GradientParser;
+    delete NoiseParser;
+    delete NoiseShapeParser;
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::initparser()
+{
+    delete[] myParserX;
+    myParserX = new FunctionParser[NbComponent];
 
     delete[] myParserY;
-    myParserY = new FunctionParser[N];
+    myParserY = new FunctionParser[NbComponent];
 
     delete[] myParserZ;
-    myParserZ = new FunctionParser[N];
+    myParserZ = new FunctionParser[NbComponent];
 
     delete[] myParserW;
-    myParserW = new FunctionParser[N];
+    myParserW = new FunctionParser[NbComponent];
 
     delete[] Fct;
     Fct = new FunctionParser[NbDefinedFunctions];
@@ -410,7 +418,7 @@ void ParWorkerThread::initparser(int N)
     VRgbtParser = new FunctionParser[NbTextures];
 
     delete GradientParser;
-    GradientParser = new FunctionParser();
+    GradientParser = new FunctionParser;
     GradientParser->AddConstant("pi", PI);
     Cstparser.AddConstant("pi", PI);
 
@@ -429,7 +437,7 @@ void ParWorkerThread::initparser(int N)
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-    for(int i=0; i<N; i++)
+    for(int i=0; i<NbComponent; i++)
     {
         myParserX[i].AddConstant("pi", PI);
         myParserY[i].AddConstant("pi", PI);
@@ -453,7 +461,6 @@ void ParWorkerThread::initparser(int N)
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
 
-
     for(int i=0; i<NbTextures; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
@@ -473,7 +480,7 @@ ErrorMessage  ParWorkerThread::parse_expression()
     std::string varliste = "x,y,z,t";
 
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
-    initparser(NbComponent);
+    initparser();
     for(int j=0; j<Nb_constants; j++)
     {
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
@@ -845,6 +852,8 @@ ErrorMessage  ParWorkerThread::parse_expression()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
+    int tmp = nb_ligne/WorkerThreadsNumber;
+
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
         WorkerThreadsTmp[nbthreads].expression_X = workerthreads[0].expression_X;
@@ -865,9 +874,60 @@ void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].Rgbt   = workerthreads[0].Rgbt;
         WorkerThreadsTmp[nbthreads].VRgbt  = workerthreads[0].VRgbt;
         WorkerThreadsTmp[nbthreads].Varu   = workerthreads[0].Varu;
+
+        WorkerThreadsTmp[nbthreads].nb_ligne = workerthreads[0].nb_ligne;
+        WorkerThreadsTmp[nbthreads].nb_colone = workerthreads[0].nb_colone;
+        WorkerThreadsTmp[nbthreads].MyIndex = nbthreads;
+        WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+
+        WorkerThreadsTmp[nbthreads].iStart   = nbthreads*tmp;
+        if(WorkerThreadsTmp[nbthreads].MyIndex == (WorkerThreadsNumber-1))
+            WorkerThreadsTmp[nbthreads].iFinish = workerthreads[0].nb_ligne;
+        else
+            WorkerThreadsTmp[nbthreads].iFinish = (nbthreads+1)*tmp;
     }
 }
+//+++++++++++++++++++++++++++++++++++++++++
+void Par3D::ThreadParsersCopy(ParWorkerThread *WorkerThreadsTmp)
+{
+    //Not working! it looks like it's impossible to make a copy of a FunctionParser object...
+    //memcpy(WorkerThreadsTmp[nbthreads].myParserX, workerthreads[0].myParserX, NbComponent*sizeof(FunctionParser));
+    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
+    {
+        WorkerThreadsTmp[nbthreads].Nb_paramfunctions = workerthreads[0].Nb_paramfunctions;
+        WorkerThreadsTmp[nbthreads].Nb_functs = workerthreads[0].Nb_functs;
+        WorkerThreadsTmp[nbthreads].Nb_rgbts = workerthreads[0].Nb_rgbts;
+        WorkerThreadsTmp[nbthreads].Nb_vrgbts = workerthreads[0].Nb_vrgbts;
+        WorkerThreadsTmp[nbthreads].Nb_Sliders = workerthreads[0].Nb_Sliders;
+        WorkerThreadsTmp[nbthreads].activeMorph = workerthreads[0].activeMorph;
+        WorkerThreadsTmp[nbthreads].Nb_newvariables = workerthreads[0].Nb_newvariables;
+        WorkerThreadsTmp[nbthreads].Nb_constants = workerthreads[0].Nb_constants;
+        WorkerThreadsTmp[nbthreads].ParConditionRequired = workerthreads[0].ParConditionRequired;
+        for(int i=0; i<NbComponent; i++)
+        {
+            WorkerThreadsTmp[nbthreads].myParserX[i] = workerthreads[0].myParserX[i];
+            WorkerThreadsTmp[nbthreads].myParserY[i] = workerthreads[0].myParserY[i];
+            WorkerThreadsTmp[nbthreads].myParserZ[i] = workerthreads[0].myParserZ[i];
+            WorkerThreadsTmp[nbthreads].myParserW[i] = workerthreads[0].myParserW[i];
+            WorkerThreadsTmp[nbthreads].myParserUmin[i] = workerthreads[0].myParserUmin[i];
+            WorkerThreadsTmp[nbthreads].myParserVmin[i] = workerthreads[0].myParserVmin[i];
+            WorkerThreadsTmp[nbthreads].myParserUmax[i] = workerthreads[0].myParserUmax[i];
+            WorkerThreadsTmp[nbthreads].myParserVmax[i] = workerthreads[0].myParserVmax[i];
+            WorkerThreadsTmp[nbthreads].myParserCND[i]  = workerthreads[0].myParserCND[i];
+        }
 
+        for(int i=0; i<NbTextures; i++)
+        {
+            WorkerThreadsTmp[nbthreads].RgbtParser[i]     = workerthreads[0].RgbtParser[i];
+            WorkerThreadsTmp[nbthreads].VRgbtParser[i]    = workerthreads[0].VRgbtParser[i];
+        }
+
+        WorkerThreadsTmp[nbthreads].Cstparser           = workerthreads[0].Cstparser;
+        *(WorkerThreadsTmp[nbthreads].GradientParser)   = *(workerthreads[0].GradientParser);
+        *(WorkerThreadsTmp[nbthreads].NoiseParser)      = *(workerthreads[0].NoiseParser);
+        *(WorkerThreadsTmp[nbthreads].NoiseShapeParser) = *(workerthreads[0].NoiseShapeParser);
+    }
+}
 //+++++++++++++++++++++++++++++++++++++++++
 int ParWorkerThread::HowManyVariables(std::string NewVariables, int type)
 {
@@ -1621,27 +1681,26 @@ ParWorkerThread::~ParWorkerThread()
 //++++++++++++++++++++++++++++++++++++
 void Par3D::UpdateThredsNumber(int NewThreadsNumber)
 {
-
+    int tmp= WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
-    ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber];
-    DeepThreadCopy(workerthreadstmp);
 
-    delete[] workerthreads;
-    workerthreads = workerthreadstmp;
-    int tmp = nb_ligne/WorkerThreadsNumber;
+    //Create new workerthreads set:
+    ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber];
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
-        workerthreads[nbthreads].nb_ligne = nb_ligne;
-        workerthreads[nbthreads].nb_colone = nb_colone;
-        workerthreads[nbthreads].MyIndex = nbthreads;
-        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
-
-        workerthreads[nbthreads].iStart   = nbthreads*tmp;
-        if(workerthreads[nbthreads].MyIndex == (WorkerThreadsNumber-1))
-            workerthreads[nbthreads].iFinish = nb_ligne;
-        else
-            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+        workerthreadstmp[nbthreads].allocateparser();
     }
+    DeepThreadCopy(workerthreadstmp);
+
+    //Free old memory:
+    for(int i=0; i<tmp; i++)
+    {
+        workerthreads[i].deleteparsers();
+    }
+    delete[] workerthreads;
+
+    //Assigne newly allocated memory
+    workerthreads = workerthreadstmp;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++

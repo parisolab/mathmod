@@ -56,7 +56,7 @@ public :
                    myParserVmin[3*NbComponent], myParserVmax[3*NbComponent],
                    Var[NbVariables], Cstparser;
     ParStruct ParamStructs[3*NbComponent];
-    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders;
+    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, activeMorph, Nb_newvariables, Nb_constants, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Rgbt, Grid;
     std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
@@ -65,8 +65,6 @@ public :
     double  v_inf[3*NbComponent], v_sup[3*NbComponent],u_inf[3*NbComponent],u_sup[3*NbComponent],dif_v[3*NbComponent],dif_u[3*NbComponent];
     double SliderValues[5000];
     double stepMorph, pace;
-    int activeMorph, Nb_newvariables, Nb_constants, Nb_funct;
-    int mesh, box,infos, latence, ParConditionRequired;
     int iStart, iFinish, MyIndex, WorkerThreadsNumber;
     unsigned int NbPolygnNbVertex[2], nbBorderPts, param4D, CurrentPar;
     float Lacunarity, Gain;
@@ -76,12 +74,13 @@ public :
 public :
     void ParCompute(int);
     void initialiser_parseur();
-    void initparser(int);
+    void initparser();
     void calcul_objet(int component =0);
     int  HowManyParamSurface(std::string, int);
     int  HowManyVariables(std::string, int);
     ErrorMessage parse_expression();
-    void allocateparser(int);
+    void allocateparser();
+    void deleteparsers();
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
     ~ParWorkerThread();
@@ -143,5 +142,6 @@ public:
     void UpdateThredsNumber(int);
     void stopcalculations(bool);
     void DeepThreadCopy(ParWorkerThread *);
+    void ThreadParsersCopy(ParWorkerThread *);
     void run() Q_DECL_OVERRIDE;
 };
