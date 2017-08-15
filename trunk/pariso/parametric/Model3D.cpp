@@ -845,9 +845,6 @@ ErrorMessage  ParWorkerThread::parse_expression()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
-    /* VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
-            RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
-            Gradient, Noise, NoiseShape, SliderNames[50]; */
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
         WorkerThreadsTmp[nbthreads].expression_X = workerthreads[0].expression_X;
