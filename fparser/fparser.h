@@ -50,42 +50,19 @@ public:
 /// Added Data:
     double * StackArray;
     double   Vars[100*64]; // Up to 100 variables
-    QTimer * timer;
     int *    dataactive;
     double** datatable;
     int      grmax;
     double   t_parameter;
     double * Results;
     int      depth;
-    int      ContinuCalculating;
-    static int IDThreadIndex;
-    int     ThreadID;
-/// Data to use for further development:
-    int     Sup1[100];
-    int*    Sup2[100];
-    double  Sup3[100];
-    double* Sup4[100];
-/// End Added Data
 /// Added fct :
     double   Eval(const double* Vars);
-    double   Eval2(const double* Vars, const double* Vars2, const double* Vars3);
-    double * Eval3(double* Vars, double* Vars2, double* Vars3);
-    double * Eval4(double* Vars, double* Vars2, double* Vars3, int);
-    double * Eval5(double* Vars  , double* Vars2, double* Vars3,
-                   double * Vars4, double* Vars5, double* Vars6, int);
     void     Eval6(int a=0);
-    void     starttimer();
-    void     stoptimer();
-    bool     timeractif();
-    void     restarttimer(int);
-    int    * lunchTwoThreads(int *, double *);
     void     AllocateMemoryForStackArray(double* , double* , double* , double* ,
                                          double* , double* , double* , double* ,
                                          double* , double  , int ,  double* , int, int *, double* []);
     bool IsVariable(int);
-    //virtual void run();
-    //void start();
-    //void stop();
 /// End Added fct
 
     int Parse(const std::string& Function, const std::string& Vars, bool useDegrees = false);
@@ -121,7 +98,7 @@ public:
     void PrintByteCode(std::ostream& dest) const;
 #endif
 //========================================================================
-private:
+public:
 //========================================================================
 // Private data:
 // ------------
