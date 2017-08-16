@@ -51,18 +51,18 @@ public :
     int coupure_col, nb_licol, coupure_ligne;
 
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser myParserCND[3*NbComponent],
-                   myParserUmin[3*NbComponent], myParserUmax[3*NbComponent],
-                   myParserVmin[3*NbComponent], myParserVmax[3*NbComponent],
+    FunctionParser myParserCND[NbComponent],
+                   myParserUmin[NbComponent], myParserUmax[NbComponent],
+                   myParserVmin[NbComponent], myParserVmax[NbComponent],
                    Var[NbVariables], Cstparser;
-    ParStruct ParamStructs[3*NbComponent];
+    ParStruct ParamStructs[NbComponent];
     int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, activeMorph, Nb_newvariables, Nb_constants, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Rgbt, Grid;
     std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
         RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
         Gradient, Noise, NoiseShape, SliderNames[50];
-    double  v_inf[3*NbComponent], v_sup[3*NbComponent],u_inf[3*NbComponent],u_sup[3*NbComponent],dif_v[3*NbComponent],dif_u[3*NbComponent];
+    double  v_inf[NbComponent], v_sup[NbComponent],u_inf[NbComponent],u_sup[NbComponent],dif_v[NbComponent],dif_u[NbComponent];
     double SliderValues[5000];
     double stepMorph, pace;
     int iStart, iFinish, MyIndex, WorkerThreadsNumber;

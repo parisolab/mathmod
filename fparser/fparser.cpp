@@ -224,16 +224,7 @@ FunctionParser::FunctionParser():
     data(new Data)
 {
     data->referenceCounter = 1;
-
-    //timer = new QTimer( this );
-    //connect( timer, SIGNAL(timeout()), this, SLOT(Eval6()) );
 }
-
-/*
-void FunctionParser::start(){
-QThread::start();
-}
-*/
 
 FunctionParser::~FunctionParser()
 {
@@ -307,7 +298,9 @@ FunctionParser::Data::Data(const Data& cpy):
     if(ByteCodeSize) ByteCode = new unsigned[ByteCodeSize];
     if(ImmedSize) Immed = new double[ImmedSize];
     if(StackSize) Stack = new double[StackSize];
-
+    //for(unsigned i=0; i<cpy.FuncPtrs.size(); ++i)
+        FuncPtrs = cpy.FuncPtrs;
+        FuncParsers=cpy.FuncParsers;
     for(unsigned i=0; i<ByteCodeSize; ++i) ByteCode[i] = cpy.ByteCode[i];
     for(unsigned i=0; i<ImmedSize; ++i) Immed[i] = cpy.Immed[i];
 
@@ -1193,23 +1186,6 @@ inline double RadiansToDegrees(double radians)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-double* FunctionParser::Eval5(double* , double* , double* , double* , double* , double* , int)
-{
-    return 0;
-};
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-int  *  FunctionParser::lunchTwoThreads(int *, double *)
-{
-    return (0);
-}
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/*
-void FunctionParser::stop(){
-};
-*/
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void FunctionParser::AllocateMemoryForStackArray(double* , double* , double* , double* , double* , double* , double* , double* , double* ,
         double t1, int grmax1, double* Results1, int depth1, int *DataA, double* DataT[])
 {
@@ -1394,12 +1370,6 @@ void FunctionParser::AllocateMemoryForStackArray(double* , double* , double* , d
     depth       = depth1;
 };
 
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/*
-void FunctionParser::run(){
-Eval6();
-}
-*/
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void FunctionParser::Eval6(int )
