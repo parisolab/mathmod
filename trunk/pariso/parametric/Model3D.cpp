@@ -69,7 +69,7 @@ ParWorkerThread::ParWorkerThread()
     activeMorph = -1;
     ParConditionRequired = -1;
     Nb_Sliders = -1;
-
+    ParsersAllocated = false;
     Lacunarity = 0.5;
     Gain = 1.0;
     Octaves = 4;
@@ -79,8 +79,8 @@ ParWorkerThread::ParWorkerThread()
         SliderNames[i] = "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
-    allocateparser();
-    initialiser_parseur();
+    //allocateparser();
+    //initialiser_parseur();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -104,6 +104,13 @@ void ParWorkerThread::ParCompute(int fctnb)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::AllocateParsersForThread()
+{
+    AllocateParsersForMasterThread();
+    initialiser_parseur();
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres()
 {
     nb_ligne = nb_colone = 50;
@@ -123,6 +130,7 @@ void Par3D::initialiser_parametres()
 
     WorkerThreadsNumber = 4;
     workerthreads = new ParWorkerThread[WorkerThreadsNumber];
+    workerthreads[0].AllocateParsersForThread();
     int tmp = (nb_ligne/WorkerThreadsNumber);
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
@@ -356,7 +364,7 @@ void  Par3D::project_4D_to_3D(int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::allocateparser()
+void ParWorkerThread::AllocateParsersForMasterThread()
 {
     myParserX = new FunctionParser[NbComponent];
 
@@ -379,7 +387,23 @@ void ParWorkerThread::allocateparser()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::deleteparsers()
+void ParWorkerThread::AllocateParsersForWorkerThread(int nbcomp)
+{
+    myParserX = new FunctionParser[nbcomp];
+
+    myParserY = new FunctionParser[nbcomp];
+
+    myParserZ = new FunctionParser[nbcomp];
+
+    myParserW = new FunctionParser[nbcomp];
+
+    Fct = new FunctionParser[NbDefinedFunctions];
+
+    ParsersAllocated = true;
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::DeleteMasterParsers()
 {
     delete[] myParserX;
     delete[] myParserY;
@@ -394,7 +418,21 @@ void ParWorkerThread::deleteparsers()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::initparser()
+void ParWorkerThread::DeleteWorkerParsers()
+{
+    if(ParsersAllocated)
+    {
+    delete[] myParserX;
+    delete[] myParserY;
+    delete[] myParserZ;
+    delete[] myParserW;
+    delete[] Fct;
+    }
+    ParsersAllocated = false;
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::InitMasterParsers()
 {
     delete[] myParserX;
     myParserX = new FunctionParser[NbComponent];
@@ -480,7 +518,7 @@ ErrorMessage  ParWorkerThread::parse_expression()
     std::string varliste = "x,y,z,t";
 
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
-    initparser();
+    InitMasterParsers();
     for(int j=0; j<Nb_constants; j++)
     {
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
@@ -849,6 +887,151 @@ ErrorMessage  ParWorkerThread::parse_expression()
     return stdError;
 }
 
+ErrorMessage  Par3D::parse_expression2(ParWorkerThread *ThreadsWorkers)
+{
+    double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    ErrorMessage NodError;
+    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
+    {
+    //Add defined constantes:
+    for(int i=0; i<ThreadsWorkers[0].Nb_paramfunctions+1; i++)
+    {
+            ThreadsWorkers[nbthreads].myParserX[i].AddConstant("pi", PI);
+            ThreadsWorkers[nbthreads].myParserY[i].AddConstant("pi", PI);
+            ThreadsWorkers[nbthreads].myParserZ[i].AddConstant("pi", PI);
+            ThreadsWorkers[nbthreads].myParserW[i].AddConstant("pi", PI);
+
+            ThreadsWorkers[nbthreads].myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            ThreadsWorkers[nbthreads].myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+            ThreadsWorkers[nbthreads].myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            ThreadsWorkers[nbthreads].myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+            ThreadsWorkers[nbthreads].myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            ThreadsWorkers[nbthreads].myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+            ThreadsWorkers[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            ThreadsWorkers[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+
+
+//Functions:
+
+            for(int i=0; i<ThreadsWorkers[0].Nb_functs; i++)
+            {
+                ThreadsWorkers[nbthreads].Fct[i].AddConstant("pi", PI);
+
+            }
+
+
+            for(int ii=0; ii<ThreadsWorkers[0].Nb_functs; ii++)
+            {
+                for(int jj=0; jj<ThreadsWorkers[0].Nb_constants; jj++)
+                {
+                    if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[0].Cstparser.Parse(ThreadsWorkers[0].Consts[jj],"u")) >= 0)
+                    {
+                        ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].Consts[jj];
+                        ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ConstNames[jj];
+                        return ThreadsWorkers[0].stdError;
+                    }
+                    ThreadsWorkers[nbthreads].Fct[ii].AddConstant(ThreadsWorkers[0].ConstNames[jj], ThreadsWorkers[0].Cstparser.Eval(vals));
+                }
+
+                //Add predefined constatnts:
+                for(int kk=0; kk<ThreadsWorkers[0].Nb_Sliders; kk++)
+                {
+                    ThreadsWorkers[nbthreads].Fct[ii].AddConstant(ThreadsWorkers[0].SliderNames[kk], ThreadsWorkers[0].SliderValues[kk]);
+                }
+            }
+
+
+            for(int ii=0; ii<ThreadsWorkers[0].Nb_functs; ii++)
+            {
+                for(int jj=0; jj<ii; jj++)
+                    ThreadsWorkers[nbthreads].Fct[ii].AddFunction(ThreadsWorkers[0].FunctNames[jj], ThreadsWorkers[nbthreads].Fct[jj]);
+                if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].Fct[ii].Parse(ThreadsWorkers[0].Functs[ii],"u,v,t")) >= 0)
+                {
+                    ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].Functs[ii];
+                    ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].FunctNames[ii];
+                    return ThreadsWorkers[0].stdError;
+                }
+            }
+
+
+
+
+
+        for(int j=0; j<ThreadsWorkers[0].Nb_constants; j++)
+        {
+
+            if ((ThreadsWorkers[0].stdError.iErrorIndex =ThreadsWorkers[0].Cstparser.Parse(ThreadsWorkers[0].Consts[j],"u")) >= 0)
+            {
+                ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].Consts[j];
+                ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ConstNames[j];
+                return ThreadsWorkers[0].stdError;
+            }
+
+            ThreadsWorkers[nbthreads].myParserX[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
+            ThreadsWorkers[nbthreads].myParserY[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
+            ThreadsWorkers[nbthreads].myParserZ[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
+            ThreadsWorkers[nbthreads].myParserW[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
+        }
+        //Add predefined sliders constatnts:
+        for(int k=0; k<ThreadsWorkers[0].Nb_Sliders; k++)
+        {
+            ThreadsWorkers[nbthreads].myParserX[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
+            ThreadsWorkers[nbthreads].myParserY[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
+            ThreadsWorkers[nbthreads].myParserZ[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
+            ThreadsWorkers[nbthreads].myParserW[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
+        }
+    }
+
+    // Add defined functions :
+    for(int i=0; i<ThreadsWorkers[0].Nb_paramfunctions+1; i++)
+    {
+        for(int j=0; j<ThreadsWorkers[0].Nb_functs; j++)
+        {
+            ThreadsWorkers[nbthreads].myParserX[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
+            ThreadsWorkers[nbthreads].myParserY[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
+            ThreadsWorkers[nbthreads].myParserZ[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
+            ThreadsWorkers[nbthreads].myParserW[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
+        }
+    }
+
+    for(int index=0; index< ThreadsWorkers[0].Nb_paramfunctions + 1; index++)
+    {
+        if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserX[index].Parse(ThreadsWorkers[0].ParamStructs[index].fx, "u,v,t")) >= 0)
+        {
+            ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fx;
+            ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
+            return ThreadsWorkers[0].stdError;
+        }
+
+        if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserY[index].Parse(ThreadsWorkers[0].ParamStructs[index].fy, "u,v,t")) >= 0)
+        {
+            ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fy;
+            ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
+            return ThreadsWorkers[0].stdError;
+        }
+
+        if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserZ[index].Parse(ThreadsWorkers[0].ParamStructs[index].fz, "u,v,t")) >= 0)
+        {
+            ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fz;
+            ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
+            return ThreadsWorkers[0].stdError;
+        }
+
+        if(param4D == 1)
+            if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserW[index].Parse(ThreadsWorkers[0].ParamStructs[index].fw, "u,v,t")) >= 0)
+            {
+                ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fw;
+                ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
+                return ThreadsWorkers[0].stdError;
+            }
+    }
+    }
+    return NodError;
+}
+
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
@@ -865,15 +1048,12 @@ void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].sup_u  = workerthreads[0].sup_u;
         WorkerThreadsTmp[nbthreads].inf_v  = workerthreads[0].inf_v;
         WorkerThreadsTmp[nbthreads].sup_v  = workerthreads[0].sup_v;
+        WorkerThreadsTmp[nbthreads].Grid   = workerthreads[0].Grid;
+        WorkerThreadsTmp[nbthreads].Funct  = workerthreads[0].Funct;
         WorkerThreadsTmp[nbthreads].Varu   = workerthreads[0].Varu;
         WorkerThreadsTmp[nbthreads].Const  = workerthreads[0].Const;
-        WorkerThreadsTmp[nbthreads].Rgbt   = workerthreads[0].Rgbt;
-        WorkerThreadsTmp[nbthreads].Grid   = workerthreads[0].Grid;
-        WorkerThreadsTmp[nbthreads].Const  = workerthreads[0].Const;
-        WorkerThreadsTmp[nbthreads].Funct  = workerthreads[0].Funct;
         WorkerThreadsTmp[nbthreads].Rgbt   = workerthreads[0].Rgbt;
         WorkerThreadsTmp[nbthreads].VRgbt  = workerthreads[0].VRgbt;
-        WorkerThreadsTmp[nbthreads].Varu   = workerthreads[0].Varu;
 
         WorkerThreadsTmp[nbthreads].nb_ligne = workerthreads[0].nb_ligne;
         WorkerThreadsTmp[nbthreads].nb_colone = workerthreads[0].nb_colone;
@@ -887,47 +1067,51 @@ void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
             WorkerThreadsTmp[nbthreads].iFinish = (nbthreads+1)*tmp;
     }
 }
+
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::ThreadParsersCopy(ParWorkerThread *WorkerThreadsTmp)
+ErrorMessage Par3D::ThreadParsersCopy(ParWorkerThread *WorkerThreadsTmp)
 {
-    //Not working! it looks like it's impossible to make a copy of a FunctionParser object...
-    //memcpy(WorkerThreadsTmp[nbthreads].myParserX, workerthreads[0].myParserX, NbComponent*sizeof(FunctionParser));
     for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
-        WorkerThreadsTmp[nbthreads].Nb_paramfunctions = workerthreads[0].Nb_paramfunctions;
-        WorkerThreadsTmp[nbthreads].Nb_functs = workerthreads[0].Nb_functs;
-        WorkerThreadsTmp[nbthreads].Nb_rgbts = workerthreads[0].Nb_rgbts;
-        WorkerThreadsTmp[nbthreads].Nb_vrgbts = workerthreads[0].Nb_vrgbts;
-        WorkerThreadsTmp[nbthreads].Nb_Sliders = workerthreads[0].Nb_Sliders;
-        WorkerThreadsTmp[nbthreads].activeMorph = workerthreads[0].activeMorph;
-        WorkerThreadsTmp[nbthreads].Nb_newvariables = workerthreads[0].Nb_newvariables;
-        WorkerThreadsTmp[nbthreads].Nb_constants = workerthreads[0].Nb_constants;
-        WorkerThreadsTmp[nbthreads].ParConditionRequired = workerthreads[0].ParConditionRequired;
-        for(int i=0; i<NbComponent; i++)
+        for(int i=0; i< workerthreads[0].Nb_paramfunctions+1; i++)
         {
-            WorkerThreadsTmp[nbthreads].myParserX[i] = workerthreads[0].myParserX[i];
-            WorkerThreadsTmp[nbthreads].myParserY[i] = workerthreads[0].myParserY[i];
-            WorkerThreadsTmp[nbthreads].myParserZ[i] = workerthreads[0].myParserZ[i];
-            WorkerThreadsTmp[nbthreads].myParserW[i] = workerthreads[0].myParserW[i];
-            WorkerThreadsTmp[nbthreads].myParserUmin[i] = workerthreads[0].myParserUmin[i];
-            WorkerThreadsTmp[nbthreads].myParserVmin[i] = workerthreads[0].myParserVmin[i];
-            WorkerThreadsTmp[nbthreads].myParserUmax[i] = workerthreads[0].myParserUmax[i];
-            WorkerThreadsTmp[nbthreads].myParserVmax[i] = workerthreads[0].myParserVmax[i];
-            WorkerThreadsTmp[nbthreads].myParserCND[i]  = workerthreads[0].myParserCND[i];
+            WorkerThreadsTmp[nbthreads].dif_u[i] = workerthreads[0].dif_u[i];
+            WorkerThreadsTmp[nbthreads].dif_v[i] = workerthreads[0].dif_v[i];
+            WorkerThreadsTmp[nbthreads].u_inf[i] = workerthreads[0].u_inf[i];
+            WorkerThreadsTmp[nbthreads].v_inf[i] = workerthreads[0].v_inf[i];
         }
-
-        for(int i=0; i<NbTextures; i++)
-        {
-            WorkerThreadsTmp[nbthreads].RgbtParser[i]     = workerthreads[0].RgbtParser[i];
-            WorkerThreadsTmp[nbthreads].VRgbtParser[i]    = workerthreads[0].VRgbtParser[i];
-        }
-
-        WorkerThreadsTmp[nbthreads].Cstparser           = workerthreads[0].Cstparser;
-        *(WorkerThreadsTmp[nbthreads].GradientParser)   = *(workerthreads[0].GradientParser);
-        *(WorkerThreadsTmp[nbthreads].NoiseParser)      = *(workerthreads[0].NoiseParser);
-        *(WorkerThreadsTmp[nbthreads].NoiseShapeParser) = *(workerthreads[0].NoiseShapeParser);
     }
+
+    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
+        WorkerThreadsTmp[nbthreads].DeleteWorkerParsers();
+
+    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
+        WorkerThreadsTmp[nbthreads].AllocateParsersForWorkerThread(WorkerThreadsTmp[0].Nb_paramfunctions+1);
+
+    return(parse_expression2(WorkerThreadsTmp));
+            /*
+WorkerThreadsTmp[nbthreads].myParserX[i].data = new FunctionParser::Data(*(workerthreads[0].myParserX[i].data));
+WorkerThreadsTmp[nbthreads].myParserX[i].data->referenceCounter = workerthreads[0].myParserX[i].data->referenceCounter;
+WorkerThreadsTmp[nbthreads].myParserX[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserX[i].parseErrorType;
+WorkerThreadsTmp[nbthreads].myParserX[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserX[i].evalErrorType;
+
+WorkerThreadsTmp[nbthreads].myParserY[i].data = new FunctionParser::Data(*(workerthreads[0].myParserY[i].data));
+WorkerThreadsTmp[nbthreads].myParserY[i].data->referenceCounter = workerthreads[0].myParserY[i].data->referenceCounter;
+WorkerThreadsTmp[nbthreads].myParserY[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserY[i].parseErrorType;
+WorkerThreadsTmp[nbthreads].myParserY[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserY[i].evalErrorType;
+
+WorkerThreadsTmp[nbthreads].myParserZ[i].data = new FunctionParser::Data(*(workerthreads[0].myParserZ[i].data));
+WorkerThreadsTmp[nbthreads].myParserZ[i].data->referenceCounter  = workerthreads[0].myParserZ[i].data->referenceCounter;
+WorkerThreadsTmp[nbthreads].myParserZ[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserZ[i].parseErrorType;
+WorkerThreadsTmp[nbthreads].myParserZ[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserZ[i].evalErrorType;
+
+WorkerThreadsTmp[nbthreads].myParserW[i].data = new FunctionParser::Data(*(workerthreads[0].myParserW[i].data));
+WorkerThreadsTmp[nbthreads].myParserW[i].data->referenceCounter  = workerthreads[0].myParserW[i].data->referenceCounter;
+WorkerThreadsTmp[nbthreads].myParserW[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserW[i].parseErrorType;
+WorkerThreadsTmp[nbthreads].myParserW[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserW[i].evalErrorType;
+*/
 }
+
 //+++++++++++++++++++++++++++++++++++++++++
 int ParWorkerThread::HowManyVariables(std::string NewVariables, int type)
 {
@@ -1686,16 +1870,21 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
 
     //Create new workerthreads set:
     ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber];
+    workerthreadstmp[0].AllocateParsersForThread();
+    /*
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
     {
         workerthreadstmp[nbthreads].allocateparser();
     }
+    */
     DeepThreadCopy(workerthreadstmp);
 
     //Free old memory:
-    for(int i=0; i<tmp; i++)
+    workerthreads[0].DeleteMasterParsers();
+
+    for(int i=1; i<tmp; i++)
     {
-        workerthreads[i].deleteparsers();
+        workerthreads[i].DeleteWorkerParsers();
     }
     delete[] workerthreads;
 

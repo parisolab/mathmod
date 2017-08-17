@@ -183,7 +183,6 @@ void MathMod::zg_valueChanged( int cl)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int MathMod::ParsePar()
 {
-    int maxnbthreads = (ui.glWidget)->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     stError = (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[0].parse_expression();
     if(stError.iErrorIndex >= 0)
     {
@@ -210,9 +209,7 @@ int MathMod::ParsePar()
         return -1;
     }
     else
-        for(int nbthreds=1; nbthreds < maxnbthreads ; nbthreds++)
-            (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreds].parse_expression();
-        //(ui.glWidget)->ParObjetThread->ParObjet->DeepThreadCopy2((ui.glWidget)->ParObjetThread->ParObjet->workerthreads);
+        (ui.glWidget)->ParObjetThread->ParObjet->ThreadParsersCopy((ui.glWidget)->ParObjetThread->ParObjet->workerthreads);
     return 1;
 }
 
@@ -232,10 +229,7 @@ void MathMod::ParametricSurfaceProcess(int type)
             (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreds].param4D = -1;
         (ui.glWidget)->ParObjetThread->ParObjet->param4D = -1;
     }
-    /*
-    int result = ParsePar();
-    if(result == -1) return;
-*/
+
     if(!(ui.glWidget)->ParObjetThread->ParObjet->isRunning())
     {
         int result = ParsePar();
@@ -245,23 +239,6 @@ void MathMod::ParametricSurfaceProcess(int type)
         connect((ui.glWidget)->ParObjetThread->ParObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
         (ui.glWidget)->ParObjetThread->ParObjet->start(QThread::LowPriority);
     }
-    /*
-    (ui.glWidget)->ParObjet->ParamBuild((ui.glWidget)->LocalScene.ArrayNorVer_localPt,
-                                        (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
-                                        (ui.glWidget)->LocalScene.PolyIndices_localPt,
-                                        &((ui.glWidget)->LocalScene.PolyNumber),
-                                        &(ui.glWidget)->LocalScene.VertxNumber,
-                                        0,
-                                        &((ui.glWidget)->LocalScene.componentsinfos),
-                                        (ui.glWidget)->LocalScene.Typetriangles,
-                                        (ui.glWidget)->LocalScene.WichPointVerifyCond,
-                                        (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
-                                        &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin)
-                                       );
-    (ui.glWidget)->LocalScene.typedrawing = -1;
-    (ui.glWidget)->initialize_GL();
-    (ui.glWidget)->update();
-    */
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
