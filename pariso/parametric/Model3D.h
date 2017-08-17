@@ -49,7 +49,6 @@ public :
     ErrorMessage stdError;
     int nb_ligne, nb_colone;
     int coupure_col, nb_licol, coupure_ligne;
-
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
     FunctionParser myParserCND[NbComponent],
                    myParserUmin[NbComponent], myParserUmax[NbComponent],
@@ -70,17 +69,21 @@ public :
     float Lacunarity, Gain;
     int Octaves;
     bool StopCalculations;
+    bool ParsersAllocated;
 
 public :
     void ParCompute(int);
     void initialiser_parseur();
-    void initparser();
+    void InitMasterParsers();
     void calcul_objet(int component =0);
     int  HowManyParamSurface(std::string, int);
     int  HowManyVariables(std::string, int);
     ErrorMessage parse_expression();
-    void allocateparser();
-    void deleteparsers();
+    void AllocateParsersForWorkerThread(int nbcomp);
+    void AllocateParsersForMasterThread();
+    void AllocateParsersForThread();
+    void DeleteMasterParsers();
+    void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
     ~ParWorkerThread();
@@ -142,6 +145,7 @@ public:
     void UpdateThredsNumber(int);
     void stopcalculations(bool);
     void DeepThreadCopy(ParWorkerThread *);
-    void ThreadParsersCopy(ParWorkerThread *);
+    ErrorMessage ThreadParsersCopy(ParWorkerThread *);
+    ErrorMessage  parse_expression2(ParWorkerThread *);
     void run() Q_DECL_OVERRIDE;
 };
