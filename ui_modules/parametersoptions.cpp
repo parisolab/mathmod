@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
-
 #include <QtGui>
 #include <math.h>
 #include "parametersoptions.h"
@@ -66,7 +65,6 @@ void Parametersoptions::slot_about_clicked()
 {
     this->close();
 }
-
 
 void Parametersoptions::SetStyleAndTheme(QApplication & appli, QString style, QString theme)
 {
@@ -133,7 +131,6 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     }
     return;
 }
-
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & js)
