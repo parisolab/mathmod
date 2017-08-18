@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include "Model3D.h"
 
-
-
 static int TypeDrawin=10;
 static int TypeDrawinNormStep = 4;
 static int PreviousSizeMinimalTopology =0;

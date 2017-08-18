@@ -21,7 +21,6 @@
 #include "Iso3D.h"
 #include "povfunctions.cpp"
 
-
 static unsigned int *IndexPolyTabMin;
 static int NbPolyMin;
 static float * NormOriginaltmp;
