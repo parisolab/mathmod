@@ -916,9 +916,9 @@ ErrorMessage  Par3D::parse_expression2(ParWorkerThread *ThreadsWorkers)
 
 //Functions:
 
-            for(int i=0; i<ThreadsWorkers[0].Nb_functs; i++)
+            for(int ij=0; ij<ThreadsWorkers[0].Nb_functs; ij++)
             {
-                ThreadsWorkers[nbthreads].Fct[i].AddConstant("pi", PI);
+                ThreadsWorkers[nbthreads].Fct[ij].AddConstant("pi", PI);
 
             }
 

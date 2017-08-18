@@ -478,7 +478,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             Threads[2] = tmp["MaxThreadsNumber"].toInt();
         }
 
-        if(JConfig["Themes"].isObject() and JConfig["Styles"].isObject() )
+        if(JConfig["Themes"].isObject() && JConfig["Styles"].isObject() )
         {
             QJsonObject tmp1, tmp2, MyTheme;
             tmp2= JConfig["Styles"].toObject();
@@ -688,7 +688,7 @@ void Parametersoptions::onblue_2valueChanged(int value)
 
 void Parametersoptions::on_TestConfig_clicked()
 {
-    if(JConfig["Themes"].isObject() and JConfig["Styles"].isObject() )
+    if(JConfig["Themes"].isObject() && JConfig["Styles"].isObject() )
     {
         QJsonObject tmp1, tmp2, MyTheme;
         tmp2= JConfig["Styles"].toObject();
