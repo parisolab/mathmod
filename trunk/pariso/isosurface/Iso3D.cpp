@@ -1580,12 +1580,12 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    double tmp, ValCol[100], val[4];
+    double tmp, ValCol[NbTextures+5], val[4];
     val[3] = workerthreads[0].stepMorph;
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(int i=0; i<workerthreads[0].Nb_vrgbts && i<100; i++)
+        for(int i=0; i<workerthreads[0].Nb_vrgbts && i<NbTextures; i++)
         {
             ValCol[i] = workerthreads[0].VRgbtParser[i].Eval(val);
         }
@@ -1609,14 +1609,14 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 
             int c= (int)tmp;
             tmp = std::abs(tmp - (double)c);
-            for (int j=0; j < workerthreads[0].Nb_vrgbts && j < 100; j+=5)
+            for (int j=0; j < workerthreads[0].Nb_vrgbts && j < NbTextures; j+=5)
                 if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
                     NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
                     NormVertexTab[i*TypeDrawin+2] = ValCol[j+3];
                     NormVertexTab[i*TypeDrawin+3] = ValCol[j+4];
-                    j = 100;
+                    j = NbTextures;
                 }
         }
     }
