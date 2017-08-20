@@ -64,21 +64,33 @@ ParWorkerThread::ParWorkerThread()
 {
     stepMorph = 0;
     pace = (double)1/(double)30;
+    ParsersAllocated = false;
+}
+//+++++++++++++++++++++++++++++++++++++++++
+ParMasterThread::~ParMasterThread()
+{
+}
+/*
+//+++++++++++++++++++++++++++++++++++++++++
+void ParMasterThread::run()
+{
+    ParCompute(CurrentPar);
+}
+*/
+ParMasterThread::ParMasterThread()
+{
     activeMorph = -1;
     ParConditionRequired = -1;
     Nb_Sliders = -1;
-    ParsersAllocated = false;
-    Lacunarity = 0.5;
     Gain = 1.0;
     Octaves = 4;
+    Lacunarity = 0.5;
     //Add predefined constatnts:
     for(int i=0; i<20; i++)
     {
         SliderNames[i] = "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
-    //allocateparser();
-    //initialiser_parseur();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -102,7 +114,7 @@ void ParWorkerThread::ParCompute(int fctnb)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::AllocateParsersForThread()
+void ParMasterThread::AllocateParsersForThread()
 {
     AllocateParsersForMasterThread();
     initialiser_parseur();
@@ -118,35 +130,38 @@ void Par3D::initialiser_parametres()
     tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
     tetazw_ok = tetaxy_ok =  tetaxz_ok = tetayz_ok = tetaxw_ok = tetayw_ok =  param4D = -1;
     // initialisation des matrices 4D
-    mat4D                                     = Matrix4D();
-    mat_rotation4D                      = Matrix4D();
-    mat_rotation_save4D           = Matrix4D();
-    mat_homothetie4D               = Matrix4D();
-    mat_translation4D                 = Matrix4D();
-    mat_inversetranslation4D    = Matrix4D();
+    mat4D                     = Matrix4D();
+    mat_rotation4D            = Matrix4D();
+    mat_rotation_save4D       = Matrix4D();
+    mat_homothetie4D          = Matrix4D();
+    mat_translation4D         = Matrix4D();
+    mat_inversetranslation4D  = Matrix4D();
     mat4D.unit();
 
     WorkerThreadsNumber = 4;
-    workerthreads = new ParWorkerThread[WorkerThreadsNumber];
-    workerthreads[0].AllocateParsersForThread();
-    int tmp = (nb_ligne/WorkerThreadsNumber);
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
-    {
-        workerthreads[nbthreads].nb_ligne = nb_ligne;
-        workerthreads[nbthreads].nb_colone = nb_colone;
-        workerthreads[nbthreads].MyIndex = nbthreads;
-        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+    workerthreads = new ParWorkerThread[WorkerThreadsNumber-1];
+    masterthread  = new ParMasterThread();
 
-        workerthreads[nbthreads].iStart   = nbthreads*tmp;
-        if(nbthreads == (WorkerThreadsNumber-1))
-            workerthreads[nbthreads].iFinish = nb_ligne;
-        else
-            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+    masterthread->AllocateParsersForThread();
+
+    masterthread->nb_ligne  = nb_ligne;
+    masterthread->nb_colone = nb_colone;
+    masterthread->MyIndex   = 0;
+    masterthread->param4D   = param4D;
+    masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
+
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        workerthreads[nbthreads].nb_ligne  = nb_ligne;
+        workerthreads[nbthreads].nb_colone = nb_colone;
+        workerthreads[nbthreads].MyIndex   = nbthreads+1;
+        workerthreads[nbthreads].param4D   = param4D;
+        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::initialiser_parseur()
+void ParMasterThread::initialiser_parseur()
 {
     NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
@@ -158,13 +173,12 @@ void ParWorkerThread::initialiser_parseur()
     NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
-
     for(int i=0; i<NbComponent; i++)
     {
-        myParserUmin[i].AddConstant   ("pi", PI);
-        myParserUmax[i].AddConstant   ("pi", PI);
-        myParserVmin[i].AddConstant   ("pi", PI);
-        myParserVmax[i].AddConstant   ("pi", PI);
+        myParserUmin[i].AddConstant("pi", PI);
+        myParserUmax[i].AddConstant("pi", PI);
+        myParserVmin[i].AddConstant("pi", PI);
+        myParserVmax[i].AddConstant("pi", PI);
         myParserX[i].AddConstant("pi", PI);
         myParserY[i].AddConstant("pi", PI);
         myParserZ[i].AddConstant("pi", PI);
@@ -362,57 +376,55 @@ void  Par3D::project_4D_to_3D(int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::AllocateParsersForMasterThread()
+void ParMasterThread::AllocateParsersForMasterThread()
 {
-    myParserX = new FunctionParser[NbComponent];
-
-    myParserY = new FunctionParser[NbComponent];
-
-    myParserZ = new FunctionParser[NbComponent];
-
-    myParserW = new FunctionParser[NbComponent];
-
-    Fct = new FunctionParser[NbDefinedFunctions];
-
-    RgbtParser = new FunctionParser[NbTextures];
-
-    VRgbtParser = new FunctionParser[NbTextures];
-
-    GradientParser = new FunctionParser;
-    NoiseParser = new FunctionParser;
-
-    NoiseShapeParser = new FunctionParser;
+    if(!ParsersAllocated)
+    {
+        myParserX = new FunctionParser[NbComponent];
+        myParserY = new FunctionParser[NbComponent];
+        myParserZ = new FunctionParser[NbComponent];
+        myParserW = new FunctionParser[NbComponent];
+        Fct = new FunctionParser[NbDefinedFunctions];
+        RgbtParser = new FunctionParser[NbTextures];
+        VRgbtParser = new FunctionParser[NbTextures];
+        GradientParser = new FunctionParser;
+        NoiseParser = new FunctionParser;
+        NoiseShapeParser = new FunctionParser;
+        ParsersAllocated = true;
+    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::AllocateParsersForWorkerThread(int nbcomp)
 {
-    myParserX = new FunctionParser[nbcomp];
-
-    myParserY = new FunctionParser[nbcomp];
-
-    myParserZ = new FunctionParser[nbcomp];
-
-    myParserW = new FunctionParser[nbcomp];
-
-    Fct = new FunctionParser[NbDefinedFunctions];
-
-    ParsersAllocated = true;
+    if(!ParsersAllocated)
+    {
+        myParserX = new FunctionParser[nbcomp];
+        myParserY = new FunctionParser[nbcomp];
+        myParserZ = new FunctionParser[nbcomp];
+        myParserW = new FunctionParser[nbcomp];
+        Fct = new FunctionParser[NbDefinedFunctions];
+        ParsersAllocated = true;
+    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::DeleteMasterParsers()
+void ParMasterThread::DeleteMasterParsers()
 {
-    delete[] myParserX;
-    delete[] myParserY;
-    delete[] myParserZ;
-    delete[] myParserW;
-    delete[] Fct;
-    delete[] RgbtParser;
-    delete[] VRgbtParser;
-    delete GradientParser;
-    delete NoiseParser;
-    delete NoiseShapeParser;
+    if(ParsersAllocated)
+    {
+        delete[] myParserX;
+        delete[] myParserY;
+        delete[] myParserZ;
+        delete[] myParserW;
+        delete[] Fct;
+        delete[] RgbtParser;
+        delete[] VRgbtParser;
+        delete GradientParser;
+        delete NoiseParser;
+        delete NoiseShapeParser;
+        ParsersAllocated = false;
+    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -420,46 +432,24 @@ void ParWorkerThread::DeleteWorkerParsers()
 {
     if(ParsersAllocated)
     {
-    delete[] myParserX;
-    delete[] myParserY;
-    delete[] myParserZ;
-    delete[] myParserW;
-    delete[] Fct;
+        delete[] myParserX;
+        delete[] myParserY;
+        delete[] myParserZ;
+        delete[] myParserW;
+        delete[] Fct;
+        ParsersAllocated = false;
     }
-    ParsersAllocated = false;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::InitMasterParsers()
+void ParMasterThread::InitMasterParsers()
 {
-    delete[] myParserX;
-    myParserX = new FunctionParser[NbComponent];
+    DeleteMasterParsers();
+    AllocateParsersForMasterThread();
 
-    delete[] myParserY;
-    myParserY = new FunctionParser[NbComponent];
-
-    delete[] myParserZ;
-    myParserZ = new FunctionParser[NbComponent];
-
-    delete[] myParserW;
-    myParserW = new FunctionParser[NbComponent];
-
-    delete[] Fct;
-    Fct = new FunctionParser[NbDefinedFunctions];
-
-    delete[] RgbtParser;
-    RgbtParser = new FunctionParser[NbTextures];
-
-    delete[] VRgbtParser;
-    VRgbtParser = new FunctionParser[NbTextures];
-
-    delete GradientParser;
-    GradientParser = new FunctionParser;
     GradientParser->AddConstant("pi", PI);
     Cstparser.AddConstant("pi", PI);
 
-    delete NoiseParser;
-    NoiseParser = new FunctionParser;
     NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -467,8 +457,6 @@ void ParWorkerThread::InitMasterParsers()
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    delete NoiseShapeParser;
-    NoiseShapeParser = new FunctionParser;
     NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -480,37 +468,29 @@ void ParWorkerThread::InitMasterParsers()
         myParserZ[i].AddConstant("pi", PI);
         myParserW[i].AddConstant("pi", PI);
         myParserCND[i].AddConstant("pi", PI);
-
         myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
         myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
         myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
         myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
         myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
-
     for(int i=0; i<NbTextures; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("pi", PI);
     }
-
     for(int i=0; i<NbDefinedFunctions; i++)
     {
         Fct[i].AddConstant("pi", PI);
     }
 }
 
-
-ErrorMessage  ParWorkerThread::parse_expression()
+ErrorMessage  ParMasterThread::parse_expression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     std::string varliste = "x,y,z,t";
@@ -885,233 +865,209 @@ ErrorMessage  ParWorkerThread::parse_expression()
     return stdError;
 }
 
-ErrorMessage  Par3D::parse_expression2(ParWorkerThread *ThreadsWorkers)
+ErrorMessage  Par3D::parse_expression2()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     ErrorMessage NodError;
-    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
+
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-    //Add defined constantes:
-    for(int i=0; i<ThreadsWorkers[0].Nb_paramfunctions+1; i++)
-    {
-            ThreadsWorkers[nbthreads].myParserX[i].AddConstant("pi", PI);
-            ThreadsWorkers[nbthreads].myParserY[i].AddConstant("pi", PI);
-            ThreadsWorkers[nbthreads].myParserZ[i].AddConstant("pi", PI);
-            ThreadsWorkers[nbthreads].myParserW[i].AddConstant("pi", PI);
+        //Add defined constantes:
+        for(int i=0; i<masterthread->Nb_paramfunctions+1; i++)
+        {
+            workerthreads[nbthreads].param4D   = masterthread->param4D;
+            workerthreads[nbthreads].myParserX[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].myParserY[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].myParserZ[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].myParserW[i].AddConstant("pi", PI);
 
-            ThreadsWorkers[nbthreads].myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-            ThreadsWorkers[nbthreads].myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            workerthreads[nbthreads].myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-            ThreadsWorkers[nbthreads].myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-            ThreadsWorkers[nbthreads].myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            workerthreads[nbthreads].myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-            ThreadsWorkers[nbthreads].myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-            ThreadsWorkers[nbthreads].myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-            ThreadsWorkers[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-            ThreadsWorkers[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            workerthreads[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-
-//Functions:
-
-            for(int ij=0; ij<ThreadsWorkers[0].Nb_functs; ij++)
+    //Functions:
+            for(int ij=0; ij<masterthread->Nb_functs; ij++)
             {
-                ThreadsWorkers[nbthreads].Fct[ij].AddConstant("pi", PI);
-
+                workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             }
 
-
-            for(int ii=0; ii<ThreadsWorkers[0].Nb_functs; ii++)
+            for(int ii=0; ii<masterthread->Nb_functs; ii++)
             {
-                for(int jj=0; jj<ThreadsWorkers[0].Nb_constants; jj++)
+                for(int jj=0; jj<masterthread->Nb_constants; jj++)
                 {
-                    if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[0].Cstparser.Parse(ThreadsWorkers[0].Consts[jj],"u")) >= 0)
+                    if ((masterthread->stdError.iErrorIndex = masterthread->Cstparser.Parse(masterthread->Consts[jj],"u")) >= 0)
                     {
-                        ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].Consts[jj];
-                        ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ConstNames[jj];
-                        return ThreadsWorkers[0].stdError;
+                        masterthread->stdError.strError = masterthread->Consts[jj];
+                        masterthread->stdError.strOrigine = masterthread->ConstNames[jj];
+                        return masterthread->stdError;
                     }
-                    ThreadsWorkers[nbthreads].Fct[ii].AddConstant(ThreadsWorkers[0].ConstNames[jj], ThreadsWorkers[0].Cstparser.Eval(vals));
+                    workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->Cstparser.Eval(vals));
                 }
 
                 //Add predefined constatnts:
-                for(int kk=0; kk<ThreadsWorkers[0].Nb_Sliders; kk++)
+                for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
                 {
-                    ThreadsWorkers[nbthreads].Fct[ii].AddConstant(ThreadsWorkers[0].SliderNames[kk], ThreadsWorkers[0].SliderValues[kk]);
+                    workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
                 }
             }
 
-
-            for(int ii=0; ii<ThreadsWorkers[0].Nb_functs; ii++)
+            for(int ii=0; ii<masterthread->Nb_functs; ii++)
             {
                 for(int jj=0; jj<ii; jj++)
-                    ThreadsWorkers[nbthreads].Fct[ii].AddFunction(ThreadsWorkers[0].FunctNames[jj], ThreadsWorkers[nbthreads].Fct[jj]);
-                if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].Fct[ii].Parse(ThreadsWorkers[0].Functs[ii],"u,v,t")) >= 0)
+                    workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
+                if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"u,v,t")) >= 0)
                 {
-                    ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].Functs[ii];
-                    ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].FunctNames[ii];
-                    return ThreadsWorkers[0].stdError;
+                    masterthread->stdError.strError = masterthread->Functs[ii];
+                    masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
+                    return masterthread->stdError;
                 }
             }
 
-
-
-
-
-        for(int j=0; j<ThreadsWorkers[0].Nb_constants; j++)
+        for(int j=0; j<masterthread->Nb_constants; j++)
         {
 
-            if ((ThreadsWorkers[0].stdError.iErrorIndex =ThreadsWorkers[0].Cstparser.Parse(ThreadsWorkers[0].Consts[j],"u")) >= 0)
+            if ((masterthread->stdError.iErrorIndex =masterthread->Cstparser.Parse(masterthread->Consts[j],"u")) >= 0)
             {
-                ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].Consts[j];
-                ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ConstNames[j];
-                return ThreadsWorkers[0].stdError;
+                masterthread->stdError.strError = masterthread->Consts[j];
+                masterthread->stdError.strOrigine = masterthread->ConstNames[j];
+                return masterthread->stdError;
             }
 
-            ThreadsWorkers[nbthreads].myParserX[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
-            ThreadsWorkers[nbthreads].myParserY[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
-            ThreadsWorkers[nbthreads].myParserZ[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
-            ThreadsWorkers[nbthreads].myParserW[i].AddConstant(ThreadsWorkers[0].ConstNames[j], ThreadsWorkers[0].Cstparser.Eval(vals));
+            workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
+            workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
+            workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
+            workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
         }
         //Add predefined sliders constatnts:
-        for(int k=0; k<ThreadsWorkers[0].Nb_Sliders; k++)
+        for(int k=0; k<masterthread->Nb_Sliders; k++)
         {
-            ThreadsWorkers[nbthreads].myParserX[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
-            ThreadsWorkers[nbthreads].myParserY[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
-            ThreadsWorkers[nbthreads].myParserZ[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
-            ThreadsWorkers[nbthreads].myParserW[i].AddConstant(ThreadsWorkers[0].SliderNames[k], ThreadsWorkers[0].SliderValues[k]);
+            workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
         }
     }
 
     // Add defined functions :
-    for(int i=0; i<ThreadsWorkers[0].Nb_paramfunctions+1; i++)
+    for(int i=0; i<masterthread->Nb_paramfunctions+1; i++)
     {
-        for(int j=0; j<ThreadsWorkers[0].Nb_functs; j++)
+        for(int j=0; j<masterthread->Nb_functs; j++)
         {
-            ThreadsWorkers[nbthreads].myParserX[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
-            ThreadsWorkers[nbthreads].myParserY[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
-            ThreadsWorkers[nbthreads].myParserZ[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
-            ThreadsWorkers[nbthreads].myParserW[i].AddFunction(ThreadsWorkers[0].FunctNames[j], ThreadsWorkers[nbthreads].Fct[j]);
+            workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            workerthreads[nbthreads].myParserY[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            workerthreads[nbthreads].myParserZ[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            workerthreads[nbthreads].myParserW[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
         }
     }
 
-    for(int index=0; index< ThreadsWorkers[0].Nb_paramfunctions + 1; index++)
+    for(int index=0; index< masterthread->Nb_paramfunctions + 1; index++)
     {
-        if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserX[index].Parse(ThreadsWorkers[0].ParamStructs[index].fx, "u,v,t")) >= 0)
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
         {
-            ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fx;
-            ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
-            return ThreadsWorkers[0].stdError;
+            masterthread->stdError.strError = masterthread->ParamStructs[index].fx;
+            masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
+            return masterthread->stdError;
         }
 
-        if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserY[index].Parse(ThreadsWorkers[0].ParamStructs[index].fy, "u,v,t")) >= 0)
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t")) >= 0)
         {
-            ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fy;
-            ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
-            return ThreadsWorkers[0].stdError;
+            masterthread->stdError.strError = masterthread->ParamStructs[index].fy;
+            masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
+            return masterthread->stdError;
         }
 
-        if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserZ[index].Parse(ThreadsWorkers[0].ParamStructs[index].fz, "u,v,t")) >= 0)
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t")) >= 0)
         {
-            ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fz;
-            ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
-            return ThreadsWorkers[0].stdError;
+            masterthread->stdError.strError = masterthread->ParamStructs[index].fz;
+            masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
+            return masterthread->stdError;
         }
 
         if(param4D == 1)
-            if ((ThreadsWorkers[0].stdError.iErrorIndex = ThreadsWorkers[nbthreads].myParserW[index].Parse(ThreadsWorkers[0].ParamStructs[index].fw, "u,v,t")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t")) >= 0)
             {
-                ThreadsWorkers[0].stdError.strError = ThreadsWorkers[0].ParamStructs[index].fw;
-                ThreadsWorkers[0].stdError.strOrigine = ThreadsWorkers[0].ParamStructs[index].index;
-                return ThreadsWorkers[0].stdError;
+                masterthread->stdError.strError = masterthread->ParamStructs[index].fw;
+                masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
+                return masterthread->stdError;
             }
-    }
+        }
     }
     return NodError;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::DeepThreadCopy(ParWorkerThread *WorkerThreadsTmp)
+void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
-    int tmp = nb_ligne/WorkerThreadsNumber;
-
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        WorkerThreadsTmp[nbthreads].expression_X = workerthreads[0].expression_X;
-        WorkerThreadsTmp[nbthreads].expression_Y = workerthreads[0].expression_Y;
-        WorkerThreadsTmp[nbthreads].expression_Z = workerthreads[0].expression_Z;
-        WorkerThreadsTmp[nbthreads].expression_W = workerthreads[0].expression_W;
-        WorkerThreadsTmp[nbthreads].expression_CND = workerthreads[0].expression_CND;
-        WorkerThreadsTmp[nbthreads].inf_u  = workerthreads[0].inf_u;
-        WorkerThreadsTmp[nbthreads].sup_u  = workerthreads[0].sup_u;
-        WorkerThreadsTmp[nbthreads].inf_v  = workerthreads[0].inf_v;
-        WorkerThreadsTmp[nbthreads].sup_v  = workerthreads[0].sup_v;
-        WorkerThreadsTmp[nbthreads].Grid   = workerthreads[0].Grid;
-        WorkerThreadsTmp[nbthreads].Funct  = workerthreads[0].Funct;
-        WorkerThreadsTmp[nbthreads].Varu   = workerthreads[0].Varu;
-        WorkerThreadsTmp[nbthreads].Const  = workerthreads[0].Const;
-        WorkerThreadsTmp[nbthreads].Rgbt   = workerthreads[0].Rgbt;
-        WorkerThreadsTmp[nbthreads].VRgbt  = workerthreads[0].VRgbt;
-
-        WorkerThreadsTmp[nbthreads].nb_ligne = workerthreads[0].nb_ligne;
-        WorkerThreadsTmp[nbthreads].nb_colone = workerthreads[0].nb_colone;
-        WorkerThreadsTmp[nbthreads].MyIndex = nbthreads;
+        WorkerThreadsTmp[nbthreads].nb_ligne = masterthread->nb_ligne;
+        WorkerThreadsTmp[nbthreads].nb_colone = masterthread->nb_colone;
+        WorkerThreadsTmp[nbthreads].MyIndex = nbthreads+1;
+        WorkerThreadsTmp[nbthreads].param4D   = param4D;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
-
-        WorkerThreadsTmp[nbthreads].iStart   = nbthreads*tmp;
-        if(WorkerThreadsTmp[nbthreads].MyIndex == (WorkerThreadsNumber-1))
-            WorkerThreadsTmp[nbthreads].iFinish = workerthreads[0].nb_ligne;
-        else
-            WorkerThreadsTmp[nbthreads].iFinish = (nbthreads+1)*tmp;
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-ErrorMessage Par3D::ThreadParsersCopy(ParWorkerThread *WorkerThreadsTmp)
+void Par3D::MasterThreadCopy(ParMasterThread *MasterThreadsTmp)
 {
-    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
+        MasterThreadsTmp->expression_X   = masterthread->expression_X;
+        MasterThreadsTmp->expression_Y   = masterthread->expression_Y;
+        MasterThreadsTmp->expression_Z   = masterthread->expression_Z;
+        MasterThreadsTmp->expression_W   = masterthread->expression_W;
+        MasterThreadsTmp->expression_CND = masterthread->expression_CND;
+        MasterThreadsTmp->inf_u  		 = masterthread->inf_u;
+        MasterThreadsTmp->sup_u          = masterthread->sup_u;
+        MasterThreadsTmp->inf_v          = masterthread->inf_v;
+        MasterThreadsTmp->sup_v          = masterthread->sup_v;
+        MasterThreadsTmp->Grid           = masterthread->Grid;
+        MasterThreadsTmp->Funct          = masterthread->Funct;
+        MasterThreadsTmp->Varu           = masterthread->Varu;
+        MasterThreadsTmp->Const          = masterthread->Const;
+        MasterThreadsTmp->Rgbt           = masterthread->Rgbt;
+        MasterThreadsTmp->VRgbt          = masterthread->VRgbt;
+
+        MasterThreadsTmp->nb_ligne       = nb_ligne;
+        MasterThreadsTmp->nb_colone      = nb_colone;
+        MasterThreadsTmp->MyIndex        = 0;
+        MasterThreadsTmp->param4D        = param4D;
+        MasterThreadsTmp->WorkerThreadsNumber = WorkerThreadsNumber;
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+ErrorMessage Par3D::ThreadParsersCopy()
+{
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        for(int i=0; i< workerthreads[0].Nb_paramfunctions+1; i++)
+        for(int i=0; i< masterthread->Nb_paramfunctions+1; i++)
         {
-            WorkerThreadsTmp[nbthreads].dif_u[i] = workerthreads[0].dif_u[i];
-            WorkerThreadsTmp[nbthreads].dif_v[i] = workerthreads[0].dif_v[i];
-            WorkerThreadsTmp[nbthreads].u_inf[i] = workerthreads[0].u_inf[i];
-            WorkerThreadsTmp[nbthreads].v_inf[i] = workerthreads[0].v_inf[i];
+            workerthreads[nbthreads].dif_u[i] = masterthread->dif_u[i];
+            workerthreads[nbthreads].dif_v[i] = masterthread->dif_v[i];
+            workerthreads[nbthreads].u_inf[i] = masterthread->u_inf[i];
+            workerthreads[nbthreads].v_inf[i] = masterthread->v_inf[i];
+            workerthreads[nbthreads].param4D  = masterthread->param4D;
         }
     }
 
-    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
-        WorkerThreadsTmp[nbthreads].DeleteWorkerParsers();
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+        workerthreads[nbthreads].DeleteWorkerParsers();
 
-    for(int nbthreads=1; nbthreads<WorkerThreadsNumber; nbthreads++)
-        WorkerThreadsTmp[nbthreads].AllocateParsersForWorkerThread(WorkerThreadsTmp[0].Nb_paramfunctions+1);
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1);
 
-    return(parse_expression2(WorkerThreadsTmp));
-            /*
-WorkerThreadsTmp[nbthreads].myParserX[i].data = new FunctionParser::Data(*(workerthreads[0].myParserX[i].data));
-WorkerThreadsTmp[nbthreads].myParserX[i].data->referenceCounter = workerthreads[0].myParserX[i].data->referenceCounter;
-WorkerThreadsTmp[nbthreads].myParserX[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserX[i].parseErrorType;
-WorkerThreadsTmp[nbthreads].myParserX[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserX[i].evalErrorType;
-
-WorkerThreadsTmp[nbthreads].myParserY[i].data = new FunctionParser::Data(*(workerthreads[0].myParserY[i].data));
-WorkerThreadsTmp[nbthreads].myParserY[i].data->referenceCounter = workerthreads[0].myParserY[i].data->referenceCounter;
-WorkerThreadsTmp[nbthreads].myParserY[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserY[i].parseErrorType;
-WorkerThreadsTmp[nbthreads].myParserY[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserY[i].evalErrorType;
-
-WorkerThreadsTmp[nbthreads].myParserZ[i].data = new FunctionParser::Data(*(workerthreads[0].myParserZ[i].data));
-WorkerThreadsTmp[nbthreads].myParserZ[i].data->referenceCounter  = workerthreads[0].myParserZ[i].data->referenceCounter;
-WorkerThreadsTmp[nbthreads].myParserZ[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserZ[i].parseErrorType;
-WorkerThreadsTmp[nbthreads].myParserZ[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserZ[i].evalErrorType;
-
-WorkerThreadsTmp[nbthreads].myParserW[i].data = new FunctionParser::Data(*(workerthreads[0].myParserW[i].data));
-WorkerThreadsTmp[nbthreads].myParserW[i].data->referenceCounter  = workerthreads[0].myParserW[i].data->referenceCounter;
-WorkerThreadsTmp[nbthreads].myParserW[i].parseErrorType = WorkerThreadsTmp[nbthreads].myParserW[i].parseErrorType;
-WorkerThreadsTmp[nbthreads].myParserW[i].evalErrorType = WorkerThreadsTmp[nbthreads].myParserW[i].evalErrorType;
-*/
+    return(parse_expression2());
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-int ParWorkerThread::HowManyVariables(std::string NewVariables, int type)
+int ParMasterThread::HowManyVariables(std::string NewVariables, int type)
 {
     std::string tmp, tmp2,tmp3;
     int position =0, jpos;
@@ -1189,7 +1145,7 @@ int ParWorkerThread::HowManyVariables(std::string NewVariables, int type)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-int ParWorkerThread::HowManyParamSurface(std::string ParamFct, int type)
+int ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 {
     std::string tmp, tmp2;
     int position =0, jpos;
@@ -1336,17 +1292,17 @@ void Par3D::CalculateNoiseShapePoints(int NewPosition)
 {
     double tmp, val[4];
     int I =0;
-    val[3] = workerthreads[0].stepMorph;
-    workerthreads[0].NoiseShape = "NoiseW(x,y,z,1,2,0)";
-    workerthreads[0].NoiseShapeParser->Parse(workerthreads[0].NoiseShape, "x,y,z,t");
-    if(workerthreads[0].NoiseShape != "")
+    val[3] = masterthread->stepMorph;
+    masterthread->NoiseShape = "NoiseW(x,y,z,1,2,0)";
+    masterthread->NoiseShapeParser->Parse(masterthread->NoiseShape, "x,y,z,t");
+    if(masterthread->NoiseShape != "")
         for(int j=0; j < nb_ligne   ; j++)
             for(int i= 0; i < nb_colone; i++)
             {
                 val[0]= NormVertexTab[I  + 3 + TypeDrawinNormStep +NewPosition ];
                 val[1]= NormVertexTab[I  + 4 + TypeDrawinNormStep +NewPosition ];
                 val[2]= NormVertexTab[I  + 5 + TypeDrawinNormStep +NewPosition ];
-                tmp  = workerthreads[0].NoiseShapeParser->Eval(val);
+                tmp  = masterthread->NoiseShapeParser->Eval(val);
                 NormVertexTab[I + 3 + TypeDrawinNormStep +NewPosition ] *= tmp;
                 NormVertexTab[I + 4 + TypeDrawinNormStep +NewPosition ] *= tmp;
                 NormVertexTab[I + 5 + TypeDrawinNormStep +NewPosition ] *= tmp;
@@ -1359,24 +1315,24 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
     int Jprime;
     double tmp, ValCol[100], val[9];
-    val[3] = workerthreads[0].stepMorph;
+    val[3] = masterthread->stepMorph;
 
     static int recalculate = 1;
 
-    if((workerthreads[0].activeMorph == 1) &&   (recalculate !=1))
+    if((masterthread->activeMorph == 1) &&   (recalculate !=1))
     {
         return;
     }
-    if(workerthreads[0].activeMorph == 1)
+    if(masterthread->activeMorph == 1)
         recalculate = -1;
     else
         recalculate = 1;
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(int i=0; i<workerthreads[0].Nb_vrgbts && i<100; i++)
+        for(int i=0; i<masterthread->Nb_vrgbts && i<100; i++)
         {
-            ValCol[i] = workerthreads[0].VRgbtParser[i].Eval(val);
+            ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
 
         for(int i= 0; i < NbVertexTmp; i++)
@@ -1385,8 +1341,8 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            if(workerthreads[0].Noise != "")
-                tmp  = workerthreads[0].NoiseParser->Eval(val);
+            if(masterthread->Noise != "")
+                tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -1394,11 +1350,11 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            tmp  = workerthreads[0].GradientParser->Eval(val);
+            tmp  = masterthread->GradientParser->Eval(val);
 
             int c= (int)tmp;
             tmp = std::abs(tmp - (double)c);
-            for (int j=0; j < workerthreads[0].Nb_vrgbts && j < 100; j+=5)
+            for (int j=0; j < masterthread->Nb_vrgbts && j < 100; j+=5)
                 if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
@@ -1422,15 +1378,15 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             Jprime = (i)/(nb_ligne);
             val[6] = (double)Jprime;
             val[4] = val[6]/(double)(nb_ligne) ;
-            val[4] = val[4] * workerthreads[0].dif_v[0]  + workerthreads[0].v_inf[0];
+            val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
 
             Jprime = (i) %  (nb_colone);
             val[5] =  (double)Jprime;
             val[3] = val[5]/(double)(nb_colone) ;
-            val[3] = val[3] * workerthreads[0].dif_u[0]  + workerthreads[0].u_inf[0];
+            val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
 
-            if(workerthreads[0].Noise != "")
-                tmp  = workerthreads[0].NoiseParser->Eval(val);
+            if(masterthread->Noise != "")
+                tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -1440,10 +1396,10 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[3]*= tmp;
             val[4]*= tmp;
 
-            NormVertexTab[i*TypeDrawin  ] = workerthreads[0].RgbtParser[0].Eval(val);
-            NormVertexTab[i*TypeDrawin+1] = workerthreads[0].RgbtParser[1].Eval(val);
-            NormVertexTab[i*TypeDrawin+2] = workerthreads[0].RgbtParser[2].Eval(val);
-            NormVertexTab[i*TypeDrawin+3] = workerthreads[0].RgbtParser[3].Eval(val);
+            NormVertexTab[i*TypeDrawin  ] = masterthread->RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin+1] = masterthread->RgbtParser[1].Eval(val);
+            NormVertexTab[i*TypeDrawin+2] = masterthread->RgbtParser[2].Eval(val);
+            NormVertexTab[i*TypeDrawin+3] = masterthread->RgbtParser[3].Eval(val);
         }
     }
 }
@@ -1524,16 +1480,16 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
     double vals[4];
-    vals[3] = workerthreads[0].stepMorph;
+    vals[3] = masterthread->stepMorph;
 
-    if (workerthreads[0].ParConditionRequired == 1)
+    if (masterthread->ParConditionRequired == 1)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
             vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
             vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
             vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
-            WichPointVerifyCond[i] = (workerthreads[0].myParserCND[0].Eval(vals) == 1);
+            WichPointVerifyCond[i] = (masterthread->myParserCND[0].Eval(vals) == 1);
             if(WichPointVerifyCond[i])
             {
                 NormVertexTab[i*TypeDrawin      ] = 0.1;
@@ -1604,7 +1560,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Bprime[0] = NormVertexTab[3+TypeDrawin*Aindex    + TypeDrawinNormStep];
                 Bprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
                 Bprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
-                Bprime[3] = workerthreads[0].stepMorph;
+                Bprime[3] = masterthread->stepMorph;
 
                 DiffX = (NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
                 DiffY = (NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
@@ -1612,7 +1568,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(workerthreads[0].myParserCND[0].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(masterthread->myParserCND[0].Eval(Bprime) == 1 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1622,7 +1578,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!(workerthreads[0].myParserCND[0].Eval(Bprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->myParserCND[0].Eval(Bprime) == 1) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1635,7 +1591,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Cprime[0] = NormVertexTab[3+TypeDrawin*Aindex    + TypeDrawinNormStep];
                 Cprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
                 Cprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
-                Cprime[3] = workerthreads[0].stepMorph;
+                Cprime[3] = masterthread->stepMorph;
 
                 DiffX = (NormVertexTab[3+TypeDrawin*Cindex    + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex     + TypeDrawinNormStep])/20;
                 DiffY = (NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
@@ -1643,7 +1599,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(workerthreads[0].myParserCND[0].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(masterthread->myParserCND[0].Eval(Cprime) == 1 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1653,7 +1609,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!(workerthreads[0].myParserCND[0].Eval(Cprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->myParserCND[0].Eval(Cprime) == 1) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1814,7 +1770,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         components->NbTrianglesNotVerifyCND = l;
         components->NbTrianglesBorderCND = M;
 
-        for(int fctnb= 0; fctnb< workerthreads[0].Nb_paramfunctions+1; fctnb++)
+        for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
         {
             if(components != NULL)
             {
@@ -1865,22 +1821,18 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
 {
     int tmp= WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
-
     //Create new workerthreads set:
-    ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber];
-    workerthreadstmp[0].AllocateParsersForThread();
-    /*
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
-    {
-        workerthreadstmp[nbthreads].allocateparser();
-    }
-    */
-    DeepThreadCopy(workerthreadstmp);
+    ParMasterThread *masterthreadtmp  = new ParMasterThread;
+    ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber-1];
+    masterthreadtmp->AllocateParsersForThread();
 
+    MasterThreadCopy(masterthreadtmp);
+    WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
-    workerthreads[0].DeleteMasterParsers();
+    masterthread->DeleteMasterParsers();
+    delete masterthread;
 
-    for(int i=1; i<tmp; i++)
+    for(int i=0; i<tmp-1; i++)
     {
         workerthreads[i].DeleteWorkerParsers();
     }
@@ -1888,14 +1840,16 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
 
     //Assigne newly allocated memory
     workerthreads = workerthreadstmp;
+    masterthread  = masterthreadtmp;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
-    for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+    for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
+    masterthread->StopCalculations = StopCalculations;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
@@ -1907,8 +1861,8 @@ void  ParWorkerThread::calcul_objet(int cmp)
 
     if(activeMorph == 1)
         stepMorph += pace;
-
     vals[2]          = stepMorph;
+
     int tmp = nb_ligne/WorkerThreadsNumber;
     iStart   = MyIndex*tmp;
     if(MyIndex == (WorkerThreadsNumber-1))
@@ -1968,7 +1922,7 @@ void  Par3D::ParamBuild(
     IndexPolyTabMin = IndexPolyTabMinPt;
 
     if(components != NULL)
-        components->NbParametric = workerthreads[0].Nb_paramfunctions+1;
+        components->NbParametric = masterthread->Nb_paramfunctions+1;
 
     if(TriangleListeCND != NULL)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
@@ -1977,31 +1931,29 @@ void  Par3D::ParamBuild(
         WichPointVerifyCond = typeCND;
 
     stopcalculations(false);
-
-    for(int fctnb= 0; fctnb< workerthreads[0].Nb_paramfunctions+1; fctnb++)
+    for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
     {
-
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        masterthread->CurrentPar = fctnb;
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentPar = fctnb;
 
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        masterthread->start();
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].start();
 
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        masterthread->wait();
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].wait();
 
         if(StopCalculations)
             return;
-
         if(param4D == 1)
         {
             Anim_Rot4D (fctnb*NbVertex);
         }
-
         calcul_Norm(fctnb*TypeDrawin*NbVertex);
         make_PolyIndexMin( fctnb,  IsoPos);  //Before
         make_PolyIndexTri( fctnb,  IsoPos);
-
         if(components != NULL)
         {
             components->Parametricpositions[2*fctnb  ]  = fctnb*6*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1)  /*+  IsoPos*/; //save the starting position of this component
@@ -2010,28 +1962,28 @@ void  Par3D::ParamBuild(
     }
 
     // Save Number of Polys and vertex :
-    NbVertexTmp                 = (workerthreads[0].Nb_paramfunctions+1)*(nb_ligne)*(nb_colone);
-    NbTriangleIsoSurfaceTmp     = (workerthreads[0].Nb_paramfunctions+1)*2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-    NbPolyMinimalTopology       = (workerthreads[0].Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-    PreviousSizeMinimalTopology = 5*(workerthreads[0].Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+    NbVertexTmp                 = (masterthread->Nb_paramfunctions+1)*(nb_ligne)*(nb_colone);
+    NbTriangleIsoSurfaceTmp     = (masterthread->Nb_paramfunctions+1)*2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+    NbPolyMinimalTopology       = (masterthread->Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+    PreviousSizeMinimalTopology = 5*(masterthread->Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
 
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
     // Pigment, Texture and Noise :
-    if(workerthreads[0].VRgbt != "" && (workerthreads[0].Nb_vrgbts %5)==0 )
+    if(masterthread->VRgbt != "" && (masterthread->Nb_vrgbts %5)==0 )
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments
-        components->NoiseParam.VRgbtParser = workerthreads[0].VRgbtParser;
-        components->NoiseParam.GradientParser = workerthreads[0].GradientParser;
-        components->NoiseParam.Nb_vrgbts = workerthreads[0].Nb_vrgbts;
+        components->NoiseParam.VRgbtParser = masterthread->VRgbtParser;
+        components->NoiseParam.GradientParser = masterthread->GradientParser;
+        components->NoiseParam.Nb_vrgbts = masterthread->Nb_vrgbts;
     }
-    else if(workerthreads[0].Nb_rgbts >= 4)
+    else if(masterthread->Nb_rgbts >= 4)
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 1; //Texture
-        components->NoiseParam.RgbtParser = workerthreads[0].RgbtParser;
+        components->NoiseParam.RgbtParser = masterthread->RgbtParser;
     }
     else
     {
@@ -2039,7 +1991,7 @@ void  Par3D::ParamBuild(
         components->NoiseParam.NoiseType = -1; //No Pigments or texture
     }
 
-    if(workerthreads[0].Noise == "")
+    if(masterthread->Noise == "")
         components->NoiseParam.NoiseShape = 0;
     else
         components->NoiseParam.NoiseShape = 1;
