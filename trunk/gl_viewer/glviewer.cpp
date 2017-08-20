@@ -516,9 +516,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
     }
     else
     {
-        LocalScene.componentsinfos.NoiseParam.RgbtParser = ParObjetThread->ParObjet->workerthreads[0].RgbtParser;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjetThread->ParObjet->workerthreads[0].NoiseParser;
-        ParObjetThread->ParObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.RgbtParser = ParObjetThread->ParObjet->masterthread->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjetThread->ParObjet->masterthread->NoiseParser;
+        ParObjetThread->ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
 
     for(unsigned int i =0; i < LocalScene.VertxNumber; i++)
@@ -531,11 +531,11 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         {
             Jprime = (i) %  (ParObjetThread->ParObjet->nb_colone);
             val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_colone) ;
-            val[3] = val[3] * ParObjetThread->ParObjet->workerthreads[0].dif_u[0]  + ParObjetThread->ParObjet->workerthreads[0].u_inf[0];
+            val[3] = val[3] * ParObjetThread->ParObjet->masterthread->dif_u[0]  + ParObjetThread->ParObjet->masterthread->u_inf[0];
 
             Jprime = (i)/(ParObjetThread->ParObjet->nb_ligne);
             val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_ligne) ;
-            val[4] = val[4] * ParObjetThread->ParObjet->workerthreads[0].dif_v[0]  + ParObjetThread->ParObjet->workerthreads[0].v_inf[0];
+            val[4] = val[4] * ParObjetThread->ParObjet->masterthread->dif_v[0]  + ParObjetThread->ParObjet->masterthread->v_inf[0];
         }
 
         if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
@@ -579,11 +579,11 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     }
     else
     {
-        LocalScene.componentsinfos.NoiseParam.VRgbtParser = ParObjetThread->ParObjet->workerthreads[0].VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam.GradientParser = ParObjetThread->ParObjet->workerthreads[0].GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjetThread->ParObjet->workerthreads[0].Nb_vrgbts;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjetThread->ParObjet->workerthreads[0].NoiseParser;
-        ParObjetThread->ParObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.VRgbtParser = ParObjetThread->ParObjet->masterthread->VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam.GradientParser = ParObjetThread->ParObjet->masterthread->GradientParser;
+        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjetThread->ParObjet->masterthread->Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjetThread->ParObjet->masterthread->NoiseParser;
+        ParObjetThread->ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
 
     for(int i=0; i<LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && i<100; i++)
@@ -643,11 +643,11 @@ void OpenGlWidget::CalculateColorsPoints()
 
             Jprime = (i) %  (ParObjetThread->ParObjet->nb_colone);
             val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_colone) ;
-            val[3] = val[3] * ParObjetThread->ParObjet->workerthreads[0].dif_u[0]  + ParObjetThread->ParObjet->workerthreads[0].u_inf[0];
+            val[3] = val[3] * ParObjetThread->ParObjet->masterthread->dif_u[0]  + ParObjetThread->ParObjet->masterthread->u_inf[0];
 
             Jprime = (i)/(ParObjetThread->ParObjet->nb_ligne);
             val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_ligne) ;
-            val[4] = val[4] * ParObjetThread->ParObjet->workerthreads[0].dif_v[0]  + ParObjetThread->ParObjet->workerthreads[0].v_inf[0];
+            val[4] = val[4] * ParObjetThread->ParObjet->masterthread->dif_v[0]  + ParObjetThread->ParObjet->masterthread->v_inf[0];
 
             if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
                 tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
