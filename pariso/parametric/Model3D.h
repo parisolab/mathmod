@@ -46,55 +46,68 @@ struct   ParStruct
 class ParWorkerThread : public QThread
 {
 public :
-    ErrorMessage stdError;
     int nb_ligne, nb_colone;
     int coupure_col, nb_licol, coupure_ligne;
-    FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser myParserCND[NbComponent],
-                   myParserUmin[NbComponent], myParserUmax[NbComponent],
-                   myParserVmin[NbComponent], myParserVmax[NbComponent],
-                   Var[NbVariables], Cstparser;
-    ParStruct ParamStructs[NbComponent];
-    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, activeMorph, Nb_newvariables, Nb_constants, ParConditionRequired;
-    std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
-        Varu, Const,  Rgbt, Grid;
-    std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
-        RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
-        Gradient, Noise, NoiseShape, SliderNames[50];
+    FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
     double  v_inf[NbComponent], v_sup[NbComponent],u_inf[NbComponent],u_sup[NbComponent],dif_v[NbComponent],dif_u[NbComponent];
-    double SliderValues[5000];
     double stepMorph, pace;
-    int iStart, iFinish, MyIndex, WorkerThreadsNumber;
-    unsigned int NbPolygnNbVertex[2], nbBorderPts, param4D, CurrentPar;
-    float Lacunarity, Gain;
-    int Octaves;
-    bool StopCalculations;
-    bool ParsersAllocated;
+    int iStart, iFinish, MyIndex, WorkerThreadsNumber, activeMorph, param4D;
+    bool StopCalculations, ParsersAllocated;
+    unsigned int CurrentPar;
 
 public :
     void ParCompute(int);
-    void initialiser_parseur();
-    void InitMasterParsers();
     void calcul_objet(int component =0);
-    int  HowManyParamSurface(std::string, int);
-    int  HowManyVariables(std::string, int);
-    ErrorMessage parse_expression();
     void AllocateParsersForWorkerThread(int nbcomp);
-    void AllocateParsersForMasterThread();
     void AllocateParsersForThread();
-    void DeleteMasterParsers();
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
     ~ParWorkerThread();
 };
 
+class ParMasterThread : public ParWorkerThread
+{
+public :
+    ErrorMessage stdError;
+    FunctionParser *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
+    FunctionParser myParserCND[NbComponent],
+                   myParserUmin[NbComponent], myParserUmax[NbComponent],
+                   myParserVmin[NbComponent], myParserVmax[NbComponent],
+                   Var[NbVariables], Cstparser;
+    ParStruct ParamStructs[NbComponent];
+    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, Nb_constants, ParConditionRequired;
+    std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
+        Varu, Const,  Rgbt, Grid;
+    std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
+        RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
+        Gradient, Noise, NoiseShape, SliderNames[50];
+    //double  v_inf[NbComponent], v_sup[NbComponent],u_inf[NbComponent],u_sup[NbComponent],dif_v[NbComponent],dif_u[NbComponent];
+    double SliderValues[5000];
+    unsigned int NbPolygnNbVertex[2], nbBorderPts;
+    float Lacunarity, Gain;
+    int Octaves;
+
+public :
+    void initialiser_parseur();
+    void InitMasterParsers();
+    int  HowManyParamSurface(std::string, int);
+    int  HowManyVariables(std::string, int);
+    ErrorMessage parse_expression();
+    void AllocateParsersForMasterThread();
+    void AllocateParsersForThread();
+    void DeleteMasterParsers();
+    //void run() Q_DECL_OVERRIDE;
+    ParMasterThread();
+    ~ParMasterThread();
+};
 
 /** The representation of a 3D model */
 class Par3D   : public QThread
 {
 public:
     ObjectProperties *LocalScene;
+    ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
     //float* NormVertexTab;
     //float* ExtraDimension;
@@ -144,8 +157,9 @@ public:
     void BuildPar();
     void UpdateThredsNumber(int);
     void stopcalculations(bool);
-    void DeepThreadCopy(ParWorkerThread *);
-    ErrorMessage ThreadParsersCopy(ParWorkerThread *);
-    ErrorMessage  parse_expression2(ParWorkerThread *);
+    void WorkerThreadCopy(ParWorkerThread *);
+    void MasterThreadCopy(ParMasterThread *);
+    ErrorMessage ThreadParsersCopy();
+    ErrorMessage  parse_expression2();
     void run() Q_DECL_OVERRIDE;
 };
