@@ -490,6 +490,14 @@ void ParMasterThread::InitMasterParsers()
     }
 }
 
+ErrorMessage  Par3D::ParsePar()
+{
+    ErrorMessage err = masterthread->parse_expression();
+    if(err.iErrorIndex < 0)
+        ThreadParsersCopy();
+    return err;
+}
+
 ErrorMessage  ParMasterThread::parse_expression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
