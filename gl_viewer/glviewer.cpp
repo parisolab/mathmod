@@ -928,11 +928,19 @@ void OpenGlWidget::morph()
 {
     LocalScene.morph *= -1;
     FistTimecalibrate *= -1;
+
+    //Isosurfaces:
     for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber; nbthreads++)
     {
         IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated =  LocalScene.morph;
-        ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
     }
+
+    //Parametric surfaces:
+    ParObjetThread->ParObjet->masterthread->activeMorph = LocalScene.morph;
+    for(int nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+        ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+    ParObjetThread->ParObjet->ParsePar();
+
     if (LocalScene.morph == 1)
         timer->start( latence);
     else if(LocalScene.anim == -1)
