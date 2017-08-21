@@ -161,5 +161,6 @@ public:
     void MasterThreadCopy(ParMasterThread *);
     ErrorMessage ThreadParsersCopy();
     ErrorMessage  parse_expression2();
+    ErrorMessage  ParsePar();
     void run() Q_DECL_OVERRIDE;
 };
