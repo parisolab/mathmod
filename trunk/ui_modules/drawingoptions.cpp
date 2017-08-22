@@ -5956,20 +5956,22 @@ void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     ui.label_5->setText("1/"+QString::number(value));
     for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-    {
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].pace  = (double)1/(double)value;
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].pace = (double)1/(double)value;
-    }
+
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->pace = (double)1/(double)value;
+    for(int nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].pace  = (double)1/(double)value;
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_InitTButton_clicked()
 {
     int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
-    for(int nbthreds=0; nbthreds < maxnbthreads ; nbthreds++)
-    {
+    for(int nbthreds=0; nbthreds < maxnbthreads; nbthreds++)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].stepMorph = 0;
+
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->stepMorph = 0;
+    for(int nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].stepMorph = 0;
-    }
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_pushButton_2_clicked()
