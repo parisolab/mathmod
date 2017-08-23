@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "mathmod.h"
 
-static int TypeDrawin= 10;
 MathMod::~MathMod()
 {
 }
