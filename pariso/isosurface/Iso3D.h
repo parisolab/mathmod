@@ -71,7 +71,6 @@ struct  Voxel
 class IsoWorkerThread : public QThread
 {
 public :
-
     FunctionParser * implicitFunctionParser, *Fct, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser;
     FunctionParser IsoConditionParser[NbComponent],
                    xSupParser[NbComponent], xInfParser[NbComponent],
@@ -99,19 +98,12 @@ public :
     float Lacunarity, Gain;
     int Octaves, CurrentIso;
     double xLocal[NbComponent][NbMaxGrid],yLocal[NbComponent][NbMaxGrid], zLocal[NbComponent][NbMaxGrid];
-    //double *xlocal;
-    double X_Start, X_End, X_Step,
-           Y_Start, Y_End, Y_Step,
-           Z_Start, Z_End, Z_Step;
     double x_Step[NbComponent], y_Step[NbComponent], z_Step[NbComponent];
-    double  vr[3*NbVariables][NbComponent][NbMaxGrid];//3* because each varu can be used for x,y or z
+    double  vr[3*NbVariables][NbComponent][NbMaxGrid];
     ImplicitStruct ImplicitStructs[NbComponent];
     ErrorMessage stdError;
     double SliderValues[5000];
-    double Xamplitude[NbComponent], Yamplitude[NbComponent], Zamplitude[NbComponent];
-
     int TimeFlow, iStart, iFinish;
-    int  IsoMesh, IsoInfos, NbTriangleUsed, hauteur_fenetre, NbVertex;
     unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
     bool StopCalculations;
     public :

@@ -121,9 +121,6 @@ IsoWorkerThread::IsoWorkerThread()
     YlimitInf   = "-4";
     ZlimitInf   = "-4";
     nb_ligne = nb_colon = nb_depth = 40;
-    IsoMesh = -1;
-    IsoInfos = 1; /// To show infos
-    hauteur_fenetre = 650;
     stepMorph = 0;
     pace = (double)1/(double)30;
     morph_activated = -1;
@@ -1231,9 +1228,9 @@ ErrorMessage IsoWorkerThread::ParseExpression(std::string VariableListe)
         yLocal[IsoIndex][0]=ySupParser[IsoIndex].Eval(vals);
         zLocal[IsoIndex][0]=zSupParser[IsoIndex].Eval(vals);
 
-        x_Step[IsoIndex] = (Xamplitude[IsoIndex] = (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals)))/(nb_ligne-1);
-        y_Step[IsoIndex] = (Yamplitude[IsoIndex] = (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals)))/(limitY-1);
-        z_Step[IsoIndex] = (Zamplitude[IsoIndex] = (zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals)))/(limitZ-1);
+        x_Step[IsoIndex] = (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(nb_ligne-1);
+        y_Step[IsoIndex] = (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
+        z_Step[IsoIndex] = (zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
         for (int i= 1; i < limitX; i++) xLocal[IsoIndex][i] = xLocal[IsoIndex][i-1] - x_Step[IsoIndex];
         for (int j= 1; j < limitY; j++) yLocal[IsoIndex][j] = yLocal[IsoIndex][j-1] - y_Step[IsoIndex];
