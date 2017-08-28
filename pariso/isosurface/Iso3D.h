@@ -75,7 +75,7 @@ class IsoWorkerThread : public QThread
                        *xSupParser, *xInfParser,
                        *ySupParser, *yInfParser,
                        *zSupParser, *zInfParser,
-                       Var[NbVariables];
+                       *Var;
         int   nb_ligne, nb_colon, nb_depth;
         int iStart, iFinish;
         int GridTable[NbComponent];
@@ -95,7 +95,7 @@ class IsoWorkerThread : public QThread
         public :
             void IsoCompute(int);
             void VoxelEvaluation(int);
-            void AllocateParsersForWorkerThread(int, int);
+            void AllocateParsersForWorkerThread(int, int, int);
             void DeleteWorkerParsers();
             void run() Q_DECL_OVERRIDE;
             IsoWorkerThread();
@@ -125,7 +125,7 @@ class IsoWorkerThread : public QThread
             void DeleteMasterParsers();
             void AllocateMasterParsers();
             void InitMasterParsers();
-            void AllocateParsersForThread();
+            void AllocateParsersForMasterThread();
             inline ErrorMessage ParseExpression(std::string);
             int HowManyIsosurface(std::string,int);
             int HowManyVariables(std::string, int);
