@@ -190,6 +190,8 @@ void Iso3D::MasterThreadCopy(IsoMasterThread *MasterThreadsTmp)
         MasterThreadsTmp->MyIndex            = 0;
         MasterThreadsTmp->WorkerThreadsNumber= WorkerThreadsNumber;
         MasterThreadsTmp->ImplicitFunctionSize = masterthread->ImplicitFunctionSize;
+        MasterThreadsTmp->FunctSize = masterthread->FunctSize;
+        MasterThreadsTmp->VaruSize = masterthread->VaruSize;
 }
 
 void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
@@ -202,7 +204,7 @@ void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
     if(first !=0)
     {
-        masterthreadtmp->AllocateParsersForThread();
+        masterthreadtmp->AllocateParsersForMasterThread();
         MasterThreadCopy(masterthreadtmp);
         WorkerThreadCopy(workerthreadstmp);
         first++;
@@ -272,7 +274,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].DeleteWorkerParsers();
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->Nb_functs);
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->FunctSize, masterthread->VaruSize);
 
     return(parse_expression2());
 }
@@ -1545,6 +1547,7 @@ void IsoMasterThread::DeleteMasterParsers()
         delete[] yInfParser;
         delete[] zInfParser;
         delete[] Fct;
+        delete[] Var;
         delete[] VRgbtParser;
         delete[] RgbtParser;
         delete GradientParser;
@@ -1566,6 +1569,7 @@ void IsoWorkerThread::DeleteWorkerParsers()
         delete[] yInfParser;
         delete[] zInfParser;
         delete[] Fct;
+        delete[] Var;
         ParsersAllocated = false;
     }
 }
@@ -1589,12 +1593,12 @@ void IsoMasterThread::InitMasterParsers()
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    for(int i=0; i<NbVariables; i++)
+    for(int i=0; i<VaruSize; i++)
     {
         Var[i].AddConstant("pi", PI);
     }
 
-    for(int i=0; i<NbDefinedFunctions; i++)
+    for(int i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
         Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -1647,7 +1651,8 @@ void IsoMasterThread::AllocateMasterParsers()
         xInfParser = new FunctionParser[ImplicitFunctionSize];
         yInfParser = new FunctionParser[ImplicitFunctionSize];
         zInfParser = new FunctionParser[ImplicitFunctionSize];
-        Fct = new FunctionParser[NbDefinedFunctions];
+        Fct = new FunctionParser[FunctSize];
+        Var = new FunctionParser[VaruSize];
 
         RgbtParser = new FunctionParser[NbTextures];
         VRgbtParser = new FunctionParser[NbTextures];
@@ -1657,7 +1662,7 @@ void IsoMasterThread::AllocateMasterParsers()
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct)
+void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct, int nbvar)
 {
     if(!ParsersAllocated)
     {
@@ -1669,11 +1674,12 @@ void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct)
         yInfParser = new FunctionParser[nbcomp];
         zInfParser = new FunctionParser[nbcomp];
         Fct = new FunctionParser[nbfunct];
+        Var = new FunctionParser[nbvar];
         ParsersAllocated = true;
     }
 }
 
-void IsoMasterThread::AllocateParsersForThread()
+void IsoMasterThread::AllocateParsersForMasterThread()
 {
     AllocateMasterParsers();
     InitMasterParsers();
