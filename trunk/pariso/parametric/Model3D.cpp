@@ -395,15 +395,15 @@ void ParMasterThread::AllocateParsersForMasterThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::AllocateParsersForWorkerThread(int nbcomp)
+void ParWorkerThread::AllocateParsersForWorkerThread(int nbcomposants, int nbfunct)
 {
     if(!ParsersAllocated)
     {
-        myParserX = new FunctionParser[nbcomp];
-        myParserY = new FunctionParser[nbcomp];
-        myParserZ = new FunctionParser[nbcomp];
-        myParserW = new FunctionParser[nbcomp];
-        Fct = new FunctionParser[NbDefinedFunctions];
+        myParserX = new FunctionParser[nbcomposants];
+        myParserY = new FunctionParser[nbcomposants];
+        myParserZ = new FunctionParser[nbcomposants];
+        myParserW = new FunctionParser[nbcomposants];
+        Fct = new FunctionParser[nbfunct];
         ParsersAllocated = true;
     }
 }
@@ -490,7 +490,7 @@ void ParMasterThread::InitMasterParsers()
     }
 }
 
-ErrorMessage  Par3D::ParsePar()
+ErrorMessage  Par3D::ParMorph()
 {
     ErrorMessage err = masterthread->parse_expression();
     if(err.iErrorIndex < 0)
@@ -1042,6 +1042,8 @@ void Par3D::MasterThreadCopy(ParMasterThread *MasterThreadsTmp)
         MasterThreadsTmp->Const          = masterthread->Const;
         MasterThreadsTmp->Rgbt           = masterthread->Rgbt;
         MasterThreadsTmp->VRgbt          = masterthread->VRgbt;
+        MasterThreadsTmp->Gradient       = masterthread->Gradient;
+        MasterThreadsTmp->Noise          = masterthread->Noise;
 
         MasterThreadsTmp->nb_ligne       = nb_ligne;
         MasterThreadsTmp->nb_colone      = nb_colone;
@@ -1069,7 +1071,7 @@ ErrorMessage Par3D::ThreadParsersCopy()
         workerthreads[nbthreads].DeleteWorkerParsers();
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1);
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1, masterthread->Nb_functs);
 
     return(parse_expression2());
 }
@@ -1832,6 +1834,7 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
     //Create new workerthreads set:
     ParMasterThread *masterthreadtmp  = new ParMasterThread;
     ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber-1];
+
     masterthreadtmp->AllocateParsersForThread();
 
     MasterThreadCopy(masterthreadtmp);

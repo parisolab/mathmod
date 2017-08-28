@@ -34,6 +34,10 @@ static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 static int Gridmax=0;
 static float*     NormVertexTab;
+
+
+
+
 CellNoise *NoiseFunction = new CellNoise();
 ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 
@@ -57,10 +61,6 @@ double TurbulencePerlin(const double* p)
                (int)p[3],
                p[4],
                p[5]);
-}
-/// +++++++++++++++++++++++++++++++++++++++++
-void Iso3D::stopcalculations()
-{
 }
 
 /// +++++++++++++++++++++++++++++++++++++++++
@@ -95,24 +95,18 @@ void Iso3D::BuildIso()
 /// +++++++++++++++++++++++++++++++++++++++++
 int Iso3D::setmaxgridto(int maxgrid)
 {
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].maximumgrid = maxgrid;
     delete GridVoxelVarPt;
     delete Results;
-//delete DataXYZ;
     GridVoxelVarPt = new Voxel[maxgrid*maxgrid*maxgrid];
     Results        = new float [10*maxgrid*maxgrid*maxgrid];
-    //workerthread = new IsoWorkerThread(this);
     return(1);
 }
-
-IsoWorkerThread::IsoWorkerThread()
-    :QThread()
+IsoMasterThread::IsoMasterThread()
 {
     ErrorMessage stError;
     IsoConditionRequired = -1;
-    Nb_Sliders = -1;
-    Cstparser.AddConstant("pi", PI);
     ImplicitFunction =  "cos(x) + cos(y) + cos(z)";
     XlimitSup = "4";
     YlimitSup = "4";
@@ -120,23 +114,35 @@ IsoWorkerThread::IsoWorkerThread()
     XlimitInf   = "-4";
     YlimitInf   = "-4";
     ZlimitInf   = "-4";
-    nb_ligne = nb_colon = nb_depth = 40;
-    stepMorph = 0;
-    pace = (double)1/(double)30;
-    morph_activated = -1;
-    AllComponentTraited = false;
-    //Add predefined constatnts:
+    Lacunarity = 0.5;
+    Gain = 1.0;
+    Octaves = 4;
+    //InitParser();
     for(int i=0; i<20; i++)
     {
         SliderNames[i]= "Param_"+QString::number(i).toStdString();
         SliderValues[i] = 1;
     }
-    Lacunarity = 0.5;
-    Gain = 1.0;
-    Octaves = 4;
-    //initparser(100);
-    InitParser();
-    //stError = ParserIso();
+
+    Cstparser.AddConstant("pi", PI);
+}
+
+IsoMasterThread::~IsoMasterThread()
+{
+
+}
+
+IsoWorkerThread::IsoWorkerThread()
+    :QThread()
+{
+    nb_ligne = nb_colon = nb_depth = 40;
+    stepMorph = 0;
+    pace = (double)1/(double)30;
+    morph_activated = -1;
+    AllComponentTraited = false;
+    ParsersAllocated = false;
+    StopCalculations = false;
+    //Add predefined constatnts:
 }
 
 IsoWorkerThread::~IsoWorkerThread()
@@ -144,57 +150,358 @@ IsoWorkerThread::~IsoWorkerThread()
     //deleteparsers();
 }
 
-void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
+//+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
-    //for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
-    //workerthreads[nbthreads].deleteparsers();
-    delete[] workerthreads;
-    WorkerThreadsNumber = NewThreadsNumber;
-    workerthreads = new IsoWorkerThread[WorkerThreadsNumber];
-    int tmp = (nb_ligne/WorkerThreadsNumber);
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        workerthreads[nbthreads].nb_ligne = nb_ligne;
-        workerthreads[nbthreads].nb_colon = nb_colon;
-        workerthreads[nbthreads].nb_depth = nb_depth;
-        workerthreads[nbthreads].MyIndex  = nbthreads;
-        workerthreads[nbthreads].maximumgrid = Gridmax;
-        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
-
-        workerthreads[nbthreads].iStart   = nbthreads*tmp;
-        if(nbthreads == (WorkerThreadsNumber-1))
-            workerthreads[nbthreads].iFinish = nb_ligne;
-        else
-            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+        WorkerThreadsTmp[nbthreads].nb_ligne = masterthread->nb_ligne;
+        WorkerThreadsTmp[nbthreads].nb_colon = masterthread->nb_colon;
+        WorkerThreadsTmp[nbthreads].nb_depth = masterthread->nb_depth;
+        WorkerThreadsTmp[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
+        WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
+        WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
 
+//+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::MasterThreadCopy(IsoMasterThread *MasterThreadsTmp)
+{
+        MasterThreadsTmp->ImplicitFunction   = masterthread->ImplicitFunction;
+        MasterThreadsTmp->XlimitSup          = masterthread->XlimitSup;
+        MasterThreadsTmp->XlimitInf          = masterthread->XlimitInf;
+        MasterThreadsTmp->YlimitSup          = masterthread->YlimitSup;
+        MasterThreadsTmp->YlimitInf          = masterthread->YlimitInf;
+        MasterThreadsTmp->ZlimitSup          = masterthread->ZlimitSup;
+        MasterThreadsTmp->ZlimitInf          = masterthread->ZlimitInf;
+        MasterThreadsTmp->Condition          = masterthread->Condition;
+        MasterThreadsTmp->Grid               = masterthread->Grid;
+        MasterThreadsTmp->Funct              = masterthread->Funct;
+        MasterThreadsTmp->Varu               = masterthread->Varu;
+        MasterThreadsTmp->Const              = masterthread->Const;
+        MasterThreadsTmp->Rgbt               = masterthread->Rgbt;
+        MasterThreadsTmp->VRgbt              = masterthread->VRgbt;
+        MasterThreadsTmp->Gradient           = masterthread->Gradient;
+        MasterThreadsTmp->Noise              = masterthread->Noise;
+
+        MasterThreadsTmp->nb_ligne           = nb_ligne;
+        MasterThreadsTmp->nb_colon           = nb_colon;
+        MasterThreadsTmp->nb_depth           = nb_depth;
+        MasterThreadsTmp->MyIndex            = 0;
+        MasterThreadsTmp->WorkerThreadsNumber= WorkerThreadsNumber;
+        MasterThreadsTmp->ImplicitFunctionSize = masterthread->ImplicitFunctionSize;
+}
+
+void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
+{
+    static int first = 0;
+    //delete[] workerthreads;
+    int OldWorkerThreadsNumber = WorkerThreadsNumber;
+    WorkerThreadsNumber = NewThreadsNumber;
+    IsoMasterThread *masterthreadtmp  = new IsoMasterThread;
+    IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
+    if(first !=0)
+    {
+        masterthreadtmp->AllocateParsersForThread();
+        MasterThreadCopy(masterthreadtmp);
+        WorkerThreadCopy(workerthreadstmp);
+        first++;
+    }
+    //Free old memory:
+    masterthread->DeleteMasterParsers();
+    delete masterthread;
+
+    for(int i=0; i<OldWorkerThreadsNumber-1; i++)
+    {
+        workerthreads[i].DeleteWorkerParsers();
+    }
+    if(OldWorkerThreadsNumber >1)
+        delete[] workerthreads;
+
+    masterthreadtmp->nb_ligne = nb_ligne;
+    masterthreadtmp->nb_colon = nb_colon;
+    masterthreadtmp->nb_depth = nb_depth;
+    masterthreadtmp->maximumgrid = Gridmax;
+    masterthreadtmp->MyIndex = 0;
+    masterthreadtmp->WorkerThreadsNumber = WorkerThreadsNumber;
+
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        workerthreadstmp[nbthreads].nb_ligne = nb_ligne;
+        workerthreadstmp[nbthreads].nb_colon = nb_colon;
+        workerthreadstmp[nbthreads].nb_depth = nb_depth;
+        workerthreadstmp[nbthreads].MyIndex  = nbthreads+1;
+        workerthreadstmp[nbthreads].maximumgrid = Gridmax;
+        workerthreadstmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+    }
+
+    //Assigne newly allocated memory
+    workerthreads = workerthreadstmp;
+    masterthread  = masterthreadtmp;
+}
+
+ErrorMessage  Iso3D::IsoMorph()
+{
+    ErrorMessage err = masterthread->ParserIso();
+    if(err.iErrorIndex < 0)
+        ThreadParsersCopy();
+    return err;
+}
+
+//+++++++++++++++++++++++++++++++++++++++
+ErrorMessage Iso3D::ThreadParsersCopy()
+{
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        memcpy(workerthreads[nbthreads].xLocal, masterthread->xLocal, NbComponent*NbMaxGrid/*(masterthread->Nb_implicitfunctions+1)*nb_ligne*/*sizeof(double));
+        memcpy(workerthreads[nbthreads].yLocal, masterthread->yLocal, NbComponent*NbMaxGrid/*(masterthread->Nb_implicitfunctions+1)*nb_colon*/*sizeof(double));
+        memcpy(workerthreads[nbthreads].zLocal, masterthread->zLocal, NbComponent*NbMaxGrid/*(masterthread->Nb_implicitfunctions+1)*nb_depth*/*sizeof(double));
+        memcpy(workerthreads[nbthreads].vr, masterthread->vr      , 3*NbVariables*NbComponent*NbMaxGrid*sizeof(double));
+        memcpy(workerthreads[nbthreads].ImplicitStructs, masterthread->ImplicitStructs, NbComponent*sizeof(ImplicitStruct));
+        memcpy(workerthreads[nbthreads].VarName, masterthread->VarName, NbVariables*sizeof(std::string));
+
+        workerthreads[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
+        workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
+        workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
+        workerthreads[nbthreads].nb_ligne = masterthread->nb_ligne;
+        workerthreads[nbthreads].nb_colon = masterthread->nb_colon;
+        workerthreads[nbthreads].nb_depth = masterthread->nb_depth;
+    }
+
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+        workerthreads[nbthreads].DeleteWorkerParsers();
+
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->Nb_functs);
+
+    return(parse_expression2());
+}
+
+
+ErrorMessage  Iso3D::parse_expression2()
+{
+    ErrorMessage NodError;
+
+    //User defined variables:
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+         for(int i=0; i<masterthread->Nb_newvariables; i++)
+         {
+             workerthreads[nbthreads].Var[i].AddConstant("pi", PI);
+             for(int j=0; j<masterthread->Nb_constants; j++)
+             {
+                 workerthreads[nbthreads].Var[i].AddConstant(masterthread->ConstNames[j],  masterthread->ConstValues[j]);
+             }
+             //Add predefined constatnts:
+             for(int k=0; k<masterthread->Nb_Sliders; k++)
+             {
+                 workerthreads[nbthreads].Var[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+             }
+         }
+
+         for(int i=0; i<masterthread->Nb_newvariables; i++)
+         {
+             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Var[i].Parse(masterthread->Varus[i],"u,tm")) >= 0)
+             {
+                 masterthread->stdError.strError = masterthread->Varus[i];
+                 masterthread->stdError.strOrigine = masterthread->VarName[i];
+                 return masterthread->stdError;
+             }
+         }
+     }
+
+    // Functions :
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        for(int ij=0; ij<masterthread->Nb_functs; ij++)
+        {
+            workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
+        }
+
+        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        {
+            for(int jj=0; jj<masterthread->Nb_constants; jj++)
+            {
+                workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
+            }
+
+            //Add predefined constatnts:
+            for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
+            {
+                workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
+            }
+        }
+
+        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        {
+            workerthreads[nbthreads].Fct[ii].AddFunction("NoiseW",TurbulenceWorley, 6);
+            workerthreads[nbthreads].Fct[ii].AddFunction("fhelix1",fhelix1, 10);
+            workerthreads[nbthreads].Fct[ii].AddFunction("fhelix2",fhelix2, 10);
+            workerthreads[nbthreads].Fct[ii].AddFunction("f_hex_y",f_hex_y, 4);
+            workerthreads[nbthreads].Fct[ii].AddFunction("p_skeletal_int",p_skeletal_int, 3);
+            workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
+            workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
+            for(int jj=0; jj<ii; jj++)
+                workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->Functs[ii];
+                masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
+                return masterthread->stdError;
+            }
+        }
+
+    }
+
+    //Add defined constantes:
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
+        {
+            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].xSupParser[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].xInfParser[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].ySupParser[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].yInfParser[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].zSupParser[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].zInfParser[i].AddConstant("pi", PI);
+
+
+
+        for(int j=0; j<masterthread->Nb_constants; j++)
+        {
+            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].xSupParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].xInfParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].ySupParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].yInfParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].zSupParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].zInfParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+        }
+        //Add predefined sliders constatnts:
+        for(int k=0; k<masterthread->Nb_Sliders; k++)
+        {
+            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].xSupParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].xInfParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].ySupParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].yInfParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].zSupParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            workerthreads[nbthreads].zInfParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+        }
+    }
+    }
+
+
+
+    // Add defined functions :
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+    for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
+    {
+        //Functions:
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fhelix1",fhelix1, 10);
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fhelix2",fhelix2, 10);
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+
+        for(int j=0; j<masterthread->Nb_functs; j++)
+        {
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+        }
+    }
+   }
+
+    // Final step: parsing
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+    for(int index=0; index< masterthread->Nb_implicitfunctions + 1; index++)
+    {
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
+            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+            return masterthread->stdError;
+        }
+
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].xSupParser[index].Parse(masterthread->ImplicitStructs[index].xmax, "x,y,z,t")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[index].xmax;
+            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+            return masterthread->stdError;
+        }
+
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].xInfParser[index].Parse(masterthread->ImplicitStructs[index].xmin, "x,y,z,t")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[index].xmin;
+            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+            return masterthread->stdError;
+        }
+
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].ySupParser[index].Parse(masterthread->ImplicitStructs[index].ymax, "x,y,z,t")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[index].ymax;
+            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+            return masterthread->stdError;
+        }
+
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].yInfParser[index].Parse(masterthread->ImplicitStructs[index].ymin, "x,y,z,t")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[index].ymin;
+            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+            return masterthread->stdError;
+        }
+
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].zSupParser[index].Parse(masterthread->ImplicitStructs[index].zmax, "x,y,z,t")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[index].zmax;
+            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+            return masterthread->stdError;
+        }
+
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].zInfParser[index].Parse(masterthread->ImplicitStructs[index].zmin, "x,y,z,t")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[index].zmin;
+            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+            return masterthread->stdError;
+        }
+      }
+    }
+    return NodError;
+}
 /// +++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
 {
     IsoSurfaceTriangleListe                = new int[3*maxtri];
     NormOriginaltmp                        = new float[3*maxtri];
     Gridmax = gridmax;
-    WorkerThreadsNumber = 4;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     nb_ligne = nb_colon = nb_depth = 40;
-    workerthreads = new IsoWorkerThread[WorkerThreadsNumber];
-    int tmp = (workerthreads[0].nb_ligne/WorkerThreadsNumber);
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber; nbthreads++)
+    WorkerThreadsNumber = 1;
+    masterthread  = new IsoMasterThread;
+    workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
+
+    //masterthread->AllocateParsersForThread();
+
+    masterthread->nb_ligne = nb_ligne;
+    masterthread->nb_colon = nb_colon;
+    masterthread->nb_depth = nb_depth;
+    masterthread->maximumgrid = gridmax;
+    masterthread->MyIndex = 0;
+    masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
+
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         workerthreads[nbthreads].nb_ligne = nb_ligne;
         workerthreads[nbthreads].nb_colon = nb_colon;
         workerthreads[nbthreads].nb_depth = nb_depth;
         workerthreads[nbthreads].maximumgrid = gridmax;
-        workerthreads[nbthreads].MyIndex = nbthreads;
-        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber
-                ;
-        workerthreads[nbthreads].iStart   = nbthreads*tmp;
-        if(nbthreads == (WorkerThreadsNumber-1))
-            workerthreads[nbthreads].iFinish = nb_ligne;
-        else
-            workerthreads[nbthreads].iFinish = (nbthreads+1)*tmp;
+        workerthreads[nbthreads].MyIndex = nbthreads+1;
+        workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
     static int staticaction = 1;
     /// Things to do one time...
@@ -208,7 +515,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-int IsoWorkerThread::HowManyVariables(std::string NewVariables, int type)
+int IsoMasterThread::HowManyVariables(std::string NewVariables, int type)
 {
     std::string tmp, tmp2,tmp3;
     int position =0, jpos;
@@ -287,7 +594,7 @@ int IsoWorkerThread::HowManyVariables(std::string NewVariables, int type)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-int IsoWorkerThread::HowManyIsosurface(std::string ImplicitFct, int type)
+int IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, int type)
 {
     std::string tmp, tmp2;
     int position =0, jpos;
@@ -511,62 +818,10 @@ int IsoWorkerThread::HowManyIsosurface(std::string ImplicitFct, int type)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::InitParser()
+void IsoMasterThread::InitParser()
 {
-    allocateparsers(NbComponent);
-    for(int i=0; i<NbComponent; i++)
-    {
-        implicitFunctionParser[i].AddConstant("pi", PI);
-        IsoConditionParser[i].AddConstant("pi", PI);
-        xSupParser[i].AddConstant("pi", PI);
-        ySupParser[i].AddConstant("pi", PI);
-        zSupParser[i].AddConstant("pi", PI);
-        xInfParser[i].AddConstant("pi", PI);
-        yInfParser[i].AddConstant("pi", PI);
-        zInfParser[i].AddConstant("pi", PI);
-    }
-
-    NoiseParser->AddConstant("pi", PI);
-    NoiseParser->AddConstant("Lacunarity", Lacunarity);
-    NoiseParser->AddConstant("Gain", Gain);
-    NoiseParser->AddConstant("Octaves", Octaves);
-
-    for(int i=0; i<NbVariables; i++)
-    {
-        Var[i].AddConstant("pi", PI);
-    }
-
-    for(int i=0; i<NbDefinedFunctions; i++)
-    {
-        Fct[i].AddConstant("pi", PI);
-    }
-
-    for(int i=0; i<NbTextures; i++)
-    {
-        RgbtParser[i].AddConstant("pi", PI);
-        RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
-        RgbtParser[i].AddConstant("Gain", Gain);
-        RgbtParser[i].AddConstant("Octaves", Octaves);
-        RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-        RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-    }
-
-    for(int i=0; i<NbTextures; i++)
-    {
-        VRgbtParser[i].AddConstant("pi", PI);
-        VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
-        VRgbtParser[i].AddConstant("Gain", Gain);
-        VRgbtParser[i].AddConstant("Octaves", Octaves);
-        VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-        VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-    }
-
-    GradientParser->AddConstant("pi", PI);
-    GradientParser->AddConstant("Lacunarity", Lacunarity);
-    GradientParser->AddConstant("Gain", Gain);
-    GradientParser->AddConstant("Octaves", Octaves);
-    GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
-    GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
+    AllocateMasterParsers();
+    InitMasterParsers();
 }
 
 
@@ -636,6 +891,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
         }
     }
 
+    double test;
     int tmp = nb_ligne/WorkerThreadsNumber;
     iStart   = MyIndex*tmp;
     if(MyIndex == (WorkerThreadsNumber-1))
@@ -673,7 +929,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                 if(StopCalculations)
                     return;
                 IJK = J+k;
-                Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
+                test = Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
                 GridVoxelVarPt[IJK].Signature   = 0; // Signature initialisation
                 GridVoxelVarPt[IJK].NbEdgePoint = 0; // No EdgePoint yet!
                 for(int l=0; l<12; l++) GridVoxelVarPt[IJK].Edge_Points[l] = -20;
@@ -697,9 +953,9 @@ void Iso3D::ConstructIsoNormale()
 
         ThreeTimesI   = i*3;
 
-        IndexFirstPoint      = 3+TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI         ]+ TypeDrawin*NbVertexTmp +TypeDrawinNormStep;
+        IndexFirstPoint  = 3+TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI      ]+ TypeDrawin*NbVertexTmp +TypeDrawinNormStep;
         IndexSecondPoint = 3+TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI+1    ]+ TypeDrawin*NbVertexTmp +TypeDrawinNormStep;
-        IndexThirdPoint     = 3+TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI+2    ]+ TypeDrawin*NbVertexTmp +TypeDrawinNormStep;
+        IndexThirdPoint  = 3+TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI+2    ]+ TypeDrawin*NbVertexTmp +TypeDrawinNormStep;
 
         pt1_x= NormVertexTab[IndexFirstPoint     ];
         pt1_y= NormVertexTab[IndexFirstPoint+1 ];
@@ -720,16 +976,16 @@ void Iso3D::ConstructIsoNormale()
         val5 = pt3_x - pt1_x;
         val6 = pt2_x - pt1_x;
 
-        NormOriginaltmp[ThreeTimesI     ] = val1*val2 - val3*val4;
+        NormOriginaltmp[ThreeTimesI  ] = val1*val2 - val3*val4;
         NormOriginaltmp[ThreeTimesI+1] = val3*val5 - val6*val2;
         NormOriginaltmp[ThreeTimesI+2] = val6*val4 - val1*val5;
 
-        scalar = (double)sqrt((NormOriginaltmp[ThreeTimesI    ]*NormOriginaltmp[ThreeTimesI     ]) +
-                              (NormOriginaltmp[ThreeTimesI+1]*NormOriginaltmp[ThreeTimesI +1]) +
+        scalar = (double)sqrt((NormOriginaltmp[ThreeTimesI  ]*NormOriginaltmp[ThreeTimesI  ]) +
+                              (NormOriginaltmp[ThreeTimesI+1]*NormOriginaltmp[ThreeTimesI+1]) +
                               (NormOriginaltmp[ThreeTimesI+2]*NormOriginaltmp[ThreeTimesI+2]));
 
         if(scalar < 0.000000001)  scalar  = 0.000000001;
-        (NormOriginaltmp[ThreeTimesI    ]/=scalar);
+        (NormOriginaltmp[ThreeTimesI  ]/=scalar);
         (NormOriginaltmp[ThreeTimesI+1]/=scalar);
         (NormOriginaltmp[ThreeTimesI+2]/=scalar);
     }
@@ -780,14 +1036,14 @@ void Iso3D::SaveIsoGLMap()
                               (NormVertexTab[idx+1]*NormVertexTab[idx+1]) +
                               (NormVertexTab[idx+2]*NormVertexTab[idx+2]));
         if(scalar < 0.000000001)  scalar = 0.000000001;
-        NormVertexTab[idx    ] /= scalar;
+        NormVertexTab[idx  ] /= scalar;
         NormVertexTab[idx+1] /= scalar;
         NormVertexTab[idx+2] /= scalar;
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++//
-ErrorMessage IsoWorkerThread::InitNoiseParser()
+ErrorMessage IsoMasterThread::InitNoiseParser()
 {
     if(Noise != "")
     {
@@ -808,14 +1064,14 @@ ErrorMessage IsoWorkerThread::InitNoiseParser()
 }
 
 //++++++++++++++++++++++++++++++++++++++++++//
-ErrorMessage IsoWorkerThread::ParserIso()
+ErrorMessage IsoMasterThread::ParserIso()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     varliste = "x,y,z,t";
 
     (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
 
-    initparser(NbComponent);
+    initparser();
 
     //Evaluates defined constantes:
     for(int j=0; j<Nb_constants; j++)
@@ -1113,7 +1369,7 @@ ErrorMessage IsoWorkerThread::ParserIso()
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-ErrorMessage IsoWorkerThread::ParseExpression(std::string VariableListe)
+ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double vals2[] = {0,0};
@@ -1275,29 +1531,69 @@ ErrorMessage IsoWorkerThread::ParseExpression(std::string VariableListe)
     }
     return stdError;
 }
-///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::deleteparsers()
-{
-    delete[] implicitFunctionParser;
-    delete GradientParser;
-    delete[] VRgbtParser;
-    delete[] RgbtParser;
-    delete[] Fct;
-    delete NoiseParser;
-}
-///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::allocateparsers(int N)
-{
-    NoiseParser = new FunctionParser;
-    NoiseParser->AddConstant("pi", PI);
 
-    implicitFunctionParser = new FunctionParser[N];
-    for(int i=0; i<N; i++)
+///+++++++++++++++++++++++++++++++++++++++++
+void IsoMasterThread::DeleteMasterParsers()
+{
+    if(ParsersAllocated)
+    {
+        delete[] implicitFunctionParser;
+        delete[] xSupParser;
+        delete[] ySupParser;
+        delete[] zSupParser;
+        delete[] xInfParser;
+        delete[] yInfParser;
+        delete[] zInfParser;
+        delete[] Fct;
+        delete[] VRgbtParser;
+        delete[] RgbtParser;
+        delete GradientParser;
+        delete NoiseParser;
+        ParsersAllocated = false;
+    }
+}
+
+///+++++++++++++++++++++++++++++++++++++++++
+void IsoWorkerThread::DeleteWorkerParsers()
+{
+    if(ParsersAllocated)
+    {
+        delete[] implicitFunctionParser;
+        delete[] xSupParser;
+        delete[] ySupParser;
+        delete[] zSupParser;
+        delete[] xInfParser;
+        delete[] yInfParser;
+        delete[] zInfParser;
+        delete[] Fct;
+        ParsersAllocated = false;
+    }
+}
+
+///+++++++++++++++++++++++++++++++++++++++++
+void IsoMasterThread::InitMasterParsers()
+{
+    for(int i=0; i<ImplicitFunctionSize; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
+        IsoConditionParser[i].AddConstant("pi", PI);
+        xSupParser[i].AddConstant("pi", PI);
+        ySupParser[i].AddConstant("pi", PI);
+        zSupParser[i].AddConstant("pi", PI);
+        xInfParser[i].AddConstant("pi", PI);
+        yInfParser[i].AddConstant("pi", PI);
+        zInfParser[i].AddConstant("pi", PI);
+    }
+    NoiseParser->AddConstant("pi", PI);
+    NoiseParser->AddConstant("Lacunarity", Lacunarity);
+    NoiseParser->AddConstant("Gain", Gain);
+    NoiseParser->AddConstant("Octaves", Octaves);
+
+    for(int i=0; i<NbVariables; i++)
+    {
+        Var[i].AddConstant("pi", PI);
     }
 
-    Fct = new FunctionParser[NbDefinedFunctions];
     for(int i=0; i<NbDefinedFunctions; i++)
     {
         Fct[i].AddConstant("pi", PI);
@@ -1310,7 +1606,6 @@ void IsoWorkerThread::allocateparsers(int N)
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
-    RgbtParser = new FunctionParser[NbTextures];
     for(int i=0; i<NbTextures; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
@@ -1319,10 +1614,8 @@ void IsoWorkerThread::allocateparsers(int N)
         RgbtParser[i].AddConstant("Octaves", Octaves);
         RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-
     }
 
-    VRgbtParser = new FunctionParser[NbTextures];
     for(int i=0; i<NbTextures; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
@@ -1333,7 +1626,6 @@ void IsoWorkerThread::allocateparsers(int N)
         VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
     }
 
-    GradientParser = new FunctionParser;
     GradientParser->AddConstant("pi", PI);
     GradientParser->AddConstant("Lacunarity", Lacunarity);
     GradientParser->AddConstant("Gain", Gain);
@@ -1343,74 +1635,56 @@ void IsoWorkerThread::allocateparsers(int N)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::initparser(int N)
+void IsoMasterThread::AllocateMasterParsers()
 {
-    deleteparsers();
-    allocateparsers(N);
+    if(!ParsersAllocated)
+    {
+        NoiseParser = new FunctionParser;
+        implicitFunctionParser = new FunctionParser[ImplicitFunctionSize];
+        xSupParser = new FunctionParser[ImplicitFunctionSize];
+        ySupParser = new FunctionParser[ImplicitFunctionSize];
+        zSupParser = new FunctionParser[ImplicitFunctionSize];
+        xInfParser = new FunctionParser[ImplicitFunctionSize];
+        yInfParser = new FunctionParser[ImplicitFunctionSize];
+        zInfParser = new FunctionParser[ImplicitFunctionSize];
+        Fct = new FunctionParser[NbDefinedFunctions];
+
+        RgbtParser = new FunctionParser[NbTextures];
+        VRgbtParser = new FunctionParser[NbTextures];
+        GradientParser = new FunctionParser;
+        ParsersAllocated = true;
+    }
 }
+
 ///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::EvalExpressionAtIndex(int IsoIndex)
+void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct)
 {
-    double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    double vals2[] = {0,0};
-    const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
-
-    if(AllComponentTraited && morph_activated ==1)
+    if(!ParsersAllocated)
     {
-        stepMorph += pace;
+        implicitFunctionParser = new FunctionParser[nbcomp];
+        xSupParser = new FunctionParser[nbcomp];
+        ySupParser = new FunctionParser[nbcomp];
+        zSupParser = new FunctionParser[nbcomp];
+        xInfParser = new FunctionParser[nbcomp];
+        yInfParser = new FunctionParser[nbcomp];
+        zInfParser = new FunctionParser[nbcomp];
+        Fct = new FunctionParser[nbfunct];
+        ParsersAllocated = true;
     }
-    vals[3]          = stepMorph;
+}
 
-    if( morph_activated ==1)
-    {
-        xLocal[IsoIndex][0]=xSupParser[IsoIndex].Eval(vals);
-        yLocal[IsoIndex][0]=ySupParser[IsoIndex].Eval(vals);
-        zLocal[IsoIndex][0]=zSupParser[IsoIndex].Eval(vals);
+void IsoMasterThread::AllocateParsersForThread()
+{
+    AllocateMasterParsers();
+    InitMasterParsers();
+}
 
-        x_Step[IsoIndex] =  (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(nb_ligne-1);
-        y_Step[IsoIndex] =  (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-        z_Step[IsoIndex] =  (zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
-
-        for (int i= 1; i < limitX; i++) xLocal[IsoIndex][i] = xLocal[IsoIndex][i-1] - x_Step[IsoIndex];
-        for (int j= 1; j < limitY; j++) yLocal[IsoIndex][j] = yLocal[IsoIndex][j-1] - y_Step[IsoIndex];
-        for (int k= 1; k < limitZ; k++) zLocal[IsoIndex][k] = zLocal[IsoIndex][k-1] - z_Step[IsoIndex];
-
-        std::string stringtoparse=ImplicitStructs[IsoIndex].fxyz    +
-                                  ImplicitStructs[IsoIndex].cnd  +
-                                  ImplicitStructs[IsoIndex].xmax  +
-                                  ImplicitStructs[IsoIndex].ymax  +
-                                  ImplicitStructs[IsoIndex].zmax  +
-                                  ImplicitStructs[IsoIndex].xmin   +
-                                  ImplicitStructs[IsoIndex].ymin   +
-                                  ImplicitStructs[IsoIndex].zmin;
-
-        for(int l=0; l<Nb_newvariables; l++)
-        {
-            if(stringtoparse.find(VarName [l]+"x") !=std::string::npos )
-                for(int i=0; i<limitX; i++)
-                {
-                    vals2[0] = xLocal[IsoIndex][i];
-                    vals2[1] = stepMorph;
-                    vr[l*3][IsoIndex][i] =Var[l] .Eval(vals2);
-                }
-
-            if(stringtoparse.find(VarName [l]+"y") !=std::string::npos )
-                for(int i=0; i<limitY; i++)
-                {
-                    vals2[0] = yLocal[IsoIndex][i];
-                    vals2[1] = stepMorph;
-                    vr[l*3+1][IsoIndex][i] =Var[l] .Eval(vals2);
-                }
-
-            if(stringtoparse.find(VarName [l]+"z") !=std::string::npos )
-                for(int i=0; i<limitZ; i++)
-                {
-                    vals2[0] = zLocal[IsoIndex][i];
-                    vals2[1] = stepMorph;
-                    vr[l*3+2][IsoIndex][i] =Var[l] .Eval(vals2);
-                }
-        }
-    }
+///+++++++++++++++++++++++++++++++++++++++++
+void IsoMasterThread::initparser()
+{
+    DeleteMasterParsers();
+    AllocateMasterParsers();
+    InitMasterParsers();
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1424,7 +1698,7 @@ void IsoWorkerThread::IsoCompute(int fctnb)
 void Iso3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
-    for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+    for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
@@ -1452,7 +1726,7 @@ void Iso3D::IsoBuild (
     IndexPolyTabMin = IndexPolyTabMinPt;
     IndexPolyTab = IndexPolyTabPt;
     if(components != NULL)
-        components->NbIso = workerthreads[0].Nb_implicitfunctions+1;
+        components->NbIso = masterthread->Nb_implicitfunctions+1;
 
     if(TriangleListeCND != NULL)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
@@ -1463,20 +1737,23 @@ void Iso3D::IsoBuild (
     stopcalculations(false);
 
     // generate Isosurface for all the implicit formulas
-    for(int fctnb= 0; fctnb< workerthreads[0].Nb_implicitfunctions+1; fctnb++)
+    for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        masterthread->CurrentIso = fctnb;
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
 
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        masterthread->start();
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].start();
 
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber; nbthreads++)
+        masterthread->wait();
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].wait();
 
         if(StopCalculations)
             return;
-        PointEdgeComputation(fctnb, 0);
+        PointEdgeComputation(fctnb);
         SignatureComputation();
         ConstructIsoSurface();
         ConstructIsoNormale();
@@ -1510,21 +1787,21 @@ void Iso3D::IsoBuild (
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
     // Pigment, Texture and Noise :
-    if(workerthreads[0].VRgbt != "" && (workerthreads[0].Nb_vrgbts %5)==0 )
+    if(masterthread->VRgbt != "" && (masterthread->Nb_vrgbts %5)==0 )
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments
-        components->NoiseParam.VRgbtParser = workerthreads[0].VRgbtParser;
-        components->NoiseParam.GradientParser = workerthreads[0].GradientParser;
-        components->NoiseParam.NoiseParser =  workerthreads[0].NoiseParser;
-        components->NoiseParam.Nb_vrgbts = workerthreads[0].Nb_vrgbts;
+        components->NoiseParam.VRgbtParser = masterthread->VRgbtParser;
+        components->NoiseParam.GradientParser = masterthread->GradientParser;
+        components->NoiseParam.NoiseParser =  masterthread->NoiseParser;
+        components->NoiseParam.Nb_vrgbts = masterthread->Nb_vrgbts;
     }
-    else if(workerthreads[0].Nb_rgbts >= 4)
+    else if(masterthread->Nb_rgbts >= 4)
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 1; //Texture
-        components->NoiseParam.RgbtParser = workerthreads[0].RgbtParser;
-        components->NoiseParam.NoiseParser =  workerthreads[0].NoiseParser;
+        components->NoiseParam.RgbtParser = masterthread->RgbtParser;
+        components->NoiseParam.NoiseParser =  masterthread->NoiseParser;
     }
     else
     {
@@ -1532,7 +1809,7 @@ void Iso3D::IsoBuild (
         components->NoiseParam.NoiseType = -1; //No Pigments or texture
     }
 
-    if(workerthreads[0].Noise == "")
+    if(masterthread->Noise == "")
         components->NoiseParam.NoiseShape = 0;
     else
         components->NoiseParam.NoiseShape = 1;
@@ -1567,7 +1844,7 @@ void Iso3D::IsoBuild (
 ///+++++++++++++++++++++++++++++++++++++++++
 int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
 {
-    for(int fctnb= 0; fctnb< workerthreads[0].Nb_implicitfunctions+1; fctnb++)
+    for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
         if( index <= components->IsoPts[2*fctnb +1] && index >= components->IsoPts[2*fctnb])
             return fctnb;
     return 30;
@@ -1577,13 +1854,13 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
     double tmp, ValCol[NbTextures+5], val[4];
-    val[3] = workerthreads[0].stepMorph;
+    val[3] = masterthread->stepMorph;
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(int i=0; i<workerthreads[0].Nb_vrgbts && i<NbTextures; i++)
+        for(int i=0; i<masterthread->Nb_vrgbts && i<NbTextures; i++)
         {
-            ValCol[i] = workerthreads[0].VRgbtParser[i].Eval(val);
+            ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
 
         for(int i= 0; i < NbVertexTmp; i++)
@@ -1592,8 +1869,8 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            if(workerthreads[0].Noise != "")
-                tmp  = workerthreads[0].NoiseParser->Eval(val);
+            if(masterthread->Noise != "")
+                tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -1601,11 +1878,11 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            tmp  = workerthreads[0].GradientParser->Eval(val);
+            tmp  = masterthread->GradientParser->Eval(val);
 
             int c= (int)tmp;
             tmp = std::abs(tmp - (double)c);
-            for (int j=0; j < workerthreads[0].Nb_vrgbts && j < NbTextures; j+=5)
+            for (int j=0; j < masterthread->Nb_vrgbts && j < NbTextures; j+=5)
                 if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
@@ -1624,8 +1901,8 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            if(workerthreads[0].Noise != "")
-                tmp  = workerthreads[0].NoiseParser->Eval(val);
+            if(masterthread->Noise != "")
+                tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
@@ -1633,10 +1910,10 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
             val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
 
-            NormVertexTab[i*TypeDrawin  ] = workerthreads[0].RgbtParser[0].Eval(val);
-            NormVertexTab[i*TypeDrawin+1] = workerthreads[0].RgbtParser[1].Eval(val);
-            NormVertexTab[i*TypeDrawin+2] = workerthreads[0].RgbtParser[2].Eval(val);
-            NormVertexTab[i*TypeDrawin+3] = workerthreads[0].RgbtParser[3].Eval(val);
+            NormVertexTab[i*TypeDrawin  ] = masterthread->RgbtParser[0].Eval(val);
+            NormVertexTab[i*TypeDrawin+1] = masterthread->RgbtParser[1].Eval(val);
+            NormVertexTab[i*TypeDrawin+2] = masterthread->RgbtParser[2].Eval(val);
+            NormVertexTab[i*TypeDrawin+3] = masterthread->RgbtParser[3].Eval(val);
         }
     }
 }
@@ -1645,15 +1922,15 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
     double vals[4];
-    vals[3] = workerthreads[0].stepMorph;
-    if (workerthreads[0].IsoConditionRequired == 1)
+    vals[3] = masterthread->stepMorph;
+    if (masterthread->IsoConditionRequired == 1)
     {
         for(int i= 0; i < NbVertexTmp; i++)
         {
             vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
             vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
             vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
-            WichPointVerifyCond[i] = (workerthreads[0].IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1);
+            WichPointVerifyCond[i] = (masterthread->IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1);
             if(WichPointVerifyCond[i])
             {
                 NormVertexTab[i*TypeDrawin      ] = 0.1;
@@ -1724,7 +2001,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Bprime[0] = NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep];
                 Bprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
                 Bprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
-                Bprime[3] = workerthreads[0].stepMorph;
+                Bprime[3] = masterthread->stepMorph;
 
                 DiffX = (NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
                 DiffY = (NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
@@ -1732,7 +2009,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(workerthreads[0].IsoConditionParser[cnd].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1742,7 +2019,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!(workerthreads[0].IsoConditionParser[cnd].Eval(Bprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1755,7 +2032,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Cprime[0] = NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep];
                 Cprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
                 Cprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
-                Cprime[3] = workerthreads[0].stepMorph;
+                Cprime[3] = masterthread->stepMorph;
 
                 DiffX = (NormVertexTab[3+TypeDrawin*Cindex    + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex     + TypeDrawinNormStep])/20;
                 DiffY = (NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
@@ -1763,7 +2040,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(workerthreads[0].IsoConditionParser[cnd].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1773,7 +2050,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 }
                 else
                 {
-                    while(!(workerthreads[0].IsoConditionParser[cnd].Eval(Cprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1933,7 +2210,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         components->NbTrianglesNotVerifyCND = l;
         components->NbTrianglesBorderCND = M;
 
-        for(int fctnb= 0; fctnb< workerthreads[0].Nb_implicitfunctions+1; fctnb++)
+        for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
         {
             if(components != NULL)
             {
@@ -1966,21 +2243,20 @@ Iso3D::~Iso3D()
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 void Iso3D::SetMiniMmeshStruct()
 {
-    int Index, iter, nbpl, iterpl, lnew,limitX;
+    int Index, iter, nbpl, iterpl, lnew;
     int I, J, IJK, i, j, k;
-    int maxgrscalemaxgr = workerthreads[0].maximumgrid*workerthreads[0].maximumgrid;
+    int maxgrscalemaxgr = Gridmax*Gridmax;
 
     lnew = 0;
     NbPolyMin = 0;
-    limitX = workerthreads[0].nb_ligne;
     /// Copy Index Polygons :
-    for(i=0; i < limitX-1 /*-workerthreads[0].CutLigne*/; i++)
+    for(i=0; i < nb_ligne-1; i++)
     {
         I  = i*maxgrscalemaxgr;
-        for(j=0; j < workerthreads[0].nb_colon-1 /*- workerthreads[0].CutColon*/; j++)
+        for(j=0; j < nb_colon-1; j++)
         {
-            J  = I+j*workerthreads[0].maximumgrid;
-            for(k=0; k < workerthreads[0].nb_depth-1 /*- workerthreads[0].CutDepth*/; k++)
+            J  = I+j*Gridmax;
+            for(k=0; k < nb_depth-1; k++)
             {
                 IJK = J+k;
                 Index = GridVoxelVarPt[IJK].Signature;
@@ -2033,19 +2309,17 @@ void Iso3D::ConstructIsoSurface()
 {
     int IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
     int I, J, IJK;
-    int maxgrscalemaxgr = workerthreads[0].maximumgrid*workerthreads[0].maximumgrid;
+    int maxgrscalemaxgr = Gridmax*Gridmax;
 
     NbTriangleIsoSurface = 0;
-    //workerthread.NbPointIsoMapCND = 0;
-    limitX = workerthreads[0].nb_ligne;
-    //if(IsoConditionRequired != 1 )
-    for(int i=0; i < limitX-1 /*- workerthreads[0].CutLigne*/; i++)
+    limitX = nb_ligne;
+    for(int i=0; i < limitX-1; i++)
     {
         I   = i*maxgrscalemaxgr;
-        for(int j=0; j < workerthreads[0].nb_colon-1/* - workerthreads[0].CutColon*/; j++)
+        for(int j=0; j < nb_colon-1; j++)
         {
-            J   = I+j*workerthreads[0].maximumgrid;
-            for(int k=0; k < workerthreads[0].nb_depth-1 /*- workerthreads[0].CutDepth*/; k++)
+            J   = I+j*Gridmax;
+            for(int k=0; k < nb_depth-1; k++)
             {
                 IJK = J+k;
                 Index = GridVoxelVarPt[IJK].Signature;
@@ -2071,24 +2345,24 @@ void Iso3D::ConstructIsoSurface()
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
+void Iso3D::PointEdgeComputation(int isoindex)
 {
     int index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
     double vals[7], IsoValue_1, IsoValue_2, rapport;
     double factor;
-    int maxgrscalemaxgr = workerthreads[0].maximumgrid*workerthreads[0].maximumgrid;
+    int maxgrscalemaxgr = Gridmax*Gridmax;
     int I, J, JK, IJK, IPLUSONEJK, IMINUSONEJK,
         IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
-    int limitX = workerthreads[0].nb_ligne;
+    int limitX = nb_ligne;
     /// We have to compute the edges for the Grid limits ie: i=0, j=0 and k=0
 
-    i_Start = 1+workerthreads[ThreadIndex].iStart;
+    i_Start = 1/*+masterthread->iStart*/;
     j_Start = 1;
     k_Start = 1;
 
-    i_End = workerthreads[0].nb_ligne-1;
-    j_End = workerthreads[0].nb_colon-1;
-    k_End = workerthreads[0].nb_depth-1;
+    i_End = nb_ligne-1;
+    j_End = nb_colon-1;
+    k_End = nb_depth-1;
     /// The code is doubled to eliminate conditions tests
 
     for(i = i_Start; i < i_End; i++)
@@ -2096,15 +2370,15 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
         I = i*maxgrscalemaxgr;
         for(j = j_Start; j < j_End; j++)
         {
-            J = I + j*workerthreads[0].maximumgrid;
+            J = I + j*Gridmax;
             for(k = k_Start; k < k_End; k++)
             {
                 IJK                 = J+k;
                 IPLUSONEJK          = IJK + maxgrscalemaxgr;
                 IMINUSONEJK         = IJK - maxgrscalemaxgr;
-                IJPLUSONEK          = IJK + workerthreads[0].maximumgrid;
-                IJMINUSONEK         = IJK - workerthreads[0].maximumgrid;
-                IMINUSONEJMINUSONEK = IMINUSONEJK - workerthreads[0].maximumgrid;
+                IJPLUSONEK          = IJK + Gridmax;
+                IJMINUSONEK         = IJK - Gridmax;
+                IMINUSONEJMINUSONEK = IMINUSONEJK - Gridmax;
 
                 IsoValue_1 = Results[IJK];
                 /// First Case P(i+1)(j)(k)
@@ -2116,9 +2390,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i] - factor * workerthreads[0].x_Step[isoindex];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k];
                     ///===========================================================///
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2150,9 +2424,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local ;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j] - factor * workerthreads[0].y_Step[isoindex];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j] - factor * masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal[isoindex][k];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
@@ -2183,9 +2457,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k] - factor * workerthreads[0].z_Step[isoindex];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k] - factor * masterthread->z_Step[isoindex];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2217,10 +2491,10 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
     /// 1) First case : i =0;
 
     i =0;
-    for(j=0; j < workerthreads[0].nb_colon; j++)
+    for(j=0; j < nb_colon; j++)
     {
-        J = j*workerthreads[0].maximumgrid;
-        for(k=0; k < workerthreads[0].nb_depth; k++)
+        J = j*Gridmax;
+        for(k=0; k < nb_depth; k++)
         {
             JK = J +k;
 
@@ -2235,9 +2509,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = TypeDrawin*NbPointIsoMap_local;
 
-                vals[0] = workerthreads[0].xLocal[isoindex][i] - factor * workerthreads[0].x_Step[isoindex];
-                vals[1] = workerthreads[0].yLocal[isoindex][j];
-                vals[2] = workerthreads[0].zLocal[isoindex][k];
+                vals[0] = masterthread->xLocal[isoindex][i] - factor * masterthread->x_Step[isoindex];
+                vals[1] = masterthread->yLocal[isoindex][j];
+                vals[2] = masterthread->zLocal[isoindex][k];
 
                 NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep ] = vals[0];
                 NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2250,8 +2524,8 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                 // The same Point is used in three other Voxels
                 if( j != 0)
                 {
-                    GridVoxelVarPt[JK-workerthreads[0].maximumgrid].Edge_Points[4] = NbPointIsoMap_local;
-                    GridVoxelVarPt[JK-workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[JK-Gridmax].Edge_Points[4] = NbPointIsoMap_local;
+                    GridVoxelVarPt[JK-Gridmax].NbEdgePoint += 1;
                 }
                 if ( k != 0 )
                 {
@@ -2260,26 +2534,26 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                 }
                 if( j != 0 && k != 0)
                 {
-                    GridVoxelVarPt[JK-workerthreads[0].maximumgrid-1].Edge_Points[6] = NbPointIsoMap_local;
-                    GridVoxelVarPt[JK-workerthreads[0].maximumgrid-1].NbEdgePoint += 1;
+                    GridVoxelVarPt[JK-Gridmax-1].Edge_Points[6] = NbPointIsoMap_local;
+                    GridVoxelVarPt[JK-Gridmax-1].NbEdgePoint += 1;
                 }
 
                 NbPointIsoMap_local++;
             }
 
             // Second Case P(0)(j+1)(k)
-            if ( j != (workerthreads[0].nb_colon -1))
+            if ( j != (nb_colon -1))
             {
-                IsoValue_2 = Results[JK+workerthreads[0].maximumgrid];
+                IsoValue_2 = Results[JK+Gridmax];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j] - factor *workerthreads[0].y_Step[isoindex];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j] - factor *masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2301,7 +2575,7 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
             } /// If ( j != nb_colon -1) ...
 
             // Third Case P(0)(j)(k+1)
-            if ( k != (workerthreads[0].nb_depth-1))
+            if ( k != (nb_depth-1))
             {
                 IsoValue_2 = Results[JK+1];
                 // Edge Point computation and  save in IsoPointMap
@@ -2310,9 +2584,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k] - factor * workerthreads[0].z_Step[isoindex];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k] - factor * masterthread->z_Step[isoindex];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2325,8 +2599,8 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     // The same Point is used in three other Voxels
                     if ( j != 0)
                     {
-                        GridVoxelVarPt[JK-workerthreads[0].maximumgrid].Edge_Points[7]   =NbPointIsoMap_local;
-                        GridVoxelVarPt[JK-workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[JK-Gridmax].Edge_Points[7]   =NbPointIsoMap_local;
+                        GridVoxelVarPt[JK-Gridmax].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2342,10 +2616,10 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
 
     i = limitX-1;
     I = i*maxgrscalemaxgr;
-    for(j=0; j < workerthreads[0].nb_colon; j++)
+    for(j=0; j < nb_colon; j++)
     {
-        J = I + j*workerthreads[0].maximumgrid;
-        for(k=0; k < workerthreads[0].nb_depth; k++)
+        J = I + j*Gridmax;
+        for(k=0; k < nb_depth; k++)
         {
             JK = J + k;
 
@@ -2353,18 +2627,18 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
 
 
             // Second Case P(i)(j+1)(k)
-            if ( j != (workerthreads[0].nb_colon -1))
+            if ( j != (nb_colon -1))
             {
-                IsoValue_2 = Results[JK+workerthreads[0].maximumgrid];
+                IsoValue_2 = Results[JK+Gridmax];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j] - factor *workerthreads[0].y_Step[isoindex];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j] - factor *masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2397,7 +2671,7 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
             } /// End of if (j != nb_colon -1)...
 
             // Third Case P(i)(j)(k+1)
-            if ( k != (workerthreads[0].nb_depth -1))
+            if ( k != (nb_depth -1))
             {
                 IsoValue_2 = Results[JK+1];
                 // Edge Point computation and  save in IsoPointMap
@@ -2406,9 +2680,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k] - factor * workerthreads[0].z_Step[isoindex];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k] - factor * masterthread->z_Step[isoindex];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2426,13 +2700,13 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     }
                     if(j != 0)
                     {
-                        GridVoxelVarPt[JK-workerthreads[0].maximumgrid].Edge_Points[7]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[JK-workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[JK-Gridmax].Edge_Points[7]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[JK-Gridmax].NbEdgePoint += 1;
                     }
                     if( i !=0 && j != 0)
                     {
-                        GridVoxelVarPt[JK-maxgrscalemaxgr-workerthreads[0].maximumgrid].Edge_Points[5] = NbPointIsoMap_local;
-                        GridVoxelVarPt[JK-maxgrscalemaxgr-workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[JK-maxgrscalemaxgr-Gridmax].Edge_Points[5] = NbPointIsoMap_local;
+                        GridVoxelVarPt[JK-maxgrscalemaxgr-Gridmax].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2448,7 +2722,7 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
     j= 0;
 
     for(i=0; i < limitX; i++)
-        for(k=0; k < workerthreads[0].nb_depth; k++)
+        for(k=0; k < nb_depth; k++)
         {
 
             IsoValue_1 = Results[i*maxgrscalemaxgr+k];
@@ -2464,9 +2738,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i] - factor * workerthreads[0].x_Step[isoindex];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2489,16 +2763,16 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
 
             // Second Case P(i)(j+1)(k)
 
-            IsoValue_2 = Results[i*maxgrscalemaxgr+workerthreads[0].maximumgrid+k];
+            IsoValue_2 = Results[i*maxgrscalemaxgr+Gridmax+k];
             // Edge Point computation and  save in IsoPointMap
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = TypeDrawin*NbPointIsoMap_local;
 
-                vals[0] = workerthreads[0].xLocal[isoindex][i];
-                vals[1] = workerthreads[0].yLocal[isoindex][j] - factor * workerthreads[0].y_Step[isoindex];
-                vals[2] = workerthreads[0].zLocal[isoindex][k];
+                vals[0] = masterthread->xLocal[isoindex][i];
+                vals[1] = masterthread->yLocal[isoindex][j] - factor * masterthread->y_Step[isoindex];
+                vals[2] = masterthread->zLocal[isoindex][k];
 
                 NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                 NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2531,7 +2805,7 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
 
 
             // Third Case P(i)(j)(k+1)
-            if(k != (workerthreads[0].nb_depth -1))
+            if(k != (nb_depth -1))
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+k+1];
                 // Edge Point computation and  save in IsoPointMap
@@ -2540,9 +2814,9 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k] - factor * workerthreads[0].z_Step[isoindex];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k] - factor * masterthread->z_Step[isoindex];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2567,19 +2841,19 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
 
 
     /// 4) Case j = nb_colon -1
-    j = workerthreads[0].nb_colon-1;
+    j = nb_colon-1;
 
     for(i=0; i < limitX; i++)
-        for(k=0; k < workerthreads[0].nb_depth; k++)
+        for(k=0; k < nb_depth; k++)
         {
 
-            IsoValue_1 = Results[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k];
+            IsoValue_1 = Results[i*maxgrscalemaxgr+j*Gridmax+k];
 
 
             // First Case P(i+1)(j)(k)
             if( i != (limitX-1))
             {
-                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k];
+                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*Gridmax+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
 
@@ -2587,33 +2861,33 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i] - factor * workerthreads[0].x_Step[isoindex];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].Edge_Points[0] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].Edge_Points[0] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if( j != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].Edge_Points[4] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k].Edge_Points[4] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k].NbEdgePoint += 1;
                     }
                     if(k != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].Edge_Points[2]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k-1].Edge_Points[2]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k-1].NbEdgePoint += 1;
                     }
                     if(j != 0 && k != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k-1].Edge_Points[6] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k-1].Edge_Points[6] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k-1].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2623,42 +2897,42 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
             } /// End of if( i != (nb_ligne-1))...
 
             // Third Case P(i)(j)(k+1)
-            if( k != (workerthreads[0].nb_depth -1))
+            if( k != (nb_depth -1))
             {
-                IsoValue_2 = Results[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k+1];
+                IsoValue_2 = Results[i*maxgrscalemaxgr+j*Gridmax+k+1];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k] - factor * workerthreads[0].z_Step[isoindex];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k] - factor * masterthread->z_Step[isoindex];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].Edge_Points[3] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].Edge_Points[3] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if(i !=0)
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].Edge_Points[1]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax+k].Edge_Points[1]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax+k].NbEdgePoint += 1;
                     }
                     if( j!=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].Edge_Points[7]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k].Edge_Points[7]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k].NbEdgePoint += 1;
                     }
                     if(i != 0 && j !=0)
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].Edge_Points[5] = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*Gridmax+k].Edge_Points[5] = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*Gridmax+k].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2673,36 +2947,36 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
     k =0;
 
     for(i=0; i < limitX; i++)
-        for(j=0; j < workerthreads[0].nb_colon; j++)
+        for(j=0; j < nb_colon; j++)
         {
-            IsoValue_1 = Results[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid];
+            IsoValue_1 = Results[i*maxgrscalemaxgr+j*Gridmax];
             // First Case P(i+1)(j)(k)
             if(i != (limitX -1))
             {
-                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid];
+                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*Gridmax];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i] - factor * workerthreads[0].x_Step[isoindex];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].Edge_Points[0] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax].Edge_Points[0] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax].NbEdgePoint += 1;
 
                     // The same Point is used in one other Voxel
                     if(j !=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid].Edge_Points[4] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax].Edge_Points[4] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2712,32 +2986,32 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
             } /// End of if(i != (nb_ligne -1))
 
             // Second Case P(i)(j+1)(k)
-            if(j != workerthreads[0].nb_colon -1)
+            if(j != nb_colon -1)
             {
-                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*workerthreads[0].maximumgrid];
+                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*Gridmax];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j] - factor * workerthreads[0].y_Step[isoindex];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j] - factor * masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].Edge_Points[8] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax].Edge_Points[8] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax].NbEdgePoint += 1;
 
                     // The same Point is used in one other Voxels
                     if ( i !=0 )
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].Edge_Points[9]    = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax].Edge_Points[9]    = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2747,40 +3021,40 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
 
             // Third Case P(i)(j)(k+1)
 
-            IsoValue_2 = Results[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+1];
+            IsoValue_2 = Results[i*maxgrscalemaxgr+j*Gridmax+1];
             // Edge Point computation and  save in IsoPointMap
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = TypeDrawin*NbPointIsoMap_local;
 
-                vals[0] = workerthreads[0].xLocal[isoindex][i];
-                vals[1] = workerthreads[0].yLocal[isoindex][j];
-                vals[2] = workerthreads[0].zLocal[isoindex][k] - factor * workerthreads[0].z_Step[isoindex];
+                vals[0] = masterthread->xLocal[isoindex][i];
+                vals[1] = masterthread->yLocal[isoindex][j];
+                vals[2] = masterthread->zLocal[isoindex][k] - factor * masterthread->z_Step[isoindex];
 
                 NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                 NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                 NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
 
                 // save The reference to this point
-                GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].Edge_Points[3] = NbPointIsoMap_local;
-                GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax].Edge_Points[3] = NbPointIsoMap_local;
+                GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax].NbEdgePoint += 1;
 
                 // The same Point is used in three other Voxels
                 if ( i !=0 )
                 {
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].Edge_Points[1]   = NbPointIsoMap_local;
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax].Edge_Points[1]   = NbPointIsoMap_local;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax].NbEdgePoint += 1;
                 }
                 if (j != 0 )
                 {
-                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid].Edge_Points[7]   = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax].Edge_Points[7]   = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax].NbEdgePoint += 1;
                 }
                 if ( i !=0 && j != 0 )
                 {
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid].Edge_Points[5] = NbPointIsoMap_local;
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*Gridmax].Edge_Points[5] = NbPointIsoMap_local;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*Gridmax].NbEdgePoint += 1;
                 }
 
                 NbPointIsoMap_local++;
@@ -2791,19 +3065,19 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
 
     /// 6) Case k = nb_depth -1
 
-    k = workerthreads[0].nb_depth -1;
+    k = nb_depth -1;
 
     for(i=0; i < limitX; i++)
-        for(j=0; j < workerthreads[0].nb_colon; j++)
+        for(j=0; j < nb_colon; j++)
         {
 
-            IsoValue_1 = Results[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k];
+            IsoValue_1 = Results[i*maxgrscalemaxgr+j*Gridmax+k];
 
 
             // First Case P(i+1)(j)(k)
             if( i != (limitX -1) )
             {
-                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k];
+                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*Gridmax+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
 
@@ -2811,33 +3085,33 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i] - factor * workerthreads[0].x_Step[isoindex];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal[isoindex][j];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].Edge_Points[0] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].Edge_Points[0] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if(j !=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].Edge_Points[4] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k].Edge_Points[4] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k].NbEdgePoint += 1;
                     }
                     if(k !=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].Edge_Points[2]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k-1].Edge_Points[2]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k-1].NbEdgePoint += 1;
                     }
                     if(j !=0 && k != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k-1].Edge_Points[6] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*workerthreads[0].maximumgrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k-1].Edge_Points[6] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*Gridmax+k-1].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2847,42 +3121,42 @@ void Iso3D::PointEdgeComputation(int isoindex, int ThreadIndex)
             } /// End of if(i != nb_ligne-1)...
 
             // Second Case P(i)(j+1)(k)
-            if( j != (workerthreads[0].nb_colon -1) )
+            if( j != (nb_colon -1) )
             {
-                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*workerthreads[0].maximumgrid+k];
+                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*Gridmax+k];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
 
-                    vals[0] = workerthreads[0].xLocal[isoindex][i];
-                    vals[1] = workerthreads[0].yLocal[isoindex][j] - factor * workerthreads[0].y_Step[isoindex];
-                    vals[2] = workerthreads[0].zLocal[isoindex][k];
+                    vals[0] = masterthread->xLocal[isoindex][i];
+                    vals[1] = masterthread->yLocal[isoindex][j] - factor * masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal[isoindex][k];
 
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].Edge_Points[8] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].Edge_Points[8] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if( i !=0 )
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].Edge_Points[9]    = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax+k].Edge_Points[9]    = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax+k].NbEdgePoint += 1;
                     }
                     if( k !=0 )
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].Edge_Points[11]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k-1].Edge_Points[11]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*Gridmax+k-1].NbEdgePoint += 1;
                     }
                     if( i !=0 && k !=0 )
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].Edge_Points[10] = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*workerthreads[0].maximumgrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax+k-1].Edge_Points[10] = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*Gridmax+k-1].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2901,42 +3175,42 @@ void Iso3D::SignatureComputation()
 {
     int I, J, IJK, IPLUSONEJK,
         IJPLUSONEK,  IPLUSONEJPLUSONEK;
-    int maxgrscalemaxgr = workerthreads[0].maximumgrid*workerthreads[0].maximumgrid;
-    int limitX = workerthreads[0].nb_ligne;
+    int maxgrscalemaxgr = Gridmax*Gridmax;
+    int limitX = nb_ligne;
     for(int i=0; i < limitX; i++)
     {
         I = i*maxgrscalemaxgr;
-        for(int j=0; j < workerthreads[0].nb_colon; j++)
+        for(int j=0; j < nb_colon; j++)
         {
-            J = I + j*workerthreads[0].maximumgrid;
-            for(int k=0; k < workerthreads[0].nb_depth; k++)
+            J = I + j*Gridmax;
+            for(int k=0; k < nb_depth; k++)
             {
                 IJK               = J + k;
                 IPLUSONEJK        = IJK + maxgrscalemaxgr;
-                IJPLUSONEK        = IJK + workerthreads[0].maximumgrid;
-                IPLUSONEJPLUSONEK = IPLUSONEJK + workerthreads[0].maximumgrid;
+                IJPLUSONEK        = IJK + Gridmax;
+                IPLUSONEJPLUSONEK = IPLUSONEJK + Gridmax;
 
                 if(Results[IJK] <= 0) GridVoxelVarPt[IJK].Signature +=1;
 
                 if(i != (limitX-1))
                     if(Results[IPLUSONEJK] <= 0) GridVoxelVarPt[IJK].Signature +=2;
 
-                if(i != (limitX-1) && k != (workerthreads[0].nb_depth-1))
+                if(i != (limitX-1) && k != (nb_depth-1))
                     if(Results[IPLUSONEJK+1] <= 0) GridVoxelVarPt[IJK].Signature +=4;
 
-                if(k != (workerthreads[0].nb_depth-1))
+                if(k != (nb_depth-1))
                     if(Results[IJK+1] <= 0) GridVoxelVarPt[IJK].Signature +=8;
 
-                if(j != (workerthreads[0].nb_colon-1))
+                if(j != (nb_colon-1))
                     if(Results[IJPLUSONEK] <= 0) GridVoxelVarPt[IJK].Signature +=16;
 
-                if(i != (limitX-1) && j != (workerthreads[0].nb_colon-1))
+                if(i != (limitX-1) && j != (nb_colon-1))
                     if(Results[IPLUSONEJPLUSONEK] <= 0) GridVoxelVarPt[IJK].Signature +=32;
 
-                if(i != (limitX-1) && j != (workerthreads[0].nb_colon-1) && k != (workerthreads[0].nb_depth-1))
+                if(i != (limitX-1) && j != (nb_colon-1) && k != (nb_depth-1))
                     if(Results[IPLUSONEJPLUSONEK+1] <= 0) GridVoxelVarPt[IJK].Signature +=64;
 
-                if(j != (workerthreads[0].nb_colon-1) && k != (workerthreads[0].nb_depth-1))
+                if(j != (nb_colon-1) && k != (nb_depth-1))
                     if(Results[IJPLUSONEK+1] <= 0) GridVoxelVarPt[IJK].Signature +=128;
             }
         }

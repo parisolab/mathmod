@@ -28,10 +28,10 @@
 #define MAGIC_SCALE 1.5707963f
 
 static const int NbTextures=30;
-static const int NbComponent=12;
-static const int NbVariables = 10;
+static const int NbComponent=30;
+static const int NbVariables = 30;
 static const int NbConstantes = 30;
-static const int NbDefinedFunctions = 20;
+static const int NbDefinedFunctions = 50;
 static const int NbMaxGrid = 1000;  // Should use the defined value in mathmodconfig.js
 
 

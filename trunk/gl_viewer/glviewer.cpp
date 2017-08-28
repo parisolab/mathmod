@@ -510,9 +510,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjetThread->IsoObjet->workerthreads[0].RgbtParser;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->workerthreads[0].NoiseParser;
-        IsoObjetThread->IsoObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjetThread->IsoObjet->masterthread->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->masterthread->NoiseParser;
+        IsoObjetThread->IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
@@ -571,11 +571,11 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     LocalScene.componentsinfos.NoiseParam.NoiseType = 0; //Pigments
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjetThread->IsoObjet->workerthreads[0].VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjetThread->IsoObjet->workerthreads[0].GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjetThread->IsoObjet->workerthreads[0].Nb_vrgbts;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->workerthreads[0].NoiseParser;
-        IsoObjetThread->IsoObjet->workerthreads[0].Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjetThread->IsoObjet->masterthread->VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjetThread->IsoObjet->masterthread->GradientParser;
+        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjetThread->IsoObjet->masterthread->Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->masterthread->NoiseParser;
+        IsoObjetThread->IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
     else
     {
@@ -930,22 +930,26 @@ void OpenGlWidget::morph()
     FistTimecalibrate *= -1;
 
     //Isosurfaces:
+    /*
     for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber; nbthreads++)
     {
         IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated =  LocalScene.morph;
     }
-
+    */
+    IsoObjetThread->IsoObjet->masterthread->morph_activated = LocalScene.morph;
+    for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber-1; nbthreads++)
+        IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
+    IsoObjetThread->IsoObjet->IsoMorph();
     //Parametric surfaces:
     ParObjetThread->ParObjet->masterthread->activeMorph = LocalScene.morph;
     for(int nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
         ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
-    ParObjetThread->ParObjet->ParsePar();
+    ParObjetThread->ParObjet->ParMorph();
 
     if (LocalScene.morph == 1)
         timer->start( latence);
     else if(LocalScene.anim == -1)
         stoptimer();
-    //initbox();
 }
 
 void OpenGlWidget::keyPressEvent ( QKeyEvent * e )
