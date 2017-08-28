@@ -58,8 +58,7 @@ public :
 public :
     void ParCompute(int);
     void calcul_objet(int component =0);
-    void AllocateParsersForWorkerThread(int nbcomp);
-    void AllocateParsersForThread();
+    void AllocateParsersForWorkerThread(int, int);
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
@@ -161,6 +160,6 @@ public:
     void MasterThreadCopy(ParMasterThread *);
     ErrorMessage ThreadParsersCopy();
     ErrorMessage  parse_expression2();
-    ErrorMessage  ParsePar();
+    ErrorMessage  ParMorph();
     void run() Q_DECL_OVERRIDE;
 };
