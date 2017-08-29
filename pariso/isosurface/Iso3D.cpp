@@ -1095,13 +1095,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             for(int j=0; j<Nb_constants; j++)
             {
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                Fct[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
 
             //Add predefined constatnts:
@@ -1137,13 +1131,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             for(int j=0; j<Nb_constants; j++)
             {
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
                 RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
                 RgbtParser[i].AddConstant("Gain", Gain);
                 RgbtParser[i].AddConstant("Octaves", Octaves);
@@ -1163,13 +1151,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         Nb_vrgbts = HowManyVariables(VRgbt, 4);
         for(int j=0; j<Nb_constants; j++)
         {
-            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-            {
-                stdError.strError = Consts[j];
-                stdError.strOrigine = ConstNames[j];
-                return stdError;
-            }
-            GradientParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
 
         GradientParser->AddConstant("Lacunarity", Lacunarity);
@@ -1182,13 +1164,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             for(int j=0; j<Nb_constants; j++)
             {
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
                 VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
                 VRgbtParser[i].AddConstant("Gain", Gain);
                 VRgbtParser[i].AddConstant("Octaves", Octaves);
@@ -1202,12 +1178,10 @@ ErrorMessage IsoMasterThread::ParserIso()
         Nb_vrgbts =0;
     }
 
-
-
     if(Noise != "")
     {
         for(int j=0; j<Nb_constants; j++)
-            NoiseParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            NoiseParser->AddConstant(ConstNames[j], ConstValues[j]);
         NoiseParser->AddConstant("Lacunarity", Lacunarity);
         NoiseParser->AddConstant("Gain", Gain);
         NoiseParser->AddConstant("Octaves", Octaves);
@@ -1228,13 +1202,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             for(int j=0; j<Nb_constants; j++)
             {
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u"))>=0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                Var[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                Var[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
 
 
@@ -1284,21 +1252,15 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         for(int j=0; j<Nb_constants; j++)
         {
-            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-            {
-                stdError.strError = Consts[j];
-                stdError.strOrigine = ConstNames[j];
-                return stdError;
-            }
-            implicitFunctionParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            implicitFunctionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             if(Condition != "")
-                IsoConditionParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            xSupParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            ySupParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            zSupParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            xInfParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            yInfParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            zInfParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                IsoConditionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+            xSupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+            ySupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+            zSupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+            xInfParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+            yInfParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+            zInfParser[i].AddConstant(ConstNames[j], ConstValues[j]);
         }
 
         //Add predefined constatnts:

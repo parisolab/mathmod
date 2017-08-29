@@ -88,7 +88,6 @@ class IsoWorkerThread : public QThread
         double  vr[3*NbVariables][NbComponent][NbMaxGrid];
         std::string VarName[NbVariables];
         ErrorMessage stdError;
-        double SliderValues[5000];
         unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
         bool StopCalculations, ParsersAllocated;
         ImplicitStruct ImplicitStructs[NbComponent];
@@ -119,7 +118,7 @@ class IsoWorkerThread : public QThread
             Gradient, Noise, varliste;
             int IsoConditionRequired, Nb_implicitfunctions, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
             ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
-            double ConstValues[NbConstantes];
+            double ConstValues[NbConstantes], SliderValues[5000];
             float Octaves, Lacunarity, Gain;
         public :
             void DeleteMasterParsers();
