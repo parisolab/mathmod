@@ -70,19 +70,20 @@ class ParMasterThread : public ParWorkerThread
 public :
     ErrorMessage stdError;
     FunctionParser *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser myParserCND[NbComponent],
-                   myParserUmin[NbComponent], myParserUmax[NbComponent],
-                   myParserVmin[NbComponent], myParserVmax[NbComponent],
-                   Var[NbVariables], Cstparser;
+    FunctionParser *myParserCND,
+                   *myParserUmin,*myParserUmax,
+                   *myParserVmin,*myParserVmax,
+                   *Var, Cstparser;
     ParStruct ParamStructs[NbComponent];
     int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, Nb_constants, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
-        Varu, Const,  Rgbt, Grid;
-    std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], Funct, FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
+        Varu, Const,  Funct, Rgbt, Grid;
+    int expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize, inf_uSize, sup_uSize, inf_vSize, sup_vSize,
+    VaruSize, ConstSize,  FunctSize, RgbtSize, GridSize;
+    std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
         RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
         Gradient, Noise, NoiseShape, SliderNames[50];
-    //double  v_inf[NbComponent], v_sup[NbComponent],u_inf[NbComponent],u_sup[NbComponent],dif_v[NbComponent],dif_u[NbComponent];
-    double SliderValues[5000];
+    double ConstValues[NbConstantes], SliderValues[5000];
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     float Lacunarity, Gain;
     int Octaves;
@@ -96,7 +97,6 @@ public :
     void AllocateParsersForMasterThread();
     void AllocateParsersForThread();
     void DeleteMasterParsers();
-    //void run() Q_DECL_OVERRIDE;
     ParMasterThread();
     ~ParMasterThread();
 };
@@ -108,8 +108,6 @@ public:
     ObjectProperties *LocalScene;
     ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
-    //float* NormVertexTab;
-    //float* ExtraDimension;
     unsigned int *IndexPolyTab;
     unsigned int *IndexPolyTabMin;
     float *Border;
