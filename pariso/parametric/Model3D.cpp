@@ -142,7 +142,7 @@ void Par3D::initialiser_parametres()
     workerthreads = new ParWorkerThread[WorkerThreadsNumber-1];
     masterthread  = new ParMasterThread();
 
-    masterthread->AllocateParsersForThread();
+    //masterthread->AllocateParsersForThread();
 
     masterthread->nb_ligne  = nb_ligne;
     masterthread->nb_colone = nb_colone;
@@ -173,7 +173,7 @@ void ParMasterThread::initialiser_parseur()
     NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
-    for(int i=0; i<NbComponent; i++)
+    for(int i=0; i<expression_XSize; i++)
     {
         myParserUmin[i].AddConstant("pi", PI);
         myParserUmax[i].AddConstant("pi", PI);
@@ -380,15 +380,21 @@ void ParMasterThread::AllocateParsersForMasterThread()
 {
     if(!ParsersAllocated)
     {
-        myParserX = new FunctionParser[NbComponent];
-        myParserY = new FunctionParser[NbComponent];
-        myParserZ = new FunctionParser[NbComponent];
-        myParserW = new FunctionParser[NbComponent];
-        Fct = new FunctionParser[NbDefinedFunctions];
-        RgbtParser = new FunctionParser[NbTextures];
-        VRgbtParser = new FunctionParser[NbTextures];
-        GradientParser = new FunctionParser;
-        NoiseParser = new FunctionParser;
+        myParserX = new FunctionParser[expression_XSize];
+        myParserY = new FunctionParser[expression_XSize];
+        myParserZ = new FunctionParser[expression_XSize];
+        myParserW = new FunctionParser[expression_XSize];
+        myParserUmin = new FunctionParser[expression_XSize];
+        myParserVmin = new FunctionParser[expression_XSize];
+        myParserUmax = new FunctionParser[expression_XSize];
+        myParserVmax = new FunctionParser[expression_XSize];
+        myParserCND  = new FunctionParser[expression_XSize];
+        Fct          = new FunctionParser[FunctSize];
+        Var          = new FunctionParser[VaruSize];
+        RgbtParser       = new FunctionParser[NbTextures];
+        VRgbtParser      = new FunctionParser[NbTextures];
+        GradientParser   = new FunctionParser;
+        NoiseParser      = new FunctionParser;
         NoiseShapeParser = new FunctionParser;
         ParsersAllocated = true;
     }
@@ -403,7 +409,7 @@ void ParWorkerThread::AllocateParsersForWorkerThread(int nbcomposants, int nbfun
         myParserY = new FunctionParser[nbcomposants];
         myParserZ = new FunctionParser[nbcomposants];
         myParserW = new FunctionParser[nbcomposants];
-        Fct = new FunctionParser[nbfunct];
+        Fct       = new FunctionParser[nbfunct];
         ParsersAllocated = true;
     }
 }
@@ -417,6 +423,12 @@ void ParMasterThread::DeleteMasterParsers()
         delete[] myParserY;
         delete[] myParserZ;
         delete[] myParserW;
+        delete[] myParserUmin;
+        delete[] myParserVmin;
+        delete[] myParserUmax;
+        delete[] myParserVmax;
+        delete[] Var;
+        delete[] myParserCND;
         delete[] Fct;
         delete[] RgbtParser;
         delete[] VRgbtParser;
@@ -461,13 +473,17 @@ void ParMasterThread::InitMasterParsers()
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-    for(int i=0; i<NbComponent; i++)
+    for(int i=0; i<expression_XSize; i++)
     {
         myParserX[i].AddConstant("pi", PI);
         myParserY[i].AddConstant("pi", PI);
         myParserZ[i].AddConstant("pi", PI);
         myParserW[i].AddConstant("pi", PI);
         myParserCND[i].AddConstant("pi", PI);
+        myParserUmin[i].AddConstant("pi", PI);
+        myParserVmin[i].AddConstant("pi", PI);
+        myParserUmax[i].AddConstant("pi", PI);
+        myParserVmax[i].AddConstant("pi", PI);
         myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
         myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
@@ -484,7 +500,7 @@ void ParMasterThread::InitMasterParsers()
         RgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("pi", PI);
     }
-    for(int i=0; i<NbDefinedFunctions; i++)
+    for(int i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
     }
@@ -513,7 +529,8 @@ ErrorMessage  ParMasterThread::parse_expression()
             stdError.strOrigine = ConstNames[j];
             return stdError;
         }
-        Cstparser.AddConstant(ConstNames[j], Cstparser.Eval(vals));
+        ConstValues[j] = Cstparser.Eval(vals);
+        Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
 
     if(Funct != "")
@@ -523,14 +540,15 @@ ErrorMessage  ParMasterThread::parse_expression()
         for(int i=0; i<Nb_functs; i++)
         {
             for(int j=0; j<Nb_constants; j++)
-            {
+            {/*
                 if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
                 {
                     stdError.strError = Consts[j];
                     stdError.strOrigine = ConstNames[j];
                     return stdError;
                 }
-                Fct[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                */
+                Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
 
             //Add predefined constatnts:
@@ -567,14 +585,15 @@ ErrorMessage  ParMasterThread::parse_expression()
         for(int i=0; i<Nb_rgbts; i++)
         {
             for(int j=0; j<Nb_constants; j++)
-            {
+            {/*
                 if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
                 {
                     stdError.strError = Consts[j];
                     stdError.strOrigine = ConstNames[j];
                     return stdError;
                 }
-                RgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                */
+                RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
         }
     }
@@ -590,26 +609,30 @@ ErrorMessage  ParMasterThread::parse_expression()
         Nb_vrgbts = HowManyVariables(VRgbt, 4);
         for(int j=0; j<Nb_constants; j++)
         {
+            /*
             if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
             {
                 stdError.strError = Consts[j];
                 stdError.strOrigine = ConstNames[j];
                 return stdError;
             }
-            GradientParser->AddConstant(ConstNames[j], Cstparser.Eval(vals));
+            */
+            GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
 
         for(int i=0; i<Nb_vrgbts; i++)
         {
             for(int j=0; j<Nb_constants; j++)
             {
+                /*
                 if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
                 {
                     stdError.strError = Consts[j];
                     stdError.strOrigine = ConstNames[j];
                     return stdError;
                 }
-                VRgbtParser[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                */
+                VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
         }
     }
@@ -626,13 +649,15 @@ ErrorMessage  ParMasterThread::parse_expression()
         {
             for(int j=0; j<Nb_constants; j++)
             {
+                /*
                 if ((stdError.iErrorIndex =Cstparser.Parse(Consts[j],"u")) >= 0)
                 {
                     stdError.strError = Consts[j];
                     stdError.strOrigine = ConstNames[j];
                     return stdError;
                 }
-                Var[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                */
+                Var[i].AddConstant(ConstNames[j], ConstValues[j]);
                 Var[i].AddConstant("pi", PI);
             }
 
@@ -682,23 +707,24 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         for(int j=0; j<Nb_constants; j++)
         {
+            /*
             if ((stdError.iErrorIndex =Cstparser.Parse(Consts[j],"u")) >= 0)
             {
                 stdError.strError = Consts[j];
                 stdError.strOrigine = ConstNames[j];
                 return stdError;
             }
-
+*/
             if(expression_CND != "")
-                myParserCND[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserUmax[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserUmin[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserVmin[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserVmax[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserX[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserY[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserZ[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
-            myParserW[i].AddConstant(ConstNames[j], Cstparser.Eval(vals));
+                myParserCND[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserUmax[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserUmin[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserVmin[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserVmax[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserX[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserY[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserZ[i].AddConstant(ConstNames[j], ConstValues[j]);
+            myParserW[i].AddConstant(ConstNames[j], ConstValues[j]);
         }
 
 
@@ -875,8 +901,42 @@ ErrorMessage  ParMasterThread::parse_expression()
 
 ErrorMessage  Par3D::parse_expression2()
 {
-    double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     ErrorMessage NodError;
+
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        //Functions:
+                for(int ij=0; ij<masterthread->Nb_functs; ij++)
+                {
+                    workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
+                }
+
+                for(int ii=0; ii<masterthread->Nb_functs; ii++)
+                {
+                    for(int jj=0; jj<masterthread->Nb_constants; jj++)
+                    {
+                        workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
+                    }
+
+                    //Add predefined constatnts:
+                    for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
+                    {
+                        workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
+                    }
+                }
+
+                for(int ii=0; ii<masterthread->Nb_functs; ii++)
+                {
+                    for(int jj=0; jj<ii; jj++)
+                        workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
+                    if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"u,v,t")) >= 0)
+                    {
+                        masterthread->stdError.strError = masterthread->Functs[ii];
+                        masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
+                        return masterthread->stdError;
+                    }
+                }
+    }
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
@@ -901,58 +961,12 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-    //Functions:
-            for(int ij=0; ij<masterthread->Nb_functs; ij++)
-            {
-                workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
-            }
-
-            for(int ii=0; ii<masterthread->Nb_functs; ii++)
-            {
-                for(int jj=0; jj<masterthread->Nb_constants; jj++)
-                {
-                    if ((masterthread->stdError.iErrorIndex = masterthread->Cstparser.Parse(masterthread->Consts[jj],"u")) >= 0)
-                    {
-                        masterthread->stdError.strError = masterthread->Consts[jj];
-                        masterthread->stdError.strOrigine = masterthread->ConstNames[jj];
-                        return masterthread->stdError;
-                    }
-                    workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->Cstparser.Eval(vals));
-                }
-
-                //Add predefined constatnts:
-                for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
-                {
-                    workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
-                }
-            }
-
-            for(int ii=0; ii<masterthread->Nb_functs; ii++)
-            {
-                for(int jj=0; jj<ii; jj++)
-                    workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
-                if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"u,v,t")) >= 0)
-                {
-                    masterthread->stdError.strError = masterthread->Functs[ii];
-                    masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
-                    return masterthread->stdError;
-                }
-            }
-
         for(int j=0; j<masterthread->Nb_constants; j++)
         {
-
-            if ((masterthread->stdError.iErrorIndex =masterthread->Cstparser.Parse(masterthread->Consts[j],"u")) >= 0)
-            {
-                masterthread->stdError.strError = masterthread->Consts[j];
-                masterthread->stdError.strOrigine = masterthread->ConstNames[j];
-                return masterthread->stdError;
-            }
-
-            workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
-            workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
-            workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
-            workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->ConstNames[j], masterthread->Cstparser.Eval(vals));
+            workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
         }
         //Add predefined sliders constatnts:
         for(int k=0; k<masterthread->Nb_Sliders; k++)
@@ -975,7 +989,9 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserW[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
         }
     }
-
+}
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
     for(int index=0; index< masterthread->Nb_paramfunctions + 1; index++)
     {
         if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
@@ -1050,6 +1066,12 @@ void Par3D::MasterThreadCopy(ParMasterThread *MasterThreadsTmp)
         MasterThreadsTmp->MyIndex        = 0;
         MasterThreadsTmp->param4D        = param4D;
         MasterThreadsTmp->WorkerThreadsNumber = WorkerThreadsNumber;
+
+        MasterThreadsTmp->expression_XSize = masterthread->expression_XSize;
+        MasterThreadsTmp->expression_YSize = masterthread->expression_YSize;
+        MasterThreadsTmp->expression_ZSize = masterthread->expression_ZSize;
+        MasterThreadsTmp->FunctSize        = masterthread->FunctSize;
+        MasterThreadsTmp->VaruSize         = masterthread->VaruSize;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
