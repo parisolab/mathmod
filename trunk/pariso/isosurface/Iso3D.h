@@ -71,11 +71,7 @@ struct  Voxel
 class IsoWorkerThread : public QThread
 {
     public :
-        FunctionParser *implicitFunctionParser, *Fct,
-                       *xSupParser, *xInfParser,
-                       *ySupParser, *yInfParser,
-                       *zSupParser, *zInfParser,
-                       *Var;
+        FunctionParser *implicitFunctionParser, *Fct;
         int   nb_ligne, nb_colon, nb_depth;
         int iStart, iFinish;
         int GridTable[NbComponent];
@@ -104,7 +100,11 @@ class IsoWorkerThread : public QThread
     class IsoMasterThread : public IsoWorkerThread
     {
         public :
-            FunctionParser IsoConditionParser[NbComponent], Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser;
+            FunctionParser *IsoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
+            *xSupParser, *xInfParser,
+            *ySupParser, *yInfParser,
+            *zSupParser, *zInfParser,
+            *Var;
             std::string ImplicitFunction, Condition,
             XlimitSup, XlimitInf,
             YlimitSup, YlimitInf,
