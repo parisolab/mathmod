@@ -1661,6 +1661,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
         // Fy
@@ -1674,6 +1675,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
         // Fz
@@ -1687,6 +1689,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
         // inf_u
@@ -1752,6 +1755,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
         // Cnd
@@ -1791,6 +1795,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
 
@@ -1942,6 +1947,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
         // Fy
@@ -1955,6 +1961,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
         // Fz
@@ -1968,6 +1975,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
         //Fw
@@ -2046,6 +2054,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
         // Const
@@ -2085,6 +2094,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\t","");
         result.replace(" ","");
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
         //Noise:
@@ -2519,6 +2529,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
             // Fy
@@ -2532,6 +2543,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
 
@@ -2546,6 +2558,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
             // inf_u
@@ -2611,6 +2624,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
             // Const
@@ -2650,6 +2664,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
             //Noise:
             QString noise = "";
@@ -2784,6 +2799,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
 
             // Fy
@@ -2797,6 +2813,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
 
             // Fz
@@ -2810,6 +2827,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
 
             // Fw
@@ -2888,6 +2906,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
 
             // Const
@@ -2927,6 +2946,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\t","");
             result.replace(" ","");
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
             //Noise:
