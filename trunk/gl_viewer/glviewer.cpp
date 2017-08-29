@@ -929,22 +929,23 @@ void OpenGlWidget::morph()
     LocalScene.morph *= -1;
     FistTimecalibrate *= -1;
 
-    //Isosurfaces:
-    /*
-    for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber; nbthreads++)
+    if(LocalScene.typedrawing == 1)
     {
-        IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated =  LocalScene.morph;
+        //Isosurfaces:
+        IsoObjetThread->IsoObjet->masterthread->morph_activated = LocalScene.morph;
+        for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber-1; nbthreads++)
+            IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
+        IsoObjetThread->IsoObjet->IsoMorph();
     }
-    */
-    IsoObjetThread->IsoObjet->masterthread->morph_activated = LocalScene.morph;
-    for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber-1; nbthreads++)
-        IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
-    IsoObjetThread->IsoObjet->IsoMorph();
-    //Parametric surfaces:
-    ParObjetThread->ParObjet->masterthread->activeMorph = LocalScene.morph;
-    for(int nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
-        ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
-    ParObjetThread->ParObjet->ParMorph();
+    else
+        if(LocalScene.typedrawing == -1)
+        {
+            //Parametric surfaces:
+            ParObjetThread->ParObjet->masterthread->activeMorph = LocalScene.morph;
+            for(int nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+                ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+            ParObjetThread->ParObjet->ParMorph();
+        }
 
     if (LocalScene.morph == 1)
         timer->start( latence);
