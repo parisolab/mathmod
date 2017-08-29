@@ -236,7 +236,6 @@ void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
         workerthreadstmp[nbthreads].maximumgrid = Gridmax;
         workerthreadstmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
-
     //Assigne newly allocated memory
     workerthreads = workerthreadstmp;
     masterthread  = masterthreadtmp;
@@ -283,35 +282,6 @@ ErrorMessage Iso3D::ThreadParsersCopy()
 ErrorMessage  Iso3D::parse_expression2()
 {
     ErrorMessage NodError;
-
-    //User defined variables:
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-    {
-         for(int i=0; i<masterthread->Nb_newvariables; i++)
-         {
-             workerthreads[nbthreads].Var[i].AddConstant("pi", PI);
-             for(int j=0; j<masterthread->Nb_constants; j++)
-             {
-                 workerthreads[nbthreads].Var[i].AddConstant(masterthread->ConstNames[j],  masterthread->ConstValues[j]);
-             }
-             //Add predefined constatnts:
-             for(int k=0; k<masterthread->Nb_Sliders; k++)
-             {
-                 workerthreads[nbthreads].Var[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-             }
-         }
-
-         for(int i=0; i<masterthread->Nb_newvariables; i++)
-         {
-             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Var[i].Parse(masterthread->Varus[i],"u,tm")) >= 0)
-             {
-                 masterthread->stdError.strError = masterthread->Varus[i];
-                 masterthread->stdError.strOrigine = masterthread->VarName[i];
-                 return masterthread->stdError;
-             }
-         }
-     }
-
     // Functions :
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
@@ -352,7 +322,6 @@ ErrorMessage  Iso3D::parse_expression2()
                 return masterthread->stdError;
             }
         }
-
     }
 
     //Add defined constantes:
@@ -361,35 +330,16 @@ ErrorMessage  Iso3D::parse_expression2()
         for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].xSupParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].xInfParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].ySupParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].yInfParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].zSupParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].zInfParser[i].AddConstant("pi", PI);
-
 
 
         for(int j=0; j<masterthread->Nb_constants; j++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].xSupParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].xInfParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].ySupParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].yInfParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].zSupParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].zInfParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
         }
         //Add predefined sliders constatnts:
         for(int k=0; k<masterthread->Nb_Sliders; k++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].xSupParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].xInfParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].ySupParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].yInfParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].zSupParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].zInfParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
         }
     }
     }
@@ -425,48 +375,6 @@ ErrorMessage  Iso3D::parse_expression2()
         if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
         {
             masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
-            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].xSupParser[index].Parse(masterthread->ImplicitStructs[index].xmax, "x,y,z,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ImplicitStructs[index].xmax;
-            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].xInfParser[index].Parse(masterthread->ImplicitStructs[index].xmin, "x,y,z,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ImplicitStructs[index].xmin;
-            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].ySupParser[index].Parse(masterthread->ImplicitStructs[index].ymax, "x,y,z,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ImplicitStructs[index].ymax;
-            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].yInfParser[index].Parse(masterthread->ImplicitStructs[index].ymin, "x,y,z,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ImplicitStructs[index].ymin;
-            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].zSupParser[index].Parse(masterthread->ImplicitStructs[index].zmax, "x,y,z,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ImplicitStructs[index].zmax;
-            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].zInfParser[index].Parse(masterthread->ImplicitStructs[index].zmin, "x,y,z,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ImplicitStructs[index].zmin;
             masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
             return masterthread->stdError;
         }
@@ -1543,6 +1451,7 @@ void IsoMasterThread::DeleteMasterParsers()
         delete[] zInfParser;
         delete[] Fct;
         delete[] Var;
+        delete[] IsoConditionParser;
         delete[] VRgbtParser;
         delete[] RgbtParser;
         delete GradientParser;
@@ -1557,14 +1466,7 @@ void IsoWorkerThread::DeleteWorkerParsers()
     if(ParsersAllocated)
     {
         delete[] implicitFunctionParser;
-        delete[] xSupParser;
-        delete[] ySupParser;
-        delete[] zSupParser;
-        delete[] xInfParser;
-        delete[] yInfParser;
-        delete[] zInfParser;
         delete[] Fct;
-        delete[] Var;
         ParsersAllocated = false;
     }
 }
@@ -1646,6 +1548,7 @@ void IsoMasterThread::AllocateMasterParsers()
         xInfParser = new FunctionParser[ImplicitFunctionSize];
         yInfParser = new FunctionParser[ImplicitFunctionSize];
         zInfParser = new FunctionParser[ImplicitFunctionSize];
+        IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
         Fct = new FunctionParser[FunctSize];
         Var = new FunctionParser[VaruSize];
 
@@ -1662,14 +1565,7 @@ void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct, in
     if(!ParsersAllocated)
     {
         implicitFunctionParser = new FunctionParser[nbcomp];
-        xSupParser = new FunctionParser[nbcomp];
-        ySupParser = new FunctionParser[nbcomp];
-        zSupParser = new FunctionParser[nbcomp];
-        xInfParser = new FunctionParser[nbcomp];
-        yInfParser = new FunctionParser[nbcomp];
-        zInfParser = new FunctionParser[nbcomp];
         Fct = new FunctionParser[nbfunct];
-        Var = new FunctionParser[nbvar];
         ParsersAllocated = true;
     }
 }
