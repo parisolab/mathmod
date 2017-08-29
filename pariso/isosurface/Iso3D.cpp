@@ -819,81 +819,114 @@ int IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, int type)
     return 0;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::InitParser()
 {
     AllocateMasterParsers();
     InitMasterParsers();
 }
 
-
-///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
+//+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::ReinitVarTablesWhenMorphActiv(int IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double vals2[] = {0,0};
-    int maxgrscalemaxgr = maximumgrid*maximumgrid;
     const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
-    int I, J, IJK;
 
-    if(AllComponentTraited && morph_activated ==1)
-    {
-        stepMorph += pace;
-    }
-    vals[3]          = stepMorph;
+        vals[3]          = masterthread->stepMorph;
+        masterthread->xLocal[IsoIndex][0]=masterthread->xSupParser[IsoIndex].Eval(vals);
+        masterthread->yLocal[IsoIndex][0]=masterthread->ySupParser[IsoIndex].Eval(vals);
+        masterthread->zLocal[IsoIndex][0]=masterthread->zSupParser[IsoIndex].Eval(vals);
 
-    if( morph_activated ==1)
-    {
-        xLocal[IsoIndex][0]=xSupParser[IsoIndex].Eval(vals);
-        yLocal[IsoIndex][0]=ySupParser[IsoIndex].Eval(vals);
-        zLocal[IsoIndex][0]=zSupParser[IsoIndex].Eval(vals);
+        masterthread->x_Step[IsoIndex] =  (masterthread->xLocal[IsoIndex][0] - masterthread->xInfParser[IsoIndex].Eval(vals))/(nb_ligne-1);
+        masterthread->y_Step[IsoIndex] =  (masterthread->yLocal[IsoIndex][0] - masterthread->yInfParser[IsoIndex].Eval(vals))/(limitY-1);
+        masterthread->z_Step[IsoIndex] =  (masterthread->zLocal[IsoIndex][0] - masterthread->zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
-        x_Step[IsoIndex] =  (xLocal[IsoIndex][0] - xInfParser[IsoIndex].Eval(vals))/(nb_ligne-1);
-        y_Step[IsoIndex] =  (yLocal[IsoIndex][0] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-        z_Step[IsoIndex] =  (zLocal[IsoIndex][0] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+        for (int i= 1; i < limitX; i++)
+            masterthread->xLocal[IsoIndex][i] = masterthread->xLocal[IsoIndex][i-1] - masterthread->x_Step[IsoIndex];
+        for (int j= 1; j < limitY; j++)
+            masterthread->yLocal[IsoIndex][j] = masterthread->yLocal[IsoIndex][j-1] - masterthread->y_Step[IsoIndex];
+        for (int k= 1; k < limitZ; k++)
+            masterthread->zLocal[IsoIndex][k] = masterthread->zLocal[IsoIndex][k-1] - masterthread->z_Step[IsoIndex];
 
-        for (int i= 1; i < limitX; i++) xLocal[IsoIndex][i] = xLocal[IsoIndex][i-1] - x_Step[IsoIndex];
-        for (int j= 1; j < limitY; j++) yLocal[IsoIndex][j] = yLocal[IsoIndex][j-1] - y_Step[IsoIndex];
-        for (int k= 1; k < limitZ; k++) zLocal[IsoIndex][k] = zLocal[IsoIndex][k-1] - z_Step[IsoIndex];
-
-        std::string stringtoparse=ImplicitStructs[IsoIndex].fxyz    +
-                                  ImplicitStructs[IsoIndex].cnd  +
-                                  ImplicitStructs[IsoIndex].xmax  +
-                                  ImplicitStructs[IsoIndex].ymax  +
-                                  ImplicitStructs[IsoIndex].zmax  +
-                                  ImplicitStructs[IsoIndex].xmin   +
-                                  ImplicitStructs[IsoIndex].ymin   +
-                                  ImplicitStructs[IsoIndex].zmin;
-
-        for(int l=0; l<Nb_newvariables; l++)
+        for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
         {
-            if(stringtoparse.find(VarName [l]+"x") !=std::string::npos )
+            workerthreads[nbthreads].x_Step[IsoIndex] = masterthread->x_Step[IsoIndex];
+            workerthreads[nbthreads].y_Step[IsoIndex] = masterthread->y_Step[IsoIndex];
+            workerthreads[nbthreads].z_Step[IsoIndex] = masterthread->z_Step[IsoIndex];
+
+            for (int k= 0; k < limitX; k++)
+            {
+                workerthreads[nbthreads].xLocal[IsoIndex][k] = masterthread->xLocal[IsoIndex][k];
+                workerthreads[nbthreads].yLocal[IsoIndex][k] = masterthread->yLocal[IsoIndex][k];
+                workerthreads[nbthreads].zLocal[IsoIndex][k] = masterthread->zLocal[IsoIndex][k];
+            }
+        }
+
+        std::string stringtoparse=masterthread->ImplicitStructs[IsoIndex].fxyz    +
+                                  masterthread->ImplicitStructs[IsoIndex].cnd  +
+                                  masterthread->ImplicitStructs[IsoIndex].xmax  +
+                                  masterthread->ImplicitStructs[IsoIndex].ymax  +
+                                  masterthread->ImplicitStructs[IsoIndex].zmax  +
+                                  masterthread->ImplicitStructs[IsoIndex].xmin   +
+                                  masterthread->ImplicitStructs[IsoIndex].ymin   +
+                                  masterthread->ImplicitStructs[IsoIndex].zmin;
+
+
+        for(int l=0; l<masterthread->Nb_newvariables; l++)
+        {
+            if(stringtoparse.find(masterthread->VarName [l]+"x") !=std::string::npos )
                 for(int i=0; i<limitX; i++)
                 {
-                    vals2[0] = xLocal[IsoIndex][i];
-                    vals2[1] = stepMorph;
-                    vr[l*3][IsoIndex][i] =Var[l] .Eval(vals2);
+                    vals2[0] = masterthread->xLocal[IsoIndex][i];
+                    vals2[1] = masterthread->stepMorph;
+                    masterthread->vr[l*3][IsoIndex][i] = masterthread->Var[l] .Eval(vals2);
+                    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                        workerthreads[nbthreads].vr[l*3][IsoIndex][i] = masterthread->vr[l*3][IsoIndex][i];
                 }
 
-            if(stringtoparse.find(VarName [l]+"y") !=std::string::npos )
+            if(stringtoparse.find(masterthread->VarName [l]+"y") !=std::string::npos )
                 for(int i=0; i<limitY; i++)
                 {
-                    vals2[0] = yLocal[IsoIndex][i];
-                    vals2[1] = stepMorph;
-                    vr[l*3+1][IsoIndex][i] =Var[l] .Eval(vals2);
+                    vals2[0] = masterthread->yLocal[IsoIndex][i];
+                    vals2[1] = masterthread->stepMorph;
+                    masterthread->vr[l*3+1][IsoIndex][i] =masterthread->Var[l] .Eval(vals2);
+                    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                        workerthreads[nbthreads].vr[l*3+1][IsoIndex][i] = masterthread->vr[l*3+1][IsoIndex][i];
                 }
 
-            if(stringtoparse.find(VarName [l]+"z") !=std::string::npos )
+            if(stringtoparse.find(masterthread->VarName [l]+"z") !=std::string::npos )
                 for(int i=0; i<limitZ; i++)
                 {
-                    vals2[0] = zLocal[IsoIndex][i];
-                    vals2[1] = stepMorph;
-                    vr[l*3+2][IsoIndex][i] =Var[l] .Eval(vals2);
+                    vals2[0] = masterthread->zLocal[IsoIndex][i];
+                    vals2[1] = masterthread->stepMorph;
+                    masterthread->vr[l*3+2][IsoIndex][i] = masterthread->Var[l] .Eval(vals2);
+                    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                        workerthreads[nbthreads].vr[l*3+2][IsoIndex][i] = masterthread->vr[l*3+2][IsoIndex][i];
                 }
         }
+    /*
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        memcpy(workerthreads[nbthreads].xLocal, masterthread->xLocal, NbComponent*NbMaxGrid*sizeof(double));
+        memcpy(workerthreads[nbthreads].yLocal, masterthread->yLocal, NbComponent*NbMaxGrid*sizeof(double));
+        memcpy(workerthreads[nbthreads].zLocal, masterthread->zLocal, NbComponent*NbMaxGrid*sizeof(double));
+        memcpy(workerthreads[nbthreads].vr, masterthread->vr      , 3*NbVariables*NbComponent*NbMaxGrid*sizeof(double));
     }
+    */
+}
 
-    double test;
+//+++++++++++++++++++++++++++++++++++++++++
+void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
+{
+    double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    //double vals2[] = {0,0};
+    int maxgrscalemaxgr = maximumgrid*maximumgrid;
+    const int limitY = nb_colon, limitZ = nb_depth;
+    int I, J, IJK;
+
+    vals[3]          = stepMorph;
+
     int tmp = nb_ligne/WorkerThreadsNumber;
     iStart   = MyIndex*tmp;
     if(MyIndex == (WorkerThreadsNumber-1))
@@ -931,7 +964,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                 if(StopCalculations)
                     return;
                 IJK = J+k;
-                test = Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
+                Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
                 GridVoxelVarPt[IJK].Signature   = 0; // Signature initialisation
                 GridVoxelVarPt[IJK].NbEdgePoint = 0; // No EdgePoint yet!
                 for(int l=0; l<12; l++) GridVoxelVarPt[IJK].Edge_Points[l] = -20;
@@ -1710,6 +1743,21 @@ void Iso3D::IsoBuild (
         masterthread->CurrentIso = fctnb;
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
+
+        if(masterthread->morph_activated)
+        {
+            if(fctnb == 0)
+            {
+            //This code is to ensure that stepmorph values are the same accross all threads because tests show that
+            //it's not allways the case when this code is spread inside threads Run() functions!
+            masterthread->stepMorph += masterthread->pace;
+            for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+                workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
+            }
+
+            // Recalculate some tables values:
+            ReinitVarTablesWhenMorphActiv(fctnb);
+        }
 
         masterthread->start();
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
