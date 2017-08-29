@@ -540,14 +540,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         for(int i=0; i<Nb_functs; i++)
         {
             for(int j=0; j<Nb_constants; j++)
-            {/*
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                */
+            {
                 Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
 
@@ -585,14 +578,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         for(int i=0; i<Nb_rgbts; i++)
         {
             for(int j=0; j<Nb_constants; j++)
-            {/*
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                */
+            {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
         }
@@ -609,14 +595,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         Nb_vrgbts = HowManyVariables(VRgbt, 4);
         for(int j=0; j<Nb_constants; j++)
         {
-            /*
-            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-            {
-                stdError.strError = Consts[j];
-                stdError.strOrigine = ConstNames[j];
-                return stdError;
-            }
-            */
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
 
@@ -624,14 +602,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         {
             for(int j=0; j<Nb_constants; j++)
             {
-                /*
-                if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                */
                 VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
         }
@@ -649,14 +619,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         {
             for(int j=0; j<Nb_constants; j++)
             {
-                /*
-                if ((stdError.iErrorIndex =Cstparser.Parse(Consts[j],"u")) >= 0)
-                {
-                    stdError.strError = Consts[j];
-                    stdError.strOrigine = ConstNames[j];
-                    return stdError;
-                }
-                */
                 Var[i].AddConstant(ConstNames[j], ConstValues[j]);
                 Var[i].AddConstant("pi", PI);
             }
@@ -707,14 +669,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         for(int j=0; j<Nb_constants; j++)
         {
-            /*
-            if ((stdError.iErrorIndex =Cstparser.Parse(Consts[j],"u")) >= 0)
-            {
-                stdError.strError = Consts[j];
-                stdError.strOrigine = ConstNames[j];
-                return stdError;
-            }
-*/
             if(expression_CND != "")
                 myParserCND[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserUmax[i].AddConstant(ConstNames[j], ConstValues[j]);
