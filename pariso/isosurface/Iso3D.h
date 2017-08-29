@@ -176,5 +176,6 @@ class IsoWorkerThread : public QThread
                 ErrorMessage IsoMorph();
                 ErrorMessage parse_expression2();
                 ErrorMessage ThreadParsersCopy();
+                void ReinitVarTablesWhenMorphActiv(int);
                 void run() Q_DECL_OVERRIDE;
     };
