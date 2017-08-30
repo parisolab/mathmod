@@ -8063,8 +8063,8 @@ void DrawingOptions::on_GlcacheCheckBox_clicked(bool checked)
 
 void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->UpdateThredsNumber(value);
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->UpdateThredsNumber(value);
+    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->UpdateThredsNumber(value);
     ui.ThreadgroupBox->setTitle("Threads: "+ QString::number(ui.ThreadNumberScrollBar->minimum())  +"  <  "+QString::number(value)+"  <  "+ QString::number(ui.ThreadNumberScrollBar->maximum()));
 }
 
