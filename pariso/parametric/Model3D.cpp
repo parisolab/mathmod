@@ -1811,7 +1811,7 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
     ParMasterThread *masterthreadtmp  = new ParMasterThread;
     ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber-1];
 
-    masterthreadtmp->AllocateParsersForThread();
+    //masterthreadtmp->AllocateParsersForThread();
 
     MasterThreadCopy(masterthreadtmp);
     WorkerThreadCopy(workerthreadstmp);

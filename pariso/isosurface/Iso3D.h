@@ -46,26 +46,6 @@
                   |/                                    |/
                  3.---------------2------------.2
 */
-struct ImplicitStruct
-{
-    std::string fxyz;
-    std::string xmin;
-    std::string xmax;
-    std::string ymin;
-    std::string ymax;
-    std::string zmin;
-    std::string zmax;
-    std::string grid;
-    std::string cnd;
-    int              index;
-};
-
-struct  Voxel
-{
-    int Edge_Points [12]; //reference to the Edge Points
-    int Signature; // From 0 to 255
-    int NbEdgePoint;
-};
 
 
 class IsoWorkerThread : public QThread
@@ -86,11 +66,11 @@ class IsoWorkerThread : public QThread
         ErrorMessage stdError;
         unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
         bool StopCalculations, ParsersAllocated;
-        ImplicitStruct ImplicitStructs[NbComponent];
+        ImplicitStructure ImplicitStructs[NbComponent];
         public :
             void IsoCompute(int);
             void VoxelEvaluation(int);
-            void AllocateParsersForWorkerThread(int, int, int);
+            void AllocateParsersForWorkerThread(int, int);
             void DeleteWorkerParsers();
             void run() Q_DECL_OVERRIDE;
             IsoWorkerThread();
