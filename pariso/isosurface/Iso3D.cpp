@@ -33,6 +33,7 @@ static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 static int Gridmax=0;
+
 static float*     NormVertexTab;
 
 
@@ -125,11 +126,22 @@ IsoMasterThread::IsoMasterThread()
     }
 
     Cstparser.AddConstant("pi", PI);
+    ImplicitFunctionSize = ConditionSize = ConstSize = VaruSize = FunctSize = RgbtSize = VRgbtSize = 0;
 }
 
 IsoMasterThread::~IsoMasterThread()
 {
 
+}
+
+IsoWorkerThread::~IsoWorkerThread()
+{
+    if(ParsersAllocated)
+    {
+        delete[] implicitFunctionParser;
+        delete[] Fct;
+        ParsersAllocated = false;
+    }
 }
 
 IsoWorkerThread::IsoWorkerThread()
@@ -145,11 +157,6 @@ IsoWorkerThread::IsoWorkerThread()
     //Add predefined constatnts:
 }
 
-IsoWorkerThread::~IsoWorkerThread()
-{
-    //deleteparsers();
-}
-
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
@@ -161,6 +168,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+        WorkerThreadsTmp[nbthreads].maximumgrid = Gridmax;
     }
 }
 
@@ -187,6 +195,7 @@ void Iso3D::MasterThreadCopy(IsoMasterThread *MasterThreadsTmp)
         MasterThreadsTmp->nb_ligne           = nb_ligne;
         MasterThreadsTmp->nb_colon           = nb_colon;
         MasterThreadsTmp->nb_depth           = nb_depth;
+        MasterThreadsTmp->maximumgrid        = Gridmax;
         MasterThreadsTmp->MyIndex            = 0;
         MasterThreadsTmp->WorkerThreadsNumber= WorkerThreadsNumber;
         MasterThreadsTmp->ImplicitFunctionSize = masterthread->ImplicitFunctionSize;
@@ -196,46 +205,24 @@ void Iso3D::MasterThreadCopy(IsoMasterThread *MasterThreadsTmp)
 
 void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
 {
-    static int first = 0;
-    //delete[] workerthreads;
+    //static int first = 0;
+
     int OldWorkerThreadsNumber = WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
     IsoMasterThread *masterthreadtmp  = new IsoMasterThread;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
-    if(first !=0)
-    {
-        masterthreadtmp->AllocateParsersForMasterThread();
-        MasterThreadCopy(masterthreadtmp);
-        WorkerThreadCopy(workerthreadstmp);
-        first++;
-    }
+    MasterThreadCopy(masterthreadtmp);
+    WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
     masterthread->DeleteMasterParsers();
     delete masterthread;
 
     for(int i=0; i<OldWorkerThreadsNumber-1; i++)
-    {
         workerthreads[i].DeleteWorkerParsers();
-    }
+
     if(OldWorkerThreadsNumber >1)
         delete[] workerthreads;
 
-    masterthreadtmp->nb_ligne = nb_ligne;
-    masterthreadtmp->nb_colon = nb_colon;
-    masterthreadtmp->nb_depth = nb_depth;
-    masterthreadtmp->maximumgrid = Gridmax;
-    masterthreadtmp->MyIndex = 0;
-    masterthreadtmp->WorkerThreadsNumber = WorkerThreadsNumber;
-
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-    {
-        workerthreadstmp[nbthreads].nb_ligne = nb_ligne;
-        workerthreadstmp[nbthreads].nb_colon = nb_colon;
-        workerthreadstmp[nbthreads].nb_depth = nb_depth;
-        workerthreadstmp[nbthreads].MyIndex  = nbthreads+1;
-        workerthreadstmp[nbthreads].maximumgrid = Gridmax;
-        workerthreadstmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
-    }
     //Assigne newly allocated memory
     workerthreads = workerthreadstmp;
     masterthread  = masterthreadtmp;
@@ -258,7 +245,9 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         memcpy(workerthreads[nbthreads].yLocal, masterthread->yLocal, NbComponent*NbMaxGrid/*(masterthread->Nb_implicitfunctions+1)*nb_colon*/*sizeof(double));
         memcpy(workerthreads[nbthreads].zLocal, masterthread->zLocal, NbComponent*NbMaxGrid/*(masterthread->Nb_implicitfunctions+1)*nb_depth*/*sizeof(double));
         memcpy(workerthreads[nbthreads].vr, masterthread->vr      , 3*NbVariables*NbComponent*NbMaxGrid*sizeof(double));
-        memcpy(workerthreads[nbthreads].ImplicitStructs, masterthread->ImplicitStructs, NbComponent*sizeof(ImplicitStruct));
+        //memcpy(workerthreads[nbthreads].ImplicitStructs, masterthread->ImplicitStructs, NbComponent*sizeof(ImplicitStructure));
+        //for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
+            //workerthreads[nbthreads].ImplicitStructs[i] = masterthread->ImplicitStructs[i];
         memcpy(workerthreads[nbthreads].VarName, masterthread->VarName, NbVariables*sizeof(std::string));
 
         workerthreads[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
@@ -273,7 +262,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].DeleteWorkerParsers();
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->FunctSize, masterthread->VaruSize);
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->FunctSize);
 
     return(parse_expression2());
 }
@@ -372,7 +361,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
     for(int index=0; index< masterthread->Nb_implicitfunctions + 1; index++)
     {
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
+        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
         {
             masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
             masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
@@ -382,6 +371,7 @@ ErrorMessage  Iso3D::parse_expression2()
     }
     return NodError;
 }
+
 /// +++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
 {
@@ -391,7 +381,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     nb_ligne = nb_colon = nb_depth = 40;
-    WorkerThreadsNumber = 1;
+    WorkerThreadsNumber = 4;
     masterthread  = new IsoMasterThread;
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
 
@@ -421,6 +411,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int gridmax)
         Results             = new float[gridmax*gridmax*gridmax];
         staticaction     *= -1;
     }
+
     NormVertexTab  = new float [10*maxpts];
 }
 
@@ -1287,9 +1278,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 
     vals[3]          = stepMorph;
 
-
-
-
     // Parse
     if(Rgbt!= "" && Nb_rgbts == 4)
         for(int i=0; i<Nb_rgbts; i++)
@@ -1449,6 +1437,7 @@ void IsoMasterThread::DeleteMasterParsers()
         delete[] xInfParser;
         delete[] yInfParser;
         delete[] zInfParser;
+        //delete[] ImplicitStructs;
         delete[] Fct;
         delete[] Var;
         delete[] IsoConditionParser;
@@ -1467,6 +1456,7 @@ void IsoWorkerThread::DeleteWorkerParsers()
     {
         delete[] implicitFunctionParser;
         delete[] Fct;
+        //delete[] ImplicitStructs;
         ParsersAllocated = false;
     }
 }
@@ -1549,6 +1539,7 @@ void IsoMasterThread::AllocateMasterParsers()
         yInfParser = new FunctionParser[ImplicitFunctionSize];
         zInfParser = new FunctionParser[ImplicitFunctionSize];
         IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
+        //ImplicitStructs = new ImplicitStruct[ImplicitFunctionSize];
         Fct = new FunctionParser[FunctSize];
         Var = new FunctionParser[VaruSize];
 
@@ -1560,12 +1551,13 @@ void IsoMasterThread::AllocateMasterParsers()
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct, int nbvar)
+void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct)
 {
     if(!ParsersAllocated)
     {
         implicitFunctionParser = new FunctionParser[nbcomp];
         Fct = new FunctionParser[nbfunct];
+        //ImplicitStructs = new ImplicitStruct[nbcomp];
         ParsersAllocated = true;
     }
 }

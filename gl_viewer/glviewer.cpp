@@ -878,7 +878,7 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax)
     try
     {
         LocalScene                = (new ObjectParameters(maxpts, maxtri))->objectproperties;
-        IsoObjetThread = new IsoThread(new Iso3D(maxtri,  maxpts,  gridmax));
+        IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax));
         ParObjetThread = new ParThread(new Par3D(maxpts));
         return 1;
     }

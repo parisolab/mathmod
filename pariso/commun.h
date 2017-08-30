@@ -34,6 +34,27 @@ static const int NbConstantes = 30;
 static const int NbDefinedFunctions = 50;
 static const int NbMaxGrid = 1000;  // Should use the defined value in mathmodconfig.js
 
+struct ImplicitStructure
+{
+    std::string fxyz;
+    std::string xmin;
+    std::string xmax;
+    std::string ymin;
+    std::string ymax;
+    std::string zmin;
+    std::string zmax;
+    std::string grid;
+    std::string cnd;
+    int              index;
+};
+
+struct  Voxel
+{
+    int Edge_Points [12]; //reference to the Edge Points
+    int Signature; // From 0 to 255
+    int NbEdgePoint;
+};
+
 
 struct NoiseParemeters
 {
