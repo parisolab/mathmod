@@ -30,6 +30,8 @@
 static const int NbTextures=30;
 static const int NbComponent=30;
 static const int NbVariables = 30;
+static const int NbSliders  = 50;
+static const int NbSliderValues = NbSliders*100;
 static const int NbConstantes = 30;
 static const int NbDefinedFunctions = 50;
 static const int NbMaxGrid = 1000;  // Should use the defined value in mathmodconfig.js

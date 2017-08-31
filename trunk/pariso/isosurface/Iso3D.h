@@ -59,9 +59,9 @@ class IsoWorkerThread : public QThread
         int morph_activated, Nb_newvariables, maximumgrid;
         double stepMorph, pace;
         int CurrentIso;
-        double xLocal[NbComponent][NbMaxGrid],yLocal[NbComponent][NbMaxGrid], zLocal[NbComponent][NbMaxGrid];
+        double *xLocal2, *yLocal2, *zLocal2;
         double x_Step[NbComponent], y_Step[NbComponent], z_Step[NbComponent];
-        double  vr[3*NbVariables][NbComponent][NbMaxGrid];
+        double *vr2;
         std::string VarName[NbVariables];
         ErrorMessage stdError;
         unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
@@ -90,7 +90,7 @@ class IsoWorkerThread : public QThread
             YlimitSup, YlimitInf,
             ZlimitSup, ZlimitInf, Grid,
             Const, Consts[NbConstantes], ConstNames[NbConstantes],
-            SliderNames[50],
+            *SliderNames,
             Varu, Varus[NbVariables],
             Funct, Functs[NbDefinedFunctions], FunctNames[NbDefinedFunctions],
             Rgbt, Rgbts[NbTextures], RgbtNames[NbTextures],
@@ -98,7 +98,7 @@ class IsoWorkerThread : public QThread
             Gradient, Noise, varliste;
             int IsoConditionRequired, Nb_implicitfunctions, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
             ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
-            double ConstValues[NbConstantes], SliderValues[5000];
+            double ConstValues[NbConstantes], *SliderValues;
             float Octaves, Lacunarity, Gain;
         public :
             void DeleteMasterParsers();
