@@ -65,18 +65,45 @@ ParWorkerThread::ParWorkerThread()
     stepMorph = 0;
     pace = (double)1/(double)30;
     ParsersAllocated = false;
+    v_inf = new double[NbComponent];
+    u_inf = new double[NbComponent];
+    v_sup = new double[NbComponent];
+    u_sup = new double[NbComponent];
+    dif_v = new double[NbComponent];
+    dif_u = new double[NbComponent];
 }
+
+//++++++++++++++++++++++++++++++++++++
+ParWorkerThread::~ParWorkerThread()
+{
+    delete[] u_inf;
+    delete[] v_inf;
+    delete[] u_sup;
+    delete[] v_sup;
+    delete[] dif_u;
+    delete[] dif_v;
+}
+
 //+++++++++++++++++++++++++++++++++++++++++
 ParMasterThread::~ParMasterThread()
 {
+    delete[] SliderNames;
+    delete[] SliderValues;
+    delete[] ConstValues;
+    delete[] Consts;
+    delete[] ConstNames;
+    delete[] Varus;
+    delete[] VarName;
+    delete[] Functs;
+    delete[] FunctNames;
+    delete[] Rgbts;
+    delete[] RgbtNames;
+    delete[] VRgbts;
+    delete[] VRgbtNames;
+    delete[] ParamStructs;
 }
-/*
+
 //+++++++++++++++++++++++++++++++++++++++++
-void ParMasterThread::run()
-{
-    ParCompute(CurrentPar);
-}
-*/
 ParMasterThread::ParMasterThread()
 {
     activeMorph = -1;
@@ -85,6 +112,21 @@ ParMasterThread::ParMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Lacunarity = 0.5;
+
+    Varus        = new std::string[NbVariables];
+    VarName      = new std::string[NbVariables];
+    Consts       = new std::string[NbConstantes];
+    ConstNames   = new std::string[NbConstantes];
+    Functs       = new std::string[NbDefinedFunctions];
+    FunctNames   = new std::string[NbDefinedFunctions];
+    Rgbts        = new std::string[NbTextures];
+    RgbtNames    = new std::string[NbTextures];
+    VRgbts       = new std::string[NbTextures];
+    VRgbtNames   = new std::string[NbTextures];
+    SliderNames  = new std::string[NbSliders];
+    SliderValues = new double[NbSliderValues];
+    ConstValues  = new double[NbConstantes];
+    ParamStructs = new ParStruct[NbComponent];
     //Add predefined constatnts:
     for(int i=0; i<20; i++)
     {
@@ -1794,12 +1836,6 @@ void Par3D::BuildPar()
 void Par3D::run()
 {
   BuildPar();
-}
-
-//++++++++++++++++++++++++++++++++++++
-ParWorkerThread::~ParWorkerThread()
-{
-
 }
 
 //++++++++++++++++++++++++++++++++++++
