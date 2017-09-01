@@ -49,7 +49,7 @@ public :
     int nb_ligne, nb_colone;
     int coupure_col, nb_licol, coupure_ligne;
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
-    double  v_inf[NbComponent], v_sup[NbComponent],u_inf[NbComponent],u_sup[NbComponent],dif_v[NbComponent],dif_u[NbComponent];
+    double  *v_inf, *v_sup,*u_inf,*u_sup,*dif_v,*dif_u;
     double stepMorph, pace;
     int iStart, iFinish, MyIndex, WorkerThreadsNumber, activeMorph, param4D;
     bool StopCalculations, ParsersAllocated;
@@ -74,20 +74,22 @@ public :
                    *myParserUmin,*myParserUmax,
                    *myParserVmin,*myParserVmax,
                    *Var, Cstparser;
-    ParStruct ParamStructs[NbComponent];
+    ParStruct *ParamStructs;
     int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, Nb_constants, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Funct, Rgbt, Grid;
     int expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize, inf_uSize, sup_uSize, inf_vSize, sup_vSize,
     VaruSize, ConstSize,  FunctSize, RgbtSize, GridSize;
-    std::string VarName[NbVariables], Varus[NbVariables], ConstNames[NbConstantes], Consts[NbConstantes], FunctNames[NbDefinedFunctions], Functs[NbDefinedFunctions],
-        RgbtNames[NbTextures], Rgbts[NbTextures], VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
-        Gradient, Noise, NoiseShape, SliderNames[50];
-    double ConstValues[NbConstantes], SliderValues[5000];
+    std::string *VarName, *Varus,
+    *Consts, *ConstNames,
+    *Functs, *FunctNames,
+    *Rgbts, *RgbtNames,
+    VRgbt, *VRgbts, *VRgbtNames,
+    Gradient, Noise, NoiseShape, *SliderNames;
+    double *ConstValues, *SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     float Lacunarity, Gain;
     int Octaves;
-
 public :
     void initialiser_parseur();
     void InitMasterParsers();

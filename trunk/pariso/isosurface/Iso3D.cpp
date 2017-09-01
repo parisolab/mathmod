@@ -106,7 +106,6 @@ int Iso3D::setmaxgridto(int maxgrid)
 }
 IsoMasterThread::IsoMasterThread()
 {
-    ErrorMessage stError;
     IsoConditionRequired = -1;
     ImplicitFunction =  "cos(x) + cos(y) + cos(z)";
     XlimitSup = "4";
@@ -118,8 +117,26 @@ IsoMasterThread::IsoMasterThread()
     Lacunarity = 0.5;
     Gain = 1.0;
     Octaves = 4;
+
+    Varus        = new std::string[NbVariables];
+    VarName      = new std::string[NbVariables];
+    Consts       = new std::string[NbConstantes];
+    ConstNames   = new std::string[NbConstantes];
+    Functs       = new std::string[NbDefinedFunctions];
+    FunctNames   = new std::string[NbDefinedFunctions];
+    Rgbts        = new std::string[NbTextures];
+    RgbtNames    = new std::string[NbTextures];
+    VRgbts       = new std::string[NbTextures];
+    VRgbtNames   = new std::string[NbTextures];
+    x_Step       = new double[NbComponent];
+    y_Step       = new double[NbComponent];
+    z_Step       = new double[NbComponent];
+    GridTable    = new int[NbComponent];
     SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
+    ConstValues  = new double[NbConstantes];
+    ImplicitStructs = new ImplicitStructure[NbComponent];
+
     for(int i=0; i<NbSliders; i++)
     {
         SliderNames[i]= "Param_"+QString::number(i).toStdString();
@@ -151,6 +168,22 @@ IsoMasterThread::~IsoMasterThread()
     }
     delete[] SliderNames;
     delete[] SliderValues;
+    delete[] ConstValues;
+    delete[] Varus;
+    delete[] VarName;
+    delete[] Consts;
+    delete[] ConstNames;
+    delete[] Functs;
+    delete[] FunctNames;
+    delete[] Rgbts;
+    delete[] RgbtNames;
+    delete[] VRgbts;
+    delete[] VRgbtNames;
+    delete[] x_Step;
+    delete[] y_Step;
+    delete[] z_Step;
+    delete[] GridTable;
+    delete[] ImplicitStructs;
 }
 
 IsoWorkerThread::~IsoWorkerThread()
@@ -277,7 +310,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, NbComponent*NbMaxGrid*sizeof(double));
         memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, NbComponent*NbMaxGrid*sizeof(double));
         memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, 3*(NbVariables+1)*NbComponent*NbMaxGrid*sizeof(double));
-        memcpy(workerthreads[nbthreads].VarName, masterthread->VarName, NbVariables*sizeof(std::string));
+        //memcpy(workerthreads[nbthreads].VarName, masterthread->VarName, NbVariables*sizeof(std::string));
 
         workerthreads[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
@@ -361,9 +394,6 @@ ErrorMessage  Iso3D::parse_expression2()
         }
     }
     }
-
-
-
     // Add defined functions :
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
@@ -762,9 +792,6 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(int IsoIndex)
     const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
 
         vals[3]          = masterthread->stepMorph;
-        //masterthread->xLocal[IsoIndex][0]=masterthread->xSupParser[IsoIndex].Eval(vals);
-        //masterthread->yLocal[IsoIndex][0]=masterthread->ySupParser[IsoIndex].Eval(vals);
-        //masterthread->zLocal[IsoIndex][0]=masterthread->zSupParser[IsoIndex].Eval(vals);
         masterthread->xLocal2[IsoIndex*NbMaxGrid]=masterthread->xSupParser[IsoIndex].Eval(vals);
         masterthread->yLocal2[IsoIndex*NbMaxGrid]=masterthread->ySupParser[IsoIndex].Eval(vals);
         masterthread->zLocal2[IsoIndex*NbMaxGrid]=masterthread->zSupParser[IsoIndex].Eval(vals);
@@ -782,9 +809,9 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(int IsoIndex)
 
         for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
         {
-            workerthreads[nbthreads].x_Step[IsoIndex] = masterthread->x_Step[IsoIndex];
-            workerthreads[nbthreads].y_Step[IsoIndex] = masterthread->y_Step[IsoIndex];
-            workerthreads[nbthreads].z_Step[IsoIndex] = masterthread->z_Step[IsoIndex];
+            //workerthreads[nbthreads].x_Step[IsoIndex] = masterthread->x_Step[IsoIndex];
+            //workerthreads[nbthreads].y_Step[IsoIndex] = masterthread->y_Step[IsoIndex];
+            //workerthreads[nbthreads].z_Step[IsoIndex] = masterthread->z_Step[IsoIndex];
 
             for (int k= 0; k < limitX; k++)
             {
@@ -862,7 +889,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
 
         for(int l=0; l<Nb_newvariables; l++)
         {
-            vals[4 + l*3] = vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i]     ;//vr[l*3][IsoIndex][i];
+            vals[4 + l*3] = vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
         }
 
         I = i*maxgrscalemaxgr;
@@ -871,7 +898,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
             vals[1] = yLocal2[IsoIndex*NbMaxGrid+j];
             for(int l=0; l<Nb_newvariables; l++)
             {
-                vals[5 + l*3] = vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + j];//vr[l*3+1][IsoIndex][j];
+                vals[5 + l*3] = vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + j];
             }
 
             J = I + j*maximumgrid;
@@ -881,7 +908,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
 
                 for(int l=0; l<Nb_newvariables; l++)
                 {
-                    vals[6 + l*3] = vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + k];//vr[l*3+2][IsoIndex][k];
+                    vals[6 + l*3] = vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + k];
                 }
                 if(StopCalculations)
                     return;

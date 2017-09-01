@@ -54,19 +54,15 @@ class IsoWorkerThread : public QThread
         FunctionParser *implicitFunctionParser, *Fct;
         int   nb_ligne, nb_colon, nb_depth;
         int iStart, iFinish;
-        int GridTable[NbComponent];
         bool AllComponentTraited;
         int morph_activated, Nb_newvariables, maximumgrid;
         double stepMorph, pace;
         int CurrentIso;
         double *xLocal2, *yLocal2, *zLocal2;
-        double x_Step[NbComponent], y_Step[NbComponent], z_Step[NbComponent];
         double *vr2;
-        std::string VarName[NbVariables];
         ErrorMessage stdError;
         unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
         bool StopCalculations, ParsersAllocated;
-        ImplicitStructure ImplicitStructs[NbComponent];
         public :
             void IsoCompute(int);
             void VoxelEvaluation(int);
@@ -89,17 +85,20 @@ class IsoWorkerThread : public QThread
             XlimitSup, XlimitInf,
             YlimitSup, YlimitInf,
             ZlimitSup, ZlimitInf, Grid,
-            Const, Consts[NbConstantes], ConstNames[NbConstantes],
+            Const, *Consts, *ConstNames,
             *SliderNames,
-            Varu, Varus[NbVariables],
-            Funct, Functs[NbDefinedFunctions], FunctNames[NbDefinedFunctions],
-            Rgbt, Rgbts[NbTextures], RgbtNames[NbTextures],
-            VRgbt, VRgbts[NbTextures], VRgbtNames[NbTextures],
+            Varu, *Varus, *VarName,
+            Funct,*Functs, *FunctNames,
+            Rgbt, *Rgbts, *RgbtNames,
+            VRgbt, *VRgbts, *VRgbtNames,
             Gradient, Noise, varliste;
             int IsoConditionRequired, Nb_implicitfunctions, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
             ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
-            double ConstValues[NbConstantes], *SliderValues;
+            double *ConstValues, *SliderValues;
+            double *x_Step, *y_Step, *z_Step;
+            int *GridTable;
             float Octaves, Lacunarity, Gain;
+            ImplicitStructure *ImplicitStructs;
         public :
             void DeleteMasterParsers();
             void AllocateMasterParsers();
