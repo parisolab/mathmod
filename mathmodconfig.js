@@ -1,8 +1,8 @@
 {
     "IsoParam": {
-        "MaxGrid": 150,
-        "MaxPt": 2,
-        "MaxTri": 4
+        "MaxGrid": 500,
+        "MaxPt": 10,
+        "MaxTri": 20
     },
     "WindowPosition": {
         "ControlX": 20,
