@@ -39,7 +39,10 @@ int main(int argc, char *argv[])
     Parameters.LoadConfig(app, argc, argv);
 
     //Creation of the two most important objects:
-    MathMod mm(0, Parameters.MaxTri, Parameters.MaxPt, Parameters.MaxGrid);
+    MathMod mm(0, Parameters.MaxTri, Parameters.MaxPt, Parameters.MaxGrid,
+               Parameters.NbComponent, Parameters.NbVariables, Parameters.NbConstantes,
+               Parameters.NbDefinedFunctions, Parameters.NbTextures, Parameters.NbSliders, Parameters.NbSliderValues);
+
     DrawingOptions drawingopt;
 
     //save references:

@@ -66,8 +66,9 @@ class IsoWorkerThread : public QThread
         public :
             void IsoCompute(int);
             void VoxelEvaluation(int);
-            void AllocateParsersForWorkerThread(int, int);
+            void AllocateParsersForWorkerThread(int,int);
             void DeleteWorkerParsers();
+            void IsoWorkerTable();
             void run() Q_DECL_OVERRIDE;
             IsoWorkerThread();
             ~IsoWorkerThread();
@@ -110,6 +111,7 @@ class IsoWorkerThread : public QThread
             ErrorMessage InitNoiseParser();
             ErrorMessage ParserIso();
             inline   void InitParser();
+            void IsoMasterTable();
             void initparser();
             IsoMasterThread();
             ~IsoMasterThread();
@@ -130,7 +132,15 @@ class IsoWorkerThread : public QThread
                 int NbTriangleIsoSurface,NbPointIsoMap;
 
         public :
-                Iso3D(int, int, int);
+                Iso3D(int, int,
+                      int gridmax=NbMaxGrid,
+                      int NbCmp=NbComponent,
+                      int NbVar=NbVariables,
+                      int NbCst=NbConstantes,
+                      int NbdeFct=NbDefinedFunctions,
+                      int NbText=NbTextures,
+                      int nbSlid=NbSliders,
+                      int nbSlidV=NbSliderValues);
                 ~Iso3D();
                 inline   void DrawIsoSurface();
                 inline   void InitParameter();

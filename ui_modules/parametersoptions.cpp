@@ -36,6 +36,14 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxTri=300000;
     MaxPt=150000;
     MaxGrid=80;
+    NbComponent = 10;
+    NbConstantes = 30;
+    NbDefinedFunctions = 30;
+    NbVariables = 20;
+    NbTextures = 10;
+    NbSliders = 20;
+    NbSliderValues = 200;
+
     dotsymbol =".";
     model = "CloseIso_2";
     ActivateGlCache = false;
@@ -419,6 +427,20 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                 MaxPt     = (IsoParam)["MaxPt"].toDouble() * 1000000;
             if((IsoParam)["MaxGrid"].isDouble())
                 MaxGrid = (IsoParam)["MaxGrid"].toDouble();
+            if((IsoParam)["NbComponent"].isDouble())
+                NbComponent= (IsoParam)["NbComponent"].toInt();
+            if((IsoParam)["NbVariables"].isDouble())
+                NbVariables= (IsoParam)["NbVariables"].toInt();
+            if((IsoParam)["NbConstantes"].isDouble())
+                NbConstantes= (IsoParam)["NbConstantes"].toInt();
+            if((IsoParam)["NbDefinedFunctions"].isDouble())
+                NbDefinedFunctions= (IsoParam)["NbDefinedFunctions"].toInt();
+            if((IsoParam)["NbTextures"].isDouble())
+                NbTextures= (IsoParam)["NbTextures"].toInt();
+            if((IsoParam)["NbSliders"].isDouble())
+                NbSliders= (IsoParam)["NbSliders"].toInt();
+            if((IsoParam)["NbSliderValues"].isDouble())
+                NbSliderValues= (IsoParam)["NbSliderValues"].toInt();
         }
 
         QJsonObject tmp;
