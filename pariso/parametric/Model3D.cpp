@@ -128,10 +128,9 @@ ParMasterThread::ParMasterThread()
     ConstValues  = new double[NbConstantes];
     ParamStructs = new ParStruct[NbComponent];
     //Add predefined constatnts:
-    for(int i=0; i<20; i++)
+    for(int i=0; i<NbSliders; i++)
     {
         SliderNames[i] = "Param_"+QString::number(i).toStdString();
-        SliderValues[i] = 1;
     }
 }
 

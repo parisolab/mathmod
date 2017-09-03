@@ -29,10 +29,8 @@ class ObjectParameters
 public:
     ObjectProperties objectproperties;
     int MaximumNumberPoints, MaximumNumberTriangles, MaximumNumberTrianglesMin;
-    int maxtr;
-    int maxpt;
 public:
-    ObjectParameters(int mp=2000000, int mt=3000000);
+    ObjectParameters(int mp=200000, int mt=300000);
 };
 
 #endif // OBJECTPARAMETERS_H

@@ -27,14 +27,27 @@
 #define PI ((double)314159265/(double)100000000)
 #define MAGIC_SCALE 1.5707963f
 
-static const int NbTextures=30;
-static const int NbComponent=30;
-static const int NbVariables = 30;
-static const int NbSliders  = 50;
-static const int NbSliderValues = NbSliders*100;
-static const int NbConstantes = 30;
-static const int NbDefinedFunctions = 50;
-static const int NbMaxGrid = 1000;  // Should use the defined value in mathmodconfig.js
+extern int NbTextures;
+extern int NbComponent;
+extern int NbVariables;
+extern int NbSliders;
+extern int NbSliderValues;
+extern int NbConstantes;
+extern int NbDefinedFunctions;
+extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
+extern int IsoNbCmp;
+
+struct ExtendedParam
+{
+    int NbTextures=30;
+    int NbComponent=30;
+    int NbVariables = 30;
+    int NbSliders  = 50;
+    int NbSliderValues = NbSliders*100;
+    int NbConstantes = 30;
+    int NbDefinedFunctions = 50;
+    int NbMaxGrid = 1000;  // Should use the defined value in mathmodconfig.js
+};
 
 struct ImplicitStructure
 {
@@ -56,7 +69,6 @@ struct  Voxel
     int Signature; // From 0 to 255
     int NbEdgePoint;
 };
-
 
 struct NoiseParemeters
 {
@@ -87,9 +99,9 @@ struct  ComponentInfos
 {
     int NbIso;
     int NbParametric;
-    int IsoPositions[2*NbComponent + 1];
-    int IsoPts[2*NbComponent + 1];
-    int Parametricpositions[2*NbComponent + 1];
+    int *IsoPositions;
+    int *IsoPts;
+    int *Parametricpositions;
     int selectedComponent;
     bool ThereisCND;
     bool ThereisRGBA;
@@ -168,35 +180,29 @@ struct  ObjectProperties
     int     quality_image;
     int     colortype;
     int     colortypeParam;
-    unsigned int   axeliste;
-    unsigned int   boxliste;
-    unsigned int   planliste;
     unsigned int   gridplanliste;
     unsigned int   MeshIsoliste;
     unsigned int   MeshIsoMinimalTopliste;
     unsigned int   MeshParliste;
-    unsigned int   IsoColorliste[NbComponent];
-    unsigned int   ParColorliste[NbComponent];
-    unsigned int   FillIsoliste[NbComponent];
-    unsigned int   FillParliste[NbComponent];
-    unsigned int   CNDverifyIsoliste[NbComponent];
-    unsigned int   CNDverifyParliste[NbComponent];
-    unsigned int   CNDnotverifyIsoliste[NbComponent];
-    unsigned int   CNDnotverifyParliste[NbComponent];
-    float          boxlimits[18];
-    int            ColorOrTexture[10];
-    float  *morefloatpt[10];
-    float  morefloat[10];
+    unsigned int   *IsoColorliste;
+    unsigned int   *ParColorliste;
+    unsigned int   *FillIsoliste;
+    unsigned int   *FillParliste;
+    unsigned int   *CNDverifyIsoliste;
+    unsigned int   *CNDverifyParliste;
+    unsigned int   *CNDnotverifyIsoliste;
+    unsigned int   *CNDnotverifyParliste;
     float  specReflection[4];
     int    threads[3];
     int    shininess;
     float  frontcol[4];
     float  backcol[4];
-    float  frontcols[NbComponent][4];
-    float  backcols[NbComponent][4];
+    float  *frontcols;
+    float  *backcols;
+
+    float  *frontcolsPar;
+    float  *backcolsPar;
     float red[4];
-    float  frontcolsPar[NbComponent][4];
-    float  backcolsPar[NbComponent][4];
     float  gridcol[4];
     float  groundcol[4];
     float  polyfactor;
