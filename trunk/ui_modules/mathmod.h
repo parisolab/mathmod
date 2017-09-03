@@ -29,7 +29,7 @@ class MathMod : public QWidget
     Q_OBJECT
 
 public:
-    MathMod(QWidget *,  int, int, int);
+    MathMod(QWidget *,int,int,int,int,int,int,int,int,int,int);
     ~MathMod();
     void keyPressEvent ( QKeyEvent *);
     void resizeEvent( QResizeEvent  *);

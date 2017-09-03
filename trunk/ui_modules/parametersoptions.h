@@ -62,7 +62,14 @@ public:
     float Specular[4];
     int Threads[3];
     int Shininess;
-    int MaxTri, MaxPt, MaxGrid;
+    int MaxTri, MaxPt, MaxGrid,
+    NbComponent,
+    NbConstantes,
+    NbDefinedFunctions,
+    NbVariables,
+    NbTextures,
+    NbSliders,
+    NbSliderValues;
 
 public slots:
     void ReadJsonFile(QString, QJsonObject &);

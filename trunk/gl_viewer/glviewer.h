@@ -76,13 +76,12 @@ public:
     void Shininess(int);
     void boxok();
     void initbox();
-    int memoryallocation(int, int, int);
+    int  memoryallocation(int, int, int,int,int,int,int,int,int,int);
     void VBOmemoryallocation();
     void deleteAllListes();
     void toggleGlCache(bool);
     void deleteVBO();
     void PutObjectInsideCube();
-    void Add(ObjectParameters *);
     void screenshot();
     void FramesShot();
     void FramesSave();

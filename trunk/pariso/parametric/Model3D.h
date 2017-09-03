@@ -78,7 +78,8 @@ public :
     int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, Nb_constants, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Funct, Rgbt, Grid;
-    int expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize, inf_uSize, sup_uSize, inf_vSize, sup_vSize,
+    int expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
+    inf_uSize, sup_uSize, inf_vSize, sup_vSize,
     VaruSize, ConstSize,  FunctSize, RgbtSize, GridSize;
     std::string *VarName, *Varus,
     *Consts, *ConstNames,
