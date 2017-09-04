@@ -962,7 +962,7 @@ void OpenGlWidget::keyPressEvent ( QKeyEvent * e )
         glt.anim();
         break;
     case Qt::Key_P :
-        FistTimecalibrate *= -1;
+        //FistTimecalibrate *= -1;
         glt.morph();
         initbox();
         break;
