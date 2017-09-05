@@ -25,7 +25,6 @@ static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 
-//static float*     NormVertexTab;
 static float*     ExtraDimension;
 
 CellNoise *NoiseFunction2 = new CellNoise();
@@ -138,7 +137,6 @@ ParMasterThread::ParMasterThread()
 Par3D::Par3D(int maxpoints)
 {
     initialiser_parametres();
-    NormVertexTab  = new float [10*maxpoints];
     ExtraDimension = new float [maxpoints];
 }
 
@@ -182,8 +180,6 @@ void Par3D::initialiser_parametres()
     WorkerThreadsNumber = 4;
     workerthreads = new ParWorkerThread[WorkerThreadsNumber-1];
     masterthread  = new ParMasterThread();
-
-    //masterthread->AllocateParsersForThread();
 
     masterthread->nb_ligne  = nb_ligne;
     masterthread->nb_colone = nb_colone;
