@@ -5921,7 +5921,6 @@ void DrawingOptions::UpdateGui(int argc)
     ui.textureEdit->hide();
     //Hide all sliders
     HideSliders();
-    //ui.ScriptTabWidget->removeTab(4);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

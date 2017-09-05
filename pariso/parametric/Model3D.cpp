@@ -25,7 +25,7 @@ static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 
-static float*     NormVertexTab;
+//static float*     NormVertexTab;
 static float*     ExtraDimension;
 
 CellNoise *NoiseFunction2 = new CellNoise();
