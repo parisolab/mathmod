@@ -382,9 +382,9 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         QString argv1 = QString(argv[1]);
         if(!argv1.endsWith("/"))
             argv1 +="/";
-        filecollection = argv1 + filecollection;
+        filecollection   = argv1 + filecollection;
         fileconfig       = argv1 + fileconfig;
-        advancedmodels = argv1 + advancedmodels;
+        advancedmodels   = argv1 + advancedmodels;
     }
 
 
