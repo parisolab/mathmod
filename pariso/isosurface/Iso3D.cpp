@@ -32,7 +32,7 @@ static int TypeDrawinNormStep = 4;
 static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
-static float* NormVertexTab;
+float* NormVertexTab;
 
 int NbMaxGrid = 100;
 int NbComponent = 30;
@@ -469,8 +469,8 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
     NbConstantes = NbConstant;
     NbDefinedFunctions = NbDefinedFunct;
     NbMaxGrid = nbmaxgrid;
-    IsoSurfaceTriangleListe  = new int[3*maxtri];
-    NormOriginaltmp          = new float[3*maxtri];
+
+
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     nb_ligne = nb_colon = nb_depth = 40;
@@ -501,12 +501,28 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
     /// Things to do one time...
     if(staticaction == 1)
     {
-        GridVoxelVarPt  = new  Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
-        Results             = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
-        staticaction     *= -1;
+        IsoSurfaceTriangleListe  = new int[3*maxtri];
+        NormOriginaltmp          = new float[3*maxtri];
+        GridVoxelVarPt           = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+        Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+        NormVertexTab            = new float [10*maxpts];
+        staticaction            *= -1;
     }
+    else
+    {
+        delete[] IsoSurfaceTriangleListe;
+        delete[] NormOriginaltmp;
+        delete[] GridVoxelVarPt;
+        delete[] Results;
+        delete[] NormVertexTab;
 
-    NormVertexTab  = new float [10*maxpts];
+        IsoSurfaceTriangleListe  = new int[3*maxtri];
+        NormOriginaltmp          = new float[3*maxtri];
+        GridVoxelVarPt           = new  Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+        Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+        NormVertexTab            = new float [10*maxpts];
+        staticaction            *= -1;
+    }
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
