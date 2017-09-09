@@ -46,12 +46,14 @@ public slots:
     void draw_norm_clicked();
     void linecolumn_valueChanged(int);
     void linecolumn_valueChanged_2(int);
+    void linecolumn_valueupdate(int);
     void ProcessNewIsoSurface();
     void ProcessParisoSurface();
     void xyzg_valueChanged(int);
     void xg_valueChanged(int);
     void yg_valueChanged(int);
     void zg_valueChanged(int);
+    void xyzg_valueupdate(int);
     void slot_checkBox73_clicked();
     void slot_uv_clicked();
     void slot_uv4D_clicked();
@@ -61,7 +63,6 @@ public slots:
     int ParseIso();
     int ParsePar();
     void frames_clicked();
-    //void UpdateFrame();
 public:
     Ui::MathMod ui;
     int xyzactivated, isomesh, uvactivated, uvactivated4D;

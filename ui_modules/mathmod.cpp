@@ -93,7 +93,7 @@ void MathMod::frames_clicked()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::linecolumn_valueChanged( int cl)
+void MathMod::linecolumn_valueupdate( int cl)
 {
     (ui.glWidget)->ParObjetThread->ParObjet->nb_colone = (ui.glWidget)->nb_colone = cl;
     (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
@@ -106,7 +106,12 @@ void MathMod::linecolumn_valueChanged( int cl)
         (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_ligne =
         (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_colone = cl;
     }
+}
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::linecolumn_valueChanged( int cl)
+{
+    linecolumn_valueupdate(cl);
     if(uvactivated  == 1)
         ParametricSurfaceProcess(1);
     else
@@ -116,17 +121,7 @@ void MathMod::linecolumn_valueChanged( int cl)
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueChanged_2( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_colone = (ui.glWidget)->nb_colone = cl;
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
-
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_ligne =
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_colone = cl;
-
-    for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
-    {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_ligne =
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_colone = cl;
-    }
+    linecolumn_valueupdate(cl);
     if(uvactivated4D  == 1)
         ParametricSurfaceProcess(3);
     else
@@ -137,11 +132,10 @@ void MathMod::linecolumn_valueChanged_2( int cl)
 void MathMod::Initparametricpage()
 {
     (ui.glWidget)->LocalScene.typedrawing = -1;
-    //(ui.glWidget)->LocalScene.line = 1;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::xyzg_valueChanged( int cl)
+void MathMod::xyzg_valueupdate(int cl)
 {
     (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_depth  =
     (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_colon  =
@@ -154,29 +148,30 @@ void MathMod::xyzg_valueChanged( int cl)
     (ui.glWidget)->isoline   =
     (ui.glWidget)->isocolumn =
     (ui.glWidget)->isodepth  = cl;
+}
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::xyzg_valueChanged(int cl)
+{
+    xyzg_valueupdate(cl);
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
     else (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::xg_valueChanged( int cl)
+void MathMod::xg_valueChanged(int cl)
 {
-    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_ligne = cl;
-    (ui.glWidget)->IsoObjetThread->IsoObjet->nb_ligne = cl;
-    (ui.glWidget)-> isoline = cl;
+    xyzg_valueupdate(cl);
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
     else (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::yg_valueChanged( int cl)
+void MathMod::yg_valueChanged(int cl)
 {
-    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_colon =  cl;
-    (ui.glWidget)->IsoObjetThread->IsoObjet->nb_colon =  cl;
-    (ui.glWidget)->isocolumn =  cl;
+    xyzg_valueupdate(cl);
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
     else (ui.glWidget)->update();
@@ -185,9 +180,7 @@ void MathMod::yg_valueChanged( int cl)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::zg_valueChanged( int cl)
 {
-    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_depth  = cl;
-    (ui.glWidget)->IsoObjetThread->IsoObjet->nb_depth  = cl;
-    (ui.glWidget)->isodepth = cl;
+    xyzg_valueupdate(cl);
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
     else (ui.glWidget)->update();
