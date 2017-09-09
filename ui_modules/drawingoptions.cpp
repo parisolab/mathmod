@@ -5298,7 +5298,18 @@ void DrawingOptions::on_actionWavefront_obj_triggered()
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
-    MathmodRef->linecolumn_valueChanged(value);
+    ui.ParamgroupBox_2->setTitle("Param Grid ( "+QString::number(value)+" ) :");
+    if(!MathmodRef->ui.glWidget->ParObjetThread->ParObjet->isRunning())
+    {
+        MathmodRef->linecolumn_valueChanged(value);
+    }
+    else
+    {
+        ui.uv->blockSignals(true);
+        ui.uv->setChecked(false);
+        ui.uv->blockSignals(false);
+        MathmodRef->uvactivated  = -1;
+    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++
