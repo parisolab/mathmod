@@ -459,7 +459,9 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
                                     int NbDefinedFunct,
                                     int NbText,
                                     int NbSlid,
-                                    int NbSliderV)
+                                    int NbSliderV,
+                                    int nbThreads,
+                                    int nbGrid)
 {
     NbTextures=NbText;
     NbComponent=NbCompo;
@@ -473,8 +475,8 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
 
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
-    nb_ligne = nb_colon = nb_depth = 40;
-    WorkerThreadsNumber = 4;
+    nb_ligne = nb_colon = nb_depth = nbGrid;
+    WorkerThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];

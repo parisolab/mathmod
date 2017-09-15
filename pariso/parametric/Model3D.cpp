@@ -134,9 +134,11 @@ ParMasterThread::ParMasterThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-Par3D::Par3D(int maxpoints)
+Par3D::Par3D(int maxpoints,
+             int nbThreads,
+             int nbGrid)
 {
-    initialiser_parametres();
+    initialiser_parametres(nbThreads, nbGrid);
     ExtraDimension = new float [maxpoints];
 }
 
@@ -160,9 +162,9 @@ void ParMasterThread::AllocateParsersForThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::initialiser_parametres()
+void Par3D::initialiser_parametres(int nbThreads, int nbGrid)
 {
-    nb_ligne = nb_colone = 50;
+    nb_ligne = nb_colone = nbGrid;
     largeur_fenetre = 620;
     hauteur_fenetre = 620;
     coupure_col = coupure_ligne = 0;
@@ -177,7 +179,7 @@ void Par3D::initialiser_parametres()
     mat_inversetranslation4D  = Matrix4D();
     mat4D.unit();
 
-    WorkerThreadsNumber = 4;
+    WorkerThreadsNumber = nbThreads;
     workerthreads = new ParWorkerThread[WorkerThreadsNumber-1];
     masterthread  = new ParMasterThread();
 
