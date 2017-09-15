@@ -140,7 +140,9 @@ class IsoWorkerThread : public QThread
                       int NbdeFct=NbDefinedFunctions,
                       int NbText=NbTextures,
                       int nbSlid=NbSliders,
-                      int nbSlidV=NbSliderValues);
+                      int nbSlidV=NbSliderValues,
+                      int nbThreads=4,
+                      int nbGrid=40);
                 ~Iso3D();
                 inline   void DrawIsoSurface();
                 inline   void InitParameter();

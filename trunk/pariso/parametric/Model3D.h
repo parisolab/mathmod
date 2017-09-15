@@ -130,7 +130,9 @@ public:
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
     int   largeur_fenetre,hauteur_fenetre;
 public:
-    Par3D(int);
+    Par3D(int ,
+          int nbThreads=4,
+          int nbGrid=50);
     ~Par3D();
     void rotation4();
     void calcul_points4(int idx=0);
@@ -138,7 +140,7 @@ public:
     void project_4D_to_3D(int idx=0);
     void Invert_boite_englobante4D(int idx=0);
     void boite_englobante4D(int index=0);
-    void initialiser_parametres();
+    void initialiser_parametres(int, int);
     void calcul_Norm(int i=0);
     void BorderCalculation(int i=0);
     void make_PolyIndex(int i=0, int  IsoPos=0);
