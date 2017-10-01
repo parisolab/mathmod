@@ -2584,7 +2584,7 @@
 			"th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
 			"th = if (th(x,y,z,t) < 0, th(x,y,z,t)+2*pi, th(x,y,z,t))",
 			"f_hex_y = if(th(x,y,z,t)<pi/6, y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-			"f_hex_y_1=if(abs(z)<DOTSYMBOL06,f_hex_y(x,y,z,0)- 0DOTSYMBOL08,1)",
+            "f_hex_y_1=if(abs(z)<0DOTSYMBOL06,f_hex_y(x,y,z,0)- 0DOTSYMBOL08,1)",
 			"Cylinder=-f_hex_y_1(x,4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z)-1DOTSYMBOL5,t)",
 			"Sphere=f_hex_y_1(6DOTSYMBOL3*atan2(x,sqrt(y*y+z*z)),3DOTSYMBOL815*atan2(z,y),sqrt(y*y+z*z+x*x)-4DOTSYMBOL6,t)",
 			"Torus=Cylinder(6DOTSYMBOL03*atan2(y,x),sqrt(x*x+y*y)-4,z,t)"],
@@ -2611,7 +2611,7 @@
 			"th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
 			"th = if (th(x,y,z,t) < 0, th(x,y,z,t)+2*pi, th(x,y,z,t))",
 			"f_hex_y = if(th(x,y,z,t)<pi/6, y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-			"f_hex_y_1=if(abs(z)<DOTSYMBOL06,f_hex_y(x,y,z,0)- 0DOTSYMBOL08,1)",
+            "f_hex_y_1=if(abs(z)<0DOTSYMBOL06,f_hex_y(x,y,z,0)- 0DOTSYMBOL08,1)",
 			"Cylinder=-f_hex_y_1(x,4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z)-1DOTSYMBOL5,t)",
 			"Sphere=f_hex_y_1(6DOTSYMBOL3*atan2(x,sqrt(y*y+z*z)),3DOTSYMBOL815*atan2(z,y),sqrt(y*y+z*z+x*x)-4DOTSYMBOL6,t)",
 			"Torus=Cylinder(6DOTSYMBOL03*atan2(y,x),sqrt(x*x+y*y)-4,z,t)"],
@@ -2638,7 +2638,7 @@
 			"th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
 			"th = if (th(x,y,z,t) < 0, th(x,y,z,t)+2*pi, th(x,y,z,t))",
 			"f_hex_y = if(th(x,y,z,t)<pi/6, y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-			"f_hex_y_1=if(abs(z)<DOTSYMBOL06,f_hex_y(sqrt(x*x+y*y)-2,4DOTSYMBOL75*atan2(y,x),z,0)- 0DOTSYMBOL08,1)",
+            "f_hex_y_1=if(abs(z)<0DOTSYMBOL06,f_hex_y(sqrt(x*x+y*y)-2,4DOTSYMBOL75*atan2(y,x),z,0)- 0DOTSYMBOL08,1)",
 			"Cylinder=-f_hex_y_1(x,4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z)-1DOTSYMBOL5,t)",
 			"Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),4DOTSYMBOL5*atan2(z,y),sqrt(y*y+z*z+x*x)-4DOTSYMBOL5,t)",
 			"Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-4,z,t)"],
@@ -2745,7 +2745,7 @@
 			"B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,1/10)"
 		}
 	},
 	{
@@ -2754,7 +2754,7 @@
 			"Name": ["Perlin Schwarz"],
 			"Component": ["PerlinSchwarz"],
 			"Funct": ["Schwarz=cos(x)+cos(y)+cos(z)"],
-			"Fxyz": ["Schwarz(x,y,z,t)-NoiseP(x,y,z,4,11,DOTSYMBOL1)"],
+            "Fxyz": ["Schwarz(x,y,z,t)-NoiseP(x,y,z,4,11,1/10)"],
 			"Xmax": ["4"],
 			"Xmin": ["-4"],
 			"Ymax": ["4"],
@@ -2768,7 +2768,7 @@
 			"B=1DOTSYMBOL72*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "Perlin",
-			"Noise": "NoiseP(x,y,z,4,11,DOTSYMBOL1)"
+            "Noise": "NoiseP(x,y,z,4,11,1/10)"
 		}
 	},
 	{
@@ -3450,7 +3450,7 @@
 			"B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,1/10)"
 		}
 	},
 	{
@@ -3615,7 +3615,7 @@
 			"Head",
 			"Bottom"],
 			"Const": ["Thick = 0DOTSYMBOL05"],
-			"Funct": ["CarvinCondition=abs((z-1) - 0DOTSYMBOL8*cos(18*atan2(x,y)/pi))<1DOTSYMBOL3|abs((z+3) - 0DOTSYMBOL3*cos(18*atan2(x,y)/pi+pi/4))<DOTSYMBOL5",
+            "Funct": ["CarvinCondition=abs((z-1) - 0DOTSYMBOL8*cos(18*atan2(x,y)/pi))<1DOTSYMBOL3|abs((z+3) - 0DOTSYMBOL3*cos(18*atan2(x,y)/pi+pi/4))<0DOTSYMBOL5",
 			"Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
 			"Bottom=(x*x+y*y+z*z-1)",
 			"ThickIsoExterior=(x*x/3+y*y/3-abs(1DOTSYMBOL5*sin(2*z/pi+ 0DOTSYMBOL3)+1DOTSYMBOL8))*(x*x/3+y*y/3-abs(1DOTSYMBOL5*sin(2*z/pi+ 0DOTSYMBOL3)+1DOTSYMBOL8))-Thick",
@@ -3654,7 +3654,7 @@
 			"B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
 			"T=1"],
 			"Name": "Granit_1",
-			"Noise": "NoiseP(x,y,z,10,7,0DOTSYMBOL12)"
+            "Noise": "NoiseP(x,y,z,10,7,12/100)"
 		}
 	},
 	{
@@ -4201,7 +4201,7 @@
 			"B=0DOTSYMBOL01*abs(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "PerlinNoise",
-			"Noise": "NoiseP(x,y,z,6,0DOTSYMBOL7,1DOTSYMBOL1)/30"
+            "Noise": "NoiseP(x,y,z,6,7/10,1)/30"
 		}
 	},
 	{
@@ -4213,7 +4213,7 @@
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001",
 			"N=1DOTSYMBOL5"],
-			"Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))<DOTSYMBOL4,-1, -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>0DOTSYMBOL4,-1,-u*u*(cos(u) - sin(u))))",
+            "Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))<0DOTSYMBOL4,-1, -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>0DOTSYMBOL4,-1,-u*u*(cos(u) - sin(u))))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -4531,7 +4531,7 @@
 			"Lobs2"],
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001"],
-			"Funct": ["Thickness1=if( t = 1, if ( (sin(13*v-7*u))<DOTSYMBOL4,-1, 3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63),if ( (sin(13*v-7*u))>0DOTSYMBOL4,-1,3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63))",
+            "Funct": ["Thickness1=if( t = 1, if ( (sin(13*v-7*u))<0DOTSYMBOL4,-1, 3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63),if ( (sin(13*v-7*u))>0DOTSYMBOL4,-1,3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -4572,7 +4572,7 @@
 			"Sphere2"],
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001"],
-			"Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))>0DOTSYMBOL35,-1,DOTSYMBOL6*sin(v)),if ( abs(sin(4*u-v))<DOTSYMBOL35,-1,0))",
+            "Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))>0DOTSYMBOL35,-1,0DOTSYMBOL6*sin(v)),if ( abs(sin(4*u-v))<0DOTSYMBOL35,-1,0))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -5359,7 +5359,7 @@
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001",
 			"N=1DOTSYMBOL5"],
-			"Funct": ["Thickness1=if( t = 1, -if (sin(u*(sin(14*v-10*u))) <DOTSYMBOL4,-1,DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >0DOTSYMBOL4,-1,DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))))",
+            "Funct": ["Thickness1=if( t = 1, -if (sin(u*(sin(14*v-10*u))) <0DOTSYMBOL4,-1,0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >0DOTSYMBOL4,-1,0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -5415,7 +5415,7 @@
 			"B=0DOTSYMBOL019*abs(cos(-z*x*z*x*y*y))",
 			"T=1"],
 			"Name": "Granit_1",
-			"Noise": "NoiseP(x-14,y-17DOTSYMBOL3,z-16DOTSYMBOL5,10,7,0DOTSYMBOL2)/1DOTSYMBOL1"
+            "Noise": "NoiseP(x-14,y-17,z-16,10,7,2/10)/1DOTSYMBOL1"
 		}
 	},
 	{
@@ -5427,9 +5427,9 @@
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001",
 			"N=3"],
-			"Funct": ["ThicknessInkaSun= if(if(t=1,(abs(sin((N/2)*(u*(sin(v))-u))))<DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),- 0DOTSYMBOL45,0)",
-			"ThicknessSave= if(if(t=1,(abs(sin((N/2)*(u*abs(sin(v))-u))))<DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),- 0DOTSYMBOL45,0)",
-			"Thickness1=if( t = 1, if ( (abs(sin((N/2)*u-v)))>0DOTSYMBOL38,- 0DOTSYMBOL45,0),if ( (abs(sin((N/2)*u-v)))<DOTSYMBOL38,- 0DOTSYMBOL45,0))",
+            "Funct": ["ThicknessInkaSun= if(if(t=1,(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),- 0DOTSYMBOL45,0)",
+            "ThicknessSave= if(if(t=1,(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),- 0DOTSYMBOL45,0)",
+            "Thickness1=if( t = 1, if ( (abs(sin((N/2)*u-v)))>0DOTSYMBOL38,- 0DOTSYMBOL45,0),if ( (abs(sin((N/2)*u-v)))<0DOTSYMBOL38,- 0DOTSYMBOL45,0))",
 			"Fx=(1+0DOTSYMBOL5*cos(u))*cos(v)",
 			"Fy=0DOTSYMBOL5*sin(u)",
 			"Fz=(1+0DOTSYMBOL5*cos(u))*sin(v)",
@@ -5679,7 +5679,7 @@
 			"cv=0DOTSYMBOL0000000001",
 			"N=10"],
 			"Funct": ["Thickness2=if(sin(N*u)>0, 0DOTSYMBOL5*t*((sin(N*u)))^(1/4), - 0DOTSYMBOL5*t*(-(sin(N*u)))^(1/4)) ",
-			"Thickness= Thickness2(u,v,1) + Thickness2(15*v-5*u,v,DOTSYMBOL05)",
+            "Thickness= Thickness2(u,v,1) + Thickness2(15*v-5*u,v,0DOTSYMBOL05)",
 			"Fx=(4+ 2*cos(u))*cos(v)",
 			"Fy=2*sin(u)",
 			"Fz=(4+2*cos(u))*sin(v)",
@@ -5779,7 +5779,7 @@
 			"B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,1/10)"
 		}
 	},
 	{
@@ -6400,7 +6400,7 @@
 			"B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
 			"T=1"],
 			"Name": "Granit_1",
-			"Noise": "NoiseP(x-14,y-17DOTSYMBOL3,z-16DOTSYMBOL5,10,7,0DOTSYMBOL12)"
+            "Noise": "NoiseP(x-14,y-17,z-16,10,7,12/100)"
 		}
 	},
 	{
@@ -6463,7 +6463,7 @@
 			"B=0DOTSYMBOL01*abs(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "PerlinNoise",
-			"Noise": "NoiseP(x,y,z,6,0DOTSYMBOL7,1DOTSYMBOL1)/30"
+            "Noise": "NoiseP(x,y,z,6,7/10,1)/30"
 		}
 	},
 	{
@@ -6490,9 +6490,9 @@
 			"-1"]
 		},
 		"Texture": {
-			"Colors": ["R=if((x*x+y*y+z*z)>0DOTSYMBOL81,DOTSYMBOL95*cos((x*x+y*y+z*z)/1DOTSYMBOL7), 0DOTSYMBOL2)",
+            "Colors": ["R=if((x*x+y*y+z*z)>0DOTSYMBOL81,0DOTSYMBOL95*cos((x*x+y*y+z*z)/1DOTSYMBOL7), 0DOTSYMBOL2)",
 			"G=if((x*x+y*y+z*z)>0DOTSYMBOL8, 0DOTSYMBOL8*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/0DOTSYMBOL3), 0DOTSYMBOL5*sin((x*x+y*y+z*z)*9))",
-			"B=if((x*x+y*y+z*z)<DOTSYMBOL8,(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+ 0DOTSYMBOL4, 0DOTSYMBOL1)",
+            "B=if((x*x+y*y+z*z)<0DOTSYMBOL8,(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+ 0DOTSYMBOL4, 0DOTSYMBOL1)",
 			"T=1"],
 			"Name": "WorleyNoise",
 			"Noise": "-(NoiseW(2*x,2*y,2*z,4,0,0)+NoiseW(2*x,2*y,2*z,4,0,0))"
@@ -6575,7 +6575,7 @@
 			"Thickness7=(1DOTSYMBOL2)"],
 			"Funct": ["Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
 			"Angle2=atan2(x,(y+cx))",
-			"CarvinCondition=(abs((z-1)- 0DOTSYMBOL8*cos(18*Angle2(x,y,z,t)/pi))<1DOTSYMBOL3|abs((z+3)- 0DOTSYMBOL3*cos(18*Angle2(x,y,z,t)/pi+pi/4))<DOTSYMBOL5)",
+            "CarvinCondition=(abs((z-1)- 0DOTSYMBOL8*cos(18*Angle2(x,y,z,t)/pi))<1DOTSYMBOL3|abs((z+3)- 0DOTSYMBOL3*cos(18*Angle2(x,y,z,t)/pi+pi/4))<0DOTSYMBOL5)",
 			"CarvinCondition2=(z-3*sin(3DOTSYMBOL2*Angle2(x,y,z,t)/pi))>0",
 			"Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
 			"IsoExterior=if(-z<5,(x*x/3DOTSYMBOL+y*y/3DOTSYMBOL-abs(1DOTSYMBOL5*sin(2*z/pi+ 0DOTSYMBOL3)+1DOTSYMBOL8)),-(-z-5))",
@@ -6635,7 +6635,7 @@
 			"B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
 			"T=1"],
 			"Name": "Granit_1",
-			"Noise": "NoiseP(x,y,z,10,7,0DOTSYMBOL12)"
+            "Noise": "NoiseP(x,y,z,10,7,12/100)"
 		}
 	},
 	{
@@ -6656,7 +6656,7 @@
 			"Thickness7=(1DOTSYMBOL2)"],
 			"Funct": ["Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
 			"Angle2=atan2(x,(y+cx))",
-			"CarvinCondition=abs((z-1)- 0DOTSYMBOL8*cos(18*Angle2(x,y,z,t)/pi))<1DOTSYMBOL3|abs((z+3)- 0DOTSYMBOL3*cos(18*Angle2(x,y,z,t)/pi+pi/4))<DOTSYMBOL5",
+            "CarvinCondition=abs((z-1)- 0DOTSYMBOL8*cos(18*Angle2(x,y,z,t)/pi))<1DOTSYMBOL3|abs((z+3)- 0DOTSYMBOL3*cos(18*Angle2(x,y,z,t)/pi+pi/4))<0DOTSYMBOL5",
 			"Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
 			"Bottom=(x*x+y*y+z*z-1)",
 			"IsoExterior=x*x/3DOTSYMBOL+y*y/3DOTSYMBOL-abs(1DOTSYMBOL5*sin(2*z/pi+ 0DOTSYMBOL3)+1DOTSYMBOL8)",
@@ -6704,7 +6704,7 @@
 			"B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
 			"T=1"],
 			"Name": "Granit_1",
-			"Noise": "NoiseP(x,y,z,10,7,0DOTSYMBOL12)"
+            "Noise": "NoiseP(x,y,z,10,7,12/100)"
 		}
 	},
 	{
