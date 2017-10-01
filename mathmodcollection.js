@@ -3688,21 +3688,21 @@
 	"Param3D": {
 		"Name": ["Torus Noise"],
 		"Component": ["TorusNoise"],
-		"Fx": ["(1+0DOTSYMBOL5*cos(u))*cos(v)*(1-NoiseW((1+0DOTSYMBOL5*cos(u))*cos(v),
-			(1+0DOTSYMBOL5*cos(u))*sin(v),
-			0DOTSYMBOL5*sin(u),
+        "Fx": ["(1+(1/2)*cos(u))*cos(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),
+            (1+(1/2)*cos(u))*sin(v),
+            (1/2)*sin(u),
 			1,
 			2,
 			0))"],
-		"Fy": ["(1+0DOTSYMBOL5*cos(u))*sin(v)*(1-NoiseW((1+0DOTSYMBOL5*cos(u))*cos(v),
-			(1+0DOTSYMBOL5*cos(u))*sin(v),
-			0DOTSYMBOL5*sin(u),
+        "Fy": ["(1+(1/2)*cos(u))*sin(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),
+            (1+(1/2)*cos(u))*sin(v),
+            (1/2)*sin(u),
 			1,
 			2,
 			0))"],
-		"Fz": ["sin(u)*(1-NoiseW((1+0DOTSYMBOL5*cos(u))*cos(v),
-			(1+0DOTSYMBOL5*cos(u))*sin(v),
-			0DOTSYMBOL5*sin(u),
+        "Fz": ["sin(u)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),
+            (1+(1/2)*cos(u))*sin(v),
+            (1/2)*sin(u),
 			1,
 			2,
 			0))"],
@@ -4813,7 +4813,7 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,1/10)"
 		}
 	},
 	{
@@ -6771,7 +6771,7 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,1/10)"
 		}
 	},
 	{
@@ -6875,7 +6875,7 @@
 			"B=0DOTSYMBOL2*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(8*x,8*y,8*z,4,2,0)+NoiseW(8*x,8*y,8*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(8*x,8*y,8*z,4,2,0)+NoiseW(8*x,8*y,8*z,4,12,1/10)"
 		}
 	},
 	{
@@ -8223,7 +8223,7 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(4*x,4*y,4*z,4,2,0)+NoiseW(4*x,4*y,4*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0)+NoiseW(4*x,4*y,4*z,4,12,1/10)"
 		}
 	},
 	{
@@ -8332,8 +8332,8 @@
 			"Geode2"],
 			"Const": ["A=4",
 			"B=3"],
-			"Fxyz": ["-((((x/1DOTSYMBOL01)^2+y^2+(z/1DOTSYMBOL05)^2-1)+(NoiseW(A*x,A*y,A*z,4,2,1)+NoiseW(A*x,A*y,A*z,4,0,0))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-0DOTSYMBOL2)",
-			"-(((x^2+y^2+z^2-0DOTSYMBOL21)*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-0DOTSYMBOL2)+(NoiseW(B*x,B*y,B*z,4,2,1)+NoiseW(B*x,B*y,B*z,4,2,1))/5)))"],
+            "Fxyz": ["-((((x/1DOTSYMBOL01)^2+y^2+(z/1DOTSYMBOL05)^2-1)+(NoiseW(A*x,A*y,A*z,4,2,1)+NoiseW(A*x,A*y,A*z,4,0,0))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
+            "-(((x^2+y^2+z^2-0DOTSYMBOL21)*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,4,2,1)+NoiseW(B*x,B*y,B*z,4,2,1))/5)))"],
 			"Xmax": ["1DOTSYMBOL5",
 			"1DOTSYMBOL5"],
 			"Xmin": ["-1",
@@ -8397,7 +8397,7 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(4*x,4*y,4*z,4,2,0)+NoiseW(4*x,4*y,4*z,4,12,0DOTSYMBOL1)"
+            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0)+NoiseW(4*x,4*y,4*z,4,12,1/10)"
 		}
 	},
 	{
