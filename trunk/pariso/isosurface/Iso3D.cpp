@@ -83,6 +83,11 @@ void Iso3D::run()
     BuildIso();
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void IsoWorkerThread::emitMySignal()
+{
+    emit mySignal(signalVal);
+}
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void Iso3D::BuildIso()
 {
     IsoBuild(
@@ -471,8 +476,6 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
     NbConstantes = NbConstant;
     NbDefinedFunctions = NbDefinedFunct;
     NbMaxGrid = nbmaxgrid;
-
-
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     nb_ligne = nb_colon = nb_depth = nbGrid;
@@ -926,6 +929,8 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
     const int limitY = nb_colon, limitZ = nb_depth;
     int I, J, IJK;
+    int id=0, signStep=0;
+    float ss;
 
     vals[3]          = stepMorph;
 
@@ -935,6 +940,8 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
         iFinish = nb_ligne;
     else
         iFinish = (MyIndex+1)*tmp;
+
+    ss = 100.0/(iFinish*limitY*limitZ);
 
     for(int i=iStart; i<iFinish; i++)
     {
@@ -966,6 +973,17 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                 if(StopCalculations)
                     return;
                 IJK = J+k;
+
+                id++;
+                if(MyIndex == 0 && morph_activated != 1)
+                {
+                    signalVal = (int)(id*ss);
+                    if(signalVal > (signStep+1))
+                    {
+                        emitMySignal();
+                        signStep += 2;
+                    }
+                }
                 Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
                 GridVoxelVarPt[IJK].Signature   = 0; // Signature initialisation
                 GridVoxelVarPt[IJK].NbEdgePoint = 0; // No EdgePoint yet!
@@ -1374,7 +1392,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
     double vals2[] = {0,0};
     const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
 
-    if(AllComponentTraited && morph_activated ==1)
+    if(AllComponentTraited /*&& morph_activated != 1*/)
     {
         stepMorph += pace;
     }
@@ -1686,6 +1704,7 @@ void IsoWorkerThread::IsoCompute(int fctnb)
 void Iso3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
+    masterthread->StopCalculations = calculation;
     for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
@@ -1731,7 +1750,7 @@ void Iso3D::IsoBuild (
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
 
-        if(masterthread->morph_activated)
+        if(masterthread->morph_activated == 1)
         {
             if(fctnb == 0)
             {

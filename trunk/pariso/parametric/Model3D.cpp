@@ -1867,9 +1867,9 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
 void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
+    masterthread->StopCalculations = StopCalculations;;
     for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
-    masterthread->StopCalculations = StopCalculations;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
