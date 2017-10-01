@@ -867,6 +867,7 @@ void OpenGlWidget::VBOmemoryallocation()
     */
 }
 
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax,
                                    int NbComponent,int NbVariables,int NbConstantes,
                                    int NbDefinedFunctions,int NbTextures,int NbSliders,int NbSliderValues)
