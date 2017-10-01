@@ -1,15 +1,18 @@
 {
     "IsoParam": {
         "MaxGrid": 150,
-        "MaxPt": 1,
-        "MaxTri": 2,
+        "MaxPt": 2,
+        "MaxTri": 3,
         "NbComponent": 20,
         "NbVariables": 30,
         "NbConstantes": 40,
         "NbDefinedFunctions": 50,
         "NbTextures": 30,
         "NbSliders": 30,
-        "NbSliderValues": 500
+        "NbSliderValues": 500,
+        "InitParGrid": 50,
+        "InitIsoGrid": 40
+
     },
     "WindowPosition": {
         "ControlX": 20,

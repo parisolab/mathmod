@@ -250,5 +250,6 @@ private slots:
     //void on_StopThreadButton_clicked();
     void on_ThreadNumberScrollBar_valueChanged(int value);
     void on_StopCalculationsButton_clicked();
+    void on_stopButton_clicked();
 };
 #endif

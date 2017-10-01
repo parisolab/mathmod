@@ -69,7 +69,10 @@ public:
     NbVariables,
     NbTextures,
     NbSliders,
-    NbSliderValues;
+    NbSliderValues,
+    InitParGrid,
+    InitIsoGrid
+    ;
 
 public slots:
     void ReadJsonFile(QString, QJsonObject &);

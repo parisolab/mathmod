@@ -75,7 +75,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
 
-
+    //connect( MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet, SIGNAL(mySignal(int)), ui.progressBar, SLOT(setValue(int)));
 }
 
 //+++++++++++++++++++++++++++++++++++++++
@@ -8082,4 +8082,9 @@ void DrawingOptions::on_StopCalculationsButton_clicked()
 {
    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->stopcalculations(true);
    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->stopcalculations(true);
+}
+
+void DrawingOptions::on_stopButton_clicked()
+{
+    on_StopCalculationsButton_clicked();
 }

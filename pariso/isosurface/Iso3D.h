@@ -50,6 +50,7 @@
 
 class IsoWorkerThread : public QThread
 {
+    Q_OBJECT
     public :
         FunctionParser *implicitFunctionParser, *Fct;
         int   nb_ligne, nb_colon, nb_depth;
@@ -63,6 +64,7 @@ class IsoWorkerThread : public QThread
         ErrorMessage stdError;
         unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
         bool StopCalculations, ParsersAllocated;
+        int signalVal;
         public :
             void IsoCompute(int);
             void VoxelEvaluation(int);
@@ -72,6 +74,10 @@ class IsoWorkerThread : public QThread
             void run() Q_DECL_OVERRIDE;
             IsoWorkerThread();
             ~IsoWorkerThread();
+signals:
+    void mySignal(int myParameter);
+ public:
+    void emitMySignal();
     };
 
     class IsoMasterThread : public IsoWorkerThread
