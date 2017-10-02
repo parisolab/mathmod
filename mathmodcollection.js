@@ -6950,8 +6950,8 @@
 			"TheBeginning2"],
 			"Funct": ["tail=x^2+y^2+z^2-0DOTSYMBOL1*t",
 			"tail2=(x+sin(5*pi*y/20))^2 + (y/10)^2 + (z)^2 - 1",
-			"tail3=tail2(x*30,y*30-30,z*30,1)"],
-			"Fxyz": ["-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,4,2,0)+NoiseW(6*x,6*y,6*z,4,0,0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *tail(x,y,z,1)",
+            "tail3=tail2((x*30),(y*30-30),(z*30),1)"],
+            "Fxyz": ["-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,(4),(2),(0))+NoiseW(6*x,6*y,6*z,(4),(0),(0)))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *tail(x,y,z,1)",
 			"tail3(x*cos(-pi/4)-y*sin(-pi/4),x*sin(-pi/4)+y*cos(-pi/4),z,t)"],
 			"Xmax": ["1",
 			"-0DOTSYMBOL5"],
@@ -6972,7 +6972,7 @@
 			"B=0DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(2*x,2*y,2*z,4,0,0)+NoiseW(2*x,2*y,2*z,2,0,0)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(4),(0),(0))+NoiseW(2*x,2*y,2*z,(2),(0),(0))"
 		}
 	},
 	{
@@ -7102,7 +7102,7 @@
 			"Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
 			"Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
 			"ThickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"],
-			"Fxyz": ["if((sqrt(x*x+y*y+z*z) - 20)<0 & abs(x)<6 ,ThickIsoExterior(x,y,z,t), 1)"],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 20)<(0) & abs(x)<(6) ,ThickIsoExterior(x,y,z,t), 1)"],
 			"Xmax": ["7"],
 			"Xmin": ["-7"],
 			"Ymax": ["23"],
@@ -7192,8 +7192,8 @@
 			"Name": ["Lamp"],
 			"Component": ["Lamp"],
 			"Funct": ["Hyperboloid=x^2+y^2-z^2-0DOTSYMBOL1",
-			"Intersection=max(Hyperboloid(x,y,z*3,1),Hyperboloid(x*3,z*3,y*3,2))",
-			"Intersection2=max(Hyperboloid(x,y,z+5,1),Hyperboloid(x,y,z-5,1))",
+            "Intersection=max(Hyperboloid(x,y,(z*3),1),Hyperboloid((x*3),(z*3),(y*3),2))",
+            "Intersection2=max(Hyperboloid(x,y,(z+5),1),Hyperboloid(x,y,(z-5),1))",
 			"Cylinders=((sqrt((x-4DOTSYMBOL5)*(x-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-0DOTSYMBOL25)*((sqrt((x+4DOTSYMBOL5)*(x+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-0DOTSYMBOL25)*((sqrt((y+4DOTSYMBOL5)*(y+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-0DOTSYMBOL25)*((sqrt((y-4DOTSYMBOL5)*(y-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-0DOTSYMBOL25)*((sqrt(x*x+y*y)-5)^2+z*z-0DOTSYMBOL25)*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-0DOTSYMBOL02)"],
 			"Fxyz": ["(Intersection2(x,y,z,t)*Cylinders(x,y,z,t))-50000"],
 			"Xmax": ["8DOTSYMBOL5"],
@@ -7209,7 +7209,7 @@
 			"B=0DOTSYMBOL019*abs(cos(-z*x*z*x*y*y))",
 			"T=1"],
 			"Name": "Granit_1",
-            "Noise": "NoiseP(x-14,y-17,z-16,10,7,2/10)/1DOTSYMBOL1"
+            "Noise": "NoiseP((x-14),(y-17),(z-16),(10),(7),(2/10))/1DOTSYMBOL1"
 		}
 	},
 	{
