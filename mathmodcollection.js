@@ -996,7 +996,7 @@
 		"Iso3D": {
 			"Name": ["UnionSpheres"],
 			"Component": ["UnionSpheres"],
-			"Fxyz": ["min( (x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1,  (x+0DOTSYMBOL5)*(x+0DOTSYMBOL5) + y*y + z*z - 1)"],
+            "Fxyz": ["min( ((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1),  ((x+0DOTSYMBOL5)*(x+0DOTSYMBOL5) + y*y + z*z - 1))"],
 			"Xmin": ["-2"],
 			"Xmax": [" 2"],
 			"Ymin": ["-2"],
@@ -1009,7 +1009,7 @@
 		"Iso3D": {
 			"Name": ["DifferenceSpheres"],
 			"Component": ["DifferenceSpheres"],
-			"Fxyz": ["((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1)*min( (x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1, (x+0DOTSYMBOL3)*(x+0DOTSYMBOL3) + y*y + z*z - 1) +0DOTSYMBOL02"],
+            "Fxyz": ["((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1)*min( ((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1), ((x+0DOTSYMBOL3)*(x+0DOTSYMBOL3) + y*y + z*z - 1)) +0DOTSYMBOL02"],
 			"Xmin": ["-2"],
 			"Xmax": [" 0DOTSYMBOL1"],
 			"Ymin": ["-1"],
@@ -1067,7 +1067,7 @@
 		"Iso3D": {
 			"Name": ["IntersectSpheres"],
 			"Component": ["IntersectSpheres"],
-			"Fxyz": ["max( (x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1,  (x+0DOTSYMBOL5)*(x+0DOTSYMBOL5) + y*y + z*z - 1)"],
+            "Fxyz": ["max( ((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1),  ((x+0DOTSYMBOL5)*(x+0DOTSYMBOL5) + y*y + z*z - 1))"],
 			"Xmin": ["-2"],
 			"Xmax": [" 2"],
 			"Ymin": ["-2"],
@@ -1171,7 +1171,7 @@
 		"Iso3D": {
 			"Name": ["Bugs"],
 			"Component": ["Bugs"],
-			"Fxyz": ["min( ((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))-0DOTSYMBOL7)*((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))-0DOTSYMBOL7) + (y/2DOTSYMBOL9)*(y/2DOTSYMBOL9) + (x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y))*(x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y)) - 1,  ((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))+0DOTSYMBOL5)*((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))+0DOTSYMBOL5) + (y/2DOTSYMBOL9)*(y/2DOTSYMBOL9) + (x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y))*(x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y)) - 1)"],
+            "Fxyz": ["min(( ((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))-0DOTSYMBOL7)*((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))-0DOTSYMBOL7) + (y/2DOTSYMBOL9)*(y/2DOTSYMBOL9) + (x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y))*(x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y)) - 1),  (((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))+0DOTSYMBOL5)*((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))+0DOTSYMBOL5) + (y/2DOTSYMBOL9)*(y/2DOTSYMBOL9) + (x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y))*(x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y)) - 1))"],
 			"Xmin": ["-2"],
 			"Xmax": [" 2"],
 			"Ymin": ["-2*2DOTSYMBOL9*1"],
@@ -1841,9 +1841,9 @@
         ],
 
         "Fxyz": [
-            "((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1)*min((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1,(x+0DOTSYMBOL3)*(x+0DOTSYMBOL3)+y*y+z*z-1)+0DOTSYMBOL02",
-            "min((x-4DOTSYMBOL7)*(x-4DOTSYMBOL7)+y*y+z*z-1,(x-3DOTSYMBOL5)*(x-3DOTSYMBOL5)+y*y+z*z-1)",
-            "max((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1,(x-2DOTSYMBOL)*(x-2DOTSYMBOL)+y*y+z*z-1)"
+            "((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1)*min(((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1),((x+0DOTSYMBOL3)*(x+0DOTSYMBOL3)+y*y+z*z-1))+0DOTSYMBOL02",
+            "min(((x-4DOTSYMBOL7)*(x-4DOTSYMBOL7)+y*y+z*z-1),((x-3DOTSYMBOL5)*(x-3DOTSYMBOL5)+y*y+z*z-1))",
+            "max(((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1),((x-2DOTSYMBOL)*(x-2DOTSYMBOL)+y*y+z*z-1))"
         ],
         "Xmax": [
             "0DOTSYMBOL5",
@@ -1903,7 +1903,7 @@
         "Fxyz": [
             "Torus(x,
 			y,
-			z+1,
+            (z+1),
 			t)*Torus(x-2*P(x,
 			y,
 			z,
@@ -2126,9 +2126,7 @@
                     "Ax+Ay+Az-NoiseW(x,
 			y,
 			z,
-			1,
-			2,
-			0)"
+            (1),(2),(0))"
                 ],
                 "Varu": [
                     "A=cos(u)"
@@ -2163,9 +2161,7 @@
                 "Noise": "NoiseW(x,
 			y,
 			z,
-			1,
-			2,
-			0)"
+            (1),(2),(0))"
             }
         },
 {
@@ -3944,7 +3940,7 @@
 			"Funct": ["P_Skeletal=cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL2",
 			"isoCondition_0=((x-pi)^2-(pi +0DOTSYMBOL05)^2)",
 			"isoCondition_1=((x-pi)^2-(pi)^2)",
-			"isoTransform=if(isoCondition_0(x,y,z,t)<0,P_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+            "isoTransform=if(isoCondition_0(x,y,z,t)<(0),P_Skeletal(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))",
 			"isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"],
 			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"],
 			"Xmax": ["30"],
@@ -4038,7 +4034,7 @@
 			"Description ": ["Fhelix internal function with sliders by Abderrahman Taha 06/02/2016"],
 			"Name": ["fhelix"],
 			"Component": ["fhelix1"],
-			"Fxyz": ["-fhelix1(sqrt(x*x+y*y)-3,Param1*atan2(y,x),z,Param2,Param3,Param4/15,Param5/15,Param6/15,Param7/10,Param8*pi/15)"],
+            "Fxyz": ["-fhelix1(sqrt(x*x+y*y)-(3),Param1*atan2(y,x),z,Param2,Param3,Param4/(15),Param5/(15),Param6/(15),Param7/(10),Param8*pi/(15))"],
 			"Xmax": ["5"],
 			"Xmin": ["-5"],
 			"Ymax": ["5"],
