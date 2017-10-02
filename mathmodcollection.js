@@ -7756,7 +7756,7 @@
 			"Description": ["Holed Spheres (implicit version) by Abderrahman Taha 09/10/2015. In this example:Thickness= 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2)"],
 			"Name": ["Holed Spheres v2 (implicit version)"],
 			"Component": ["HoledSphere"],
-			"Fxyz": ["min(x*x+y*y+z*z-1,(x*x*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2+y*y*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2+z*z*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2-1))*(x*x+y*y+z*z-1)"],
+            "Fxyz": ["min((x*x+y*y+z*z-1),(x*x*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2+y*y*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2+z*z*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2-1))*(x*x+y*y+z*z-1)"],
 			"Xmax": ["1DOTSYMBOL2"],
 			"Xmin": ["-1DOTSYMBOL2"],
 			"Ymax": ["1DOTSYMBOL2"],
@@ -8254,7 +8254,7 @@
 			"B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
 			"T=1"],
 			"Name": "Granit_1",
-            "Noise": "NoiseP(x-14,y-17,z-16,10,7,12/100)"
+            "Noise": "NoiseP((x-14),(y-17),(z-16),(10),(7),(12/100))"
 		}
 	},
 	{
@@ -8286,7 +8286,7 @@
 	},
 	{
 		"Iso3D": {
-			"Description": ["Tore-1DOTSYMBOL0 by Abderrahman Taha 29/09/2015"],
+            "Description": ["ToreSherk by Abderrahman Taha 29/09/2015"],
 			"Name": ["ToreSherk"],
 			"Component": ["ToreSherk"],
             "Const": ["cx=0DOTSYMBOL0001",
@@ -8317,10 +8317,10 @@
 			"B=0DOTSYMBOL01*abs(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "PerlinNoise",
-            "Noise": "NoiseP(x,y,z,6,7/10,1)/30"
+            "Noise": "NoiseP(x,y,z,(6),(7/10),1)/30"
 		}
 	},
-	{
+    {
 		"Iso3D": {
 			"Description ": ["Geode by Abderrahman Taha 28/09/2015"],
 			"Name": ["Geode"],
@@ -8328,8 +8328,8 @@
 			"Geode2"],
 			"Const": ["A=4",
 			"B=3"],
-            "Fxyz": ["-((((x/1DOTSYMBOL01)^2+y^2+(z/1DOTSYMBOL05)^2-1)+(NoiseW(A*x,A*y,A*z,4,2,1)+NoiseW(A*x,A*y,A*z,4,0,0))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
-            "-(((x^2+y^2+z^2-0DOTSYMBOL21)*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,4,2,1)+NoiseW(B*x,B*y,B*z,4,2,1))/5)))"],
+            "Fxyz": ["-((((x/1DOTSYMBOL01)^2+y^2+(z/1DOTSYMBOL05)^2-1)+(NoiseW(A*x,A*y,A*z,(4),(2),(1))+NoiseW(A*x,A*y,A*z,(4),(0),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
+            "-(((x^2+y^2+z^2-0DOTSYMBOL21)*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"],
 			"Xmax": ["1DOTSYMBOL5",
 			"1DOTSYMBOL5"],
 			"Xmin": ["-1",
@@ -8349,7 +8349,7 @@
 			"B=if((x*x+y*y+z*z)<0DOTSYMBOL8,(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+0DOTSYMBOL4, 0DOTSYMBOL1)",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "-(NoiseW(2*x,2*y,2*z,4,0,0)+NoiseW(2*x,2*y,2*z,4,0,0))"
+            "Noise": "-(NoiseW(2*x,2*y,2*z,(4),(0),(0))+NoiseW(2*x,2*y,2*z,(4),(0),(0)))"
 		}
 	},
 	{
@@ -8357,7 +8357,7 @@
 			"Name": ["The Core"],
 			"Component": ["Core"],
 			"Description ": ["The core by Abderrahman Taha 27/09/2015"],
-			"Fxyz": ["-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,4,2,0)+NoiseW(6*x,6*y,6*z,4,0,0))/5)*(atan2(x,y)<pi/2)"],
+            "Fxyz": ["-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,(4),(2),0)+NoiseW(6*x,6*y,6*z,(4),(0),(0)))/5)*(atan2(x,y)<pi/2)"],
 			"Xmax": ["1"],
 			"Xmin": ["-1"],
 			"Ymax": ["1"],
@@ -8371,7 +8371,7 @@
 			"B=0DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(2*x,2*y,2*z,4,0,0)+NoiseW(2*x,2*y,2*z,2,0,0)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(4),(0),(0))+NoiseW(2*x,2*y,2*z,(2),(0),(0))"
 		}
 	},
 	{
