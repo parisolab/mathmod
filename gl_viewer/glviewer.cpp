@@ -1389,7 +1389,7 @@ void OpenGlWidget::initialize_GL()
     }
 
     PutObjectInsideCube();
-    if(LocalScene.VertxNumber !=0 && LocalScene.activateGlCache)
+    if(/*LocalScene.VertxNumber !=0 &&*/ LocalScene.activateGlCache)
         CreateGlLists();
 }
 
@@ -1984,7 +1984,7 @@ void OpenGlWidget::paintGL()
         }
         initialize_GL();
     }
-    if(LocalScene.VertxNumber != 0)
+    //if(LocalScene.VertxNumber != 0)
     {
         if(LocalScene.activateGlCache)
             draw_cache(&LocalScene);
