@@ -9508,8 +9508,8 @@
 			"Step2=0DOTSYMBOL4",
 			"R00=0DOTSYMBOL031"],
 			"Funct": ["Sphere = (x*x+y*y+ z*z-R00)",
-			"Sphere1 = Sphere(x,y,(abs(z)%Step1) -Step1/2,t)",
-			"Sphere2 = - Sphere1((abs(x)%Step2) -Step2/2,y,z,t)",
+            "Sphere1 = Sphere(x,y,((abs(z)%Step1) -Step1/2),t)",
+            "Sphere2 = - Sphere1(((abs(x)%Step2) -Step2/2),y,z,t)",
 			"Plan = Sphere2(x,0DOTSYMBOL7* (sin(2*t+ ( (x)^2+(z)^2)/4 )) +y,z,t)"],
 			"Fxyz": ["Plan(x,z,y,t)"],
 			"Xmax": [" 6DOTSYMBOL8"],
@@ -9629,7 +9629,7 @@
 			"Scherk_3=((sinh(x)*sinh(cos(pi/3)*x-sin(pi/3)*y)*sinh(cos(2*pi/3)*x-sin(2*pi/3)*y)-cos(z) ) )",
 			"Scherk_4=((sinh(x)*sinh(cos(pi/4)*x-sin(pi/4)*y)*sinh(cos(2*pi/4)*x-sin(2*pi/4)*y) *sinh(cos(3*pi/4)*x-sin(3*pi/4)*y) -cos(z) ) )",
 			"Scherk_5=((sinh(x)*sinh(cos(pi/5)*x-sin(pi/5)*y)*sinh(cos(2*pi/5)*x-sin(2*pi/5)*y) *sinh(cos(3*pi/5)*x-sin(3*pi/5)*y) *sinh(cos(4*pi/5)*x-sin(4*pi/5)*y) -cos(z) ) )",
-			"Iso=if(N=2,Scherk_2(x,y,z,t), if(N=3,Scherk_3(x,y,z,t),if(N=4,Scherk_4(x,y,z,t),Scherk_5(x,y,z,t))))",
+            "Iso=if((N=2),Scherk_2(x,y,z,t), if((N=3),Scherk_3(x,y,z,t),if((N=4),Scherk_4(x,y,z,t),Scherk_5(x,y,z,t))))",
 			"DFx=(Iso(x+0DOTSYMBOL01,y,z,t)-Iso(x,y,z,t))/0DOTSYMBOL01",
 			"DFy=(Iso(x,y+0DOTSYMBOL01,z,t)-Iso(x,y,z,t))/0DOTSYMBOL01",
 			"DFz=(Iso(x,y,z+0DOTSYMBOL01,t)-Iso(x,y,z,t))/0DOTSYMBOL01",
@@ -9685,7 +9685,7 @@
 			"Const": ["N=10",
 			"R=8"],
 			"Funct": ["Scherk0=-((x*y-z)*(x*y-z)-0DOTSYMBOL4)",
-			"Scherk1=if(abs(x)<3 & abs(y)<3, Scherk0(sinh(x),sinh(y),sin(z),t), 0)",
+            "Scherk1=if((abs(x)<3 & abs(y)<3), Scherk0(sinh(x),sinh(y),sin(z),t), 0)",
 			"Scherk2=Scherk1(x*cos(t)-y*sin(t),x*sin(t)+y*cos(t),z,t)",
 			"Torus = Scherk2( (sqrt(x*x+z*z)-R) , y,  N*atan2(z,x),t)"],
 			"Fxyz": ["Torus(x,y,z,t)"],
@@ -9754,8 +9754,8 @@
 			" Param6= 15",
 			" Param7= 20",
 			" Param8= 0"],
-			"Funct": ["Helix=-fhelix1(x,y,z,Param2,Param3,Param4/15,Param5/15,Param6/15,Param7/10,Param8*pi/15)",
-			"Helix1 = Helix((abs(x+8*t)%Step1)-Step1/2,y+8*t,z,t)",
+            "Funct": ["Helix=-fhelix1(x,y,z,Param2,Param3,(Param4/15),(Param5/15),(Param6/15),(Param7/10),Param8*pi/15)",
+            "Helix1 = Helix(((abs(x+8*t)%Step1)-Step1/2),y+8*t,z,t)",
 			"Cylinder2 = Helix1( N1*atan2(x,z)    , y ,   (sqrt(x*x+z*z)-P1)   ,t)",
 			"Cylinder3 = Helix1( N1*atan2(x,z)    , y ,   (sqrt(x*x+z*z)-P1)   ,t)",
 			"Torus3 = Cylinder2(  (sqrt(y*y+x*x)-P2)   ,   N2*atan2(x,y)  ,z,t)"],
@@ -9803,10 +9803,10 @@
 			"P2=40",
 			"R00=10"],
 			"Funct": ["Octahedra=(abs(x)+abs(y)+abs(z))-3DOTSYMBOL8*R00/100",
-			"Octahedra1 = Octahedra(x,y,(abs(z)%(Step1/10))-Step1/20,t)",
-			"Octahedra2 = -Octahedra1((abs(x+2*t)%(Step2/10))-Step2/20,y,z+2*t,t)",
-			"Cylinder2 = Octahedra2(x, (sqrt(y*y+z*z)-P1/10),N1*atan2(y,z)/10,t)",
-			"Torus3 = Cylinder2(N2*atan2(x,y)/10, (sqrt(y*y+x*x)-P2/10),z,t)"],
+            "Octahedra1 = Octahedra(x,y,((abs(z)%(Step1/10))-Step1/20),t)",
+            "Octahedra2 = -Octahedra1(((abs(x+2*t)%(Step2/10))-Step2/20),y,z+2*t,t)",
+            "Cylinder2 = Octahedra2(x, (sqrt(y*y+z*z)-P1/10),(N1*atan2(y,z)/10),t)",
+            "Torus3 = Cylinder2((N2*atan2(x,y)/10), (sqrt(y*y+x*x)-P2/10),z,t)"],
 			"Fxyz": ["Torus3(x,y,z,t)"],
 			"Xmax": [" ((P1+P2)/10 + R00/25)"],
 			"Xmin": ["-((P1+P2)/10 + R00/25)"],
@@ -9938,8 +9938,8 @@
 			"R00=0DOTSYMBOL1",
 			"R01=0DOTSYMBOL24"],
 			"Funct": ["Sphere = (x*x+y*y+ z*z-R00)",
-			"Sphere1 = Sphere(x,y,(abs(z)%Step1)-Step1/2,t)",
-			"Sphere2 = -Sphere1((abs(x+2*t)%Step2)-Step2/2,y,z+2*t,t)",
+            "Sphere1 = Sphere(x,y,((abs(z)%Step1)-Step1/2),t)",
+            "Sphere2 = -Sphere1(((abs(x+2*t)%Step2)-Step2/2),y,z+2*t,t)",
 			"Cylinder2 = Sphere2(x, (sqrt(y*y+z*z)-P1),N1*atan2(y,z),t)",
 			"Torus3 = Cylinder2(N2*atan2(x,y), (sqrt(y*y+x*x)-P2),z,t)"],
 			"Fxyz": ["Torus3(x,y,z,t)"],
@@ -9966,8 +9966,8 @@
 			"R00=0DOTSYMBOL04",
 			"R01=0DOTSYMBOL24"],
 			"Funct": ["Torus0 = (sqrt(x*x+y*y)-R01)^2 + z*z - R00",
-			"Torus1 = Torus0(x,y,(abs(z)%Step1)-Step1/2,t)",
-			"Torus2 = -Torus1((abs(x+t)%Step2)-Step2/2,y,z+t,t)",
+            "Torus1 = Torus0(x,y,((abs(z)%Step1)-Step1/2),t)",
+            "Torus2 = -Torus1(((abs(x+t)%Step2)-Step2/2),y,z+t,t)",
 			"Cylinder = Torus2(N1*atan2(y,x),(sqrt(x*x+y*y)-P1) ,z,t)",
 			"Cylinder2 = Torus2(x, (sqrt(y*y+z*z)-P1),N1*atan2(y,z),t)",
 			"Torus3 = Cylinder2(N2*atan2(x,y), (sqrt(y*y+x*x)-P2),z,t)"],
@@ -9993,7 +9993,7 @@
 			"Funct": ["Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
 			"isoCondition_0=(x^2-2DOTSYMBOL2^2)",
 			"isoCondition_1=(x^2-1DOTSYMBOL6^2)",
-			"isoTransform=if(isoCondition_0(x,y,z,t)<0,-Diamond(x,y+8*t,1DOTSYMBOL5*z+10*t,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+            "isoTransform=if((isoCondition_0(x,y,z,t)<0),-Diamond(x,y+8*t,1DOTSYMBOL5*z+10*t,t),1)+M*exp(isoCondition_1(x,y,z,t))",
 			"isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"],
 			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z/1DOTSYMBOL5,t)"],
 			"Xmax": ["25"],
@@ -10060,7 +10060,7 @@
 			"Description ": ["Red giant by Abderrahman Taha 29/04/2016"],
 			"Name": ["Red giant"],
 			"Component": ["Redgiant"],
-			"Fxyz": ["-((x*x+y*y+z*z-1)+(if(t<pi/2, 1,5*  if(t<pi,  abs(sin(t-pi/2)), abs(sin(3*t-pi/2))) ))*(NoiseW(6*x,6*y,5*cos(t)+6*z,4,2,0)  +NoiseW(4*sin(t)+6*x,5*cos(t) + 6*y,6*z,4,0,0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *(x^2+y^2+z^2-0DOTSYMBOL03)"],
+            "Fxyz": ["-((x*x+y*y+z*z-1)+(if((t<pi/2), (1),5*  if(t<pi,  abs(sin(t-pi/2)), abs(sin(3*t-pi/2))) ))*(NoiseW(6*x,6*y,5*cos(t)+6*z,(4),(2),0)  +NoiseW(4*sin(t)+6*x,5*cos(t) + 6*y,6*z,(4),(0),0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *(x^2+y^2+z^2-0DOTSYMBOL03)"],
 			"Xmax": ["1"],
 			"Xmin": ["-1"],
 			"Ymax": ["1"],
@@ -10074,15 +10074,15 @@
 			"B=0DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(2*x,2*y,2*z,4,0,0)+NoiseW(2*x,2*y,2*z,2,0,0)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(4),(0),(0))+NoiseW(2*x,2*y,2*z,(2),(0),(0))"
 		}
 	},
 	{
 		"Iso3D": {
 			"Component": ["PrettyBall_1"],
 			"Description": ["PrettyBall_2 by Abderrahman Taha 28/10/2015"],
-			"Fxyz": ["if( (x)*(x)+y*y+z*z<64 ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -0DOTSYMBOL6 ,1)  + exp(((x)*(x)+y*y+z*z-64)/3)"],
-			"Name": ["Pretty Ball"],
+            "Fxyz": ["if( (x*x+y*y+z*z<64) ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -0DOTSYMBOL6 ,1)  + exp(((x)*(x)+y*y+z*z-64)/3)"],
+            "Name": ["Pretty Ball_2"],
 			"Varu": ["Cos = cos(u)",
 			"Sin = sin(u)"],
 			"Xmax": ["8"],
@@ -10098,7 +10098,7 @@
 			"B=2*abs(cos((x*x+y*y+z*z)/2DOTSYMBOL3) *cos((x*x+y*y+z*z)/2DOTSYMBOL3) *sin((x*x+y*y+z*z)/2DOTSYMBOL3))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "0DOTSYMBOL5*NoiseW(x,y,z,4,2,0)"
+            "Noise": "0DOTSYMBOL5*NoiseW(x,y,z,(4),(2),0)"
 		}
 	},
 	{
@@ -10113,7 +10113,7 @@
 			"S=51",
 			"T=12"],
 			"Funct": ["P_Skeletal=x+y+z+(S/100)*(x*y+y*z+x*z)+(T/10)",
-			"isoTransform=if(x*(x-2*pi)<0,P_Skeletal(cos(x), cos(y), cos(z), t),1)+M*exp(x*(x-2*pi))"],
+            "isoTransform=if((x*(x-2*pi)<0),P_Skeletal(cos(x), cos(y), cos(z), t),1)+M*exp(x*(x-2*pi))"],
 			"Fxyz": ["-isoTransform((sqrt(x*x+y*y+z*z)-R), P*atan2(y,x), N*pi*atan2(z, sqrt(x*x+y*y)), t)"],
 			"Xmax": ["19"],
 			"Xmin": ["-19"],
@@ -10328,7 +10328,7 @@
 			"Iso4=Iso(x+Iso2(sin(x), sin(y), sin(z),t),y+Iso2(sin(y), sin(x), sin(z),t),z+Iso2(sin(z), sin(y), sin(x),t),t)",
 			"Iso5=Iso(x-Iso2(sin(x), sin(y), sin(z),t),y-Iso2(sin(y), sin(x), sin(z),t),z-Iso2(sin(z), sin(y), sin(x),t),t)",
 			"SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-			"isoTransform=if(x*x<16,SchwarzP(x,y,z,t),1)+M*exp(x*x-14)",
+            "isoTransform=if((x*x<16),SchwarzP(x,y,z,t),1)+M*exp(x*x-14)",
 			"SchwarzPSphere = -isoTransform((sqrt(x*x+y*y+z*z)-9),P*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"],
 			"Fxyz": ["SchwarzPSphere(x,z,y,t)"],
 			"Xmax": ["13"],
@@ -10531,15 +10531,6 @@
 			"1"]
 		}
 	},	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 {
 		"Iso3D": {
@@ -10749,7 +10740,7 @@
 			"Funct": ["Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
 			"isoCondition_0=(x^2-2DOTSYMBOL2^2)",
 			"isoCondition_1=(x^2-1DOTSYMBOL6^2)",
-			"isoTransform=if(isoCondition_0(x,y,z,t)<0,-Diamond(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+            "isoTransform=if((isoCondition_0(x,y,z,t)<0),-Diamond(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
 			"isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"],
 			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"],
 			"Xmax": ["25"],
@@ -10840,7 +10831,7 @@
 			"Funct": ["P_Skeletal=cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL2",
 			"isoCondition_0=((x-pi)^2-(pi +0DOTSYMBOL05)^2)",
 			"isoCondition_1=((x-pi)^2-(pi)^2)",
-			"isoTransform=if(isoCondition_0(x,y,z,t)<0,P_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
+            "isoTransform=if((isoCondition_0(x,y,z,t)<0),P_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
 			"isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"],
 			"Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"],
 			"Xmax": ["30"],
