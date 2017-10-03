@@ -8664,7 +8664,7 @@
 			"W1 = 6*3DOTSYMBOL14/180",
 			"W2 = 27*3DOTSYMBOL14/180",
 			"N = 8"],
-			"Funct": ["Re=(1/sqrt((cos(u)/a)^2 + (sin(u)/b)^2) + if(W1=0|W2=0|N=0,0, L*exp(-(2*(u-P)/W1)^2-(2*(2*3DOTSYMBOL14*(N*v/(2*3DOTSYMBOL14) -floor(N*v/(2*3DOTSYMBOL14))))/W2)^2)) )"],
+            "Funct": ["Re=(1/sqrt((cos(u)/a)^2 + (sin(u)/b)^2) + if((W1=0|W2=0|N=0),(0), L*exp(-(2*(u-P)/W1)^2-(2*(2*3DOTSYMBOL14*(N*v/(2*3DOTSYMBOL14) -floor(N*v/(2*3DOTSYMBOL14))))/W2)^2)) )"],
 			"Fx": ["D*(A*sin(Beta)*cos(u) + Re(v,u,t)*(cos(v+Phi)*cos(u+Omega) - sin(Mu)*sin(v+Phi)*sin(u+Omega)))*exp(u*cot(Alfa))"],
 			"Fy": ["(-A*sin(Beta)*sin(u) - Re(v,u,t)*(cos(v+Phi)*sin(u+Omega) + sin(Mu)*sin(v+Phi)*cos(u+Omega)))*exp(u*cot(Alfa))"],
 			"Fz": ["(-A*cos(Beta) + Re(v,u,t)*sin(v+Phi)*cos(Mu))*exp(u*cot(Alfa))"],
