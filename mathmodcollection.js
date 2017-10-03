@@ -4760,7 +4760,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(4*x,4*y,4*z,8,1,0)"
+            "Noise": "NoiseW(4*x,4*y,4*z,(8),(1),0)"
 		}
 	},
 	{
@@ -4809,7 +4809,7 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,1/10)"
+            "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0) +NoiseW(4*x,4*y,4*z,(4),(12),1/10)"
 		}
 	},
 	{
@@ -5244,7 +5244,7 @@
 			"B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-            "Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,1/10)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(4),(2),0)+NoiseP(2*x,2*y,2*z,(4),(12),1/10)"
 		}
 	},
 	{
@@ -5582,7 +5582,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
 		}
 	},
 	{
@@ -6007,7 +6007,7 @@
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001",
 			"N=1DOTSYMBOL5"],
-			"Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))<0DOTSYMBOL4,-1, -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>0DOTSYMBOL4,-1,-u*u*(cos(u) - sin(u))))",
+            "Funct": ["Thickness1=if( (t = 1), if ( abs(sin(4*u-v))<0DOTSYMBOL4,(-1), -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>0DOTSYMBOL4,(-1),-u*u*(cos(u) - sin(u))))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -6079,7 +6079,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
 		}
 	},
 	{
@@ -6121,7 +6121,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
 		}
 	},
 	{
@@ -6163,7 +6163,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
 		}
 	},
 	{
@@ -6205,7 +6205,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
 		}
 	},
 	{
@@ -6247,7 +6247,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
 		}
 	},
 	{
@@ -6289,7 +6289,7 @@
 			"B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
 			"T=1"],
 			"Name": "Dream",
-			"Noise": "NoiseW(2*x,2*y,2*z,8,1,2)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
 		}
 	},
 	{
@@ -6325,7 +6325,7 @@
 			"Lobs2"],
 			"Const": ["cu=0DOTSYMBOL01",
 			"cv=0DOTSYMBOL01"],
-			"Funct": ["Thickness1=if( t = 1, if ( (sin(13*v-7*u))<0DOTSYMBOL4,-1, 3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63),if ( (sin(13*v-7*u))>0DOTSYMBOL4,-1,3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63))",
+            "Funct": ["Thickness1=if((t = 1), if ( (sin(13*v-7*u))<0DOTSYMBOL4,(-1), 3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63),if ( (sin(13*v-7*u))>0DOTSYMBOL4,(-1),3*cos(u)*cos(v)*sin(u)-0DOTSYMBOL63))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -6366,7 +6366,7 @@
 			"Sphere2"],
 			"Const": ["cu=0DOTSYMBOL001",
 			"cv=0DOTSYMBOL001"],
-			"Funct": ["Thickness1=if( t = 1, if ( abs(sin(4*u-v))>0DOTSYMBOL35,-1,0DOTSYMBOL6*sin(v)),if ( abs(sin(4*u-v))<0DOTSYMBOL35,-1,0))",
+            "Funct": ["Thickness1=if((t = 1), if ( abs(sin(4*u-v))>0DOTSYMBOL35,(-1),0DOTSYMBOL6*sin(v)),if ( abs(sin(4*u-v))<0DOTSYMBOL35,(-1),0))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
@@ -6404,7 +6404,7 @@
 			"B=0DOTSYMBOL5*cos(5*(x*x+y*y+z*z))",
 			"T=1"],
 			"Name": "Granit",
-			"Noise": "NoiseW(13*x,13*y,13*z,1,2,0)"
+            "Noise": "NoiseW(13*x,13*y,13*z,(1),(2),0)"
 		}
 	},
 	{
@@ -6767,7 +6767,7 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,1/10)"
+            "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0) +NoiseW(4*x,4*y,4*z,(4),(12),1/10)"
 		}
 	},
 	{
@@ -6871,7 +6871,7 @@
 			"B=0DOTSYMBOL2*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
 			"T=1"],
 			"Name": "WorleyNoise",
-            "Noise": "NoiseW(8*x,8*y,8*z,4,2,0)+NoiseW(8*x,8*y,8*z,4,12,1/10)"
+            "Noise": "NoiseW(8*x,8*y,8*z,(4),(2),0)+NoiseW(8*x,8*y,8*z,(4),(12),1/10)"
 		}
 	},
 	{
@@ -7153,7 +7153,7 @@
 			"Const": ["cu=0DOTSYMBOL00001",
 			"cv=0DOTSYMBOL00001",
 			"N=1DOTSYMBOL5"],
-			"Funct": ["Thickness1=if( t = 1, -if (sin(u*(sin(14*v-10*u))) <0DOTSYMBOL4,-1,0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >0DOTSYMBOL4,-1,0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))))",
+            "Funct": ["Thickness1=if((t = 1), -if (sin(u*(sin(14*v-10*u))) <0DOTSYMBOL4,(-1),0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >0DOTSYMBOL4,(-1),0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))))",
 			"Fx=cos(u)*cos(v)",
 			"Fy=sin(u)",
 			"Fz=cos(u)*sin(v)",
