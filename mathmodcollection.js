@@ -7221,9 +7221,9 @@
 			"Const": ["cu=0DOTSYMBOL00001",
 			"cv=0DOTSYMBOL00001",
 			"N=3"],
-			"Funct": ["ThicknessInkaSun= if(if(t=1,(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"ThicknessSave= if(if(t=1,(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"Thickness1=if( t = 1, if ( (abs(sin((N/2)*u-v)))>0DOTSYMBOL38,-0DOTSYMBOL45,0),if ( (abs(sin((N/2)*u-v)))<0DOTSYMBOL38,-0DOTSYMBOL45,0))",
+            "Funct": ["ThicknessInkaSun= if(if((t=1),(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "ThicknessSave= if(if((t=1),(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "Thickness1=if((t=1), if ( (abs(sin((N/2)*u-v)))>0DOTSYMBOL38,-0DOTSYMBOL45,0),if ( (abs(sin((N/2)*u-v)))<0DOTSYMBOL38,-0DOTSYMBOL45,0))",
 			"Fx=(1+0DOTSYMBOL5*cos(u))*cos(v)",
 			"Fy=0DOTSYMBOL5*sin(u)",
 			"Fz=(1+0DOTSYMBOL5*cos(u))*sin(v)",
@@ -7265,9 +7265,9 @@
 			"Const": ["cu=0DOTSYMBOL00001",
 			"cv=0DOTSYMBOL00001",
 			"N=3"],
-			"Funct": ["ThicknessInkaSun= if(if(t=1,(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"ThicknessSave= if(if(t=1,(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"Thickness1= if(if(t=1,(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "Funct": ["ThicknessInkaSun= if(if((t=1),(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "ThicknessSave= if(if((t=1),(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "Thickness1= if(if((t=1),(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
 			"Fx=(1+0DOTSYMBOL5*cos(u))*cos(v)",
 			"Fy=0DOTSYMBOL5*sin(u)",
 			"Fz=(1+0DOTSYMBOL5*cos(u))*sin(v)",
@@ -7309,9 +7309,9 @@
 			"Const": ["cu=0DOTSYMBOL00001",
 			"cv=0DOTSYMBOL00001",
 			"N=3"],
-			"Funct": ["ThicknessInkaSun= if(if(t=1,(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"ThicknessSave= if(if(t=1,(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"Thickness1= if(if(t=1,(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "Funct": ["ThicknessInkaSun= if(if((t=1),(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "ThicknessSave= if(if((t=1),(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "Thickness1= if(if((t=1),(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
 			"Fx=(1+0DOTSYMBOL5*cos(u))*cos(v)",
 			"Fy=0DOTSYMBOL5*sin(u)",
 			"Fz=(1+0DOTSYMBOL5*cos(u))*sin(v)",
@@ -7633,7 +7633,7 @@
 			"B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-            "Noise": "NoiseW(2*x,2*y,2*z,4,2,0)+NoiseP(2*x,2*y,2*z,4,12,1/10)"
+            "Noise": "NoiseW(2*x,2*y,2*z,(4),(2),0)+NoiseP(2*x,2*y,2*z,(4),(12),1/10)"
 		}
 	},
 	{
@@ -8219,7 +8219,7 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0)+NoiseW(4*x,4*y,4*z,4,12,1/10)"
+            "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0)+NoiseW(4*x,4*y,4*z,(4),(12),1/10)"
 		}
 	},
 	{
@@ -8393,17 +8393,17 @@
 			"B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-            "Noise": "NoiseW(4*x,4*y,4*z,4,2,0)+NoiseW(4*x,4*y,4*z,4,12,1/10)"
+            "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0)+NoiseW(4*x,4*y,4*z,(4),(12),1/10)"
 		}
 	},
-	{
+    {
 		"Param3D": {
 			"Description": ["Flower_1 by Abderrahman Taha 26/09/2015"],
 			"Name": ["Flower"],
 			"Component": ["BreatherNoise"],
-			"Fx": ["((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1-NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),1,2,0))"],
-			"Fy": ["((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1 -NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),1,2,0))"],
-			"Fz": ["(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1 - NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),1,2,0))"],
+            "Fx": ["((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1-NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(1),(2),0))"],
+            "Fy": ["((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1 -NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(1),(2),0))"],
+            "Fz": ["(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1 - NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(1),(2),0))"],
 			"Umax": ["13DOTSYMBOL2"],
 			"Umin": ["-13DOTSYMBOL2"],
 			"Vmax": ["37DOTSYMBOL4"],
@@ -9078,7 +9078,7 @@
 			"MinU=0",
 			"MaxV=10*pi",
 			"MinV=0"],
-			"Funct": ["th=if(M=1, 0DOTSYMBOL3*((abs(sin(11*u)*cos(11*v)))^19+0DOTSYMBOL1*((sin(2*N*u)))),if(M=2, 0DOTSYMBOL9*sin((N*v)% pi/3), if(M=3, (0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3,if(M=4, 0DOTSYMBOL4*sin(N*v-u)^100,if(M=5, 0DOTSYMBOL4*sin(N*v),if(M=6, 0DOTSYMBOL4*sin(2*N*v-u),if(M=7, 0DOTSYMBOL4*sin(N*v)^10,if(M=8, -0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5),if(M=9, ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if(M=10, ((sin(9*u)*cos(9*v)))^2 +0DOTSYMBOL5* (sin(2*N*u)), (0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
+            "Funct": ["th=if((M=1), 0DOTSYMBOL3*((abs(sin(11*u)*cos(11*v)))^19+0DOTSYMBOL1*((sin(2*N*u)))),if((M=2), 0DOTSYMBOL9*sin((N*v)% pi/3), if((M=3), ((0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3) ,if((M=4), (0DOTSYMBOL4*sin(N*v-u)^100) , if((M=5), 0DOTSYMBOL4*sin(N*v),if((M=6), 0DOTSYMBOL4*sin(2*N*v-u),if((M=7), (0DOTSYMBOL4*sin(N*v)^10),if((M=8), -0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5),if((M=9), ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if((M=10), ((sin(9*u)*cos(9*v)))^2 +0DOTSYMBOL5* (sin(2*N*u)), (0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
 			"Fx=if(v<2*pi, (A-(A-1)*cos(v))*cos(u),if(v<3*pi, -B+(B+cos(u))*cos(v),-B+B*cos(v)-cos(u)))",
 			"Fy=if(v<2*pi,(A-(A-1)*cos(v))*sin(u), sin(u))",
 			"Fz=if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,((D-1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
