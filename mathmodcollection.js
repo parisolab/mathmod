@@ -9168,9 +9168,9 @@
 			"c=0DOTSYMBOL1",
 			"n=2"],
 			"Funct": ["th=0DOTSYMBOL2*((1-abs(u-pi/2)/MaxU)*(v/MaxV+0DOTSYMBOL05)*abs(cos(N*(u))^3-sin(N*(v))^2))^3",
-			"Fx=if(M=1,2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2,if(M=2,((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4,if(M=3,2^v*(sin(u)*cos(u))/35,if(M=4,1DOTSYMBOL2^v*(sin(u)^2*sin(v))+2,2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2))))",
-			"Fy=if(M=1,2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2,if(M=2,((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4,if(M=3,2^v*(sin(u)^2*sin(v))/35-4,if(M=4,1DOTSYMBOL2^v*(sin(u)*cos(u))+5,2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2))))",
-			"Fz=if(M=1,1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v),if(M=2,(b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6,if(M=3,2^v*(sin(u)^2*cos(v))/35-12,if(M=4,1DOTSYMBOL2^v*(sin(u)^2*cos(v))-12,1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)))))",
+            "Fx=if((M=1),(2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4),if((M=3),(2^v*(sin(u)*cos(u))/35),if((M=4),(1DOTSYMBOL2^v*(sin(u)^2*sin(v))+2),2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2))))",
+            "Fy=if((M=1),(2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4),if((M=3),(2^v*(sin(u)^2*sin(v))/35-4),if((M=4),(1DOTSYMBOL2^v*(sin(u)*cos(u))+5),2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2))))",
+            "Fz=if((M=1),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v),if((M=2),((b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6),if((M=3),(2^v*(sin(u)^2*cos(v))/35-12),if((M=4),(1DOTSYMBOL2^v*(sin(u)^2*cos(v))-12),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)))))",
 			"DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
 			"DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
 			"DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
@@ -9223,9 +9223,9 @@
 			"Binx = (DFyv(u,v,t) * Nz(u,v,t) - DFzv(u,v,t) * Ny(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))",
 			"Biny = (DFzv(u,v,t) * Nx(u,v,t) - DFxv(u,v,t) * Nz(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))",
 			"Binz = (DFxv(u,v,t) * Ny(u,v,t) - DFyv(u,v,t) * Nx(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))",
-			"Sx  = Fx(1,v,t) + (r0/100)*Nx(1,v,t)*cos(u) + (r0/100)*Binx(1,v,t)*sin(u)",
-			"Sy  = Fy(1,v,t) + (r0/100)*Ny(1,v,t)*cos(u) + (r0/100)*Biny(1,v,t)*sin(u)",
-			"Sz  = Fz(1,v,t) + (r0/100)*Nz(1,v,t)*cos(u) + (r0/100)*Binz(1,v,t)*sin(u)"],
+            "Sx  = Fx((1),v,t) + (r0/100)*Nx((1),v,t)*cos(u) + (r0/100)*Binx((1),v,t)*sin(u)",
+            "Sy  = Fy((1),v,t) + (r0/100)*Ny((1),v,t)*cos(u) + (r0/100)*Biny((1),v,t)*sin(u)",
+            "Sz  = Fz((1),v,t) + (r0/100)*Nz((1),v,t)*cos(u) + (r0/100)*Binz((1),v,t)*sin(u)"],
 			"Fx": ["Sx(u,v,t)"],
 			"Fy": ["Sy(u,v,t)"],
 			"Fz": ["Sz(u,v,t)"],
@@ -9343,8 +9343,8 @@
 		},
 		"Texture": {
 			"Colors": ["R= if(int(i)%MM>P & int(i)%MM<P+2 ,0DOTSYMBOL8,0DOTSYMBOL8) ",
-			"G= if(int(i)%MM>P & int(i)%MM<P+2 ,0DOTSYMBOL8,0DOTSYMBOL1) ",
-			"B= if(int(i)%MM>P & int(i)%MM<P+2,0DOTSYMBOL8,0DOTSYMBOL1) ",
+            "G= if((int(i)%MM>P & int(i)%MM<P+2), 0DOTSYMBOL8,0DOTSYMBOL1) ",
+            "B= if((int(i)%MM>P & int(i)%MM<P+2), 0DOTSYMBOL8,0DOTSYMBOL1) ",
 			"T= 1 "],
 			"Name": "Rings",
 			"Noise": "1"
@@ -9417,10 +9417,10 @@
 			"Inka Sun_2"],
 			"Const": ["N=4",
 			"M=1"],
-			"Funct": ["InkaSun= if(if(t=1,(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"InkaSun1= if(if(t=1,(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-			"TwistedTori=if( t = 1, if ( (abs(sin((N/2)*u-v)))>0DOTSYMBOL38,-0DOTSYMBOL45,0),if ( (abs(sin((N/2)*u-v)))<0DOTSYMBOL38,-0DOTSYMBOL45,0))",
-			"Th= if(M = 1, InkaSun(u,v,t),if(M = 2, InkaSun1(u,v,t),if(M = 3, TwistedTori(u,v,t), InkaSun(u,v,t))))",
+            "Funct": ["InkaSun= if(if((t=1),(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "InkaSun1= if(if((t=1),(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
+            "TwistedTori=if((t=1), if((abs(sin((N/2)*u-v)))>0DOTSYMBOL38,-0DOTSYMBOL45,0),if((abs(sin((N/2)*u-v)))<0DOTSYMBOL38,-0DOTSYMBOL45,0))",
+            "Th= if((M=1), InkaSun(u,v,t),if((M=2), InkaSun1(u,v,t),if((M=3), TwistedTori(u,v,t), InkaSun(u,v,t))))",
 			"Fx=(1+0DOTSYMBOL5*cos(u))*cos(v)",
 			"Fy=0DOTSYMBOL5*sin(u)",
 			"Fz=(1+0DOTSYMBOL5*cos(u))*sin(v)",
@@ -9728,9 +9728,9 @@
 			"Vmin": ["0"]
 		},
 		"Texture": {
-			"Colors": ["R= if(abs(7*u)%pi/2& abs(7*v)%pi/3,0DOTSYMBOL6,1) ",
-			"G= if(abs(7*u)%pi/2| abs(7*v)%pi/3,0DOTSYMBOL8,0DOTSYMBOL4) ",
-			"B= if(abs(7*u)%pi/2| abs(7*v)%pi/3,0DOTSYMBOL6,0DOTSYMBOL1) ",
+            "Colors": ["R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),0DOTSYMBOL6,1) ",
+            "G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),0DOTSYMBOL8,0DOTSYMBOL4) ",
+            "B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),0DOTSYMBOL6,0DOTSYMBOL1) ",
 			"T=1"],
 			"Name": "Candy",
 			"Noise": "1"
@@ -10487,7 +10487,7 @@
 			"B=(172/100)*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
 			"T=1"],
 			"Name": "WorleyNoise",
-			"Noise": "NoiseW(4*x,4*y,4*z,4,2,0) +NoiseW(4*x,4*y,4*z,4,12,0)"
+            "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0) +NoiseW(4*x,4*y,4*z,(4),(12),0)"
 		},
 		"Sliders": {
 			"Max": ["30",
