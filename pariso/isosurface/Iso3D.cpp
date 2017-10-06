@@ -1749,11 +1749,10 @@ void Iso3D::IsoBuild (
         masterthread->CurrentIso = fctnb;
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
-
-        //masterthread->stepMorph += masterthread->pace;
+/*
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
-
+*/
         if(masterthread->morph_activated == 1)
         {
             if(fctnb == 0)
@@ -1764,7 +1763,6 @@ void Iso3D::IsoBuild (
             for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
                 workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
             }
-
             // Recalculate some tables values:
             ReinitVarTablesWhenMorphActiv(fctnb);
         }
