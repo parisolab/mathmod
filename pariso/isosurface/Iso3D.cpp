@@ -1749,10 +1749,10 @@ void Iso3D::IsoBuild (
         masterthread->CurrentIso = fctnb;
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
-/*
+
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
-*/
+
         if(masterthread->morph_activated == 1)
         {
             if(fctnb == 0)
