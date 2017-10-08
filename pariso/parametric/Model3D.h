@@ -45,6 +45,7 @@ struct   ParStruct
 
 class ParWorkerThread : public QThread
 {
+    Q_OBJECT
 public :
     int nb_ligne, nb_colone;
     int coupure_col, nb_licol, coupure_ligne;
@@ -54,6 +55,7 @@ public :
     int iStart, iFinish, MyIndex, WorkerThreadsNumber, activeMorph, param4D;
     bool StopCalculations, ParsersAllocated;
     unsigned int CurrentPar;
+    int signalVal;
 
 public :
     void ParCompute(int);
@@ -63,6 +65,10 @@ public :
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
     ~ParWorkerThread();
+signals:
+    void mySignal(int myParameter);
+public:
+    void emitMySignal();
 };
 
 class ParMasterThread : public ParWorkerThread

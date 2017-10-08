@@ -1873,12 +1873,18 @@ void Par3D::stopcalculations(bool calculation)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
+void ParWorkerThread::emitMySignal()
+{
+    emit mySignal(signalVal);
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++
 void  ParWorkerThread::calcul_objet(int cmp)
 {
     double vals[] = {0,0,0};
     double iprime, jprime;
-    int NewPosition =  cmp*TypeDrawin*(nb_ligne)*(nb_colone);
-
+    int NewPosition =  cmp*TypeDrawin*(nb_ligne)*(nb_colone), id=0, signStep=0;
+    float ss;
     if(activeMorph == 1)
         stepMorph += pace;
     vals[2]          = stepMorph;
@@ -1889,6 +1895,7 @@ void  ParWorkerThread::calcul_objet(int cmp)
         iFinish = nb_ligne;
     else
         iFinish = (MyIndex+1)*tmp;
+    ss = 100.0/(iFinish*nb_colone);
 
     int l=TypeDrawin*iStart*nb_colone;
 
@@ -1905,6 +1912,16 @@ void  ParWorkerThread::calcul_objet(int cmp)
 
             if(StopCalculations)
                 return;
+            id++;
+            if(MyIndex == 0 && activeMorph != 1)
+            {
+                signalVal = (int)(id*ss);
+                if(signalVal > (signStep+1))
+                {
+                    emitMySignal();
+                    signStep += 2;
+                }
+            }
             NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals);
             NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals);
             NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);

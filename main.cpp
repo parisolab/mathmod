@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
                Parameters.NbDefinedFunctions, Parameters.NbTextures, Parameters.NbSliders, Parameters.NbSliderValues);
 
     DrawingOptions drawingopt;
-
     //save references:
     drawingopt.Parameters = &Parameters;
     drawingopt.MathmodRef = &mm;
@@ -55,8 +54,8 @@ int main(int argc, char *argv[])
     if(drawingopt.IsolistItemRef != 0)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
 
-
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
     mm.show();
     drawingopt.show();
     drawingopt.on_choice_activated(Parameters.model);
