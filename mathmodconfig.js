@@ -21,6 +21,7 @@
         "GlwinY": 20
     },
     "Localization": {
+        "AutomaticDetection": true,
         "DotSymbol": "."
     },
     "WindowSize": {
