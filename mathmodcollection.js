@@ -1404,7 +1404,7 @@
 	"Iso3D": {
 		"Name": ["CloseIso_2"],
 		"Component": ["CloseIso_2"],
-        "Fxyz": ["-if((x^10+y^10+z^10<3*(3DOTSYMBOL5^10)),(cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2))))),(x^10+y^10+z^10-3*(3DOTSYMBOL5^10)))"],
+        "Fxyz": ["-if((x^10+y^10+z^10<((39/10)^10)),(cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2))))),(x^10+y^10+z^10-((39/10)^10)))"],
 		"Xmin": ["-4"],
 		"Xmax": ["4"],
 		"Ymin": ["-4"],
