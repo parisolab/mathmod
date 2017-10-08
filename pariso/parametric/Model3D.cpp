@@ -1974,6 +1974,9 @@ void  Par3D::ParamBuild(
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentPar = fctnb;
 
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+            workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
+
         masterthread->start();
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].start();
