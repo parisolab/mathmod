@@ -127,8 +127,8 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
             sortie.replace("\n", " ");
             sortie.insert(before, " >>> Error <<< ");
             message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
-                            "..." + sortie + "..."
-                           );
+                                        "..." + sortie + "..."
+                                       );
             message.adjustSize () ;
             message.exec();
             file.close();
@@ -375,6 +375,19 @@ void Parametersoptions::SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObjec
     }
 }
 
+#include <string>
+#include <sstream>
+bool Parametersoptions::isFloat(std::string myString)
+{
+    std::istringstream iss(myString);
+        float f;
+        iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+        // Check the entire string was consumed and if either failbit or badbit is set
+        return iss.eof() && !iss.fail();
+}
+
+#include "../fparser/fparser.h"
+
 void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 {
     if(argc >1)
@@ -408,7 +421,21 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         {
             QJsonObject tmp;
             tmp = JConfig["Localization"].toObject();
-            dotsymbol = tmp["DotSymbol"].toString();
+            if(tmp["AutomaticDetection"].isBool() && tmp["AutomaticDetection"].toBool())
+            {
+                FunctionParser ff;
+                if ((ff.Parse("1.02","t")) >= 0)
+                    dotsymbol = ",";
+                else
+                    dotsymbol = ".";
+                /*
+                QMessageBox message;
+                message.setText("Decimalpoint : "+QString((QLocale::system()).decimalPoint()) + "---"+dotsymbol);
+                message.exec();
+                */
+            }
+            else
+                dotsymbol = tmp["DotSymbol"].toString();
         }
 
         if(JConfig["StartOptions"].isObject())
