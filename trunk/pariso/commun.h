@@ -37,7 +37,7 @@ extern int NbDefinedFunctions;
 extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
 extern int IsoNbCmp;
 extern float* NormVertexTab;
-
+/*
 struct ExtendedParam
 {
     int NbTextures=30;
@@ -49,7 +49,7 @@ struct ExtendedParam
     int NbDefinedFunctions = 50;
     int NbMaxGrid = 1000;  // Should use the defined value in mathmodconfig.js
 };
-
+*/
 struct ImplicitStructure
 {
     std::string fxyz;
