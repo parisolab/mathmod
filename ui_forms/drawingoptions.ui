@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MathMod-6.1</string>
+   <string>MathMod-6.1(MacOSX)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
@@ -3128,7 +3128,7 @@ p, li { white-space: pre-wrap; }
                    <attribute name="title">
                     <string>Grid</string>
                    </attribute>
-                   <layout class="QGridLayout" name="gridLayout_4">
+                   <layout class="QGridLayout" name="gridLayout_35">
                     <item row="0" column="0">
                      <widget class="QGroupBox" name="ParamgroupBox_2">
                       <property name="sizePolicy">
@@ -3140,43 +3140,95 @@ p, li { white-space: pre-wrap; }
                       <property name="title">
                        <string>Param Grid:</string>
                       </property>
-                      <layout class="QGridLayout" name="gridLayout_35">
+                      <layout class="QGridLayout" name="gridLayout_4">
                        <item row="0" column="0">
-                        <widget class="QScrollBar" name="linecolumn_2">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>100</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>150</height>
-                          </size>
-                         </property>
-                         <property name="minimum">
-                          <number>10</number>
-                         </property>
-                         <property name="maximum">
-                          <number>2400</number>
-                         </property>
-                         <property name="pageStep">
-                          <number>1</number>
-                         </property>
-                         <property name="value">
-                          <number>50</number>
-                         </property>
-                         <property name="orientation">
-                          <enum>Qt::Vertical</enum>
-                         </property>
-                        </widget>
+                        <layout class="QHBoxLayout" name="horizontalLayout_35">
+                         <item>
+                          <widget class="QScrollBar" name="linecolumn_2">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>100</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>150</height>
+                            </size>
+                           </property>
+                           <property name="minimum">
+                            <number>0</number>
+                           </property>
+                           <property name="maximum">
+                            <number>2400</number>
+                           </property>
+                           <property name="pageStep">
+                            <number>1</number>
+                           </property>
+                           <property name="value">
+                            <number>50</number>
+                           </property>
+                           <property name="orientation">
+                            <enum>Qt::Vertical</enum>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <layout class="QVBoxLayout" name="verticalLayout_9">
+                           <item>
+                            <widget class="QScrollBar" name="lineScrollBar">
+                             <property name="minimumSize">
+                              <size>
+                               <width>150</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="maximum">
+                              <number>2400</number>
+                             </property>
+                             <property name="pageStep">
+                              <number>1</number>
+                             </property>
+                             <property name="value">
+                              <number>50</number>
+                             </property>
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QScrollBar" name="coloneScrollBar">
+                             <property name="minimumSize">
+                              <size>
+                               <width>150</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="maximum">
+                              <number>2400</number>
+                             </property>
+                             <property name="pageStep">
+                              <number>1</number>
+                             </property>
+                             <property name="value">
+                              <number>50</number>
+                             </property>
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
                        </item>
                        <item row="1" column="0">
                         <widget class="QCheckBox" name="uv">

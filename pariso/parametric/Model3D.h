@@ -54,12 +54,12 @@ public :
     double stepMorph, pace;
     int iStart, iFinish, MyIndex, WorkerThreadsNumber, activeMorph, param4D;
     bool StopCalculations, ParsersAllocated;
-    unsigned int CurrentPar;
+    unsigned int CurrentPar, CurrentIndex;
     int signalVal;
 
 public :
-    void ParCompute(int);
-    void calcul_objet(int component =0);
+    void ParCompute(int, int);
+    void calcul_objet(int component =0, int idx=0);
     void AllocateParsersForWorkerThread(int, int);
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
@@ -81,6 +81,8 @@ public :
                    *myParserVmin,*myParserVmax,
                    *Var, Cstparser;
     ParStruct *ParamStructs;
+    bool*UsedFunct, *UsedFunct2, gridnotnull;
+    double *grid;
     int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, Nb_constants, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Funct, Rgbt, Grid;
@@ -147,11 +149,11 @@ public:
     void Invert_boite_englobante4D(int idx=0);
     void boite_englobante4D(int index=0);
     void initialiser_parametres(int, int);
+    void initialiser_LineColumn(int, int);
     void calcul_Norm(int i=0);
     void BorderCalculation(int i=0);
-    void make_PolyIndex(int i=0, int  IsoPos=0);
-    void make_PolyIndexTri(int i=0, int  IsoPos=0);
-    void make_PolyIndexMin(int i=0, int  IsoPos=0);
+    void make_PolyIndexTri(int i=0, int p=0, int  IsoPos=0);
+    void make_PolyIndexMin(int i=0, int p=0, int  IsoPos=0);
     void CNDCalculation(int, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void CalculateNoiseShapePoints(int);
