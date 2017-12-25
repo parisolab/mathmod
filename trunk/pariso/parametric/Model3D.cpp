@@ -1886,27 +1886,18 @@ void Par3D::UpdateThredsNumber(int NewThreadsNumber)
 {
     int tmp= WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
-    //Create new workerthreads set:
-    //ParMasterThread *masterthreadtmp  = new ParMasterThread;
     ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber-1];
-
-    //MasterThreadCopy(masterthreadtmp);
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
-    //masterthread->DeleteMasterParsers();
-    //delete masterthread;
     for(int i=0; i<tmp-1; i++)
-    {
         workerthreads[i].DeleteWorkerParsers();
-    }
     delete[] workerthreads;
-
     //Assigne newly allocated memory
     workerthreads = workerthreadstmp;
     masterthread->WorkerThreadsNumber  = WorkerThreadsNumber;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++
 void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
