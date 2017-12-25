@@ -1881,6 +1881,15 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        if(result!="")
+        {
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+            for(j=0; j < lst.size(); j++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+        }
+        else
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
+
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
@@ -2179,6 +2188,14 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        if(result!="")
+        {
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+            for(j=0; j < lst.size(); j++)
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+        }
+        else
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
@@ -2747,6 +2764,14 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
+            if(result!="")
+            {
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+                for(j=0; j < lst.size(); j++)
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+            }
+            else
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
@@ -3024,6 +3049,14 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
+            if(result!="")
+            {
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+                for(j=0; j < lst.size(); j++)
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+            }
+            else
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
@@ -5298,10 +5331,44 @@ void DrawingOptions::on_actionWavefront_obj_triggered()
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
-    ui.ParamgroupBox_2->setTitle("Param Grid ( "+QString::number(value)+" ) :");
+    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( "+QString::number(value)+", "+QString::number(value)+" ) :");
     if(!MathmodRef->ui.glWidget->ParObjetThread->ParObjet->isRunning())
     {
         MathmodRef->linecolumn_valueChanged(value);
+    }
+    else
+    {
+        ui.uv->blockSignals(true);
+        ui.uv->setChecked(false);
+        ui.uv->blockSignals(false);
+        MathmodRef->uvactivated  = -1;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++
+void DrawingOptions::on_lineScrollBar_valueChanged(int value)
+{
+    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( "+QString::number(value)+", "+QString::number(MathmodRef->ui.glWidget->ParObjetThread->ParObjet->nb_colone)+" ) :");
+    if(!MathmodRef->ui.glWidget->ParObjetThread->ParObjet->isRunning())
+    {
+        MathmodRef->line_valueChanged(value);
+    }
+    else
+    {
+        ui.uv->blockSignals(true);
+        ui.uv->setChecked(false);
+        ui.uv->blockSignals(false);
+        MathmodRef->uvactivated  = -1;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++
+void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
+{
+    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( "+QString::number(MathmodRef->ui.glWidget->ParObjetThread->ParObjet->nb_ligne)+", "+QString::number(value)+" ) :");
+    if(!MathmodRef->ui.glWidget->ParObjetThread->ParObjet->isRunning())
+    {
+        MathmodRef->column_valueChanged(value);
     }
     else
     {
@@ -8088,3 +8155,4 @@ void DrawingOptions::on_stopButton_clicked()
 {
     on_StopCalculationsButton_clicked();
 }
+

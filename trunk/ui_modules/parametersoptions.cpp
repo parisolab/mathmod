@@ -409,7 +409,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         QFile::setPermissions(fileconfig, QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
 
-
     QFile fconf(fileconfig);
     if(fconf.exists())
         ReadJsonFile(fileconfig, JConfig);

@@ -23,7 +23,6 @@
 #include <string.h>
 #include <cmath>
 #include "../objectparameters.h"
-//#include "../commun.h"
 
 
 /*
@@ -76,7 +75,7 @@ class IsoWorkerThread : public QThread
             ~IsoWorkerThread();
 signals:
     void mySignal(int myParameter);
- public:
+public:
     void emitMySignal();
     };
 
