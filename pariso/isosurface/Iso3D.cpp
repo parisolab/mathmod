@@ -290,23 +290,16 @@ void Iso3D::MasterThreadCopy(IsoMasterThread *MasterThreadsTmp)
         }
 }
 
+//+++++++++++++++++++++++++++++++++++++++
 void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
 {
-    //static int first = 0;
-
     int OldWorkerThreadsNumber = WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
-    //IsoMasterThread *masterthreadtmp  = new IsoMasterThread();
-    //masterthreadtmp->IsoMasterTable();
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
     for(int i=0; i<WorkerThreadsNumber-1; i++)
         workerthreadstmp[i].IsoWorkerTable();
-    //MasterThreadCopy(masterthreadtmp);
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
-    //masterthread->DeleteMasterParsers();
-    //delete masterthread;
-
     for(int i=0; i<OldWorkerThreadsNumber-1; i++)
         workerthreads[i].DeleteWorkerParsers();
 
@@ -316,9 +309,9 @@ void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
     //Assigne newly allocated memory
     workerthreads = workerthreadstmp;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
-    //masterthread  = masterthreadtmp;
 }
 
+//+++++++++++++++++++++++++++++++++++++++
 ErrorMessage  Iso3D::IsoMorph()
 {
     ErrorMessage err = masterthread->ParserIso();
