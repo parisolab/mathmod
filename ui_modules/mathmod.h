@@ -45,8 +45,14 @@ public slots:
     void iso_infos();
     void draw_norm_clicked();
     void linecolumn_valueChanged(int);
+    void line_valueChanged(int);
+    void column_valueChanged(int);
     void linecolumn_valueChanged_2(int);
     void linecolumn_valueupdate(int);
+
+    void line_valueupdate(int);
+    void column_valueupdate(int);
+
     void ProcessNewIsoSurface();
     void ProcessParisoSurface();
     void xyzg_valueChanged(int);

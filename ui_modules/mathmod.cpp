@@ -109,6 +109,31 @@ void MathMod::linecolumn_valueupdate( int cl)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::line_valueupdate( int cl)
+{
+    (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
+
+    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_ligne = cl;
+
+    for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    {
+        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_ligne = cl;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::column_valueupdate( int cl)
+{
+    (ui.glWidget)->ParObjetThread->ParObjet->nb_colone = (ui.glWidget)->nb_colone = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_colone = cl;
+
+    for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    {
+        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_colone = cl;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueChanged( int cl)
 {
     linecolumn_valueupdate(cl);
@@ -117,7 +142,24 @@ void MathMod::linecolumn_valueChanged( int cl)
     else
         (ui.glWidget)->update();
 }
-
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::line_valueChanged( int cl)
+{
+    line_valueupdate(cl);
+    if(uvactivated  == 1)
+        ParametricSurfaceProcess(1);
+    else
+        (ui.glWidget)->update();
+}
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::column_valueChanged( int cl)
+{
+    column_valueupdate(cl);
+    if(uvactivated  == 1)
+        ParametricSurfaceProcess(1);
+    else
+        (ui.glWidget)->update();
+}
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueChanged_2( int cl)
 {
