@@ -1,9 +1,9 @@
 {
     "IsoParam": {
         "MaxGrid": 250,
-        "MaxPt": 3,
+        "MaxPt": 4,
         "MaxTri": 6,
-        "NbComponent": 20,
+        "NbComponent": 200,
         "NbVariables": 30,
         "NbConstantes": 40,
         "NbDefinedFunctions": 50,
@@ -36,7 +36,7 @@
         "GL_SHININESS": 110
     },
     "ThreadsConfig": {
-        "ThreadsNumber": 4,
+        "ThreadsNumber": 6,
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
     },
