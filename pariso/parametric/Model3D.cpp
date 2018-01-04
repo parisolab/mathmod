@@ -1428,7 +1428,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             for (int j=0; j < masterthread->Nb_vrgbts && j < 100; j+=5)
                 if(tmp <= ValCol[j])
                 {
-                    NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
+                    NormVertexTab[i*TypeDrawin  ] = ValCol[j+1];
                     NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
                     NormVertexTab[i*TypeDrawin+2] = ValCol[j+3];
                     NormVertexTab[i*TypeDrawin+3] = ValCol[j+4];
@@ -1474,78 +1474,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
         }
     }
 }
-
-
-
-
-/*
-///+++++++++++++++++++++++++++++++++++++++++
-void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
-{
-    double tmp, ValCol[100], val[4];
-    ImprovedNoise* PerlinNoise = new ImprovedNoise(4., 4., 4.);
-    val[3] = stepMorph;
-    if(VRgbt != "" && (Nb_vrgbts %5)==0 )
-    {
-        components->ThereisRGBA = true;
-        for(int i=0; i<Nb_vrgbts && i<100; i++)
-        {
-            ValCol[i] = VRgbtParser[i].Eval(val);
-        }
-
-        for(int i= 0; i < NbVertexTmp; i++)
-        {
-            if(Noise != "")
-                tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
-            else
-                tmp =1.0;
-
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ];
-            tmp  = GradientParser->Eval(val);
-
-            int c= (int)tmp;
-            tmp = std::abs(tmp - (double)c);
-            for (int j=0; j < Nb_vrgbts && j < 100; j+=5)
-                if(tmp <= ValCol[j])
-                {
-                    NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
-                    NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
-                    NormVertexTab[i*TypeDrawin+2] = ValCol[j+3];
-                    NormVertexTab[i*TypeDrawin+3] = ValCol[j+4];
-                    j = 100;
-                }
-        }
-    }
-    else if(Nb_rgbts >= 4)
-    {
-        for(int i= 0; i < NbVertexTmp; i++)
-        {
-            if(Noise != "")
-                tmp = PerlinNoise->Marble(NormVertexTab[i*TypeDrawin  +3 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +4 + TypeDrawinNormStep ],
-                        NormVertexTab[i*TypeDrawin  +5 + TypeDrawinNormStep ], 4);
-            else
-                tmp =1.0;
-
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
-
-            NormVertexTab[i*TypeDrawin    ] = RgbtParser[0].Eval(val);
-            NormVertexTab[i*TypeDrawin+1] = RgbtParser[1].Eval(val);
-            NormVertexTab[i*TypeDrawin+2] = RgbtParser[2].Eval(val);
-            NormVertexTab[i*TypeDrawin+3] = RgbtParser[3].Eval(val);
-        }
-        components->ThereisRGBA = true;
-    }
-    else
-        components->ThereisRGBA = false;
-}
-*/
 
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
@@ -2019,13 +1947,12 @@ void  Par3D::ParamBuild(
 
         masterthread->CurrentPar   = fctnb;
         masterthread->CurrentIndex = NextIndex;
-            // Save Number of Polys and vertex :
-            NbVertexTmp                 += (nb_ligne)*(nb_colone);
-            NbTriangleIsoSurfaceTmp     += 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-            NbPolyMinimalTopology       += (nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-            PreviousSizeMinimalTopology += 5*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-            NbVertex  = (nb_ligne)*(nb_colone);
-
+        // Save Number of Polys and vertex :
+        NbVertexTmp                 += (nb_ligne)*(nb_colone);
+        NbTriangleIsoSurfaceTmp     += 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+        NbPolyMinimalTopology       += (nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+        PreviousSizeMinimalTopology += 5*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
+        NbVertex  = (nb_ligne)*(nb_colone);
 
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         {
@@ -2049,31 +1976,20 @@ void  Par3D::ParamBuild(
 
         if(param4D == 1)
         {
-            Anim_Rot4D (/*fctnb*NbVertex*/ NextIndex);
+            Anim_Rot4D (NextIndex);
         }
-        calcul_Norm(/*fctnb*TypeDrawin*NbVertex*/TypeDrawin*NextIndex);
-        make_PolyIndexMin( NextPosition, NextIndex,  IsoPos);  //Before
+        calcul_Norm(TypeDrawin*NextIndex);
+        make_PolyIndexMin( NextPosition, NextIndex,  IsoPos);
         make_PolyIndexTri( NextPosition, NextIndex, IsoPos);
         if(components != NULL)
         {
-            components->Parametricpositions[2*fctnb  ]  = /*fctnb*6*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1)*/  6*NextPosition; //save the starting position of this component
+            components->Parametricpositions[2*fctnb  ]  = 6*NextPosition; //save the starting position of this component
             components->Parametricpositions[2*fctnb+1] = 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1); //save the number of Polygones of this component
         }
         NextPosition += (nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
         NextIndex    += (nb_ligne)*(nb_colone);
     }
 
-    /*
-    if(!masterthread->gridnotnull)
-    {
-        // Save Number of Polys and vertex :
-        NbVertexTmp                 = (masterthread->Nb_paramfunctions+1)*(nb_ligne)*(nb_colone);
-        NbTriangleIsoSurfaceTmp     = (masterthread->Nb_paramfunctions+1)*2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-        NbPolyMinimalTopology       = (masterthread->Nb_paramfunctions+1)*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-        PreviousSizeMinimalTopology = (masterthread->Nb_paramfunctions+1)*5*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-    }
-
-    */
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
@@ -2122,8 +2038,8 @@ void  Par3D::ParamBuild(
 void  Par3D::make_PolyIndexMin(int NewPo, int index, int IsoPos)
 {
     int k=0;
-    int NewPosition = /*NewPo * 5*(nb_ligne  - coupure_ligne -1)*(nb_colone- coupure_col -1);*/ 5*NewPo;
-    int nbVertex       = /*NewPo * (nb_ligne  - coupure_ligne)*(nb_colone- coupure_col);*/index;
+    int NewPosition = 5*NewPo;
+    int nbVertex       = index;
     for (int i=0; i< nb_ligne - coupure_ligne -1; i++)
         for (int j=0; j< nb_colone - coupure_col -1; j++)
         {
@@ -2134,16 +2050,13 @@ void  Par3D::make_PolyIndexMin(int NewPo, int index, int IsoPos)
             IndexPolyTabMin[k+4+NewPosition] = i*nb_colone + (j+1)+nbVertex + IsoPos;
             k+=5;
         }
-
-    //PreviousSizeMinimalTopology += 5*(nb_ligne  - coupure_ligne)*(nb_colone- coupure_col);
-    //NbPolyMinimalTopology += (nb_ligne  - coupure_ligne-1)*(nb_colone- coupure_col-1);
 }
 //+++++++++++++++++++++++++++++++++++++++++++
 void  Par3D::make_PolyIndexTri(int NewPo, int index, int IsoPos)
 {
     int k=0;
-    int NewPosition = /*NewPo * 6*(nb_ligne  - coupure_ligne -1)*(nb_colone- coupure_col -1);*/ 6*NewPo;
-    int nbVertex       = /*NewPo * (nb_ligne  - coupure_ligne)*(nb_colone- coupure_col);*/index;
+    int NewPosition = 6*NewPo;
+    int nbVertex    = index;
     for (int i=0; i< nb_ligne - coupure_ligne -1; i++)
         for (int j=0; j< nb_colone - coupure_col -1; j++)
         {
