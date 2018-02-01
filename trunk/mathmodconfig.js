@@ -6,7 +6,7 @@
         "NbComponent": 200,
         "NbVariables": 30,
         "NbConstantes": 40,
-        "NbDefinedFunctions": 50,
+        "NbDefinedFunctions": 100,
         "NbTextures": 30,
         "NbSliders": 30,
         "NbSliderValues": 500,

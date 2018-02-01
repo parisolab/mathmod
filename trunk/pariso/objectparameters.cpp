@@ -58,7 +58,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
 
     objectproperties.componentsinfos.IsoPositions        = new int[2*NbComponent+1];
     objectproperties.componentsinfos.IsoPts              = new int[2*NbComponent+1];
-    objectproperties.componentsinfos.Parametricpositions = new int[2*NbComponent+1];
+    objectproperties.componentsinfos.Parametricpositions = new int[3*NbComponent+1];
 
     objectproperties.IsoColorliste          = new unsigned int[NbComponent];
     objectproperties.ParColorliste          = new unsigned int[NbComponent];
@@ -90,24 +90,24 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
 
     //objectproperties.specReflection[0] = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2; objectproperties.specReflection[3] = 1.0;
 
-    objectproperties.backcol[0]   = objectproperties.backcols[0]   = objectproperties.backcolsPar[0]   = StaticColor[0];
-    objectproperties.backcol[1]   = objectproperties.backcols[1]   = objectproperties.backcolsPar[1]   = StaticColor[1];
-    objectproperties.backcol[2]   = objectproperties.backcols[2]   = objectproperties.backcolsPar[2]   = StaticColor[2];
+    objectproperties.backcol[0]   = objectproperties.backcols[0]   = objectproperties.backcolsPar[0]   = 0.3;//StaticColor[0];
+    objectproperties.backcol[1]   = objectproperties.backcols[1]   = objectproperties.backcolsPar[1]   = 0.3;//StaticColor[1];
+    objectproperties.backcol[2]   = objectproperties.backcols[2]   = objectproperties.backcolsPar[2]   = 0.3;//StaticColor[2];
     objectproperties.backcol[3]   = objectproperties.backcols[3]   = objectproperties.backcolsPar[3]   = 1.0;
 
-    objectproperties.backcols[1*4+0]   = objectproperties.backcolsPar[1*4+0]   = 0.93;
-    objectproperties.backcols[1*4+1]   = objectproperties.backcolsPar[1*4+1]   = 0.5;
-    objectproperties.backcols[1*4+2]   = objectproperties.backcolsPar[1*4+2]   = 0.93;
+    objectproperties.backcols[1*4+0]   = objectproperties.backcolsPar[1*4+0]   = 0.3;
+    objectproperties.backcols[1*4+1]   = objectproperties.backcolsPar[1*4+1]   = 0.3;
+    objectproperties.backcols[1*4+2]   = objectproperties.backcolsPar[1*4+2]   = 0.3;
     objectproperties.backcols[1*4+3]   = objectproperties.backcolsPar[1*4+3]   = 1.0;
 
-    objectproperties.backcols[2*4+0]   = objectproperties.backcolsPar[2*4+0]   = 0.93;
-    objectproperties.backcols[2*4+1]   = objectproperties.backcolsPar[2*4+1]   = 0.1;
-    objectproperties.backcols[2*4+2]   = objectproperties.backcolsPar[2*4+2]   = 0.1;
+    objectproperties.backcols[2*4+0]   = objectproperties.backcolsPar[2*4+0]   = 0.3;
+    objectproperties.backcols[2*4+1]   = objectproperties.backcolsPar[2*4+1]   = 0.3;
+    objectproperties.backcols[2*4+2]   = objectproperties.backcolsPar[2*4+2]   = 0.3;
     objectproperties.backcols[2*4+3]   = objectproperties.backcolsPar[2*4+3]   = 1.0;
 
-    objectproperties.backcols[3*4+0]   = objectproperties.backcolsPar[3*4+0]   = 0.513;
-    objectproperties.backcols[3*4+1]   = objectproperties.backcolsPar[3*4+1]   = 0.2;
-    objectproperties.backcols[3*4+2]   = objectproperties.backcolsPar[3*4+2]   = 0.9;
+    objectproperties.backcols[3*4+0]   = objectproperties.backcolsPar[3*4+0]   = 0.3;
+    objectproperties.backcols[3*4+1]   = objectproperties.backcolsPar[3*4+1]   = 0.3;
+    objectproperties.backcols[3*4+2]   = objectproperties.backcolsPar[3*4+2]   = 0.3;
     objectproperties.backcols[3*4+3]   = objectproperties.backcolsPar[3*4+3]   = 1.0;
 
     objectproperties.backcols[4*4+0]   = objectproperties.backcolsPar[4*4+0]   = 0.93;
@@ -140,24 +140,24 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.backcols[9*4+2]   = objectproperties.backcolsPar[9*4+2]   = 0.93;
     objectproperties.backcols[9*4+3]   = objectproperties.backcolsPar[9*4+3]   = 1.0;
 
-    objectproperties.frontcol[0]  = objectproperties.frontcols[0] = objectproperties.frontcolsPar[0] = StaticColor[4];
-    objectproperties.frontcol[1]  = objectproperties.frontcols[1] = objectproperties.frontcolsPar[1] = StaticColor[5];
-    objectproperties.frontcol[2]  = objectproperties.frontcols[2] = objectproperties.frontcolsPar[2] = StaticColor[6];
+    objectproperties.frontcol[0]  = objectproperties.frontcols[0] = objectproperties.frontcolsPar[0] = 0.9;//StaticColor[4];
+    objectproperties.frontcol[1]  = objectproperties.frontcols[1] = objectproperties.frontcolsPar[1] = 0.3;//StaticColor[5];
+    objectproperties.frontcol[2]  = objectproperties.frontcols[2] = objectproperties.frontcolsPar[2] = 0.3;//StaticColor[6];
     objectproperties.frontcol[3]  = objectproperties.frontcols[3] = objectproperties.frontcolsPar[3] = 1.0;
 
-    objectproperties.frontcols[1*4+0] = objectproperties.frontcolsPar[1*4+0] = 0.1;
-    objectproperties.frontcols[1*4+1] = objectproperties.frontcolsPar[1*4+1] = 0.6;
-    objectproperties.frontcols[1*4+2] = objectproperties.frontcolsPar[1*4+2] = 0.1;
+    objectproperties.frontcols[1*4+0] = objectproperties.frontcolsPar[1*4+0] = 0.9;
+    objectproperties.frontcols[1*4+1] = objectproperties.frontcolsPar[1*4+1] = 0.3;
+    objectproperties.frontcols[1*4+2] = objectproperties.frontcolsPar[1*4+2] = 0.3;
     objectproperties.frontcols[1*4+3] = objectproperties.frontcolsPar[1*4+3] = 1.0;
 
-    objectproperties.frontcols[2*4+0] = objectproperties.frontcolsPar[2*4+0] = 0.1;
-    objectproperties.frontcols[2*4+1] = objectproperties.frontcolsPar[2*4+1] = 0.81;
-    objectproperties.frontcols[2*4+2] = objectproperties.frontcolsPar[2*4+2] = 0.93;
+    objectproperties.frontcols[2*4+0] = objectproperties.frontcolsPar[2*4+0] = 0.9;
+    objectproperties.frontcols[2*4+1] = objectproperties.frontcolsPar[2*4+1] = 0.3;
+    objectproperties.frontcols[2*4+2] = objectproperties.frontcolsPar[2*4+2] = 0.3;
     objectproperties.frontcols[2*4+3] = objectproperties.frontcolsPar[2*4+3] = 1.0;
 
-    objectproperties.frontcols[3*4+0] = objectproperties.frontcolsPar[3*4+0] = 0.8;
-    objectproperties.frontcols[3*4+1] = objectproperties.frontcolsPar[3*4+1] = 0.91;
-    objectproperties.frontcols[3*4+2] = objectproperties.frontcolsPar[3*4+2] = 0.9;
+    objectproperties.frontcols[3*4+0] = objectproperties.frontcolsPar[3*4+0] = 0.9;
+    objectproperties.frontcols[3*4+1] = objectproperties.frontcolsPar[3*4+1] = 0.3;
+    objectproperties.frontcols[3*4+2] = objectproperties.frontcolsPar[3*4+2] = 0.3;
     objectproperties.frontcols[3*4+3] = objectproperties.frontcolsPar[3*4+3] = 1.0;
 
     objectproperties.frontcols[4*4+0] = objectproperties.frontcolsPar[4*4+0] = 0.96;
@@ -190,16 +190,17 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.frontcols[9*4+2] = objectproperties.frontcolsPar[9*4+2] = 0.3;
     objectproperties.frontcols[9*4+3] = objectproperties.frontcolsPar[9*4+3] = 1.0;
 
-    for(int i=10; i<NbComponent; i++)
+    int step = 4;
+    for(int i=step; i<NbComponent; i++)
     {
-        objectproperties.frontcols[i*4+0] = objectproperties.frontcolsPar[i*4+0] = objectproperties.frontcolsPar[(i%10)*4+0];
-        objectproperties.frontcols[i*4+1] = objectproperties.frontcolsPar[i*4+1] = objectproperties.frontcolsPar[(i%10)*4+1];
-        objectproperties.frontcols[i*4+2] = objectproperties.frontcolsPar[i*4+2] = objectproperties.frontcolsPar[(i%10)*4+2];
+        objectproperties.frontcols[i*4+0] = objectproperties.frontcolsPar[i*4+0] = objectproperties.frontcolsPar[(i%step)*4+0];
+        objectproperties.frontcols[i*4+1] = objectproperties.frontcolsPar[i*4+1] = objectproperties.frontcolsPar[(i%step)*4+1];
+        objectproperties.frontcols[i*4+2] = objectproperties.frontcolsPar[i*4+2] = objectproperties.frontcolsPar[(i%step)*4+2];
         objectproperties.frontcols[i*4+3] = objectproperties.frontcolsPar[i*4+3] = 1;
 
-        objectproperties.backcols[i*4+0] = objectproperties.backcolsPar[i*4+0] = objectproperties.backcolsPar[(i%10)*4+0];
-        objectproperties.backcols[i*4+1] = objectproperties.backcolsPar[i*4+1] = objectproperties.backcolsPar[(i%10)*4+1];
-        objectproperties.backcols[i*4+2] = objectproperties.backcolsPar[i*4+2] = objectproperties.backcolsPar[(i%10)*4+2];
+        objectproperties.backcols[i*4+0] = objectproperties.backcolsPar[i*4+0] = objectproperties.backcolsPar[(i%step)*4+0];
+        objectproperties.backcols[i*4+1] = objectproperties.backcolsPar[i*4+1] = objectproperties.backcolsPar[(i%step)*4+1];
+        objectproperties.backcols[i*4+2] = objectproperties.backcolsPar[i*4+2] = objectproperties.backcolsPar[(i%step)*4+2];
         objectproperties.backcols[i*4+3] = objectproperties.backcolsPar[i*4+3] = 1;
     }
     objectproperties.border              = 1;

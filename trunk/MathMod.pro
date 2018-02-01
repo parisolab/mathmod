@@ -62,7 +62,7 @@ FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/parametersoptions.ui \
     ui_forms/sliderparam.ui \
     ui_forms/addparam.ui
-			 
+
 RC_FILE 	= mm.rc
 RESOURCES  += myressources.qrc
 QT         += opengl widgets
