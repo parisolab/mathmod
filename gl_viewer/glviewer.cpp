@@ -67,9 +67,9 @@ static void UpdateFillParliste (ObjectProperties *scene)
         glNewList(scene->FillParliste[i], GL_COMPILE);
         glDrawElements(
             GL_TRIANGLES,
-            3*scene->componentsinfos.Parametricpositions[2*i+1],
+            3*scene->componentsinfos.Parametricpositions[3*i+1],
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
+            &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[3*i]])
         );
         glEndList();
     }
@@ -233,9 +233,9 @@ static void DrawParametric (ObjectProperties *scene)
             else
                 glDrawElements(
                     GL_TRIANGLES,
-                    3*scene->componentsinfos.Parametricpositions[2*i+1],
+                    3*scene->componentsinfos.Parametricpositions[3*i+1],
                     GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[2*i]])
+                    &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[3*i]])
                 );
     }
 
@@ -1389,7 +1389,7 @@ void OpenGlWidget::initialize_GL()
     }
 
     PutObjectInsideCube();
-    if(/*LocalScene.VertxNumber !=0 &&*/ LocalScene.activateGlCache)
+    if(/*LocalScene.VertxNumber != 0 &&*/ LocalScene.activateGlCache)
         CreateGlLists();
 }
 
