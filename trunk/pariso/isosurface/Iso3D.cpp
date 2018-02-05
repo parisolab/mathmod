@@ -158,6 +158,8 @@ void IsoMasterThread::IsoMasterTable()
     SliderValues = new double[NbSliderValues];
     ConstValues  = new double[NbConstantes];
     ImplicitStructs = new ImplicitStructure[NbComponent];
+    UsedFunct    = new bool[NbComponent*NbDefinedFunctions];
+    UsedFunct2   = new bool[NbDefinedFunctions*NbDefinedFunctions];
     for(int i=0; i<NbSliders; i++)
     {
         SliderNames[i]= "Param_"+QString::number(i).toStdString();
@@ -202,6 +204,8 @@ IsoMasterThread::~IsoMasterThread()
     delete[] z_Step;
     delete[] GridTable;
     delete[] ImplicitStructs;
+    delete[] UsedFunct;
+    delete[] UsedFunct2;
 }
 
 IsoWorkerThread::~IsoWorkerThread()
@@ -384,6 +388,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
             for(int jj=0; jj<ii; jj++)
+                if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
                 workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
             {
@@ -429,7 +434,8 @@ ErrorMessage  Iso3D::parse_expression2()
 
         for(int j=0; j<masterthread->Nb_functs; j++)
         {
-            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            if(masterthread->UsedFunct[i*NbDefinedFunctions+j])
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
         }
     }
    }
@@ -1155,7 +1161,8 @@ ErrorMessage IsoMasterThread::ParserIso()
         for(int i=0; i<Nb_functs; i++)
         {
             for(int j=0; j<i; j++)
-                Fct[i].AddFunction(FunctNames[j], Fct[j]);
+                if( (UsedFunct2[i*NbDefinedFunctions+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
+                    Fct[i].AddFunction(FunctNames[j], Fct[j]);
             if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"x,y,z,t"))>=0)
             {
                 stdError.strError = Functs[i];
@@ -1362,8 +1369,11 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         for(int j=0; j<Nb_functs; j++)
         {
-            implicitFunctionParser[i].AddFunction(FunctNames[j], Fct[j]);
-            IsoConditionParser[i].AddFunction(FunctNames[j], Fct[j]);
+            if((UsedFunct[i*NbDefinedFunctions+j]=(ImplicitStructs[i].fxyz.find(FunctNames[j]) != std::string::npos)))
+            {
+                implicitFunctionParser[i].AddFunction(FunctNames[j], Fct[j]);
+                IsoConditionParser[i].AddFunction(FunctNames[j], Fct[j]);
+            }
         }
         implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         implicitFunctionParser[i].AddFunction("fhelix1",fhelix1, 10);
