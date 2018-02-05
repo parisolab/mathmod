@@ -105,6 +105,7 @@ public:
             int *GridTable;
             float Octaves, Lacunarity, Gain;
             ImplicitStructure *ImplicitStructs;
+            bool *UsedFunct, *UsedFunct2;
         public :
             void DeleteMasterParsers();
             void AllocateMasterParsers();
