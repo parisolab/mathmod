@@ -373,6 +373,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(int ij=0; ij<masterthread->Nb_functs; ij++)
         {
+            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentIsoCmpId, 1);
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
         }
 
@@ -1623,6 +1624,7 @@ void IsoMasterThread::InitMasterParsers()
     for(int i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
+        Fct[i].AddFunction("CmpId",CurrentIsoCmpId, 1);
         Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         Fct[i].AddFunction("fhelix1",fhelix1, 10);
         Fct[i].AddFunction("fhelix2",fhelix2, 10);
@@ -1695,12 +1697,6 @@ void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct)
     }
 }
 
-void IsoMasterThread::AllocateParsersForMasterThread()
-{
-    AllocateMasterParsers();
-    InitMasterParsers();
-}
-
 ///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::initparser()
 {
@@ -1762,7 +1758,8 @@ void Iso3D::IsoBuild (
     // generate Isosurface for all the implicit formulas
     for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
-        masterthread->CurrentIso = IsoComponentId = fctnb;
+        IsoComponentId = fctnb;
+        masterthread->CurrentIso = fctnb;
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
 
