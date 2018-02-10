@@ -46,7 +46,19 @@ int NbSliderValues = 500;
 CellNoise *NoiseFunction = new CellNoise();
 ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 
-double TurbulenceWorley(const double* p)
+double IsoComponentId=0;
+double IsoThreadId=0;
+
+double CurrentIsoCmpId(const double* p)
+{
+    int pp = (int)p[0];
+    if(pp==0)
+        return IsoComponentId;
+    else
+        return IsoThreadId;
+}
+
+extern double TurbulenceWorley(const double* p)
 {
     return NoiseFunction->CellNoiseFunc(
                p[0],
@@ -1750,7 +1762,7 @@ void Iso3D::IsoBuild (
     // generate Isosurface for all the implicit formulas
     for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
-        masterthread->CurrentIso = fctnb;
+        masterthread->CurrentIso = IsoComponentId = fctnb;
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
 
