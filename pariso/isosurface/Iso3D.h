@@ -110,7 +110,6 @@ public:
             void DeleteMasterParsers();
             void AllocateMasterParsers();
             void InitMasterParsers();
-            void AllocateParsersForMasterThread();
             inline ErrorMessage ParseExpression(std::string);
             int HowManyIsosurface(std::string,int);
             int HowManyVariables(std::string, int);
