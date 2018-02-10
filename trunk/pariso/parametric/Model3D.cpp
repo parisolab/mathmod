@@ -24,23 +24,23 @@ static int TypeDrawinNormStep = 4;
 static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
-static double ComponentId = 0;
-static double ThreadId = 0;
 static float*     ExtraDimension;
 
 CellNoise *NoiseFunction2 = new CellNoise();
 ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
 
+double ParamComponentId=0;
+double ParamThreadId=0;
 
-
-double CurrentCmpId(const double* p)
+double CurrentParamCmpId(const double* p)
 {
     int pp = (int)p[0];
     if(pp==0)
-        return ComponentId;
+        return ParamComponentId;
     else
-        return ThreadId;
+        return ParamThreadId;
 }
+
 
 double TurbulenceWorley2(const double* p)
 {
@@ -523,7 +523,7 @@ void ParMasterThread::InitMasterParsers()
     for(int i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
-        Fct[i].AddFunction("CmpId",CurrentCmpId, 1);
+        Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
     }
 }
 
@@ -865,7 +865,7 @@ ErrorMessage  Par3D::parse_expression2()
                 for(int ij=0; ij<masterthread->Nb_functs; ij++)
                 {
                     workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
-                    workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentCmpId, 1);
+                    workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
                 }
 
                 for(int ii=0; ii<masterthread->Nb_functs; ii++)
@@ -1831,7 +1831,7 @@ void  Par3D::ParamBuild(
 
     for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
     {
-        ComponentId = fctnb;
+        ParamComponentId = fctnb;
         if(masterthread->gridnotnull)
         {
             initialiser_LineColumn(masterthread->grid[2*fctnb], masterthread->grid[2*fctnb+1]);
