@@ -90,18 +90,18 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
 
     //objectproperties.specReflection[0] = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2; objectproperties.specReflection[3] = 1.0;
 
-    objectproperties.backcol[0]   = objectproperties.backcols[0]   = objectproperties.backcolsPar[0]   = 0.3;//StaticColor[0];
-    objectproperties.backcol[1]   = objectproperties.backcols[1]   = objectproperties.backcolsPar[1]   = 0.3;//StaticColor[1];
-    objectproperties.backcol[2]   = objectproperties.backcols[2]   = objectproperties.backcolsPar[2]   = 0.3;//StaticColor[2];
+    objectproperties.backcol[0]   = objectproperties.backcols[0]   = objectproperties.backcolsPar[0]   = 0.1;//StaticColor[0];
+    objectproperties.backcol[1]   = objectproperties.backcols[1]   = objectproperties.backcolsPar[1]   = 0.8;//StaticColor[1];
+    objectproperties.backcol[2]   = objectproperties.backcols[2]   = objectproperties.backcolsPar[2]   = 0.1;//StaticColor[2];
     objectproperties.backcol[3]   = objectproperties.backcols[3]   = objectproperties.backcolsPar[3]   = 1.0;
 
-    objectproperties.backcols[1*4+0]   = objectproperties.backcolsPar[1*4+0]   = 0.3;
-    objectproperties.backcols[1*4+1]   = objectproperties.backcolsPar[1*4+1]   = 0.3;
-    objectproperties.backcols[1*4+2]   = objectproperties.backcolsPar[1*4+2]   = 0.3;
+    objectproperties.backcols[1*4+0]   = objectproperties.backcolsPar[1*4+0]   = 0.2;
+    objectproperties.backcols[1*4+1]   = objectproperties.backcolsPar[1*4+1]   = 0.6;
+    objectproperties.backcols[1*4+2]   = objectproperties.backcolsPar[1*4+2]   = 0.9;
     objectproperties.backcols[1*4+3]   = objectproperties.backcolsPar[1*4+3]   = 1.0;
 
-    objectproperties.backcols[2*4+0]   = objectproperties.backcolsPar[2*4+0]   = 0.3;
-    objectproperties.backcols[2*4+1]   = objectproperties.backcolsPar[2*4+1]   = 0.3;
+    objectproperties.backcols[2*4+0]   = objectproperties.backcolsPar[2*4+0]   = 0.8;
+    objectproperties.backcols[2*4+1]   = objectproperties.backcolsPar[2*4+1]   = 0.1;
     objectproperties.backcols[2*4+2]   = objectproperties.backcolsPar[2*4+2]   = 0.3;
     objectproperties.backcols[2*4+3]   = objectproperties.backcolsPar[2*4+3]   = 1.0;
 
@@ -141,8 +141,8 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.backcols[9*4+3]   = objectproperties.backcolsPar[9*4+3]   = 1.0;
 
     objectproperties.frontcol[0]  = objectproperties.frontcols[0] = objectproperties.frontcolsPar[0] = 0.9;//StaticColor[4];
-    objectproperties.frontcol[1]  = objectproperties.frontcols[1] = objectproperties.frontcolsPar[1] = 0.3;//StaticColor[5];
-    objectproperties.frontcol[2]  = objectproperties.frontcols[2] = objectproperties.frontcolsPar[2] = 0.3;//StaticColor[6];
+    objectproperties.frontcol[1]  = objectproperties.frontcols[1] = objectproperties.frontcolsPar[1] = 0.6;//StaticColor[5];
+    objectproperties.frontcol[2]  = objectproperties.frontcols[2] = objectproperties.frontcolsPar[2] = 0.1;//StaticColor[6];
     objectproperties.frontcol[3]  = objectproperties.frontcols[3] = objectproperties.frontcolsPar[3] = 1.0;
 
     objectproperties.frontcols[1*4+0] = objectproperties.frontcolsPar[1*4+0] = 0.9;
