@@ -1803,7 +1803,7 @@ void  Par3D::ParamBuild(
     unsigned  int *NbPolyMinPt
 )
 {
-    int NbTriangleIsoSurfaceTmp, nbline_save, nbcolone_save, NextPosition=0, NextIndex=0;
+    int NbTriangleIsoSurfaceTmp, nbline_save=0, nbcolone_save=0, NextPosition=0, NextIndex=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
