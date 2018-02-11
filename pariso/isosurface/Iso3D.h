@@ -113,9 +113,7 @@ public:
             inline ErrorMessage ParseExpression(std::string);
             int HowManyIsosurface(std::string,int);
             int HowManyVariables(std::string, int);
-            ErrorMessage InitNoiseParser();
             ErrorMessage ParserIso();
-            inline   void InitParser();
             void IsoMasterTable();
             void initparser();
             IsoMasterThread();
@@ -149,18 +147,13 @@ public:
                       int nbThreads=4,
                       int nbGrid=40);
                 ~Iso3D();
-                inline   void DrawIsoSurface();
-                inline   void InitParameter();
                 inline   void SignatureComputation();
                 inline   void ConstructIsoSurface();
                 inline void ConstructIsoNormale();
                 inline   void PointEdgeComputation(int);
-                void MinimalMeshObjFile();
                 inline void CNDCalculation(int, struct ComponentInfos *);
                 void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
                 void SaveIsoGLMap();
-                int  setmaxgridto(int);
-                void SetMinimuMmeshSize(double);
                 void SetMiniMmeshStruct();
                 int CNDtoUse(int index, struct ComponentInfos *components);
                 void CalculateColorsPoints(struct ComponentInfos *components);
@@ -168,7 +161,6 @@ public:
                 void UpdateThredsNumber(int);
                 void stopcalculations(bool);
                 void WorkerThreadCopy(IsoWorkerThread *);
-                void MasterThreadCopy(IsoMasterThread *);
                 ErrorMessage IsoMorph();
                 ErrorMessage parse_expression2();
                 ErrorMessage ThreadParsersCopy();

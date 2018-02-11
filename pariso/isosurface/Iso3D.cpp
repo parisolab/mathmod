@@ -80,10 +80,6 @@ double TurbulencePerlin(const double* p)
                p[5]);
 }
 
-/// +++++++++++++++++++++++++++++++++++++++++
-void Iso3D::SetMinimuMmeshSize(double)
-{
-}
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::run()
 {
@@ -112,18 +108,6 @@ void Iso3D::BuildIso()
         &(LocalScene->componentsinfos),
         LocalScene->Typetriangles,
         LocalScene->WichPointVerifyCond);
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
-int Iso3D::setmaxgridto(int maxgrid)
-{
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-        workerthreads[nbthreads].maximumgrid = maxgrid;
-    delete GridVoxelVarPt;
-    delete Results;
-    GridVoxelVarPt = new Voxel[maxgrid*maxgrid*maxgrid];
-    Results        = new float [10*maxgrid*maxgrid*maxgrid];
-    return(1);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -268,44 +252,6 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].maximumgrid = NbMaxGrid;
     }
 }
-
-//+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::MasterThreadCopy(IsoMasterThread *MasterThreadsTmp)
-{
-        MasterThreadsTmp->ImplicitFunction   = masterthread->ImplicitFunction;
-        MasterThreadsTmp->XlimitSup          = masterthread->XlimitSup;
-        MasterThreadsTmp->XlimitInf          = masterthread->XlimitInf;
-        MasterThreadsTmp->YlimitSup          = masterthread->YlimitSup;
-        MasterThreadsTmp->YlimitInf          = masterthread->YlimitInf;
-        MasterThreadsTmp->ZlimitSup          = masterthread->ZlimitSup;
-        MasterThreadsTmp->ZlimitInf          = masterthread->ZlimitInf;
-        MasterThreadsTmp->Condition          = masterthread->Condition;
-        MasterThreadsTmp->Grid               = masterthread->Grid;
-        MasterThreadsTmp->Funct              = masterthread->Funct;
-        MasterThreadsTmp->Varu               = masterthread->Varu;
-        MasterThreadsTmp->Const              = masterthread->Const;
-        MasterThreadsTmp->Rgbt               = masterthread->Rgbt;
-        MasterThreadsTmp->VRgbt              = masterthread->VRgbt;
-        MasterThreadsTmp->Gradient           = masterthread->Gradient;
-        MasterThreadsTmp->Noise              = masterthread->Noise;
-
-        MasterThreadsTmp->nb_ligne           = nb_ligne;
-        MasterThreadsTmp->nb_colon           = nb_colon;
-        MasterThreadsTmp->nb_depth           = nb_depth;
-        MasterThreadsTmp->maximumgrid        = NbMaxGrid;
-        MasterThreadsTmp->MyIndex            = 0;
-        MasterThreadsTmp->WorkerThreadsNumber= WorkerThreadsNumber;
-        MasterThreadsTmp->ImplicitFunctionSize = masterthread->ImplicitFunctionSize;
-        MasterThreadsTmp->FunctSize = masterthread->FunctSize;
-        MasterThreadsTmp->VaruSize = masterthread->VaruSize;
-        MasterThreadsTmp->Nb_Sliders = masterthread->Nb_Sliders;
-        if(masterthread->Nb_Sliders >0)
-        {
-            memcpy(MasterThreadsTmp->SliderNames, masterthread->SliderNames, NbSliders*sizeof(std::string));
-            memcpy(MasterThreadsTmp->SliderValues, masterthread->SliderValues, NbSliderValues*sizeof(double));
-        }
-}
-
 //+++++++++++++++++++++++++++++++++++++++
 void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
 {
@@ -847,13 +793,6 @@ int IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, int type)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void IsoMasterThread::InitParser()
-{
-    AllocateMasterParsers();
-    InitMasterParsers();
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::ReinitVarTablesWhenMorphActiv(int IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -1108,27 +1047,6 @@ void Iso3D::SaveIsoGLMap()
         NormVertexTab[idx+1] /= scalar;
         NormVertexTab[idx+2] /= scalar;
     }
-}
-
-//+++++++++++++++++++++++++++++++++++++++++//
-ErrorMessage IsoMasterThread::InitNoiseParser()
-{
-    if(Noise != "")
-    {
-        NoiseParser->AddConstant("Lacunarity", Lacunarity);
-        NoiseParser->AddConstant("Gain", Gain);
-        NoiseParser->AddConstant("Octaves", Octaves);
-        NoiseParser->AddConstant("pi", PI);
-        NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
-        NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
-
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t")) >= 0)
-        {
-            stdError.strError = Noise;
-            stdError.strOrigine = Noise;
-        }
-    }
-    return stdError;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++//
