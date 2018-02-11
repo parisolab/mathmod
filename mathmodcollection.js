@@ -10956,7 +10956,7 @@
         },
         {
             "Param3D": {
-                "Name": ["Wireframe_Catenoid"
+                "Name": ["Wireframe_Shell"
                 ],
                 "Description": ["Wireframe Catenoid by Abderrahman Taha 29/01/2018"
                 ],
