@@ -84,7 +84,8 @@ public slots:
     void onblue_2valueChanged(int value);
     void ontransparence_2clicked(bool checked);
     void on_updateParam_clicked();
-    void on_actionWavefront_obj_triggered();
+    void on_actionPolygonWavefront_obj_triggered();
+    void on_actionColorPolygonWavefront_obj_triggered();
     void on_linecolumn_2_valueChanged(int value);
     void oncolor_3activated(int index);
     void onred_3valueChanged(int value);
@@ -185,6 +186,7 @@ private slots:
     void on_comboBoxTexture_activated(int index);
     void on_comboBoxPigment_activated(int index);
     void on_actionTrianglesWavefront_obj_triggered();
+    void on_actionColorTrianglesWavefront_obj_triggered();
     void on_OctavesScrollBar_valueChanged(int value);
     void on_LacunarityScrollBar_valueChanged(int value);
     void on_GainScrollBar_valueChanged(int value);

@@ -5323,11 +5323,16 @@ void DrawingOptions::on_updateParam_clicked()
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void DrawingOptions::on_actionWavefront_obj_triggered()
+void DrawingOptions::on_actionPolygonWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjPoly();
 }
 
+//+++++++++++++++++++++++++++++++++++++++
+void DrawingOptions::on_actionColorPolygonWavefront_obj_triggered()
+{
+    MathmodRef->ui.glWidget->SaveSceneAsObjPoly(1);
+}
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
@@ -6157,6 +6162,11 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
 void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjTrian();
+}
+
+void DrawingOptions::on_actionColorTrianglesWavefront_obj_triggered()
+{
+    MathmodRef->ui.glWidget->SaveSceneAsObjTrian(1);
 }
 
 void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)

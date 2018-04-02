@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MathMod-7.0</string>
+   <string>MathMod-7.1</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
@@ -9304,8 +9304,11 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Export</string>
     </property>
-    <addaction name="actionWavefront_obj"/>
+    <addaction name="actionPolygonWavefront_obj"/>
     <addaction name="actionTrianglesWavefront_obj"/>
+    <addaction name="separator"/>
+    <addaction name="actionColorPolygonWavefront_obj"/>
+    <addaction name="actionColorTrianglesWavefront_obj"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Options"/>
@@ -9428,9 +9431,9 @@ p, li { white-space: pre-wrap; }
     <string>Smooth</string>
    </property>
   </action>
-  <action name="actionWavefront_obj">
+  <action name="actionPolygonWavefront_obj">
    <property name="text">
-    <string>PolygonWavefront .obj</string>
+    <string>PolygonWavefront.obj</string>
    </property>
   </action>
   <action name="actionSave_My_Selection">
@@ -9535,6 +9538,16 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Frames Shots&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionColorPolygonWavefront_obj">
+   <property name="text">
+    <string>ColorPolygonWavefront.obj</string>
+   </property>
+  </action>
+  <action name="actionColorTrianglesWavefront_obj">
+   <property name="text">
+    <string>ColorTrianglesWavefront.obj</string>
    </property>
   </action>
  </widget>

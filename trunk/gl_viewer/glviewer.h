@@ -130,8 +130,8 @@ public slots:
     void colorstype(int);
     void colorstypeParIso(int);
     void colorstypeParam(int);
-    void SaveSceneAsObjPoly();
-    void SaveSceneAsObjTrian();
+    void SaveSceneAsObjPoly(int n=0);
+    void SaveSceneAsObjTrian(int n=0);
     void CalculateColorsPoints(void);
     void CalculateTexturePoints(int type);
     void CalculatePigmentPoints(int type);
