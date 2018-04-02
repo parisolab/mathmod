@@ -299,8 +299,8 @@ FunctionParser::Data::Data(const Data& cpy):
     if(ImmedSize) Immed = new double[ImmedSize];
     if(StackSize) Stack = new double[StackSize];
     //for(unsigned i=0; i<cpy.FuncPtrs.size(); ++i)
-        FuncPtrs = cpy.FuncPtrs;
-        FuncParsers=cpy.FuncParsers;
+    FuncPtrs = cpy.FuncPtrs;
+    FuncParsers=cpy.FuncParsers;
     for(unsigned i=0; i<ByteCodeSize; ++i) ByteCode[i] = cpy.ByteCode[i];
     for(unsigned i=0; i<ImmedSize; ++i) Immed[i] = cpy.Immed[i];
 
@@ -1186,7 +1186,7 @@ inline double RadiansToDegrees(double radians)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void FunctionParser::AllocateMemoryForStackArray(double* , double* , double* , double* , double* , double* , double* , double* , double* ,
+void FunctionParser::AllocateMemoryForStackArray(double*, double*, double*, double*, double*, double*, double*, double*, double*,
         double t1, int grmax1, double* Results1, int depth1, int *DataA, double* DataT[])
 {
 

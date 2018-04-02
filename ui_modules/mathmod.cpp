@@ -99,12 +99,12 @@ void MathMod::linecolumn_valueupdate( int cl)
     (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
 
     (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_ligne =
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_colone = cl;
+        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_colone = cl;
 
     for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
         (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_ligne =
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_colone = cl;
+            (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_colone = cl;
     }
 }
 
@@ -180,16 +180,16 @@ void MathMod::Initparametricpage()
 void MathMod::xyzg_valueupdate(int cl)
 {
     (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_depth  =
-    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_colon  =
-    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_ligne  = cl;
+        (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_colon  =
+            (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_ligne  = cl;
 
     (ui.glWidget)->IsoObjetThread->IsoObjet->nb_depth  =
-    (ui.glWidget)->IsoObjetThread->IsoObjet->nb_colon  =
-    (ui.glWidget)->IsoObjetThread->IsoObjet->nb_ligne  = cl;
+        (ui.glWidget)->IsoObjetThread->IsoObjet->nb_colon  =
+            (ui.glWidget)->IsoObjetThread->IsoObjet->nb_ligne  = cl;
 
     (ui.glWidget)->isoline   =
-    (ui.glWidget)->isocolumn =
-    (ui.glWidget)->isodepth  = cl;
+        (ui.glWidget)->isocolumn =
+            (ui.glWidget)->isodepth  = cl;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -372,23 +372,23 @@ void MathMod::ProcessParisoSurface()
     }
     else
         //for(int nbthreds=1; nbthreds < maxnbthreads ; nbthreds++)
-            //(ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].ParserIso();
-/*
-    (ui.glWidget)->LocalScene.typedrawing = 11;
+        //(ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].ParserIso();
+        /*
+            (ui.glWidget)->LocalScene.typedrawing = 11;
 
-    (ui.glWidget)->IsoObjetThread->IsoObjet->IsoBuild(
-        (ui.glWidget)->LocalScene.ArrayNorVer_localPt,
-        (ui.glWidget)->LocalScene.PolyIndices_localPt,
-        &(ui.glWidget)->LocalScene.PolyNumberTmp1,
-        &(ui.glWidget)->LocalScene.VertxNumberTmp1,
-        (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
-        &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin),
-        &((ui.glWidget)->LocalScene.componentsinfos),
-        (ui.glWidget)->LocalScene.Typetriangles,
-        (ui.glWidget)->LocalScene.WichPointVerifyCond
-    );
-*/
-    stError = (ui.glWidget)->ParObjetThread->ParObjet->masterthread->parse_expression();
+            (ui.glWidget)->IsoObjetThread->IsoObjet->IsoBuild(
+                (ui.glWidget)->LocalScene.ArrayNorVer_localPt,
+                (ui.glWidget)->LocalScene.PolyIndices_localPt,
+                &(ui.glWidget)->LocalScene.PolyNumberTmp1,
+                &(ui.glWidget)->LocalScene.VertxNumberTmp1,
+                (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
+                &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin),
+                &((ui.glWidget)->LocalScene.componentsinfos),
+                (ui.glWidget)->LocalScene.Typetriangles,
+                (ui.glWidget)->LocalScene.WichPointVerifyCond
+            );
+        */
+        stError = (ui.glWidget)->ParObjetThread->ParObjet->masterthread->parse_expression();
     if(stError.iErrorIndex >= 0)
     {
         message.setTextFormat(Qt::RichText);
@@ -415,26 +415,26 @@ void MathMod::ProcessParisoSurface()
     }
     else
         (ui.glWidget)->ParObjetThread->ParObjet->ThreadParsersCopy();
-/*
-    (ui.glWidget)->ParObjetThread->ParObjet->ParamBuild(
-        &((ui.glWidget)->LocalScene.ArrayNorVer_localPt[TypeDrawin*((ui.glWidget)->LocalScene.VertxNumberTmp1)]),
-        (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
-        &((ui.glWidget)->LocalScene.PolyIndices_localPt[(ui.glWidget)->LocalScene.PolyNumberTmp1]),
-        &(ui.glWidget)->LocalScene.PolyNumberTmp2,
-        &(ui.glWidget)->LocalScene.VertxNumberTmp2,
-        (ui.glWidget)->LocalScene.VertxNumberTmp1,
-        &((ui.glWidget)->LocalScene.componentsinfos),
-        (ui.glWidget)->LocalScene.Typetriangles,
-        (ui.glWidget)->LocalScene.WichPointVerifyCond,
-        (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
-        &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin)
-    );
-    (ui.glWidget)->LocalScene.PolyNumber = (ui.glWidget)->LocalScene.PolyNumberTmp1 + (ui.glWidget)->LocalScene.PolyNumberTmp2;
-    (ui.glWidget)->LocalScene.VertxNumber= (ui.glWidget)->LocalScene.VertxNumberTmp1  + (ui.glWidget)->LocalScene.VertxNumberTmp2;
+    /*
+        (ui.glWidget)->ParObjetThread->ParObjet->ParamBuild(
+            &((ui.glWidget)->LocalScene.ArrayNorVer_localPt[TypeDrawin*((ui.glWidget)->LocalScene.VertxNumberTmp1)]),
+            (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
+            &((ui.glWidget)->LocalScene.PolyIndices_localPt[(ui.glWidget)->LocalScene.PolyNumberTmp1]),
+            &(ui.glWidget)->LocalScene.PolyNumberTmp2,
+            &(ui.glWidget)->LocalScene.VertxNumberTmp2,
+            (ui.glWidget)->LocalScene.VertxNumberTmp1,
+            &((ui.glWidget)->LocalScene.componentsinfos),
+            (ui.glWidget)->LocalScene.Typetriangles,
+            (ui.glWidget)->LocalScene.WichPointVerifyCond,
+            (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
+            &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin)
+        );
+        (ui.glWidget)->LocalScene.PolyNumber = (ui.glWidget)->LocalScene.PolyNumberTmp1 + (ui.glWidget)->LocalScene.PolyNumberTmp2;
+        (ui.glWidget)->LocalScene.VertxNumber= (ui.glWidget)->LocalScene.VertxNumberTmp1  + (ui.glWidget)->LocalScene.VertxNumberTmp2;
 
-    (ui.glWidget)->initialize_GL();
-    (ui.glWidget)->update();
-    */
+        (ui.glWidget)->initialize_GL();
+        (ui.glWidget)->update();
+        */
 }
 
 //++++++++++++++++++++++++++++++++++++++++

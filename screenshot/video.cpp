@@ -72,8 +72,8 @@ void videoplayer::saveas()
 
     if ( !fn.isEmpty() )
     {
-        if(fn.contains(".bmp"))  buf.save(fn, "BMP" , 1);
+        if(fn.contains(".bmp"))  buf.save(fn, "BMP", 1);
         else if(fn.contains(".png"))  buf.save(fn, "PNG", 1);
-        else buf.save(fn+".png", "PNG" , image_quality);
+        else buf.save(fn+".png", "PNG", image_quality);
     }
 }

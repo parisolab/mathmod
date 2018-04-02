@@ -169,7 +169,7 @@ void ParWorkerThread::run()
 //+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::ParCompute(int fctnb, int idx)
 {
-        calcul_objet(fctnb, idx);
+    calcul_objet(fctnb, idx);
 }
 /*
 //+++++++++++++++++++++++++++++++++++++++++
@@ -862,38 +862,38 @@ ErrorMessage  Par3D::parse_expression2()
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         //Functions:
-                for(int ij=0; ij<masterthread->Nb_functs; ij++)
-                {
-                    workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
-                    workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
-                }
+        for(int ij=0; ij<masterthread->Nb_functs; ij++)
+        {
+            workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
+            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
+        }
 
-                for(int ii=0; ii<masterthread->Nb_functs; ii++)
-                {
-                    for(int jj=0; jj<masterthread->Nb_constants; jj++)
-                    {
-                        workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
-                    }
+        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        {
+            for(int jj=0; jj<masterthread->Nb_constants; jj++)
+            {
+                workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
+            }
 
-                    //Add predefined constatnts:
-                    for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
-                    {
-                        workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
-                    }
-                }
+            //Add predefined constatnts:
+            for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
+            {
+                workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
+            }
+        }
 
-                for(int ii=0; ii<masterthread->Nb_functs; ii++)
-                {
-                    for(int jj=0; jj<ii; jj++)
-                        if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
-                           workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
-                    if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"u,v,t")) >= 0)
-                    {
-                        masterthread->stdError.strError = masterthread->Functs[ii];
-                        masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
-                        return masterthread->stdError;
-                    }
-                }
+        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        {
+            for(int jj=0; jj<ii; jj++)
+                if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
+                    workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"u,v,t")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->Functs[ii];
+                masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
+                return masterthread->stdError;
+            }
+        }
     }
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
@@ -919,72 +919,72 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-        for(int j=0; j<masterthread->Nb_constants; j++)
-        {
-            workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-            workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
-        }
-        //Add predefined sliders constatnts:
-        for(int k=0; k<masterthread->Nb_Sliders; k++)
-        {
-            workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-            workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-        }
-    }
-
-    // Add defined functions :
-    for(int i=0; i<masterthread->Nb_paramfunctions+1; i++)
-    {
-        for(int j=0; j<masterthread->Nb_functs; j++)
-        {
-            if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j])
-                workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
-            if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+1])
-                workerthreads[nbthreads].myParserY[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
-            if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+2])
-                workerthreads[nbthreads].myParserZ[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
-            if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+3])
-                workerthreads[nbthreads].myParserW[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            for(int j=0; j<masterthread->Nb_constants; j++)
+            {
+                workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+                workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+                workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+                workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            }
+            //Add predefined sliders constatnts:
+            for(int k=0; k<masterthread->Nb_Sliders; k++)
+            {
+                workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+                workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+                workerthreads[nbthreads].myParserZ[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+                workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            }
         }
 
+        // Add defined functions :
+        for(int i=0; i<masterthread->Nb_paramfunctions+1; i++)
+        {
+            for(int j=0; j<masterthread->Nb_functs; j++)
+            {
+                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j])
+                    workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+1])
+                    workerthreads[nbthreads].myParserY[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+2])
+                    workerthreads[nbthreads].myParserZ[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+3])
+                    workerthreads[nbthreads].myParserW[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            }
+
+        }
     }
-}
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-    for(int index=0; index< masterthread->Nb_paramfunctions + 1; index++)
-    {
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
+        for(int index=0; index< masterthread->Nb_paramfunctions + 1; index++)
         {
-            masterthread->stdError.strError = masterthread->ParamStructs[index].fx;
-            masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ParamStructs[index].fy;
-            masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t")) >= 0)
-        {
-            masterthread->stdError.strError = masterthread->ParamStructs[index].fz;
-            masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
-            return masterthread->stdError;
-        }
-
-        if(param4D == 1)
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
             {
-                masterthread->stdError.strError = masterthread->ParamStructs[index].fw;
+                masterthread->stdError.strError = masterthread->ParamStructs[index].fx;
                 masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
                 return masterthread->stdError;
             }
+
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ParamStructs[index].fy;
+                masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
+                return masterthread->stdError;
+            }
+
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ParamStructs[index].fz;
+                masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
+                return masterthread->stdError;
+            }
+
+            if(param4D == 1)
+                if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t")) >= 0)
+                {
+                    masterthread->stdError.strError = masterthread->ParamStructs[index].fw;
+                    masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
+                    return masterthread->stdError;
+                }
         }
     }
     return NodError;
@@ -1681,24 +1681,24 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
 void Par3D::BuildPar()
 {
     ParamBuild(
-                    LocalScene->ArrayNorVer_localPt,
-                    LocalScene->ArrayNorVerExtra_localPt,
-                    LocalScene->PolyIndices_localPt,
-                    &LocalScene->PolyNumber,
-                    &(LocalScene->VertxNumber),
-                    0,
-                    &(LocalScene->componentsinfos),
-                    LocalScene->Typetriangles,
-                    LocalScene->WichPointVerifyCond,
-                    LocalScene->PolyIndices_localPtMin,
-                    &(LocalScene->NbPolygnNbVertexPtMin)
-                );
+        LocalScene->ArrayNorVer_localPt,
+        LocalScene->ArrayNorVerExtra_localPt,
+        LocalScene->PolyIndices_localPt,
+        &LocalScene->PolyNumber,
+        &(LocalScene->VertxNumber),
+        0,
+        &(LocalScene->componentsinfos),
+        LocalScene->Typetriangles,
+        LocalScene->WichPointVerifyCond,
+        LocalScene->PolyIndices_localPtMin,
+        &(LocalScene->NbPolygnNbVertexPtMin)
+    );
 }
 
 //++++++++++++++++++++++++++++++++++++
 void Par3D::run()
 {
-  BuildPar();
+    BuildPar();
 }
 
 //++++++++++++++++++++++++++++++++++++
