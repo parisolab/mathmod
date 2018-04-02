@@ -349,7 +349,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
             for(int jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
-                workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
+                    workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
@@ -367,66 +367,66 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
 
 
-        for(int j=0; j<masterthread->Nb_constants; j++)
-        {
-            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            for(int j=0; j<masterthread->Nb_constants; j++)
+            {
+                workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            }
+            //Add predefined sliders constatnts:
+            for(int k=0; k<masterthread->Nb_Sliders; k++)
+            {
+                workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            }
         }
-        //Add predefined sliders constatnts:
-        for(int k=0; k<masterthread->Nb_Sliders; k++)
-        {
-            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
-        }
-    }
     }
     // Add defined functions :
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-    for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
-    {
-        //Functions:
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fhelix1",fhelix1, 10);
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fhelix2",fhelix2, 10);
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-
-        for(int j=0; j<masterthread->Nb_functs; j++)
+        for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
         {
-            if(masterthread->UsedFunct[i*NbDefinedFunctions+j])
-                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            //Functions:
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fhelix1",fhelix1, 10);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fhelix2",fhelix2, 10);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+
+            for(int j=0; j<masterthread->Nb_functs; j++)
+            {
+                if(masterthread->UsedFunct[i*NbDefinedFunctions+j])
+                    workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            }
         }
     }
-   }
 
     // Final step: parsing
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-    for(int index=0; index< masterthread->Nb_implicitfunctions + 1; index++)
-    {
-        if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
+        for(int index=0; index< masterthread->Nb_implicitfunctions + 1; index++)
         {
-            masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
-            masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
-            return masterthread->stdError;
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
+                masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+                return masterthread->stdError;
+            }
         }
-      }
     }
     return NodError;
 }
 
 /// +++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
-                                    int NbCompo,
-                                    int NbVariabl,
-                                    int NbConstant,
-                                    int NbDefinedFunct,
-                                    int NbText,
-                                    int NbSlid,
-                                    int NbSliderV,
-                                    int nbThreads,
-                                    int nbGrid)
+              int NbCompo,
+              int NbVariabl,
+              int NbConstant,
+              int NbDefinedFunct,
+              int NbText,
+              int NbSlid,
+              int NbSliderV,
+              int nbThreads,
+              int nbGrid)
 {
     NbTextures=NbText;
     NbComponent=NbCompo;
@@ -800,78 +800,78 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(int IsoIndex)
     double vals2[] = {0,0};
     const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
 
-        vals[3]          = masterthread->stepMorph;
-        masterthread->xLocal2[IsoIndex*NbMaxGrid]=masterthread->xSupParser[IsoIndex].Eval(vals);
-        masterthread->yLocal2[IsoIndex*NbMaxGrid]=masterthread->ySupParser[IsoIndex].Eval(vals);
-        masterthread->zLocal2[IsoIndex*NbMaxGrid]=masterthread->zSupParser[IsoIndex].Eval(vals);
+    vals[3]          = masterthread->stepMorph;
+    masterthread->xLocal2[IsoIndex*NbMaxGrid]=masterthread->xSupParser[IsoIndex].Eval(vals);
+    masterthread->yLocal2[IsoIndex*NbMaxGrid]=masterthread->ySupParser[IsoIndex].Eval(vals);
+    masterthread->zLocal2[IsoIndex*NbMaxGrid]=masterthread->zSupParser[IsoIndex].Eval(vals);
 
-        masterthread->x_Step[IsoIndex] =  (masterthread->xLocal2[IsoIndex*NbMaxGrid] - masterthread->xInfParser[IsoIndex].Eval(vals))/(limitX-1);
-        masterthread->y_Step[IsoIndex] =  (masterthread->yLocal2[IsoIndex*NbMaxGrid] - masterthread->yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-        masterthread->z_Step[IsoIndex] =  (masterthread->zLocal2[IsoIndex*NbMaxGrid] - masterthread->zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+    masterthread->x_Step[IsoIndex] =  (masterthread->xLocal2[IsoIndex*NbMaxGrid] - masterthread->xInfParser[IsoIndex].Eval(vals))/(limitX-1);
+    masterthread->y_Step[IsoIndex] =  (masterthread->yLocal2[IsoIndex*NbMaxGrid] - masterthread->yInfParser[IsoIndex].Eval(vals))/(limitY-1);
+    masterthread->z_Step[IsoIndex] =  (masterthread->zLocal2[IsoIndex*NbMaxGrid] - masterthread->zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
-        for (int i= 1; i < limitX; i++)
-            masterthread->xLocal2[IsoIndex*NbMaxGrid+i] = masterthread->xLocal2[IsoIndex*NbMaxGrid+i-1] - masterthread->x_Step[IsoIndex];
-        for (int j= 1; j < limitY; j++)
-            masterthread->yLocal2[IsoIndex*NbMaxGrid+j] = masterthread->yLocal2[IsoIndex*NbMaxGrid+j-1] - masterthread->y_Step[IsoIndex];
-        for (int k= 1; k < limitZ; k++)
-            masterthread->zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k-1] - masterthread->z_Step[IsoIndex];
+    for (int i= 1; i < limitX; i++)
+        masterthread->xLocal2[IsoIndex*NbMaxGrid+i] = masterthread->xLocal2[IsoIndex*NbMaxGrid+i-1] - masterthread->x_Step[IsoIndex];
+    for (int j= 1; j < limitY; j++)
+        masterthread->yLocal2[IsoIndex*NbMaxGrid+j] = masterthread->yLocal2[IsoIndex*NbMaxGrid+j-1] - masterthread->y_Step[IsoIndex];
+    for (int k= 1; k < limitZ; k++)
+        masterthread->zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k-1] - masterthread->z_Step[IsoIndex];
 
-        for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        //workerthreads[nbthreads].x_Step[IsoIndex] = masterthread->x_Step[IsoIndex];
+        //workerthreads[nbthreads].y_Step[IsoIndex] = masterthread->y_Step[IsoIndex];
+        //workerthreads[nbthreads].z_Step[IsoIndex] = masterthread->z_Step[IsoIndex];
+
+        for (int k= 0; k < limitX; k++)
         {
-            //workerthreads[nbthreads].x_Step[IsoIndex] = masterthread->x_Step[IsoIndex];
-            //workerthreads[nbthreads].y_Step[IsoIndex] = masterthread->y_Step[IsoIndex];
-            //workerthreads[nbthreads].z_Step[IsoIndex] = masterthread->z_Step[IsoIndex];
+            workerthreads[nbthreads].xLocal2[IsoIndex*NbMaxGrid+k] = masterthread->xLocal2[IsoIndex*NbMaxGrid+k];
+            workerthreads[nbthreads].yLocal2[IsoIndex*NbMaxGrid+k] = masterthread->yLocal2[IsoIndex*NbMaxGrid+k];
+            workerthreads[nbthreads].zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k];
+        }
+    }
 
-            for (int k= 0; k < limitX; k++)
+    std::string stringtoparse=masterthread->ImplicitStructs[IsoIndex].fxyz    +
+                              masterthread->ImplicitStructs[IsoIndex].cnd  +
+                              masterthread->ImplicitStructs[IsoIndex].xmax  +
+                              masterthread->ImplicitStructs[IsoIndex].ymax  +
+                              masterthread->ImplicitStructs[IsoIndex].zmax  +
+                              masterthread->ImplicitStructs[IsoIndex].xmin   +
+                              masterthread->ImplicitStructs[IsoIndex].ymin   +
+                              masterthread->ImplicitStructs[IsoIndex].zmin;
+
+
+    for(int l=0; l<masterthread->Nb_newvariables; l++)
+    {
+        if(stringtoparse.find(masterthread->VarName [l]+"x") !=std::string::npos )
+            for(int i=0; i<limitX; i++)
             {
-                workerthreads[nbthreads].xLocal2[IsoIndex*NbMaxGrid+k] = masterthread->xLocal2[IsoIndex*NbMaxGrid+k];
-                workerthreads[nbthreads].yLocal2[IsoIndex*NbMaxGrid+k] = masterthread->yLocal2[IsoIndex*NbMaxGrid+k];
-                workerthreads[nbthreads].zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k];
+                vals2[0] = masterthread->xLocal2[IsoIndex*NbMaxGrid+i];
+                vals2[1] = masterthread->stepMorph;
+                masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
+                for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                    workerthreads[nbthreads].vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
             }
-        }
 
-        std::string stringtoparse=masterthread->ImplicitStructs[IsoIndex].fxyz    +
-                                  masterthread->ImplicitStructs[IsoIndex].cnd  +
-                                  masterthread->ImplicitStructs[IsoIndex].xmax  +
-                                  masterthread->ImplicitStructs[IsoIndex].ymax  +
-                                  masterthread->ImplicitStructs[IsoIndex].zmax  +
-                                  masterthread->ImplicitStructs[IsoIndex].xmin   +
-                                  masterthread->ImplicitStructs[IsoIndex].ymin   +
-                                  masterthread->ImplicitStructs[IsoIndex].zmin;
+        if(stringtoparse.find(masterthread->VarName [l]+"y") !=std::string::npos )
+            for(int i=0; i<limitY; i++)
+            {
+                vals2[0] = masterthread->yLocal2[IsoIndex*NbMaxGrid+i];
+                vals2[1] = masterthread->stepMorph;
+                masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
+                for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                    workerthreads[nbthreads].vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
+            }
 
-
-        for(int l=0; l<masterthread->Nb_newvariables; l++)
-        {
-            if(stringtoparse.find(masterthread->VarName [l]+"x") !=std::string::npos )
-                for(int i=0; i<limitX; i++)
-                {
-                    vals2[0] = masterthread->xLocal2[IsoIndex*NbMaxGrid+i];
-                    vals2[1] = masterthread->stepMorph;
-                    masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-                        workerthreads[nbthreads].vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
-                }
-
-            if(stringtoparse.find(masterthread->VarName [l]+"y") !=std::string::npos )
-                for(int i=0; i<limitY; i++)
-                {
-                    vals2[0] = masterthread->yLocal2[IsoIndex*NbMaxGrid+i];
-                    vals2[1] = masterthread->stepMorph;
-                    masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-                        workerthreads[nbthreads].vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
-                }
-
-            if(stringtoparse.find(masterthread->VarName [l]+"z") !=std::string::npos )
-                for(int i=0; i<limitZ; i++)
-                {
-                    vals2[0] = masterthread->zLocal2[IsoIndex*NbMaxGrid+i];
-                    vals2[1] = masterthread->stepMorph;
-                    masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
-                        workerthreads[nbthreads].vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
-                }
-        }
+        if(stringtoparse.find(masterthread->VarName [l]+"z") !=std::string::npos )
+            for(int i=0; i<limitZ; i++)
+            {
+                vals2[0] = masterthread->zLocal2[IsoIndex*NbMaxGrid+i];
+                vals2[1] = masterthread->stepMorph;
+                masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
+                for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                    workerthreads[nbthreads].vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
+            }
+    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1689,11 +1689,11 @@ void Iso3D::IsoBuild (
         {
             if(fctnb == 0)
             {
-            //This code is to ensure that stepmorph values are the same accross all threads because tests show that
-            //it's not allways the case when this code is spread inside threads Run() functions!
-            masterthread->stepMorph += masterthread->pace;
-            for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
-                workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
+                //This code is to ensure that stepmorph values are the same accross all threads because tests show that
+                //it's not allways the case when this code is spread inside threads Run() functions!
+                masterthread->stepMorph += masterthread->pace;
+                for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+                    workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
             }
             // Recalculate some tables values:
             ReinitVarTablesWhenMorphActiv(fctnb);

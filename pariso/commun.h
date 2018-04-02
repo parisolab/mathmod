@@ -219,13 +219,13 @@ public :
     const static uint FNV_PRIME = 16777619U;
 
     float CellNoiseFunc(float, float, float, int, int type=2, int Dist=0);
-    float EuclidianDistanceFunc(float ,float , float , float , float , float);
-    float ManhattanDistanceFunc(float ,float , float , float , float , float);
-    float ChebyshevDistanceFunc(float ,float , float , float , float , float);
+    float EuclidianDistanceFunc(float,float, float, float, float, float);
+    float ManhattanDistanceFunc(float,float, float, float, float, float);
+    float ChebyshevDistanceFunc(float,float, float, float, float, float);
     int probLookup(uint );
-    void insert(float* , float );
+    void insert(float*, float );
     int lcgRandom(int );
-    int hash(int , int , int );
+    int hash(int, int, int );
 };
 
 class ImprovedNoise
@@ -238,7 +238,7 @@ public:
     float fade(float);
     float lerp(float, float, float);
     float grad(int, float, float, float);
-    float FractalNoise3D(float, float, float, int, float , float);
+    float FractalNoise3D(float, float, float, int, float, float);
     float Marble(float, float, float,int);
     float lookup(float, float, float);
 };

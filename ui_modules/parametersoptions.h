@@ -63,16 +63,16 @@ public:
     int Threads[3];
     int Shininess;
     int MaxTri, MaxPt, MaxGrid,
-    NbComponent,
-    NbConstantes,
-    NbDefinedFunctions,
-    NbVariables,
-    NbTextures,
-    NbSliders,
-    NbSliderValues,
-    InitParGrid,
-    InitIsoGrid
-    ;
+        NbComponent,
+        NbConstantes,
+        NbDefinedFunctions,
+        NbVariables,
+        NbTextures,
+        NbSliders,
+        NbSliderValues,
+        InitParGrid,
+        InitIsoGrid
+        ;
 
 public slots:
     void ReadJsonFile(QString, QJsonObject &);

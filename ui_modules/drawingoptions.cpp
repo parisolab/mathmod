@@ -2277,7 +2277,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();           
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunctionSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
 
@@ -6531,7 +6531,8 @@ void DrawingOptions::on_C20ScrollBar_valueChanged(int value)
 }
 
 void DrawingOptions::on_PredefinedSets_activated(int index)
-{;
+{
+    ;
     indexcurrentSet = index;
     if(index >0)
     {
@@ -8157,8 +8158,8 @@ void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_StopCalculationsButton_clicked()
 {
-   MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->stopcalculations(true);
-   MathmodRef->ui.glWidget->ParObjetThread->ParObjet->stopcalculations(true);
+    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->stopcalculations(true);
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->stopcalculations(true);
 }
 
 void DrawingOptions::on_stopButton_clicked()

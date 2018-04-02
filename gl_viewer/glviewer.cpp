@@ -202,41 +202,41 @@ static void DrawParametric (ObjectProperties *scene)
     glPolygonOffset(scene->polyfactor, scene->polyunits);
     for(int i=0; i< scene->componentsinfos.NbParametric; i++)
     {
-            if(!scene->componentsinfos.ThereisRGBA)
+        if(!scene->componentsinfos.ThereisRGBA)
+        {
+            for(int j=0; j<4; j++)
             {
-                for(int j=0; j<4; j++)
-                {
-                    frontcl[j]=scene->frontcolsPar[4*i+j];
-                    backcl[j]=scene->backcolsPar[4*i+j];
-                }
-                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE,  backcl);
-                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+                frontcl[j]=scene->frontcolsPar[4*i+j];
+                backcl[j]=scene->backcolsPar[4*i+j];
             }
-            if(scene->componentsinfos.ThereisCND)
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
-                    );
-
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
-                    );
-            }
-            else
+            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE,  backcl);
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+        }
+        if(scene->componentsinfos.ThereisCND)
+        {
+            if(scene->componentsinfos.DFTrianglesVerifyCND)
                 glDrawElements(
                     GL_TRIANGLES,
-                    3*scene->componentsinfos.Parametricpositions[3*i+1],
+                    3*(scene->componentsinfos.NbTrianglesVerifyCND),
                     GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[3*i]])
+                    &(scene->PolyIndices_localPt[0])
                 );
+
+            if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                glDrawElements(
+                    GL_TRIANGLES,
+                    3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                    GL_UNSIGNED_INT,
+                    &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                );
+        }
+        else
+            glDrawElements(
+                GL_TRIANGLES,
+                3*scene->componentsinfos.Parametricpositions[3*i+1],
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[3*i]])
+            );
     }
 
     if(scene->componentsinfos.ThereisRGBA)
@@ -876,7 +876,7 @@ int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax,
     try
     {
         IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,NbComponent,NbVariables,NbConstantes,
-                                                 NbDefinedFunctions,NbTextures,NbSliders,NbSliderValues));
+                                       NbDefinedFunctions,NbTextures,NbSliders,NbSliderValues));
 
         ParObjetThread = new ParThread(new Par3D(maxpts));
 
@@ -938,15 +938,14 @@ void OpenGlWidget::morph()
             IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
         IsoObjetThread->IsoObjet->IsoMorph();
     }
-    else
-        if(LocalScene.typedrawing == -1)
-        {
-            //Parametric surfaces:
-            ParObjetThread->ParObjet->masterthread->activeMorph = LocalScene.morph;
-            for(int nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
-                ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
-            ParObjetThread->ParObjet->ParMorph();
-        }
+    else if(LocalScene.typedrawing == -1)
+    {
+        //Parametric surfaces:
+        ParObjetThread->ParObjet->masterthread->activeMorph = LocalScene.morph;
+        for(int nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+            ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+        ParObjetThread->ParObjet->ParMorph();
+    }
 
     if (LocalScene.morph == 1)
         timer->start( latence);
@@ -979,7 +978,7 @@ void OpenGlWidget::resizeGL( int newwidth, int newheight)
     glLoadIdentity();
     glViewport(0, 0, newwidth, newheight);
     float k=6;
-    glFrustum(-newwidth/k, newwidth/k, -newheight/k , newheight/k, 250.0, 3000.0 );
+    glFrustum(-newwidth/k, newwidth/k, -newheight/k, newheight/k, 250.0, 3000.0 );
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef( 0.0, 0, -1000.0 );
@@ -1858,17 +1857,18 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
         // save vertices:
         if(type ==1)
         {
-        for (i=0; i< LocalScene.VertxNumber; i++)
+            for (i=0; i< LocalScene.VertxNumber; i++)
+            {
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i  ]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2]<<"\n";
+            }
+        }
+        else
         {
-            (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i  ]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2]<<"\n";
-        }
-        }
-        else {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
                 (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
@@ -1914,14 +1914,15 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
                 (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
-                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
-                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i     ]<<"  "\
-                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1   ]<<"  "\
-                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2   ]<<"\n";
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i     ]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1   ]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2   ]<<"\n";
             }
         }
-        else {
+        else
+        {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
                 (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
@@ -1929,7 +1930,6 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
                          <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
             }
         }
-
         for (i = 0; i < LocalScene.PolyNumber ; i+=3)
         {
 
@@ -1939,8 +1939,6 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
         }
     }
 }
-
-
 
 void OpenGlWidget::paintGL()
 {
@@ -2340,8 +2338,8 @@ void OpenGlWidget::quality(int c)
 void OpenGlWidget::screenshot()
 {
     QImage image = grabFrameBuffer();
-    if(LocalScene.png_ok == 1) image.save("GLscreenshot.png", "PNG" , LocalScene.quality_image);
-    if(LocalScene.bmp_ok == 1) image.save("GLscreenshot.bmp", "BMP" , LocalScene.quality_image);
+    if(LocalScene.png_ok == 1) image.save("GLscreenshot.png", "PNG", LocalScene.quality_image);
+    if(LocalScene.bmp_ok == 1) image.save("GLscreenshot.bmp", "BMP", LocalScene.quality_image);
 }
 
 void OpenGlWidget::FramesShot()
@@ -2366,7 +2364,7 @@ void OpenGlWidget::FramesSave()
         QImage image = grabFrameBuffer();
         QString FileName = FramesDir+QString("%1").arg(Index, 5, 10, QChar('0'))+".png";
         Index +=1;
-        image.save(FileName, "PNG" , 1);
+        image.save(FileName, "PNG", 1);
     }
 }
 
@@ -2613,13 +2611,13 @@ void OpenGlWidget::InitSpecularParameters()
     glEnable(GL_NORMALIZE);
     glFrontFace (GL_CCW);
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
-    glMaterialfv(GL_BACK , GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
+    glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
 
     glMaterialfv(GL_FRONT, GL_SPECULAR, LocalScene.specReflection);
-    glMaterialfv(GL_BACK , GL_SPECULAR, LocalScene.specReflection);
+    glMaterialfv(GL_BACK, GL_SPECULAR, LocalScene.specReflection);
 
     glMateriali(GL_FRONT, GL_SHININESS, LocalScene.shininess);
-    glMateriali(GL_BACK , GL_SHININESS, LocalScene.shininess);
+    glMateriali(GL_BACK, GL_SHININESS, LocalScene.shininess);
     glEnable(GL_DEPTH_TEST);
     update();
 }

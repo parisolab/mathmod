@@ -87,14 +87,14 @@ public :
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Funct, Rgbt, Grid;
     int expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
-    inf_uSize, sup_uSize, inf_vSize, sup_vSize,
-    VaruSize, ConstSize,  FunctSize, RgbtSize, GridSize;
+        inf_uSize, sup_uSize, inf_vSize, sup_vSize,
+        VaruSize, ConstSize,  FunctSize, RgbtSize, GridSize;
     std::string *VarName, *Varus,
-    *Consts, *ConstNames,
-    *Functs, *FunctNames,
-    *Rgbts, *RgbtNames,
-    VRgbt, *VRgbts, *VRgbtNames,
-    Gradient, Noise, NoiseShape, *SliderNames;
+        *Consts, *ConstNames,
+        *Functs, *FunctNames,
+        *Rgbts, *RgbtNames,
+        VRgbt, *VRgbts, *VRgbtNames,
+        Gradient, Noise, NoiseShape, *SliderNames;
     double *ConstValues, *SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     float Lacunarity, Gain;
@@ -138,7 +138,7 @@ public:
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
     int   largeur_fenetre,hauteur_fenetre;
 public:
-    Par3D(int ,
+    Par3D(int,
           int nbThreads=4,
           int nbGrid=50);
     ~Par3D();
@@ -157,7 +157,7 @@ public:
     void CNDCalculation(int, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void CalculateNoiseShapePoints(int);
-    void ParamBuild(float * , float * ,unsigned int *, unsigned int *,
+    void ParamBuild(float *, float *,unsigned int *, unsigned int *,
                     unsigned int *, int  IsoPos=0,
                     ComponentInfos *components = NULL,
                     int *TriangleListeCND = NULL,
