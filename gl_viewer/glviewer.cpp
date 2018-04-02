@@ -1840,7 +1840,7 @@ static void draw_cache(ObjectProperties *scene)
 
 
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void OpenGlWidget::SaveSceneAsObjPoly()
+void OpenGlWidget::SaveSceneAsObjPoly(int type)
 {
     int startpl = 0;
     int actualpointindice;
@@ -1856,11 +1856,25 @@ void OpenGlWidget::SaveSceneAsObjPoly()
         stream.setRealNumberNotation(QTextStream::FixedNotation);
         stream.setRealNumberPrecision(3);
         // save vertices:
+        if(type ==1)
+        {
         for (i=0; i< LocalScene.VertxNumber; i++)
         {
             (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
                      <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i  ]<<"  "\
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1]<<"  "\
+                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2]<<"\n";
+        }
+        }
+        else {
+            for (i=0; i< LocalScene.VertxNumber; i++)
+            {
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
+            }
         }
 
         // save faces:
@@ -1882,7 +1896,7 @@ void OpenGlWidget::SaveSceneAsObjPoly()
 
 
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void OpenGlWidget::SaveSceneAsObjTrian()
+void OpenGlWidget::SaveSceneAsObjTrian(int type)
 {
     QString fileName = QFileDialog::getSaveFileName(this,
                        tr("Save OBJ file"), "", tr("OBJ Files (*.obj)"));
@@ -1895,11 +1909,25 @@ void OpenGlWidget::SaveSceneAsObjTrian()
         stream.setRealNumberNotation(QTextStream::FixedNotation);
         stream.setRealNumberPrecision(3);
         // save vertices:
-        for (i=0; i< LocalScene.VertxNumber; i++)
+        if(type == 1)
         {
-            (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                     <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
+            for (i=0; i< LocalScene.VertxNumber; i++)
+            {
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
+                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
+                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
+                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i     ]<<"  "\
+                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1   ]<<"  "\
+                               <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2   ]<<"\n";
+            }
+        }
+        else {
+            for (i=0; i< LocalScene.VertxNumber; i++)
+            {
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
+            }
         }
 
         for (i = 0; i < LocalScene.PolyNumber ; i+=3)
