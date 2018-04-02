@@ -59,9 +59,9 @@ public:
 /// Added fct :
     double   Eval(const double* Vars);
     void     Eval6(int a=0);
-    void     AllocateMemoryForStackArray(double* , double* , double* , double* ,
-                                         double* , double* , double* , double* ,
-                                         double* , double  , int ,  double* , int, int *, double* []);
+    void     AllocateMemoryForStackArray(double*, double*, double*, double*,
+                                         double*, double*, double*, double*,
+                                         double*, double, int,  double*, int, int *, double* []);
     bool IsVariable(int);
 /// End Added fct
 

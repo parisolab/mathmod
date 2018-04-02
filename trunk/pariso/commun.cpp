@@ -198,13 +198,13 @@ float ImprovedNoise::noise(float x, float y, float z)
     int A = p[X  ]+Y, AA = p[A]+Z, AB = p[A+1]+Z,
         B = p[X+1]+Y, BA = p[B]+Z, BB = p[B+1]+Z;
 
-    return lerp(w, lerp(v, lerp(u, grad(p[AA  ], x  , y  , z   ),
-                                grad(p[BA  ], x-1, y  , z   )),
-                        lerp(u, grad(p[AB  ], x  , y-1, z   ),
+    return lerp(w, lerp(v, lerp(u, grad(p[AA  ], x, y, z   ),
+                                grad(p[BA  ], x-1, y, z   )),
+                        lerp(u, grad(p[AB  ], x, y-1, z   ),
                              grad(p[BB  ], x-1, y-1, z   ))),
-                lerp(v, lerp(u, grad(p[AA+1], x  , y  , z-1 ),
-                             grad(p[BA+1], x-1, y  , z-1 )),
-                     lerp(u, grad(p[AB+1], x  , y-1, z-1 ),
+                lerp(v, lerp(u, grad(p[AA+1], x, y, z-1 ),
+                             grad(p[BA+1], x-1, y, z-1 )),
+                     lerp(u, grad(p[AB+1], x, y-1, z-1 ),
                           grad(p[BB+1], x-1, y-1, z-1 ))));
 }
 
@@ -227,7 +227,7 @@ float ImprovedNoise::grad(int hash, float x, float y, float z)
     return ((h&1) == 0 ? u : -u) + ((h&2) == 0 ? v : -v);
 }
 
-float ImprovedNoise::FractalNoise3D(float x, float y, float z, int octNum, float lacunarity , float gain)
+float ImprovedNoise::FractalNoise3D(float x, float y, float z, int octNum, float lacunarity, float gain)
 {
     float freq = 1.0, amp = 1.0, sum = 0;
 

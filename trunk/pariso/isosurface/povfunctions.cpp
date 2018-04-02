@@ -40,8 +40,8 @@ double f_hex_y(const double* pp)
     double p[10];
     for(int i=0; i<4; i++)
         p[i] = pp[i];
-    x1=fabs(fmod(fabs(p[0]) , sqrt(3.0))-sqrt(3.0)/2);
-    y1=fabs(fmod(fabs(p[1]) , 3)-1.5);
+    x1=fabs(fmod(fabs(p[0]), sqrt(3.0))-sqrt(3.0)/2);
+    y1=fabs(fmod(fabs(p[1]), 3)-1.5);
     x2=sqrt(3.0)/2-x1;
     y2=1.5-y1;
     if ((x1*x1+y1*y1)>(x2*x2+y2*y2))

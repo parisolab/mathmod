@@ -50,120 +50,120 @@
 class IsoWorkerThread : public QThread
 {
     Q_OBJECT
-    public :
-        FunctionParser *implicitFunctionParser, *Fct;
-        int   nb_ligne, nb_colon, nb_depth;
-        int iStart, iFinish;
-        bool AllComponentTraited;
-        int morph_activated, Nb_newvariables, maximumgrid;
-        double stepMorph, pace;
-        int CurrentIso;
-        double *xLocal2, *yLocal2, *zLocal2;
-        double *vr2;
-        ErrorMessage stdError;
-        unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
-        bool StopCalculations, ParsersAllocated;
-        int signalVal;
-        public :
-            void IsoCompute(int);
-            void VoxelEvaluation(int);
-            void AllocateParsersForWorkerThread(int,int);
-            void DeleteWorkerParsers();
-            void IsoWorkerTable();
-            void run() Q_DECL_OVERRIDE;
-            IsoWorkerThread();
-            ~IsoWorkerThread();
+public :
+    FunctionParser *implicitFunctionParser, *Fct;
+    int   nb_ligne, nb_colon, nb_depth;
+    int iStart, iFinish;
+    bool AllComponentTraited;
+    int morph_activated, Nb_newvariables, maximumgrid;
+    double stepMorph, pace;
+    int CurrentIso;
+    double *xLocal2, *yLocal2, *zLocal2;
+    double *vr2;
+    ErrorMessage stdError;
+    unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
+    bool StopCalculations, ParsersAllocated;
+    int signalVal;
+public :
+    void IsoCompute(int);
+    void VoxelEvaluation(int);
+    void AllocateParsersForWorkerThread(int,int);
+    void DeleteWorkerParsers();
+    void IsoWorkerTable();
+    void run() Q_DECL_OVERRIDE;
+    IsoWorkerThread();
+    ~IsoWorkerThread();
 signals:
     void mySignal(int myParameter);
 public:
     void emitMySignal();
-    };
+};
 
-    class IsoMasterThread : public IsoWorkerThread
-    {
-        public :
-            FunctionParser *IsoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
-            *xSupParser, *xInfParser,
-            *ySupParser, *yInfParser,
-            *zSupParser, *zInfParser,
-            *Var;
-            std::string ImplicitFunction, Condition,
-            XlimitSup, XlimitInf,
-            YlimitSup, YlimitInf,
-            ZlimitSup, ZlimitInf, Grid,
-            Const, *Consts, *ConstNames,
-            *SliderNames,
-            Varu, *Varus, *VarName,
-            Funct,*Functs, *FunctNames,
-            Rgbt, *Rgbts, *RgbtNames,
-            VRgbt, *VRgbts, *VRgbtNames,
-            Gradient, Noise, varliste;
-            int IsoConditionRequired, Nb_implicitfunctions, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
-            ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
-            double *ConstValues, *SliderValues;
-            double *x_Step, *y_Step, *z_Step;
-            int *GridTable;
-            float Octaves, Lacunarity, Gain;
-            ImplicitStructure *ImplicitStructs;
-            bool *UsedFunct, *UsedFunct2;
-        public :
-            void DeleteMasterParsers();
-            void AllocateMasterParsers();
-            void InitMasterParsers();
-            inline ErrorMessage ParseExpression(std::string);
-            int HowManyIsosurface(std::string,int);
-            int HowManyVariables(std::string, int);
-            ErrorMessage ParserIso();
-            void IsoMasterTable();
-            void initparser();
-            IsoMasterThread();
-            ~IsoMasterThread();
-    };
+class IsoMasterThread : public IsoWorkerThread
+{
+public :
+    FunctionParser *IsoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
+                   *xSupParser, *xInfParser,
+                   *ySupParser, *yInfParser,
+                   *zSupParser, *zInfParser,
+                   *Var;
+    std::string ImplicitFunction, Condition,
+        XlimitSup, XlimitInf,
+        YlimitSup, YlimitInf,
+        ZlimitSup, ZlimitInf, Grid,
+        Const, *Consts, *ConstNames,
+        *SliderNames,
+        Varu, *Varus, *VarName,
+        Funct,*Functs, *FunctNames,
+        Rgbt, *Rgbts, *RgbtNames,
+        VRgbt, *VRgbts, *VRgbtNames,
+        Gradient, Noise, varliste;
+    int IsoConditionRequired, Nb_implicitfunctions, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
+        ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
+    double *ConstValues, *SliderValues;
+    double *x_Step, *y_Step, *z_Step;
+    int *GridTable;
+    float Octaves, Lacunarity, Gain;
+    ImplicitStructure *ImplicitStructs;
+    bool *UsedFunct, *UsedFunct2;
+public :
+    void DeleteMasterParsers();
+    void AllocateMasterParsers();
+    void InitMasterParsers();
+    inline ErrorMessage ParseExpression(std::string);
+    int HowManyIsosurface(std::string,int);
+    int HowManyVariables(std::string, int);
+    ErrorMessage ParserIso();
+    void IsoMasterTable();
+    void initparser();
+    IsoMasterThread();
+    ~IsoMasterThread();
+};
 
-    class Iso3D  : public QThread
-    {
-        public :
-                ObjectProperties *LocalScene;
-                IsoWorkerThread *workerthreads;
-                IsoMasterThread *masterthread;
-                int   nb_ligne, nb_colon, nb_depth;
-                int WorkerThreadsNumber;
-                int   *     IsoSurfaceTriangleListe;
-                bool *     WichPointVerifyCond, StopCalculations;
-                int *     TypeIsoSurfaceTriangleListeCND;
-                unsigned int *  IndexPolyTab;
-                int NbTriangleIsoSurface,NbPointIsoMap;
+class Iso3D  : public QThread
+{
+public :
+    ObjectProperties *LocalScene;
+    IsoWorkerThread *workerthreads;
+    IsoMasterThread *masterthread;
+    int   nb_ligne, nb_colon, nb_depth;
+    int WorkerThreadsNumber;
+    int   *     IsoSurfaceTriangleListe;
+    bool *     WichPointVerifyCond, StopCalculations;
+    int *     TypeIsoSurfaceTriangleListeCND;
+    unsigned int *  IndexPolyTab;
+    int NbTriangleIsoSurface,NbPointIsoMap;
 
-        public :
-                Iso3D(int, int,
-                      int gridmax=NbMaxGrid,
-                      int NbCmp=NbComponent,
-                      int NbVar=NbVariables,
-                      int NbCst=NbConstantes,
-                      int NbdeFct=NbDefinedFunctions,
-                      int NbText=NbTextures,
-                      int nbSlid=NbSliders,
-                      int nbSlidV=NbSliderValues,
-                      int nbThreads=4,
-                      int nbGrid=40);
-                ~Iso3D();
-                inline   void SignatureComputation();
-                inline   void ConstructIsoSurface();
-                inline void ConstructIsoNormale();
-                inline   void PointEdgeComputation(int);
-                inline void CNDCalculation(int, struct ComponentInfos *);
-                void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
-                void SaveIsoGLMap();
-                void SetMiniMmeshStruct();
-                int CNDtoUse(int index, struct ComponentInfos *components);
-                void CalculateColorsPoints(struct ComponentInfos *components);
-                void BuildIso();
-                void UpdateThredsNumber(int);
-                void stopcalculations(bool);
-                void WorkerThreadCopy(IsoWorkerThread *);
-                ErrorMessage IsoMorph();
-                ErrorMessage parse_expression2();
-                ErrorMessage ThreadParsersCopy();
-                void ReinitVarTablesWhenMorphActiv(int);
-                void run() Q_DECL_OVERRIDE;
-    };
+public :
+    Iso3D(int, int,
+          int gridmax=NbMaxGrid,
+          int NbCmp=NbComponent,
+          int NbVar=NbVariables,
+          int NbCst=NbConstantes,
+          int NbdeFct=NbDefinedFunctions,
+          int NbText=NbTextures,
+          int nbSlid=NbSliders,
+          int nbSlidV=NbSliderValues,
+          int nbThreads=4,
+          int nbGrid=40);
+    ~Iso3D();
+    inline   void SignatureComputation();
+    inline   void ConstructIsoSurface();
+    inline void ConstructIsoNormale();
+    inline   void PointEdgeComputation(int);
+    inline void CNDCalculation(int, struct ComponentInfos *);
+    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
+    void SaveIsoGLMap();
+    void SetMiniMmeshStruct();
+    int CNDtoUse(int index, struct ComponentInfos *components);
+    void CalculateColorsPoints(struct ComponentInfos *components);
+    void BuildIso();
+    void UpdateThredsNumber(int);
+    void stopcalculations(bool);
+    void WorkerThreadCopy(IsoWorkerThread *);
+    ErrorMessage IsoMorph();
+    ErrorMessage parse_expression2();
+    ErrorMessage ThreadParsersCopy();
+    void ReinitVarTablesWhenMorphActiv(int);
+    void run() Q_DECL_OVERRIDE;
+};

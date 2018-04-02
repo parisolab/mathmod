@@ -48,8 +48,11 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     model = "CloseIso_2";
     ActivateGlCache = false;
     Shininess = 110;
-    Specular[0] = Specular[1] = Specular[2] = 0.5; Specular[3] = 1.0;
-    Threads[0] = 4; Threads[1] = 1; Threads[2] = 32;
+    Specular[0] = Specular[1] = Specular[2] = 0.5;
+    Specular[3] = 1.0;
+    Threads[0] = 4;
+    Threads[1] = 1;
+    Threads[2] = 32;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
     advancedmodels = "advancedmodels.js";
@@ -127,8 +130,8 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
             sortie.replace("\n", " ");
             sortie.insert(before, " >>> Error <<< ");
             message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
-                                        "..." + sortie + "..."
-                                       );
+                            "..." + sortie + "..."
+                           );
             message.adjustSize () ;
             message.exec();
             file.close();
@@ -257,7 +260,7 @@ void Parametersoptions::on_maxpt_valueChanged(int value)
 
 void Parametersoptions::on_loadconfig_clicked()
 {
-    ReadJsonFile(fullpath , JConfig);
+    ReadJsonFile(fullpath, JConfig);
     GuiUpdate();
 }
 
@@ -380,10 +383,10 @@ void Parametersoptions::SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObjec
 bool Parametersoptions::isFloat(std::string myString)
 {
     std::istringstream iss(myString);
-        float f;
-        iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
-        // Check the entire string was consumed and if either failbit or badbit is set
-        return iss.eof() && !iss.fail();
+    float f;
+    iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+    // Check the entire string was consumed and if either failbit or badbit is set
+    return iss.eof() && !iss.fail();
 }
 
 #include "../fparser/fparser.h"
