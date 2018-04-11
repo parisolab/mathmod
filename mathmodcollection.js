@@ -10890,6 +10890,70 @@
 		}
     },
         {
+            "Iso3D": {
+                "Description": [
+                    "Implicit Costa minimal surface v02 by Abderrahman Taha 25/03/2018"
+                ],
+                "Funct": [
+                    "Costa=(z*((x^2+y^2)-18-8*sin((-11+abs(z*13/10))/4)-18*exp((-12+abs(z*13/10))/2))-(x^2-y^2)) ",
+                    "DFx=((Costa(x,y,z,t)-Costa(x+cx,y,z,t))/cx)",
+                    "DFy=((Costa(x,y,z,t)-Costa(x,y+cx,z,t))/cx)",
+                    "DFz=((Costa(x,y,z,t)-Costa(x,y,z+cx,t))/cx)",
+                    "Rapport=(x/sqrt(x*x+y*y+z*z))",
+                    "Iso3=Costa(x-T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
+                    "Iso2=Costa(x+T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y+T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z+T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)",
+                    "TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t)) + exp((4/10)*min((k1*x*x+k1*y*y-100) , min(((x+6)^2+k2*y^2+z^2-80),min(((x-6)^2+k2*y^2+z^2-80) , min (((y+6)^2+k2*x^2+z^2-80) , ((y-6)^2+k2*x^2+z^2-80)))))) -1"
+                ],
+                "Component": [
+                    "Schwarz"
+                ],
+                "Const": [
+                    "X=16",
+                    "Y=16",
+                    "Z=18",
+                    "N=4",
+                    "cx=1/100",
+                    "T=21/100",
+                    "k1=1",
+                    "k2=14/10"
+                ],
+                "Fxyz": [
+                    "TickIsoExterior(x,y,8*z/10,t)"
+                ],
+                "Name": [
+                    "ImplicitCosta"
+                ],
+                "Xmax": [
+                    " X"
+                ],
+                "Xmin": [
+                    "-X"
+                ],
+                "Ymax": [
+                    " Y"
+                ],
+                "Ymin": [
+                    "-Y"
+                ],
+                "Zmax": [
+                    " Z"
+                ],
+                "Zmin": [
+                    "-Z"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R=7/10",
+                    "G=7/10",
+                    "B=7/10",
+                    "T=1"
+                ],
+                "Name": "Lines1",
+                "Noise": ""
+            }
+        },
+        {
             "Param3D": {
                 "Description ": ["Plain weaving patterns over sinusoidal surfaces by Abderrahman Taha 18/12/2017"],
                 "Component": ["TwistedClifford_00","TwistedClifford_01","TwistedClifford_02","TwistedClifford_03","TwistedClifford_04","TwistedClifford_05","TwistedClifford_06","TwistedClifford_07","TwistedClifford_08","TwistedClifford_09","TwistedClifford_10","TwistedClifford_11","TwistedClifford_12","TwistedClifford_13","TwistedClifford_14","TwistedClifford_15"],
