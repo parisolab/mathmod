@@ -1654,7 +1654,7 @@ void Iso3D::IsoBuild (
 )
 {
 
-    int    ThreeTimesI, l, NbTriangleIsoSurfaceTmp;
+    int    l, NbTriangleIsoSurfaceTmp;
     //NormVertexTab = NormVertexTabPt;
     PreviousSizeMinimalTopology = 0;
     NbPolyMinimalTopology = 0;
@@ -1720,18 +1720,17 @@ void Iso3D::IsoBuild (
         l = 3*NbTriangleIsoSurfaceTmp;
         if(components != NULL)
         {
-            components->IsoPositions[2*fctnb       ] = l; //save the starting position of this component
+            components->IsoPositions[2*fctnb    ] = l; //save the starting position of this component
             components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurface; //save the number of triangles of this component
 
-            components->IsoPts[2*fctnb       ] = NbVertexTmp;
+            components->IsoPts[2*fctnb    ] = NbVertexTmp;
             components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
         }
         for (int i=0; i < NbTriangleIsoSurface ; ++i)
         {
-            ThreeTimesI = 3*i;
-            IndexPolyTab[l    ] = IsoSurfaceTriangleListe[ThreeTimesI     ] + NbVertexTmp;
-            IndexPolyTab[l+1] = IsoSurfaceTriangleListe[ThreeTimesI+1] + NbVertexTmp;
-            IndexPolyTab[l+2] = IsoSurfaceTriangleListe[ThreeTimesI+2] + NbVertexTmp;
+            IndexPolyTab[l  ] = IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp;
+            IndexPolyTab[l+1] = IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp;
+            IndexPolyTab[l+2] = IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp;
             l+=3;
         }
         // Save Number of Polys and vertex :
