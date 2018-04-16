@@ -44,9 +44,9 @@ public :
     int btgauche, btdroit, btmilieu, latence,
         Ugrid, Vgrid, CutV, CutU,
         IDGlWindow;
-    int isoline, isocolumn, isodepth,
-        cpisoline, cpisocolumn, cpisodepth, TypeTriangle;
-    QTimer        * timer;
+    int Xgrid, Ygrid, Zgrid,
+        CutX, CutY, CutZ, TypeTriangle;
+    QTimer * timer;
     double Axe_x, Axe_y, Axe_z, angle, val1, val2, val3, old_x, old_y, old_z;
     ObjectProperties  LocalScene;
     QString FramesDir;

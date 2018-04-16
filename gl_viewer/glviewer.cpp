@@ -997,8 +997,8 @@ OpenGlWidget::OpenGlWidget( QWidget *parent)
     val1 = val2 = val3 = 0.0;
     Vgrid = Ugrid = 50;
     CutV = CutU = 0;
-    isoline = isocolumn = isodepth = 40;
-    cpisoline = cpisocolumn = cpisodepth = 0;
+    Xgrid = Ygrid = Zgrid = 40;
+    CutX = CutY = CutZ = 0;
     IDGlWindow        = NBGlWindow;
     LocalScene.VertxNumber      = 0;
     FramesDir = "/home";
@@ -1022,7 +1022,7 @@ void OpenGlWidget::FillOk()
 void OpenGlWidget::PrintInfos()
 {
     (LocalScene.typedrawing == 1) ?
-    nbl = QString::number(isoline-cpisoline)+"x"+QString::number(isocolumn-cpisocolumn)+"x"+QString::number(isodepth-cpisodepth) :
+    nbl = QString::number(Xgrid-CutX)+"x"+QString::number(Ygrid-CutY)+"x"+QString::number(Zgrid-CutZ) :
           nbl = QString::number(Ugrid-CutU)+"x"+QString::number(Vgrid-CutV)+" = "+QString::number((Ugrid-CutU)*(Vgrid-CutV));
     glDisable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
