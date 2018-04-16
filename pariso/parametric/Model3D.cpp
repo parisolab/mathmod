@@ -1865,7 +1865,10 @@ void  Par3D::ParamBuild(
             workerthreads[nbthreads].wait();
 
         if(StopCalculations)
+        {
+            initialiser_LineColumn(nbline_save, nbcolone_save);
             return;
+        }
 
         if(param4D == 1)
         {
