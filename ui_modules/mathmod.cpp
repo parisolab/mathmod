@@ -183,9 +183,9 @@ void MathMod::xyzg_valueupdate(int cl)
         (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Ygrid  =
             (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Xgrid  = cl;
 
-    (ui.glWidget)->IsoObjetThread->IsoObjet->nb_depth  =
-        (ui.glWidget)->IsoObjetThread->IsoObjet->nb_colon  =
-            (ui.glWidget)->IsoObjetThread->IsoObjet->nb_ligne  = cl;
+    (ui.glWidget)->IsoObjetThread->IsoObjet->Zgrid  =
+        (ui.glWidget)->IsoObjetThread->IsoObjet->Ygrid  =
+            (ui.glWidget)->IsoObjetThread->IsoObjet->Xgrid  = cl;
 
     (ui.glWidget)->isoline   =
         (ui.glWidget)->isocolumn =

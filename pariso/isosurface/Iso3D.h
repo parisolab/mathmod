@@ -126,7 +126,7 @@ public :
     ObjectProperties *LocalScene;
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
-    int   nb_ligne, nb_colon, nb_depth;
+    int   Xgrid, Ygrid, Zgrid;
     int WorkerThreadsNumber;
     int   *     IsoSurfaceTriangleListe;
     bool *     WichPointVerifyCond, StopCalculations;
