@@ -5353,7 +5353,7 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 {
-    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( "+QString::number(value)+", "+QString::number(MathmodRef->ui.glWidget->ParObjetThread->ParObjet->nb_colone)+" ) :");
+    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( "+QString::number(value)+", "+QString::number(MathmodRef->ui.glWidget->ParObjetThread->ParObjet->Ugrid)+" ) :");
     if(!MathmodRef->ui.glWidget->ParObjetThread->ParObjet->isRunning())
     {
         MathmodRef->line_valueChanged(value);
@@ -5370,7 +5370,7 @@ void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 {
-    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( "+QString::number(MathmodRef->ui.glWidget->ParObjetThread->ParObjet->nb_ligne)+", "+QString::number(value)+" ) :");
+    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( "+QString::number(MathmodRef->ui.glWidget->ParObjetThread->ParObjet->Vgrid)+", "+QString::number(value)+" ) :");
     if(!MathmodRef->ui.glWidget->ParObjetThread->ParObjet->isRunning())
     {
         MathmodRef->column_valueChanged(value);

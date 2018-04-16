@@ -95,41 +95,41 @@ void MathMod::frames_clicked()
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_colone = (ui.glWidget)->nb_colone = cl;
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->nb_colone = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->nb_ligne    = cl;
 
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_ligne =
-        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_colone = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid =
+        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = cl;
 
     for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_ligne =
-            (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_colone = cl;
+        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid =
+            (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = cl;
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::line_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_ligne  = (ui.glWidget)->nb_ligne    = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->nb_ligne    = cl;
 
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_ligne = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid = cl;
 
     for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_ligne = cl;
+        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid = cl;
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::column_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->nb_colone = (ui.glWidget)->nb_colone = cl;
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->nb_colone = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->nb_colone = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = cl;
 
     for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].nb_colone = cl;
+        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = cl;
     }
 }
 
@@ -179,9 +179,9 @@ void MathMod::Initparametricpage()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::xyzg_valueupdate(int cl)
 {
-    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_depth  =
-        (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_colon  =
-            (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->nb_ligne  = cl;
+    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Zgrid  =
+        (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Ygrid  =
+            (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Xgrid  = cl;
 
     (ui.glWidget)->IsoObjetThread->IsoObjet->nb_depth  =
         (ui.glWidget)->IsoObjetThread->IsoObjet->nb_colon  =

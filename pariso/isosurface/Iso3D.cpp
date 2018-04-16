@@ -221,7 +221,7 @@ IsoWorkerThread::~IsoWorkerThread()
 
 IsoWorkerThread::IsoWorkerThread()
 {
-    nb_ligne = nb_colon = nb_depth = 40;
+    Xgrid = Ygrid = Zgrid = 40;
     stepMorph = 0;
     pace = (double)1/(double)30;
     morph_activated = -1;
@@ -244,9 +244,9 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        WorkerThreadsTmp[nbthreads].nb_ligne = masterthread->nb_ligne;
-        WorkerThreadsTmp[nbthreads].nb_colon = masterthread->nb_colon;
-        WorkerThreadsTmp[nbthreads].nb_depth = masterthread->nb_depth;
+        WorkerThreadsTmp[nbthreads].Xgrid = masterthread->Xgrid;
+        WorkerThreadsTmp[nbthreads].Ygrid = masterthread->Ygrid;
+        WorkerThreadsTmp[nbthreads].Zgrid = masterthread->Zgrid;
         WorkerThreadsTmp[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
@@ -297,9 +297,9 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
-        workerthreads[nbthreads].nb_ligne = masterthread->nb_ligne;
-        workerthreads[nbthreads].nb_colon = masterthread->nb_colon;
-        workerthreads[nbthreads].nb_depth = masterthread->nb_depth;
+        workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
+        workerthreads[nbthreads].Ygrid = masterthread->Ygrid;
+        workerthreads[nbthreads].Zgrid = masterthread->Zgrid;
     }
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
@@ -446,18 +446,18 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
     for(int i=0; i<WorkerThreadsNumber-1; i++)
         workerthreads[i].IsoWorkerTable();
 
-    masterthread->nb_ligne = nb_ligne;
-    masterthread->nb_colon = nb_colon;
-    masterthread->nb_depth = nb_depth;
+    masterthread->Xgrid = nb_ligne;
+    masterthread->Ygrid = nb_colon;
+    masterthread->Zgrid = nb_depth;
     masterthread->maximumgrid = NbMaxGrid;
     masterthread->MyIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        workerthreads[nbthreads].nb_ligne = nb_ligne;
-        workerthreads[nbthreads].nb_colon = nb_colon;
-        workerthreads[nbthreads].nb_depth = nb_depth;
+        workerthreads[nbthreads].Xgrid = nb_ligne;
+        workerthreads[nbthreads].Ygrid = nb_colon;
+        workerthreads[nbthreads].Zgrid = nb_depth;
         workerthreads[nbthreads].maximumgrid = NbMaxGrid;
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
@@ -880,17 +880,17 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     //double vals2[] = {0,0};
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
-    const int limitY = nb_colon, limitZ = nb_depth;
+    const int limitY = Ygrid, limitZ = Zgrid;
     int I, J, IJK;
     int id=0, signStep=0;
     float ss;
 
     vals[3]          = stepMorph;
 
-    int tmp = nb_ligne/WorkerThreadsNumber;
+    int tmp = Xgrid/WorkerThreadsNumber;
     iStart   = MyIndex*tmp;
     if(MyIndex == (WorkerThreadsNumber-1))
-        iFinish = nb_ligne;
+        iFinish = Xgrid;
     else
         iFinish = (MyIndex+1)*tmp;
 
@@ -1326,7 +1326,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double vals2[] = {0,0};
-    const int limitX = nb_ligne, limitY = nb_colon, limitZ = nb_depth;
+    const int limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
 
     if(AllComponentTraited /*&& morph_activated != 1*/)
     {

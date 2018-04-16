@@ -47,8 +47,7 @@ class ParWorkerThread : public QThread
 {
     Q_OBJECT
 public :
-    int nb_ligne, nb_colone;
-    int coupure_col, nb_licol, coupure_ligne;
+    int Ugrid, Vgrid;
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
     double  *v_inf, *v_sup,*u_inf,*u_sup,*dif_v,*dif_u;
     double stepMorph, pace;
@@ -125,7 +124,7 @@ public:
     bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
-    int nb_ligne, nb_colone, NbVertex, WorkerThreadsNumber;
+    int Ugrid, Vgrid, NbVertex, WorkerThreadsNumber;
     int coupure_col, coupure_ligne;
     double MINX,MINY,MINZ,MINW,
            MAXX,MAXY,MAXZ,MAXW,

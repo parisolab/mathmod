@@ -524,12 +524,12 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
         if(type != 1)
         {
-            Jprime = (i) %  (ParObjetThread->ParObjet->nb_colone);
-            val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_colone) ;
+            Jprime = (i) %  (ParObjetThread->ParObjet->Vgrid);
+            val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->Vgrid) ;
             val[3] = val[3] * ParObjetThread->ParObjet->masterthread->dif_u[0]  + ParObjetThread->ParObjet->masterthread->u_inf[0];
 
-            Jprime = (i)/(ParObjetThread->ParObjet->nb_ligne);
-            val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_ligne) ;
+            Jprime = (i)/(ParObjetThread->ParObjet->Ugrid);
+            val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->Ugrid) ;
             val[4] = val[4] * ParObjetThread->ParObjet->masterthread->dif_v[0]  + ParObjetThread->ParObjet->masterthread->v_inf[0];
         }
 
@@ -636,12 +636,12 @@ void OpenGlWidget::CalculateColorsPoints()
             val[1]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep]/hauteur_fenetre -decalage_yo;
             val[2]= difMaximum*LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep]/hauteur_fenetre -decalage_zo;
 
-            Jprime = (i) %  (ParObjetThread->ParObjet->nb_colone);
-            val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_colone) ;
+            Jprime = (i) %  (ParObjetThread->ParObjet->Vgrid);
+            val[3] = (double)Jprime/(double)(ParObjetThread->ParObjet->Vgrid) ;
             val[3] = val[3] * ParObjetThread->ParObjet->masterthread->dif_u[0]  + ParObjetThread->ParObjet->masterthread->u_inf[0];
 
-            Jprime = (i)/(ParObjetThread->ParObjet->nb_ligne);
-            val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->nb_ligne) ;
+            Jprime = (i)/(ParObjetThread->ParObjet->Ugrid);
+            val[4] = (double)Jprime/(double)(ParObjetThread->ParObjet->Ugrid) ;
             val[4] = val[4] * ParObjetThread->ParObjet->masterthread->dif_v[0]  + ParObjetThread->ParObjet->masterthread->v_inf[0];
 
             if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)

@@ -182,8 +182,8 @@ void ParMasterThread::AllocateParsersForThread()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres(int nbThreads, int nbGrid)
 {
-    nb_ligne = nbGrid;
-    nb_colone = nbGrid;
+    Ugrid = nbGrid;
+    Vgrid = nbGrid;
     largeur_fenetre = 620;
     hauteur_fenetre = 620;
     coupure_col = coupure_ligne = 0;
@@ -202,16 +202,16 @@ void Par3D::initialiser_parametres(int nbThreads, int nbGrid)
     workerthreads = new ParWorkerThread[WorkerThreadsNumber-1];
     masterthread  = new ParMasterThread();
 
-    masterthread->nb_ligne  = nb_ligne;
-    masterthread->nb_colone = nb_colone;
+    masterthread->Ugrid  = Ugrid;
+    masterthread->Vgrid = Vgrid;
     masterthread->MyIndex   = 0;
     masterthread->param4D   = param4D;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        workerthreads[nbthreads].nb_ligne  = nb_ligne;
-        workerthreads[nbthreads].nb_colone = nb_colone;
+        workerthreads[nbthreads].Ugrid  = Ugrid;
+        workerthreads[nbthreads].Vgrid = Vgrid;
         workerthreads[nbthreads].MyIndex   = nbthreads+1;
         workerthreads[nbthreads].param4D   = param4D;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
@@ -220,14 +220,14 @@ void Par3D::initialiser_parametres(int nbThreads, int nbGrid)
 
 void Par3D::initialiser_LineColumn(int li, int cl)
 {
-    nb_ligne  = li;
-    nb_colone = cl;
-    masterthread->nb_ligne  = nb_ligne;
-    masterthread->nb_colone = nb_colone;
+    Ugrid  = li;
+    Vgrid = cl;
+    masterthread->Ugrid  = Ugrid;
+    masterthread->Vgrid = Vgrid;
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        workerthreads[nbthreads].nb_ligne  = nb_ligne;
-        workerthreads[nbthreads].nb_colone = nb_colone;
+        workerthreads[nbthreads].Ugrid  = Ugrid;
+        workerthreads[nbthreads].Vgrid = Vgrid;
     }
 }
 
@@ -263,18 +263,18 @@ void  Par3D::boite_englobante4D(int idx)
     MAXW =-999999999;
 
     int IDX = 0;
-    for (int i=0; i < nb_ligne; i++)
-        for (int j=0; j < nb_colone; j++)
+    for (int i=0; i < Ugrid; i++)
+        for (int j=0; j < Vgrid; j++)
         {
             if(MINX > NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep] ) MINX = NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep];
             if(MINY > NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep] ) MINY = NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep];
             if(MINZ > NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep] ) MINZ = NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep];
-            if(MINW > ExtraDimension[i*nb_colone + j + idx] ) MINW = ExtraDimension[i*nb_colone + j + idx];
+            if(MINW > ExtraDimension[i*Vgrid + j + idx] ) MINW = ExtraDimension[i*Vgrid + j + idx];
 
             if(MAXX < NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep] ) MAXX = NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep];
             if(MAXY < NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep] ) MAXY = NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep];
             if(MAXZ < NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep] ) MAXZ = NormVertexTab[IDX + 5 + idx*TypeDrawin + TypeDrawinNormStep];
-            if(MAXW < ExtraDimension[i*nb_colone + j + idx] ) MAXW = ExtraDimension[i*nb_colone + j + idx];
+            if(MAXW < ExtraDimension[i*Vgrid + j + idx] ) MAXW = ExtraDimension[i*Vgrid + j + idx];
             IDX +=TypeDrawin;
         }
 
@@ -304,13 +304,13 @@ void  Par3D::boite_englobante4D(int idx)
     double decalage_zo  = -(MINZ +MAXZ)/2 ;
     double decalage_wo = -(MINW +MAXW)/2 ;
     IDX =0;
-    for (int i=0; i < nb_ligne   ; i++)
-        for (int j=0; j < nb_colone   ; j++)
+    for (int i=0; i < Ugrid   ; i++)
+        for (int j=0; j < Vgrid   ; j++)
         {
             NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep]= (NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_xo)/DIFMAXIMUM ;
             NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_yo)/DIFMAXIMUM ;
             NormVertexTab[IDX + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 5 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_zo)/DIFMAXIMUM ;
-            ExtraDimension[i*nb_colone + j + idx] = (ExtraDimension[i*nb_colone + j + idx] + decalage_wo)/DIFMAXIMUM ;
+            ExtraDimension[i*Vgrid + j + idx] = (ExtraDimension[i*Vgrid + j + idx] + decalage_wo)/DIFMAXIMUM ;
             IDX +=TypeDrawin;
         }
 }
@@ -322,8 +322,8 @@ void  Par3D::Invert_boite_englobante4D(int idx)
     double decalage_yo  = -(MINY +MAXY)/2;
     double decalage_zo  = -(MINZ +MAXZ)/2;
     int IDX =0;
-    for (int i=0; i < nb_ligne   ; i++)
-        for (int j=0; j < nb_colone   ; j++)
+    for (int i=0; i < Ugrid   ; i++)
+        for (int j=0; j < Vgrid   ; j++)
         {
             NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep]*DIFMAXIMUM -  decalage_xo);
             NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep]*DIFMAXIMUM -  decalage_yo);
@@ -351,19 +351,19 @@ void  Par3D::calcul_points4(int idx)
     // Changement de coordonnees des points selon les
     // angles angex et angley
     int lndex =0;
-    for (i=0; i < nb_ligne  ; i++)
-        for (j=0; j < nb_colone   ; j++)
+    for (i=0; i < Ugrid  ; i++)
+        for (j=0; j < Vgrid   ; j++)
         {
             tp1 = NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep];
             tp2 = NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep];
             tp3 = NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep];
-            tp4 = ExtraDimension[i*nb_colone + j + idx];
+            tp4 = ExtraDimension[i*Vgrid + j + idx];
             if(param4D == 1)
             {
                 NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo;
                 NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo;
                 NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo;
-                ExtraDimension[i*nb_colone + j + idx] = mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo;
+                ExtraDimension[i*Vgrid + j + idx] = mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo;
             }
             else
             {
@@ -380,10 +380,10 @@ void  Par3D::project_4D_to_3D(int idx)
 {
     double c4;
     int I = 0;
-    for (int i=0; i < nb_ligne; ++i)
-        for (int j=0; j < nb_colone  ; ++j)
+    for (int i=0; i < Ugrid; ++i)
+        for (int j=0; j < Vgrid  ; ++j)
         {
-            c4 = 1/(ExtraDimension[i*nb_colone + j + idx] - 2);
+            c4 = 1/(ExtraDimension[i*Vgrid + j + idx] - 2);
             NormVertexTab[I + 3 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
             NormVertexTab[I + 4 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
             NormVertexTab[I + 5 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
@@ -995,8 +995,8 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        WorkerThreadsTmp[nbthreads].nb_ligne = masterthread->nb_ligne;
-        WorkerThreadsTmp[nbthreads].nb_colone = masterthread->nb_colone;
+        WorkerThreadsTmp[nbthreads].Ugrid = masterthread->Ugrid;
+        WorkerThreadsTmp[nbthreads].Vgrid = masterthread->Vgrid;
         WorkerThreadsTmp[nbthreads].MyIndex = nbthreads+1;
         WorkerThreadsTmp[nbthreads].param4D   = param4D;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
@@ -1224,22 +1224,22 @@ int ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 void Par3D::BorderCalculation(int NewPosition)
 {
     int k=0;
-    for(int i=0; i<nb_ligne - coupure_ligne-2; i++)
-        for(int j=0; j<nb_colone - coupure_col -2; j++)
+    for(int i=0; i<Ugrid - coupure_ligne-2; i++)
+        for(int j=0; j<Vgrid - coupure_col -2; j++)
         {
-            if(VerifCND[i*(nb_colone)+j] != VerifCND[i*(nb_colone)+j+1])
+            if(VerifCND[i*(Vgrid)+j] != VerifCND[i*(Vgrid)+j+1])
             {
-                Border[k + 0] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(nb_colone)+j+1)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep])/2;
-                Border[k + 1] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(nb_colone)+j+1)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep])/2;
-                Border[k + 2] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(nb_colone)+j+1)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 0] = (NormVertexTab[(i*(Vgrid)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(Vgrid)+j+1)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 1] = (NormVertexTab[(i*(Vgrid)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(Vgrid)+j+1)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 2] = (NormVertexTab[(i*(Vgrid)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] + NormVertexTab[(i*(Vgrid)+j+1)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep])/2;
                 k += 3;
             }
 
-            if(VerifCND[i*(nb_colone)+j] != VerifCND[(i+1)*(nb_colone)+j])
+            if(VerifCND[i*(Vgrid)+j] != VerifCND[(i+1)*(Vgrid)+j])
             {
-                Border[k + 0] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(nb_colone)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep])/2;
-                Border[k + 1] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(nb_colone)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep])/2;
-                Border[k + 2] = (NormVertexTab[(i*(nb_colone)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(nb_colone)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 0] = (NormVertexTab[(i*(Vgrid)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(Vgrid)+j)*TypeDrawin+3+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 1] = (NormVertexTab[(i*(Vgrid)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(Vgrid)+j)*TypeDrawin+4+NewPosition+ TypeDrawinNormStep])/2;
+                Border[k + 2] = (NormVertexTab[(i*(Vgrid)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] + NormVertexTab[((i+1)*(Vgrid)+j)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep])/2;
                 k += 3;
             }
         }
@@ -1256,8 +1256,8 @@ void Par3D::CalculateNoiseShapePoints(int NewPosition)
     masterthread->NoiseShape = "NoiseW(x,y,z,1,2,0)";
     masterthread->NoiseShapeParser->Parse(masterthread->NoiseShape, "x,y,z,t");
     if(masterthread->NoiseShape != "")
-        for(int j=0; j < nb_ligne   ; j++)
-            for(int i= 0; i < nb_colone; i++)
+        for(int j=0; j < Ugrid   ; j++)
+            for(int i= 0; i < Vgrid; i++)
             {
                 val[0]= NormVertexTab[I  + 3 + TypeDrawinNormStep +NewPosition ];
                 val[1]= NormVertexTab[I  + 4 + TypeDrawinNormStep +NewPosition ];
@@ -1336,16 +1336,16 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
             val[7] = (double)i;
-            val[8] = (double)(nb_colone);
+            val[8] = (double)(Vgrid);
             val[9] = (double)(cmpId);
-            Jprime = (i)/(nb_ligne);
+            Jprime = (i)/(Ugrid);
             val[6] = (double)Jprime;
-            val[4] = val[6]/(double)(nb_ligne) ;
+            val[4] = val[6]/(double)(Ugrid) ;
             val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
 
-            Jprime = (i) %  (nb_colone);
+            Jprime = (i) %  (Vgrid);
             val[5] =  (double)Jprime;
-            val[3] = val[5]/(double)(nb_colone) ;
+            val[3] = val[5]/(double)(Vgrid) ;
             val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
 
             if(masterthread->Noise != "")
@@ -1743,23 +1743,23 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
         stepMorph += pace;
     vals[2]          = stepMorph;
 
-    int tmp = nb_ligne/WorkerThreadsNumber;
+    int tmp = Ugrid/WorkerThreadsNumber;
     iStart   = MyIndex*tmp;
     if(MyIndex == (WorkerThreadsNumber-1))
-        iFinish = nb_ligne;
+        iFinish = Ugrid;
     else
         iFinish = (MyIndex+1)*tmp;
-    ss = 100.0/(iFinish*nb_colone);
+    ss = 100.0/(iFinish*Vgrid);
 
-    int l=TypeDrawin*iStart*nb_colone;
+    int l=TypeDrawin*iStart*Vgrid;
 
     for(int j=iStart; j < iFinish   ; j++)
     {
-        jprime = (double)j/(double)(nb_ligne -1 ) ;
+        jprime = (double)j/(double)(Ugrid -1 ) ;
         jprime = jprime * dif_u[cmp]  + u_inf[cmp] ;
-        for (int i=0; i < nb_colone   ; i++)
+        for (int i=0; i < Vgrid   ; i++)
         {
-            iprime = (double)i/(double)(nb_colone-1 ) ;
+            iprime = (double)i/(double)(Vgrid-1 ) ;
             iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
             vals[0]=jprime;
             vals[1]=iprime;
@@ -1781,9 +1781,9 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
             NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);
             l+=TypeDrawin;
             if(param4D == 1)
-                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
+                ExtraDimension[j*Vgrid + i + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
             else
-                ExtraDimension[j*nb_colone + i + (int)(NewPosition/TypeDrawin)] = 1;
+                ExtraDimension[j*Vgrid + i + (int)(NewPosition/TypeDrawin)] = 1;
         }
     }
 }
@@ -1823,11 +1823,11 @@ void  Par3D::ParamBuild(
     stopcalculations(false);
     if(masterthread->gridnotnull)
     {
-        nbline_save   = nb_ligne;
-        nbcolone_save = nb_colone;
+        nbline_save   = Ugrid;
+        nbcolone_save = Vgrid;
     }
     else
-        NbVertex  = (nb_ligne)*(nb_colone);
+        NbVertex  = (Ugrid)*(Vgrid);
 
     for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
     {
@@ -1841,11 +1841,11 @@ void  Par3D::ParamBuild(
         masterthread->CurrentPar   = fctnb;
         masterthread->CurrentIndex = NextIndex;
         // Save Number of Polys and vertex :
-        NbVertexTmp                 += (nb_ligne)*(nb_colone);
-        NbTriangleIsoSurfaceTmp     += 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-        NbPolyMinimalTopology       += (nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-        PreviousSizeMinimalTopology += 5*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1);
-        NbVertex  = (nb_ligne)*(nb_colone);
+        NbVertexTmp                 += (Ugrid)*(Vgrid);
+        NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1);
+        NbPolyMinimalTopology       += (Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1);
+        PreviousSizeMinimalTopology += 5*(Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1);
+        NbVertex  = (Ugrid)*(Vgrid);
 
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         {
@@ -1880,11 +1880,11 @@ void  Par3D::ParamBuild(
         if(components != NULL)
         {
             components->Parametricpositions[3*fctnb  ] = 6*NextPosition; //save the starting position of this component
-            components->Parametricpositions[3*fctnb+1] = 2*(nb_ligne  - coupure_ligne -1)*(nb_colone - coupure_col -1); //save the number of Polygones of this component
+            components->Parametricpositions[3*fctnb+1] = 2*(Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1); //save the number of Polygones of this component
             components->Parametricpositions[3*fctnb+2] = NextIndex;
         }
-        NextPosition += (nb_ligne  - coupure_ligne-1)*(nb_colone - coupure_col-1);
-        NextIndex    += (nb_ligne)*(nb_colone);
+        NextPosition += (Ugrid  - coupure_ligne-1)*(Vgrid - coupure_col-1);
+        NextIndex    += (Ugrid)*(Vgrid);
     }
 
     //CND calculation for the triangles results:
@@ -1937,14 +1937,14 @@ void  Par3D::make_PolyIndexMin(int NewPo, int index, int IsoPos)
     int k=0;
     int NewPosition = 5*NewPo;
     int nbVertex       = index;
-    for (int i=0; i< nb_ligne - coupure_ligne -1; i++)
-        for (int j=0; j< nb_colone - coupure_col -1; j++)
+    for (int i=0; i< Ugrid - coupure_ligne -1; i++)
+        for (int j=0; j< Vgrid - coupure_col -1; j++)
         {
             IndexPolyTabMin[k  +NewPosition] =  4;
-            IndexPolyTabMin[k+1+NewPosition] =  i*nb_colone + j+nbVertex + IsoPos;
-            IndexPolyTabMin[k+2+NewPosition] = (i+1)*nb_colone + j +nbVertex + IsoPos;
-            IndexPolyTabMin[k+3+NewPosition] = (i+1)*nb_colone + (j+1)+nbVertex + IsoPos;
-            IndexPolyTabMin[k+4+NewPosition] = i*nb_colone + (j+1)+nbVertex + IsoPos;
+            IndexPolyTabMin[k+1+NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
+            IndexPolyTabMin[k+2+NewPosition] = (i+1)*Vgrid + j +nbVertex + IsoPos;
+            IndexPolyTabMin[k+3+NewPosition] = (i+1)*Vgrid + (j+1)+nbVertex + IsoPos;
+            IndexPolyTabMin[k+4+NewPosition] = i*Vgrid + (j+1)+nbVertex + IsoPos;
             k+=5;
         }
 }
@@ -1954,16 +1954,16 @@ void  Par3D::make_PolyIndexTri(int NewPo, int index, int IsoPos)
     int k=0;
     int NewPosition = 6*NewPo;
     int nbVertex    = index;
-    for (int i=0; i< nb_ligne - coupure_ligne -1; i++)
-        for (int j=0; j< nb_colone - coupure_col -1; j++)
+    for (int i=0; i< Ugrid - coupure_ligne -1; i++)
+        for (int j=0; j< Vgrid - coupure_col -1; j++)
         {
-            IndexPolyTab[k    +NewPosition] =  i*nb_colone + j+nbVertex + IsoPos;
-            IndexPolyTab[k+1+NewPosition] = (i+1)*nb_colone + j +nbVertex + IsoPos;
-            IndexPolyTab[k+2+NewPosition] = (i+1)*nb_colone + (j+1)+nbVertex + IsoPos;
+            IndexPolyTab[k    +NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
+            IndexPolyTab[k+1+NewPosition] = (i+1)*Vgrid + j +nbVertex + IsoPos;
+            IndexPolyTab[k+2+NewPosition] = (i+1)*Vgrid + (j+1)+nbVertex + IsoPos;
 
-            IndexPolyTab[k+3+NewPosition] = i*nb_colone + j+nbVertex + IsoPos;
-            IndexPolyTab[k+4+NewPosition] = (i+1)*nb_colone + (j+1)+nbVertex + IsoPos;
-            IndexPolyTab[k+5+NewPosition] = i*nb_colone + (j+1)+nbVertex + IsoPos;
+            IndexPolyTab[k+3+NewPosition] = i*Vgrid + j+nbVertex + IsoPos;
+            IndexPolyTab[k+4+NewPosition] = (i+1)*Vgrid + (j+1)+nbVertex + IsoPos;
+            IndexPolyTab[k+5+NewPosition] = i*Vgrid + (j+1)+nbVertex + IsoPos;
             k+=6;
         }
 }
@@ -1972,11 +1972,11 @@ void  Par3D::make_PolyIndexTri(int NewPo, int index, int IsoPos)
 void  Par3D::calcul_Norm(int NewPosition)
 {
 //calculate Normals
-    int        i, j, deplacement = TypeDrawin*nb_colone;
+    int        i, j, deplacement = TypeDrawin*Vgrid;
     double caa, bab, cab, baa, ba, ca;
 
-    for (i=0; i < nb_ligne -1  ; i++)
-        for (j=0; j < nb_colone -1  ; j++)
+    for (i=0; i < Ugrid -1  ; i++)
+        for (j=0; j < Vgrid -1  ; j++)
         {
             caa = NormVertexTab[(i+1)*deplacement+j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep];
             bab = NormVertexTab[i*deplacement+(j+1)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+5+NewPosition+ TypeDrawinNormStep];
@@ -2002,24 +2002,24 @@ void  Par3D::calcul_Norm(int NewPosition)
             NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]/=b4;
         }
 
-    i = nb_ligne -1;
-    for (j=0; j < nb_colone -1   ; j++)
+    i = Ugrid -1;
+    for (j=0; j < Vgrid -1   ; j++)
     {
         NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
     }
 
-    j =nb_colone -1;
-    for (i=0; i < nb_ligne -1  ; i++)
+    j =Vgrid -1;
+    for (i=0; i < Ugrid -1  ; i++)
     {
         NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin  +NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
     }
 
-    i = nb_ligne -1;
-    j =nb_colone -1;
+    i = Ugrid -1;
+    j =Vgrid -1;
     NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin  +NewPosition+ TypeDrawinNormStep];
     NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
     NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];

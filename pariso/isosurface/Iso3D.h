@@ -52,7 +52,7 @@ class IsoWorkerThread : public QThread
     Q_OBJECT
 public :
     FunctionParser *implicitFunctionParser, *Fct;
-    int   nb_ligne, nb_colon, nb_depth;
+    int   Xgrid, Ygrid, Zgrid;
     int iStart, iFinish;
     bool AllComponentTraited;
     int morph_activated, Nb_newvariables, maximumgrid;
