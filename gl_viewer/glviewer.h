@@ -42,7 +42,7 @@ class OpenGlWidget : public QGLWidget
     Q_OBJECT
 public :
     int btgauche, btdroit, btmilieu, latence,
-        nb_ligne, nb_colone, coupure_col, coupure_ligne,
+        Ugrid, Vgrid, CutV, CutU,
         IDGlWindow;
     int isoline, isocolumn, isodepth,
         cpisoline, cpisocolumn, cpisodepth, TypeTriangle;

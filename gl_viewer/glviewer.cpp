@@ -995,8 +995,8 @@ OpenGlWidget::OpenGlWidget( QWidget *parent)
 
     latence = 10;
     val1 = val2 = val3 = 0.0;
-    nb_colone = nb_ligne = 50;
-    coupure_col = coupure_ligne = 0;
+    Vgrid = Ugrid = 50;
+    CutV = CutU = 0;
     isoline = isocolumn = isodepth = 40;
     cpisoline = cpisocolumn = cpisodepth = 0;
     IDGlWindow        = NBGlWindow;
@@ -1023,7 +1023,7 @@ void OpenGlWidget::PrintInfos()
 {
     (LocalScene.typedrawing == 1) ?
     nbl = QString::number(isoline-cpisoline)+"x"+QString::number(isocolumn-cpisocolumn)+"x"+QString::number(isodepth-cpisodepth) :
-          nbl = QString::number(nb_ligne-coupure_ligne)+"x"+QString::number(nb_colone-coupure_col)+" = "+QString::number((nb_ligne-coupure_ligne)*(nb_colone-coupure_col));
+          nbl = QString::number(Ugrid-CutU)+"x"+QString::number(Vgrid-CutV)+" = "+QString::number((Ugrid-CutU)*(Vgrid-CutV));
     glDisable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
