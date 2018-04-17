@@ -57,5 +57,8 @@
         <file>advancedmodels.js</file>
         <file>images/win/player_play.png</file>
         <file>images/win/stop.png</file>
+        <file>copying</file>
+        <file>Licence.txt</file>
+        <file>Readme.txt</file>
     </qresource>
 </RCC>
