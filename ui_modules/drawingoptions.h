@@ -32,6 +32,14 @@
 #include "addparam.h"
 #include <QMainWindow>
 
+struct SliderStruct {
+    QScrollBar * SliderScrollBar;
+    QLabel *     SliderLabel;
+    QLabel *     SliderLabelMin;
+    QLabel *     SliderLabelMax;
+    QGroupBox *  SliderGroupeBox;
+};
+
 class DrawingOptions : public QMainWindow
 {
     Q_OBJECT
@@ -50,6 +58,7 @@ public:
     void keyPressEvent ( QKeyEvent *);
     Ui::DrawingOptions ui;
     QJsonObject JSONMathModels;
+    SliderStruct * SliderArray;
 
 public slots:
     void updateGlOptions();

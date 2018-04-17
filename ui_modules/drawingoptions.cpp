@@ -64,6 +64,11 @@ void DrawingOptions::videoplay()
     player->show();
 }
 
+DrawingOptions::~DrawingOptions()
+{
+    delete[] SliderArray;
+}
+
 //+++++++++++++++++++++++++++++++++++++++
 DrawingOptions::DrawingOptions(QWidget *parent)
     : QMainWindow(parent)
@@ -74,13 +79,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
-
-    //connect( MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet, SIGNAL(mySignal(int)), ui.progressBar, SLOT(setValue(int)));
-}
-
-//+++++++++++++++++++++++++++++++++++++++
-DrawingOptions::~DrawingOptions()
-{
+    SliderArray = new SliderStruct[20];
 }
 
 //+++++++++++++++++++++++++++++++++++++++
