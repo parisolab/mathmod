@@ -186,7 +186,7 @@ void Par3D::initialiser_parametres(int nbThreads, int nbGrid)
     Vgrid = nbGrid;
     largeur_fenetre = 620;
     hauteur_fenetre = 620;
-    coupure_col = coupure_ligne = 0;
+    CutV = CutU = 0;
     tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
     tetazw_ok = tetaxy_ok =  tetaxz_ok = tetayz_ok = tetaxw_ok = tetayw_ok =  param4D = -1;
     // initialisation des matrices 4D
@@ -1224,8 +1224,8 @@ int ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 void Par3D::BorderCalculation(int NewPosition)
 {
     int k=0;
-    for(int i=0; i<Ugrid - coupure_ligne-2; i++)
-        for(int j=0; j<Vgrid - coupure_col -2; j++)
+    for(int i=0; i<Ugrid - CutU-2; i++)
+        for(int j=0; j<Vgrid - CutV -2; j++)
         {
             if(VerifCND[i*(Vgrid)+j] != VerifCND[i*(Vgrid)+j+1])
             {
@@ -1842,9 +1842,9 @@ void  Par3D::ParamBuild(
         masterthread->CurrentIndex = NextIndex;
         // Save Number of Polys and vertex :
         NbVertexTmp                 += (Ugrid)*(Vgrid);
-        NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1);
-        NbPolyMinimalTopology       += (Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1);
-        PreviousSizeMinimalTopology += 5*(Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1);
+        NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
+        NbPolyMinimalTopology       += (Ugrid  - CutU -1)*(Vgrid - CutV -1);
+        PreviousSizeMinimalTopology += 5*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         NbVertex  = (Ugrid)*(Vgrid);
 
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
@@ -1880,10 +1880,10 @@ void  Par3D::ParamBuild(
         if(components != NULL)
         {
             components->Parametricpositions[3*fctnb  ] = 6*NextPosition; //save the starting position of this component
-            components->Parametricpositions[3*fctnb+1] = 2*(Ugrid  - coupure_ligne -1)*(Vgrid - coupure_col -1); //save the number of Polygones of this component
+            components->Parametricpositions[3*fctnb+1] = 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1); //save the number of Polygones of this component
             components->Parametricpositions[3*fctnb+2] = NextIndex;
         }
-        NextPosition += (Ugrid  - coupure_ligne-1)*(Vgrid - coupure_col-1);
+        NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NextIndex    += (Ugrid)*(Vgrid);
     }
 
@@ -1937,8 +1937,8 @@ void  Par3D::make_PolyIndexMin(int NewPo, int index, int IsoPos)
     int k=0;
     int NewPosition = 5*NewPo;
     int nbVertex       = index;
-    for (int i=0; i< Ugrid - coupure_ligne -1; i++)
-        for (int j=0; j< Vgrid - coupure_col -1; j++)
+    for (int i=0; i< Ugrid - CutU -1; i++)
+        for (int j=0; j< Vgrid - CutV -1; j++)
         {
             IndexPolyTabMin[k  +NewPosition] =  4;
             IndexPolyTabMin[k+1+NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
@@ -1954,8 +1954,8 @@ void  Par3D::make_PolyIndexTri(int NewPo, int index, int IsoPos)
     int k=0;
     int NewPosition = 6*NewPo;
     int nbVertex    = index;
-    for (int i=0; i< Ugrid - coupure_ligne -1; i++)
-        for (int j=0; j< Vgrid - coupure_col -1; j++)
+    for (int i=0; i< Ugrid - CutU -1; i++)
+        for (int j=0; j< Vgrid - CutV -1; j++)
         {
             IndexPolyTab[k    +NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
             IndexPolyTab[k+1+NewPosition] = (i+1)*Vgrid + j +nbVertex + IsoPos;

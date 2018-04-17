@@ -125,7 +125,7 @@ public:
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
     int Ugrid, Vgrid, NbVertex, WorkerThreadsNumber;
-    int coupure_col, coupure_ligne;
+    int CutV, CutU;
     double MINX,MINY,MINZ,MINW,
            MAXX,MAXY,MAXZ,MAXW,
            DIFX,DIFY,DIFZ,DIFW,
@@ -135,7 +135,7 @@ public:
     double tetaxy, tetaxz, tetayz, tetaxw, tetayw, tetazw;
 
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
-    int   largeur_fenetre,hauteur_fenetre;
+    int largeur_fenetre,hauteur_fenetre;
 public:
     Par3D(int,
           int nbThreads=4,
