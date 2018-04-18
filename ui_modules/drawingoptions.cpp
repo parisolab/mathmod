@@ -64,6 +64,7 @@ void DrawingOptions::videoplay()
     player->show();
 }
 
+//+++++++++++++++++++++++++++++++++++++++
 DrawingOptions::~DrawingOptions()
 {
     delete[] SliderArray;
@@ -79,9 +80,134 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
-    SliderArray = new SliderStruct[20];
+    SaveSlidersRef();
 }
 
+//+++++++++++++++++++++++++++++++++++++++
+void DrawingOptions::SaveSlidersRef(int nb)
+{
+    SliderArray = new SliderStruct[nb];
+
+    SliderArray[0].SliderScrollBar = ui.C1ScrollBar;
+    SliderArray[0].SliderLabel = ui.C1label;
+    SliderArray[0].SliderLabelMax = ui.C1labelMax;
+    SliderArray[0].SliderLabelMin = ui.C1labelMin;
+    SliderArray[0].SliderGroupeBox = ui.groupBox_9;
+
+    SliderArray[1].SliderScrollBar = ui.C2ScrollBar;
+    SliderArray[1].SliderLabel = ui.C2label;
+    SliderArray[1].SliderLabelMax = ui.C2labelMax;
+    SliderArray[1].SliderLabelMin = ui.C2labelMin;
+    SliderArray[1].SliderGroupeBox = ui.groupBox_10;
+
+    SliderArray[2].SliderScrollBar = ui.C3ScrollBar;
+    SliderArray[2].SliderLabel = ui.C3label;
+    SliderArray[2].SliderLabelMax = ui.C3labelMax;
+    SliderArray[2].SliderLabelMin = ui.C3labelMin;
+    SliderArray[2].SliderGroupeBox = ui.groupBox_11;
+
+    SliderArray[3].SliderScrollBar = ui.C4ScrollBar;
+    SliderArray[3].SliderLabel = ui.C4label;
+    SliderArray[3].SliderLabelMax = ui.C4labelMax;
+    SliderArray[3].SliderLabelMin = ui.C4labelMin;
+    SliderArray[3].SliderGroupeBox = ui.groupBox_12;
+
+    SliderArray[4].SliderScrollBar = ui.C5ScrollBar;
+    SliderArray[4].SliderLabel = ui.C5label;
+    SliderArray[4].SliderLabelMax = ui.C5labelMax;
+    SliderArray[4].SliderLabelMin = ui.C5labelMin;
+    SliderArray[4].SliderGroupeBox = ui.groupBox_13;
+
+    SliderArray[5].SliderScrollBar = ui.C6ScrollBar;
+    SliderArray[5].SliderLabel = ui.C6label;
+    SliderArray[5].SliderLabelMax = ui.C6labelMax;
+    SliderArray[5].SliderLabelMin = ui.C6labelMin;
+    SliderArray[5].SliderGroupeBox = ui.groupBox_14;
+
+    SliderArray[6].SliderScrollBar = ui.C7ScrollBar;
+    SliderArray[6].SliderLabel = ui.C7label;
+    SliderArray[6].SliderLabelMax = ui.C7labelMax;
+    SliderArray[6].SliderLabelMin = ui.C7labelMin;
+    SliderArray[6].SliderGroupeBox = ui.groupBox_15;
+
+    SliderArray[7].SliderScrollBar = ui.C8ScrollBar;
+    SliderArray[7].SliderLabel = ui.C8label;
+    SliderArray[7].SliderLabelMax = ui.C8labelMax;
+    SliderArray[7].SliderLabelMin = ui.C8labelMin;
+    SliderArray[7].SliderGroupeBox = ui.groupBox_16;
+
+    SliderArray[8].SliderScrollBar = ui.C9ScrollBar;
+    SliderArray[8].SliderLabel = ui.C9label;
+    SliderArray[8].SliderLabelMax = ui.C9labelMax;
+    SliderArray[8].SliderLabelMin = ui.C9labelMin;
+    SliderArray[8].SliderGroupeBox = ui.groupBox_17;
+
+    SliderArray[9].SliderScrollBar = ui.C10ScrollBar;
+    SliderArray[9].SliderLabel = ui.C10label;
+    SliderArray[9].SliderLabelMax = ui.C10labelMax;
+    SliderArray[9].SliderLabelMin = ui.C10labelMin;
+    SliderArray[9].SliderGroupeBox = ui.groupBox_18;
+
+    SliderArray[10].SliderScrollBar = ui.C11ScrollBar;
+    SliderArray[10].SliderLabel = ui.C11label;
+    SliderArray[10].SliderLabelMax = ui.C11labelMax;
+    SliderArray[10].SliderLabelMin = ui.C11labelMin;
+    SliderArray[10].SliderGroupeBox = ui.groupBox_19;
+
+    SliderArray[11].SliderScrollBar = ui.C12ScrollBar;
+    SliderArray[11].SliderLabel = ui.C12label;
+    SliderArray[11].SliderLabelMax = ui.C12labelMax;
+    SliderArray[11].SliderLabelMin = ui.C12labelMin;
+    SliderArray[11].SliderGroupeBox = ui.groupBox_20;
+
+    SliderArray[12].SliderScrollBar = ui.C13ScrollBar;
+    SliderArray[12].SliderLabel = ui.C13label;
+    SliderArray[12].SliderLabelMax = ui.C13labelMax;
+    SliderArray[12].SliderLabelMin = ui.C13labelMin;
+    SliderArray[12].SliderGroupeBox = ui.groupBox_21;
+
+    SliderArray[13].SliderScrollBar = ui.C14ScrollBar;
+    SliderArray[13].SliderLabel = ui.C14label;
+    SliderArray[13].SliderLabelMax = ui.C14labelMax;
+    SliderArray[13].SliderLabelMin = ui.C14labelMin;
+    SliderArray[13].SliderGroupeBox = ui.groupBox_22;
+
+    SliderArray[14].SliderScrollBar = ui.C15ScrollBar;
+    SliderArray[14].SliderLabel = ui.C15label;
+    SliderArray[14].SliderLabelMax = ui.C15labelMax;
+    SliderArray[14].SliderLabelMin = ui.C15labelMin;
+    SliderArray[14].SliderGroupeBox = ui.groupBox_23;
+
+    SliderArray[15].SliderScrollBar = ui.C16ScrollBar;
+    SliderArray[15].SliderLabel = ui.C16label;
+    SliderArray[15].SliderLabelMax = ui.C16labelMax;
+    SliderArray[15].SliderLabelMin = ui.C16labelMin;
+    SliderArray[15].SliderGroupeBox = ui.groupBox_24;
+
+    SliderArray[16].SliderScrollBar = ui.C17ScrollBar;
+    SliderArray[16].SliderLabel = ui.C17label;
+    SliderArray[16].SliderLabelMax = ui.C17labelMax;
+    SliderArray[16].SliderLabelMin = ui.C17labelMin;
+    SliderArray[16].SliderGroupeBox = ui.groupBox_25;
+
+    SliderArray[17].SliderScrollBar = ui.C18ScrollBar;
+    SliderArray[17].SliderLabel = ui.C18label;
+    SliderArray[17].SliderLabelMax = ui.C18labelMax;
+    SliderArray[17].SliderLabelMin = ui.C18labelMin;
+    SliderArray[17].SliderGroupeBox = ui.groupBox_26;
+
+    SliderArray[18].SliderScrollBar = ui.C19ScrollBar;
+    SliderArray[18].SliderLabel = ui.C19label;
+    SliderArray[18].SliderLabelMax = ui.C19labelMax;
+    SliderArray[18].SliderLabelMin = ui.C19labelMin;
+    SliderArray[18].SliderGroupeBox = ui.groupBox_27;
+
+    SliderArray[19].SliderScrollBar = ui.C20ScrollBar;
+    SliderArray[19].SliderLabel = ui.C20label;
+    SliderArray[19].SliderLabelMax = ui.C20labelMax;
+    SliderArray[19].SliderLabelMin = ui.C20labelMin;
+    SliderArray[19].SliderGroupeBox = ui.groupBox_28;
+}
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::on_xyzg_valueChanged(int value)
 {
@@ -1050,288 +1176,22 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
             ui.PredefinedSets->addItems(qlist);
         }
 
-        if(qlstnames.size() >= 1)
+        for(int sl=0; sl<20; sl++)
         {
-            ui.C1ScrollBar->blockSignals(true);
-            ui.C1ScrollBar->setMaximum(qlstmax.at(0).toDouble());
-            ui.C1ScrollBar->setMinimum(qlstmin.at(0).toDouble());
-            ui.C1ScrollBar->setSingleStep(qlstStep.at(0).toDouble());
-            ui.C1ScrollBar->setPageStep(qlstStep.at(0).toDouble());
-            ui.C1ScrollBar->setSliderPosition(qlstPos.at(0).toDouble());
-            ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0)+"("+ qlstStep.at(0) +")");
-            ui.C1labelMin->setText(qlstmin.at(0));
-            ui.C1labelMax->setText(qlstmax.at(0));
-            ui.C1ScrollBar->blockSignals(false);
-            ui.groupBox_9->show();
-        }
-
-        if(qlstnames.size() >= 2)
-        {
-            ui.C2ScrollBar->blockSignals(true);
-            ui.C2ScrollBar->setMaximum(qlstmax.at(1).toDouble());
-            ui.C2ScrollBar->setMinimum(qlstmin.at(1).toDouble());
-            ui.C2ScrollBar->setSingleStep(qlstStep.at(1).toDouble());
-            ui.C2ScrollBar->setPageStep(qlstStep.at(1).toDouble());
-            ui.C2ScrollBar->setSliderPosition(qlstPos.at(1).toDouble());
-            ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1)+"("+ qlstStep.at(1) +")");
-            ui.C2labelMin->setText(qlstmin.at(1));
-            ui.C2labelMax->setText(qlstmax.at(1));
-            ui.C2ScrollBar->blockSignals(false);
-            ui.groupBox_10->show();
-        }
-        if(qlstnames.size() >= 3)
-        {
-
-            ui.C3ScrollBar->blockSignals(true);
-            ui.C3ScrollBar->setMaximum(qlstmax.at(2).toDouble());
-            ui.C3ScrollBar->setMinimum(qlstmin.at(2).toDouble());
-            ui.C3ScrollBar->setSingleStep(qlstStep.at(2).toDouble());
-            ui.C3ScrollBar->setPageStep(qlstStep.at(2).toDouble());
-            ui.C3ScrollBar->setSliderPosition(qlstPos.at(2).toDouble());
-            ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2)+"("+ qlstStep.at(2) +")");
-            ui.C3labelMin->setText(qlstmin.at(2));
-            ui.C3labelMax->setText(qlstmax.at(2));
-            ui.C3ScrollBar->blockSignals(false);
-            ui.groupBox_11->show();
-        }
-        if(qlstnames.size() >= 4)
-        {
-            ui.C4ScrollBar->blockSignals(true);
-            ui.C4ScrollBar->setMaximum(qlstmax.at(3).toDouble());
-            ui.C4ScrollBar->setMinimum(qlstmin.at(3).toDouble());
-            ui.C4ScrollBar->setSingleStep(qlstStep.at(3).toDouble());
-            ui.C4ScrollBar->setPageStep(qlstStep.at(3).toDouble());
-            ui.C4ScrollBar->setSliderPosition(qlstPos.at(3).toDouble());
-            ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3)+"("+ qlstStep.at(3) +")");
-            ui.C4labelMin->setText(qlstmin.at(3));
-            ui.C4labelMax->setText(qlstmax.at(3));
-            ui.C4ScrollBar->blockSignals(false);
-            ui.groupBox_12->show();
-        }
-        if(qlstnames.size() >= 5)
-        {
-            ui.C5ScrollBar->blockSignals(true);
-            ui.C5ScrollBar->setMaximum(qlstmax.at(4).toDouble());
-            ui.C5ScrollBar->setMinimum(qlstmin.at(4).toDouble());
-            ui.C5ScrollBar->setSingleStep(qlstStep.at(4).toDouble());
-            ui.C5ScrollBar->setPageStep(qlstStep.at(4).toDouble());
-            ui.C5ScrollBar->setSliderPosition(qlstPos.at(4).toDouble());
-            ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4)+"("+ qlstStep.at(4) +")");
-            ui.C5labelMin->setText(qlstmin.at(4));
-            ui.C5labelMax->setText(qlstmax.at(4));
-            ui.C5ScrollBar->blockSignals(false);
-            ui.groupBox_13->show();
-        }
-
-        if(qlstnames.size() >= 6)
-        {
-            ui.C6ScrollBar->blockSignals(true);
-            ui.C6ScrollBar->setMaximum(qlstmax.at(5).toDouble());
-            ui.C6ScrollBar->setMinimum(qlstmin.at(5).toDouble());
-            ui.C6ScrollBar->setSingleStep(qlstStep.at(5).toDouble());
-            ui.C6ScrollBar->setPageStep(qlstStep.at(5).toDouble());
-            ui.C6ScrollBar->setSliderPosition(qlstPos.at(5).toDouble());
-            ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5)+"("+ qlstStep.at(5) +")");
-            ui.C6labelMin->setText(qlstmin.at(5));
-            ui.C6labelMax->setText(qlstmax.at(5));
-            ui.C6ScrollBar->blockSignals(false);
-            ui.groupBox_14->show();
-        }
-        if(qlstnames.size() >= 7)
-        {
-            ui.C7ScrollBar->blockSignals(true);
-            ui.C7ScrollBar->setMaximum(qlstmax.at(6).toDouble());
-            ui.C7ScrollBar->setMinimum(qlstmin.at(6).toDouble());
-            ui.C7ScrollBar->setSingleStep(qlstStep.at(6).toDouble());
-            ui.C7ScrollBar->setPageStep(qlstStep.at(6).toDouble());
-            ui.C7ScrollBar->setSliderPosition(qlstPos.at(6).toDouble());
-            ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6)+"("+ qlstStep.at(6) +")");
-            ui.C7labelMin->setText(qlstmin.at(6));
-            ui.C7labelMax->setText(qlstmax.at(6));
-            ui.C7ScrollBar->blockSignals(false);
-            ui.groupBox_15->show();
-        }
-        if(qlstnames.size() >= 8)
-        {
-            ui.C8ScrollBar->blockSignals(true);
-            ui.C8ScrollBar->setMaximum(qlstmax.at(7).toDouble());
-            ui.C8ScrollBar->setMinimum(qlstmin.at(7).toDouble());
-            ui.C8ScrollBar->setSingleStep(qlstStep.at(7).toDouble());
-            ui.C8ScrollBar->setPageStep(qlstStep.at(7).toDouble());
-            ui.C8ScrollBar->setSliderPosition(qlstPos.at(7).toDouble());
-            ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7)+"("+ qlstStep.at(7) +")");
-            ui.C8labelMin->setText(qlstmin.at(7));
-            ui.C8labelMax->setText(qlstmax.at(7));
-            ui.C8ScrollBar->blockSignals(false);
-            ui.groupBox_16->show();
-        }
-        if(qlstnames.size() >= 9)
-        {
-            ui.C9ScrollBar->blockSignals(true);
-            ui.C9ScrollBar->setMaximum(qlstmax.at(8).toDouble());
-            ui.C9ScrollBar->setMinimum(qlstmin.at(8).toDouble());
-            ui.C9ScrollBar->setSingleStep(qlstStep.at(8).toDouble());
-            ui.C9ScrollBar->setPageStep(qlstStep.at(8).toDouble());
-            ui.C9ScrollBar->setSliderPosition(qlstPos.at(8).toDouble());
-            ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8)+"("+ qlstStep.at(8) +")");
-            ui.C9labelMin->setText(qlstmin.at(8));
-            ui.C9labelMax->setText(qlstmax.at(8));
-            ui.C9ScrollBar->blockSignals(false);
-            ui.groupBox_17->show();
-        }
-        if(qlstnames.size() >= 10)
-        {
-            ui.C10ScrollBar->blockSignals(true);
-            ui.C10ScrollBar->setMaximum(qlstmax.at(9).toDouble());
-            ui.C10ScrollBar->setMinimum(qlstmin.at(9).toDouble());
-            ui.C10ScrollBar->setSingleStep(qlstStep.at(9).toDouble());
-            ui.C10ScrollBar->setPageStep(qlstStep.at(9).toDouble());
-            ui.C10ScrollBar->setSliderPosition(qlstPos.at(9).toDouble());
-            ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9)+"("+ qlstStep.at(9) +")");
-            ui.C10labelMin->setText(qlstmin.at(9));
-            ui.C10labelMax->setText(qlstmax.at(9));
-            ui.C10ScrollBar->blockSignals(false);
-            ui.groupBox_18->show();
-        }
-        if(qlstnames.size() >= 11)
-        {
-            ui.C11ScrollBar->blockSignals(true);
-            ui.C11ScrollBar->setMaximum(qlstmax.at(10).toDouble());
-            ui.C11ScrollBar->setMinimum(qlstmin.at(10).toDouble());
-            ui.C11ScrollBar->setSingleStep(qlstStep.at(10).toDouble());
-            ui.C11ScrollBar->setPageStep(qlstStep.at(10).toDouble());
-            ui.C11ScrollBar->setSliderPosition(qlstPos.at(10).toDouble());
-            ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10)+"("+ qlstStep.at(10) +")");
-            ui.C11labelMin->setText(qlstmin.at(10));
-            ui.C11labelMax->setText(qlstmax.at(10));
-            ui.C11ScrollBar->blockSignals(false);
-            ui.groupBox_19->show();
-        }
-        if(qlstnames.size() >= 12)
-        {
-            ui.C12ScrollBar->blockSignals(true);
-            ui.C12ScrollBar->setMaximum(qlstmax.at(11).toDouble());
-            ui.C12ScrollBar->setMinimum(qlstmin.at(11).toDouble());
-            ui.C12ScrollBar->setSingleStep(qlstStep.at(11).toDouble());
-            ui.C12ScrollBar->setPageStep(qlstStep.at(11).toDouble());
-            ui.C12ScrollBar->setSliderPosition(qlstPos.at(11).toDouble());
-            ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11)+"("+ qlstStep.at(11) +")");
-            ui.C12labelMin->setText(qlstmin.at(11));
-            ui.C12labelMax->setText(qlstmax.at(11));
-            ui.C12ScrollBar->blockSignals(false);
-            ui.groupBox_20->show();
-        }
-        if(qlstnames.size() >= 13)
-        {
-            ui.C13ScrollBar->blockSignals(true);
-            ui.C13ScrollBar->setMaximum(qlstmax.at(12).toDouble());
-            ui.C13ScrollBar->setMinimum(qlstmin.at(12).toDouble());
-            ui.C13ScrollBar->setSingleStep(qlstStep.at(12).toDouble());
-            ui.C13ScrollBar->setPageStep(qlstStep.at(12).toDouble());
-            ui.C13ScrollBar->setSliderPosition(qlstPos.at(12).toDouble());
-            ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12)+"("+ qlstStep.at(12) +")");
-            ui.C13labelMin->setText(qlstmin.at(12));
-            ui.C13labelMax->setText(qlstmax.at(12));
-            ui.C13ScrollBar->blockSignals(false);
-            ui.groupBox_21->show();
-        }
-        if(qlstnames.size() >= 14)
-        {
-            ui.C14ScrollBar->blockSignals(true);
-            ui.C14ScrollBar->setMaximum(qlstmax.at(13).toDouble());
-            ui.C14ScrollBar->setMinimum(qlstmin.at(13).toDouble());
-            ui.C14ScrollBar->setSingleStep(qlstStep.at(13).toDouble());
-            ui.C14ScrollBar->setPageStep(qlstStep.at(13).toDouble());
-            ui.C14ScrollBar->setSliderPosition(qlstPos.at(13).toDouble());
-            ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13)+"("+ qlstStep.at(13) +")");
-            ui.C14labelMin->setText(qlstmin.at(13));
-            ui.C14labelMax->setText(qlstmax.at(13));
-            ui.C14ScrollBar->blockSignals(false);
-            ui.groupBox_22->show();
-        }
-        if(qlstnames.size() >= 15)
-        {
-            ui.C15ScrollBar->blockSignals(true);
-            ui.C15ScrollBar->setMaximum(qlstmax.at(14).toDouble());
-            ui.C15ScrollBar->setMinimum(qlstmin.at(14).toDouble());
-            ui.C15ScrollBar->setSingleStep(qlstStep.at(14).toDouble());
-            ui.C15ScrollBar->setPageStep(qlstStep.at(14).toDouble());
-            ui.C15ScrollBar->setSliderPosition(qlstPos.at(14).toDouble());
-            ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14)+"("+ qlstStep.at(14) +")");
-            ui.C15labelMin->setText(qlstmin.at(14));
-            ui.C15labelMax->setText(qlstmax.at(14));
-            ui.C15ScrollBar->blockSignals(false);
-            ui.groupBox_23->show();
-        }
-        if(qlstnames.size() >= 16)
-        {
-            ui.C16ScrollBar->blockSignals(true);
-            ui.C16ScrollBar->setMaximum(qlstmax.at(15).toDouble());
-            ui.C16ScrollBar->setMinimum(qlstmin.at(15).toDouble());
-            ui.C16ScrollBar->setSingleStep(qlstStep.at(15).toDouble());
-            ui.C16ScrollBar->setPageStep(qlstStep.at(15).toDouble());
-            ui.C16ScrollBar->setSliderPosition(qlstPos.at(15).toDouble());
-            ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15)+"("+ qlstStep.at(15) +")");
-            ui.C16labelMin->setText(qlstmin.at(15));
-            ui.C16labelMax->setText(qlstmax.at(15));
-            ui.C16ScrollBar->blockSignals(false);
-            ui.groupBox_24->show();
-        }
-        if(qlstnames.size() >= 17)
-        {
-            ui.C17ScrollBar->blockSignals(true);
-            ui.C17ScrollBar->setMaximum(qlstmax.at(16).toDouble());
-            ui.C17ScrollBar->setMinimum(qlstmin.at(16).toDouble());
-            ui.C17ScrollBar->setSingleStep(qlstStep.at(16).toDouble());
-            ui.C17ScrollBar->setPageStep(qlstStep.at(16).toDouble());
-            ui.C17ScrollBar->setSliderPosition(qlstPos.at(16).toDouble());
-            ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16)+"("+ qlstStep.at(16) +")");
-            ui.C17labelMin->setText(qlstmin.at(16));
-            ui.C17labelMax->setText(qlstmax.at(16));
-            ui.C17ScrollBar->blockSignals(false);
-            ui.groupBox_25->show();
-        }
-        if(qlstnames.size() >= 18)
-        {
-            ui.C18ScrollBar->blockSignals(true);
-            ui.C18ScrollBar->setMaximum(qlstmax.at(17).toDouble());
-            ui.C18ScrollBar->setMinimum(qlstmin.at(17).toDouble());
-            ui.C18ScrollBar->setSingleStep(qlstStep.at(17).toDouble());
-            ui.C18ScrollBar->setPageStep(qlstStep.at(17).toDouble());
-            ui.C18ScrollBar->setSliderPosition(qlstPos.at(17).toDouble());
-            ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17)+"("+ qlstStep.at(17) +")");
-            ui.C18labelMin->setText(qlstmin.at(17));
-            ui.C18labelMax->setText(qlstmax.at(17));
-            ui.C18ScrollBar->blockSignals(false);
-            ui.groupBox_26->show();
-        }
-        if(qlstnames.size() >= 19)
-        {
-            ui.C19ScrollBar->blockSignals(true);
-            ui.C19ScrollBar->setMaximum(qlstmax.at(18).toDouble());
-            ui.C19ScrollBar->setMinimum(qlstmin.at(18).toDouble());
-            ui.C19ScrollBar->setSingleStep(qlstStep.at(18).toDouble());
-            ui.C19ScrollBar->setPageStep(qlstStep.at(18).toDouble());
-            ui.C19ScrollBar->setSliderPosition(qlstPos.at(18).toDouble());
-            ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18)+"("+ qlstStep.at(18) +")");
-            ui.C19labelMin->setText(qlstmin.at(18));
-            ui.C19labelMax->setText(qlstmax.at(18));
-            ui.C19ScrollBar->blockSignals(false);
-            ui.groupBox_27->show();
-        }
-        if(qlstnames.size() >= 20)
-        {
-            ui.C20ScrollBar->blockSignals(true);
-            ui.C20ScrollBar->setMaximum(qlstmax.at(19).toDouble());
-            ui.C20ScrollBar->setMinimum(qlstmin.at(19).toDouble());
-            ui.C20ScrollBar->setSingleStep(qlstStep.at(19).toDouble());
-            ui.C20ScrollBar->setPageStep(qlstStep.at(19).toDouble());
-            ui.C20ScrollBar->setSliderPosition(qlstPos.at(19).toDouble());
-            ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19)+"("+ qlstStep.at(19) +")");
-            ui.C20labelMin->setText(qlstmin.at(19));
-            ui.C20labelMax->setText(qlstmax.at(19));
-            ui.C20ScrollBar->blockSignals(false);
-            ui.groupBox_28->show();
+            if(qlstnames.size() >= (sl+1))
+            {
+                (SliderArray[sl].SliderScrollBar)->blockSignals(true);
+                (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setPageStep(qlstStep.at(sl).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl).toDouble());
+                (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl)+"("+ qlstStep.at(sl) +")");
+                (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl));
+                (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
+                (SliderArray[sl].SliderScrollBar)->blockSignals(false);
+                (SliderArray[sl].SliderGroupeBox)->show();
+            }
         }
     }
     else
@@ -6531,7 +6391,6 @@ void DrawingOptions::on_C20ScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_PredefinedSets_activated(int index)
 {
-    ;
     indexcurrentSet = index;
     if(index >0)
     {
@@ -6543,366 +6402,29 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
         }
 
-        if(size >=1)
+
+    for(int sl=0; sl<20; sl++)
+    {
+        if(size >= (sl+1))
         {
-            ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0+(index-1)*size)+"("+ qlstStep.at(0) +")");
-            ui.C1ScrollBar->blockSignals(true);
+            (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl+(index-1)*size)+"("+ qlstStep.at(sl) +")");
+            (SliderArray[sl].SliderScrollBar)->blockSignals(true);
             if(qlstmin.size() > qlstnames.size())
             {
-                ui.C1ScrollBar->setMaximum(qlstmax.at(0+(index-1)*size).toDouble());
-                ui.C1ScrollBar->setMinimum(qlstmin.at(0+(index-1)*size).toDouble());
-                ui.C1ScrollBar->setSingleStep(qlstStep.at(0+(index-1)*size).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl+(index-1)*size).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl+(index-1)*size).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl+(index-1)*size).toDouble());
 
-                ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0+(index-1)*size)+"("+ qlstStep.at(0+(index-1)*size) +")");
-                ui.C1labelMin->setText(qlstmin.at(0+(index-1)*size));
-                ui.C1labelMax->setText(qlstmax.at(0+(index-1)*size));
+                (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl+(index-1)*size)+"("+ qlstStep.at(sl+(index-1)*size) +")");
+                (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl+(index-1)*size));
+                (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl+(index-1)*size));
             }
-            ui.C1ScrollBar->setSliderPosition(qlstPos.at(0+(index-1)*size).toDouble());
-            ui.C1ScrollBar->blockSignals(false);
+            (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl+(index-1)*size).toDouble());
+            (SliderArray[sl].SliderScrollBar)->blockSignals(false);
         }
+    }
 
-        if(size >=2)
-        {
-            ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1+(index-1)*size)+"("+ qlstStep.at(1) +")");
-            ui.C2ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C2ScrollBar->setMaximum(qlstmax.at(1+(index-1)*size).toDouble());
-                ui.C2ScrollBar->setMinimum(qlstmin.at(1+(index-1)*size).toDouble());
-                ui.C2ScrollBar->setSingleStep(qlstStep.at(1+(index-1)*size).toDouble());
-
-                ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1+(index-1)*size)+"("+ qlstStep.at(1+(index-1)*size) +")");
-                ui.C2labelMin->setText(qlstmin.at(1+(index-1)*size));
-                ui.C2labelMax->setText(qlstmax.at(1+(index-1)*size));
-            }
-            ui.C2ScrollBar->setSliderPosition(qlstPos.at(1+(index-1)*size).toDouble());
-            ui.C2ScrollBar->blockSignals(false);
-        }
-
-        if(size >=3)
-        {
-            ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2+(index-1)*size)+"("+ qlstStep.at(2) +")");
-            ui.C3ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C3ScrollBar->setMaximum(qlstmax.at(2+(index-1)*size).toDouble());
-                ui.C3ScrollBar->setMinimum(qlstmin.at(2+(index-1)*size).toDouble());
-                ui.C3ScrollBar->setSingleStep(qlstStep.at(2+(index-1)*size).toDouble());
-
-                ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2+(index-1)*size)+"("+ qlstStep.at(2+(index-1)*size) +")");
-                ui.C3labelMin->setText(qlstmin.at(2+(index-1)*size));
-                ui.C3labelMax->setText(qlstmax.at(2+(index-1)*size));
-            }
-            ui.C3ScrollBar->setSliderPosition(qlstPos.at(2+(index-1)*size).toDouble());
-            ui.C3ScrollBar->blockSignals(false);
-        }
-
-        if(size >=4)
-        {
-            ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3+(index-1)*size)+"("+ qlstStep.at(3) +")");
-            ui.C4ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C4ScrollBar->setMaximum(qlstmax.at(3+(index-1)*size).toDouble());
-                ui.C4ScrollBar->setMinimum(qlstmin.at(3+(index-1)*size).toDouble());
-                ui.C4ScrollBar->setSingleStep(qlstStep.at(3+(index-1)*size).toDouble());
-
-                ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3+(index-1)*size)+"("+ qlstStep.at(3+(index-1)*size) +")");
-                ui.C4labelMin->setText(qlstmin.at(3+(index-1)*size));
-                ui.C4labelMax->setText(qlstmax.at(3+(index-1)*size));
-            }
-            ui.C4ScrollBar->setSliderPosition(qlstPos.at(3+(index-1)*size).toDouble());
-            ui.C4ScrollBar->blockSignals(false);
-        }
-
-        if(size >=5)
-        {
-            ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4+(index-1)*size)+"("+ qlstStep.at(4) +")");
-            ui.C5ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C5ScrollBar->setMaximum(qlstmax.at(4+(index-1)*size).toDouble());
-                ui.C5ScrollBar->setMinimum(qlstmin.at(4+(index-1)*size).toDouble());
-                ui.C5ScrollBar->setSingleStep(qlstStep.at(4+(index-1)*size).toDouble());
-
-                ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4+(index-1)*size)+"("+ qlstStep.at(4+(index-1)*size) +")");
-                ui.C5labelMin->setText(qlstmin.at(4+(index-1)*size));
-                ui.C5labelMax->setText(qlstmax.at(4+(index-1)*size));
-            }
-            ui.C5ScrollBar->setSliderPosition(qlstPos.at(4+(index-1)*size).toDouble());
-            ui.C5ScrollBar->blockSignals(false);
-        }
-
-        if(size >=6)
-        {
-            ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5+(index-1)*size)+"("+ qlstStep.at(5) +")");
-            ui.C6ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C6ScrollBar->setMaximum(qlstmax.at(5+(index-1)*size).toDouble());
-                ui.C6ScrollBar->setMinimum(qlstmin.at(5+(index-1)*size).toDouble());
-                ui.C6ScrollBar->setSingleStep(qlstStep.at(5+(index-1)*size).toDouble());
-
-                ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5+(index-1)*size)+"("+ qlstStep.at(5+(index-1)*size) +")");
-                ui.C6labelMin->setText(qlstmin.at(5+(index-1)*size));
-                ui.C6labelMax->setText(qlstmax.at(5+(index-1)*size));
-            }
-            ui.C6ScrollBar->setSliderPosition(qlstPos.at(5+(index-1)*size).toDouble());
-            ui.C6ScrollBar->blockSignals(false);
-        }
-
-        if(size >=7)
-        {
-            ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6+(index-1)*size)+"("+ qlstStep.at(6) +")");
-            ui.C7ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C7ScrollBar->setMaximum(qlstmax.at(6+(index-1)*size).toDouble());
-                ui.C7ScrollBar->setMinimum(qlstmin.at(6+(index-1)*size).toDouble());
-                ui.C7ScrollBar->setSingleStep(qlstStep.at(6+(index-1)*size).toDouble());
-
-                ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6+(index-1)*size)+"("+ qlstStep.at(6+(index-1)*size) +")");
-                ui.C7labelMin->setText(qlstmin.at(6+(index-1)*size));
-                ui.C7labelMax->setText(qlstmax.at(6+(index-1)*size));
-            }
-            ui.C7ScrollBar->setSliderPosition(qlstPos.at(6+(index-1)*size).toDouble());
-            ui.C7ScrollBar->blockSignals(false);
-        }
-
-        if(size >=8)
-        {
-            ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7+(index-1)*size)+"("+ qlstStep.at(7) +")");
-            ui.C8ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C8ScrollBar->setMaximum(qlstmax.at(7+(index-1)*size).toDouble());
-                ui.C8ScrollBar->setMinimum(qlstmin.at(7+(index-1)*size).toDouble());
-                ui.C8ScrollBar->setSingleStep(qlstStep.at(7+(index-1)*size).toDouble());
-
-                ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7+(index-1)*size)+"("+ qlstStep.at(7+(index-1)*size) +")");
-                ui.C8labelMin->setText(qlstmin.at(7+(index-1)*size));
-                ui.C8labelMax->setText(qlstmax.at(7+(index-1)*size));
-            }
-            ui.C8ScrollBar->setSliderPosition(qlstPos.at(7+(index-1)*size).toDouble());
-            ui.C8ScrollBar->blockSignals(false);
-        }
-
-        if(size >=9)
-        {
-            ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8+(index-1)*size)+"("+ qlstStep.at(8) +")");
-            ui.C9ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C9ScrollBar->setMaximum(qlstmax.at(8+(index-1)*size).toDouble());
-                ui.C9ScrollBar->setMinimum(qlstmin.at(8+(index-1)*size).toDouble());
-                ui.C9ScrollBar->setSingleStep(qlstStep.at(8+(index-1)*size).toDouble());
-
-                ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8+(index-1)*size)+"("+ qlstStep.at(8+(index-1)*size) +")");
-                ui.C9labelMin->setText(qlstmin.at(8+(index-1)*size));
-                ui.C9labelMax->setText(qlstmax.at(8+(index-1)*size));
-            }
-            ui.C9ScrollBar->setSliderPosition(qlstPos.at(8+(index-1)*size).toDouble());
-            ui.C9ScrollBar->blockSignals(false);
-        }
-        if(size >=10)
-        {
-            ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9+(index-1)*size)+"("+ qlstStep.at(9) +")");
-            ui.C10ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C10ScrollBar->setMaximum(qlstmax.at(9+(index-1)*size).toDouble());
-                ui.C10ScrollBar->setMinimum(qlstmin.at(9+(index-1)*size).toDouble());
-                ui.C10ScrollBar->setSingleStep(qlstStep.at(9+(index-1)*size).toDouble());
-
-                ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9+(index-1)*size)+"("+ qlstStep.at(9+(index-1)*size) +")");
-                ui.C10labelMin->setText(qlstmin.at(9+(index-1)*size));
-                ui.C10labelMax->setText(qlstmax.at(9+(index-1)*size));
-            }
-            ui.C10ScrollBar->setSliderPosition(qlstPos.at(9+(index-1)*size).toDouble());
-            ui.C10ScrollBar->blockSignals(false);
-        }
-
-        if(size >=11)
-        {
-            ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10+(index-1)*size)+"("+ qlstStep.at(10) +")");
-            ui.C11ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C11ScrollBar->setMaximum(qlstmax.at(10+(index-1)*size).toDouble());
-                ui.C11ScrollBar->setMinimum(qlstmin.at(10+(index-1)*size).toDouble());
-                ui.C11ScrollBar->setSingleStep(qlstStep.at(10+(index-1)*size).toDouble());
-
-                ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10+(index-1)*size)+"("+ qlstStep.at(10+(index-1)*size) +")");
-                ui.C11labelMin->setText(qlstmin.at(10+(index-1)*size));
-                ui.C11labelMax->setText(qlstmax.at(10+(index-1)*size));
-            }
-            ui.C11ScrollBar->setSliderPosition(qlstPos.at(10+(index-1)*size).toDouble());
-            ui.C11ScrollBar->blockSignals(false);
-        }
-
-        if(size >=12)
-        {
-            ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11+(index-1)*size)+"("+ qlstStep.at(11) +")");
-            ui.C12ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C12ScrollBar->setMaximum(qlstmax.at(11+(index-1)*size).toDouble());
-                ui.C12ScrollBar->setMinimum(qlstmin.at(11+(index-1)*size).toDouble());
-                ui.C12ScrollBar->setSingleStep(qlstStep.at(11+(index-1)*size).toDouble());
-
-                ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11+(index-1)*size)+"("+ qlstStep.at(11+(index-1)*size) +")");
-                ui.C12labelMin->setText(qlstmin.at(11+(index-1)*size));
-                ui.C12labelMax->setText(qlstmax.at(11+(index-1)*size));
-            }
-            ui.C12ScrollBar->setSliderPosition(qlstPos.at(11+(index-1)*size).toDouble());
-            ui.C12ScrollBar->blockSignals(false);
-        }
-
-        if(size >=13)
-        {
-            ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12+(index-1)*size)+"("+ qlstStep.at(12) +")");
-            ui.C13ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C13ScrollBar->setMaximum(qlstmax.at(12+(index-1)*size).toDouble());
-                ui.C13ScrollBar->setMinimum(qlstmin.at(12+(index-1)*size).toDouble());
-                ui.C13ScrollBar->setSingleStep(qlstStep.at(12+(index-1)*size).toDouble());
-
-                ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12+(index-1)*size)+"("+ qlstStep.at(12+(index-1)*size) +")");
-                ui.C13labelMin->setText(qlstmin.at(12+(index-1)*size));
-                ui.C13labelMax->setText(qlstmax.at(12+(index-1)*size));
-            }
-            ui.C13ScrollBar->setSliderPosition(qlstPos.at(12+(index-1)*size).toDouble());
-            ui.C13ScrollBar->blockSignals(false);
-        }
-
-        if(size >=14)
-        {
-            ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13+(index-1)*size)+"("+ qlstStep.at(13) +")");
-            ui.C14ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C14ScrollBar->setMaximum(qlstmax.at(13+(index-1)*size).toDouble());
-                ui.C14ScrollBar->setMinimum(qlstmin.at(13+(index-1)*size).toDouble());
-                ui.C14ScrollBar->setSingleStep(qlstStep.at(13+(index-1)*size).toDouble());
-
-                ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13+(index-1)*size)+"("+ qlstStep.at(13+(index-1)*size) +")");
-                ui.C14labelMin->setText(qlstmin.at(13+(index-1)*size));
-                ui.C14labelMax->setText(qlstmax.at(13+(index-1)*size));
-            }
-            ui.C14ScrollBar->setSliderPosition(qlstPos.at(13+(index-1)*size).toDouble());
-            ui.C14ScrollBar->blockSignals(false);
-        }
-
-        if(size >=15)
-        {
-            ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14+(index-1)*size)+"("+ qlstStep.at(14) +")");
-            ui.C15ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C15ScrollBar->setMaximum(qlstmax.at(14+(index-1)*size).toDouble());
-                ui.C15ScrollBar->setMinimum(qlstmin.at(14+(index-1)*size).toDouble());
-                ui.C15ScrollBar->setSingleStep(qlstStep.at(14+(index-1)*size).toDouble());
-
-                ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14+(index-1)*size)+"("+ qlstStep.at(14+(index-1)*size) +")");
-                ui.C15labelMin->setText(qlstmin.at(14+(index-1)*size));
-                ui.C15labelMax->setText(qlstmax.at(14+(index-1)*size));
-            }
-            ui.C15ScrollBar->setSliderPosition(qlstPos.at(14+(index-1)*size).toDouble());
-            ui.C15ScrollBar->blockSignals(false);
-        }
-
-        if(size >=16)
-        {
-            ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15+(index-1)*size)+"("+ qlstStep.at(15) +")");
-            ui.C16ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C16ScrollBar->setMaximum(qlstmax.at(15+(index-1)*size).toDouble());
-                ui.C16ScrollBar->setMinimum(qlstmin.at(15+(index-1)*size).toDouble());
-                ui.C16ScrollBar->setSingleStep(qlstStep.at(15+(index-1)*size).toDouble());
-
-                ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15+(index-1)*size)+"("+ qlstStep.at(15+(index-1)*size) +")");
-                ui.C16labelMin->setText(qlstmin.at(15+(index-1)*size));
-                ui.C16labelMax->setText(qlstmax.at(15+(index-1)*size));
-            }
-            ui.C16ScrollBar->setSliderPosition(qlstPos.at(15+(index-1)*size).toDouble());
-            ui.C16ScrollBar->blockSignals(false);
-        }
-
-        if(size >=17)
-        {
-            ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16+(index-1)*size)+"("+ qlstStep.at(16) +")");
-            ui.C17ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C17ScrollBar->setMaximum(qlstmax.at(16+(index-1)*size).toDouble());
-                ui.C17ScrollBar->setMinimum(qlstmin.at(16+(index-1)*size).toDouble());
-                ui.C17ScrollBar->setSingleStep(qlstStep.at(16+(index-1)*size).toDouble());
-
-                ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16+(index-1)*size)+"("+ qlstStep.at(16+(index-1)*size) +")");
-                ui.C17labelMin->setText(qlstmin.at(16+(index-1)*size));
-                ui.C17labelMax->setText(qlstmax.at(16+(index-1)*size));
-            }
-            ui.C17ScrollBar->setSliderPosition(qlstPos.at(16+(index-1)*size).toDouble());
-            ui.C17ScrollBar->blockSignals(false);
-        }
-
-        if(size >=18)
-        {
-            ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17+(index-1)*size)+"("+ qlstStep.at(17) +")");
-            ui.C18ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C18ScrollBar->setMaximum(qlstmax.at(17+(index-1)*size).toDouble());
-                ui.C18ScrollBar->setMinimum(qlstmin.at(17+(index-1)*size).toDouble());
-                ui.C18ScrollBar->setSingleStep(qlstStep.at(17+(index-1)*size).toDouble());
-
-                ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17+(index-1)*size)+"("+ qlstStep.at(17+(index-1)*size) +")");
-                ui.C18labelMin->setText(qlstmin.at(17+(index-1)*size));
-                ui.C18labelMax->setText(qlstmax.at(17+(index-1)*size));
-            }
-            ui.C18ScrollBar->setSliderPosition(qlstPos.at(17+(index-1)*size).toDouble());
-            ui.C18ScrollBar->blockSignals(false);
-        }
-
-        if(size >=19)
-        {
-            ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18+(index-1)*size)+"("+ qlstStep.at(18) +")");
-            ui.C19ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C19ScrollBar->setMaximum(qlstmax.at(18+(index-1)*size).toDouble());
-                ui.C19ScrollBar->setMinimum(qlstmin.at(18+(index-1)*size).toDouble());
-                ui.C19ScrollBar->setSingleStep(qlstStep.at(18+(index-1)*size).toDouble());
-
-                ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18+(index-1)*size)+"("+ qlstStep.at(18+(index-1)*size) +")");
-                ui.C19labelMin->setText(qlstmin.at(18+(index-1)*size));
-                ui.C19labelMax->setText(qlstmax.at(18+(index-1)*size));
-            }
-            ui.C19ScrollBar->setSliderPosition(qlstPos.at(18+(index-1)*size).toDouble());
-            ui.C19ScrollBar->blockSignals(false);
-        }
-
-        if(size >=20)
-        {
-            ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19+(index-1)*size)+"("+ qlstStep.at(19) +")");
-            ui.C20ScrollBar->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
-            {
-                ui.C20ScrollBar->setMaximum(qlstmax.at(19+(index-1)*size).toDouble());
-                ui.C20ScrollBar->setMinimum(qlstmin.at(19+(index-1)*size).toDouble());
-                ui.C20ScrollBar->setSingleStep(qlstStep.at(19+(index-1)*size).toDouble());
-
-                ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19+(index-1)*size)+"("+ qlstStep.at(19+(index-1)*size) +")");
-                ui.C20labelMin->setText(qlstmin.at(19+(index-1)*size));
-                ui.C20labelMax->setText(qlstmax.at(19+(index-1)*size));
-            }
-            ui.C20ScrollBar->setSliderPosition(qlstPos.at(19+(index-1)*size).toDouble());
-            ui.C20ScrollBar->blockSignals(false);
-        }
-
-        //Draw
+    //Draw
         if(CurrentFormulaType==2)
             MathmodRef->ProcessNewIsoSurface( );
         else
@@ -7195,412 +6717,32 @@ void DrawingOptions::update_slider_param()
 {
     int SliderIndex=sliderconf.currentSlider;
 
-    if(SliderIndex==0)
+    for(int sl=0; sl<20; sl++)
     {
-        qlstmax[0] = sliderconf.ui.MaxEdit->text();
-        qlstmin[0] = sliderconf.ui.MinEdit->text();
-        qlstStep[0] = sliderconf.ui.StepEdit->text();
-        qlstPos[0] = sliderconf.ui.PosEdit->text();
+        if(SliderIndex==sl)
+        {
+            qlstmax[sl] = sliderconf.ui.MaxEdit->text();
+            qlstmin[sl] = sliderconf.ui.MinEdit->text();
+            qlstStep[sl] = sliderconf.ui.StepEdit->text();
+            qlstPos[sl] = sliderconf.ui.PosEdit->text();
 
-        ui.C1ScrollBar->blockSignals(true);
-        ui.C1ScrollBar->setMaximum(qlstmax.at(0).toDouble());
-        ui.C1ScrollBar->setMinimum(qlstmin.at(0).toDouble());
-        ui.C1ScrollBar->setSingleStep(qlstStep.at(0).toDouble());
-        ui.C1ScrollBar->setPageStep(qlstStep.at(0).toDouble());
-        ui.C1ScrollBar->setSliderPosition(qlstPos.at(0).toDouble());
-        ui.C1label->setText(qlstnames.at(0) + " = " +qlstPos.at(0)+"("+ qlstStep.at(0) +")");
-        ui.C1labelMin->setText(qlstmin.at(0));
-        ui.C1labelMax->setText(qlstmax.at(0));
-        ui.C1ScrollBar->blockSignals(false);
+            (SliderArray[sl].SliderScrollBar)->blockSignals(true);
+            (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl).toDouble());
+            (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toDouble());
+            (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl).toDouble());
+            (SliderArray[sl].SliderScrollBar)->setPageStep(qlstStep.at(sl).toDouble());
+            (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl).toDouble());
+            (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl)+"("+ qlstStep.at(sl) +")");
+            (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl));
+            (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
+            (SliderArray[sl].SliderScrollBar)->blockSignals(false);
 
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderNames[0] = qlstnames.at(0).toStdString();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderNames[0] = qlstnames.at(0).toStdString();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderNames[sl] = qlstnames.at(sl).toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderNames[sl] = qlstnames.at(sl).toStdString();
 
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[0] = qlstPos.at(0).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[0] = qlstPos.at(0).toDouble();
-    }
-
-    if(SliderIndex==1)
-    {
-        qlstmax[1] = sliderconf.ui.MaxEdit->text();
-        qlstmin[1] = sliderconf.ui.MinEdit->text();
-        qlstStep[1] = sliderconf.ui.StepEdit->text();
-        qlstPos[1] = sliderconf.ui.PosEdit->text();
-
-        ui.C2ScrollBar->blockSignals(true);
-        ui.C2ScrollBar->setMaximum(qlstmax.at(1).toDouble());
-        ui.C2ScrollBar->setMinimum(qlstmin.at(1).toDouble());
-        ui.C2ScrollBar->setSingleStep(qlstStep.at(1).toDouble());
-        ui.C2ScrollBar->setPageStep(qlstStep.at(1).toDouble());
-        ui.C2ScrollBar->setSliderPosition(qlstPos.at(1).toDouble());
-        ui.C2label->setText(qlstnames.at(1) + " = " +qlstPos.at(1)+"("+ qlstStep.at(1) +")");
-        ui.C2labelMin->setText(qlstmin.at(1));
-        ui.C2labelMax->setText(qlstmax.at(1));
-        ui.C2ScrollBar->blockSignals(false);
-
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[1] = qlstPos.at(1).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[1] = qlstPos.at(1).toDouble();
-
-    }
-    if(SliderIndex==2)
-    {
-        qlstmax[2] = sliderconf.ui.MaxEdit->text();
-        qlstmin[2] = sliderconf.ui.MinEdit->text();
-        qlstStep[2] = sliderconf.ui.StepEdit->text();
-        qlstPos[2] = sliderconf.ui.PosEdit->text();
-
-        ui.C3ScrollBar->blockSignals(true);
-        ui.C3ScrollBar->setMaximum(qlstmax.at(2).toDouble());
-        ui.C3ScrollBar->setMinimum(qlstmin.at(2).toDouble());
-        ui.C3ScrollBar->setSingleStep(qlstStep.at(2).toDouble());
-        ui.C3ScrollBar->setPageStep(qlstStep.at(2).toDouble());
-        ui.C3ScrollBar->setSliderPosition(qlstPos.at(2).toDouble());
-        ui.C3label->setText(qlstnames.at(2) + " = " +qlstPos.at(2)+"("+ qlstStep.at(2) +")");
-        ui.C3labelMin->setText(qlstmin.at(2));
-        ui.C3labelMax->setText(qlstmax.at(2));
-        ui.C3ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[2] = qlstPos.at(2).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[2] = qlstPos.at(2).toDouble();
-    }
-    if(SliderIndex==3)
-    {
-        qlstmax[3] = sliderconf.ui.MaxEdit->text();
-        qlstmin[3] = sliderconf.ui.MinEdit->text();
-        qlstStep[3] = sliderconf.ui.StepEdit->text();
-        qlstPos[3] = sliderconf.ui.PosEdit->text();
-
-        ui.C4ScrollBar->blockSignals(true);
-        ui.C4ScrollBar->setMaximum(qlstmax.at(3).toDouble());
-        ui.C4ScrollBar->setMinimum(qlstmin.at(3).toDouble());
-        ui.C4ScrollBar->setSingleStep(qlstStep.at(3).toDouble());
-        ui.C4ScrollBar->setPageStep(qlstStep.at(3).toDouble());
-        ui.C4ScrollBar->setSliderPosition(qlstPos.at(3).toDouble());
-        ui.C4label->setText(qlstnames.at(3) + " = " +qlstPos.at(3)+"("+ qlstStep.at(3) +")");
-        ui.C4labelMin->setText(qlstmin.at(3));
-        ui.C4labelMax->setText(qlstmax.at(3));
-        ui.C4ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[3] = qlstPos.at(3).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[3] = qlstPos.at(3).toDouble();
-    }
-    if(SliderIndex==4)
-    {
-        qlstmax[4] = sliderconf.ui.MaxEdit->text();
-        qlstmin[4] = sliderconf.ui.MinEdit->text();
-        qlstStep[4] = sliderconf.ui.StepEdit->text();
-        qlstPos[4] = sliderconf.ui.PosEdit->text();
-
-        ui.C5ScrollBar->blockSignals(true);
-        ui.C5ScrollBar->setMaximum(qlstmax.at(4).toDouble());
-        ui.C5ScrollBar->setMinimum(qlstmin.at(4).toDouble());
-        ui.C5ScrollBar->setSingleStep(qlstStep.at(4).toDouble());
-        ui.C5ScrollBar->setPageStep(qlstStep.at(4).toDouble());
-        ui.C5ScrollBar->setSliderPosition(qlstPos.at(4).toDouble());
-        ui.C5label->setText(qlstnames.at(4) + " = " +qlstPos.at(4)+"("+ qlstStep.at(4) +")");
-        ui.C5labelMin->setText(qlstmin.at(4));
-        ui.C5labelMax->setText(qlstmax.at(4));
-        ui.C5ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[4] = qlstPos.at(4).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[4] = qlstPos.at(4).toDouble();
-    }
-    if(SliderIndex==5)
-    {
-        qlstmax[5] = sliderconf.ui.MaxEdit->text();
-        qlstmin[5] = sliderconf.ui.MinEdit->text();
-        qlstStep[5] = sliderconf.ui.StepEdit->text();
-        qlstPos[5] = sliderconf.ui.PosEdit->text();
-
-        ui.C6ScrollBar->blockSignals(true);
-        ui.C6ScrollBar->setMaximum(qlstmax.at(5).toDouble());
-        ui.C6ScrollBar->setMinimum(qlstmin.at(5).toDouble());
-        ui.C6ScrollBar->setSingleStep(qlstStep.at(5).toDouble());
-        ui.C6ScrollBar->setPageStep(qlstStep.at(5).toDouble());
-        ui.C6ScrollBar->setSliderPosition(qlstPos.at(5).toDouble());
-        ui.C6label->setText(qlstnames.at(5) + " = " +qlstPos.at(5)+"("+ qlstStep.at(5) +")");
-        ui.C6labelMin->setText(qlstmin.at(5));
-        ui.C6labelMax->setText(qlstmax.at(5));
-        ui.C6ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[5] = qlstPos.at(5).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[5] = qlstPos.at(5).toDouble();
-    }
-    if(SliderIndex==6)
-    {
-        qlstmax[6] = sliderconf.ui.MaxEdit->text();
-        qlstmin[6] = sliderconf.ui.MinEdit->text();
-        qlstStep[6] = sliderconf.ui.StepEdit->text();
-        qlstPos[6] = sliderconf.ui.PosEdit->text();
-
-        ui.C7ScrollBar->blockSignals(true);
-        ui.C7ScrollBar->setMaximum(qlstmax.at(6).toDouble());
-        ui.C7ScrollBar->setMinimum(qlstmin.at(6).toDouble());
-        ui.C7ScrollBar->setSingleStep(qlstStep.at(6).toDouble());
-        ui.C7ScrollBar->setPageStep(qlstStep.at(6).toDouble());
-        ui.C7ScrollBar->setSliderPosition(qlstPos.at(6).toDouble());
-        ui.C7label->setText(qlstnames.at(6) + " = " +qlstPos.at(6)+"("+ qlstStep.at(6) +")");
-        ui.C7labelMin->setText(qlstmin.at(6));
-        ui.C7labelMax->setText(qlstmax.at(6));
-        ui.C7ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[6] = qlstPos.at(6).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[6] = qlstPos.at(6).toDouble();
-    }
-    if(SliderIndex==7)
-    {
-        qlstmax[7] = sliderconf.ui.MaxEdit->text();
-        qlstmin[7] = sliderconf.ui.MinEdit->text();
-        qlstStep[7] = sliderconf.ui.StepEdit->text();
-        qlstPos[7] = sliderconf.ui.PosEdit->text();
-
-        ui.C8ScrollBar->blockSignals(true);
-        ui.C8ScrollBar->setMaximum(qlstmax.at(7).toDouble());
-        ui.C8ScrollBar->setMinimum(qlstmin.at(7).toDouble());
-        ui.C8ScrollBar->setSingleStep(qlstStep.at(7).toDouble());
-        ui.C8ScrollBar->setPageStep(qlstStep.at(7).toDouble());
-        ui.C8ScrollBar->setSliderPosition(qlstPos.at(7).toDouble());
-        ui.C8label->setText(qlstnames.at(7) + " = " +qlstPos.at(7)+"("+ qlstStep.at(7) +")");
-        ui.C8labelMin->setText(qlstmin.at(7));
-        ui.C8labelMax->setText(qlstmax.at(7));
-        ui.C8ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[7] = qlstPos.at(7).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[7] = qlstPos.at(7).toDouble();
-    }
-    if(SliderIndex==8)
-    {
-        qlstmax[8] = sliderconf.ui.MaxEdit->text();
-        qlstmin[8] = sliderconf.ui.MinEdit->text();
-        qlstStep[8] = sliderconf.ui.StepEdit->text();
-        qlstPos[8] = sliderconf.ui.PosEdit->text();
-
-        ui.C9ScrollBar->blockSignals(true);
-        ui.C9ScrollBar->setMaximum(qlstmax.at(8).toDouble());
-        ui.C9ScrollBar->setMinimum(qlstmin.at(8).toDouble());
-        ui.C9ScrollBar->setSingleStep(qlstStep.at(8).toDouble());
-        ui.C9ScrollBar->setPageStep(qlstStep.at(8).toDouble());
-        ui.C9ScrollBar->setSliderPosition(qlstPos.at(8).toDouble());
-        ui.C9label->setText(qlstnames.at(8) + " = " +qlstPos.at(8)+"("+ qlstStep.at(8) +")");
-        ui.C9labelMin->setText(qlstmin.at(8));
-        ui.C9labelMax->setText(qlstmax.at(8));
-        ui.C9ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[8] = qlstPos.at(8).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[8] = qlstPos.at(8).toDouble();
-    }
-    if(SliderIndex==9)
-    {
-        qlstmax[9] = sliderconf.ui.MaxEdit->text();
-        qlstmin[9] = sliderconf.ui.MinEdit->text();
-        qlstStep[9] = sliderconf.ui.StepEdit->text();
-        qlstPos[9] = sliderconf.ui.PosEdit->text();
-
-        ui.C10ScrollBar->blockSignals(true);
-        ui.C10ScrollBar->setMaximum(qlstmax.at(9).toDouble());
-        ui.C10ScrollBar->setMinimum(qlstmin.at(9).toDouble());
-        ui.C10ScrollBar->setSingleStep(qlstStep.at(9).toDouble());
-        ui.C10ScrollBar->setPageStep(qlstStep.at(9).toDouble());
-        ui.C10ScrollBar->setSliderPosition(qlstPos.at(9).toDouble());
-        ui.C10label->setText(qlstnames.at(9) + " = " +qlstPos.at(9)+"("+ qlstStep.at(9) +")");
-        ui.C10labelMin->setText(qlstmin.at(9));
-        ui.C10labelMax->setText(qlstmax.at(9));
-        ui.C10ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[9] = qlstPos.at(9).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[9] = qlstPos.at(9).toDouble();
-    }
-    if(SliderIndex==10)
-    {
-        qlstmax[10] = sliderconf.ui.MaxEdit->text();
-        qlstmin[10] = sliderconf.ui.MinEdit->text();
-        qlstStep[10] = sliderconf.ui.StepEdit->text();
-        qlstPos[10] = sliderconf.ui.PosEdit->text();
-
-        ui.C11ScrollBar->blockSignals(true);
-        ui.C11ScrollBar->setMaximum(qlstmax.at(10).toDouble());
-        ui.C11ScrollBar->setMinimum(qlstmin.at(10).toDouble());
-        ui.C11ScrollBar->setSingleStep(qlstStep.at(10).toDouble());
-        ui.C11ScrollBar->setPageStep(qlstStep.at(10).toDouble());
-        ui.C11ScrollBar->setSliderPosition(qlstPos.at(10).toDouble());
-        ui.C11label->setText(qlstnames.at(10) + " = " +qlstPos.at(10)+"("+ qlstStep.at(10) +")");
-        ui.C11labelMin->setText(qlstmin.at(10));
-        ui.C11labelMax->setText(qlstmax.at(10));
-        ui.C11ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[10] = qlstPos.at(10).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[10] = qlstPos.at(10).toDouble();
-    }
-    if(SliderIndex==11)
-    {
-        qlstmax[11] = sliderconf.ui.MaxEdit->text();
-        qlstmin[11] = sliderconf.ui.MinEdit->text();
-        qlstStep[11] = sliderconf.ui.StepEdit->text();
-        qlstPos[11] = sliderconf.ui.PosEdit->text();
-
-        ui.C12ScrollBar->blockSignals(true);
-        ui.C12ScrollBar->setMaximum(qlstmax.at(11).toDouble());
-        ui.C12ScrollBar->setMinimum(qlstmin.at(11).toDouble());
-        ui.C12ScrollBar->setSingleStep(qlstStep.at(11).toDouble());
-        ui.C12ScrollBar->setPageStep(qlstStep.at(11).toDouble());
-        ui.C12ScrollBar->setSliderPosition(qlstPos.at(11).toDouble());
-        ui.C12label->setText(qlstnames.at(11) + " = " +qlstPos.at(11)+"("+ qlstStep.at(11) +")");
-        ui.C12labelMin->setText(qlstmin.at(11));
-        ui.C12labelMax->setText(qlstmax.at(11));
-        ui.C12ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[11] = qlstPos.at(11).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[11] = qlstPos.at(11).toDouble();
-    }
-    if(SliderIndex==12)
-    {
-        qlstmax[12] = sliderconf.ui.MaxEdit->text();
-        qlstmin[12] = sliderconf.ui.MinEdit->text();
-        qlstStep[12] = sliderconf.ui.StepEdit->text();
-        qlstPos[12] = sliderconf.ui.PosEdit->text();
-
-        ui.C13ScrollBar->blockSignals(true);
-        ui.C13ScrollBar->setMaximum(qlstmax.at(12).toDouble());
-        ui.C13ScrollBar->setMinimum(qlstmin.at(12).toDouble());
-        ui.C13ScrollBar->setSingleStep(qlstStep.at(12).toDouble());
-        ui.C13ScrollBar->setPageStep(qlstStep.at(12).toDouble());
-        ui.C13ScrollBar->setSliderPosition(qlstPos.at(12).toDouble());
-        ui.C13label->setText(qlstnames.at(12) + " = " +qlstPos.at(12)+"("+ qlstStep.at(12) +")");
-        ui.C13labelMin->setText(qlstmin.at(12));
-        ui.C13labelMax->setText(qlstmax.at(12));
-        ui.C13ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[12] = qlstPos.at(12).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[12] = qlstPos.at(12).toDouble();
-    }
-    if(SliderIndex==13)
-    {
-        qlstmax[13] = sliderconf.ui.MaxEdit->text();
-        qlstmin[13] = sliderconf.ui.MinEdit->text();
-        qlstStep[13] = sliderconf.ui.StepEdit->text();
-        qlstPos[13] = sliderconf.ui.PosEdit->text();
-
-        ui.C14ScrollBar->blockSignals(true);
-        ui.C14ScrollBar->setMaximum(qlstmax.at(13).toDouble());
-        ui.C14ScrollBar->setMinimum(qlstmin.at(13).toDouble());
-        ui.C14ScrollBar->setSingleStep(qlstStep.at(13).toDouble());
-        ui.C14ScrollBar->setPageStep(qlstStep.at(13).toDouble());
-        ui.C14ScrollBar->setSliderPosition(qlstPos.at(13).toDouble());
-        ui.C14label->setText(qlstnames.at(13) + " = " +qlstPos.at(13)+"("+ qlstStep.at(13) +")");
-        ui.C14labelMin->setText(qlstmin.at(13));
-        ui.C14labelMax->setText(qlstmax.at(13));
-        ui.C14ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[13] = qlstPos.at(13).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[13] = qlstPos.at(13).toDouble();
-    }
-    if(SliderIndex==14)
-    {
-        qlstmax[14] = sliderconf.ui.MaxEdit->text();
-        qlstmin[14] = sliderconf.ui.MinEdit->text();
-        qlstStep[14] = sliderconf.ui.StepEdit->text();
-        qlstPos[14] = sliderconf.ui.PosEdit->text();
-
-        ui.C15ScrollBar->blockSignals(true);
-        ui.C15ScrollBar->setMaximum(qlstmax.at(14).toDouble());
-        ui.C15ScrollBar->setMinimum(qlstmin.at(14).toDouble());
-        ui.C15ScrollBar->setSingleStep(qlstStep.at(14).toDouble());
-        ui.C15ScrollBar->setPageStep(qlstStep.at(14).toDouble());
-        ui.C15ScrollBar->setSliderPosition(qlstPos.at(14).toDouble());
-        ui.C15label->setText(qlstnames.at(14) + " = " +qlstPos.at(14)+"("+ qlstStep.at(14) +")");
-        ui.C15labelMin->setText(qlstmin.at(14));
-        ui.C15labelMax->setText(qlstmax.at(14));
-        ui.C15ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[14] = qlstPos.at(14).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[14] = qlstPos.at(14).toDouble();
-    }
-    if(SliderIndex==15)
-    {
-        qlstmax[15] = sliderconf.ui.MaxEdit->text();
-        qlstmin[15] = sliderconf.ui.MinEdit->text();
-        qlstStep[15] = sliderconf.ui.StepEdit->text();
-        qlstPos[15] = sliderconf.ui.PosEdit->text();
-
-        ui.C16ScrollBar->blockSignals(true);
-        ui.C16ScrollBar->setMaximum(qlstmax.at(15).toDouble());
-        ui.C16ScrollBar->setMinimum(qlstmin.at(15).toDouble());
-        ui.C16ScrollBar->setSingleStep(qlstStep.at(15).toDouble());
-        ui.C16ScrollBar->setPageStep(qlstStep.at(15).toDouble());
-        ui.C16ScrollBar->setSliderPosition(qlstPos.at(15).toDouble());
-        ui.C16label->setText(qlstnames.at(15) + " = " +qlstPos.at(15)+"("+ qlstStep.at(15) +")");
-        ui.C16labelMin->setText(qlstmin.at(15));
-        ui.C16labelMax->setText(qlstmax.at(15));
-        ui.C16ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[15] = qlstPos.at(15).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[15] = qlstPos.at(15).toDouble();
-    }
-    if(SliderIndex==16)
-    {
-        qlstmax[16] = sliderconf.ui.MaxEdit->text();
-        qlstmin[16] = sliderconf.ui.MinEdit->text();
-        qlstStep[16] = sliderconf.ui.StepEdit->text();
-        qlstPos[16] = sliderconf.ui.PosEdit->text();
-
-        ui.C17ScrollBar->blockSignals(true);
-        ui.C17ScrollBar->setMaximum(qlstmax.at(16).toDouble());
-        ui.C17ScrollBar->setMinimum(qlstmin.at(16).toDouble());
-        ui.C17ScrollBar->setSingleStep(qlstStep.at(16).toDouble());
-        ui.C17ScrollBar->setPageStep(qlstStep.at(16).toDouble());
-        ui.C17ScrollBar->setSliderPosition(qlstPos.at(16).toDouble());
-        ui.C17label->setText(qlstnames.at(16) + " = " +qlstPos.at(16)+"("+ qlstStep.at(16) +")");
-        ui.C17labelMin->setText(qlstmin.at(16));
-        ui.C17labelMax->setText(qlstmax.at(16));
-        ui.C17ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[16] = qlstPos.at(16).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[16] = qlstPos.at(16).toDouble();
-    }
-    if(SliderIndex==17)
-    {
-        qlstmax[17] = sliderconf.ui.MaxEdit->text();
-        qlstmin[17] = sliderconf.ui.MinEdit->text();
-        qlstStep[17] = sliderconf.ui.StepEdit->text();
-        qlstPos[17] = sliderconf.ui.PosEdit->text();
-
-        ui.C18ScrollBar->blockSignals(true);
-        ui.C18ScrollBar->setMaximum(qlstmax.at(17).toDouble());
-        ui.C18ScrollBar->setMinimum(qlstmin.at(17).toDouble());
-        ui.C18ScrollBar->setSingleStep(qlstStep.at(17).toDouble());
-        ui.C18ScrollBar->setPageStep(qlstStep.at(17).toDouble());
-        ui.C18ScrollBar->setSliderPosition(qlstPos.at(17).toDouble());
-        ui.C18label->setText(qlstnames.at(17) + " = " +qlstPos.at(17)+"("+ qlstStep.at(17) +")");
-        ui.C18labelMin->setText(qlstmin.at(17));
-        ui.C18labelMax->setText(qlstmax.at(17));
-        ui.C18ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[17] = qlstPos.at(17).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[17] = qlstPos.at(17).toDouble();
-    }
-    if(SliderIndex==18)
-    {
-        qlstmax[18] = sliderconf.ui.MaxEdit->text();
-        qlstmin[18] = sliderconf.ui.MinEdit->text();
-        qlstStep[18] = sliderconf.ui.StepEdit->text();
-        qlstPos[18] = sliderconf.ui.PosEdit->text();
-
-        ui.C19ScrollBar->blockSignals(true);
-        ui.C19ScrollBar->setMaximum(qlstmax.at(18).toDouble());
-        ui.C19ScrollBar->setMinimum(qlstmin.at(18).toDouble());
-        ui.C19ScrollBar->setSingleStep(qlstStep.at(18).toDouble());
-        ui.C19ScrollBar->setPageStep(qlstStep.at(18).toDouble());
-        ui.C19ScrollBar->setSliderPosition(qlstPos.at(18).toDouble());
-        ui.C19label->setText(qlstnames.at(18) + " = " +qlstPos.at(18)+"("+ qlstStep.at(18) +")");
-        ui.C19labelMin->setText(qlstmin.at(18));
-        ui.C19labelMax->setText(qlstmax.at(18));
-        ui.C19ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[18] = qlstPos.at(18).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[18] = qlstPos.at(18).toDouble();
-    }
-    if(SliderIndex==19)
-    {
-        qlstmax[19] = sliderconf.ui.MaxEdit->text();
-        qlstmin[19] = sliderconf.ui.MinEdit->text();
-        qlstStep[19] = sliderconf.ui.StepEdit->text();
-        qlstPos[19] = sliderconf.ui.PosEdit->text();
-
-        ui.C20ScrollBar->blockSignals(true);
-        ui.C20ScrollBar->setMaximum(qlstmax.at(19).toDouble());
-        ui.C20ScrollBar->setMinimum(qlstmin.at(19).toDouble());
-        ui.C20ScrollBar->setSingleStep(qlstStep.at(19).toDouble());
-        ui.C20ScrollBar->setPageStep(qlstStep.at(19).toDouble());
-        ui.C20ScrollBar->setSliderPosition(qlstPos.at(19).toDouble());
-        ui.C20label->setText(qlstnames.at(19) + " = " +qlstPos.at(19)+"("+ qlstStep.at(19) +")");
-        ui.C20labelMin->setText(qlstmin.at(19));
-        ui.C20labelMax->setText(qlstmax.at(19));
-        ui.C20ScrollBar->blockSignals(false);
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[19] = qlstPos.at(19).toDouble();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[19] = qlstPos.at(19).toDouble();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[sl] = qlstPos.at(sl).toDouble();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[sl] = qlstPos.at(sl).toDouble();
+        }
     }
 
     //Draw
@@ -7634,145 +6776,15 @@ void DrawingOptions::on_AddSetButton_clicked()
     else
         tmp2.remove("SetNames");
 
-    if(size >=1)
+    for(int sl=0; sl<20; sl++)
     {
-        array2.append(QString::number(ui.C1ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C1ScrollBar->minimum()));
-        array4.append(QString::number(ui.C1ScrollBar->maximum()));
-        array5.append(QString::number(ui.C1ScrollBar->singleStep()));
-    }
-    if(size >=2)
-    {
-        array2.append(QString::number(ui.C2ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C2ScrollBar->minimum()));
-        array4.append(QString::number(ui.C2ScrollBar->maximum()));
-        array5.append(QString::number(ui.C2ScrollBar->singleStep()));
-    }
-    if(size >=3)
-    {
-        array2.append(QString::number(ui.C3ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C3ScrollBar->minimum()));
-        array4.append(QString::number(ui.C3ScrollBar->maximum()));
-        array5.append(QString::number(ui.C3ScrollBar->singleStep()));
-    }
-    if(size >=4)
-    {
-        array2.append(QString::number(ui.C4ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C4ScrollBar->minimum()));
-        array4.append(QString::number(ui.C4ScrollBar->maximum()));
-        array5.append(QString::number(ui.C4ScrollBar->singleStep()));
-    }
-    if(size >=5)
-    {
-        array2.append(QString::number(ui.C5ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C5ScrollBar->minimum()));
-        array4.append(QString::number(ui.C5ScrollBar->maximum()));
-        array5.append(QString::number(ui.C5ScrollBar->singleStep()));
-    }
-    if(size >=6)
-    {
-        array2.append(QString::number(ui.C6ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C6ScrollBar->minimum()));
-        array4.append(QString::number(ui.C6ScrollBar->maximum()));
-        array5.append(QString::number(ui.C6ScrollBar->singleStep()));
-    }
-    if(size >=7)
-    {
-        array2.append(QString::number(ui.C7ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C7ScrollBar->minimum()));
-        array4.append(QString::number(ui.C7ScrollBar->maximum()));
-        array5.append(QString::number(ui.C7ScrollBar->singleStep()));
-    }
-    if(size >=8)
-    {
-        array2.append(QString::number(ui.C8ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C8ScrollBar->minimum()));
-        array4.append(QString::number(ui.C8ScrollBar->maximum()));
-        array5.append(QString::number(ui.C8ScrollBar->singleStep()));
-    }
-    if(size >=9)
-    {
-        array2.append(QString::number(ui.C9ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C9ScrollBar->minimum()));
-        array4.append(QString::number(ui.C9ScrollBar->maximum()));
-        array5.append(QString::number(ui.C9ScrollBar->singleStep()));
-    }
-    if(size >=10)
-    {
-        array2.append(QString::number(ui.C10ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C10ScrollBar->minimum()));
-        array4.append(QString::number(ui.C10ScrollBar->maximum()));
-        array5.append(QString::number(ui.C10ScrollBar->singleStep()));
-    }
-    if(size >=11)
-    {
-        array2.append(QString::number(ui.C11ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C11ScrollBar->minimum()));
-        array4.append(QString::number(ui.C11ScrollBar->maximum()));
-        array5.append(QString::number(ui.C11ScrollBar->singleStep()));
-    }
-    if(size >=12)
-    {
-        array2.append(QString::number(ui.C12ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C12ScrollBar->minimum()));
-        array4.append(QString::number(ui.C12ScrollBar->maximum()));
-        array5.append(QString::number(ui.C12ScrollBar->singleStep()));
-    }
-    if(size >=13)
-    {
-        array2.append(QString::number(ui.C13ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C13ScrollBar->minimum()));
-        array4.append(QString::number(ui.C13ScrollBar->maximum()));
-        array5.append(QString::number(ui.C13ScrollBar->singleStep()));
-    }
-    if(size >=14)
-    {
-        array2.append(QString::number(ui.C14ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C14ScrollBar->minimum()));
-        array4.append(QString::number(ui.C14ScrollBar->maximum()));
-        array5.append(QString::number(ui.C14ScrollBar->singleStep()));
-    }
-    if(size >=15)
-    {
-        array2.append(QString::number(ui.C15ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C15ScrollBar->minimum()));
-        array4.append(QString::number(ui.C15ScrollBar->maximum()));
-        array5.append(QString::number(ui.C15ScrollBar->singleStep()));
-    }
-    if(size >=16)
-    {
-        array2.append(QString::number(ui.C16ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C16ScrollBar->minimum()));
-        array4.append(QString::number(ui.C16ScrollBar->maximum()));
-        array5.append(QString::number(ui.C16ScrollBar->singleStep()));
-    }
-    if(size >=17)
-    {
-        array2.append(QString::number(ui.C17ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C17ScrollBar->minimum()));
-        array4.append(QString::number(ui.C17ScrollBar->maximum()));
-        array5.append(QString::number(ui.C17ScrollBar->singleStep()));
-    }
-    if(size >=18)
-    {
-        array2.append(QString::number(ui.C18ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C18ScrollBar->minimum()));
-        array4.append(QString::number(ui.C18ScrollBar->maximum()));
-        array5.append(QString::number(ui.C18ScrollBar->singleStep()));
-    }
-    if(size >=19)
-    {
-        array2.append(QString::number(ui.C19ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C19ScrollBar->minimum()));
-        array4.append(QString::number(ui.C19ScrollBar->maximum()));
-        array5.append(QString::number(ui.C19ScrollBar->singleStep()));
-    }
-    if(size >=20)
-    {
-        array2.append(QString::number(ui.C20ScrollBar->sliderPosition()));
-        array3.append(QString::number(ui.C20ScrollBar->minimum()));
-        array4.append(QString::number(ui.C20ScrollBar->maximum()));
-        array5.append(QString::number(ui.C20ScrollBar->singleStep()));
+        if(size >=(sl+1))
+        {
+            array2.append(QString::number((SliderArray[sl].SliderScrollBar)->sliderPosition()));
+            array3.append(QString::number((SliderArray[sl].SliderScrollBar)->minimum()));
+            array4.append(QString::number((SliderArray[sl].SliderScrollBar)->maximum()));
+            array5.append(QString::number((SliderArray[sl].SliderScrollBar)->singleStep()));
+        }
     }
 
     if(tmp2["SetNames"].isArray())

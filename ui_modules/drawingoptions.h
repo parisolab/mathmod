@@ -61,6 +61,7 @@ public:
     SliderStruct * SliderArray;
 
 public slots:
+    void SaveSlidersRef(int n=20);
     void updateGlOptions();
     void editorwin();
     void videoplay();
