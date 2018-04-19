@@ -1203,6 +1203,13 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     }
 }
 
+void DrawingOptions::DrawJsonModel(const QJsonObject & Jobj, int textureIndex)
+{
+    ShowJsonModel(Jobj, textureIndex);
+    ui.ObjectClasseCurrent->takeTopLevelItem(0);
+    UpdateCurrentTreeObject();
+}
+
 void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 {
     int j;
@@ -2999,9 +3006,7 @@ void DrawingOptions::Run_JsonObject_activeted()
     }
 
     // Draw here
-    ShowJsonModel(doc.object());
-    ui.ObjectClasseCurrent->takeTopLevelItem(0);
-    UpdateCurrentTreeObject();
+    DrawJsonModel(doc.object());
 }
 
 //+++++++++++++++++++++++++++++++++++++++
@@ -3725,9 +3730,8 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                             if (s == (tst = ( MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Iso3D"]).toObject()["Name"].toArray()[0].toString()))
                             {
                                 // Draw here
-                                ShowJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
-                                ui.ObjectClasseCurrent->takeTopLevelItem(0);
-                                UpdateCurrentTreeObject();
+
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
                         }
@@ -3736,9 +3740,7 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                             if (s == (tst = ( MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param3D"]).toObject()["Name"].toArray()[0].toString()))
                             {
                                 // Draw here
-                                ShowJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
-                                ui.ObjectClasseCurrent->takeTopLevelItem(0);
-                                UpdateCurrentTreeObject();
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
                         }
@@ -3747,9 +3749,7 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                             if (s == (tst = ( MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param4D"]).toObject()["Name"].toArray()[0].toString()))
                             {
                                 // Draw here
-                                ShowJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
-                                ui.ObjectClasseCurrent->takeTopLevelItem(0);
-                                UpdateCurrentTreeObject();
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
                         }
@@ -4508,9 +4508,7 @@ void DrawingOptions::on_updateButton_clicked()
             copyCurrentObject.remove("Param4D");
 
             // Draw here
-            ShowJsonModel(copyCurrentObject);
-            ui.ObjectClasseCurrent->takeTopLevelItem(0);
-            UpdateCurrentTreeObject();
+            DrawJsonModel(copyCurrentObject);
         }
     }
     else if(copyCurrentObject["Param3D"].isObject())
@@ -4934,9 +4932,7 @@ void DrawingOptions::on_updateButton_clicked()
             copyCurrentObject.remove("Iso3D");
             copyCurrentObject.remove("Param4D");
             // Draw here
-            ShowJsonModel(copyCurrentObject);
-            ui.ObjectClasseCurrent->takeTopLevelItem(0);
-            UpdateCurrentTreeObject();
+            DrawJsonModel(copyCurrentObject);
         }
     }
     else if(copyCurrentObject["Param4D"].isObject())
@@ -5165,14 +5161,9 @@ void DrawingOptions::on_updateButton_clicked()
             copyCurrentObject.remove("Param3D");
             copyCurrentObject.remove("Iso3D");
             // Draw here
-            ShowJsonModel(copyCurrentObject);
-            ui.ObjectClasseCurrent->takeTopLevelItem(0);
-            UpdateCurrentTreeObject();
+            DrawJsonModel(copyCurrentObject);
         }
     }
-
-
-
 }
 
 //+++++++++++++++++++++++++++++++++++++++
@@ -5797,9 +5788,7 @@ void DrawingOptions::on_Multiplier_clicked()
 
         Multiplier(i, j, k, copyCurrentObject, indexcurrentFormula);
         // Draw here
-        ShowJsonModel(copyCurrentObject);
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        UpdateCurrentTreeObject();
+        DrawJsonModel(copyCurrentObject);
     }
     //Init Combo
     ui.xcomboBox->setCurrentIndex(0);
@@ -5993,10 +5982,7 @@ void DrawingOptions::on_comboBoxTexture_activated(int index)
         QJsonDocument document;
         document.setObject(MathmodRef->pariso.JTextures[index - 1].toObject());
         ui.textureEdit->setText(QString (document.toJson()));
-
-        ShowJsonModel(tmp, index-1);
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        UpdateCurrentTreeObject();
+        DrawJsonModel(tmp, index-1);
     }
     return;
 }
@@ -6010,10 +5996,7 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
         QJsonDocument document;
         document.setObject(MathmodRef->pariso.JPigments[index - 1].toObject());
         ui.textureEdit->setText(QString (document.toJson()));
-
-        ShowJsonModel(tmp, 1000+index-1);
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        UpdateCurrentTreeObject();
+        DrawJsonModel(tmp, 1000+index-1);
     }
     return;
 }
@@ -6800,9 +6783,7 @@ void DrawingOptions::on_AddSetButton_clicked()
     tmp2["Step"]      = array5;
     tmp["Sliders"]    = tmp2;
     // Draw here
-    ShowJsonModel(tmp);
-    ui.ObjectClasseCurrent->takeTopLevelItem(0);
-    UpdateCurrentTreeObject();
+    DrawJsonModel(tmp);
 }
 
 void DrawingOptions::on_CutSetButton_clicked()
@@ -6853,9 +6834,7 @@ void DrawingOptions::on_CutSetButton_clicked()
 
         tmp["Sliders"] = tmp2;
         // Draw here
-        ShowJsonModel(tmp);
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        UpdateCurrentTreeObject();
+        DrawJsonModel(tmp);
     }
 }
 
@@ -6911,9 +6890,7 @@ void DrawingOptions::on_CutParam_clicked()
 
         tmp["Sliders"] = tmp2;
         // Draw here
-        ShowJsonModel(tmp);
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        UpdateCurrentTreeObject();
+        DrawJsonModel(tmp);
     }
 }
 
@@ -6972,9 +6949,7 @@ void DrawingOptions::add_new_param()
 
     tmp["Sliders"] = tmp2;
     // Draw here
-    ShowJsonModel(tmp);
-    ui.ObjectClasseCurrent->takeTopLevelItem(0);
-    UpdateCurrentTreeObject();
+    DrawJsonModel(tmp);
 }
 
 void DrawingOptions::update_infos_param(int index)

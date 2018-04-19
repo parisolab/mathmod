@@ -105,6 +105,7 @@ public slots:
     void ontransparence_3toggled(bool checked);
     int JSON_choice_activated(const QString &);
     void ShowJsonModel(const QJsonObject &, int textureIndex=-1);
+    void DrawJsonModel(const QJsonObject & Jobj, int textureIndex=-1);
     void AddObjectToMySelectionTree();
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);
