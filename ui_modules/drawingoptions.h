@@ -45,6 +45,20 @@ class DrawingOptions : public QMainWindow
     Q_OBJECT
 
 public:
+    enum ScriptErrorType
+    {
+        NO_ERROR=0,
+        MAXGRID_OUT_OF_RANGE,
+        MAXPT_OUT_OF_RANGE,
+        MAXTRI_OUT_OF_RANGE,
+        NBCOMPONENT_OUT_OF_RANGE,
+        NBVARIABLES_OUT_OF_RANGE,
+        NBCONSTANTES_OUT_OF_RANGE,
+        NBDEFINEDFUNCTIONS_OUT_OF_RANGE,
+        NBTEXTURES_OUT_OF_RANGE,
+        NBSLIDERS_OUT_OF_RANGE,
+        NBSLIDERSVALUES_OUT_OF_RANGE
+    };
     DrawingOptions(QWidget *parent = 0);
     ~DrawingOptions();
     MathMod*  MathmodRef;
@@ -59,8 +73,11 @@ public:
     Ui::DrawingOptions ui;
     QJsonObject JSONMathModels;
     SliderStruct * SliderArray;
+    ScriptErrorType scriptErrorType;
+    int evalErrorType;
 
 public slots:
+    const char* ErrorMsg() const;
     void SaveSlidersRef(int n=20);
     void updateGlOptions();
     void editorwin();

@@ -27,7 +27,27 @@ static int CurrentFormulaType =-1; //0:Pariso; 1:Parametric; 2:Isosurface
 QTreeWidgetItem *MyselectionItemReference;
 QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
 
-
+// Error messages returned by ErrorMsg():
+const char* ScriptErrorMessage[]=
+{
+    "NO_ERROR",                       // 0
+    "MAXGRID_OUT_OF_RANGE",           // 1
+    "MAXPT_OUT_OF_RANGE",             // 2
+    "MAXTRI_OUT_OF_RANGE",            // 3
+    "NBCOMPONENT_OUT_OF_RANGE",       // 4
+    "NBVARIABLES_OUT_OF_RANGE",       // 5
+    "NBCONSTANTES_OUT_OF_RANGE",      // 6
+    "NBDEFINEDFUNCTIONS_OUT_OF_RANGE",// 7
+    "NBTEXTURES_OUT_OF_RANGE",        // 8
+    "NBSLIDERS_OUT_OF_RANGE"          // 9
+};
+// Return parse error message
+// --------------------------
+const char* DrawingOptions::ErrorMsg() const
+{
+    if(scriptErrorType != NO_ERROR) return ScriptErrorMessage[scriptErrorType];
+    return 0;
+}
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::editorwin()
 {
