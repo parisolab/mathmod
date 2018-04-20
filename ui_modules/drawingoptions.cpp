@@ -43,10 +43,14 @@ const char* ScriptErrorMessage[]=
 };
 // Return parse error message
 // --------------------------
-const char* DrawingOptions::ErrorMsg() const
+void DrawingOptions::ErrorMsg() const
 {
-    if(scriptErrorType != NO_ERROR) return ScriptErrorMessage[scriptErrorType];
-    return 0;
+    QMessageBox msgBox;
+    if(scriptErrorType != NO_ERROR)
+    {
+        msgBox.setText(ScriptErrorMessage[scriptErrorType]);
+        msgBox.exec();
+    }
 }
 //+++++++++++++++++++++++++++++++++++++++
 void DrawingOptions::editorwin()
@@ -1223,12 +1227,55 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     }
 }
 
-void DrawingOptions::DrawJsonModel(const QJsonObject & Jobj, int textureIndex)
+void DrawingOptions::DrawJsonModel(const QJsonObject & Jobj, int textureIndex, bool Inspect)
 {
+    if(Inspect & !VerifiedJsonModel(Jobj, Inspect))
+        return;
     ShowJsonModel(Jobj, textureIndex);
     ui.ObjectClasseCurrent->takeTopLevelItem(0);
     UpdateCurrentTreeObject();
 }
+
+
+bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
+{
+    QString result;
+    QJsonArray lst;
+    QJsonObject QObj;
+
+    if(!Inspect)
+        return true;
+    if(Jobj["Iso3D"].isObject())
+    {
+        QObj = Jobj["Iso3D"].toObject();
+        // Fxyz
+        lst = QObj["Fxyz"].toArray();
+        if(lst.size() > Parameters->NbComponent)
+        {
+            scriptErrorType = NBCOMPONENT_OUT_OF_RANGE;
+            ErrorMsg();
+            return false;
+        }
+        else
+            return true;
+    }
+    if(Jobj["Param3D"].isObject())
+    {
+        QObj = Jobj["Param3D"].toObject();
+        // Fxyz
+        lst = QObj["Fx"].toArray();
+        if(lst.size() > Parameters->NbComponent)
+        {
+            scriptErrorType = NBCOMPONENT_OUT_OF_RANGE;
+            ErrorMsg();
+            return false;
+        }
+        else
+            return true;
+    }
+    return true;
+}
+
 
 void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 {
@@ -1262,6 +1309,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // Fxyz
         lst = QObj["Fxyz"].toArray();
         result = "";
+
         for(j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
         if(lst.size() >= 1)
@@ -2152,6 +2200,9 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
         if((array[i].toObject())["Iso3D"].isObject()  &&
                 (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"].toArray()[0].toString() == arg1)
         {
+            if(!VerifiedJsonModel((array[i].toObject())))
+                return (0);
+
             ShowSliders(array[i].toObject());
             // Fxyz
             lst = QObj["Fxyz"].toArray();
@@ -2420,6 +2471,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
         else if((array[i].toObject())["Param3D"].isObject()     &&
                 (QObj = (array[i].toObject())["Param3D"].toObject())["Name"].toArray()[0].toString() == arg1)
         {
+            if(!VerifiedJsonModel((array[i].toObject())))
+                return (0);
             ShowSliders(array[i].toObject());
             // Fx
             lst = QObj["Fx"].toArray();
@@ -2698,6 +2751,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
         else if((array[i].toObject())["Param4D"].isObject()     &&
                 (QObj = (array[i].toObject())["Param4D"].toObject())["Name"].toArray()[0].toString() == arg1)
         {
+            if(!VerifiedJsonModel((array[i].toObject())))
+                return (0);
             ShowSliders(array[i].toObject());
             // Fx
             lst = QObj["Fx"].toArray();

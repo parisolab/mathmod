@@ -77,7 +77,7 @@ public:
     int evalErrorType;
 
 public slots:
-    const char* ErrorMsg() const;
+    void ErrorMsg() const;
     void SaveSlidersRef(int n=20);
     void updateGlOptions();
     void editorwin();
@@ -122,7 +122,8 @@ public slots:
     void ontransparence_3toggled(bool checked);
     int JSON_choice_activated(const QString &);
     void ShowJsonModel(const QJsonObject &, int textureIndex=-1);
-    void DrawJsonModel(const QJsonObject & Jobj, int textureIndex=-1);
+    void DrawJsonModel(const QJsonObject & Jobj, int textureIndex=-1, bool Inspect=true);
+    bool VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect=true);
     void AddObjectToMySelectionTree();
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);
