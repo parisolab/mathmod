@@ -35,13 +35,32 @@ const char* ScriptErrorMessage[]=
     "MAXPT_OUT_OF_RANGE",             // 2
     "MAXTRI_OUT_OF_RANGE",            // 3
     "NBCOMPONENT_OUT_OF_RANGE",       // 4
+    "XMAX_NBCOMPONENT_MISMATCH",
+    "YMAX_NBCOMPONENT_MISMATCH",
+    "ZMAX_NBCOMPONENT_MISMATCH",
+    "XMIN_NBCOMPONENT_MISMATCH",
+    "YMIN_NBCOMPONENT_MISMATCH",
+    "ZMIN_NBCOMPONENT_MISMATCH",
+    "FY_FX_MISMATCH",
+    "FZ_FX_MISMATCH",
+    "FW_FX_MISMATCH",
+    "UMAX_NBCOMPONENT_MISMATCH",
+    "VMAX_NBCOMPONENT_MISMATCH",
+    "WMAX_NBCOMPONENT_MISMATCH",
+    "UMIN_NBCOMPONENT_MISMATCH",
+    "VMIN_NBCOMPONENT_MISMATCH",
+    "WMIN_NBCOMPONENT_MISMATCH",
+    "GRID_NBCOMPONENT_MISMATCH",
+    "COMPONENT_NBCOMPONENT_MISMATCH",
+    "CND_NBCOMPONENT_MISMATCH",
     "NBVARIABLES_OUT_OF_RANGE",       // 5
     "NBCONSTANTES_OUT_OF_RANGE",      // 6
     "NBDEFINEDFUNCTIONS_OUT_OF_RANGE",// 7
     "NBTEXTURES_OUT_OF_RANGE",        // 8
     "NBSLIDERS_OUT_OF_RANGE"          // 9
 };
-// Return parse error message
+
+// Return script error message
 // --------------------------
 void DrawingOptions::ErrorMsg() const
 {
@@ -1239,9 +1258,9 @@ void DrawingOptions::DrawJsonModel(const QJsonObject & Jobj, int textureIndex, b
 
 bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
 {
-    QString result;
     QJsonArray lst;
     QJsonObject QObj;
+    int NbFxyz, NbFx;
 
     if(!Inspect)
         return true;
@@ -1250,28 +1269,189 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         QObj = Jobj["Iso3D"].toObject();
         // Fxyz
         lst = QObj["Fxyz"].toArray();
-        if(lst.size() > Parameters->NbComponent)
+        if((NbFxyz=lst.size()) > Parameters->NbComponent)
         {
             scriptErrorType = NBCOMPONENT_OUT_OF_RANGE;
             ErrorMsg();
             return false;
         }
-        else
-            return true;
+        if((QObj["Xmax"].toArray()).size() != NbFxyz)
+        {
+            scriptErrorType = XMAX_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Ymax"].toArray()).size() != NbFxyz)
+        {
+            scriptErrorType = YMAX_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Zmax"].toArray()).size() != NbFxyz)
+        {
+            scriptErrorType = ZMAX_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+
+        if((QObj["Xmin"].toArray()).size() != NbFxyz)
+        {
+            scriptErrorType = XMIN_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Ymin"].toArray()).size() != NbFxyz)
+        {
+            scriptErrorType = YMIN_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Zmin"].toArray()).size() != NbFxyz)
+        {
+            scriptErrorType = ZMIN_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+
+        if((QObj["Component"].toArray()).size() != NbFxyz)
+        {
+            scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if(((QObj["Grid"].toArray()).size() > 0) && ((QObj["Grid"].toArray()).size() != NbFxyz))
+        {
+            scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFxyz))
+        {
+            scriptErrorType = CND_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Funct"].toArray()).size() > Parameters->NbDefinedFunctions)
+        {
+            scriptErrorType = NBDEFINEDFUNCTIONS_OUT_OF_RANGE;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Const"].toArray()).size() > Parameters->NbConstantes)
+        {
+            scriptErrorType = NBCONSTANTES_OUT_OF_RANGE;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Varu"].toArray()).size() > Parameters->NbVariables)
+        {
+            scriptErrorType = NBVARIABLES_OUT_OF_RANGE;
+            ErrorMsg();
+            return false;
+        }
+
+        return true;
     }
     if(Jobj["Param3D"].isObject())
     {
         QObj = Jobj["Param3D"].toObject();
-        // Fxyz
+        // Fx
         lst = QObj["Fx"].toArray();
-        if(lst.size() > Parameters->NbComponent)
+        if((NbFx=lst.size()) > Parameters->NbComponent)
         {
             scriptErrorType = NBCOMPONENT_OUT_OF_RANGE;
             ErrorMsg();
             return false;
         }
-        else
-            return true;
+        // Fy
+        if((QObj["Fy"].toArray()).size() != NbFx)
+        {
+            scriptErrorType = FY_FX_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        // Fz
+        if((QObj["Fz"].toArray()).size() != NbFx)
+        {
+            scriptErrorType = FZ_FX_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if(((QObj["Fw"].toArray()).size()!=0) && ((QObj["Fw"].toArray()).size() != NbFx))
+        {
+            scriptErrorType = FW_FX_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+
+        if((QObj["Umax"].toArray()).size() != NbFx)
+        {
+            scriptErrorType = UMAX_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Vmax"].toArray()).size() != NbFx)
+        {
+            scriptErrorType = VMAX_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if(((QObj["Wmax"].toArray()).size() > 0) && ((QObj["Wmax"].toArray()).size() != NbFx))
+        {
+            scriptErrorType = WMAX_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+
+        if((QObj["Umin"].toArray()).size() != NbFx)
+        {
+            scriptErrorType = UMIN_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Vmin"].toArray()).size() != NbFx)
+        {
+            scriptErrorType = VMIN_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if(((QObj["Wmin"].toArray()).size() > 0) && ((QObj["Wmin"].toArray()).size() != NbFx))
+        {
+            scriptErrorType = WMIN_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+
+        if((QObj["Component"].toArray()).size() != NbFx)
+        {
+            scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if(((QObj["Grid"].toArray()).size() > 0) && ((QObj["Grid"].toArray()).size() != 2*NbFx))
+        {
+            scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFx))
+        {
+            scriptErrorType = CND_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Funct"].toArray()).size() > Parameters->NbDefinedFunctions)
+        {
+            scriptErrorType = NBDEFINEDFUNCTIONS_OUT_OF_RANGE;
+            ErrorMsg();
+            return false;
+        }
+        if((QObj["Const"].toArray()).size() > Parameters->NbConstantes)
+        {
+            scriptErrorType = NBCONSTANTES_OUT_OF_RANGE;
+            ErrorMsg();
+            return false;
+        }
     }
     return true;
 }
