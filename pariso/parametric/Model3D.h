@@ -99,7 +99,6 @@ public :
     float Lacunarity, Gain;
     int Octaves;
 public :
-    void initialiser_parseur();
     void InitMasterParsers();
     int  HowManyParamSurface(std::string, int);
     int  HowManyVariables(std::string, int);
