@@ -122,6 +122,7 @@ public :
 
 class Iso3D  : public QThread
 {
+    Q_OBJECT
 public :
     ObjectProperties *LocalScene;
     IsoWorkerThread *workerthreads;
@@ -133,6 +134,7 @@ public :
     int *     TypeIsoSurfaceTriangleListeCND;
     unsigned int *  IndexPolyTab;
     int NbTriangleIsoSurface,NbPointIsoMap;
+    ScriptErrorType messageerror;
 
 public :
     Iso3D(int, int,
@@ -150,7 +152,7 @@ public :
     inline   void SignatureComputation();
     inline   void ConstructIsoSurface();
     inline void ConstructIsoNormale();
-    inline   void PointEdgeComputation(int);
+    inline   int PointEdgeComputation(int);
     inline void CNDCalculation(int, struct ComponentInfos *);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
     void SaveIsoGLMap();
@@ -166,4 +168,9 @@ public :
     ErrorMessage ThreadParsersCopy();
     void ReinitVarTablesWhenMorphActiv(int);
     void run() Q_DECL_OVERRIDE;
+
+signals:
+    void ErrorSignal(int);
+public:
+    void emitErrorSignal();
 };

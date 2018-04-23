@@ -35,39 +35,52 @@ const char* ScriptErrorMessage[]=
     "MAXPT_OUT_OF_RANGE",             // 2
     "MAXTRI_OUT_OF_RANGE",            // 3
     "NBCOMPONENT_OUT_OF_RANGE",       // 4
-    "XMAX_NBCOMPONENT_MISMATCH",
-    "YMAX_NBCOMPONENT_MISMATCH",
-    "ZMAX_NBCOMPONENT_MISMATCH",
-    "XMIN_NBCOMPONENT_MISMATCH",
-    "YMIN_NBCOMPONENT_MISMATCH",
-    "ZMIN_NBCOMPONENT_MISMATCH",
-    "FY_FX_MISMATCH",
-    "FZ_FX_MISMATCH",
-    "FW_FX_MISMATCH",
-    "UMAX_NBCOMPONENT_MISMATCH",
-    "VMAX_NBCOMPONENT_MISMATCH",
-    "WMAX_NBCOMPONENT_MISMATCH",
-    "UMIN_NBCOMPONENT_MISMATCH",
-    "VMIN_NBCOMPONENT_MISMATCH",
-    "WMIN_NBCOMPONENT_MISMATCH",
-    "GRID_NBCOMPONENT_MISMATCH",
-    "COMPONENT_NBCOMPONENT_MISMATCH",
-    "CND_NBCOMPONENT_MISMATCH",
-    "NBVARIABLES_OUT_OF_RANGE",       // 5
-    "NBCONSTANTES_OUT_OF_RANGE",      // 6
-    "NBDEFINEDFUNCTIONS_OUT_OF_RANGE",// 7
-    "NBTEXTURES_OUT_OF_RANGE",        // 8
-    "NBSLIDERS_OUT_OF_RANGE"          // 9
+    "XMAX_NBCOMPONENT_MISMATCH",      // 5
+    "YMAX_NBCOMPONENT_MISMATCH",      // 6
+    "ZMAX_NBCOMPONENT_MISMATCH",      // 7
+    "XMIN_NBCOMPONENT_MISMATCH",      // 8
+    "YMIN_NBCOMPONENT_MISMATCH",      // 9
+    "ZMIN_NBCOMPONENT_MISMATCH",      //10
+    "FY_FX_MISMATCH",                 //11
+    "FZ_FX_MISMATCH",                 //12
+    "FW_FX_MISMATCH",                 //13
+    "UMAX_NBCOMPONENT_MISMATCH",      //14
+    "VMAX_NBCOMPONENT_MISMATCH",      //15
+    "WMAX_NBCOMPONENT_MISMATCH",      //16
+    "UMIN_NBCOMPONENT_MISMATCH",      //17
+    "VMIN_NBCOMPONENT_MISMATCH",      //18
+    "WMIN_NBCOMPONENT_MISMATCH",      //19
+    "GRID_NBCOMPONENT_MISMATCH",      //20
+    "COMPONENT_NBCOMPONENT_MISMATCH", //21
+    "CND_NBCOMPONENT_MISMATCH",       //22
+    "NBVARIABLES_OUT_OF_RANGE",       //23
+    "NBCONSTANTES_OUT_OF_RANGE",      //24
+    "NBDEFINEDFUNCTIONS_OUT_OF_RANGE",//25
+    "NBTEXTURES_OUT_OF_RANGE",        //26
+    "NBSLIDERS_OUT_OF_RANGE",         //27
+    "NBSLIDERSVALUES_OUT_OF_RANGE",   //28
+    "VERTEX_TAB_MEM_OVERFLOW",        //29
+    "TRIANGLES_TAB_MEM_OVERFLOW"      //30
 };
 
-// Return script error message
 // --------------------------
 void DrawingOptions::ErrorMsg() const
 {
     QMessageBox msgBox;
     if(scriptErrorType != NO_ERROR)
     {
+        statusBar()->showMessage(ScriptErrorMessage[scriptErrorType]);
         msgBox.setText(ScriptErrorMessage[scriptErrorType]);
+        msgBox.exec();
+    }
+}
+// --------------------------
+void DrawingOptions::MemoryErrorMsg(int err) const
+{
+    QMessageBox msgBox;
+    if(err != NO_ERROR)
+    {
+        msgBox.setText(ScriptErrorMessage[err]);
         msgBox.exec();
     }
 }
@@ -123,6 +136,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
+    statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
 }
 

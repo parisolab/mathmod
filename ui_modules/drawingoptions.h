@@ -45,38 +45,7 @@ class DrawingOptions : public QMainWindow
     Q_OBJECT
 
 public:
-    enum ScriptErrorType
-    {
-        NO_ERROR=0,
-        MAXGRID_OUT_OF_RANGE,
-        MAXPT_OUT_OF_RANGE,
-        MAXTRI_OUT_OF_RANGE,
-        NBCOMPONENT_OUT_OF_RANGE,
-        XMAX_NBCOMPONENT_MISMATCH,
-        YMAX_NBCOMPONENT_MISMATCH,
-        ZMAX_NBCOMPONENT_MISMATCH,
-        XMIN_NBCOMPONENT_MISMATCH,
-        YMIN_NBCOMPONENT_MISMATCH,
-        ZMIN_NBCOMPONENT_MISMATCH,
-        FY_FX_MISMATCH,
-        FZ_FX_MISMATCH,
-        FW_FX_MISMATCH,
-        UMAX_NBCOMPONENT_MISMATCH,
-        VMAX_NBCOMPONENT_MISMATCH,
-        WMAX_NBCOMPONENT_MISMATCH,
-        UMIN_NBCOMPONENT_MISMATCH,
-        VMIN_NBCOMPONENT_MISMATCH,
-        WMIN_NBCOMPONENT_MISMATCH,
-        GRID_NBCOMPONENT_MISMATCH,
-        COMPONENT_NBCOMPONENT_MISMATCH,
-        CND_NBCOMPONENT_MISMATCH,
-        NBVARIABLES_OUT_OF_RANGE,
-        NBCONSTANTES_OUT_OF_RANGE,
-        NBDEFINEDFUNCTIONS_OUT_OF_RANGE,
-        NBTEXTURES_OUT_OF_RANGE,
-        NBSLIDERS_OUT_OF_RANGE,
-        NBSLIDERSVALUES_OUT_OF_RANGE
-    };
+
     DrawingOptions(QWidget *parent = 0);
     ~DrawingOptions();
     MathMod*  MathmodRef;
@@ -96,6 +65,7 @@ public:
 
 public slots:
     void ErrorMsg() const;
+    void MemoryErrorMsg(int) const;
     void SaveSlidersRef(int n=20);
     void updateGlOptions();
     void editorwin();

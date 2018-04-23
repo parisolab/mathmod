@@ -20,6 +20,7 @@
 #include "TableMap.h"
 #include "Iso3D.h"
 #include "povfunctions.cpp"
+#include <qmessagebox.h>
 
 static unsigned int *IndexPolyTabMin;
 static int NbPolyMin;
@@ -94,6 +95,11 @@ void Iso3D::run()
 void IsoWorkerThread::emitMySignal()
 {
     emit mySignal(signalVal);
+}
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void Iso3D::emitErrorSignal()
+{
+    emit ErrorSignal(int(messageerror));
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void Iso3D::BuildIso()
@@ -1708,7 +1714,13 @@ void Iso3D::IsoBuild (
 
         if(StopCalculations)
             return;
-        PointEdgeComputation(fctnb);
+        int result = PointEdgeComputation(fctnb);
+        if(result == 0)
+        {
+            messageerror = VERTEX_TAB_MEM_OVERFLOW;
+            emitErrorSignal();
+            return;
+        }
         SignatureComputation();
         ConstructIsoSurface();
         ConstructIsoNormale();
@@ -2299,7 +2311,7 @@ void Iso3D::ConstructIsoSurface()
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::PointEdgeComputation(int isoindex)
+int Iso3D::PointEdgeComputation(int isoindex)
 {
     int index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
     double vals[7], IsoValue_1, IsoValue_2, rapport;
@@ -2348,9 +2360,14 @@ void Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
                     ///===========================================================///
+                    if((3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep + 2) < 10*maxgrscalemaxgr)
+                    {
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                    }
+                    else
+                        return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[0] = NbPointIsoMap_local;
@@ -3114,14 +3131,11 @@ void Iso3D::PointEdgeComputation(int isoindex)
                     }
 
                     NbPointIsoMap_local++;
-
                 }
             } /// End of if( j != (nb_colon -1) )...
-
         }
-
-
     NbPointIsoMap =    NbPointIsoMap_local;
+    return 1;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++///
