@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
-    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet, SIGNAL(ErrorSignal(int)), &drawingopt, SLOT(StatusbarErrorMsg(int)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet, SIGNAL(ErrorSignal(int)), &drawingopt, SLOT(MemoryErrorMsg(int)));
 
     mm.show();
     drawingopt.show();
