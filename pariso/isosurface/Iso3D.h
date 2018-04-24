@@ -150,8 +150,8 @@ public :
           int nbGrid=40);
     ~Iso3D();
     inline   void SignatureComputation();
-    inline   void ConstructIsoSurface();
-    inline void ConstructIsoNormale();
+    inline   int ConstructIsoSurface();
+    inline   void ConstructIsoNormale();
     inline   int PointEdgeComputation(int);
     inline void CNDCalculation(int, struct ComponentInfos *);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);

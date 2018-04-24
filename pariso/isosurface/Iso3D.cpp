@@ -1724,8 +1724,16 @@ void Iso3D::IsoBuild (
             emitErrorSignal();
             return;
         }
+
         SignatureComputation();
-        ConstructIsoSurface();
+
+        result = ConstructIsoSurface();
+        if(result == 0)
+        {
+            messageerror = TRIANGLES_TAB_MEM_OVERFLOW;
+            emitErrorSignal();
+            return;
+        }
         ConstructIsoNormale();
         SaveIsoGLMap();
         SetMiniMmeshStruct();
@@ -2274,7 +2282,7 @@ void Iso3D::SetMiniMmeshStruct()
 }
 
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
-void Iso3D::ConstructIsoSurface()
+int Iso3D::ConstructIsoSurface()
 {
     int IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
     int I, J, IJK;
@@ -2298,20 +2306,25 @@ void Iso3D::ConstructIsoSurface()
                     IndexSeconPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+1]];
                     IndexThirdPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+2]];
                     {
-                        if(IndexFirstPoint != -20 && IndexSeconPoint != -20 && IndexThirdPoint != -20)
+                        if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
                         {
-                            if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
-                            IndexNbTriangle = NbTriangleIsoSurface*3;
-                            IsoSurfaceTriangleListe[IndexNbTriangle  ] = IndexFirstPoint;
-                            IsoSurfaceTriangleListe[IndexNbTriangle+1] = IndexSeconPoint;
-                            IsoSurfaceTriangleListe[IndexNbTriangle+2] = IndexThirdPoint;
-                            NbTriangleIsoSurface++;
+                            if(IndexFirstPoint != -20 && IndexSeconPoint != -20 && IndexThirdPoint != -20)
+                            {
+                                IndexNbTriangle = NbTriangleIsoSurface*3;
+                                IsoSurfaceTriangleListe[IndexNbTriangle  ] = IndexFirstPoint;
+                                IsoSurfaceTriangleListe[IndexNbTriangle+1] = IndexSeconPoint;
+                                IsoSurfaceTriangleListe[IndexNbTriangle+2] = IndexThirdPoint;
+                                NbTriangleIsoSurface++;
+                            }
                         }
+                        else
+                            return 0;
                     }
                 }
             }
         }
     }
+    return 1;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
