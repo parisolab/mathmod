@@ -35,6 +35,8 @@ extern int NbSliderValues;
 extern int NbConstantes;
 extern int NbDefinedFunctions;
 extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
+extern int NbMaxTri;
+extern int NbMaxPts;
 extern int IsoNbCmp;
 extern float* NormVertexTab;
 

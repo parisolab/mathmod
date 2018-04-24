@@ -36,6 +36,8 @@ static int NbVertexTmp = 0;
 float* NormVertexTab;
 
 int NbMaxGrid = 100;
+int NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
+int NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 int NbComponent = 30;
 int NbConstantes = 30;
 int NbDefinedFunctions = 50;
@@ -441,6 +443,8 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
     NbConstantes = NbConstant;
     NbDefinedFunctions = NbDefinedFunct;
     NbMaxGrid = nbmaxgrid;
+    NbMaxTri = maxtri;
+    NbMaxPts = maxpts;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     Xgrid = Ygrid = Zgrid = nbGrid;
@@ -2296,6 +2300,7 @@ void Iso3D::ConstructIsoSurface()
                     {
                         if(IndexFirstPoint != -20 && IndexSeconPoint != -20 && IndexThirdPoint != -20)
                         {
+                            if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
                             IndexNbTriangle = NbTriangleIsoSurface*3;
                             IsoSurfaceTriangleListe[IndexNbTriangle  ] = IndexFirstPoint;
                             IsoSurfaceTriangleListe[IndexNbTriangle+1] = IndexSeconPoint;
@@ -2359,7 +2364,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
                     ///===========================================================///
-                    if((3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep + 2) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep + 2) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2398,7 +2403,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2437,7 +2442,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2493,7 +2498,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                 {
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2540,7 +2545,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor *masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2578,7 +2583,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2635,7 +2640,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor *masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2684,7 +2689,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2747,7 +2752,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2784,7 +2789,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                 {
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2833,7 +2838,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2885,7 +2890,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2935,7 +2940,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -2994,7 +2999,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -3034,7 +3039,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -3072,7 +3077,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                 {
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                     NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -3134,7 +3139,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
@@ -3184,7 +3189,7 @@ int Iso3D::PointEdgeComputation(int isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*maxgrscalemaxgr)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
