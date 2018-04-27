@@ -61,7 +61,8 @@ const char* ScriptErrorMessage[]=
     "NBSLIDERSVALUES_OUT_OF_RANGE",   //28
     "VERTEX_TAB_MEM_OVERFLOW",        //29
     "TRIANGLES_TAB_MEM_OVERFLOW",     //30
-    "MINPOLY_TAB_MEM_OVERFLOW"        //31
+    "MINPOLY_TAB_MEM_OVERFLOW",       //31
+    "POLY_TAB_MEM_OVERFLOW"           //32
 };
 
 // --------------------------

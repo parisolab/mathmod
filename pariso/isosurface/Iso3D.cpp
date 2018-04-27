@@ -1756,12 +1756,21 @@ void Iso3D::IsoBuild (
             components->IsoPts[2*fctnb    ] = NbVertexTmp;
             components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
         }
-        for (int i=0; i < NbTriangleIsoSurface ; ++i)
+        if( (l + 3*NbTriangleIsoSurface) < 4*NbMaxTri)
         {
-            IndexPolyTab[l  ] = IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp;
-            IndexPolyTab[l+1] = IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp;
-            IndexPolyTab[l+2] = IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp;
-            l+=3;
+            for (int i=0; i < NbTriangleIsoSurface ; ++i)
+            {
+                IndexPolyTab[l  ] = IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp;
+                IndexPolyTab[l+1] = IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp;
+                IndexPolyTab[l+2] = IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp;
+                l+=3;
+            }
+        }
+        else
+        {
+            messageerror = POLY_TAB_MEM_OVERFLOW;
+            emitErrorSignal();
+            return;
         }
         // Save Number of Polys and vertex :
         NbVertexTmp                        += NbPointIsoMap;
