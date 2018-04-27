@@ -1778,7 +1778,14 @@ void Iso3D::IsoBuild (
     }
 
     //CND calculation for the triangles results:
-    CNDCalculation(NbTriangleIsoSurfaceTmp, components);
+    int result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
+    if(result == 0)
+    {
+        messageerror = CND_TAB_MEM_OVERFLOW;
+        emitErrorSignal();
+        return;
+    }
+
 
     // Pigment, Texture and Noise :
     if(masterthread->VRgbt != "" && (masterthread->Nb_vrgbts %5)==0 )
@@ -1913,7 +1920,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
+int Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
     double vals[4];
     vals[3] = masterthread->stepMorph;
@@ -2056,36 +2063,36 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 //***********
                 //Add points:
                 //***********
+                if((TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep +20)  < 10*NbMaxPts )
+                {
+                    //Add Bprime:
+                    NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = Bprime[0];
+                    NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = Bprime[1];
+                    NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = Bprime[2];
+                    NormVertexTab[TypeDrawin*NbVertexTmp   + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex    + TypeDrawinNormStep];
+                    NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
+                    NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 2+ TypeDrawinNormStep];
+                    NormVertexTab[TypeDrawin*NbVertexTmp   ] = 1.0;
+                    NormVertexTab[TypeDrawin*NbVertexTmp +1] = 1.0;
+                    NormVertexTab[TypeDrawin*NbVertexTmp +2] = 1.0;
+                    NormVertexTab[TypeDrawin*NbVertexTmp +3] = 1.0;
 
-                //Add Bprime:
-                NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = Bprime[0];
-                NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = Bprime[1];
-                NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = Bprime[2];
+                    //Add Cprime:
+                    NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = Cprime[0];
+                    NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
+                    NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = Cprime[2];
+                    NormVertexTab[TypeDrawin*NbVertexTmp +   TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex    + TypeDrawinNormStep];
+                    NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
+                    NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 2+ TypeDrawinNormStep];
+                    NormVertexTab[TypeDrawin*NbVertexTmp    + TypeDrawin] = 1.0;
+                    NormVertexTab[TypeDrawin*NbVertexTmp +1 + TypeDrawin] = 1.0;
+                    NormVertexTab[TypeDrawin*NbVertexTmp +2 + TypeDrawin] = 1.0;
+                    NormVertexTab[TypeDrawin*NbVertexTmp +3 + TypeDrawin] = 1.0;
 
-                NormVertexTab[TypeDrawin*NbVertexTmp   + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex      + TypeDrawinNormStep];
-                NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
-                NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 2+ TypeDrawinNormStep];
-
-                NormVertexTab[TypeDrawin*NbVertexTmp   ] = 1.0;
-                NormVertexTab[TypeDrawin*NbVertexTmp +1] = 1.0;
-                NormVertexTab[TypeDrawin*NbVertexTmp +2] = 1.0;
-                NormVertexTab[TypeDrawin*NbVertexTmp +3] = 1.0;
-
-                //Add Cprime:
-                NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = Cprime[0];
-                NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
-                NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = Cprime[2];
-
-                NormVertexTab[TypeDrawin*NbVertexTmp +   TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex      + TypeDrawinNormStep];
-                NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
-                NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 2+ TypeDrawinNormStep];
-
-                NormVertexTab[TypeDrawin*NbVertexTmp    + TypeDrawin] = 1.0;
-                NormVertexTab[TypeDrawin*NbVertexTmp +1 + TypeDrawin] = 1.0;
-                NormVertexTab[TypeDrawin*NbVertexTmp +2 + TypeDrawin] = 1.0;
-                NormVertexTab[TypeDrawin*NbVertexTmp +3 + TypeDrawin] = 1.0;
-
-                NbVertexTmp += 2;
+                    NbVertexTmp += 2;
+                }
+                else
+                    return 0;
 
                 //***********
                 //Add triangles:
@@ -2171,7 +2178,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 1)
             {
-                NewIndexPolyTab[3*k      ] =  IndexPolyTab[3*i      ];
+                NewIndexPolyTab[3*k    ] =  IndexPolyTab[3*i    ];
                 NewIndexPolyTab[3*k + 1] =  IndexPolyTab[3*i + 1];
                 NewIndexPolyTab[3*k + 2] =  IndexPolyTab[3*i + 2];
                 k++;
@@ -2180,7 +2187,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == -1)
             {
-                NewIndexPolyTab[3*(l + k)       ] =  IndexPolyTab[3*i      ];
+                NewIndexPolyTab[3*(l + k)    ] =  IndexPolyTab[3*i    ];
                 NewIndexPolyTab[3*(l + k) + 1] =  IndexPolyTab[3*i + 1];
                 NewIndexPolyTab[3*(l + k) + 2] =  IndexPolyTab[3*i + 2];
                 l++;
@@ -2189,7 +2196,7 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 4)
             {
-                NewIndexPolyTab[3*(M + l + k)      ] =  IndexPolyTab[3*i      ];
+                NewIndexPolyTab[3*(M + l + k)    ] =  IndexPolyTab[3*i    ];
                 NewIndexPolyTab[3*(M + l + k) + 1] =  IndexPolyTab[3*i + 1];
                 NewIndexPolyTab[3*(M + l + k) + 2] =  IndexPolyTab[3*i + 2];
                 M++;
@@ -2208,7 +2215,6 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         {
             if(components != NULL)
             {
-                //if(components->IsoPositions[2*fctnb + 1] > NbTriangleIsoSurfaceTmp )
                 components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
             }
         }
@@ -2221,12 +2227,13 @@ void Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
 
         for(int i= 0; i < NbVertexTmp; i++)
         {
-            NormVertexTab[i*TypeDrawin    ] = 0.5;
+            NormVertexTab[i*TypeDrawin  ] = 0.5;
             NormVertexTab[i*TypeDrawin+1] = 0.6;
             NormVertexTab[i*TypeDrawin+2] = 0.8;
             NormVertexTab[i*TypeDrawin+3] = 1.0;
         }
     }
+    return 1;
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 Iso3D::~Iso3D()

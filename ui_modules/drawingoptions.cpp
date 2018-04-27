@@ -62,7 +62,8 @@ const char* ScriptErrorMessage[]=
     "VERTEX_TAB_MEM_OVERFLOW",        //29
     "TRIANGLES_TAB_MEM_OVERFLOW",     //30
     "MINPOLY_TAB_MEM_OVERFLOW",       //31
-    "POLY_TAB_MEM_OVERFLOW"           //32
+    "POLY_TAB_MEM_OVERFLOW",          //32
+    "CND_TAB_MEM_OVERFLOW"            //33
 };
 
 // --------------------------
