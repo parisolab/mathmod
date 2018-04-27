@@ -130,7 +130,7 @@ public :
     int   Xgrid, Ygrid, Zgrid;
     int WorkerThreadsNumber;
     int   *     IsoSurfaceTriangleListe;
-    bool *     WichPointVerifyCond, StopCalculations;
+    bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
     unsigned int *  IndexPolyTab;
     int NbTriangleIsoSurface,NbPointIsoMap;
