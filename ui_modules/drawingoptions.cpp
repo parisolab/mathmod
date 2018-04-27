@@ -63,7 +63,8 @@ const char* ScriptErrorMessage[]=
     "TRIANGLES_TAB_MEM_OVERFLOW",     //30
     "MINPOLY_TAB_MEM_OVERFLOW",       //31
     "POLY_TAB_MEM_OVERFLOW",          //32
-    "CND_TAB_MEM_OVERFLOW"            //33
+    "CND_TAB_MEM_OVERFLOW",           //33
+    "CND_POL_MEM_OVERFLOW"            //34
 };
 
 // --------------------------
@@ -6658,28 +6659,28 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         }
 
 
-    for(int sl=0; sl<20; sl++)
-    {
-        if(size >= (sl+1))
+        for(int sl=0; sl<20; sl++)
         {
-            (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl+(index-1)*size)+"("+ qlstStep.at(sl) +")");
-            (SliderArray[sl].SliderScrollBar)->blockSignals(true);
-            if(qlstmin.size() > qlstnames.size())
+            if(size >= (sl+1))
             {
-                (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl+(index-1)*size).toDouble());
-                (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl+(index-1)*size).toDouble());
-                (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl+(index-1)*size).toDouble());
+                (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl+(index-1)*size)+"("+ qlstStep.at(sl) +")");
+                (SliderArray[sl].SliderScrollBar)->blockSignals(true);
+                if(qlstmin.size() > qlstnames.size())
+                {
+                    (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl+(index-1)*size).toDouble());
+                    (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl+(index-1)*size).toDouble());
+                    (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl+(index-1)*size).toDouble());
 
-                (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl+(index-1)*size)+"("+ qlstStep.at(sl+(index-1)*size) +")");
-                (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl+(index-1)*size));
-                (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl+(index-1)*size));
+                    (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl+(index-1)*size)+"("+ qlstStep.at(sl+(index-1)*size) +")");
+                    (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl+(index-1)*size));
+                    (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl+(index-1)*size));
+                }
+                (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl+(index-1)*size).toDouble());
+                (SliderArray[sl].SliderScrollBar)->blockSignals(false);
             }
-            (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl+(index-1)*size).toDouble());
-            (SliderArray[sl].SliderScrollBar)->blockSignals(false);
         }
-    }
 
-    //Draw
+        //Draw
         if(CurrentFormulaType==2)
             MathmodRef->ProcessNewIsoSurface( );
         else

@@ -32,7 +32,8 @@
 #include "addparam.h"
 #include <QMainWindow>
 
-struct SliderStruct {
+struct SliderStruct
+{
     QScrollBar * SliderScrollBar;
     QLabel *     SliderLabel;
     QLabel *     SliderLabelMin;

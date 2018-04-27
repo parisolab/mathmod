@@ -1785,7 +1785,12 @@ void Iso3D::IsoBuild (
         emitErrorSignal();
         return;
     }
-
+    else if(result == 2)
+    {
+        messageerror = CND_POL_MEM_OVERFLOW;
+        emitErrorSignal();
+        return;
+    }
 
     // Pigment, Texture and Noise :
     if(masterthread->VRgbt != "" && (masterthread->Nb_vrgbts %5)==0 )
@@ -2105,67 +2110,71 @@ int Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *co
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCND[i] = 0;
 
-                /// (A, Bprime, Cprime)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                IndexPolyTab[IndexNbTriangle  ] = Aindex;
-                IndexPolyTab[IndexNbTriangle+1] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
-                (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
-                //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
-                NbTriangleIsoSurfaceTmp++;
+                if(3*(NbTriangleIsoSurfaceTmp+4) < 4*NbMaxTri)
+                {
+                    /// (A, Bprime, Cprime)
+                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                    IndexPolyTab[IndexNbTriangle  ] = Aindex;
+                    IndexPolyTab[IndexNbTriangle+1] = IndexBprime;
+                    IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
+                    (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
+                    TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
+                    //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
+                    NbTriangleIsoSurfaceTmp++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Aindex;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
-                NbPolyMinimalTopology++;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = Aindex;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                    NbPolyMinimalTopology++;
 
-                /// (Bprime, B, C)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+1] = Bindex;
-                IndexPolyTab[IndexNbTriangle+2] = Cindex;
-                (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                NbTriangleIsoSurfaceTmp++;
+                    /// (Bprime, B, C)
+                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                    IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
+                    IndexPolyTab[IndexNbTriangle+1] = Bindex;
+                    IndexPolyTab[IndexNbTriangle+2] = Cindex;
+                    (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
+                    TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
+                    //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
+                    NbTriangleIsoSurfaceTmp++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Bindex;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
-                NbPolyMinimalTopology++;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = Bindex;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
+                    NbPolyMinimalTopology++;
 
-                /// (Bprime, C, Cprime)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+1] = Cindex;
-                IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
-                (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                NbTriangleIsoSurfaceTmp++;
+                    /// (Bprime, C, Cprime)
+                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                    IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
+                    IndexPolyTab[IndexNbTriangle+1] = Cindex;
+                    IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
+                    (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
+                    TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
+                    //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
+                    NbTriangleIsoSurfaceTmp++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
-                NbPolyMinimalTopology++;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                    NbPolyMinimalTopology++;
 
-                /// (Bprime, Cprime) --> the border
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+1] = IndexCprime;
-                IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 4; /// Type = 4-->Border
-                NbTriangleIsoSurfaceTmp++;
+                    /// (Bprime, Cprime) --> the border
+                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                    IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
+                    IndexPolyTab[IndexNbTriangle+1] = IndexCprime;
+                    IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
+                    TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 4; /// Type = 4-->Border
+                    NbTriangleIsoSurfaceTmp++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
-                NbPolyMinimalTopology++;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                    NbPolyMinimalTopology++;
+                }
+                else return 2;
             }
         }
 
@@ -2283,7 +2292,7 @@ int Iso3D::SetMiniMmeshStruct()
                         /// First Poly:
                         IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][17];
                         for(iter = 0; iter < triTable_min[Index][17]; iter++)
-                         IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
+                            IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
                         /// Second Poly:
                         IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][18];
                         for(iter = triTable_min[Index][17]; iter < triTable_min[Index][17]+triTable_min[Index][18]; iter++)
@@ -2291,7 +2300,7 @@ int Iso3D::SetMiniMmeshStruct()
                     }
                     else
                         return 0;
-               }
+                }
                 else if( nbpl > 2)
                 {
                     NbPolyMin += nbpl;
@@ -3052,9 +3061,9 @@ int Iso3D::PointEdgeComputation(int isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
                     }
                     else
                         return 0;
