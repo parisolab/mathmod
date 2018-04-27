@@ -1734,9 +1734,17 @@ void Iso3D::IsoBuild (
             emitErrorSignal();
             return;
         }
+
         ConstructIsoNormale();
         SaveIsoGLMap();
-        SetMiniMmeshStruct();
+
+        result = SetMiniMmeshStruct();
+        if(result == 0)
+        {
+            messageerror = MINPOLY_TAB_MEM_OVERFLOW;
+            emitErrorSignal();
+            return;
+        }
 
         // Save the Index:
         l = 3*NbTriangleIsoSurfaceTmp;
@@ -2218,7 +2226,7 @@ Iso3D::~Iso3D()
 }
 
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
-void Iso3D::SetMiniMmeshStruct()
+int Iso3D::SetMiniMmeshStruct()
 {
     int Index, iter, nbpl, iterpl, lnew;
     int I, J, IJK, i, j, k;
@@ -2242,35 +2250,48 @@ void Iso3D::SetMiniMmeshStruct()
                 if( nbpl == 1)
                 {
                     NbPolyMin += nbpl;
-                    IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][17];
-                    for(iter = 0; iter < triTable_min[Index][17]; iter++)
-                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
+                    if((PreviousSizeMinimalTopology + lnew +1 + triTable_min[Index][17]) < 5*NbMaxTri)
+                    {
+                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][17];
+                        for(iter = 0; iter < triTable_min[Index][17]; iter++)
+                            IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
+                    }
+                    else
+                        return 0;
                 }
                 else if( nbpl == 2)
                 {
                     NbPolyMin += nbpl;
-                    /// First Poly:
-                    IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][17];
-                    for(iter = 0; iter < triTable_min[Index][17]; iter++)
-                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
-                    /// Second Poly:
-                    IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][18];
-                    for(iter = triTable_min[Index][17]; iter < triTable_min[Index][17]+triTable_min[Index][18]; iter++)
-                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
-                }
+                    if((PreviousSizeMinimalTopology + lnew +2 + triTable_min[Index][17] + triTable_min[Index][18]) < 5*NbMaxTri)
+                    {
+                        /// First Poly:
+                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][17];
+                        for(iter = 0; iter < triTable_min[Index][17]; iter++)
+                         IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
+                        /// Second Poly:
+                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][18];
+                        for(iter = triTable_min[Index][17]; iter < triTable_min[Index][17]+triTable_min[Index][18]; iter++)
+                            IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
+                    }
+                    else
+                        return 0;
+               }
                 else if( nbpl > 2)
                 {
                     NbPolyMin += nbpl;
                     /// In this case we have only Triangles (3 or 4):
                     iter = 0;
-                    for(iterpl = 0; iterpl < nbpl; iterpl++)
-                    {
-                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = 3;
-                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter  ]]  + NbVertexTmp;
-                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+1]]  + NbVertexTmp;
-                        IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+2]]  + NbVertexTmp;
-                        iter +=3;
-                    }
+                    if((PreviousSizeMinimalTopology + lnew + 4*nbpl) < 5*NbMaxTri)
+                        for(iterpl = 0; iterpl < nbpl; iterpl++)
+                        {
+                            IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = 3;
+                            IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter  ]]  + NbVertexTmp;
+                            IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+1]]  + NbVertexTmp;
+                            IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+2]]  + NbVertexTmp;
+                            iter +=3;
+                        }
+                    else
+                        return 0;
                 }
 
             } /// End of for(k=0;
@@ -2279,6 +2300,7 @@ void Iso3D::SetMiniMmeshStruct()
 
     PreviousSizeMinimalTopology += lnew;
     NbPolyMinimalTopology += NbPolyMin;
+    return 1;
 }
 
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++

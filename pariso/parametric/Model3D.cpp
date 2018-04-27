@@ -171,14 +171,6 @@ void ParWorkerThread::ParCompute(int fctnb, int idx)
 {
     calcul_objet(fctnb, idx);
 }
-/*
-//+++++++++++++++++++++++++++++++++++++++++
-void ParMasterThread::AllocateParsersForThread()
-{
-    AllocateParsersForMasterThread();
-    initialiser_parseur();
-}
-*/
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres(int nbThreads, int nbGrid)
 {

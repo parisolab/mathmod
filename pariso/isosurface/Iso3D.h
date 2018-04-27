@@ -156,7 +156,7 @@ public :
     inline void CNDCalculation(int, struct ComponentInfos *);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
     void SaveIsoGLMap();
-    void SetMiniMmeshStruct();
+    int SetMiniMmeshStruct();
     int CNDtoUse(int index, struct ComponentInfos *components);
     void CalculateColorsPoints(struct ComponentInfos *components);
     void BuildIso();
