@@ -1756,7 +1756,7 @@ void Iso3D::IsoBuild (
             components->IsoPts[2*fctnb    ] = NbVertexTmp;
             components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
         }
-        if( (l + 3*NbTriangleIsoSurface) < 4*NbMaxTri)
+        if( (l+3*NbTriangleIsoSurface) < 4*NbMaxTri)
         {
             for (int i=0; i < NbTriangleIsoSurface ; ++i)
             {

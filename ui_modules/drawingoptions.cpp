@@ -34,7 +34,8 @@ const char* ScriptErrorMessage[]=
     "MAXGRID_OUT_OF_RANGE",           // 1
     "MAXPT_OUT_OF_RANGE",             // 2
     "MAXTRI_OUT_OF_RANGE",            // 3
-    "NBCOMPONENT_OUT_OF_RANGE",       // 4
+    "FXYZ_OUT_OF_RANGE",              // 4
+    "FX_OUT_OF_RANGE",
     "XMAX_NBCOMPONENT_MISMATCH",      // 5
     "YMAX_NBCOMPONENT_MISMATCH",      // 6
     "ZMAX_NBCOMPONENT_MISMATCH",      // 7
@@ -1286,10 +1287,10 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
     {
         QObj = Jobj["Iso3D"].toObject();
         // Fxyz
-        lst = QObj["Fxyz"].toArray();
-        if((NbFxyz=lst.size()) > Parameters->NbComponent)
+        NbFxyz = (QObj["Fxyz"].toArray()).size();
+        if(NbFxyz > Parameters->NbComponent || NbFxyz == 0)
         {
-            scriptErrorType = NBCOMPONENT_OUT_OF_RANGE;
+            scriptErrorType = FXYZ_OUT_OF_RANGE;
             ErrorMsg();
             return false;
         }
@@ -1374,10 +1375,10 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
     {
         QObj = Jobj["Param3D"].toObject();
         // Fx
-        lst = QObj["Fx"].toArray();
-        if((NbFx=lst.size()) > Parameters->NbComponent)
+        NbFx = (QObj["Fx"].toArray()).size();
+        if(NbFx > Parameters->NbComponent || NbFx == 0)
         {
-            scriptErrorType = NBCOMPONENT_OUT_OF_RANGE;
+            scriptErrorType = FX_OUT_OF_RANGE;
             ErrorMsg();
             return false;
         }
