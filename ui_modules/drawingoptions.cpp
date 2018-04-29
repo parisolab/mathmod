@@ -65,7 +65,9 @@ const char* ScriptErrorMessage[]=
     "MINPOLY_TAB_MEM_OVERFLOW",       //31
     "POLY_TAB_MEM_OVERFLOW",          //32
     "CND_TAB_MEM_OVERFLOW",           //33
-    "CND_POL_MEM_OVERFLOW"            //34
+    "CND_POL_MEM_OVERFLOW",           //34
+    "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW", //35
+    "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW"  //36
 };
 
 // --------------------------
@@ -1447,12 +1449,63 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
             ErrorMsg();
             return false;
         }
-        if(((QObj["Grid"].toArray()).size() > 0) && ((QObj["Grid"].toArray()).size() != 2*NbFx))
+
+        //Start Grid field processing
+        QString result = "";
+        if((lst = QObj["Grid"].toArray()).size() > 0 )
         {
-            scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
+            if(lst.size() != 2*NbFx)
+            {
+                scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+                ErrorMsg();
+                return false;
+            }
+            else
+            {
+                // Grid
+                    for(int j=0; j < lst.size()-1; j++)
+                        result += lst[j].toString() + ";";
+                if(lst.size() >= 1)
+                    result += lst[lst.size()-1].toString();
+                result.replace("\n","");
+                result.replace("\t","");
+                result.replace(" ","");
+                if(result!="")
+                {
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+                    for(int j=0; j < lst.size(); j++)
+                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+                    int TotalPts = 0;
+                    int TotalTri = 0;
+                    for(int j=0; j < lst.size()/2; j++)
+                    {
+                        TotalPts += MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ]*
+                                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1];
+                        TotalTri += (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ] - 1)*
+                                (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1] - 1);
+                    }
+                    if(TotalPts > NbMaxPts)
+                    {
+                        scriptErrorType = DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW;
+                        ErrorMsg();
+                        return false;
+                    }
+                    if(TotalTri > NbMaxTri)
+                    {
+                        scriptErrorType = DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW;
+                        ErrorMsg();
+                        return false;
+                    }
+                }
+            }
         }
+        else
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
+
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
+        //End Grid field processing
+
         if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFx))
         {
             scriptErrorType = CND_NBCOMPONENT_MISMATCH;

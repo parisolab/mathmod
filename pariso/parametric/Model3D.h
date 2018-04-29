@@ -113,6 +113,7 @@ public :
 /** The representation of a 3D model */
 class Par3D   : public QThread
 {
+    Q_OBJECT
 public:
     ObjectProperties *LocalScene;
     ParMasterThread *masterthread;
@@ -135,6 +136,7 @@ public:
 
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
     int largeur_fenetre,hauteur_fenetre;
+    ScriptErrorType messageerror;
 public:
     Par3D(int,
           int nbThreads=4,
@@ -171,4 +173,8 @@ public:
     ErrorMessage  parse_expression2();
     ErrorMessage  ParMorph();
     void run() Q_DECL_OVERRIDE;
+    signals:
+        void ErrorSignal(int);
+    public:
+        void emitErrorSignal();
 };

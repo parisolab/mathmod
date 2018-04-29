@@ -1744,7 +1744,6 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
     ss = 100.0/(iFinish*Vgrid);
 
     int l=TypeDrawin*iStart*Vgrid;
-
     for(int j=iStart; j < iFinish   ; j++)
     {
         jprime = (double)j/(double)(Ugrid -1 ) ;
@@ -1780,6 +1779,11 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
     }
 }
 
+//++++++++++++++++++++++++++++++++++++
+void Par3D::emitErrorSignal()
+{
+    emit ErrorSignal(int(messageerror));
+}
 //++++++++++++++++++++++++++++++++++++
 void  Par3D::ParamBuild(
     float *NormVertexTabPt,
@@ -1838,6 +1842,20 @@ void  Par3D::ParamBuild(
         NbPolyMinimalTopology       += (Ugrid  - CutU -1)*(Vgrid - CutV -1);
         PreviousSizeMinimalTopology += 5*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         NbVertex  = (Ugrid)*(Vgrid);
+
+        if(NbVertexTmp > NbMaxPts)
+        {
+            messageerror = VERTEX_TAB_MEM_OVERFLOW;
+            emitErrorSignal();
+            return;
+        }
+
+        if(NbTriangleIsoSurfaceTmp > NbMaxTri)
+        {
+            messageerror = TRIANGLES_TAB_MEM_OVERFLOW;
+            emitErrorSignal();
+            return;
+        }
 
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         {
