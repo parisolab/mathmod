@@ -60,5 +60,10 @@
         <file>copying</file>
         <file>Licence.txt</file>
         <file>Readme.txt</file>
+        <file>images/icon/catenoid_mini_16x16.png</file>
+        <file>images/icon/catenoid_mini_32x32.png</file>
+        <file>images/icon/catenoid_mini_64x64.ico</file>
+        <file>images/icon/catenoid_mini_64x64.png</file>
+        <file>images/icon/copying</file>
     </qresource>
 </RCC>
