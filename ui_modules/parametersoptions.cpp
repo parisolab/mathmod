@@ -21,6 +21,7 @@
 #include <math.h>
 #include "parametersoptions.h"
 
+bool MACOS = false;
 
 Parametersoptions::Parametersoptions(QWidget *parent)
     : QWidget(parent)
@@ -268,7 +269,7 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
 {
 
     QFile fconllect(filecollection);
-    if(fconllect.exists() && (argc >1))
+    if(fconllect.exists() && ((argc >1) || MACOS))
         ReadJsonFile(filecollection, Collection);
     else
         ReadJsonFile(":/mathmodcollection.js", Collection);
@@ -393,9 +394,10 @@ bool Parametersoptions::isFloat(std::string myString)
 
 void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 {
+    QString argv1;
     if(argc >1)
     {
-        QString argv1 = QString(argv[1]);
+        argv1 = QString(argv[1]);
         if(!argv1.endsWith("/"))
             argv1 +="/";
         filecollection   = argv1 + filecollection;
@@ -403,9 +405,16 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         advancedmodels   = argv1 + advancedmodels;
     }
 
+#ifdef Q_OS_MAC
+    MACOS = true;
+    argv1 ="../Resources/";
+    filecollection   = argv1 + filecollection;
+    fileconfig       = argv1 + fileconfig;
+    advancedmodels   = argv1 + advancedmodels;
+#endif
 
     QFile mathmodfileconfig(fileconfig);
-    if(!mathmodfileconfig.exists() && (argc >1))
+    if(!mathmodfileconfig.exists() && ((argc >1) || MACOS ))
     {
         QFile file3(":/mathmodconfig.js");
         file3.copy(fileconfig);
@@ -557,7 +566,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 
 
     QFile advancedmodelsfile(advancedmodels);
-    if(!advancedmodelsfile.exists() && (argc >1))
+    if(!advancedmodelsfile.exists() && ((argc >1) || MACOS))
     {
         QFile file2(":/advancedmodels.js");
         QString str;
@@ -581,7 +590,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
     }
 
     QFile mathmodfile(filecollection);
-    if(!mathmodfile.exists() && (argc >1))
+    if(!mathmodfile.exists() && ((argc >1) || MACOS))
     {
         QFile file2(":/mathmodcollection.js");
         QString str;
