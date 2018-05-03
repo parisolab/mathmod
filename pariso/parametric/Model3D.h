@@ -118,8 +118,6 @@ public:
     ObjectProperties *LocalScene;
     ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
-    unsigned int *IndexPolyTab;
-    unsigned int *IndexPolyTabMin;
     float *Border;
     bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
@@ -137,6 +135,7 @@ public:
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
     int largeur_fenetre,hauteur_fenetre;
     ScriptErrorType messageerror;
+
 public:
     Par3D(int,
           int nbThreads=4,

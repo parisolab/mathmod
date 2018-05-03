@@ -132,7 +132,6 @@ public :
     int   *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
-    unsigned int *  IndexPolyTab;
     int NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
 

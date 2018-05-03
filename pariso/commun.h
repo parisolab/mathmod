@@ -38,7 +38,7 @@ extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
 extern int NbMaxTri;
 extern int NbMaxPts;
 extern int IsoNbCmp;
-extern float* NormVertexTab;
+
 
 struct ImplicitStructure
 {
@@ -148,6 +148,11 @@ struct  ComponentInfos
     bool DMTrianglesBorderCND;
     NoiseParemeters NoiseParam;
 };
+
+extern float* NormVertexTab;
+extern int * IndexPolyTab;
+extern int * IndexPolyTabMin;
+extern struct ComponentInfos *components;
 
 struct  ObjectProperties
 {
