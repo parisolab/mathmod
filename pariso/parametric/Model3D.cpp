@@ -1792,7 +1792,7 @@ void  Par3D::ParamBuild(
     unsigned int *PolyNumber,
     unsigned int *VertxNumber,
     int  IsoPos,
-    ComponentInfos *componentsPt,
+    ComponentInfos *components,
     int *TriangleListeCND,
     bool *typeCND,
     unsigned int *IndexPolyTabMinPt,
@@ -1803,6 +1803,9 @@ void  Par3D::ParamBuild(
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
+
+    IndexPolyTab = IndexPolyTabPt;
+    IndexPolyTabMin = IndexPolyTabMinPt;
 
     if(components != NULL)
         components->NbParametric = masterthread->Nb_paramfunctions+1;
@@ -1933,11 +1936,7 @@ void  Par3D::ParamBuild(
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
-    struct ComponentInfos *cmptmp = components;
-    components = componentsPt;
-    componentsPt   = cmptmp;
-    memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(int));
-    memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(int));
+
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
     memcpy(ExtraDimensionPt, ExtraDimension, NbVertexTmp*sizeof(float));
 }
