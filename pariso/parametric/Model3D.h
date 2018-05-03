@@ -118,8 +118,8 @@ public:
     ObjectProperties *LocalScene;
     ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
-    unsigned int *IndexPolyTab;
-    unsigned int *IndexPolyTabMin;
+    //unsigned int *IndexPolyTab;
+    //unsigned int *IndexPolyTabMin;
     float *Border;
     bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
@@ -154,7 +154,7 @@ public:
     void BorderCalculation(int i=0);
     void make_PolyIndexTri(int i=0, int p=0, int  IsoPos=0);
     void make_PolyIndexMin(int i=0, int p=0, int  IsoPos=0);
-    void CNDCalculation(int, struct ComponentInfos *);
+    int CNDCalculation(int &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void CalculateNoiseShapePoints(int);
     void ParamBuild(float *, float *,unsigned int *, unsigned int *,

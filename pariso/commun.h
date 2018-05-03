@@ -38,7 +38,10 @@ extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
 extern int NbMaxTri;
 extern int NbMaxPts;
 extern int IsoNbCmp;
+
 extern float* NormVertexTab;
+extern unsigned int * IndexPolyTab;
+extern unsigned int * IndexPolyTabMin;
 
 struct ImplicitStructure
 {

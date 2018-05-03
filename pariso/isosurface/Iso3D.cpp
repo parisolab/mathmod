@@ -22,7 +22,6 @@
 #include "povfunctions.cpp"
 #include <qmessagebox.h>
 
-static unsigned int *IndexPolyTabMin;
 static int NbPolyMin;
 static float * NormOriginaltmp;
 static Voxel *GridVoxelVarPt;
@@ -34,6 +33,8 @@ static int PreviousSizeMinimalTopology =0;
 static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 float* NormVertexTab;
+unsigned int * IndexPolyTab;
+unsigned int * IndexPolyTabMin;
 
 int NbMaxGrid = 100;
 int NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
@@ -480,6 +481,8 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
         GridVoxelVarPt           = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         NormVertexTab            = new float [10*maxpts];
+        IndexPolyTab             = new unsigned int [4*maxtri];
+        IndexPolyTabMin          = new unsigned int [5*maxtri];
         staticaction            *= -1;
     }
     else
@@ -489,12 +492,16 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
         delete[] GridVoxelVarPt;
         delete[] Results;
         delete[] NormVertexTab;
+        delete[] IndexPolyTab;
+        delete[] IndexPolyTabMin;
 
         IsoSurfaceTriangleListe  = new int[3*maxtri];
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new  Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         NormVertexTab            = new float [10*maxpts];
+        IndexPolyTab             = new unsigned int [4*maxtri];
+        IndexPolyTabMin          = new unsigned int [5*maxtri];
         staticaction            *= -1;
     }
 }
@@ -1663,14 +1670,13 @@ void Iso3D::IsoBuild (
 )
 {
     int    l, NbTriangleIsoSurfaceTmp;
-    //NormVertexTab = NormVertexTabPt;
     PreviousSizeMinimalTopology = 0;
     NbPolyMinimalTopology = 0;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
 
-    IndexPolyTabMin = IndexPolyTabMinPt;
-    IndexPolyTab = IndexPolyTabPt;
+    //IndexPolyTabMin = IndexPolyTabMinPt;
+    //IndexPolyTab = IndexPolyTabPt;
     if(components != NULL)
         components->NbIso = masterthread->Nb_implicitfunctions+1;
 
@@ -1830,22 +1836,9 @@ void Iso3D::IsoBuild (
 
     // Vertex :
     *VertexNumberpt = NbVertexTmp;
+    memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
+    memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
-    /*
-    float *tmpNormvert;
-    static int Action=0;
-    if(Action == 0)
-    {
-        memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
-        Action++;
-    }
-    else
-    {
-        tmpNormvert = NormVertexTab;
-        NormVertexTab = NormVertexTabPt;
-        NormVertexTabPt = tmpNormvert;
-    }
-    */
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
@@ -1925,7 +1918,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-int Iso3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
+int Iso3D::CNDCalculation(int & NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
     double vals[4];
     vals[3] = masterthread->stepMorph;

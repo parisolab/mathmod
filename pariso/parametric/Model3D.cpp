@@ -1360,7 +1360,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
+int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
 {
     double vals[4];
     vals[3] = masterthread->stepMorph;
@@ -1390,7 +1390,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         }
 
         int Aindex, Bindex, Cindex;
-        int nbtriangle = NbTriangleIsoSurfaceTmp;
+        int nbtriangle = Tmpo;
         for(int i= 0; i < nbtriangle; i++)
         {
             Aindex = IndexPolyTab[3*i       ];
@@ -1547,14 +1547,14 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 TypeIsoSurfaceTriangleListeCND[i] = 0;
 
                 /// (A, Bprime, Cprime)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexNbTriangle = Tmpo*3;
                 IndexPolyTab[IndexNbTriangle  ] = Aindex;
                 IndexPolyTab[IndexNbTriangle+1] = IndexBprime;
                 IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
+                TypeIsoSurfaceTriangleListeCND[Tmpo] = 1 : TypeIsoSurfaceTriangleListeCND[Tmpo] = -1;
                 //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
-                NbTriangleIsoSurfaceTmp++;
+                Tmpo++;
 
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = Aindex;
@@ -1563,14 +1563,14 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NbPolyMinimalTopology++;
 
                 /// (Bprime, B, C)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexNbTriangle = Tmpo*3;
                 IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
                 IndexPolyTab[IndexNbTriangle+1] = Bindex;
                 IndexPolyTab[IndexNbTriangle+2] = Cindex;
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
+                TypeIsoSurfaceTriangleListeCND[Tmpo] = -1 : TypeIsoSurfaceTriangleListeCND[Tmpo] = 1;
                 //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                NbTriangleIsoSurfaceTmp++;
+                Tmpo++;
 
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
@@ -1579,14 +1579,14 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NbPolyMinimalTopology++;
 
                 /// (Bprime, C, Cprime)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexNbTriangle = Tmpo*3;
                 IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
                 IndexPolyTab[IndexNbTriangle+1] = Cindex;
                 IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
+                TypeIsoSurfaceTriangleListeCND[Tmpo] = -1 : TypeIsoSurfaceTriangleListeCND[Tmpo] = 1;
                 //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                NbTriangleIsoSurfaceTmp++;
+                Tmpo++;
 
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
@@ -1595,12 +1595,12 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
                 NbPolyMinimalTopology++;
 
                 /// (Bprime, Cprime) --> the border
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexNbTriangle = Tmpo*3;
                 IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
                 IndexPolyTab[IndexNbTriangle+1] = IndexCprime;
                 IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
-                TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 4; /// Type = 4-->Border
-                NbTriangleIsoSurfaceTmp++;
+                TypeIsoSurfaceTriangleListeCND[Tmpo] = 4; /// Type = 4-->Border
+                Tmpo++;
 
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                 IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
@@ -1614,31 +1614,31 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         //***********
         //Reorganize the triangles index:
         //***********
-        unsigned int *NewIndexPolyTab = new unsigned int[3*NbTriangleIsoSurfaceTmp];
+        unsigned int *NewIndexPolyTab = new unsigned int[3*Tmpo];
         int k, l, M;
         k = l = M =0;
-        for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
+        for(int i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 1)
             {
-                NewIndexPolyTab[3*k       ] =  IndexPolyTab[3*i      ];
+                NewIndexPolyTab[3*k    ] =  IndexPolyTab[3*i    ];
                 NewIndexPolyTab[3*k + 1] =  IndexPolyTab[3*i + 1];
                 NewIndexPolyTab[3*k + 2] =  IndexPolyTab[3*i + 2];
                 k++;
             }
 
-        for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
+        for(int i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == -1)
             {
-                NewIndexPolyTab[3*(l + k)       ] =  IndexPolyTab[3*i      ];
+                NewIndexPolyTab[3*(l + k)    ] =  IndexPolyTab[3*i    ];
                 NewIndexPolyTab[3*(l + k) + 1] =  IndexPolyTab[3*i + 1];
                 NewIndexPolyTab[3*(l + k) + 2] =  IndexPolyTab[3*i + 2];
                 l++;
             }
 
-        for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
+        for(int i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 4)
             {
-                NewIndexPolyTab[3*(M + l + k)      ] =  IndexPolyTab[3*i      ];
+                NewIndexPolyTab[3*(M + l + k)    ] =  IndexPolyTab[3*i    ];
                 NewIndexPolyTab[3*(M + l + k) + 1] =  IndexPolyTab[3*i + 1];
                 NewIndexPolyTab[3*(M + l + k) + 2] =  IndexPolyTab[3*i + 2];
                 M++;
@@ -1646,7 +1646,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
 
         //Copy the new index in the original one:
         memcpy(IndexPolyTab, NewIndexPolyTab, 3*(M + l + k)*sizeof(unsigned int));
-        NbTriangleIsoSurfaceTmp = M + l + k;
+        Tmpo = M + l + k;
         delete[] (NewIndexPolyTab);
 
         components->NbTrianglesVerifyCND = k;
@@ -1657,7 +1657,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
         {
             if(components != NULL)
             {
-                components->Parametricpositions[3*fctnb + 1] = NbTriangleIsoSurfaceTmp;
+                components->Parametricpositions[3*fctnb + 1] = Tmpo;
             }
         }
 
@@ -1667,6 +1667,7 @@ void Par3D::CNDCalculation(int NbTriangleIsoSurfaceTmp, struct ComponentInfos *c
     {
         components->ThereisCND = false;
     }
+    return Tmpo;
 }
 
 //++++++++++++++++++++++++++++++++++++
@@ -1804,9 +1805,6 @@ void  Par3D::ParamBuild(
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
 
-    IndexPolyTab = IndexPolyTabPt;
-    IndexPolyTabMin = IndexPolyTabMinPt;
-
     if(components != NULL)
         components->NbParametric = masterthread->Nb_paramfunctions+1;
 
@@ -1937,6 +1935,8 @@ void  Par3D::ParamBuild(
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
 
+    memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
+    memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
     memcpy(ExtraDimensionPt, ExtraDimension, NbVertexTmp*sizeof(float));
 }

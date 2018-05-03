@@ -132,7 +132,7 @@ public :
     int   *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
-    unsigned int *  IndexPolyTab;
+    //unsigned int *  IndexPolyTab;
     int NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
 
@@ -153,7 +153,7 @@ public :
     inline   int ConstructIsoSurface();
     inline   void ConstructIsoNormale();
     inline   int PointEdgeComputation(int);
-    inline int CNDCalculation(int, struct ComponentInfos *);
+    inline int CNDCalculation(int &, struct ComponentInfos *);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
     void SaveIsoGLMap();
     int SetMiniMmeshStruct();

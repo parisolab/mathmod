@@ -19,8 +19,6 @@
  ***************************************************************************/
 #ifndef OBJECTPARAMETERS_H
 #define OBJECTPARAMETERS_H
-#include <math.h>
-#include <string>
 #include "commun.h"
 
 
