@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "video.h"
 
-videoplayer::videoplayer(QImage buffer)
+screenimage::screenimage(QImage buffer)
     : QMainWindow( 0, 0)
 {
     buf = buffer;
@@ -44,25 +44,25 @@ videoplayer::videoplayer(QImage buffer)
     pushScreenshot->setText( tr( "Save Screen" ) );
 }
 
-videoplayer::~videoplayer()
+screenimage::~screenimage()
 {
 //delete m;
     delete l;
 }
 
-void videoplayer::connectcontrols()
+void screenimage::connectcontrols()
 {
     connect( pushScreenshot, SIGNAL(clicked() ), this, SLOT(saveas()));
     connect( scrollBar55, SIGNAL(valueChanged(int) ), this, SLOT(f_1(int)));
 }
 //+++++++++++++++++++++++++++++++++++++++
-void videoplayer::f_1(int quality)
+void screenimage::f_1(int quality)
 {
     image_quality = quality;
 }
 
 //+++++++++++++++++++++++++++++++++++++++
-void videoplayer::saveas()
+void screenimage::saveas()
 {
     QString fn = QFileDialog::getSaveFileName(this,
                  tr("Choose a filename to save under"),

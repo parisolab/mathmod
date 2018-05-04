@@ -25,13 +25,13 @@
 #include <qgroupbox.h>
 #include <qscrollbar.h>
 
-class videoplayer: public QMainWindow
+class screenimage: public QMainWindow
 {
     Q_OBJECT
 
 public:
-    videoplayer(QImage);
-    ~videoplayer();
+    screenimage(QImage);
+    ~screenimage();
 public slots:
     void connectcontrols();
     void saveas();

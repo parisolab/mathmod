@@ -56,10 +56,6 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.view_rotz      = 1.0;
     objectproperties.IndexCurrentFormula = -1;
 
-    objectproperties.componentsinfos.IsoPositions        = new int[2*NbComponent+1];
-    objectproperties.componentsinfos.IsoPts              = new int[2*NbComponent+1];
-    objectproperties.componentsinfos.Parametricpositions = new int[3*NbComponent+1];
-
     objectproperties.IsoColorliste          = new unsigned int[NbComponent];
     objectproperties.ParColorliste          = new unsigned int[NbComponent];
     objectproperties.FillIsoliste           = new unsigned int[NbComponent];
@@ -242,6 +238,10 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.quality_image  = 50;
     objectproperties.colortype      = 0;
     objectproperties.colortypeParam = 0;
+
+    objectproperties.componentsinfos.IsoPositions        = new int[2*NbComponent+1];
+    objectproperties.componentsinfos.IsoPts              = new int[2*NbComponent+1];
+    objectproperties.componentsinfos.Parametricpositions = new int[3*NbComponent+1];
 
     objectproperties.componentsinfos.NoiseParam.Octaves     = 4;
     objectproperties.componentsinfos.NoiseParam.Lacunarity  = 0.5;

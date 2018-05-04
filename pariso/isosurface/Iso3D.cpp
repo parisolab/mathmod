@@ -35,6 +35,7 @@ static int NbVertexTmp = 0;
 float* NormVertexTab;
 unsigned int * IndexPolyTab;
 unsigned int * IndexPolyTabMin;
+struct  ComponentInfos ComponentInfostmp;
 
 int NbMaxGrid = 100;
 int NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;

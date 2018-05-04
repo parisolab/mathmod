@@ -122,7 +122,7 @@ void DrawingOptions::colorsoptions()
 void DrawingOptions::videoplay()
 {
     QImage buf = MathmodRef->ui.glWidget->Copyscreenshot();
-    videoplayer *player = new videoplayer(buf);
+    screenimage *player = new screenimage(buf);
     player->connectcontrols();
     player->show();
 }

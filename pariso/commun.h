@@ -27,21 +27,6 @@
 #define PI ((double)314159265/(double)100000000)
 #define MAGIC_SCALE 1.5707963f
 
-extern int NbTextures;
-extern int NbComponent;
-extern int NbVariables;
-extern int NbSliders;
-extern int NbSliderValues;
-extern int NbConstantes;
-extern int NbDefinedFunctions;
-extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
-extern int NbMaxTri;
-extern int NbMaxPts;
-extern int IsoNbCmp;
-
-extern float* NormVertexTab;
-extern unsigned int * IndexPolyTab;
-extern unsigned int * IndexPolyTabMin;
 
 struct ImplicitStructure
 {
@@ -290,3 +275,19 @@ public:
     float lookup(float, float, float);
 };
 
+extern int NbTextures;
+extern int NbComponent;
+extern int NbVariables;
+extern int NbSliders;
+extern int NbSliderValues;
+extern int NbConstantes;
+extern int NbDefinedFunctions;
+extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
+extern int NbMaxTri;
+extern int NbMaxPts;
+extern int IsoNbCmp;
+
+extern float* NormVertexTab;
+extern unsigned int * IndexPolyTab;
+extern unsigned int * IndexPolyTabMin;
+extern struct  ComponentInfos ComponentInfostmp;
