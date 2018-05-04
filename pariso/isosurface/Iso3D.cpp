@@ -473,6 +473,7 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
+
     static int staticaction = 1;
     /// Things to do one time...
     if(staticaction == 1)

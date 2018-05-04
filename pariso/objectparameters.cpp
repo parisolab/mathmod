@@ -239,18 +239,24 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.colortype      = 0;
     objectproperties.colortypeParam = 0;
 
-    objectproperties.componentsinfos.IsoPositions        = new int[2*NbComponent+1];
-    objectproperties.componentsinfos.IsoPts              = new int[2*NbComponent+1];
-    objectproperties.componentsinfos.Parametricpositions = new int[3*NbComponent+1];
+    InitComponentinfos(objectproperties.componentsinfos);
+    InitComponentinfos(ComponentInfostmp);
+}
 
-    objectproperties.componentsinfos.NoiseParam.Octaves     = 4;
-    objectproperties.componentsinfos.NoiseParam.Lacunarity  = 0.5;
-    objectproperties.componentsinfos.NoiseParam.Gain        = 0.5;
-    objectproperties.componentsinfos.NoiseParam.NoiseActive = 1;
+void ObjectParameters::InitComponentinfos(struct  ComponentInfos & compinfos)
+{
+    compinfos.IsoPositions        = new int[2*NbComponent+1];
+    compinfos.IsoPts              = new int[2*NbComponent+1];
+    compinfos.Parametricpositions = new int[3*NbComponent+1];
 
-    objectproperties.componentsinfos.DFTrianglesNotVerifyCND =
-        objectproperties.componentsinfos.DFTrianglesVerifyCND =
-            objectproperties.componentsinfos.DMTrianglesBorderCND = true;
-    objectproperties.componentsinfos.DMTrianglesNotVerifyCND =
-        objectproperties.componentsinfos.DMTrianglesVerifyCND = false;
+    compinfos.NoiseParam.Octaves     = 4;
+    compinfos.NoiseParam.Lacunarity  = 0.5;
+    compinfos.NoiseParam.Gain        = 0.5;
+    compinfos.NoiseParam.NoiseActive = 1;
+
+    compinfos.DFTrianglesNotVerifyCND =
+        compinfos.DFTrianglesVerifyCND =
+            compinfos.DMTrianglesBorderCND = true;
+    compinfos.DMTrianglesNotVerifyCND =
+        compinfos.DMTrianglesVerifyCND = false;
 }
