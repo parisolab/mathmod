@@ -154,7 +154,7 @@ public :
     inline   void ConstructIsoNormale();
     inline   int PointEdgeComputation(int);
     inline int CNDCalculation(int &, struct ComponentInfos *);
-    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, ComponentInfos *components = NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
+    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, struct ComponentInfos * P=NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
     void SaveIsoGLMap();
     int SetMiniMmeshStruct();
     int CNDtoUse(int index, struct ComponentInfos *components);
@@ -167,6 +167,7 @@ public :
     ErrorMessage parse_expression2();
     ErrorMessage ThreadParsersCopy();
     void ReinitVarTablesWhenMorphActiv(int);
+    void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
 
 signals:

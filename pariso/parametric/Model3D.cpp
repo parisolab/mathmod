@@ -1785,6 +1785,38 @@ void Par3D::emitErrorSignal()
 {
     emit ErrorSignal(int(messageerror));
 }
+//+++++++++++++++++++++++++++++++++++++++++
+void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
+{
+    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbComponent+1)*sizeof(int));
+    memcpy(copy->IsoPts, origin->IsoPts, (2*NbComponent+1)*sizeof(int));
+    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbComponent+1)*sizeof(int));
+
+    copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
+    copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
+    copy->NoiseParam.Gain           = origin->NoiseParam.Gain;
+    copy->NoiseParam.NoiseActive    = origin->NoiseParam.NoiseActive;
+    copy->NoiseParam.NoiseType      = origin->NoiseParam.NoiseType;
+    copy->NoiseParam.Nb_vrgbts      = origin->NoiseParam.Nb_vrgbts;
+    copy->NoiseParam.VRgbtParser    = origin->NoiseParam.VRgbtParser;
+    copy->NoiseParam.GradientParser = origin->NoiseParam.GradientParser;
+    copy->NoiseParam.NoiseParser    = origin->NoiseParam.NoiseParser;
+    copy->NoiseParam.RgbtParser     = origin->NoiseParam.RgbtParser;
+
+    copy->ThereisRGBA             = origin->ThereisRGBA;
+    copy->DFTrianglesNotVerifyCND = origin->DFTrianglesNotVerifyCND;
+    copy->DFTrianglesVerifyCND    = origin->DFTrianglesVerifyCND;
+    copy->DMTrianglesBorderCND    = origin->DMTrianglesBorderCND ;
+    copy->DMTrianglesNotVerifyCND = origin->DMTrianglesNotVerifyCND;
+    copy->DMTrianglesVerifyCND    = origin->DMTrianglesVerifyCND;
+    copy->NbIso                   = origin->NbIso;
+    copy->NbParametric            = origin->NbParametric;
+    copy->selectedComponent       = origin->selectedComponent;
+    copy->ThereisCND              = origin->ThereisCND;
+    copy->NbTrianglesVerifyCND    = origin->NbTrianglesVerifyCND;
+    copy->NbTrianglesNotVerifyCND = origin->NbTrianglesNotVerifyCND;
+    copy->NbTrianglesBorderCND    = origin->NbTrianglesBorderCND;
+}
 //++++++++++++++++++++++++++++++++++++
 void  Par3D::ParamBuild(
     float *NormVertexTabPt,
@@ -1793,7 +1825,7 @@ void  Par3D::ParamBuild(
     unsigned int *PolyNumber,
     unsigned int *VertxNumber,
     int  IsoPos,
-    ComponentInfos *components,
+    ComponentInfos *componentsPt,
     int *TriangleListeCND,
     bool *typeCND,
     unsigned int *IndexPolyTabMinPt,
@@ -1930,7 +1962,7 @@ void  Par3D::ParamBuild(
     if(masterthread->gridnotnull)
         initialiser_LineColumn(nbline_save, nbcolone_save);
 
-// 3) Nb Poly & Vertex :
+    // 3) Nb Poly & Vertex :
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
@@ -1939,6 +1971,7 @@ void  Par3D::ParamBuild(
     memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
     memcpy(ExtraDimensionPt, ExtraDimension, NbVertexTmp*sizeof(float));
+    copycomponent(componentsPt, components);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++

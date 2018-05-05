@@ -54,11 +54,6 @@ struct NoiseParemeters
     int Octaves;
     float Lacunarity ;
     float Gain;
-    float WindowSize;
-    float shiftX;
-    float ShiftY;
-    float ShiftZ;
-    float * IndexPoint;
     int NoiseType; // 0 :Texture ; 1 : Pigments
     FunctionParser *RgbtParser;
     FunctionParser *VRgbtParser, *GradientParser, *NoiseParser;
@@ -290,4 +285,5 @@ extern int IsoNbCmp;
 extern float* NormVertexTab;
 extern unsigned int * IndexPolyTab;
 extern unsigned int * IndexPolyTabMin;
-extern struct  ComponentInfos ComponentInfostmp;
+extern struct  ComponentInfos componentsStr;
+extern struct ComponentInfos * components;

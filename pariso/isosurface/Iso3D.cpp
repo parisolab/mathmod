@@ -35,7 +35,8 @@ static int NbVertexTmp = 0;
 float* NormVertexTab;
 unsigned int * IndexPolyTab;
 unsigned int * IndexPolyTabMin;
-struct  ComponentInfos ComponentInfostmp;
+struct ComponentInfos componentsStr;
+struct ComponentInfos * components=&componentsStr;
 
 int NbMaxGrid = 100;
 int NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
@@ -1658,6 +1659,38 @@ void Iso3D::stopcalculations(bool calculation)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
+//+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
+{
+    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbComponent+1)*sizeof(int));
+    memcpy(copy->IsoPts, origin->IsoPts, (2*NbComponent+1)*sizeof(int));
+    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbComponent+1)*sizeof(int));
+
+    copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
+    copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
+    copy->NoiseParam.Gain           = origin->NoiseParam.Gain;
+    copy->NoiseParam.NoiseActive    = origin->NoiseParam.NoiseActive;
+    copy->NoiseParam.NoiseType      = origin->NoiseParam.NoiseType;
+    copy->NoiseParam.Nb_vrgbts      = origin->NoiseParam.Nb_vrgbts;
+    copy->NoiseParam.VRgbtParser    = origin->NoiseParam.VRgbtParser;
+    copy->NoiseParam.GradientParser = origin->NoiseParam.GradientParser;
+    copy->NoiseParam.NoiseParser    = origin->NoiseParam.NoiseParser;
+    copy->NoiseParam.RgbtParser     = origin->NoiseParam.RgbtParser;
+
+    copy->ThereisRGBA             = origin->ThereisRGBA;
+    copy->DFTrianglesNotVerifyCND = origin->DFTrianglesNotVerifyCND;
+    copy->DFTrianglesVerifyCND    = origin->DFTrianglesVerifyCND;
+    copy->DMTrianglesBorderCND    = origin->DMTrianglesBorderCND ;
+    copy->DMTrianglesNotVerifyCND = origin->DMTrianglesNotVerifyCND;
+    copy->DMTrianglesVerifyCND    = origin->DMTrianglesVerifyCND;
+    copy->NbIso                   = origin->NbIso;
+    copy->NbParametric            = origin->NbParametric;
+    copy->selectedComponent       = origin->selectedComponent;
+    copy->ThereisCND              = origin->ThereisCND;
+    copy->NbTrianglesVerifyCND    = origin->NbTrianglesVerifyCND;
+    copy->NbTrianglesNotVerifyCND = origin->NbTrianglesNotVerifyCND;
+    copy->NbTrianglesBorderCND    = origin->NbTrianglesBorderCND;
+}
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float *NormVertexTabPt,
@@ -1666,7 +1699,7 @@ void Iso3D::IsoBuild (
     unsigned int *VertexNumberpt,
     unsigned int *IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt,
-    struct ComponentInfos *components,
+    struct ComponentInfos * componentsPt,
     int *TriangleListeCND,
     bool *typeCND
 )
@@ -1676,6 +1709,7 @@ void Iso3D::IsoBuild (
     NbPolyMinimalTopology = 0;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
+
 
     //IndexPolyTabMin = IndexPolyTabMinPt;
     //IndexPolyTab = IndexPolyTabPt;
@@ -1838,9 +1872,11 @@ void Iso3D::IsoBuild (
 
     // Vertex :
     *VertexNumberpt = NbVertexTmp;
+
     memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
+    copycomponent(componentsPt, components);
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)

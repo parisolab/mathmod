@@ -240,7 +240,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.colortypeParam = 0;
 
     InitComponentinfos(objectproperties.componentsinfos);
-    InitComponentinfos(ComponentInfostmp);
+    InitComponentinfos(componentsStr);
 }
 
 void ObjectParameters::InitComponentinfos(struct  ComponentInfos & compinfos)

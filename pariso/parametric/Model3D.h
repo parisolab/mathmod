@@ -172,6 +172,7 @@ public:
     ErrorMessage ThreadParsersCopy();
     ErrorMessage  parse_expression2();
     ErrorMessage  ParMorph();
+    void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
     signals:
         void ErrorSignal(int);
