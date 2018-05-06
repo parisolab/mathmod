@@ -3010,37 +3010,6 @@
     },
     {
       "Iso3D": {
-        "Name": [
-          "W_SkeletalGraph"
-        ],
-        "Component": [
-          "W_SkeletalGraph"
-        ],
-        "Fxyz": [
-          "cos(2*x)+cos(2*y)+cos(2*z)-1DOTSYMBOL95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2DOTSYMBOL8"
-        ],
-        "Xmax": [
-          "4*pi"
-        ],
-        "Xmin": [
-          "0"
-        ],
-        "Ymax": [
-          "4*pi"
-        ],
-        "Ymin": [
-          "0"
-        ],
-        "Zmax": [
-          "4*pi"
-        ],
-        "Zmin": [
-          "0"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
         "Description": [
           "Constructive Solid Geometry(CSG)with mathematics"
         ],
@@ -6359,130 +6328,6 @@
     {
       "Iso3D": {
         "Description": [
-          "The Dome-2.0 by Abderrahman Taha 27/02/2016"
-        ],
-        "Name": [
-          "The Dome_02"
-        ],
-        "Component": [
-          "Dome"
-        ],
-        "Cnd": [
-          "sqrt(x*x+y*y+z*z)>S/3"
-        ],
-        "Const": [
-          "A=4",
-          "N1=10",
-          "N2=10",
-          "R=16"
-        ],
-        "Funct": [
-          "Scherk=sinh(x)*sinh(y)-A*sin(z)",
-          "Scherk2=Scherk(N1*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-R),N2*atan2(z,y),t)"
-        ],
-        "Fxyz": [
-          "-Scherk2(z,y,x,t)"
-        ],
-        "Xmax": [
-          "27"
-        ],
-        "Xmin": [
-          "-27"
-        ],
-        "Ymax": [
-          "27"
-        ],
-        "Ymin": [
-          "-27"
-        ],
-        "Zmax": [
-          "18"
-        ],
-        "Zmin": [
-          "-18"
-        ]
-      },
-      "Sliders": {
-        "Max": [
-          "20",
-          "30",
-          "30",
-          "30",
-          "100",
-          "20",
-          "30",
-          "30",
-          "30",
-          "100",
-          "20",
-          "30",
-          "30",
-          "30",
-          "100"
-        ],
-        "Min": [
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0"
-        ],
-        "Name": [
-          "A",
-          "N1",
-          "N2",
-          "R",
-          "S"
-        ],
-        "Position": [
-          "4",
-          "10",
-          "10",
-          "16",
-          "63",
-          "4",
-          "1",
-          "7",
-          "16",
-          "44",
-          "4",
-          "2",
-          "9",
-          "15",
-          "73"
-        ],
-        "Step": [
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
           "Schwarz P Tori v01 by Abderrahman Taha 25/02/2016"
         ],
         "Name": [
@@ -6627,7 +6472,7 @@
           "P_Skeletal Tori-2.0 by Abderrahman Taha 22/02/2016"
         ],
         "Name": [
-          "P_SkeletalTori_02"
+          "P_Skeletal Tori"
         ],
         "Component": [
           "P_SkeletalTori"
@@ -6734,7 +6579,7 @@
           "0",
           "5",
           "19",
-          "4",
+          "7",
           "14",
           "33",
           "8",
@@ -7217,7 +7062,7 @@
           "The Dome-1DOTSYMBOL0 by Abderrahman Taha 12/01/2015"
         ],
         "Name": [
-          "The Dome"
+          "The Dome_01"
         ],
         "Component": [
           "Dome"
@@ -7266,7 +7111,7 @@
     {
       "Iso3D": {
         "Name": [
-          "Wall Pattern Torus-03"
+          "Wall Pattern Torus-02"
         ],
         "Description": [
           "Wall Pattern Torus-03 by Abderrahman Taha 10/01/2016"
@@ -7963,55 +7808,6 @@
       }
     },
     {
-      "Iso3D": {
-        "Description": [
-          "Schwarz P Sphere_2 by Abderrahman Taha 13/12/2015"
-        ],
-        "Name": [
-          "Schwarz P Sphere_2"
-        ],
-        "Component": [
-          "Schwarz P Sphere"
-        ],
-        "Const": [
-          "M=1",
-          "N=10"
-        ],
-        "Funct": [
-          "Iso=cos(x)+cos(y)+cos(z)",
-          "Iso4= (Iso(x+sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso5= (Iso(x-sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "TickIso2= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoCondition_0=(x^2-4DOTSYMBOL8^2)",
-          "isoCondition_1=(x^2-4DOTSYMBOL6^2)",
-          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),SchwarzP(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2(x,y,z,t)"
-        ],
-        "Xmax": [
-          "18"
-        ],
-        "Xmin": [
-          "-18"
-        ],
-        "Ymax": [
-          "18"
-        ],
-        "Ymin": [
-          "-18"
-        ],
-        "Zmax": [
-          "18"
-        ],
-        "Zmin": [
-          "-18"
-        ]
-      }
-    },
-    {
       "Param3D": {
         "Description ": [
           "Under Sea by Abderrahman Taha 12/12/2015"
@@ -8190,55 +7986,6 @@
     {
       "Iso3D": {
         "Description": [
-          "Skeletal SchwarzP Tori_2 by Abderrahman Taha 10/12/2015"
-        ],
-        "Name": [
-          "Skeletal SchwarzP Tori_2"
-        ],
-        "Component": [
-          "Skeletal SchwarzP Tori"
-        ],
-        "Const": [
-          "M=0DOTSYMBOL2",
-          "N=15",
-          "T=1",
-          "S=pi"
-        ],
-        "Funct": [
-          "Iso=cos(x)+cos(y)+cos(z)",
-          "Iso2= (Iso(x+t*sin(x)*1DOTSYMBOL2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+t*sin(y)*1DOTSYMBOL2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+t*sin(z)*1DOTSYMBOL2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "SchwarzP= (-Iso2(x,y,z,t))",
-          "isoCondition_0=((x-S)^2-2^2)",
-          "isoCondition_1=((x-S)^2-0DOTSYMBOL01^2)",
-          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),SchwarzP(x,y,z,-1),1)+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "30"
-        ],
-        "Xmin": [
-          "-30"
-        ],
-        "Ymax": [
-          "30"
-        ],
-        "Ymin": [
-          "-30"
-        ],
-        "Zmax": [
-          "15"
-        ],
-        "Zmin": [
-          "-15"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
           "Skeletal SchwarzP Tori by Abderrahman Taha 10/12/2015"
         ],
         "Name": [
@@ -8282,55 +8029,6 @@
         ],
         "Zmin": [
           "-15"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "Schwarz P Tori by Abderrahman Taha 10/12/2015"
-        ],
-        "Name": [
-          "Schwarz P Tori"
-        ],
-        "Component": [
-          "Schwarz P Tori"
-        ],
-        "Const": [
-          "M=0DOTSYMBOL1",
-          "N=15"
-        ],
-        "Funct": [
-          "Iso=cos(x)+cos(y)+cos(z)",
-          "Iso4= (Iso(x+sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso5= (Iso(x-sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "TickIso2= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoCondition_0=(x^2-3DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-3^2)",
-          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),SchwarzP(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "27"
-        ],
-        "Xmin": [
-          "-27"
-        ],
-        "Ymax": [
-          "27"
-        ],
-        "Ymin": [
-          "-27"
-        ],
-        "Zmax": [
-          "12"
-        ],
-        "Zmin": [
-          "-12"
         ]
       }
     },
@@ -8469,98 +8167,6 @@
         ],
         "Zmin": [
           "-19"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "P_Skeletal Sphere by Abderrahman Taha 08/12/2015"
-        ],
-        "Name": [
-          "P_SkeletalSphere_00"
-        ],
-        "Component": [
-          "P_Skeletal Sphere"
-        ],
-        "Const": [
-          "M=4",
-          "N=10",
-          "P=0DOTSYMBOL7"
-        ],
-        "Funct": [
-          "P_Skeletal =cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL2",
-          "isoCondition_0=((x-pi)^2-(pi-P+0DOTSYMBOL01)^2)",
-          "isoCondition_1=((x-pi)^2-(pi-P)^2)",
-          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),P_Skeletal(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-(13)),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2(x,y,z,t)"
-        ],
-        "Xmax": [
-          "19"
-        ],
-        "Xmin": [
-          "-19"
-        ],
-        "Ymax": [
-          "19"
-        ],
-        "Ymin": [
-          "-19"
-        ],
-        "Zmax": [
-          "19"
-        ],
-        "Zmin": [
-          "-19"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "P_Skeletal Tori by Abderrahman Taha 08/12/2015"
-        ],
-        "Name": [
-          "P_Skeletal_Tori001"
-        ],
-        "Component": [
-          "P_Skeletal Tori"
-        ],
-        "Const": [
-          "M=1",
-          "N=10",
-          "P=7"
-        ],
-        "Funct": [
-          "P_Skeletal=cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL2",
-          "isoCondition_0=((x-pi)^2-(pi +0DOTSYMBOL05)^2)",
-          "isoCondition_1=((x-pi)^2-(pi)^2)",
-          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),P_Skeletal(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "30"
-        ],
-        "Xmin": [
-          "-30"
-        ],
-        "Ymax": [
-          "30"
-        ],
-        "Ymin": [
-          "-30"
-        ],
-        "Zmax": [
-          "15"
-        ],
-        "Zmin": [
-          "-15"
         ]
       }
     },
@@ -8838,51 +8444,6 @@
       }
     },
     {
-      "Iso3D": {
-        "Name": [
-          "Diamond Tori"
-        ],
-        "Description": [
-          "Diamond Tori by Abderrahman Taha 06/12/2015"
-        ],
-        "Component": [
-          "Diamond Tori"
-        ],
-        "Const": [
-          "M=1",
-          "N=10"
-        ],
-        "Funct": [
-          "Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
-          "isoCondition_0=(x^2-2DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-1DOTSYMBOL6^2)",
-          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),Diamond(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-15),N*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "25"
-        ],
-        "Xmin": [
-          "-25"
-        ],
-        "Ymax": [
-          "25"
-        ],
-        "Ymin": [
-          "-25"
-        ],
-        "Zmax": [
-          "10DOTSYMBOL5"
-        ],
-        "Zmin": [
-          "-10DOTSYMBOL5"
-        ]
-      }
-    },
-    {
       "Param3D": {
         "Description ": [
           "Sleeping bugs by Abderrahman Taha 06/12/2015"
@@ -8953,13 +8514,13 @@
     {
       "Iso3D": {
         "Description": [
-          "Gyroid Tori by Abderrahman Taha 06/12/2015"
+          "Gyroidal Tori by Abderrahman Taha 06/12/2015"
         ],
         "Name": [
-          "Gyroid Tori"
+          "Gyroidal Tori_1"
         ],
         "Component": [
-          "Gyroid Tori"
+          "Gyroidal Tori"
         ],
         "Const": [
           "N=10"
@@ -9488,7 +9049,7 @@
           " CubeOctahedrons"
         ],
         "Const": [
-          "N=20"
+          "N=5"
         ],
         "Funct": [
           "Octahedron=(abs(x)+abs(y)+abs(z))-(1/(2*N))",
@@ -9640,68 +9201,6 @@
         ],
         "Name": "Dream",
         "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "Spiral Schwarz Torus_1 by Abderrahman Taha 25/11/2015"
-        ],
-        "Name": [
-          "Spiral Schwarz Torus"
-        ],
-        "Component": [
-          "SpiralSchwarzTorus_1",
-          "SpiralSchwarzTorus_2"
-        ],
-        "Const": [
-          "N=1DOTSYMBOL4",
-          "k=48"
-        ],
-        "Funct": [
-          "Iso=cos(x)+cos(y)+cos(z)",
-          "DFx=-sin(x)",
-          "DFy=-sin(y)",
-          "DFz=-sin(z)",
-          "Rapport=sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z))",
-          "Iso3=(Iso(x+sin(x)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso4=(Iso(x+sin(x)*0DOTSYMBOL4/Rapport(x,y,z,t),y+sin(y)*0DOTSYMBOL4/Rapport(x,y,z,t),z+sin(z)*0DOTSYMBOL4/Rapport(x,y,z,t),t))",
-          "Iso5=(Iso(x-sin(x)*0DOTSYMBOL4/Rapport(x,y,z,t),y-sin(y)*0DOTSYMBOL4/Rapport(x,y,z,t),z-sin(z)*0DOTSYMBOL4/Rapport(x,y,z,t),t))",
-          "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoCondition=(x^2+z^2-28)",
-          "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
-          "isoTransform_2=isoTransform_1(x*cos(pi*y/(k*pi))-z*sin(pi*y/(k*pi)),y,x*sin(pi*y/(k*pi))+z*cos(pi*y/(k*pi)),t)",
-          "isoTransform_3=if(isoCondition(x,y,z,t)<(0),-Iso3(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
-          "isoTransform_4=isoTransform_3(x*cos(pi*y/(k*pi))-z*sin(pi*y/(k*pi)),y,x*sin(pi*y/(k*pi))+z*cos(pi*y/(k*pi)),t)"
-        ],
-        "Fxyz": [
-          "isoTransform_2((sqrt(x*x+y*y)-10),12*atan2(y,x),z,t)",
-          "isoTransform_4((sqrt(x*x+y*y)-10),12*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "15DOTSYMBOL5",
-          "15DOTSYMBOL5"
-        ],
-        "Xmin": [
-          "-15DOTSYMBOL5",
-          "-15DOTSYMBOL5"
-        ],
-        "Ymax": [
-          "15DOTSYMBOL5",
-          "15DOTSYMBOL5"
-        ],
-        "Ymin": [
-          "-15DOTSYMBOL5",
-          "-15DOTSYMBOL5"
-        ],
-        "Zmax": [
-          "5DOTSYMBOL5",
-          "5DOTSYMBOL5"
-        ],
-        "Zmin": [
-          "-5DOTSYMBOL5",
-          "-5DOTSYMBOL5"
-        ]
       }
     },
     {
@@ -10070,7 +9569,7 @@
           "Gyroidal Torus by Abderrahman Taha 21/11/2015"
         ],
         "Name": [
-          "Gyroidal Torus"
+          "Gyroidal Tori_2"
         ],
         "Component": [
           "GyroidalTorus"
@@ -10273,47 +9772,6 @@
     {
       "Iso3D": {
         "Description": [
-          "Matrix of Spheres by Abderrahman Taha 16/11/2015"
-        ],
-        "Name": [
-          "Matrix of Spheres"
-        ],
-        "Component": [
-          " MatrixofSpheres"
-        ],
-        "Const": [
-          "N=2",
-          "R=1/N"
-        ],
-        "Funct": [
-          "Sphere=sqrt(x*x+y*y+z*z)-1/(2*N)"
-        ],
-        "Fxyz": [
-          "-Sphere((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t)"
-        ],
-        "Xmax": [
-          "1"
-        ],
-        "Xmin": [
-          "0"
-        ],
-        "Ymax": [
-          "1"
-        ],
-        "Ymin": [
-          "0"
-        ],
-        "Zmax": [
-          "1"
-        ],
-        "Zmin": [
-          "0"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
           " Pseudo Chmutov_2 by Abderrahman Taha 14/11/2015"
         ],
         "Name": [
@@ -10347,66 +9805,6 @@
         "Zmin": [
           "-1DOTSYMBOL1"
         ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "Ring of Fire_1 by Abderrahman Taha 11/11/2015"
-        ],
-        "Name": [
-          "Ring of Fire"
-        ],
-        "Component": [
-          "Ring"
-        ],
-        "Const": [
-          "cx=0DOTSYMBOL0001"
-        ],
-        "Funct": [
-          "Scherk=sinh(x)*sinh(y)-5*sin(z)",
-          "Scherk2=Scherk(x,(sqrt(y*y+x*x)-10),z,t)",
-          "Thickness2=(0DOTSYMBOL43)",
-          "IsoExterior=Scherk2(x,(sqrt(y*y+z*z)-26),z,t)",
-          "DFx2= ((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2= ((IsoExterior(x,y,z,t)-IsoExterior(x,y+cx,z,t))/cx)",
-          "DFz2= ((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cx,t))/cx)",
-          "Rapport2= (sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso3= (IsoExterior(x-DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "Iso2= (IsoExterior(x+DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
-        ],
-        "Fxyz": [
-          "if((sqrt(y*y+z*z)-37<0)&(sqrt(y*y+z*z)-16>0) & ( (sqrt(y*y+z*z)-26)^2+x*x-75>0 ),ThickIsoExterior(x,y,z,t),1)+0DOTSYMBOL1"
-        ],
-        "Xmax": [
-          "11"
-        ],
-        "Xmin": [
-          "-11"
-        ],
-        "Ymax": [
-          "38"
-        ],
-        "Ymin": [
-          "-38"
-        ],
-        "Zmax": [
-          "38"
-        ],
-        "Zmin": [
-          "-38"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL71",
-          "G=1DOTSYMBOL1*abs(cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)/2))",
-          "B=0DOTSYMBOL01*abs(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z)/2))",
-          "T=1"
-        ],
-        "Name": "PerlinNoise",
-        "Noise": "NoiseP(x,y,z,(6),(7/10),(1))/30"
       }
     },
     {
@@ -12656,166 +12054,6 @@
       }
     },
     {
-      "Iso3D": {
-        "Name": [
-          "Pseudo k-Noids_1"
-        ],
-        "Description ": [
-          "Pseudo k-Noids by Abderrahman Taha 14/10/2015"
-        ],
-        "Component": [
-          "Pseudo-k-Noids"
-        ],
-        "Funct": [
-          "Noids=((x^2) - 0DOTSYMBOL685*(y)^2)^2 - 2DOTSYMBOL5*(z)^2 - (x^2 + 0DOTSYMBOL75*abs(y*cos(0DOTSYMBOL3*x) - z*sin(0DOTSYMBOL6*x))^2 + (y*sin(1DOTSYMBOL5*x) + z*cos(0DOTSYMBOL05*x))^2-0DOTSYMBOL5)",
-          "Noids1=Noids(x,y,(sqrt(x*x+1DOTSYMBOL6*z*z)-1),t)",
-          "Noids2=Noids1(x,(sqrt(x*x+1DOTSYMBOL6*y*y)-1),z,t)",
-          "Noids3=Noids2((sqrt(x*x+1DOTSYMBOL6*y*y)-1),y,z,t)"
-        ],
-        "Fxyz": [
-          "Noids2(x,y,z,t)"
-        ],
-        "Xmax": [
-          " 2DOTSYMBOL55"
-        ],
-        "Xmin": [
-          "-2DOTSYMBOL55"
-        ],
-        "Ymax": [
-          " 2"
-        ],
-        "Ymin": [
-          "-2"
-        ],
-        "Zmax": [
-          " 1DOTSYMBOL8"
-        ],
-        "Zmin": [
-          "-1DOTSYMBOL8"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Name": [
-          "Pseudo k-Noids_2"
-        ],
-        "Description ": [
-          "Pseudo k-Noids by Abderrahman Taha 14/10/2015"
-        ],
-        "Component": [
-          "Pseudo-k-Noids"
-        ],
-        "Funct": [
-          "Noids=((x^2) - 0DOTSYMBOL685*(y)^2)^2 - 2DOTSYMBOL5*(z)^2 - (x^2 + 0DOTSYMBOL75*abs(y*cos(0DOTSYMBOL3*x) - z*sin(0DOTSYMBOL6*x))^2 + (y*sin(1DOTSYMBOL5*x) + z*cos(0DOTSYMBOL05*x))^2-0DOTSYMBOL5)",
-          "Noids1=Noids(x,y,(sqrt(x*x+1DOTSYMBOL6*z*z)-1),t)",
-          "Noids2=Noids1(x,(sqrt(x*x+1DOTSYMBOL6*y*y)-1),z,t)",
-          "Noids3=Noids2((sqrt(x*x+1DOTSYMBOL6*y*y)-1),y,z,t)"
-        ],
-        "Fxyz": [
-          "Noids(x,y,z,t)"
-        ],
-        "Xmax": [
-          " 2DOTSYMBOL55"
-        ],
-        "Xmin": [
-          "-2DOTSYMBOL55"
-        ],
-        "Ymax": [
-          " 2"
-        ],
-        "Ymin": [
-          "-2"
-        ],
-        "Zmax": [
-          " 1DOTSYMBOL8"
-        ],
-        "Zmin": [
-          "-1DOTSYMBOL8"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Name": [
-          "Pseudo k-Noids_3"
-        ],
-        "Description ": [
-          "Pseudo k-Noids by Abderrahman Taha 14/10/2015"
-        ],
-        "Component": [
-          "Pseudo-k-Noids"
-        ],
-        "Funct": [
-          "Noids=((x^2) - 0DOTSYMBOL685*(y)^2)^2 - 2DOTSYMBOL5*(z)^2 - (x^2 + 0DOTSYMBOL75*abs(y*cos(0DOTSYMBOL3*x) - z*sin(0DOTSYMBOL6*x))^2 + (y*sin(1DOTSYMBOL5*x) + z*cos(0DOTSYMBOL05*x))^2-0DOTSYMBOL5)",
-          "Noids1=Noids(x,y,(sqrt(x*x+1DOTSYMBOL6*z*z)-1),t)",
-          "Noids2=Noids1(x,(sqrt(x*x+1DOTSYMBOL6*y*y)-1),z,t)",
-          "Noids3=Noids2((sqrt(x*x+1DOTSYMBOL6*y*y)-1),y,z,t)"
-        ],
-        "Fxyz": [
-          "Noids1(x,y,z,t)"
-        ],
-        "Xmax": [
-          " 2DOTSYMBOL55"
-        ],
-        "Xmin": [
-          "-2DOTSYMBOL55"
-        ],
-        "Ymax": [
-          " 2"
-        ],
-        "Ymin": [
-          "-2"
-        ],
-        "Zmax": [
-          " 1DOTSYMBOL8"
-        ],
-        "Zmin": [
-          "-1DOTSYMBOL8"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Name": [
-          "Pseudo k-Noids_4"
-        ],
-        "Description ": [
-          "Pseudo k-Noids by Abderrahman Taha 14/10/2015"
-        ],
-        "Component": [
-          "Pseudo-k-Noids"
-        ],
-        "Funct": [
-          "Noids=((x^2) - 0DOTSYMBOL685*(y)^2)^2 - 2DOTSYMBOL5*(z)^2 - (x^2 + 0DOTSYMBOL75*abs(y*cos(0DOTSYMBOL3*x) - z*sin(0DOTSYMBOL6*x))^2 + (y*sin(1DOTSYMBOL5*x) + z*cos(0DOTSYMBOL05*x))^2-0DOTSYMBOL5)",
-          "Noids1=Noids(x,y,(sqrt(x*x+1DOTSYMBOL6*z*z)-1),t)",
-          "Noids2=Noids1(x,(sqrt(x*x+1DOTSYMBOL6*y*y)-1),z,t)",
-          "Noids3=Noids2((sqrt(x*x+1DOTSYMBOL6*y*y)-1),y,z,t)"
-        ],
-        "Fxyz": [
-          "Noids3(x,y,z,t)"
-        ],
-        "Xmax": [
-          " 2DOTSYMBOL55"
-        ],
-        "Xmin": [
-          "-2DOTSYMBOL55"
-        ],
-        "Ymax": [
-          " 2"
-        ],
-        "Ymin": [
-          "-2"
-        ],
-        "Zmax": [
-          " 1DOTSYMBOL8"
-        ],
-        "Zmin": [
-          "-1DOTSYMBOL8"
-        ]
-      }
-    },
-    {
       "Param3D": {
         "Description ": [
           "Pseudo Hopf Tori by Abderrahman Taha 10/10/2015"
@@ -14114,119 +13352,6 @@
         ],
         "Name": "Granit_1",
         "Noise": "NoiseP((x-14),(y-17),(z-16),(10),(7),(12/100))"
-      }
-    },
-    {
-      "Iso3D": {
-        "Component": [
-          "DevilPlay"
-        ],
-        "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001"
-        ],
-        "Description": [
-          "Devil Play by Abderrahman Taha 01/10/2015"
-        ],
-        "Funct": [
-          "Devil=x^4+2*x^2*z^2-0DOTSYMBOL36*x^2-y^4+0DOTSYMBOL25*y^2+z^4",
-          "Devil2=Devil(x,sqrt(y*y+z*z)-1DOTSYMBOL5,z,t)",
-          "Thickness2=(0DOTSYMBOL1)",
-          "IsoExterior=Devil2(x,y,sqrt(x*x+z*z)-1DOTSYMBOL5,t)",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso2=(IsoExterior(x+t*DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+t*DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+t*DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))"
-        ],
-        "Fxyz": [
-          "IsoExterior(x,y,z,t)"
-        ],
-        "Name": [
-          "Devil Play"
-        ],
-        "Xmax": [
-          " 4DOTSYMBOL5"
-        ],
-        "Xmin": [
-          "-4DOTSYMBOL5"
-        ],
-        "Ymax": [
-          " 4DOTSYMBOL5"
-        ],
-        "Ymin": [
-          "-2DOTSYMBOL5"
-        ],
-        "Zmax": [
-          " 7DOTSYMBOL5"
-        ],
-        "Zmin": [
-          "-7DOTSYMBOL5"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "ToreSherk by Abderrahman Taha 29/09/2015"
-        ],
-        "Name": [
-          "ToreSherk"
-        ],
-        "Component": [
-          "ToreSherk"
-        ],
-        "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001"
-        ],
-        "Funct": [
-          "Scherk=sinh(x)*sinh(y)-5*sin(z)",
-          "Scherk2=Scherk(x,(sqrt(y*y+x*x)-10),z,t)",
-          "Thickness2=(0DOTSYMBOL43)",
-          "IsoExterior=Scherk2(x,(sqrt(y*y+z*z)-26),z,t)",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
-        ],
-        "Fxyz": [
-          "if((sqrt(y*y+z*z)-37<0)&(sqrt(y*y+z*z)-16>0) & ( (sqrt(y*y+z*z)-26)^2+x*x-75>0 ),ThickIsoExterior(x,y,z,t),1)+0DOTSYMBOL1"
-        ],
-        "Xmax": [
-          "11"
-        ],
-        "Xmin": [
-          "-11"
-        ],
-        "Ymax": [
-          "38"
-        ],
-        "Ymin": [
-          "-38"
-        ],
-        "Zmax": [
-          "38"
-        ],
-        "Zmin": [
-          "-38"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL71",
-          "G=1DOTSYMBOL1*abs(cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)/2))",
-          "B=0DOTSYMBOL01*abs(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z)/2))",
-          "T=1"
-        ],
-        "Name": "PerlinNoise",
-        "Noise": "NoiseP(x,y,z,(6),(7/10),1)/30"
       }
     },
     {
@@ -15936,7 +15061,7 @@
           "Set of Spheres animation by Abderrahman Taha 08/03/2017"
         ],
         "Name": [
-          "SetOfSpheres"
+          "SetOfSpheres_01"
         ],
         "Component": [
           "SetSpheres"
@@ -16109,7 +15234,7 @@
           "Scherk Torus 0N by Abderrahman Taha 25/02/2017"
         ],
         "Name": [
-          "Scherk_25"
+          "ScherkTorus_03"
         ],
         "Component": [
           "Scherk"
@@ -16718,54 +15843,6 @@
     {
       "Iso3D": {
         "Description": [
-          "Animated Diamond Tori-2.0 by Abderrahman Taha 02/05/2016"
-        ],
-        "Name": [
-          "Animated Diamond Tori"
-        ],
-        "Component": [
-          "Diamond Tori"
-        ],
-        "Const": [
-          "M=1DOTSYMBOL3",
-          "N1=8",
-          "N2=10",
-          "P=8DOTSYMBOL5",
-          "R=14DOTSYMBOL5"
-        ],
-        "Funct": [
-          "Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
-          "isoCondition_0=(x^2-2DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-1DOTSYMBOL6^2)",
-          "isoTransform=if((isoCondition_0(x,y,z,t)<0),-Diamond(x,y+8*t,1DOTSYMBOL5*z+10*t,t),1)+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z/1DOTSYMBOL5,t)"
-        ],
-        "Xmax": [
-          "25"
-        ],
-        "Xmin": [
-          "-25"
-        ],
-        "Ymax": [
-          "25"
-        ],
-        "Ymin": [
-          "-25"
-        ],
-        "Zmax": [
-          "15"
-        ],
-        "Zmin": [
-          "-15"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
           "Animated Bone Cage model by Abderrahman Taha 01/05/2016"
         ],
         "Name": [
@@ -16808,57 +15885,6 @@
         ],
         "Zmin": [
           "-15"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "Schwarz P Tori-3.0 by Abderrahman Taha 29/04/2016"
-        ],
-        "Name": [
-          "Schwarz P Tori_3"
-        ],
-        "Component": [
-          "Schwarz P Tori"
-        ],
-        "Const": [
-          "M=1",
-          "N1=10",
-          "N2=10",
-          "R1=8",
-          "R2=15",
-          "H=4"
-        ],
-        "Funct": [
-          "Iso=cos(x)+cos(y)+cos(z)",
-          "R=0DOTSYMBOL1*H*x/sqrt(x*x+y*y+z*z)",
-          "Iso4= (Iso(x+R(sin(x),sin(y),sin(z),t),y+R(sin(y),sin(x),sin(z),t), z+R(sin(z),sin(y),sin(x),t),t))",
-          "Iso5= (Iso(x-R(sin(x),sin(y),sin(z),t),y-R(sin(y),sin(x),sin(z),t), z-R(sin(z),sin(y),sin(x),t),t))",
-          "SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoTransform=if(x*x<10DOTSYMBOL24,SchwarzP(x,y-2*t,z-3*t,t),1)+0DOTSYMBOL1*M*exp(x*x-9)",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-R1),y,N1*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-R2),N2*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "27"
-        ],
-        "Xmin": [
-          "-27"
-        ],
-        "Ymax": [
-          "27"
-        ],
-        "Ymin": [
-          "-27"
-        ],
-        "Zmax": [
-          "12"
-        ],
-        "Zmin": [
-          "-12"
         ]
       }
     },
@@ -16960,7 +15986,7 @@
           "P_Skeletal Sphere by Abderrahman Taha 08/12/2015"
         ],
         "Name": [
-          "P_Skeletal Sphere_3"
+          "P_Skeletal Sphere"
         ],
         "Component": [
           "P_Skeletal Sphere"
@@ -17239,7 +16265,7 @@
           "Schwarz P Sphere  by Abderrahman Taha 29/03/2016"
         ],
         "Name": [
-          "Schwarz P Sphere_3"
+          "Schwarz P Sphere"
         ],
         "Component": [
           "SchwarzPSphere"
@@ -17857,7 +16883,7 @@
           "Diamond Tori-2.0 by Abderrahman Taha 24/02/2016"
         ],
         "Name": [
-          "Diamond Tori_2"
+          "Diamond Tori"
         ],
         "Component": [
           "Diamond Tori"
@@ -17958,151 +16984,6 @@
           "1"
         ],
         "Step": [
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "P_Skeletal Tori-2.0 by Abderrahman Taha 22/02/2016"
-        ],
-        "Name": [
-          "P_Skeletal Tori_2"
-        ],
-        "Component": [
-          "P_Skeletal Tori"
-        ],
-        "Const": [
-          "M=1",
-          "N1=15",
-          "N2=15",
-          "P=5",
-          "R=15"
-        ],
-        "Funct": [
-          "P_Skeletal=cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL2",
-          "isoCondition_0=((x-pi)^2-(pi +0DOTSYMBOL05)^2)",
-          "isoCondition_1=((x-pi)^2-(pi)^2)",
-          "isoTransform=if((isoCondition_0(x,y,z,t)<0),P_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "30"
-        ],
-        "Xmin": [
-          "-30"
-        ],
-        "Ymax": [
-          "30"
-        ],
-        "Ymin": [
-          "-30"
-        ],
-        "Zmax": [
-          "15"
-        ],
-        "Zmin": [
-          "-15"
-        ]
-      },
-      "Sliders": {
-        "Max": [
-          "50",
-          "10",
-          "25",
-          "25",
-          "25",
-          "50",
-          "10",
-          "25",
-          "25",
-          "25",
-          "50",
-          "10",
-          "25",
-          "25",
-          "25",
-          "50",
-          "10",
-          "25",
-          "25",
-          "25"
-        ],
-        "Min": [
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0"
-        ],
-        "Name": [
-          "M",
-          "P",
-          "R",
-          "N1",
-          "N2"
-        ],
-        "Position": [
-          "1",
-          "5",
-          "15",
-          "15",
-          "15",
-          "10",
-          "7",
-          "18",
-          "3",
-          "11",
-          "0",
-          "5",
-          "19",
-          "4",
-          "14",
-          "33",
-          "8",
-          "18",
-          "2",
-          "11"
-        ],
-        "Step": [
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
           "1",
           "1",
           "1",
