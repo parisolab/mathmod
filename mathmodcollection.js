@@ -12245,58 +12245,6 @@
       }
     },
     {
-      "Iso3D": {
-        "Description": [
-          "Arena_0 by Abderrahman Taha 19/10/2015"
-        ],
-        "Name": [
-          "Arena_0"
-        ],
-        "Component": [
-          "Arena"
-        ],
-        "Const": [
-          "cx=0DOTSYMBOL00001",
-          "cy=0DOTSYMBOL00001",
-          "cz=0DOTSYMBOL00001"
-        ],
-        "Funct": [
-          "Scherk=sinh(x)*sinh(y)-4*sin(z)",
-          "Scherk2=Scherk(x,(sqrt(y*y+z*z)-16),z,t)",
-          "Thickness2=(0DOTSYMBOL6)",
-          "IsoExterior=Scherk2(x,y,z,t)",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
-        ],
-        "Fxyz": [
-          "if((sqrt(x*x+y*y+z*z) - 20)<(0) & abs(x)<(6) ,ThickIsoExterior(x,y,z,t), 1)"
-        ],
-        "Xmax": [
-          "7"
-        ],
-        "Xmin": [
-          "-7"
-        ],
-        "Ymax": [
-          "23"
-        ],
-        "Ymin": [
-          "-23"
-        ],
-        "Zmax": [
-          "23"
-        ],
-        "Zmin": [
-          "-23"
-        ]
-      }
-    },
-    {
       "Param3D": {
         "Description ": [
           "Lumpet Tori by Abderrahman Taha 10/10/2015"
