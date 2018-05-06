@@ -3758,6 +3758,7 @@ void DrawingOptions::AddListModels(bool update)
 
     QColor greenColor = QColor(0, 255, 0, 50);
     // Parametric:
+    //(ui.ObjectClasse)->setSortingEnabled(true);
     QTreeWidgetItem *ParlistItem = new QTreeWidgetItem(ui.ObjectClasse);
     QString Text = "Parametric Surfaces (" + QString::number(MathmodRef->pariso.JPar.count()) + ")" ;
     ParlistItem->setBackgroundColor(0, greenColor);
@@ -3860,6 +3861,7 @@ void DrawingOptions::AddListModels(bool update)
             }
         }
     }
+    ParlistItem->sortChildren(0, Qt::AscendingOrder);
 
     // Iso:
     QTreeWidgetItem *IsolistItem = IsolistItemRef = new QTreeWidgetItem(ui.ObjectClasse);
@@ -3961,6 +3963,8 @@ void DrawingOptions::AddListModels(bool update)
             }
         }
     }
+
+    IsolistItemRef->sortChildren(0, Qt::AscendingOrder);
 
     //My Selection:
     // Isosurfaces:
