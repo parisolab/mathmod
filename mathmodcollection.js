@@ -549,49 +549,6 @@
     {
       "Iso3D": {
         "Name": [
-          "BouncingBall"
-        ],
-        "Component": [
-          "Ball",
-          "Plan"
-        ],
-        "Fxyz": [
-          "(x-4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2+(y-2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2+(z-3*abs(cos((5*t)*pi/3DOTSYMBOL11)))^2-0DOTSYMBOL6",
-          "z+0DOTSYMBOL6"
-        ],
-        "Grid": [
-          "20",
-          "20"
-        ],
-        "Xmax": [
-          "1+4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "4"
-        ],
-        "Xmin": [
-          "-1+4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "-4"
-        ],
-        "Ymax": [
-          "1+2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "4"
-        ],
-        "Ymin": [
-          "-1+2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "-4"
-        ],
-        "Zmax": [
-          "6",
-          "0DOTSYMBOL1"
-        ],
-        "Zmin": [
-          "-1",
-          "-1DOTSYMBOL1"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Name": [
           "Cayley_1"
         ],
         "Component": [
@@ -1993,58 +1950,6 @@
         ],
         "Zmax": [
           " 2"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Name": [
-          "BouncingBall2"
-        ],
-        "Component": [
-          "SphereIso",
-          "ThickWalls",
-          "TransparentWall"
-        ],
-        "Fxyz": [
-          "((x-(abs(((t*2DOTSYMBOL5)%16)-8)-4))^2+(y-(abs(((t*2DOTSYMBOL9)%16)-8)-4))^2+(z-(4DOTSYMBOL4-((((t*1DOTSYMBOL2)%4)-2)^2)))^2-0DOTSYMBOL8)",
-          "(z+0DOTSYMBOL407)*(y-4DOTSYMBOL9)*(y+4DOTSYMBOL9)*(x+4DOTSYMBOL9)",
-          "(x-4DOTSYMBOL9)"
-        ],
-        "Grid": [
-          "25",
-          "15",
-          "5"
-        ],
-        "Xmax": [
-          "4DOTSYMBOL81",
-          "4DOTSYMBOL91",
-          "4DOTSYMBOL92"
-        ],
-        "Xmin": [
-          "-4DOTSYMBOL81",
-          "-4DOTSYMBOL91",
-          "4DOTSYMBOL88"
-        ],
-        "Ymax": [
-          "4DOTSYMBOL81",
-          "4DOTSYMBOL91",
-          "4DOTSYMBOL91"
-        ],
-        "Ymin": [
-          "-4DOTSYMBOL81",
-          "-4DOTSYMBOL91",
-          "-4DOTSYMBOL91"
-        ],
-        "Zmax": [
-          "5DOTSYMBOL5",
-          "5DOTSYMBOL5",
-          "5DOTSYMBOL5"
-        ],
-        "Zmin": [
-          "-0DOTSYMBOL5",
-          "-0DOTSYMBOL41",
-          "-0DOTSYMBOL41"
         ]
       }
     },
