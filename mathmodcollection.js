@@ -5150,37 +5150,6 @@
     {
       "Param3D": {
         "Name": [
-          "Cone"
-        ],
-        "Component": [
-          "Cone"
-        ],
-        "Fx": [
-          "u*cos(v)"
-        ],
-        "Fy": [
-          "u*sin(v)"
-        ],
-        "Fz": [
-          "u"
-        ],
-        "Umin": [
-          "-1"
-        ],
-        "Umax": [
-          "1"
-        ],
-        "Vmin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Name": [
           "Diamond"
         ],
         "Component": [
@@ -5832,7 +5801,7 @@
     {
       "Param3D": {
         "Name": [
-          "Pseudo_Cone"
+          "Cone Distorsion"
         ],
         "Component": [
           "Pseudo_Cone"
@@ -5841,10 +5810,10 @@
           "u*cos(v)"
         ],
         "Fy": [
-          "0DOTSYMBOL848528*(u*sin(v)*cos((u*cos(v)--1)*2*pi*1/2)-u*sin((u*cos(v)--1)*2*pi*1/2))"
+          "0DOTSYMBOL848528*(u*sin(v)*cos((u*cos(v)+1)*2*pi*1/2)-u*sin((u*cos(v)+1)*2*pi*1/2))"
         ],
         "Fz": [
-          "0DOTSYMBOL848528*(u*sin(v)*sin((u*cos(v)--1)*2*pi*1/2)+u*cos((u*cos(v)--1)*2*pi*1/2))"
+          "0DOTSYMBOL848528*(u*sin(v)*sin((u*cos(v)+1)*2*pi*1/2)+u*cos((u*cos(v)+1)*2*pi*1/2))"
         ],
         "Umin": [
           "-1"
@@ -17034,7 +17003,7 @@
           "TickIsoExterior(x,y,8*z/10,t)"
         ],
         "Name": [
-          "ImplicitCosta"
+          "Implicit Costa"
         ],
         "Xmax": [
           " X"
@@ -17057,9 +17026,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=7/10",
-          "G=7/10",
-          "B=7/10",
+          "R=0.6*0.3*abs(cos(x)*cos(y)*cos(z))^(1/10)",
+          "G=0.3",
+          "B=0.01",
           "T=1"
         ],
         "Name": "Lines1",
@@ -21669,7 +21638,7 @@
           "Half Cylinder Section with chained pattern v01 by Abderrahman Taha 11/03/2018"
         ],
         "Name": [
-          "ChainedCylinder_01"
+          "Chained Cylinder"
         ],
         "Const": [
           "u1min=0",
@@ -23489,7 +23458,7 @@
           "Sinusoidal surface with chained patterns v02 by Abderrahman Taha 07/03/2018"
         ],
         "Name": [
-          "ChainedPattern_v02"
+          "Chained Sinusoid"
         ],
         "Const": [
           "u1min=-(15/10)",
