@@ -7578,3 +7578,7 @@ void DrawingOptions::on_stopButton_clicked()
     on_StopCalculationsButton_clicked();
 }
 
+void DrawingOptions::on_actionScripts_selection_triggered()
+{
+    select.show();
+}

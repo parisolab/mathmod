@@ -30,6 +30,7 @@
 #include "colorsoptions.h"
 #include "sliderparam.h"
 #include "addparam.h"
+#include "selectoptions.h"
 #include <QMainWindow>
 
 struct SliderStruct
@@ -55,6 +56,7 @@ public:
     AddParamForm addnewparam;
     QTreeWidgetItem *IsolistItemRef;
     Parametersoptions * Parameters;
+    SelectOptions select;
     void AddListModels(bool b=false);
     void Run_JsonObject_activeted();
     void keyPressEvent ( QKeyEvent *);
@@ -273,5 +275,6 @@ private slots:
     void on_stopButton_clicked();
     void on_lineScrollBar_valueChanged(int value);
     void on_coloneScrollBar_valueChanged(int value);
+    void on_actionScripts_selection_triggered();
 };
 #endif

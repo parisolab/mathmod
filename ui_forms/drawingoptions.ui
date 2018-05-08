@@ -46,7 +46,7 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>120</width>
             <height>0</height>
            </size>
           </property>
@@ -58,7 +58,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>8</pointsize>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="maxVisibleItems">
@@ -88,8 +88,14 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>7</pointsize>
+            <pointsize>10</pointsize>
            </font>
+          </property>
+          <property name="toolTip">
+           <string>Show scripts liste</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>5000</number>
           </property>
           <property name="text">
            <string/>
@@ -124,8 +130,16 @@
             <height>20</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
-           <string>Load Script</string>
+           <string>Load scripts collection</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>5000</number>
           </property>
           <property name="text">
            <string/>
@@ -9317,6 +9331,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionEditor"/>
     <addaction name="actionColors_2"/>
     <addaction name="actionConfiguration"/>
+    <addaction name="separator"/>
+    <addaction name="actionScripts_selection"/>
    </widget>
    <widget class="QMenu" name="menuExport">
     <property name="title">
@@ -9327,6 +9343,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionColorPolygonWavefront_obj"/>
     <addaction name="actionColorTrianglesWavefront_obj"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Options"/>
@@ -9362,6 +9379,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionOpenGL"/>
    <addaction name="separator"/>
    <addaction name="actionFrames"/>
+   <addaction name="separator"/>
+   <addaction name="actionScripts_selection"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -9566,6 +9585,15 @@ p, li { white-space: pre-wrap; }
   <action name="actionColorTrianglesWavefront_obj">
    <property name="text">
     <string>ColorTrianglesWavefront.obj</string>
+   </property>
+  </action>
+  <action name="actionScripts_selection">
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/search.png</normaloff>:/images/mac/search.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scripts selection</string>
    </property>
   </action>
  </widget>

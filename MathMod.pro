@@ -4,6 +4,7 @@ HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/mathmod.h \
             ui_modules/ParisoMathObject.h \
             ui_modules/editor.h \
+            ui_modules/selectoptions.h \
             pariso/parametric/Model3D.h \
             pariso/parametric/ND/Matrix4D.h \
             fparser/fparser.h \
@@ -32,6 +33,7 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/about.cpp \
             ui_modules/ParisoMathObject.cpp \
             ui_modules/editor.cpp \
+            ui_modules/selectoptions.cpp \
             fparser/fparser.cpp \
             pariso/parametric/Model3D.cpp \
             pariso/parametric/ND/Matrix4D.cpp \
@@ -61,7 +63,8 @@ FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/editor.ui \
             ui_forms/parametersoptions.ui \
     ui_forms/sliderparam.ui \
-    ui_forms/addparam.ui
+    ui_forms/addparam.ui \
+    ui_forms/selectoptions.ui
 
 RC_FILE 	= mm.rc
 RESOURCES  += myressources.qrc

@@ -321,7 +321,9 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
             newjiso.read( jsobj );
             pariso.JIso.append(newjiso);
             a = (jsobj)["Name"].toArray()[0].toString();
-            lst.append(a);
+
+            if(a.indexOf("Ca", 0, Qt::CaseInsensitive) >0)
+                lst.append(a);
         }
         else if((array[i].toObject())["Param3D"].isObject())
         {
@@ -330,7 +332,9 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
             newjpar.read( jsobj );
             pariso.JPar.append(newjpar);
             a = ( jsobj )["Name"].toArray()[0].toString();
-            lst.append(a);
+
+            if(a.indexOf("Ca", 0, Qt::CaseInsensitive) >= 0)
+                lst.append(a);
         }
         else if((array[i].toObject())["Param4D"].isObject())
         {
@@ -343,6 +347,7 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
         }
     }
 
+    lst.sort();
     lst.insert(0, "Examples ("+QString::number(lst.count())+")");
 
     ListeModelTexture str;
@@ -404,6 +409,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         fileconfig       = argv1 + fileconfig;
         advancedmodels   = argv1 + advancedmodels;
     }
+/*
 #ifdef Q_OS_MACOS
     else
     {
@@ -414,7 +420,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         advancedmodels   = argv1 + advancedmodels;
      }
 #endif
-
+*/
     QFile mathmodfileconfig(fileconfig);
     if(!mathmodfileconfig.exists() && ((argc >1) || MACOS ))
     {

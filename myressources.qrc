@@ -65,5 +65,6 @@
         <file>images/icon/catenoid_mini_64x64.ico</file>
         <file>images/icon/catenoid_mini_64x64.png</file>
         <file>images/icon/copying</file>
+        <file>images/mac/search.png</file>
     </qresource>
 </RCC>
