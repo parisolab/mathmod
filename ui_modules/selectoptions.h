@@ -37,5 +37,6 @@ public:
     Ui::SelectOptions ui;
 private slots:
     void on_addpushButton_clicked();
+    void on_CutpushButton_clicked();
 };
 

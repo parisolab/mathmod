@@ -35,10 +35,29 @@ void SelectOptions::on_addpushButton_clicked()
     QString select = ui.StringlineEdit->text();
     if(select != "")
     {
+        if(selectedwords.size() > 0)
+            selectedwords.removeAt(0);
         selectedwords.append(ui.StringlineEdit->text());
-        ui.StringSelect->clear();
-        selectedwords.removeAt(0);
         selectedwords.insert(0, "Words Selection ("+QString::number(selectedwords.count())+")");
+        ui.StringSelect->clear();
         ui.StringSelect->addItems(selectedwords);
+    }
+}
+
+void SelectOptions::on_CutpushButton_clicked()
+{
+    int currentindex = ui.StringSelect->currentIndex();
+    if(currentindex > 0)
+    {
+        selectedwords.removeAt(currentindex);
+        selectedwords.removeAt(0);
+        if(selectedwords.count() > 0)
+        {
+            selectedwords.insert(0, "Words Selection ("+QString::number(selectedwords.count())+")");
+            ui.StringSelect->clear();
+            ui.StringSelect->addItems(selectedwords);
+        }
+        else
+            ui.StringSelect->clear();
     }
 }
