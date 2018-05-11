@@ -25,11 +25,18 @@
 
 #include "ui_selectoptions.h"
 
+struct SelectedListOptions {
+    QStringList selectedwords;
+    bool sensitive;
+    bool showall;
+    QStringList fieldnames;
+};
+
 class SelectOptions : public QWidget
 {
     Q_OBJECT
 public:
-    QStringList selectedwords;
+    SelectedListOptions selectedoptions;
 public:
     SelectOptions(QWidget *parent = 0);
 
@@ -38,5 +45,13 @@ public:
 private slots:
     void on_addpushButton_clicked();
     void on_CutpushButton_clicked();
+    void on_ShowAllcheckBox_clicked(bool checked);
+    void on_SelectpushButton_clicked();
+    void on_CaseSensitiveCheckBox_clicked(bool checked);
+
+signals:
+    void UpdateSignal();
+public:
+    void emitUpdateSignal();
 };
 

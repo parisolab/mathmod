@@ -140,9 +140,12 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     ui.setupUi(this);
     indexcurrentFormula = -1;
     IsolistItemRef = 0;
+    select.selectedoptions.showall = false;
+    select.selectedoptions.sensitive = false;
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
+    connect( select.ui.SelectpushButton, SIGNAL(clicked()), this, SLOT(UpdateListModels()));
     statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
 }
@@ -3737,6 +3740,37 @@ void DrawingOptions::LoadK3DSurfScript (QString filename, int type)
 }
 
 // --------------------------
+void DrawingOptions::UpdateListModels()
+{
+     QTreeWidgetItem * Toplevel , child;
+     int topcount = ui.ObjectClasse->topLevelItemCount();
+     int childcount;
+     bool sel = false;
+
+      for(int i=0; i<topcount; ++i)
+      {
+          Toplevel = ui.ObjectClasse->topLevelItem(i);
+          childcount = Toplevel->childCount();
+
+          for(int j =0; j < childcount; j++)
+          {
+              sel = true;
+              if(!select.selectedoptions.showall)
+              for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
+              {
+                  if(!(Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
+                  {
+                      sel = false;
+                      break;
+                  }
+              }
+
+              (Toplevel->child(j))->setHidden(!sel);
+          }
+      }
+}
+
+// --------------------------
 void DrawingOptions::AddListModels(bool update)
 {
     if(!update)
@@ -3758,9 +3792,8 @@ void DrawingOptions::AddListModels(bool update)
 
     QColor greenColor = QColor(0, 255, 0, 50);
     // Parametric:
-    //(ui.ObjectClasse)->setSortingEnabled(true);
     QTreeWidgetItem *ParlistItem = new QTreeWidgetItem(ui.ObjectClasse);
-    QString Text = "Parametric Surfaces (" + QString::number(MathmodRef->pariso.JPar.count()) + ")" ;
+    QString Text = "Parametric (" + QString::number(MathmodRef->pariso.JPar.count()) + ")" ;
     ParlistItem->setBackgroundColor(0, greenColor);
     ParlistItem->setText(0, Text);
     for (int i = 0; i < MathmodRef->pariso.JPar.count(); ++i)
@@ -3872,6 +3905,8 @@ void DrawingOptions::AddListModels(bool update)
     {
         QTreeWidgetItem *nameitem = new QTreeWidgetItem(IsolistItem);
         nameitem->setText(0,  MathmodRef->pariso.JIso[i].Name[0]);
+        //if((MathmodRef->pariso.JIso[i].Name[0]).indexOf("Ca", 0, Qt::CaseInsensitive) < 0)
+            //nameitem->setHidden(true);
         if(MathmodRef->pariso.JIso[i].Component.count() > 0)
         {
             QTreeWidgetItem *cmpitem = new QTreeWidgetItem(nameitem);
@@ -3982,15 +4017,11 @@ void DrawingOptions::on_pushButton_clicked()
     checked *=-1;
     if(checked == -1)
     {
-        //ui.groupBox->show();
         ui.ObjectClasse->hide();
-        //ui.pushButton->setText(">>");
     }
     else
     {
-        //ui.groupBox->hide();
         ui.ObjectClasse->show();
-        //ui.pushButton->setText("<<");
     }
 }
 

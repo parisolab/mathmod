@@ -35,12 +35,13 @@ void SelectOptions::on_addpushButton_clicked()
     QString select = ui.StringlineEdit->text();
     if(select != "")
     {
-        if(selectedwords.size() > 0)
-            selectedwords.removeAt(0);
-        selectedwords.append(ui.StringlineEdit->text());
-        selectedwords.insert(0, "Words Selection ("+QString::number(selectedwords.count())+")");
+        if(selectedoptions.selectedwords.size() > 0)
+            selectedoptions.selectedwords.removeAt(0);
+        selectedoptions.selectedwords.append(ui.StringlineEdit->text());
+        selectedoptions.selectedwords.insert(0, "Words Selection ("+QString::number(selectedoptions.selectedwords.count())+")");
         ui.StringSelect->clear();
-        ui.StringSelect->addItems(selectedwords);
+        ui.StringSelect->addItems(selectedoptions.selectedwords);
+        ui.StringlineEdit->clear();
     }
 }
 
@@ -49,15 +50,37 @@ void SelectOptions::on_CutpushButton_clicked()
     int currentindex = ui.StringSelect->currentIndex();
     if(currentindex > 0)
     {
-        selectedwords.removeAt(currentindex);
-        selectedwords.removeAt(0);
-        if(selectedwords.count() > 0)
+        selectedoptions.selectedwords.removeAt(currentindex);
+        selectedoptions.selectedwords.removeAt(0);
+        if(selectedoptions.selectedwords.count() > 0)
         {
-            selectedwords.insert(0, "Words Selection ("+QString::number(selectedwords.count())+")");
+            selectedoptions.selectedwords.insert(0, "Words Selection ("+QString::number(selectedoptions.selectedwords.count())+")");
             ui.StringSelect->clear();
-            ui.StringSelect->addItems(selectedwords);
+            ui.StringSelect->addItems(selectedoptions.selectedwords);
         }
         else
             ui.StringSelect->clear();
     }
+}
+
+void SelectOptions::on_ShowAllcheckBox_clicked(bool checked)
+{
+    ui.SelectgroupBox->setEnabled(!checked);
+    ui.SelectgroupBox->setVisible(!checked);
+    selectedoptions.showall = checked;
+}
+
+void SelectOptions::emitUpdateSignal()
+{
+    emit UpdateSignal();
+}
+
+void SelectOptions::on_SelectpushButton_clicked()
+{
+    emitUpdateSignal();
+}
+
+void SelectOptions::on_CaseSensitiveCheckBox_clicked(bool checked)
+{
+    selectedoptions.sensitive = checked;
 }
