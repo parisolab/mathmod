@@ -43,6 +43,7 @@ void SelectOptions::on_addpushButton_clicked()
         ui.StringSelect->addItems(selectedoptions.selectedwords);
         ui.StringlineEdit->clear();
     }
+    emitUpdateSignal();
 }
 
 void SelectOptions::on_CutpushButton_clicked()
@@ -61,6 +62,7 @@ void SelectOptions::on_CutpushButton_clicked()
         else
             ui.StringSelect->clear();
     }
+    emitUpdateSignal();
 }
 
 void SelectOptions::on_ShowAllcheckBox_clicked(bool checked)
@@ -68,19 +70,16 @@ void SelectOptions::on_ShowAllcheckBox_clicked(bool checked)
     ui.SelectgroupBox->setEnabled(!checked);
     ui.SelectgroupBox->setVisible(!checked);
     selectedoptions.showall = checked;
-}
-
-void SelectOptions::emitUpdateSignal()
-{
-    emit UpdateSignal();
-}
-
-void SelectOptions::on_SelectpushButton_clicked()
-{
     emitUpdateSignal();
 }
 
 void SelectOptions::on_CaseSensitiveCheckBox_clicked(bool checked)
 {
     selectedoptions.sensitive = checked;
+    emitUpdateSignal();
+}
+
+void SelectOptions::emitUpdateSignal()
+{
+    emit UpdateSignal();
 }

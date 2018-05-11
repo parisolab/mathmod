@@ -145,7 +145,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
-    connect( select.ui.SelectpushButton, SIGNAL(clicked()), this, SLOT(UpdateListModels()));
+    connect( &select, SIGNAL(UpdateSignal()), this, SLOT(UpdateListModels()));
     statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
 }

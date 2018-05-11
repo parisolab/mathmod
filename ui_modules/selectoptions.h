@@ -46,12 +46,10 @@ private slots:
     void on_addpushButton_clicked();
     void on_CutpushButton_clicked();
     void on_ShowAllcheckBox_clicked(bool checked);
-    void on_SelectpushButton_clicked();
     void on_CaseSensitiveCheckBox_clicked(bool checked);
-
 signals:
     void UpdateSignal();
-public:
+public slots:
     void emitUpdateSignal();
 };
 
