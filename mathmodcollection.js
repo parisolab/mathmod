@@ -16976,6 +16976,9 @@
         "Description": [
           "Implicit Costa minimal surface v02 by Abderrahman Taha 25/03/2018"
         ],
+         "Name": [
+           "Implicit Costa"
+         ],
         "Funct": [
           "Costa=(z*((x^2+y^2)-18-8*sin((-11+abs(z*13/10))/4)-18*exp((-12+abs(z*13/10))/2))-(x^2-y^2)) ",
           "DFx=((Costa(x,y,z,t)-Costa(x+cx,y,z,t))/cx)",
@@ -17002,9 +17005,6 @@
         "Fxyz": [
           "TickIsoExterior(x,y,8*z/10,t)"
         ],
-        "Name": [
-          "Implicit Costa"
-        ],
         "Xmax": [
           " X"
         ],
@@ -17026,8 +17026,8 @@
       },
       "Texture": {
         "Colors": [
-          "R=0.6*0.3*abs(cos(x)*cos(y)*cos(z))^(1/10)",
-          "G=0.3",
+          "R=0.8*abs(cos(x)*cos(y)*cos(z))^(1/10)",
+          "G=0.2",
           "B=0.01",
           "T=1"
         ],
