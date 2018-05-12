@@ -7777,54 +7777,6 @@
       }
     },
     {
-      "Param3D": {
-        "Description ": [
-          "Under Sea by Abderrahman Taha 12/12/2015"
-        ],
-        "Name": [
-          "Under The Sea"
-        ],
-        "Component": [
-          "UnderSea"
-        ],
-        "Const": [
-          "M=2",
-          "N=5"
-        ],
-        "Fx": [
-          "u*cos(v)"
-        ],
-        "Fy": [
-          "u*sin(v)"
-        ],
-        "Fz": [
-          "exp(-u*u) * (sin(M*pi*(u)) -u*cos(N*v))"
-        ],
-        "Umax": [
-          "2"
-        ],
-        "Umin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
-        ],
-        "Vmin": [
-          "0"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=1DOTSYMBOL5*0DOTSYMBOL41",
-          "G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
-          "B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
-          "T=1"
-        ],
-        "Name": "WorleyNoise",
-        "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0) +NoiseW(4*x,4*y,4*z,(4),(12),1/10)"
-      }
-    },
-    {
       "Iso3D": {
         "Name": [
           "HexaGrid Torus_2"
@@ -13219,50 +13171,6 @@
       }
     },
     {
-      "Param3D": {
-        "Description ": [
-          "Under Sea by Abderrahman Taha 02/10/2015"
-        ],
-        "Name": [
-          "Under The Sea"
-        ],
-        "Component": [
-          "UnderSea"
-        ],
-        "Fx": [
-          "u*cos(v)"
-        ],
-        "Fy": [
-          "u*sin(v)"
-        ],
-        "Fz": [
-          "exp(-u*u)*(sin(2*pi*u)-u*cos(3*v))"
-        ],
-        "Umax": [
-          "2"
-        ],
-        "Umin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
-        ],
-        "Vmin": [
-          "0"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=1DOTSYMBOL5*0DOTSYMBOL41",
-          "G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "T=1"
-        ],
-        "Name": "WorleyNoise",
-        "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0)+NoiseW(4*x,4*y,4*z,(4),(12),1/10)"
-      }
-    },
-    {
       "Iso3D": {
         "Description": [
           "Devil's Plate by Abderrahman Taha 01/10/2015"
@@ -16487,7 +16395,7 @@
           "Under Sea by Abderrahman Taha 25/03/2016"
         ],
         "Name": [
-          "Under The Sea_03"
+          "Under The Sea"
         ],
         "Component": [
           "UnderSea"
