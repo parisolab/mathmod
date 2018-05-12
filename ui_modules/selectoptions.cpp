@@ -83,3 +83,15 @@ void SelectOptions::emitUpdateSignal()
 {
     emit UpdateSignal();
 }
+
+void SelectOptions::on_AND_clicked(bool checked)
+{
+    selectedoptions.AND = checked;
+    emitUpdateSignal();
+}
+
+void SelectOptions::on_radioButton_clicked(bool checked)
+{
+    selectedoptions.AND = !checked;
+    emitUpdateSignal();
+}

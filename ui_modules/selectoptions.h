@@ -29,6 +29,7 @@ struct SelectedListOptions {
     QStringList selectedwords;
     bool sensitive;
     bool showall;
+    bool AND;
     QStringList fieldnames;
 };
 
@@ -47,6 +48,10 @@ private slots:
     void on_CutpushButton_clicked();
     void on_ShowAllcheckBox_clicked(bool checked);
     void on_CaseSensitiveCheckBox_clicked(bool checked);
+    void on_AND_clicked(bool checked);
+
+    void on_radioButton_clicked(bool checked);
+
 signals:
     void UpdateSignal();
 public slots:

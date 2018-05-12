@@ -142,6 +142,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     IsolistItemRef = 0;
     select.selectedoptions.showall = false;
     select.selectedoptions.sensitive = false;
+    select.selectedoptions.AND = true;
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
@@ -3742,29 +3743,38 @@ void DrawingOptions::LoadK3DSurfScript (QString filename, int type)
 // --------------------------
 void DrawingOptions::UpdateListModels()
 {
-     QTreeWidgetItem * Toplevel , child;
+     QTreeWidgetItem * Toplevel;
      int topcount = ui.ObjectClasse->topLevelItemCount();
      int childcount;
      bool sel = false;
-
       for(int i=0; i<topcount; ++i)
       {
           Toplevel = ui.ObjectClasse->topLevelItem(i);
           childcount = Toplevel->childCount();
-
           for(int j =0; j < childcount; j++)
           {
               sel = true;
               if(!select.selectedoptions.showall)
               for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
               {
+                  if(!select.selectedoptions.AND)
+                  {
+                      sel = false;
+                      if((Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
+                        {
+                          sel = true;
+                          break;
+                        }
+                  }
+                      else
+                  {
                   if(!(Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
                   {
                       sel = false;
                       break;
                   }
+                  }
               }
-
               (Toplevel->child(j))->setHidden(!sel);
           }
       }
