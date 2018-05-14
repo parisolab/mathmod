@@ -169,7 +169,8 @@ public slots:
     void update_slider_param();
     void add_new_param();
     void update_infos_param(int);
-    void UpdateListModels();
+    void SearchListModels();
+    bool ParseItemTree(QTreeWidgetItem*);
 private slots:
     void on_actionSmooth_2_clicked();
     void on_Infos_clicked();

@@ -146,7 +146,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
-    connect( &select, SIGNAL(UpdateSignal()), this, SLOT(UpdateListModels()));
+    connect( &select, SIGNAL(UpdateSignal()), this, SLOT(SearchListModels()));
     statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
 }
@@ -3741,16 +3741,53 @@ void DrawingOptions::LoadK3DSurfScript (QString filename, int type)
 }
 
 // --------------------------
-void DrawingOptions::UpdateListModels()
+bool DrawingOptions::ParseItemTree(QTreeWidgetItem * item)
+{
+     int childcount = item->childCount();
+     bool sel = false;
+     for(int j =0; j < childcount; j++)
+     {
+              if(!select.selectedoptions.showall)
+              for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
+              {
+                  if(!select.selectedoptions.AND)
+                  {
+                    sel = false;
+                    if((item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
+                    {
+                        sel = true;
+                        break;
+                    }
+                  }
+                  else
+                  {
+                      sel = true;
+                      if(!(item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
+                    {
+                        sel = false;
+                        break;
+                    }
+                  }
+              }
+              return sel;
+          }
+      return sel;
+
+}
+
+// --------------------------
+void DrawingOptions::SearchListModels()
 {
      QTreeWidgetItem * Toplevel;
      int topcount = ui.ObjectClasse->topLevelItemCount();
      int childcount;
      bool sel = false;
+     int searchresult=0;
       for(int i=0; i<topcount; ++i)
       {
           Toplevel = ui.ObjectClasse->topLevelItem(i);
           childcount = Toplevel->childCount();
+          searchresult=0;
           for(int j =0; j < childcount; j++)
           {
               sel = true;
@@ -3775,7 +3812,16 @@ void DrawingOptions::UpdateListModels()
                   }
                   }
               }
+              if(sel)
+                  searchresult ++;
               (Toplevel->child(j))->setHidden(!sel);
+              if(Toplevel->text(0).contains("IsoSurfaces"))
+                Toplevel->setText(0, "IsoSurfaces (" + QString::number(searchresult) + ")");
+              else
+                  if(Toplevel->text(0).contains("Parametric"))
+                      Toplevel->setText(0, "Parametric (" + QString::number(searchresult) + ")");
+                  else
+                      Toplevel->setText(0, "My Selection (" + QString::number(searchresult) + ")");
           }
       }
 }
@@ -3915,8 +3961,6 @@ void DrawingOptions::AddListModels(bool update)
     {
         QTreeWidgetItem *nameitem = new QTreeWidgetItem(IsolistItem);
         nameitem->setText(0,  MathmodRef->pariso.JIso[i].Name[0]);
-        //if((MathmodRef->pariso.JIso[i].Name[0]).indexOf("Ca", 0, Qt::CaseInsensitive) < 0)
-            //nameitem->setHidden(true);
         if(MathmodRef->pariso.JIso[i].Component.count() > 0)
         {
             QTreeWidgetItem *cmpitem = new QTreeWidgetItem(nameitem);

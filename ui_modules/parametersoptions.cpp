@@ -321,9 +321,7 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
             newjiso.read( jsobj );
             pariso.JIso.append(newjiso);
             a = (jsobj)["Name"].toArray()[0].toString();
-
-            if(a.indexOf("Ca", 0, Qt::CaseInsensitive) >0)
-                lst.append(a);
+            lst.append(a);
         }
         else if((array[i].toObject())["Param3D"].isObject())
         {
@@ -332,9 +330,7 @@ ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollecti
             newjpar.read( jsobj );
             pariso.JPar.append(newjpar);
             a = ( jsobj )["Name"].toArray()[0].toString();
-
-            if(a.indexOf("Ca", 0, Qt::CaseInsensitive) >= 0)
-                lst.append(a);
+            lst.append(a);
         }
         else if((array[i].toObject())["Param4D"].isObject())
         {

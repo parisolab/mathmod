@@ -20831,7 +20831,7 @@
           "500"
         ],
         "Name": [
-          "Wireframe_knots"
+          "knot_wireframe"
         ],
         "Umax": [
           "umax",
