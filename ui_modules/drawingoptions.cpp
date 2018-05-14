@@ -1468,8 +1468,8 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
             else
             {
                 // Grid
-                    for(int j=0; j < lst.size()-1; j++)
-                        result += lst[j].toString() + ";";
+                for(int j=0; j < lst.size()-1; j++)
+                    result += lst[j].toString() + ";";
                 if(lst.size() >= 1)
                     result += lst[lst.size()-1].toString();
                 result.replace("\n","");
@@ -1485,9 +1485,9 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
                     for(int j=0; j < lst.size()/2; j++)
                     {
                         TotalPts += MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ]*
-                                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1];
+                                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1];
                         TotalTri += (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ] - 1)*
-                                (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1] - 1);
+                                    (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1] - 1);
                     }
                     if(TotalPts > NbMaxPts)
                     {
@@ -3743,87 +3743,86 @@ void DrawingOptions::LoadK3DSurfScript (QString filename, int type)
 // --------------------------
 bool DrawingOptions::ParseItemTree(QTreeWidgetItem * item)
 {
-     int childcount = item->childCount();
-     bool sel = false;
-     for(int j =0; j < childcount; j++)
-     {
-              if(!select.selectedoptions.showall)
-              for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
-              {
-                  if(!select.selectedoptions.AND)
-                  {
+    int childcount = item->childCount();
+    bool sel = false;
+    for(int j =0; j < childcount; j++)
+    {
+        if(!select.selectedoptions.showall)
+            for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
+            {
+                if(!select.selectedoptions.AND)
+                {
                     sel = false;
                     if((item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
                     {
                         sel = true;
                         break;
                     }
-                  }
-                  else
-                  {
-                      sel = true;
-                      if(!(item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
+                }
+                else
+                {
+                    sel = true;
+                    if(!(item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
                     {
                         sel = false;
                         break;
                     }
-                  }
-              }
-              return sel;
-          }
-      return sel;
+                }
+            }
+        return sel;
+    }
+    return sel;
 
 }
 
 // --------------------------
 void DrawingOptions::SearchListModels()
 {
-     QTreeWidgetItem * Toplevel;
-     int topcount = ui.ObjectClasse->topLevelItemCount();
-     int childcount;
-     bool sel = false;
-     int searchresult=0;
-      for(int i=0; i<topcount; ++i)
-      {
-          Toplevel = ui.ObjectClasse->topLevelItem(i);
-          childcount = Toplevel->childCount();
-          searchresult=0;
-          for(int j =0; j < childcount; j++)
-          {
-              sel = true;
-              if(!select.selectedoptions.showall)
-              for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
-              {
-                  if(!select.selectedoptions.AND)
-                  {
-                      sel = false;
-                      if((Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
+    QTreeWidgetItem * Toplevel;
+    int topcount = ui.ObjectClasse->topLevelItemCount();
+    int childcount;
+    bool sel = false;
+    int searchresult=0;
+    for(int i=0; i<topcount; ++i)
+    {
+        Toplevel = ui.ObjectClasse->topLevelItem(i);
+        childcount = Toplevel->childCount();
+        searchresult=0;
+        for(int j =0; j < childcount; j++)
+        {
+            sel = true;
+            if(!select.selectedoptions.showall)
+                for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
+                {
+                    if(!select.selectedoptions.AND)
+                    {
+                        sel = false;
+                        if((Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
                         {
-                          sel = true;
-                          break;
+                            sel = true;
+                            break;
                         }
-                  }
-                      else
-                  {
-                  if(!(Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
-                  {
-                      sel = false;
-                      break;
-                  }
-                  }
-              }
-              if(sel)
-                  searchresult ++;
-              (Toplevel->child(j))->setHidden(!sel);
-              if(Toplevel->text(0).contains("IsoSurfaces"))
+                    }
+                    else
+                    {
+                        if(!(Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
+                        {
+                            sel = false;
+                            break;
+                        }
+                    }
+                }
+            if(sel)
+                searchresult ++;
+            (Toplevel->child(j))->setHidden(!sel);
+            if(Toplevel->text(0).contains("IsoSurfaces"))
                 Toplevel->setText(0, "IsoSurfaces (" + QString::number(searchresult) + ")");
-              else
-                  if(Toplevel->text(0).contains("Parametric"))
-                      Toplevel->setText(0, "Parametric (" + QString::number(searchresult) + ")");
-                  else
-                      Toplevel->setText(0, "My Selection (" + QString::number(searchresult) + ")");
-          }
-      }
+            else if(Toplevel->text(0).contains("Parametric"))
+                Toplevel->setText(0, "Parametric (" + QString::number(searchresult) + ")");
+            else
+                Toplevel->setText(0, "My Selection (" + QString::number(searchresult) + ")");
+        }
+    }
 }
 
 // --------------------------

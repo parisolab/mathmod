@@ -25,7 +25,8 @@
 
 #include "ui_selectoptions.h"
 
-struct SelectedListOptions {
+struct SelectedListOptions
+{
     QStringList selectedwords;
     bool sensitive;
     bool showall;
