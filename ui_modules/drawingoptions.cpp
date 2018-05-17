@@ -144,6 +144,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     select.selectedoptions.sensitive = false;
     select.selectedoptions.AND = true;
     select.selectedoptions.parsefunctions = true;
+    select.selectedoptions.parsenames = true;
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
@@ -3824,13 +3825,12 @@ void DrawingOptions::SearchListModels()
                     select.selectedoptions.namelist[m] = false;
                     select.selectedoptions.functlist[m] = false;
                 }
-
-                // Search in every script name:
-                for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
-                {
-                    select.selectedoptions.namelist[k-1] = (Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
-                }
-
+                // Search in scripts names:
+                if(select.selectedoptions.parsenames)
+                    for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
+                    {
+                        select.selectedoptions.namelist[k-1] = (Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+                    }
                 // continue searching in the functions list when needed:
                 if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
                     if(select.selectedoptions.parsefunctions && (SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )

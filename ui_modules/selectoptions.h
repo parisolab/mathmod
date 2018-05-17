@@ -33,6 +33,7 @@ struct SelectedListOptions
     bool sensitive;
     bool showall;
     bool AND;
+    bool parsenames;
     bool parsefunctions;
     QStringList fieldnames;
 };
