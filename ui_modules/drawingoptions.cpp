@@ -143,6 +143,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     select.selectedoptions.showall = false;
     select.selectedoptions.sensitive = false;
     select.selectedoptions.AND = true;
+    select.selectedoptions.parsefunctions = true;
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
@@ -3739,50 +3740,74 @@ void DrawingOptions::LoadK3DSurfScript (QString filename, int type)
         }
     }
 }
-
+/*
 // --------------------------
-bool DrawingOptions::ParseItemTree(QTreeWidgetItem * item)
+bool DrawingOptions::ParseItemTreeProperty(QTreeWidgetItem * item, QString proprty)
 {
     int childcount = item->childCount();
     bool sel = false;
     for(int j =0; j < childcount; j++)
     {
-        if(!select.selectedoptions.showall)
-            for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
-            {
-                if(!select.selectedoptions.AND)
-                {
-                    sel = false;
-                    if((item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
-                    {
-                        sel = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    sel = true;
-                    if(!(item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
-                    {
-                        sel = false;
-                        break;
-                    }
-                }
-            }
-        return sel;
+        if((item->child(j))->text(0).contains(proprty))
+            return ParseItemTree(item->child(j));
     }
     return sel;
+}
+*/
+// --------------------------
+QTreeWidgetItem * DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem * item, QString proprty)
+{
+    int childcount = item->childCount();
+    for(int j =0; j < childcount; j++)
+    {
+        if((item->child(j))->text(0).contains(proprty))
+            return item->child(j);
+    }
+    return NULL;
+}
 
+// --------------------------
+void DrawingOptions::ParseItemTree(QTreeWidgetItem * item, bool viewall)
+{
+    int childcount = item->childCount();
+    bool sel = false;
+    for(int j =0; j < childcount; j++)
+    {
+        if(!viewall)
+        {
+            for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
+            {
+                sel = (item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+                select.selectedoptions.functlist[k-1] = (select.selectedoptions.functlist.at(k-1) || sel);
+                if(sel)
+                    item->child(j)->setTextColor(0, QColor(255, 0, 0, 255));
+            }
+        }
+        else
+            item->child(j)->setTextColor(0, QColor(255, 255, 255, 255));
+    }
 }
 
 // --------------------------
 void DrawingOptions::SearchListModels()
 {
     QTreeWidgetItem * Toplevel;
+    QTreeWidgetItem * Childlevel;
+    QTreeWidgetItem * SubChildlevel;
     int topcount = ui.ObjectClasse->topLevelItemCount();
     int childcount;
-    bool sel = false;
+    bool sel1 = false;
     int searchresult=0;
+
+    //init boolean lists:
+    for(int i =0; i < select.selectedoptions.selectedwords.count()-1; i++)
+    {
+        select.selectedoptions.namelist.append(false);
+        select.selectedoptions.functlist.append(false);
+    }
+
+
+
     for(int i=0; i<topcount; ++i)
     {
         Toplevel = ui.ObjectClasse->topLevelItem(i);
@@ -3790,31 +3815,57 @@ void DrawingOptions::SearchListModels()
         searchresult=0;
         for(int j =0; j < childcount; j++)
         {
-            sel = true;
+            sel1 = true;
             if(!select.selectedoptions.showall)
+            {
+                //init boolean lists:
+                for(int m =0; m < select.selectedoptions.selectedwords.count()-1; m++)
+                {
+                    select.selectedoptions.namelist[m] = false;
+                    select.selectedoptions.functlist[m] = false;
+                }
+
+                // Search in every script name:
                 for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
                 {
-                    if(!select.selectedoptions.AND)
-                    {
-                        sel = false;
-                        if((Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
-                        {
-                            sel = true;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if(!(Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive)))
-                        {
-                            sel = false;
-                            break;
-                        }
-                    }
+                    select.selectedoptions.namelist[k-1] = (Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
                 }
-            if(sel)
+
+                // continue searching in the functions list when needed:
+                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
+                    if(select.selectedoptions.parsefunctions && (SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
+                    {
+                        ParseItemTree(SubChildlevel);
+                    }
+                // now look in the search results
+                if(select.selectedoptions.AND)
+                {
+                    sel1 = true;
+                    for(int l=0; l< select.selectedoptions.selectedwords.count() -1; l++)
+                        sel1 = sel1 && (select.selectedoptions.namelist.at(l) || select.selectedoptions.functlist.at(l));
+                }
+                else
+                {
+                    sel1 = false;
+                    for(int l=0; l< select.selectedoptions.selectedwords.count() -1; l++)
+                        sel1 = sel1 || (select.selectedoptions.namelist.at(l) || select.selectedoptions.functlist.at(l));
+                }
+            }
+            else
+            {
+                // Make sure the text color is white when showall is activated
+                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
+                    if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
+                    {
+                        ParseItemTree(SubChildlevel, true);
+                    }
+            }
+
+            // Now count and show only scripts with appropiate search results:
+            if(sel1)
                 searchresult ++;
-            (Toplevel->child(j))->setHidden(!sel);
+
+            (Toplevel->child(j))->setHidden(!sel1);
             if(Toplevel->text(0).contains("IsoSurfaces"))
                 Toplevel->setText(0, "IsoSurfaces (" + QString::number(searchresult) + ")");
             else if(Toplevel->text(0).contains("Parametric"))
@@ -3823,6 +3874,10 @@ void DrawingOptions::SearchListModels()
                 Toplevel->setText(0, "My Selection (" + QString::number(searchresult) + ")");
         }
     }
+
+    //Clear boolean lists:
+    select.selectedoptions.namelist.clear();
+    select.selectedoptions.functlist.clear();
 }
 
 // --------------------------

@@ -28,9 +28,12 @@
 struct SelectedListOptions
 {
     QStringList selectedwords;
+    QList<bool> namelist;
+    QList<bool> functlist;
     bool sensitive;
     bool showall;
     bool AND;
+    bool parsefunctions;
     QStringList fieldnames;
 };
 
