@@ -95,3 +95,15 @@ void SelectOptions::on_radioButton_clicked(bool checked)
     selectedoptions.AND = !checked;
     emitUpdateSignal();
 }
+
+void SelectOptions::on_FunctcheckBox_clicked(bool checked)
+{
+    selectedoptions.parsefunctions = checked;
+    emitUpdateSignal();
+}
+
+void SelectOptions::on_NamescheckBox_clicked(bool checked)
+{
+    selectedoptions.parsenames = checked;
+    emitUpdateSignal();
+}

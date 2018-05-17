@@ -57,6 +57,10 @@ private slots:
 
     void on_radioButton_clicked(bool checked);
 
+    void on_FunctcheckBox_clicked(bool checked);
+
+    void on_NamescheckBox_clicked(bool checked);
+
 signals:
     void UpdateSignal();
 public slots:
