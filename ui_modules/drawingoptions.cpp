@@ -145,6 +145,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     select.selectedoptions.AND = true;
     select.selectedoptions.parsefunctions = true;
     select.selectedoptions.parsenames = true;
+    select.selectedoptions.parsecmpnames = true;
     connect( sliderconf.ui.SaveButton, SIGNAL(clicked()), this, SLOT(update_slider_param()));
     connect( sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this, SLOT(update_infos_param(int)));
     connect( addnewparam.ui.SaveButton, SIGNAL(clicked()), this, SLOT(add_new_param()));
@@ -3741,20 +3742,7 @@ void DrawingOptions::LoadK3DSurfScript (QString filename, int type)
         }
     }
 }
-/*
-// --------------------------
-bool DrawingOptions::ParseItemTreeProperty(QTreeWidgetItem * item, QString proprty)
-{
-    int childcount = item->childCount();
-    bool sel = false;
-    for(int j =0; j < childcount; j++)
-    {
-        if((item->child(j))->text(0).contains(proprty))
-            return ParseItemTree(item->child(j));
-    }
-    return sel;
-}
-*/
+
 // --------------------------
 QTreeWidgetItem * DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem * item, QString proprty)
 {
@@ -3807,8 +3795,6 @@ void DrawingOptions::SearchListModels()
         select.selectedoptions.functlist.append(false);
     }
 
-
-
     for(int i=0; i<topcount; ++i)
     {
         Toplevel = ui.ObjectClasse->topLevelItem(i);
@@ -3837,6 +3823,17 @@ void DrawingOptions::SearchListModels()
                     {
                         ParseItemTree(SubChildlevel);
                     }
+                // continue searching in the components names list when needed:
+                if(select.selectedoptions.parsecmpnames && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
+                {
+                    ParseItemTree(Childlevel);
+                    int ct= Childlevel->childCount();
+                    for(int m=0; m<ct; m++)
+                        ParseItemTree(Childlevel->child(m));
+                }
+
+
+
                 // now look in the search results
                 if(select.selectedoptions.AND)
                 {
@@ -3854,11 +3851,19 @@ void DrawingOptions::SearchListModels()
             else
             {
                 // Make sure the text color is white when showall is activated
-                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
+                if(select.selectedoptions.parsefunctions && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
                     if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
                     {
                         ParseItemTree(SubChildlevel, true);
                     }
+                // Components names and their childes:
+                if(select.selectedoptions.parsecmpnames && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
+                {
+                    ParseItemTree(Childlevel, true);
+                    int ct= Childlevel->childCount();
+                    for(int m=0; m<ct; m++)
+                        ParseItemTree(Childlevel->child(m), true);
+                }
             }
 
             // Now count and show only scripts with appropiate search results:
