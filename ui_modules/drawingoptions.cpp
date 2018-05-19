@@ -3756,24 +3756,26 @@ QTreeWidgetItem * DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem * item, 
 }
 
 // --------------------------
-void DrawingOptions::ParseItemTree(QTreeWidgetItem * item, bool viewall)
+void DrawingOptions::ParseItemTree(QTreeWidgetItem * item, QList<bool> &list,bool viewall)
 {
     int childcount = item->childCount();
     bool sel = false;
+    bool result;
     for(int j =0; j < childcount; j++)
     {
+        item->child(j)->setTextColor(0, QColor(255, 255, 255, 255));
         if(!viewall)
         {
+            result = false;
             for(int k =1; k < select.selectedoptions.selectedwords.count(); k++)
             {
                 sel = (item->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
-                select.selectedoptions.functlist[k-1] = (select.selectedoptions.functlist.at(k-1) || sel);
-                if(sel)
-                    item->child(j)->setTextColor(0, QColor(255, 0, 0, 255));
+                result = result || sel;
+                list[k-1] = (list.at(k-1) || sel);
             }
+            if(result)
+                item->child(j)->setTextColor(0, QColor(255, 0, 0, 255));
         }
-        else
-            item->child(j)->setTextColor(0, QColor(255, 255, 255, 255));
     }
 }
 
@@ -3793,6 +3795,8 @@ void DrawingOptions::SearchListModels()
     {
         select.selectedoptions.namelist.append(false);
         select.selectedoptions.functlist.append(false);
+        select.selectedoptions.cmpnamelist.append(false);
+        select.selectedoptions.complist.append(false);
     }
 
     for(int i=0; i<topcount; ++i)
@@ -3810,6 +3814,8 @@ void DrawingOptions::SearchListModels()
                 {
                     select.selectedoptions.namelist[m] = false;
                     select.selectedoptions.functlist[m] = false;
+                    select.selectedoptions.cmpnamelist[m] = false;
+                    select.selectedoptions.complist[m] = false;
                 }
                 // Search in scripts names:
                 if(select.selectedoptions.parsenames)
@@ -3818,18 +3824,18 @@ void DrawingOptions::SearchListModels()
                         select.selectedoptions.namelist[k-1] = (Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
                     }
                 // continue searching in the functions list when needed:
-                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
-                    if(select.selectedoptions.parsefunctions && (SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
+                if(select.selectedoptions.parsefunctions && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
+                    if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
                     {
-                        ParseItemTree(SubChildlevel);
+                        ParseItemTree(SubChildlevel, select.selectedoptions.functlist);
                     }
                 // continue searching in the components names list when needed:
                 if(select.selectedoptions.parsecmpnames && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
                 {
-                    ParseItemTree(Childlevel);
+                    ParseItemTree(Childlevel, select.selectedoptions.cmpnamelist);
                     int ct= Childlevel->childCount();
                     for(int m=0; m<ct; m++)
-                        ParseItemTree(Childlevel->child(m));
+                        ParseItemTree(Childlevel->child(m), select.selectedoptions.complist);
                 }
 
 
@@ -3839,13 +3845,15 @@ void DrawingOptions::SearchListModels()
                 {
                     sel1 = true;
                     for(int l=0; l< select.selectedoptions.selectedwords.count() -1; l++)
-                        sel1 = sel1 && (select.selectedoptions.namelist.at(l) || select.selectedoptions.functlist.at(l));
+                        sel1 = sel1 && (select.selectedoptions.namelist.at(l) || select.selectedoptions.functlist.at(l)
+                                        || select.selectedoptions.cmpnamelist.at(l)  || select.selectedoptions.complist.at(l));
                 }
                 else
                 {
                     sel1 = false;
                     for(int l=0; l< select.selectedoptions.selectedwords.count() -1; l++)
-                        sel1 = sel1 || (select.selectedoptions.namelist.at(l) || select.selectedoptions.functlist.at(l));
+                        sel1 = sel1 || (select.selectedoptions.namelist.at(l) || select.selectedoptions.functlist.at(l)
+                                        || select.selectedoptions.cmpnamelist.at(l) || select.selectedoptions.complist.at(l));
                 }
             }
             else
@@ -3854,15 +3862,15 @@ void DrawingOptions::SearchListModels()
                 if(select.selectedoptions.parsefunctions && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
                     if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
                     {
-                        ParseItemTree(SubChildlevel, true);
+                        ParseItemTree(SubChildlevel, select.selectedoptions.functlist, true);
                     }
                 // Components names and their childes:
                 if(select.selectedoptions.parsecmpnames && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
                 {
-                    ParseItemTree(Childlevel, true);
+                    ParseItemTree(Childlevel, select.selectedoptions.cmpnamelist, true);
                     int ct= Childlevel->childCount();
                     for(int m=0; m<ct; m++)
-                        ParseItemTree(Childlevel->child(m), true);
+                        ParseItemTree(Childlevel->child(m), select.selectedoptions.complist, true);
                 }
             }
 
@@ -3883,6 +3891,8 @@ void DrawingOptions::SearchListModels()
     //Clear boolean lists:
     select.selectedoptions.namelist.clear();
     select.selectedoptions.functlist.clear();
+    select.selectedoptions.cmpnamelist.clear();
+    select.selectedoptions.complist.clear();
 }
 
 // --------------------------

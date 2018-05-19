@@ -30,6 +30,8 @@ struct SelectedListOptions
     QStringList selectedwords;
     QList<bool> namelist;
     QList<bool> functlist;
+    QList<bool> cmpnamelist;
+    QList<bool> complist;
     bool sensitive;
     bool showall;
     bool AND;
@@ -61,6 +63,8 @@ private slots:
     void on_FunctcheckBox_clicked(bool checked);
 
     void on_NamescheckBox_clicked(bool checked);
+
+    void on_CompcheckBox_clicked(bool checked);
 
 signals:
     void UpdateSignal();

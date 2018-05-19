@@ -170,7 +170,7 @@ public slots:
     void add_new_param();
     void update_infos_param(int);
     void SearchListModels();
-    void ParseItemTree(QTreeWidgetItem*, bool view=false);
+    void ParseItemTree(QTreeWidgetItem*, QList<bool> &list, bool view=false);
     QTreeWidgetItem * ChildItemTreeProperty(QTreeWidgetItem * item, QString proprty);
 private slots:
     void on_actionSmooth_2_clicked();

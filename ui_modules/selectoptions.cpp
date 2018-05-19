@@ -70,7 +70,8 @@ void SelectOptions::on_ShowAllcheckBox_clicked(bool checked)
     ui.SelectgroupBox->setEnabled(!checked);
     ui.SelectgroupBox->setVisible(!checked);
     selectedoptions.showall = checked;
-    emitUpdateSignal();
+    if(selectedoptions.selectedwords.count() > 0)
+        emitUpdateSignal();
 }
 
 void SelectOptions::on_CaseSensitiveCheckBox_clicked(bool checked)
@@ -87,13 +88,15 @@ void SelectOptions::emitUpdateSignal()
 void SelectOptions::on_AND_clicked(bool checked)
 {
     selectedoptions.AND = checked;
-    emitUpdateSignal();
+    if(selectedoptions.selectedwords.count() > 1)
+        emitUpdateSignal();
 }
 
 void SelectOptions::on_radioButton_clicked(bool checked)
 {
     selectedoptions.AND = !checked;
-    emitUpdateSignal();
+    if(selectedoptions.selectedwords.count() > 1)
+        emitUpdateSignal();
 }
 
 void SelectOptions::on_FunctcheckBox_clicked(bool checked)
@@ -105,5 +108,11 @@ void SelectOptions::on_FunctcheckBox_clicked(bool checked)
 void SelectOptions::on_NamescheckBox_clicked(bool checked)
 {
     selectedoptions.parsenames = checked;
+    emitUpdateSignal();
+}
+
+void SelectOptions::on_CompcheckBox_clicked(bool checked)
+{
+    selectedoptions.parsecmpnames = checked;
     emitUpdateSignal();
 }
