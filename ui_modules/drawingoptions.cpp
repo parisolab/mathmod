@@ -3859,13 +3859,13 @@ void DrawingOptions::SearchListModels()
             else
             {
                 // Make sure the text color is white when showall is activated
-                if(select.selectedoptions.parsefunctions && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
+                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
                     if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
                     {
                         ParseItemTree(SubChildlevel, select.selectedoptions.functlist, true);
                     }
                 // Components names and their childes:
-                if(select.selectedoptions.parsecmpnames && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
+                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
                 {
                     ParseItemTree(Childlevel, select.selectedoptions.cmpnamelist, true);
                     int ct= Childlevel->childCount();
