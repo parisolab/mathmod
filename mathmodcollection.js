@@ -16497,7 +16497,7 @@
           "Iso4= (Iso(x+R(sin(x),sin(y),sin(z),t),y+R(sin(y),sin(x),sin(z),t), z+R(sin(z),sin(y),sin(x),t),t))",
           "Iso5= (Iso(x-R(sin(x),sin(y),sin(z),t),y-R(sin(y),sin(x),sin(z),t), z-R(sin(z),sin(y),sin(x),t),t))",
           "SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoTransform=if(x*x<10DOTSYMBOL24,SchwarzP(x,y,z,t),1)+0DOTSYMBOL1*M*exp(x*x-9)",
+          "isoTransform=if(x*x<10DOTSYMBOL24,SchwarzP(x,y-2*t,z-3*t,t),1)+0DOTSYMBOL1*M*exp(x*x-9)",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-R1),y,N1*atan2(z,x),t)"
         ],
         "Fxyz": [
