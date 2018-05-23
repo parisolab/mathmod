@@ -16108,146 +16108,94 @@
         ]
       }
     },
-    {
-      "Param3D": {
-        "Description ": [
-          "Multi-sided Torus by Abderrahman Taha (Update) 01/03/2017"
-        ],
-        "Name": [
-          "Multi-sided Torus_4"
-        ],
-        "Component": [
-          "MultiSidedTorus "
-        ],
-        "Const": [
-          "N=9",
-          "R3=3",
-          "R=15"
-        ],
-        "Funct": [
-          "F1 = (R3 + (R/(10*N))*cos(u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*cos(u/N+v))",
-          "F2 = ((R/(10*N))*sin(u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*sin(u/N+v))"
-        ],
-        "Fx": [
-          "-sin(u)*F1(u+t,v,t)"
-        ],
-        "Fy": [
-          "cos(u)*F1(u+t,v,t) "
-        ],
-        "Fz": [
-          "F2(u+t,v,t)"
-        ],
-        "Umax": [
-          "pi"
-        ],
-        "Umin": [
-          "-pi"
-        ],
-        "Vmax": [
-          "pi"
-        ],
-        "Vmin": [
-          "-pi"
-        ]
-      },
-      "Sliders": {
-        "Max": [
-          "30",
-          "30",
-          "50"
-        ],
-        "Min": [
-          "1",
-          "1",
-          "1"
-        ],
-        "Name": [
-          "N",
-          "R3",
-          "R"
-        ],
-        "Position": [
-          "5",
-          "3",
-          "15"
-        ],
-        "Step": [
-          "1",
-          "1",
-          "1"
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Description ": [
-          "Multi-sided Torus by Abderrahman Taha 27/03/2016"
-        ],
-        "Name": [
-          "Multi-sided Torus_5"
-        ],
-        "Component": [
-          "MultiSidedTorus "
-        ],
-        "Const": [
-          "N=9",
-          "R3=3",
-          "R=15"
-        ],
-        "Funct": [
-          "F1 = (R3 + (R/(10*N))*cos(u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*sin(u/N+v))",
-          "F2 = ((R/(10*N))*sin(u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*cos(u/N+v))"
-        ],
-        "Fx": [
-          "sin(u)*F1(u,v,t)"
-        ],
-        "Fy": [
-          "cos(u)*F1(u,v,t) "
-        ],
-        "Fz": [
-          "F2(u,v,t)"
-        ],
-        "Umax": [
-          "pi"
-        ],
-        "Umin": [
-          "-pi"
-        ],
-        "Vmax": [
-          "pi"
-        ],
-        "Vmin": [
-          "-pi"
-        ]
-      },
-      "Sliders": {
-        "Max": [
-          "30",
-          "30",
-          "50"
-        ],
-        "Min": [
-          "1",
-          "1",
-          "1"
-        ],
-        "Name": [
-          "N",
-          "R3",
-          "R"
-        ],
-        "Position": [
-          "9",
-          "3",
-          "15"
-        ],
-        "Step": [
-          "1",
-          "1",
-          "1"
-        ]
-      }
-    },
+        {
+            "Param3D": {
+                "Description ": [
+                    "Multi-sided Torus by Abderrahman Taha (Update) 24/10/2017"
+                ],
+                "Component": [
+                    "MultiSidedTorus "
+                ],
+                "Const": [
+                    "N=10",
+                    "R3=3",
+                    "R=5",
+                    "N2=4",
+                    "P=8",
+                    "M=10"
+                ],
+                "Funct": [
+                    "F1 = (R3 + (R/(10*N))*cos(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*cos(N2*u/N+v))",
+                    "F2 = ((R/(10*N))*sin(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*sin(N2*u/N+v))"
+                ],
+                "Fx": [
+                    "-sin(u)*F1(u-t,v,t)"
+                ],
+                "Fy": [
+                    "cos(u)*F1(u-t,v,t) "
+                ],
+                "Fz": [
+                    "F2(u-t,v,t)"
+                ],
+                "Name": [
+                    "Multi-sidedTorus"
+                ],
+                "Umax": [
+                    "pi"
+                ],
+                "Umin": [
+                    "-pi"
+                ],
+                "Vmax": [
+                    "pi"
+                ],
+                "Vmin": [
+                    "-pi"
+                ]
+            },
+            "Sliders": {
+                "Max": [
+                    "30",
+                    "30",
+                    "50",
+                    "20"
+                ],
+                "Min": [
+                    "1",
+                    "1",
+                    "1",
+                    "0"
+                ],
+                "Name": [
+                    "N",
+                    "R3",
+                    "R",
+                    "N2"
+                ],
+                "Position": [
+                    "4",
+                    "3",
+                    "15",
+                    "4"
+                ],
+                "Step": [
+                    "1",
+                    "1",
+                    "1",
+                    "1"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R= if((i)%(M)>P | (j)%(M)>P,(0DOTSYMBOL5),(0DOTSYMBOL7)) ",
+                    "G= if((i)%(M)>P | (j)%(M)>P,(0DOTSYMBOL5),(0DOTSYMBOL14)) ",
+                    "B= if((i)%(M)>P | (j)%(M)>P,(0DOTSYMBOL3),(0DOTSYMBOL2))",
+                    "T= 1 "
+                ],
+                "Name": "square",
+                "Noise": "1"
+            }
+        },
     {
       "Param3D": {
         "Description ": [
