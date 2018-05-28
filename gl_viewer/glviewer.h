@@ -106,10 +106,9 @@ public slots:
     void axeOk();
     void normOk();
     void infosOk();
-    void boxOk();
+    //void boxOk();
     void smoothline();
-    void lineOk();
-    void DrawPlan();
+    //void lineOk();
     void transparency(int, int currentposition=0);
     void red(int, int currentposition=0);
     void green(int, int currentposition=0);

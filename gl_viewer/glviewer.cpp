@@ -31,6 +31,12 @@ int FistTimecalibrate =-1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo, decalage_zo;
 
 
+GLfloat minx   = 999999999,  miny  = 999999999,  minz  = 999999999,
+        maxx =-999999999,   maxy =-999999999, maxz =-999999999,
+        difX, difY, difZ;
+
+
+
 static void UpdateParColorliste (ObjectProperties *scene)
 {
     float frontcl[4], backcl[4];
@@ -352,6 +358,70 @@ static void DrawIso_cache (ObjectProperties *scene)
     glDisable(GL_LIGHT0);
 }
 
+static void drawCube(float x)
+{
+    float  longX = x*(difX/difMaximum), longY= x*(difY/difMaximum), longZ= x*(difZ/difMaximum);
+    glColor4f (0.8, 0.8, 0.8, 1.0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glLineWidth(1);
+
+    glBegin(GL_QUADS);
+        glVertex3f(-longX,-longY ,-longZ);
+        glVertex3f(longX, -longY, -longZ);
+        glVertex3f(longX, longY, -longZ);
+        glVertex3f(-longX, longY, -longZ);
+
+        glVertex3f(-longX, -longY, -longZ);
+        glVertex3f(-longX, -longY, longZ);
+        glVertex3f(-longX, longY, longZ);
+        glVertex3f(-longX, longY, -longZ);
+
+        glVertex3f(-longX, -longY, -longZ);
+        glVertex3f(-longX, -longY, longZ);
+        glVertex3f(longX, -longY, longZ);
+        glVertex3f(longX, -longY, -longZ);
+
+        glEnd();
+        glLineWidth(1);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // this line should be put elsewhere where it's missing
+
+
+
+/*
+        glColor3f (0.0, 1.0, 0.0);
+        glRasterPos3f(x, -x, x);
+        glCallLists(strlen("Grid = "),
+                    GL_UNSIGNED_BYTE,
+                    (GLubyte *)"Grid = ");
+*/
+        //X
+        glColor3f (1.0, 0.0, 0.0);
+        glRasterPos3f(longX, -longY, longZ+60);
+        glCallLists(QString::number(maxx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxx,'g',  3).toLatin1());
+
+        glColor3f (1.0, 0.0, 0.0);
+        glRasterPos3f(-longX, -longY, longZ+60);
+        glCallLists(QString::number(minx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minx,'g',  3).toLatin1());
+
+        //Y
+        glColor3f (0.0, 1.0, 0.0);
+        glRasterPos3f(longX+100, longY, -longZ);
+        glCallLists(QString::number(maxy,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxy,'g',  3).toLatin1());
+
+        glColor3f (0.0, 1.0, 0.0);
+        glRasterPos3f(longX+100, -longY,-longZ);
+        glCallLists(QString::number(miny,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(miny,'g',  3).toLatin1());
+
+        //Z
+        glColor3f (0.4, 0.4, 1.0);
+        glRasterPos3f(longX+60, -longY-60, longZ);
+        glCallLists(QString::number(maxz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxz,'g',  3).toLatin1());
+
+        glColor3f (0.4, 0.4, 1.0);
+        glRasterPos3f(longX+60, -longY-60,-longZ);
+        glCallLists(QString::number(minz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minz,'g',  3).toLatin1());
+    }
+
 static void DrawIso (ObjectProperties *scene)
 {
     float frontcl[4], backcl[4];
@@ -377,6 +447,8 @@ static void DrawIso (ObjectProperties *scene)
                 glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
                 glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
             }
+
+
             if(scene->componentsinfos.ThereisCND)
             {
                 if(scene->componentsinfos.DFTrianglesVerifyCND)
@@ -744,7 +816,7 @@ void OpenGlWidget::smoothline()
 
     update();
 }
-
+/*
 void OpenGlWidget::boxOk()
 {
     LocalScene.line *= -1;
@@ -754,13 +826,13 @@ void OpenGlWidget::lineOk()
 {
     LocalScene.line *= -1;
 }
-
+*/
 void OpenGlWidget::valueChanged()
 {
     InitGlParameters();
 }
 
-GLuint fontOffset;
+GLuint fontOffset=0;
 void makeRasterFont()
 {
     GLuint i;
@@ -1380,7 +1452,6 @@ void OpenGlWidget::initialize_GL()
 
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
 
-
         boxok();
         InitFont();
         glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
@@ -1635,6 +1706,8 @@ static void DrawMeshParametric(ObjectProperties *scene)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
+
+
 static void draw(ObjectProperties *scene)
 {
     scene->box =1;
@@ -1648,9 +1721,7 @@ static void draw(ObjectProperties *scene)
 
         glEnable (GL_LINE_SMOOTH);
         glEnable (GL_BLEND);
-        //glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_COLOR);
         glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        //glBlendFunc (GL_ONE, GL_ONE);
         glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
     }
 
@@ -1672,6 +1743,7 @@ static void draw(ObjectProperties *scene)
     if (scene->infos == 1)
         DrawAxe();
 
+    drawCube(350);
     //glLoadIdentity();
     // Box:
     //if (scene->box == 1) glCallList(scene->boxliste);
@@ -1699,13 +1771,15 @@ static void draw(ObjectProperties *scene)
     // Draw Filled Object:
     if(scene->fill == 1 && scene->typedrawing == 11)
         DrawPariso(scene);
-        */
+    */
+
+
+
     if (scene->fill == 1 && scene->typedrawing == 1)
         DrawIso(scene);
+    //drawCube(500);
     if (scene->fill == 1 && scene->typedrawing == -1)
         DrawParametric(scene);
-
-
 
     // Draw Mesh Object:
     if (scene->triangles == 1 /*&& scene->typedrawing == 1*/)
@@ -2021,32 +2095,6 @@ void OpenGlWidget::paintGL()
     if (LocalScene.morph == 1 && LocalScene.frame == 1)  FramesSave();
 }
 
-void OpenGlWidget::DrawPlan()
-{
-    GLuint list;
-
-    list = glGenLists(1);
-    glNewList( list, GL_COMPILE );
-
-    glBegin( GL_LINE );
-    glVertex3f(-400.0, 0.0, -400.0);
-    glNormal3f(0.0, 0.0, 1.0);
-
-    glVertex3f(-400.0, 0.0, 400.0);
-    glNormal3f(0.0, 0.0, 1.0);
-
-    glVertex3f(400.0, 0.0, 400.0);
-    glNormal3f(0.0, 0.0, 1.0);
-
-    glVertex3f(400.0, 0.0, -400.0);
-    glNormal3f(0.0, 0.0, 1.0);
-    glEnd();
-
-    glEndList();
-}
-
-
-
 void OpenGlWidget::timerEvent(QTimerEvent*)
 {
     update();
@@ -2078,10 +2126,9 @@ void OpenGlWidget::initbox()
 
 void OpenGlWidget::PutObjectInsideCube()
 {
-    GLfloat minx   = 999999999,  miny  = 999999999,  minz  = 999999999,
-            maxx =-999999999,   maxy =-999999999, maxz =-999999999,
-            difX, difY, difZ;
 
+    minx   = 999999999;  miny  = 999999999;  minz  = 999999999;
+            maxx =-999999999 ;  maxy =-999999999; maxz =-999999999;
     if((LocalScene.morph != 1 || (LocalScene.morph == 1 && FistTimecalibrate ==1))   && LocalScene.slider != 1)
     {
         for (unsigned int i=0; i< LocalScene.VertxNumber; i++)
@@ -2131,72 +2178,72 @@ void OpenGlWidget::boxok()
     glLineWidth(1);
     glColor3f (0.8, 0.0, 0.7);
     glBegin( GL_LINES );
-    glVertex3f(-150.0, 600.0, -350);
-    glVertex3f(-150.0,-600.0, -350);
-    glVertex3f(0.0, 600.0, -350);
-    glVertex3f(0.0,-600.0, -350);
+    glVertex3f(-150.0, 600.0, -500);
+    glVertex3f(-150.0,-600.0, -500);
+    glVertex3f(0.0, 600.0, -500);
+    glVertex3f(0.0,-600.0, -500);
 
-    glVertex3f(150.0, 600.0, -350);
-    glVertex3f(150.0,-600.0, -350);
-    glVertex3f(600.0, -150.0, -350);
-    glVertex3f(-600.0,-150.0, -350);
+    glVertex3f(150.0, 600.0, -500);
+    glVertex3f(150.0,-600.0, -500);
+    glVertex3f(600.0, -150.0, -500);
+    glVertex3f(-600.0,-150.0, -500);
 
-    glVertex3f(600.0, 0.0, -350);
-    glVertex3f(-600.0, 0.0, -350);
-    glVertex3f(600.0, 150.0, -350);
-    glVertex3f(-600.0, 150.0, -350);
+    glVertex3f(600.0, 0.0, -500);
+    glVertex3f(-600.0, 0.0, -500);
+    glVertex3f(600.0, 150.0, -500);
+    glVertex3f(-600.0, 150.0, -500);
 
-    glVertex3f(-75.0, 600.0, -350);
-    glVertex3f(-75.0,-600.0, -350);
-    glVertex3f(-225.0, 600.0, -350);
-    glVertex3f(-225.0,-600.0, -350);
-    glVertex3f(-300.0, 600.0, -350);
-    glVertex3f(-300.0,-600.0, -350);
-    glVertex3f(-375.0, 600.0, -350);
-    glVertex3f(-375.0,-600.0, -350);
-    glVertex3f(-450.0, 600.0, -350);
-    glVertex3f(-450.0,-600.0, -350);
-    glVertex3f(-525.0, 600.0, -350);
-    glVertex3f(-525.0,-600.0, -350);
+    glVertex3f(-75.0, 600.0, -500);
+    glVertex3f(-75.0,-600.0, -500);
+    glVertex3f(-225.0, 600.0, -500);
+    glVertex3f(-225.0,-600.0, -500);
+    glVertex3f(-300.0, 600.0, -500);
+    glVertex3f(-300.0,-600.0, -500);
+    glVertex3f(-375.0, 600.0, -500);
+    glVertex3f(-375.0,-600.0, -500);
+    glVertex3f(-450.0, 600.0, -500);
+    glVertex3f(-450.0,-600.0, -500);
+    glVertex3f(-525.0, 600.0, -500);
+    glVertex3f(-525.0,-600.0, -500);
 
-    glVertex3f(75.0, 600.0, -350);
-    glVertex3f(75.0,-600.0, -350);
-    glVertex3f(225.0, 600.0, -350);
-    glVertex3f(225.0,-600.0, -350);
-    glVertex3f(300.0, 600.0, -350);
-    glVertex3f(300.0,-600.0, -350);
-    glVertex3f(375.0, 600.0, -350);
-    glVertex3f(375.0,-600.0, -350);
-    glVertex3f(450.0, 600.0, -350);
-    glVertex3f(450.0,-600.0, -350);
-    glVertex3f(525.0, 600.0, -350);
-    glVertex3f(525.0,-600.0, -350);
+    glVertex3f(75.0, 600.0, -500);
+    glVertex3f(75.0,-600.0, -500);
+    glVertex3f(225.0, 600.0, -500);
+    glVertex3f(225.0,-600.0, -500);
+    glVertex3f(300.0, 600.0, -500);
+    glVertex3f(300.0,-600.0, -500);
+    glVertex3f(375.0, 600.0, -500);
+    glVertex3f(375.0,-600.0, -500);
+    glVertex3f(450.0, 600.0, -500);
+    glVertex3f(450.0,-600.0, -500);
+    glVertex3f(525.0, 600.0, -500);
+    glVertex3f(525.0,-600.0, -500);
 
-    glVertex3f(600.0,-75.0, -350);
-    glVertex3f(-600.0,-75.0, -350);
-    glVertex3f(600.0,-225.0, -350);
-    glVertex3f(-600.0,-225.0, -350);
-    glVertex3f(600.0,-300.0, -350);
-    glVertex3f(-600.0,-300.0, -350);
-    glVertex3f(600.0,-375.0, -350);
-    glVertex3f(-600.0,-375.0, -350);
-    glVertex3f(600.0,-450.0, -350);
-    glVertex3f(-600.0,-450.0, -350);
-    glVertex3f(600.0,-525.0, -350);
-    glVertex3f(-600.0,-525.0, -350);
+    glVertex3f(600.0,-75.0, -500);
+    glVertex3f(-600.0,-75.0, -500);
+    glVertex3f(600.0,-225.0, -500);
+    glVertex3f(-600.0,-225.0, -500);
+    glVertex3f(600.0,-300.0, -500);
+    glVertex3f(-600.0,-300.0, -500);
+    glVertex3f(600.0,-375.0, -500);
+    glVertex3f(-600.0,-375.0, -500);
+    glVertex3f(600.0,-450.0, -500);
+    glVertex3f(-600.0,-450.0, -500);
+    glVertex3f(600.0,-525.0, -500);
+    glVertex3f(-600.0,-525.0, -500);
 
-    glVertex3f(600.0,75.0, -350);
-    glVertex3f(-600.0,75.0, -350);
-    glVertex3f(600.0,225.0, -350);
-    glVertex3f(-600.0,225.0, -350);
-    glVertex3f(600.0,300.0, -350);
-    glVertex3f(-600.0,300.0, -350);
-    glVertex3f(600.0,375.0, -350);
-    glVertex3f(-600.0,375.0, -350);
-    glVertex3f(600.0,450.0, -350);
-    glVertex3f(-600.0,450.0, -350);
-    glVertex3f(600.0,525.0, -350);
-    glVertex3f(-600.0,525.0, -350);
+    glVertex3f(600.0,75.0, -500);
+    glVertex3f(-600.0,75.0, -500);
+    glVertex3f(600.0,225.0, -500);
+    glVertex3f(-600.0,225.0, -500);
+    glVertex3f(600.0,300.0, -500);
+    glVertex3f(-600.0,300.0, -500);
+    glVertex3f(600.0,375.0, -500);
+    glVertex3f(-600.0,375.0, -500);
+    glVertex3f(600.0,450.0, -500);
+    glVertex3f(-600.0,450.0, -500);
+    glVertex3f(600.0,525.0, -500);
+    glVertex3f(-600.0,525.0, -500);
     glEnd();
     glLineWidth(4.18);
     glEndList();
