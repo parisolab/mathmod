@@ -176,6 +176,7 @@ struct  ObjectProperties
     int    transparency;
     int    smoothpoly;
     int    box;
+    int    boundingbox;
     int    isobox;
     bool   activarecnd;
     bool   activateGlCache;

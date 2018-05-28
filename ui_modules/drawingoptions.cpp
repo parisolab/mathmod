@@ -7736,3 +7736,9 @@ void DrawingOptions::on_actionScripts_selection_triggered()
 {
     select.show();
 }
+
+void DrawingOptions::on_actionBoundingBox_clicked()
+{
+    MathmodRef->ui.glWidget->boundingboxOk();
+    MathmodRef->ui.glWidget->update();
+}

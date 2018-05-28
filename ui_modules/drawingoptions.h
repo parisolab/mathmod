@@ -279,5 +279,6 @@ private slots:
     void on_lineScrollBar_valueChanged(int value);
     void on_coloneScrollBar_valueChanged(int value);
     void on_actionScripts_selection_triggered();
+    void on_actionBoundingBox_clicked();
 };
 #endif

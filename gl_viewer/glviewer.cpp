@@ -816,12 +816,12 @@ void OpenGlWidget::smoothline()
 
     update();
 }
-/*
-void OpenGlWidget::boxOk()
-{
-    LocalScene.line *= -1;
-}
 
+void OpenGlWidget::boundingboxOk()
+{
+    LocalScene.boundingbox *= -1;
+}
+/*
 void OpenGlWidget::lineOk()
 {
     LocalScene.line *= -1;
@@ -1743,10 +1743,10 @@ static void draw(ObjectProperties *scene)
     if (scene->infos == 1)
         DrawAxe();
 
-    drawCube(350);
-    //glLoadIdentity();
-    // Box:
-    //if (scene->box == 1) glCallList(scene->boxliste);
+    // Bounding Box:
+    if (scene->boundingbox == 1)
+        drawCube(350);
+
     glPushMatrix();
 
     if (scene->anim == 1 && scene->animx == 1)
@@ -1767,22 +1767,14 @@ static void draw(ObjectProperties *scene)
         glRotatef(scene->animzValue, 0, 0, 1.0);
     }
 
-    /*
-    // Draw Filled Object:
-    if(scene->fill == 1 && scene->typedrawing == 11)
-        DrawPariso(scene);
-    */
-
-
-
     if (scene->fill == 1 && scene->typedrawing == 1)
         DrawIso(scene);
-    //drawCube(500);
+
     if (scene->fill == 1 && scene->typedrawing == -1)
         DrawParametric(scene);
 
     // Draw Mesh Object:
-    if (scene->triangles == 1 /*&& scene->typedrawing == 1*/)
+    if (scene->triangles == 1)
         DrawMeshIso(scene);
 
     if (scene->mesh == 1 && scene->typedrawing == -1)

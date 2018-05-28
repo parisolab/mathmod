@@ -213,6 +213,7 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.infosdetails[0]  = objectproperties.infosdetails[1] = objectproperties.infosdetails[2] = 1;
     objectproperties.axe                 = 1;
     objectproperties.box                 = 1;
+    objectproperties.boundingbox         = -1;
     objectproperties.isobox              = 1;
     objectproperties.triangles           = -1;
     objectproperties.typedrawing         =  1;

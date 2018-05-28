@@ -106,7 +106,7 @@ public slots:
     void axeOk();
     void normOk();
     void infosOk();
-    //void boxOk();
+    void boundingboxOk();
     void smoothline();
     //void lineOk();
     void transparency(int, int currentposition=0);
