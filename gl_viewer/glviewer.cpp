@@ -385,15 +385,6 @@ static void drawCube(float x)
         glLineWidth(1);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // this line should be put elsewhere where it's missing
 
-
-
-/*
-        glColor3f (0.0, 1.0, 0.0);
-        glRasterPos3f(x, -x, x);
-        glCallLists(strlen("Grid = "),
-                    GL_UNSIGNED_BYTE,
-                    (GLubyte *)"Grid = ");
-*/
         //X
         glColor3f (1.0, 0.0, 0.0);
         glRasterPos3f(longX, -longY, longZ+60);
@@ -821,12 +812,7 @@ void OpenGlWidget::boundingboxOk()
 {
     LocalScene.boundingbox *= -1;
 }
-/*
-void OpenGlWidget::lineOk()
-{
-    LocalScene.line *= -1;
-}
-*/
+
 void OpenGlWidget::valueChanged()
 {
     InitGlParameters();
@@ -1034,7 +1020,6 @@ void OpenGlWidget::keyPressEvent ( QKeyEvent * e )
         glt.anim();
         break;
     case Qt::Key_P :
-        //FistTimecalibrate *= -1;
         glt.morph();
         initbox();
         break;
@@ -1124,15 +1109,9 @@ void OpenGlWidget::PrintInfos()
                     (GLubyte *)"Poly = ");
         glColor3f (1.0, 0.0, 0.0);
         glRasterPos2i(80, 40);
-        //(LocalScene.typedrawing == 1) ?
         glCallLists(QString::number(LocalScene.PolyNumber/3).size(),
                     GL_UNSIGNED_BYTE,
                     QString::number(LocalScene.PolyNumber/3).toLatin1()) ;
-        /*:
-        glCallLists(QString::number(LocalScene.PolyNumber/4).size(),
-                    GL_UNSIGNED_BYTE,
-                    QString::number(LocalScene.PolyNumber/4).toLatin1()) ;
-                    */
     }
     if ( LocalScene.infosdetails[2] ==1)
     {
@@ -1174,7 +1153,6 @@ void OpenGlWidget::PrintInfos()
     glPopMatrix();
     glEnable(GL_DEPTH_TEST);
 }
-
 
 static void DrawAxe()
 {
@@ -1309,70 +1287,6 @@ static void DrawNormals(ObjectProperties *scene)
 }
 
 static int staticaction = 0;
-/*
-static void DrawPariso (ObjectProperties *scene)
-{
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(scene->polyfactor, scene->polyunits);
-    unsigned int  *strtinparam = &(scene->PolyIndices_localPt[scene->PolyNumberTmp1]);
-    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
-    {
-        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcolsPar[i]);
-        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcolsPar[i]);
-
-        glDrawElements(GL_QUADS ,4*scene->componentsinfos.Parametricpositions[2*i +1], GL_UNSIGNED_INT,
-                       &(strtinparam[scene->componentsinfos.Parametricpositions[2*i]]));
-    }
-
-    for(int i=0; i< scene->componentsinfos.NbIso; i++)
-    {
-        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcols[i]);
-        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcols[i]);
-        glDrawElements(GL_TRIANGLES, 3*scene->componentsinfos.IsoPositions[2*i +1], GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]]));
-    }
-
-    glDisable(GL_COLOR_MATERIAL);
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-
-    //Draw mesh quads for parametric surfaces:
-    //if (scene->line == 1)
-    {
-        glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(GL_QUADS, scene->PolyNumberTmp2, GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[scene->PolyNumberTmp1]));
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
-
-
-    //Draw mesh polygons for isosurfaces:
-    //if (scene->typedrawing == 1 && scene->isobox == 1)
-    {
-        glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-        int startpl = 0;
-        for (unsigned int i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
-        {
-            int polysize       =  scene->PolyIndices_localPtMin[startpl++];
-            glBegin(GL_POLYGON);
-            for (int j = 0; j < polysize; j++)
-            {
-                int actualpointindice = scene->PolyIndices_localPtMin[startpl];
-                glVertex3f(scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3  + TypeDrawinNormStep],
-                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4  + TypeDrawinNormStep],
-                           scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5  + TypeDrawinNormStep]);
-                startpl++;
-            }
-            glEnd();
-        }
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    }
-}
-*/
 
 void OpenGlWidget::CreateGlLists()
 {
@@ -1459,7 +1373,7 @@ void OpenGlWidget::initialize_GL()
     }
 
     PutObjectInsideCube();
-    if(/*LocalScene.VertxNumber != 0 &&*/ LocalScene.activateGlCache)
+    if(LocalScene.activateGlCache)
         CreateGlLists();
 }
 
@@ -1706,8 +1620,6 @@ static void DrawMeshParametric(ObjectProperties *scene)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-
-
 static void draw(ObjectProperties *scene)
 {
     scene->box =1;
@@ -1743,10 +1655,6 @@ static void draw(ObjectProperties *scene)
     if (scene->infos == 1)
         DrawAxe();
 
-    // Bounding Box:
-    if (scene->boundingbox == 1)
-        drawCube(350);
-
     glPushMatrix();
 
     if (scene->anim == 1 && scene->animx == 1)
@@ -1780,6 +1688,10 @@ static void draw(ObjectProperties *scene)
     if (scene->mesh == 1 && scene->typedrawing == -1)
         DrawMeshParametric(scene);
 
+    // Bounding Box:
+    if (scene->boundingbox == 1)
+        drawCube(350);
+
     // Draw Minimal topology for isosurfaces:
     if (scene->mesh == 1  && scene->typedrawing == 1)
         DrawMinimalTopology(scene);
@@ -1805,7 +1717,6 @@ static void draw(ObjectProperties *scene)
 
 static void draw_cache(ObjectProperties *scene)
 {
-    //scene->typedrawing = 1;
     scene->box =1;
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (staticaction < 1)
@@ -1832,8 +1743,6 @@ static void draw_cache(ObjectProperties *scene)
     }
 
     // Plan:
-    //if (scene->plan == 1)
-    //glLoadIdentity();
     if (scene->infos == 1)
         glCallList(scene->gridplanliste);
 
@@ -1841,9 +1750,6 @@ static void draw_cache(ObjectProperties *scene)
     if (scene->infos == 1)
         DrawAxe();
 
-    //glLoadIdentity();
-    // Box:
-    //if (scene->box == 1) glCallList(scene->boxliste);
     glPushMatrix();
 
     if (scene->anim == 1 && scene->animx == 1)
@@ -1900,10 +1806,6 @@ static void draw_cache(ObjectProperties *scene)
     glFlush();
 }
 
-
-
-
-
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void OpenGlWidget::SaveSceneAsObjPoly(int type)
 {
@@ -1958,9 +1860,6 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
         }
     }
 }
-
-
-
 ///++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void OpenGlWidget::SaveSceneAsObjTrian(int type)
 {
