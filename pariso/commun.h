@@ -71,7 +71,7 @@ struct ErrorMessage
 
 enum ScriptErrorType
 {
-    NO_ERROR=0,
+    SCRIPT_NO_ERROR=0,
     MAXGRID_OUT_OF_RANGE,
     MAXPT_OUT_OF_RANGE,
     MAXTRI_OUT_OF_RANGE,

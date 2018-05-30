@@ -57,14 +57,15 @@
         <file>advancedmodels.js</file>
         <file>images/win/player_play.png</file>
         <file>images/win/stop.png</file>
-        <file>copying</file>
         <file>Licence.txt</file>
         <file>Readme.txt</file>
         <file>images/icon/catenoid_mini_16x16.png</file>
         <file>images/icon/catenoid_mini_32x32.png</file>
         <file>images/icon/catenoid_mini_64x64.ico</file>
         <file>images/icon/catenoid_mini_64x64.png</file>
-        <file>images/icon/copying</file>
         <file>images/mac/search.png</file>
+        <file>images/icon/copying.txt</file>
+        <file>images/mac/copying.txt</file>
+        <file>images/win/copying.txt</file>
     </qresource>
 </RCC>

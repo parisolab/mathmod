@@ -30,7 +30,7 @@ QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
 // Error messages returned by ErrorMsg():
 const char* ScriptErrorMessage[]=
 {
-    "NO_ERROR",                       // 0
+    "SCRIPT_NO_ERROR",                       // 0
     "MAXGRID_OUT_OF_RANGE",           // 1
     "MAXPT_OUT_OF_RANGE",             // 2
     "MAXTRI_OUT_OF_RANGE",            // 3
@@ -74,7 +74,7 @@ const char* ScriptErrorMessage[]=
 void DrawingOptions::ErrorMsg() const
 {
     QMessageBox msgBox;
-    if(scriptErrorType != NO_ERROR)
+    if(scriptErrorType != SCRIPT_NO_ERROR)
     {
         statusBar()->showMessage(ScriptErrorMessage[scriptErrorType]);
         msgBox.setText(ScriptErrorMessage[scriptErrorType]);
@@ -85,7 +85,7 @@ void DrawingOptions::ErrorMsg() const
 void DrawingOptions::MemoryErrorMsg(int err) const
 {
     QMessageBox msgBox;
-    if(err != NO_ERROR)
+    if(err != SCRIPT_NO_ERROR)
     {
         msgBox.setText(ScriptErrorMessage[err]);
         msgBox.exec();
