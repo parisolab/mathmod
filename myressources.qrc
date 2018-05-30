@@ -67,5 +67,6 @@
         <file>images/icon/copying.txt</file>
         <file>images/mac/copying.txt</file>
         <file>images/win/copying.txt</file>
+        <file>copying.txt</file>
     </qresource>
 </RCC>
