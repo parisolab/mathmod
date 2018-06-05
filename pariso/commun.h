@@ -179,7 +179,6 @@ struct  ObjectProperties
     int    boundingbox;
     int    isobox;
     bool   activarecnd;
-    bool   activateGlCache;
     int    triangles;
     int    interior;
     int    exterior;

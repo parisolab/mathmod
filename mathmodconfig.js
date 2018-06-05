@@ -1,8 +1,8 @@
 {
     "IsoParam": {
-        "MaxGrid": 250,
-        "MaxPt": 4,
-        "MaxTri": 6,
+        "MaxGrid": 200,
+        "MaxPt": 1,
+        "MaxTri": 2,
         "NbComponent": 200,
         "NbVariables": 30,
         "NbConstantes": 40,
@@ -31,7 +31,6 @@
         "GlwinW": 750
     },
     "OpenGlConfig": {
-        "AtivateGlCache": false,
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_SHININESS": 110
     },

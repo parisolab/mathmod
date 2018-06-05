@@ -36,7 +36,6 @@ public:
     void ParametricSurfaceProcess(int type = 1);
     void Initparametricpage();
     void updateGL();
-    void activateteGlCacheOption(bool);
     void updateGLspectrale(float *);
     void updateThreads(int *);
     void updateGLshininess(int);
@@ -49,10 +48,8 @@ public slots:
     void column_valueChanged(int);
     void linecolumn_valueChanged_2(int);
     void linecolumn_valueupdate(int);
-
     void line_valueupdate(int);
     void column_valueupdate(int);
-
     void ProcessNewIsoSurface();
     void ProcessParisoSurface();
     void xyzg_valueChanged(int);

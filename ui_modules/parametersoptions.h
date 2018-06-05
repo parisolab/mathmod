@@ -58,7 +58,6 @@ public:
     int ControlH;
     int GlwinW;
     int GlwinH;
-    bool ActivateGlCache;
     float Specular[4];
     int Threads[3];
     int Shininess;
@@ -89,21 +88,14 @@ public slots:
     void LoadConfig(QApplication &,int argc, char *argv[]);
     ListeModelTexture LoadCollectionModels(QJsonObject &JIso, jpariso &Jcollection, int argc);
     bool isFloat(std::string);
-private slots:
+    private slots:
     void on_comboBox_2_activated(const QString &arg1);
-
     void on_comboBox_3_activated(const QString &arg1);
-
     void on_comboBox_activated(const QString &arg1);
-
     void onred_2valueChanged(int value);
-
     void ongreen_2valueChanged(int value);
-
     void onblue_2valueChanged(int value);
-
     void on_TestConfig_clicked();
-
 private:
     Ui::Parametersoptions ui;
 };

@@ -47,7 +47,6 @@ Parametersoptions::Parametersoptions(QWidget *parent)
 
     dotsymbol =".";
     model = "CloseIso_2";
-    ActivateGlCache = false;
     Shininess = 110;
     Specular[0] = Specular[1] = Specular[2] = 0.5;
     Specular[3] = 1.0;
@@ -443,11 +442,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                     dotsymbol = ",";
                 else
                     dotsymbol = ".";
-                /*
-                QMessageBox message;
-                message.setText("Decimalpoint : "+QString((QLocale::system()).decimalPoint()) + "---"+dotsymbol);
-                message.exec();
-                */
             }
             else
                 dotsymbol = tmp["DotSymbol"].toString();
@@ -502,13 +496,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             ControlH = tmp["ControlH"].toDouble();
             GlwinW = tmp["GlwinW"].toDouble();
             GlwinH = tmp["GlwinH"].toDouble();
-        }
-
-        if(JConfig["OpenGlConfig"].isObject() )
-        {
-            QJsonObject tmp;
-            tmp= JConfig["OpenGlConfig"].toObject();
-            ActivateGlCache = tmp["AtivateGlCache"].toBool();
         }
 
         if(JConfig["OpenGlConfig"].isObject() )

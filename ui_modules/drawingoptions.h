@@ -70,7 +70,6 @@ public slots:
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;
     void SaveSlidersRef(int n=20);
-    void updateGlOptions();
     void editorwin();
     void videoplay();
     void colorsoptions();
@@ -199,7 +198,6 @@ private slots:
     void on_yzcheckBox2_clicked();
     void on_InitMatrix_2_clicked();
     void on_xyzcheckBox2_clicked();
-    //void on_pushButtonInfo_clicked();
     void on_pushButton_3_clicked();
     void on_cut_2_clicked();
     void on_pushButton_4_clicked();
@@ -271,8 +269,6 @@ private slots:
     void on_blue_Specular_valueChanged(int);
     void on_transparent_Specular_valueChanged(int);
     void on_ShininessScrollBar_valueChanged(int value);
-    void on_GlcacheCheckBox_clicked(bool checked);
-    //void on_StopThreadButton_clicked();
     void on_ThreadNumberScrollBar_valueChanged(int value);
     void on_StopCalculationsButton_clicked();
     void on_stopButton_clicked();

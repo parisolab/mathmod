@@ -61,7 +61,6 @@ public:
     OpenGlWidget( QWidget *parent=0);
     ~OpenGlWidget();
     void initialize_GL();
-    void CreateGlLists();
     void resizeGL(int, int);
     void paintGL();
     void timerEvent( QTimerEvent * );
@@ -70,8 +69,6 @@ public:
     void mouseReleaseEvent( QMouseEvent *);
     void keyPressEvent ( QKeyEvent *);
     virtual   void run();
-    void valueChanged();
-    void InitGlParameters();
     void InitSpecularParameters();
     void Shininess(int);
     void boxok();
@@ -79,7 +76,6 @@ public:
     int  memoryallocation(int, int, int,int,int,int,int,int,int,int);
     void VBOmemoryallocation();
     void deleteAllListes();
-    void toggleGlCache(bool);
     void deleteVBO();
     void PutObjectInsideCube();
     void screenshot();

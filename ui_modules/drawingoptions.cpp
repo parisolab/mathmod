@@ -6312,21 +6312,6 @@ void DrawingOptions::on_Multiplier_clicked()
 }
 
 // --------------------------
-void DrawingOptions::updateGlOptions()
-{
-    MathmodRef->activateteGlCacheOption(Parameters->ActivateGlCache);
-    if(!Parameters->ActivateGlCache)
-    {
-        ui.GlcacheCheckBox->blockSignals(true);
-        ui.GlcacheCheckBox->setChecked(false);
-        ui.GlcacheCheckBox->blockSignals(false);
-    }
-    MathmodRef->updateGLspectrale(Parameters->Specular);
-    MathmodRef->updateGLshininess(Parameters->Shininess);
-    MathmodRef->updateThreads(Parameters->Threads);
-}
-
-// --------------------------
 void DrawingOptions::UpdateGui(int argc)
 {
     ui.xyzg->setMaximum(Parameters->MaxGrid);
@@ -7707,11 +7692,6 @@ void DrawingOptions::on_transparent_Specular_valueChanged(int value)
 void DrawingOptions::on_ShininessScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->Shininess(value);
-}
-
-void DrawingOptions::on_GlcacheCheckBox_clicked(bool checked)
-{
-    MathmodRef->ui.glWidget->toggleGlCache(checked);
 }
 
 void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)

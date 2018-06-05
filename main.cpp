@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
     drawingopt.Parameters = &Parameters;
     drawingopt.MathmodRef = &mm;
     mm.Parent = &drawingopt;
-    drawingopt.updateGlOptions();
     //GUI update:
     drawingopt.UpdateGui(argc);
     if(drawingopt.IsolistItemRef != 0)

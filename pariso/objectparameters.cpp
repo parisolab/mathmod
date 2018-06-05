@@ -202,7 +202,6 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.border              = 1;
     objectproperties.mesh                = 1;
     objectproperties.activarecnd         = true;
-    objectproperties.activateGlCache     = true;
     objectproperties.specReflection[0]   = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2;
     objectproperties.specReflection[3]   = 1.0;
     objectproperties.shininess           = 110;

@@ -478,12 +478,6 @@ void MathMod::Mesh()
 }
 
 //++++++++++++++++++++++++++++++++++++++++
-void MathMod::activateteGlCacheOption(bool state)
-{
-    (ui.glWidget)->LocalScene.activateGlCache= state;
-}
-
-//++++++++++++++++++++++++++++++++++++++++
 void MathMod::updateGLspectrale(float *spec)
 {
     (ui.glWidget)->LocalScene.specReflection[0]= spec[0];
