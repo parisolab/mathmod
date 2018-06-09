@@ -54,7 +54,8 @@ SOURCES   = ui_modules/drawingoptions.cpp \
     ui_modules/sliderparam.cpp \
     ui_modules/addparam.cpp \
     pariso/isosurface/isothread.cpp \
-    pariso/parametric/parthread.cpp
+    pariso/parametric/parthread.cpp \
+    gl_viewer/viewer.cpp
 
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/colorsoptions.ui \
