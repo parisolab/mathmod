@@ -6097,7 +6097,7 @@ p, li { white-space: pre-wrap; }
                 <item row="0" column="0">
                  <widget class="QGroupBox" name="ThreadgroupBox">
                   <property name="title">
-                   <string>Threads Number (4 ):</string>
+                   <string>Threads Number (16 ):</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_76">
                    <item row="0" column="0">
@@ -6106,13 +6106,16 @@ p, li { white-space: pre-wrap; }
                       <number>1</number>
                      </property>
                      <property name="maximum">
-                      <number>32</number>
+                      <number>64</number>
                      </property>
                      <property name="pageStep">
                       <number>1</number>
                      </property>
+                     <property name="value">
+                      <number>16</number>
+                     </property>
                      <property name="sliderPosition">
-                      <number>4</number>
+                      <number>16</number>
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -6418,7 +6421,7 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>327</width>
+                 <width>320</width>
                  <height>1145</height>
                 </rect>
                </property>

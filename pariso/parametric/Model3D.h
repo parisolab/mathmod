@@ -139,7 +139,7 @@ public:
     ScriptErrorType messageerror;
 public:
     Par3D(int,
-          int nbThreads=4,
+          int nbThreads=16,
           int nbGrid=50);
     ~Par3D();
     void rotation4();

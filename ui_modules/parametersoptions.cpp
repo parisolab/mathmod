@@ -50,9 +50,9 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     Shininess = 110;
     Specular[0] = Specular[1] = Specular[2] = 0.5;
     Specular[3] = 1.0;
-    Threads[0] = 4;
+    Threads[0] = 16;
     Threads[1] = 1;
-    Threads[2] = 32;
+    Threads[2] = 64;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
     advancedmodels = "advancedmodels.js";

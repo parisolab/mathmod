@@ -26,13 +26,13 @@ MathMod::~MathMod()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 MathMod::MathMod(QWidget *parent, int maxtri, int maxpts, int gridmax,
                  int NbComponent,int NbVariables,int NbConstantes,
-                 int NbDefinedFunctions,int NbTextures,int NbSliders,int NbSliderValues)
+                 int NbDefinedFunctions,int NbTextures,int NbSliders,int NbSliderValues, int nbthreads)
     : QWidget(parent)
 {
     ui.setupUi(this);
     xyzactivated = uvactivated = uvactivated4D= 1;
     if((ui.glWidget)->memoryallocation(maxtri, maxpts, gridmax, NbComponent, NbVariables, NbConstantes,
-                                       NbDefinedFunctions, NbTextures, NbSliders, NbSliderValues)!=1)
+                                       NbDefinedFunctions, NbTextures, NbSliders, NbSliderValues, nbthreads)!=1)
         exit(0);
 }
 

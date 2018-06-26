@@ -6335,7 +6335,7 @@ void DrawingOptions::UpdateGui(int argc)
     ui.comboBoxPigment->insertItems(0, LstModelTexture.listePigments);
     AddListModels();
 
-    //OpenGl threads:
+    //Threads setting:
     SetThreadValues(Parameters->Threads);
 
     //OpenGl specular:

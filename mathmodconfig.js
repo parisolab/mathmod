@@ -35,7 +35,7 @@
         "GL_SHININESS": 110
     },
     "ThreadsConfig": {
-        "ThreadsNumber": 6,
+        "ThreadsNumber": 16,
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
     },

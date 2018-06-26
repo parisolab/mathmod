@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     //Creation of the two most important objects:
     MathMod mm(0, Parameters.MaxTri, Parameters.MaxPt, Parameters.MaxGrid,
                Parameters.NbComponent, Parameters.NbVariables, Parameters.NbConstantes,
-               Parameters.NbDefinedFunctions, Parameters.NbTextures, Parameters.NbSliders, Parameters.NbSliderValues);
+               Parameters.NbDefinedFunctions, Parameters.NbTextures, Parameters.NbSliders, Parameters.NbSliderValues, Parameters.Threads[0]);
 
     DrawingOptions drawingopt;
     //save references:

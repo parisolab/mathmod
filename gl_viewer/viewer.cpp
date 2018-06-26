@@ -236,17 +236,17 @@ void OpenGlWidget::CalculateColorsPoints()
 
 int OpenGlWidget::memoryallocation(int maxtri, int maxpts, int gridmax,
                                    int NbComponent,int NbVariables,int NbConstantes,
-                                   int NbDefinedFunctions,int NbTextures,int NbSliders,int NbSliderValues)
+                                   int NbDefinedFunctions,int NbTextures,int NbSliders,int NbSliderValues, int nbthreads)
 {
     //memoryallocation
     try
     {
         IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,NbComponent,NbVariables,NbConstantes,
-                                       NbDefinedFunctions,NbTextures,NbSliders,NbSliderValues));
+                                       NbDefinedFunctions,NbTextures,NbSliders,NbSliderValues, nbthreads));
 
-        ParObjetThread = new ParThread(new Par3D(maxpts));
+        ParObjetThread = new ParThread(new Par3D(maxpts, nbthreads));
 
-        LocalScene                = (new ObjectParameters(maxpts, maxtri))->objectproperties;
+        LocalScene     = (new ObjectParameters(maxpts, maxtri))->objectproperties;
         return 1;
     }
     catch(std::bad_alloc&)
