@@ -50,7 +50,7 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     Shininess = 110;
     Specular[0] = Specular[1] = Specular[2] = 0.5;
     Specular[3] = 1.0;
-    Threads[0] = 16;
+    Threads[0] = 8;
     Threads[1] = 1;
     Threads[2] = 64;
     filecollection = "mathmodcollection.js";
@@ -99,7 +99,7 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     QFile file1(JsonFile);
     if ( !file1.exists())
     {
-        JsonFile = QFileDialog::getOpenFileName(0, QObject::tr("Open mathmodconfig.js File"),
+        JsonFile = QFileDialog::getOpenFileName(nullptr, QObject::tr("Open mathmodconfig.js File"),
                                                 "",
                                                 QObject::tr("Json (*.js)"));
     }
@@ -458,11 +458,11 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         {
             IsoParam = JConfig["IsoParam"].toObject();
             if((IsoParam)["MaxTri"].isDouble())
-                MaxTri     = (IsoParam)["MaxTri"].toDouble() * 1000000;
+                MaxTri     = (IsoParam)["MaxTri"].toInt() * 1000000;
             if((IsoParam)["MaxPt"].isDouble())
-                MaxPt     = (IsoParam)["MaxPt"].toDouble() * 1000000;
+                MaxPt     = (IsoParam)["MaxPt"].toInt() * 1000000;
             if((IsoParam)["MaxGrid"].isDouble())
-                MaxGrid = (IsoParam)["MaxGrid"].toDouble();
+                MaxGrid = (IsoParam)["MaxGrid"].toInt();
             if((IsoParam)["NbComponent"].isDouble())
                 NbComponent= (IsoParam)["NbComponent"].toInt();
             if((IsoParam)["NbVariables"].isDouble())
@@ -483,19 +483,19 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         if(JConfig["WindowPosition"].isObject())
         {
             tmp = JConfig["WindowPosition"].toObject();
-            ControlX = tmp["ControlX"].toDouble();
-            ControlY = tmp["ControlY"].toDouble();
-            GlwinX = tmp["GlwinX"].toDouble();
-            GlwinY = tmp["GlwinY"].toDouble();
+            ControlX = tmp["ControlX"].toInt();
+            ControlY = tmp["ControlY"].toInt();
+            GlwinX = tmp["GlwinX"].toInt();
+            GlwinY = tmp["GlwinY"].toInt();
         }
 
         if(JConfig["WindowSize"].isObject())
         {
             tmp = JConfig["WindowSize"].toObject();
-            ControlW = tmp["ControlW"].toDouble();
-            ControlH = tmp["ControlH"].toDouble();
-            GlwinW = tmp["GlwinW"].toDouble();
-            GlwinH = tmp["GlwinH"].toDouble();
+            ControlW = tmp["ControlW"].toInt();
+            ControlH = tmp["ControlH"].toInt();
+            GlwinW = tmp["GlwinW"].toInt();
+            GlwinH = tmp["GlwinH"].toInt();
         }
 
         if(JConfig["OpenGlConfig"].isObject() )
@@ -521,7 +521,10 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         if(JConfig["ThreadsConfig"].isObject())
         {
             QJsonObject tmp = JConfig["ThreadsConfig"].toObject();
-            Threads[0] = tmp["ThreadsNumber"].toInt();
+            if(tmp["AutoDetect"].isBool() && tmp["AutoDetect"].toBool())
+                Threads[0] = QThread::idealThreadCount() ;
+            else
+                Threads[0] = tmp["ThreadsNumber"].toInt();
             Threads[1] = tmp["MinThreadsNumber"].toInt();
             Threads[2] = tmp["MaxThreadsNumber"].toInt();
         }

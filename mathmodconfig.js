@@ -35,7 +35,8 @@
         "GL_SHININESS": 110
     },
     "ThreadsConfig": {
-        "ThreadsNumber": 16,
+        "AutoDetect": true,
+        "ThreadsNumber": 8,
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
     },
@@ -44,7 +45,7 @@
         "UsedStyle": "Fusion"
     },
     "StartOptions": {
-        "Model": "CloseIso_2"
+        "Model": "Blobs"
     },
     "Themes": {
         "PredefinedThemes": [ "Default", "Dark", "MyTheme"],
