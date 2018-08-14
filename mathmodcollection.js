@@ -15225,6 +15225,59 @@
         },
         {
         "Iso3D": {
+        "Const": [
+        "T=2/10",
+        "dx=5",
+        "dy=3",
+        "dz=3",
+        "m=1/1000",
+        "cx=1/10000"
+        ],
+        "Description": [
+        "Script by Abderrahman Taha to generate lattices having function definition F , thickness (T) and density (dx,dy,dz)"
+        ],
+        "Name": [
+        "SchwarzP_Lattice"
+        ],
+        "Funct": [
+        "F=cos(x)+cos(y)+cos(z)",
+        "DFx=((F(x,y,z,t)-F(x+cx,y,z,t))/cx)",
+        "DFy=((F(x,y,z,t)-F(x,y+cx,z,t))/cx)",
+        "DFz=((F(x,y,z,t)-F(x,y,z+cx,t))/cx)",
+        "R=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
+        "G=(F(x-DFx(x,y,z,t)*T/R(x,y,z,t),y-DFy(x,y,z,t)*T/R(x,y,z,t),z-DFz(x,y,z,t)*T/R(x,y,z,t),t))",
+        "L=(F(x+DFx(x,y,z,t)*T/R(x,y,z,t),y+DFy(x,y,z,t)*T/R(x,y,z,t),z+DFz(x,y,z,t)*T/R(x,y,z,t),t))",
+        "Iso=(L(x,y,z,t)*G(x,y,z,t))",
+        "ExternalShape=(abs(x)+m<dx*pi & abs(y)+m<dy*pi & abs(z)+m<dz*pi)"
+        ],
+        "Fxyz": [
+        "if(ExternalShape(x,y,z,t) ,Iso(x,y,z,t),1)"
+        ],
+        "Component": [
+        "SchwarzP"
+        ],
+        "Xmax": [
+        "pi*dx"
+        ],
+        "Xmin": [
+        "-pi*dx"
+        ],
+        "Ymax": [
+        "pi*dy"
+        ],
+        "Ymin": [
+        "-pi*dy"
+        ],
+        "Zmax": [
+        "pi*dz"
+        ],
+        "Zmin": [
+        "-pi*dz"
+        ]
+        }
+        },
+        {
+        "Iso3D": {
         "Description": ["Oloid by Abderrahman Taha 02/08/2018"],
         "Name": ["Oloid"],
         "Component": ["oloid"],
