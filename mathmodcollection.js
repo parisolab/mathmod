@@ -15114,6 +15114,82 @@
             }
         },
         {
+            "Param3D": {
+                "Description": ["Jeener's Klein surface v1 by Abderrahman Taha 26/07/2018"
+                ],
+                "Name": ["N_Klein_v1"
+                ],
+                "Component": ["NKlein"
+                ],
+                "Grid": ["300","300"
+                ],
+                "Const": ["T=5","S=2","P=6","M=8"
+                ],
+                "Funct": ["W=((S+1)/4)*cos((S+1)*u + pi/T) + sqrt(2)"
+                ],
+                "Fx": ["S*cos(u) + cos(S*u) - W(u,v,t)*sin(u*(S-1)/2)*cos(v)"
+                ],
+                "Fy": ["W(u,v,t)*sin(v)"
+                ],
+                "Fz": ["S*sin(u) - sin(S*u) - W(u,v,t)*cos(u*(S-1)/2)*cos(v)"
+                ],
+                "Umax": ["2*pi"
+                ],
+                "Umin": ["0"
+                ],
+                "Vmax": ["2*pi"
+                ],
+                "Vmin": ["0"
+                ]
+            },
+            "Texture": {
+                "Colors": ["R=if((i)%(M)>P | (j)%(M)>P,(0.8),(0.8))","G= if((i)%(M)>P | (j)%(M)>P,(0.2),(0.6))","B= if((i)%(M)>P | (j)%(M)>P,(0.2),(0.2))","T= 1"
+                ],
+                "Name": "square",
+                "Noise": ""
+            }
+        },
+        {
+            "Param3D": {
+                "Description": ["Bonan-Jeener's Klein surface by Abderrahman Taha 25/07/2018"
+                ],
+                "Name": ["N_Klein_v2"
+                ],
+                "Component": ["NKlein"
+                ],
+                "Const": ["T=-3/2","M=4"
+                ],
+                "Funct": ["W=sin((M-1)*u) + T"
+                ],
+                "Fx": ["M*cos(u) - cos(M*u) - ((M-1)/M)*W(u,v,t)*sin(u*(M+1)/2)*cos(v)"
+                ],
+                "Fy": ["M*sin(u) - sin(M*u) + ((M-1)/M)*W(u,v,t)*cos(u*(M+1)/2)*cos(v)"
+                ],
+                "Fz": ["W(u,v,t)*sin(v)"
+                ],
+                "Umax": ["2*pi"
+                ],
+                "Umin": ["0"
+                ],
+                "Vmax": ["2*pi"
+                ],
+                "Vmin": ["0"
+                ]
+            },
+            "Sliders": {
+                "Max": ["12"
+                ],
+                "Min": ["1"
+                ],
+                "Name": ["M"
+                ],
+                "Position": ["5"
+                ],
+                "Step": ["1"
+                ]
+            }
+        },
+        {
         "Iso3D": {
         "Description": ["Oloid by Abderrahman Taha 02/08/2018"],
         "Name": ["Oloid"],
