@@ -12263,40 +12263,6 @@
       }
     },
     {
-      "Param3D": {
-        "Description ": [
-          "Holed Sphere by Abderrahman Taha 9/10/2015"
-        ],
-        "Name": [
-          "Holed Sphere v2 (parametric version)"
-        ],
-        "Component": [
-          "HoledSphere"
-        ],
-        "Fx": [
-          "(cos(u)*cos(v))+(0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5))*(-cos(u)*cos(u)*cos(v))/sqrt((-cos(u)*cos(u)*cos(v))^2+(-cos(u)*sin(v)*cos(u))^2+(-sin(u)*cos(v)*cos(u)*cos(v)-sin(v)*cos(u)*sin(u)*sin(v))^2)"
-        ],
-        "Fy": [
-          "(cos(u)*sin(v))+(0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5))*(-cos(u)*sin(v)*cos(u))/sqrt((-cos(u)*cos(u)*cos(v))^2+(-cos(u)*sin(v)*cos(u))^2+(-sin(u)*cos(v)*cos(u)*cos(v)-sin(v)*cos(u)*sin(u)*sin(v))^2)"
-        ],
-        "Fz": [
-          "(sin(u))+(0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5))*(-sin(u)*cos(v)*cos(u)*cos(v)-sin(v)*cos(u)*sin(u)*sin(v))/sqrt((-cos(u)*cos(u)*cos(v))^2+(-cos(u)*sin(v)*cos(u))^2+(-sin(u)*cos(v)*cos(u)*cos(v)-sin(v)*cos(u)*sin(u)*sin(v))^2)"
-        ],
-        "Umax": [
-          "pi/2"
-        ],
-        "Umin": [
-          "-pi/2"
-        ],
-        "Vmax": [
-          "2*pi"
-        ],
-        "Vmin": [
-          "0"
-        ]
-      }
-    },
-    {
       "Iso3D": {
         "Description": [
           "Holed Spheres (implicit version) by Abderrahman Taha 08/10/2015"
@@ -12345,13 +12311,41 @@
         ]
       }
     },
+        {
+        "Param3D": {
+        "Description ": ["Clifford Torus with spines (urchin) by Abderrahman Taha 11/08/2018"
+        ],
+        "Name": ["Urchin"
+        ],
+        "Funct": ["Fx=-(cos(u+v)/(sqrt(2)+cos(v-u)))","Fy=sin(v-u)/(sqrt(2)+cos(v-u))","Fz=sin(u+v)/(sqrt(2)+cos(v-u))","DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)","DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)","DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)","DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)","DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)","DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)","n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Thickness=-((abs(sin(15*u)*cos(15*v)))^11)/3","Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
+        ],
+        "Component": ["HoledCliffordTorus"
+        ],
+        "Const": ["c=1/10000"
+        ],
+        "Fx": ["Gx(u,v,t)"
+        ],
+        "Fy": ["Gy(u,v,t)"
+        ],
+        "Fz": ["Gz(u,v,t)"
+        ],
+        "Umax": ["2*pi"
+        ],
+        "Umin": ["0"
+        ],
+        "Vmax": ["pi"
+        ],
+        "Vmin": ["0"
+        ]
+        }
+        },
     {
       "Param3D": {
         "Description ": [
           "Holed Spheres by Abderrahman Taha 08/10/2015"
         ],
         "Name": [
-          "Holed Spheres_3"
+          "Holed_Spheres"
         ],
         "Component": [
           "HoledSpheres"
@@ -12362,120 +12356,6 @@
         ],
         "Funct": [
           "Thickness= 0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
-          "Fx=cos(u)*cos(v)",
-          "Fy=cos(u)*sin(v)",
-          "Fz=sin(u)",
-          "DFxu= ((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
-          "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-          "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-          "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
-        ],
-        "Fx": [
-          "Gx(u,v,t)"
-        ],
-        "Fy": [
-          "Gy(u,v,t)"
-        ],
-        "Fz": [
-          "Gz(u,v,t)"
-        ],
-        "Umax": [
-          "pi/2"
-        ],
-        "Umin": [
-          "-pi/2"
-        ],
-        "Vmax": [
-          "pi"
-        ],
-        "Vmin": [
-          "-pi"
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Description ": [
-          "Holed Spheres by Abderrahman Taha 08/10/2015"
-        ],
-        "Name": [
-          "Holed Spheres_4"
-        ],
-        "Component": [
-          "HoledSpheres"
-        ],
-        "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
-        ],
-        "Funct": [
-          " Thickness= (abs(cos(7*u)+cos(7*(v-u*u*u*u*u))*sin(11*v))/2)^9",
-          "Fx=cos(u)*cos(v)",
-          "Fy=cos(u)*sin(v)",
-          "Fz=sin(u)",
-          "DFxu= ((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
-          "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-          "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-          "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
-        ],
-        "Fx": [
-          "Gx(u,v,t)"
-        ],
-        "Fy": [
-          "Gy(u,v,t)"
-        ],
-        "Fz": [
-          "Gz(u,v,t)"
-        ],
-        "Umax": [
-          "pi/2"
-        ],
-        "Umin": [
-          "-pi/2"
-        ],
-        "Vmax": [
-          "pi"
-        ],
-        "Vmin": [
-          "-pi"
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Description ": [
-          "Holed Spheres by Abderrahman Taha 08/10/2015"
-        ],
-        "Name": [
-          "Holed Spheres_5"
-        ],
-        "Component": [
-          "HoledSpheres"
-        ],
-        "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
-        ],
-        "Funct": [
-          " Thickness= (abs(cos(7*u)+cos(7*(v-u*u*u))*sin(11*v))/2)^9",
           "Fx=cos(u)*cos(v)",
           "Fy=cos(u)*sin(v)",
           "Fz=sin(u)",
