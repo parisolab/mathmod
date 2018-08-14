@@ -6884,58 +6884,52 @@
         ]
       }
     },
-    {
-      "Iso3D": {
-        "Description": [
-          "The Dome-1DOTSYMBOL0 by Abderrahman Taha 12/01/2015"
+        {
+        "Iso3D": {
+        "Description": ["The Dome by Abderrahman Taha 10/08/2018"
         ],
-        "Name": [
-          "The Dome_01"
+        "Name": ["The_Dome_01"
         ],
-        "Component": [
-          "Dome"
+        "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","Scherk2=Scherk(N*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-R),N*atan2(z,y),t)","IsoExterior=Scherk2(x,y,z,t)","DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+c,y,z,t))/c)","DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+c,z,t))/c)","DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+c,t))/c)","Rapp=x/sqrt(x*x+y*y+z*z)","Iso3=(IsoExterior(x- Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y-Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z-Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","Iso2=(IsoExterior(x+ Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y+Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z+Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
         ],
-        "Const": [
-          "cx=0DOTSYMBOL001",
-          "cy=0DOTSYMBOL001",
-          "cz=0DOTSYMBOL001"
+        "Fxyz": ["if((sqrt(x*x+y*y+z*z)-24)<(0),TickIsoExterior(z,y,x,t),(1))"
         ],
-        "Funct": [
-          "Scherk=sinh(x)*sinh(y)-4*sin(z)",
-          "Scherk2=Scherk(10*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-16),10*atan2(z,y),t)",
-          "Tickness2=(0DOTSYMBOL6)",
-          "IsoExterior=Scherk2(x,y,z,t)",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Tickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
+        "Component": ["The_Dome_01"
         ],
-        "Fxyz": [
-          "if((sqrt(x*x+y*y+z*z)-24)<(0),TickIsoExterior(x,y,z,t),(1))"
+        "Const": ["c=0.001","Th=0.6","N=10","R=16"
         ],
-        "Xmax": [
-          "18"
+        "Xmax": ["27"
         ],
-        "Xmin": [
-          "-18"
+        "Xmin": ["-27"
         ],
-        "Ymax": [
-          "27"
+        "Ymax": ["27"
         ],
-        "Ymin": [
-          "-27"
+        "Ymin": ["-27"
         ],
-        "Zmax": [
-          "27"
+        "Zmax": ["18"
         ],
-        "Zmin": [
-          "-27"
+        "Zmin": ["-18"
         ]
-      }
-    },
+        },
+        "Sliders": {
+        "Max": ["50","50"
+        ],
+        "Min": ["0","0"
+        ],
+        "Name": ["N","R"
+        ],
+        "Position": ["10","16"
+        ],
+        "Step": ["1","1"
+        ]
+        },
+        "Texture": {
+        "Colors": ["R=0.8*abs(cos(x)*cos(y)*cos(z))^(1/10)","G=(2/10)","B=(1/100)","T=1"
+        ],
+        "Name": "Lines",
+        "Noise": ""
+        }
+        },
     {
       "Iso3D": {
         "Name": [
@@ -15082,6 +15076,43 @@
         "Noise": "1"
       }
     },
+
+        {
+            "Param3D": {
+                "Description ": ["Wireframe NKlein v1 (Jenner's NKlein) by Abderrahman Taha 03/08/2018"
+                ],
+                "Name": ["NKlein_wire"
+                ],
+                "Const": ["T=6","S=3","r1=6","H=r1/99","du=1/10000","dv=1/10000","u1max=2*pi","u1min=0","v1max=2*pi","v1min=0","M=114","N=16","umin=0","umax=2*pi","vmin=0","vmax=2*pi","Gu=(u1max-u1min)/N","Gv=(v1max-v1min)/M"
+                ],
+                "Funct": ["W=((S+1)/4)*cos((S+1)*v + pi/T) + sqrt(2)","Rapp=u/sqrt(u*u+v*v+t*t)","Bx = 1/sqrt(u*u+v*v+t*t)","Fx = S*cos(v) + cos(S*v) - W(u,v,t)*sin(v*(S-1)/2)*cos(u)","Fy = W(u,v,t)*sin(u)","Fz = S*sin(v) - sin(S*v) - W(u,v,t)*cos(v*(S-1)/2)*cos(u)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","Thickness2=H*sin(M*pi*(v-v1min)/(v1max-v1min)+((N*(u-u1min)/(u1max-u1min)))*(pi)+pi/2)","Thickness1=H*sin(N*pi*(u-u1min)/(u1max-u1min)+((M*(v-v1min)/(v1max-v1min)))*(pi)-pi/2)","Thickness3=if((sin(v) * cos(v)>0), 2*H, -2*H)","TFx=Fx(u,v,t)+Thickness3(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))","TFy=Fy(u,v,t)+Thickness3(u,v,t)*Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))","TFz=Fz(u,v,t)+Thickness3(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))","Tx=Fx(u,v,t)+Thickness1(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Ty=Fy(u,v,t)+Thickness1(u,v,t)*Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Tz=Fz(u,v,t)+Thickness1(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))","Sx=Fx(u,v,t)+Thickness2(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Sy=Fy(u,v,t)+Thickness2(u,v,t)*Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Sz=Fz(u,v,t)+Thickness2(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","F2x=Tx(u1min + CmpId(0)*Gu,v,t)","F2y=Ty(u1min + CmpId(0)*Gu,v,t)","F2z=Tz(u1min + CmpId(0)*Gu,v,t)","DF2xv=DFxv(u1min + CmpId(0)*Gu,v,t)","DF2yv=DFyv(u1min + CmpId(0)*Gu,v,t)","DF2zv=DFzv(u1min + CmpId(0)*Gu,v,t)","DF2xv2=n1(u1min + CmpId(0)*Gu,v,t)","DF2yv2=n2(u1min + CmpId(0)*Gu,v,t)","DF2zv2=n3(u1min + CmpId(0)*Gu,v,t)","Nxv=Rapp(DF2xv2(u,v,t),DF2yv2(u,v,t),DF2zv2(u,v,t))","Nyv=Rapp(DF2yv2(u,v,t),DF2xv2(u,v,t),DF2zv2(u,v,t))","Nzv=Rapp(DF2zv2(u,v,t),DF2yv2(u,v,t),DF2xv2(u,v,t))","Binxv=(DF2yv(u,v,t)*Nzv(u,v,t)-DF2zv(u,v,t)*Nyv(u,v,t))*Bx(DF2xv(u,v,t),DF2yv(u,v,t),DF2zv(u,v,t))","Binyv=(DF2zv(u,v,t)*Nxv(u,v,t)-DF2xv(u,v,t)*Nzv(u,v,t))*Bx(DF2xv(u,v,t),DF2yv(u,v,t),DF2zv(u,v,t))","Binzv=(DF2xv(u,v,t)*Nyv(u,v,t)-DF2yv(u,v,t)*Nxv(u,v,t))*Bx(DF2xv(u,v,t),DF2yv(u,v,t),DF2zv(u,v,t))","Tx=F2x(u,v,t)+(r1/100)*(Nxv(u,v,t)*cos(u)+Binxv(u,v,t)*sin(u))","Ty=F2y(u,v,t)+(r1/100)*(Nyv(u,v,t)*cos(u)+Binyv(u,v,t)*sin(u))","Tz=F2z(u,v,t)+(r1/100)*(Nzv(u,v,t)*cos(u)+Binzv(u,v,t)*sin(u))","F2x=Sx(u,v1min + (CmpId(0)-(N+1))*Gv,t)","F2y=Sy(u,v1min + (CmpId(0)-(N+1))*Gv,t)","F2z=Sz(u,v1min + (CmpId(0)-(N+1))*Gv,t)","DF2xu=DFxu(u,v1min + (CmpId(0)-(N+1))*Gv,t)","DF2yu=DFyu(u,v1min + (CmpId(0)-(N+1))*Gv,t)","DF2zu=DFzu(u,v1min + (CmpId(0)-(N+1))*Gv,t)","DF2xu2=n1(u,v1min + (CmpId(0)-(N+1))*Gv,t)","DF2yu2=n2(u,v1min + (CmpId(0)-(N+1))*Gv,t)","DF2zu2=n3(u,v1min + (CmpId(0)-(N+1))*Gv,t)","Nxu=Rapp(DF2xu2(u,v,t),DF2yu2(u,v,t),DF2zu2(u,v,t))","Nyu=Rapp(DF2yu2(u,v,t),DF2xu2(u,v,t),DF2zu2(u,v,t))","Nzu=Rapp(DF2zu2(u,v,t),DF2yu2(u,v,t),DF2xu2(u,v,t))","Binxu=(DF2yu(u,v,t)*Nzu(u,v,t)-DF2zu(u,v,t)*Nyu(u,v,t))*Bx(DF2xu(u,v,t),DF2yu(u,v,t),DF2zu(u,v,t))","Binyu=(DF2zu(u,v,t)*Nxu(u,v,t)-DF2xu(u,v,t)*Nzu(u,v,t))*Bx(DF2xu(u,v,t),DF2yu(u,v,t),DF2zu(u,v,t))","Binzu=(DF2xu(u,v,t)*Nyu(u,v,t)-DF2yu(u,v,t)*Nxu(u,v,t))*Bx(DF2xu(u,v,t),DF2yu(u,v,t),DF2zu(u,v,t))","Sx=F2x(u,v,t)+(r1/100)*(Nxu(u,v,t)*cos(v)+Binxu(u,v,t)*sin(v))","Sy=F2y(u,v,t)+(r1/100)*(Nyu(u,v,t)*cos(v)+Binyu(u,v,t)*sin(v))","Sz=F2z(u,v,t)+(r1/100)*(Nzu(u,v,t)*cos(v)+Binzu(u,v,t)*sin(v))"
+                ],
+                "Component": ["PlainWeaving_00","PlainWeaving_01","PlainWeaving_02","PlainWeaving_03","PlainWeaving_04","PlainWeaving_05","PlainWeaving_06","PlainWeaving_07","PlainWeaving_08","PlainWeaving_09","PlainWeaving_10","PlainWeaving_11","PlainWeaving_12","PlainWeaving_13","PlainWeaving_14","PlainWeaving_15","PlainWeaving_16","PlainWeaving_17","PlainWeaving_18","PlainWeaving_19","PlainWeaving_20","PlainWeaving_21","PlainWeaving_22","PlainWeaving_23","PlainWeaving_24","PlainWeaving_25","PlainWeaving_26","PlainWeaving_27","PlainWeaving_28","PlainWeaving_29","PlainWeaving_30","PlainWeaving_31","PlainWeaving_32","PlainWeaving_33","PlainWeaving_34","PlainWeaving_35","PlainWeaving_36","PlainWeaving_37","PlainWeaving_38","PlainWeaving_39","PlainWeaving_40","PlainWeaving_41","PlainWeaving_42","PlainWeaving_43","PlainWeaving_44","PlainWeaving_45","PlainWeaving_46","PlainWeaving_47","PlainWeaving_48","PlainWeaving_49","PlainWeaving_50","PlainWeaving_51","PlainWeaving_52","PlainWeaving_53","PlainWeaving_54","PlainWeaving_55","PlainWeaving_56","PlainWeaving_57","PlainWeaving_58","PlainWeaving_59","PlainWeaving_60","PlainWeaving_61","PlainWeaving_62","PlainWeaving_63","PlainWeaving_64","PlainWeaving_65","PlainWeaving_66","PlainWeaving_67","PlainWeaving_68","PlainWeaving_69","PlainWeaving_70","PlainWeaving_71","PlainWeaving_72","PlainWeaving_73","PlainWeaving_74","PlainWeaving_75","PlainWeaving_76","PlainWeaving_77","PlainWeaving_78","PlainWeaving_79","PlainWeaving_80","PlainWeaving_81","PlainWeaving_82","PlainWeaving_83","PlainWeaving_84","PlainWeaving_85","PlainWeaving_86","PlainWeaving_87","PlainWeaving_88","PlainWeaving_89","PlainWeaving_90","PlainWeaving_91","PlainWeaving_92","PlainWeaving_93","PlainWeaving_94","PlainWeaving_95","PlainWeaving_96","PlainWeaving_97","PlainWeaving_98","PlainWeaving_99","PlainWeaving_100","PlainWeaving_101","PlainWeaving_102","PlainWeaving_103","PlainWeaving_104","PlainWeaving_105","PlainWeaving_106","PlainWeaving_107","PlainWeaving_108","PlainWeaving_109","PlainWeaving_110","PlainWeaving_111","PlainWeaving_112","PlainWeaving_113","PlainWeaving_114","PlainWeaving_115","PlainWeaving_116","PlainWeaving_117","PlainWeaving_118","PlainWeaving_119","PlainWeaving_120","PlainWeaving_121","PlainWeaving_122","PlainWeaving_123","PlainWeaving_124","PlainWeaving_125","PlainWeaving_126","PlainWeaving_127","PlainWeaving_128","PlainWeaving_129","PlainWeaving_130"
+                ],
+                "Fx": ["Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","TFx(u,v,t)"
+                ],
+                "Fy": ["Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","TFy(u,v,t)"
+                ],
+                "Fz": ["Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","TFz(u,v,t)"
+                ],
+                "Grid": ["75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","300","300"
+                ],
+                "Umax": ["umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax"
+                ],
+                "Umin": ["umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin"
+                ],
+                "Vmax": ["vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax"
+                ],
+                "Vmin": ["vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin"
+                ]
+            },
+            "Texture": {
+                "Colors": ["R=if(cmpId > 130, (6/10), (9/10))","G=if((cmpId > 130), (6/10), (6/10))","B=if((cmpId > 130), (6/10), (0))","T=if((cmpId > 130), (7/10), (1))"
+                ],
+                "Name": "Gold",
+                "Noise": ""
+            }
+        },
     {
       "Iso3D": {
         "Description": [
@@ -16182,7 +16213,7 @@
           "The Dome-2.0 by Abderrahman Taha 27/02/2016"
         ],
         "Name": [
-          "The Dome_02"
+          "The_Dome_02"
         ],
         "Component": [
           "Dome"
