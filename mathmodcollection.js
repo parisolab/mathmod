@@ -1,6 +1,43 @@
 {
   "MathModels": [
         {
+         "Param3D": {
+         "Description ": ["Spiky Klein by Abderrahman Taha 19/08/2018"],
+         "Name": ["Spiky Klein"],
+         "Component": ["SpikyKlein"],
+         "Const": ["c=1/1000",
+         "N=5",
+         "A=3.5",
+         "B=2",
+         "C=3",
+         "D=3"],
+         "Funct": ["th = (3/10)* ((abs(sin(11*u) * cos(11*v)))^19+(1/10)*((sin(2*N*u))))",
+         "Fx= if(v<2*pi, (A-(A-1) * cos(v)) * cos(u), if(v<3*pi, - B + ( B+cos(u))*cos(v),- B + B *cos(v)-cos(u)))",
+         "Fy= if(v<2*pi,(A - (A-1)*cos(v))*sin(u), sin(u))",
+         "Fz= if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,(( D -1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
+         "DFxu=((Fx(u,v,t)-Fx(u+c,v,t))/c)",
+         "DFxv=((Fx(u,v,t)-Fx(u,v+c,t))/c)",
+         "DFyu=((Fy(u,v,t)-Fy(u+c,v,t))/c)",
+         "DFyv=((Fy(u,v,t)-Fy(u,v+c,t))/c)",
+         "DFzu=((Fz(u,v,t)-Fz(u+c,v,t))/c)",
+         "DFzv=((Fz(u,v,t)-Fz(u,v+c,t))/c)",
+         "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+         "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+         "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+         "Rapp= u/sqrt(u*u+v*v+t*t)",
+         "Gx= Fx(u,v,t)+th(u,v-3*t,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+         "Gy= Fy(u,v,t)+th(u,v-3*t,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
+         "Gz= Fz(u,v,t)+th(u,v-3*t,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
+         "Fx": ["Gx(u,v,t)"],
+         "Fy": ["Gy(u,v,t)"],
+         "Fz": ["Gz(u,v,t)"],
+         "Umax": ["2*pi"],
+         "Umin": ["0"],
+         "Vmax": ["4*pi"],
+         "Vmin": ["0"]
+         }
+        },
+        {
             "Iso3D": {
                 "Description ": ["Geode by Abderrahman Taha 20/08/2018"
                 ],
