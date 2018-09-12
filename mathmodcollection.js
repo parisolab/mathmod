@@ -1,6 +1,38 @@
 {
   "MathModels": [
         {
+            "Iso3D": {
+                "Description ": ["Geode by Abderrahman Taha 20/08/2018"
+                ],
+                "Component": ["Geode1","Geode2"
+                ],
+                "Const": ["A=4","B=3"
+                ],
+                "Fxyz": ["-((((x/(101/100))^2+y^2+(z/(105/100))^2-1)+((4/10)*NoiseW(A*x,A*y,A*z,(4),(1),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)","-(((x^2+y^2+z^2-(21/100))*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"
+                ],
+                "Name": ["Geode_02"
+                ],
+                "Xmax": ["(15/10)","(15/10)"
+                ],
+                "Xmin": ["-1","-1"
+                ],
+                "Ymax": ["1","1"
+                ],
+                "Ymin": ["-1","-1"
+                ],
+                "Zmax": ["(15/10)","(15/10)"
+                ],
+                "Zmin": ["-1","-1"
+                ]
+            },
+            "Texture": {
+                "Colors": ["R=if((x*x+y*y+z*z)>(81/100),(95/100)*cos((x*x+y*y+z*z)/(17/10)), (2/10))+(2/10)","G=if((x*x+y*y+z*z)>(8/10), (8/10)*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/(3/10)), (5/10)*sin((x*x+y*y+z*z)*9))+(2/10)","B=if((x*x+y*y+z*z)<(8/10),(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+(4/10), (1/10))+(5/10)","T=1"
+                ],
+                "Name": "WorleyNoise",
+                "Noise": "-((35/100)*NoiseW(2*x,2*y,2*z,(4),(1),(0))+(178/100)*NoiseW(2*x,2*y,2*z,(4),(0),(0)))"
+            }
+        },
+        {
             "Param3D": {
                 "Description": ["Helix Zome by Abderrahman Taha 01/09/2018"
                 ],
@@ -13021,7 +13053,7 @@
           "Geode by Abderrahman Taha 28/09/2015"
         ],
         "Name": [
-          "Geode"
+          "Geode_01"
         ],
         "Component": [
           "Geode1",
