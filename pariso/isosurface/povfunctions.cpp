@@ -17,7 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
 ***************************************************************************/
-#define PI ((double)314159265/(double)100000000)
+#define PI (static_cast <double> (314159265)/static_cast <double> (100000000))
 
 double maxim(double p1, double p2)
 {

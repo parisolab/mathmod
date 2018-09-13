@@ -49,15 +49,15 @@ int NbTextures = 30;
 int NbSliders = 50;
 int NbSliderValues = 500;
 
-CellNoise *NoiseFunction = new CellNoise();
-ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
+static CellNoise *NoiseFunction = new CellNoise();
+static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 
-double IsoComponentId=0;
-double IsoThreadId=0;
+static double IsoComponentId=0;
+static double IsoThreadId=0;
 
 double CurrentIsoCmpId(const double* p)
 {
-    int pp = (int)p[0];
+    int pp = static_cast <int> (p[0]);
     if(pp==0)
         return IsoComponentId;
     else
@@ -66,24 +66,27 @@ double CurrentIsoCmpId(const double* p)
 
 extern double TurbulenceWorley(const double* p)
 {
-    return NoiseFunction->CellNoiseFunc(
-               p[0],
-               p[1],
-               p[2],
-               (int)p[3],
-               (int)p[4],
-               (int)p[5]);
+    return static_cast <double> (
+                NoiseFunction->CellNoiseFunc(
+               static_cast <float> (p[0]),
+               static_cast <float> (p[1]),
+               static_cast <float> (p[2]),
+               static_cast <int> (p[3]),
+               static_cast <int> (p[4]),
+               static_cast <int> (p[5]))
+            );
 }
 
 double TurbulencePerlin(const double* p)
 {
-    return PNoise->FractalNoise3D(
-               p[0],
-               p[1],
-               p[2],
-               (int)p[3],
-               p[4],
-               p[5]);
+    return static_cast <double> (
+                PNoise->FractalNoise3D(
+               static_cast <float> (p[0]),
+               static_cast <float> (p[1]),
+               static_cast <float> (p[2]),
+               static_cast <int> (p[3]),
+               static_cast <float> (p[4]),
+               static_cast <float> (p[5])));
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
