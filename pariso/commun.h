@@ -24,9 +24,8 @@
 #include <iostream>
 #include "../fparser/fparser.h"
 
-#define PI ((double)314159265/(double)100000000)
+#define PI (static_cast <double>(314159265)/static_cast <double>(100000000))
 #define MAGIC_SCALE 1.5707963f
-
 
 struct ImplicitStructure
 {
@@ -135,8 +134,10 @@ struct  ComponentInfos
 struct  ObjectProperties
 {
     float         * ArrayNorVer_localPt;
+    float         * OriginalArrayNorVer_localPt;
     uint vboId_ArrayNorVer_localPt;
     float         * ArrayNorVerExtra_localPt;
+    float         * OriginalArrayNorVerExtra_localPt;
     uint vboId_ArrayNorVerExtra_localPt;
     unsigned int  * PolyIndices_localPt;
     uint vboId_PolyIndices_localPt;
@@ -231,12 +232,7 @@ struct  ObjectProperties
     double axe_x, axe_y, axe_z, ScalCoeff, view_rotx, view_roty, view_rotz;
 };
 
-static inline float tinyrnd()
-{
-    static unsigned trand = 0;
-    trand = 1664525u * trand + 1013904223u;
-    return (float) trand / 4294967296.0f;
-}
+
 
 class CellNoise
 {

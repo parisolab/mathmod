@@ -18,6 +18,7 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
 ***************************************************************************/
 #define PI (static_cast <double> (314159265)/static_cast <double> (100000000))
+#include <cmath>
 
 double maxim(double p1, double p2)
 {
@@ -49,7 +50,7 @@ double f_hex_y(const double* pp)
         x1=x2;
         y1=y2;
     }
-    if ((x1==0)&&(y1==0))
+    if ((x1==0.0)&&(y1==0.0))
         p[0]=0.000001;
     th=atan2(y1,x1);
     if (th<PI/6)
@@ -109,7 +110,7 @@ double  fhelix1(const double* pp)
     for(int i=0; i<10; i++)
         p[i] = pp[i];
     r = sqrt(p[0] * p[0] + p[2] * p[2]);
-    if ((p[0] == 0) && (p[2] == 0))
+    if ((p[0] == 0.0) && (p[2] == 0.0))
         p[0] = 0.000001;
     th = atan2(p[2], p[0]);
     th = fmod(th * p[3] + p[1] * p[4] * p[3], 2*PI);
@@ -118,11 +119,11 @@ double  fhelix1(const double* pp)
     p[2] = (th - PI) / p[7] / (p[4] * p[3]);
 
     p[0] = r - p[6];
-    if (p[8] == 1)
+    if (p[8] == 1.0)
         r2 = sqrt(p[0] * p[0] + p[2] * p[2]);
     else
     {
-        if (p[9] != 0)
+        if (p[9] != 0.0)
         {
             th = cos(p[9] * PI/180);
             ph = sin(p[9] * PI/180);
@@ -130,7 +131,7 @@ double  fhelix1(const double* pp)
             p[2] = p[0] * ph + p[2] * th;
             p[0] = x2;
         }
-        if (p[8] != 0)
+        if (p[8] != 0.0)
         {
             temp = 2. / p[8];
             r2 = pow((pow(fabs(p[0]), temp) + pow(fabs(p[2]), temp)), p[8] *.5);
@@ -159,12 +160,12 @@ double fhelix2(const double* pp) // 26
     p[0] = x2 * ph + z2 * th;
     p[2] = (-x2 * th + z2 * ph);
 
-    if (p[8] == 1)
+    if (p[8] == 1.0)
         return (sqrt(p[0] * p[0] + p[2] * p[2]) - p[5]);
-    if (p[8] != 0)
+    if (p[8] != 0.0)
     {
         temp = 2. / p[8];
-        r2 = pow((pow(fabs(p[0]), temp) + pow(fabs(p[2]), temp)), p[8] *.5);
+        r2 = pow((pow(fabs(p[0]), temp) + pow(fabs(p[2]), temp)), p[8] *0.5);
     }
     else
         r2 = maxim(fabs(p[0]), fabs(p[2]));
