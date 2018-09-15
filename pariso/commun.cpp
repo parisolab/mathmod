@@ -168,9 +168,9 @@ int CellNoise::hash(int i, int j, int k)
 
 ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 {
-    passes = int(std::log((float)xsize)/std::log(MAGIC_SCALE) + 0.5f);
-    passes = std::max(passes, int(std::log((float)ysize)/std::log(MAGIC_SCALE) + 0.5f));
-    passes = std::max(passes, int(std::log((float)zsize)/std::log(MAGIC_SCALE) + 0.5f));
+    passes = int(std::log(xsize)/std::log(MAGIC_SCALE) + 0.5f);
+    passes = std::max(passes, int(std::log(ysize)/std::log(MAGIC_SCALE) + 0.5f));
+    passes = std::max(passes, int(std::log(zsize)/std::log(MAGIC_SCALE) + 0.5f));
     float factor = 1.0f;
     for (int pass = 0 ; pass < passes; pass++, factor *= MAGIC_SCALE)
         correction += factor*factor;
@@ -181,7 +181,7 @@ ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 
     for (int i = 0; i < 256; i++)
     {
-        int k = tinyrnd()*(256 - i) + i;
+        int k = static_cast <int>((tinyrnd()*(256 - i) + i));
 
         int l = p[i];
 
@@ -193,9 +193,9 @@ ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 
 float ImprovedNoise::noise(float x, float y, float z)
 {
-    int X = (int)std::floor(x) & 255,
-        Y = (int)std::floor(y) & 255,
-        Z = (int)std::floor(z) & 255;
+    int X = static_cast <int>(std::floor(x)) & 255,
+        Y = static_cast <int>(std::floor(y)) & 255,
+        Z = static_cast <int>(std::floor(z)) & 255;
     x -= std::floor(x);
     y -= std::floor(y);
     z -= std::floor(z);
@@ -266,7 +266,7 @@ float ImprovedNoise::lookup(float x, float y, float z)
     float factor = 1.0;
     for (int pass = 0 ; pass < passes; pass++, factor *= MAGIC_SCALE)
     {
-        float r = 1.0 / factor;
+        float r = 1 / factor;
         t += noise(x*r, y*r,z*r) * factor;
     }
 
