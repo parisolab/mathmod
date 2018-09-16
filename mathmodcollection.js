@@ -7826,57 +7826,41 @@
         ]
       }
     },
-    {
-      "Iso3D": {
-        "Description": [
-          "Menger L4 SchwarzP by Abderrahman Taha 11/12/2015"
-        ],
-        "Name": [
-          "Menger_4 SchwarzP"
-        ],
-        "Component": [
-          "Menger SchwarzP"
-        ],
-        "Fxyz": [
-          "if(-(Dx+Dy+Dz-1DOTSYMBOL02)*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx*(Cy+Cz)+Cz*Cy)=0)*((Bx*(By+Bz)+Bz*By)=0)*((Ax*(Ay+Az)+Az*Ay)=0)),(cos(254DOTSYMBOL469*(x+Ex*0DOTSYMBOL002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254DOTSYMBOL469*(y+Ey*0DOTSYMBOL002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254DOTSYMBOL469*(z+Ez*0DOTSYMBOL002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez))))*(cos(254DOTSYMBOL469*(x-Ex*0DOTSYMBOL002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254DOTSYMBOL469*(y-Ey*0DOTSYMBOL002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254DOTSYMBOL469*(z-Ez*0DOTSYMBOL002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"
-        ],
-        "Varu": [
-          "A=((abs(u-2/3)<1/81)+(abs(u-20/27)<1/81)+(abs(u-16/27)<1/81)+(abs(u-8/9)<1/81)+(abs(u-26/27)<1/81)+(abs(u-22/27)<1/81)+(abs(u-4/9)<1/81)+(abs(u-14/27)<1/81)+(abs(u-10/27)<1/81)+(abs(u+2/3)<1/81)+(abs(u+16/27)<1/81)+(abs(u+20/27)<1/81)+(abs(u+4/9)<1/81)+(abs(u+10/27)<1/81)+(abs(u+14/27)<1/81)+(abs(u+8/9)<1/81)+(abs(u+22/27)<1/81)+(abs(u+26/27)<1/81)+(abs(u)<1/81)+(abs(u-2/27)<1/81)+(abs(u+2/27)<1/81)+(abs(u-2/9)<1/81)+(abs(u-8/27)<1/81)+(abs(u-4/27)<1/81)+(abs(u+2/9)<1/81)+(abs(u+4/27)<1/81)+(abs(u+8/27)<1/81))",
-          "B=((abs(u-2/3)<1/27)+(abs(u-8/9)<1/27)+(abs(u-4/9)<1/27)+(abs(u+2/3)<1/27)+(abs(u+4/9)<1/27)+(abs(u+8/9)<1/27)+(abs(u)<1/27)+(abs(u-2/9)<1/27)+(abs(u+2/9)<1/27))",
-          "C=((abs(u-2/3)<1/9)+(abs(u+2/3)<1/9)+(abs(u)<1/9))",
-          "D=u^600",
-          "E=sin(254DOTSYMBOL469*u)"
-        ],
-        "Xmax": [
-          "1DOTSYMBOL0005"
-        ],
-        "Xmin": [
-          "0DOTSYMBOL3333"
-        ],
-        "Ymax": [
-          "1DOTSYMBOL0005"
-        ],
-        "Ymin": [
-          "0DOTSYMBOL3333"
-        ],
-        "Zmax": [
-          "1DOTSYMBOL0005"
-        ],
-        "Zmin": [
-          "0DOTSYMBOL3333"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL6*sqrt(4*x^40+y^4+z^4)",
-          "G=0DOTSYMBOL3*sqrt(x^4+y^4+4*z^20)",
-          "B=0DOTSYMBOL4*sqrt(x^4+4*y^20+z^4)",
-          "T=1"
-        ],
-        "Name": "Granit_2",
-        "Noise": "1"
-      }
-    },
+        {
+            "Iso3D": {
+                "Description": ["Menger L4 SchwarzP (update) by Abderrahman Taha 15/09/2018"
+                ],
+                "Component": ["Menger SchwarzP"
+                ],
+                "Const": ["c1=254469/1000","c2=2/1000","c3=3333/10000",
+        "c4=10005/10000"
+                ],
+                "Fxyz": ["if(-(Dx+Dy+Dz-(102/100))*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx*(Cy+Cz)+Cz*Cy)=0)*((Bx*(By+Bz)+Bz*By)=0)*((Ax*(Ay+Az)+Az*Ay)=0)),(cos(c1*(x+Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y+Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z+Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez))))*(cos(c1*(x-Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y-Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z-Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"
+                ],
+                "Name": ["Menger_4 SchwarzP"
+                ],
+                "Varu": ["A=((abs(u-2/3)<1/81)+(abs(u-20/27)<1/81)+(abs(u-16/27)<1/81)+(abs(u-8/9)<1/81)+(abs(u-26/27)<1/81)+(abs(u-22/27)<1/81)+(abs(u-4/9)<1/81)+(abs(u-14/27)<1/81)+(abs(u-10/27)<1/81)+(abs(u+2/3)<1/81)+(abs(u+16/27)<1/81)+(abs(u+20/27)<1/81)+(abs(u+4/9)<1/81)+(abs(u+10/27)<1/81)+(abs(u+14/27)<1/81)+(abs(u+8/9)<1/81)+(abs(u+22/27)<1/81)+(abs(u+26/27)<1/81)+(abs(u)<1/81)+(abs(u-2/27)<1/81)+(abs(u+2/27)<1/81)+(abs(u-2/9)<1/81)+(abs(u-8/27)<1/81)+(abs(u-4/27)<1/81)+(abs(u+2/9)<1/81)+(abs(u+4/27)<1/81)+(abs(u+8/27)<1/81))","B=((abs(u-2/3)<1/27)+(abs(u-8/9)<1/27)+(abs(u-4/9)<1/27)+(abs(u+2/3)<1/27)+(abs(u+4/9)<1/27)+(abs(u+8/9)<1/27)+(abs(u)<1/27)+(abs(u-2/9)<1/27)+(abs(u+2/9)<1/27))","C=((abs(u-2/3)<1/9)+(abs(u+2/3)<1/9)+(abs(u)<1/9))","D=u^600","E=sin(c1*u)"
+                ],
+                "Xmax": ["c4"
+                ],
+                "Xmin": ["c3"
+                ],
+                "Ymax": ["c4"
+                ],
+                "Ymin": ["c3"
+                ],
+                "Zmax": ["c4"
+                ],
+                "Zmin": ["c3"
+                ]
+            },
+            "Texture": {
+                "Colors": ["R=(6/10)*sqrt(4*x^40+y^4+z^4)","G=(3/10)*sqrt(x^4+y^4+4*z^20)","B=(4/10)*sqrt(x^4+4*y^20+z^4)","T=1"
+                ],
+                "Name": "Granit_2",
+                "Noise": "1"
+            }
+        },
     {
       "Iso3D": {
         "Description": [
