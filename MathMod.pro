@@ -3,11 +3,10 @@ HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/about.h \
             ui_modules/mathmod.h \
             ui_modules/ParisoMathObject.h \
-            ui_modules/editor.h \
             ui_modules/selectoptions.h \
             pariso/parametric/Model3D.h \
             pariso/parametric/ND/Matrix4D.h \
-            fparser/fparser.h \
+            fparser/fparser.hh \
             pariso/isosurface/Iso3D.h \
             gl_viewer/glviewer.h \
             gl_viewer/qglthread.h \
@@ -25,6 +24,7 @@ HEADERS   = ui_modules/drawingoptions.h \
     ui_modules/sliderparam.h \
     ui_modules/addparam.h \
     pariso/isosurface/isothread.h \
+    ui_modules/editor.h \
     pariso/parametric/parthread.h
 
 SOURCES   = ui_modules/drawingoptions.cpp \
@@ -34,7 +34,7 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/ParisoMathObject.cpp \
             ui_modules/editor.cpp \
             ui_modules/selectoptions.cpp \
-            fparser/fparser.cpp \
+            fparser/fparser.cc \
             pariso/parametric/Model3D.cpp \
             pariso/parametric/ND/Matrix4D.cpp \
             pariso/isosurface/Iso3D.cpp \
@@ -69,8 +69,7 @@ FORMS     = ui_forms/drawingoptions.ui \
 
 RC_FILE 	= mm.rc
 RESOURCES  += myressources.qrc
-QT         += opengl widgets
-
+QT         += opengl widgets qml
 OTHER_FILES += \
             mathmodcollection.js \
             mathmodconfig.js

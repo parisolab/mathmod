@@ -17,7 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
 ***************************************************************************/
-#define PI (static_cast <double> (314159265)/static_cast <double> (100000000))
+#define PI1 (static_cast <double> (314159265)/static_cast <double> (100000000))
 #include <cmath>
 
 double maxim(double p1, double p2)
@@ -53,11 +53,11 @@ double f_hex_y(const double* pp)
     if ((x1==0.0)&&(y1==0.0))
         p[0]=0.000001;
     th=atan2(y1,x1);
-    if (th<PI/6)
+    if (th<PI1/6)
         return(y1);
     else
     {
-        y1=-sin(PI/3)*x1+cos(PI/3)*y1;
+        y1=-sin(PI1/3)*x1+cos(PI1/3)*y1;
         return(fabs(y1));
     }
 }
@@ -70,8 +70,8 @@ double fmesh(const double* pp) // 40
     for(int i=0; i<10; i++)
         p[i] = pp[i];
 
-    th = PI / p[3];
-    ph = PI/ p[4];
+    th = PI1 / p[3];
+    ph = PI1/ p[4];
     r = fmod(p[0], p[3] * 2);
     if (r < 0)
         r += p[3] * 2;
@@ -113,10 +113,10 @@ double  fhelix1(const double* pp)
     if ((p[0] == 0.0) && (p[2] == 0.0))
         p[0] = 0.000001;
     th = atan2(p[2], p[0]);
-    th = fmod(th * p[3] + p[1] * p[4] * p[3], 2*PI);
+    th = fmod(th * p[3] + p[1] * p[4] * p[3], 2*PI1);
     if (th < 0)
-        th += 2*PI;
-    p[2] = (th - PI) / p[7] / (p[4] * p[3]);
+        th += 2*PI1;
+    p[2] = (th - PI1) / p[7] / (p[4] * p[3]);
 
     p[0] = r - p[6];
     if (p[8] == 1.0)
@@ -125,8 +125,8 @@ double  fhelix1(const double* pp)
     {
         if (p[9] != 0.0)
         {
-            th = cos(p[9] * PI/180);
-            ph = sin(p[9] * PI/180);
+            th = cos(p[9] * PI1/180);
+            ph = sin(p[9] * PI1/180);
             x2 = p[0] * th - p[2] * ph;
             p[2] = p[0] * ph + p[2] * th;
             p[0] = x2;

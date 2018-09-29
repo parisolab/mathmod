@@ -22,7 +22,8 @@
 #include <math.h>
 #include <string>
 #include <iostream>
-#include "../fparser/fparser.h"
+#include <qthread.h>
+#include "../fparser/fparser.hh"
 
 #define PI (static_cast <double>(314159265)/static_cast <double>(100000000))
 #define MAGIC_SCALE 1.5707963f

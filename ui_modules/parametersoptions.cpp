@@ -390,7 +390,7 @@ bool Parametersoptions::isFloat(std::string myString)
     return iss.eof() && !iss.fail();
 }
 
-#include "../fparser/fparser.h"
+#include "../fparser/fparser.hh"
 
 void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 {

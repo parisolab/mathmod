@@ -25,7 +25,7 @@
 #include <cmath>
 #include "../objectparameters.h"
 #include "ND/Matrix4D.h"
-
+#include <qthread.h>
 using std::string;
 
 struct   ParStruct
