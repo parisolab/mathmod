@@ -99,7 +99,7 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     QFile file1(JsonFile);
     if ( !file1.exists())
     {
-        JsonFile = QFileDialog::getOpenFileName(nullptr, QObject::tr("Open mathmodconfig.js File"),
+        JsonFile = QFileDialog::getOpenFileName(NULL, QObject::tr("Open mathmodconfig.js File"),
                                                 "",
                                                 QObject::tr("Json (*.js)"));
     }
