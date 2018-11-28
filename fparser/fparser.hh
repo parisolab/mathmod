@@ -57,6 +57,9 @@ class FunctionParserBase
     ParseErrorType GetParseErrorType() const;
 
     Value_t Eval(const Value_t* Vars);
+
+    void AllocateStackMemory(int );
+    Value_t Eval(const Value_t* Vars, float* results, unsigned);
     int EvalError() const;
 
     bool AddConstant(const std::string& name, Value_t value);
@@ -129,7 +132,7 @@ class FunctionParserBase
 
 
 //========================================================================
- private:
+ public:
 //========================================================================
 
     friend class FPoptimizer_CodeTree::CodeTree<Value_t>;
@@ -143,6 +146,7 @@ class FunctionParserBase
 // Private methods:
 // ---------------
     void CopyOnWrite();
+    void CopyOnWrite2();
     bool CheckRecursiveLinking(const FunctionParserBase*) const;
     bool NameExists(const char*, unsigned);
     bool ParseVariables(const std::string&);

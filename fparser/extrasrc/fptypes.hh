@@ -268,6 +268,7 @@ struct FunctionParserBase<Value_t>::Data
 #if !defined(FP_USE_THREAD_SAFE_EVAL) && \
     !defined(FP_USE_THREAD_SAFE_EVAL_WITH_ALLOCA)
     std::vector<Value_t> mStack;
+    std::vector<Value_t> mStacki[64];
     // Note: When mStack exists,
     //       mStack.size() and mStackSize are mutually redundant.
 #endif
