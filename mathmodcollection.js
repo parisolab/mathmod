@@ -15874,7 +15874,7 @@
           "PrettyBall_2 by Abderrahman Taha 28/10/2015"
         ],
         "Fxyz": [
-          "if( (x*x+y*y+z*z<64) ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -0DOTSYMBOL6 ,1)  + exp(((x)*(x)+y*y+z*z-64)/3)"
+          "max( (x*x+y*y+z*z-64) ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -0.6)  + exp((x*x+y*y+z*z-64)/3)"
         ],
         "Name": [
           "Pretty Ball_2"
