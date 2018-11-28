@@ -2737,76 +2737,45 @@
         ]
       }
     },
+        {
+          "Iso3D": {
+              "Description": [
+              " CloseIso_1 by Abderrahman taha 28/11/2018"
+            ],
+            "Name": [
+              "CloseIso_1"
+            ],
+            "Component": [
+              "CloseIso_1"
+            ],
+            "Fxyz": [
+              "-max((cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2))))),(x^10+y^10+z^10-((39/10)^10)))"
+            ],
+            "Xmin": [
+              "-4"
+            ],
+            "Xmax": [
+              "4"
+            ],
+            "Ymin": [
+              "-4"
+            ],
+            "Ymax": [
+              "4"
+            ],
+            "Zmin": [
+              "-4"
+            ],
+            "Zmax": [
+              "4"
+            ]
+          }
+        },
     {
       "Iso3D": {
         "Description": [
-          " To make a closed Isosurface, you can use the \"if\" instruction like in this example with Schwarz :if((x^10 + y^10 +z^10 < 200000),   // We use a Cube as a conditioncos(x) + cos(y) + cos(z) ,           // Schwarz(x^10 + y^10 +z^10 - 200000 )     // Cube"
+          " CloseIso_2 by Abderrahman taha 28/11/2018"
         ],
-        "Name": [
-          "CloseIso"
-        ],
-        "Component": [
-          "CloseIso"
-        ],
-        "Fxyz": [
-          " if((x^10 + y^10 +z^10 < 200000), cos(x) + cos(y) + cos(z), (x^10 + y^10 +z^10 - 200000))"
-        ],
-        "Xmin": [
-          "-4"
-        ],
-        "Xmax": [
-          " 4"
-        ],
-        "Ymin": [
-          "-4"
-        ],
-        "Ymax": [
-          " 4"
-        ],
-        "Zmin": [
-          "-4"
-        ],
-        "Zmax": [
-          " 4"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          " Another closed isosurface but in this case we consider the outside volume delimited by the Schwarz surfaceDOTSYMBOLThe \"outside\" volume is defined by deleting the signe \"-\""
-        ],
-        "Name": [
-          "CloseIso_1"
-        ],
-        "Component": [
-          "CloseIso_1"
-        ],
-        "Fxyz": [
-          "if((x^10+y^10+z^10<100000),(cos(x)+cos(y)+cos(z)),(x^10+y^10+z^10-100000))"
-        ],
-        "Xmin": [
-          "-4"
-        ],
-        "Xmax": [
-          "4"
-        ],
-        "Ymin": [
-          "-4"
-        ],
-        "Ymax": [
-          "4"
-        ],
-        "Zmin": [
-          "-4"
-        ],
-        "Zmax": [
-          "4"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
         "Name": [
           "CloseIso_2"
         ],
@@ -2814,7 +2783,7 @@
           "CloseIso_2"
         ],
         "Fxyz": [
-          "-if((x^10+y^10+z^10<((39/10)^10)),(cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2))))),(x^10+y^10+z^10-((39/10)^10)))"
+          "-max((x^10+y^10+z^10-100000),(cos(x)+cos(y)+cos(z)))"
         ],
         "Xmin": [
           "-4"
