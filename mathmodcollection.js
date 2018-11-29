@@ -9315,7 +9315,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Arena_2 by Abderrahman Taha 23/11/2015"
+          "Arena by Abderrahman Taha 28/11/2018"
         ],
         "Name": [
           "Arena"
@@ -9324,32 +9324,29 @@
           "Arena"
         ],
         "Const": [
-          "cx=0DOTSYMBOL00001",
-          "cy=0DOTSYMBOL00001",
-          "cz=0DOTSYMBOL00001",
-          "N=20"
+          "cx=1/100000",
+          "Th=6/10",
+          "N=10"
         ],
         "Funct": [
           "Scherk=sinh(x)*sinh(y)-4*sin(z)",
-          "Scherk2=Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)",
-          "Thickness2=(0DOTSYMBOL6)",
-          "IsoExterior=Scherk2(x,y,z,t)",
+          "IsoExterior=Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)",
           "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
+          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cx,z,t))/cx)",
+          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cx,t))/cx)",
           "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
+          "Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Th/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Th/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Th/Rapport2(x,y,z,t),t))",
+          "Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Th/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Th/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Th/Rapport2(x,y,z,t),t))",
           "ThickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
         ],
         "Fxyz": [
-          "if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(10) ,ThickIsoExterior(x,y,z,t), 1)"
+          "max(-(x*x+y*y+z*z - 27^2) * (abs(x) -10) ,ThickIsoExterior(x,y,z,t))"
         ],
         "Xmax": [
-          "10DOTSYMBOL1"
+          "101/10"
         ],
         "Xmin": [
-          "-10DOTSYMBOL1"
+          "-101/10"
         ],
         "Ymax": [
           "28"
