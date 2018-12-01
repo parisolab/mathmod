@@ -8975,10 +8975,10 @@
           "N=5"
         ],
         "Funct": [
-          "Sphere=sqrt(x*x+y*y+z*z)-1/(2*N+0DOTSYMBOL001)"
+          "Sphere=sqrt(x*x+y*y+z*z)-1/(2*N+0DOTSYMBOL5)"
         ],
         "Fxyz": [
-          "if((((x < 1/N | x>(1-1/N)) | (y < 1/N | y>(1-1/N)) | (z < 1/N | z>(1-1/N)))), Sphere((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "
+          "-max(-(((x < 1/N | x>(1-1/N)) | (y < 1/N | y>(1-1/N)) | (z < 1/N | z>(1-1/N)))), Sphere((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t)) "
         ],
         "Xmax": [
           "1"
