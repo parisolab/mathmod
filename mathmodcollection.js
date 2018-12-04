@@ -7839,7 +7839,7 @@
                 "Const": ["c1=254469/1000","c2=2/1000","c3=3333/10000",
         "c4=10005/10000"
                 ],
-                "Fxyz": ["-max((Dx+Dy+Dz-1.02)*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx*(Cy+Cz)+Cz*Cy)=0)*((Bx*(By+Bz)+Bz*By)=0)*((Ax*(Ay+Az)+Az*Ay)=0)),(cos(254.469*(x+Ex*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(y+Ey*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(z+Ez*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez))))*(cos(254.469*(x-Ex*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(y-Ey*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(254.469*(z-Ez*0.002/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))))"
+                "Fxyz": ["if(-(Dx+Dy+Dz-(102/100))*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx*(Cy+Cz)+Cz*Cy)=0)*((Bx*(By+Bz)+Bz*By)=0)*((Ax*(Ay+Az)+Az*Ay)=0)),(cos(c1*(x+Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y+Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z+Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez))))*(cos(c1*(x-Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y-Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z-Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"
                 ],
                 "Name": ["Menger_4 SchwarzP"
                 ],
@@ -11077,7 +11077,7 @@
           "Hexagrams Menger Sponge Level 4 by Abderrahman Taha 24/10/2015"
         ],
         "Name": [
-          "Hexagrams_Menger4"
+          "Hexagrams Menger Level 4"
         ],
         "Component": [
           "MengerSponge"
