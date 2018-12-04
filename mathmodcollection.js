@@ -15360,7 +15360,7 @@
         "ExternalShape=(abs(x)+m<dx*pi & abs(y)+m<dy*pi & abs(z)+m<dz*pi)"
         ],
         "Fxyz": [
-        "-(ExternalShape(x,y,z,t)*Iso(x,y,z,t))"
+        "if(ExternalShape(x,y,z,t) ,Iso(x,y,z,t),1)"
         ],
         "Component": [
         "SchwarzP"
