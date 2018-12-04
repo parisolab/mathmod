@@ -15791,7 +15791,7 @@
         "Funct": [
           "P_Skeletal0=-y-z+0DOTSYMBOL51*(-x*y+y*z+z*x)+1DOTSYMBOL2",
           "P_Skeletal=sin(x)+P_Skeletal0(cos(x), cos(y), cos(z), t)",
-          "isoTransform=max((x-pi)*(x-pi)-13DOTSYMBOL25,P_Skeletal(x,y-4*t,z-20*t,t))+M*exp((x-pi)*(x-pi)-9DOTSYMBOL86)",
+          "isoTransform=if((x-pi)*(x-pi)<13DOTSYMBOL25,P_Skeletal(x,y-4*t,z-20*t,t),1)+M*exp((x-pi)*(x-pi)-9DOTSYMBOL86)",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)",
           "isoTransform3=isoTransform2(x*cos(y/N1)-z*sin(y/N1),y,x*sin(y/N1)+z*cos(y/N1),t)"
         ],
