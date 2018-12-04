@@ -237,7 +237,7 @@ IsoWorkerThread::IsoWorkerThread()
 {
     Xgrid = Ygrid = Zgrid = 40;
     stepMorph = 0;
-    pace = (double)1/(double)30;
+    pace = 1.0/30.0;
     morph_activated = -1;
     AllComponentTraited = false;
     ParsersAllocated = false;
@@ -328,6 +328,87 @@ ErrorMessage Iso3D::ThreadParsersCopy()
 ErrorMessage  Iso3D::parse_expression2()
 {
     ErrorMessage NodError;
+/*
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        for(int index=0; index< masterthread->Nb_implicitfunctions + 1; index++)
+        {
+            workerthreads[nbthreads].implicitFunctionParser[index] = masterthread->implicitFunctionParser[index];
+            workerthreads[nbthreads].implicitFunctionParser[index].ForceDeepCopy();
+        }
+    }
+*/
+/*
+
+    // Functions :
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        for(int ij=0; ij<masterthread->Nb_functs; ij++)
+        {
+            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentIsoCmpId, 1);
+            workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
+        }
+
+        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        {
+            for(int jj=0; jj<masterthread->Nb_constants; jj++)
+            {
+                workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
+            }
+
+            //Add predefined constatnts:
+            for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
+            {
+                workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
+            }
+        }
+
+        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        {
+
+            for(int jj=0; jj<ii; jj++)
+                if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
+                    workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->Functs[ii];
+                masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
+                return masterthread->stdError;
+            }
+        }
+
+    }
+
+    // Add defined functions :
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
+        {
+
+            for(int j=0; j<masterthread->Nb_functs; j++)
+            {
+                if(masterthread->UsedFunct[i*NbDefinedFunctions+j])
+                    workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+            }
+        }
+    }
+
+    // Final step: parsing
+    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    {
+        for(int index=0; index< masterthread->Nb_implicitfunctions + 1; index++)
+        {
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
+                masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
+                return masterthread->stdError;
+            }
+        }
+    }
+
+*/
+
     // Functions :
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
@@ -424,8 +505,11 @@ ErrorMessage  Iso3D::parse_expression2()
                 masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
                 return masterthread->stdError;
             }
+
+            //workerthreads[nbthreads].implicitFunctionParser[index].Optimize();
         }
     }
+
     return NodError;
 }
 
@@ -899,57 +983,136 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(int IsoIndex)
 //+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
 {
-    double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    //double vals2[] = {0,0};
+    double* vals;
+    float* Res;
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
     const int limitY = Ygrid, limitZ = Zgrid;
     int I, J, IJK;
     int id=0, signStep=0;
-    float ss;
+    float ss=0;
+    int nbX=4, nbY=4, nbZ=4;
+    int nbstack=nbX*nbY*nbZ;
 
-    vals[3]          = stepMorph;
-
-    int tmp = Xgrid/WorkerThreadsNumber;
-    iStart   = MyIndex*tmp;
-    if(MyIndex == (WorkerThreadsNumber-1))
-        iFinish = Xgrid;
-    else
-        iFinish = (MyIndex+1)*tmp;
-
-    ss = 100.0/(iFinish*limitY*limitZ);
-
-    for(int i=iStart; i<iFinish; i++)
+    vals = new double[34*nbstack];
+    Res  = new float[nbstack];
+    vals[3]    = stepMorph;
+    int taille=0;
+    iStart = 0;
+    iFinish = 0;
+    for(int i=0; i<Xgrid; i++)
     {
-        vals[0] = xLocal2[IsoIndex*NbMaxGrid+i];
-
-        for(int l=0; l<Nb_newvariables; l++)
+        if((i% (WorkerThreadsNumber))  == MyIndex )
         {
-            vals[4 + l*3] = vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
+            taille += 1;
+        }
+        if(MyIndex < (i% (WorkerThreadsNumber)) || (i% (WorkerThreadsNumber))  == MyIndex)
+            iFinish  += 1;
+    }
+    iStart = iFinish - taille;
+    if(((iFinish-iStart)*limitY*limitZ) > 0)
+        ss = 100.0/(((iFinish-iStart)/nbstack)*limitY*limitZ);
+    else
+        ss = 100;
+
+    for(int l=0; l<nbstack; l++)
+        vals[l*34+3]= stepMorph;
+
+    implicitFunctionParser[IsoIndex].AllocateStackMemory(nbstack);
+    int remX= (iFinish-iStart)%nbX;
+    int remY= limitY%nbY;
+    int remZ= limitZ%nbZ;
+
+    for(int i=iStart; i<iFinish; i+=nbX )
+    {
+        if(remX>0 && (i+remX)==(iFinish-iStart))
+        {
+            nbX = remX;
+            nbstack =nbX*nbY*nbZ;
         }
 
-        I = i*maxgrscalemaxgr;
-        for(int j=0; j<limitY; j++)
+        for(int l=0; l<nbstack; l++)
         {
-            vals[1] = yLocal2[IsoIndex*NbMaxGrid+j];
-            for(int l=0; l<Nb_newvariables; l++)
+            vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+i+int(l/(nbstack/nbX))];
+
+            for(int p=0; p<Nb_newvariables; p++)
             {
-                vals[5 + l*3] = vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + j];
+                vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i +int(l/(nbstack/nbX))];
+            }
+        }
+        I = i*maxgrscalemaxgr;
+        for(int j=0; j<limitY; j+=nbY)
+        {
+            if(remY>0 && (j+remY)==(limitY))
+            {
+                nbY = remY;
+                nbstack =nbX*nbY*nbZ;
+
+                // reconstruct X array:
+                for(int l=0; l<nbstack; l++)
+                {
+                    vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+i+int(l/(nbstack/nbX))];
+
+                    for(int p=0; p<Nb_newvariables; p++)
+                    {
+                        vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i +int(l/(nbstack/nbX))];
+                    }
+                }
+            }
+
+            for(int l=0; l<nbstack; l++)
+            {
+                vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+j+((int(l/nbZ))%nbY)];
+
+                for(int p=0; p<Nb_newvariables; p++)
+                {
+                    vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + j +((int(l/nbZ))%nbY)];
+                }
             }
 
             J = I + j*maximumgrid;
-            for(int k=0; k<limitZ; k++)
+            for(int k=0; k<limitZ; k+=nbZ)
             {
-                vals[2] = zLocal2[IsoIndex*NbMaxGrid+k];
-
-                for(int l=0; l<Nb_newvariables; l++)
+                if(remZ>0 && (k+remZ)==(limitZ))
                 {
-                    vals[6 + l*3] = vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + k];
+                    nbZ = remZ;
+                    nbstack =nbX*nbY*nbZ;
+
+                    // reconstruct X array:
+                    for(int l=0; l<nbstack; l++)
+                    {
+                        vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+i+int(l/(nbstack/nbX))];
+
+                        for(int p=0; p<Nb_newvariables; p++)
+                        {
+                            vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i +int(l/(nbstack/nbX))];
+                        }
+                    }
+                    // reconstruct Y array:
+                    for(int l=0; l<nbstack; l++)
+                    {
+                        vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+j+((int(l/nbZ))%nbY)];
+
+                        for(int p=0; p<Nb_newvariables; p++)
+                        {
+                            vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + j +((int(l/nbZ))%nbY)];
+                        }
+                    }
+                }
+
+                for(int l=0; l<nbstack; l++)
+                {
+                    vals[l*34+2]= zLocal2[IsoIndex*NbMaxGrid+k+(l%nbZ)];
+
+                    for(int p=0; p<Nb_newvariables; p++)
+                    {
+                        vals[l*34+6 + p*3] = vr2[(p*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + k +(l%nbZ)];
+                    }
                 }
                 if(StopCalculations)
                     return;
                 IJK = J+k;
-
                 id++;
+
                 if(MyIndex == 0 && morph_activated != 1)
                 {
                     signalVal = (int)(id*ss);
@@ -959,13 +1122,31 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                         signStep += 2;
                     }
                 }
-                Results[IJK]= implicitFunctionParser[IsoIndex].Eval(vals);
-                GridVoxelVarPt[IJK].Signature   = 0; // Signature initialisation
-                GridVoxelVarPt[IJK].NbEdgePoint = 0; // No EdgePoint yet!
-                for(int l=0; l<12; l++) GridVoxelVarPt[IJK].Edge_Points[l] = -20;
+
+                double res = implicitFunctionParser[IsoIndex].Eval2(vals, 34, Res, nbstack);
+                if(int(res) == 13)
+                {
+                    for(int l=0; l<nbstack; l++)
+                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*34]));
+                }
+                int p=0;
+                int sect=0;
+                for(int ii=0; ii<nbX; ii++)
+                    for(int jj=0; jj<nbY; jj++)
+                        for(int kk=0; kk<nbZ; kk++)
+                        {
+                            sect= IJK + (ii)*maxgrscalemaxgr+ (jj)*maximumgrid + (kk);
+                            Results[sect] = Res[p];
+                            GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
+                            GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
+                            for(int l=0; l<12; l++) GridVoxelVarPt[sect].Edge_Points[l] = -20;
+                            p++;
+                        }
             }
         }
     }
+    delete vals;
+    delete Res;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++

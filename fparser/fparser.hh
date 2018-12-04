@@ -37,6 +37,7 @@ class FunctionParserBase
         ILL_PARAMS_AMOUNT, PREMATURE_EOS, EXPECT_PARENTH_FUNC,
         UNKNOWN_IDENTIFIER,
         NO_FUNCTION_PARSED_YET,
+        IF_INSTRUCTION_ERROR,
         FP_NO_ERROR
     };
 
@@ -59,7 +60,7 @@ class FunctionParserBase
     Value_t Eval(const Value_t* Vars);
 
     void AllocateStackMemory(int );
-    Value_t Eval(const Value_t* Vars, float* results, unsigned);
+    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, float* results, unsigned, int position=-1);
     int EvalError() const;
 
     bool AddConstant(const std::string& name, Value_t value);

@@ -20,11 +20,11 @@
 #define PI1 (static_cast <double> (314159265)/static_cast <double> (100000000))
 #include <cmath>
 
+
 double maxim(double p1, double p2)
 {
     return p1 > p2 ? p1 : p2;
 }
-
 
 double p_skeletal_int(const double* pp)
 {

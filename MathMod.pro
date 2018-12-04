@@ -25,7 +25,8 @@ HEADERS   = ui_modules/drawingoptions.h \
     ui_modules/addparam.h \
     pariso/isosurface/isothread.h \
     ui_modules/editor.h \
-    pariso/parametric/parthread.h
+    pariso/parametric/parthread.h \
+    fparser/fpconfig.hh
 
 SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/colorsoptions.cpp \

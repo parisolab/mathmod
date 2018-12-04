@@ -1426,6 +1426,7 @@ int FunctionParserBase<Value_t>::ParseFunction(const char* function,
 
 #ifndef FP_USE_THREAD_SAFE_EVAL
     mData->mStack.resize(mData->mStackSize);
+    mData->mStacki.resize(64*mData->mStackSize);
     //for(int i =0; i<64; i++)
         //mData->mStacki[i].resize(mData->mStackSize);
 #endif
@@ -3006,12 +3007,12 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
 template<typename Value_t>
 void FunctionParserBase<Value_t>::AllocateStackMemory(int nbStack)
 {
-    for(int i =0; i<nbStack; i++)
-        mData->mStacki[i].resize(mData->mStackSize);
+    //for(int i =0; i<nbStack; i++)
+        //mData->mStacki.resize(nbStack*mData->mStackSize);
 }
 
 template<typename Value_t>
-Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, unsigned NbStack)
+Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, float* results, unsigned NbStack, int SP)
 {
     if(mData->mParseErrorType != FP_NO_ERROR) return Value_t(0);
 
@@ -3019,12 +3020,11 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
     const Value_t* const immed = mData->mImmed.empty() ? 0 : &(mData->mImmed[0]);
     const unsigned byteCodeSize = unsigned(mData->mByteCode.size());
     unsigned IP, DP=0, Nbval;
-    int SP=-1;
-
 
     /* No thread safety, so use a global stack. */
     std::vector<Value_t>& Stack = mData->mStack;
-    std::vector<Value_t>* Stacki = mData->mStacki;
+    std::vector<Value_t>& Stacki = mData->mStacki;
+    int Size = Stack.size();
 
     for(IP=0; IP<byteCodeSize; ++IP)
     {
@@ -3033,157 +3033,161 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
 // Functions:
           case   cCos:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP] = fp_cos(Stacki[Nbval][SP]); break;
+              Stacki[Nbval*Size+SP] = fp_cos(Stacki[Nbval*Size+SP]); break;
 
           case   cAbs:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP] = fp_abs(Stacki[Nbval][SP]); break;
+              Stacki[Nbval*Size+SP] = fp_abs(Stacki[Nbval*Size+SP]); break;
 
           case  cAcos:
               if(IsComplexType<Value_t>::result == false
-              && (Stacki[0][SP] < Value_t(-1) || Stacki[0][SP] > Value_t(1)))
+              && (Stacki[SP] < Value_t(-1) || Stacki[SP] > Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_acos(Stacki[Nbval][SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_acos(Stacki[Nbval*Size+SP]); break;
 
           case cAcosh:
               if(IsComplexType<Value_t>::result == false
-              && Stacki[0][SP] < Value_t(1))
+              && Stacki[SP] < Value_t(1))
               { mData->mEvalErrorType=4; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_acosh(Stacki[Nbval][SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_acosh(Stacki[Nbval*Size+SP]); break;
 
           case  cAsin:
               if(IsComplexType<Value_t>::result == false
-              && (Stacki[0][SP] < Value_t(-1) || Stacki[0][SP] > Value_t(1)))
+              && (Stacki[SP] < Value_t(-1) || Stacki[SP] > Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_asin(Stacki[Nbval][SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_asin(Stacki[Nbval*Size+SP]); break;
 
           case cAsinh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_asinh(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_asinh(Stacki[Nbval*Size+SP]); break;
 
           case  cAtan:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_atan(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_atan(Stacki[Nbval*Size+SP]); break;
 
           case cAtan2:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] = fp_atan2(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                Stacki[Nbval*Size+SP-1] = fp_atan2(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
                        --SP; break;
 
           case cAtanh:
               if(IsComplexType<Value_t>::result
-              ?  (Stacki[0][SP] == Value_t(-1) || Stacki[0][SP] == Value_t(1))
-              :  (Stacki[0][SP] <= Value_t(-1) || Stacki[0][SP] >= Value_t(1)))
+              ?  (Stacki[SP] == Value_t(-1) || Stacki[SP] == Value_t(1))
+              :  (Stacki[SP] <= Value_t(-1) || Stacki[SP] >= Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_atanh(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_atanh(Stacki[Nbval*Size+SP]); break;
 
           case  cCbrt:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_cbrt(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_cbrt(Stacki[Nbval*Size+SP]); break;
 
           case  cCeil:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_ceil(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_ceil(Stacki[Nbval*Size+SP]); break;
 
           case  cCosh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_cosh(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_cosh(Stacki[Nbval*Size+SP]); break;
 
           case   cCot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               {
-                  const Value_t t = fp_tan(Stacki[Nbval][SP]);
+                  const Value_t t = fp_tan(Stacki[Nbval*Size+SP]);
                   if(t == Value_t(0))
                   { mData->mEvalErrorType=1; return Value_t(0); }
-                  Stacki[Nbval][SP] = Value_t(1)/t;
+                  Stacki[Nbval*Size+SP] = Value_t(1)/t;
               }
              break;
 
           case   cCsc:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               {
-                  const Value_t s = fp_sin(Stacki[Nbval][SP]);
+                  const Value_t s = fp_sin(Stacki[Nbval*Size+SP]);
                   if(s == Value_t(0))
                   { mData->mEvalErrorType=1; return Value_t(0); }
-                  Stacki[Nbval][SP] = Value_t(1)/s;
+                  Stacki[Nbval*Size+SP] = Value_t(1)/s;
               }
              break;
 
           case   cExp:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_exp(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_exp(Stacki[Nbval*Size+SP]); break;
 
           case   cExp2:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_exp2(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_exp2(Stacki[Nbval*Size+SP]); break;
 
           case cFloor:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_floor(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_floor(Stacki[Nbval*Size+SP]); break;
 
           case cHypot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] = fp_hypot(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                Stacki[Nbval*Size+SP-1] = fp_hypot(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
                 --SP; break;
 
-          case    cIf:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-            {
-                  if(fp_truth(Stacki[Nbval][SP]))
-                      IP += 2;
-                  else
-                  {
-                      const unsigned* buf = &byteCode[IP+1];
-                      IP = buf[0];
-                      DP = buf[1];
-                  }
+        case    cIf:
+        {
+            bool valid = fp_truth(Stacki[SP]);
+
+            for(Nbval=1; Nbval<NbStack; Nbval++)
+                if(valid != fp_truth(Stacki[Nbval*Size+SP]))
+                    return double(IF_INSTRUCTION_ERROR);
+
+                if(valid)
+                    IP += 2;
+                else
+                {
+                    const unsigned* buf = &byteCode[IP+1];
+                    IP = buf[0];
+                    DP = buf[1];
+                }
             }
-            SP--;
-                  break;
+            SP--;    break;
 
           case   cInt:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_int(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_int(Stacki[Nbval*Size+SP]); break;
 
           case   cLog:
               if(IsComplexType<Value_t>::result
-               ?   Stacki[0][SP] == Value_t(0)
-               :   !(Stacki[0][SP] > Value_t(0)))
+               ?   Stacki[SP] == Value_t(0)
+               :   !(Stacki[SP] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_log(Stacki[Nbval][SP]);
+                  Stacki[Nbval*Size+SP] = fp_log(Stacki[Nbval*Size+SP]);
             break;
 
           case cLog10:
               if(IsComplexType<Value_t>::result
-               ?   Stacki[0][SP] == Value_t(0)
-               :   !(Stacki[0][SP] > Value_t(0)))
+               ?   Stacki[SP] == Value_t(0)
+               :   !(Stacki[SP] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_log10(Stacki[Nbval][SP]);
+                  Stacki[Nbval*Size+SP] = fp_log10(Stacki[Nbval*Size+SP]);
               break;
 
           case  cLog2:
               if(IsComplexType<Value_t>::result
-               ?   Stacki[0][SP] == Value_t(0)
-               :   !(Stacki[0][SP] > Value_t(0)))
+               ?   Stacki[SP] == Value_t(0)
+               :   !(Stacki[SP] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_log2(Stacki[Nbval][SP]);
+                  Stacki[Nbval*Size+SP] = fp_log2(Stacki[Nbval*Size+SP]);
               break;
 
           case   cMax:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] = fp_max(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                Stacki[Nbval*Size+SP-1] = fp_max(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
                        --SP; break;
 
           case   cMin:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] = fp_min(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                Stacki[Nbval*Size+SP-1] = fp_min(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
                        --SP; break;
 
           case   cPow:
@@ -3198,55 +3202,55 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
 
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
-              if(Stacki[Nbval][SP-1] == Value_t(0) &&
-                 Stacki[Nbval][SP] < Value_t(0))
+              if(Stacki[Nbval*Size+SP-1] == Value_t(0) &&
+                 Stacki[Nbval*Size+SP] < Value_t(0))
               { mData->mEvalErrorType=3; return Value_t(0); }
-                  Stacki[Nbval][SP-1] = fp_pow(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                  Stacki[Nbval*Size+SP-1] = fp_pow(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             }
               --SP; break;
 
           case  cTrunc:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_trunc(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_trunc(Stacki[Nbval*Size+SP]); break;
 
           case   cSec:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               {
-                  const Value_t c = fp_cos(Stacki[Nbval][SP]);
+                  const Value_t c = fp_cos(Stacki[Nbval*Size+SP]);
                   if(c == Value_t(0))
                   { mData->mEvalErrorType=1; return Value_t(0); }
-                  Stacki[Nbval][SP] = Value_t(1)/c;
+                  Stacki[Nbval*Size+SP] = Value_t(1)/c;
               }
               break;
           case   cSin:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_sin(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_sin(Stacki[Nbval*Size+SP]); break;
 
           case  cSinh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_sinh(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_sinh(Stacki[Nbval*Size+SP]); break;
 
           case  cSqrt:
               if(IsComplexType<Value_t>::result == false &&
-                 Stacki[0][SP] < Value_t(0))
+                 Stacki[SP] < Value_t(0))
               { mData->mEvalErrorType=2; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_sqrt(Stacki[Nbval][SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_sqrt(Stacki[Nbval*Size+SP]); break;
 
           case   cTan:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_tan(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_tan(Stacki[Nbval*Size+SP]); break;
 
           case  cTanh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_tanh(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_tanh(Stacki[Nbval*Size+SP]); break;
 
 
 // Misc:
           case cImmed:
             ++SP;
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = immed[DP];
+                Stacki[Nbval*Size+SP] = immed[DP];
             DP++;
             break;
 
@@ -3261,90 +3265,90 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
 // Operators:
           case   cNeg:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = -Stacki[Nbval][SP]; break;
+                Stacki[Nbval*Size+SP] = -Stacki[Nbval*Size+SP]; break;
           case   cAdd:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] += Stacki[Nbval][SP]; --SP; break;
+                Stacki[Nbval*Size+SP-1] += Stacki[Nbval*Size+SP]; --SP; break;
           case   cSub:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] -= Stacki[Nbval][SP]; --SP; break;
+                Stacki[Nbval*Size+SP-1] -= Stacki[Nbval*Size+SP]; --SP; break;
           case   cMul:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] *= Stacki[Nbval][SP]; --SP; break;
+                Stacki[Nbval*Size+SP-1] *= Stacki[Nbval*Size+SP]; --SP; break;
 
           case   cDiv:
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
-              if(Stacki[Nbval][SP] == Value_t(0))
+              if(Stacki[Nbval*Size+SP] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
-              Stacki[Nbval][SP-1] /= Stacki[Nbval][SP];
+              Stacki[Nbval*Size+SP-1] /= Stacki[Nbval*Size+SP];
             }
             --SP; break;
 
           case   cMod:
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
-              if(Stacki[Nbval][SP] == Value_t(0))
+              if(Stacki[Nbval*Size+SP] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
-              Stacki[Nbval][SP-1] = fp_mod(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+              Stacki[Nbval*Size+SP-1] = fp_mod(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             }
               --SP; break;
 
           case cEqual:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_equal(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+              Stacki[Nbval*Size+SP-1] = fp_equal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
 
           case cNEqual:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_nequal(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+              Stacki[Nbval*Size+SP-1] = fp_nequal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
 
           case  cLess:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_less(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+              Stacki[Nbval*Size+SP-1] = fp_less(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
 
           case  cLessOrEq:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_lessOrEq(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+              Stacki[Nbval*Size+SP-1] = fp_lessOrEq(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
 
           case cGreater:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_less(Stacki[Nbval][SP], Stacki[Nbval][SP-1]);
+              Stacki[Nbval*Size+SP-1] = fp_less(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP-1]);
               --SP; break;
 
           case cGreaterOrEq:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_lessOrEq(Stacki[Nbval][SP], Stacki[Nbval][SP-1]);
+              Stacki[Nbval*Size+SP-1] = fp_lessOrEq(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP-1]);
               --SP; break;
 
           case   cNot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_not(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_not(Stacki[Nbval*Size+SP]); break;
 
           case cNotNot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_notNot(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_notNot(Stacki[Nbval*Size+SP]); break;
 
           case   cAnd:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_and(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+              Stacki[Nbval*Size+SP-1] = fp_and(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
 
           case    cOr:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP-1] = fp_or(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+              Stacki[Nbval*Size+SP-1] = fp_or(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
 
 // Degrees-radians conversion:
           case   cDeg:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = RadiansToDegrees(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = RadiansToDegrees(Stacki[Nbval*Size+SP]); break;
           case   cRad:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = DegreesToRadians(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = DegreesToRadians(Stacki[Nbval*Size+SP]); break;
 
 // User-defined function calls:
           case cFCall:
@@ -3355,35 +3359,12 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
                   {
                   const Value_t retVal =
                       mData->mFuncPtrs[index].mRawFuncPtr ?
-                      mData->mFuncPtrs[index].mRawFuncPtr(&Stacki[Nbval][SP-params+1]) :
+                      mData->mFuncPtrs[index].mRawFuncPtr(&(Stacki[Nbval*Size+SP-params+1])) :
                       mData->mFuncPtrs[index].mFuncWrapperPtr->callFunction
-                      (&Stacki[Nbval][SP-params+1]);
-                  Stacki[Nbval][SP-(int(params)-1)] = retVal;
+                      (&Stacki[Nbval*Size+SP-params+1]);
+                  Stacki[Nbval*Size+SP-(int(params)-1)] = retVal;
                   }
                   SP -= int(params)-1;
-                  break;
-              }
-
-          case cPCall:
-              {
-                  unsigned index = byteCode[++IP];
-                  unsigned params = mData->mFuncParsers[index].mParams;
-                  for(Nbval=0; Nbval<NbStack; Nbval++)
-                  {
-                    Value_t retVal =
-                        mData->mFuncParsers[index].mParserPtr->Eval
-                        (&Stacki[Nbval][SP-params+1]);
-                    Stacki[Nbval][SP - (int(params)-1)] = retVal;
-                  }
-                  SP -= int(params)-1;
-
-                  const int error =
-                      mData->mFuncParsers[index].mParserPtr->EvalError();
-                  if(error)
-                  {
-                      mData->mEvalErrorType = error;
-                      return 0;
-                  }
                   break;
               }
 
@@ -3392,7 +3373,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
               {
                   unsigned stackOffs = byteCode[++IP];
                   for(Nbval=0; Nbval<NbStack; Nbval++)
-                    Stacki[Nbval][SP+1] = Stacki[Nbval][stackOffs];
+                    Stacki[Nbval*Size+SP+1] = Stacki[Nbval*Size+stackOffs];
                   ++SP;
                   break;
               }
@@ -3403,18 +3384,18 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
                   unsigned stackOffs_target = byteCode[++IP];
                   unsigned stackOffs_source = byteCode[++IP];
                   for(Nbval=0; Nbval<NbStack; Nbval++)
-                      Stacki[Nbval][stackOffs_target] = Stacki[Nbval][stackOffs_source];
+                      Stacki[Nbval*Size+stackOffs_target] = Stacki[Nbval*Size+stackOffs_source];
                   SP = stackOffs_target;
                   break;
               }
 
           case  cLog2by:
               if(IsComplexType<Value_t>::result
-               ?   Stacki[0][SP-1] == Value_t(0)
-               :   !(Stacki[0][SP-1] > Value_t(0)))
+               ?   Stacki[SP-1] == Value_t(0)
+               :   !(Stacki[SP-1] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP-1] = fp_log2(Stacki[Nbval][SP-1]) * Stacki[Nbval][SP];
+                  Stacki[Nbval*Size+SP-1] = fp_log2(Stacki[Nbval*Size+SP-1]) * Stacki[Nbval*Size+SP];
               --SP;
               break;
 
@@ -3423,108 +3404,143 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars, float* results, u
 
           case cSinCos:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  fp_sinCos(Stacki[Nbval][SP], Stacki[Nbval][SP+1], Stacki[Nbval][SP]);
+                  fp_sinCos(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP+1], Stacki[Nbval*Size+SP]);
               ++SP;
               break;
           case cSinhCosh:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  fp_sinhCosh(Stacki[Nbval][SP], Stacki[Nbval][SP+1], Stacki[Nbval][SP]);
+                  fp_sinhCosh(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP+1], Stacki[Nbval*Size+SP]);
               ++SP;
               break;
 
           case cAbsNot:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_absNot(Stacki[Nbval][SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_absNot(Stacki[Nbval*Size+SP]); break;
           case cAbsNotNot:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP] = fp_absNotNot(Stacki[Nbval][SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_absNotNot(Stacki[Nbval*Size+SP]); break;
           case cAbsAnd:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP-1] = fp_absAnd(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                  Stacki[Nbval*Size+SP-1] = fp_absAnd(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
           case cAbsOr:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval][SP-1] = fp_absOr(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                  Stacki[Nbval*Size+SP-1] = fp_absOr(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
           case cAbsIf:
-              if(fp_absTruth(Stacki[0][SP--]))
-                  IP += 2;
-              else
-              {
-                  const unsigned* buf = &byteCode[IP+1];
-                  IP = buf[0];
-                  DP = buf[1];
-              }
-              break;
+        {
+            bool valid = fp_absTruth(Stacki[SP]);
+
+            for(Nbval=1; Nbval<NbStack; Nbval++)
+                if(valid != fp_absTruth(Stacki[Nbval*Size+SP]))
+                    return double(IF_INSTRUCTION_ERROR);
+
+                if(valid)
+                    IP += 2;
+                else
+                {
+                    const unsigned* buf = &byteCode[IP+1];
+                    IP = buf[0];
+                    DP = buf[1];
+                }
+            }
+            SP--;    break;
+
+
 
           case   cDup:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP+1] = Stacki[Nbval][SP];
+                Stacki[Nbval*Size+SP+1] = Stacki[Nbval*Size+SP];
             ++SP; break;
 
           case   cInv:
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
-              if(Stacki[Nbval][SP] == Value_t(0))
+              if(Stacki[Nbval*Size+SP] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
-              Stacki[Nbval][SP] = Value_t(1)/Stacki[Nbval][SP];
+              Stacki[Nbval*Size+SP] = Value_t(1)/Stacki[Nbval*Size+SP];
             }
               break;
 
           case   cSqr:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                      Stacki[Nbval][SP] = Stacki[Nbval][SP]*Stacki[Nbval][SP];
+                      Stacki[Nbval*Size+SP] = Stacki[Nbval*Size+SP]*Stacki[Nbval*Size+SP];
               break;
 
           case   cRDiv:
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
-              if(Stacki[Nbval][SP-1] == Value_t(0))
+              if(Stacki[Nbval*Size+SP-1] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
-              Stacki[Nbval][SP-1] = Stacki[Nbval][SP] / Stacki[Nbval][SP-1];
+              Stacki[Nbval*Size+SP-1] = Stacki[Nbval*Size+SP] / Stacki[Nbval*Size+SP-1];
             }
             --SP; break;
 
           case   cRSub:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] = Stacki[Nbval][SP] - Stacki[Nbval][SP-1];
+                Stacki[Nbval*Size+SP-1] = Stacki[Nbval*Size+SP] - Stacki[Nbval*Size+SP-1];
             --SP; break;
 
           case   cRSqrt:
               for(Nbval=0; Nbval<NbStack; Nbval++)
               {
-                if(Stacki[Nbval][SP] == Value_t(0))
+                if(Stacki[Nbval*Size+SP] == Value_t(0))
                 { mData->mEvalErrorType=1; return Value_t(0); }
-                Stacki[Nbval][SP] = Value_t(1) / fp_sqrt(Stacki[Nbval][SP]);
+                Stacki[Nbval*Size+SP] = Value_t(1) / fp_sqrt(Stacki[Nbval*Size+SP]);
               }
                 break;
 
 #ifdef FP_SUPPORT_COMPLEX_NUMBERS
           case   cReal:for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_real(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_real(Stacki[Nbval*Size+SP]); break;
           case   cImag:for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_imag(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_imag(Stacki[Nbval*Size+SP]); break;
           case   cArg: for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_arg(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_arg(Stacki[Nbval*Size+SP]); break;
           case   cConj:for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP] = fp_conj(Stacki[Nbval][SP]); break;
+                Stacki[Nbval*Size+SP] = fp_conj(Stacki[Nbval*Size+SP]); break;
           case   cPolar:for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval][SP-1] = fp_polar(Stacki[Nbval][SP-1], Stacki[Nbval][SP]);
+                Stacki[Nbval*Size+SP-1] = fp_polar(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
 #endif
 
+        case cPCall:
+            {
+                unsigned index = byteCode[++IP];
+                unsigned params = mData->mFuncParsers[index].mParams;
+                float res[NbStack];
+                double rest=mData->mFuncParsers[index].mParserPtr->Eval2
+                (&(Stacki[SP-params+1]), Size, res, NbStack /*, SP-params+1*/);
+                if (int(rest) == IF_INSTRUCTION_ERROR)
+                    return double(IF_INSTRUCTION_ERROR);
+
+                for(Nbval=0; Nbval<NbStack; Nbval++)
+                {
+                  Stacki[Nbval*Size+SP - (int(params)-1)] = res[Nbval];
+                }
+                SP -= int(params)-1;
+
+                const int error =
+                    mData->mFuncParsers[index].mParserPtr->EvalError();
+                if(error)
+                {
+                    mData->mEvalErrorType = error;
+                    return 0;
+                }
+                break;
+            }
 
 // Variables:
           default:
             ++SP;
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval][SP] = Vars[byteCode[IP]+ 34*Nbval-VarBegin];
+              Stacki[Nbval*Size+SP] = Vars[byteCode[IP]+ NbVar*Nbval-VarBegin];
         }
     }
 
     mData->mEvalErrorType=0;
     for(Nbval=0; Nbval<NbStack; Nbval++)
-        results[Nbval] = Stacki[Nbval][SP];
+        results[Nbval] = Stacki[Nbval*Size+SP];
     return Value_t(FP_NO_ERROR);
 }
 
@@ -3641,7 +3657,7 @@ void FunctionParserBase<Value_t>::InjectRawByteCode
 #ifndef FP_USE_THREAD_SAFE_EVAL
     mData->mStack.resize(stackSize);
     //for(int i =0; i<64; i++)
-        //mData->mStacki[i].resize(mData->mStackSize);
+        mData->mStacki.resize(64*mData->mStackSize);
 #endif
 }
 
