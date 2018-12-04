@@ -7980,7 +7980,7 @@
           "D_Skeletal =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-0DOTSYMBOL07*(cos(4*x)+cos(4*y)+cos(4*z))+0DOTSYMBOL95",
           "isoCondition_0=((x-pi)^2-(pi-P+0DOTSYMBOL01)^2)",
           "isoCondition_1=((x-pi)^2-(pi-P)^2)",
-          "isoTransform=max(isoCondition_0(x,y,z,t),D_Skeletal(x,y,z,t))+M*exp(isoCondition_1(x,y,z,t))",
+          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),D_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
         ],
         "Fxyz": [
