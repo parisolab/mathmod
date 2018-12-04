@@ -8880,7 +8880,7 @@
           "Octahedr1 = ( (abs(x-0DOTSYMBOL5)+abs(y-0DOTSYMBOL5)+abs(z-0DOTSYMBOL5))-(1/2-1/(N)) )"
         ],
         "Fxyz": [
-          "-max(Octahedr(x,y,z,t)*Octahedr1(x,y,z,t),Octahedron((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t))"
+          "if(Octahedr(x,y,z,t)<(0) & Octahedr1(x,y,z,t)>(0), Octahedron((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "
         ],
         "Xmax": [
           "1"
