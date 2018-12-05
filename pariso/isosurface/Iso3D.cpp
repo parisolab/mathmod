@@ -988,11 +988,11 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
     const int limitY = Ygrid, limitZ = Zgrid;
     int I, J, IJK;
-    int id=0, signStep=0;
-    float ss=0;
+    int signStep=0;
+    float ss=0, id=0;
     int nbX=4, nbY=4, nbZ=4;
     int nbstack=nbX*nbY*nbZ;
-
+    int PreviousSignal=0;
     vals = new double[34*nbstack];
     Res  = new float[nbstack];
     vals[3]    = stepMorph;
@@ -1009,10 +1009,11 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
             iFinish  += 1;
     }
     iStart = iFinish - taille;
-    if(((iFinish-iStart)*limitY*limitZ) > 0)
-        ss = 100.0/(((iFinish-iStart)/nbstack)*limitY*limitZ);
+
+    if((ss=taille*limitY*limitZ) >0)
+        ss = 100.0/ss;
     else
-        ss = 100;
+        ss=100.0;
 
     for(int l=0; l<nbstack; l++)
         vals[l*34+3]= stepMorph;
@@ -1111,17 +1112,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                 if(StopCalculations)
                     return;
                 IJK = J+k;
-                id++;
 
-                if(MyIndex == 0 && morph_activated != 1)
-                {
-                    signalVal = (int)(id*ss);
-                    if(signalVal > (signStep+1))
-                    {
-                        emitMySignal();
-                        signStep += 2;
-                    }
-                }
 
                 double res = implicitFunctionParser[IsoIndex].Eval2(vals, 34, Res, nbstack);
                 if(int(res) == 13)
@@ -1142,6 +1133,17 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                             for(int l=0; l<12; l++) GridVoxelVarPt[sect].Edge_Points[l] = -20;
                             p++;
                         }
+                //Signal emission:
+                id+=nbstack;
+                if(MyIndex == 0 && morph_activated != 1)
+                {
+                    signalVal = (int)(id*ss);
+                    if((signalVal - PreviousSignal)>1)
+                    {
+                        PreviousSignal = signalVal;
+                        emitMySignal();
+                    }
+                }
             }
         }
     }
