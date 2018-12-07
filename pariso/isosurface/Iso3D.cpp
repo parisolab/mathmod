@@ -988,10 +988,11 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
     int maxgrscalemaxgr = maximumgrid*maximumgrid;
     const int limitY = Ygrid, limitZ = Zgrid;
     int I, J, IJK;
-    int signStep=0;
-    float ss=0, id=0;
-    int nbX=4, nbY=4, nbZ=4;
+    int id=0;
+    int OrignbX=4, OrignbY=4, OrignbZ=4;
+    int nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     int nbstack=nbX*nbY*nbZ;
+    int Iindice=0, Jindice=0, Kindice=0;
     int PreviousSignal=0;
     vals = new double[34*nbstack];
     Res  = new float[nbstack];
@@ -1005,115 +1006,85 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
         {
             taille += 1;
         }
-        if(MyIndex < (i% (WorkerThreadsNumber)) || (i% (WorkerThreadsNumber))  == MyIndex)
+        if(MyIndex <= (i% (WorkerThreadsNumber)))
             iFinish  += 1;
     }
     iStart = iFinish - taille;
 
-    if((ss=taille*limitY*limitZ) >0)
-        ss = 100.0/ss;
-    else
-        ss=100.0;
-
     for(int l=0; l<nbstack; l++)
         vals[l*34+3]= stepMorph;
 
-    implicitFunctionParser[IsoIndex].AllocateStackMemory(nbstack);
     int remX= (iFinish-iStart)%nbX;
     int remY= limitY%nbY;
     int remZ= limitZ%nbZ;
+    int Totalpoints=(iFinish-iStart)*limitY*limitZ;
 
     for(int i=iStart; i<iFinish; i+=nbX )
     {
-        if(remX>0 && (i+remX)==(iFinish-iStart))
+        Iindice = i;
+        nbY=OrignbY;
+        nbZ=OrignbZ;
+        if((remX>0) && ((Iindice+remX)==(iFinish)))
         {
             nbX = remX;
-            nbstack =nbX*nbY*nbZ;
+            i= iFinish;
         }
 
-        for(int l=0; l<nbstack; l++)
-        {
-            vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+i+int(l/(nbstack/nbX))];
-
-            for(int p=0; p<Nb_newvariables; p++)
-            {
-                vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i +int(l/(nbstack/nbX))];
-            }
-        }
-        I = i*maxgrscalemaxgr;
+        I = Iindice*maxgrscalemaxgr;
         for(int j=0; j<limitY; j+=nbY)
         {
-            if(remY>0 && (j+remY)==(limitY))
+            Jindice = j;
+            nbZ=OrignbZ;
+
+            if((remY>0) && ((Jindice+remY)==(limitY)))
             {
                 nbY = remY;
-                nbstack =nbX*nbY*nbZ;
-
+                j= limitY;
+            }
+            J = I + Jindice*maximumgrid;
+            for(int k=0; k<limitZ; k+=nbZ)
+            {
+                Kindice = k;
+                if((remZ>0) && ((Kindice+remZ)==(limitZ)))
+                {
+                    nbZ = remZ;
+                    k= limitZ;
+                }
+                nbstack = nbX*nbY*nbZ;
                 // reconstruct X array:
                 for(int l=0; l<nbstack; l++)
                 {
-                    vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+i+int(l/(nbstack/nbX))];
+                    vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+Iindice+int(l*nbX/nbstack)];
 
                     for(int p=0; p<Nb_newvariables; p++)
                     {
-                        vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i +int(l/(nbstack/nbX))];
-                    }
-                }
-            }
-
-            for(int l=0; l<nbstack; l++)
-            {
-                vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+j+((int(l/nbZ))%nbY)];
-
-                for(int p=0; p<Nb_newvariables; p++)
-                {
-                    vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + j +((int(l/nbZ))%nbY)];
-                }
-            }
-
-            J = I + j*maximumgrid;
-            for(int k=0; k<limitZ; k+=nbZ)
-            {
-                if(remZ>0 && (k+remZ)==(limitZ))
-                {
-                    nbZ = remZ;
-                    nbstack =nbX*nbY*nbZ;
-
-                    // reconstruct X array:
-                    for(int l=0; l<nbstack; l++)
-                    {
-                        vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+i+int(l/(nbstack/nbX))];
-
-                        for(int p=0; p<Nb_newvariables; p++)
-                        {
-                            vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i +int(l/(nbstack/nbX))];
-                        }
-                    }
-                    // reconstruct Y array:
-                    for(int l=0; l<nbstack; l++)
-                    {
-                        vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+j+((int(l/nbZ))%nbY)];
-
-                        for(int p=0; p<Nb_newvariables; p++)
-                        {
-                            vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + j +((int(l/nbZ))%nbY)];
-                        }
+                        vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Iindice +int(l*nbX/nbstack)];
                     }
                 }
 
+                // reconstruct Y array:
                 for(int l=0; l<nbstack; l++)
                 {
-                    vals[l*34+2]= zLocal2[IsoIndex*NbMaxGrid+k+(l%nbZ)];
+                    vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+Jindice+((int(l/nbZ))%nbY)];
 
                     for(int p=0; p<Nb_newvariables; p++)
                     {
-                        vals[l*34+6 + p*3] = vr2[(p*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + k +(l%nbZ)];
+                        vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Jindice +((int(l/nbZ))%nbY)];
+                    }
+                }
+                // Construct Z array:
+                for(int l=0; l<nbstack; l++)
+                {
+                    vals[l*34+2]= zLocal2[IsoIndex*NbMaxGrid+Kindice+(l%nbZ)];
+
+                    for(int p=0; p<Nb_newvariables; p++)
+                    {
+                        vals[l*34+6 + p*3] = vr2[(p*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Kindice +(l%nbZ)];
                     }
                 }
                 if(StopCalculations)
                     return;
-                IJK = J+k;
-
-
+                IJK = J+Kindice;
                 double res = implicitFunctionParser[IsoIndex].Eval2(vals, 34, Res, nbstack);
                 if(int(res) == 13)
                 {
@@ -1135,10 +1106,11 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                         }
                 //Signal emission:
                 id+=nbstack;
+
                 if(MyIndex == 0 && morph_activated != 1)
                 {
-                    signalVal = (int)(id*ss);
-                    if((signalVal - PreviousSignal)>1)
+                    signalVal = (int)((id*100)/Totalpoints);
+                    if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
                     {
                         PreviousSignal = signalVal;
                         emitMySignal();
@@ -1147,6 +1119,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
             }
         }
     }
+
     delete vals;
     delete Res;
 }
