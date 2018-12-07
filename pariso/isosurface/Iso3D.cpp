@@ -1051,37 +1051,21 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                     k= limitZ;
                 }
                 nbstack = nbX*nbY*nbZ;
-                // reconstruct X array:
+                // X, Y and Z arrays construction:
                 for(int l=0; l<nbstack; l++)
                 {
-                    vals[l*34]= xLocal2[IsoIndex*NbMaxGrid+Iindice+int(l*nbX/nbstack)];
-
-                    for(int p=0; p<Nb_newvariables; p++)
-                    {
-                        vals[l*34+4 + p*3] = vr2[(p*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Iindice +int(l*nbX/nbstack)];
-                    }
-                }
-
-                // reconstruct Y array:
-                for(int l=0; l<nbstack; l++)
-                {
+                    vals[l*34  ]= xLocal2[IsoIndex*NbMaxGrid+Iindice+int(l*nbX/nbstack)];
                     vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+Jindice+((int(l/nbZ))%nbY)];
-
-                    for(int p=0; p<Nb_newvariables; p++)
-                    {
-                        vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Jindice +((int(l/nbZ))%nbY)];
-                    }
-                }
-                // Construct Z array:
-                for(int l=0; l<nbstack; l++)
-                {
                     vals[l*34+2]= zLocal2[IsoIndex*NbMaxGrid+Kindice+(l%nbZ)];
 
                     for(int p=0; p<Nb_newvariables; p++)
                     {
+                        vals[l*34+4 + p*3] = vr2[(p*3  )*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Iindice +int(l*nbX/nbstack)];
+                        vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Jindice +((int(l/nbZ))%nbY)];
                         vals[l*34+6 + p*3] = vr2[(p*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Kindice +(l%nbZ)];
                     }
                 }
+
                 if(StopCalculations)
                     return;
                 IJK = J+Kindice;
