@@ -1104,8 +1104,8 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
         }
     }
 
-    delete vals;
-    delete Res;
+    delete[] vals;
+    delete[] Res;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
