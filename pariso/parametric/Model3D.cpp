@@ -1728,36 +1728,143 @@ void ParWorkerThread::emitMySignal()
 //+++++++++++++++++++++++++++++++++++++++++++
 void  ParWorkerThread::calcul_objet(int cmp, int idx)
 {
-    double vals[] = {0,0,0};
-    double iprime, jprime;
-    int NewPosition =  TypeDrawin*idx, id=0, signStep=0;
-    float ss;
+    //double vals[] = {0,0,0};
+    //double iprime, jprime;
+    int NewPosition =  TypeDrawin*idx, id=0, PreviousSignal=0;
+    //float ss;
+
+    int OrignbU=8, OrignbV=8;
+    int nbU=OrignbU, nbV=OrignbV;
+    int nbstack=nbU*nbV;
+    int Iindice=0, Jindice=0;
+    double* vals, res;
+    float *ResX, *ResY, *ResZ, *ResW;
+
+
+    vals  = new double[3*nbstack];
+    ResX  = new float[nbstack];
+    ResY  = new float[nbstack];
+    ResZ  = new float[nbstack];
+    ResW  = new float[nbstack];
+
     if(activeMorph == 1)
         stepMorph += pace;
     vals[2]          = stepMorph;
 
+    /*
     int tmp = Ugrid/WorkerThreadsNumber;
     iStart   = MyIndex*tmp;
     if(MyIndex == (WorkerThreadsNumber-1))
         iFinish = Ugrid;
     else
         iFinish = (MyIndex+1)*tmp;
-    ss = 100.0/(iFinish*Vgrid);
+    */
+    int taille=0;
 
-    int l=TypeDrawin*iStart*Vgrid;
-    for(int j=iStart; j < iFinish   ; j++)
+    iStart = 0;
+    iFinish = 0;
+    for(int i=0; i<Ugrid; i++)
     {
-        jprime = (double)j/(double)(Ugrid -1 ) ;
-        jprime = jprime * dif_u[cmp]  + u_inf[cmp] ;
-        for (int i=0; i < Vgrid   ; i++)
+        if((i% (WorkerThreadsNumber))  == MyIndex )
         {
-            iprime = (double)i/(double)(Vgrid-1 ) ;
-            iprime = iprime * dif_v[cmp]  + v_inf[cmp] ;
-            vals[0]=jprime;
-            vals[1]=iprime;
+            taille += 1;
+        }
+        if(MyIndex <= (i% (WorkerThreadsNumber)))
+            iFinish  += 1;
+    }
+    iStart = iFinish - taille;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    int remU= (iFinish-iStart)%nbU;
+    int remV= Vgrid%nbV;
+    int Totalpoints=(iFinish-iStart)*Vgrid;
+    for(int l=0; l<nbstack; l++)
+        vals[l*3+2]= stepMorph;
+
+
+    //int Pace=TypeDrawin*iStart*Vgrid;
+
+    for(int i=iStart; i < iFinish   ; i+=nbU)
+    {
+        Iindice = i;
+        nbV=OrignbV;
+        if((remU>0) && ((Iindice+remU)==(iFinish)))
+        {
+            nbU = remU;
+            i= iFinish;
+            nbstack = nbU*nbV;
+        }
+
+
+
+
+
+
+        for (int j=0; j < Vgrid   ; j+=nbV)
+        {
+            Jindice = j;
+            nbstack = nbU*nbV;
+            if((remV>0) && ((Jindice+remV)==(Vgrid)))
+            {
+                nbV = remV;
+                j= Vgrid;
+                nbstack = nbU*nbV;
+            }
+
+            for(int l=0; l<nbstack; l++)
+            {
+                vals[l*3  ]= (double)(Iindice+  int(l/nbV) /*int(l*nbU/nbstack)*/ )*dif_u[cmp]/(double)(Ugrid-1) + u_inf[cmp];
+                vals[l*3+1]= (double)(Jindice+(l%nbV))*dif_v[cmp]/(double)(Vgrid-1) + v_inf[cmp];
+            }
 
             if(StopCalculations)
                 return;
+
+
+            res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
+            if(int(res) == 13)
+            {
+                for(int l=0; l<nbstack; l++)
+                    ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
+            }
+
+
+            res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
+            if(int(res) == 13)
+            {
+                for(int l=0; l<nbstack; l++)
+                    ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
+            }
+
+
+            res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
+            if(int(res) == 13)
+            {
+                for(int l=0; l<nbstack; l++)
+                    ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
+            }
+
+            if(param4D == 1)
+            {
+                res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
+                if(int(res) == 13)
+                {
+                    for(int l=0; l<nbstack; l++)
+                        ResW[l] = myParserW[cmp].Eval(&(vals[l*3]));
+                }
+            }
+/*
             id++;
             if(MyIndex == 0 && activeMorph != 1)
             {
@@ -1768,16 +1875,51 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
                     signStep += 2;
                 }
             }
-            NormVertexTab[l+3+NewPosition+ TypeDrawinNormStep] = myParserX[cmp].Eval(vals);
-            NormVertexTab[l+4+NewPosition+ TypeDrawinNormStep] = myParserY[cmp].Eval(vals);
-            NormVertexTab[l+5+NewPosition+ TypeDrawinNormStep] = myParserZ[cmp].Eval(vals);
-            l+=TypeDrawin;
+            */
+
+            //Signal emission:
+            id+=nbstack;
+
+            if(MyIndex == 0 && activeMorph != 1)
+            {
+                signalVal = (int)((id*100)/Totalpoints);
+                if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
+                {
+                    PreviousSignal = signalVal;
+                    emitMySignal();
+                }
+            }
+
+
+            int p=0;
+            for(int ii=0; ii<nbU;ii++)
+                for(int jj=0; jj<nbV; jj++)
+                {
+                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +3 +NewPosition+ TypeDrawinNormStep] = ResX[p];
+                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +4 +NewPosition+ TypeDrawinNormStep] = ResY[p];
+                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +5 +NewPosition+ TypeDrawinNormStep] = ResZ[p];
+                    if(param4D == 1)
+                        ExtraDimension[(Iindice+ii)*Vgrid + (Jindice +jj) + (int)(NewPosition/TypeDrawin)] = ResW[p];
+                    else
+                        ExtraDimension[(Iindice+ii)*Vgrid + (Jindice +jj) + (int)(NewPosition/TypeDrawin)] = 1;
+                    p++;
+                }
+
+            /*
             if(param4D == 1)
-                ExtraDimension[j*Vgrid + i + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
+                ExtraDimension[(Iindice+ii)*Vgrid + j + (int)(NewPosition/TypeDrawin)] = myParserW[cmp].Eval(vals);
             else
-                ExtraDimension[j*Vgrid + i + (int)(NewPosition/TypeDrawin)] = 1;
+                ExtraDimension[i*Vgrid + j + (int)(NewPosition/TypeDrawin)] = 1;
+                */
+
         }
     }
+
+    delete[] vals;
+    delete[] ResX;
+    delete[] ResY;
+    delete[] ResZ;
+    delete[] ResW;
 }
 
 //++++++++++++++++++++++++++++++++++++
