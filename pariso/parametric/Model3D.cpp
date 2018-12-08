@@ -1789,7 +1789,7 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
 
             for(int l=0; l<nbstack; l++)
             {
-                vals[l*3  ]= (double)(Iindice+  int(l/nbV) /*int(l*nbU/nbstack)*/ )*dif_u[cmp]/(double)(Ugrid-1) + u_inf[cmp];
+                vals[l*3  ]= (double)(Iindice+ int(l/nbV))*dif_u[cmp]/(double)(Ugrid-1) + u_inf[cmp];
                 vals[l*3+1]= (double)(Jindice+(l%nbV))*dif_v[cmp]/(double)(Vgrid-1) + v_inf[cmp];
             }
 
