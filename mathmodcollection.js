@@ -5326,7 +5326,7 @@
           "pi/2"
         ],
         "Vmin": [
-          "0"
+          "1/100000"
         ],
         "Vmax": [
           "2*pi"
@@ -11377,7 +11377,7 @@
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2+cu*cv)",
           "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
           "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
           "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
@@ -11437,7 +11437,7 @@
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2+cu*cv)",
           "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
           "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
           "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
@@ -11497,7 +11497,7 @@
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2+cu*cv)",
           "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
           "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
           "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
@@ -12110,74 +12110,6 @@
         "Vmin": [
           "0"
         ]
-      }
-    },
-    {
-      "Param3D": {
-        "Description ": [
-          "Sleeping bugs by Abderrahman Taha 11/10/2015"
-        ],
-        "Name": [
-          "Sleeping bugs"
-        ],
-        "Component": [
-          "Sleepingbugs"
-        ],
-        "Const": [
-          "cu=0DOTSYMBOL0000000001",
-          "cv=0DOTSYMBOL0000000001",
-          "N=3"
-        ],
-        "Funct": [
-          "Thickness= -0DOTSYMBOL5*(abs(sin(15*u)*cos(15*v)))^7 + 0DOTSYMBOL35*((sin(2*N*u)))",
-          "Fx=-cos(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
-          "Fz=sin(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
-          "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-          "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-          "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
-        ],
-        "Fx": [
-          "Gx(u,v,t)"
-        ],
-        "Fy": [
-          "Gy(u,v,t)"
-        ],
-        "Fz": [
-          "Gz(u,v,t)"
-        ],
-        "Umax": [
-          "pi"
-        ],
-        "Umin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
-        ],
-        "Vmin": [
-          "0"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))+0DOTSYMBOL3",
-          "B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "T=1"
-        ],
-        "Name": "WorleyNoise",
-        "Noise": "NoiseW(2*x,2*y,2*z,(4),(2),0)+NoiseP(2*x,2*y,2*z,(4),(12),1/10)"
       }
     },
     {
@@ -13024,9 +12956,9 @@
           "DevilPlate"
         ],
         "Const": [
-          "cx=0DOTSYMBOL001",
-          "cy=0DOTSYMBOL001",
-          "cz=0DOTSYMBOL00"
+          "cx=0DOTSYMBOL00001",
+          "cy=0DOTSYMBOL00001",
+          "cz=0DOTSYMBOL00001"
         ],
         "Funct": [
           "Devil=x^4+2*x^2*z^2-0DOTSYMBOL36*x^2-y^4+0DOTSYMBOL25*y^2+z^4",
@@ -14221,7 +14153,7 @@
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "Rapp=u/sqrt(u*u+v*v+t*t)",
+          "Rapp=u/sqrt(u*u+v*v+t*t+cu*cv)",
           "Fx=Fx(u,v,t)+th(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
           "Fy=Fy(u,v,t)+th(u,v,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
           "Fz=Fz(u,v,t)+th(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
@@ -14288,7 +14220,7 @@
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "Rapp=u/sqrt(u*u+v*v+t*t)",
+          "Rapp=u/sqrt(u*u+v*v+t*t+cu*cv)",
           "Fx=Fx(u,v,t)+th(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
           "Fy=Fy(u,v,t)+th(u,v,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
           "Fz=Fz(u,v,t)+th(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
@@ -17922,7 +17854,7 @@
           "Wireframe_Shell_20"
         ],
         "Const": [
-          "u1min=0",
+          "u1min=1/100000",
           "u1max=pi",
           "v1min=-pi/4",
           "v1max=5*pi/2",
