@@ -3047,18 +3047,24 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   Stacki[Nbval*Size+SP] = fp_acos(Stacki[Nbval*Size+SP]); break;
 
           case cAcosh:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+            {
               if(IsComplexType<Value_t>::result == false
-              && Stacki[SP] < Value_t(1))
+              && Stacki[Nbval*Size+SP] < Value_t(1))
               { mData->mEvalErrorType=4; return Value_t(0); }
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP] = fp_acosh(Stacki[Nbval*Size+SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_acosh(Stacki[Nbval*Size+SP]);
+            }
+            break;
 
           case  cAsin:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+            {
               if(IsComplexType<Value_t>::result == false
-              && (Stacki[SP] < Value_t(-1) || Stacki[SP] > Value_t(1)))
+              && (Stacki[Nbval*Size+SP] < Value_t(-1) || Stacki[Nbval*Size+SP] > Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP] = fp_asin(Stacki[Nbval*Size+SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_asin(Stacki[Nbval*Size+SP]);
+            }
+            break;
 
           case cAsinh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
