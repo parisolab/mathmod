@@ -3163,12 +3163,14 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             break;
 
           case cLog10:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+            {
               if(IsComplexType<Value_t>::result
-               ?   Stacki[SP] == Value_t(0)
-               :   !(Stacki[SP] > Value_t(0)))
+               ?   Stacki[Nbval*Size+SP] == Value_t(0)
+               :   !(Stacki[Nbval*Size+SP] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
-              for(Nbval=0; Nbval<NbStack; Nbval++)
                   Stacki[Nbval*Size+SP] = fp_log10(Stacki[Nbval*Size+SP]);
+            }
               break;
 
           case  cLog2:
