@@ -1427,8 +1427,6 @@ int FunctionParserBase<Value_t>::ParseFunction(const char* function,
 #ifndef FP_USE_THREAD_SAFE_EVAL
     mData->mStack.resize(mData->mStackSize);
     mData->mStacki.resize(64*mData->mStackSize);
-    //for(int i =0; i<64; i++)
-        //mData->mStacki[i].resize(mData->mStackSize);
 #endif
 
     return -1;
@@ -3671,8 +3669,7 @@ void FunctionParserBase<Value_t>::InjectRawByteCode
 
 #ifndef FP_USE_THREAD_SAFE_EVAL
     mData->mStack.resize(stackSize);
-    //for(int i =0; i<64; i++)
-        mData->mStacki.resize(64*mData->mStackSize);
+    mData->mStacki.resize(64*mData->mStackSize);
 #endif
 }
 
