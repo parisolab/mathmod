@@ -3231,11 +3231,14 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                 Stacki[Nbval*Size+SP] = fp_sinh(Stacki[Nbval*Size+SP]); break;
 
           case  cSqrt:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+            {
               if(IsComplexType<Value_t>::result == false &&
-                 Stacki[SP] < Value_t(0))
+                 Stacki[Nbval*Size+SP] < Value_t(0))
               { mData->mEvalErrorType=2; return Value_t(0); }
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP] = fp_sqrt(Stacki[Nbval*Size+SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_sqrt(Stacki[Nbval*Size+SP]);
+            }
+            break;
 
           case   cTan:
             for(Nbval=0; Nbval<NbStack; Nbval++)
