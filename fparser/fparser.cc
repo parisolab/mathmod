@@ -3389,7 +3389,6 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   break;
               }
 
-
           case   cFetch:
               {
                   unsigned stackOffs = byteCode[++IP];
@@ -3469,8 +3468,6 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             }
             SP--;    break;
 
-
-
           case   cDup:
             for(Nbval=0; Nbval<NbStack; Nbval++)
                 Stacki[Nbval*Size+SP+1] = Stacki[Nbval*Size+SP];
@@ -3533,8 +3530,8 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                 unsigned params = mData->mFuncParsers[index].mParams;
                 float res[NbStack];
                 double rest=mData->mFuncParsers[index].mParserPtr->Eval2
-                (&(Stacki[SP-params+1]), Size, res, NbStack /*, SP-params+1*/);
-                if (int(rest) == IF_FUNCT_ERROR /*&& mData->mEvalErrorType == IF_FUNCT_ERROR*/)
+                (&(Stacki[SP-params+1]), Size, res, NbStack);
+                if (int(rest) == IF_FUNCT_ERROR)
                 {
                     mData->mEvalErrorType = IF_FUNCT_ERROR;
                     return IF_FUNCT_ERROR;
@@ -3545,15 +3542,6 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   Stacki[Nbval*Size+SP - (int(params)-1)] = res[Nbval];
                 }
                 SP -= int(params)-1;
-/*
-                const int error =
-                    mData->mFuncParsers[index].mParserPtr->EvalError();
-                if(error)
-                {
-                    mData->mEvalErrorType = error;
-                    return EVAL_ERROR;
-                }
-                */
                 break;
             }
 
