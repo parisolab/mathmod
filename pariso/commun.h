@@ -69,6 +69,18 @@ struct ErrorMessage
     std::string strOrigine;
 };
 
+// Any modification to this enum must be translated to the same enum in fparser.hh
+enum EvalErrorType
+{
+    EVAL_ERROR=0,
+    DIVISION_BY_ZERO,
+    COTAN_FUNCT_ERROR,
+    EXP_FUNCT_ERROR,
+    ARC_TRIGONOMETRIC_FUNCT_ERROR,
+    IF_FUNCT_ERROR,
+    EVAL_NO_ERROR
+};
+
 enum ScriptErrorType
 {
     SCRIPT_NO_ERROR=0,
@@ -109,7 +121,6 @@ enum ScriptErrorType
     CND_POL_MEM_OVERFLOW,
     DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW,
     DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW
-
 };
 struct  ComponentInfos
 {

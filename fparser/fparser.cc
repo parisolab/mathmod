@@ -3022,7 +3022,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     unsigned IP, DP=0, Nbval;
 
     /* No thread safety, so use a global stack. */
-    std::vector<Value_t>& Stack = mData->mStack;
+    std::vector<Value_t>& Stack  = mData->mStack;
     std::vector<Value_t>& Stacki = mData->mStacki;
     int Size = Stack.size();
 
@@ -3098,7 +3098,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               {
                   const Value_t t = fp_tan(Stacki[Nbval*Size+SP]);
                   if(t == Value_t(0))
-                  { mData->mEvalErrorType=1; return Value_t(0); }
+                  { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
                   Stacki[Nbval*Size+SP] = Value_t(1)/t;
               }
              break;
@@ -3108,7 +3108,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               {
                   const Value_t s = fp_sin(Stacki[Nbval*Size+SP]);
                   if(s == Value_t(0))
-                  { mData->mEvalErrorType=1; return Value_t(0); }
+                  { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
                   Stacki[Nbval*Size+SP] = Value_t(1)/s;
               }
              break;
@@ -3136,7 +3136,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
             for(Nbval=1; Nbval<NbStack; Nbval++)
                 if(valid != fp_truth(Stacki[Nbval*Size+SP]))
-                    return double(IF_INSTRUCTION_ERROR);
+                    { mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(IF_FUNCT_ERROR); }
 
                 if(valid)
                     IP += 2;
@@ -3218,7 +3218,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               {
                   const Value_t c = fp_cos(Stacki[Nbval*Size+SP]);
                   if(c == Value_t(0))
-                  { mData->mEvalErrorType=1; return Value_t(0); }
+                  { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
                   Stacki[Nbval*Size+SP] = Value_t(1)/c;
               }
               break;
@@ -3280,7 +3280,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
               if(Stacki[Nbval*Size+SP] == Value_t(0))
-              { mData->mEvalErrorType=1; return Value_t(0); }
+              { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
               Stacki[Nbval*Size+SP-1] /= Stacki[Nbval*Size+SP];
             }
             --SP; break;
@@ -3289,7 +3289,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
               if(Stacki[Nbval*Size+SP] == Value_t(0))
-              { mData->mEvalErrorType=1; return Value_t(0); }
+              { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
               Stacki[Nbval*Size+SP-1] = fp_mod(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             }
               --SP; break;
@@ -3433,7 +3433,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
             for(Nbval=1; Nbval<NbStack; Nbval++)
                 if(valid != fp_absTruth(Stacki[Nbval*Size+SP]))
-                    return double(IF_INSTRUCTION_ERROR);
+                    { mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(IF_FUNCT_ERROR); }
 
                 if(valid)
                     IP += 2;
@@ -3457,7 +3457,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
               if(Stacki[Nbval*Size+SP] == Value_t(0))
-              { mData->mEvalErrorType=1; return Value_t(0); }
+              { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
               Stacki[Nbval*Size+SP] = Value_t(1)/Stacki[Nbval*Size+SP];
             }
               break;
@@ -3471,7 +3471,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
               if(Stacki[Nbval*Size+SP-1] == Value_t(0))
-              { mData->mEvalErrorType=1; return Value_t(0); }
+              { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
               Stacki[Nbval*Size+SP-1] = Stacki[Nbval*Size+SP] / Stacki[Nbval*Size+SP-1];
             }
             --SP; break;
@@ -3485,7 +3485,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               for(Nbval=0; Nbval<NbStack; Nbval++)
               {
                 if(Stacki[Nbval*Size+SP] == Value_t(0))
-                { mData->mEvalErrorType=1; return Value_t(0); }
+                { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
                 Stacki[Nbval*Size+SP] = Value_t(1) / fp_sqrt(Stacki[Nbval*Size+SP]);
               }
                 break;
@@ -3511,22 +3511,26 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                 float res[NbStack];
                 double rest=mData->mFuncParsers[index].mParserPtr->Eval2
                 (&(Stacki[SP-params+1]), Size, res, NbStack /*, SP-params+1*/);
-                if (int(rest) == IF_INSTRUCTION_ERROR)
-                    return double(IF_INSTRUCTION_ERROR);
+                if (int(rest) == IF_FUNCT_ERROR /*&& mData->mEvalErrorType == IF_FUNCT_ERROR*/)
+                {
+                    mData->mEvalErrorType = IF_FUNCT_ERROR;
+                    return IF_FUNCT_ERROR;
+                }
 
                 for(Nbval=0; Nbval<NbStack; Nbval++)
                 {
                   Stacki[Nbval*Size+SP - (int(params)-1)] = res[Nbval];
                 }
                 SP -= int(params)-1;
-
+/*
                 const int error =
                     mData->mFuncParsers[index].mParserPtr->EvalError();
                 if(error)
                 {
                     mData->mEvalErrorType = error;
-                    return 0;
+                    return EVAL_ERROR;
                 }
+                */
                 break;
             }
 
@@ -3538,10 +3542,10 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
         }
     }
 
-    mData->mEvalErrorType=0;
+    mData->mEvalErrorType=EVAL_NO_ERROR;
     for(Nbval=0; Nbval<NbStack; Nbval++)
         results[Nbval] = Stacki[Nbval*Size+SP];
-    return Value_t(FP_NO_ERROR);
+    return Value_t(EVAL_NO_ERROR);
 }
 
 

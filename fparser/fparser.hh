@@ -37,8 +37,18 @@ class FunctionParserBase
         ILL_PARAMS_AMOUNT, PREMATURE_EOS, EXPECT_PARENTH_FUNC,
         UNKNOWN_IDENTIFIER,
         NO_FUNCTION_PARSED_YET,
-        IF_INSTRUCTION_ERROR,
         FP_NO_ERROR
+    };
+    // Any modification to this enum must be translated to the same enum in commun.h
+    enum EvalErrorType
+    {
+        EVAL_ERROR=0,
+        DIVISION_BY_ZERO,
+        COTAN_FUNCT_ERROR,
+        EXP_FUNCT_ERROR,
+        ARC_TRIGONOMETRIC_FUNCT_ERROR,
+        IF_FUNCT_ERROR,
+        EVAL_NO_ERROR
     };
 
     typedef Value_t value_type;

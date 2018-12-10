@@ -1733,7 +1733,7 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
     int nbU=OrignbU, nbV=OrignbV;
     int nbstack=nbU*nbV;
     int Iindice=0, Jindice=0;
-    double* vals, res;
+    double* vals, res, res2=0;
     float *ResX, *ResY, *ResZ, *ResW;
     int taille=0;
 
@@ -1797,21 +1797,21 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
                 return;
 
             res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
-            if(int(res) == 13)
+            if(int(res) == IF_FUNCT_ERROR)
             {
                 for(int l=0; l<nbstack; l++)
                     ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
             }
 
             res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
-            if(int(res) == 13)
+            if(int(res) == IF_FUNCT_ERROR)
             {
                 for(int l=0; l<nbstack; l++)
                     ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
             }
 
             res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
-            if(int(res) == 13)
+            if(int(res) == IF_FUNCT_ERROR)
             {
                 for(int l=0; l<nbstack; l++)
                     ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
@@ -1820,7 +1820,7 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
             if(param4D == 1)
             {
                 res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
-                if(int(res) == 13)
+                if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(int l=0; l<nbstack; l++)
                         ResW[l] = myParserW[cmp].Eval(&(vals[l*3]));

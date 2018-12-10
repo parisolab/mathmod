@@ -1066,15 +1066,22 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                     }
                 }
 
-                if(StopCalculations)
-                    return;
                 IJK = J+Kindice;
                 double res = implicitFunctionParser[IsoIndex].Eval2(vals, 34, Res, nbstack);
-                if(int(res) == 13)
+                if( res == IF_FUNCT_ERROR)
                 {
                     for(int l=0; l<nbstack; l++)
                         Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*34]));
                 }
+                else
+                    if( res == DIVISION_BY_ZERO)
+                    {
+                        StopCalculations = true;
+                    }
+
+                if(StopCalculations)
+                    return;
+
                 int p=0;
                 int sect=0;
                 for(int ii=0; ii<nbX; ii++)
@@ -1900,7 +1907,11 @@ void Iso3D::IsoBuild (
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].wait();
 
-        if(StopCalculations)
+        bool Stop = masterthread->StopCalculations;
+        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+            Stop = Stop || workerthreads[nbthreads].StopCalculations;
+
+        if(StopCalculations || Stop)
             return;
         int result = PointEdgeComputation(fctnb);
         if(result == 0)
