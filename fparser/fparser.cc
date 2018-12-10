@@ -3074,12 +3074,15 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                        --SP; break;
 
           case cAtanh:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+            {
               if(IsComplexType<Value_t>::result
-              ?  (Stacki[SP] == Value_t(-1) || Stacki[SP] == Value_t(1))
-              :  (Stacki[SP] <= Value_t(-1) || Stacki[SP] >= Value_t(1)))
+              ?  (Stacki[Nbval*Size+SP] == Value_t(-1) || Stacki[Nbval*Size+SP] == Value_t(1))
+              :  (Stacki[Nbval*Size+SP] <= Value_t(-1) || Stacki[Nbval*Size+SP] >= Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_atanh(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_atanh(Stacki[Nbval*Size+SP]);
+            }
+            break;
 
           case  cCbrt:
             for(Nbval=0; Nbval<NbStack; Nbval++)
