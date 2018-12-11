@@ -41,9 +41,9 @@
         "MaxThreadsNumber": 64
     },
     "CalculFactorConfig": {
-        "FactX": 3,
-        "FactY": 5,
-        "FactZ": 2
+        "FactX": 4,
+        "FactY": 4,
+        "FactZ": 4
     },
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
