@@ -53,6 +53,9 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     Threads[0] = 8;
     Threads[1] = 1;
     Threads[2] = 64;
+    CalculFactor[0]=4;
+    CalculFactor[1]=4;
+    CalculFactor[2]=4;
     filecollection = "mathmodcollection.js";
     fileconfig       = "mathmodconfig.js";
     advancedmodels = "advancedmodels.js";
@@ -516,6 +519,14 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                 Specular[2] = (tmp["GL_SPECULAR"].toArray())[2].toDouble()/100.0;
                 Specular[3] = (tmp["GL_SPECULAR"].toArray())[3].toDouble()/100.0;
             }
+        }
+
+        if(JConfig["CalculFactorConfig"].isObject())
+        {
+            QJsonObject tmp = JConfig["CalculFactorConfig"].toObject();
+            CalculFactor[0] = tmp["FactX"].toInt();
+            CalculFactor[1] = tmp["FactY"].toInt();
+            CalculFactor[2] = tmp["FactZ"].toInt();
         }
 
         if(JConfig["ThreadsConfig"].isObject())

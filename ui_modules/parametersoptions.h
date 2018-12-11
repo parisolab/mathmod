@@ -60,6 +60,7 @@ public:
     int GlwinH;
     float Specular[4];
     int Threads[3];
+    int CalculFactor[3];
     int Shininess;
     int MaxTri, MaxPt, MaxGrid,
         NbComponent,

@@ -42,6 +42,9 @@ struct ImplicitStructure
     int              index;
 };
 
+extern int OrignbX, OrignbY, OrignbZ;
+extern int Stack_Factor;
+
 struct  Voxel
 {
     int Edge_Points [12]; //reference to the Edge Points

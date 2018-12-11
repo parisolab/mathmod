@@ -1426,7 +1426,7 @@ int FunctionParserBase<Value_t>::ParseFunction(const char* function,
 
 #ifndef FP_USE_THREAD_SAFE_EVAL
     mData->mStack.resize(mData->mStackSize);
-    mData->mStacki.resize(64*mData->mStackSize);
+    //mData->mStacki.resize(64*mData->mStackSize);
 #endif
 
     return -1;
@@ -3005,8 +3005,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
 template<typename Value_t>
 void FunctionParserBase<Value_t>::AllocateStackMemory(int nbStack)
 {
-    //for(int i =0; i<nbStack; i++)
-        //mData->mStacki.resize(nbStack*mData->mStackSize);
+    mData->mStacki.resize(nbStack*(mData->mStack).size());
 }
 
 template<typename Value_t>
@@ -3669,7 +3668,7 @@ void FunctionParserBase<Value_t>::InjectRawByteCode
 
 #ifndef FP_USE_THREAD_SAFE_EVAL
     mData->mStack.resize(stackSize);
-    mData->mStacki.resize(64*mData->mStackSize);
+    //mData->mStacki.resize(64*mData->mStackSize);
 #endif
 }
 

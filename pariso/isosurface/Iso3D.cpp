@@ -49,6 +49,10 @@ int NbTextures = 30;
 int NbSliders = 50;
 int NbSliderValues = 500;
 
+
+int OrignbX, OrignbY, OrignbZ;
+int Stack_Factor=OrignbX*OrignbY*OrignbZ;
+
 static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 
@@ -369,6 +373,7 @@ ErrorMessage  Iso3D::parse_expression2()
                 masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
                 return masterthread->stdError;
             }
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor);
         }
     }
 
@@ -408,7 +413,9 @@ ErrorMessage  Iso3D::parse_expression2()
             for(int j=0; j<masterthread->Nb_functs; j++)
             {
                 if(masterthread->UsedFunct[i*NbDefinedFunctions+j])
+                {
                     workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
+                }
             }
         }
     }
@@ -424,8 +431,6 @@ ErrorMessage  Iso3D::parse_expression2()
                 masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
                 return masterthread->stdError;
             }
-
-            //workerthreads[nbthreads].implicitFunctionParser[index].Optimize();
         }
     }
 
@@ -442,8 +447,13 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
               int NbSlid,
               int NbSliderV,
               int nbThreads,
-              int nbGrid)
+              int nbGrid,
+              int factX,
+              int factY,
+              int factZ)
 {
+    OrignbX= factX; OrignbY= factY; OrignbZ=factZ;
+    Stack_Factor = factX*factY*factZ;
     NbTextures=NbText;
     NbComponent=NbCompo;
     NbVariables = NbVariabl;
@@ -908,7 +918,6 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
     const int limitY = Ygrid, limitZ = Zgrid;
     int I, J, IJK;
     int id=0;
-    int OrignbX=4, OrignbY=4, OrignbZ=4;
     int nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     int nbstack=nbX*nbY*nbZ;
     int Iindice=0, Jindice=0, Kindice=0;
@@ -938,6 +947,8 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
     int remZ= limitZ%nbZ;
     int Totalpoints=(iFinish-iStart)*limitY*limitZ;
 
+    //****
+    implicitFunctionParser[IsoIndex].AllocateStackMemory(Stack_Factor);
     for(int i=iStart; i<iFinish; i+=nbX )
     {
         Iindice = i;
@@ -1180,6 +1191,7 @@ ErrorMessage IsoMasterThread::ParserIso()
 
         for(int i=0; i<Nb_functs; i++)
         {
+
             for(int j=0; j<i; j++)
                 if( (UsedFunct2[i*NbDefinedFunctions+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
@@ -1189,6 +1201,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                 stdError.strOrigine = FunctNames[i];
                 return stdError;
             }
+            Fct[i].AllocateStackMemory(Stack_Factor);
         }
     }
     else
@@ -1402,6 +1415,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+
     }
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);

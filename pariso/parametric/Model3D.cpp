@@ -576,6 +576,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 stdError.strOrigine = FunctNames[i];
                 return stdError;
             }
+            Fct[i].AllocateStackMemory(Stack_Factor);
         }
     }
     else
@@ -885,6 +886,7 @@ ErrorMessage  Par3D::parse_expression2()
                 masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
                 return masterthread->stdError;
             }
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor);
         }
     }
 
@@ -1729,11 +1731,12 @@ void ParWorkerThread::emitMySignal()
 void  ParWorkerThread::calcul_objet(int cmp, int idx)
 {
     int NewPosition =  TypeDrawin*idx, id=0, PreviousSignal=0;
-    int OrignbU=8, OrignbV=8;
+    int OrignbU=int (std::sqrt(Stack_Factor));
+    int OrignbV=OrignbU;
     int nbU=OrignbU, nbV=OrignbV;
     int nbstack=nbU*nbV;
     int Iindice=0, Jindice=0;
-    double* vals, res, res2=0;
+    double* vals, res;
     float *ResX, *ResY, *ResZ, *ResW;
     int taille=0;
 
@@ -1764,6 +1767,12 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
     int Totalpoints=(iFinish-iStart)*Vgrid;
     for(int l=0; l<nbstack; l++)
         vals[l*3+2]= stepMorph;
+
+    myParserX[cmp].AllocateStackMemory(Stack_Factor);
+    myParserY[cmp].AllocateStackMemory(Stack_Factor);
+    myParserZ[cmp].AllocateStackMemory(Stack_Factor);
+    if(param4D == 1)
+        myParserW[cmp].AllocateStackMemory(Stack_Factor);
 
     for(int i=iStart; i < iFinish   ; i+=nbU)
     {

@@ -146,8 +146,11 @@ public :
           int NbText=NbTextures,
           int nbSlid=NbSliders,
           int nbSlidV=NbSliderValues,
-          int nbThreads=16,
-          int nbGrid=40);
+          int nbThreads=6,
+          int nbGrid=40,
+          int factX=4,
+          int factY=4,
+          int factZ=4);
     ~Iso3D();
     inline   void SignatureComputation();
     inline   int ConstructIsoSurface();

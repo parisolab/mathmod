@@ -40,12 +40,17 @@
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
     },
+    "CalculFactorConfig": {
+        "FactX": 3,
+        "FactY": 5,
+        "FactZ": 2
+    },
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
         "UsedStyle": "Fusion"
     },
     "StartOptions": {
-        "Model": "Blobs"
+        "Model": "CloseIso_1"
     },
     "Themes": {
         "PredefinedThemes": [ "Default", "Dark", "MyTheme"],
