@@ -36,7 +36,7 @@
     },
     "ThreadsConfig": {
         "AutoDetect": true,
-        "ThreadsNumber": 8,
+        "ThreadsNumber": 4,
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
     },
