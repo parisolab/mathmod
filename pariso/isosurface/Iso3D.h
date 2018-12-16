@@ -135,7 +135,7 @@ public :
     //unsigned int *  IndexPolyTab;
     int NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
-
+    QString message;
 public :
     Iso3D(int, int,
           int gridmax=NbMaxGrid,
@@ -175,6 +175,8 @@ public :
 
 signals:
     void ErrorSignal(int);
+    void UpdateMessageSignal(QString);
 public:
     void emitErrorSignal();
+    void emitUpdateMessageSignal();
 };

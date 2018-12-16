@@ -114,6 +114,11 @@ void Iso3D::emitErrorSignal()
     emit ErrorSignal(int(messageerror));
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void Iso3D::emitUpdateMessageSignal()
+{
+    emit UpdateMessageSignal(message);
+}
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void Iso3D::BuildIso()
 {
     IsoBuild(
@@ -946,7 +951,6 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
     int remY= limitY%nbY;
     int remZ= limitZ%nbZ;
     int Totalpoints=(iFinish-iStart)*limitY*limitZ;
-
     //****
     implicitFunctionParser[IsoIndex].AllocateStackMemory(Stack_Factor);
     for(int i=iStart; i<iFinish; i+=nbX )
@@ -1810,6 +1814,9 @@ void Iso3D::IsoBuild (
     // generate Isosurface for all the implicit formulas
     for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
+
+        message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_implicitfunctions+1)+"--> Math calculation");
+        emitUpdateMessageSignal();
         IsoComponentId = fctnb;
         masterthread->CurrentIso = fctnb;
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
@@ -1846,6 +1853,10 @@ void Iso3D::IsoBuild (
 
         if(StopCalculations || Stop)
             return;
+
+        message += QString("--> Mesh generation");
+        emitUpdateMessageSignal();
+
         int result = PointEdgeComputation(fctnb);
         if(result == 0)
         {
@@ -1906,6 +1917,9 @@ void Iso3D::IsoBuild (
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
     }
 
+    message = QString("2) Mesh Processing");
+    emitUpdateMessageSignal();
+
     //CND calculation for the triangles results:
     int result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
     if(result == 0)
@@ -1959,6 +1973,8 @@ void Iso3D::IsoBuild (
 
     // Vertex :
     *VertexNumberpt = NbVertexTmp;
+    message = QString("Threads:"+QString::number(WorkerThreadsNumber)+"; Components:"+QString::number(masterthread->Nb_implicitfunctions+1));
+    emitUpdateMessageSignal();
 
     memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
