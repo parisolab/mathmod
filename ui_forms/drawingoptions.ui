@@ -179,112 +179,6 @@
        </spacer>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <item>
-         <widget class="QPushButton" name="anim">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Animation</string>
-          </property>
-          <property name="text">
-           <string>Anim</string>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>30</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="morph">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Morphing</string>
-          </property>
-          <property name="text">
-           <string>Morph</string>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>30</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
          <number>1</number>
@@ -9439,6 +9333,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionConfiguration"/>
     <addaction name="separator"/>
     <addaction name="actionScripts_selection"/>
+    <addaction name="separator"/>
+    <addaction name="actionAnimation_Rotation"/>
+    <addaction name="actionMorph_use_t_parameter"/>
    </widget>
    <widget class="QMenu" name="menuExport">
     <property name="title">
@@ -9700,6 +9597,22 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Scripts selection</string>
+   </property>
+  </action>
+  <action name="actionAnimation_Rotation">
+   <property name="text">
+    <string>Animation(Rotation)</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+A</string>
+   </property>
+  </action>
+  <action name="actionMorph_use_t_parameter">
+   <property name="text">
+    <string>Morph(use t parameter)</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+P</string>
    </property>
   </action>
  </widget>

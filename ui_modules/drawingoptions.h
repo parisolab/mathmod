@@ -59,7 +59,6 @@ public:
     SelectOptions select;
     void AddListModels(bool b=false);
     void Run_JsonObject_activeted();
-    void keyPressEvent ( QKeyEvent *);
     Ui::DrawingOptions ui;
     QJsonObject JSONMathModels;
     SliderStruct * SliderArray;
@@ -163,8 +162,6 @@ public slots:
     void on_actionScreenshot_triggered();
     void on_actionEditor_triggered();
     void on_actionColors_triggered();
-    void on_anim_clicked();
-    void on_morph_clicked();
     void update_slider_param();
     void add_new_param();
     void update_infos_param(int);
@@ -276,5 +273,7 @@ private slots:
     void on_coloneScrollBar_valueChanged(int value);
     void on_actionScripts_selection_triggered();
     void on_actionBoundingBox_clicked();
+    void on_actionAnimation_Rotation_triggered();
+    void on_actionMorph_use_t_parameter_triggered();
 };
 #endif

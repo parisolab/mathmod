@@ -6082,28 +6082,6 @@ void DrawingOptions::on_actionColors_triggered()
 }
 
 // --------------------------
-void DrawingOptions::on_anim_clicked()
-{
-    MathmodRef->ui.glWidget->anim();
-}
-
-// --------------------------
-void DrawingOptions::on_morph_clicked()
-{
-    MathmodRef->ui.glWidget->morph();
-}
-
-// --------------------------
-void DrawingOptions::keyPressEvent ( QKeyEvent *key)
-{
-    int button = key->key();
-    if(button == Qt::Key_A )
-        ui.anim->click();
-    else if(button == Qt::Key_M)
-        ui.morph->click();
-}
-
-// --------------------------
 void DrawingOptions::on_actionSmooth_2_clicked()
 {
     MathmodRef->smoothline();
@@ -7726,4 +7704,14 @@ void DrawingOptions::on_actionBoundingBox_clicked()
 {
     MathmodRef->ui.glWidget->boundingboxOk();
     MathmodRef->ui.glWidget->update();
+}
+
+void DrawingOptions::on_actionAnimation_Rotation_triggered()
+{
+    MathmodRef->ui.glWidget->anim();
+}
+
+void DrawingOptions::on_actionMorph_use_t_parameter_triggered()
+{
+    MathmodRef->ui.glWidget->morph();
 }
