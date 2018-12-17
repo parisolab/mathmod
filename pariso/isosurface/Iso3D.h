@@ -172,11 +172,10 @@ public :
     void ReinitVarTablesWhenMorphActiv(int);
     void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
-
+public :
+    void emitErrorSignal();
+    void emitUpdateMessageSignal();
 signals:
     void ErrorSignal(int);
     void UpdateMessageSignal(QString);
-public:
-    void emitErrorSignal();
-    void emitUpdateMessageSignal();
 };

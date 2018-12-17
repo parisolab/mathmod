@@ -1814,7 +1814,6 @@ void Iso3D::IsoBuild (
     // generate Isosurface for all the implicit formulas
     for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
-
         message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_implicitfunctions+1)+"==> Math calculation");
         emitUpdateMessageSignal();
         IsoComponentId = fctnb;

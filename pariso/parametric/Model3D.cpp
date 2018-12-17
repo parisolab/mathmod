@@ -69,7 +69,11 @@ double TurbulencePerlin2(const double* p)
 Par3D::~Par3D()
 {
 }
-
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void Par3D::emitUpdateMessageSignal()
+{
+    emit UpdateMessageSignal(message);
+}
 //+++++++++++++++++++++++++++++++++++++++++
 ParWorkerThread::ParWorkerThread()
 {
@@ -1948,6 +1952,8 @@ void  Par3D::ParamBuild(
 
     for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
     {
+        message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_paramfunctions+1)+"==> Math calculation");
+        emitUpdateMessageSignal();
         ParamComponentId = fctnb;
         if(masterthread->gridnotnull)
         {
@@ -2001,6 +2007,9 @@ void  Par3D::ParamBuild(
             return;
         }
 
+        message += QString(" ==> Mesh generation");
+        emitUpdateMessageSignal();
+
         if(param4D == 1)
         {
             Anim_Rot4D (NextIndex);
@@ -2017,6 +2026,9 @@ void  Par3D::ParamBuild(
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NextIndex    += (Ugrid)*(Vgrid);
     }
+
+    message = QString("2) Mesh Processing");
+    emitUpdateMessageSignal();
 
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
@@ -2053,11 +2065,13 @@ void  Par3D::ParamBuild(
     if(masterthread->gridnotnull)
         initialiser_LineColumn(nbline_save, nbcolone_save);
 
+    message = QString("Threads:"+QString::number(WorkerThreadsNumber)+"; Components:"+QString::number(masterthread->Nb_paramfunctions+1));
+    emitUpdateMessageSignal();
+
     // 3) Nb Poly & Vertex :
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
-
     memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));

@@ -137,6 +137,7 @@ public:
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
     int largeur_fenetre,hauteur_fenetre;
     ScriptErrorType messageerror;
+    QString message;
 public:
     Par3D(int,
           int nbThreads=16,
@@ -174,8 +175,10 @@ public:
     ErrorMessage  ParMorph();
     void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
+public :
+    void emitErrorSignal();
+    void emitUpdateMessageSignal();
 signals:
     void ErrorSignal(int);
-public:
-    void emitErrorSignal();
+    void UpdateMessageSignal(QString);
 };
