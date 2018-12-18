@@ -32,6 +32,8 @@ ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
 double ParamComponentId=0;
 double ParamThreadId=0;
 
+QElapsedTimer ptime;
+
 double CurrentParamCmpId(const double* p)
 {
     int pp = (int)p[0];
@@ -1950,12 +1952,19 @@ void  Par3D::ParamBuild(
     else
         NbVertex  = (Ugrid)*(Vgrid);
 
-    QElapsedTimer times;
-    times.start();
+    if(masterthread->activeMorph != 1)
+    {
+        ptime.restart();
+    }
+
     for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
     {
-        message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_paramfunctions+1)+"==> Math calculation");
-        emitUpdateMessageSignal();
+        if(masterthread->activeMorph != 1)
+        {
+            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_paramfunctions+1)+"==> Math calculation");
+            emitUpdateMessageSignal();
+        }
+
         ParamComponentId = fctnb;
         if(masterthread->gridnotnull)
         {
@@ -2009,8 +2018,11 @@ void  Par3D::ParamBuild(
             return;
         }
 
-        message += QString(" ==> Mesh generation");
-        emitUpdateMessageSignal();
+        if(masterthread->activeMorph != 1)
+        {
+            message += QString(" ==> Mesh generation");
+            emitUpdateMessageSignal();
+        }
 
         if(param4D == 1)
         {
@@ -2029,8 +2041,11 @@ void  Par3D::ParamBuild(
         NextIndex    += (Ugrid)*(Vgrid);
     }
 
-    message = QString("2) Mesh Processing");
-    emitUpdateMessageSignal();
+    if(masterthread->activeMorph != 1)
+    {
+        message = QString("2) Mesh Processing");
+        emitUpdateMessageSignal();
+    }
 
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
@@ -2067,8 +2082,11 @@ void  Par3D::ParamBuild(
     if(masterthread->gridnotnull)
         initialiser_LineColumn(nbline_save, nbcolone_save);
 
-    message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->Nb_paramfunctions+1)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
-    emitUpdateMessageSignal();
+    if(masterthread->activeMorph != 1)
+    {
+        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->Nb_paramfunctions+1)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
+        emitUpdateMessageSignal();
+    }
 
     // 3) Nb Poly & Vertex :
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;

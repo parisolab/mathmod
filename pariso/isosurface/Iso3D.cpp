@@ -59,6 +59,8 @@ static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 static double IsoComponentId=0;
 static double IsoThreadId=0;
 
+QElapsedTimer times;
+
 double CurrentIsoCmpId(const double* p)
 {
     int pp = static_cast <int> (p[0]);
@@ -1811,13 +1813,19 @@ void Iso3D::IsoBuild (
 
     stopcalculations(false);
 
-    QElapsedTimer times;
-    times.start();
+    if(masterthread->morph_activated != 1)
+    {
+        times.restart();
+    }
     // generate Isosurface for all the implicit formulas
     for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
-        message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_implicitfunctions+1)+"==> Math calculation");
-        emitUpdateMessageSignal();
+        if(masterthread->morph_activated != 1)
+        {
+            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_implicitfunctions+1)+"==> Math calculation");
+            emitUpdateMessageSignal();
+        }
+
         IsoComponentId = fctnb;
         masterthread->CurrentIso = fctnb;
         for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
@@ -1855,8 +1863,11 @@ void Iso3D::IsoBuild (
         if(StopCalculations || Stop)
             return;
 
-        message += QString(" ==> Mesh generation");
-        emitUpdateMessageSignal();
+        if(masterthread->morph_activated != 1)
+        {
+            message += QString(" ==> Mesh generation");
+            emitUpdateMessageSignal();
+        }
 
         int result = PointEdgeComputation(fctnb);
         if(result == 0)
@@ -1918,8 +1929,11 @@ void Iso3D::IsoBuild (
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
     }
 
-    message = QString("2) Mesh Processing");
-    emitUpdateMessageSignal();
+    if(masterthread->morph_activated != 1)
+    {
+        message = QString("2) Mesh Processing");
+        emitUpdateMessageSignal();
+    }
 
     //CND calculation for the triangles results:
     int result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
@@ -1974,8 +1988,12 @@ void Iso3D::IsoBuild (
 
     // Vertex :
     *VertexNumberpt = NbVertexTmp;
-    message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->Nb_implicitfunctions+1)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
-    emitUpdateMessageSignal();
+
+    if(masterthread->morph_activated != 1)
+    {
+        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->Nb_implicitfunctions+1)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
+        emitUpdateMessageSignal();
+    }
 
     memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
