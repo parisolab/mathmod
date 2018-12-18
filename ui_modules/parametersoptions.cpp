@@ -407,18 +407,18 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         fileconfig       = argv1 + fileconfig;
         advancedmodels   = argv1 + advancedmodels;
     }
-/*
-    #ifdef Q_OS_MACOS
-        else
-        {
-            MACOS = true;
-            argv1 ="../Resources/";
-            filecollection   = argv1 + filecollection;
-            fileconfig       = argv1 + fileconfig;
-            advancedmodels   = argv1 + advancedmodels;
-         }
-    #endif
-*/
+    /*
+        #ifdef Q_OS_MACOS
+            else
+            {
+                MACOS = true;
+                argv1 ="../Resources/";
+                filecollection   = argv1 + filecollection;
+                fileconfig       = argv1 + fileconfig;
+                advancedmodels   = argv1 + advancedmodels;
+             }
+        #endif
+    */
     QFile mathmodfileconfig(fileconfig);
     if(!mathmodfileconfig.exists() && ((argc >1) || MACOS ))
     {

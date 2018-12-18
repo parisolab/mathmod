@@ -89,52 +89,52 @@ static void drawCube(float x)
     glLineWidth(1);
 
     glBegin(GL_QUADS);
-        glVertex3f(-longX,-longY ,-longZ);
-        glVertex3f(longX, -longY, -longZ);
-        glVertex3f(longX, longY, -longZ);
-        glVertex3f(-longX, longY, -longZ);
+    glVertex3f(-longX,-longY ,-longZ);
+    glVertex3f(longX, -longY, -longZ);
+    glVertex3f(longX, longY, -longZ);
+    glVertex3f(-longX, longY, -longZ);
 
-        glVertex3f(-longX, -longY, -longZ);
-        glVertex3f(-longX, -longY, longZ);
-        glVertex3f(-longX, longY, longZ);
-        glVertex3f(-longX, longY, -longZ);
+    glVertex3f(-longX, -longY, -longZ);
+    glVertex3f(-longX, -longY, longZ);
+    glVertex3f(-longX, longY, longZ);
+    glVertex3f(-longX, longY, -longZ);
 
-        glVertex3f(-longX, -longY, -longZ);
-        glVertex3f(-longX, -longY, longZ);
-        glVertex3f(longX, -longY, longZ);
-        glVertex3f(longX, -longY, -longZ);
+    glVertex3f(-longX, -longY, -longZ);
+    glVertex3f(-longX, -longY, longZ);
+    glVertex3f(longX, -longY, longZ);
+    glVertex3f(longX, -longY, -longZ);
 
-        glEnd();
-        glLineWidth(1);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // this line should be put elsewhere where it's missing
+    glEnd();
+    glLineWidth(1);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // this line should be put elsewhere where it's missing
 
-        //X
-        glColor3f (1.0, 0.0, 0.0);
-        glRasterPos3f(longX, -longY, longZ+60);
-        glCallLists(QString::number(maxx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxx,'g',  3).toLatin1());
+    //X
+    glColor3f (1.0, 0.0, 0.0);
+    glRasterPos3f(longX, -longY, longZ+60);
+    glCallLists(QString::number(maxx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxx,'g',  3).toLatin1());
 
-        glColor3f (1.0, 0.0, 0.0);
-        glRasterPos3f(-longX, -longY, longZ+60);
-        glCallLists(QString::number(minx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minx,'g',  3).toLatin1());
+    glColor3f (1.0, 0.0, 0.0);
+    glRasterPos3f(-longX, -longY, longZ+60);
+    glCallLists(QString::number(minx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minx,'g',  3).toLatin1());
 
-        //Y
-        glColor3f (0.0, 1.0, 0.0);
-        glRasterPos3f(longX+100, longY, -longZ);
-        glCallLists(QString::number(maxy,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxy,'g',  3).toLatin1());
+    //Y
+    glColor3f (0.0, 1.0, 0.0);
+    glRasterPos3f(longX+100, longY, -longZ);
+    glCallLists(QString::number(maxy,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxy,'g',  3).toLatin1());
 
-        glColor3f (0.0, 1.0, 0.0);
-        glRasterPos3f(longX+100, -longY,-longZ);
-        glCallLists(QString::number(miny,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(miny,'g',  3).toLatin1());
+    glColor3f (0.0, 1.0, 0.0);
+    glRasterPos3f(longX+100, -longY,-longZ);
+    glCallLists(QString::number(miny,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(miny,'g',  3).toLatin1());
 
-        //Z
-        glColor3f (0.4, 0.4, 1.0);
-        glRasterPos3f(longX+60, -longY-60, longZ);
-        glCallLists(QString::number(maxz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxz,'g',  3).toLatin1());
+    //Z
+    glColor3f (0.4, 0.4, 1.0);
+    glRasterPos3f(longX+60, -longY-60, longZ);
+    glCallLists(QString::number(maxz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxz,'g',  3).toLatin1());
 
-        glColor3f (0.4, 0.4, 1.0);
-        glRasterPos3f(longX+60, -longY-60,-longZ);
-        glCallLists(QString::number(minz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minz,'g',  3).toLatin1());
-    }
+    glColor3f (0.4, 0.4, 1.0);
+    glRasterPos3f(longX+60, -longY-60,-longZ);
+    glCallLists(QString::number(minz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minz,'g',  3).toLatin1());
+}
 
 static void DrawIso (ObjectProperties *scene)
 {

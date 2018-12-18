@@ -385,8 +385,12 @@ void OpenGlWidget::initbox()
 void OpenGlWidget::PutObjectInsideCube()
 {
 
-    minx   = 999999999;  miny  = 999999999;  minz  = 999999999;
-            maxx =-999999999 ;  maxy =-999999999; maxz =-999999999;
+    minx   = 999999999;
+    miny  = 999999999;
+    minz  = 999999999;
+    maxx =-999999999 ;
+    maxy =-999999999;
+    maxz =-999999999;
     if((LocalScene.morph != 1 || (LocalScene.morph == 1 && FistTimecalibrate ==1))   && LocalScene.slider != 1)
     {
         for (unsigned int i=0; i< LocalScene.VertxNumber; i++)
