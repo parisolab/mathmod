@@ -1950,6 +1950,8 @@ void  Par3D::ParamBuild(
     else
         NbVertex  = (Ugrid)*(Vgrid);
 
+    QElapsedTimer times;
+    times.start();
     for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
     {
         message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_paramfunctions+1)+"==> Math calculation");
@@ -2065,7 +2067,7 @@ void  Par3D::ParamBuild(
     if(masterthread->gridnotnull)
         initialiser_LineColumn(nbline_save, nbcolone_save);
 
-    message = QString("Threads:"+QString::number(WorkerThreadsNumber)+"; Components:"+QString::number(masterthread->Nb_paramfunctions+1));
+    message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->Nb_paramfunctions+1)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
     emitUpdateMessageSignal();
 
     // 3) Nb Poly & Vertex :

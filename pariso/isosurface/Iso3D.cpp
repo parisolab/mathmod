@@ -1811,6 +1811,8 @@ void Iso3D::IsoBuild (
 
     stopcalculations(false);
 
+    QElapsedTimer times;
+    times.start();
     // generate Isosurface for all the implicit formulas
     for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
@@ -1972,7 +1974,7 @@ void Iso3D::IsoBuild (
 
     // Vertex :
     *VertexNumberpt = NbVertexTmp;
-    message = QString("Threads:"+QString::number(WorkerThreadsNumber)+"; Components:"+QString::number(masterthread->Nb_implicitfunctions+1));
+    message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->Nb_implicitfunctions+1)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
     emitUpdateMessageSignal();
 
     memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));

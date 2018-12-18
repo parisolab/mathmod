@@ -23,6 +23,7 @@
 #include <string>
 #include <iostream>
 #include <qthread.h>
+#include <QElapsedTimer>
 #include "../fparser/fparser.hh"
 
 #define PI (static_cast <double>(314159265)/static_cast <double>(100000000))
