@@ -1855,7 +1855,7 @@ void  ParWorkerThread::calcul_objet(int cmp, int idx)
             }
 
             int p=0;
-            for(int ii=0; ii<nbU;ii++)
+            for(int ii=0; ii<nbU; ii++)
                 for(int jj=0; jj<nbV; jj++)
                 {
                     NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +3 +NewPosition+ TypeDrawinNormStep] = ResX[p];

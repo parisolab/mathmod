@@ -73,26 +73,26 @@ double CurrentIsoCmpId(const double* p)
 extern double TurbulenceWorley(const double* p)
 {
     return static_cast <double> (
-                NoiseFunction->CellNoiseFunc(
-               static_cast <float> (p[0]),
-               static_cast <float> (p[1]),
-               static_cast <float> (p[2]),
-               static_cast <int> (p[3]),
-               static_cast <int> (p[4]),
-               static_cast <int> (p[5]))
-            );
+               NoiseFunction->CellNoiseFunc(
+                   static_cast <float> (p[0]),
+                   static_cast <float> (p[1]),
+                   static_cast <float> (p[2]),
+                   static_cast <int> (p[3]),
+                   static_cast <int> (p[4]),
+                   static_cast <int> (p[5]))
+           );
 }
 
 double TurbulencePerlin(const double* p)
 {
     return static_cast <double> (
-                PNoise->FractalNoise3D(
-               static_cast <float> (p[0]),
-               static_cast <float> (p[1]),
-               static_cast <float> (p[2]),
-               static_cast <int> (p[3]),
-               static_cast <float> (p[4]),
-               static_cast <float> (p[5])));
+               PNoise->FractalNoise3D(
+                   static_cast <float> (p[0]),
+                   static_cast <float> (p[1]),
+                   static_cast <float> (p[2]),
+                   static_cast <int> (p[3]),
+                   static_cast <float> (p[4]),
+                   static_cast <float> (p[5])));
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -459,7 +459,9 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
               int factY,
               int factZ)
 {
-    OrignbX= factX; OrignbY= factY; OrignbZ=factZ;
+    OrignbX= factX;
+    OrignbY= factY;
+    OrignbZ=factZ;
     Stack_Factor = factX*factY*factZ;
     NbTextures=NbText;
     NbComponent=NbCompo;
@@ -1009,11 +1011,10 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
                     for(int l=0; l<nbstack; l++)
                         Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*34]));
                 }
-                else
-                    if( res == DIVISION_BY_ZERO)
-                    {
-                        StopCalculations = true;
-                    }
+                else if( res == DIVISION_BY_ZERO)
+                {
+                    StopCalculations = true;
+                }
 
                 if(StopCalculations)
                     return;
