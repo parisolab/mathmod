@@ -6335,7 +6335,7 @@ void DrawingOptions::UpdateGui(int argc)
     HideSliders();
     //ProgressBar + text informations (set to minimum size 0)
     QList<int> Sizes;
-    Sizes <<500<<0;
+    Sizes <<500<<250;
     ui.splitter_6->setSizes(Sizes);
     ui.Messagetext->setFontPointSize(10);
 }
