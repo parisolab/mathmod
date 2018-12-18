@@ -9604,7 +9604,7 @@ p, li { white-space: pre-wrap; }
     <string>Animation(Rotation)</string>
    </property>
    <property name="shortcut">
-    <string>Meta+A</string>
+    <string>Ctrl+A</string>
    </property>
   </action>
   <action name="actionMorph_use_t_parameter">
@@ -9612,7 +9612,7 @@ p, li { white-space: pre-wrap; }
     <string>Morph(use t parameter)</string>
    </property>
    <property name="shortcut">
-    <string>Meta+P</string>
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>
