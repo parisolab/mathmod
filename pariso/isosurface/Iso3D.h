@@ -53,7 +53,7 @@ class IsoWorkerThread : public QThread
 public :
     FunctionParser *implicitFunctionParser, *Fct;
     int   Xgrid, Ygrid, Zgrid;
-    int iStart, iFinish;
+    int iStart, iFinish, WorkerThreadsNumber, MyIndex;
     bool AllComponentTraited;
     int morph_activated, Nb_newvariables, maximumgrid;
     double stepMorph, pace;
@@ -61,7 +61,7 @@ public :
     double *xLocal2, *yLocal2, *zLocal2;
     double *vr2;
     ErrorMessage stdError;
-    unsigned int NbPolygn, NbPolygnNbVertex[2], MyIndex,WorkerThreadsNumber;
+    unsigned int NbPolygn, NbPolygnNbVertex[2];
     bool StopCalculations, ParsersAllocated;
     int signalVal;
 public :
@@ -72,7 +72,7 @@ public :
     void IsoWorkerTable();
     void run() Q_DECL_OVERRIDE;
     IsoWorkerThread();
-    ~IsoWorkerThread();
+    ~IsoWorkerThread() override;
 signals:
     void mySignal(int myParameter);
 public:
@@ -151,13 +151,13 @@ public :
           int factX=4,
           int factY=4,
           int factZ=4);
-    ~Iso3D();
+    ~Iso3D() override;
     inline   void SignatureComputation();
     inline   int ConstructIsoSurface();
     inline   void ConstructIsoNormale();
     inline   int PointEdgeComputation(int);
     inline int CNDCalculation(int &, struct ComponentInfos *);
-    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int * a=NULL,unsigned  int *b=NULL, struct ComponentInfos * P=NULL, int *listeCND=NULL, bool *ltypeCND=NULL);
+    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool *);
     void SaveIsoGLMap();
     int SetMiniMmeshStruct();
     int CNDtoUse(int index, struct ComponentInfos *components);

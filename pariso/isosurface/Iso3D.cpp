@@ -59,7 +59,7 @@ static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 static double IsoComponentId=0;
 static double IsoThreadId=0;
 
-QElapsedTimer times;
+static QElapsedTimer times;
 
 double CurrentIsoCmpId(const double* p)
 {
@@ -314,10 +314,10 @@ ErrorMessage Iso3D::ThreadParsersCopy()
     for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
 
-        memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, NbComponent*NbMaxGrid*sizeof(double));
-        memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, NbComponent*NbMaxGrid*sizeof(double));
-        memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, NbComponent*NbMaxGrid*sizeof(double));
-        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, 3*(masterthread->Nb_newvariables)*NbComponent*NbMaxGrid*sizeof(double));
+        memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*(masterthread->Nb_newvariables)*NbComponent*NbMaxGrid)*sizeof(double));
         workerthreads[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
