@@ -545,7 +545,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
         {
             stdError.strError = Consts[j];
-            stdError.strOrigine = ConstNames[j];
             return stdError;
         }
         ConstValues[j] = Cstparser.Eval(vals);
@@ -579,7 +578,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"u,v,t")) >= 0)
             {
                 stdError.strError = Functs[i];
-                stdError.strOrigine = FunctNames[i];
                 return stdError;
             }
             Fct[i].AllocateStackMemory(Stack_Factor);
@@ -656,7 +654,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             if ((stdError.iErrorIndex =Var[i].Parse(Varus[i],"u,tm")) >= 0)
             {
                 stdError.strError = Varus[i];
-                stdError.strOrigine = VarName[i];
                 return stdError;
             }
             varliste += ","+VarName[i]+"x,"+VarName[i]+"y,"+VarName[i]+"z";
@@ -738,7 +735,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,grid,cmpId")) >= 0)
             {
                 stdError.strError = Rgbts[i];
-                stdError.strOrigine = RgbtNames[i];
                 return stdError;
             }
 
@@ -749,7 +745,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
         {
             stdError.strError = Gradient;
-            stdError.strOrigine = Gradient;
             return stdError;
         }
 
@@ -757,7 +752,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
             {
                 stdError.strError = VRgbts[i];
-                stdError.strOrigine = VRgbtNames[i];
                 return stdError;
             }
     }
@@ -766,7 +760,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t")) >= 0)
         {
             stdError.strError = Noise;
-            stdError.strOrigine = Noise;
             return stdError;
         }
 
@@ -774,7 +767,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = NoiseShapeParser->Parse(NoiseShape,"x,y,z,t")) >= 0)
         {
             stdError.strError = NoiseShape;
-            stdError.strOrigine = NoiseShape;
             return stdError;
         }
 
@@ -783,7 +775,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].umin;
-            stdError.strOrigine = ParamStructs[index].index;
             return stdError;
         }
         u_inf[index] = myParserUmin[index].Eval(vals);
@@ -791,7 +782,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = myParserUmax[index].Parse(ParamStructs[index].umax, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].umax;
-            stdError.strOrigine = ParamStructs[index].index;
             return stdError;
         }
         u_sup[index] = myParserUmax[index].Eval(vals);
@@ -800,7 +790,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = myParserVmin[index].Parse(ParamStructs[index].vmin, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].vmin;
-            stdError.strOrigine = ParamStructs[index].index;
             return stdError;
         }
         v_inf[index] = myParserVmin[index].Eval(vals);
@@ -808,7 +797,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = myParserVmax[index].Parse(ParamStructs[index].vmax, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].vmax;
-            stdError.strOrigine = ParamStructs[index].index;
             return stdError;
         }
         v_sup[index] = myParserVmax[index].Eval(vals);
@@ -817,21 +805,18 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = myParserX[index].Parse(ParamStructs[index].fx, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].fx;
-            stdError.strOrigine = ParamStructs[index].index;
             return stdError;
         }
 
         if ((stdError.iErrorIndex = myParserY[index].Parse(ParamStructs[index].fy, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].fy;
-            stdError.strOrigine = ParamStructs[index].index;
             return stdError;
         }
 
         if ((stdError.iErrorIndex = myParserZ[index].Parse(ParamStructs[index].fz, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].fz;
-            stdError.strOrigine = ParamStructs[index].index;
             return stdError;
         }
 
@@ -839,7 +824,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].fw, "u,v,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].fw;
-                stdError.strOrigine = ParamStructs[index].index;
                 return stdError;
             }
 
@@ -847,7 +831,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             if ((stdError.iErrorIndex = myParserCND[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].cnd;
-                stdError.strOrigine = ParamStructs[index].index;
                 return stdError;
             }
     }
@@ -889,7 +872,6 @@ ErrorMessage  Par3D::parse_expression2()
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"u,v,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
-                masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
                 return masterthread->stdError;
             }
             workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor);
@@ -960,21 +942,18 @@ ErrorMessage  Par3D::parse_expression2()
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fx;
-                masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
                 return masterthread->stdError;
             }
 
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fy;
-                masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
                 return masterthread->stdError;
             }
 
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fz;
-                masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
                 return masterthread->stdError;
             }
 
@@ -982,7 +961,6 @@ ErrorMessage  Par3D::parse_expression2()
                 if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t")) >= 0)
                 {
                     masterthread->stdError.strError = masterthread->ParamStructs[index].fw;
-                    masterthread->stdError.strOrigine = masterthread->ParamStructs[index].index;
                     return masterthread->stdError;
                 }
         }

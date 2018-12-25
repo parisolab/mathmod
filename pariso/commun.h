@@ -40,7 +40,6 @@ struct ImplicitStructure
     std::string zmax;
     std::string grid;
     std::string cnd;
-    int              index;
 };
 
 extern int OrignbX, OrignbY, OrignbZ;
@@ -70,7 +69,6 @@ struct ErrorMessage
 {
     int iErrorIndex;
     std::string strError;
-    std::string strOrigine;
 };
 
 // Any modification to this enum must be translated to the same enum in fparser.hh

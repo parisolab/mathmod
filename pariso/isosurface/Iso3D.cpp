@@ -377,7 +377,6 @@ ErrorMessage  Iso3D::parse_expression2()
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
-                masterthread->stdError.strOrigine = masterthread->FunctNames[ii];
                 return masterthread->stdError;
             }
             workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor);
@@ -435,7 +434,6 @@ ErrorMessage  Iso3D::parse_expression2()
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
-                masterthread->stdError.strOrigine = masterthread->ImplicitStructs[index].index;
                 return masterthread->stdError;
             }
         }
@@ -1172,7 +1170,6 @@ ErrorMessage IsoMasterThread::ParserIso()
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
         {
             stdError.strError = Consts[j];
-            stdError.strOrigine = ConstNames[j];
             return stdError;
         }
         ConstValues[j] = Cstparser.Eval(&vals[3]);
@@ -1205,7 +1202,6 @@ ErrorMessage IsoMasterThread::ParserIso()
             if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"x,y,z,t"))>=0)
             {
                 stdError.strError = Functs[i];
-                stdError.strOrigine = FunctNames[i];
                 return stdError;
             }
             Fct[i].AllocateStackMemory(Stack_Factor);
@@ -1313,7 +1309,6 @@ ErrorMessage IsoMasterThread::ParserIso()
             if ((stdError.iErrorIndex = Var[i].Parse(Varus[i],"u,tm")) >= 0)
             {
                 stdError.strError = Varus[i];
-                stdError.strOrigine = VarName[i];
                 return stdError;
             }
             varliste += ","+VarName[i]+"x,"+VarName[i]+"y,"+VarName[i]+"z";
@@ -1450,7 +1445,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t")) >= 0)
             {
                 stdError.strError = Rgbts[i];
-                stdError.strOrigine = RgbtNames[i];
                 return stdError;
             }
 
@@ -1460,7 +1454,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
         {
             stdError.strError = Gradient;
-            stdError.strOrigine = Gradient;
             return stdError;
         }
 
@@ -1468,7 +1461,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
             {
                 stdError.strError = VRgbts[i];
-                stdError.strOrigine = VRgbtNames[i];
                 return stdError;
             }
     }
@@ -1477,7 +1469,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t")) >= 0)
         {
             stdError.strError = Noise;
-            stdError.strOrigine = Noise;
             return stdError;
         }
 
@@ -1486,7 +1477,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,VariableListe)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
-            stdError.strOrigine = ImplicitStructs[i].index;
             return stdError;
         }
         if(Condition != "")
@@ -1494,7 +1484,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             if ((stdError.iErrorIndex = IsoConditionParser[i].Parse(ImplicitStructs[i].cnd,"x,y,z,t")) >= 0)
             {
                 stdError.strError = ImplicitStructs[i].cnd;
-                stdError.strOrigine = ImplicitStructs[i].index;
                 return stdError;
             }
         }
@@ -1502,37 +1491,31 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         if ((stdError.iErrorIndex = xSupParser[i].Parse(ImplicitStructs[i].xmax, "x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].xmax;
-            stdError.strOrigine = ImplicitStructs[i].index;
             return stdError;
         }
         if ((stdError.iErrorIndex = ySupParser[i].Parse(ImplicitStructs[i].ymax, "x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].ymax;
-            stdError.strOrigine = ImplicitStructs[i].index;
             return stdError;
         }
         if ((stdError.iErrorIndex = zSupParser[i].Parse(ImplicitStructs[i].zmax, "x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].zmax;
-            stdError.strOrigine = ImplicitStructs[i].index;
             return stdError;
         }
         if ((stdError.iErrorIndex = xInfParser[i].Parse(ImplicitStructs[i].xmin, "x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].xmin;
-            stdError.strOrigine = ImplicitStructs[i].index;
             return stdError;
         }
         if ((stdError.iErrorIndex = yInfParser[i].Parse(ImplicitStructs[i].ymin, "x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].ymin;
-            stdError.strOrigine = ImplicitStructs[i].index;
             return stdError;
         }
         if ((stdError.iErrorIndex = zInfParser[i].Parse(ImplicitStructs[i].zmin, "x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].zmin;
-            stdError.strOrigine = ImplicitStructs[i].index;
             return stdError;
         }
     }
