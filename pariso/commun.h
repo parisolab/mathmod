@@ -126,7 +126,7 @@ enum ScriptErrorType
 };
 struct  ComponentInfos
 {
-    int NbIso;
+    int NbIso=0;
     int NbParametric;
     int *IsoPositions;
     int *IsoPts;
