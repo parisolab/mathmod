@@ -38,16 +38,16 @@ unsigned int * IndexPolyTabMin;
 struct ComponentInfos componentsStr;
 struct ComponentInfos * components=&componentsStr;
 
-int NbMaxGrid = 100;
-int NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
-int NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
-int NbComponent = 30;
-int NbConstantes = 30;
-int NbDefinedFunctions = 50;
-int NbVariables = 30;
-int NbTextures = 30;
-int NbSliders = 50;
-int NbSliderValues = 500;
+unsigned int NbMaxGrid = 100;
+unsigned int NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
+unsigned int NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
+unsigned int NbComponent = 30;
+unsigned int NbConstantes = 30;
+unsigned int NbDefinedFunctions = 50;
+unsigned int NbVariables = 30;
+unsigned int NbTextures = 30;
+unsigned int NbSliders = 50;
+unsigned int NbSliderValues = 500;
 
 
 int OrignbX, OrignbY, OrignbZ;
@@ -533,11 +533,11 @@ Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-int IsoMasterThread::HowManyVariables(std::string NewVariables, int type)
+unsigned int IsoMasterThread::HowManyVariables(std::string NewVariables, int type)
 {
     std::string tmp, tmp2,tmp3;
-    int position =0, jpos;
-    int Nb_variables =0;
+    int  position =0;
+    unsigned int  Nb_variables =0, jpos;
     while( NewVariables!= "")
     {
         if((position = NewVariables.find(";")) >0)
@@ -608,7 +608,7 @@ int IsoMasterThread::HowManyVariables(std::string NewVariables, int type)
             Nb_variables++;
         }
     }
-    return Nb_variables;
+    return (Nb_variables);
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -802,7 +802,7 @@ int IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, int type)
             if(ImplicitStructs[i].grid != "")
             {
                 Cstparser.Parse(ImplicitStructs[i].grid, "u");
-                GridTable[i] = Cstparser.Eval(&val); //position is used only to make the Eval function work
+                GridTable[i] = Cstparser.Eval(&val); //position is used only to make the Eval function work properly
             }
         }
         return Nb_implicitfunction;
@@ -1288,7 +1288,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         Nb_newvariables = HowManyVariables(Varu, 0);
 
-        for(int i=0; i<Nb_newvariables; i++)
+        for(unsigned int i=0; i<Nb_newvariables; i++)
         {
             for(int j=0; j<Nb_constants; j++)
             {
