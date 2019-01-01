@@ -55,8 +55,7 @@ public :
     int   Xgrid, Ygrid, Zgrid;
     int iStart, iFinish, WorkerThreadsNumber, MyIndex;
     bool AllComponentTraited;
-    int morph_activated, maximumgrid;
-    unsigned int Nb_newvariables;
+    int morph_activated, Nb_newvariables, maximumgrid;
     double stepMorph, pace;
     int CurrentIso;
     double *xLocal2, *yLocal2, *zLocal2;
@@ -83,7 +82,7 @@ public:
 class IsoMasterThread : public IsoWorkerThread
 {
 public :
-    FunctionParser  *IsoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
+    FunctionParser *IsoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
                    *xSupParser, *xInfParser,
                    *ySupParser, *yInfParser,
                    *zSupParser, *zInfParser,
@@ -113,7 +112,7 @@ public :
     void InitMasterParsers();
     inline ErrorMessage ParseExpression(std::string);
     int HowManyIsosurface(std::string,int);
-    unsigned int HowManyVariables(std::string, int);
+    int HowManyVariables(std::string, int);
     ErrorMessage ParserIso();
     void IsoMasterTable();
     void initparser();
