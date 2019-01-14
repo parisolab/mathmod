@@ -1035,7 +1035,7 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
 
                 if(MyIndex == 0 && morph_activated != 1)
                 {
-                    signalVal = (int)((id*100)/Totalpoints);
+                    signalVal = int((id*100)/Totalpoints);
                     if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
                     {
                         PreviousSignal = signalVal;
@@ -1092,11 +1092,11 @@ void Iso3D::ConstructIsoNormale()
         NormOriginaltmp[ThreeTimesI+1] = val3*val5 - val6*val2;
         NormOriginaltmp[ThreeTimesI+2] = val6*val4 - val1*val5;
 
-        scalar = (double)sqrt((NormOriginaltmp[ThreeTimesI  ]*NormOriginaltmp[ThreeTimesI  ]) +
+        scalar = float(sqrt((NormOriginaltmp[ThreeTimesI  ]*NormOriginaltmp[ThreeTimesI  ]) +
                               (NormOriginaltmp[ThreeTimesI+1]*NormOriginaltmp[ThreeTimesI+1]) +
-                              (NormOriginaltmp[ThreeTimesI+2]*NormOriginaltmp[ThreeTimesI+2]));
+                              (NormOriginaltmp[ThreeTimesI+2]*NormOriginaltmp[ThreeTimesI+2])));
 
-        if(scalar < 0.000000001)  scalar  = 0.000000001;
+        if(scalar < float(0.0000000001))  scalar  = float(0.0000000001);
         (NormOriginaltmp[ThreeTimesI  ]/=scalar);
         (NormOriginaltmp[ThreeTimesI+1]/=scalar);
         (NormOriginaltmp[ThreeTimesI+2]/=scalar);
@@ -1144,13 +1144,13 @@ void Iso3D::SaveIsoGLMap()
     for (int i=0; i < NbPointIsoMap  ; i++)
     {
         idx = TypeDrawin*i + TypeDrawinNormStep;
-        scalar = (double)sqrt((NormVertexTab[idx  ]*NormVertexTab[idx  ]) +
+        scalar = double(sqrt((NormVertexTab[idx  ]*NormVertexTab[idx  ]) +
                               (NormVertexTab[idx+1]*NormVertexTab[idx+1]) +
-                              (NormVertexTab[idx+2]*NormVertexTab[idx+2]));
+                              (NormVertexTab[idx+2]*NormVertexTab[idx+2])));
         if(scalar < 0.000000001)  scalar = 0.000000001;
-        NormVertexTab[idx  ] /= scalar;
-        NormVertexTab[idx+1] /= scalar;
-        NormVertexTab[idx+2] /= scalar;
+        NormVertexTab[idx  ] /= float(scalar);
+        NormVertexTab[idx+1] /= float(scalar);
+        NormVertexTab[idx+2] /= float(scalar);
     }
 }
 
@@ -1222,9 +1222,9 @@ ErrorMessage IsoMasterThread::ParserIso()
             for(int j=0; j<Nb_constants; j++)
             {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
-                RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
-                RgbtParser[i].AddConstant("Gain", Gain);
-                RgbtParser[i].AddConstant("Octaves", Octaves);
+                RgbtParser[i].AddConstant("Lacunarity", double(Lacunarity));
+                RgbtParser[i].AddConstant("Gain", double(Gain));
+                RgbtParser[i].AddConstant("Octaves", double(Octaves));
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
             }
