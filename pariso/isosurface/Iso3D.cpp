@@ -48,8 +48,6 @@ int NbVariables = 30;
 int NbTextures = 30;
 int NbSliders = 50;
 int NbSliderValues = 500;
-
-
 int OrignbX, OrignbY, OrignbZ;
 int Stack_Factor=OrignbX*OrignbY*OrignbZ;
 

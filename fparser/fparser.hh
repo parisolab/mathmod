@@ -96,11 +96,11 @@ class FunctionParserBase
 
 
     int ParseAndDeduceVariables(const std::string& function,
-                                int* amountOfVariablesFound = 0,
+                                int* amountOfVariablesFound = nullptr,
                                 bool useDegrees = false);
     int ParseAndDeduceVariables(const std::string& function,
                                 std::string& resultVarString,
-                                int* amountOfVariablesFound = 0,
+                                int* amountOfVariablesFound = nullptr,
                                 bool useDegrees = false);
     int ParseAndDeduceVariables(const std::string& function,
                                 std::vector<std::string>& resultVars,
@@ -236,3 +236,5 @@ bool FunctionParserBase<Value_t>::AddFunctionWrapper
         (name, new DerivedWrapper(wrapper), paramsAmount);
 }
 #endif
+
+extern template class FunctionParserBase<double>; // explicit instantiation declaration

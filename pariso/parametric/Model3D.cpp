@@ -26,17 +26,17 @@ static int NbPolyMinimalTopology =0;
 static int NbVertexTmp = 0;
 static float*     ExtraDimension;
 
-CellNoise *NoiseFunction2 = new CellNoise();
-ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
+static CellNoise *NoiseFunction2 = new CellNoise();
+static ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
 
-double ParamComponentId=0;
-double ParamThreadId=0;
+static double ParamComponentId=0;
+static double ParamThreadId=0;
 
-QElapsedTimer ptime;
+static QElapsedTimer ptime;
 
 double CurrentParamCmpId(const double* p)
 {
-    int pp = (int)p[0];
+    int pp = int(p[0]);
     if(pp==0)
         return ParamComponentId;
     else
@@ -46,25 +46,25 @@ double CurrentParamCmpId(const double* p)
 
 double TurbulenceWorley2(const double* p)
 {
-    return NoiseFunction2->CellNoiseFunc(
-               p[0],
-               p[1],
-               p[2],
-               (int)p[3],
-               (int)p[4],
-               (int)p[5]);
+    return double(NoiseFunction2->CellNoiseFunc(
+               float(p[0]),
+               float(p[1]),
+               float(p[2]),
+               int(p[3]),
+               int(p[4]),
+               int(p[5])));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
 double TurbulencePerlin2(const double* p)
 {
-    return PNoise2->FractalNoise3D(
-               p[0],
-               p[1],
-               p[2],
-               (int)p[3],
-               p[4],
-               p[5]);
+    return double(PNoise2->FractalNoise3D(
+               float(p[0]),
+               float(p[1]),
+               float(p[2]),
+               int(p[3]),
+               float(p[4]),
+               float(p[5])));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
