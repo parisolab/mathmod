@@ -72,12 +72,12 @@ extern double TurbulenceWorley(const double* p)
 {
     return static_cast <double> (
                NoiseFunction->CellNoiseFunc(
-                   static_cast <float> (p[0]),
-                   static_cast <float> (p[1]),
-                   static_cast <float> (p[2]),
-                   static_cast <int> (p[3]),
-                   static_cast <int> (p[4]),
-                   static_cast <int> (p[5]))
+                   float (p[0]),
+                   float (p[1]),
+                   float (p[2]),
+                   int (p[3]),
+                   int (p[4]),
+                   int (p[5]))
            );
 }
 
@@ -85,12 +85,12 @@ double TurbulencePerlin(const double* p)
 {
     return static_cast <double> (
                PNoise->FractalNoise3D(
-                   static_cast <float> (p[0]),
-                   static_cast <float> (p[1]),
-                   static_cast <float> (p[2]),
-                   static_cast <int> (p[3]),
-                   static_cast <float> (p[4]),
-                   static_cast <float> (p[5])));
+                   float (p[0]),
+                   float (p[1]),
+                   float (p[2]),
+                   int (p[3]),
+                   float (p[4]),
+                   float (p[5])));
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
