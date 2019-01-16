@@ -19,11 +19,11 @@
  ***************************************************************************/
 #include "Model3D.h"
 
-static int TypeDrawin=10;
-static int TypeDrawinNormStep = 4;
-static int PreviousSizeMinimalTopology =0;
-static int NbPolyMinimalTopology =0;
-static int NbVertexTmp = 0;
+static uint TypeDrawin=10;
+static uint TypeDrawinNormStep = 4;
+static uint PreviousSizeMinimalTopology =0;
+static uint NbPolyMinimalTopology =0;
+static uint NbVertexTmp = 0;
 static float*     ExtraDimension;
 
 static CellNoise *NoiseFunction2 = new CellNoise();
@@ -80,7 +80,7 @@ void Par3D::emitUpdateMessageSignal()
 ParWorkerThread::ParWorkerThread()
 {
     stepMorph = 0;
-    pace = (double)1/(double)30;
+    pace = 1.0/30.0;
     ParsersAllocated = false;
     v_inf = new double[NbComponent];
     u_inf = new double[NbComponent];
@@ -173,7 +173,7 @@ void ParWorkerThread::run()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void ParWorkerThread::ParCompute(int fctnb, int idx)
+void ParWorkerThread::ParCompute(uint fctnb, uint idx)
 {
     calcul_objet(fctnb, idx);
 }
@@ -248,7 +248,7 @@ void  Par3D::rotation4()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void  Par3D::boite_englobante4D(int idx)
+void  Par3D::boite_englobante4D(uint idx)
 {
     MINX =999999999;
     MINY =999999999;
@@ -260,7 +260,7 @@ void  Par3D::boite_englobante4D(int idx)
     MAXZ =-999999999;
     MAXW =-999999999;
 
-    int IDX = 0;
+    uint IDX = 0;
     for (int i=0; i < Ugrid; i++)
         for (int j=0; j < Vgrid; j++)
         {
@@ -314,7 +314,7 @@ void  Par3D::boite_englobante4D(int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void  Par3D::Invert_boite_englobante4D(int idx)
+void  Par3D::Invert_boite_englobante4D(uint idx)
 {
     double decalage_xo  = -(MINX +MAXX)/2;
     double decalage_yo  = -(MINY +MAXY)/2;
@@ -331,7 +331,7 @@ void  Par3D::Invert_boite_englobante4D(int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::Anim_Rot4D (int idx)
+void Par3D::Anim_Rot4D (uint idx)
 {
     rotation4();
     calcul_points4(idx);         // On applique la rotation 4D
@@ -342,7 +342,7 @@ void Par3D::Anim_Rot4D (int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void  Par3D::calcul_points4(int idx)
+void  Par3D::calcul_points4(uint idx)
 {
     int i,j;
     double tp1, tp2, tp3, tp4;
@@ -374,7 +374,7 @@ void  Par3D::calcul_points4(int idx)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::project_4D_to_3D(int idx)
+void  Par3D::project_4D_to_3D(uint idx)
 {
     double c4;
     int I = 0;
@@ -1273,25 +1273,25 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
 
-        for(int i= 0; i < NbVertexTmp; i++)
+        for(uint i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
-            val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
-            val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+            val[0]= double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
+            val[1]= double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
+            val[2]= double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+            val[0]= tmp*double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
+            val[1]= tmp*double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
+            val[2]= tmp*double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
 
             tmp  = masterthread->GradientParser->Eval(val);
 
-            int c= (int)tmp;
-            tmp = std::abs(tmp - (double)c);
+            int c= int(tmp);
+            tmp = std::abs(tmp - double(c));
             for (int j=0; j < masterthread->Nb_vrgbts && j < 100; j+=5)
                 if(tmp <= ValCol[j])
                 {
@@ -1712,9 +1712,9 @@ void ParWorkerThread::emitMySignal()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  ParWorkerThread::calcul_objet(int cmp, int idx)
+void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
 {
-    int NewPosition =  TypeDrawin*idx, id=0, PreviousSignal=0;
+    uint NewPosition =  TypeDrawin*idx, id=0, PreviousSignal=0;
     int OrignbU=int (std::sqrt(Stack_Factor));
     int OrignbV=OrignbU;
     int nbU=OrignbU, nbV=OrignbV;

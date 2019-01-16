@@ -57,8 +57,8 @@ public :
     int signalVal;
 
 public :
-    void ParCompute(int, int);
-    void calcul_objet(int component =0, int idx=0);
+    void ParCompute(uint, uint);
+    void calcul_objet(uint component =0, uint idx=0);
     void AllocateParsersForWorkerThread(int, int);
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
@@ -144,11 +144,11 @@ public:
           int nbGrid=50);
     ~Par3D();
     void rotation4();
-    void calcul_points4(int idx=0);
-    void Anim_Rot4D (int idx=0);
-    void project_4D_to_3D(int idx=0);
-    void Invert_boite_englobante4D(int idx=0);
-    void boite_englobante4D(int index=0);
+    void calcul_points4(uint idx=0);
+    void Anim_Rot4D (uint idx=0);
+    void project_4D_to_3D(uint idx=0);
+    void Invert_boite_englobante4D(uint idx=0);
+    void boite_englobante4D(uint index=0);
     void initialiser_parametres(int, int);
     void initialiser_LineColumn(int, int);
     void calcul_Norm(int i=0);
