@@ -840,7 +840,7 @@ ErrorMessage  Par3D::parse_expression2()
 {
     ErrorMessage NodError;
 
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         //Functions:
         for(int ij=0; ij<masterthread->Nb_functs; ij++)
@@ -877,7 +877,7 @@ ErrorMessage  Par3D::parse_expression2()
         }
     }
 
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         //Add defined constantes:
         for(int i=0; i<masterthread->Nb_paramfunctions+1; i++)
@@ -934,9 +934,9 @@ ErrorMessage  Par3D::parse_expression2()
 
         }
     }
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        for(int index=0; index< masterthread->Nb_paramfunctions + 1; index++)
+        for(uint index=0; index< masterthread->Nb_paramfunctions + 1; index++)
         {
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
             {
@@ -970,7 +970,7 @@ ErrorMessage  Par3D::parse_expression2()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         WorkerThreadsTmp[nbthreads].Ugrid = masterthread->Ugrid;
         WorkerThreadsTmp[nbthreads].Vgrid = masterthread->Vgrid;
@@ -982,9 +982,9 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 //+++++++++++++++++++++++++++++++++++++++++
 ErrorMessage Par3D::ThreadParsersCopy()
 {
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        for(int i=0; i< masterthread->Nb_paramfunctions+1; i++)
+        for(uint i=0; i< masterthread->Nb_paramfunctions+1; i++)
         {
             workerthreads[nbthreads].dif_u[i] = masterthread->dif_u[i];
             workerthreads[nbthreads].dif_v[i] = masterthread->dif_v[i];
@@ -994,10 +994,10 @@ ErrorMessage Par3D::ThreadParsersCopy()
         }
     }
 
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].DeleteWorkerParsers();
 
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1, masterthread->Nb_functs);
 
     return(parse_expression2());
@@ -1082,11 +1082,11 @@ int ParMasterThread::HowManyVariables(std::string NewVariables, int type)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-int ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
+uint ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 {
     std::string tmp, tmp2;
     int position =0, jpos;
-    int Nb_paramfunction =0;
+    uint Nb_paramfunction =0;
 
     switch(type)
     {
@@ -1250,7 +1250,7 @@ void Par3D::CalculateNoiseShapePoints(int NewPosition)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    int Jprime,cmpId=0;
+    uint Jprime,cmpId=0;
     double tmp, ValCol[100], val[10];
     val[3] = masterthread->stepMorph;
 
@@ -1306,23 +1306,23 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            if(i >= int(components->Parametricpositions[3*cmpId+2]))
+            if(i >= uint(components->Parametricpositions[3*cmpId+2]))
                 cmpId++;
             val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
             val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
 
-            val[7] = (double)i;
-            val[8] = (double)(Vgrid);
-            val[9] = (double)(cmpId);
+            val[7] = double(i);
+            val[8] = double(Vgrid);
+            val[9] = double(cmpId);
             Jprime = (i)/(Ugrid);
-            val[6] = (double)Jprime;
-            val[4] = val[6]/(double)(Ugrid) ;
+            val[6] = double(Jprime);
+            val[4] = val[6]/double(Ugrid) ;
             val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
 
             Jprime = (i) %  (Vgrid);
-            val[5] =  (double)Jprime;
-            val[3] = val[5]/(double)(Vgrid) ;
+            val[5] =  double(Jprime);
+            val[3] = val[5]/double(Vgrid) ;
             val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
 
             if(masterthread->Noise != "")

@@ -100,7 +100,7 @@ public :
     int Octaves;
 public :
     void InitMasterParsers();
-    int  HowManyParamSurface(std::string, int);
+    uint  HowManyParamSurface(std::string, int);
     int  HowManyVariables(std::string, int);
     ErrorMessage parse_expression();
     void AllocateParsersForMasterThread();
