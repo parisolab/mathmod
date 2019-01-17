@@ -47,7 +47,7 @@ class ParWorkerThread : public QThread
 {
     Q_OBJECT
 public :
-    int Ugrid, Vgrid;
+    uint Ugrid, Vgrid;
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
     double  *v_inf, *v_sup,*u_inf,*u_sup,*dif_v,*dif_u;
     double stepMorph, pace;
@@ -63,7 +63,7 @@ public :
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
-    ~ParWorkerThread();
+    ~ParWorkerThread() override;
 signals:
     void mySignal(int myParameter);
 public:
@@ -143,7 +143,7 @@ public:
     Par3D(int,
           int nbThreads=16,
           int nbGrid=50);
-    ~Par3D();
+    ~Par3D()  override;
     void rotation4();
     void calcul_points4(uint idx=0);
     void Anim_Rot4D (uint idx=0);
@@ -161,11 +161,11 @@ public:
     void CalculateNoiseShapePoints(int);
     void ParamBuild(float *, float *,unsigned int *, unsigned int *,
                     unsigned int *, int  IsoPos=0,
-                    ComponentInfos *components = NULL,
-                    int *TriangleListeCND = NULL,
-                    bool *typeCND = NULL,
-                    unsigned int *IndexPolyTabMinPt = NULL,
-                    unsigned  int *NbPolyMinPt = NULL);
+                    ComponentInfos *components = nullptr,
+                    int *TriangleListeCND = nullptr,
+                    bool *typeCND = nullptr,
+                    unsigned int *IndexPolyTabMinPt = nullptr,
+                    unsigned  int *NbPolyMinPt = nullptr);
     void BuildPar();
     void UpdateThredsNumber(int);
     void stopcalculations(bool);

@@ -302,8 +302,8 @@ void  Par3D::boite_englobante4D(uint idx)
     double decalage_zo  = -(MINZ +MAXZ)/2 ;
     double decalage_wo = -(MINW +MAXW)/2 ;
     IDX =0;
-    for (int i=0; i < Ugrid   ; i++)
-        for (int j=0; j < Vgrid   ; j++)
+    for (uint i=0; i < Ugrid   ; i++)
+        for (uint j=0; j < Vgrid   ; j++)
         {
             NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep]= (NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_xo)/DIFMAXIMUM ;
             NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] + decalage_yo)/DIFMAXIMUM ;
@@ -320,8 +320,8 @@ void  Par3D::Invert_boite_englobante4D(uint idx)
     double decalage_yo  = -(MINY +MAXY)/2;
     double decalage_zo  = -(MINZ +MAXZ)/2;
     int IDX =0;
-    for (int i=0; i < Ugrid   ; i++)
-        for (int j=0; j < Vgrid   ; j++)
+    for (uint i=0; i < Ugrid   ; i++)
+        for (uint j=0; j < Vgrid   ; j++)
         {
             NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 3 + idx*TypeDrawin+ TypeDrawinNormStep]*DIFMAXIMUM -  decalage_xo);
             NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = (NormVertexTab[IDX + 4 + idx*TypeDrawin+ TypeDrawinNormStep]*DIFMAXIMUM -  decalage_yo);
@@ -344,13 +344,12 @@ void Par3D::Anim_Rot4D (uint idx)
 //+++++++++++++++++++++++++++++++++++++++++
 void  Par3D::calcul_points4(uint idx)
 {
-    int i,j;
     double tp1, tp2, tp3, tp4;
     // Changement de coordonnees des points selon les
     // angles angex et angley
-    int lndex =0;
-    for (i=0; i < Ugrid  ; i++)
-        for (j=0; j < Vgrid   ; j++)
+    uint lndex =0;
+    for (uint i=0; i < Ugrid  ; i++)
+        for (uint j=0; j < Vgrid   ; j++)
         {
             tp1 = NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep];
             tp2 = NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep];
@@ -377,11 +376,11 @@ void  Par3D::calcul_points4(uint idx)
 void  Par3D::project_4D_to_3D(uint idx)
 {
     double c4;
-    int I = 0;
-    for (int i=0; i < Ugrid; ++i)
-        for (int j=0; j < Vgrid  ; ++j)
+    uint I = 0;
+    for (uint i=0; i < Ugrid; ++i)
+        for (uint j=0; j < Vgrid  ; ++j)
         {
-            c4 = 1/(ExtraDimension[i*Vgrid + j + idx] - 2);
+            c4 = 1.0/(ExtraDimension[i*Vgrid + j + idx] - 2);
             NormVertexTab[I + 3 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
             NormVertexTab[I + 4 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
             NormVertexTab[I + 5 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
@@ -1202,8 +1201,8 @@ int ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 void Par3D::BorderCalculation(int NewPosition)
 {
     int k=0;
-    for(int i=0; i<Ugrid - CutU-2; i++)
-        for(int j=0; j<Vgrid - CutV -2; j++)
+    for(uint i=0; i<Ugrid - CutU-2; i++)
+        for(uint j=0; j<Vgrid - CutV -2; j++)
         {
             if(VerifCND[i*(Vgrid)+j] != VerifCND[i*(Vgrid)+j+1])
             {
@@ -1229,13 +1228,13 @@ void Par3D::BorderCalculation(int NewPosition)
 void Par3D::CalculateNoiseShapePoints(int NewPosition)
 {
     double tmp, val[4];
-    int I =0;
+    uint I =0;
     val[3] = masterthread->stepMorph;
     masterthread->NoiseShape = "NoiseW(x,y,z,1,2,0)";
     masterthread->NoiseShapeParser->Parse(masterthread->NoiseShape, "x,y,z,t");
     if(masterthread->NoiseShape != "")
-        for(int j=0; j < Ugrid   ; j++)
-            for(int i= 0; i < Vgrid; i++)
+        for(uint j=0; j < Ugrid   ; j++)
+            for(uint i= 0; i < Vgrid; i++)
             {
                 val[0]= NormVertexTab[I  + 3 + TypeDrawinNormStep +NewPosition ];
                 val[1]= NormVertexTab[I  + 4 + TypeDrawinNormStep +NewPosition ];
@@ -1305,7 +1304,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     }
     else if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 1)
     {
-        for(int i= 0; i < NbVertexTmp; i++)
+        for(uint i= 0; i < NbVertexTmp; i++)
         {
             if(i >= int(components->Parametricpositions[3*cmpId+2]))
                 cmpId++;
@@ -1353,7 +1352,7 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
 
     if (masterthread->ParConditionRequired == 1)
     {
-        for(int i= 0; i < NbVertexTmp; i++)
+        for(uint i= 0; i < NbVertexTmp; i++)
         {
             vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
             vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
@@ -1735,7 +1734,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
 
     iStart = 0;
     iFinish = 0;
-    for(int i=0; i<Ugrid; i++)
+    for(uint i=0; i<Ugrid; i++)
     {
         if((i% (WorkerThreadsNumber))  == MyIndex )
         {
@@ -1769,7 +1768,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             nbstack = nbU*nbV;
         }
 
-        for (int j=0; j < Vgrid   ; j+=nbV)
+        for (uint j=0; j < Vgrid   ; j+=nbV)
         {
             Jindice = j;
             nbstack = nbU*nbV;
