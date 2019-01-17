@@ -124,8 +124,7 @@ public:
     bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
-    int NbVertex, WorkerThreadsNumber;
-    uint Ugrid, Vgrid;
+    int Ugrid, Vgrid, NbVertex, WorkerThreadsNumber;
     int CutV, CutU;
     double MINX,MINY,MINZ,MINW,
            MAXX,MAXY,MAXZ,MAXW,

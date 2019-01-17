@@ -250,19 +250,19 @@ void  Par3D::rotation4()
 //+++++++++++++++++++++++++++++++++++++++++
 void  Par3D::boite_englobante4D(uint idx)
 {
-    MINX =10^12;
-    MINY =MINX;
-    MINZ =MINX;
-    MINW =MINX;
+    MINX =999999999;
+    MINY =999999999;
+    MINZ =999999999;
+    MINW =999999999;
 
-    MAXX =-MINX;
-    MAXY =-MINX;
-    MAXZ =-MINX;
-    MAXW =-MINX;
+    MAXX =-999999999;
+    MAXY =-999999999;
+    MAXZ =-999999999;
+    MAXW =-999999999;
 
     uint IDX = 0;
-    for (uint i=0; i < Ugrid; i++)
-        for (uint j=0; j < Vgrid; j++)
+    for (int i=0; i < Ugrid; i++)
+        for (int j=0; j < Vgrid; j++)
         {
             if(MINX > NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep] ) MINX = NormVertexTab[IDX + 3 + idx*TypeDrawin + TypeDrawinNormStep];
             if(MINY > NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep] ) MINY = NormVertexTab[IDX + 4 + idx*TypeDrawin + TypeDrawinNormStep];
