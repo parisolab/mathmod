@@ -47,11 +47,11 @@ class ParWorkerThread : public QThread
 {
     Q_OBJECT
 public :
-    uint Ugrid, Vgrid;
+    uint MyIndex, WorkerThreadsNumber, Ugrid, Vgrid;
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
     double  *v_inf, *v_sup,*u_inf,*u_sup,*dif_v,*dif_u;
     double stepMorph, pace;
-    int iStart, iFinish, MyIndex, WorkerThreadsNumber, activeMorph, param4D;
+    int iStart, iFinish, activeMorph, param4D;
     bool StopCalculations, ParsersAllocated;
     unsigned int CurrentPar, CurrentIndex;
     int signalVal;
@@ -124,7 +124,7 @@ public:
     bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
-    int NbVertex, WorkerThreadsNumber;
+    uint NbVertex, WorkerThreadsNumber;
     uint Ugrid, Vgrid;
     int CutV, CutU;
     double MINX,MINY,MINZ,MINW,
@@ -151,7 +151,7 @@ public:
     void Invert_boite_englobante4D(uint idx=0);
     void boite_englobante4D(uint index=0);
     void initialiser_parametres(uint, uint);
-    void initialiser_LineColumn(int, int);
+    void initialiser_LineColumn(uint, uint);
     void calcul_Norm(int i=0);
     void BorderCalculation(int i=0);
     void make_PolyIndexTri(int i=0, int p=0, int  IsoPos=0);

@@ -206,7 +206,7 @@ void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
     masterthread->param4D   = param4D;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         workerthreads[nbthreads].Ugrid  = Ugrid;
         workerthreads[nbthreads].Vgrid = Vgrid;
@@ -216,13 +216,13 @@ void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
     }
 }
 
-void Par3D::initialiser_LineColumn(int li, int cl)
+void Par3D::initialiser_LineColumn(uint li, uint cl)
 {
     Ugrid  = li;
     Vgrid = cl;
     masterthread->Ugrid  = Ugrid;
     masterthread->Vgrid = Vgrid;
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         workerthreads[nbthreads].Ugrid  = Ugrid;
         workerthreads[nbthreads].Vgrid = Vgrid;
@@ -1906,7 +1906,8 @@ void  Par3D::ParamBuild(
     unsigned  int *NbPolyMinPt
 )
 {
-    int NbTriangleIsoSurfaceTmp, nbline_save=0, nbcolone_save=0, NextPosition=0, NextIndex=0;
+    int NbTriangleIsoSurfaceTmp;
+    uint nbline_save=0, nbcolone_save=0, NextPosition=0, NextIndex=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
