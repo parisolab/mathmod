@@ -158,9 +158,9 @@ ParMasterThread::ParMasterThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-Par3D::Par3D(int maxpoints,
-             int nbThreads,
-             int nbGrid)
+Par3D::Par3D(uint maxpoints,
+             uint nbThreads,
+             uint nbGrid)
 {
     initialiser_parametres(nbThreads, nbGrid);
     ExtraDimension = new float [maxpoints];
@@ -178,7 +178,7 @@ void ParWorkerThread::ParCompute(uint fctnb, uint idx)
     calcul_objet(fctnb, idx);
 }
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::initialiser_parametres(int nbThreads, int nbGrid)
+void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
 {
     Ugrid = nbGrid;
     Vgrid = nbGrid;

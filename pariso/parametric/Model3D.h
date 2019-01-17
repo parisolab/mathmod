@@ -140,9 +140,9 @@ public:
     ScriptErrorType messageerror;
     QString message;
 public:
-    Par3D(int,
-          int nbThreads=16,
-          int nbGrid=50);
+    Par3D(uint,
+          uint nbThreads=16,
+          uint nbGrid=50);
     ~Par3D()  override;
     void rotation4();
     void calcul_points4(uint idx=0);
@@ -150,7 +150,7 @@ public:
     void project_4D_to_3D(uint idx=0);
     void Invert_boite_englobante4D(uint idx=0);
     void boite_englobante4D(uint index=0);
-    void initialiser_parametres(int, int);
+    void initialiser_parametres(uint, uint);
     void initialiser_LineColumn(int, int);
     void calcul_Norm(int i=0);
     void BorderCalculation(int i=0);
