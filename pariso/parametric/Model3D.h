@@ -127,7 +127,7 @@ public:
     uint NbVertex, WorkerThreadsNumber;
     uint Ugrid, Vgrid;
     int CutV, CutU;
-    double MINX,MINY,MINZ,MINW,
+    float MINX,MINY,MINZ,MINW,
            MAXX,MAXY,MAXZ,MAXW,
            DIFX,DIFY,DIFZ,DIFW,
            DIFMAXIMUM;

@@ -297,10 +297,10 @@ void  Par3D::boite_englobante4D(uint idx)
 // On va inclure cet objet dans un HperCube de langueur maximum
 // egale a "hauteur_fenetre"
 
-    double decalage_xo  = -(MINX +MAXX)/2 ;
-    double decalage_yo  = -(MINY +MAXY)/2 ;
-    double decalage_zo  = -(MINZ +MAXZ)/2 ;
-    double decalage_wo = -(MINW +MAXW)/2 ;
+    float decalage_xo  = -(MINX +MAXX)/2 ;
+    float decalage_yo  = -(MINY +MAXY)/2 ;
+    float decalage_zo  = -(MINZ +MAXZ)/2 ;
+    float decalage_wo = -(MINW +MAXW)/2 ;
     IDX =0;
     for (uint i=0; i < Ugrid   ; i++)
         for (uint j=0; j < Vgrid   ; j++)
@@ -316,10 +316,10 @@ void  Par3D::boite_englobante4D(uint idx)
 //+++++++++++++++++++++++++++++++++++++++++
 void  Par3D::Invert_boite_englobante4D(uint idx)
 {
-    double decalage_xo  = -(MINX +MAXX)/2;
-    double decalage_yo  = -(MINY +MAXY)/2;
-    double decalage_zo  = -(MINZ +MAXZ)/2;
-    int IDX =0;
+    float decalage_xo  = -(MINX +MAXX)/2;
+    float decalage_yo  = -(MINY +MAXY)/2;
+    float decalage_zo  = -(MINZ +MAXZ)/2;
+    uint IDX =0;
     for (uint i=0; i < Ugrid   ; i++)
         for (uint j=0; j < Vgrid   ; j++)
         {
