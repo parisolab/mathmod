@@ -6101,10 +6101,10 @@
           "13DOTSYMBOL2"
         ],
         "Vmin": [
-          "-37DOTSYMBOL4"
+          "-37DOTSYMBOL2"
         ],
         "Vmax": [
-          "37DOTSYMBOL4"
+          "37DOTSYMBOL2"
         ]
       }
     },
@@ -6411,10 +6411,10 @@
           "-13DOTSYMBOL2"
         ],
         "Vmax": [
-          "37DOTSYMBOL4"
+          "37DOTSYMBOL2"
         ],
         "Vmin": [
-          "-37DOTSYMBOL4"
+          "-37DOTSYMBOL2"
         ]
       }
     },
@@ -13176,10 +13176,10 @@
           "-13DOTSYMBOL2"
         ],
         "Vmax": [
-          "37DOTSYMBOL4"
+          "37DOTSYMBOL2"
         ],
         "Vmin": [
-          "-37DOTSYMBOL4"
+          "-37DOTSYMBOL2"
         ]
       }
     },

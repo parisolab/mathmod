@@ -152,7 +152,7 @@ public:
     void boite_englobante4D(uint index=0);
     void initialiser_parametres(uint, uint);
     void initialiser_LineColumn(uint, uint);
-    void calcul_Norm(int i=0);
+    void calcul_Norm(uint i=0);
     void BorderCalculation(int i=0);
     void make_PolyIndexTri(int i=0, int p=0, int  IsoPos=0);
     void make_PolyIndexMin(int i=0, int p=0, int  IsoPos=0);

@@ -1,8 +1,8 @@
 {
     "IsoParam": {
-        "MaxGrid": 400,
-        "MaxPt": 6,
-        "MaxTri": 8,
+        "MaxGrid": 200,
+        "MaxPt": 1,
+        "MaxTri": 2,
         "NbComponent": 200,
         "NbVariables": 30,
         "NbConstantes": 40,

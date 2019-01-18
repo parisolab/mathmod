@@ -2115,14 +2115,14 @@ void  Par3D::make_PolyIndexTri(int NewPo, int index, int IsoPos)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::calcul_Norm(int NewPosition)
+void  Par3D::calcul_Norm(uint NewPosition)
 {
 //calculate Normals
-    int        i, j, deplacement = TypeDrawin*Vgrid;
+    uint        i, j, deplacement = TypeDrawin*Vgrid;
     double caa, bab, cab, baa, ba, ca;
 
-    for (i=0; i < Ugrid -1  ; i++)
-        for (j=0; j < Vgrid -1  ; j++)
+    for (i=0; i < Ugrid-1  ; i++)
+        for (j=0; j < Vgrid-1  ; j++)
         {
             caa = NormVertexTab[(i+1)*deplacement+j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep];
             bab = NormVertexTab[i*deplacement+(j+1)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+5+NewPosition+ TypeDrawinNormStep];
