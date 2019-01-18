@@ -9467,8 +9467,8 @@
           "EmbeddedSquareFlatTorus"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0000000001",
-          "cv=0DOTSYMBOL0000000001",
+          "cu=0DOTSYMBOL001",
+          "cv=0DOTSYMBOL001",
           "N=10"
         ],
         "Funct": [
@@ -9526,8 +9526,8 @@
           "EmbeddedSquareFlatTorus"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0000000001",
-          "cv=0DOTSYMBOL0000000001",
+          "cu=0DOTSYMBOL001",
+          "cv=0DOTSYMBOL001",
           "N=10"
         ],
         "Funct": [
@@ -9585,8 +9585,8 @@
           "Sleepingbugs"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0000000001",
-          "cv=0DOTSYMBOL0000000001",
+          "cu=0DOTSYMBOL001",
+          "cv=0DOTSYMBOL001",
           "N=3"
         ],
         "Funct": [

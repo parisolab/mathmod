@@ -1345,7 +1345,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
+uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
 {
     double vals[4];
     vals[3] = masterthread->stepMorph;
@@ -1354,29 +1354,29 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
-            vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
-            vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
-            WichPointVerifyCond[i] = (masterthread->myParserCND[0].Eval(vals) == 1);
+            vals[0] = double(NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep]);
+            vals[1] = double(NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep]);
+            vals[2] = double(NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep]);
+            WichPointVerifyCond[i] = (masterthread->myParserCND[0].Eval(vals) == 1.0);
             if(WichPointVerifyCond[i])
             {
-                NormVertexTab[i*TypeDrawin    ] = 0.1;
-                NormVertexTab[i*TypeDrawin  +1] = 0.9;
+                NormVertexTab[i*TypeDrawin    ] = 1/10;
+                NormVertexTab[i*TypeDrawin  +1] = 9/10;
                 NormVertexTab[i*TypeDrawin  +2] = 0.0;
                 NormVertexTab[i*TypeDrawin  +3] = 1.0;
             }
             else
             {
-                NormVertexTab[i*TypeDrawin    ] = 0.9;
-                NormVertexTab[i*TypeDrawin  +1] = 0.1;
+                NormVertexTab[i*TypeDrawin    ] = 9/10;
+                NormVertexTab[i*TypeDrawin  +1] = 1/10;
                 NormVertexTab[i*TypeDrawin  +2] = 0.0;
                 NormVertexTab[i*TypeDrawin  +3] = 1.0;
             }
         }
 
-        int Aindex, Bindex, Cindex;
-        int nbtriangle = Tmpo;
-        for(int i= 0; i < nbtriangle; i++)
+        uint Aindex, Bindex, Cindex;
+        uint nbtriangle = Tmpo;
+        for(uint i= 0; i < nbtriangle; i++)
         {
             Aindex = IndexPolyTab[3*i    ];
             Bindex = IndexPolyTab[3*i + 1];
@@ -1425,18 +1425,18 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
-                Bprime[0] = NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep];
-                Bprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
-                Bprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
+                Bprime[0] = double(NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep]);
+                Bprime[1] = double(NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep]);
+                Bprime[2] = double(NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep]);
                 Bprime[3] = masterthread->stepMorph;
 
-                DiffX = (NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
-                DiffY = (NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
-                DiffZ = (NormVertexTab[3+TypeDrawin*Bindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20;
+                DiffX = double(NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20.0;
+                DiffY = double(NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20.0;
+                DiffZ = double(NormVertexTab[3+TypeDrawin*Bindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20.0;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->myParserCND[0].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(masterthread->myParserCND[0].Eval(Bprime) == 1.0 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1446,7 +1446,7 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 }
                 else
                 {
-                    while(!(masterthread->myParserCND[0].Eval(Bprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->myParserCND[0].Eval(Bprime) == 1.0) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1456,18 +1456,18 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 }
 
                 /// Cprime
-                Cprime[0] = NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep];
-                Cprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
-                Cprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
+                Cprime[0] = double(NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep]);
+                Cprime[1] = double(NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep]);
+                Cprime[2] = double(NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep]);
                 Cprime[3] = masterthread->stepMorph;
 
-                DiffX = (NormVertexTab[3+TypeDrawin*Cindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
-                DiffY = (NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
-                DiffZ = (NormVertexTab[3+TypeDrawin*Cindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20;
+                DiffX = double(NormVertexTab[3+TypeDrawin*Cindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20.0;
+                DiffY = double(NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20.0;
+                DiffZ = double(NormVertexTab[3+TypeDrawin*Cindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20.0;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->myParserCND[0].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(masterthread->myParserCND[0].Eval(Cprime) == 1.0 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1477,7 +1477,7 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 }
                 else
                 {
-                    while(!(masterthread->myParserCND[0].Eval(Cprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->myParserCND[0].Eval(Cprime) == 1.0) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1491,9 +1491,9 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 //***********
 
                 //Add Bprime:
-                NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = Bprime[0];
-                NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = Bprime[1];
-                NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = Bprime[2];
+                NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = float(Bprime[0]);
+                NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = float(Bprime[1]);
+                NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = float(Bprime[2]);
 
                 NormVertexTab[TypeDrawin*NbVertexTmp   + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex    + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
@@ -1505,9 +1505,9 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 NormVertexTab[TypeDrawin*NbVertexTmp +3] = 1.0;
 
                 //Add Cprime:
-                NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = Cprime[0];
-                NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
-                NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = Cprime[2];
+                NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = float(Cprime[0]);
+                NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = float(Cprime[1]);
+                NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = float(Cprime[2]);
 
                 NormVertexTab[TypeDrawin*NbVertexTmp  +  TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex    + TypeDrawinNormStep];
                 NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
@@ -1524,9 +1524,9 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 //Add triangles:
                 //***********
                 /// Add Three new triangles :
-                int IndexBprime = (NbVertexTmp-2);
-                int IndexCprime = (NbVertexTmp-1);
-                int IndexNbTriangle;
+                uint IndexBprime = (NbVertexTmp-2);
+                uint IndexCprime = (NbVertexTmp-1);
+                uint IndexNbTriangle;
 
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCND[i] = 0;
@@ -1600,9 +1600,9 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
         //Reorganize the triangles index:
         //***********
         unsigned int *NewIndexPolyTab = new unsigned int[3*Tmpo];
-        int k, l, M;
+        uint k, l, M;
         k = l = M =0;
-        for(int i=0; i<Tmpo; i++)
+        for(uint i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 1)
             {
                 NewIndexPolyTab[3*k    ] =  IndexPolyTab[3*i    ];
@@ -1611,7 +1611,7 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 k++;
             }
 
-        for(int i=0; i<Tmpo; i++)
+        for(uint i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == -1)
             {
                 NewIndexPolyTab[3*(l + k)    ] =  IndexPolyTab[3*i    ];
@@ -1620,7 +1620,7 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
                 l++;
             }
 
-        for(int i=0; i<Tmpo; i++)
+        for(uint i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 4)
             {
                 NewIndexPolyTab[3*(M + l + k)    ] =  IndexPolyTab[3*i    ];
@@ -1640,7 +1640,7 @@ int Par3D::CNDCalculation(int &Tmpo, struct ComponentInfos *components)
 
         for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
         {
-            if(components != NULL)
+            if(components != nullptr)
             {
                 components->Parametricpositions[3*fctnb + 1] = Tmpo;
             }
@@ -1906,7 +1906,7 @@ void  Par3D::ParamBuild(
     unsigned  int *NbPolyMinPt
 )
 {
-    int NbTriangleIsoSurfaceTmp;
+    uint NbTriangleIsoSurfaceTmp;
     uint nbline_save=0, nbcolone_save=0, NextPosition=0, NextIndex=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     NbPolyMinimalTopology = 0;
@@ -2118,7 +2118,7 @@ void  Par3D::make_PolyIndexTri(uint NewPo, uint index, uint IsoPos)
 void  Par3D::calcul_Norm(uint NewPosition)
 {
 //calculate Normals
-    uint        i, j, deplacement = TypeDrawin*Vgrid;
+    uint  i, j, deplacement = TypeDrawin*Vgrid;
     float caa, bab, cab, baa, ba, ca, b4;
 
     for (i=0; i < Ugrid-1  ; i++)

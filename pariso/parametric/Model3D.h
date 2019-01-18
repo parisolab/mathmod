@@ -156,7 +156,7 @@ public:
     void BorderCalculation(int i=0);
     void make_PolyIndexTri(uint i=0, uint p=0, uint  IsoPos=0);
     void make_PolyIndexMin(uint i=0, uint p=0, uint  IsoPos=0);
-    int CNDCalculation(int &, struct ComponentInfos *);
+    uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void CalculateNoiseShapePoints(int);
     void ParamBuild(float *, float *,unsigned int *, unsigned int *,
