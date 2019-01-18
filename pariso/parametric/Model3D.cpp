@@ -2103,7 +2103,7 @@ void  Par3D::make_PolyIndexTri(int NewPo, int index, int IsoPos)
     for (int i=0; i< Ugrid - CutU -1; i++)
         for (int j=0; j< Vgrid - CutV -1; j++)
         {
-            IndexPolyTab[k    +NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
+            IndexPolyTab[k  +NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
             IndexPolyTab[k+1+NewPosition] = (i+1)*Vgrid + j +nbVertex + IsoPos;
             IndexPolyTab[k+2+NewPosition] = (i+1)*Vgrid + (j+1)+nbVertex + IsoPos;
 
@@ -2119,7 +2119,7 @@ void  Par3D::calcul_Norm(uint NewPosition)
 {
 //calculate Normals
     uint        i, j, deplacement = TypeDrawin*Vgrid;
-    double caa, bab, cab, baa, ba, ca;
+    float caa, bab, cab, baa, ba, ca, b4;
 
     for (i=0; i < Ugrid-1  ; i++)
         for (j=0; j < Vgrid-1  ; j++)
@@ -2135,12 +2135,12 @@ void  Par3D::calcul_Norm(uint NewPosition)
             NormVertexTab[i*deplacement +j*TypeDrawin +1+NewPosition+ TypeDrawinNormStep] = cab*ba  - ca*bab;
             NormVertexTab[i*deplacement +j*TypeDrawin +2+NewPosition+ TypeDrawinNormStep] = ca*baa  - caa*ba;
 
-            double b4 = (double)sqrt(
+            b4  = sqrt(
                             (NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep]*NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep]) +
                             (NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]*NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]) +
                             (NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]*NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]));
 
-            if( b4 < 0.00000001)  b4 = 0.00000001;
+            if( b4 < 0.000001)  b4 = 0.000001;
 
 //Normalise:
             NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep]/=b4;
