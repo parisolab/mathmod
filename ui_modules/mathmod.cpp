@@ -103,7 +103,7 @@ void MathMod::linecolumn_valueupdate( int cl)
     (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid =
         (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = cl;
 
-    for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
         (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid =
             (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = cl;
@@ -117,7 +117,7 @@ void MathMod::line_valueupdate( int cl)
 
     (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid = cl;
 
-    for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
         (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid = cl;
     }
@@ -129,7 +129,7 @@ void MathMod::column_valueupdate( int cl)
     (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->Vgrid = cl;
     (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = cl;
 
-    for(int nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
         (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = cl;
     }
