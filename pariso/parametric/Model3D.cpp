@@ -149,7 +149,7 @@ ParMasterThread::ParMasterThread()
     ParamStructs = new ParStruct[NbComponent];
     UsedFunct    = new bool[4*NbComponent*NbDefinedFunctions];
     UsedFunct2   = new bool[NbDefinedFunctions*NbDefinedFunctions];
-    grid         = new double[2*NbComponent];
+    grid         = new uint[2*NbComponent];
     //Add predefined constatnts:
     for(int i=0; i<NbSliders; i++)
     {
@@ -1898,7 +1898,7 @@ void  Par3D::ParamBuild(
     unsigned int *IndexPolyTabPt,
     unsigned int *PolyNumber,
     unsigned int *VertxNumber,
-    int  IsoPos,
+    uint  IsoPos,
     ComponentInfos *componentsPt,
     int *TriangleListeCND,
     bool *typeCND,
@@ -1912,13 +1912,13 @@ void  Par3D::ParamBuild(
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
 
-    if(components != NULL)
+    if(components != nullptr)
         components->NbParametric = masterthread->Nb_paramfunctions+1;
 
-    if(TriangleListeCND != NULL)
+    if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
 
-    if(typeCND != NULL)
+    if(typeCND != nullptr)
         WichPointVerifyCond = typeCND;
 
     stopcalculations(false);
@@ -1935,7 +1935,7 @@ void  Par3D::ParamBuild(
         ptime.restart();
     }
 
-    for(int fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
+    for(uint fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
     {
         if(masterthread->activeMorph != 1)
         {
@@ -1973,21 +1973,21 @@ void  Par3D::ParamBuild(
             return;
         }
 
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         {
             workerthreads[nbthreads].CurrentPar = fctnb;
             workerthreads[nbthreads].CurrentIndex = NextIndex;
         }
 
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
 
         masterthread->start();
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].start();
 
         masterthread->wait();
-        for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
             workerthreads[nbthreads].wait();
 
         if(StopCalculations)
@@ -2009,7 +2009,7 @@ void  Par3D::ParamBuild(
         calcul_Norm(TypeDrawin*NextIndex);
         make_PolyIndexMin( NextPosition, NextIndex,  IsoPos);
         make_PolyIndexTri( NextPosition, NextIndex, IsoPos);
-        if(components != NULL)
+        if(components != nullptr)
         {
             components->Parametricpositions[3*fctnb  ] = 6*NextPosition; //save the starting position of this component
             components->Parametricpositions[3*fctnb+1] = 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1); //save the number of Polygones of this component

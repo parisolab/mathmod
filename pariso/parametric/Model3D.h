@@ -81,7 +81,7 @@ public :
                    *Var, Cstparser;
     ParStruct *ParamStructs;
     bool*UsedFunct, *UsedFunct2, gridnotnull;
-    double *grid;
+    uint *grid;
     int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, Nb_constants, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Funct, Rgbt, Grid;
@@ -160,7 +160,7 @@ public:
     void CalculateColorsPoints(struct ComponentInfos *);
     void CalculateNoiseShapePoints(int);
     void ParamBuild(float *, float *,unsigned int *, unsigned int *,
-                    unsigned int *, int  IsoPos=0,
+                    unsigned int *, uint  IsoPos=0,
                     ComponentInfos *components = nullptr,
                     int *TriangleListeCND = nullptr,
                     bool *typeCND = nullptr,
