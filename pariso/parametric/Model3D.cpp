@@ -1700,7 +1700,7 @@ void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
     masterthread->StopCalculations = StopCalculations;;
-    for(int nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
@@ -1718,7 +1718,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     int OrignbV=OrignbU;
     int nbU=OrignbU, nbV=OrignbV;
     int nbstack=nbU*nbV;
-    int Iindice=0, Jindice=0;
+    uint Iindice=0, Jindice=0;
     double* vals, res;
     float *ResX, *ResY, *ResZ, *ResW;
     int taille=0;
@@ -1745,9 +1745,9 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     }
     iStart = iFinish - taille;
 
-    int remU= (iFinish-iStart)%nbU;
-    int remV= Vgrid%nbV;
-    int Totalpoints=(iFinish-iStart)*Vgrid;
+    uint remU= (iFinish-iStart)%nbU;
+    uint remV= Vgrid%nbV;
+    uint Totalpoints=(iFinish-iStart)*Vgrid;
     for(int l=0; l<nbstack; l++)
         vals[l*3+2]= stepMorph;
 
@@ -1757,7 +1757,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     if(param4D == 1)
         myParserW[cmp].AllocateStackMemory(Stack_Factor);
 
-    for(int i=iStart; i < iFinish   ; i+=nbU)
+    for(uint i=iStart; i < iFinish   ; i+=nbU)
     {
         Iindice = i;
         nbV=OrignbV;
@@ -1823,7 +1823,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             id+=nbstack;
             if(MyIndex == 0 && activeMorph != 1)
             {
-                signalVal = (int)((id*100)/Totalpoints);
+                signalVal = uint((id*100)/Totalpoints);
                 if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
                 {
                     PreviousSignal = signalVal;

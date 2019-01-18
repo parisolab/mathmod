@@ -399,7 +399,7 @@ void OpenGlWidget::morph()
     {
         //Parametric surfaces:
         ParObjetThread->ParObjet->masterthread->activeMorph = LocalScene.morph;
-        for(int nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads< ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
             ParObjetThread->ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
         ParObjetThread->ParObjet->ParMorph();
     }

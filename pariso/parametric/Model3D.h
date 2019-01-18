@@ -51,10 +51,12 @@ public :
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
     double  *v_inf, *v_sup,*u_inf,*u_sup,*dif_v,*dif_u;
     double stepMorph, pace;
-    int iStart, iFinish, activeMorph, param4D;
+    int activeMorph, param4D;
+    uint iStart, iFinish;
+
     bool StopCalculations, ParsersAllocated;
     unsigned int CurrentPar, CurrentIndex;
-    int signalVal;
+    uint signalVal;
 
 public :
     void ParCompute(uint, uint);
