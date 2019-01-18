@@ -126,7 +126,7 @@ public:
     int VerifCND[1000000];
     uint NbVertex, WorkerThreadsNumber;
     uint Ugrid, Vgrid;
-    int CutV, CutU;
+    uint CutV, CutU;
     float MINX,MINY,MINZ,MINW,
            MAXX,MAXY,MAXZ,MAXW,
            DIFX,DIFY,DIFZ,DIFW,
@@ -154,8 +154,8 @@ public:
     void initialiser_LineColumn(uint, uint);
     void calcul_Norm(uint i=0);
     void BorderCalculation(int i=0);
-    void make_PolyIndexTri(int i=0, int p=0, int  IsoPos=0);
-    void make_PolyIndexMin(int i=0, int p=0, int  IsoPos=0);
+    void make_PolyIndexTri(uint i=0, uint p=0, uint  IsoPos=0);
+    void make_PolyIndexMin(uint i=0, uint p=0, uint  IsoPos=0);
     int CNDCalculation(int &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void CalculateNoiseShapePoints(int);
