@@ -351,22 +351,22 @@ void  Par3D::calcul_points4(uint idx)
     for (uint i=0; i < Ugrid  ; i++)
         for (uint j=0; j < Vgrid   ; j++)
         {
-            tp1 = NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep];
-            tp2 = NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep];
-            tp3 = NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep];
-            tp4 = ExtraDimension[i*Vgrid + j + idx];
+            tp1 = double(NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep]);
+            tp2 = double(NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep]);
+            tp3 = double(NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep]);
+            tp4 = double(ExtraDimension[i*Vgrid + j + idx]);
             if(param4D == 1)
             {
-                NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo;
-                NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo;
-                NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo;
-                ExtraDimension[i*Vgrid + j + idx] = mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo;
+                NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = float(mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo);
+                NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = float(mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo);
+                NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = float(mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo);
+                ExtraDimension[i*Vgrid + j + idx] = float(mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo);
             }
             else
             {
-                NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xo;
-                NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yo;
-                NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zo;
+                NormVertexTab[lndex + 3 + idx*TypeDrawin+ TypeDrawinNormStep] = float(mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xo);
+                NormVertexTab[lndex + 4 + idx*TypeDrawin+ TypeDrawinNormStep] = float(mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yo);
+                NormVertexTab[lndex + 5 + idx*TypeDrawin+ TypeDrawinNormStep] = float(mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zo);
             }
             lndex += TypeDrawin;
         }
