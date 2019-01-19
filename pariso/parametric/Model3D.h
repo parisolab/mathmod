@@ -84,7 +84,8 @@ public :
     ParStruct *ParamStructs;
     bool*UsedFunct, *UsedFunct2, gridnotnull;
     uint *grid;
-    int Nb_paramfunctions, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, Nb_constants, ParConditionRequired;
+    uint Nb_paramfunctions, Nb_functs, Nb_constants;
+    int Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, ParConditionRequired;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Funct, Rgbt, Grid;
     int expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
@@ -98,12 +99,12 @@ public :
         Gradient, Noise, NoiseShape, *SliderNames;
     double *ConstValues, *SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
-    float Lacunarity, Gain;
+    double Lacunarity, Gain;
     int Octaves;
 public :
     void InitMasterParsers();
     uint  HowManyParamSurface(std::string, int);
-    int  HowManyVariables(std::string, int);
+    uint  HowManyVariables(std::string, int);
     ErrorMessage parse_expression();
     void AllocateParsersForMasterThread();
     void AllocateParsersForThread();

@@ -6523,7 +6523,7 @@ void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 // --------------------------
 void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 {
-    float Lacunarity = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = (float)value/10.0;
+    double Lacunarity = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = double(value)/10.0;
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Lacunarity = Lacunarity;
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Lacunarity = Lacunarity;
     ui.LacunarityLabel->setText("Lacunarity = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity));

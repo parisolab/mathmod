@@ -281,17 +281,17 @@ public:
     float lookup(float, float, float);
 };
 
-extern int NbTextures;
-extern int NbComponent;
-extern int NbVariables;
+extern uint NbTextures;
+extern uint NbComponent;
+extern uint NbVariables;
 extern int NbSliders;
 extern int NbSliderValues;
-extern int NbConstantes;
-extern int NbDefinedFunctions;
-extern int NbMaxGrid;  // Should use the defined value in mathmodconfig.js
-extern int NbMaxTri;
-extern int NbMaxPts;
-extern int IsoNbCmp;
+extern uint NbConstantes;
+extern uint NbDefinedFunctions;
+extern uint NbMaxGrid;  // Should use the defined value in mathmodconfig.js
+extern uint NbMaxTri;
+extern uint NbMaxPts;
+extern uint IsoNbCmp;
 
 extern float* NormVertexTab;
 extern unsigned int * IndexPolyTab;

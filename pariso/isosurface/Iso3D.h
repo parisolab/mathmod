@@ -103,7 +103,7 @@ public :
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
     int *GridTable;
-    float Octaves, Lacunarity, Gain;
+    double Octaves, Lacunarity, Gain;
     ImplicitStructure *ImplicitStructs;
     bool *UsedFunct, *UsedFunct2;
 public :

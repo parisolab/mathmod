@@ -380,10 +380,10 @@ void  Par3D::project_4D_to_3D(uint idx)
     for (uint i=0; i < Ugrid; ++i)
         for (uint j=0; j < Vgrid  ; ++j)
         {
-            c4 = 1.0/(ExtraDimension[i*Vgrid + j + idx] - 2);
-            NormVertexTab[I + 3 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
-            NormVertexTab[I + 4 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
-            NormVertexTab[I + 5 + idx*TypeDrawin + TypeDrawinNormStep] *= c4;
+            c4 = 1.0/double(ExtraDimension[i*Vgrid + j + idx] - 2);
+            NormVertexTab[I + 3 + idx*TypeDrawin + TypeDrawinNormStep] *= float(c4);
+            NormVertexTab[I + 4 + idx*TypeDrawin + TypeDrawinNormStep] *= float(c4);
+            NormVertexTab[I + 5 + idx*TypeDrawin + TypeDrawinNormStep] *= float(c4);
             I += TypeDrawin;
         }
 }
@@ -554,9 +554,9 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         Nb_functs = HowManyVariables(Funct, 2);
 
-        for(int i=0; i<Nb_functs; i++)
+        for(uint i=0; i<Nb_functs; i++)
         {
-            for(int j=0; j<Nb_constants; j++)
+            for(uint j=0; j<Nb_constants; j++)
             {
                 Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
@@ -569,9 +569,9 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
 
 
-        for(int i=0; i<Nb_functs; i++)
+        for(uint i=0; i<Nb_functs; i++)
         {
-            for(int j=0; j<i; j++)
+            for(uint j=0; j<i; j++)
                 if( (UsedFunct2[i*NbDefinedFunctions+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
             if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"u,v,t")) >= 0)
@@ -595,7 +595,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 
         for(int i=0; i<Nb_rgbts; i++)
         {
-            for(int j=0; j<Nb_constants; j++)
+            for(uint j=0; j<Nb_constants; j++)
             {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
@@ -611,14 +611,14 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(VRgbt != "")
     {
         Nb_vrgbts = HowManyVariables(VRgbt, 4);
-        for(int j=0; j<Nb_constants; j++)
+        for(uint j=0; j<Nb_constants; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
 
         for(int i=0; i<Nb_vrgbts; i++)
         {
-            for(int j=0; j<Nb_constants; j++)
+            for(uint j=0; j<Nb_constants; j++)
             {
                 VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
@@ -635,7 +635,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 
         for(int i=0; i<Nb_newvariables; i++)
         {
-            for(int j=0; j<Nb_constants; j++)
+            for(uint j=0; j<Nb_constants; j++)
             {
                 Var[i].AddConstant(ConstNames[j], ConstValues[j]);
                 Var[i].AddConstant("pi", PI);
@@ -682,9 +682,9 @@ ErrorMessage  ParMasterThread::parse_expression()
 
 
     //Add defined constantes:
-    for(int i=0; i<Nb_paramfunctions+1; i++)
+    for(uint i=0; i<Nb_paramfunctions+1; i++)
     {
-        for(int j=0; j<Nb_constants; j++)
+        for(uint j=0; j<Nb_constants; j++)
         {
             if(expression_CND != "")
                 myParserCND[i].AddConstant(ConstNames[j], ConstValues[j]);
@@ -714,9 +714,9 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
     }
     // Add defined functions :
-    for(int i=0; i<Nb_paramfunctions+1; i++)
+    for(uint i=0; i<Nb_paramfunctions+1; i++)
     {
-        for(int j=0; j<Nb_functs; j++)
+        for(uint j=0; j<Nb_functs; j++)
         {
             if((UsedFunct[i*4*NbDefinedFunctions+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
                 myParserX[i].AddFunction(FunctNames[j], Fct[j]);
@@ -1004,11 +1004,11 @@ ErrorMessage Par3D::ThreadParsersCopy()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-int ParMasterThread::HowManyVariables(std::string NewVariables, int type)
+uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
 {
     std::string tmp, tmp2,tmp3;
     int position =0, jpos;
-    int Nb_variables =0;
+    uint Nb_variables =0;
     while( NewVariables!= "")
     {
         if((position = NewVariables.find(";")) >0)
