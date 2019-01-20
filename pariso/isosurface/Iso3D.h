@@ -53,9 +53,10 @@ class IsoWorkerThread : public QThread
 public :
     FunctionParser *implicitFunctionParser, *Fct;
     int   Xgrid, Ygrid, Zgrid;
-    int iStart, iFinish, WorkerThreadsNumber, MyIndex;
+    int iStart, iFinish;
     bool AllComponentTraited;
-    int morph_activated, Nb_newvariables, maximumgrid;
+    int morph_activated;
+    uint maximumgrid, Nb_newvariables, MyIndex, WorkerThreadsNumber;
     double stepMorph, pace;
     int CurrentIso;
     double *xLocal2, *yLocal2, *zLocal2;
@@ -98,8 +99,9 @@ public :
         Rgbt, *Rgbts, *RgbtNames,
         VRgbt, *VRgbts, *VRgbtNames,
         Gradient, Noise, varliste;
-    int IsoConditionRequired, Nb_implicitfunctions, Nb_constants, Nb_functs, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
+    int IsoConditionRequired, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
         ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
+    uint Nb_constants, Nb_implicitfunctions, Nb_functs;
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
     int *GridTable;
@@ -128,7 +130,7 @@ public :
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
     int   Xgrid, Ygrid, Zgrid;
-    int WorkerThreadsNumber;
+    uint WorkerThreadsNumber;
     int   *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
@@ -137,20 +139,20 @@ public :
     ScriptErrorType messageerror;
     QString message;
 public :
-    Iso3D(int, int,
-          int gridmax=NbMaxGrid,
-          int NbCmp=NbComponent,
-          int NbVar=NbVariables,
-          int NbCst=NbConstantes,
-          int NbdeFct=NbDefinedFunctions,
-          int NbText=NbTextures,
+    Iso3D(uint, uint,
+          uint gridmax=NbMaxGrid,
+          uint NbCmp=NbComponent,
+          uint NbVar=NbVariables,
+          uint NbCst=NbConstantes,
+          uint NbdeFct=NbDefinedFunctions,
+          uint NbText=NbTextures,
           int nbSlid=NbSliders,
           int nbSlidV=NbSliderValues,
-          int nbThreads=6,
-          int nbGrid=40,
-          int factX=4,
-          int factY=4,
-          int factZ=4);
+          uint nbThreads=6,
+          uint nbGrid=40,
+          uint factX=4,
+          uint factY=4,
+          uint factZ=4);
     ~Iso3D() override;
     inline   void SignatureComputation();
     inline   int ConstructIsoSurface();
@@ -163,7 +165,7 @@ public :
     int CNDtoUse(int index, struct ComponentInfos *components);
     void CalculateColorsPoints(struct ComponentInfos *components);
     void BuildIso();
-    void UpdateThredsNumber(int);
+    void UpdateThredsNumber(uint);
     void stopcalculations(bool);
     void WorkerThreadCopy(IsoWorkerThread *);
     ErrorMessage IsoMorph();

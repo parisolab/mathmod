@@ -43,8 +43,8 @@ struct ImplicitStructure
     std::string cnd;
 };
 
-extern int OrignbX, OrignbY, OrignbZ;
-extern int Stack_Factor;
+extern uint OrignbX, OrignbY, OrignbZ;
+extern uint Stack_Factor;
 
 struct  Voxel
 {

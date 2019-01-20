@@ -48,8 +48,9 @@ uint NbVariables = 30;
 uint NbTextures = 30;
 int NbSliders = 50;
 int NbSliderValues = 500;
-int OrignbX, OrignbY, OrignbZ;
-int Stack_Factor=OrignbX*OrignbY*OrignbZ;
+
+uint OrignbX, OrignbY, OrignbZ;
+uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 
 static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
@@ -265,7 +266,7 @@ void IsoWorkerThread::IsoWorkerTable()
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
         WorkerThreadsTmp[nbthreads].Xgrid = masterthread->Xgrid;
         WorkerThreadsTmp[nbthreads].Ygrid = masterthread->Ygrid;
@@ -277,16 +278,16 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
     }
 }
 //+++++++++++++++++++++++++++++++++++++++
-void Iso3D::UpdateThredsNumber(int NewThreadsNumber)
+void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
-    int OldWorkerThreadsNumber = WorkerThreadsNumber;
+    uint OldWorkerThreadsNumber = WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
-    for(int i=0; i<WorkerThreadsNumber-1; i++)
+    for(uint i=0; i<WorkerThreadsNumber-1; i++)
         workerthreadstmp[i].IsoWorkerTable();
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
-    for(int i=0; i<OldWorkerThreadsNumber-1; i++)
+    for(uint i=0; i<OldWorkerThreadsNumber-1; i++)
         workerthreads[i].DeleteWorkerParsers();
 
     if(OldWorkerThreadsNumber >1)
@@ -309,7 +310,7 @@ ErrorMessage  Iso3D::IsoMorph()
 //+++++++++++++++++++++++++++++++++++++++
 ErrorMessage Iso3D::ThreadParsersCopy()
 {
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
 
         memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
@@ -324,31 +325,30 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].Zgrid = masterthread->Zgrid;
     }
 
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].DeleteWorkerParsers();
 
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
         workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->FunctSize);
 
     return(parse_expression2());
 }
 
-
 ErrorMessage  Iso3D::parse_expression2()
 {
     ErrorMessage NodError;
     // Functions :
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        for(int ij=0; ij<masterthread->Nb_functs; ij++)
+        for(uint ij=0; ij<masterthread->Nb_functs; ij++)
         {
             workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentIsoCmpId, 1);
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
         }
 
-        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        for(uint ii=0; ii<masterthread->Nb_functs; ii++)
         {
-            for(int jj=0; jj<masterthread->Nb_constants; jj++)
+            for(uint jj=0; jj<masterthread->Nb_constants; jj++)
             {
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
             }
@@ -360,7 +360,7 @@ ErrorMessage  Iso3D::parse_expression2()
             }
         }
 
-        for(int ii=0; ii<masterthread->Nb_functs; ii++)
+        for(uint ii=0; ii<masterthread->Nb_functs; ii++)
         {
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseW",TurbulenceWorley, 6);
             workerthreads[nbthreads].Fct[ii].AddFunction("fhelix1",fhelix1, 10);
@@ -369,7 +369,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
-            for(int jj=0; jj<ii; jj++)
+            for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
@@ -382,9 +382,9 @@ ErrorMessage  Iso3D::parse_expression2()
     }
 
     //Add defined constantes:
-    for(int nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
     {
-        for(int i=0; i<masterthread->Nb_implicitfunctions+1; i++)
+        for(uint i=0; i<masterthread->Nb_implicitfunctions+1; i++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
 
@@ -441,19 +441,19 @@ ErrorMessage  Iso3D::parse_expression2()
 }
 
 /// +++++++++++++++++++++++++++++++++++++++++
-Iso3D::Iso3D( int maxtri, int maxpts, int nbmaxgrid,
-              int NbCompo,
-              int NbVariabl,
-              int NbConstant,
-              int NbDefinedFunct,
-              int NbText,
+Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
+              uint NbCompo,
+              uint NbVariabl,
+              uint NbConstant,
+              uint NbDefinedFunct,
+              uint NbText,
               int NbSlid,
               int NbSliderV,
-              int nbThreads,
-              int nbGrid,
-              int factX,
-              int factY,
-              int factZ)
+              uint nbThreads,
+              uint nbGrid,
+              uint factX,
+              uint factY,
+              uint factZ)
 {
     OrignbX= factX;
     OrignbY= factY;
@@ -919,11 +919,11 @@ void IsoWorkerThread::VoxelEvaluation(int IsoIndex)
 {
     double* vals;
     float* Res;
-    int maxgrscalemaxgr = maximumgrid*maximumgrid;
+    uint maxgrscalemaxgr = maximumgrid*maximumgrid;
     const int limitY = Ygrid, limitZ = Zgrid;
     int I, J, IJK;
     int id=0;
-    int nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
+    uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     int nbstack=nbX*nbY*nbZ;
     int Iindice=0, Jindice=0, Kindice=0;
     int PreviousSignal=0;

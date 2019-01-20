@@ -3003,7 +3003,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
 }
 
 template<typename Value_t>
-void FunctionParserBase<Value_t>::AllocateStackMemory(int nbStack)
+void FunctionParserBase<Value_t>::AllocateStackMemory(uint nbStack)
 {
     mData->mStacki.resize(nbStack*(mData->mStack).size());
 }
