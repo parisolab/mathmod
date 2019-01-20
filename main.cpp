@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     Parameters.LoadConfig(app, argc, argv);
 
     //Creation of the two most important objects:
-    MathMod mm(0, Parameters.MaxTri, Parameters.MaxPt, Parameters.MaxGrid,
+    MathMod mm(nullptr, Parameters.MaxTri, Parameters.MaxPt, Parameters.MaxGrid,
                Parameters.NbComponent, Parameters.NbVariables, Parameters.NbConstantes,
                Parameters.NbDefinedFunctions, Parameters.NbTextures, Parameters.NbSliders,
                Parameters.NbSliderValues, Parameters.Threads[0], 40,
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     mm.Parent = &drawingopt;
     //GUI update:
     drawingopt.UpdateGui(argc);
-    if(drawingopt.IsolistItemRef != 0)
+    if(drawingopt.IsolistItemRef != nullptr)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
 
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));

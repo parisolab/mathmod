@@ -61,7 +61,7 @@ struct NoiseParemeters
     int NoiseType; // 0 :Texture ; 1 : Pigments
     FunctionParser *RgbtParser;
     FunctionParser *VRgbtParser, *GradientParser, *NoiseParser;
-    int Nb_vrgbts;
+    uint Nb_vrgbts;
     int NoiseShape;
     int NoiseActive;
 };
@@ -127,21 +127,21 @@ enum ScriptErrorType
 };
 struct  ComponentInfos
 {
-    int NbIso=0;
-    int NbParametric;
+    uint NbIso=0;
+    uint NbParametric=0;
     int *IsoPositions;
     int *IsoPts;
-    int *Parametricpositions;
+    uint *Parametricpositions;
     int selectedComponent;
     bool ThereisCND;
     bool ThereisRGBA;
-    int NbTrianglesVerifyCND;
+    uint NbTrianglesVerifyCND;
     bool DMTrianglesVerifyCND;
     bool DFTrianglesVerifyCND;
-    int NbTrianglesNotVerifyCND;
+    uint NbTrianglesNotVerifyCND;
     bool DMTrianglesNotVerifyCND;
     bool DFTrianglesNotVerifyCND;
-    int NbTrianglesBorderCND;
+    uint NbTrianglesBorderCND;
     bool DMTrianglesBorderCND;
     NoiseParemeters NoiseParam;
 };

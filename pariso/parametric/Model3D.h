@@ -56,18 +56,18 @@ public :
 
     bool StopCalculations, ParsersAllocated;
     unsigned int CurrentPar, CurrentIndex;
-    uint signalVal;
+    int signalVal;
 
 public :
     void ParCompute(uint, uint);
     void calcul_objet(uint component =0, uint idx=0);
-    void AllocateParsersForWorkerThread(int, int);
+    void AllocateParsersForWorkerThread(uint, uint);
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
     ~ParWorkerThread() override;
 signals:
-    void mySignal(int myParameter);
+    void mySignal(int);
 public:
     void emitMySignal();
 };
@@ -85,10 +85,10 @@ public :
     bool*UsedFunct, *UsedFunct2, gridnotnull;
     uint *grid;
     uint Nb_paramfunctions, Nb_functs, Nb_constants;
-    int Nb_rgbts, Nb_vrgbts, Nb_Sliders, Nb_newvariables, ParConditionRequired;
+    uint Nb_rgbts, Nb_vrgbts, Nb_newvariables;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Varu, Const,  Funct, Rgbt, Grid;
-    int expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
+    int Nb_Sliders, ParConditionRequired, expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
         VaruSize, ConstSize,  FunctSize, RgbtSize, GridSize;
     std::string *VarName, *Varus,
@@ -156,12 +156,10 @@ public:
     void initialiser_parametres(uint, uint);
     void initialiser_LineColumn(uint, uint);
     void calcul_Norm(uint i=0);
-    void BorderCalculation(int i=0);
     void make_PolyIndexTri(uint i=0, uint p=0, uint  IsoPos=0);
     void make_PolyIndexMin(uint i=0, uint p=0, uint  IsoPos=0);
     uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
-    void CalculateNoiseShapePoints(int);
     void ParamBuild(float *, float *,unsigned int *, unsigned int *,
                     unsigned int *, uint  IsoPos=0,
                     ComponentInfos *components = nullptr,
@@ -170,7 +168,7 @@ public:
                     unsigned int *IndexPolyTabMinPt = nullptr,
                     unsigned  int *NbPolyMinPt = nullptr);
     void BuildPar();
-    void UpdateThredsNumber(int);
+    void UpdateThredsNumber(uint);
     void stopcalculations(bool);
     void WorkerThreadCopy(ParWorkerThread *);
     void MasterThreadCopy(ParMasterThread *);
