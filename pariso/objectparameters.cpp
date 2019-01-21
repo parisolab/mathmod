@@ -245,8 +245,8 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
 
 void ObjectParameters::InitComponentinfos(struct  ComponentInfos & compinfos)
 {
-    compinfos.IsoPositions        = new int[2*NbComponent+1];
-    compinfos.IsoPts              = new int[2*NbComponent+1];
+    compinfos.IsoPositions        = new uint[2*NbComponent+1];
+    compinfos.IsoPts              = new uint[2*NbComponent+1];
     compinfos.Parametricpositions = new uint[3*NbComponent+1];
 
     compinfos.NoiseParam.Octaves     = 4;

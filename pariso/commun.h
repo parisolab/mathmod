@@ -129,8 +129,8 @@ struct  ComponentInfos
 {
     uint NbIso=0;
     uint NbParametric=0;
-    int *IsoPositions;
-    int *IsoPts;
+    uint *IsoPositions;
+    uint *IsoPts;
     uint *Parametricpositions;
     int selectedComponent;
     bool ThereisCND;

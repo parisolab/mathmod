@@ -131,11 +131,11 @@ public :
     IsoMasterThread *masterthread;
     uint   Xgrid, Ygrid, Zgrid;
     uint WorkerThreadsNumber;
-    int   *     IsoSurfaceTriangleListe;
+    uint   *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
     //unsigned int *  IndexPolyTab;
-    int NbTriangleIsoSurface,NbPointIsoMap;
+    uint NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
     QString message;
 public :
@@ -155,13 +155,13 @@ public :
           uint factZ=4);
     ~Iso3D() override;
     inline   void SignatureComputation();
-    inline   int ConstructIsoSurface();
+    inline   uint ConstructIsoSurface();
     inline   void ConstructIsoNormale();
     inline   uint PointEdgeComputation(uint);
     inline int CNDCalculation(int &, struct ComponentInfos *);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool *);
     void SaveIsoGLMap();
-    int SetMiniMmeshStruct();
+    uint SetMiniMmeshStruct();
     int CNDtoUse(int index, struct ComponentInfos *components);
     void CalculateColorsPoints(struct ComponentInfos *components);
     void BuildIso();

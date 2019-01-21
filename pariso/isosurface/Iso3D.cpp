@@ -500,7 +500,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     /// Things to do one time...
     if(staticaction == 1)
     {
-        IsoSurfaceTriangleListe  = new int[3*maxtri];
+        IsoSurfaceTriangleListe  = new uint[3*maxtri];
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
@@ -519,7 +519,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         delete[] IndexPolyTab;
         delete[] IndexPolyTabMin;
 
-        IsoSurfaceTriangleListe  = new int[3*maxtri];
+        IsoSurfaceTriangleListe  = new uint[3*maxtri];
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new  Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
@@ -1056,9 +1056,9 @@ void Iso3D::ConstructIsoNormale()
           pt2_x, pt2_y, pt2_z,
           pt3_x, pt3_y, pt3_z,
           scalar;
-    int ThreeTimesI, IndexFirstPoint, IndexSecondPoint, IndexThirdPoint;
+    uint ThreeTimesI, IndexFirstPoint, IndexSecondPoint, IndexThirdPoint;
 
-    for(int i = 0; i<NbTriangleIsoSurface; ++i)
+    for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
 
         ThreeTimesI   = i*3;
@@ -1094,7 +1094,7 @@ void Iso3D::ConstructIsoNormale()
                               (NormOriginaltmp[ThreeTimesI+1]*NormOriginaltmp[ThreeTimesI+1]) +
                               (NormOriginaltmp[ThreeTimesI+2]*NormOriginaltmp[ThreeTimesI+2])));
 
-        if(scalar < float(0.0000000001))  scalar  = float(0.0000000001);
+        if(scalar < float(0.0000001))  scalar  = float(0.0000001);
         (NormOriginaltmp[ThreeTimesI  ]/=scalar);
         (NormOriginaltmp[ThreeTimesI+1]/=scalar);
         (NormOriginaltmp[ThreeTimesI+2]/=scalar);
@@ -1105,11 +1105,11 @@ void Iso3D::ConstructIsoNormale()
 
 void Iso3D::SaveIsoGLMap()
 {
-    int IndexFirstPoint, IndexSecondPoint, IndexThirdPoint, ThreeTimesI;
+    uint IndexFirstPoint, IndexSecondPoint, IndexThirdPoint, ThreeTimesI;
     double scalar;
 
 /// Recalculate the normals so we have one for each Point (like Pov Mesh) :
-    for (int i=0; i < NbPointIsoMap ; i++)
+    for (uint i=0; i < NbPointIsoMap ; i++)
     {
         ThreeTimesI = TypeDrawin*i  + TypeDrawinNormStep;
         NormVertexTab[ TypeDrawin*NbVertexTmp +ThreeTimesI  ] = 0;
@@ -1117,7 +1117,7 @@ void Iso3D::SaveIsoGLMap()
         NormVertexTab[ TypeDrawin*NbVertexTmp +ThreeTimesI+2] = 0;
     }
 
-    for(int i = 0; i<NbTriangleIsoSurface; ++i)
+    for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI   = i*3;
         IndexFirstPoint  = TypeDrawin*IsoSurfaceTriangleListe[ThreeTimesI   ] + TypeDrawin*NbVertexTmp  + TypeDrawinNormStep ;
@@ -1138,8 +1138,8 @@ void Iso3D::SaveIsoGLMap()
     }
 
 /// Normalisation
-    int idx;
-    for (int i=0; i < NbPointIsoMap  ; i++)
+    uint idx;
+    for (uint i=0; i < NbPointIsoMap  ; i++)
     {
         idx = TypeDrawin*i + TypeDrawinNormStep;
         scalar = double(sqrt((NormVertexTab[idx  ]*NormVertexTab[idx  ]) +
@@ -1733,9 +1733,9 @@ void Iso3D::stopcalculations(bool calculation)
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbComponent+1)*sizeof(int));
-    memcpy(copy->IsoPts, origin->IsoPts, (2*NbComponent+1)*sizeof(int));
-    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbComponent+1)*sizeof(int));
+    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbComponent+1)*sizeof(uint));
+    memcpy(copy->IsoPts, origin->IsoPts, (2*NbComponent+1)*sizeof(uint));
+    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbComponent+1)*sizeof(uint));
 
     copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
     copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
@@ -1882,7 +1882,7 @@ void Iso3D::IsoBuild (
 
         // Save the Index:
         l = 3*NbTriangleIsoSurfaceTmp;
-        if(components != NULL)
+        if(components != nullptr)
         {
             components->IsoPositions[2*fctnb    ] = l; //save the starting position of this component
             components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurface; //save the number of triangles of this component
@@ -2386,7 +2386,7 @@ Iso3D::~Iso3D()
 }
 
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
-int Iso3D::SetMiniMmeshStruct()
+uint Iso3D::SetMiniMmeshStruct()
 {
     int Index, iter, nbpl, iterpl, lnew;
     int I, J, IJK, i, j, k;
@@ -2464,7 +2464,7 @@ int Iso3D::SetMiniMmeshStruct()
 }
 
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
-int Iso3D::ConstructIsoSurface()
+uint Iso3D::ConstructIsoSurface()
 {
     int IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
     int I, J, IJK;
