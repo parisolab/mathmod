@@ -52,13 +52,13 @@ class IsoWorkerThread : public QThread
     Q_OBJECT
 public :
     FunctionParser *implicitFunctionParser, *Fct;
-    int   Xgrid, Ygrid, Zgrid;
-    int iStart, iFinish;
+    uint   Xgrid, Ygrid, Zgrid;
+    uint iStart, iFinish;
     bool AllComponentTraited;
     int morph_activated;
     uint maximumgrid, Nb_newvariables, MyIndex, WorkerThreadsNumber;
     double stepMorph, pace;
-    int CurrentIso;
+    uint CurrentIso;
     double *xLocal2, *yLocal2, *zLocal2;
     double *vr2;
     ErrorMessage stdError;
@@ -66,8 +66,8 @@ public :
     bool StopCalculations, ParsersAllocated;
     int signalVal;
 public :
-    void IsoCompute(int);
-    void VoxelEvaluation(int);
+    void IsoCompute(uint);
+    void VoxelEvaluation(uint);
     void AllocateParsersForWorkerThread(int,int);
     void DeleteWorkerParsers();
     void IsoWorkerTable();
@@ -99,9 +99,9 @@ public :
         Rgbt, *Rgbts, *RgbtNames,
         VRgbt, *VRgbts, *VRgbtNames,
         Gradient, Noise, varliste;
-    int IsoConditionRequired, Nb_rgbts, Nb_vrgbts, Nb_Sliders,
+    int IsoConditionRequired, Nb_Sliders,
         ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
-    uint Nb_constants, Nb_implicitfunctions, Nb_functs;
+    uint Nb_rgbts, Nb_vrgbts, Nb_constants, Nb_implicitfunctions, Nb_functs;
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
     int *GridTable;
@@ -113,8 +113,8 @@ public :
     void AllocateMasterParsers();
     void InitMasterParsers();
     inline ErrorMessage ParseExpression(std::string);
-    int HowManyIsosurface(std::string,int);
-    int HowManyVariables(std::string, int);
+    uint HowManyIsosurface(std::string,uint);
+    uint HowManyVariables(std::string, uint);
     ErrorMessage ParserIso();
     void IsoMasterTable();
     void initparser();
@@ -129,7 +129,7 @@ public :
     ObjectProperties *LocalScene;
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
-    int   Xgrid, Ygrid, Zgrid;
+    uint   Xgrid, Ygrid, Zgrid;
     uint WorkerThreadsNumber;
     int   *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
@@ -157,7 +157,7 @@ public :
     inline   void SignatureComputation();
     inline   int ConstructIsoSurface();
     inline   void ConstructIsoNormale();
-    inline   int PointEdgeComputation(int);
+    inline   uint PointEdgeComputation(uint);
     inline int CNDCalculation(int &, struct ComponentInfos *);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool *);
     void SaveIsoGLMap();
@@ -171,7 +171,7 @@ public :
     ErrorMessage IsoMorph();
     ErrorMessage parse_expression2();
     ErrorMessage ThreadParsersCopy();
-    void ReinitVarTablesWhenMorphActiv(int);
+    void ReinitVarTablesWhenMorphActiv(uint);
     void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
 public :
