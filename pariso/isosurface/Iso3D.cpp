@@ -1775,15 +1775,12 @@ void Iso3D::IsoBuild (
     bool *typeCND
 )
 {
-    int    l, NbTriangleIsoSurfaceTmp;
+    uint    l, NbTriangleIsoSurfaceTmp;
     PreviousSizeMinimalTopology = 0;
     NbPolyMinimalTopology = 0;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
 
-
-    //IndexPolyTabMin = IndexPolyTabMinPt;
-    //IndexPolyTab = IndexPolyTabPt;
     if(components != nullptr)
         components->NbIso = masterthread->Nb_implicitfunctions+1;
 
@@ -1892,7 +1889,7 @@ void Iso3D::IsoBuild (
         }
         if( (l+3*NbTriangleIsoSurface) < 4*NbMaxTri)
         {
-            for (int i=0; i < NbTriangleIsoSurface ; ++i)
+            for (uint i=0; i < NbTriangleIsoSurface ; ++i)
             {
                 IndexPolyTab[l  ] = IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp;
                 IndexPolyTab[l+1] = IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp;
@@ -1918,7 +1915,7 @@ void Iso3D::IsoBuild (
     }
 
     //CND calculation for the triangles results:
-    int result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
+    uint result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
     if(result == 0)
     {
         messageerror = CND_TAB_MEM_OVERFLOW;
@@ -1983,9 +1980,9 @@ void Iso3D::IsoBuild (
     copycomponent(componentsPt, components);
 }
 ///+++++++++++++++++++++++++++++++++++++++++
-int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
+uint Iso3D::CNDtoUse(uint index, struct ComponentInfos *components)
 {
-    for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
+    for(uint fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
         if( index <= components->IsoPts[2*fctnb +1] && index >= components->IsoPts[2*fctnb])
             return fctnb;
     return 30;
@@ -1994,17 +1991,20 @@ int Iso3D::CNDtoUse(int index, struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    double tmp, ValCol[NbTextures+5], val[4];
+    double tmp,
+            *ValCol,
+            val[4];
+    ValCol = new double[NbTextures+5];
     val[3] = masterthread->stepMorph;
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(int i=0; i<masterthread->Nb_vrgbts && i<NbTextures; i++)
+        for(uint i=0; i<masterthread->Nb_vrgbts && i<NbTextures; i++)
         {
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
 
-        for(int i= 0; i < NbVertexTmp; i++)
+        for(uint i= 0; i < NbVertexTmp; i++)
         {
             val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
             val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
@@ -2057,10 +2057,11 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             NormVertexTab[i*TypeDrawin+3] = masterthread->RgbtParser[3].Eval(val);
         }
     }
+    delete[] ValCol;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-int Iso3D::CNDCalculation(int & NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
+uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
 {
     double vals[4];
     vals[3] = masterthread->stepMorph;

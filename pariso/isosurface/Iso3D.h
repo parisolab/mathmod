@@ -158,11 +158,11 @@ public :
     inline   uint ConstructIsoSurface();
     inline   void ConstructIsoNormale();
     inline   uint PointEdgeComputation(uint);
-    inline int CNDCalculation(int &, struct ComponentInfos *);
+    inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool *);
     void SaveIsoGLMap();
     uint SetMiniMmeshStruct();
-    int CNDtoUse(int index, struct ComponentInfos *components);
+    uint CNDtoUse(uint index, struct ComponentInfos *components);
     void CalculateColorsPoints(struct ComponentInfos *components);
     void BuildIso();
     void UpdateThredsNumber(uint);
