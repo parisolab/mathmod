@@ -2006,55 +2006,55 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
-            val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
-            val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+            val[0]= double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
+            val[1]= double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
+            val[2]= double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+            val[0]= tmp*double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
+            val[1]= tmp*double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
+            val[2]= tmp*double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
 
             tmp  = masterthread->GradientParser->Eval(val);
 
-            int c= (int)tmp;
-            tmp = std::abs(tmp - (double)c);
-            for (int j=0; j < masterthread->Nb_vrgbts && j < NbTextures; j+=5)
+            int c= int(tmp);
+            tmp = std::abs(tmp - double(c));
+            for (uint j=0; j < masterthread->Nb_vrgbts && j < NbTextures; j+=5)
                 if(tmp <= ValCol[j])
                 {
-                    NormVertexTab[i*TypeDrawin    ] = ValCol[j+1];
-                    NormVertexTab[i*TypeDrawin+1] = ValCol[j+2];
-                    NormVertexTab[i*TypeDrawin+2] = ValCol[j+3];
-                    NormVertexTab[i*TypeDrawin+3] = ValCol[j+4];
+                    NormVertexTab[i*TypeDrawin  ] = float(ValCol[j+1]);
+                    NormVertexTab[i*TypeDrawin+1] = float(ValCol[j+2]);
+                    NormVertexTab[i*TypeDrawin+2] = float(ValCol[j+3]);
+                    NormVertexTab[i*TypeDrawin+3] = float(ValCol[j+4]);
                     j = NbTextures;
                 }
         }
     }
     else if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 1)
     {
-        for(int i= 0; i < NbVertexTmp; i++)
+        for(uint i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ];
-            val[1]= NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ];
-            val[2]= NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ];
+            val[0]= double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
+            val[1]= double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
+            val[2]= double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ];
-            val[1]= tmp*NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ];
-            val[2]= tmp*NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ];
+            val[0]= tmp*double(NormVertexTab[i*TypeDrawin  +3+TypeDrawinNormStep ]);
+            val[1]= tmp*double(NormVertexTab[i*TypeDrawin  +4+TypeDrawinNormStep ]);
+            val[2]= tmp*double(NormVertexTab[i*TypeDrawin  +5+TypeDrawinNormStep ]);
 
-            NormVertexTab[i*TypeDrawin  ] = masterthread->RgbtParser[0].Eval(val);
-            NormVertexTab[i*TypeDrawin+1] = masterthread->RgbtParser[1].Eval(val);
-            NormVertexTab[i*TypeDrawin+2] = masterthread->RgbtParser[2].Eval(val);
-            NormVertexTab[i*TypeDrawin+3] = masterthread->RgbtParser[3].Eval(val);
+            NormVertexTab[i*TypeDrawin  ] = float(masterthread->RgbtParser[0].Eval(val));
+            NormVertexTab[i*TypeDrawin+1] = float(masterthread->RgbtParser[1].Eval(val));
+            NormVertexTab[i*TypeDrawin+2] = float(masterthread->RgbtParser[2].Eval(val));
+            NormVertexTab[i*TypeDrawin+3] = float(masterthread->RgbtParser[3].Eval(val));
         }
     }
     delete[] ValCol;
@@ -2067,32 +2067,32 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     vals[3] = masterthread->stepMorph;
     if (masterthread->IsoConditionRequired == 1)
     {
-        for(int i= 0; i < NbVertexTmp; i++)
+        for(uint i= 0; i < NbVertexTmp; i++)
         {
-            vals[0] = NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep];
-            vals[1] = NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep];
-            vals[2] = NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep];
-            PointVerifyCond[i] = (masterthread->IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1);
+            vals[0] = double(NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep]);
+            vals[1] = double(NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep]);
+            vals[2] = double(NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep]);
+            PointVerifyCond[i] = (masterthread->IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1.0);
             if(PointVerifyCond[i])
             {
-                NormVertexTab[i*TypeDrawin    ] = 0.1;
-                NormVertexTab[i*TypeDrawin  +1] = 0.9;
+                NormVertexTab[i*TypeDrawin    ] = float(0.1);
+                NormVertexTab[i*TypeDrawin  +1] = float(0.9);
                 NormVertexTab[i*TypeDrawin  +2] = 0.0;
                 NormVertexTab[i*TypeDrawin  +3] = 1.0;
             }
             else
             {
-                NormVertexTab[i*TypeDrawin    ] = 0.9;
-                NormVertexTab[i*TypeDrawin  +1] = 0.1;
+                NormVertexTab[i*TypeDrawin    ] = float(0.9);
+                NormVertexTab[i*TypeDrawin  +1] = float(0.1);
                 NormVertexTab[i*TypeDrawin  +2] = 0.0;
                 NormVertexTab[i*TypeDrawin  +3] = 1.0;
             }
         }
-        int Aindex, Bindex, Cindex;
-        int nbtriangle = NbTriangleIsoSurfaceTmp;
-        for(int i= 0; i < nbtriangle; i++)
+        uint Aindex, Bindex, Cindex;
+        uint nbtriangle = NbTriangleIsoSurfaceTmp;
+        for(uint i= 0; i < nbtriangle; i++)
         {
-            Aindex = IndexPolyTab[3*i       ];
+            Aindex = IndexPolyTab[3*i    ];
             Bindex = IndexPolyTab[3*i + 1];
             Cindex = IndexPolyTab[3*i + 2];
             //Init this triangle type to 1:
@@ -2136,22 +2136,22 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
             int Alfa;
-            int cnd = CNDtoUse(Aindex, components);
+            uint cnd = CNDtoUse(Aindex, components);
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
-                Bprime[0] = NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep];
-                Bprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
-                Bprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
+                Bprime[0] = double(NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep]);
+                Bprime[1] = double(NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep]);
+                Bprime[2] = double(NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep]);
                 Bprime[3] = masterthread->stepMorph;
 
-                DiffX = (NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20;
-                DiffY = (NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
-                DiffZ = (NormVertexTab[3+TypeDrawin*Bindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20;
+                DiffX = double(NormVertexTab[3+TypeDrawin*Bindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep])/20.0;
+                DiffY = double(NormVertexTab[3+TypeDrawin*Bindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20.0;
+                DiffZ = double(NormVertexTab[3+TypeDrawin*Bindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20.0;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1 && (Alfa < 20))
+                    while(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1.0 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -2161,7 +2161,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
                 else
                 {
-                    while(!(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1.0) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -2171,18 +2171,18 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
 
                 /// Cprime
-                Cprime[0] = NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep];
-                Cprime[1] = NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep];
-                Cprime[2] = NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep];
+                Cprime[0] = double(NormVertexTab[3+TypeDrawin*Aindex  + TypeDrawinNormStep]);
+                Cprime[1] = double(NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep]);
+                Cprime[2] = double(NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep]);
                 Cprime[3] = masterthread->stepMorph;
 
-                DiffX = (NormVertexTab[3+TypeDrawin*Cindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex     + TypeDrawinNormStep])/20;
-                DiffY = (NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
-                DiffZ = (NormVertexTab[3+TypeDrawin*Cindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20;
+                DiffX = double(NormVertexTab[3+TypeDrawin*Cindex  + TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex     + TypeDrawinNormStep])/20;
+                DiffY = double(NormVertexTab[3+TypeDrawin*Cindex+1+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+1+ TypeDrawinNormStep])/20;
+                DiffZ = double(NormVertexTab[3+TypeDrawin*Cindex+2+ TypeDrawinNormStep] - NormVertexTab[3+TypeDrawin*Aindex+2+ TypeDrawinNormStep])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1 && (Alfa < 20))
+                    while(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1.0 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -2192,7 +2192,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
                 else
                 {
-                    while(!(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1) && (Alfa < 20))
+                    while(!(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1.0) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -2207,9 +2207,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 if((TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep +20)  < 10*NbMaxPts )
                 {
                     //Add Bprime:
-                    NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = Bprime[0];
-                    NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = Bprime[1];
-                    NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = Bprime[2];
+                    NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = float(Bprime[0]);
+                    NormVertexTab[TypeDrawin*NbVertexTmp+4+ TypeDrawinNormStep] = float(Bprime[1]);
+                    NormVertexTab[TypeDrawin*NbVertexTmp+5+ TypeDrawinNormStep] = float(Bprime[2]);
                     NormVertexTab[TypeDrawin*NbVertexTmp   + TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex    + TypeDrawinNormStep];
                     NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 1+ TypeDrawinNormStep];
                     NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Bindex + 2+ TypeDrawinNormStep];
@@ -2219,9 +2219,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     NormVertexTab[TypeDrawin*NbVertexTmp +3] = 1.0;
 
                     //Add Cprime:
-                    NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = Cprime[0];
-                    NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = Cprime[1];
-                    NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = Cprime[2];
+                    NormVertexTab[TypeDrawin*NbVertexTmp+ 3 + TypeDrawin + TypeDrawinNormStep] = float(Cprime[0]);
+                    NormVertexTab[TypeDrawin*NbVertexTmp+ 4 + TypeDrawin + TypeDrawinNormStep] = float(Cprime[1]);
+                    NormVertexTab[TypeDrawin*NbVertexTmp+ 5 + TypeDrawin + TypeDrawinNormStep] = float(Cprime[2]);
                     NormVertexTab[TypeDrawin*NbVertexTmp +   TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex    + TypeDrawinNormStep];
                     NormVertexTab[TypeDrawin*NbVertexTmp +1+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 1+ TypeDrawinNormStep];
                     NormVertexTab[TypeDrawin*NbVertexTmp +2+ TypeDrawin+ TypeDrawinNormStep] = NormVertexTab[TypeDrawin*Cindex + 2+ TypeDrawinNormStep];
@@ -2239,9 +2239,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //Add triangles:
                 //***********
                 /// Add Three new triangles :
-                int IndexBprime = (NbVertexTmp-2);
-                int IndexCprime = (NbVertexTmp-1);
-                int IndexNbTriangle;
+                uint IndexBprime = (NbVertexTmp-2);
+                uint IndexCprime = (NbVertexTmp-1);
+                uint IndexNbTriangle;
 
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCND[i] = 0;
@@ -2317,10 +2317,10 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         //***********
         //Reorganize the triangles index:
         //***********
-        unsigned int *NewIndexPolyTab = new unsigned int[3*NbTriangleIsoSurfaceTmp];
-        int k, l, M;
+        uint *NewIndexPolyTab = new uint[3*NbTriangleIsoSurfaceTmp];
+        uint k, l, M;
         k = l = M =0;
-        for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
+        for(uint i=0; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 1)
             {
                 NewIndexPolyTab[3*k    ] =  IndexPolyTab[3*i    ];
@@ -2329,7 +2329,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 k++;
             }
 
-        for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
+        for(uint i=0; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == -1)
             {
                 NewIndexPolyTab[3*(l + k)    ] =  IndexPolyTab[3*i    ];
@@ -2338,7 +2338,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 l++;
             }
 
-        for(int i=0; i<NbTriangleIsoSurfaceTmp; i++)
+        for(uint i=0; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 4)
             {
                 NewIndexPolyTab[3*(M + l + k)    ] =  IndexPolyTab[3*i    ];
@@ -2356,9 +2356,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         components->NbTrianglesNotVerifyCND = l;
         components->NbTrianglesBorderCND = M;
 
-        for(int fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
+        for(uint fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
         {
-            if(components != NULL)
+            if(components != nullptr)
             {
                 components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
             }
@@ -2370,11 +2370,11 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     {
         components->ThereisCND = false;
 
-        for(int i= 0; i < NbVertexTmp; i++)
+        for(uint i= 0; i < NbVertexTmp; i++)
         {
-            NormVertexTab[i*TypeDrawin  ] = 0.5;
-            NormVertexTab[i*TypeDrawin+1] = 0.6;
-            NormVertexTab[i*TypeDrawin+2] = 0.8;
+            NormVertexTab[i*TypeDrawin  ] = float(0.5);
+            NormVertexTab[i*TypeDrawin+1] = float(0.6);
+            NormVertexTab[i*TypeDrawin+2] = float(0.8);
             NormVertexTab[i*TypeDrawin+3] = 1.0;
         }
     }
