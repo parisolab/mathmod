@@ -48,9 +48,9 @@ extern uint Stack_Factor;
 
 struct  Voxel
 {
-    int Edge_Points [12]; //reference to the Edge Points
-    int Signature; // From 0 to 255
-    int NbEdgePoint;
+    uint Edge_Points [12]; //reference to the Edge Points
+    uint Signature; // From 0 to 255
+    uint NbEdgePoint;
 };
 
 struct NoiseParemeters

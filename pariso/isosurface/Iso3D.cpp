@@ -22,10 +22,10 @@
 #include "povfunctions.cpp"
 #include <qmessagebox.h>
 
-static int NbPolyMin;
+static uint NbPolyMin;
 static float * NormOriginaltmp;
 static Voxel *GridVoxelVarPt;
-static float *Results;
+static double *Results;
 
 static uint TypeDrawin=10;
 static uint TypeDrawinNormStep = 4;
@@ -503,7 +503,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         IsoSurfaceTriangleListe  = new uint[3*maxtri];
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
-        Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+        Results                  = new double[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         NormVertexTab            = new float [10*maxpts];
         IndexPolyTab             = new unsigned int [4*maxtri];
         IndexPolyTabMin          = new unsigned int [5*maxtri];
@@ -522,7 +522,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         IsoSurfaceTriangleListe  = new uint[3*maxtri];
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new  Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
-        Results                  = new float[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+        Results                  = new double[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         NormVertexTab            = new float [10*maxpts];
         IndexPolyTab             = new unsigned int [4*maxtri];
         IndexPolyTabMin          = new unsigned int [5*maxtri];
@@ -1025,7 +1025,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                             Results[sect] = Res[p];
                             GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
                             GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
-                            for(int l=0; l<12; l++) GridVoxelVarPt[sect].Edge_Points[l] = -20;
+                            //for(int l=0; l<12; l++) GridVoxelVarPt[sect].Edge_Points[l] = -20;
                             p++;
                         }
                 //Signal emission:
@@ -2389,9 +2389,8 @@ Iso3D::~Iso3D()
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 uint Iso3D::SetMiniMmeshStruct()
 {
-    int Index, iter, nbpl, iterpl, lnew;
-    int I, J, IJK, i, j, k;
-    int maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint I, J, IJK, i, j, k, Index, lnew, iter, nbpl, iterpl;
+    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
 
     lnew = 0;
     NbPolyMin = 0;
@@ -2467,23 +2466,23 @@ uint Iso3D::SetMiniMmeshStruct()
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 uint Iso3D::ConstructIsoSurface()
 {
-    int IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
-    int I, J, IJK;
-    int maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
+    uint I, J, IJK;
+    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
 
     NbTriangleIsoSurface = 0;
     limitX = Xgrid;
-    for(int i=0; i < limitX-1; i++)
+    for(uint i=0; i < limitX-1; i++)
     {
         I   = i*maxgrscalemaxgr;
-        for(int j=0; j < Ygrid-1; j++)
+        for(uint j=0; j < Ygrid-1; j++)
         {
             J   = I+j*NbMaxGrid;
-            for(int k=0; k < Zgrid-1; k++)
+            for(uint k=0; k < Zgrid-1; k++)
             {
                 IJK = J+k;
                 Index = GridVoxelVarPt[IJK].Signature;
-                for (int l = 0; triTable[Index][l] != -1; l += 3)
+                for (uint l = 0; triTable[Index][l] != 111; l += 3)
                 {
                     IndexFirstPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l  ]];
                     IndexSeconPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+1]];
@@ -2491,7 +2490,7 @@ uint Iso3D::ConstructIsoSurface()
                     {
                         if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
                         {
-                            if(IndexFirstPoint != -20 && IndexSeconPoint != -20 && IndexThirdPoint != -20)
+                            //if(IndexFirstPoint != -20 && IndexSeconPoint != -20 && IndexThirdPoint != -20)
                             {
                                 IndexNbTriangle = NbTriangleIsoSurface*3;
                                 IsoSurfaceTriangleListe[IndexNbTriangle  ] = IndexFirstPoint;
@@ -2550,7 +2549,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 /// First Case P(i+1)(j)(k)
 
                 IsoValue_2 = Results[IPLUSONEJK];
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0 )
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0 )
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
@@ -2562,9 +2561,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     ///===========================================================///
                     if((3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep + 2) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2590,7 +2589,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 IsoValue_2 = Results[IJPLUSONEK];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local ;
@@ -2601,9 +2600,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2629,7 +2628,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 IsoValue_2 = Results[IJK+1];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -2640,9 +2639,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2684,7 +2683,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             // First Case P(1)(j)(k)
 
             IsoValue_2 = Results[maxgrscalemaxgr+JK];
-            if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+            if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
             {
                 // Edge Point computation and  save in IsoPointMap
                 factor = (IsoValue - IsoValue_1)/rapport;
@@ -2696,9 +2695,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                 {
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                 }
                 else
                     return 0;
@@ -2732,7 +2731,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[JK+NbMaxGrid];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -2743,9 +2742,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2770,7 +2769,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[JK+1];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -2781,9 +2780,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2827,7 +2826,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[JK+NbMaxGrid];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -2838,9 +2837,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2876,7 +2875,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[JK+1];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -2887,9 +2886,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2937,7 +2936,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             if( i != (limitX -1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+k];
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
 
                     // Edge Point computation and  save in IsoPointMap
@@ -2950,9 +2949,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -2976,7 +2975,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
             IsoValue_2 = Results[i*maxgrscalemaxgr+NbMaxGrid+k];
             // Edge Point computation and  save in IsoPointMap
-            if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+            if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = TypeDrawin*NbPointIsoMap_local;
@@ -2987,9 +2986,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                 {
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                 }
                 else
                     return 0;
@@ -3025,7 +3024,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+k+1];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -3036,9 +3035,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -3075,7 +3074,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             if( i != (limitX-1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid+k];
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
 
                     // Edge Point computation and  save in IsoPointMap
@@ -3088,9 +3087,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -3127,7 +3126,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+j*NbMaxGrid+k+1];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -3138,9 +3137,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -3185,7 +3184,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             if(i != (limitX -1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid];
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
@@ -3197,9 +3196,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -3226,7 +3225,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*NbMaxGrid];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -3237,9 +3236,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -3264,7 +3263,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
             IsoValue_2 = Results[i*maxgrscalemaxgr+j*NbMaxGrid+1];
             // Edge Point computation and  save in IsoPointMap
-            if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+            if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = TypeDrawin*NbPointIsoMap_local;
@@ -3275,9 +3274,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                 {
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                 }
                 else
                     return 0;
@@ -3324,7 +3323,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             if( i != (limitX -1) )
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid+k];
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
 
                     // Edge Point computation and  save in IsoPointMap
@@ -3337,9 +3336,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -3376,7 +3375,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*NbMaxGrid+k];
                 // Edge Point computation and  save in IsoPointMap
-                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1)!=0)
+                if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = TypeDrawin*NbPointIsoMap_local;
@@ -3387,9 +3386,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = vals[0];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = vals[1];
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = vals[2];
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
                     else
                         return 0;
@@ -3426,17 +3425,17 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++///
 void Iso3D::SignatureComputation()
 {
-    int I, J, IJK, IPLUSONEJK,
+    uint I, J, IJK, IPLUSONEJK,
         IJPLUSONEK,  IPLUSONEJPLUSONEK;
-    int maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
-    int limitX = Xgrid;
-    for(int i=0; i < limitX; i++)
+    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint limitX = Xgrid;
+    for(uint i=0; i < limitX; i++)
     {
         I = i*maxgrscalemaxgr;
-        for(int j=0; j < Ygrid; j++)
+        for(uint j=0; j < Ygrid; j++)
         {
             J = I + j*NbMaxGrid;
-            for(int k=0; k < Zgrid; k++)
+            for(uint k=0; k < Zgrid; k++)
             {
                 IJK               = J + k;
                 IPLUSONEJK        = IJK + maxgrscalemaxgr;
