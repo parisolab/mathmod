@@ -24,7 +24,7 @@ static float StaticColor[20]=
 //Green(Back face)
     0.3,0.5,0.0,1.0,
 //Gold (Front face)
-    249./255.,170./255.,0.0,1.0,
+    249.0/255.0,170.0/255.0,0.0,1.0,
 // grid:
     0.1,0.4,0.1,1.0,
 //Background:
@@ -33,7 +33,7 @@ static float StaticColor[20]=
     1.0,0.2,0.0,1.0
 }; // greencol, goldcol,...
 
-ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
+ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
 {
     MaximumNumberPoints            = maxpoints;
     MaximumNumberTriangles         = maxtriangles;
@@ -186,8 +186,8 @@ ObjectParameters::ObjectParameters(int maxpoints, int maxtriangles)
     objectproperties.frontcols[9*4+2] = objectproperties.frontcolsPar[9*4+2] = 0.3;
     objectproperties.frontcols[9*4+3] = objectproperties.frontcolsPar[9*4+3] = 1.0;
 
-    int step = 4;
-    for(int i=step; i<NbComponent; i++)
+    uint step = 4;
+    for(uint i=step; i<NbComponent; i++)
     {
         objectproperties.frontcols[i*4+0] = objectproperties.frontcolsPar[i*4+0] = objectproperties.frontcolsPar[(i%step)*4+0];
         objectproperties.frontcols[i*4+1] = objectproperties.frontcolsPar[i*4+1] = objectproperties.frontcolsPar[(i%step)*4+1];

@@ -20,11 +20,11 @@
 #include "video.h"
 
 screenimage::screenimage(QImage buffer)
-    : QMainWindow( 0, 0)
+    : QMainWindow( nullptr, nullptr)
 {
     buf = buffer;
     image_quality=1;
-    l = new QLabel(this, 0);
+    l = new QLabel(this, nullptr);
     l->resize(320, 320);
     resize(320, 343);
     this->setWindowTitle("ScreenShot");
@@ -33,7 +33,7 @@ screenimage::screenimage(QImage buffer)
     l->setPixmap(ScreenshotIcon); //  (ScreenshotIcon);
     groupBox = new QGroupBox(this);
     groupBox->setGeometry( QRect( 0, 317, 320, 25 ) );
-    scrollBar55 = new QScrollBar(Qt::Horizontal, 0 );
+    scrollBar55 = new QScrollBar(Qt::Horizontal, nullptr );
     scrollBar55->setGeometry( QRect( 160, 2, 80, 16 ) );
     scrollBar55->setPageStep( 1 );
     scrollBar55->setValue( 1 );

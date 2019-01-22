@@ -24,11 +24,11 @@
 static int indexcurrentFormula=-1;
 static int indexcurrentSet=0;
 static int CurrentFormulaType =-1; //0:Pariso; 1:Parametric; 2:Isosurface
-QTreeWidgetItem *MyselectionItemReference;
-QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
+static QTreeWidgetItem *MyselectionItemReference;
+static QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
 
 // Error messages returned by ErrorMsg():
-const char* ScriptErrorMessage[]=
+static const char* ScriptErrorMessage[]=
 {
     "SCRIPT_NO_ERROR",                       // 0
     "MAXGRID_OUT_OF_RANGE",           // 1
@@ -139,7 +139,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
 {
     ui.setupUi(this);
     indexcurrentFormula = -1;
-    IsolistItemRef = 0;
+    IsolistItemRef = nullptr;
     select.selectedoptions.showall = false;
     select.selectedoptions.sensitive = false;
     select.selectedoptions.AND = true;
@@ -1252,11 +1252,11 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
             if(qlstnames.size() >= (sl+1))
             {
                 (SliderArray[sl].SliderScrollBar)->blockSignals(true);
-                (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl).toDouble());
-                (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toDouble());
-                (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl).toDouble());
-                (SliderArray[sl].SliderScrollBar)->setPageStep(qlstStep.at(sl).toDouble());
-                (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl).toInt());
+                (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toInt());
+                (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl).toInt());
+                (SliderArray[sl].SliderScrollBar)->setPageStep(qlstStep.at(sl).toInt());
+                (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl).toInt());
                 (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl)+"("+ qlstStep.at(sl) +")");
                 (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl));
                 (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
@@ -1482,9 +1482,9 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
                 {
                     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
                     for(int j=0; j < lst.size(); j++)
-                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
-                    int TotalPts = 0;
-                    int TotalTri = 0;
+                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+                    uint TotalPts = 0;
+                    uint TotalTri = 0;
                     for(int j=0; j < lst.size()/2; j++)
                     {
                         TotalPts += MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ]*
@@ -2079,7 +2079,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         {
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
             for(j=0; j < lst.size(); j++)
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
         }
         else
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
@@ -2386,7 +2386,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         {
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
             for(j=0; j < lst.size(); j++)
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
         }
         else
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
@@ -2967,7 +2967,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             {
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
                 for(j=0; j < lst.size(); j++)
-                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
             }
             else
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
@@ -3254,7 +3254,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             {
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
                 for(j=0; j < lst.size(); j++)
-                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toInt();
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
             }
             else
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
@@ -3391,7 +3391,7 @@ void DrawingOptions::LoadNewFileModels(bool upd)
 {
     QString mathmodcollection;
 
-    mathmodcollection = QFileDialog::getOpenFileName(0, tr("Load Json Script"),
+    mathmodcollection = QFileDialog::getOpenFileName(nullptr, tr("Load Json Script"),
                         "",
                         tr("Json (*.js)"));
 
@@ -3463,7 +3463,7 @@ void DrawingOptions::LoadK3DSurfScript (QString filename, int type)
     QString JsonString="";
     int FctType = -1;
 
-    filename = QFileDialog::getOpenFileName(0, QObject::tr("Open K3DSurf script File"),
+    filename = QFileDialog::getOpenFileName(nullptr, QObject::tr("Open K3DSurf script File"),
                                             "",
                                             QObject::tr("K3DS (*.k3ds)"));
 
@@ -3752,7 +3752,7 @@ QTreeWidgetItem * DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem * item, 
         if((item->child(j))->text(0).contains(proprty))
             return item->child(j);
     }
-    return NULL;
+    return nullptr;
 }
 
 // --------------------------
@@ -3783,7 +3783,7 @@ void DrawingOptions::ParseItemTree(QTreeWidgetItem * item, QList<bool> &list,boo
 void DrawingOptions::SearchListModels()
 {
     QTreeWidgetItem * Toplevel;
-    QTreeWidgetItem * Childlevel;
+    QTreeWidgetItem * Childlevel=nullptr;
     QTreeWidgetItem * SubChildlevel;
     int topcount = ui.ObjectClasse->topLevelItemCount();
     int childcount;
@@ -3824,13 +3824,13 @@ void DrawingOptions::SearchListModels()
                         select.selectedoptions.namelist[k-1] = (Toplevel->child(j))->text(0).contains(select.selectedoptions.selectedwords[k], (select.selectedoptions.sensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
                     }
                 // continue searching in the functions list when needed:
-                if(select.selectedoptions.parsefunctions && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
-                    if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
+                if(select.selectedoptions.parsefunctions && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != nullptr)
+                    if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != nullptr )
                     {
                         ParseItemTree(SubChildlevel, select.selectedoptions.functlist);
                     }
                 // continue searching in the components names list when needed:
-                if(select.selectedoptions.parsecmpnames && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
+                if(select.selectedoptions.parsecmpnames && (Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != nullptr)
                 {
                     ParseItemTree(Childlevel, select.selectedoptions.cmpnamelist);
                     int ct= Childlevel->childCount();
@@ -3859,13 +3859,13 @@ void DrawingOptions::SearchListModels()
             else
             {
                 // Make sure the text color is white when showall is activated
-                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != NULL)
-                    if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != NULL )
+                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Parameters")) != nullptr)
+                    if((SubChildlevel=ChildItemTreeProperty(Childlevel, "Functions")) != nullptr )
                     {
                         ParseItemTree(SubChildlevel, select.selectedoptions.functlist, true);
                     }
                 // Components names and their childes:
-                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != NULL)
+                if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != nullptr)
                 {
                     ParseItemTree(Childlevel, select.selectedoptions.cmpnamelist, true);
                     int ct= Childlevel->childCount();
@@ -5827,7 +5827,7 @@ void DrawingOptions::on_xycheckBox2_clicked()
 // --------------------------
 void DrawingOptions::on_xyhorizontalScrollBar2_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.animxValueStep =(float) value/4.0;
+    MathmodRef->ui.glWidget->LocalScene.animxValueStep =float(value)/4;
 }
 
 // --------------------------
@@ -5839,7 +5839,7 @@ void DrawingOptions::on_xzcheckBox2_clicked()
 // --------------------------
 void DrawingOptions::on_xzhorizontalScrollBar2_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.animyValueStep =(float) value/4.0;
+    MathmodRef->ui.glWidget->LocalScene.animyValueStep = float(value)/4;
 }
 
 // --------------------------
@@ -5851,7 +5851,7 @@ void DrawingOptions::on_yzcheckBox2_clicked()
 // --------------------------
 void DrawingOptions::on_yzhorizontalScrollBar2_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.animzValueStep =(float) value/4.0;
+    MathmodRef->ui.glWidget->LocalScene.animzValueStep = float(value)/4;
 }
 
 // --------------------------
@@ -6297,7 +6297,7 @@ void DrawingOptions::UpdateGui(int argc)
     ui.YhorizontalScrollBar->setMaximum(Parameters->MaxGrid);
     ui.ZhorizontalScrollBar->setMaximum(Parameters->MaxGrid);
 
-    int sqr = (Parameters->MaxPt > Parameters->MaxTri ? sqrt(Parameters->MaxTri):sqrt(Parameters->MaxPt));
+    int sqr = (Parameters->MaxPt > Parameters->MaxTri ? int(sqrt(Parameters->MaxTri)): int(sqrt(Parameters->MaxPt)));
     ui.linecolumn_2->setMaximum(sqr);
     ui.linecolumn_3->setMaximum(sqr);
 
@@ -6343,29 +6343,30 @@ void DrawingOptions::UpdateGui(int argc)
 // --------------------------
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
-    int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
+    double P = 1.0/double(value);
+    uint maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
     ui.label_5->setText("1/"+QString::number(value));
 
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->pace = (double)1/(double)value;
-    for(int nbthreds=0; nbthreds < maxnbthreads -1; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].pace = (double)1/(double)value;
+    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->pace = P;
+    for(uint nbthreds=0; nbthreds < maxnbthreads -1; nbthreds++)
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].pace = P;
 
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->pace = (double)1/(double)value;
-    for(int nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].pace  = (double)1/(double)value;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->pace = P;
+    for(uint nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].pace  = P;
 }
 
 // --------------------------
 void DrawingOptions::on_InitTButton_clicked()
 {
-    int maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
+    uint maxnbthreads= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->WorkerThreadsNumber;
 
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->stepMorph = 0;
-    for(int nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
+    for(uint nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->workerthreads[nbthreds].stepMorph = 0;
 
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->stepMorph = 0;
-    for(int nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
+    for(uint nbthreds=0; nbthreds < maxnbthreads-1; nbthreds++)
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->workerthreads[nbthreds].stepMorph = 0;
 }
 
@@ -6516,27 +6517,29 @@ void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Octaves = Octaves;
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Octaves = Octaves;
 
-    ui.OctavesLabel->setText("Octaves = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves));
+    ui.OctavesLabel->setText("Octaves = "+QString::number(Octaves));
     on_pushButton_5_clicked();
 }
 
 // --------------------------
 void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 {
-    double Lacunarity = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = double(value)/10.0;
+    double Lacunarity = double(value)/10.0;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = float(Lacunarity);
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Lacunarity = Lacunarity;
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Lacunarity = Lacunarity;
-    ui.LacunarityLabel->setText("Lacunarity = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity));
+    ui.LacunarityLabel->setText("Lacunarity = "+QString::number(Lacunarity));
     on_pushButton_5_clicked();
 }
 
 // --------------------------
 void DrawingOptions::on_GainScrollBar_valueChanged(int value)
 {
-    float Gain = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = (float)value/10.0;
+    double Gain = double(value)/10.0;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = float(Gain);
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Gain = Gain;
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Gain = Gain;
-    ui.GainLabel->setText("Gain = "+QString::number(MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain));
+    ui.GainLabel->setText("Gain = "+QString::number(Gain));
     on_pushButton_5_clicked();
 }
 
@@ -6920,15 +6923,15 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
                 (SliderArray[sl].SliderScrollBar)->blockSignals(true);
                 if(qlstmin.size() > qlstnames.size())
                 {
-                    (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl+(index-1)*size).toDouble());
-                    (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl+(index-1)*size).toDouble());
-                    (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl+(index-1)*size).toDouble());
+                    (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl+(index-1)*size).toInt());
+                    (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl+(index-1)*size).toInt());
+                    (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl+(index-1)*size).toInt());
 
                     (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl+(index-1)*size)+"("+ qlstStep.at(sl+(index-1)*size) +")");
                     (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl+(index-1)*size));
                     (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl+(index-1)*size));
                 }
-                (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl+(index-1)*size).toDouble());
+                (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl+(index-1)*size).toInt());
                 (SliderArray[sl].SliderScrollBar)->blockSignals(false);
             }
         }
@@ -7257,11 +7260,11 @@ void DrawingOptions::update_slider_param()
             qlstPos[sl] = sliderconf.ui.PosEdit->text();
 
             (SliderArray[sl].SliderScrollBar)->blockSignals(true);
-            (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl).toDouble());
-            (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toDouble());
-            (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl).toDouble());
-            (SliderArray[sl].SliderScrollBar)->setPageStep(qlstStep.at(sl).toDouble());
-            (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl).toDouble());
+            (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl).toInt());
+            (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toInt());
+            (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl).toInt());
+            (SliderArray[sl].SliderScrollBar)->setPageStep(qlstStep.at(sl).toInt());
+            (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl).toInt());
             (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl)+"("+ qlstStep.at(sl) +")");
             (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl));
             (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
@@ -7575,19 +7578,19 @@ void DrawingOptions::on_actionFrames_triggered()
 void DrawingOptions::SetSpecularValues(float *spec)
 {
     ui.red_Specular->blockSignals(true);
-    ui.red_Specular->setSliderPosition((int)(spec[0]*100));
+    ui.red_Specular->setSliderPosition(int(spec[0]*100));
     ui.red_Specular->blockSignals(false);
 
     ui.green_Specular->blockSignals(true);
-    ui.green_Specular->setSliderPosition((int)(spec[1]*100));
+    ui.green_Specular->setSliderPosition(int(spec[1]*100));
     ui.green_Specular->blockSignals(false);
 
     ui.blue_Specular->blockSignals(true);
-    ui.blue_Specular->setSliderPosition((int)(spec[2]*100));
+    ui.blue_Specular->setSliderPosition(int(spec[2]*100));
     ui.blue_Specular->blockSignals(false);
 
     ui.transparent_Specular->blockSignals(true);
-    ui.transparent_Specular->setSliderPosition((int)(spec[3]*100));
+    ui.transparent_Specular->setSliderPosition(int(spec[3]*100));
     ui.transparent_Specular->blockSignals(false);
 }
 
@@ -7679,8 +7682,8 @@ void DrawingOptions::on_ShininessScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->UpdateThredsNumber(value);
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->UpdateThredsNumber(value);
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->UpdateThredsNumber(uint(value));
+    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->UpdateThredsNumber(uint(value));
     ui.ThreadgroupBox->setTitle("Threads: "+ QString::number(ui.ThreadNumberScrollBar->minimum())  +"  <  "+QString::number(value)+"  <  "+ QString::number(ui.ThreadNumberScrollBar->maximum()));
 }
 

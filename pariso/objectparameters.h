@@ -28,7 +28,7 @@ public:
     ObjectProperties objectproperties;
     int MaximumNumberPoints, MaximumNumberTriangles, MaximumNumberTrianglesMin;
 public:
-    ObjectParameters(int mp=200000, int mt=300000);
+    ObjectParameters(uint mp=200000, uint mt=300000);
     void InitComponentinfos(struct  ComponentInfos &);
 };
 

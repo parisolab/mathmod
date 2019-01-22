@@ -34,7 +34,7 @@ static void DrawParametric (ObjectProperties *scene)
         glEnable(GL_COLOR_MATERIAL);
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
-    for(int i=0; i< scene->componentsinfos.NbParametric; i++)
+    for(uint i=0; i< scene->componentsinfos.NbParametric; i++)
     {
         if(!scene->componentsinfos.ThereisRGBA)
         {
@@ -148,7 +148,7 @@ static void DrawIso (ObjectProperties *scene)
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
 
-    for(int i=0; i< scene->componentsinfos.NbIso; i++)
+    for(uint i=0; i< scene->componentsinfos.NbIso; i++)
     {
         {
             if(!scene->componentsinfos.ThereisRGBA)
@@ -391,7 +391,7 @@ void OpenGlWidget::morph()
     {
         //Isosurfaces:
         IsoObjetThread->IsoObjet->masterthread->morph_activated = LocalScene.morph;
-        for(int nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads< IsoObjetThread->IsoObjet->WorkerThreadsNumber-1; nbthreads++)
             IsoObjetThread->IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
         IsoObjetThread->IsoObjet->IsoMorph();
     }
