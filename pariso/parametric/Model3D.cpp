@@ -1670,14 +1670,14 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     uint nbstack=nbU*nbV;
     uint Iindice=0, Jindice=0;
     double* vals, res;
-    float *ResX, *ResY, *ResZ, *ResW;
+    double *ResX, *ResY, *ResZ, *ResW;
     uint taille=0;
 
     vals  = new double[3*nbstack];
-    ResX  = new float[nbstack];
-    ResY  = new float[nbstack];
-    ResZ  = new float[nbstack];
-    ResW  = new float[nbstack];
+    ResX  = new double[nbstack];
+    ResY  = new double[nbstack];
+    ResZ  = new double[nbstack];
+    ResW  = new double[nbstack];
 
     if(activeMorph == 1)
         stepMorph += pace;
@@ -1742,21 +1742,21 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
-                    ResX[l] = float(myParserX[cmp].Eval(&(vals[l*3])));
+                    ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
             }
 
             res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
-                    ResY[l] = float(myParserY[cmp].Eval(&(vals[l*3])));
+                    ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
             }
 
             res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
-                    ResZ[l] = float(myParserZ[cmp].Eval(&(vals[l*3])));
+                    ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
             }
 
             if(param4D == 1)
@@ -1765,7 +1765,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        ResW[l] = float(myParserW[cmp].Eval(&(vals[l*3])));
+                        ResW[l] = myParserW[cmp].Eval(&(vals[l*3]));
                 }
             }
 
@@ -1785,11 +1785,11 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             for(uint ii=0; ii<nbU; ii++)
                 for(uint jj=0; jj<nbV; jj++)
                 {
-                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +3 +NewPosition+ TypeDrawinNormStep] = ResX[p];
-                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +4 +NewPosition+ TypeDrawinNormStep] = ResY[p];
-                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +5 +NewPosition+ TypeDrawinNormStep] = ResZ[p];
+                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +3 +NewPosition+ TypeDrawinNormStep] = float(ResX[p]);
+                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +4 +NewPosition+ TypeDrawinNormStep] = float(ResY[p]);
+                    NormVertexTab[(Iindice+ii)*TypeDrawin*Vgrid + (Jindice +jj)*TypeDrawin +5 +NewPosition+ TypeDrawinNormStep] = float(ResZ[p]);
                     if(param4D == 1)
-                        ExtraDimension[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = ResW[p];
+                        ExtraDimension[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
                     else
                         ExtraDimension[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = 1;
                     p++;

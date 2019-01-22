@@ -69,7 +69,7 @@ class FunctionParserBase
 
     Value_t Eval(const Value_t* Vars);
     void AllocateStackMemory( unsigned int );
-    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, float* results, unsigned, int position=-1);
+    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, double* results, unsigned, int position=-1);
     int EvalError() const;
 
     bool AddConstant(const std::string& name, Value_t value);

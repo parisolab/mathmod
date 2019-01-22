@@ -3009,7 +3009,7 @@ void FunctionParserBase<Value_t>::AllocateStackMemory(uint nbStack)
 }
 
 template<typename Value_t>
-Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, float* results, unsigned NbStack, int SP)
+Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, double* results, unsigned NbStack, int SP)
 {
     if(mData->mParseErrorType != FP_NO_ERROR) return Value_t(0);
 
@@ -3525,7 +3525,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             {
                 unsigned index = byteCode[++IP];
                 unsigned params = mData->mFuncParsers[index].mParams;
-                float res[NbStack];
+                double res[NbStack];
                 double rest=mData->mFuncParsers[index].mParserPtr->Eval2
                 (&(Stacki[SP-params+1]), Size, res, NbStack);
                 if (int(rest) == IF_FUNCT_ERROR)

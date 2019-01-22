@@ -918,7 +918,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     double* vals;
-    float* Res;
+    double* Res;
     uint maxgrscalemaxgr = maximumgrid*maximumgrid;
     const uint limitY = Ygrid, limitZ = Zgrid;
     uint I, J, IJK;
@@ -928,7 +928,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint Iindice=0, Jindice=0, Kindice=0;
     int PreviousSignal=0;
     vals = new double[34*nbstack];
-    Res  = new float[nbstack];
+    Res  = new double[nbstack];
     vals[3]    = stepMorph;
     uint taille=0;
     iStart = 0;
@@ -1002,12 +1002,12 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 
                 IJK = J+Kindice;
                 double res = implicitFunctionParser[IsoIndex].Eval2(vals, 34, Res, nbstack);
-                if( res == IF_FUNCT_ERROR)
+                if( abs(res - IF_FUNCT_ERROR) == 0.0)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        Res[l] = float(implicitFunctionParser[IsoIndex].Eval(&(vals[l*34])));
+                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*34]));
                 }
-                else if( res == DIVISION_BY_ZERO)
+                else if( abs(res - DIVISION_BY_ZERO) == 0.0)
                 {
                     StopCalculations = true;
                 }
