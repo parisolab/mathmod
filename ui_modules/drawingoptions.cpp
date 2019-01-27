@@ -1487,8 +1487,8 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
                     uint TotalTri = 0;
                     for(int j=0; j < lst.size()/2; j++)
                     {
-                        TotalPts += MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ]*
-                                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1];
+                        TotalPts += MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j   ]*
+                                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j +1];
                         TotalTri += (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ] - 1)*
                                     (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1] - 1);
                     }

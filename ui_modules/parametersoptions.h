@@ -40,7 +40,7 @@ class Parametersoptions: public QWidget
     Q_OBJECT
 
 public:
-    Parametersoptions(QWidget *parent = 0);
+    Parametersoptions(QWidget *parent = nullptr);
     QString dotsymbol;
     QString model;
     QString fullpath;
@@ -62,14 +62,13 @@ public:
     int Threads[3];
     int CalculFactor[3];
     int Shininess;
+    int NbSliders, NbSliderValues;
     int MaxTri, MaxPt, MaxGrid,
         NbComponent,
         NbConstantes,
         NbDefinedFunctions,
         NbVariables,
         NbTextures,
-        NbSliders,
-        NbSliderValues,
         InitParGrid,
         InitIsoGrid
         ;

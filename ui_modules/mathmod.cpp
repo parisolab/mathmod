@@ -24,10 +24,10 @@ MathMod::~MathMod()
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-MathMod::MathMod(QWidget *parent, int maxtri, int maxpts, int gridmax,
-                 int NbComponent,int NbVariables,int NbConstantes,
-                 int NbDefinedFunctions,int NbTextures,int NbSliders,int NbSliderValues,
-                 int nbthreads, int initGrid, int FactX, int FactY, int FactZ)
+MathMod::MathMod(QWidget *parent, uint maxtri, uint maxpts, uint gridmax,
+                 uint NbComponent,uint NbVariables,uint NbConstantes,
+                 uint NbDefinedFunctions,uint NbTextures,int NbSliders,int NbSliderValues,
+                 uint nbthreads, uint initGrid, uint FactX, uint FactY, uint FactZ)
     : QWidget(parent)
 {
     ui.setupUi(this);
@@ -97,41 +97,41 @@ void MathMod::frames_clicked()
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->Vgrid = cl;
-    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->Ugrid    = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->Vgrid =
+    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->Ugrid    = uint(cl);
 
     (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid =
-        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = cl;
+        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = uint(cl);
 
     for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
         (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid =
-            (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = cl;
+            (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = uint(cl);
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::line_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->Ugrid    = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->Ugrid =
 
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid = uint(cl);
 
     for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid = cl;
+        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid = uint(cl);
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::column_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->Vgrid = cl;
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = cl;
+    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->Vgrid =
+    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = uint(cl);
 
     for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = cl;
+        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = uint(cl);
     }
 }
 
@@ -183,11 +183,11 @@ void MathMod::xyzg_valueupdate(int cl)
 {
     (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Zgrid  =
         (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Ygrid  =
-            (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Xgrid  = cl;
+            (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Xgrid  = uint(cl);
 
     (ui.glWidget)->IsoObjetThread->IsoObjet->Zgrid  =
         (ui.glWidget)->IsoObjetThread->IsoObjet->Ygrid  =
-            (ui.glWidget)->IsoObjetThread->IsoObjet->Xgrid  = cl;
+            (ui.glWidget)->IsoObjetThread->IsoObjet->Xgrid  = uint(cl);
 
     (ui.glWidget)->Xgrid   =
         (ui.glWidget)->Ygrid =
@@ -497,8 +497,8 @@ void MathMod::updateThreads(int *thr)
     (ui.glWidget)->LocalScene.threads[2]= thr[2];
     if(thr[0] > 0)
     {
-        (ui.glWidget)->IsoObjetThread->IsoObjet->UpdateThredsNumber(thr[0]);
-        (ui.glWidget)->ParObjetThread->ParObjet->UpdateThredsNumber(thr[0]);
+        (ui.glWidget)->IsoObjetThread->IsoObjet->UpdateThredsNumber(uint(thr[0]));
+        (ui.glWidget)->ParObjetThread->ParObjet->UpdateThredsNumber(uint(thr[0]));
     }
 }
 

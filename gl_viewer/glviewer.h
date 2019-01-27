@@ -41,8 +41,9 @@ class OpenGlWidget : public QGLWidget
 {
     Q_OBJECT
 public :
+    uint
+    Ugrid, Vgrid, CutV, CutU;
     int btgauche, btdroit, btmilieu, latence,
-        Ugrid, Vgrid, CutV, CutU,
         IDGlWindow;
     int Xgrid, Ygrid, Zgrid,
         CutX, CutY, CutZ, TypeTriangle;
