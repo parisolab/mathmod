@@ -22,15 +22,15 @@
 static float StaticColor[20]=
 {
 //Green(Back face)
-    0.3,0.5,0.0,1.0,
+    0.3f,0.5f,0.0f,1.0f,
 //Gold (Front face)
-    249.0/255.0,170.0/255.0,0.0,1.0,
+    249.0f/255.0f,170.0f/255.0f,0.0f,1.0f,
 // grid:
-    0.1,0.4,0.1,1.0,
+    0.1f,0.3f,0.1f,0.5f,
 //Background:
-    0.0,0.0,0.0,1.0,
+    0.0f,0.0f,0.0f,1.0f,
 //Condition:
-    1.0,0.2,0.0,1.0
+    1.0f,0.2f,0.0f,1.0f
 }; // greencol, goldcol,...
 
 ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
@@ -86,105 +86,105 @@ ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
 
     //objectproperties.specReflection[0] = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2; objectproperties.specReflection[3] = 1.0;
 
-    objectproperties.backcol[0]   = objectproperties.backcols[0]   = objectproperties.backcolsPar[0]   = 0.2;//StaticColor[0];
-    objectproperties.backcol[1]   = objectproperties.backcols[1]   = objectproperties.backcolsPar[1]   = 0.8;//StaticColor[1];
-    objectproperties.backcol[2]   = objectproperties.backcols[2]   = objectproperties.backcolsPar[2]   = 0.1;//StaticColor[2];
-    objectproperties.backcol[3]   = objectproperties.backcols[3]   = objectproperties.backcolsPar[3]   = 1.0;
+    objectproperties.backcol[0]   = objectproperties.backcols[0]   = objectproperties.backcolsPar[0]   = 0.2f;
+    objectproperties.backcol[1]   = objectproperties.backcols[1]   = objectproperties.backcolsPar[1]   = 0.8f;
+    objectproperties.backcol[2]   = objectproperties.backcols[2]   = objectproperties.backcolsPar[2]   = 0.1f;
+    objectproperties.backcol[3]   = objectproperties.backcols[3]   = objectproperties.backcolsPar[3]   = 1.0f;
 
-    objectproperties.backcols[1*4+0]   = objectproperties.backcolsPar[1*4+0]   = 0.6;
-    objectproperties.backcols[1*4+1]   = objectproperties.backcolsPar[1*4+1]   = 0.6;
-    objectproperties.backcols[1*4+2]   = objectproperties.backcolsPar[1*4+2]   = 0.9;
-    objectproperties.backcols[1*4+3]   = objectproperties.backcolsPar[1*4+3]   = 1.0;
+    objectproperties.backcols[1*4+0]   = objectproperties.backcolsPar[1*4+0]   = 0.6f;
+    objectproperties.backcols[1*4+1]   = objectproperties.backcolsPar[1*4+1]   = 0.6f;
+    objectproperties.backcols[1*4+2]   = objectproperties.backcolsPar[1*4+2]   = 0.9f;
+    objectproperties.backcols[1*4+3]   = objectproperties.backcolsPar[1*4+3]   = 1.0f;
 
-    objectproperties.backcols[2*4+0]   = objectproperties.backcolsPar[2*4+0]   = 0.8;
-    objectproperties.backcols[2*4+1]   = objectproperties.backcolsPar[2*4+1]   = 0.6;
-    objectproperties.backcols[2*4+2]   = objectproperties.backcolsPar[2*4+2]   = 0.3;
-    objectproperties.backcols[2*4+3]   = objectproperties.backcolsPar[2*4+3]   = 1.0;
+    objectproperties.backcols[2*4+0]   = objectproperties.backcolsPar[2*4+0]   = 0.8f;
+    objectproperties.backcols[2*4+1]   = objectproperties.backcolsPar[2*4+1]   = 0.6f;
+    objectproperties.backcols[2*4+2]   = objectproperties.backcolsPar[2*4+2]   = 0.3f;
+    objectproperties.backcols[2*4+3]   = objectproperties.backcolsPar[2*4+3]   = 1.0f;
 
-    objectproperties.backcols[3*4+0]   = objectproperties.backcolsPar[3*4+0]   = 0.9;
-    objectproperties.backcols[3*4+1]   = objectproperties.backcolsPar[3*4+1]   = 0.8;
-    objectproperties.backcols[3*4+2]   = objectproperties.backcolsPar[3*4+2]   = 0.6;
-    objectproperties.backcols[3*4+3]   = objectproperties.backcolsPar[3*4+3]   = 1.0;
+    objectproperties.backcols[3*4+0]   = objectproperties.backcolsPar[3*4+0]   = 0.9f;
+    objectproperties.backcols[3*4+1]   = objectproperties.backcolsPar[3*4+1]   = 0.8f;
+    objectproperties.backcols[3*4+2]   = objectproperties.backcolsPar[3*4+2]   = 0.6f;
+    objectproperties.backcols[3*4+3]   = objectproperties.backcolsPar[3*4+3]   = 1.0f;
 
-    objectproperties.backcols[4*4+0]   = objectproperties.backcolsPar[4*4+0]   = 0.93;
-    objectproperties.backcols[4*4+1]   = objectproperties.backcolsPar[4*4+1]   = 0.2;
-    objectproperties.backcols[4*4+2]   = objectproperties.backcolsPar[4*4+2]   = 0.1;
-    objectproperties.backcols[4*4+3]   = objectproperties.backcolsPar[4*4+3]   = 1.0;
+    objectproperties.backcols[4*4+0]   = objectproperties.backcolsPar[4*4+0]   = 0.93f;
+    objectproperties.backcols[4*4+1]   = objectproperties.backcolsPar[4*4+1]   = 0.2f;
+    objectproperties.backcols[4*4+2]   = objectproperties.backcolsPar[4*4+2]   = 0.1f;
+    objectproperties.backcols[4*4+3]   = objectproperties.backcolsPar[4*4+3]   = 1.0f;
 
-    objectproperties.backcols[5*4+0]   = objectproperties.backcolsPar[5*4+0]   = 0.3;
-    objectproperties.backcols[5*4+1]   = objectproperties.backcolsPar[5*4+1]   = 0.72;
-    objectproperties.backcols[5*4+2]   = objectproperties.backcolsPar[5*4+2]   = 0.63;
-    objectproperties.backcols[5*4+3]   = objectproperties.backcolsPar[5*4+3]   = 1.0;
+    objectproperties.backcols[5*4+0]   = objectproperties.backcolsPar[5*4+0]   = 0.3f;
+    objectproperties.backcols[5*4+1]   = objectproperties.backcolsPar[5*4+1]   = 0.72f;
+    objectproperties.backcols[5*4+2]   = objectproperties.backcolsPar[5*4+2]   = 0.63f;
+    objectproperties.backcols[5*4+3]   = objectproperties.backcolsPar[5*4+3]   = 1.0f;
 
-    objectproperties.backcols[6*4+0]   = objectproperties.backcolsPar[6*4+0]   = 0.1;
-    objectproperties.backcols[6*4+1]   = objectproperties.backcolsPar[6*4+1]   = 0.5;
-    objectproperties.backcols[6*4+2]   = objectproperties.backcolsPar[6*4+2]   = 0.73;
-    objectproperties.backcols[6*4+3]   = objectproperties.backcolsPar[6*4+3]   = 1.0;
+    objectproperties.backcols[6*4+0]   = objectproperties.backcolsPar[6*4+0]   = 0.1f;
+    objectproperties.backcols[6*4+1]   = objectproperties.backcolsPar[6*4+1]   = 0.5f;
+    objectproperties.backcols[6*4+2]   = objectproperties.backcolsPar[6*4+2]   = 0.73f;
+    objectproperties.backcols[6*4+3]   = objectproperties.backcolsPar[6*4+3]   = 1.0f;
 
-    objectproperties.backcols[7*4+0]   = objectproperties.backcolsPar[7*4+0]   = 0.9;
-    objectproperties.backcols[7*4+1]   = objectproperties.backcolsPar[7*4+1]   = 0.5;
-    objectproperties.backcols[7*4+2]   = objectproperties.backcolsPar[7*4+2]   = 0.3;
-    objectproperties.backcols[7*4+3]   = objectproperties.backcolsPar[7*4+3]   = 1.0;
+    objectproperties.backcols[7*4+0]   = objectproperties.backcolsPar[7*4+0]   = 0.9f;
+    objectproperties.backcols[7*4+1]   = objectproperties.backcolsPar[7*4+1]   = 0.5f;
+    objectproperties.backcols[7*4+2]   = objectproperties.backcolsPar[7*4+2]   = 0.3f;
+    objectproperties.backcols[7*4+3]   = objectproperties.backcolsPar[7*4+3]   = 1.0f;
 
-    objectproperties.backcols[8*4+0]   = objectproperties.backcolsPar[8*4+0]   = 0.8;
-    objectproperties.backcols[8*4+1]   = objectproperties.backcolsPar[8*4+1]   = 0.8;
-    objectproperties.backcols[8*4+2]   = objectproperties.backcolsPar[8*4+2]   = 0.6;
-    objectproperties.backcols[8*4+3]   = objectproperties.backcolsPar[8*4+3]   = 1.0;
+    objectproperties.backcols[8*4+0]   = objectproperties.backcolsPar[8*4+0]   = 0.8f;
+    objectproperties.backcols[8*4+1]   = objectproperties.backcolsPar[8*4+1]   = 0.8f;
+    objectproperties.backcols[8*4+2]   = objectproperties.backcolsPar[8*4+2]   = 0.6f;
+    objectproperties.backcols[8*4+3]   = objectproperties.backcolsPar[8*4+3]   = 1.0f;
 
-    objectproperties.backcols[9*4+0]   = objectproperties.backcolsPar[9*4+0]   = 0.7;
-    objectproperties.backcols[9*4+1]   = objectproperties.backcolsPar[9*4+1]   = 0.9;
-    objectproperties.backcols[9*4+2]   = objectproperties.backcolsPar[9*4+2]   = 0.93;
-    objectproperties.backcols[9*4+3]   = objectproperties.backcolsPar[9*4+3]   = 1.0;
+    objectproperties.backcols[9*4+0]   = objectproperties.backcolsPar[9*4+0]   = 0.7f;
+    objectproperties.backcols[9*4+1]   = objectproperties.backcolsPar[9*4+1]   = 0.9f;
+    objectproperties.backcols[9*4+2]   = objectproperties.backcolsPar[9*4+2]   = 0.93f;
+    objectproperties.backcols[9*4+3]   = objectproperties.backcolsPar[9*4+3]   = 1.0f;
 
-    objectproperties.frontcol[0]  = objectproperties.frontcols[0] = objectproperties.frontcolsPar[0] = 0.9;//StaticColor[4];
-    objectproperties.frontcol[1]  = objectproperties.frontcols[1] = objectproperties.frontcolsPar[1] = 0.6;//StaticColor[5];
-    objectproperties.frontcol[2]  = objectproperties.frontcols[2] = objectproperties.frontcolsPar[2] = 0.1;//StaticColor[6];
-    objectproperties.frontcol[3]  = objectproperties.frontcols[3] = objectproperties.frontcolsPar[3] = 1.0;
+    objectproperties.frontcol[0]  = objectproperties.frontcols[0] = objectproperties.frontcolsPar[0] = 0.9f;
+    objectproperties.frontcol[1]  = objectproperties.frontcols[1] = objectproperties.frontcolsPar[1] = 0.6f;
+    objectproperties.frontcol[2]  = objectproperties.frontcols[2] = objectproperties.frontcolsPar[2] = 0.1f;
+    objectproperties.frontcol[3]  = objectproperties.frontcols[3] = objectproperties.frontcolsPar[3] = 1.0f;
 
-    objectproperties.frontcols[1*4+0] = objectproperties.frontcolsPar[1*4+0] = 0.3;
-    objectproperties.frontcols[1*4+1] = objectproperties.frontcolsPar[1*4+1] = 0.8;
-    objectproperties.frontcols[1*4+2] = objectproperties.frontcolsPar[1*4+2] = 0.5;
-    objectproperties.frontcols[1*4+3] = objectproperties.frontcolsPar[1*4+3] = 1.0;
+    objectproperties.frontcols[1*4+0] = objectproperties.frontcolsPar[1*4+0] = 0.3f;
+    objectproperties.frontcols[1*4+1] = objectproperties.frontcolsPar[1*4+1] = 0.8f;
+    objectproperties.frontcols[1*4+2] = objectproperties.frontcolsPar[1*4+2] = 0.5f;
+    objectproperties.frontcols[1*4+3] = objectproperties.frontcolsPar[1*4+3] = 1.0f;
 
-    objectproperties.frontcols[2*4+0] = objectproperties.frontcolsPar[2*4+0] = 0.2;
-    objectproperties.frontcols[2*4+1] = objectproperties.frontcolsPar[2*4+1] = 0.5;
-    objectproperties.frontcols[2*4+2] = objectproperties.frontcolsPar[2*4+2] = 0.6;
-    objectproperties.frontcols[2*4+3] = objectproperties.frontcolsPar[2*4+3] = 1.0;
+    objectproperties.frontcols[2*4+0] = objectproperties.frontcolsPar[2*4+0] = 0.2f;
+    objectproperties.frontcols[2*4+1] = objectproperties.frontcolsPar[2*4+1] = 0.5f;
+    objectproperties.frontcols[2*4+2] = objectproperties.frontcolsPar[2*4+2] = 0.6f;
+    objectproperties.frontcols[2*4+3] = objectproperties.frontcolsPar[2*4+3] = 1.0f;
 
-    objectproperties.frontcols[3*4+0] = objectproperties.frontcolsPar[3*4+0] = 0.1;
-    objectproperties.frontcols[3*4+1] = objectproperties.frontcolsPar[3*4+1] = 0.3;
-    objectproperties.frontcols[3*4+2] = objectproperties.frontcolsPar[3*4+2] = 0.9;
-    objectproperties.frontcols[3*4+3] = objectproperties.frontcolsPar[3*4+3] = 1.0;
+    objectproperties.frontcols[3*4+0] = objectproperties.frontcolsPar[3*4+0] = 0.1f;
+    objectproperties.frontcols[3*4+1] = objectproperties.frontcolsPar[3*4+1] = 0.3f;
+    objectproperties.frontcols[3*4+2] = objectproperties.frontcolsPar[3*4+2] = 0.9f;
+    objectproperties.frontcols[3*4+3] = objectproperties.frontcolsPar[3*4+3] = 1.0f;
 
-    objectproperties.frontcols[4*4+0] = objectproperties.frontcolsPar[4*4+0] = 0.96;
-    objectproperties.frontcols[4*4+1] = objectproperties.frontcolsPar[4*4+1] = 0.71;
-    objectproperties.frontcols[4*4+2] = objectproperties.frontcolsPar[4*4+2] = 0.3;
-    objectproperties.frontcols[4*4+3] = objectproperties.frontcolsPar[4*4+3] = 1.0;
+    objectproperties.frontcols[4*4+0] = objectproperties.frontcolsPar[4*4+0] = 0.96f;
+    objectproperties.frontcols[4*4+1] = objectproperties.frontcolsPar[4*4+1] = 0.71f;
+    objectproperties.frontcols[4*4+2] = objectproperties.frontcolsPar[4*4+2] = 0.3f;
+    objectproperties.frontcols[4*4+3] = objectproperties.frontcolsPar[4*4+3] = 1.0f;
 
-    objectproperties.frontcols[5*4+0] = objectproperties.frontcolsPar[5*4+0] = 0.1;
-    objectproperties.frontcols[5*4+1] = objectproperties.frontcolsPar[5*4+1] = 0.2;
-    objectproperties.frontcols[5*4+2] = objectproperties.frontcolsPar[5*4+2] = 0.9;
-    objectproperties.frontcols[5*4+3] = objectproperties.frontcolsPar[5*4+3] = 1.0;
+    objectproperties.frontcols[5*4+0] = objectproperties.frontcolsPar[5*4+0] = 0.1f;
+    objectproperties.frontcols[5*4+1] = objectproperties.frontcolsPar[5*4+1] = 0.2f;
+    objectproperties.frontcols[5*4+2] = objectproperties.frontcolsPar[5*4+2] = 0.9f;
+    objectproperties.frontcols[5*4+3] = objectproperties.frontcolsPar[5*4+3] = 1.0f;
 
-    objectproperties.frontcols[6*4+0] = objectproperties.frontcolsPar[6*4+0] = 0.99;
-    objectproperties.frontcols[6*4+1] = objectproperties.frontcolsPar[6*4+1] = 0.1;
-    objectproperties.frontcols[6*4+2] = objectproperties.frontcolsPar[6*4+2] = 0.843;
-    objectproperties.frontcols[6*4+3] = objectproperties.frontcolsPar[6*4+3] = 1.0;
+    objectproperties.frontcols[6*4+0] = objectproperties.frontcolsPar[6*4+0] = 0.99f;
+    objectproperties.frontcols[6*4+1] = objectproperties.frontcolsPar[6*4+1] = 0.1f;
+    objectproperties.frontcols[6*4+2] = objectproperties.frontcolsPar[6*4+2] = 0.843f;
+    objectproperties.frontcols[6*4+3] = objectproperties.frontcolsPar[6*4+3] = 1.0f;
 
-    objectproperties.frontcols[7*4+0] = objectproperties.frontcolsPar[7*4+0] = 0.16;
-    objectproperties.frontcols[7*4+1] = objectproperties.frontcolsPar[7*4+1] = 0.91;
-    objectproperties.frontcols[7*4+2] = objectproperties.frontcolsPar[7*4+2] = 0.73;
-    objectproperties.frontcols[7*4+3] = objectproperties.frontcolsPar[7*4+3] = 1.0;
+    objectproperties.frontcols[7*4+0] = objectproperties.frontcolsPar[7*4+0] = 0.16f;
+    objectproperties.frontcols[7*4+1] = objectproperties.frontcolsPar[7*4+1] = 0.91f;
+    objectproperties.frontcols[7*4+2] = objectproperties.frontcolsPar[7*4+2] = 0.73f;
+    objectproperties.frontcols[7*4+3] = objectproperties.frontcolsPar[7*4+3] = 1.0f;
 
-    objectproperties.frontcols[8*4+0] = objectproperties.frontcolsPar[8*4+0] = 0.8;
-    objectproperties.frontcols[8*4+1] = objectproperties.frontcolsPar[8*4+1] = 0.9;
-    objectproperties.frontcols[8*4+2] = objectproperties.frontcolsPar[8*4+2] = 0.0;
-    objectproperties.frontcols[8*4+3] = objectproperties.frontcolsPar[8*4+3] = 1.0;
+    objectproperties.frontcols[8*4+0] = objectproperties.frontcolsPar[8*4+0] = 0.8f;
+    objectproperties.frontcols[8*4+1] = objectproperties.frontcolsPar[8*4+1] = 0.9f;
+    objectproperties.frontcols[8*4+2] = objectproperties.frontcolsPar[8*4+2] = 0.0f;
+    objectproperties.frontcols[8*4+3] = objectproperties.frontcolsPar[8*4+3] = 1.0f;
 
-    objectproperties.frontcols[9*4+0] = objectproperties.frontcolsPar[9*4+0] = 0.9;
-    objectproperties.frontcols[9*4+1] = objectproperties.frontcolsPar[9*4+1] = 0.91;
-    objectproperties.frontcols[9*4+2] = objectproperties.frontcolsPar[9*4+2] = 0.3;
-    objectproperties.frontcols[9*4+3] = objectproperties.frontcolsPar[9*4+3] = 1.0;
+    objectproperties.frontcols[9*4+0] = objectproperties.frontcolsPar[9*4+0] = 0.9f;
+    objectproperties.frontcols[9*4+1] = objectproperties.frontcolsPar[9*4+1] = 0.91f;
+    objectproperties.frontcols[9*4+2] = objectproperties.frontcolsPar[9*4+2] = 0.3f;
+    objectproperties.frontcols[9*4+3] = objectproperties.frontcolsPar[9*4+3] = 1.0f;
 
     uint step = 4;
     for(uint i=step; i<NbComponent; i++)
@@ -202,7 +202,7 @@ ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
     objectproperties.border              = 1;
     objectproperties.mesh                = 1;
     objectproperties.activarecnd         = true;
-    objectproperties.specReflection[0]   = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2;
+    objectproperties.specReflection[0]   = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2f;
     objectproperties.specReflection[3]   = 1.0;
     objectproperties.shininess           = 110;
     objectproperties.fill                = 1;

@@ -26,7 +26,7 @@ class ObjectParameters
 {
 public:
     ObjectProperties objectproperties;
-    int MaximumNumberPoints, MaximumNumberTriangles, MaximumNumberTrianglesMin;
+    uint MaximumNumberPoints, MaximumNumberTriangles, MaximumNumberTrianglesMin;
 public:
     ObjectParameters(uint mp=200000, uint mt=300000);
     void InitComponentinfos(struct  ComponentInfos &);
