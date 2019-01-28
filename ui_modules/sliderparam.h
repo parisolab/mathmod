@@ -20,10 +20,6 @@
 
 #ifndef SLIDERPARAM
 #define SLIDERPARAM
-
-
-
-
 #include "ui_sliderparam.h"
 
 class SlidersForm : public QWidget
@@ -31,7 +27,7 @@ class SlidersForm : public QWidget
     Q_OBJECT
 
 public:
-    SlidersForm(QWidget *parent = 0);
+    SlidersForm(QWidget *parent = nullptr);
 
 public:
     Ui::SlidersForm ui;
@@ -39,15 +35,6 @@ public:
 private slots:
     void on_SaveButton_clicked();
 };
-
-
-
-
-
-
-
-
-
 
 #endif // SLIDERPARAM
 

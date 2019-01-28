@@ -48,7 +48,7 @@ class DrawingOptions : public QMainWindow
 
 public:
 
-    DrawingOptions(QWidget *parent = 0);
+    DrawingOptions(QWidget *parent = nullptr);
     ~DrawingOptions();
     MathMod*  MathmodRef;
     About ab;

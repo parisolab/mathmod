@@ -443,7 +443,7 @@ namespace
     bool containsOnlyValidIdentifierChars(const std::string& name)
     {
         if(name.empty()) return false;
-        return readIdentifier<Value_t>(name.c_str()) == (unsigned) name.size();
+        return readIdentifier<Value_t>(name.c_str()) == unsigned(name.size());
     }
 
 
@@ -533,7 +533,7 @@ namespace
     {
         for(unsigned p=0; p<n_limbs; ++p)
         {
-            unsigned carry = unsigned( buffer[p] >> (elem_t)(limb_bits-4) );
+            unsigned carry = unsigned( buffer[p] >> elem_t(limb_bits-4) );
             buffer[p] = (buffer[p] << 4) | nibble;
             nibble = carry;
         }

@@ -15,7 +15,7 @@ class editor : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit editor(QWidget *parent =0);
+    explicit editor(QWidget *parent = nullptr);
     ~editor();
     void about();
     void newFile();

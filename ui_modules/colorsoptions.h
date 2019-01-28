@@ -28,7 +28,7 @@ class ColorsOptions : public QWidget
     Q_OBJECT
 
 public:
-    ColorsOptions(QWidget *parent = 0);
+    ColorsOptions(QWidget *parent = nullptr);
 
 public:
     Ui::ColorsOptions ui;

@@ -30,7 +30,7 @@ class AddParamForm : public QWidget
     Q_OBJECT
 
 public:
-    AddParamForm(QWidget *parent = 0);
+    AddParamForm(QWidget *parent = nullptr);
 
 public:
     Ui::AddParamForm ui;

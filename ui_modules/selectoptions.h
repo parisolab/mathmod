@@ -47,7 +47,7 @@ class SelectOptions : public QWidget
 public:
     SelectedListOptions selectedoptions;
 public:
-    SelectOptions(QWidget *parent = 0);
+    SelectOptions(QWidget *parent = nullptr);
 
 public:
     Ui::SelectOptions ui;

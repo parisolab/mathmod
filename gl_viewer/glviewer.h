@@ -31,11 +31,14 @@
 #include <qpixmap.h>
 #include <QResizeEvent>
 #include <QMessageBox>
+#include <QTextStream>
+#include <QFileDialog>
 #include "../pariso/isosurface/Iso3D.h"
 #include "../pariso/isosurface/isothread.h"
 #include "../pariso/parametric/parthread.h"
 #include "../pariso/parametric/Model3D.h"
 #include "qglthread.h"
+#include "raster.h"
 
 class OpenGlWidget : public QGLWidget
 {
@@ -59,7 +62,7 @@ public :
     GLfloat oldminx, oldminy,oldminz,oldmaxx, oldmaxy, oldmaxz;
     ImprovedNoise* PerlinNoise;
 public:
-    OpenGlWidget( QWidget *parent=0);
+    OpenGlWidget( QWidget *parent=nullptr);
     ~OpenGlWidget();
     void initialize_GL();
     void resizeGL(int, int);

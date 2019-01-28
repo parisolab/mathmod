@@ -28,7 +28,7 @@ class About : public QWidget
     Q_OBJECT
 
 public:
-    About(QWidget *parent = 0);
+    About(QWidget *parent = nullptr);
 private slots:
     void on_about_clicked();
 
