@@ -43,7 +43,7 @@ float tinyrnd()
 {
     static unsigned trand = 0;
     trand = 1664525u * trand + 1013904223u;
-    return (static_cast <float> ( trand) / 4294967296.0f);
+    return (float ( trand) / 4294967296.0f);
 }
 
 float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, int CombineDist)
@@ -57,9 +57,9 @@ float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, in
     for (int i = 0; i < 9; i++)
         distanceArray[i] = 6666;
 
-    int evalCubeX = static_cast <int>(floor(x));
-    int evalCubeY = static_cast <int>(floor(y));
-    int evalCubeZ = static_cast <int>(floor(z));
+    int evalCubeX = int(floor(x));
+    int evalCubeY = int(floor(y));
+    int evalCubeZ = int(floor(z));
 
     for (int i = -1; i < 2; ++i)
         for (int j = -1; j < 2; ++j)
@@ -68,22 +68,22 @@ float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, in
                 cubeX = evalCubeX + i;
                 cubeY = evalCubeY + j;
                 cubeZ = evalCubeZ + k;
-                lastRandom = static_cast <uint>(lcgRandom(hash((cubeX + seed), (cubeY), (cubeZ))));
-                numberFeaturePoints = static_cast <uint>(probLookup(lastRandom));
+                lastRandom = uint(lcgRandom(hash((cubeX + seed), (cubeY), (cubeZ))));
+                numberFeaturePoints = uint(probLookup(lastRandom));
                 for (uint l = 0; l < numberFeaturePoints; ++l)
                 {
-                    lastRandom = static_cast <uint>(lcgRandom(static_cast <int>(lastRandom)));
-                    randomDiff[0] = static_cast <float>(lastRandom) / 0x100000000;
+                    lastRandom = uint(lcgRandom(int(lastRandom)));
+                    randomDiff[0] = float(lastRandom) / 0x100000000;
 
-                    lastRandom = static_cast <uint>(lcgRandom(static_cast <int>(lastRandom)));
-                    randomDiff[1] = static_cast <float>(lastRandom) / 0x100000000;
+                    lastRandom = uint(lcgRandom(int(lastRandom)));
+                    randomDiff[1] = float(lastRandom) / 0x100000000;
 
-                    lastRandom = static_cast <uint>(lcgRandom(static_cast <int>(lastRandom)));
-                    randomDiff[2] = static_cast <float>(lastRandom) / 0x100000000;
+                    lastRandom = uint(lcgRandom(int(lastRandom)));
+                    randomDiff[2] = float(lastRandom) / 0x100000000;
 
-                    featurePoint[0] = randomDiff[0] + static_cast <float>(cubeX);
-                    featurePoint[1] = randomDiff[1] + static_cast <float>(cubeY);
-                    featurePoint[2] = randomDiff[2] + static_cast <float>(cubeZ);
+                    featurePoint[0] = randomDiff[0] + float(cubeX);
+                    featurePoint[1] = randomDiff[1] + float(cubeY);
+                    featurePoint[2] = randomDiff[2] + float(cubeZ);
                     if(type == 1)
                         insert(distanceArray, ManhattanDistanceFunc(x, y, z, featurePoint[0], featurePoint[1], featurePoint[2]));
                     else if(type == 2 || type == 4)
@@ -158,7 +158,7 @@ void CellNoise::insert(float* arr, float value)
 
 int CellNoise::lcgRandom(int lastValue)
 {
-    return static_cast <int>(((1103515245u * static_cast <uint>(lastValue) + 12345u) % 0x100000000u));
+    return int(((1103515245u * uint(lastValue) + 12345u) % 0x100000000u));
 }
 
 int CellNoise::hash(int i, int j, int k)
@@ -181,7 +181,7 @@ ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 
     for (int i = 0; i < 256; i++)
     {
-        int k = static_cast <int>((tinyrnd()*(256 - i) + i));
+        int k = int((tinyrnd()*(256 - i) + i));
 
         int l = p[i];
 
@@ -193,9 +193,9 @@ ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 
 float ImprovedNoise::noise(float x, float y, float z)
 {
-    int X = static_cast <int>(std::floor(x)) & 255,
-        Y = static_cast <int>(std::floor(y)) & 255,
-        Z = static_cast <int>(std::floor(z)) & 255;
+    int X = int(std::floor(x)) & 255,
+        Y = int(std::floor(y)) & 255,
+        Z = int(std::floor(z)) & 255;
     x -= std::floor(x);
     y -= std::floor(y);
     z -= std::floor(z);

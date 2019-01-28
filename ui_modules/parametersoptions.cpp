@@ -21,7 +21,7 @@
 #include <math.h>
 #include "parametersoptions.h"
 
-bool MACOS = false;
+static bool MACOS = false;
 
 Parametersoptions::Parametersoptions(QWidget *parent)
     : QWidget(parent)
@@ -102,7 +102,7 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     QFile file1(JsonFile);
     if ( !file1.exists())
     {
-        JsonFile = QFileDialog::getOpenFileName(NULL, QObject::tr("Open mathmodconfig.js File"),
+        JsonFile = QFileDialog::getOpenFileName(nullptr, QObject::tr("Open mathmodconfig.js File"),
                                                 "",
                                                 QObject::tr("Json (*.js)"));
     }
@@ -204,15 +204,15 @@ void Parametersoptions::GuiUpdate()
 {
     QJsonObject isoparam = (JConfig)["IsoParam"].toObject();
     //Grid
-    int mg =    (isoparam)["MaxGrid"].toDouble();
+    int mg =    (isoparam)["MaxGrid"].toInt();
     ui.maxgriLabel->setText("MaxGrid="+ QString::number(mg));
     ui.maxgri->setValue(mg);
     //Triangles
-    mg = (isoparam)["MaxTri"].toDouble();
+    mg = (isoparam)["MaxTri"].toInt();
     ui.maxtriLabel->setText("MaxTri="+ QString::number(mg)+"M");
     ui.maxtri->setValue(mg);
     //Points
-    mg = (isoparam)["MaxPt"].toDouble();
+    mg = (isoparam)["MaxPt"].toInt();
     ui.maxptLabel->setText("MaxPt="+ QString::number(mg)+"M");
     ui.maxpt->setValue(mg);
     //Styles:
@@ -239,7 +239,7 @@ void Parametersoptions::on_maxtri_valueChanged(int value)
 {
     ui.maxtriLabel->setText("MaxTri="+QString::number(value)+"M");
     int val = ui.maxpt->value();
-    int MaxParametricGrid = value > val? sqrt(val)*10000.0 : sqrt(value)*10000.0;
+    int MaxParametricGrid = value > val? int(sqrt(val)*10000.0) : int(sqrt(value)*10000.0);
 
     ui.MaxParametricGrid->setText("MaxParametricGrid = "+QString::number(MaxParametricGrid));
 
@@ -253,7 +253,7 @@ void Parametersoptions::on_maxpt_valueChanged(int value)
     ui.maxptLabel->setText("MaxPt="+QString::number(value)+"M");
 
     int val = ui.maxtri->value();
-    int MaxParametricGrid = value > val? sqrt(val)*1000.0 : sqrt(value)*1000.0;
+    int MaxParametricGrid = value > val? int(sqrt(val)*1000.0) : int(sqrt(value)*1000.0);
     ui.MaxParametricGrid->setText("MaxParametricGrid = "+QString::number(MaxParametricGrid));
 
     QJsonObject tmp = JConfig["IsoParam"].toObject();
@@ -461,11 +461,11 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         {
             IsoParam = JConfig["IsoParam"].toObject();
             if((IsoParam)["MaxTri"].isDouble())
-                MaxTri     = (IsoParam)["MaxTri"].toInt() * 1000000;
+                MaxTri     = ((IsoParam)["MaxTri"]).toInt() * 1000000;
             if((IsoParam)["MaxPt"].isDouble())
                 MaxPt     = (IsoParam)["MaxPt"].toInt() * 1000000;
             if((IsoParam)["MaxGrid"].isDouble())
-                MaxGrid = (IsoParam)["MaxGrid"].toInt();
+                MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
             if((IsoParam)["NbComponent"].isDouble())
                 NbComponent= (IsoParam)["NbComponent"].toInt();
             if((IsoParam)["NbVariables"].isDouble())
@@ -514,10 +514,10 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             tmp= JConfig["OpenGlConfig"].toObject();
             if(tmp["GL_SPECULAR"].isArray())
             {
-                Specular[0] = (tmp["GL_SPECULAR"].toArray())[0].toDouble()/100.0;
-                Specular[1] = (tmp["GL_SPECULAR"].toArray())[1].toDouble()/100.0;
-                Specular[2] = (tmp["GL_SPECULAR"].toArray())[2].toDouble()/100.0;
-                Specular[3] = (tmp["GL_SPECULAR"].toArray())[3].toDouble()/100.0;
+                Specular[0] = float((tmp["GL_SPECULAR"].toArray())[0].toDouble()/100.0);
+                Specular[1] = float((tmp["GL_SPECULAR"].toArray())[1].toDouble()/100.0);
+                Specular[2] = float((tmp["GL_SPECULAR"].toArray())[2].toDouble()/100.0);
+                Specular[3] = float((tmp["GL_SPECULAR"].toArray())[3].toDouble()/100.0);
             }
         }
 
@@ -550,18 +550,18 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             if(theme == "MyTheme")
             {
                 MyTheme = tmp1["MyTheme"].toObject();
-                mypalette.setColor(QPalette::Window, QColor((MyTheme["Window"].toArray())[0].toDouble(), (MyTheme["Window"].toArray())[1].toDouble(), (MyTheme["Window"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::WindowText, QColor((MyTheme["WindowText"].toArray())[0].toDouble(), (MyTheme["WindowText"].toArray())[1].toDouble(), (MyTheme["WindowText"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::Base, QColor((MyTheme["Base"].toArray())[0].toDouble(), (MyTheme["Base"].toArray())[1].toDouble(), (MyTheme["Base"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::AlternateBase, QColor((MyTheme["AlternateBase"].toArray())[0].toDouble(), (MyTheme["AlternateBase"].toArray())[1].toDouble(), (MyTheme["AlternateBase"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::ToolTipBase, QColor((MyTheme["ToolTipBase"].toArray())[0].toDouble(), (MyTheme["ToolTipBase"].toArray())[1].toDouble(), (MyTheme["ToolTipBase"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::ToolTipText, QColor((MyTheme["ToolTipText"].toArray())[0].toDouble(), (MyTheme["ToolTipText"].toArray())[1].toDouble(), (MyTheme["ToolTipText"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::Text, QColor((MyTheme["Text"].toArray())[0].toDouble(), (MyTheme["Text"].toArray())[1].toDouble(), (MyTheme["Text"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::Button, QColor((MyTheme["Button"].toArray())[0].toDouble(), (MyTheme["Button"].toArray())[1].toDouble(), (MyTheme["Button"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::BrightText, QColor((MyTheme["BrightText"].toArray())[0].toDouble(), (MyTheme["BrightText"].toArray())[1].toDouble(), (MyTheme["BrightText"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::ButtonText, QColor((MyTheme["ButtonText"].toArray())[0].toDouble(), (MyTheme["ButtonText"].toArray())[1].toDouble(), (MyTheme["ButtonText"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::Highlight, QColor((MyTheme["Highlight"].toArray())[0].toDouble(), (MyTheme["Highlight"].toArray())[1].toDouble(), (MyTheme["Highlight"].toArray())[2].toDouble()));
-                mypalette.setColor(QPalette::HighlightedText, QColor((MyTheme["HighlightedText"].toArray())[0].toDouble(), (MyTheme["HighlightedText"].toArray())[1].toDouble(), (MyTheme["HighlightedText"].toArray())[2].toDouble()));
+                mypalette.setColor(QPalette::Window, QColor((MyTheme["Window"].toArray())[0].toInt(), (MyTheme["Window"].toArray())[1].toInt(), (MyTheme["Window"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::WindowText, QColor((MyTheme["WindowText"].toArray())[0].toInt(), (MyTheme["WindowText"].toArray())[1].toInt(), (MyTheme["WindowText"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::Base, QColor((MyTheme["Base"].toArray())[0].toInt(), (MyTheme["Base"].toArray())[1].toInt(), (MyTheme["Base"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::AlternateBase, QColor((MyTheme["AlternateBase"].toArray())[0].toInt(), (MyTheme["AlternateBase"].toArray())[1].toInt(), (MyTheme["AlternateBase"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::ToolTipBase, QColor((MyTheme["ToolTipBase"].toArray())[0].toInt(), (MyTheme["ToolTipBase"].toArray())[1].toInt(), (MyTheme["ToolTipBase"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::ToolTipText, QColor((MyTheme["ToolTipText"].toArray())[0].toInt(), (MyTheme["ToolTipText"].toArray())[1].toInt(), (MyTheme["ToolTipText"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::Text, QColor((MyTheme["Text"].toArray())[0].toInt(), (MyTheme["Text"].toArray())[1].toInt(), (MyTheme["Text"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::Button, QColor((MyTheme["Button"].toArray())[0].toInt(), (MyTheme["Button"].toArray())[1].toInt(), (MyTheme["Button"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::BrightText, QColor((MyTheme["BrightText"].toArray())[0].toInt(), (MyTheme["BrightText"].toArray())[1].toInt(), (MyTheme["BrightText"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::ButtonText, QColor((MyTheme["ButtonText"].toArray())[0].toInt(), (MyTheme["ButtonText"].toArray())[1].toInt(), (MyTheme["ButtonText"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::Highlight, QColor((MyTheme["Highlight"].toArray())[0].toInt(), (MyTheme["Highlight"].toArray())[1].toInt(), (MyTheme["Highlight"].toArray())[2].toInt()));
+                mypalette.setColor(QPalette::HighlightedText, QColor((MyTheme["HighlightedText"].toArray())[0].toInt(), (MyTheme["HighlightedText"].toArray())[1].toInt(), (MyTheme["HighlightedText"].toArray())[2].toInt()));
                 mypalette2 = mypalette;
             }
             SetStyleAndTheme(app, style, theme);
@@ -660,51 +660,51 @@ void Parametersoptions::on_comboBox_activated(const QString &arg1)
 
     if(arg1 == "Text")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Text"].toArray())[0].toDouble(), (MyTheme["Text"].toArray())[1].toDouble(), (MyTheme["Text"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Text"].toArray())[0].toInt(), (MyTheme["Text"].toArray())[1].toInt(), (MyTheme["Text"].toArray())[2].toInt()));
     }
     else if(arg1 == "BrightText")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["BrightText"].toArray())[0].toDouble(), (MyTheme["BrightText"].toArray())[1].toDouble(), (MyTheme["BrightText"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["BrightText"].toArray())[0].toInt(), (MyTheme["BrightText"].toArray())[1].toInt(), (MyTheme["BrightText"].toArray())[2].toInt()));
     }
     else if(arg1 == "ButtonText")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["ButtonText"].toArray())[0].toDouble(), (MyTheme["ButtonText"].toArray())[1].toDouble(), (MyTheme["ButtonText"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["ButtonText"].toArray())[0].toInt(), (MyTheme["ButtonText"].toArray())[1].toInt(), (MyTheme["ButtonText"].toArray())[2].toInt()));
     }
     else if(arg1 == "Button")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Button"].toArray())[0].toDouble(), (MyTheme["Button"].toArray())[1].toDouble(), (MyTheme["Button"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Button"].toArray())[0].toInt(), (MyTheme["Button"].toArray())[1].toInt(), (MyTheme["Button"].toArray())[2].toInt()));
     }
     else if(arg1 == "Base")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Base"].toArray())[0].toDouble(), (MyTheme["Base"].toArray())[1].toDouble(), (MyTheme["Base"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Base"].toArray())[0].toInt(), (MyTheme["Base"].toArray())[1].toInt(), (MyTheme["Base"].toArray())[2].toInt()));
     }
     else if(arg1 == "AlternateBase")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["AlternateBase"].toArray())[0].toDouble(), (MyTheme["AlternateBase"].toArray())[1].toDouble(), (MyTheme["AlternateBase"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["AlternateBase"].toArray())[0].toInt(), (MyTheme["AlternateBase"].toArray())[1].toInt(), (MyTheme["AlternateBase"].toArray())[2].toInt()));
     }
     else if(arg1 == "Highlight")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Highlight"].toArray())[0].toDouble(), (MyTheme["Highlight"].toArray())[1].toDouble(), (MyTheme["Highlight"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Highlight"].toArray())[0].toInt(), (MyTheme["Highlight"].toArray())[1].toInt(), (MyTheme["Highlight"].toArray())[2].toInt()));
     }
     else if(arg1 == "HighlightedText")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["HighlightedText"].toArray())[0].toDouble(), (MyTheme["HighlightedText"].toArray())[1].toDouble(), (MyTheme["HighlightedText"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["HighlightedText"].toArray())[0].toInt(), (MyTheme["HighlightedText"].toArray())[1].toInt(), (MyTheme["HighlightedText"].toArray())[2].toInt()));
     }
     else if(arg1 == "ToolTipBase")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["ToolTipBase"].toArray())[0].toDouble(), (MyTheme["ToolTipBase"].toArray())[1].toDouble(), (MyTheme["ToolTipBase"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["ToolTipBase"].toArray())[0].toInt(), (MyTheme["ToolTipBase"].toArray())[1].toInt(), (MyTheme["ToolTipBase"].toArray())[2].toInt()));
     }
     else if(arg1 == "ToolTipText")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["ToolTipText"].toArray())[0].toDouble(), (MyTheme["ToolTipText"].toArray())[1].toDouble(), (MyTheme["ToolTipText"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["ToolTipText"].toArray())[0].toInt(), (MyTheme["ToolTipText"].toArray())[1].toInt(), (MyTheme["ToolTipText"].toArray())[2].toInt()));
     }
     else if(arg1 == "WindowText")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["WindowText"].toArray())[0].toDouble(), (MyTheme["WindowText"].toArray())[1].toDouble(), (MyTheme["WindowText"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["WindowText"].toArray())[0].toInt(), (MyTheme["WindowText"].toArray())[1].toInt(), (MyTheme["WindowText"].toArray())[2].toInt()));
     }
     else if(arg1 == "Window")
     {
-        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Window"].toArray())[0].toDouble(), (MyTheme["Window"].toArray())[1].toDouble(), (MyTheme["Window"].toArray())[2].toDouble()));
+        tmp.setColor(QPalette::ButtonText, QColor((MyTheme["Window"].toArray())[0].toInt(), (MyTheme["Window"].toArray())[1].toInt(), (MyTheme["Window"].toArray())[2].toInt()));
     }
     ui.ColorsButton->setPalette(tmp);
 }
@@ -763,18 +763,18 @@ void Parametersoptions::on_TestConfig_clicked()
         if(theme == "MyTheme")
         {
             MyTheme = tmp1["MyTheme"].toObject();
-            mypalette.setColor(QPalette::Window, QColor((MyTheme["Window"].toArray())[0].toDouble(), (MyTheme["Window"].toArray())[1].toDouble(), (MyTheme["Window"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::WindowText, QColor((MyTheme["WindowText"].toArray())[0].toDouble(), (MyTheme["WindowText"].toArray())[1].toDouble(), (MyTheme["WindowText"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::Base, QColor((MyTheme["Base"].toArray())[0].toDouble(), (MyTheme["Base"].toArray())[1].toDouble(), (MyTheme["Base"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::AlternateBase, QColor((MyTheme["AlternateBase"].toArray())[0].toDouble(), (MyTheme["AlternateBase"].toArray())[1].toDouble(), (MyTheme["AlternateBase"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::ToolTipBase, QColor((MyTheme["ToolTipBase"].toArray())[0].toDouble(), (MyTheme["ToolTipBase"].toArray())[1].toDouble(), (MyTheme["ToolTipBase"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::ToolTipText, QColor((MyTheme["ToolTipText"].toArray())[0].toDouble(), (MyTheme["ToolTipText"].toArray())[1].toDouble(), (MyTheme["ToolTipText"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::Text, QColor((MyTheme["Text"].toArray())[0].toDouble(), (MyTheme["Text"].toArray())[1].toDouble(), (MyTheme["Text"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::Button, QColor((MyTheme["Button"].toArray())[0].toDouble(), (MyTheme["Button"].toArray())[1].toDouble(), (MyTheme["Button"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::BrightText, QColor((MyTheme["BrightText"].toArray())[0].toDouble(), (MyTheme["BrightText"].toArray())[1].toDouble(), (MyTheme["BrightText"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::ButtonText, QColor((MyTheme["ButtonText"].toArray())[0].toDouble(), (MyTheme["ButtonText"].toArray())[1].toDouble(), (MyTheme["ButtonText"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::Highlight, QColor((MyTheme["Highlight"].toArray())[0].toDouble(), (MyTheme["Highlight"].toArray())[1].toDouble(), (MyTheme["Highlight"].toArray())[2].toDouble()));
-            mypalette.setColor(QPalette::HighlightedText, QColor((MyTheme["HighlightedText"].toArray())[0].toDouble(), (MyTheme["HighlightedText"].toArray())[1].toDouble(), (MyTheme["HighlightedText"].toArray())[2].toDouble()));
+            mypalette.setColor(QPalette::Window, QColor((MyTheme["Window"].toArray())[0].toInt(), (MyTheme["Window"].toArray())[1].toInt(), (MyTheme["Window"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::WindowText, QColor((MyTheme["WindowText"].toArray())[0].toInt(), (MyTheme["WindowText"].toArray())[1].toInt(), (MyTheme["WindowText"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::Base, QColor((MyTheme["Base"].toArray())[0].toInt(), (MyTheme["Base"].toArray())[1].toInt(), (MyTheme["Base"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::AlternateBase, QColor((MyTheme["AlternateBase"].toArray())[0].toInt(), (MyTheme["AlternateBase"].toArray())[1].toInt(), (MyTheme["AlternateBase"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::ToolTipBase, QColor((MyTheme["ToolTipBase"].toArray())[0].toInt(), (MyTheme["ToolTipBase"].toArray())[1].toInt(), (MyTheme["ToolTipBase"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::ToolTipText, QColor((MyTheme["ToolTipText"].toArray())[0].toInt(), (MyTheme["ToolTipText"].toArray())[1].toInt(), (MyTheme["ToolTipText"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::Text, QColor((MyTheme["Text"].toArray())[0].toInt(), (MyTheme["Text"].toArray())[1].toInt(), (MyTheme["Text"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::Button, QColor((MyTheme["Button"].toArray())[0].toInt(), (MyTheme["Button"].toArray())[1].toInt(), (MyTheme["Button"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::BrightText, QColor((MyTheme["BrightText"].toArray())[0].toInt(), (MyTheme["BrightText"].toArray())[1].toInt(), (MyTheme["BrightText"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::ButtonText, QColor((MyTheme["ButtonText"].toArray())[0].toInt(), (MyTheme["ButtonText"].toArray())[1].toInt(), (MyTheme["ButtonText"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::Highlight, QColor((MyTheme["Highlight"].toArray())[0].toInt(), (MyTheme["Highlight"].toArray())[1].toInt(), (MyTheme["Highlight"].toArray())[2].toInt()));
+            mypalette.setColor(QPalette::HighlightedText, QColor((MyTheme["HighlightedText"].toArray())[0].toInt(), (MyTheme["HighlightedText"].toArray())[1].toInt(), (MyTheme["HighlightedText"].toArray())[2].toInt()));
             mypalette2 = mypalette;
         }
         SetStyleAndTheme(*MainApp, style, theme);

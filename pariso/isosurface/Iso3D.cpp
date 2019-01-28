@@ -62,7 +62,7 @@ static QElapsedTimer times;
 
 double CurrentIsoCmpId(const double* p)
 {
-    int pp = static_cast <int> (p[0]);
+    int pp = int (p[0]);
     if(pp==0)
         return IsoComponentId;
     else
@@ -71,7 +71,7 @@ double CurrentIsoCmpId(const double* p)
 
 extern double TurbulenceWorley(const double* p)
 {
-    return static_cast <double> (
+    return double (
                NoiseFunction->CellNoiseFunc(
                    float (p[0]),
                    float (p[1]),
@@ -84,7 +84,7 @@ extern double TurbulenceWorley(const double* p)
 
 double TurbulencePerlin(const double* p)
 {
-    return static_cast <double> (
+    return double (
                PNoise->FractalNoise3D(
                    float (p[0]),
                    float (p[1]),

@@ -42,7 +42,7 @@ void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject & js)
     QFile file1(JsonFile);
     if ( !file1.exists())
     {
-        JsonFile = QFileDialog::getOpenFileName(0, QObject::tr("Open mathmodcollection.js File"),
+        JsonFile = QFileDialog::getOpenFileName(nullptr, QObject::tr("Open mathmodcollection.js File"),
                                                 "",
                                                 QObject::tr("Json (*.js)"));
     }

@@ -6292,10 +6292,11 @@ void DrawingOptions::on_Multiplier_clicked()
 // --------------------------
 void DrawingOptions::UpdateGui(int argc)
 {
-    ui.xyzg->setMaximum(Parameters->MaxGrid);
-    ui.XhorizontalScrollBar->setMaximum(Parameters->MaxGrid);
-    ui.YhorizontalScrollBar->setMaximum(Parameters->MaxGrid);
-    ui.ZhorizontalScrollBar->setMaximum(Parameters->MaxGrid);
+    int maxgrd = int(Parameters->MaxGrid);
+    ui.xyzg->setMaximum(maxgrd);
+    ui.XhorizontalScrollBar->setMaximum(maxgrd);
+    ui.YhorizontalScrollBar->setMaximum(maxgrd);
+    ui.ZhorizontalScrollBar->setMaximum(maxgrd);
 
     int sqr = (Parameters->MaxPt > Parameters->MaxTri ? int(sqrt(Parameters->MaxTri)): int(sqrt(Parameters->MaxPt)));
     ui.linecolumn_2->setMaximum(sqr);

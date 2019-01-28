@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QJsonObject>
 #include <QStyleFactory>
+#include <QMainWindow>
 
 struct ListeModelTexture
 {
@@ -63,15 +64,14 @@ public:
     int CalculFactor[3];
     int Shininess;
     int NbSliders, NbSliderValues;
-    int MaxTri, MaxPt, MaxGrid,
-        NbComponent,
+    int MaxTri, MaxPt, MaxGrid;
+    int NbComponent,
         NbConstantes,
         NbDefinedFunctions,
         NbVariables,
         NbTextures,
         InitParGrid,
-        InitIsoGrid
-        ;
+        InitIsoGrid;
 
 public slots:
     void ReadJsonFile(QString, QJsonObject &);

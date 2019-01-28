@@ -26,7 +26,7 @@
 #include <QElapsedTimer>
 #include "../fparser/fparser.hh"
 
-#define PI (static_cast <double>(314159265)/static_cast <double>(100000000))
+#define PI (double(314159265)/double(100000000))
 #define MAGIC_SCALE 1.5707963f
 extern template class FunctionParserBase<double>; // explicit instantiation declaration
 

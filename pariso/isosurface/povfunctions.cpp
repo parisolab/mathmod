@@ -17,7 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
 ***************************************************************************/
-#define PI1 (static_cast <double> (314159265)/static_cast <double> (100000000))
+#define PI1 (double (314159265)/double (100000000))
 #include <cmath>
 
 
