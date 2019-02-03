@@ -735,7 +735,7 @@ void OpenGlWidget::boundingboxOk()
     LocalScene.boundingbox *= -1;
 }
 
-GLuint fontOffset=0;
+static GLuint fontOffset=0;
 void makeRasterFont()
 {
     GLuint i;
@@ -926,8 +926,7 @@ void OpenGlWidget::resizeGL( int newwidth, int newheight)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, newwidth, newheight);
-    float k=6;
-    glFrustum(-newwidth/k, newwidth/k, -newheight/k, newheight/k, 250.0, 3000.0 );
+    glFrustum(-newwidth/6.0, newwidth/6.0, -newheight/6.0, newheight/6.0, 250.0, 3000.0 );
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef( 0.0, 0, -1000.0 );
@@ -1067,11 +1066,11 @@ static void DrawAxe()
     glVertex3f(0.0, 0.0, 400.0);
     glVertex3f(10.0, 0.0, 380.0);
     glVertex3f(0.0, 10.0, 380.0);
-    glColor3f (0.0, 0.0, 0.3);
+    glColor3f (0.0, 0.0, 0.3f);
     glVertex3f(-10.0, 0.0, 380.0);
     glColor3f (0.0, 0.0, 1.0);
     glVertex3f(0.0, -10.0, 380.0);
-    glColor3f (0.0, 0.0, 0.3);
+    glColor3f (0.0, 0.0, 0.3f);
     glVertex3f(10.0, 0.0, 380.0);
     glEnd();
 
@@ -1080,11 +1079,11 @@ static void DrawAxe()
     glVertex3f(0.0, 400.0, 0.0);
     glVertex3f(10.0, 380.0, 0.0);
     glVertex3f(0.0, 380.0, 10.0);
-    glColor3f (0.0, 0.3, 0.0);
+    glColor3f (0.0, 0.3f, 0.0);
     glVertex3f(-10.0, 380.0, 0.0);
     glColor3f (0.0, 1.0, 0.0);
     glVertex3f(.0, 380.0, -10.0);
-    glColor3f (0.0, 0.3, 0.0);
+    glColor3f (0.0, 0.3f, 0.0);
     glVertex3f(10.0, 380.0, 0.0);
     glEnd();
 
@@ -1094,11 +1093,11 @@ static void DrawAxe()
     glVertex3f(400.0, 0.0, 0.0);
     glVertex3f(380.0, 10.0, 0.0);
     glVertex3f(380.0, 0.0, 10.0);
-    glColor3f (0.3, 0.0, 0.0);
+    glColor3f (0.3f, 0.0, 0.0);
     glVertex3f(380.0, -10.0, 0.0);
     glColor3f (1.0, 0.0, 0.0);
     glVertex3f(380.0, 0.0, -10.0);
-    glColor3f (0.3, 0.0, 0.0);
+    glColor3f (0.3f, 0.0, 0.0);
     glVertex3f(380.0, 10.0, 0.0);
     glEnd();
 
@@ -1116,7 +1115,7 @@ static void DrawAxe()
     glRasterPos3i(410, 10, 10);
     glCallLists(strlen("X"),GL_UNSIGNED_BYTE,"X");
 
-    glColor3f (0.7, 0.7, 0.7);
+    glColor3f (0.7f, 0.7f, 0.7f);
     glTranslatef(410.0, 4.0, 4.0);
     glTranslatef(-410.0, -4.0, -4.0);
 
@@ -1137,17 +1136,17 @@ static void DrawAxe()
                 GL_UNSIGNED_BYTE,
                 "Z");
 
-    glColor3f (0.0, 0.7, 0.7);
+    glColor3f (0.0, 0.7f, 0.7f);
     glTranslatef(4.0, 4.0, 410.0);
     glTranslatef(-4.0, -4.0, -410.0);
-    glLineWidth(0.9);
+    glLineWidth(0.9f);
 }
 
 static void DrawNormals(ObjectProperties *scene)
 {
-    int j =  0;
-    glColor4f (0.8, 0., 0.7, 1.0);
-    for (unsigned int i=0; i< scene->PolyNumber; i+=4)
+    uint j =  0;
+    glColor4f (0.8f, 0., 0.7f, 1.0);
+    for (uint i=0; i< scene->PolyNumber; i+=4)
     {
         j =   TypeDrawin*scene->PolyIndices_localPt[i];
         glBegin( GL_LINES );
@@ -1206,7 +1205,7 @@ static void DrawIsoCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesVerifyCND,
+            int(3*scene->componentsinfos.NbTrianglesVerifyCND),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[0]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1219,7 +1218,7 @@ static void DrawIsoCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesNotVerifyCND,
+            int(3*scene->componentsinfos.NbTrianglesNotVerifyCND),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1232,7 +1231,7 @@ static void DrawIsoCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesBorderCND,
+            int(3*scene->componentsinfos.NbTrianglesBorderCND),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1248,7 +1247,7 @@ static void DrawParCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesVerifyCND,
+            int(3*scene->componentsinfos.NbTrianglesVerifyCND),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[0]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1261,7 +1260,7 @@ static void DrawParCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesNotVerifyCND,
+            int(3*scene->componentsinfos.NbTrianglesNotVerifyCND),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1274,7 +1273,7 @@ static void DrawParCND(ObjectProperties *scene)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            3*scene->componentsinfos.NbTrianglesBorderCND,
+            int(3*scene->componentsinfos.NbTrianglesBorderCND),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1285,7 +1284,7 @@ static void DrawParCND(ObjectProperties *scene)
 static void DrawMeshIso(ObjectProperties *scene)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glDrawElements(GL_TRIANGLES, scene->PolyNumber, GL_UNSIGNED_INT, scene->PolyIndices_localPt);
+    glDrawElements(GL_TRIANGLES, int(scene->PolyNumber), GL_UNSIGNED_INT, scene->PolyIndices_localPt);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
@@ -1294,14 +1293,14 @@ static void DrawMinimalTopology (ObjectProperties *scene)
     glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    int startpl = 0;
-    for (unsigned int i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+    uint startpl = 0;
+    for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
     {
-        int polysize       =  scene->PolyIndices_localPtMin[startpl++];
+        uint polysize       =  scene->PolyIndices_localPtMin[startpl++];
         glBegin(GL_POLYGON);
-        for (int j = 0; j < polysize; j++)
+        for (uint j = 0; j < polysize; j++)
         {
-            int actualpointindice = scene->PolyIndices_localPtMin[startpl];
+            uint actualpointindice = scene->PolyIndices_localPtMin[startpl];
             glVertex3f(
                 scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
                 scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
@@ -1319,14 +1318,14 @@ static void DrawMeshParametric(ObjectProperties *scene)
     glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    int startpl = 0;
-    for (unsigned int i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+    uint startpl = 0;
+    for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
     {
-        int polysize       =  scene->PolyIndices_localPtMin[startpl++];
+        uint polysize       =  scene->PolyIndices_localPtMin[startpl++];
         glBegin(GL_POLYGON);
-        for (int j = 0; j < polysize; j++)
+        for (uint j = 0; j < polysize; j++)
         {
-            int actualpointindice = scene->PolyIndices_localPtMin[startpl];
+            uint actualpointindice = scene->PolyIndices_localPtMin[startpl];
             glVertex3f(
                 scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
                 scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
@@ -1363,7 +1362,7 @@ static void draw(ObjectProperties *scene)
     // Ratation (Animation):
     if (scene->anim == 1 && scene->animxyz == 1)
     {
-        glRotatef(scene->RotStrength, scene->axe_x, scene->axe_y, scene->axe_z);
+        glRotatef(scene->RotStrength, float(scene->axe_x), float(scene->axe_y), float(scene->axe_z));
     }
 
     // Plan:
@@ -1521,7 +1520,7 @@ void OpenGlWidget::boxok()
     LocalScene.gridplanliste = glGenLists(1);
     glNewList(LocalScene.gridplanliste, GL_COMPILE );
     glLineWidth(1);
-    glColor3f (0.8, 0.0, 0.7);
+    glColor3f (0.8f, 0.0, 0.7f);
     glBegin( GL_LINES );
     glVertex3f(-150.0, 600.0, -500);
     glVertex3f(-150.0,-600.0, -500);
