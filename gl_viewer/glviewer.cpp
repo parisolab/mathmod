@@ -571,7 +571,12 @@ static void DrawParametric (ObjectProperties *scene)
 
 static void drawCube(float x)
 {
-    float  longX = x*float(difX/float(difMaximum)), longY= x*(difY/float(difMaximum)), longZ= x*(difZ/float(difMaximum));
+    float  longX = x*float(difX/float(difMaximum)),
+            longY= x*(difY/float(difMaximum)),
+            longZ= x*(difZ/float(difMaximum));
+    double mix= double(minx), max=double(maxx),
+            miy=double(miny), may=double(maxy),
+            miz=double(minz), maz=double(maxz);
     glColor4f (0.8f, 0.8f, 0.8f, 1.0f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glLineWidth(1);
@@ -599,29 +604,29 @@ static void drawCube(float x)
     //X
     glColor3f (1.0, 0.0, 0.0);
     glRasterPos3f(longX, -longY, longZ+60);
-    glCallLists(QString::number(maxx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxx,'g',  3).toLatin1());
+    glCallLists(QString::number(max,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(max,'g',  3).toLatin1());
 
     glColor3f (1.0, 0.0, 0.0);
     glRasterPos3f(-longX, -longY, longZ+60);
-    glCallLists(QString::number(minx,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minx,'g',  3).toLatin1());
+    glCallLists(QString::number(mix,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(mix,'g',  3).toLatin1());
 
     //Y
     glColor3f (0.0, 1.0, 0.0);
     glRasterPos3f(longX+100, longY, -longZ);
-    glCallLists(QString::number(maxy,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxy,'g',  3).toLatin1());
+    glCallLists(QString::number(may,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(may,'g',  3).toLatin1());
 
     glColor3f (0.0, 1.0, 0.0);
     glRasterPos3f(longX+100, -longY,-longZ);
-    glCallLists(QString::number(miny,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(miny,'g',  3).toLatin1());
+    glCallLists(QString::number(miy,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(miy,'g',  3).toLatin1());
 
     //Z
-    glColor3f (0.4, 0.4, 1.0);
+    glColor3f (0.4f, 0.4f, 1.0);
     glRasterPos3f(longX+60, -longY-60, longZ);
-    glCallLists(QString::number(maxz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maxz,'g',  3).toLatin1());
+    glCallLists(QString::number(maz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(maz,'g',  3).toLatin1());
 
-    glColor3f (0.4, 0.4, 1.0);
+    glColor3f (0.4f, 0.4f, 1.0);
     glRasterPos3f(longX+60, -longY-60,-longZ);
-    glCallLists(QString::number(minz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(minz,'g',  3).toLatin1());
+    glCallLists(QString::number(miz,'g',  3).size(),GL_UNSIGNED_BYTE,QString::number(miz,'g',  3).toLatin1());
 }
 
 static void DrawIso (ObjectProperties *scene)
@@ -641,7 +646,7 @@ static void DrawIso (ObjectProperties *scene)
         {
             if(!scene->componentsinfos.ThereisRGBA)
             {
-                for(int j=0; j<4; j++)
+                for(uint j=0; j<4; j++)
                 {
                     frontcl[j]=scene->frontcols[4*i+j];
                     backcl[j]=scene->backcols[4*i+j];
@@ -656,7 +661,7 @@ static void DrawIso (ObjectProperties *scene)
                 if(scene->componentsinfos.DFTrianglesVerifyCND)
                     glDrawElements(
                         GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesVerifyCND),
+                        int(3*(scene->componentsinfos.NbTrianglesVerifyCND)),
                         GL_UNSIGNED_INT,
                         &(scene->PolyIndices_localPt[0])
                     );
@@ -664,7 +669,7 @@ static void DrawIso (ObjectProperties *scene)
                 if(scene->componentsinfos.DFTrianglesNotVerifyCND)
                     glDrawElements(
                         GL_TRIANGLES,
-                        3*(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                        int(3*(scene->componentsinfos.NbTrianglesNotVerifyCND)),
                         GL_UNSIGNED_INT,
                         &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
                     );
@@ -673,7 +678,7 @@ static void DrawIso (ObjectProperties *scene)
             {
                 glDrawElements(
                     GL_TRIANGLES,
-                    3*scene->componentsinfos.IsoPositions[2*i+1],
+                    int(3*scene->componentsinfos.IsoPositions[2*i+1]),
                     GL_UNSIGNED_INT,
                     &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
                 );
