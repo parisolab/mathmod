@@ -26,11 +26,11 @@ Matrix4D::Matrix4D()
 {
 
     pi = 3.14159265;
-    xx = 1.0f;
-    yy = 1.0f;
-    zz = 1.0f;
-    ww = 1.0f;
-    ko = 1.0f;
+    xx = 1.0;
+    yy = 1.0;
+    zz = 1.0;
+    ww = 1.0;
+    ko = 1.0;
     xy = xz = xw = xo = 0;
     yx = yz = yw = yo = 0;
     zx = zy = zw = zo = 0;
@@ -97,17 +97,17 @@ void Matrix4D::yzrot(double theta)
     double ct = cos(theta);
     double st = sin(theta);
 
-    double Nyx = (double) (yx * ct + zx * st);
-    double Nyy = (double) (yy * ct + zy * st);
-    double Nyz = (double) (yz * ct + zz * st);
-    double Nyw = (double) (yw * ct + zw * st);
-    double Nyo = (double) (yo * ct + zo * st);
+    double Nyx = double(yx * ct + zx * st);
+    double Nyy = double(yy * ct + zy * st);
+    double Nyz = double(yz * ct + zz * st);
+    double Nyw = double(yw * ct + zw * st);
+    double Nyo = double(yo * ct + zo * st);
 
-    double Nzx = (double) (zx * ct - yx * st);
-    double Nzy = (double) (zy * ct - yy * st);
-    double Nzz = (double) (zz * ct - yz * st);
-    double Nzw = (double) (zw * ct - yw * st);
-    double Nzo = (double) (zo * ct - yo * st);
+    double Nzx = double(zx * ct - yx * st);
+    double Nzy = double(zy * ct - yy * st);
+    double Nzz = double(zz * ct - yz * st);
+    double Nzw = double(zw * ct - yw * st);
+    double Nzo = double(zo * ct - yo * st);
 
     yo = Nyo;
     yx = Nyx;
@@ -129,17 +129,17 @@ void Matrix4D::xzrot(double theta)
     double ct = cos(theta);
     double st = sin(theta);
 
-    double Nxx = (double) (xx * ct + zx * st);
-    double Nxy = (double) (xy * ct + zy * st);
-    double Nxz = (double) (xz * ct + zz * st);
-    double Nxw = (double) (xw * ct + zw * st);
-    double Nxo = (double) (xo * ct + zo * st);
+    double Nxx = double(xx * ct + zx * st);
+    double Nxy = double(xy * ct + zy * st);
+    double Nxz = double(xz * ct + zz * st);
+    double Nxw = double(xw * ct + zw * st);
+    double Nxo = double(xo * ct + zo * st);
 
-    double Nzx = (double) (zx * ct - xx * st);
-    double Nzy = (double) (zy * ct - xy * st);
-    double Nzz = (double) (zz * ct - xz * st);
-    double Nzw = (double) (zw * ct - xw * st);
-    double Nzo = (double) (zo * ct - xo * st);
+    double Nzx = double(zx * ct - xx * st);
+    double Nzy = double(zy * ct - xy * st);
+    double Nzz = double(zz * ct - xz * st);
+    double Nzw = double(zw * ct - xw * st);
+    double Nzo = double(zo * ct - xo * st);
 
     xo = Nxo;
     xx = Nxx;
@@ -161,17 +161,17 @@ void Matrix4D::xyrot(double theta)
     double ct = cos(theta);
     double st = sin(theta);
 
-    double Nyx = (double) (yx * ct + xx * st);
-    double Nyy = (double) (yy * ct + xy * st);
-    double Nyz = (double) (yz * ct + xz * st);
-    double Nyw = (double) (yw * ct + xw * st);
-    double Nyo = (double) (yo * ct + xo * st);
+    double Nyx = double(yx * ct + xx * st);
+    double Nyy = double(yy * ct + xy * st);
+    double Nyz = double(yz * ct + xz * st);
+    double Nyw = double(yw * ct + xw * st);
+    double Nyo = double(yo * ct + xo * st);
 
-    double Nxx = (double) (xx * ct - yx * st);
-    double Nxy = (double) (xy * ct - yy * st);
-    double Nxz = (double) (xz * ct - yz * st);
-    double Nxw = (double) (xw * ct - yw * st);
-    double Nxo = (double) (xo * ct - yo * st);
+    double Nxx = double(xx * ct - yx * st);
+    double Nxy = double(xy * ct - yy * st);
+    double Nxz = double(xz * ct - yz * st);
+    double Nxw = double(xw * ct - yw * st);
+    double Nxo = double(xo * ct - yo * st);
 
     yo = Nyo;
     yx = Nyx;
@@ -194,17 +194,17 @@ void Matrix4D::xwrot(double theta)
     double ct = cos(theta);
     double st = sin(theta);
 
-    double Nwx = (double) (wx * ct + xx * st);
-    double Nwy = (double) (wy * ct + xy * st);
-    double Nwz = (double) (wz * ct + xz * st);
-    double Nww = (double) (ww * ct + xw * st);
-    double Nwo = (double) (wo * ct + xo * st);
+    double Nwx = double(wx * ct + xx * st);
+    double Nwy = double(wy * ct + xy * st);
+    double Nwz = double(wz * ct + xz * st);
+    double Nww = double(ww * ct + xw * st);
+    double Nwo = double(wo * ct + xo * st);
 
-    double Nxx = (double) (xx * ct - wx * st);
-    double Nxy = (double) (xy * ct - wy * st);
-    double Nxz = (double) (xz * ct - wz * st);
-    double Nxw = (double) (xw * ct - ww * st);
-    double Nxo = (double) (xo * ct - wo * st);
+    double Nxx = double(xx * ct - wx * st);
+    double Nxy = double(xy * ct - wy * st);
+    double Nxz = double(xz * ct - wz * st);
+    double Nxw = double(xw * ct - ww * st);
+    double Nxo = double(xo * ct - wo * st);
 
     wo = Nwo;
     wx = Nwx;
@@ -227,17 +227,17 @@ void Matrix4D::ywrot(double theta)
     double ct = cos(theta);
     double st = sin(theta);
 
-    double Nwx = (double) (wx * ct + yx * st);
-    double Nwy = (double) (wy * ct + yy * st);
-    double Nwz = (double) (wz * ct + yz * st);
-    double Nww = (double) (ww * ct + yw * st);
-    double Nwo = (double) (wo * ct + yo * st);
+    double Nwx = double(wx * ct + yx * st);
+    double Nwy = double(wy * ct + yy * st);
+    double Nwz = double(wz * ct + yz * st);
+    double Nww = double(ww * ct + yw * st);
+    double Nwo = double(wo * ct + yo * st);
 
-    double Nyx = (double) (yx * ct - wx * st);
-    double Nyy = (double) (yy * ct - wy * st);
-    double Nyz = (double) (yz * ct - wz * st);
-    double Nyw = (double) (yw * ct - ww * st);
-    double Nyo = (double) (yo * ct - wo * st);
+    double Nyx = double(yx * ct - wx * st);
+    double Nyy = double(yy * ct - wy * st);
+    double Nyz = double(yz * ct - wz * st);
+    double Nyw = double(yw * ct - ww * st);
+    double Nyo = double(yo * ct - wo * st);
 
     wo = Nwo;
     wx = Nwx;
@@ -261,17 +261,17 @@ void Matrix4D::zwrot(double theta)
     double ct = cos(theta);
     double st = sin(theta);
 
-    double Nwx = (double) (wx * ct + zx * st);
-    double Nwy = (double) (wy * ct + zy * st);
-    double Nwz = (double) (wz * ct + zz * st);
-    double Nww = (double) (ww * ct + zw * st);
-    double Nwo = (double) (wo * ct + zo * st);
+    double Nwx = double(wx * ct + zx * st);
+    double Nwy = double(wy * ct + zy * st);
+    double Nwz = double(wz * ct + zz * st);
+    double Nww = double(ww * ct + zw * st);
+    double Nwo = double(wo * ct + zo * st);
 
-    double Nzx = (double) (zx * ct - wx * st);
-    double Nzy = (double) (zy * ct - wy * st);
-    double Nzz = (double) (zz * ct - wz * st);
-    double Nzw = (double) (zw * ct - ww * st);
-    double Nzo = (double) (zo * ct - wo * st);
+    double Nzx = double(zx * ct - wx * st);
+    double Nzy = double(zy * ct - wy * st);
+    double Nzz = double(zz * ct - wz * st);
+    double Nzw = double(zw * ct - ww * st);
+    double Nzo = double(zo * ct - wo * st);
 
     wo = Nwo;
     wx = Nwx;
