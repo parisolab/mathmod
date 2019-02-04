@@ -2372,9 +2372,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            NormVertexTab[i*TypeDrawin  ] = float(0.5);
-            NormVertexTab[i*TypeDrawin+1] = float(0.6);
-            NormVertexTab[i*TypeDrawin+2] = float(0.8);
+            NormVertexTab[i*TypeDrawin  ] = 0.5f;
+            NormVertexTab[i*TypeDrawin+1] = 0.6f;
+            NormVertexTab[i*TypeDrawin+2] = 0.8f;
             NormVertexTab[i*TypeDrawin+3] = 1.0;
         }
     }
@@ -2383,7 +2383,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 ///+++++++++++++++++++++++++++++++++++++++++
 Iso3D::~Iso3D()
 {
-
 }
 
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
@@ -2453,7 +2452,6 @@ uint Iso3D::SetMiniMmeshStruct()
                     else
                         return 0;
                 }
-
             } /// End of for(k=0;
         } /// End of for(j=0;
     } /// End of for(i=0;
