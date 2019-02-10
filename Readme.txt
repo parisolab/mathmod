@@ -1,4 +1,4 @@
-﻿Copyright © 2018 Abderrahman Taha (taha_ab@yahoo.fr)
+﻿Copyright © 2019 Abderrahman Taha (taha_ab@yahoo.fr)
 
 
 Download: https://sourceforge.net/projects/mathmod/   
