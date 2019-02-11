@@ -266,19 +266,19 @@ int MathMod::ParsePar()
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ParametricSurfaceProcess(int type)
 {
-    if(type == 3)
-    {
-        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->param4D =  1;
-        (ui.glWidget)->ParObjetThread->ParObjet->param4D =  1;
-    }
-    else
-    {
-        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->param4D = -1;
-        (ui.glWidget)->ParObjetThread->ParObjet->param4D = -1;
-    }
-
     if(!(ui.glWidget)->ParObjetThread->ParObjet->isRunning())
     {
+        if(type == 3)
+        {
+            (ui.glWidget)->ParObjetThread->ParObjet->masterthread->param4D =  1;
+            (ui.glWidget)->ParObjetThread->ParObjet->param4D =  1;
+        }
+        else
+        {
+            (ui.glWidget)->ParObjetThread->ParObjet->masterthread->param4D = -1;
+            (ui.glWidget)->ParObjetThread->ParObjet->param4D = -1;
+        }
+
         int result = ParsePar();
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = -1;

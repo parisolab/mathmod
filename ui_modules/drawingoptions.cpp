@@ -1277,11 +1277,15 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 // --------------------------
 void DrawingOptions::DrawJsonModel(const QJsonObject & Jobj, int textureIndex, bool Inspect)
 {
-    if(Inspect & !VerifiedJsonModel(Jobj, Inspect))
-        return;
-    ShowJsonModel(Jobj, textureIndex);
-    ui.ObjectClasseCurrent->takeTopLevelItem(0);
-    UpdateCurrentTreeObject();
+    if(!(MathmodRef->ui.glWidget)->ParObjetThread->ParObjet->isRunning() &&
+            !(MathmodRef->ui.glWidget)->IsoObjetThread->IsoObjet->isRunning())
+    {
+        if(Inspect & !VerifiedJsonModel(Jobj, Inspect))
+            return;
+        ShowJsonModel(Jobj, textureIndex);
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        UpdateCurrentTreeObject();
+    }
 }
 
 // --------------------------
@@ -4188,7 +4192,8 @@ void DrawingOptions::on_actionSmooth_triggered()
 // --------------------------
 void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
 {
-    if(!MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->isRunning())
+    if(!MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->isRunning() &&
+         !MathmodRef->ui.glWidget->ParObjetThread->ParObjet->isRunning())
     {
         //int result;
         QString tst;
