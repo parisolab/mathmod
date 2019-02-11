@@ -2033,8 +2033,8 @@ void  Par3D::make_PolyIndexMin(uint NewPo, uint index, uint IsoPos)
     uint k=0;
     uint NewPosition = 5*NewPo;
     uint nbVertex       = index;
-    for (uint i=0; i< Ugrid - CutU -1; i++)
-        for (uint j=0; j< Vgrid - CutV -1; j++)
+    for (uint i=0; i+CutU+1 < Ugrid ; i++)
+        for (uint j=0; j+CutV+1< Vgrid ; j++)
         {
             IndexPolyTabMin[k  +NewPosition] = 4;
             IndexPolyTabMin[k+1+NewPosition] = i*Vgrid + j+nbVertex + IsoPos;
@@ -2051,8 +2051,8 @@ void  Par3D::make_PolyIndexTri(uint NewPo, uint index, uint IsoPos)
     uint k=0;
     uint NewPosition = 6*NewPo;
     uint nbVertex    = index;
-    for (uint i=0; i< Ugrid - CutU -1; i++)
-        for (uint j=0; j< Vgrid - CutV -1; j++)
+    for (uint i=0; i+CutU+1< Ugrid; i++)
+        for (uint j=0; j+CutV+1< Vgrid; j++)
         {
             IndexPolyTab[k  +NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
             IndexPolyTab[k+1+NewPosition] = (i+1)*Vgrid + j +nbVertex + IsoPos;
@@ -2072,8 +2072,8 @@ void  Par3D::calcul_Norm(uint NewPosition)
     uint  i, j, deplacement = TypeDrawin*Vgrid;
     float caa, bab, cab, baa, ba, ca, b4;
 
-    for (i=0; i < Ugrid-1  ; i++)
-        for (j=0; j < Vgrid-1  ; j++)
+    for (i=0; i+1 < Ugrid  ; i++)
+        for (j=0; j+1 < Vgrid  ; j++)
         {
             caa = NormVertexTab[(i+1)*deplacement+j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+4+NewPosition+ TypeDrawinNormStep];
             bab = NormVertexTab[i*deplacement+(j+1)*TypeDrawin+5+NewPosition+ TypeDrawinNormStep] - NormVertexTab[i*deplacement +j*TypeDrawin+5+NewPosition+ TypeDrawinNormStep];
@@ -2098,25 +2098,33 @@ void  Par3D::calcul_Norm(uint NewPosition)
             NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]/=b4;
         }
 
+    if(Ugrid>1)
+    {
     i = Ugrid -1;
-    for (j=0; j < Vgrid -1   ; j++)
+    for (j=0; j+1 < Vgrid   ; j++)
     {
         NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep] = NormVertexTab[(i-1)*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
     }
+    }
 
+    if(Vgrid>1)
+    {
     j =Vgrid -1;
-    for (i=0; i < Ugrid -1  ; i++)
+    for (i=0; i+1< Ugrid  ; i++)
     {
         NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin  +NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
         NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep] = NormVertexTab[i*deplacement +(j-1)*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
     }
-
+    }
+    if(Ugrid>1 && Vgrid>1)
+    {
     i = Ugrid -1;
     j =Vgrid -1;
     NormVertexTab[i*deplacement +j*TypeDrawin  +NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin  +NewPosition+ TypeDrawinNormStep];
     NormVertexTab[i*deplacement +j*TypeDrawin+1+NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin+1+NewPosition+ TypeDrawinNormStep];
     NormVertexTab[i*deplacement +j*TypeDrawin+2+NewPosition+ TypeDrawinNormStep]  = NormVertexTab[(i-1)*deplacement +(j-1)*TypeDrawin+2+NewPosition+ TypeDrawinNormStep];
-}
+    }
+    }
