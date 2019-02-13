@@ -205,7 +205,7 @@ void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
     masterthread->param4D   = param4D;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].Ugrid  = Ugrid;
         workerthreads[nbthreads].Vgrid = Vgrid;
@@ -221,7 +221,7 @@ void Par3D::initialiser_LineColumn(uint li, uint cl)
     Vgrid = cl;
     masterthread->Ugrid  = Ugrid;
     masterthread->Vgrid = Vgrid;
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].Ugrid  = Ugrid;
         workerthreads[nbthreads].Vgrid = Vgrid;
@@ -839,7 +839,7 @@ ErrorMessage  Par3D::parse_expression2()
 {
     ErrorMessage NodError;
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         //Functions:
         for(uint ij=0; ij<masterthread->Nb_functs; ij++)
@@ -876,7 +876,7 @@ ErrorMessage  Par3D::parse_expression2()
         }
     }
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         //Add defined constantes:
         for(uint i=0; i<masterthread->Nb_paramfunctions+1; i++)
@@ -933,7 +933,7 @@ ErrorMessage  Par3D::parse_expression2()
 
         }
     }
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint index=0; index< masterthread->Nb_paramfunctions + 1; index++)
         {
@@ -969,7 +969,7 @@ ErrorMessage  Par3D::parse_expression2()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         WorkerThreadsTmp[nbthreads].Ugrid = masterthread->Ugrid;
         WorkerThreadsTmp[nbthreads].Vgrid = masterthread->Vgrid;
@@ -981,7 +981,7 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 //+++++++++++++++++++++++++++++++++++++++++
 ErrorMessage Par3D::ThreadParsersCopy()
 {
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint i=0; i< masterthread->Nb_paramfunctions+1; i++)
         {
@@ -993,10 +993,10 @@ ErrorMessage Par3D::ThreadParsersCopy()
         }
     }
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].DeleteWorkerParsers();
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1, masterthread->Nb_functs);
 
     return(parse_expression2());
@@ -1635,7 +1635,7 @@ void Par3D::UpdateThredsNumber(uint NewThreadsNumber)
     ParWorkerThread *workerthreadstmp = new ParWorkerThread[WorkerThreadsNumber-1];
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
-    for(uint i=0; i<tmp-1; i++)
+    for(uint i=0; i+1<tmp; i++)
         workerthreads[i].DeleteWorkerParsers();
     delete[] workerthreads;
     //Assigne newly allocated memory
@@ -1648,7 +1648,7 @@ void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
     masterthread->StopCalculations = StopCalculations;;
-    for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
@@ -1923,21 +1923,21 @@ void  Par3D::ParamBuild(
             return;
         }
 
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         {
             workerthreads[nbthreads].CurrentPar = fctnb;
             workerthreads[nbthreads].CurrentIndex = NextIndex;
         }
 
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
 
         masterthread->start();
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].start();
 
         masterthread->wait();
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].wait();
 
         if(StopCalculations)
