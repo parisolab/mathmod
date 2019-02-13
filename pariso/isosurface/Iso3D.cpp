@@ -266,7 +266,7 @@ void IsoWorkerThread::IsoWorkerTable()
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         WorkerThreadsTmp[nbthreads].Xgrid = masterthread->Xgrid;
         WorkerThreadsTmp[nbthreads].Ygrid = masterthread->Ygrid;
@@ -283,11 +283,11 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     uint OldWorkerThreadsNumber = WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
-    for(uint i=0; i<WorkerThreadsNumber-1; i++)
+    for(uint i=0; i+1<WorkerThreadsNumber; i++)
         workerthreadstmp[i].IsoWorkerTable();
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
-    for(uint i=0; i<OldWorkerThreadsNumber-1; i++)
+    for(uint i=0; i+1<OldWorkerThreadsNumber; i++)
         workerthreads[i].DeleteWorkerParsers();
 
     if(OldWorkerThreadsNumber >1)
@@ -310,7 +310,7 @@ ErrorMessage  Iso3D::IsoMorph()
 //+++++++++++++++++++++++++++++++++++++++
 ErrorMessage Iso3D::ThreadParsersCopy()
 {
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
 
         memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
@@ -325,10 +325,10 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].Zgrid = masterthread->Zgrid;
     }
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].DeleteWorkerParsers();
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->FunctSize);
 
     return(parse_expression2());
@@ -338,7 +338,7 @@ ErrorMessage  Iso3D::parse_expression2()
 {
     ErrorMessage NodError;
     // Functions :
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint ij=0; ij<masterthread->Nb_functs; ij++)
         {
@@ -382,7 +382,7 @@ ErrorMessage  Iso3D::parse_expression2()
     }
 
     //Add defined constantes:
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint i=0; i<masterthread->Nb_implicitfunctions+1; i++)
         {
@@ -401,7 +401,7 @@ ErrorMessage  Iso3D::parse_expression2()
         }
     }
     // Add defined functions :
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint i=0; i<masterthread->Nb_implicitfunctions+1; i++)
         {
@@ -425,7 +425,7 @@ ErrorMessage  Iso3D::parse_expression2()
     }
 
     // Final step: parsing
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint index=0; index< masterthread->Nb_implicitfunctions + 1; index++)
         {
@@ -476,7 +476,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     masterthread  = new IsoMasterThread();
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
-    for(uint i=0; i<WorkerThreadsNumber-1; i++)
+    for(uint i=0; i+1<WorkerThreadsNumber; i++)
         workerthreads[i].IsoWorkerTable();
 
     masterthread->Xgrid = Xgrid;
@@ -486,7 +486,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     masterthread->MyIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].Xgrid = Xgrid;
         workerthreads[nbthreads].Ygrid = Ygrid;
@@ -856,12 +856,8 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
     for (uint k= 1; k < limitZ; k++)
         masterthread->zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k-1] - masterthread->z_Step[IsoIndex];
 
-    for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        //workerthreads[nbthreads].x_Step[IsoIndex] = masterthread->x_Step[IsoIndex];
-        //workerthreads[nbthreads].y_Step[IsoIndex] = masterthread->y_Step[IsoIndex];
-        //workerthreads[nbthreads].z_Step[IsoIndex] = masterthread->z_Step[IsoIndex];
-
         for (uint k= 0; k < limitX; k++)
         {
             workerthreads[nbthreads].xLocal2[IsoIndex*NbMaxGrid+k] = masterthread->xLocal2[IsoIndex*NbMaxGrid+k];
@@ -888,7 +884,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
                 vals2[0] = masterthread->xLocal2[IsoIndex*NbMaxGrid+i];
                 vals2[1] = masterthread->stepMorph;
                 masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
                     workerthreads[nbthreads].vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
             }
 
@@ -898,7 +894,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
                 vals2[0] = masterthread->yLocal2[IsoIndex*NbMaxGrid+i];
                 vals2[1] = masterthread->stepMorph;
                 masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
                     workerthreads[nbthreads].vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
             }
 
@@ -908,7 +904,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
                 vals2[0] = masterthread->zLocal2[IsoIndex*NbMaxGrid+i];
                 vals2[1] = masterthread->stepMorph;
                 masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                for(uint nbthreads=0; nbthreads<WorkerThreadsNumber-1; nbthreads++)
+                for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
                     workerthreads[nbthreads].vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
             }
     }
@@ -1726,7 +1722,7 @@ void Iso3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
     masterthread->StopCalculations = calculation;
-    for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
@@ -1807,10 +1803,10 @@ void Iso3D::IsoBuild (
 
         IsoComponentId = fctnb;
         masterthread->CurrentIso = fctnb;
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].CurrentIso = fctnb;
 
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
 
         if(masterthread->morph_activated == 1)
@@ -1820,7 +1816,7 @@ void Iso3D::IsoBuild (
                 //This code is to ensure that stepmorph values are the same accross all threads because tests show that
                 //it's not allways the case when this code is spread inside threads Run() functions!
                 masterthread->stepMorph += masterthread->pace;
-                for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+                for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
                     workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
             }
             // Recalculate some tables values:
@@ -1828,15 +1824,15 @@ void Iso3D::IsoBuild (
         }
 
         masterthread->start();
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].start();
 
         masterthread->wait();
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].wait();
 
         bool Stop = masterthread->StopCalculations;
-        for(uint nbthreads=0; nbthreads< WorkerThreadsNumber-1; nbthreads++)
+        for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             Stop = Stop || workerthreads[nbthreads].StopCalculations;
 
         if(StopCalculations || Stop)
@@ -1982,7 +1978,7 @@ void Iso3D::IsoBuild (
 ///+++++++++++++++++++++++++++++++++++++++++
 uint Iso3D::CNDtoUse(uint index, struct ComponentInfos *components)
 {
-    for(uint fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
+    for(uint fctnb= 0; fctnb < (masterthread->Nb_implicitfunctions+1); fctnb++)
         if( index <= components->IsoPts[2*fctnb +1] && index >= components->IsoPts[2*fctnb])
             return fctnb;
     return 30;
@@ -2255,7 +2251,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
                     (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                     TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
-                    //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
                     NbTriangleIsoSurfaceTmp++;
 
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
@@ -2271,7 +2266,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTab[IndexNbTriangle+2] = Cindex;
                     (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                     TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                    //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
                     NbTriangleIsoSurfaceTmp++;
 
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
@@ -2287,7 +2281,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
                     (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                     TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
-                    //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
                     NbTriangleIsoSurfaceTmp++;
 
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
@@ -2394,13 +2387,13 @@ uint Iso3D::SetMiniMmeshStruct()
     lnew = 0;
     NbPolyMin = 0;
     /// Copy Index Polygons :
-    for(i=0; i < Xgrid-1; i++)
+    for(i=0; i+1 < Xgrid; i++)
     {
         I  = i*maxgrscalemaxgr;
-        for(j=0; j < Ygrid-1; j++)
+        for(j=0; j+1 < Ygrid; j++)
         {
             J  = I+j*NbMaxGrid;
-            for(k=0; k < Zgrid-1; k++)
+            for(k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
                 Index = GridVoxelVarPt[IJK].Signature;
@@ -2470,13 +2463,13 @@ uint Iso3D::ConstructIsoSurface()
 
     NbTriangleIsoSurface = 0;
     limitX = Xgrid;
-    for(uint i=0; i < limitX-1; i++)
+    for(uint i=0; i+1 < limitX; i++)
     {
         I   = i*maxgrscalemaxgr;
-        for(uint j=0; j < Ygrid-1; j++)
+        for(uint j=0; j+1 < Ygrid; j++)
         {
             J   = I+j*NbMaxGrid;
-            for(uint k=0; k < Zgrid-1; k++)
+            for(uint k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
                 Index = GridVoxelVarPt[IJK].Signature;
