@@ -1292,6 +1292,14 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
         }
     }
 }
+///+++++++++++++++++++++++++++++++++++++++++
+uint Par3D::CNDtoUse(uint index, struct ComponentInfos *components)
+{
+    for(uint fctnb= 0; fctnb < (masterthread->Nb_paramfunctions+1); fctnb++)
+        if( index <= components->Parametricpositions[2*fctnb +1] && index >= components->Parametricpositions[2*fctnb])
+            return fctnb;
+    return 30;
+}
 
 ///+++++++++++++++++++++++++++++++++++++++++
 uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
@@ -1371,6 +1379,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
             int Alfa;
+            //uint cnd = CNDtoUse(Aindex, components);
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
