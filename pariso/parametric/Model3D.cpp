@@ -1314,7 +1314,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
             vals[0] = double(NormVertexTab[i*TypeDrawin+3+ TypeDrawinNormStep]);
             vals[1] = double(NormVertexTab[i*TypeDrawin+4+ TypeDrawinNormStep]);
             vals[2] = double(NormVertexTab[i*TypeDrawin+5+ TypeDrawinNormStep]);
-            WichPointVerifyCond[i] = (masterthread->myParserCND[0].Eval(vals) == 1.0);
+            WichPointVerifyCond[i] = (masterthread->myParserCND[CNDtoUse(i, components)].Eval(vals) == 1.0);
             if(WichPointVerifyCond[i])
             {
                 NormVertexTab[i*TypeDrawin    ] = 1/10;
@@ -1379,7 +1379,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
             int Alfa;
-            //uint cnd = CNDtoUse(Aindex, components);
+            uint cnd = CNDtoUse(Aindex, components);
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
