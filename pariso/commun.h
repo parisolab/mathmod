@@ -132,6 +132,7 @@ struct  ComponentInfos
     uint *IsoPositions;
     uint *IsoPts;
     uint *Parametricpositions;
+    uint *ParPts;
     int selectedComponent;
     bool ThereisCND;
     bool ThereisRGBA;

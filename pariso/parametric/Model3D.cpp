@@ -1296,7 +1296,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 uint Par3D::CNDtoUse(uint index, struct ComponentInfos *components)
 {
     for(uint fctnb= 0; fctnb < (masterthread->Nb_paramfunctions+1); fctnb++)
-        if( index <= components->Parametricpositions[2*fctnb +1] && index >= components->Parametricpositions[2*fctnb])
+        if( index <= components->ParPts[2*fctnb +1] && index >= components->ParPts[2*fctnb])
             return fctnb;
     return 30;
 }
@@ -1394,7 +1394,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->myParserCND[0].Eval(Bprime) == 1.0 && (Alfa < 20))
+                    while(masterthread->myParserCND[cnd].Eval(Bprime) == 1.0 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1404,7 +1404,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
                 }
                 else
                 {
-                    while(!(masterthread->myParserCND[0].Eval(Bprime) == 1.0) && (Alfa < 20))
+                    while(!(masterthread->myParserCND[cnd].Eval(Bprime) == 1.0) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1425,7 +1425,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->myParserCND[0].Eval(Cprime) == 1.0 && (Alfa < 20))
+                    while(masterthread->myParserCND[cnd].Eval(Cprime) == 1.0 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1435,7 +1435,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
                 }
                 else
                 {
-                    while(!(masterthread->myParserCND[0].Eval(Cprime) == 1.0) && (Alfa < 20))
+                    while(!(masterthread->myParserCND[cnd].Eval(Cprime) == 1.0) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1912,6 +1912,11 @@ void  Par3D::ParamBuild(
         masterthread->CurrentPar   = fctnb;
         masterthread->CurrentIndex = NextIndex;
         // Save Number of Polys and vertex :
+        if(components != nullptr)
+        {
+            components->ParPts[2*fctnb    ] = NbVertexTmp;
+            components->ParPts[2*fctnb  +1] = NbVertexTmp + (Ugrid)*(Vgrid)  -1;
+        }
         NbVertexTmp                 += (Ugrid)*(Vgrid);
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         NbPolyMinimalTopology       += (Ugrid  - CutU -1)*(Vgrid - CutV -1);
@@ -1974,6 +1979,7 @@ void  Par3D::ParamBuild(
             components->Parametricpositions[3*fctnb+1] = 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1); //save the number of Polygones of this component
             components->Parametricpositions[3*fctnb+2] = NextIndex;
         }
+
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NextIndex    += (Ugrid)*(Vgrid);
     }

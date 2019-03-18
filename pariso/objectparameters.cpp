@@ -248,6 +248,7 @@ void ObjectParameters::InitComponentinfos(struct  ComponentInfos & compinfos)
     compinfos.IsoPositions        = new uint[2*NbComponent+1];
     compinfos.IsoPts              = new uint[2*NbComponent+1];
     compinfos.Parametricpositions = new uint[3*NbComponent+1];
+    compinfos.ParPts              = new uint[2*NbComponent+1];
 
     compinfos.NoiseParam.Octaves     = 4;
     compinfos.NoiseParam.Lacunarity  = 0.5;
