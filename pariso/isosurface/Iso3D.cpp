@@ -1745,11 +1745,6 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->NoiseParam.RgbtParser     = origin->NoiseParam.RgbtParser;
 
     copy->ThereisRGBA             = origin->ThereisRGBA;
-    copy->DFTrianglesNotVerifyCND = origin->DFTrianglesNotVerifyCND;
-    copy->DFTrianglesVerifyCND    = origin->DFTrianglesVerifyCND;
-    copy->DMTrianglesBorderCND    = origin->DMTrianglesBorderCND ;
-    copy->DMTrianglesNotVerifyCND = origin->DMTrianglesNotVerifyCND;
-    copy->DMTrianglesVerifyCND    = origin->DMTrianglesVerifyCND;
     copy->NbIso                   = origin->NbIso;
     copy->NbParametric            = origin->NbParametric;
     copy->selectedComponent       = origin->selectedComponent;
