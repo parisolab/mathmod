@@ -9346,59 +9346,34 @@
         ]
       }
     },
-    {
-      "Iso3D": {
-        "Description": [
-          "Arena_2 by Abderrahman Taha 23/11/2015"
-        ],
-        "Name": [
-          "Arena"
-        ],
-        "Component": [
-          "Arena"
-        ],
-        "Const": [
-          "cx=0DOTSYMBOL00001",
-          "cy=0DOTSYMBOL00001",
-          "cz=0DOTSYMBOL00001",
-          "N=20"
-        ],
-        "Funct": [
-          "Scherk=sinh(x)*sinh(y)-4*sin(z)",
-          "Scherk2=Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)",
-          "Thickness2=(0DOTSYMBOL6)",
-          "IsoExterior=Scherk2(x,y,z,t)",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso3=(IsoExterior(x-DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y-DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z-DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "Iso2=(IsoExterior(x+DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
-        ],
-        "Fxyz": [
-          "if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(10) ,ThickIsoExterior(x,y,z,t), 1)"
-        ],
-        "Xmax": [
-          "10DOTSYMBOL1"
-        ],
-        "Xmin": [
-          "-10DOTSYMBOL1"
-        ],
-        "Ymax": [
-          "28"
-        ],
-        "Ymin": [
-          "-28"
-        ],
-        "Zmax": [
-          "28"
-        ],
-        "Zmin": [
-          "-28"
-        ]
-      }
-    },
+        {
+            "Iso3D": {
+                "Description": ["Arena by Abderrahman Taha 30/03/2019"
+                ],
+                "Component": ["Arena"
+                ],
+                "Const": ["c=1/10000","th=6/10","N=10"
+                ],
+                "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)","DFx=((IsoExterior(x,y,z,t)-IsoExterior(x+c,y,z,t))/c)","DFy=((IsoExterior(x,y,z,t)-IsoExterior(x,y+c,z,t))/c)","DFz=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+c,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))"
+                ],
+                "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10) ,ThickIsoExterior(x,y,z,t), 1)"
+                ],
+                "Name": ["Arena"
+                ],
+                "Xmax": ["10"
+                ],
+                "Xmin": ["-10"
+                ],
+                "Ymax": ["28"
+                ],
+                "Ymin": ["-28"
+                ],
+                "Zmax": ["28"
+                ],
+                "Zmin": ["-28"
+                ]
+            }
+        },
     {
       "Iso3D": {
         "Description": [
