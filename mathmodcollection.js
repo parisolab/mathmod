@@ -19897,6 +19897,8 @@
         "Param3D": {
         "Description ": ["Wireframe Knot by Abderrahman Taha 06/04/2019"
         ],
+        "Name": ["Knot_wireframe"
+        ],
         "Funct": ["Rapp=u/sqrt(u*u+v*v+t*t)","Bx = 1/sqrt(u*u+v*v+t*t)",
 
         "Fx = (cos(q*v)*(R+(r/10)*cos(p*v))) + (r0/100)*Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v)))*cos(u) + (r0/100)*((R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))) * Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v)))) - (p*r/10)*cos(p*v) * Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)",
@@ -19915,8 +19917,6 @@
         "Fz": ["Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Sz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","TFz(u,v,t)"
         ],
         "Grid": ["75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","75","30","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","30","500","300","300"
-        ],
-        "Name": ["Knot_wireframe"
         ],
         "Umax": ["umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax"
         ],
@@ -19945,6 +19945,48 @@
         "Name": "Gold",
         "Noise": ""
         }
+        },
+        {
+            "Param3D": {
+                "Description": ["Torus knot(p,q) by Abderrahman Taha 10/04/2019"
+                ],
+                "Name": ["Knot_pq"
+                ],
+                "Component": ["knot"
+                ],
+                "Const": ["p=7","q=2","R=3","r=1","r0=20","r00=30","dv=1/1000"
+                ],
+                "Funct": ["Rapp = (u/sqrt(u*u+v*v+t*t))","Bx = 1/sqrt(u*u+v*v+t*t)","Fx = (cos(q*v)*(R+(r/10)*cos(p*v))) + (r0/100)*Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v)))*cos(u) + (r0/100)*((R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))) * Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v)))) - (p*r/10)*cos(p*v) * Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","Fy = (sin(q*v)*(R+(r/10)*cos(p*v))) + (r0/100)*Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v)))*cos(u) + (r0/100)*((p*r/10)*cos(p*v) * Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))) - (-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))) * Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v)))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","Fz = (r/10)*(sin(p*v)) + (r0/100)*Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))))*cos(u) + (r0/100)*((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))) * Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))) - (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))) * Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)"
+                ],
+                "Fx": ["-Fx(u,v,t)"
+                ],
+                "Fy": ["Fy(u,v,t)"
+                ],
+                "Fz": ["-Fz(u,v,t)"
+                ],
+                "Grid": ["50","200"
+                ],
+                "Umax": ["pi"
+                ],
+                "Umin": ["-pi"
+                ],
+                "Vmax": ["2*pi"
+                ],
+                "Vmin": ["0"
+                ]
+            },
+            "Sliders": {
+                "Max": ["20","20","10","50","100","20","20","10","50","100","20","20","10","50","100","20","20","10","50","100","20","20","10","50","100"
+                ],
+                "Min": ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"
+                ],
+                "Name": ["p","q","R","r","r0"
+                ],
+                "Position": ["5","2","2","5","22","3","2","1","5","18","4","3","4","22","55","8","1","5","23","60","1","5","4","28","45"
+                ],
+                "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"
+                ]
+            }
         },
         {
             "Param3D": {
