@@ -7795,7 +7795,7 @@
     {
       "Iso3D": {
         "Name": [
-          "HexaGrid Torus_2"
+          "HexaGrid_Torus_02"
         ],
         "Component": [
           "HexaGrid Torus"
@@ -7804,7 +7804,7 @@
           "N=3"
         ],
         "Description ": [
-          " HexaGrid Torus_2 by Aberrahman Taha 11/12/2015. Reference: PG_HexaGridCylinder 12/2012 Gerd Platl"
+          " HexaGrid Torus by Aberrahman Taha 11/12/2015. Origin: Gerd Platl"
         ],
         "Funct": [
           "HexaGrid=-0DOTSYMBOL55-88*(sqrt(x*x+y*y)-2)^2 -cos( 8*z) -cos(14*atan2(y,x) -4*z) -cos(14*atan2(y,x) +4*z) -0DOTSYMBOL6*( cos( 28*atan2(y,x)) +cos(12*z -14*atan2(y,x)) +cos(12*z +14*atan2(y,x)))"
@@ -7813,32 +7813,32 @@
           "HexaGrid((sqrt(x*x+z*z)-4),y,N*atan2(z,x),t)"
         ],
         "Xmax": [
-          " 6DOTSYMBOL2"
+          " 62/10"
         ],
         "Xmin": [
-          "-6DOTSYMBOL2 "
+          "-62/10 "
         ],
         "Ymax": [
-          "4DOTSYMBOL5"
+          "45/10"
         ],
         "Ymin": [
-          "-4DOTSYMBOL5"
+          "-45/10"
         ],
         "Zmax": [
-          " 6DOTSYMBOL2"
+          " 62/10"
         ],
         "Zmin": [
-          "-6DOTSYMBOL2"
+          "-62/10"
         ]
       }
     },
     {
       "Iso3D": {
         "Description ": [
-          " HexaGrid Torus by Aberrahman Taha 11/12/2015. Reference: PG_HexaGridCylinder3 12/2012 Gerd Platl, http://k3dsurf.s4.bizhat.com/viewtopic.php… "
+          " HexaGrid Torus by Aberrahman Taha 11/12/2015. Origin: Gerd Platl "
         ],
         "Name": [
-          "HexaGrid Torus"
+          "HexaGrid_Torus_01"
         ],
         "Component": [
           "HexaGrid Torus"
@@ -7850,22 +7850,22 @@
           "HexaGrid((sqrt(x*x+z*z)-4),y,3*atan2(z,x),t)"
         ],
         "Xmax": [
-          " 6DOTSYMBOL2"
+          " 62/10"
         ],
         "Xmin": [
-          "-6DOTSYMBOL2 "
+          "-62/10 "
         ],
         "Ymax": [
-          " 4DOTSYMBOL5"
+          " 45/10"
         ],
         "Ymin": [
-          "-4DOTSYMBOL5 "
+          "-45/10"
         ],
         "Zmax": [
-          " 6DOTSYMBOL2"
+          " 62/10"
         ],
         "Zmin": [
-          "-6DOTSYMBOL2 "
+          "-62/10"
         ]
       }
     },
