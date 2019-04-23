@@ -12308,59 +12308,23 @@
     {
       "Iso3D": {
         "Description": [
-          "Holed Spheres (implicit version) by Abderrahman Taha 09/10/2015. In this example:Thickness= 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2)"
+          "Holed Spheres (implicit version) by Abderrahman Taha 22/04/2019"
         ],
         "Name": [
-          "Holed Spheres v2 (implicit version)"
+          "Holed_Sphere"
         ],
         "Component": [
           "HoledSphere"
         ],
-        "Fxyz": [
-          "min((x*x+y*y+z*z-1),(x*x*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2+y*y*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2+z*z*(1-( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))/sqrt(x*x+y*y+z*z))^2-1))*(x*x+y*y+z*z-1)"
-        ],
-        "Xmax": [
-          "1DOTSYMBOL2"
-        ],
-        "Xmin": [
-          "-1DOTSYMBOL2"
-        ],
-        "Ymax": [
-          "1DOTSYMBOL2"
-        ],
-        "Ymin": [
-          "-1DOTSYMBOL2"
-        ],
-        "Zmax": [
-          "1DOTSYMBOL2"
-        ],
-        "Zmin": [
-          "-1DOTSYMBOL2"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "Holed Spheres (implicit version) by Abderrahman Taha 08/10/2015"
-        ],
-        "Name": [
-          "Holed Spheres (implicit version)"
-        ],
-        "Component": [
-          "HoledSphere_2"
-        ],
         "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001"
+          "c=1/100000"
         ],
         "Funct": [
           "Iso=x*x+y*y+z*z-1",
           "Thickness=( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))",
-          "DFx=((Iso(x,y,z,t)-Iso(x+cx,y,z,t))/cx)",
-          "DFy=((Iso(x,y,z,t)-Iso(x,y+cy,z,t))/cy)",
-          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+cz,t))/cz)",
+          "DFx=((Iso(x,y,z,t)-Iso(x+c,y,z,t))/c)",
+          "DFy=((Iso(x,y,z,t)-Iso(x,y+c,z,t))/c)",
+          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+c,t))/c)",
           "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
           "Iso2=(Iso(x+t*DFx(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),t))",
           "ThickIso=max(Iso2(x,y,z,1), Iso2(x,y,z,-1))"
