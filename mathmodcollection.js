@@ -2641,40 +2641,45 @@
         ]
       }
     },
-    {
-      "Iso3D": {
-        "Description": [
-          "(x^N + y ^N + z^N) - (cos(m*7*x) + cos(n*7*y) + cos(k*7*z)) + lN : Even integer > 4 --> Sharpness of edgesDOTSYMBOLn, m, k : integers --> number of holesDOTSYMBOLl : Real number (-3,1) --> Thickness"
-        ],
-        "Name": [
-          "ChmutySchwarz"
-        ],
-        "Component": [
-          "ChmutySchwarz"
-        ],
-        "Fxyz": [
-          "(x^16 + y ^16 + z^16 ) -(cos(7*x) +cos(7*y) +cos(7*z)) -0DOTSYMBOL1"
-        ],
-        "Xmin": [
-          "-1DOTSYMBOL1"
-        ],
-        "Xmax": [
-          " 1DOTSYMBOL1"
-        ],
-        "Ymin": [
-          "-1DOTSYMBOL1"
-        ],
-        "Ymax": [
-          " 1DOTSYMBOL1"
-        ],
-        "Zmin": [
-          "-1DOTSYMBOL1"
-        ],
-        "Zmax": [
-          " 1DOTSYMBOL1"
-        ]
-      }
-    },
+        {
+            "Iso3D": {
+                "Description": ["Chmutov like surface with three parameters to increase the holes number by Abderrahman Taha 22/04/2019"
+                ],
+                "Fxyz": ["(x^k + y ^k + z^k ) -(cos(n*l*x/5) +cos(n*l*y/5) +cos(n*l*z/5)) -p"
+                ],
+                "Name": ["ChmutovSchwarz"
+                ],
+                "Component": ["ChmutySchwarz"
+                ],
+                "Const": ["k=12","l=7","p=1/100","n=1", "c=11/10"
+                ],
+                "Xmax": [" c"
+                ],
+                "Xmin": ["-c"
+                ],
+                "Ymax": [" c"
+                ],
+                "Ymin": ["-c"
+                ],
+                "Zmax": [" c"
+                ],
+                "Zmin": ["-c"
+                ]
+            },
+            "Sliders": {
+                "Max": ["30","30","30"
+                ],
+                "Min": ["0","0","0"
+                ],
+                "Name": ["k","l","n"
+                ],
+                "Position": ["12","7","5"
+                ],
+                "Step": ["1","1","1"
+                ]
+            }
+        }
+    ,
     {
       "Iso3D": {
         "Name": [
