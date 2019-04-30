@@ -6053,6 +6053,7 @@ void DrawingOptions::on_actionMesh_triggered()
 // --------------------------
 void DrawingOptions::on_calculate_clicked()
 {
+    on_InitTButton_clicked();
     Run_JsonObject_activeted();
 }
 
