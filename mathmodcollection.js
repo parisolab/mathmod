@@ -11981,7 +11981,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Pseudo Hopf Tori by Abderrahman Taha 10/10/2015"
+          "Pseudo Hopf Tori by Abderrahman Taha 05/05/2019"
         ],
         "Name": [
           "Pseudo Hopf Tori"
@@ -11990,21 +11990,20 @@
           "PseudoHopfTori"
         ],
         "Const": [
-          "cu=0DOTSYMBOL00001",
-          "cv=0DOTSYMBOL00001",
+          "c=1/100000",
           "N=3"
         ],
         "Funct": [
-          "Thickness= (abs(sin(15*u)*cos(15*v)))^7 + 0DOTSYMBOL4*((sin(2*N*u)))",
+          "Thickness= (abs(sin(15*u)*cos(15*v)))^7 + (4/10)*((sin(2*N*u)))",
           "Fx=-cos(u+v)/(sqrt(2)+cos(v-u))",
           "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
           "Fz=sin(u+v)/(sqrt(2)+cos(v-u))",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu=((Fx(u,v,t)-Fx(u+c,v,t))/c)",
+          "DFxv=((Fx(u,v,t)-Fx(u,v+c,t))/c)",
+          "DFyu=((Fy(u,v,t)-Fy(u+c,v,t))/c)",
+          "DFyv=((Fy(u,v,t)-Fy(u,v+c,t))/c)",
+          "DFzu=((Fz(u,v,t)-Fz(u+c,v,t))/c)",
+          "DFzv=((Fz(u,v,t)-Fz(u,v+c,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
