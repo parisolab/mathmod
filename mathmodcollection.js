@@ -12106,28 +12106,27 @@
           "EmbeddedSquareFlatTorus"
         ],
         "Const": [
-          "cu=c/1000",
+          "c=1/1000",
           "N=10"
         ],
         "Funct": [
-          "Thickness2=if(sin(N*u)>0, (5/10)*((sin(N*u)))^(1/4), -(5/10)*(abs(sin(N*u)))^(1/4)) ",
-          "Thickness= Thickness2(u,v,t)",
+          "Thickness=if(sin(N*u)>0, (5/10)*((sin(N*u)))^(1/4), -(5/10)*(abs(sin(N*u)))^(1/4)) ",
           "Fx=(4+ 2*cos(u))*cos(v)",
           "Fy=2*sin(u)",
           "Fz=(4+2*cos(u))*sin(v)",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu=((Fx(u,v,t)-Fx(u+c,v,t))/c)",
+          "DFxv=((Fx(u,v,t)-Fx(u,v+c,t))/c)",
+          "DFyu=((Fy(u,v,t)-Fy(u+c,v,t))/c)",
+          "DFyv=((Fy(u,v,t)-Fy(u,v+c,t))/c)",
+          "DFzu=((Fz(u,v,t)-Fz(u+c,v,t))/c)",
+          "DFzv=((Fz(u,v,t)-Fz(u,v+c,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
+          "R=u/sqrt(u^2+v^2+t^2)",
+          "Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
