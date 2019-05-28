@@ -1894,6 +1894,40 @@
         ]
       }
     },
+        {
+            "Iso3D": {
+            "Description": ["Clebsch surface by Abderrahman Taha 18/05/2019"
+            ],
+            "Name": ["Clebsch_01"
+            ],
+            "Funct": ["Clebsch =81*(x^3+y^3+z^3)-189*(x^2*y+x^2*z+y^2*x+y^2*z+z^2*x+z^2*y) +54*x*y*z+126*(x*y+x*z+y*z)-9*(x^2+y^2+z^2)-9*(x+y+z)+1 ","DFx=((Clebsch(x,y,z,t)-Clebsch(x+cx,y,z,t))/cx)","DFy=((Clebsch(x,y,z,t)-Clebsch(x,y+cx,z,t))/cx)","DFz=((Clebsch(x,y,z,t)-Clebsch(x,y,z+cx,t))/cx)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso3=Clebsch(x-T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-T*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)","Iso2=Clebsch(x+T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y+T*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z+T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)","Iso=if( x*x+y*y+z*z-1<0, Iso2(x,y,z,t)*Iso3(x,y,z,t) , (1/2)*exp((x*x+y*y+z*z-1))) "
+            ],
+            "Component": ["Schwarz"
+            ],
+            "Const": ["X=1","Y=1","Z=1","N=4","cx=1/1000","T=2/100","k1=1","k2=14/10"
+            ],
+            "Fxyz": ["Iso(x,y,z,t)"
+            ],
+            "Xmax": [" X"
+            ],
+            "Xmin": ["-X"
+            ],
+            "Ymax": [" Y"
+            ],
+            "Ymin": ["-Y"
+            ],
+            "Zmax": [" Z"
+            ],
+            "Zmin": ["-Z"
+            ]
+            },
+            "Texture": {
+            "Colors": ["R=(7/10)","G=(7/10)","B=(7/10)","T=1"
+            ],
+            "Name": "Gray",
+            "Noise": ""
+            }
+            },
     {
       "Iso3D": {
         "Name": [
