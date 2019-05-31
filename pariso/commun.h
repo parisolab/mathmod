@@ -30,6 +30,15 @@
 #define MAGIC_SCALE 1.5707963f
 extern template class FunctionParserBase<double>; // explicit instantiation declaration
 
+struct  GlobalParam
+{
+    uint TypeDrawin=10;
+    uint TypeDrawinNormStep = 4;
+    uint PreviousSizeMinimalTopology =0;
+    uint NbPolyMinimalTopology =0;
+    uint NbVertexTmp = 0;
+};
+
 struct ImplicitStructure
 {
     std::string fxyz;

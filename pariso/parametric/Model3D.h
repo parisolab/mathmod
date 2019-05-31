@@ -43,7 +43,7 @@ struct   ParStruct
     int  index;
 };
 
-class ParWorkerThread : public QThread
+class ParWorkerThread : public QThread, public ParisoObject
 {
     Q_OBJECT
 public :

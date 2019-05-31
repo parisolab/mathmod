@@ -21,6 +21,11 @@
 #define OBJECTPARAMETERS_H
 #include "commun.h"
 
+class ParisoObject
+{
+public:
+    GlobalParam globalparam;
+};
 
 class ObjectParameters
 {

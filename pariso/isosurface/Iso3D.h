@@ -47,7 +47,7 @@
 */
 
 
-class IsoWorkerThread : public QThread
+class IsoWorkerThread : public QThread, public ParisoObject
 {
     Q_OBJECT
 public :
