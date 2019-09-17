@@ -14492,13 +14492,13 @@
           "A = 5",
           "B = 2",
           "C = 10",
-          "D = 0DOTSYMBOL09",
+          "D = 1",
           "E = 1",
           "th = A*pi/10",
           "ph = B*pi/10"
         ],
         "Funct": [
-          "fmesh0=-fmesh(x,y,z,A/10,B/10,C/10,D,E) +0DOTSYMBOL08 ",
+          "fmesh0=-fmesh(x,y,z,A/10,B/10,C/10,D/10,E) +0DOTSYMBOL08 ",
           "fmesh3= if(atan2(z,sqrt(x*x+y*y))<0DOTSYMBOL9, fmesh0(atan2(y,x),(sqrt(x*x+y*y+z*z)-4),atan2(z,sqrt(x*x+y*y)),t), 1)*(atan2(z,sqrt(x*x+y*y))<0DOTSYMBOL9)"
         ],
         "Fxyz": [
@@ -14527,24 +14527,29 @@
                 "Max": [
                     "15",
                     "15",
-                    "20"
+                    "20",
+                    "10"
                 ],
                 "Min": [
                     "1",
                     "1",
-                    "1"
+                    "1",
+                    "0"
                 ],
                 "Name": [
                     "A",
                     "B",
-                    "C"
+                    "C",
+                    "D"
                 ],
                 "Position": [
                     "5",
                     "2",
-                    "10"
+                    "10",
+                    "1"
                 ],
                 "Step": [
+                    "1",
                     "1",
                     "1",
                     "1"
