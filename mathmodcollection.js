@@ -14480,7 +14480,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Straw Basket v02 (using the predefined MathMod function fmesh ) by Abderrahman Taha 08/05/2017. The mesh formula is from the PovRay team: http://www.povray.org/ "
+          "Straw Basket using the predefined MathMod function fmesh by Abderrahman Taha 17/09/2019"
         ],
         "Name": [
           "Straw Basket_02"
@@ -14499,8 +14499,6 @@
         ],
         "Funct": [
           "fmesh0=-fmesh(x,y,z,A,B,C,D,E) +0DOTSYMBOL08 ",
-          "fmesh1=fmesh0(atan2(y,x),(sqrt(x*x+y*y)-4),z,t) ",
-          "fmesh2= fmesh1((sqrt(x*x+z*z)-7),y,2*atan2(z,x),t)",
           "fmesh3= if(atan2(z,sqrt(x*x+y*y))<0DOTSYMBOL9, fmesh0(atan2(y,x),(sqrt(x*x+y*y+z*z)-4),atan2(z,sqrt(x*x+y*y)),t), 1)*(atan2(z,sqrt(x*x+y*y))<0DOTSYMBOL9)"
         ],
         "Fxyz": [
