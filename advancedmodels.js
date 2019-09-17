@@ -552,16 +552,16 @@
           "Straw Basket"
         ],
         "Const": [
-          "A = 0DOTSYMBOL5",
-          "B = 0DOTSYMBOL2",
+          "A = 5",
+          "B = 2",
           "C = 1",
           "D = 0DOTSYMBOL09",
           "E = 1",
-          "th = pi / A",
-          "ph = pi/ B"
+          "th = A*pi / 10",
+          "ph = B*pi/ 10"
         ],
         "Funct": [
-          "fmesh0=-fmesh(x,y,z,A,B,C,D,E) +0DOTSYMBOL08 ",
+          "fmesh0=-fmesh(x,y,z,A/10,B/10,C,D,E) +0DOTSYMBOL08 ",
           "fmesh3= if(atan2(z,sqrt(x*x+y*y))<0DOTSYMBOL9, fmesh0(atan2(y,x),sqrt(x*x+y*y+z*z)-4,atan2(z,sqrt(x*x+y*y)),t), 1)*(atan2(z,sqrt(x*x+y*y))<0DOTSYMBOL9)"
         ],
         "Fxyz": [
