@@ -9573,6 +9573,34 @@
         ]
       }
     },
+        {
+            "Description": ["Surface with rotational symmetry of order 5, by Patrice Jeener 17/09/2019"
+            ],
+        "Iso3D": {
+            "Name": ["PatriceJ"
+            ],
+            "Component": ["patrice"
+            ],
+            "Const": ["X=2","Y=2","Z=13/10","cx=1/1000","T=2/100"
+            ],
+            "Funct": ["Patrice=16*z^5 -20*z^3 + 5*z+ x^5 -10*x^3*y^2 +5*x*y^4","DFx=((Patrice(x,y,z,t)-Patrice(x+cx,y,z,t))/cx)","DFy=((Patrice(x,y,z,t)-Patrice(x,y+cx,z,t))/cx)","DFz=((Patrice(x,y,z,t)-Patrice(x,y,z+cx,t))/cx)","Rapport=(x/sqrt(x*x+y*y+z*z))","Iso3=Patrice(x-T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)","Iso2=Patrice(x+T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y+T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z+T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)","TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
+            ],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z)-X)<(0),TickIsoExterior(x,y,z,t),(1))"
+            ],
+            "Xmax": [" X"
+            ],
+            "Xmin": ["-X"
+            ],
+            "Ymax": [" Y"
+            ],
+            "Ymin": ["-Y"
+            ],
+            "Zmax": [" Z"
+            ],
+            "Zmin": ["-Z"
+            ]
+        }
+    },
     {
       "Iso3D": {
         "Description": [
