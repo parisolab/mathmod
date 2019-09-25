@@ -210,6 +210,9 @@
                 "Description": [
                     "Happy new Year based on the great work of Abdelhamid Belaid: http://abdelhamid394.blogspot.ca/"
                 ],
+                "Name": [
+                    "Happy_New_Year"
+                ],
                 "Component": [
                     "Happy",
                     "NW",
@@ -250,9 +253,6 @@
                     "E(x-8,y+6.5,z,t)",
                     "Y(x-1.5,y+13,z,t)*A(x-10,y+13,z,t)*R(x-14,y+13,z,t)",
                     "E(x-5,y+13,z,t)"
-                ],
-                "Name": [
-                    "Happy_New_Year"
                 ],
                 "Xmax": [
                     "30",
@@ -303,6 +303,46 @@
                     "G=0.6",
                     "B=0.1",
                     "T=1"
+                ]
+            }
+        },
+        {
+            "Iso3D": {
+                "Name": [
+                    "Wonder_Tree"
+                ],
+                "Component": [
+                    "WonderTree"
+                ],
+                "Const": [
+                    "k=4.0",
+                    "e=0.0001"
+                ],
+                "Funct": [
+                    "R=k*(x/(x*x+y*y+z*z))",
+                    "Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
+                    "Fct = Gyroid(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) + exp(0.1*(x*x+y*y+z*z-0.2)) - exp(-10.0*(x*x+y*y+z*z-0.05))"
+                ],
+                "Fxyz": [
+                    "-(Fct(x,y,z,t))"
+                ],
+                "Xmax": [
+                    "2"
+                ],
+                "Xmin": [
+                    "-2"
+                ],
+                "Ymax": [
+                    "2"
+                ],
+                "Ymin": [
+                    "-2"
+                ],
+                "Zmax": [
+                    "2"
+                ],
+                "Zmin": [
+                    "-2"
                 ]
             }
         },
