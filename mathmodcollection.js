@@ -299,9 +299,9 @@
             },
             "Texture": {
                 "Colors": [
-                    "R=0.8",
-                    "G=0.6",
-                    "B=0.1",
+                    "R=8/10",
+                    "G=6/10",
+                    "B=1/10",
                     "T=1"
                 ]
             }
@@ -315,13 +315,13 @@
                     "WonderTree"
                 ],
                 "Const": [
-                    "k=4.0",
-                    "e=0.0001"
+                    "k=4",
+                    "e=1/10000"
                 ],
                 "Funct": [
                     "R=k*(x/(x*x+y*y+z*z))",
                     "Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-                    "Fct = Gyroid(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) + exp(0.1*(x*x+y*y+z*z-0.2)) - exp(-10.0*(x*x+y*y+z*z-0.05))"
+                    "Fct = Gyroid(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) + exp((1/10)*(x*x+y*y+z*z-(2/10))) - exp(-10*(x*x+y*y+z*z-(5/100)))"
                 ],
                 "Fxyz": [
                     "-(Fct(x,y,z,t))"
@@ -343,6 +343,45 @@
                 ],
                 "Zmin": [
                     "-2"
+                ]
+            }
+        },
+        {
+            "Iso3D": {
+                "Description": [
+                    "Moebius band by Stephan Klaus 23/09/2019"
+                ],
+                "Name": [
+                    "Moebius_Strip"
+                ],
+                "Component": [
+                    "Moebius"
+                ],
+                "Const": [
+                    "a=1/2",
+                    "b=1/10",
+                    "N=4"
+                ],
+                "Fxyz": [
+                    "((b^2*x^2+a^2*y^2)*(x^2+y^2)+b^2*(-x+y*z)^2+a^2*(y+x*z)^2-a^2*b^2*(x^2+y^2))^2-4*(x^2+y^2)*(b^2*x*(-x+y*z)-a^2*y*(y+x*z))^2"
+                ],
+                "Xmax": [
+                    "3/2"
+                ],
+                "Xmin": [
+                    "-3/2"
+                ],
+                "Ymax": [
+                    "3/2"
+                ],
+                "Ymin": [
+                    "-3/2"
+                ],
+                "Zmax": [
+                    "1/2"
+                ],
+                "Zmin": [
+                    "-1/2"
                 ]
             }
         },
