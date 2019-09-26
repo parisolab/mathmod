@@ -208,7 +208,7 @@
         {
             "Iso3D": {
                 "Description": [
-                    "Happy new Year based on the great work of Abdelhamid Belaid: http://abdelhamid394.blogspot.ca/"
+                    "Happy_New_Year based on the great work from Abdelhamid Belaid: http://abdelhamid394.blogspot.ca/"
                 ],
                 "Name": [
                     "Happy_New_Year"
@@ -7289,7 +7289,7 @@
         ],
         "Component": ["The_Dome_01"
         ],
-        "Const": ["c=0.001","Th=0.6","N=10","R=16"
+        "Const": ["c=1/1000","Th=6/10","N=10","R=16"
         ],
         "Xmax": ["27"
         ],
@@ -7317,7 +7317,7 @@
         ]
         },
         "Texture": {
-        "Colors": ["R=0.8*abs(cos(x)*cos(y)*cos(z))^(1/10)","G=(2/10)","B=(1/100)","T=1"
+        "Colors": ["R=(8/10)*abs(cos(x)*cos(y)*cos(z))^(1/10)","G=(2/10)","B=(1/100)","T=1"
         ],
         "Name": "Lines",
         "Noise": ""
@@ -15479,7 +15479,7 @@
                 ]
             },
             "Texture": {
-                "Colors": ["R=if((i)%(M)>P | (j)%(M)>P,(0.8),(0.8))","G= if((i)%(M)>P | (j)%(M)>P,(0.2),(0.6))","B= if((i)%(M)>P | (j)%(M)>P,(0.2),(0.2))","T= 1"
+                "Colors": ["R=if((i)%(M)>P | (j)%(M)>P,(8/10),(8/10))","G= if((i)%(M)>P | (j)%(M)>P,(2/10),(6/10))","B= if((i)%(M)>P | (j)%(M)>P,(2/10),(2/10))","T= 1"
                 ],
                 "Name": "square",
                 "Noise": ""
@@ -15537,7 +15537,7 @@
         ],
         "Fy": ["cos(u)*F1(u-t,v,t)","cos(u)*F3(u-t,v,t)","cos(u)*F3(u-t,v,t)"
         ],
-        "Fz": ["F2(u-t,v,t) +3","F4(u-t,v,t) ","F4(u-t,v,t)+6.1"
+        "Fz": ["F2(u-t,v,t) +3","F4(u-t,v,t) ","F4(u-t,v,t)+61/10"
         ],
         "Component": ["MultiSidedTorus_0 ","MultiSidedTorus_1","MultiSidedTorus_2"
         ],
