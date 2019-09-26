@@ -75,7 +75,7 @@ public :
     IsoWorkerThread();
     ~IsoWorkerThread() override;
 signals:
-    void mySignal(int myParameter);
+    void mySignal(int);
 public:
     void emitMySignal();
 };
@@ -131,7 +131,7 @@ public :
     IsoMasterThread *masterthread;
     uint   Xgrid, Ygrid, Zgrid;
     uint WorkerThreadsNumber;
-    uint   *     IsoSurfaceTriangleListe;
+    uint *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
     //unsigned int *  IndexPolyTab;
@@ -162,8 +162,8 @@ public :
     void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool *);
     void SaveIsoGLMap();
     uint SetMiniMmeshStruct();
-    uint CNDtoUse(uint index, struct ComponentInfos *components);
-    void CalculateColorsPoints(struct ComponentInfos *components);
+    uint CNDtoUse(uint index, struct ComponentInfos *);
+    void CalculateColorsPoints(struct ComponentInfos *);
     void BuildIso();
     void UpdateThredsNumber(uint);
     void stopcalculations(bool);
