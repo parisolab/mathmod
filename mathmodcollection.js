@@ -13757,7 +13757,7 @@
     {
       "Param3D": {
         "Description": [
-          "SeaShells_1 by Abderrahman Taha 12/09/2015"
+          "SeaShells by Abderrahman Taha 16/09/2019"
         ],
         "Name": [
           "SeaShells"
@@ -13770,19 +13770,19 @@
           "b = 14",
           "D = 1",
           "A = 50",
-          "Mu = 10*3DOTSYMBOL14/180",
-          "Alfa = 84*3DOTSYMBOL14/180",
-          "Beta = -19*3DOTSYMBOL14/180",
-          "Omega = -2*3DOTSYMBOL14/180",
-          "Phi = 45*3DOTSYMBOL14/180",
+          "Mu = 10*pi/180",
+          "Alfa = 84*pi/180",
+          "Beta = -19*pi/180",
+          "Omega = -2*pi/180",
+          "Phi = 45*pi/180",
           "L = 8",
           "P = 0",
-          "W1 = 6*3DOTSYMBOL14/180",
-          "W2 = 27*3DOTSYMBOL14/180",
+          "W1 = 6*pi/180",
+          "W2 = 27*pi/180",
           "N = 8"
         ],
         "Funct": [
-          "Re=(1/sqrt((cos(u)/a)^2 + (sin(u)/b)^2) + if((W1=0|W2=0|N=0),(0), L*exp(-(2*(u-P)/W1)^2-(2*(2*3DOTSYMBOL14*(N*v/(2*3DOTSYMBOL14) -floor(N*v/(2*3DOTSYMBOL14))))/W2)^2)) )"
+          "Re=(1/sqrt((cos(u)/a)^2 + (sin(u)/b)^2) + if((W1=0|W2=0|N=0),(0), L*exp(-(2*(u-P)/W1)^2-(2*(2*pi*(N*v/(2*pi) -floor(N*v/(2*pi))))/W2)^2)) )"
         ],
         "Fx": [
           "D*(A*sin(Beta)*cos(u) + Re(v,u,t)*(cos(v+Phi)*cos(u+Omega) - sin(Mu)*sin(v+Phi)*sin(u+Omega)))*exp(u*cot(Alfa))"
