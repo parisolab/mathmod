@@ -18094,7 +18094,7 @@
           "Wireframe_Shell"
         ],
         "Description": [
-          "Wireframe Catenoid by Abderrahman Taha 29/01/2018"
+          "Wireframe Shell by Abderrahman Taha 29/01/2018"
         ],
         "Component": [
           "Wireframe_Shell_00",
