@@ -12861,49 +12861,49 @@
     {
       "Iso3D": {
         "Description": [
-          "Skeletal Sphere (implicit version) by Abderrahman Taha 06/10/2015"
+          "Skeletal Sphere (implicit version) by Abderrahman Taha 03/10/2019"
         ],
         "Name": [
-          "Skeletal Sphere (implicit version)"
+          "Skeletal_Sphere_Implicit"
         ],
         "Component": [
           "SkeletalSphere"
         ],
         "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001"
+          "c=1/100000",
+          "L=12/10"
         ],
         "Funct": [
           "Iso=x*x+y*y+z*z-1",
-          "Thickness=(0DOTSYMBOL1*cos(10*atan2(x,y))*sin(10*atan2(z,sqrt(x*x+y*y))))",
-          "DFx=((Iso(x,y,z,t)-Iso(x+cx,y,z,t))/cx)",
-          "DFy=((Iso(x,y,z,t)-Iso(x,y+cy,z,t))/cy)",
-          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+cz,t))/cz)",
+          "Th=(cos(10*atan2(x,y))*sin(10*atan2(z,sqrt(x*x+y*y)))/10)",
+          "DFx=((Iso(x,y,z,t)-Iso(x+c,y,z,t))/c)",
+          "DFy=((Iso(x,y,z,t)-Iso(x,y+c,z,t))/c)",
+          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+c,t))/c)",
           "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
-          "Iso2=(Iso(x+t*DFx(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),t))",
+          "R=(x/sqrt(x*x+y*y+z*z))",
+          "Iso2=(Iso(x+Th(x,y,z,t)*R(x,y,z,t),y+DFy(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t)*Th(x,y,z,t)/Rapport(x,y,z,t),z+DFz(x,y,z,t)*Th(x,y,z,t)/Rapport(x,y,z,t),t))",
           "ThickIso=max(Iso2(x,y,z,1), Iso2(x,y,z,-1))"
         ],
         "Fxyz": [
           "ThickIso(x,y,z,t)"
         ],
         "Xmax": [
-          "1DOTSYMBOL2"
+          "L"
         ],
         "Xmin": [
-          "-1DOTSYMBOL2"
+          "-L"
         ],
         "Ymax": [
-          "1DOTSYMBOL2"
+          "L"
         ],
         "Ymin": [
-          "-1DOTSYMBOL2"
+          "-L"
         ],
         "Zmax": [
-          "1DOTSYMBOL2"
+          "L"
         ],
         "Zmin": [
-          "-1DOTSYMBOL2"
+          "-L"
         ]
       }
     },
