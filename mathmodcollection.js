@@ -12468,7 +12468,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Shells by Abderrahman Taha 09/10/2015"
+          "Shells by Abderrahman Taha 02/10/2019"
         ],
         "Name": [
           "Shells_1"
@@ -12477,27 +12477,26 @@
           "Shells"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
+          "c=1/10000"
         ],
         "Funct": [
           "Fx=-cos(u) *(3 *cos(v) - cos(3 *v))",
           "Fy= 3 *sin(v) - sin(3 * v)",
           "Fz= sin(u) *(3 *cos(v) - cos(3 * v))",
-          "DFxu= ((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)",
+          "DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)",
+          "DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)",
+          "DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)",
+          "DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)",
+          "DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)",
           "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Thickness=(0DOTSYMBOL4*abs(cos(11*(u))^2 - sin(13*(v))^5 ))^3",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/(R(u,v,t)+0DOTSYMBOL0001)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/(R(u,v,t)+0DOTSYMBOL0001)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/(R(u,v,t)+0DOTSYMBOL0001)"
+          "Ra=u/(sqrt(u^2+v^2+t^2)+c/10000)",
+          "Th=((4/10)*abs(cos(11*(u))^2 - sin(13*(v))^5))^3",
+          "Gx=Fx(u,v,t)+Th(u,v,t)*Ra(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Th(u,v,t)*Ra(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Th(u,v,t)*Ra(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
@@ -12571,38 +12570,39 @@
           "HoledSphere"
         ],
         "Const": [
-          "c=1/100000"
+          "c=1/100000",
+          "L=(12/10)"
         ],
         "Funct": [
           "Iso=x*x+y*y+z*z-1",
-          "Thickness=( 0DOTSYMBOL05*cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y))))/1DOTSYMBOL1)^2))",
+          "Th=(cos((abs(cos(21*atan2(x,y))+sin(19*atan2(z,sqrt(x*x+y*y)))))^2)/20)",
           "DFx=((Iso(x,y,z,t)-Iso(x+c,y,z,t))/c)",
           "DFy=((Iso(x,y,z,t)-Iso(x,y+c,z,t))/c)",
           "DFz=((Iso(x,y,z,t)-Iso(x,y,z+c,t))/c)",
-          "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
-          "Iso2=(Iso(x+t*DFx(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness(x,y,z,t)/Rapport(x,y,z,t),t))",
+          "R=(x/sqrt(x*x+y*y+z*z))",
+          "Iso2=(Iso(x+Th(x,y,z,t)*R(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th(x,y,z,t)*R(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+Th(x,y,z,t)*R(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
           "ThickIso=max(Iso2(x,y,z,1), Iso2(x,y,z,-1))"
         ],
         "Fxyz": [
           "-max(Iso2(x,y,z,1), (x*x+y*y+z*z-1))*Iso2(x,y,z,1)"
         ],
         "Xmax": [
-          "1DOTSYMBOL2"
+          "L"
         ],
         "Xmin": [
-          "-1DOTSYMBOL2"
+          "-L"
         ],
         "Ymax": [
-          "1DOTSYMBOL2"
+          "L"
         ],
         "Ymin": [
-          "-1DOTSYMBOL2"
+          "-L"
         ],
         "Zmax": [
-          "1DOTSYMBOL2"
+          "L"
         ],
         "Zmin": [
-          "-1DOTSYMBOL2"
+          "-L"
         ]
       }
     },
@@ -13811,8 +13811,8 @@
           "PseudoDuplin"
         ],
         "Const": [
-          "Th1= 0DOTSYMBOL9",
-          "Th2= 0DOTSYMBOL4"
+          "Th1= 9/10",
+          "Th2= 4/10"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
