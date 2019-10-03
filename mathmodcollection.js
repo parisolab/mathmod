@@ -12876,12 +12876,11 @@
         "Funct": [
           "Iso=x*x+y*y+z*z-1",
           "Th=(cos(10*atan2(x,y))*sin(10*atan2(z,sqrt(x*x+y*y)))/10)",
-          "DFx=((Iso(x,y,z,t)-Iso(x+c,y,z,t))/c)",
-          "DFy=((Iso(x,y,z,t)-Iso(x,y+c,z,t))/c)",
-          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+c,t))/c)",
-          "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
+          "DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)",
+          "DFy=((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)",
+          "DFz=((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)",
           "R=(x/sqrt(x*x+y*y+z*z))",
-          "Iso2=(Iso(x+Th(x,y,z,t)*R(x,y,z,t),y+DFy(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t)*Th(x,y,z,t)/Rapport(x,y,z,t),z+DFz(x,y,z,t)*Th(x,y,z,t)/Rapport(x,y,z,t),t))",
+          "Iso2=(Iso(x+t*Th(x,y,z,t)*R(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+t*Th(x,y,z,t)*R(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+t*Th(x,y,z,t)*R(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
           "ThickIso=max(Iso2(x,y,z,1), Iso2(x,y,z,-1))"
         ],
         "Fxyz": [
