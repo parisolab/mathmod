@@ -12561,7 +12561,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Holed Spheres (implicit version) by Abderrahman Taha 22/04/2019"
+          "Holed Spheres (implicit version) by Abderrahman Taha 2/10/2019"
         ],
         "Name": [
           "Holed_Sphere"
