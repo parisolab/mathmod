@@ -12637,7 +12637,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Holed Spheres by Abderrahman Taha 08/10/2015"
+          "Holed Spheres by Abderrahman Taha 02/10/2019"
         ],
         "Name": [
           "Holed_Spheres"
@@ -12646,27 +12646,26 @@
           "HoledSpheres"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
+          "c=1/100000"
         ],
         "Funct": [
-          "Thickness= 0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
+          "Th= (3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
           "Fx=cos(u)*cos(v)",
           "Fy=cos(u)*sin(v)",
           "Fz=sin(u)",
-          "DFxu= ((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)",
+          "DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)",
+          "DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)",
+          "DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)",
+          "DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)",
+          "DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)",
           "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
+          "R=u/sqrt(u*u+v*v+t*t)",
+          "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t), n2(u,v,t), n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t), n3(u,v,t), n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t), n1(u,v,t), n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
