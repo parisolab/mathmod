@@ -14773,7 +14773,7 @@
     {
       "Param3D": {
         "Description": [
-          "Twisted_Strip by Abderrahman Taha 15/03/2017"
+          "Twisted_Strip by Abderrahman Taha 04/10/2019"
         ],
         "Name": [
           "Twisted_Strip_02"
@@ -14796,10 +14796,10 @@
           "(R/10)*u*sin(N*v+M*sin(t+v))"
         ],
         "Umax": [
-          "0DOTSYMBOL4"
+          "4/10"
         ],
         "Umin": [
-          "-0DOTSYMBOL4"
+          "-4/10"
         ],
         "Vmax": [
           "2*pi"
@@ -14839,7 +14839,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Inka_Sun and Twisted_Toroids v02 by Abderrahman Taha 10/03/2017"
+          "Inka_Sun and Twisted_Toroids v02 by Abderrahman Taha 04/10/2019"
         ],
         "Name": [
           "Inka Sun_02"
