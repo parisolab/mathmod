@@ -14364,7 +14364,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Sea Shell by Abderrahman Taha 16/04/2017"
+          "Sea Shell by Abderrahman Taha 04/10/2019"
         ],
         "Name": [
           "Sea_Shell_001"
@@ -14401,7 +14401,7 @@
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
           "Rapp=u/sqrt(u*u+v*v+t*t+c*c)",
           "Fx=Fx(u,v,t)+th(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-          "Fy=Fy(u,v,t)+th(u,v,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
+          "Fy=Fy(u,v,t)+th(u,v,t)*Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
           "Fz=Fz(u,v,t)+th(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
@@ -14430,7 +14430,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Seashell by Abderrahman Taha 19/04/2017"
+          "Seashell by Abderrahman Taha 04/10/2019"
         ],
         "Name": [
           "Sea_Shell_002"
@@ -14439,36 +14439,35 @@
           "Sea Shell"
         ],
         "Const": [
-          "cu=0DOTSYMBOL001",
-          "cv=0DOTSYMBOL001",
+          "c=1/10000",
           "N=14",
           "M=4",
           "MaxU=pi",
           "MinU=0",
           "MaxV=5*pi/2",
           "MinV=0",
-          "a=0DOTSYMBOL2",
+          "a=2/10",
           "b=1",
-          "c=0DOTSYMBOL1",
+          "c=1/10",
           "n=2"
         ],
         "Funct": [
-          "th=0DOTSYMBOL2*((1-abs(u-pi/2)/MaxU)*(v/MaxV+0DOTSYMBOL05)*abs(cos(N*(u))^3-sin(N*(v))^2))^3",
+          "th=(2/10)*((1-abs(u-pi/2)/MaxU)*(v/MaxV+5/100)*abs(cos(N*(u))^3-sin(N*(v))^2))^3",
           "Fx=if((M=1),(2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4),if((M=3),(2^v*(sin(u)*cos(u))/35),if((M=4),(1DOTSYMBOL2^v*(sin(u)^2*sin(v))+2),2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2))))",
           "Fy=if((M=1),(2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4),if((M=3),(2^v*(sin(u)^2*sin(v))/35-4),if((M=4),(1DOTSYMBOL2^v*(sin(u)*cos(u))+5),2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2))))",
           "Fz=if((M=1),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v),if((M=2),((b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6),if((M=3),(2^v*(sin(u)^2*cos(v))/35-12),if((M=4),(1DOTSYMBOL2^v*(sin(u)^2*cos(v))-12),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)))))",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu=((Fx(u,v,t)-Fx(u+c,v,t))/c)",
+          "DFxv=((Fx(u,v,t)-Fx(u,v+c,t))/c)",
+          "DFyu=((Fy(u,v,t)-Fy(u+c,v,t))/c)",
+          "DFyv=((Fy(u,v,t)-Fy(u,v+c,t))/c)",
+          "DFzu=((Fz(u,v,t)-Fz(u+c,v,t))/c)",
+          "DFzv=((Fz(u,v,t)-Fz(u,v+c,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "Rapp=u/sqrt(u*u+v*v+t*t+cu*cv)",
+          "Rapp=u/sqrt(u*u+v*v+t*t+c*c)",
           "Fx=Fx(u,v,t)+th(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-          "Fy=Fy(u,v,t)+th(u,v,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
+          "Fy=Fy(u,v,t)+th(u,v,t)*Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
           "Fz=Fz(u,v,t)+th(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
