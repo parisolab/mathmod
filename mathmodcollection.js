@@ -14496,7 +14496,7 @@
     {
       "Param3D": {
         "Description": [
-          "Torsion spring by Abderrahman Taha 28/03/2017"
+          "Torsion spring by Abderrahman Taha 04/10/2019"
         ],
         "Name": [
           "Torsion_Spring"
@@ -14512,7 +14512,7 @@
           "r0=19",
           "P=3",
           "MM=6",
-          "dv=0DOTSYMBOL001"
+          "dv=1/10000"
         ],
         "Funct": [
           "Fx = ((R1/10)*cos(v)+(R/10)*u*cos(N*v+M*sin(t+v))*cos(v))",
@@ -14677,9 +14677,9 @@
       },
       "Texture": {
         "Colors": [
-          "R= if(int(i)%MM>P & int(i)%MM<P+2 ,0DOTSYMBOL8,0DOTSYMBOL8) ",
-          "G= if((int(i)%MM>P & int(i)%MM<P+2), 0DOTSYMBOL8,0DOTSYMBOL1) ",
-          "B= if((int(i)%MM>P & int(i)%MM<P+2), 0DOTSYMBOL8,0DOTSYMBOL1) ",
+          "R= if(int(i)%MM>P & int(i)%MM<P+2 ,(8/10),(8/10)) ",
+          "G= if((int(i)%MM>P & int(i)%MM<P+2), (8/10),(1/10)) ",
+          "B= if((int(i)%MM>P & int(i)%MM<P+2), (8/10),(1/10)) ",
           "T= 1 "
         ],
         "Name": "Rings",
