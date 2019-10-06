@@ -14850,19 +14850,21 @@
         ],
         "Const": [
           "N=4",
-          "M=1"
+          "M=1",
+          "T=1/2"
+
         ],
         "Funct": [
-          "InkaSun= if(if((t=1),(abs(sin((N/2)*(u*(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-          "InkaSun1= if(if((t=1),(abs(sin((N/2)*(u*abs(sin(v))-u))))<0DOTSYMBOL4,(abs(sin((N/2)*(u*abs(sin(v))-u))))>0DOTSYMBOL38),-0DOTSYMBOL45,0)",
-          "TwistedTori=if((t=1), if((abs(sin((N/2)*u-v)))>0DOTSYMBOL38,-0DOTSYMBOL45,0),if((abs(sin((N/2)*u-v)))<0DOTSYMBOL38,-0DOTSYMBOL45,0))",
+          "InkaSun= if(if((t=1),(abs(sin((N/2)*(u*(sin(v))-u))))<(4/10),(abs(sin((N/2)*(u*(sin(v))-u))))>(38/100)),-(45/100),0)",
+          "InkaSun1= if(if((t=1),(abs(sin((N/2)*(u*abs(sin(v))-u))))<(4/10),(abs(sin((N/2)*(u*abs(sin(v))-u))))>(38/100)),-(45/100),0)",
+          "TwistedTori=if((t=1), if((abs(sin((N/2)*u-v)))>(38/100),-(45/100),0),if((abs(sin((N/2)*u-v)))<(38/100),-(45/100),0))",
           "Th= if((M=1), InkaSun(u,v,t),if((M=2), InkaSun1(u,v,t),if((M=3), TwistedTori(u,v,t), InkaSun(u,v,t))))",
-          "Fx=(1+0DOTSYMBOL5*cos(u))*cos(v)",
-          "Fy=0DOTSYMBOL5*sin(u)",
-          "Fz=(1+0DOTSYMBOL5*cos(u))*sin(v)",
-          "n1=((-0DOTSYMBOL5*cos(u))*(-(1+0DOTSYMBOL5*cos(u))*cos(v)))",
-          "n2=((0DOTSYMBOL5*sin(u)*sin(v))*((1+0DOTSYMBOL5*cos(u))*sin(v))-(0DOTSYMBOL5*sin(u)*cos(v))*(-(1+0DOTSYMBOL5*cos(u))*cos(v)))",
-          "n3=(-(-0DOTSYMBOL5*cos(u))*((1+0DOTSYMBOL5*cos(u))*sin(v)))",
+          "Fx=(1+T*cos(u))*cos(v)",
+          "Fy=T*sin(u)",
+          "Fz=(1+T*cos(u))*sin(v)",
+          "n1=((-T*cos(u))*(-(1+T*cos(u))*cos(v)))",
+          "n2=((T*sin(u)*sin(v))*((1+T*cos(u))*sin(v))-(T*sin(u)*cos(v))*(-(1+T*cos(u))*cos(v)))",
+          "n3=(-(-T*cos(u))*((1+T*cos(u))*sin(v)))",
           "Rapp=u/sqrt(u*u + v*v + t*t)",
           "Gx=Fx(u,v,t)+Th(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
           "Gy=Fy(u,v,t)+Th(u,v,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
