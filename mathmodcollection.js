@@ -15071,7 +15071,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Scherk Torus 01 by Abderrahman Taha 22/02/2017"
+          "Scherk Torus 01 by Abderrahman Taha 07/10/2019"
         ],
         "Name": [
           "ScherkTorus_01"
@@ -15084,7 +15084,7 @@
           "R=8"
         ],
         "Funct": [
-          "Scherk0=-((x*y-z)*(x*y-z)-0DOTSYMBOL4)",
+          "Scherk0=-((x*y-z)*(x*y-z)-4/10)",
           "Scherk1=if((abs(x)<3 & abs(y)<3), Scherk0(sinh(x),sinh(y),sin(z),t), 0)",
           "Scherk2=Scherk1(x*cos(t)-y*sin(t),x*sin(t)+y*cos(t),z,t)",
           "Torus = Scherk2( (sqrt(x*x+z*z)-R) , y,  N*atan2(z,x),t)"
@@ -15099,10 +15099,10 @@
           "-11 "
         ],
         "Ymax": [
-          " 3DOTSYMBOL5"
+          " 35/10"
         ],
         "Ymin": [
-          "-3DOTSYMBOL5 "
+          "-35/10 "
         ],
         "Zmax": [
           " 11"
