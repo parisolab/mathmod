@@ -14765,13 +14765,13 @@
           "Plan(x,y,z,t)"
         ],
         "Xmax": [
-          " 13DOTSYMBOL93"
+          "1393/100"
         ],
         "Xmin": [
           "0"
         ],
         "Ymax": [
-          " 13DOTSYMBOL93"
+          " 1393/100"
         ],
         "Ymin": [
           "0"
@@ -14787,7 +14787,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Set of Spheres animation by Abderrahman Taha 08/03/2017"
+          "Set of Spheres animation by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "SetOfSpheres_01"
@@ -14796,36 +14796,36 @@
           "SetSpheres"
         ],
         "Const": [
-          "Step1=0DOTSYMBOL4",
-          "Step2=0DOTSYMBOL4",
-          "R00=0DOTSYMBOL031"
+          "Step1=4/10",
+          "Step2=4/10",
+          "R00=31/1000"
         ],
         "Funct": [
           "Sphere = (x*x+y*y+ z*z-R00)",
           "Sphere1 = Sphere(x,y,((abs(z)%Step1) -Step1/2),t)",
           "Sphere2 = - Sphere1(((abs(x)%Step2) -Step2/2),y,z,t)",
-          "Plan = Sphere2(x,0DOTSYMBOL7* (sin(2*t+ ( (x)^2+(z)^2)/4 )) +y,z,t)"
+          "Plan = Sphere2(x,(7/10)* (sin(2*t+ ( (x)^2+(z)^2)/4 )) +y,z,t)"
         ],
         "Fxyz": [
           "Plan(x,z,y,t)"
         ],
         "Xmax": [
-          " 6DOTSYMBOL8"
+          " 68/10"
         ],
         "Xmin": [
-          "-6DOTSYMBOL4"
+          "-64/10"
         ],
         "Ymax": [
-          " 6DOTSYMBOL8"
+          " 68/10"
         ],
         "Ymin": [
-          "-6DOTSYMBOL4"
+          "-64/10"
         ],
         "Zmax": [
-          " 1DOTSYMBOL6"
+          " 16/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL6"
+          "-16/10"
         ]
       }
     },
