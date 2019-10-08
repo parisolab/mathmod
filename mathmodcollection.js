@@ -14638,11 +14638,11 @@
           "Inka_Sun and Twisted_Toroids v02 by Abderrahman Taha 04/10/2019"
         ],
         "Name": [
-          "Inka Sun_02"
+          "InkaSun"
         ],
         "Component": [
-          "Inka Sun_1",
-          "Inka Sun_2"
+          "InkaSun_1",
+          "InkaSun_2"
         ],
         "Const": [
           "N=4",
