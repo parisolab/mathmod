@@ -15118,7 +15118,7 @@
           "Twisted Strip by Abderrahman Taha 07/10/2019"
         ],
         "Name": [
-          "Twisted Strip"
+          "Twisted_Strip"
         ],
         "Component": [
           "TwistedStrip"
@@ -15149,18 +15149,18 @@
     {
       "Param3D": {
         "Description": [
-          "Blobby Torus by Abderrahman Taha 09/05/2016"
+          "Blobby Torus by Abderrahman Taha 07/10/2019"
         ],
         "Name": [
-          "Blobby Torus"
+          "Blobby_Torus"
         ],
         "Component": [
           "BlobbyTorus"
         ],
         "Funct": [
-          "G1=(8+(sin(2*(u-v+t+sin(v-u))) +3)*cos(u))*cos(v)",
-          "G2=(8+(sin(2*(u-v+t+sin(v-u))) +3)*cos(u))*sin(v)",
-          "G3=((sin(2*(u-v+t+sin(v-u))) +3)*sin(u))"
+          "G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)",
+          "G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)",
+          "G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))"
         ],
         "Fx": [
           "-G1(u,v,t)"
@@ -15186,9 +15186,9 @@
       },
       "Texture": {
         "Colors": [
-          "R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),0DOTSYMBOL6,1) ",
-          "G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),0DOTSYMBOL8,0DOTSYMBOL4) ",
-          "B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),0DOTSYMBOL6,0DOTSYMBOL1) ",
+          "R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),1) ",
+          "G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)) ",
+          "B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)) ",
           "T=1"
         ],
         "Name": "Candy",
