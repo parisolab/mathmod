@@ -14742,7 +14742,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Set of Spheres animation v02 by Abderrahman Taha 09/03/2017"
+          "Set of Spheres animation v03 by Abderrahman Taha 07/10/2019"
         ],
         "Name": [
           "SetofSpheres_02"
@@ -14751,15 +14751,15 @@
           "SetSpheres"
         ],
         "Const": [
-          "Step1=0DOTSYMBOL41",
-          "Step2=0DOTSYMBOL41",
-          "R00=0DOTSYMBOL035"
+          "Step1=41/100",
+          "Step2=41/100",
+          "R00=35/100"
         ],
         "Funct": [
           "Sphere = (x*x+y*y+ z*z-R00)",
           "Sphere1 = Sphere(x,((abs(y)%Step1)-Step1/2),z,t)",
           "Sphere2 = -Sphere1(((abs(x)%Step2)-Step2/2),y,z,t)",
-          "Plan = Sphere2(x , y, z - 0DOTSYMBOL7*(sin(2*t+( (x - ( (abs(x)%Step2)-Step2/2)-7)^2+(y -((abs(y)%Step1)-Step1/2)-7)^2)/4 )),t)"
+          "Plan = Sphere2(x , y, z - (7/10)*(sin(2*t+( (x - ( (abs(x)%Step2)-Step2/2)-7)^2+(y -((abs(y)%Step1)-Step1/2)-7)^2)/4 )),t)"
         ],
         "Fxyz": [
           "Plan(x,y,z,t)"
