@@ -15019,7 +15019,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Scherk Torus 02 by Abderrahman Taha 22/02/2017"
+          "Scherk Torus 02 by Abderrahman Taha 07/10/2019"
         ],
         "Name": [
           "ScherkTorus_02"
@@ -15028,22 +15028,22 @@
           "Scherk"
         ],
         "Const": [
-          "th=0DOTSYMBOL2",
+          "th=2/10",
           "N=10",
           "R=8",
           "L=6"
         ],
         "Funct": [
-          "Scherk=((sinh(x)*sinh(cos(pi/3)*x-sin(pi/3)*y)*sinh(cos(2*pi/3)*x-sin(2*pi/3)*y)-cos(z) ) )",
-          "DFx=(Scherk(x+0DOTSYMBOL01,y,z,t)-Scherk(x,y,z,t))/0DOTSYMBOL01",
-          "DFy=(Scherk(x,y+0DOTSYMBOL01,z,t)-Scherk(x,y,z,t))/0DOTSYMBOL01",
-          "DFz=(Scherk(x,y,z+0DOTSYMBOL01,t)-Scherk(x,y,z,t))/0DOTSYMBOL01",
+          "Scherk=((sinh(x)*sinh(cos(pi/3)*x-sin(pi/3)*y)*sinh(cos(2*pi/3)*x-sin(2*pi/3)*y)-cos(z)))",
+          "DFx=(Scherk(x+(1/100),y,z,t)-Scherk(x,y,z,t))*100",
+          "DFy=(Scherk(x,y+(1/100),z,t)-Scherk(x,y,z,t))*100",
+          "DFz=(Scherk(x,y,z+(1/100),t)-Scherk(x,y,z,t))*100",
           "Rapport2=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
           "Iso3=(Scherk(x-DFx(x,y,z,t)*th/Rapport2(x,y,z,t),y-DFy(x,y,z,t)*th/Rapport2(x,y,z,t),z-DFz(x,y,z,t)*th/Rapport2(x,y,z,t),t))",
           "Iso2=(Scherk(x+DFx(x,y,z,t)*th/Rapport2(x,y,z,t),y+DFy(x,y,z,t)*th/Rapport2(x,y,z,t),z+DFz(x,y,z,t)*th/Rapport2(x,y,z,t),t))",
           "TickScherk=(Iso2(x,y,z,t)*Iso3(x,y,z,t))",
           "ScherkTorus=if(sqrt(x*x+y*y)<3DOTSYMBOL2, TickScherk(x,y,z,t),1)",
-          "Torus = ScherkTorus( (sqrt(x*x+z*z)-R) , y,  N*atan2(z,x),t)"
+          "Torus = ScherkTorus( (sqrt(x*x+z*z)-R), y, N*atan2(z,x),t)"
         ],
         "Fxyz": [
           "-Torus(x,z,y,t)"
@@ -15061,10 +15061,10 @@
           "-11 "
         ],
         "Zmax": [
-          " 3DOTSYMBOL5"
+          " 35/10"
         ],
         "Zmin": [
-          "-3DOTSYMBOL5"
+          "-35/10"
         ]
       }
     },
