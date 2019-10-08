@@ -15115,7 +15115,7 @@
     {
       "Param3D": {
         "Description": [
-          "Twisted Strip by Abderrahman Taha 11/05/2016"
+          "Twisted Strip by Abderrahman Taha 07/10/2019"
         ],
         "Name": [
           "Twisted Strip"
@@ -15124,19 +15124,19 @@
           "TwistedStrip"
         ],
         "Fx": [
-          "cos(v)+1DOTSYMBOL4*u*cos(6*v+5*sin(t+v))*cos(v)"
+          "cos(v)+(14/10)*u*cos(6*v+5*sin(t+v))*cos(v)"
         ],
         "Fy": [
-          "sin(v)+1DOTSYMBOL4*u*cos(6*v+5*sin(t+v))*sin(v)"
+          "sin(v)+(14/10)*u*cos(6*v+5*sin(t+v))*sin(v)"
         ],
         "Fz": [
-          "1DOTSYMBOL4*u*sin(6*v+5*sin(t+v))"
+          "(14/10)*u*sin(6*v+5*sin(t+v))"
         ],
         "Umax": [
-          "0DOTSYMBOL4"
+          "4/10"
         ],
         "Umin": [
-          "-0DOTSYMBOL4"
+          "-4/10"
         ],
         "Vmax": [
           "2*pi"
