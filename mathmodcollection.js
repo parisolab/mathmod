@@ -14832,7 +14832,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Twisted Torus 01 by Abderrahman Taha 26/02/2017"
+          "Twisted Torus 01 by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "TwistedTorus"
@@ -14847,10 +14847,10 @@
           "M=1"
         ],
         "Funct": [
-          "ThickIso=(x*x- 0DOTSYMBOL01*th*th)",
+          "ThickIso=(x*x- th*th/100)",
           "Cylinder=if(sqrt(x*x+y*y)<R, min(ThickIso(x,y,z,t), ThickIso(y,x,z,t)),1)",
           "Cylinder1=if(sqrt(x*x+y*y)<R, ThickIso(x,y,z,t),1)",
-          "Twist = Cylinder( x*cos(0DOTSYMBOL25*M*z)+y*sin(0DOTSYMBOL25*M*z) , x*sin(0DOTSYMBOL25*M*z)-y*cos(0DOTSYMBOL25*M*z), z,t)",
+          "Twist = Cylinder( x*cos(M*z/4)+y*sin(M*z/4) , x*sin(M*z/4)-y*cos(M*z/4), z,t)",
           "Torus = Twist( (sqrt(x*x+z*z)-P) , y, atan2(z,x),t)",
           "TorusL =(Torus(x,y,z,t))* min( (sqrt(x*x+z*z)-P)^2 + y*y - R*R , Torus(x,y,z,t) ) "
         ],
