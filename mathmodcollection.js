@@ -15554,7 +15554,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Tori of Octahedra v02 by Abderrahman Taha 07/03/2017"
+          "Tori of Octahedra v02 by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "ToriofOctahedra"
@@ -15572,7 +15572,7 @@
           "R00=10"
         ],
         "Funct": [
-          "Octahedra=(abs(x)+abs(y)+abs(z))-3DOTSYMBOL8*R00/100",
+          "Octahedra=(abs(x)+abs(y)+abs(z))-38*R00/1000",
           "Octahedra1 = Octahedra(x,y,((abs(z)%(Step1/10))-Step1/20),t)",
           "Octahedra2 = -Octahedra1(((abs(x+2*t)%(Step2/10))-Step2/20),y,z+2*t,t)",
           "Cylinder2 = Octahedra2(x, (sqrt(y*y+z*z)-P1/10),(N1*atan2(y,z)/10),t)",
