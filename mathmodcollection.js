@@ -15384,6 +15384,12 @@
         },
         {
         "Iso3D": {
+        "Description": [
+          "Script by Abderrahman Taha to generate lattices having function definition F , thickness (T) and density (dx,dy,dz)"
+        ],
+         "Name": [
+           "SchwarzP_Lattice"
+        ],
         "Const": [
         "T=2/10",
         "dx=5",
@@ -15391,12 +15397,6 @@
         "dz=3",
         "m=1/1000",
         "cx=1/10000"
-        ],
-        "Description": [
-        "Script by Abderrahman Taha to generate lattices having function definition F , thickness (T) and density (dx,dy,dz)"
-        ],
-        "Name": [
-        "SchwarzP_Lattice"
         ],
         "Funct": [
         "F=cos(x)+cos(y)+cos(z)",
@@ -15508,7 +15508,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Helical Tori by Abderrahman Taha 02/05/2016"
+          "Helical Tori by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "Helical Tori"
@@ -15517,19 +15517,19 @@
           "HelicalTori"
         ],
         "Const": [
-          "M=1DOTSYMBOL3",
+          "M=13/10",
           "N1=8",
           "N2=8",
-          "P=8DOTSYMBOL5",
-          "R=14DOTSYMBOL5"
+          "P=85/10",
+          "R=145/10"
         ],
         "Funct": [
-          "Diamond=sin(x)*sin(y)*sin(z)-sin(x)*cos(y)*cos(z)-0DOTSYMBOL5*cos(x)*sin(y)*cos(z)",
-          "isoTransform=if(x*x<4DOTSYMBOL84,-Diamond(x,y,z+8*t,t),1)+M*exp(x*x-2DOTSYMBOL56)",
+          "Diamond=sin(x)*sin(y)*sin(z)-sin(x)*cos(y)*cos(z)-cos(x)*sin(y)*cos(z)/2",
+          "isoTransform=if(x*x<(484/100),-Diamond(x,y,z+8*t,t),1)+M*exp(x*x-(256/100))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
         ],
         "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z/1DOTSYMBOL5,t)"
+          "-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z/(15/10),t)"
         ],
         "Xmax": [
           "25"
