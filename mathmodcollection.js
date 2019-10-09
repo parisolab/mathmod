@@ -15917,21 +15917,21 @@
     },
     {
       "Iso3D": {
-        "Component": [
-          "PrettyBall_1"
-        ],
         "Description": [
-          "PrettyBall_2 by Abderrahman Taha 28/10/2015"
-        ],
-        "Fxyz": [
-          "if( (x*x+y*y+z*z<64) ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -0DOTSYMBOL6 ,1)  + exp(((x)*(x)+y*y+z*z-64)/3)"
+          "PrettyBall_2 by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "Pretty Ball_2"
         ],
+        "Component": [
+          "PrettyBall_1"
+        ],
         "Varu": [
           "Cos = cos(u)",
           "Sin = sin(u)"
+        ],
+        "Fxyz": [
+          "if( (x*x+y*y+z*z<64) ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -(6/10) ,(1))  + exp(((x)*(x)+y*y+z*z-64)/3)"
         ],
         "Xmax": [
           "8"
@@ -15954,13 +15954,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL73",
-          "G=1DOTSYMBOL8*abs(cos((x*x+y*y+z*z)/2DOTSYMBOL3) *sin((x*x+y*y+z*z)/2DOTSYMBOL3))",
-          "B=2*abs(cos((x*x+y*y+z*z)/2DOTSYMBOL3) *cos((x*x+y*y+z*z)/2DOTSYMBOL3) *sin((x*x+y*y+z*z)/2DOTSYMBOL3))",
+          "R=(73/100)",
+          "G=(18/10)*abs(cos(10*(x*x+y*y+z*z)/23) *sin(10*(x*x+y*y+z*z)/23))",
+          "B=2*abs(cos(10*(x*x+y*y+z*z)/23) *cos(10*(x*x+y*y+z*z)/23) *sin(10*(x*x+y*y+z*z)/23))",
           "T=1"
         ],
         "Name": "WorleyNoise",
-        "Noise": "0DOTSYMBOL5*NoiseW(x,y,z,(4),(2),0)"
+        "Noise": "NoiseW(x,y,z,(4),(2),(0))/2"
       }
     },
     {
