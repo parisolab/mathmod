@@ -15874,7 +15874,7 @@
     {
       "Iso3D": {
         "Description ": [
-          "Red giant by Abderrahman Taha 29/04/2016"
+          "Red giant by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "Red giant"
@@ -15883,7 +15883,7 @@
           "Redgiant"
         ],
         "Fxyz": [
-          "-((x*x+y*y+z*z-1)+(if((t<pi/2), (1),5*  if(t<pi,  abs(sin(t-pi/2)), abs(sin(3*t-pi/2))) ))*(NoiseW(6*x,6*y,5*cos(t)+6*z,(4),(2),0)  +NoiseW(4*sin(t)+6*x,5*cos(t) + 6*y,6*z,(4),(0),0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *(x^2+y^2+z^2-0DOTSYMBOL03)"
+          "-((x*x+y*y+z*z-1)+(if((t<pi/2), (1),5*  if(t<pi,  abs(sin(t-pi/2)), abs(sin(3*t-pi/2))) ))*(NoiseW(6*x,6*y,5*cos(t)+6*z,(4),(2),0)  +NoiseW(4*sin(t)+6*x,5*cos(t) + 6*y,6*z,(4),(0),0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *(x^2+y^2+z^2-(3/100))"
         ],
         "Xmax": [
           "1"
@@ -15906,9 +15906,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL6",
-          "G=2DOTSYMBOL4*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
-          "B=0DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=(6/10)",
+          "G=(24/10)*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
+          "B=(7/10)*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
