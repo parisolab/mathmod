@@ -15773,7 +15773,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Tori of Toris by Abderrahman Taha 05/05/2016"
+          "Tori of Toris by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "Tori of Toris"
@@ -15782,15 +15782,15 @@
           "TorToris"
         ],
         "Const": [
-          "Step1=0DOTSYMBOL6",
+          "Step1=6/10",
           "Step2=1",
-          "M=1DOTSYMBOL3",
+          "M=13/10",
           "N1=2",
-          "N2=3DOTSYMBOL5",
+          "N2=35/10",
           "P1=2",
           "P2=4",
-          "R00=0DOTSYMBOL04",
-          "R01=0DOTSYMBOL24"
+          "R00=4/100",
+          "R01=24/100"
         ],
         "Funct": [
           "Torus0 = (sqrt(x*x+y*y)-R01)^2 + z*z - R00",
