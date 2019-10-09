@@ -15721,7 +15721,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Tori of Spheres by Abderrahman Taha 05/05/2016"
+          "Tori of Spheres by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "Tori of Spheres"
@@ -15730,15 +15730,15 @@
           "TorSpheres"
         ],
         "Const": [
-          "Step1=0DOTSYMBOL7",
-          "Step2=0DOTSYMBOL7",
-          "M=1DOTSYMBOL3",
+          "Step1=7/10",
+          "Step2=7/10",
+          "M=13/10",
           "N1=2",
-          "N2=3DOTSYMBOL01",
-          "P1=2DOTSYMBOL5",
+          "N2=301/100",
+          "P1=25/10",
           "P2=4",
-          "R00=0DOTSYMBOL1",
-          "R01=0DOTSYMBOL24"
+          "R00=1/10",
+          "R01=24/100"
         ],
         "Funct": [
           "Sphere = (x*x+y*y+ z*z-R00)",
