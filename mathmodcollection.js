@@ -16358,7 +16358,10 @@
         {
             "Param3D": {
                 "Description ": [
-                    "Multi-sided Torus by Abderrahman Taha (Update) 24/10/2017"
+                    "Multi-sided Torus by Abderrahman Taha (Update) 08/10/2019"
+                ],
+                "Name": [
+                    "Multi-sidedTorus"
                 ],
                 "Component": [
                     "MultiSidedTorus "
@@ -16383,9 +16386,6 @@
                 ],
                 "Fz": [
                     "F2(u-t,v,t)"
-                ],
-                "Name": [
-                    "Multi-sidedTorus"
                 ],
                 "Umax": [
                     "pi"
@@ -16434,9 +16434,9 @@
             },
             "Texture": {
                 "Colors": [
-                    "R= if((i)%(M)>P | (j)%(M)>P,(0DOTSYMBOL5),(0DOTSYMBOL7)) ",
-                    "G= if((i)%(M)>P | (j)%(M)>P,(0DOTSYMBOL5),(0DOTSYMBOL14)) ",
-                    "B= if((i)%(M)>P | (j)%(M)>P,(0DOTSYMBOL3),(0DOTSYMBOL2))",
+                    "R= if((i)%(M)>P | (j)%(M)>P,(1/2),(7/10)) ",
+                    "G= if((i)%(M)>P | (j)%(M)>P,(1/2),(14/100)) ",
+                    "B= if((i)%(M)>P | (j)%(M)>P,(3/10),(2/10))",
                     "T= 1 "
                 ],
                 "Name": "square",
