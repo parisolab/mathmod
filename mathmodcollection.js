@@ -16489,7 +16489,7 @@
           "T=1"
         ],
         "Name": "WorleyNoise",
-        "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),0) +NoiseW(4*x,4*y,4*z,(4),(12),0)"
+        "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),(0)) +NoiseW(4*x,4*y,4*z,(4),(12),(0))"
       },
       "Sliders": {
         "Max": [
@@ -16670,7 +16670,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Schwarz P Tori-1.0 by Abderrahman Taha 25/02/2016"
+          "Schwarz P Tori-1.0 by Abderrahman Taha 08/10/2019"
         ],
         "Name": [
           "SchwarzP_Tori"
@@ -16688,11 +16688,11 @@
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "R=0DOTSYMBOL1*H*x/sqrt(x*x+y*y+z*z)",
+          "R=H*x/(10*sqrt(x*x+y*y+z*z))",
           "Iso4= (Iso(x+R(sin(x),sin(y),sin(z),t),y+R(sin(y),sin(x),sin(z),t), z+R(sin(z),sin(y),sin(x),t),t))",
           "Iso5= (Iso(x-R(sin(x),sin(y),sin(z),t),y-R(sin(y),sin(x),sin(z),t), z-R(sin(z),sin(y),sin(x),t),t))",
           "SchwarzP= (Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoTransform=if(x*x<10DOTSYMBOL24,SchwarzP(x,y-2*t,z-3*t,t),1)+0DOTSYMBOL1*M*exp(x*x-9)",
+          "isoTransform=if(x*x<(1024/100),SchwarzP(x,y-2*t,z-3*t,t),1)+M*exp(x*x-9)/10",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-R1),y,N1*atan2(z,x),t)"
         ],
         "Fxyz": [
@@ -16811,13 +16811,13 @@
     {
       "Iso3D": {
         "Description": [
-          "Diamond Tori-2.0 by Abderrahman Taha 24/02/2016"
+          "Diamond Tori-2.0 by Abderrahman Taha 07/10/2019"
         ],
         "Name": [
-          "Diamond Tori"
+          "DiamondTori"
         ],
         "Component": [
-          "Diamond Tori"
+          "DiamondTori"
         ],
         "Const": [
           "M=1",
@@ -16828,8 +16828,8 @@
         ],
         "Funct": [
           "Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
-          "isoCondition_0=(x^2-2DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-1DOTSYMBOL6^2)",
+          "isoCondition_0=(x^2-(22/10)^2)",
+          "isoCondition_1=(x^2-(16/10)^2)",
           "isoTransform=if((isoCondition_0(x,y,z,t)<0),-Diamond(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
         ],
@@ -16849,10 +16849,10 @@
           "-25"
         ],
         "Zmax": [
-          "10DOTSYMBOL5"
+          "105/10"
         ],
         "Zmin": [
-          "-10DOTSYMBOL5"
+          "-105/10"
         ]
       },
       "Sliders": {
@@ -16936,7 +16936,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Implicit Costa minimal surface v02 by Abderrahman Taha 25/03/2018"
+          "Implicit Costa minimal surface by Abderrahman Taha 07/10/2019"
         ],
          "Name": [
            "Implicit Costa"
@@ -16965,7 +16965,7 @@
           "k2=14/10"
         ],
         "Fxyz": [
-          "TickIsoExterior(x,y,8*z/10,t)"
+          "TickIsoExterior(x,y,(8*z/10),t)"
         ],
         "Xmax": [
           " X"
@@ -17000,29 +17000,31 @@
     {
       "Param3D": {
         "Description ": [
-          "Plain weaving patterns over sinusoidal surfaces by Abderrahman Taha 18/12/2017"
+          "Plain weave patterns over sinusoidal surfaces by Abderrahman Taha 07/10/2019"
+        ],
+        "Name": [
+          "Sinus_Plain_weave"
         ],
         "Component": [
-          "TwistedClifford_00",
-          "TwistedClifford_01",
-          "TwistedClifford_02",
-          "TwistedClifford_03",
-          "TwistedClifford_04",
-          "TwistedClifford_05",
-          "TwistedClifford_06",
-          "TwistedClifford_07",
-          "TwistedClifford_08",
-          "TwistedClifford_09",
-          "TwistedClifford_10",
-          "TwistedClifford_11",
-          "TwistedClifford_12",
-          "TwistedClifford_13",
-          "TwistedClifford_14",
-          "TwistedClifford_15"
+          "PlainWeave_00",
+          "PlainWeave_01",
+          "PlainWeave_02",
+          "PlainWeave_03",
+          "PlainWeave_04",
+          "PlainWeave_05",
+          "PlainWeave_06",
+          "PlainWeave_07",
+          "PlainWeave_08",
+          "PlainWeave_09",
+          "PlainWeave_10",
+          "PlainWeave_11",
+          "PlainWeave_12",
+          "PlainWeave_13",
+          "PlainWeave_14",
+          "PlainWeave_15"
         ],
         "Const": [
-          "cu=1/10000",
-          "cv=1/10000",
+          "c=1/10000",
           "umax=1",
           "umin=-1",
           "vmax=1",
@@ -17036,12 +17038,12 @@
           "Fx=u",
           "Fy=v",
           "Fz=-sin(pi*((u)^2+(v)^2))/3",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
@@ -17108,9 +17110,6 @@
           "Gz2(u,v,t)",
           "Gz2(u,v,t)",
           "Gz2(u,v,t)"
-        ],
-        "Name": [
-          "Sinus_Plain_weave"
         ],
         "Umax": [
           "umin+(umax-umin)/N -k",
@@ -17187,41 +17186,43 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL5",
-          "G=0DOTSYMBOL5",
-          "B=0DOTSYMBOL5",
+          "R=1/2",
+          "G=1/2",
+          "B=1/2",
           "T=1"
         ],
-        "Name": "Granit",
+        "Name": "Gray",
         "Noise": ""
       }
     },
     {
       "Param3D": {
         "Description ": [
-          "Plain weave Catenoid by Abderrahman Taha 18/12/2017"
+          "Plain weave Catenoid by Abderrahman Taha 07/10/2019"
+        ],
+        "Name": [
+          "Catenoid_Plain_weave"
         ],
         "Component": [
-          "TwistedClifford_00",
-          "TwistedClifford_01",
-          "TwistedClifford_02",
-          "TwistedClifford_03",
-          "TwistedClifford_04",
-          "TwistedClifford_05",
-          "TwistedClifford_06",
-          "TwistedClifford_07",
-          "TwistedClifford_08",
-          "TwistedClifford_09",
-          "TwistedClifford_10",
-          "TwistedClifford_11",
-          "TwistedClifford_12",
-          "TwistedClifford_13",
-          "TwistedClifford_14",
-          "TwistedClifford_15"
+          "PlainWeave_00",
+          "PlainWeave_01",
+          "PlainWeave_02",
+          "PlainWeave_03",
+          "PlainWeave_04",
+          "PlainWeave_05",
+          "PlainWeave_06",
+          "PlainWeave_07",
+          "PlainWeave_08",
+          "PlainWeave_09",
+          "PlainWeave_10",
+          "PlainWeave_11",
+          "PlainWeave_12",
+          "PlainWeave_13",
+          "PlainWeave_14",
+          "PlainWeave_15"
         ],
         "Const": [
-          "cu=1/10000",
-          "cv=1/10000",
+          "c=1/10000",
           "umax=pi",
           "umin=-pi",
           "vmax=pi",
@@ -17235,12 +17236,12 @@
           "Fx=2*cosh(v/2)*cos(u)",
           "Fy=2*cosh(v/2)*sin(u)",
           "Fz=v",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
@@ -17307,9 +17308,6 @@
           "Gz2(u,v,t)",
           "Gz2(u,v,t)",
           "Gz2(u,v,t)"
-        ],
-        "Name": [
-          "Catenoid_Plain_weave"
         ],
         "Umax": [
           "umin+(umax-umin)/N -k",
@@ -17383,6 +17381,16 @@
           "vmin+6*(vmax-vmin)/N+k",
           "vmin+7*(vmax-vmin)/N+k"
         ]
+      },
+      "Texture": {
+         "Colors": [
+            "R=1/2",
+            "G=1/2",
+            "B=1/2",
+            "T=1"
+         ],
+         "Name": "Gray",
+         "Noise": ""
       }
     },
     {
