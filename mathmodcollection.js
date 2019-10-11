@@ -17746,6 +17746,9 @@
           "600",
           "30"
         ],
+        "Name": [
+           "Wireframe_sinus"
+        ],
         "Umax": [
           "umax",
           "umax",
