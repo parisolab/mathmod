@@ -19672,9 +19672,9 @@
       "Texture": {
         "Name": "Lines3",
         "Colors": [
-          "R=1DOTSYMBOL5*cos(x*pi)*sin(z*pi)",
-          "G=1DOTSYMBOL5*sin(x*pi)*cos(y*pi)",
-          "B=1DOTSYMBOL5*sin(y*pi)*cos(z*pi)",
+          "R=(15/10)*cos(x*pi)*sin(z*pi)",
+          "G=(15/10)*sin(x*pi)*cos(y*pi)",
+          "B=(15/10)*sin(y*pi)*cos(z*pi)",
           "T=1"
         ],
         "Noise": "NoiseW(x,y,z,(1),(2),(0))"
@@ -19698,7 +19698,7 @@
           "R=cos(2*x*y*pi)",
           "G=sin(2*y*z*pi)",
           "B=sin(2*z*x*pi)",
-          "T=1DOTSYMBOL0"
+          "T=1"
         ],
         "Name": "Lines5",
         "Noise": "NoiseW(x,y,z,(1),(2),(0))"
@@ -19744,7 +19744,7 @@
       "Texture": {
         "Colors": [
           "R=(int(abs(x))+int(abs(y))+int(abs(z)))%2",
-          "G=0DOTSYMBOL1",
+          "G=1/10",
           "B=1",
           "T=1"
         ],
@@ -19756,8 +19756,8 @@
       "Texture": {
         "Colors": [
           "R=1",
-          "G=0DOTSYMBOL6*abs(cos(6*z*y*x*y*pi))",
-          "B=0DOTSYMBOL5+0DOTSYMBOL3*abs(cos(6*z*z*x*y*pi))",
+          "G=(6/10)*abs(cos(6*z*y*x*y*pi))",
+          "B=(1/2)+(3/10)*abs(cos(6*z*z*x*y*pi))",
           "T=1"
         ],
         "Name": "Granit_1",
@@ -19768,8 +19768,8 @@
       "Texture": {
         "Colors": [
           "R=1",
-          "G=0DOTSYMBOL9*abs(cos(pi*(x*x+y*y+z*z)))",
-          "B=0DOTSYMBOL5+0DOTSYMBOL2*abs(cos(3*cos(pi*(x*x+y*y+z*z))))",
+          "G=(9/10)*abs(cos(pi*(x*x+y*y+z*z)))",
+          "B=(1/2)+(2/10)*abs(cos(3*cos(pi*(x*x+y*y+z*z))))",
           "T=1"
         ],
         "Name": "Granit_2",
@@ -19779,9 +19779,9 @@
     {
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL41",
-          "G=0DOTSYMBOL81*abs(cos(x*x+y*y+z*z)*sin(x*x+y*y+z*z))",
-          "B=0DOTSYMBOL8601*abs(cos(x*x+y*y+z*z)*cos(x*x+y*y+z*z)*sin(x*x+y*y+z*z))",
+          "R=4/10",
+          "G=(8/10)*abs(cos(x*x+y*y+z*z)*sin(x*x+y*y+z*z))",
+          "B=(86/100)*abs(cos(x*x+y*y+z*z)*cos(x*x+y*y+z*z)*sin(x*x+y*y+z*z))",
           "T=1"
         ],
         "Name": "Granit_3",
@@ -19791,9 +19791,9 @@
     {
       "Texture": {
         "Colors": [
-          "R=2*0DOTSYMBOL41",
-          "G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=(8/10)",
+          "G=(16/10)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "B=(16/10)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
@@ -19803,9 +19803,9 @@
     {
       "Texture": {
         "Colors": [
-          "R=2*0DOTSYMBOL41",
-          "G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=8/10",
+          "G=(16/10)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "B=(16/10)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "PerlinNoise",
