@@ -19822,10 +19822,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL20",
-                "R=0DOTSYMBOL4",
-                "G=0DOTSYMBOL4",
-                "B=0DOTSYMBOL70",
+                "V=2/10",
+                "R=4/10",
+                "G=4/10",
+                "B=7/10",
                 "A=1"
               ]
             }
@@ -19834,10 +19834,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL3",
+                "V=3/10",
                 "R=1",
-                "G=0DOTSYMBOL1",
-                "B=0DOTSYMBOL31",
+                "G=1/10",
+                "B=31/100",
                 "A=1"
               ]
             }
@@ -19846,9 +19846,9 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
-                "R=0DOTSYMBOL51",
-                "G=0DOTSYMBOL17",
+                "V=6/10",
+                "R=51/100",
+                "G=17/100",
                 "B=1",
                 "A=1"
               ]
@@ -19858,10 +19858,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
+                "V=6/10",
                 "R=1",
-                "G=0DOTSYMBOL3",
-                "B=0DOTSYMBOL1",
+                "G=3/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -19871,9 +19871,9 @@
               "Name": "Red",
               "Vrgba": [
                 "V=1",
-                "R=0DOTSYMBOL915",
-                "G=0DOTSYMBOL17",
-                "B=0DOTSYMBOL1",
+                "R=9/10",
+                "G=17/100",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -19891,10 +19891,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL20",
-                "R=0DOTSYMBOL90",
-                "G=0DOTSYMBOL9",
-                "B=0DOTSYMBOL40",
+                "V=2/10",
+                "R=9/10",
+                "G=9/10",
+                "B=4/10",
                 "A=1"
               ]
             }
@@ -19903,10 +19903,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL3",
+                "V=3/10",
                 "R=1",
-                "G=0DOTSYMBOL1",
-                "B=0DOTSYMBOL31",
+                "G=1/10",
+                "B=31/100",
                 "A=1"
               ]
             }
@@ -19915,9 +19915,9 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
+                "V=6/10",
                 "R=1",
-                "G=0DOTSYMBOL7",
+                "G=7/10",
                 "B=1",
                 "A=1"
               ]
@@ -19927,10 +19927,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
+                "V=6/10",
                 "R=1",
-                "G=0DOTSYMBOL3",
-                "B=0DOTSYMBOL1",
+                "G=3/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -19940,9 +19940,9 @@
               "Name": "Red",
               "Vrgba": [
                 "V=1",
-                "R=0DOTSYMBOL15",
-                "G=0DOTSYMBOL6",
-                "B=0DOTSYMBOL1",
+                "R=15/100",
+                "G=6/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -19960,7 +19960,7 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL0",
+                "V=0",
                 "R=1",
                 "G=0",
                 "B=0",
@@ -19972,7 +19972,7 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL2",
+                "V=2/10",
                 "R=0",
                 "G=0",
                 "B=1",
@@ -19984,7 +19984,7 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL5",
+                "V=5/10",
                 "R=1",
                 "G=1",
                 "B=0",
@@ -19996,7 +19996,7 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL7",
+                "V=7/10",
                 "R=0",
                 "G=1",
                 "B=0",
@@ -20008,7 +20008,7 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=1DOTSYMBOL0",
+                "V=1",
                 "R=1",
                 "G=0",
                 "B=0",
@@ -20029,22 +20029,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL20",
-                "R=1DOTSYMBOL",
-                "G=0DOTSYMBOL85",
-                "B=0DOTSYMBOL40",
-                "A=1"
-              ]
-            }
-          },
-          {
-            "Color": {
-              "Name": "Red",
-              "Vrgba": [
-                "V=0DOTSYMBOL3",
+                "V=2/10",
                 "R=1",
-                "G=0DOTSYMBOL1",
-                "B=0DOTSYMBOL31",
+                "G=85/100",
+                "B=4/10",
                 "A=1"
               ]
             }
@@ -20053,9 +20041,21 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
-                "R=0DOTSYMBOL31",
-                "G=0DOTSYMBOL31",
+                "V=3/10",
+                "R=1",
+                "G=1/10",
+                "B=31/100",
+                "A=1"
+              ]
+            }
+          },
+          {
+            "Color": {
+              "Name": "Red",
+              "Vrgba": [
+                "V=6/10",
+                "R=31/100",
+                "G=31/100",
                 "B=1",
                 "A=1"
               ]
@@ -20065,10 +20065,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
+                "V=6/10",
                 "R=1",
-                "G=0DOTSYMBOL3",
-                "B=0DOTSYMBOL1",
+                "G=3/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -20078,9 +20078,9 @@
               "Name": "Red",
               "Vrgba": [
                 "V=1",
-                "R=0DOTSYMBOL4",
-                "G=0DOTSYMBOL6",
-                "B=0DOTSYMBOL1",
+                "R=4/10",
+                "G=6/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -20097,22 +20097,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL40",
-                "R=1DOTSYMBOL",
-                "G=0DOTSYMBOL85",
-                "B=0DOTSYMBOL40",
-                "A=1"
-              ]
-            }
-          },
-          {
-            "Color": {
-              "Name": "Red",
-              "Vrgba": [
-                "V=0DOTSYMBOL5",
+                "V=4/10",
                 "R=1",
-                "G=0DOTSYMBOL1",
-                "B=0DOTSYMBOL31",
+                "G=85/100",
+                "B=4/10",
                 "A=1"
               ]
             }
@@ -20121,9 +20109,21 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL5",
-                "R=0DOTSYMBOL31",
-                "G=0DOTSYMBOL31",
+                "V=5/10",
+                "R=1",
+                "G=1/10",
+                "B=31/100",
+                "A=1"
+              ]
+            }
+          },
+          {
+            "Color": {
+              "Name": "Red",
+              "Vrgba": [
+                "V=5/10",
+                "R=31/100",
+                "G=31/100",
                 "B=1",
                 "A=1"
               ]
@@ -20133,10 +20133,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL7",
+                "V=7/10",
                 "R=1",
-                "G=0DOTSYMBOL3",
-                "B=0DOTSYMBOL1",
+                "G=3/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -20146,9 +20146,9 @@
               "Name": "Red",
               "Vrgba": [
                 "V=1",
-                "R=0DOTSYMBOL4",
-                "G=0DOTSYMBOL6",
-                "B=0DOTSYMBOL1",
+                "R=4/10",
+                "G=6/10",
+                "B=1/10",
                 "A=1"
               ]
             }
