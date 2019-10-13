@@ -17625,8 +17625,7 @@
                 "Name": "L",
                 "Noise": ""
             }
-        }
-        ,
+        },
         {
             "Param3D": {
                 "Description ": [
