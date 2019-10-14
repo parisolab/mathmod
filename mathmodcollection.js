@@ -84,12 +84,12 @@
          "Fx= if(v<2*pi, (A-(A-1) * cos(v)) * cos(u), if(v<3*pi, - B + ( B+cos(u))*cos(v),- B + B *cos(v)-cos(u)))",
          "Fy= if(v<2*pi,(A - (A-1)*cos(v))*sin(u), sin(u))",
          "Fz= if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,(( D -1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
-         "DFxu=((Fx(u,v,t)-Fx(u+c,v,t))/c)",
-         "DFxv=((Fx(u,v,t)-Fx(u,v+c,t))/c)",
-         "DFyu=((Fy(u,v,t)-Fy(u+c,v,t))/c)",
-         "DFyv=((Fy(u,v,t)-Fy(u,v+c,t))/c)",
-         "DFzu=((Fz(u,v,t)-Fz(u+c,v,t))/c)",
-         "DFzv=((Fz(u,v,t)-Fz(u,v+c,t))/c)",
+         "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+         "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+         "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+         "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+         "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+         "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
          "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
          "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
          "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
@@ -17629,7 +17629,7 @@
         {
             "Param3D": {
                 "Description ": [
-                    "Triaxial weave fabric by Abderrahman Taha 30/09/2019"
+                    "Triaxial weave fabric by Abderrahman Taha 14/10/2019"
                 ],
                 "Name": [
                     "Triaxial weave"
@@ -17649,8 +17649,7 @@
                     "Triaxial_11"
                 ],
                 "Const": [
-                    "cu=1/10000",
-                    "cv=1/10000",
+                    "c=1/10000",
                     "umax=1",
                     "umin=-1",
                     "vmax=1",
@@ -17678,12 +17677,12 @@
                     "Fx=u",
                     "Fy=v",
                     "Fz=0",
-                    "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-                    "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-                    "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-                    "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-                    "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-                    "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+                    "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+                    "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+                    "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+                    "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+                    "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+                    "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
                     "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
                     "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
                     "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
