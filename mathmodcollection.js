@@ -12433,7 +12433,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Holed Spheres by Abderrahman Taha 02/10/2019"
+          "Holed Spheres by Abderrahman Taha 14/10/2019"
         ],
         "Name": [
           "Holed_Spheres"
@@ -12449,12 +12449,12 @@
           "Fx=cos(u)*cos(v)",
           "Fy=cos(u)*sin(v)",
           "Fz=sin(u)",
-          "DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
