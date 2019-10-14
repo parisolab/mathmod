@@ -12150,7 +12150,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Embedding of the Square Flat Torus (Level 2 ) by Abderrahman Taha 13/10/2015"
+          "Embedding of the Square Flat Torus (Level 2 ) by Abderrahman Taha 14/10/2019"
         ],
         "Name": [
           "Embedded Square Flat Torus L2"
@@ -12167,12 +12167,12 @@
           "Fx=(4+ 2*cos(u))*cos(v)",
           "Fy=2*sin(u)",
           "Fz=(4+2*cos(u))*sin(v)",
-          "DFxu=((Fx(u,v,t)-Fx(u+c,v,t))/c)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+c,t))/c)",
-          "DFyu=((Fy(u,v,t)-Fy(u+c,v,t))/c)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+c,t))/c)",
-          "DFzu=((Fz(u,v,t)-Fz(u+c,v,t))/c)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+c,t))/c)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
@@ -12264,7 +12264,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Shells by Abderrahman Taha 02/10/2019"
+          "Shells by Abderrahman Taha 14/10/2019"
         ],
         "Name": [
           "Shells_1"
@@ -12279,12 +12279,12 @@
           "Fx=-cos(u) *(3 *cos(v) - cos(3 *v))",
           "Fy= 3 *sin(v) - sin(3 * v)",
           "Fz= sin(u) *(3 *cos(v) - cos(3 * v))",
-          "DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
@@ -12404,11 +12404,11 @@
     },
         {
         "Param3D": {
-        "Description ": ["Clifford Torus with spines (urchin) by Abderrahman Taha 11/08/2018"
+        "Description ": ["Clifford Torus with spines (urchin) by Abderrahman Taha 11/10/2019"
         ],
         "Name": ["Urchin"
         ],
-        "Funct": ["Fx=-(cos(u+v)/(sqrt(2)+cos(v-u)))","Fy=sin(v-u)/(sqrt(2)+cos(v-u))","Fz=sin(u+v)/(sqrt(2)+cos(v-u))","DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)","DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)","DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)","DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)","DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)","DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)","n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Thickness=-((abs(sin(15*u)*cos(15*v)))^11)/3","Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
+        "Funct": ["Fx=-(cos(u+v)/(sqrt(2)+cos(v-u)))","Fy=sin(v-u)/(sqrt(2)+cos(v-u))","Fz=sin(u+v)/(sqrt(2)+cos(v-u))","DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)","DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)","DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)","DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)","DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)","DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)","n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Thickness=-((abs(sin(15*u)*cos(15*v)))^11)/3","Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Component": ["HoledCliffordTorus"
         ],
