@@ -13107,14 +13107,14 @@
     },
     {
       "Iso3D": {
+        "Description ": [
+          "The core by Abderrahman Taha 15/10/2019"
+        ],
         "Name": [
           "The Core"
         ],
         "Component": [
           "Core"
-        ],
-        "Description ": [
-          "The core by Abderrahman Taha 27/09/2015"
         ],
         "Fxyz": [
           "-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,(4),(2),0)+NoiseW(6*x,6*y,6*z,(4),(0),(0)))/5)*(atan2(x,y)<pi/2)"
@@ -13140,9 +13140,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL7",
-          "G=2DOTSYMBOL4*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
-          "B=0DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=7/10",
+          "G=(24/10)*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
+          "B=(7/10)*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
@@ -13170,10 +13170,10 @@
           "u*cos(t - v)"
         ],
         "Umax": [
-          "1DOTSYMBOL3"
+          "13/10"
         ],
         "Umin": [
-          "0DOTSYMBOL3"
+          "3/10"
         ],
         "Vmax": [
           "2*pi"
@@ -13184,9 +13184,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=1DOTSYMBOL5*0DOTSYMBOL41",
-          "G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=6/10",
+          "G=(16/10)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "B=(17/10)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
