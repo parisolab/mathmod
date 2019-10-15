@@ -12993,7 +12993,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Devil's Plate by Abderrahman Taha 01/10/2015"
+          "Devil's Plate by Abderrahman Taha 15/10/2019"
         ],
         "Name": [
           "Devil Plate"
@@ -13002,53 +13002,51 @@
           "DevilPlate"
         ],
         "Const": [
-          "cx=0DOTSYMBOL00001",
-          "cy=0DOTSYMBOL00001",
-          "cz=0DOTSYMBOL00001"
+          "c=1/10000",
+          "Th=1/10"
         ],
         "Funct": [
-          "Devil=x^4+2*x^2*z^2-0DOTSYMBOL36*x^2-y^4+0DOTSYMBOL25*y^2+z^4",
-          "Devil2=Devil(x,sqrt(y*y+z*z)-1DOTSYMBOL5,z,t)",
-          "Thickness2=(0DOTSYMBOL1)",
-          "IsoExterior=Devil2(x,y,sqrt(x*x+z*z)-1DOTSYMBOL5,t)",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso2=(IsoExterior(x+t*DFx2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),y+t*DFy2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),z+t*DFz2(x,y,z,t)*Thickness2(x,y,z,t)/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))"
+          "Devil=x^4+2*x^2*z^2-(36/100)*x^2-y^4+(25/100)*y^2+z^4",
+          "Devil2=Devil(x,sqrt(y*y+z*z)-(15/10),z,t)",
+          "IsoExterior=Devil2(x,y,sqrt(x*x+z*z)-(15/10),t)",
+          "DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)",
+          "DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)",
+          "DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
+          "R=x/sqrt(x*x+y*y+z*z)",
+          "Iso=(IsoExterior(x+t*Th*R(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+t*Th*R(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+t*Th*R(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
+          "ThickIsoExterior=(Iso(x,y,z,1)*Iso(x,y,z,-1))"
         ],
         "Fxyz": [
-          "if(y<4DOTSYMBOL4 & y> -2DOTSYMBOL4, ThickIsoExterior(x/1DOTSYMBOL5,y,z,t), 1)"
+          "if(y<(44/10) & y> -(24/10), ThickIsoExterior((10*x/15),y,z,t), 1)"
         ],
         "Xmax": [
-          " 4DOTSYMBOL5"
+          " 45/10"
         ],
         "Xmin": [
-          "-4DOTSYMBOL5"
+          "-45/10"
         ],
         "Ymax": [
-          " 4DOTSYMBOL5"
+          " 45/10"
         ],
         "Ymin": [
-          "-2DOTSYMBOL5"
+          "-25/10"
         ],
         "Zmax": [
-          " 7DOTSYMBOL5"
+          " 75/10"
         ],
         "Zmin": [
-          "-7DOTSYMBOL5"
+          "-75/10"
         ]
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL95*abs(cos(z*y*x))",
-          "G=0DOTSYMBOL45*abs(cos(z*y*x))",
-          "B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
+          "R=9/10",
+          "G=4/10",
+          "B=0",
           "T=1"
         ],
-        "Name": "Granit_1",
-        "Noise": "NoiseP((x-14),(y-17),(z-16),(10),(7),(12/100))"
+        "Name": "Clay",
+        "Noise": ""
       }
     },
     {
