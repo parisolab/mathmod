@@ -7232,13 +7232,14 @@
           "ExoticFlower"
         ],
         "Const": [
-          "c=1/10000"
+          "c=1/10000",
+          "A=sqrt(2)"
         ],
         "Funct": [
           "Th= -(6/10)*(abs(sin(15*u)*cos(15*v)))^(3*sin(7*u-5*v))^2",
-          "Fx=-(cos(u+v)/(sqrt(2)+cos(v-u)))",
-          "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
-          "Fz=sin(u+v)/(sqrt(2)+cos(v-u))",
+          "Fx=-(cos(u+v)/(A+cos(v-u)))",
+          "Fy=sin(v-u)/(A+cos(v-u))",
+          "Fz=sin(u+v)/(A+cos(v-u))",
           "DFxu= ((Fx(u+c,v,t)-Fx(u,v,t))/c)",
           "DFxv= ((Fx(u,v+c,t)-Fx(u,v,t))/c)",
           "DFyu= ((Fy(u+c,v,t)-Fy(u,v,t))/c)",
