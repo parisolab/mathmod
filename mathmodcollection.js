@@ -12705,7 +12705,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Twisted Clifford Torus by Abderrahman Taha 05/10/2015"
+          "Twisted Clifford Torus by Abderrahman Taha 14/10/2019"
         ],
         "Name": [
           "Twisted Clifford Torus"
@@ -12714,24 +12714,23 @@
           "TwistedClifford"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
+          "c=1/100000"
         ],
         "Funct": [
-          "Fx=cos(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "Fy=sin(v-u)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "Fz=sin(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "Fx=cos(u+v)/(sqrt(2)+cos(v-u))",
+          "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
+          "Fz=sin(u+v)/(sqrt(2)+cos(v-u))",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
           "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Thickness=0DOTSYMBOL3*sin(10*u)*cos(10*v)",
+          "Thickness=(3/10)*sin(10*u)*cos(10*v)",
           "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
           "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
           "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
