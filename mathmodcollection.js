@@ -12445,7 +12445,7 @@
           "c=1/100000"
         ],
         "Funct": [
-          "Th= (3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
+          "Th= (3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(18/10))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(55/10))",
           "Fx=cos(u)*cos(v)",
           "Fy=cos(u)*sin(v)",
           "Fz=sin(u)",
@@ -12489,7 +12489,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Holed Clifford Torus by Abderrahman Taha 02/10/2019"
+          "Holed Clifford Torus by Abderrahman Taha 14/10/2019"
         ],
         "Name": [
           "Holed Clifford Torus"
@@ -12504,12 +12504,12 @@
           "Fx=-(cos(u+v)/(sqrt(2)+cos(v-u)))",
           "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
           "Fz=sin(u+v)/(sqrt(2)+cos(v-u))",
-          "DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
@@ -12545,7 +12545,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Spiny Sea Creature by Abderrahman Taha 02/10/2019"
+          "Spiny Sea Creature by Abderrahman Taha 14/10/2019"
         ],
         "Name": [
           "Spiny Sea Creature"
@@ -12560,12 +12560,12 @@
           "Fx=cos(u+v)/(sqrt(2)+cos(v-u))",
           "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
           "Fz=sin(u+v)/(sqrt(2)+cos(v-u))",
-          "DFxu= ((Fx(u,v,t)-Fx(u+c,v,t))/c)",
-          "DFxv= ((Fx(u,v,t)-Fx(u,v+c,t))/c)",
-          "DFyu= ((Fy(u,v,t)-Fy(u+c,v,t))/c)",
-          "DFyv= ((Fy(u,v,t)-Fy(u,v+c,t))/c)",
-          "DFzu= ((Fz(u,v,t)-Fz(u+c,v,t))/c)",
-          "DFzv= ((Fz(u,v,t)-Fz(u,v+c,t))/c)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
