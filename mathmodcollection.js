@@ -7283,7 +7283,7 @@
         ],
         "Name": ["The_Dome_01"
         ],
-        "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","Scherk2=Scherk(N*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-R),N*atan2(z,y),t)","IsoExterior=Scherk2(x,y,z,t)","DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+c,y,z,t))/c)","DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+c,z,t))/c)","DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+c,t))/c)","Rapp=x/sqrt(x*x+y*y+z*z)","Iso3=(IsoExterior(x- Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y-Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z-Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","Iso2=(IsoExterior(x+ Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y+Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z+Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
+        "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","Scherk2=Scherk(N*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-R),N*atan2(z,y),t)","IsoExterior=Scherk2(x,y,z,t)","DFx2=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy2=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz2=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=x/sqrt(x*x+y*y+z*z)","Iso3=(IsoExterior(x- Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y-Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z-Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","Iso2=(IsoExterior(x+ Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y+Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z+Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
         ],
         "Fxyz": ["if((sqrt(x*x+y*y+z*z)-24)<(0),TickIsoExterior(z,y,x,t),(1))"
         ],
@@ -7317,7 +7317,7 @@
         ]
         },
         "Texture": {
-        "Colors": ["R=(8/10)*abs(cos(x)*cos(y)*cos(z))^(1/10)","G=(2/10)","B=(1/100)","T=1"
+        "Colors": ["R=(7/10)*(cos(x)*cos(y)*cos(z))^(1/10)","G=(7/10)","B=(7/10)","T=1"
         ],
         "Name": "Lines",
         "Noise": ""
