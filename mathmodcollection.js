@@ -13052,7 +13052,7 @@
     {
       "Iso3D": {
         "Description ": [
-          "Geode by Abderrahman Taha 28/09/2015"
+          "Geode by Abderrahman Taha 15/10/2019"
         ],
         "Name": [
           "Geode_01"
@@ -13066,8 +13066,8 @@
           "B=3"
         ],
         "Fxyz": [
-          "-((((x/1DOTSYMBOL01)^2+y^2+(z/1DOTSYMBOL05)^2-1)+(NoiseW(A*x,A*y,A*z,(4),(2),(1))+NoiseW(A*x,A*y,A*z,(4),(0),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
-          "-(((x^2+y^2+z^2-0DOTSYMBOL21)*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"
+          "-(((x^2+y^2+z^2-1)+(NoiseW(A*x,A*y,A*z,(4),(2),(1))+NoiseW(A*x,A*y,A*z,(4),(0),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
+          "-(((x^2+y^2+z^2-(21/100))*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"
         ],
         "Xmax": [
           "(15/10)",
@@ -13086,8 +13086,8 @@
           "-1"
         ],
         "Zmax": [
-          "1DOTSYMBOL5",
-          "1DOTSYMBOL5"
+          "15/10",
+          "15/10"
         ],
         "Zmin": [
           "-1",
@@ -13096,9 +13096,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=if((x*x+y*y+z*z)>0DOTSYMBOL81,0DOTSYMBOL95*cos((x*x+y*y+z*z)/1DOTSYMBOL7), 0DOTSYMBOL2)",
-          "G=if((x*x+y*y+z*z)>0DOTSYMBOL8, 0DOTSYMBOL8*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/0DOTSYMBOL3), 0DOTSYMBOL5*sin((x*x+y*y+z*z)*9))",
-          "B=if((x*x+y*y+z*z)<0DOTSYMBOL8,(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+0DOTSYMBOL4, 0DOTSYMBOL1)",
+          "R=if((x*x+y*y+z*z)>(8/10),(95/100)*cos(10*(x*x+y*y+z*z)/17), (2/10))",
+          "G=if((x*x+y*y+z*z)>(8/10),(8/10)*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin(10*(x*x+y*y+z*z)/3), sin((x*x+y*y+z*z)*9)/2)",
+          "B=if((x*x+y*y+z*z)<(8/10),(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+(4/10), (1/10))",
           "T=1"
         ],
         "Name": "WorleyNoise",
