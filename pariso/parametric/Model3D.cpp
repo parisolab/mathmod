@@ -1256,7 +1256,8 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
         for(uint i= 0; i < NbVertexTmp; i++)
         {
             if(i >= uint(components->Parametricpositions[3*cmpId+2]))
-                cmpId++;
+                if((masterthread->Nb_paramfunctions+1) > cmpId)
+                    cmpId++;
             val[0]= double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
             val[1]= double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
             val[2]= double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
