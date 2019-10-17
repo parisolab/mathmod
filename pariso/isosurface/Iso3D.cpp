@@ -1436,7 +1436,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
     // Parse
     if(Rgbt!= "" && Nb_rgbts == 4)
         for(uint i=0; i<Nb_rgbts; i++)
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t")) >= 0)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId")) >= 0)
             {
                 stdError.strError = Rgbts[i];
                 return stdError;
@@ -1984,7 +1984,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
     double tmp,
             *ValCol,
-            val[4];
+            val[10];
     ValCol = new double[NbTextures+5];
     val[3] = masterthread->stepMorph;
 
