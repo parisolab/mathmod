@@ -7325,50 +7325,50 @@
         },
     {
       "Iso3D": {
-        "Name": [
-          "Wall Pattern Torus-02"
-        ],
         "Description": [
-          "Wall Pattern Torus-03 by Abderrahman Taha 10/01/2016"
+          "Wall Pattern Torus-03 by Abderrahman Taha 18/10/2019"
+        ],
+         "Name": [
+          "Wall Pattern Torus-02"
         ],
         "Component": [
           "f_hex_y"
         ],
+        "Const": [
+          "X=(57/10)"
+        ],
         "Funct": [
-          "x1=abs((abs(x) % sqrt(3DOTSYMBOL0))-sqrt(3DOTSYMBOL0)/2)",
-          "y1 = abs((abs(y) % 3)-1DOTSYMBOL5)",
-          "x2=sqrt(3DOTSYMBOL0)/2-x1(x,y,z,t)",
-          "y2=1DOTSYMBOL5-y1(x,y,z,t)",
-          "x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
-          "y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
+          "x1=abs((abs(x) % sqrt(3))-sqrt(3)/2)",
+          "y1 = abs((abs(y) % 3)-(15/10))",
+          "x2=sqrt(3)/2-x1(x,y,z,t)",
+          "y2=(15/10)-y1(x,y,z,t)",
           "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
           "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-          "f_hex_y_1=if(abs(z)<0DOTSYMBOL06,f_hex_y(x,y,z,0)-0DOTSYMBOL08,1)",
-          "Cylinder=-f_hex_y_1(x,4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z)-1DOTSYMBOL5,t)",
-          "Sphere=f_hex_y_1(6DOTSYMBOL3*atan2(x,sqrt(y*y+z*z)),3DOTSYMBOL815*atan2(z,y),sqrt(y*y+z*z+x*x)-4DOTSYMBOL6,t)",
-          "Torus=Cylinder(6DOTSYMBOL03*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
+          "f_hex_y_1=if(100*abs(z)<6,f_hex_y(x,y,z,0)-(8/100),1)",
+          "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(15/10),t)",
+          "Torus=Cylinder(6*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
         ],
         "Fxyz": [
           "Torus(x,y,z,t)"
         ],
         "Xmax": [
-          "5DOTSYMBOL7"
+          "X"
         ],
         "Xmin": [
-          "-5DOTSYMBOL7"
+          "-X"
         ],
         "Ymax": [
-          "5DOTSYMBOL7"
+          "X"
         ],
         "Ymin": [
-          "-5DOTSYMBOL7"
+          "-X"
         ],
         "Zmax": [
-          "1DOTSYMBOL6"
+          "16/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL6"
+          "-16/10"
         ]
       }
     },
