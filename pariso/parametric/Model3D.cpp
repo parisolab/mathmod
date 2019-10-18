@@ -1199,7 +1199,7 @@ uint ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    uint Jprime,cmpId=0;
+    uint Jprime,cmpId=0, K=0;
     double tmp, ValCol[100], val[10];
     val[3] = masterthread->stepMorph;
 
@@ -1255,16 +1255,21 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            if(i >= uint(components->Parametricpositions[3*cmpId+2]))
-                if((masterthread->Nb_paramfunctions+1) > cmpId)
+            if((i >= uint(components->Parametricpositions[3*cmpId+2])))
+            {
+                K = cmpId;
+                if(masterthread->Nb_paramfunctions>cmpId)
+                {
                     cmpId++;
+                }
+            }
             val[0]= double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
             val[1]= double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
             val[2]= double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
 
             val[7] = double(i);
             val[8] = double(Vgrid);
-            val[9] = double(cmpId);
+            val[9] = double(K);
             Jprime = (i)/(Ugrid);
             val[6] = double(Jprime);
             val[4] = val[6]/double(Ugrid) ;
