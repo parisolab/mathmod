@@ -1982,7 +1982,7 @@ uint Iso3D::CNDtoUse(uint index, struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    uint cmpId=0;
+    uint cmpId=0, K=0, nbvertx=0;
     double tmp,
             *ValCol,
             val[10];
@@ -2030,14 +2030,19 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            if(i >= uint(components->Parametricpositions[2*cmpId+2]))
-                if((masterthread->Nb_implicitfunctions+1) > cmpId)
-                    cmpId++;
+                if((i >= uint(components->IsoPts[2*cmpId])))
+                {
+                    K = cmpId;
+                    if(masterthread->Nb_implicitfunctions>cmpId)
+                    {
+                        cmpId++;
+                    }
+                }
+
             val[0]= double(NormVertexTab[i*TypeDrawin  + 3 + TypeDrawinNormStep ]);
             val[1]= double(NormVertexTab[i*TypeDrawin  + 4 + TypeDrawinNormStep ]);
             val[2]= double(NormVertexTab[i*TypeDrawin  + 5 + TypeDrawinNormStep ]);
-            val[3] = double(cmpId);
-
+            val[4] = double(K);
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
