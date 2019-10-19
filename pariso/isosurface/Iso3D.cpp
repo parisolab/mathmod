@@ -1982,7 +1982,7 @@ uint Iso3D::CNDtoUse(uint index, struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 {
-    uint cmpId=0, K=0, nbvertx=0;
+    uint cmpId=0, K=0;
     double tmp,
             *ValCol,
             val[10];
