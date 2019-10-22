@@ -104,10 +104,10 @@ public :
     uint Nb_rgbts, Nb_vrgbts, Nb_constants, Nb_implicitfunctions, Nb_functs;
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
-    int *GridTable;
+    uint *grid;
     double Octaves, Lacunarity, Gain;
     ImplicitStructure *ImplicitStructs;
-    bool *UsedFunct, *UsedFunct2;
+    bool *UsedFunct, *UsedFunct2, gridnotnull;
 public :
     void DeleteMasterParsers();
     void AllocateMasterParsers();

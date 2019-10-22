@@ -174,7 +174,7 @@ void IsoMasterThread::IsoMasterTable()
     x_Step       = new double[NbComponent];
     y_Step       = new double[NbComponent];
     z_Step       = new double[NbComponent];
-    GridTable    = new int[NbComponent];
+    grid         = new uint[NbComponent];
     SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
     ConstValues  = new double[NbConstantes];
@@ -223,7 +223,7 @@ IsoMasterThread::~IsoMasterThread()
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
-    delete[] GridTable;
+    delete[] grid;
     delete[] ImplicitStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
@@ -792,20 +792,20 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 ImplicitFct ="";
             }
         }
-
+/*
         for(uint i=0; i<Nb_implicitfunction; i++)
-            GridTable[i] = 0;
+            grid[i] = 0;
         for(uint i=0; i<Nb_implicitfunction+1; i++)
         {
             if(ImplicitStructs[i].grid != "")
             {
                 Cstparser.Parse(ImplicitStructs[i].grid, "u");
-                GridTable[i] = int(Cstparser.Eval(&val)); //position is used only to make the Eval function work properlly
+                grid[i] = uint(Cstparser.Eval(&val)); //position is used only to make the Eval function work properlly
             }
         }
+        */
         return Nb_implicitfunction;
     }
-
 
     else if(type == 8) //Cnd
     {
@@ -1424,7 +1424,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double vals2[] = {0,0};
-    const uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
+    uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
 
     if(AllComponentTraited /*&& morph_activated != 1*/)
     {
@@ -1516,6 +1516,10 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 
     for(uint IsoIndex=0; IsoIndex<Nb_implicitfunctions+1; IsoIndex++)
     {
+        if(gridnotnull)
+        {
+            limitX = limitY = limitZ = grid[IsoIndex];
+        }
         xLocal2[IsoIndex*NbMaxGrid]=xSupParser[IsoIndex].Eval(vals);
         yLocal2[IsoIndex*NbMaxGrid]=ySupParser[IsoIndex].Eval(vals);
         zLocal2[IsoIndex*NbMaxGrid]=zSupParser[IsoIndex].Eval(vals);
@@ -1766,7 +1770,7 @@ void Iso3D::IsoBuild (
     bool *typeCND
 )
 {
-    uint    l, NbTriangleIsoSurfaceTmp;
+    uint l, NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
     PreviousSizeMinimalTopology = 0;
     NbPolyMinimalTopology = 0;
     NbPointIsoMap= 0;
@@ -1787,6 +1791,7 @@ void Iso3D::IsoBuild (
     {
         times.restart();
     }
+
     // generate Isosurface for all the implicit formulas
     for(uint fctnb= 0; fctnb< masterthread->Nb_implicitfunctions+1; fctnb++)
     {
@@ -1794,6 +1799,22 @@ void Iso3D::IsoBuild (
         {
             message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_implicitfunctions+1)+"==> Math calculation");
             emitUpdateMessageSignal();
+        }
+
+        if(masterthread->gridnotnull)
+        {
+
+            masterthread->Zgrid  =
+                masterthread->Ygrid  =
+                    masterthread->Xgrid  = masterthread->grid[fctnb];
+            for(uint th=0; th+1 < WorkerThreadsNumber; th++)
+                workerthreads[th].Xgrid =
+                workerthreads[th].Ygrid =
+                workerthreads[th].Zgrid = masterthread->grid[fctnb];
+
+            Zgrid  =
+                Ygrid  =
+                    Xgrid  = masterthread->grid[fctnb];
         }
 
         IsoComponentId = fctnb;
@@ -1831,7 +1852,22 @@ void Iso3D::IsoBuild (
             Stop = Stop || workerthreads[nbthreads].StopCalculations;
 
         if(StopCalculations || Stop)
+        {
+            if(masterthread->gridnotnull)
+            {
+                masterthread->Zgrid  =
+                    masterthread->Ygrid  =
+                        masterthread->Xgrid  = PreviousGridVal;
+                for(uint th=0; th+1 < WorkerThreadsNumber; th++)
+                    workerthreads[th].Xgrid =
+                    workerthreads[th].Ygrid =
+                    workerthreads[th].Zgrid = PreviousGridVal;
+                Zgrid  =
+                    Ygrid  =
+                        Xgrid  = PreviousGridVal;
+            }
             return;
+        }
 
         if(masterthread->morph_activated != 1)
         {
@@ -1895,7 +1931,7 @@ void Iso3D::IsoBuild (
             return;
         }
         // Save Number of Polys and vertex :
-        NbVertexTmp                        += NbPointIsoMap;
+        NbVertexTmp               += NbPointIsoMap;
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
     }
 
@@ -1969,7 +2005,24 @@ void Iso3D::IsoBuild (
     memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
     copycomponent(componentsPt, components);
+
+        if(masterthread->gridnotnull)
+        {
+            masterthread->Zgrid  =
+                masterthread->Ygrid  =
+                    masterthread->Xgrid  = PreviousGridVal;
+            for(uint th=0; th+1 < WorkerThreadsNumber; th++)
+                workerthreads[th].Xgrid =
+                workerthreads[th].Ygrid =
+                workerthreads[th].Zgrid = PreviousGridVal;
+
+            Zgrid  =
+                Ygrid  =
+                    Xgrid  = PreviousGridVal;
+            //masterthread->gridnotnull =false;
+        }
 }
+
 ///+++++++++++++++++++++++++++++++++++++++++
 uint Iso3D::CNDtoUse(uint index, struct ComponentInfos *components)
 {

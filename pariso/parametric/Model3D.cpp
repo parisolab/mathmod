@@ -284,15 +284,15 @@ void  Par3D::boite_englobante4D(uint idx)
     if (DIFY > DIFMAXIMUM)
     {
         DIFMAXIMUM = DIFY;
-    };
+    }
     if (DIFZ > DIFMAXIMUM)
     {
         DIFMAXIMUM = DIFZ;
-    };
+    }
     if (DIFW > DIFMAXIMUM)
     {
         DIFMAXIMUM = DIFW;
-    };
+    }
 // On va inclure cet objet dans un HperCube de langueur maximum
 // egale a "hauteur_fenetre"
 
@@ -1662,7 +1662,7 @@ void Par3D::UpdateThredsNumber(uint NewThreadsNumber)
 void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
-    masterthread->StopCalculations = StopCalculations;;
+    masterthread->StopCalculations = StopCalculations;
     for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }

@@ -1713,6 +1713,14 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        if(result!="")
+        {
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = true;
+            for(j=0; j < lst.size(); j++)
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+        }
+        else
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = false;
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Grid = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
@@ -2614,6 +2622,14 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             result.replace("\n","");
             result.replace("\t","");
             result.replace(" ","");
+            if(result!="")
+            {
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = true;
+                for(j=0; j < lst.size(); j++)
+                    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+            }
+            else
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = false;
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Grid = result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
