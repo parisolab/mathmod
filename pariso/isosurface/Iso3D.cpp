@@ -615,7 +615,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     std::string tmp, tmp2;
     size_t position =0, jpos;
     uint Nb_implicitfunction =0;
-    double val=0.0;
     if(type ==0)
     {
         ImplicitStructs[0].fxyz = ImplicitFct;
@@ -1801,21 +1800,7 @@ void Iso3D::IsoBuild (
             emitUpdateMessageSignal();
         }
 
-        if(masterthread->gridnotnull)
-        {
-
-            masterthread->Zgrid  =
-                masterthread->Ygrid  =
-                    masterthread->Xgrid  = masterthread->grid[fctnb];
-            for(uint th=0; th+1 < WorkerThreadsNumber; th++)
-                workerthreads[th].Xgrid =
-                workerthreads[th].Ygrid =
-                workerthreads[th].Zgrid = masterthread->grid[fctnb];
-
-            Zgrid  =
-                Ygrid  =
-                    Xgrid  = masterthread->grid[fctnb];
-        }
+        Setgrid(masterthread->grid[fctnb]);
 
         IsoComponentId = fctnb;
         masterthread->CurrentIso = fctnb;
@@ -1853,19 +1838,7 @@ void Iso3D::IsoBuild (
 
         if(StopCalculations || Stop)
         {
-            if(masterthread->gridnotnull)
-            {
-                masterthread->Zgrid  =
-                    masterthread->Ygrid  =
-                        masterthread->Xgrid  = PreviousGridVal;
-                for(uint th=0; th+1 < WorkerThreadsNumber; th++)
-                    workerthreads[th].Xgrid =
-                    workerthreads[th].Ygrid =
-                    workerthreads[th].Zgrid = PreviousGridVal;
-                Zgrid  =
-                    Ygrid  =
-                        Xgrid  = PreviousGridVal;
-            }
+            Setgrid(PreviousGridVal);
             return;
         }
 
@@ -2006,23 +1979,26 @@ void Iso3D::IsoBuild (
     memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
     copycomponent(componentsPt, components);
 
-        if(masterthread->gridnotnull)
-        {
-            masterthread->Zgrid  =
-                masterthread->Ygrid  =
-                    masterthread->Xgrid  = PreviousGridVal;
-            for(uint th=0; th+1 < WorkerThreadsNumber; th++)
-                workerthreads[th].Xgrid =
-                workerthreads[th].Ygrid =
-                workerthreads[th].Zgrid = PreviousGridVal;
-
-            Zgrid  =
-                Ygrid  =
-                    Xgrid  = PreviousGridVal;
-            //masterthread->gridnotnull =false;
-        }
+    Setgrid(PreviousGridVal);
 }
+///+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::Setgrid(uint NewGridVal)
+{
+    if(masterthread->gridnotnull)
+    {
+        masterthread->Zgrid  =
+            masterthread->Ygrid  =
+                masterthread->Xgrid  = NewGridVal;
+        for(uint th=0; th+1 < WorkerThreadsNumber; th++)
+            workerthreads[th].Xgrid =
+            workerthreads[th].Ygrid =
+            workerthreads[th].Zgrid = NewGridVal;
 
+        Zgrid  =
+            Ygrid  =
+                Xgrid  = NewGridVal;
+    }
+}
 ///+++++++++++++++++++++++++++++++++++++++++
 uint Iso3D::CNDtoUse(uint index, struct ComponentInfos *components)
 {
