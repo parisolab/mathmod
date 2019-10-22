@@ -4777,7 +4777,7 @@ void DrawingOptions::on_updateButton_clicked()
                 if(copyCurrentObject2["Grid"].isArray())
                 {
                     array=copyCurrentObject2["Grid"].toArray();
-                    array.replace(indexcurrentFormula, QString::number(ui.xyzg->value()));
+                    //array.replace(indexcurrentFormula, QString::number(ui.xyzg->value()));
                     copyCurrentObject2["Grid"] = array;
                 }
                 else
@@ -4956,7 +4956,7 @@ void DrawingOptions::on_updateButton_clicked()
                     if(copyCurrentObject2["Grid"].isArray())
                     {
                         array=copyCurrentObject2["Grid"].toArray();
-                        array.insert(indexcurrentFormula, QString::number(ui.xyzg->value()));
+                        //array.insert(indexcurrentFormula, QString::number(ui.xyzg->value()));
                         copyCurrentObject2["Grid"] = array;
                     }
                     else
