@@ -1277,7 +1277,7 @@ ErrorMessage IsoMasterThread::ParserIso()
 
     }
 
-    if(Varu != "")
+    if(varunotnull)
     {
         Nb_newvariables = HowManyVariables(Varu, 0);
 

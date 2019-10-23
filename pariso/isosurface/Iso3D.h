@@ -107,7 +107,7 @@ public :
     uint *grid;
     double Octaves, Lacunarity, Gain;
     ImplicitStructure *ImplicitStructs;
-    bool *UsedFunct, *UsedFunct2, gridnotnull;
+    bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull;
 public :
     void DeleteMasterParsers();
     void AllocateMasterParsers();
