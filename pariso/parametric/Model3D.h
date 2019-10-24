@@ -82,7 +82,7 @@ public :
                    *myParserVmin,*myParserVmax,
                    *Var, Cstparser;
     ParStruct *ParamStructs;
-    bool*UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull;
+    bool*UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull, functnotnull;
     uint *grid;
     uint Nb_paramfunctions, Nb_functs, Nb_constants;
     uint Nb_rgbts, Nb_vrgbts, Nb_newvariables;

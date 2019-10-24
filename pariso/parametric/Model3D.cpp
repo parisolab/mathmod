@@ -549,7 +549,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
 
-    if(Funct != "")
+    if(functnotnull)
     {
         Nb_functs = HowManyVariables(Funct, 2);
 
