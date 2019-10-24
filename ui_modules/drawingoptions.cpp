@@ -1514,10 +1514,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         else
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
 
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
-        //End Grid field processing
-
         if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFx))
         {
             scriptErrorType = CND_NBCOMPONENT_MISMATCH;
@@ -2007,18 +2003,18 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // Funct
         if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
         {
-        lst = QObj["Funct"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
-        MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
+            lst = QObj["Funct"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
+            MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
         }
 
 
@@ -2095,26 +2091,21 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
 
         // Grid
-        lst = QObj["Grid"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        if(result!="")
+        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
         {
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+            lst = QObj["Grid"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            if(result!="")
             for(j=0; j < lst.size(); j++)
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
         }
-        else
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
-
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
         // Component
         lst = QObj["Component"].toArray();
@@ -3018,25 +3009,21 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
-            lst = QObj["Grid"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            if(result!="")
+            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
             {
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+                lst = QObj["Grid"].toArray();
+                result = "";
+                for(j=0; j < lst.size()-1; j++)
+                    result += lst[j].toString() + ";";
+                if(lst.size() >= 1)
+                    result += lst[lst.size()-1].toString();
+                result.replace("\n","");
+                result.replace("\t","");
+                result.replace(" ","");
+                if(result!="")
                 for(j=0; j < lst.size(); j++)
-                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
             }
-            else
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
             // Component
             lst = QObj["Component"].toArray();
@@ -3315,27 +3302,22 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
             }
 
-
             // Grid
-            lst = QObj["Grid"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            if(result!="")
+            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
             {
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
+                lst = QObj["Grid"].toArray();
+                result = "";
+                for(j=0; j < lst.size()-1; j++)
+                    result += lst[j].toString() + ";";
+                if(lst.size() >= 1)
+                    result += lst[lst.size()-1].toString();
+                result.replace("\n","");
+                result.replace("\t","");
+                result.replace(" ","");
+                if(result!="")
                 for(j=0; j < lst.size(); j++)
-                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
             }
-            else
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = false;
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
 
             // Component
             lst = QObj["Component"].toArray();
