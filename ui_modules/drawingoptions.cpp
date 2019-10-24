@@ -1614,17 +1614,20 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
         }
         // Const
-        lst = QObj["Const"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
+        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->constnotnull = QObj["Const"].isArray()))
+        {
+            lst = QObj["Const"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
+        }
 
         // Funct
         lst = QObj["Funct"].toArray();
@@ -2533,17 +2536,20 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
             }
             // Const
-            lst = QObj["Const"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
+            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->constnotnull = QObj["Const"].isArray()))
+            {
+                lst = QObj["Const"].toArray();
+                result = "";
+                for(j=0; j < lst.size()-1; j++)
+                    result += lst[j].toString() + ";";
+                if(lst.size() >= 1)
+                    result += lst[lst.size()-1].toString();
+                result.replace("\n","");
+                result.replace("\t","");
+                result.replace(" ","");
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
+            }
 
             // Funct
             lst = QObj["Funct"].toArray();
@@ -2559,20 +2565,17 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
 
-
             //Noise:
             QString noise = "";
             noise = (array[i].toObject())["Noise"].toString();
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
 
-
             // Texture:
             QString noise1 = "";
             noise1 = (array[i].toObject())["Texture"].toObject()["Noise"].toString();
             noise1.replace("\n","");
             noise1.replace("\t","");
-
 
             lst =  (array[i].toObject())["Texture"].toObject()["Colors"].toArray();
             result = "";

@@ -1153,7 +1153,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     varliste = "x,y,z,t";
 
-    (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
+    (constnotnull) ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
 
     initparser();
 

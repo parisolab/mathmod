@@ -99,6 +99,8 @@ public :
         Rgbt, *Rgbts, *RgbtNames,
         VRgbt, *VRgbts, *VRgbtNames,
         Gradient, Noise, varliste;
+
+    bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull;
     int IsoConditionRequired, Nb_Sliders,
         ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
     uint Nb_rgbts, Nb_vrgbts, Nb_constants, Nb_implicitfunctions, Nb_functs;
@@ -107,7 +109,6 @@ public :
     uint *grid;
     double Octaves, Lacunarity, Gain;
     ImplicitStructure *ImplicitStructs;
-    bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull;
 public :
     void DeleteMasterParsers();
     void AllocateMasterParsers();
