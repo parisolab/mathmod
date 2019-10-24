@@ -671,7 +671,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     HowManyParamSurface(sup_v, 6);
     if(param4D == 1)
         HowManyParamSurface(expression_W, 7);
-    if(expression_CND != "")
+    if(cndnotnull)
     {
         ParConditionRequired = 1;
         HowManyParamSurface(expression_CND, 8);
@@ -685,7 +685,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         for(uint j=0; j<Nb_constants; j++)
         {
-            if(expression_CND != "")
+            if(cndnotnull)
                 myParserCND[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserUmax[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserUmin[i].AddConstant(ConstNames[j], ConstValues[j]);
@@ -700,7 +700,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         //Add predefined constatnts:
         for(int k=0; k<Nb_Sliders; k++)
         {
-            if(expression_CND != "")
+            if(cndnotnull)
                 myParserCND[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserUmin[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserUmax[i].AddConstant(SliderNames[k], SliderValues[k]);
@@ -825,7 +825,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 return stdError;
             }
 
-        if(expression_CND != "")
+        if(cndnotnull)
             if ((stdError.iErrorIndex = myParserCND[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].cnd;
