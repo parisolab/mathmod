@@ -536,7 +536,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     std::string varliste = "x,y,z,t";
 
-    (Const != "") ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
+    (constnotnull) ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
     InitMasterParsers();
     for(uint j=0; j<Nb_constants; j++)
     {
