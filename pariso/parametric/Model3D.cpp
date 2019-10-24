@@ -628,7 +628,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         Nb_vrgbts =0;
     }
 
-    if(Varu != "")
+    if(varunotnull)
     {
         Nb_newvariables = HowManyVariables(Varu, 0);
 
