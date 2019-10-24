@@ -1630,18 +1630,21 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
 
         // Funct
-        lst = QObj["Funct"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
-        MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
+        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
+        {
+            lst = QObj["Funct"].toArray();
+            result = "";
+            for(j=0; j < lst.size()-1; j++)
+                result += lst[j].toString() + ";";
+            if(lst.size() >= 1)
+                result += lst[lst.size()-1].toString();
+            result.replace("\n","");
+            result.replace("\t","");
+            result.replace(" ","");
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
+            MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
+        }
 
         //Noise:
         QString noise = "";
@@ -2552,18 +2555,21 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Funct
-            lst = QObj["Funct"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
+            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
+            {
+                lst = QObj["Funct"].toArray();
+                result = "";
+                for(j=0; j < lst.size()-1; j++)
+                    result += lst[j].toString() + ";";
+                if(lst.size() >= 1)
+                    result += lst[lst.size()-1].toString();
+                result.replace("\n","");
+                result.replace("\t","");
+                result.replace(" ","");
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
+                MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
+            }
 
             //Noise:
             QString noise = "";

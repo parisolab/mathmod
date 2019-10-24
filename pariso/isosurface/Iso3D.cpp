@@ -1169,7 +1169,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
 
-    if(Funct != "")
+    if(functnotnull)
     {
         Nb_functs = HowManyVariables(Funct, 2);
         for(uint i=0; i<Nb_functs; i++)
