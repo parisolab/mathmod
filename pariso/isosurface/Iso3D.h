@@ -100,7 +100,7 @@ public :
         VRgbt, *VRgbts, *VRgbtNames,
         Gradient, Noise, varliste;
 
-    bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull, functnotnull;
+    bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull, functnotnull, cndnotnull;
     int IsoConditionRequired, Nb_Sliders,
         ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
     uint Nb_rgbts, Nb_vrgbts, Nb_constants, Nb_implicitfunctions, Nb_functs;

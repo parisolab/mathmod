@@ -770,42 +770,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
         }
         return Nb_implicitfunction;
     }
-
-    else if(type == 7) //Grid
-    {
-        ImplicitStructs[0].grid = ImplicitFct;
-
-        while( ImplicitFct!= "")
-        {
-            if((position = ImplicitFct.find(";")) != std::string::npos)
-            {
-                tmp = ImplicitFct;
-                ImplicitStructs[Nb_implicitfunction].grid = (tmp.substr(0,position));
-                Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
-                ImplicitFct = tmp2;
-            }
-            else
-            {
-                ImplicitStructs[Nb_implicitfunction].grid  = ImplicitFct;
-                ImplicitFct ="";
-            }
-        }
-/*
-        for(uint i=0; i<Nb_implicitfunction; i++)
-            grid[i] = 0;
-        for(uint i=0; i<Nb_implicitfunction+1; i++)
-        {
-            if(ImplicitStructs[i].grid != "")
-            {
-                Cstparser.Parse(ImplicitStructs[i].grid, "u");
-                grid[i] = uint(Cstparser.Eval(&val)); //position is used only to make the Eval function work properlly
-            }
-        }
-        */
-        return Nb_implicitfunction;
-    }
-
     else if(type == 8) //Cnd
     {
         ImplicitStructs[0].cnd = ImplicitFct;
@@ -1321,7 +1285,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     HowManyIsosurface(ZlimitInf, 5);
     HowManyIsosurface(ZlimitSup, 6);
     HowManyIsosurface(Grid, 7);
-    if(Condition != "")
+    if(cndnotnull)
     {
         IsoConditionRequired = 1;
         HowManyIsosurface(Condition, 8);
@@ -1335,7 +1299,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         for(uint j=0; j<Nb_constants; j++)
         {
             implicitFunctionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
-            if(Condition != "")
+            if(cndnotnull)
                 IsoConditionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             xSupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             ySupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
@@ -1349,7 +1313,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         for(int k=0; k<Nb_Sliders; k++)
         {
             implicitFunctionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
-            if(Condition != "")
+            if(cndnotnull)
                 IsoConditionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             xSupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             ySupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
@@ -1472,7 +1436,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;
         }
-        if(Condition != "")
+        if(cndnotnull)
         {
             if ((stdError.iErrorIndex = IsoConditionParser[i].Parse(ImplicitStructs[i].cnd,"x,y,z,t")) >= 0)
             {
