@@ -2684,23 +2684,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
-            /*
-            QString grd="Grid";
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = QObj[grd].isArray()))
-            {
-                lst = QObj["Grid"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                for(j=0; j < lst.size(); j++)
-                        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
-            }
-            */
+
             ScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
             // XlimitSup
