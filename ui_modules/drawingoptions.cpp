@@ -1956,20 +1956,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
         }
         // Cnd
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull = QObj["Cnd"].isArray()))
-        {
-            lst = QObj["Cnd"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
-        }
+        ScriptFieldprocess(QObj, PAR_CND_FIELD);
 
         // Const
         if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->constnotnull = QObj["Const"].isArray()))
@@ -2273,20 +2260,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
 
         // Cnd
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull = QObj["Cnd"].isArray()))
-        {
-            lst = QObj["Cnd"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND= result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
-        }
+        ScriptFieldprocess(QObj, PAR_CND_FIELD);
 
         // Funct
         if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
@@ -2445,8 +2419,14 @@ void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIE
            arg = "Grid";
            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull=QObj[arg].isArray();
            break;
-         case ISO_CND_FIELD : break;
-         case PAR_CND_FIELD : break;
+         case ISO_CND_FIELD :
+            arg = "Cnd";
+            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->cndnotnull=QObj[arg].isArray();
+            break;
+         case PAR_CND_FIELD :
+            arg = "Cnd";
+            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull=QObj[arg].isArray();
+            break;
     }
     if(argnotnull)
     {
@@ -2464,15 +2444,21 @@ void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIE
                 for(int j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
                 break;
-        case PAR_GRID_FIELD :
-            for(int j=0; j < lst.size(); j++)
-                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+            case PAR_GRID_FIELD :
+                for(int j=0; j < lst.size(); j++)
+                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
 
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
-            break;
-        case ISO_CND_FIELD : break;
-        case PAR_CND_FIELD : break;
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_CND_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Condition = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_CND_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
+                break;
         }
     }
 }
@@ -2512,20 +2498,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
 
             // Cnd
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->cndnotnull = QObj["Cnd"].isArray()))
-            {
-                lst = QObj["Cnd"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Condition = result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
-            }
+            ScriptFieldprocess(QObj, ISO_CND_FIELD);
 
             // Varu
             if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->varunotnull = QObj["Varu"].isArray()))
@@ -2895,20 +2868,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Cnd
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull = QObj["Cnd"].isArray()))
-            {
-                lst = QObj["Cnd"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND= result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
-            }
+            ScriptFieldprocess(QObj, PAR_CND_FIELD);
 
             // Funct
             if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
@@ -3181,20 +3141,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Cnd
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull = QObj["Cnd"].isArray()))
-            {
-                lst = QObj["Cnd"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND= result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
-            }
+            ScriptFieldprocess(QObj, PAR_CND_FIELD);
 
             // Funct
             if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
