@@ -2476,6 +2476,49 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     }
 }
 
+void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
+{
+    QString result, arg="";
+    QJsonArray lst;
+    bool argnotnull=false;
+    switch(idx) {
+         case ISO_GRID_FIELD :
+            arg = "Grid";
+            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull=QObj[arg].isArray();
+            break;
+        case PAR_GRID_FIELD :
+           arg = "Grid";
+           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull=QObj[arg].isArray();
+           break;
+         case ISO_CND_FIELD : break;
+         case PAR_CND_FIELD : break;
+    }
+    if(argnotnull)
+    {
+        lst = QObj[arg].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        switch(idx) {
+             case ISO_GRID_FIELD :
+                for(int j=0; j < lst.size(); j++)
+                        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+                break;
+        case PAR_GRID_FIELD :
+            for(int j=0; j < lst.size(); j++)
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+            break;
+        case ISO_CND_FIELD : break;
+        case PAR_CND_FIELD : break;
+        }
+    }
+}
+
 // --------------------------
 int DrawingOptions::JSON_choice_activated(const QString &arg1)
 {
@@ -2641,7 +2684,9 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
+            /*
+            QString grd="Grid";
+            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = QObj[grd].isArray()))
             {
                 lst = QObj["Grid"].toArray();
                 result = "";
@@ -2655,6 +2700,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 for(j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
             }
+            */
+            ScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
             // XlimitSup
             lst = QObj["Xmax"].toArray();

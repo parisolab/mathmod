@@ -33,6 +33,14 @@
 #include "selectoptions.h"
 #include <QMainWindow>
 
+enum ScriptFIELD
+{
+    ISO_GRID_FIELD,
+    ISO_CND_FIELD,
+    PAR_GRID_FIELD,
+    PAR_CND_FIELD
+};
+
 struct SliderStruct
 {
     QScrollBar * SliderScrollBar;
@@ -66,6 +74,7 @@ public:
     int evalErrorType;
 
 public slots:
+    void ScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;
     void SaveSlidersRef(int n=20);
