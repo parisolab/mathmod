@@ -3040,6 +3040,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
+            /*
             if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
             {
                 lst = QObj["Grid"].toArray();
@@ -3055,6 +3056,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 for(j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
             }
+            */
+            ScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
             // Component
             lst = QObj["Component"].toArray();
