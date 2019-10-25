@@ -1712,20 +1712,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
         }
         // Grid
-        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
-        {
-            lst = QObj["Grid"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            for(j=0; j < lst.size(); j++)
-                    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
-        }
+        ScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
         // XlimitSup
         lst = QObj["Xmax"].toArray();
@@ -2091,21 +2078,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
 
         // Grid
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
-        {
-            lst = QObj["Grid"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            if(result!="")
-            for(j=0; j < lst.size(); j++)
-                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
-        }
+        ScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
         // Component
         lst = QObj["Component"].toArray();
@@ -3040,23 +3013,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
-            /*
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
-            {
-                lst = QObj["Grid"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                if(result!="")
-                for(j=0; j < lst.size(); j++)
-                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
-            }
-            */
             ScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
             // Component
@@ -3337,21 +3293,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = QObj["Grid"].isArray()))
-            {
-                lst = QObj["Grid"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                if(result!="")
-                for(j=0; j < lst.size(); j++)
-                        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
-            }
+            ScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
             // Component
             lst = QObj["Component"].toArray();
