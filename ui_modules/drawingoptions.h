@@ -74,7 +74,7 @@ public:
     int evalErrorType;
 
 public slots:
-    void ScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
+    inline void ScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;
     void SaveSlidersRef(int n=20);

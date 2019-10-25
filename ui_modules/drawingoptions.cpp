@@ -2405,7 +2405,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     }
 }
 
-void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
+inline void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
 {
     QString result, arg="";
     QJsonArray lst;
