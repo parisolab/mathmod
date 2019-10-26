@@ -1569,19 +1569,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         QObj = Jobj["Iso3D"].toObject();
 
         // Fxyz
-        lst = QObj["Fxyz"].toArray();
-        result = "";
-
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunctionSize = lst.size();
-        MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_FXYZ_FIELD);
 
         // Condition:
         OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
@@ -1664,106 +1652,28 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
         // XlimitSup
-        lst = QObj["Xmax"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitSup = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.xmax = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_XMAX_FIELD);
 
         // YlimitSup
-        lst = QObj["Ymax"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitSup = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.ymax = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_YMAX_FIELD);
 
         // ZlimitSup
-        lst = QObj["Zmax"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitSup = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.zmax = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_ZMAX_FIELD);
 
         // XlimitInf
-        lst = QObj["Xmin"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitInf = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.xmin = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_XMIN_FIELD);
 
         // YlimitInf
-        lst = QObj["Ymin"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitInf = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.ymin = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_YMIN_FIELD);
 
         // ZlimitInf
-        lst = QObj["Zmin"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitInf = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.zmin = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_ZMIN_FIELD);
 
         // Component
-        lst = QObj["Component"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_COMP_FIELD);
 
         // Name
-        lst = QObj["Name"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
+        MandatoryIsoFieldprocess(QObj, ISO_NAME_FIELD);
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -1795,98 +1705,25 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     {
         QObj = Jobj["Param3D"].toObject();
         // Fx
-        lst = QObj["Fx"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
-        MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
 
         // Fy
-        lst = QObj["Fy"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
-        MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_FY_FIELD);
 
         // Fz
-        lst = QObj["Fz"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
-        MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_FZ_FIELD);
 
         // inf_u
-        lst = QObj["Umin"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_u = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_UMIN_FIELD);
 
         // sup_u
-        lst = QObj["Umax"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_u = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_UMAX_FIELD);
 
         // inf_v
-        lst = QObj["Vmin"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_v = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_VMIN_FIELD);
 
         // sup_v
-        lst = QObj["Vmax"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_v = result.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
 
         // Varu
         OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
@@ -1976,28 +1813,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
         // Component
-        lst = QObj["Component"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
 
         // Name
-        lst = QObj["Name"].toArray();
-        result = "";
-        for(j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
+        MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -2286,11 +2105,181 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.name = QStringList("");
 }
 
-void DrawingOptions::MandatoryScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
+void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const MandatoryParField & idx)
 {
+    QString result, arg="";
+    QJsonArray lst;
+    switch(idx) {
+         case PAR_FX_FIELD :
+            arg = "Fx";
+            break;
+        case PAR_FY_FIELD :
+           arg = "Fy";
+           break;
+        case PAR_FZ_FIELD :
+           arg = "Fz";
+           break;
+        case PAR_FW_FIELD :
+           arg = "Fw";
+           break;
+        case PAR_UMAX_FIELD :
+           arg = "Umax";
+           break;
+        case PAR_UMIN_FIELD :
+           arg = "Umin";
+           break;
+        case PAR_VMAX_FIELD :
+           arg = "Vmax";
+           break;
+        case PAR_VMIN_FIELD :
+           arg = "Vmin";
+           break;
+        case PAR_NAME_FIELD :
+           arg = "Name";
+           break;
+        case PAR_COMP_FIELD :
+           arg = "Component";
+           break;
+    }
+
+        lst = QObj[arg].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        switch(idx) {
+             case PAR_FX_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
+                MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_FY_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
+                MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_FZ_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
+                MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_FW_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_W = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.fw = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_UMIN_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_u = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_UMAX_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_u = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_VMAX_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_v = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_VMIN_FIELD :
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_v = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_COMP_FIELD :
+                MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
+                break;
+            case PAR_NAME_FIELD :
+                MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
+                break;
+        }
 }
 
-void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
+void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj, const MandatoryIsoField & idx)
+{
+    QString result, arg="";
+    QJsonArray lst;
+    switch(idx) {
+         case ISO_FXYZ_FIELD :
+            arg = "Fxyz";
+            break;
+        case ISO_XMAX_FIELD :
+           arg = "Xmax";
+           break;
+        case ISO_YMAX_FIELD :
+           arg = "Ymax";
+           break;
+        case ISO_ZMAX_FIELD :
+           arg = "Zmax";
+           break;
+        case ISO_XMIN_FIELD :
+           arg = "Xmin";
+           break;
+        case ISO_YMIN_FIELD :
+           arg = "Ymin";
+           break;
+        case ISO_ZMIN_FIELD :
+           arg = "Zmin";
+           break;
+        case ISO_NAME_FIELD :
+           arg = "Name";
+           break;
+        case ISO_COMP_FIELD :
+           arg = "Component";
+           break;
+
+    }
+
+        lst = QObj[arg].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        switch(idx) {
+             case ISO_FXYZ_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunctionSize = lst.size();
+                MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_XMAX_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitSup = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.xmax = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_YMAX_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitSup = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.ymax = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_ZMAX_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitSup = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.zmax = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_XMIN_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitInf = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.xmin = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_YMIN_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitInf = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.ymin = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_ZMIN_FIELD :
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitInf = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.zmin = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_COMP_FIELD :
+                MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
+                break;
+            case ISO_NAME_FIELD :
+                MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
+                break;
+        }
+}
+
+void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const OptionnalScriptFIELD & idx)
 {
     QString result, arg="";
     QJsonArray lst;
@@ -2422,70 +2411,19 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             ShowSliders(array[i].toObject());
             // Fxyz
-            lst = QObj["Fxyz"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunctionSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_FXYZ_FIELD);
 
             // Cnd
             OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
 
             // Varu
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->varunotnull = QObj["Varu"].isArray()))
-            {
-                lst = QObj["Varu"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Varu = result.toStdString();
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VaruSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
+
             // Const
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->constnotnull = QObj["Const"].isArray()))
-            {
-                lst = QObj["Const"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
 
             // Funct
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
-            {
-                lst = QObj["Funct"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
 
             //Noise:
             QString noise = "";
@@ -2557,107 +2495,28 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
             // XlimitSup
-            lst = QObj["Xmax"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitSup = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.xmax = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_XMAX_FIELD);
 
             // YlimitSup
-            lst = QObj["Ymax"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitSup = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.ymax = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_YMAX_FIELD);
 
             // ZlimitSup
-            lst = QObj["Zmax"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitSup = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.zmax = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_ZMAX_FIELD);
 
             // XlimitInf
-            lst = QObj["Xmin"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitInf = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.xmin = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_XMIN_FIELD);
 
             // YlimitInf
-            lst = QObj["Ymin"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitInf = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.ymin = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_YMIN_FIELD);
 
             // ZlimitInf
-            lst = QObj["Zmin"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitInf = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.zmin = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_ZMIN_FIELD);
 
             // Component
-            lst = QObj["Component"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
+            MandatoryIsoFieldprocess(QObj, ISO_COMP_FIELD);
 
             // Name
-            lst = QObj["Name"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
-
+            MandatoryIsoFieldprocess(QObj, ISO_NAME_FIELD);
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2677,153 +2536,40 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
+
             // Fx
-            lst = QObj["Fx"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
 
             // Fy
-            lst = QObj["Fy"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
-
+            MandatoryParFieldprocess(QObj, PAR_FY_FIELD);
 
             // Fz
-            lst = QObj["Fz"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_FZ_FIELD);
 
             // inf_u
-            lst = QObj["Umin"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_u = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_UMIN_FIELD);
 
             // sup_u
-            lst = QObj["Umax"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_u = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_UMAX_FIELD);
 
             // inf_v
-            lst = QObj["Vmin"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_v = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_VMIN_FIELD);
 
             // sup_v
-            lst = QObj["Vmax"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_v = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
 
             // Varu
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->varunotnull = QObj["Varu"].isArray()))
-            {
-                lst = QObj["Varu"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
             // Const
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->constnotnull = QObj["Const"].isArray()))
-            {
-                lst = QObj["Const"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
 
             // Cnd
             OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
 
             // Funct
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
-            {
-                lst = QObj["Funct"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
+
             //Noise:
             QString noise = "";
             noise = (array[i].toObject())["Noise"].toString();
@@ -2899,28 +2645,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
             // Component
-            lst = QObj["Component"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
 
             // Name
-            lst = QObj["Name"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2939,164 +2667,40 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 return (0);
             ShowSliders(array[i].toObject());
             // Fx
-            lst = QObj["Fx"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
 
             // Fy
-            lst = QObj["Fy"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_FY_FIELD);
 
             // Fz
-            lst = QObj["Fz"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
-            MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_FZ_FIELD);
 
             // Fw
-            lst = QObj["Fw"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_W = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.fw = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_FW_FIELD);
 
             // inf_u
-            lst = QObj["Umin"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_u = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_UMIN_FIELD);
 
             // sup_u
-            lst = QObj["Umax"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_u = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_UMAX_FIELD);
 
             // inf_v
-            lst = QObj["Vmin"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_v = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_VMIN_FIELD);
 
             // sup_v
-            lst = QObj["Vmax"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_v = result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
 
             // Varu
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->varunotnull = QObj["Varu"].isArray()))
-            {
-                lst = QObj["Varu"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
             // Const
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->constnotnull = QObj["Const"].isArray()))
-            {
-                lst = QObj["Const"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
 
             // Cnd
             OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
 
             // Funct
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
-            {
-                lst = QObj["Funct"].toArray();
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
-            }
+            OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
 
             //Noise:
             QString noise = "";
@@ -3166,28 +2770,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
             // Component
-            lst = QObj["Component"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
 
             // Name
-            lst = QObj["Name"].toArray();
-            result = "";
-            for(j=0; j < lst.size()-1; j++)
-                result += lst[j].toString() + ";";
-            if(lst.size() >= 1)
-                result += lst[lst.size()-1].toString();
-            result.replace("\n","");
-            result.replace("\t","");
-            result.replace(" ","");
-            MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
+            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
 
             QJsonDocument document;
             document.setObject(array[i].toObject());

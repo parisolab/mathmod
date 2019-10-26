@@ -33,7 +33,7 @@
 #include "selectoptions.h"
 #include <QMainWindow>
 
-enum ScriptFIELD
+enum OptionnalScriptFIELD
 {
     ISO_GRID_FIELD,
     ISO_CND_FIELD,
@@ -45,6 +45,33 @@ enum ScriptFIELD
     PAR_CONST_FIELD,
     PAR_FUNCT_FIELD,
     PAR_VAR_FIELD
+};
+
+enum MandatoryIsoField
+{
+    ISO_FXYZ_FIELD,
+    ISO_XMIN_FIELD,
+    ISO_XMAX_FIELD,
+    ISO_YMIN_FIELD,
+    ISO_YMAX_FIELD,
+    ISO_ZMIN_FIELD,
+    ISO_ZMAX_FIELD,
+    ISO_COMP_FIELD,
+    ISO_NAME_FIELD
+};
+
+enum MandatoryParField
+{
+    PAR_FX_FIELD,
+    PAR_FY_FIELD,
+    PAR_FZ_FIELD,
+    PAR_FW_FIELD,
+    PAR_UMIN_FIELD,
+    PAR_UMAX_FIELD,
+    PAR_VMIN_FIELD,
+    PAR_VMAX_FIELD,
+    PAR_COMP_FIELD,
+    PAR_NAME_FIELD
 };
 
 struct SliderStruct
@@ -80,8 +107,9 @@ public:
     int evalErrorType;
 
 public slots:
-    void OptionalScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
-    void MandatoryScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
+    void OptionalScriptFieldprocess(const QJsonObject &, const OptionnalScriptFIELD &);
+    void MandatoryIsoFieldprocess(const QJsonObject &, const MandatoryIsoField &);
+    void MandatoryParFieldprocess(const QJsonObject &, const MandatoryParField &);
     void updateCurrentTreestruct();
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;
