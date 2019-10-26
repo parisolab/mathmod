@@ -1562,6 +1562,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     }
 
     ShowSliders(Jobj);
+    updateCurrentTreestruct();
 
     if(Jobj["Iso3D"].isObject())
     {
@@ -2405,7 +2406,21 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     }
 }
 
-inline void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
+void DrawingOptions::updateCurrentTreestruct()
+{
+    MathmodRef->RootObjet.CurrentTreestruct.fw=
+    MathmodRef->RootObjet.CurrentTreestruct.fx=
+    MathmodRef->RootObjet.CurrentTreestruct.fy=
+    MathmodRef->RootObjet.CurrentTreestruct.fz=
+    MathmodRef->RootObjet.CurrentTreestruct.Cnd=
+    MathmodRef->RootObjet.CurrentTreestruct.Grid=
+    MathmodRef->RootObjet.CurrentTreestruct.RGBT=
+    MathmodRef->RootObjet.CurrentTreestruct.Varu=
+    MathmodRef->RootObjet.CurrentTreestruct.fxyz=
+    MathmodRef->RootObjet.CurrentTreestruct.name = QStringList("");
+}
+
+void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
 {
     QString result, arg="";
     QJsonArray lst;
@@ -2474,6 +2489,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     QJsonObject QObj;
 
 
+    updateCurrentTreestruct();
     for(i=0; i< array.size(); i++)
     {
         if((array[i].toObject())["Iso3D"].isObject()  &&
