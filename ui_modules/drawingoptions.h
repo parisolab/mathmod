@@ -37,8 +37,14 @@ enum ScriptFIELD
 {
     ISO_GRID_FIELD,
     ISO_CND_FIELD,
+    ISO_CONST_FIELD,
+    ISO_FUNCT_FIELD,
+    ISO_VAR_FIELD,
     PAR_GRID_FIELD,
-    PAR_CND_FIELD
+    PAR_CND_FIELD,
+    PAR_CONST_FIELD,
+    PAR_FUNCT_FIELD,
+    PAR_VAR_FIELD
 };
 
 struct SliderStruct
