@@ -2286,6 +2286,10 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.name = QStringList("");
 }
 
+void DrawingOptions::MandatoryScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
+{
+}
+
 void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
 {
     QString result, arg="";

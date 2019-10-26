@@ -81,6 +81,7 @@ public:
 
 public slots:
     void OptionalScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
+    void MandatoryScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
     void updateCurrentTreestruct();
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;
