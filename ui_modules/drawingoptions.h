@@ -80,7 +80,7 @@ public:
     int evalErrorType;
 
 public slots:
-    void ScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
+    void OptionalScriptFieldprocess(const QJsonObject &, const ScriptFIELD &);
     void updateCurrentTreestruct();
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;

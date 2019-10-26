@@ -1584,16 +1584,16 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
 
         // Condition:
-        ScriptFieldprocess(QObj, ISO_CND_FIELD);
+        OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
 
         // Varu
-        ScriptFieldprocess(QObj, ISO_VAR_FIELD);
+        OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
 
         // Const
-        ScriptFieldprocess(QObj, ISO_CONST_FIELD);
+        OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
 
         // Funct
-        ScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
+        OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
 
         //Noise:
         QString noise = "";
@@ -1661,7 +1661,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
         }
         // Grid
-        ScriptFieldprocess(QObj, ISO_GRID_FIELD);
+        OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
         // XlimitSup
         lst = QObj["Xmax"].toArray();
@@ -1889,16 +1889,16 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
 
         // Varu
-        ScriptFieldprocess(QObj, PAR_VAR_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
         // Cnd
-        ScriptFieldprocess(QObj, PAR_CND_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
 
         // Const
-        ScriptFieldprocess(QObj, PAR_CONST_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
 
         // Funct
-        ScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
 
         //Noise:
         QString noise = "";
@@ -1973,7 +1973,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
 
         // Grid
-        ScriptFieldprocess(QObj, PAR_GRID_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
         // Component
         lst = QObj["Component"].toArray();
@@ -2135,16 +2135,16 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
 
         // Varu
-        ScriptFieldprocess(QObj, PAR_VAR_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
         // Const
-        ScriptFieldprocess(QObj, PAR_CONST_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
 
         // Cnd
-        ScriptFieldprocess(QObj, PAR_CND_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
 
         // Funct
-        ScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
 
         //Noise:
         QString noise = "";
@@ -2219,7 +2219,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         }
 
         // Grid
-        ScriptFieldprocess(QObj, PAR_GRID_FIELD);
+        OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
         // Component
         lst = QObj["Component"].toArray();
@@ -2286,7 +2286,7 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.name = QStringList("");
 }
 
-void DrawingOptions::ScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
+void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const ScriptFIELD & idx)
 {
     QString result, arg="";
     QJsonArray lst;
@@ -2432,7 +2432,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
 
             // Cnd
-            ScriptFieldprocess(QObj, ISO_CND_FIELD);
+            OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
 
             // Varu
             if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->varunotnull = QObj["Varu"].isArray()))
@@ -2550,7 +2550,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             // Grid
 
-            ScriptFieldprocess(QObj, ISO_GRID_FIELD);
+            OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
             // XlimitSup
             lst = QObj["Xmax"].toArray();
@@ -2802,7 +2802,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Cnd
-            ScriptFieldprocess(QObj, PAR_CND_FIELD);
+            OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
 
             // Funct
             if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
@@ -2892,7 +2892,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
-            ScriptFieldprocess(QObj, PAR_GRID_FIELD);
+            OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
             // Component
             lst = QObj["Component"].toArray();
@@ -3075,7 +3075,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Cnd
-            ScriptFieldprocess(QObj, PAR_CND_FIELD);
+            OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
 
             // Funct
             if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull = QObj["Funct"].isArray()))
@@ -3159,7 +3159,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             }
 
             // Grid
-            ScriptFieldprocess(QObj, PAR_GRID_FIELD);
+            OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
             // Component
             lst = QObj["Component"].toArray();
