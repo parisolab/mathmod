@@ -1193,7 +1193,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
 
     //For Solid Texture :
-    if(VRgbt != "")
+    if(vrgbtnotnull)
     {
         Nb_vrgbts = HowManyVariables(VRgbt, 4);
         for(uint j=0; j<Nb_constants; j++)
@@ -1335,7 +1335,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             }
 
     // Add defined functions :
-    if(VRgbt != "")
+    if(vrgbtnotnull)
     {
         for(uint j=0; j<Nb_functs; j++)
         {
@@ -1406,7 +1406,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             }
 
     // Parse
-    if(VRgbt!= "" && (Nb_vrgbts % 5) ==0)
+    if(vrgbtnotnull && (Nb_vrgbts % 5) ==0)
     {
         if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
         {
@@ -1894,7 +1894,7 @@ void Iso3D::IsoBuild (
     }
 
     // Pigment, Texture and Noise :
-    if(masterthread->VRgbt != "" && (masterthread->Nb_vrgbts %5)==0 )
+    if(masterthread->vrgbtnotnull && (masterthread->Nb_vrgbts %5)==0 )
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments
