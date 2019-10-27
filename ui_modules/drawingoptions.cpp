@@ -1484,11 +1484,9 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
-        //if(noise1 == "")
-        {
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise2.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
-        }
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise2.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
+
         // Grid
         OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
