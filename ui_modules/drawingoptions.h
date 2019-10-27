@@ -44,7 +44,11 @@ enum OptionnalScriptFIELD
     PAR_CND_FIELD,
     PAR_CONST_FIELD,
     PAR_FUNCT_FIELD,
-    PAR_VAR_FIELD
+    PAR_VAR_FIELD,
+    PAR_TEXT_FIELD,
+    PAR_PIGM_FIELD,
+    ISO_TEXT_FIELD,
+    ISO_PIGM_FIELD
 };
 
 enum MandatoryIsoField
@@ -110,6 +114,8 @@ public slots:
     void OptionalScriptFieldprocess(const QJsonObject &, const OptionnalScriptFIELD &);
     void MandatoryIsoFieldprocess(const QJsonObject &, const MandatoryIsoField &);
     void MandatoryParFieldprocess(const QJsonObject &, const MandatoryParField &);
+    void LoadTexture(const QJsonObject &, const OptionnalScriptFIELD &);
+    void LoadPigment(const QJsonObject &, const OptionnalScriptFIELD &);
     void updateCurrentTreestruct();
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;
