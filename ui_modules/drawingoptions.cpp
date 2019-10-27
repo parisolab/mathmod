@@ -2203,27 +2203,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             {
                 QTextureObj = QObj1["Texture"].toObject();
                 LoadTexture(QTextureObj, PAR_TEXT_FIELD);
-                /*
-                QString noise1 = "";
-                noise1 = (QTextureObj = QObj1["Texture"].toObject())["Noise"].toString();
-                lst = QTextureObj["Colors"].toArray();
-                noise1.replace("\n","");
-                noise1.replace("\t","");
-                noise1.replace(" ","");
-
-                result = "";
-                for(j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Rgbt = result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Noise = noise1.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
-                */
             }
 
             // Pigment
