@@ -1170,7 +1170,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
 
 
-    if(Rgbt != "")
+    if(rgbtnotnull)
     {
         Nb_rgbts = HowManyVariables(Rgbt, 3);
 
@@ -1325,7 +1325,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
 
     // Add defined functions :
-    if(Rgbt != "")
+    if(rgbtnotnull)
         for(int i=0; i<4; i++)
             for(uint j=0; j<Nb_functs; j++)
             {
@@ -1397,7 +1397,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
     vals[3]          = stepMorph;
 
     // Parse
-    if(Rgbt!= "" && Nb_rgbts == 4)
+    if(rgbtnotnull && Nb_rgbts == 4)
         for(uint i=0; i<Nb_rgbts; i++)
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId")) >= 0)
             {
