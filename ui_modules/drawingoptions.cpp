@@ -1430,12 +1430,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // Funct
         OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
 
-        //Noise:
-        QString noise = "";
-        noise = Jobj["Noise"].toString();
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise.toStdString();
-        MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
-
         // Colors
         QString noise1 = "";
         noise1 = QTextureObj["Noise"].toString();
@@ -1454,11 +1448,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         result.replace(" ","");
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
-        if(noise == "")
-        {
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise1.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
-        }
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
 
         // Pigment
         QString noise2 = "";
@@ -1490,7 +1481,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
-        if(noise == "" && noise1 == "")
+        if(noise1 == "")
         {
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise2.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Noise = noise2;
@@ -1847,8 +1838,27 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.Grid=
     MathmodRef->RootObjet.CurrentTreestruct.RGBT=
     MathmodRef->RootObjet.CurrentTreestruct.Varu=
+    MathmodRef->RootObjet.CurrentTreestruct.Const=
+    MathmodRef->RootObjet.CurrentTreestruct.Funct=
+    MathmodRef->RootObjet.CurrentTreestruct.VRGBT=
+    MathmodRef->RootObjet.CurrentTreestruct.Gradient=
     MathmodRef->RootObjet.CurrentTreestruct.fxyz=
-    MathmodRef->RootObjet.CurrentTreestruct.name = QStringList("");
+    MathmodRef->RootObjet.CurrentTreestruct.umin =
+    MathmodRef->RootObjet.CurrentTreestruct.umax =
+    MathmodRef->RootObjet.CurrentTreestruct.vmin =
+    MathmodRef->RootObjet.CurrentTreestruct.vmax =
+    MathmodRef->RootObjet.CurrentTreestruct.xmin =
+    MathmodRef->RootObjet.CurrentTreestruct.xmax =
+    MathmodRef->RootObjet.CurrentTreestruct.ymin =
+    MathmodRef->RootObjet.CurrentTreestruct.ymax =
+    MathmodRef->RootObjet.CurrentTreestruct.zmin =
+    MathmodRef->RootObjet.CurrentTreestruct.zmax =
+    MathmodRef->RootObjet.CurrentTreestruct.tmin =
+    MathmodRef->RootObjet.CurrentTreestruct.tmax =
+    MathmodRef->RootObjet.CurrentTreestruct.name =
+    MathmodRef->RootObjet.CurrentTreestruct.Component = QStringList("");
+    MathmodRef->RootObjet.CurrentTreestruct.Noise =
+    MathmodRef->RootObjet.CurrentTreestruct.text = "";
 }
 
 void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const MandatoryParField & idx)
