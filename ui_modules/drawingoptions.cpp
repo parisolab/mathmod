@@ -30,7 +30,7 @@ static QStringList  qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
 // Error messages returned by ErrorMsg():
 static const char* ScriptErrorMessage[]=
 {
-    "SCRIPT_NO_ERROR",                       // 0
+    "SCRIPT_NO_ERROR",                // 0
     "MAXGRID_OUT_OF_RANGE",           // 1
     "MAXPT_OUT_OF_RANGE",             // 2
     "MAXTRI_OUT_OF_RANGE",            // 3
@@ -1060,12 +1060,6 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         result.replace("\t","");
         result.replace(" ","");
         qlstStep = result.split(";", QString::SkipEmptyParts);
-        /*
-         if(qlstPos.size() <= qlstnames.size())
-         {
-             //ui.PredefinedSet->hide();
-          }
-          */
         QStringList qlist;
         if(qlstPos.size() >= qlstnames.size())
         {
@@ -5961,307 +5955,140 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         MathmodRef->ui.glWidget->LocalScene.slider = -1;
     }
 }
-
 // --------------------------
-void DrawingOptions::on_C20toolButton_clicked()
+void DrawingOptions::CIndextoolButton_clicked(int idx)
 {
-    int range = (indexcurrentSet <1) ? 19 : (indexcurrentSet-1)*qlstnames.size() + 19;
-    sliderconf.currentSlider=19;
+    int range = (indexcurrentSet <1) ? (idx-1) : (indexcurrentSet-1)*qlstnames.size() + (idx-1);
+    sliderconf.currentSlider=(idx-1);
     sliderconf.ui.MaxEdit->setText(qlstmax[range]);
     sliderconf.ui.MinEdit->setText(qlstmin[range]);
     sliderconf.ui.StepEdit->setText(qlstStep[range]);
     sliderconf.ui.PosEdit->setText(qlstPos[range]);
     sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(20);
+    sliderconf.ui.ParametersComboBox->setCurrentIndex(idx);
     sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
+}
+
+// --------------------------
+void DrawingOptions::on_C20toolButton_clicked()
+{
+    CIndextoolButton_clicked(20);
 }
 
 // --------------------------
 void DrawingOptions::on_C19toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 18 : (indexcurrentSet-1)*qlstnames.size() + 18;
-    sliderconf.currentSlider=18;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(19);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(19);
 }
 
 // --------------------------
 void DrawingOptions::on_C18toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 17 : (indexcurrentSet-1)*qlstnames.size() + 17;
-    sliderconf.currentSlider=17;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(18);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(18);
 }
 
 // --------------------------
 void DrawingOptions::on_C17toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 16 : (indexcurrentSet-1)*qlstnames.size() + 16;
-    sliderconf.currentSlider=16;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(17);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(17);
 }
 
 // --------------------------
 void DrawingOptions::on_C16toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 15 : (indexcurrentSet-1)*qlstnames.size() + 15;
-    sliderconf.currentSlider=15;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(16);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(16);
 }
 
 // --------------------------
 void DrawingOptions::on_C15toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 14 : (indexcurrentSet-1)*qlstnames.size() + 14;
-    sliderconf.currentSlider=14;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(15);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(15);
 }
 
 // --------------------------
 void DrawingOptions::on_C14toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 13 : (indexcurrentSet-1)*qlstnames.size() + 13;
-    sliderconf.currentSlider=13;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(14);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(14);
 }
 
 // --------------------------
 void DrawingOptions::on_C13toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 12 : (indexcurrentSet-1)*qlstnames.size() + 12;
-    sliderconf.currentSlider=12;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(13);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(13);
 }
 
 // --------------------------
 void DrawingOptions::on_C12toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 11 : (indexcurrentSet-1)*qlstnames.size() + 11;
-    sliderconf.currentSlider=11;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(12);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(12);
 }
 
 // --------------------------
 void DrawingOptions::on_C11toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 10 : (indexcurrentSet-1)*qlstnames.size() + 10;
-    sliderconf.currentSlider=10;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(11);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(11);
 }
 
 // --------------------------
 void DrawingOptions::on_C10toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 9 : (indexcurrentSet-1)*qlstnames.size() + 9;
-    sliderconf.currentSlider=9;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(10);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(10);
 }
 
 // --------------------------
 void DrawingOptions::on_C9toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 8 : (indexcurrentSet-1)*qlstnames.size() + 8;
-    sliderconf.currentSlider=8;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(9);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(9);
 }
 
 // --------------------------
 void DrawingOptions::on_C8toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 7 : (indexcurrentSet-1)*qlstnames.size() + 7;
-    sliderconf.currentSlider=7;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(8);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(8);
 }
 
 // --------------------------
 void DrawingOptions::on_C7toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 6 : (indexcurrentSet-1)*qlstnames.size() + 6;
-    sliderconf.currentSlider=6;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(7);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(7);
 }
 
 // --------------------------
 void DrawingOptions::on_C6toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 5 : (indexcurrentSet-1)*qlstnames.size() + 5;
-    sliderconf.currentSlider=5;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(6);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(6);
 }
 
 // --------------------------
 void DrawingOptions::on_C5toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 4 : (indexcurrentSet-1)*qlstnames.size() + 4;
-    sliderconf.currentSlider=4;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(5);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(5);
 }
 
 // --------------------------
 void DrawingOptions::on_C4toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 3 : (indexcurrentSet-1)*qlstnames.size() + 3;
-    sliderconf.currentSlider=3;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(4);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(4);
 }
 
 // --------------------------
 void DrawingOptions::on_C3toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 2 : (indexcurrentSet-1)*qlstnames.size() + 2;
-    sliderconf.currentSlider=2;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(3);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(3);
 }
 
 // --------------------------
 void DrawingOptions::on_C2toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 1 : (indexcurrentSet-1)*qlstnames.size() + 1;
-    sliderconf.currentSlider=1;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(2);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(2);
 }
 
 // --------------------------
 void DrawingOptions::on_C1toolButton_clicked()
 {
-    int range = (indexcurrentSet <1) ? 0 : (indexcurrentSet-1)*qlstnames.size() + 0;
-    sliderconf.currentSlider=0;
-    sliderconf.ui.MaxEdit->setText(qlstmax[range]);
-    sliderconf.ui.MinEdit->setText(qlstmin[range]);
-    sliderconf.ui.StepEdit->setText(qlstStep[range]);
-    sliderconf.ui.PosEdit->setText(qlstPos[range]);
-    sliderconf.ui.ParametersComboBox->blockSignals(true);
-    sliderconf.ui.ParametersComboBox->setCurrentIndex(1);
-    sliderconf.ui.ParametersComboBox->blockSignals(false);
-    sliderconf.show();
+    CIndextoolButton_clicked(1);
 }
-
 // --------------------------
 void DrawingOptions::update_slider_param()
 {
@@ -6521,6 +6348,8 @@ void DrawingOptions::add_new_param()
 
 void DrawingOptions::update_infos_param(int index)
 {
+    CIndextoolButton_clicked(index);
+    /*
     switch(index)
     {
     case 1 :
@@ -6584,6 +6413,7 @@ void DrawingOptions::update_infos_param(int index)
         on_C20toolButton_clicked();
         break;
     }
+    */
     sliderconf.currentSlider = index -1;
 }
 

@@ -111,6 +111,7 @@ public:
     int evalErrorType;
 
 public slots:
+    void CIndextoolButton_clicked(int);
     void OptionalScriptFieldprocess(const QJsonObject &, const OptionnalScriptFIELD &);
     void MandatoryIsoFieldprocess(const QJsonObject &, const MandatoryIsoField &);
     void MandatoryParFieldprocess(const QJsonObject &, const MandatoryParField &);
