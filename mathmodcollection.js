@@ -2628,8 +2628,13 @@
         "Component": [
           "Bugs"
         ],
+        "Const": [
+           "A=7/10",
+           "B=29/10",
+           "C=86/100"
+        ],
         "Fxyz": [
-          "min(( ((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))-0DOTSYMBOL7)*((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))-0DOTSYMBOL7) + (y/2DOTSYMBOL9)*(y/2DOTSYMBOL9) + (x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y))*(x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y)) - 1),  (((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))+0DOTSYMBOL5)*((x*cos(0DOTSYMBOL866646*y) - z*sin(0DOTSYMBOL866646*y))+0DOTSYMBOL5) + (y/2DOTSYMBOL9)*(y/2DOTSYMBOL9) + (x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y))*(x*sin(0DOTSYMBOL866646*y) + z*cos(0DOTSYMBOL866646*y)) - 1))"
+          "min(( ((x*cos(C*y) - z*sin(C*y))-A)*((x*cos(C*y) - z*sin(C*y))-A) + (y/B)*(y/B) + (x*sin(C*y) + z*cos(C*y))*(x*sin(C*y) + z*cos(C*y)) - 1),  (((x*cos(C*y) - z*sin(C*y))+(1/2))*((x*cos(C*y) - z*sin(C*y))+(1/2)) + (y/B)*(y/B) + (x*sin(C*y) + z*cos(C*y))*(x*sin(C*y) + z*cos(C*y)) - 1))"
         ],
         "Xmin": [
           "-2"
@@ -2638,10 +2643,10 @@
           " 2"
         ],
         "Ymin": [
-          "-2*2DOTSYMBOL9*1"
+          "-6"
         ],
         "Ymax": [
-          " 2*2DOTSYMBOL9*1"
+          " 6"
         ],
         "Zmin": [
           "-2"
