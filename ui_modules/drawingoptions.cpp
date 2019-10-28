@@ -1507,7 +1507,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         // Pigment
         if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
-            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)))))
+            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)))))
         {
             LoadPigment(QPigmentObj, ISO_PIGM_FIELD);
         }
