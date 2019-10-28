@@ -5955,7 +5955,6 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         MathmodRef->ui.glWidget->LocalScene.slider = -1;
     }
 }
-// --------------------------
 void DrawingOptions::CIndextoolButton_clicked(int idx)
 {
     int range = (indexcurrentSet <1) ? (idx-1) : (indexcurrentSet-1)*qlstnames.size() + (idx-1);
@@ -6349,71 +6348,6 @@ void DrawingOptions::add_new_param()
 void DrawingOptions::update_infos_param(int index)
 {
     CIndextoolButton_clicked(index);
-    /*
-    switch(index)
-    {
-    case 1 :
-        on_C1toolButton_clicked();
-        break;
-    case 2 :
-        on_C2toolButton_clicked();
-        break;
-    case 3 :
-        on_C3toolButton_clicked();
-        break;
-    case 4 :
-        on_C4toolButton_clicked();
-        break;
-    case 5 :
-        on_C5toolButton_clicked();
-        break;
-    case 6 :
-        on_C6toolButton_clicked();
-        break;
-    case 7 :
-        on_C7toolButton_clicked();
-        break;
-    case 8 :
-        on_C8toolButton_clicked();
-        break;
-    case 9 :
-        on_C9toolButton_clicked();
-        break;
-    case 10 :
-        on_C10toolButton_clicked();
-        break;
-    case 11 :
-        on_C11toolButton_clicked();
-        break;
-    case 12 :
-        on_C12toolButton_clicked();
-        break;
-    case 13 :
-        on_C13toolButton_clicked();
-        break;
-    case 14 :
-        on_C14toolButton_clicked();
-        break;
-    case 15 :
-        on_C15toolButton_clicked();
-        break;
-    case 16 :
-        on_C16toolButton_clicked();
-        break;
-    case 17 :
-        on_C17toolButton_clicked();
-        break;
-    case 18 :
-        on_C18toolButton_clicked();
-        break;
-    case 19 :
-        on_C19toolButton_clicked();
-        break;
-    case 20 :
-        on_C20toolButton_clicked();
-        break;
-    }
-    */
     sliderconf.currentSlider = index -1;
 }
 
