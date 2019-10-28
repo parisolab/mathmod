@@ -5625,61 +5625,132 @@ void DrawingOptions::on_pushButton_5_clicked()
 }
 
 // --------------------------
-void DrawingOptions::on_C1ScrollBar_valueChanged(int value)
+void DrawingOptions::on_C1ScrollBar_valueChanged(int val)
 {
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[0] = value;
-
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[0] = value;
-    ui.C1label->setText(qlstnames.at(0) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
+    CScrollBar_valueChanged(val, 0);
 }
 
 // --------------------------
-void DrawingOptions::on_C2ScrollBar_valueChanged(int value)
+void DrawingOptions::on_C2ScrollBar_valueChanged(int val)
 {
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[1] = value;
-
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[1] = value;
-    ui.C2label->setText(qlstnames.at(1) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
+    CScrollBar_valueChanged(val, 1);
 }
 
 // --------------------------
-void DrawingOptions::on_C3ScrollBar_valueChanged(int value)
+void DrawingOptions::on_C3ScrollBar_valueChanged(int val)
 {
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[2] = value;
-
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[2] = value;
-
-    ui.C3label->setText(qlstnames.at(2) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
+    CScrollBar_valueChanged(val, 2);
 }
 
 // --------------------------
-void DrawingOptions::on_C4ScrollBar_valueChanged(int value)
+void DrawingOptions::on_C4ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 3);
+}
+
+// --------------------------
+void DrawingOptions::on_C5ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 4);
+}
+
+// --------------------------
+void DrawingOptions::on_C6ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 5);
+}
+
+// --------------------------
+void DrawingOptions::on_C7ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 6);
+}
+
+// --------------------------
+void DrawingOptions::on_C8ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 7);
+}
+
+// --------------------------
+void DrawingOptions::on_C9ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 8);
+}
+
+// --------------------------
+void DrawingOptions::on_C10ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 9);
+}
+
+// --------------------------
+void DrawingOptions::on_C11ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 10);
+}
+
+// --------------------------
+void DrawingOptions::on_C12ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 11);
+}
+
+// --------------------------
+void DrawingOptions::on_C13ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 12);
+}
+
+// --------------------------
+void DrawingOptions::on_C14ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 13);
+}
+
+// --------------------------
+void DrawingOptions::on_C15ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 14);
+}
+
+// --------------------------
+void DrawingOptions::on_C16ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 15);
+}
+
+// --------------------------
+void DrawingOptions::on_C17ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 16);
+}
+
+// --------------------------
+void DrawingOptions::on_C18ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 17);
+}
+
+// --------------------------
+void DrawingOptions::on_C19ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 18);
+}
+
+// --------------------------
+void DrawingOptions::on_C20ScrollBar_valueChanged(int val)
+{
+    CScrollBar_valueChanged(val, 19);
+}
+
+// --------------------------
+void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
 {
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[3] = value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[3] = value;
-    ui.C4label->setText(qlstnames.at(3) + " = " +QString::number(value));
+    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[idx] = val;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[idx] = val;
+    ui.C20label->setText(qlstnames.at(idx) + " = " +QString::number(val));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
@@ -5687,229 +5758,7 @@ void DrawingOptions::on_C4ScrollBar_valueChanged(int value)
     MathmodRef->ui.glWidget->LocalScene.slider = -1;
 }
 
-// --------------------------
-void DrawingOptions::on_C5ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[4] = value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[4] = value;
-    ui.C5label->setText(qlstnames.at(4) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
 
-// --------------------------
-void DrawingOptions::on_C6ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[5] = value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[5] = value;
-    ui.C6label->setText(qlstnames.at(5) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C7ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[6] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[6] = value;
-    ui.C7label->setText(qlstnames.at(6) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C8ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[7] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[7] = value;
-    ui.C8label->setText(qlstnames.at(7) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C9ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[8] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[8] = value;
-    ui.C9label->setText(qlstnames.at(8) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C10ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[9] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[9] = value;
-    ui.C10label->setText(qlstnames.at(9) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C11ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[10] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[10] = value;
-    ui.C11label->setText(qlstnames.at(10) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C12ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[11] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[11] = value;
-    ui.C12label->setText(qlstnames.at(11) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C13ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[12] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[12] = value;
-    ui.C13label->setText(qlstnames.at(12) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C14ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[13] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[13] = value;
-    ui.C14label->setText(qlstnames.at(13) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C15ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[14] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[14] = value;
-    ui.C15label->setText(qlstnames.at(14) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C16ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[15] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[15] = value;
-    ui.C16label->setText(qlstnames.at(15) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C17ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[16] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[16] = value;
-    ui.C17label->setText(qlstnames.at(16) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C18ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[17] =value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[17] = value;
-    ui.C18label->setText(qlstnames.at(17) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C19ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[18] = value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[18] = value;
-    ui.C19label->setText(qlstnames.at(18) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
-
-// --------------------------
-void DrawingOptions::on_C20ScrollBar_valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[19] = value;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[19] = value;
-    ui.C20label->setText(qlstnames.at(19) + " = " +QString::number(value));
-    if(CurrentFormulaType==2)
-        MathmodRef->ProcessNewIsoSurface( );
-    else
-        MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
-}
 
 // --------------------------
 void DrawingOptions::on_PredefinedSets_activated(int index)

@@ -284,6 +284,7 @@ private slots:
     void on_C18ScrollBar_valueChanged(int value);
     void on_C19ScrollBar_valueChanged(int value);
     void on_C20ScrollBar_valueChanged(int value);
+    void CScrollBar_valueChanged(int, int);
     void on_C20toolButton_clicked();
     void on_C19toolButton_clicked();
     void on_C18toolButton_clicked();
