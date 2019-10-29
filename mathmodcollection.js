@@ -10738,7 +10738,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Bouncing Ball_1 by Abderrahman Taha 04/11/2015"
+          "Bouncing Ball_1 by Abderrahman Taha 29/10/2019"
         ],
         "Name": [
           "Bouncing Ball"
@@ -10749,9 +10749,9 @@
           "TransparentWall"
         ],
         "Fxyz": [
-          "((x-(abs(((t*2DOTSYMBOL5)%16)-8)-4))^2+(y-(abs(((t*2DOTSYMBOL9)%16)-8)-4))^2+(z-(4DOTSYMBOL4-((((t*1DOTSYMBOL2)%4)-2)^2)))^2-0DOTSYMBOL8)",
-          "(z+0DOTSYMBOL407)*(y-4DOTSYMBOL9)*(y+4DOTSYMBOL9)*(x+4DOTSYMBOL9)",
-          "(x-4DOTSYMBOL9)"
+          "((x-(abs(((t*25/10)%16)-8)-4))^2+(y-(abs(((t*29/10)%16)-8)-4))^2+(z-(44/10-((((t*12/10)%4)-2)^2)))^2-8/10)",
+          "(z+4/10)*(y-49/10)*(y+49/10)*(x+49/10)",
+          "(x-49/10)"
         ],
         "Grid": [
           "25",
@@ -10759,34 +10759,34 @@
           "5"
         ],
         "Xmax": [
-          "4DOTSYMBOL81",
-          "4DOTSYMBOL91",
-          "4DOTSYMBOL91"
+          "481/100",
+          "491/100",
+          "491/100"
         ],
         "Xmin": [
-          "-4DOTSYMBOL81",
-          "-4DOTSYMBOL91",
-          "-4DOTSYMBOL91"
+          "-481/100",
+          "-491/100",
+          "-491/100"
         ],
         "Ymax": [
-          "4DOTSYMBOL81",
-          "4DOTSYMBOL91",
-          "4DOTSYMBOL91"
+          "481/100",
+          "491/100",
+          "491/100"
         ],
         "Ymin": [
-          "-4DOTSYMBOL81",
-          "-4DOTSYMBOL91",
-          "-4DOTSYMBOL91"
+          "-481/100",
+          "-491/100",
+          "-491/100"
         ],
         "Zmax": [
-          "5DOTSYMBOL5",
-          "5DOTSYMBOL5",
-          "5DOTSYMBOL5"
+          "55/10",
+          "55/10",
+          "55/10"
         ],
         "Zmin": [
-          "-0DOTSYMBOL5",
-          "-0DOTSYMBOL41",
-          "-0DOTSYMBOL41"
+          "-1/2",
+          "-41/100",
+          "-41/100"
         ]
       }
     },
