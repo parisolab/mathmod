@@ -10133,7 +10133,7 @@
                     "Lobed Torus_2 by Abderrahman Taha 29/10/2019"
                 ],
                 "Name": [
-                    "Lobed Torus_2"
+                    "Lobed_Torus_2"
                 ],
                 "Component": [
                     "LobedTorus"
@@ -10200,7 +10200,7 @@
                     "Lobed Torus_4 by Abderrahman Taha 29/10/2019"
                 ],
                 "Name": [
-                    "Lobed Torus_4"
+                    "Lobed_Torus_4"
                 ],
                 "Component": [
                     "LobedTorus"
@@ -10267,7 +10267,7 @@
           "Lobed Torus_5 by Abderrahman Taha 29/10/2019"
         ],
         "Name": [
-          "Lobed Torus_5"
+          "Lobed_Torus_5"
         ],
         "Component": [
           "LobedTorus"
@@ -10401,7 +10401,7 @@
           "Lobed Torus_7 by Abderrahman Taha 29/10/2019"
         ],
         "Name": [
-          "Lobed Torus_7"
+          "Lobed_Torus_7"
         ],
         "Component": [
           "LobedTorus"
