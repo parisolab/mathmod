@@ -10471,10 +10471,10 @@
     {
       "Iso3D": {
         "Description ": [
-          "Torus Distortion due to moving surface by Abderrahman Taha 09/11/2015"
+          "Torus Distortion due to moving surface by Abderrahman Taha 29/10/2019"
         ],
         "Name": [
-          "Torus Distortion"
+          "Torus_Distortion"
         ],
         "Component": [
           "Drope",
@@ -10482,36 +10482,36 @@
         ],
         "Fxyz": [
           "z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey)",
-          "(sqrt((x-Sx*exp(Ex+Ey))^2 + (y-Cy*exp(Ex+Ey))^2) -1)^2 +(z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey))^2 -0DOTSYMBOL1"
+          "(sqrt((x-Sx*exp(Ex+Ey))^2 + (y-Cy*exp(Ex+Ey))^2) -1)^2 +(z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey))^2 -(1/10)"
         ],
         "Varu": [
-          "S=1DOTSYMBOL5*u*sin(2*tm)",
+          "S=(15/10)*u*sin(2*tm)",
           "C=2*u*cos(3*tm)",
           "E=-u*u"
         ],
         "Xmax": [
           "2",
-          "1DOTSYMBOL8"
+          "18/10"
         ],
         "Xmin": [
           "-2",
-          "-1DOTSYMBOL8"
+          "-18/10"
         ],
         "Ymax": [
           "2",
-          "1DOTSYMBOL8"
+          "18/10"
         ],
         "Ymin": [
           "-2",
-          "-1DOTSYMBOL8"
+          "-18/10"
         ],
         "Zmax": [
-          "1DOTSYMBOL7",
-          "1DOTSYMBOL5"
+          "17/10",
+          "15/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL7",
-          "-1DOTSYMBOL5"
+          "-17/10",
+          "-15/10"
         ]
       }
     },
