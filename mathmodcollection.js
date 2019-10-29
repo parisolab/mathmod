@@ -11073,13 +11073,13 @@
     {
       "Param3D": {
         "Description": [
-          "Double Helical curve by Abderrahman Taha 01/11/2015"
+          "Double Helical curve by Abderrahman Taha 28/10/2019"
         ],
         "Name": [
           "Double Helical curve"
         ],
         "Cnd": [
-          "sqrt(z^2+y^2)-0DOTSYMBOL200001>0",
+          "sqrt(z^2+y^2)-(1/5)>0",
           "1"
         ],
         "Component": [
@@ -11092,11 +11092,11 @@
         ],
         "Fy": [
           "v",
-          "0DOTSYMBOL2*sin(pi*u)"
+          "sin(pi*u)/5"
         ],
         "Fz": [
           "-sin(5*pi*u)/5",
-          "0DOTSYMBOL2*cos(pi*u)"
+          "cos(pi*u)/5"
         ],
         "Umax": [
           "1",
@@ -11107,11 +11107,11 @@
           "-1"
         ],
         "Vmax": [
-          "0DOTSYMBOL5",
+          "1/2",
           "1"
         ],
         "Vmin": [
-          "-0DOTSYMBOL5",
+          "-1/2",
           "-1"
         ]
       }
