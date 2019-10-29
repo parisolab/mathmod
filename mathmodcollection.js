@@ -11033,43 +11033,46 @@
         "Noise": "1"
       }
     },
-    {
-      "Iso3D": {
-        "Description": [
-          "Contour lines by Abderrahman Taha 01/11/2015"
-        ],
-        "Name": [
-          "Contour lines_1"
-        ],
-        "Cnd": [
-          "(z-0DOTSYMBOL25)*(z+0DOTSYMBOL25)*(z-0DOTSYMBOL5)*(z+0DOTSYMBOL5)*(z-0DOTSYMBOL75)*(z+0DOTSYMBOL75)*(z-1)*(z+1)*(z-1DOTSYMBOL5)*(z+1DOTSYMBOL5)*(z-1DOTSYMBOL25)*(z+1DOTSYMBOL25)>0"
-        ],
-        "Component": [
-          "Drope"
-        ],
-        "Fxyz": [
-          "z-4*x*exp(-x^2-y^2)"
-        ],
-        "Xmax": [
-          "2"
-        ],
-        "Xmin": [
-          "-2"
-        ],
-        "Ymax": [
-          "2"
-        ],
-        "Ymin": [
-          "-2"
-        ],
-        "Zmax": [
-          "1DOTSYMBOL8"
-        ],
-        "Zmin": [
-          "-1DOTSYMBOL8"
-        ]
-      }
-    },
+        {
+              "Iso3D": {
+                "Description": [
+                  "Contour lines by Abderrahman Taha 28/10/2019"
+                ],
+                "Name": [
+                  "Contour_lines"
+                ],
+                "Const": [
+                  "C=1/4"
+                ],
+                "Cnd": [
+                  "(z-C)*(z+C)*(z-2*C)*(z+2*C)*(z-3*C)*(z+3*C)*(z-1)*(z+1)*(z-6*C)*(z+1DOTSYMBOL5)*(z-5*C)*(z+5*C)>0"
+                ],
+                "Component": [
+                  "Drope"
+                ],
+                "Fxyz": [
+                  "z-4*x*exp(-x^2-y^2)"
+                ],
+                "Xmax": [
+                  "2"
+                ],
+                "Xmin": [
+                  "-2"
+                ],
+                "Ymax": [
+                  "2"
+                ],
+                "Ymin": [
+                  "-2"
+                ],
+                "Zmax": [
+                  "18/10"
+                ],
+                "Zmin": [
+                  "-18/10"
+                ]
+              }
+            },
     {
       "Param3D": {
         "Description": [
