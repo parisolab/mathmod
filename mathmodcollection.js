@@ -10792,17 +10792,17 @@
     },
     {
       "Param3D": {
+        "Description ": [
+           "simple Enneper by Abderrahman Taha 28/10/2019"
+        ],
         "Name": [
-          "simple Enneper_10"
+          "simple_Enneper_10"
         ],
         "Component": [
           "Enneper"
         ],
         "Const": [
           "k=10"
-        ],
-        "Description ": [
-          "simple Enneper by Abderrahman Taha 3/11/2015"
         ],
         "Fx": [
           "k*u*cos(v+t)-u^(2*k-1)/6*cos((2*k-1)*v+t)"
@@ -10814,7 +10814,7 @@
           "(u^k*cos(k*v+t))"
         ],
         "Umax": [
-          "1DOTSYMBOL15"
+          "115/100"
         ],
         "Umin": [
           "0"
@@ -10826,16 +10826,16 @@
           "-pi"
         ]
       },
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL91",
-          "G=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
-          "B=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
-          "T=1"
-        ],
-        "Name": "Candy",
-        "Noise": "1"
-      }
+            "Texture": {
+              "Colors": [
+                "R=(9/10)",
+                "G=(8/10)*abs(cos(5*pi*atan2(x,y)))",
+                "B=(8/10)*abs(cos(5*pi*atan2(x,y)))",
+                "T=1"
+              ],
+              "Name": "Candy",
+              "Noise": ""
+            }
     },
     {
       "Param3D": {
