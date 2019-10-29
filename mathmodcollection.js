@@ -10583,49 +10583,49 @@
     {
       "Param3D": {
         "Description ": [
-          "Sphere Parts by Abderrahman Taha 23/10/2015"
+          "Sphere Parts by Abderrahman Taha 29/10/2019"
         ],
         "Name": [
-          "Sphere Parts"
+          "Sphere_Parts"
         ],
         "Component": [
           "Sphere1",
           "Sphere2"
         ],
         "Const": [
-          "cu=0DOTSYMBOL001",
-          "cv=0DOTSYMBOL001"
+          "c=1/10000",
+          "A=35/100"
         ],
         "Funct": [
-          "Thickness1=if((t = 1), if ( abs(sin(4*u-v))>0DOTSYMBOL35,(-1),0DOTSYMBOL6*sin(v)),if ( abs(sin(4*u-v))<0DOTSYMBOL35,(-1),0))",
+          "Th=if((t = 1), if ( abs(sin(4*u-v))>A,(-1),(6/10)*sin(v)),if ( abs(sin(4*u-v))<A,(-1),(0)))",
           "Fx=cos(u)*cos(v)",
           "Fy=sin(u)",
           "Fz=cos(u)*sin(v)",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness1(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness1(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness1(u,v,t)*n3(u,v,t)/R(u,v,t)"
+          "R=u/sqrt(u*u+v*v+t*t)",
+          "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
-          "Gx(u,v,1)",
-          "Gx(u,v,0)"
+          "Gx(u,v,(1))",
+          "Gx(u,v,(0))"
         ],
         "Fy": [
-          "Gy(u,v,1)",
-          "Gy(u,v,0)"
+          "Gy(u,v,(1))",
+          "Gy(u,v,(0))"
         ],
         "Fz": [
-          "Gz(u,v,1)",
-          "Gz(u,v,0)"
+          "Gz(u,v,(1))",
+          "Gz(u,v,(0))"
         ],
         "Umax": [
           "pi/2",
@@ -10646,13 +10646,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL5*cos(5*(x*x+y*y))",
-          "G=0DOTSYMBOL5*cos(5*(x*x+y*y+z*z))",
-          "B=0DOTSYMBOL5*cos(5*(x*x+y*y+z*z))",
+          "R=if(cmpId=0,(1/2)*cos(5*(x*x+y*y)), cos(5*(x*x+y*y)))",
+          "G=cos(5*(x*x+y*y+z*z))/2",
+          "B=cos(5*(x*x+y*y+z*z))/2",
           "T=1"
         ],
         "Name": "Granit",
-        "Noise": "NoiseW(13*x,13*y,13*z,(1),(2),0)"
+        "Noise": "NoiseW((13*x),(13*y),(13*z),(1),(2),(0))"
       }
     },
     {
