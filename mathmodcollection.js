@@ -11116,123 +11116,117 @@
         ]
       }
     },
-    {
-      "Iso3D": {
-        "Description": [
-          "Menger Schwarz_1 by Abderrahman Taha 28/10/2015. Menger Sponge Level 3 made out of the skeletal graph of Schwarz's D surface"
-        ],
-        "Name": [
-          "Skeletal Menger"
-        ],
-        "Cnd": [
-          "(x+y+z)>0",
-          "(x+y+z)>0",
-          "(x+y+z)>0",
-          "(x+y+z)>0",
-          "(x+y+z)>0",
-          "(x+y+z)>0",
-          "(x+y+z)>0",
-          "(x+y+z)>0"
-        ],
-        "Component": [
-          "MengerSchwarz1",
-          "MengerSchwarz2",
-          "MengerSchwarz3",
-          "MengerSchwarz4",
-          "MengerSchwarz5",
-          "MengerSchwarz6",
-          "MengerSchwarz7",
-          "MengerSchwarz8"
-        ],
-        "Funct": [
-          "Thickness=-0DOTSYMBOL013",
-          "isoCondition=if((abs(x)>1/3|abs(y)>1/3)&(abs(z)>1/3|abs(y)>1/3)&(abs(x)>1/3|abs(z)>1/3)&(((((abs(x-2/3)<1/9)+(abs(x+2/3)<1/9)+(abs(x)<1/9))*((abs(y-2/3)<1/9)+(abs(y)<1/9)+(abs(y+2/3)<1/9)+(abs(z-2/3)<1/9)+(abs(z)<1/9)+(abs(z+2/3)<1/9)))+(((abs(z-2/3)<1/9)+(abs(z+2/3)<1/9)+(abs(z)<1/9))*((abs(y-2/3)<1/9)+(abs(y)<1/9)+(abs(y+2/3)<1/9))))=0)&(((((abs(x-2/3)<1/27)+(abs(x-2/3-2/9)<1/27)+(abs(x-2/3+2/9)<1/27)+(abs(x+2/3)<1/27)+(abs(x+2/3-2/9)<1/27)+(abs(x+2/3+2/9)<1/27)+(abs(x)<1/27)+(abs(x-2/9)<1/27)+(abs(x+2/9)<1/27))*((abs(y-2/3)<1/27)+(abs(y-2/3-2/9)<1/27)+(abs(y-2/3+2/9)<1/27)+(abs(y)<1/27)+(abs(y-2/9)<1/27)+(abs(y+2/9)<1/27)+(abs(y+2/3)<1/27)+(abs(y+2/3-2/9)<1/27)+(abs(y+2/3+2/9)<1/27)+(abs(z-2/3)<1/27)+(abs(z-2/3-2/9)<1/27)+(abs(z-2/3+2/9)<1/27)+(abs(z)<1/27)+(abs(z-2/9)<1/27)+(abs(z+2/9)<1/27)+(abs(z+2/3)<1/27)+(abs(z+2/3-2/9)<1/27)+(abs(z+2/3+2/9)<1/27)))+(((abs(z-2/3)<1/27)+(abs(z-2/3-2/9)<1/27)+(abs(z-2/3+2/9)<1/27)+(abs(z+2/3)<1/27)+(abs(z+2/3-2/9)<1/27)+(abs(z+2/3+2/9)<1/27)+(abs(z)<1/27)+(abs(z-2/9)<1/27)+(abs(z+2/9)<1/27))*((abs(y-2/3)<1/27)+(abs(y-2/3-2/9)<1/27)+(abs(y-2/3+2/9)<1/27)+(abs(y)<1/27)+(abs(y-2/9)<1/27)+(abs(y+2/9)<1/27)+(abs(y+2/3)<1/27)+(abs(y+2/3-2/9)<1/27)+(abs(y+2/3+2/9)<1/27))))=0),x^100+y^100+z^100-1DOTSYMBOL12,1)"
-        ],
-        "Fxyz": [
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
-          "if(isoCondition(x,y,z,t)<(0),-(cos(84DOTSYMBOL823*( x-Ex*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( y-Ey*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(84DOTSYMBOL823*( z-Ez*Thickness(x,y,z,t)/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"
-        ],
-        "Varu": [
-          "E=sin(84DOTSYMBOL823*u)"
-        ],
-        "Xmax": [
-          "1DOTSYMBOL06",
-          "1DOTSYMBOL06",
-          "1DOTSYMBOL06",
-          "1DOTSYMBOL06",
-          "0",
-          "0",
-          "0",
-          "0"
-        ],
-        "Xmin": [
-          "0",
-          "0",
-          "0",
-          "0",
-          "-1DOTSYMBOL06",
-          "-1DOTSYMBOL06",
-          "-1DOTSYMBOL06",
-          "-1DOTSYMBOL06"
-        ],
-        "Ymax": [
-          "1DOTSYMBOL06",
-          "0",
-          "1DOTSYMBOL06",
-          "0",
-          "0",
-          "1DOTSYMBOL06",
-          "0",
-          "1DOTSYMBOL06"
-        ],
-        "Ymin": [
-          "0",
-          "-1DOTSYMBOL06",
-          "0",
-          "-1DOTSYMBOL06",
-          "-1DOTSYMBOL06",
-          "0",
-          "-1DOTSYMBOL06",
-          "0"
-        ],
-        "Zmax": [
-          "1DOTSYMBOL06",
-          "1DOTSYMBOL06",
-          "0",
-          "0",
-          "0",
-          "0",
-          "1DOTSYMBOL06",
-          "1DOTSYMBOL06"
-        ],
-        "Zmin": [
-          "0",
-          "0",
-          "-1DOTSYMBOL06",
-          "-1DOTSYMBOL06",
-          "-1DOTSYMBOL06",
-          "-1DOTSYMBOL06",
-          "0",
-          "0"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL7*sqrt(4*x^40+y^4+z^4)",
-          "G=0DOTSYMBOL4*sqrt(x^4+y^4+4*z^20)",
-          "B=0DOTSYMBOL5*sqrt(x^4+4*y^20+z^4)",
-          "T=1"
-        ],
-        "Name": "Granit_2",
-        "Noise": "1"
-      }
-    },
+        {
+              "Iso3D": {
+                "Description": [
+                  "Menger Schwarz_1 by Abderrahman Taha 29/10/2019 _ Menger Sponge Level 3 made out from the skeletal graph of the Schwarz's D surface"
+                ],
+                "Name": [
+                  "Skeletal Menger"
+                ],
+                "Const": [
+                  "A=84",
+                  "Th=-13/1000",
+                  "X=106/100"
+                ],
+                "Varu": [
+                  "E=sin(A*u)"
+                ],
+                "Component": [
+                  "MengerSchwarz1",
+                  "MengerSchwarz2",
+                  "MengerSchwarz3",
+                  "MengerSchwarz4",
+                  "MengerSchwarz5",
+                  "MengerSchwarz6",
+                  "MengerSchwarz7",
+                  "MengerSchwarz8"
+                ],
+                "Funct": [
+                  "isoCondition=if((abs(x)>1/3|abs(y)>1/3)&(abs(z)>1/3|abs(y)>1/3)&(abs(x)>1/3|abs(z)>1/3)&(((((abs(x-2/3)<1/9)+(abs(x+2/3)<1/9)+(abs(x)<1/9))*((abs(y-2/3)<1/9)+(abs(y)<1/9)+(abs(y+2/3)<1/9)+(abs(z-2/3)<1/9)+(abs(z)<1/9)+(abs(z+2/3)<1/9)))+(((abs(z-2/3)<1/9)+(abs(z+2/3)<1/9)+(abs(z)<1/9))*((abs(y-2/3)<1/9)+(abs(y)<1/9)+(abs(y+2/3)<1/9))))=0)&(((((abs(x-2/3)<1/27)+(abs(x-2/3-2/9)<1/27)+(abs(x-2/3+2/9)<1/27)+(abs(x+2/3)<1/27)+(abs(x+2/3-2/9)<1/27)+(abs(x+2/3+2/9)<1/27)+(abs(x)<1/27)+(abs(x-2/9)<1/27)+(abs(x+2/9)<1/27))*((abs(y-2/3)<1/27)+(abs(y-2/3-2/9)<1/27)+(abs(y-2/3+2/9)<1/27)+(abs(y)<1/27)+(abs(y-2/9)<1/27)+(abs(y+2/9)<1/27)+(abs(y+2/3)<1/27)+(abs(y+2/3-2/9)<1/27)+(abs(y+2/3+2/9)<1/27)+(abs(z-2/3)<1/27)+(abs(z-2/3-2/9)<1/27)+(abs(z-2/3+2/9)<1/27)+(abs(z)<1/27)+(abs(z-2/9)<1/27)+(abs(z+2/9)<1/27)+(abs(z+2/3)<1/27)+(abs(z+2/3-2/9)<1/27)+(abs(z+2/3+2/9)<1/27)))+(((abs(z-2/3)<1/27)+(abs(z-2/3-2/9)<1/27)+(abs(z-2/3+2/9)<1/27)+(abs(z+2/3)<1/27)+(abs(z+2/3-2/9)<1/27)+(abs(z+2/3+2/9)<1/27)+(abs(z)<1/27)+(abs(z-2/9)<1/27)+(abs(z+2/9)<1/27))*((abs(y-2/3)<1/27)+(abs(y-2/3-2/9)<1/27)+(abs(y-2/3+2/9)<1/27)+(abs(y)<1/27)+(abs(y-2/9)<1/27)+(abs(y+2/9)<1/27)+(abs(y+2/3)<1/27)+(abs(y+2/3-2/9)<1/27)+(abs(y+2/3+2/9)<1/27))))=0),x^100+y^100+z^100-(112/100),1)"
+                ],
+                "Fxyz": [
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)",
+                  "if(isoCondition(x,y,z,t)<(0),-(cos(A*( x-Ex*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( y-Ey*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(A*( z-Ez*Th/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"
+                ],
+                "Xmax": [
+                  "X",
+                  "X",
+                  "X",
+                  "X",
+                  "0",
+                  "0",
+                  "0",
+                  "0"
+                ],
+                "Xmin": [
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "-X",
+                  "-X",
+                  "-X",
+                  "-X"
+                ],
+                "Ymax": [
+                  "X",
+                  "0",
+                  "X",
+                  "0",
+                  "0",
+                  "X",
+                  "0",
+                  "X"
+                ],
+                "Ymin": [
+                  "0",
+                  "-X",
+                  "0",
+                  "-X",
+                  "-X",
+                  "0",
+                  "-X",
+                  "0"
+                ],
+                "Zmax": [
+                  "X",
+                  "X",
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "X",
+                  "X"
+                ],
+                "Zmin": [
+                  "0",
+                  "0",
+                  "-X",
+                  "-X",
+                  "-X",
+                  "-X",
+                  "0",
+                  "0"
+                ]
+              },
+              "Texture": {
+                "Colors": [
+                  "R=(7/10)*sqrt(4*x^40+y^4+z^4)",
+                  "G=(4/10)*sqrt(x^4+y^4+4*z^20)",
+                  "B=(5/10)*sqrt(x^4+4*y^20+z^4)",
+                  "T=1"
+                ],
+                "Name": "Rainbow",
+                "Noise": ""
+              }
+            },
     {
       "Param3D": {
         "Description ": [
