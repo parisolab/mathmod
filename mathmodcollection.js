@@ -11236,7 +11236,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Double Nib Parametric surface by Abderrahman Taha 31/10/2015"
+          "Double Nib Parametric surface by Abderrahman Taha 29/10/2019"
         ],
         "Name": [
           "Double Nib"
@@ -11245,27 +11245,26 @@
           "DoubleNib"
         ],
         "Const": [
-          "cu=1/10000",
-          "cv=1/10000"
+          "c=1/10000"
         ],
         "Funct": [
           "Fx=-cos(t+v)/(2*u)-u^3*cos(t-3*v)/6",
           "Fy=-sin(t+v)/(2*u)+u^3*sin(t-3*v)/6",
-          "Fz=u*cos(t-v)",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "Fz=-u*cos(t-v)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+          "R=u/sqrt(u*u+v*v+t*t)",
           "Thickness=DFyv(u,v,t)/2",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
+          "Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
@@ -11291,13 +11290,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=6/10",
-          "G=31*abs(cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
-          "B=7*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
+          "R=5/10",
+          "G=abs(cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
+          "B=3*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
-        "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),(0)) +NoiseW(4*x,4*y,4*z,(4),(12),(1/10))"
+        "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),(0)) +NoiseW(4*x,4*y,4*z,(4),(12),(0))"
       }
     },
         {
