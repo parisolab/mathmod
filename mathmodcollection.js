@@ -10981,10 +10981,10 @@
     {
       "Param3D": {
         "Description ": [
-          "Double Enneper by Abderrahman Taha 3/11/2015"
+          "Double Enneper by Abderrahman Taha 28/10/2019"
         ],
         "Name": [
-          "Double Enneper_4x4"
+          "Double_Enneper_4x4"
         ],
         "Component": [
           "Enneper_1",
@@ -11006,8 +11006,8 @@
           "(-u^(k)*cos(k*v+t))"
         ],
         "Umax": [
-          "1DOTSYMBOL2",
-          "1DOTSYMBOL2"
+          "12/10",
+          "12/10"
         ],
         "Umin": [
           "0",
@@ -11024,9 +11024,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL91",
-          "G=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
-          "B=0DOTSYMBOL8*abs(cos(5*pi*atan2(x,y)))",
+          "R=(9/10)",
+          "G=(8/10)*abs(cos(5*pi*atan2(x,y)))",
+          "B=(8/10)*abs(cos(5*pi*atan2(x,y)))",
           "T=1"
         ],
         "Name": "Granit_2",
