@@ -10128,74 +10128,73 @@
         "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
       }
     },
-    {
-      "Param3D": {
-        "Description ": [
-          "Lobed Torus_2 by Abderrahman Taha 10/11/2015"
-        ],
-        "Name": [
-          "Lobed Torus_2"
-        ],
-        "Component": [
-          "LobedTorus"
-        ],
-        "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001",
-          "N=3"
-        ],
-        "Funct": [
-          "Thickness=0DOTSYMBOL9*sin((N*v)% pi/3)",
-          "Fx=(N/2+1+ 0DOTSYMBOL6*cos(u))*cos(v)",
-          "Fy=0DOTSYMBOL6*sin(u)",
-          "Fz=(N/2+1+ 0DOTSYMBOL6*cos(u))*sin(v)",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
-          "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-          "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-          "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
-        ],
-        "Fx": [
-          "Gx(u,v,t)"
-        ],
-        "Fy": [
-          "Gy(u,v,t)"
-        ],
-        "Fz": [
-          "Gz(u,v,t)"
-        ],
-        "Umax": [
-          "2*pi"
-        ],
-        "Umin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
-        ],
-        "Vmin": [
-          "0"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=0DOTSYMBOL8*abs(cos((pi*(x*x+y*y+z*z))))",
-          "B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
-          "T=1"
-        ],
-        "Name": "Dream",
-        "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),2)"
-      }
-    },
+        {
+            "Param3D": {
+                "Description ": [
+                    "Lobed Torus_2 by Abderrahman Taha 29/10/2019"
+                ],
+                "Name": [
+                    "Lobed Torus_2"
+                ],
+                "Component": [
+                    "LobedTorus"
+                ],
+                "Const": [
+                    "c=1/10000",
+                    "N=3"
+                ],
+                "Funct": [
+                    "Th=(9/10)*sin((N*v)% pi/3)",
+                    "Fx=(N/2+1+ (6/10)*cos(u))*cos(v)",
+                    "Fy=(6/10)*sin(u)",
+                    "Fz=(N/2+1+ (6/10)*cos(u))*sin(v)",
+                    "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+                    "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+                    "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+                    "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+                    "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+                    "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+                    "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+                    "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+                    "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+                    "R=u/sqrt(u*u+v*v+t*t)",
+                    "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+                    "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+                    "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
+                ],
+                "Fx": [
+                    "Gx(u,v,t)"
+                ],
+                "Fy": [
+                    "Gy(u,v,t)"
+                ],
+                "Fz": [
+                    "Gz(u,v,t)"
+                ],
+                "Umax": [
+                    "2*pi"
+                ],
+                "Umin": [
+                    "0"
+                ],
+                "Vmax": [
+                    "2*pi"
+                ],
+                "Vmin": [
+                    "0"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R=9/10",
+                    "G=8*abs(cos((pi*(x*x+y*y+z*z))))/10",
+                    "B=6*abs(cos(cos(pi*(x*x+y*y+z*z))))/10",
+                    "T=1"
+                ],
+                "Name": "Dream",
+                "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),(2))"
+            }
+        },
         {
             "Param3D": {
                 "Description ": [
