@@ -11245,8 +11245,8 @@
           "DoubleNib"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
+          "cu=1/10000",
+          "cv=1/10000"
         ],
         "Funct": [
           "Fx=-cos(t+v)/(2*u)-u^3*cos(t-3*v)/6",
@@ -11262,7 +11262,7 @@
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
           "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Thickness=DFyv(u,v,t)*0DOTSYMBOL5",
+          "Thickness=DFyv(u,v,t)/2",
           "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
           "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
           "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
@@ -11277,10 +11277,10 @@
           "Gz(u,v,t)"
         ],
         "Umax": [
-          "1DOTSYMBOL3"
+          "13/10"
         ],
         "Umin": [
-          "0DOTSYMBOL3"
+          "3/10"
         ],
         "Vmax": [
           "2*pi"
