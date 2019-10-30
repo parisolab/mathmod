@@ -9959,61 +9959,62 @@
     {
       "Iso3D": {
         "Description": [
-          " Pseudo Chmutov_2 by Abderrahman Taha 14/11/2015"
+          " Pseudo Chmutov_2 by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "Pseudo Chmutov_2"
+          "Pseudo_Chmutov_2"
         ],
         "Component": [
           "PseudoChmutov"
         ],
         "Const": [
           "M=7",
-          "N=16"
+          "N=16",
+          "L=11/10"
         ],
         "Fxyz": [
-          "-((x^N+y^N+z^N)-(cos(M*x)+cos(M*y)+cos(M*z))-0DOTSYMBOL1)"
+          "-((x^N+y^N+z^N)-(cos(M*x)+cos(M*y)+cos(M*z))-(1/10))"
         ],
         "Xmax": [
-          "1DOTSYMBOL1"
+          "L"
         ],
         "Xmin": [
-          "-1DOTSYMBOL1"
+          "-L"
         ],
         "Ymax": [
-          "1DOTSYMBOL1"
+          "L"
         ],
         "Ymin": [
-          "-1DOTSYMBOL1"
+          "-L"
         ],
         "Zmax": [
-          "1DOTSYMBOL1"
+          "L"
         ],
         "Zmin": [
-          "-1DOTSYMBOL1"
+          "-L"
         ]
       }
     },
-    {
-      "Param3D": {
-        "Description ": [
-          "Bullet by Abderrahman Taha 30/10/2019"
-        ],
-        "Name": [
-          "Bullet"
-        ],
-        "Component": [
-          "Bullet1",
-          "Bullet2"
-        ],
-        "Const": [
-          "c=1/10000"
-        ],
-        "Funct": [
-          "Th=if( (t = 1), if ( abs(sin(4*u-v))<(1/4),(-1), -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>(1/4),(-1),-u*u*(cos(u) - sin(u))))",
-          "Fx=cos(u)*cos(v)",
-          "Fy=sin(u)",
-          "Fz=cos(u)*sin(v)",
+        {
+            "Param3D": {
+                "Description ": [
+                    "Bullet by Abderrahman Taha 30/10/2019"
+                ],
+                "Name": [
+                    "Bullet"
+                ],
+                "Component": [
+                    "Bullet1",
+                    "Bullet2"
+                ],
+                "Const": [
+                    "c=1/10000"
+                ],
+                "Funct": [
+                    "Th=if( (t = 1), if ( abs(sin(4*u-v))<(1/4),(-1), -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>(1/4),(-1),-u*u*(cos(u) - sin(u))))",
+                    "Fx=cos(u)*cos(v)",
+                    "Fy=sin(u)",
+                    "Fz=cos(u)*sin(v)",
                     "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
                     "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
                     "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
@@ -10027,37 +10028,37 @@
                     "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
                     "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
                     "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
-        ],
-        "Fx": [
-          "Gx(u,v,1)",
-          "Gx(u,v,0)"
-        ],
-        "Fy": [
-          "Gy(u,v,1)",
-          "Gy(u,v,0)"
-        ],
-        "Fz": [
-          "Gz(u,v,1)",
-          "Gz(u,v,0)"
-        ],
-        "Umax": [
-          "pi/2",
-          "pi/2"
-        ],
-        "Umin": [
-          "-pi/2",
-          "-pi/2"
-        ],
-        "Vmax": [
-          "2*pi",
-          "2*pi"
-        ],
-        "Vmin": [
-          "0",
-          "0"
-        ]
-      }
-    },
+                ],
+                "Fx": [
+                    "Gx(u,v,1)",
+                    "Gx(u,v,0)"
+                ],
+                "Fy": [
+                    "Gy(u,v,1)",
+                    "Gy(u,v,0)"
+                ],
+                "Fz": [
+                    "Gz(u,v,1)",
+                    "Gz(u,v,0)"
+                ],
+                "Umax": [
+                    "pi/2",
+                    "pi/2"
+                ],
+                "Umin": [
+                    "-pi/2",
+                    "-pi/2"
+                ],
+                "Vmax": [
+                    "2*pi",
+                    "2*pi"
+                ],
+                "Vmin": [
+                    "0",
+                    "0"
+                ]
+            }
+        },
         {
             "Param3D": {
                 "Description ": [
