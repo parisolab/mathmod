@@ -9997,7 +9997,7 @@
     {
       "Param3D": {
         "Description ": [
-          "Bullet by Abderrahman Taha 10/11/2015"
+          "Bullet by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
           "Bullet"
@@ -10007,28 +10007,26 @@
           "Bullet2"
         ],
         "Const": [
-          "cu=0DOTSYMBOL001",
-          "cv=0DOTSYMBOL001",
-          "N=1DOTSYMBOL5"
+          "c=1/10000"
         ],
         "Funct": [
-          "Thickness1=if( (t = 1), if ( abs(sin(4*u-v))<0DOTSYMBOL4,(-1), -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>0DOTSYMBOL4,(-1),-u*u*(cos(u) - sin(u))))",
+          "Th=if( (t = 1), if ( abs(sin(4*u-v))<(1/4),(-1), -u*u*(cos(u) - sin(u)) ),if ( abs(sin(4*u-v))>(1/4),(-1),-u*u*(cos(u) - sin(u))))",
           "Fx=cos(u)*cos(v)",
           "Fy=sin(u)",
           "Fz=cos(u)*sin(v)",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
-          "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-          "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-          "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness1(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness1(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness1(u,v,t)*n3(u,v,t)/R(u,v,t)"
+                    "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+                    "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+                    "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+                    "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+                    "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+                    "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+                    "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+                    "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+                    "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+                    "R=u/sqrt(u*u+v*v+t*t)",
+                    "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+                    "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+                    "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,1)",
