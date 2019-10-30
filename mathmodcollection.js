@@ -9645,7 +9645,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Schwarz Cube Torus by Abderrahman Taha 22/11/2015"
+          "Schwarz Cube Torus by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
           "Schwarz Cube Torus"
@@ -9657,22 +9657,27 @@
           "SchwarzCubeTorus_4"
         ],
         "Const": [
-          "k=6"
+          "k=6",
+          "C=65/10",
+          "D=65/10",
+          "E=(323/100)^20",
+          "Th=4/10"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "Iso4=(Iso(x+sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso5=(Iso(x-sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoCondition=(x^20+(y/4)^20+z^20-3DOTSYMBOL23^20)",
-          "isoTransform_2=if(isoCondition(x,y,z,t)<(0),ThickIso2(k*x,k*y,k*z,t),1)",
+          "Rap= x/sqrt(x*x+y*y+z*z)",
+          "Iso4=(Iso(x+Th*Rap(sin(x),sin(y),sin(z),t),y+Th*Rap(sin(y),sin(z),sin(x),t),z+Th*Rap(sin(z),sin(x),sin(y),t),t))",
+          "Iso5=(Iso(x-Th*Rap(sin(x),sin(y),sin(z),t),y-Th*Rap(sin(y),sin(z),sin(x),t),z-Th*Rap(sin(z),sin(x),sin(y),t),t))",
+          "ThickIso=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+          "isoCondition=(x^20+(y/4)^20+z^20-E)",
+          "isoTransform_2=if(isoCondition(x,y,z,t)<(0),ThickIso(k*x,k*y,k*z,t),1)",
           "isoTransform_3=isoTransform_2(x*cos(pi*y/(k*pi))-z*sin(pi*y/(k*pi)),y,x*sin(pi*y/(k*pi))+z*cos(pi*y/(k*pi)),t)"
         ],
         "Fxyz": [
-          "-isoTransform_3(sqrt(x*x+y*y)-6DOTSYMBOL5,3*atan2(y,x),z,t)",
-          "-isoTransform_3(sqrt(x*x+y*y)-6DOTSYMBOL5,3*atan2(y,x),z,t)",
-          "-isoTransform_3(sqrt(x*x+y*y)-6DOTSYMBOL5,3*atan2(y,x),z,t)",
-          "-isoTransform_3(sqrt(x*x+y*y)-6DOTSYMBOL5,3*atan2(y,x),z,t)"
+          "-isoTransform_3(sqrt(x*x+y*y)-C,3*atan2(y,x),z,t)",
+          "-isoTransform_3(sqrt(x*x+y*y)-C,3*atan2(y,x),z,t)",
+          "-isoTransform_3(sqrt(x*x+y*y)-C,3*atan2(y,x),z,t)",
+          "-isoTransform_3(sqrt(x*x+y*y)-C,3*atan2(y,x),z,t)"
         ],
         "Xmax": [
           "0",
@@ -9713,9 +9718,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL8",
-          "G=0DOTSYMBOL6",
-          "B=0DOTSYMBOL1",
+          "R=8/10",
+          "G=6/10",
+          "B=1/10",
           "T=1"
         ],
         "Name": "Gold",
