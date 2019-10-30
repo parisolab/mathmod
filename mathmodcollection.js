@@ -9799,13 +9799,15 @@
             "Zmax": [" Z"
             ],
             "Zmin": ["-Z"
+            ],
+            "Grid": ["150"
             ]
         }
     },
     {
       "Iso3D": {
         "Description": [
-          "iWP Skeletal Graphis by Abderrahman Taha 20/11/2015"
+          "iWP Skeletal Graphis by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
           "W_SkeletalGraph"
@@ -9814,7 +9816,7 @@
           "W_SkeletalGraphis"
         ],
         "Fxyz": [
-          "-(cos(2*x)+cos(2*y)+cos(2*z)-1DOTSYMBOL95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2DOTSYMBOL8)"
+          "-(cos(2*x)+cos(2*y)+cos(2*z)-(195/100)*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+(28/10))"
         ],
         "Xmax": [
           "4*pi"
