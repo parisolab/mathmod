@@ -9922,16 +9922,13 @@
     {
       "Param4D": {
         "Description": [
-          "4D Clliford Ribbon by Abderrahman Taha 16/11/2015"
+          "4D Clliford Ribbon by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "4D Clliford Ribbon"
+          "4D_Clliford_Ribbon"
         ],
         "Component": [
           "CllifordRibbon"
-        ],
-        "Fw": [
-          "cos(v)"
         ],
         "Fx": [
           "sin(u-4*v)"
@@ -9942,8 +9939,11 @@
         "Fz": [
           "sin(v)"
         ],
+        "Fw": [
+          "cos(v)"
+        ],
         "Umax": [
-          "pi/1DOTSYMBOL5"
+          "2*pi/3"
         ],
         "Umin": [
           "0"
@@ -9953,6 +9953,10 @@
         ],
         "Vmin": [
           "0"
+        ],
+        "Grid": [
+          "50",
+          "150"
         ]
       }
     },
