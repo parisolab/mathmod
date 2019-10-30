@@ -9839,56 +9839,57 @@
     {
       "Iso3D": {
         "Description": [
-          " Pseudo Chmutov_2 by Abderrahman Taha 19/11/2015"
+          " Pseudo Chmutov by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "Pseudo Chmutov"
+          "Pseudo_Chmutov"
         ],
         "Component": [
-          "PseudoChmutov",
-          "PseudoChmutov_01"
+          "PseudoChmutov_1",
+          "PseudoChmutov_2"
         ],
         "Const": [
           "M=7",
-          "N=16"
+          "N=16",
+          "L=11/10"
         ],
         "Fxyz": [
-          "-((x^N+y^N+z^N)-(cos(M*x)+cos(M*y)+cos(M*z))-0DOTSYMBOL1)",
-          "((x^N+y^N+z^N)-(cos((2*M)*x)+cos((2*M)*y)+cos((2*M)*z))+0DOTSYMBOL5)"
+          "-((x^N+y^N+z^N)-(cos(M*x)+cos(M*y)+cos(M*z))-(1/10))",
+          "((x^N+y^N+z^N)-(cos((2*M)*x)+cos((2*M)*y)+cos((2*M)*z))+(1/2))"
         ],
         "Xmax": [
-          "1DOTSYMBOL1",
-          "1DOTSYMBOL1"
+          "L",
+          "L"
         ],
         "Xmin": [
-          "-1DOTSYMBOL1",
-          "-1DOTSYMBOL1"
+          "-L",
+          "-L"
         ],
         "Ymax": [
-          "1DOTSYMBOL1",
-          "1DOTSYMBOL1"
+          "L",
+          "L"
         ],
         "Ymin": [
-          "-1DOTSYMBOL1",
-          "-1DOTSYMBOL1"
+          "-L",
+          "-L"
         ],
         "Zmax": [
-          "1DOTSYMBOL1",
-          "1DOTSYMBOL1"
+          "L",
+          "L"
         ],
         "Zmin": [
-          "-1DOTSYMBOL1",
-          "-1DOTSYMBOL1"
+          "-L",
+          "-L"
         ]
       }
     },
     {
       "Param4D": {
         "Description": [
-          "4D Roller Coaster by Abderrahman Taha 16/11/2015"
+          "4D Roller Coaster by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "4D Roller Coaster"
+          "4D_Roller_Coaster"
         ],
         "Component": [
           "RollerCoaster"
@@ -9912,10 +9913,14 @@
           "0"
         ],
         "Vmax": [
-          "pi/1DOTSYMBOL2"
+          "5*pi/6"
         ],
         "Vmin": [
           "0"
+        ],
+        "Grid": [
+          "150",
+           "50"
         ]
       }
     },
