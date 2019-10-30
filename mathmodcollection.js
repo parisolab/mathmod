@@ -9725,28 +9725,26 @@
     {
       "Iso3D": {
         "Description": [
-          "Gyroidal Torus by Abderrahman Taha 21/11/2015"
+          "Gyroidal Torus by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "Gyroidal Tori_2"
+          "Gyroidal_Tori_2"
         ],
         "Component": [
           "GyroidalTorus"
         ],
         "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001"
+          "c=1/100000",
+          "Th=4/10"
         ],
         "Funct": [
           "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-          "Thickness2= (0DOTSYMBOL4)",
-          "DFx= ((Iso(x,y,z,t)-Iso(x+cx,y,z,t))/cx)",
-          "DFy= ((Iso(x,y,z,t)-Iso(x,y+cy,z,t))/cy)",
-          "DFz= ((Iso(x,y,z,t)-Iso(x,y,z+cz,t))/cz)",
-          "Rapport= (sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
-          "Iso4= (Iso(x-DFx(x,y,z,t)*Thickness2(x,y,z,t)/Rapport(x,y,z,t),y-DFy(x,y,z,t)*Thickness2(x,y,z,t)/Rapport(x,y,z,t),z-DFz(x,y,z,t)*Thickness2(x,y,z,t)/Rapport(x,y,z,t),t))",
-          "Iso5= (Iso(x+DFx(x,y,z,t)*Thickness2(x,y,z,t)/Rapport(x,y,z,t),y+DFy(x,y,z,t)*Thickness2(x,y,z,t)/Rapport(x,y,z,t),z+DFz(x,y,z,t)*Thickness2(x,y,z,t)/Rapport(x,y,z,t),t))",
+          "DFx= ((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)",
+          "DFy= ((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)",
+          "DFz= ((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)",
+          "Rap= x/sqrt(x*x+y*y+z*z)",
+          "Iso4= (Iso(x-Th*Rap(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-Th*Rap(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-Th*Rap(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
+          "Iso5= (Iso(x+Th*Rap(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th*Rap(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+Th*Rap(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
           "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
           "isoCondition=(x^2+z^2-16)",
           "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)"
