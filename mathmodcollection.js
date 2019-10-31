@@ -9137,7 +9137,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Octahedron of Octahedra by Abderrahman Taha 04/03/2017"
+          "Octahedron of Octahedra by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
           "OctahedronOfOctahedra"
@@ -9146,12 +9146,13 @@
           "OctahedronOfOctahedra"
         ],
         "Const": [
-          "N=7"
+          "N=7",
+          "A=1/2"
         ],
         "Funct": [
           "Octahedron=(abs(x)+abs(y)+abs(z))-(1/(2*N))",
-          "Octahedr = ( (abs(x-0DOTSYMBOL5)+abs(y-0DOTSYMBOL5)+abs(z-0DOTSYMBOL5))-(1/2))",
-          "Octahedr1 = ( (abs(x-0DOTSYMBOL5)+abs(y-0DOTSYMBOL5)+abs(z-0DOTSYMBOL5))-(1/2-1/(N)) )"
+          "Octahedr = ( (abs(x-A)+abs(y-A)+abs(z-A))-(1/2))",
+          "Octahedr1 = ( (abs(x-A)+abs(y-A)+abs(z-A))-(1/2-1/(N)) )"
         ],
         "Fxyz": [
           "if(Octahedr(x,y,z,t)<(0) & Octahedr1(x,y,z,t)>(0), Octahedron((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "
