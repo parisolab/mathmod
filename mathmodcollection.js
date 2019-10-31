@@ -9294,37 +9294,38 @@
     {
       "Param3D": {
         "Description ": [
-          "Belted Torus_1 by Abderrahman Taha 26/11/2015"
+          "Belted Torus_1 by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Belted Torus"
+          "Belted_Torus"
         ],
         "Component": [
           "BeltedTorus"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001",
+          "c=1/10000",
+          "A=2/5",
+          "B=3/5",
           "N=2"
         ],
         "Funct": [
-          "Thickness=0DOTSYMBOL4*sin(2*N*v)^100 + 0DOTSYMBOL4*sin(N*v-u)^100",
-          "Fx=(N/2+1+ 0DOTSYMBOL6*cos(u))*cos(v)",
-          "Fy=0DOTSYMBOL6*sin(u)",
-          "Fz=(N/2+1+ 0DOTSYMBOL6*cos(u))*sin(v)",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "Th=A*sin(2*N*v)^100 + A*sin(N*v-u)^100",
+          "Fx=(N/2+1+B*cos(u))*cos(v)",
+          "Fy=B*sin(u)",
+          "Fz=(N/2+1+B*cos(u))*sin(v)",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)^3",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
+          "R=u/sqrt(u*u+v*v+t*t)",
+          "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
@@ -9350,9 +9351,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=0DOTSYMBOL8*abs(cos((pi*(x*x+y*y+z*z))))",
-          "B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
+          "R=(9/10)",
+          "G=(4/5)*abs(cos((pi*(x*x+y*y+z*z))))",
+          "B=(3/5)*abs(cos(cos(pi*(x*x+y*y+z*z))))",
           "T=1"
         ],
         "Name": "Dream",
@@ -9360,85 +9361,30 @@
       }
     },
     {
-      "Param4D": {
-        "Description": [
-          "Kinky 4D Clifford Torus by Aberrahman Taha 24/11/2015"
-        ],
-        "Name": [
-          "Kinky 4D Clifford Torus"
-        ],
-        "Component": [
-          "4DTorus"
-        ],
-        "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001",
-          "N=3"
-        ],
-        "Funct": [
-          "Thickness=-abs(0DOTSYMBOL1*cos(3*v-7*u)*sin(3*v))",
-          "Fx=sin(u)",
-          "Fy=cos(u)",
-          "Fz=sin(v)",
-          "DFxu=cos(u)",
-          "DFyu=-sin(u)",
-          "DFzv=cos(v)",
-          "n1=(DFyu(u,v,t)*DFzv(u,v,t))",
-          "n2=(-DFxu(u,v,t)*DFzv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)"
-        ],
-        "Fw": [
-          "cos(v)"
-        ],
-        "Fx": [
-          "Gx(u,v,t)"
-        ],
-        "Fy": [
-          "Gy(u,v,t)"
-        ],
-        "Fz": [
-          "Gz(u,v,t)"
-        ],
-        "Umax": [
-          "2*pi"
-        ],
-        "Umin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
-        ],
-        "Vmin": [
-          "0"
-        ]
-      }
-    },
-    {
       "Iso3D": {
         "Description": [
-          "Schwarz Torus_1 by Abderrahman Taha 24/11/2015"
+          "Schwarz Torus_1 by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "Schwarz Torus_1"
+          "Schwarz_Torus_v1"
         ],
         "Component": [
           "SchwarzTorus_1",
           "SchwarzTorus_2"
         ],
         "Const": [
-          "N=1DOTSYMBOL4"
+          "Th1=4/10",
+          "Th2=14/10"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "Iso3=(Iso(x+sin(x)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso4=(Iso(x+sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso5=(Iso(x-sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+          "Rap=x/sqrt(x*x+y*y+z*z)",
+          "Iso1= (Iso(x+Th1*Rap(sin(x),sin(y),sin(z),t),y+Th1*Rap(sin(y),sin(z),sin(x),t),z+Th1*Rap(sin(z),sin(x),sin(y),t),t))",
+          "Iso2= (Iso(x-Th1*Rap(sin(x),sin(y),sin(z),t),y-Th1*Rap(sin(y),sin(z),sin(x),t),z-Th1*Rap(sin(z),sin(x),sin(y),t),t))",
+          "Iso3= (Iso(x+Th2*Rap(sin(x),sin(y),sin(z),t),y+Th2*Rap(sin(y),sin(z),sin(x),t),z+Th2*Rap(sin(z),sin(x),sin(y),t),t))",
+          "ThickIso=(Iso1(x,y,z,t)*Iso2(x,y,z,t))",
           "isoCondition=(x^2+z^2-20)",
-          "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
+          "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
           "isoTransform_2=if(isoCondition(x,y,z,t)<(0),-Iso3(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)"
         ],
         "Fxyz": [
