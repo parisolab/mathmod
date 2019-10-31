@@ -9474,10 +9474,10 @@
     {
       "Iso3D": {
         "Description": [
-          "Schwarz Torus_2 by Abderrahman Taha 23/11/2015"
+          "Schwarz Torus v2 by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "Schwarz Torus_2"
+          "Schwarz_Torus_v2"
         ],
         "Component": [
           "SchwarzTorus_1",
@@ -9485,15 +9485,16 @@
           "SchwarzTorus_3"
         ],
         "Const": [
-          "N=14/10",
-          "Th=4/10"
+          "Th1=14/10",
+          "Th2=4/10"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "Iso3=(Iso(x+sin(x)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso2=(Iso(x-sin(x)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*N/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso4=(Iso(x+sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "Iso5=(Iso(x-sin(x)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y-sin(y)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z-sin(z)*0DOTSYMBOL4/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
+          "Rap=x/sqrt(x*x+y*y+z*z)",
+          "Iso3= (Iso(x+Th1*Rap(sin(x),sin(y),sin(z),t),y+Th1*Rap(sin(y),sin(z),sin(x),t),z+Th1*Rap(sin(z),sin(x),sin(y),t),t))",
+          "Iso2= (Iso(x-Th1*Rap(sin(x),sin(y),sin(z),t),y-Th1*Rap(sin(y),sin(z),sin(x),t),z-Th1*Rap(sin(z),sin(x),sin(y),t),t))",
+          "Iso4= (Iso(x+Th2*Rap(sin(x),sin(y),sin(z),t),y+Th2*Rap(sin(y),sin(z),sin(x),t),z+Th2*Rap(sin(z),sin(x),sin(y),t),t))",
+          "Iso5= (Iso(x-Th2*Rap(sin(x),sin(y),sin(z),t),y-Th2*Rap(sin(y),sin(z),sin(x),t),z-Th2*Rap(sin(z),sin(x),sin(y),t),t))",
           "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
           "isoCondition=(x^2+z^2-28)",
           "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
