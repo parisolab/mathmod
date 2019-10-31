@@ -9023,19 +9023,35 @@
           "Bottom"
         ],
         "Const": [
-          "Thick = 0DOTSYMBOL05"
+          "Thick = 1/20",
+          "Th1 = 1/5",
+          "Th2 = 6/5"
         ],
         "Funct": [
-          "CarvinCondition=abs((z-1) -0DOTSYMBOL8*cos(18*atan2(x,y)/pi))<1DOTSYMBOL3|abs((z+3) -0DOTSYMBOL3*cos(18*atan2(x,y)/pi+pi/4))<0DOTSYMBOL5",
+          "CarvinCondition=abs((z-1) -(8/10)*cos(18*atan2(x,y)/pi))<(13/10)|abs((z+3) -(3/10)*cos(18*atan2(x,y)/pi+pi/4))<(1/2)",
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
           "Bottom=(x*x+y*y+z*z-1)",
-          "ThickIsoExterior=(x*x/3+y*y/3-abs(1DOTSYMBOL5*sin(2*z/pi+0DOTSYMBOL3)+1DOTSYMBOL8))*(x*x/3+y*y/3-abs(1DOTSYMBOL5*sin(2*z/pi+0DOTSYMBOL3)+1DOTSYMBOL8))-Thick",
+
+
+          "ThickIsoExterior=(x*x/3+y*y/3-abs((15/10)*sin(2*z/pi+(3/10))+(18/10)))*(x*x/3+y*y/3-abs((15/10)*sin(2*z/pi+(3/10))+(18/10)))-Thick",
           "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-          "Rapport=(sqrt((-sin(x)*sin(y)+cos(z)*cos(x))*(-sin(x)*sin(y)+cos(z)*cos(x))+(-sin(y)*sin(z)+cos(x)*cos(y))*(-sin(y)*sin(z)+cos(x)*cos(y))+(-sin(z)*sin(x)+cos(y)*cos(z))*(-sin(z)*sin(x)+cos(y)*cos(z))))",
-          "Iso4=(Iso(x+t*(-sin(x)*sin(y)+cos(z)*cos(x))*0DOTSYMBOL2/Rapport(x,y,z,t),y+t*(-sin(y)*sin(z)+cos(x)*cos(y))*0DOTSYMBOL2/Rapport(x,y,z,t),z+t*(-sin(z)*sin(x)+cos(y)*cos(z))*0DOTSYMBOL2/Rapport(x,y,z,t),t))",
+
+          "Rap=t*x/sqrt(x*x+y*y+z*z)",
+
+          "Iso4= Iso(
+x+Th1*Rap((-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), t),
+y+Th1*Rap((-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), t),
+z+Th1*Rap((-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), t),
+t)",
+          "Iso6= Iso(
+x+Th2*Rap((-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), t),
+y+Th2*Rap((-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), t),
+z+Th2*Rap((-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), t),
+t)",
+
           "ThickIso2=(Iso4(x,y,z,-1)*Iso4(x,y,z,1))",
           "isoTransform_2=if(CarvinCondition(x,y,z,t)=(0),ThickIsoExterior(x,y,z,t),1)",
-          "Iso6=(Iso(x+t*(-sin(x)*sin(y)+cos(z)*cos(x))*1DOTSYMBOL2/Rapport(x,y,z,t),y+t*(-sin(y)*sin(z)+cos(x)*cos(y))*1DOTSYMBOL2/Rapport(x,y,z,t),z+t*(-sin(z)*sin(x)+cos(y)*cos(z))*1DOTSYMBOL2/Rapport(x,y,z,t),t))",
+
           "isoTransform_6=if(CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<(0),-ThickIso2((6*x),(6*y),(6*z),t) * Iso6((x*6),(y*6),(z*6), -1) *(Iso6((x*6),(y*6),(z*6),1)),1)"
         ],
         "Fxyz": [
@@ -9076,13 +9092,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL95*abs(cos(z*y*x*y))",
-          "G=0DOTSYMBOL45*abs(cos(z*y*x*y))",
-          "B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
+          "R=(95/100)*abs(cos(z*y*x*y))",
+          "G=(45/100)*abs(cos(z*y*x*y))",
+          "B=(2/100)*abs(cos(-z*x*z*x*y*y))",
           "T=1"
         ],
         "Name": "Granit_1",
-        "Noise": "NoiseP(x,y,z,(10),(7),12/100)"
+        "Noise": "NoiseP(x,y,z,(10),(7),(12/100))"
       }
     },
     {
