@@ -9485,7 +9485,8 @@
           "SchwarzTorus_3"
         ],
         "Const": [
-          "N=1DOTSYMBOL4"
+          "N=14/10",
+          "Th=4/10"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
@@ -9553,9 +9554,6 @@
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "DFx= -sin(x)",
-          "DFy= -sin(y)",
-          "DFz= -sin(z)",
           "Rap=x/sqrt(x*x+y*y+z*z)",
           "Iso1= (Iso(x+Th*Rap(sin(x),sin(y),sin(z),t),y+Th*Rap(sin(y),sin(z),sin(x),t),z+Th*Rap(sin(z),sin(x),sin(y),t),t))",
           "Iso2= (Iso(x-Th*Rap(sin(x),sin(y),sin(z),t),y-Th*Rap(sin(y),sin(z),sin(x),t),z-Th*Rap(sin(z),sin(x),sin(y),t),t))",
