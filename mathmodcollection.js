@@ -9490,16 +9490,14 @@
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "Rap=x/sqrt(x*x+y*y+z*z)",
-          "Iso3= (Iso(x+Th1*Rap(sin(x),sin(y),sin(z),t),y+Th1*Rap(sin(y),sin(z),sin(x),t),z+Th1*Rap(sin(z),sin(x),sin(y),t),t))",
-          "Iso2= (Iso(x-Th1*Rap(sin(x),sin(y),sin(z),t),y-Th1*Rap(sin(y),sin(z),sin(x),t),z-Th1*Rap(sin(z),sin(x),sin(y),t),t))",
-          "Iso4= (Iso(x+Th2*Rap(sin(x),sin(y),sin(z),t),y+Th2*Rap(sin(y),sin(z),sin(x),t),z+Th2*Rap(sin(z),sin(x),sin(y),t),t))",
-          "Iso5= (Iso(x-Th2*Rap(sin(x),sin(y),sin(z),t),y-Th2*Rap(sin(y),sin(z),sin(x),t),z-Th2*Rap(sin(z),sin(x),sin(y),t),t))",
-          "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+          "Rapp=1/sqrt(x*x+y*y+z*z)",
+          "iso7=Iso(x+sin(x)*Th2*t,y+Th2*sin(y)*t,z+Th2*sin(z)*t,0)*Iso(x-sin(x)*Th2*t,y-Th2*sin(y)*t,z-Th2*sin(z)*t,0)",
+          "iso0=Iso(x+sin(x)*Th1*t,y+Th1*sin(y)*t,z+Th1*sin(z)*t,0)",
+          "iso1=Iso(x-sin(x)*Th1*t,y-Th1*sin(y)*t,z-Th1*sin(z)*t,0)",
           "isoCondition=(x^2+z^2-28)",
-          "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
-          "isoTransform_2=if(isoCondition(x,y,z,t)<(0),-Iso3(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)",
-          "isoTransform_3=if(isoCondition(x,y,z,t)<(0),Iso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)"
+          "isoTransform_1=if(isoCondition(x,y,z,t)<(0), iso7(x,y,z,Rapp(sin(x),sin(y),sin(z),t)),1)+exp(isoCondition(x,y,z,t)/3)",
+          "isoTransform_2=if(isoCondition(x,y,z,t)<(0),-iso0(x,y,z,Rapp(sin(x),sin(y),sin(z),t)),1)+exp(isoCondition(x,y,z,t)/3)",
+          "isoTransform_3=if(isoCondition(x,y,z,t)<(0), iso1(x,y,z,Rapp(sin(x),sin(y),sin(z),t)),1)+exp(isoCondition(x,y,z,t)/3)"
         ],
         "Fxyz": [
           "-isoTransform_1((sqrt(x*x+y*y)-10),12*atan2(y,x),z,t)",
