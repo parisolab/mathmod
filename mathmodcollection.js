@@ -9539,27 +9539,27 @@
     {
       "Iso3D": {
         "Description": [
-          "Schwarz Torus_3 by Abderrahman Taha 23/11/2015"
+          "Schwarz Torus v3 by Abderrahman Taha 30/10/2019"
         ],
         "Name": [
-          "Schwarz Torus_3"
+          "Schwarz_Torus_v3"
         ],
         "Component": [
           "SchwarzTorus"
         ],
         "Const": [
-          "N=2"
+          "N=2",
+          "Th=4/10"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "0DOTSYMBOL4= (0DOTSYMBOL4)",
           "DFx= -sin(x)",
           "DFy= -sin(y)",
           "DFz= -sin(z)",
-          "Rapport= sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z))",
-          "Iso4= (Iso(x+sin(x)*0DOTSYMBOL4/Rapport(x,y,z,t),y+sin(y)*0DOTSYMBOL4/Rapport(x,y,z,t),z+sin(z)*0DOTSYMBOL4/Rapport(x,y,z,t),t))",
-          "Iso5= (Iso(x-sin(x)*0DOTSYMBOL4/Rapport(x,y,z,t),y-sin(y)*0DOTSYMBOL4/Rapport(x,y,z,t),z-sin(z)*0DOTSYMBOL4/Rapport(x,y,z,t),t))",
-          "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
+          "Rap=x/sqrt(x*x+y*y+z*z)",
+          "Iso1= (Iso(x+Th*Rap(sin(x),sin(y),sin(z),t),y+Th*Rap(sin(y),sin(z),sin(x),t),z+Th*Rap(sin(z),sin(x),sin(y),t),t))",
+          "Iso2= (Iso(x-Th*Rap(sin(x),sin(y),sin(z),t),y-Th*Rap(sin(y),sin(z),sin(x),t),z-Th*Rap(sin(z),sin(x),sin(y),t),t))",
+          "ThickIso2=(Iso1(x,y,z,t)*Iso2(x,y,z,t))",
           "isoCondition=(x^2+z^2-28)",
           "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)"
         ],
