@@ -9088,10 +9088,14 @@
     {
       "Iso3D": {
         "Description": [
-          "Diamon Torus by Abderrahman Taha 28/11/2015"
+          "Diamon Torus by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Diamon Torus"
+          "Diamon_Torus"
+        ],
+        "Const": [
+          "A=98/10",
+          "B=35/10"
         ],
         "Component": [
           "Diamon Torus_1",
@@ -9099,7 +9103,7 @@
         ],
         "Funct": [
           "Iso=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
-          "isoCondition_0=(x^2+z^2-3DOTSYMBOL2^2)",
+          "isoCondition_0=(x^2+z^2-(32/10)^2)",
           "isoCondition_1=(x^2+z^2-3^2)",
           "isoTransform_1=if(isoCondition_0(x,y,z,t)<(0),Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
           "isoTransform_2=if(isoCondition_0(x,y,z,t)<(0),-Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))"
@@ -9109,28 +9113,28 @@
           "isoTransform_2((sqrt(x*x+y*y)-6),12*atan2(y,x),z,t)"
         ],
         "Xmax": [
-          "9DOTSYMBOL8",
-          "9DOTSYMBOL8"
+          "A",
+          "A"
         ],
         "Xmin": [
-          "-9DOTSYMBOL8",
-          "-9DOTSYMBOL8"
+          "-A",
+          "-A"
         ],
         "Ymax": [
-          "9DOTSYMBOL8",
-          "9DOTSYMBOL8"
+          "A",
+          "A"
         ],
         "Ymin": [
-          "-9DOTSYMBOL8",
-          "-9DOTSYMBOL8"
+          "-A",
+          "-A"
         ],
         "Zmax": [
-          "3DOTSYMBOL5",
-          "3DOTSYMBOL5"
+          "B",
+          "B"
         ],
         "Zmin": [
-          "-3DOTSYMBOL5",
-          "-3DOTSYMBOL5"
+          "-B",
+          "-B"
         ]
       }
     },
@@ -9140,7 +9144,7 @@
           "Octahedron of Octahedra by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "OctahedronOfOctahedra"
+          "Octahedron_Of_Octahedra"
         ],
         "Component": [
           "OctahedronOfOctahedra"
@@ -9200,7 +9204,7 @@
           "Cube of Octahedra by Abderrahman Taha 27/11/2015"
         ],
         "Name": [
-          "Cube of Octahedrons"
+          "Cube_of_Octahedrons"
         ],
         "Component": [
           " CubeOctahedrons"
