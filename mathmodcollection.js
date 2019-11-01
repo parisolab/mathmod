@@ -8029,6 +8029,9 @@
     },
     {
       "Iso3D": {
+        "Description ": [
+          " HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl"
+        ],
         "Name": [
           "HexaGrid_Torus_02"
         ],
@@ -8038,84 +8041,80 @@
         "Const": [
           "N=3"
         ],
-        "Description ": [
-          " HexaGrid Torus by Aberrahman Taha 11/12/2015. Origin: Gerd Platl"
-        ],
         "Funct": [
-          "HexaGrid=-0DOTSYMBOL55-88*(sqrt(x*x+y*y)-2)^2 -cos( 8*z) -cos(14*atan2(y,x) -4*z) -cos(14*atan2(y,x) +4*z) -0DOTSYMBOL6*( cos( 28*atan2(y,x)) +cos(12*z -14*atan2(y,x)) +cos(12*z +14*atan2(y,x)))"
+          "HexaGrid=-(11/20)-88*(sqrt(x*x+y*y)-2)^2 -cos( 8*z) -cos(14*atan2(y,x) -4*z) -cos(14*atan2(y,x) +4*z) -(3/5)*( cos( 28*atan2(y,x)) +cos(12*z -14*atan2(y,x)) +cos(12*z +14*atan2(y,x)))"
         ],
         "Fxyz": [
           "HexaGrid((sqrt(x*x+z*z)-4),y,N*atan2(z,x),t)"
         ],
         "Xmax": [
-          " 62/10"
+          " 31/5"
         ],
         "Xmin": [
-          "-62/10 "
+          "-31/5 "
         ],
         "Ymax": [
-          "45/10"
+          "9/2"
         ],
         "Ymin": [
-          "-45/10"
+          "-9/2"
         ],
         "Zmax": [
-          " 62/10"
+          " 31/5"
         ],
         "Zmin": [
-          "-62/10"
+          "-31/5"
         ]
       }
     },
     {
       "Iso3D": {
         "Description ": [
-          " HexaGrid Torus by Aberrahman Taha 11/12/2015. Origin: Gerd Platl "
+          " HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl "
         ],
         "Name": [
           "HexaGrid_Torus_01"
         ],
         "Component": [
-          "HexaGrid Torus"
+          "HexaGrid_Torus"
         ],
         "Funct": [
-          "HexaGrid=-0DOTSYMBOL5-88*(sqrt(x*x+y*y)-2)^2-cos( 8*z)-cos(14*atan2(y,x) -4*z)-cos(14*atan2(y,x) +4*z)-0DOTSYMBOL12*( cos( 28*atan2(y,x))+cos(12*z -14*atan2(y,x))+cos(12*z +14*atan2(y,x)))"
+          "HexaGrid=-(1/2)-88*(sqrt(x*x+y*y)-2)^2-cos( 8*z)-cos(14*atan2(y,x) -4*z)-cos(14*atan2(y,x) +4*z)-(3/25)*( cos( 28*atan2(y,x))+cos(12*z -14*atan2(y,x))+cos(12*z +14*atan2(y,x)))"
         ],
         "Fxyz": [
           "HexaGrid((sqrt(x*x+z*z)-4),y,3*atan2(z,x),t)"
         ],
         "Xmax": [
-          " 62/10"
+          " 31/5"
         ],
         "Xmin": [
-          "-62/10 "
+          "-31/5 "
         ],
         "Ymax": [
-          " 45/10"
+          " 9/2"
         ],
         "Ymin": [
-          "-45/10"
+          "-9/2"
         ],
         "Zmax": [
-          " 62/10"
+          " 31/5"
         ],
         "Zmin": [
-          "-62/10"
+          "-31/5"
         ]
       }
     },
         {
             "Iso3D": {
-                "Description": ["Menger L4 SchwarzP (update) by Abderrahman Taha 15/09/2018"
+                "Description": ["Menger L4 SchwarzP by Abderrahman Taha 01/11/2019"
                 ],
-                "Component": ["Menger SchwarzP"
+                "Name": ["Menger_4_SchwarzP"
                 ],
-                "Const": ["c1=254469/1000","c2=2/1000","c3=3333/10000",
-        "c4=10005/10000"
+                "Component": ["MengerSchwarzP"
+                ],
+                "Const": ["c1=254469/1000","c2=2/1000","c3=3333/10000","c4=10005/10000"
                 ],
                 "Fxyz": ["if(-(Dx+Dy+Dz-(102/100))*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx*(Cy+Cz)+Cz*Cy)=0)*((Bx*(By+Bz)+Bz*By)=0)*((Ax*(Ay+Az)+Az*Ay)=0)),(cos(c1*(x+Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y+Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z+Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez))))*(cos(c1*(x-Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y-Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z-Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"
-                ],
-                "Name": ["Menger_4 SchwarzP"
                 ],
                 "Varu": ["A=((abs(u-2/3)<1/81)+(abs(u-20/27)<1/81)+(abs(u-16/27)<1/81)+(abs(u-8/9)<1/81)+(abs(u-26/27)<1/81)+(abs(u-22/27)<1/81)+(abs(u-4/9)<1/81)+(abs(u-14/27)<1/81)+(abs(u-10/27)<1/81)+(abs(u+2/3)<1/81)+(abs(u+16/27)<1/81)+(abs(u+20/27)<1/81)+(abs(u+4/9)<1/81)+(abs(u+10/27)<1/81)+(abs(u+14/27)<1/81)+(abs(u+8/9)<1/81)+(abs(u+22/27)<1/81)+(abs(u+26/27)<1/81)+(abs(u)<1/81)+(abs(u-2/27)<1/81)+(abs(u+2/27)<1/81)+(abs(u-2/9)<1/81)+(abs(u-8/27)<1/81)+(abs(u-4/27)<1/81)+(abs(u+2/9)<1/81)+(abs(u+4/27)<1/81)+(abs(u+8/27)<1/81))","B=((abs(u-2/3)<1/27)+(abs(u-8/9)<1/27)+(abs(u-4/9)<1/27)+(abs(u+2/3)<1/27)+(abs(u+4/9)<1/27)+(abs(u+8/9)<1/27)+(abs(u)<1/27)+(abs(u-2/9)<1/27)+(abs(u+2/9)<1/27))","C=((abs(u-2/3)<1/9)+(abs(u+2/3)<1/9)+(abs(u)<1/9))","D=u^600","E=sin(c1*u)"
                 ],
@@ -8135,7 +8134,7 @@
             "Texture": {
                 "Colors": ["R=(6/10)*sqrt(4*x^40+y^4+z^4)","G=(3/10)*sqrt(x^4+y^4+4*z^20)","B=(4/10)*sqrt(x^4+4*y^20+z^4)","T=1"
                 ],
-                "Name": "Granit_2",
+                "Name": "ll",
                 "Noise": "1"
             }
         },
