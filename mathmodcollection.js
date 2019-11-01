@@ -8375,23 +8375,23 @@
     {
       "Iso3D": {
         "Description": [
-          "W_Skeletal Tori by Abderrahman Taha 07/12/2015"
+          "W_Skeletal Tori by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "W_Skeletal Tori"
+          "W_Skeletal_Tori"
         ],
         "Component": [
-          "W_Skeletal Tori"
+          "W_SkeletalTori"
         ],
         "Const": [
           "M=1",
-          "N=10",
+          "N=8",
           "P=7"
         ],
         "Funct": [
-          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-1DOTSYMBOL95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2DOTSYMBOL8",
-          "isoCondition_0=(x^2-(pi+0DOTSYMBOL5)^2)",
-          "isoCondition_1=(x^2-(pi+0DOTSYMBOL3)^2)",
+          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
+          "isoCondition_0=(x^2-(pi+1/2)^2)",
+          "isoCondition_1=(x^2-(pi+3/10)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),W_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
         ],
@@ -8435,7 +8435,7 @@
           "P=7"
         ],
         "Funct": [
-          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2.5",
+          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
           "isoCondition_0=(x^2-(pi+1/2)^2)",
           "isoCondition_1=(x^2-(pi+3/10)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),W_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
