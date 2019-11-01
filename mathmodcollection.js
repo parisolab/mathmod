@@ -8421,7 +8421,7 @@
     {
       "Iso3D": {
         "Description": [
-          "W_Skeletal Sphere by Abderrahman Taha 07/12/2015"
+          "W_Skeletal Sphere by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
           "W_Skeletal Sphere"
@@ -8435,9 +8435,9 @@
           "P=7"
         ],
         "Funct": [
-          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-1DOTSYMBOL95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2DOTSYMBOL8",
-          "isoCondition_0=(x^2-(pi+0DOTSYMBOL5)^2)",
-          "isoCondition_1=(x^2-(pi+0DOTSYMBOL3)^2)",
+          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2.5",
+          "isoCondition_0=(x^2-(pi+1/2)^2)",
+          "isoCondition_1=(x^2-(pi+3/10)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),W_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),P*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"
         ],
@@ -8457,23 +8457,23 @@
           "-16"
         ],
         "Zmax": [
-          "16"
+          "17"
         ],
         "Zmin": [
-          "-16"
+          "-17"
         ]
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Diamond Sphere by Abderrahman Taha 07/12/2015"
+          "Diamond Sphere by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "Diamond Sphere"
+          "Diamond_Sphere"
         ],
         "Component": [
-          "Diamond Sphere"
+          "DiamondSphere"
         ],
         "Const": [
           "N=8",
@@ -8481,7 +8481,7 @@
         ],
         "Funct": [
           "Diamond =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
-          "isoCondition_0=(x^2-2DOTSYMBOL2^2)",
+          "isoCondition_0=(x^2-(11/5)^2)",
           "isoCondition_1=(x^2-2^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),Diamond(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"
@@ -8512,13 +8512,13 @@
     {
       "Iso3D": {
         "Description": [
-          "Neovius Sphere by Abderrahman Taha 05/12/2015"
+          "Neovius Sphere by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "Neovius Sphere"
+          "Neovius_Sphere"
         ],
         "Component": [
-          "Neovius Sphere"
+          "NeoviusSphere"
         ],
         "Const": [
           "N=10",
@@ -8526,8 +8526,8 @@
         ],
         "Funct": [
           "Neovius =3*(cos(x)+cos(y)+cos(z))+7*cos(x)*cos(y)*cos(z)",
-          "isoCondition_0=(x^2-2DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-1DOTSYMBOL6^2)",
+          "isoCondition_0=(x^2-(11/5)^2)",
+          "isoCondition_1=(x^2-(8/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),Neovius(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),10*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"
         ],
@@ -8557,13 +8557,13 @@
     {
       "Iso3D": {
         "Description": [
-          "Neovius Tori by Abderrahman Taha 06/12/2015"
+          "Neovius Tori by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Neovius Tori"
+          "Neovius_Tori"
         ],
         "Component": [
-          "Neovius Tori"
+          "NeoviusTori"
         ],
         "Const": [
           "M=1",
@@ -8571,8 +8571,8 @@
         ],
         "Funct": [
           "Neovius=3*(cos(x)+cos(y)+cos(z))+7*cos(x)*cos(y)*cos(z)",
-          "isoCondition_0=(x^2-2DOTSYMBOL4^2)",
-          "isoCondition_1=(x^2-1DOTSYMBOL6^2)",
+          "isoCondition_0=(x^2-(12/5)^2)",
+          "isoCondition_1=(x^2-(8/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),Neovius(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
         ],
@@ -8592,10 +8592,10 @@
           "-25"
         ],
         "Zmax": [
-          "10DOTSYMBOL5"
+          "21/2"
         ],
         "Zmin": [
-          "-10DOTSYMBOL5"
+          "-21/2"
         ]
       }
     },
