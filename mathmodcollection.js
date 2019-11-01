@@ -8237,22 +8237,22 @@
     {
       "Iso3D": {
         "Description": [
-          "D_Skeletal Tori by Abderrahman Taha 08/12/2015"
+          "DSkeletal Tori by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "D_Skeletal Tori"
+          "DSkeletal_Tori"
         ],
         "Component": [
-          "D_Skeletal Tori"
+          "DSkeletalTori"
         ],
         "Const": [
           "M=4",
           "N=8",
-          "P=0DOTSYMBOL3"
+          "P=3/10"
         ],
         "Funct": [
-          "D_Skeletal =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-0DOTSYMBOL07*(cos(4*x)+cos(4*y)+cos(4*z))+0DOTSYMBOL95",
-          "isoCondition_0=((x-pi)^2-(pi-P+0DOTSYMBOL01)^2)",
+          "D_Skeletal =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-(7/100)*(cos(4*x)+cos(4*y)+cos(4*z))+4/5",
+          "isoCondition_0=((x-pi)^2-(pi-P+1/100)^2)",
           "isoCondition_1=((x-pi)^2-(pi-P)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),D_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
