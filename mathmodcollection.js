@@ -7986,10 +7986,10 @@
     {
       "Param3D": {
         "Description ": [
-          "Richmond polar_2  parametric surface by Abderrahman Taha 14/12/2015"
+          "Richmond Polar_2  parametric surface by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "Richmond polar_2"
+          "Richmond_Polar_2"
         ],
         "Component": [
           "RichmondPolar"
@@ -8004,10 +8004,10 @@
           "u*cos(v)*sin(v)"
         ],
         "Umax": [
-          "1DOTSYMBOL3"
+          "13/10"
         ],
         "Umin": [
-          "0DOTSYMBOL3"
+          "3/10"
         ],
         "Vmax": [
           "2*pi"
@@ -8018,13 +8018,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=0DOTSYMBOL8*abs(cos((pi*(x*x+y*y+z*z))))",
-          "B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
+          "R=9/10",
+          "G=(4/5)*abs(cos((pi*(x*x+y*y+z*z))))",
+          "B=(3/5)*abs(cos(cos(pi*(x*x+y*y+z*z))))",
           "T=1"
         ],
         "Name": "Dream",
-        "Noise": "NoiseW(4*x,4*y,4*z,(8),(1),0)"
+        "Noise": "NoiseW(4*x,4*y,4*z,(8),(1),(0))"
       }
     },
     {
