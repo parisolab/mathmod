@@ -9023,64 +9023,51 @@
           "Bottom"
         ],
         "Const": [
-          "Thick = 1/20",
           "Th1 = 1/5",
-          "Th2 = 6/5"
+          "Th2 = 6/5",
+          "A = 17/10",
+          "B = 5/12"
         ],
         "Funct": [
           "CarvinCondition=abs((z-1) -(8/10)*cos(18*atan2(x,y)/pi))<(13/10)|abs((z+3) -(3/10)*cos(18*atan2(x,y)/pi+pi/4))<(1/2)",
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
           "Bottom=(x*x+y*y+z*z-1)",
-
-
-          "ThickIsoExterior=(x*x/3+y*y/3-abs((15/10)*sin(2*z/pi+(3/10))+(18/10)))*(x*x/3+y*y/3-abs((15/10)*sin(2*z/pi+(3/10))+(18/10)))-Thick",
+          "ThickIsoExterior=(x*x/3+y*y/3-abs((15/10)*sin(2*z/pi+(3/10))+(18/10)))*(x*x/3+y*y/3-abs((15/10)*sin(2*z/pi+(3/10))+(18/10)))-(1/20)",
           "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-
           "Rap=t*x/sqrt(x*x+y*y+z*z)",
-
-          "Iso4= Iso(
-x+Th1*Rap((-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), t),
-y+Th1*Rap((-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), t),
-z+Th1*Rap((-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), t),
-t)",
-          "Iso6= Iso(
-x+Th2*Rap((-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), t),
-y+Th2*Rap((-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), t),
-z+Th2*Rap((-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), t),
-t)",
-
+          "Iso4= Iso(x+Th1*Rap((-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), t),y+Th1*Rap((-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), t),z+Th1*Rap((-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), t),t)",
+          "Iso6= Iso(x+Th2*Rap((-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), t),y+Th2*Rap((-sin(y)*sin(z)+cos(x)*cos(y)), (-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), t),z+Th2*Rap((-sin(z)*sin(x)+cos(y)*cos(z)), (-sin(x)*sin(y)+cos(z)*cos(x)), (-sin(y)*sin(z)+cos(x)*cos(y)), t),t)",
           "ThickIso2=(Iso4(x,y,z,-1)*Iso4(x,y,z,1))",
           "isoTransform_2=if(CarvinCondition(x,y,z,t)=(0),ThickIsoExterior(x,y,z,t),1)",
-
           "isoTransform_6=if(CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<(0),-ThickIso2((6*x),(6*y),(6*z),t) * Iso6((x*6),(y*6),(z*6), -1) *(Iso6((x*6),(y*6),(z*6),1)),1)"
         ],
         "Fxyz": [
           "isoTransform_2(x,y,-z,t) * isoTransform_6(x,y,-z,t)",
-          "Torus(1DOTSYMBOL7*x,1DOTSYMBOL7*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y))) -10DOTSYMBOL6,t)",
-          "Bottom(x/2DOTSYMBOL4,y/2DOTSYMBOL4,2*(z+5DOTSYMBOL1),t)"
+          "Torus(A*x,A*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y))) -(54/5),t)",
+          "Bottom(x*B,y*B,2*(z+(51/10)),t)"
         ],
         "Xmax": [
-          "3DOTSYMBOL5",
+          "7/2",
           "5",
           "3"
         ],
         "Xmin": [
-          "-3DOTSYMBOL5",
+          "-7/2",
           "-5",
           "-3"
         ],
         "Ymax": [
-          "3DOTSYMBOL5",
+          "7/2",
           "5",
           "3"
         ],
         "Ymin": [
-          "-3DOTSYMBOL5",
+          "-7/2",
           "-5",
           "-3"
         ],
         "Zmax": [
-          "4DOTSYMBOL5",
+          "9/2",
           "10",
           "-2"
         ],
