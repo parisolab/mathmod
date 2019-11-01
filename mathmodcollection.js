@@ -8142,26 +8142,26 @@
     {
       "Iso3D": {
         "Description": [
-          "Skeletal SchwarzP Tori by Abderrahman Taha 10/12/2015"
+          "Skeletal SchwarzP Tori by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "Skeletal SchwarzP Tori"
+          "Skeletal_SchwarzP_Tori"
         ],
         "Component": [
-          "Skeletal SchwarzP Tori"
+          "SkeletalSchwarzPTori"
         ],
         "Const": [
-          "M=0DOTSYMBOL1",
+          "M=1/10",
           "N=15",
-          "T=1DOTSYMBOL2",
+          "Th=6/5",
           "S=5"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
-          "Iso2= (Iso(x+t*sin(x)*1DOTSYMBOL2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),y+t*sin(y)*1DOTSYMBOL2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),z+t*sin(z)*1DOTSYMBOL2/sqrt(sin(x)*sin(x)+sin(y)*sin(y)+sin(z)*sin(z)),t))",
-          "SchwarzP= (-Iso2(x,y,z,t))",
-          "isoCondition_0=((x-S)^2-2DOTSYMBOL4^2)",
-          "isoCondition_1=((x-S)^2-1DOTSYMBOL4^2)",
+          "Rap=x/sqrt(x*x+y*y+z*z)",
+          "SchwarzP= -(Iso(x-Th*Rap(sin(x),sin(y),sin(z),t),y-Th*Rap(sin(y),sin(z),sin(x),t),z-Th*Rap(sin(z),sin(x),sin(y),t),t))",
+          "isoCondition_0=((x-S)^2-(12/5)^2)",
+          "isoCondition_1=((x-S)^2-(7/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),-SchwarzP(x,y,z,-1),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
         ],
@@ -8191,22 +8191,22 @@
     {
       "Iso3D": {
         "Description": [
-          "G_Skeletal Tori by Abderrahman Taha 09/12/2015"
+          "G_Skeletal Tori by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "G_Skeletal Tori"
+          "GSkeletal_Tori"
         ],
         "Component": [
-          "G_Skeletal Tori"
+          "GSkeletalTori"
         ],
         "Const": [
           "M=4",
           "N=10",
-          "P=0DOTSYMBOL4"
+          "P=2/5"
         ],
         "Funct": [
-          "G_Skeletal =cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)+0DOTSYMBOL08*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+1",
-          "isoCondition_0=((x-pi)^2-(pi-P+0DOTSYMBOL3)^2)",
+          "G_Skeletal =cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)+(4/25)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+1",
+          "isoCondition_0=((x-pi)^2-(pi-P+3/10)^2)",
           "isoCondition_1=((x-pi)^2-(pi-P)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),G_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
@@ -8283,13 +8283,13 @@
     {
       "Iso3D": {
         "Description": [
-          "D_Skeletal Sphere by Abderrahman Taha 01/11/2019"
+          "DSkeletal Sphere by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "D_Skeletal_Sphere"
+          "DSkeletal_Sphere"
         ],
         "Component": [
-          "D_SkeletalSphere"
+          "DSkeletalSphere"
         ],
         "Const": [
           "M=4",
