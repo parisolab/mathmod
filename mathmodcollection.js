@@ -8602,37 +8602,37 @@
     {
       "Param3D": {
         "Description ": [
-          "Sleeping bugs by Abderrahman Taha 06/12/2015"
+          "Sleeping bugs by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Sleeping bugs"
+          "Sleeping_bugs"
         ],
         "Component": [
-          "Sleeping Bugs"
+          "SleepingBugs"
         ],
         "Const": [
-          "cu=0DOTSYMBOL001",
-          "cv=0DOTSYMBOL001",
-          "N=3"
+          "c=1/10000",
+          "N=3",
+          "A=sqrt(2)"
         ],
         "Funct": [
-          "Tickness= 0DOTSYMBOL4*(-0DOTSYMBOL5*(abs(sin(15*u)*cos(15*v)))^9 + 0DOTSYMBOL35*((sin(2*N*u))))",
-          "Fx=-cos(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
-          "Fz=sin(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
+          "Th= (2/5)*(-(1/2)*(abs(sin(15*u)*cos(15*v)))^9 + (7/20)*((sin(2*N*u))))",
+          "Fx=-cos(u+v)/(A+cos(v-u))",
+          "Fy=sin(v-u)/(A+cos(v-u))",
+          "Fz=sin(u+v)/(A+cos(v-u))",
+          "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
           "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
           "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+Tickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Tickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Tickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
+          "R=u/sqrt(u*u+v*v+t*t)",
+          "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
@@ -8658,33 +8658,33 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))+0DOTSYMBOL3",
-          "B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=(9/10)",
+          "G=(4/5)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))+(3/10)",
+          "B=(4/5)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
-        "Noise": "NoiseW(2*x,2*y,2*z,(4),(2),0)+NoiseP(2*x,2*y,2*z,(4),(12),1/10)"
+        "Noise": "NoiseW(2*x,2*y,2*z,(4),(2),0)+NoiseP(2*x,2*y,2*z,(4),(12),(1/10))"
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Gyroidal Tori by Abderrahman Taha 06/12/2015"
+          "Gyroidal Tori by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Gyroidal Tori_1"
+          "Gyroidal_Tori_v1"
         ],
         "Component": [
-          "Gyroidal Tori"
+          "GyroidalTori"
         ],
         "Const": [
           "N=10"
         ],
         "Funct": [
           "Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-          "isoCondition_0=(x^2-2DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-1DOTSYMBOL6^2)",
+          "isoCondition_0=(x^2-(11/5)^2)",
+          "isoCondition_1=(x^2-(8/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),Gyroid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
         ],
@@ -8704,31 +8704,31 @@
           "-25"
         ],
         "Zmax": [
-          "10DOTSYMBOL5"
+          "21/2"
         ],
         "Zmin": [
-          "-10DOTSYMBOL5"
+          "-21/2"
         ]
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Gyroid Sphere by Abderrahman Taha 05/12/2015"
+          "Gyroid Sphere by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Gyroid Sphere"
+          "Gyroid_Sphere"
         ],
         "Component": [
-          "Gyroid Sphere"
+          "GyroidSphere"
         ],
         "Const": [
-          "N=18"
+          "N=12"
         ],
         "Funct": [
           "Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-          "isoCondition_0=(x^2-2DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-1DOTSYMBOL6^2)",
+          "isoCondition_0=(x^2-(11/5)^2)",
+          "isoCondition_1=(x^2-(8/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),Gyroid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),10*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"
         ],
@@ -8758,21 +8758,21 @@
     {
       "Iso3D": {
         "Description": [
-          "Schwarz Cylinder by Abderrahman Taha 05/12/2015"
+          "Schwarz Cylinder by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Schwarz Cylinder"
+          "Schwarz_Cylinder"
         ],
         "Component": [
-          "Schwarz Cylinder"
+          "SchwarzCylinder"
         ],
         "Const": [
           "N=8"
         ],
         "Funct": [
           "Schwarz=cos(x) + cos(y) + cos(z)",
-          "isoCondition_0=(x^2-3DOTSYMBOL2^2)",
-          "isoCondition_1=(x^2-2DOTSYMBOL6^2)",
+          "isoCondition_0=(x^2-(16/5)^2)",
+          "isoCondition_1=(x^2-(13/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),-Schwarz(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-12),y,N*atan2(z,x),t)"
         ],
@@ -8802,21 +8802,21 @@
     {
       "Iso3D": {
         "Description": [
-          "Lidinoid Sphere by Abderrahman Taha 05/12/2015"
+          "Lidinoid Sphere by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Lidinoid Sphere"
+          "Lidinoid_Sphere"
         ],
         "Component": [
-          "Lidinoid Sphere"
+          "LidinoidSphere"
         ],
         "Const": [
           "N=8"
         ],
         "Funct": [
-          "Lidinoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0DOTSYMBOL15)",
-          "isoCondition_0=(x^2-2DOTSYMBOL6^2)",
-          "isoCondition_1=(x^2-2DOTSYMBOL4^2)",
+          "Lidinoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+(15/100))",
+          "isoCondition_0=(x^2-(13/5)^2)",
+          "isoCondition_1=(x^2-(12/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),-Lidinoid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-12),10*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)",
           "isoTransform3=-isoTransform((sqrt(x*x+y*y+z*z)-12),y,N*atan2(z,x),t)"
@@ -8847,21 +8847,21 @@
     {
       "Iso3D": {
         "Description": [
-          "Lidinoid Torus by Abderrahman Taha 02/12/2015"
+          "Lidinoid Torus by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Lidinoid Torus"
+          "Lidinoid_Torus"
         ],
         "Component": [
-          "Neovius Torus_1"
+          "NeoviusTorus"
         ],
         "Const": [
           "N=8"
         ],
         "Funct": [
-          "Lidinoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0DOTSYMBOL15)",
-          "isoCondition_0=(x^2+z^2-2DOTSYMBOL6^2)",
-          "isoCondition_1=(x^2+z^2-2DOTSYMBOL4^2)",
+          "Lidinoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+3/20)",
+          "isoCondition_0=(x^2+z^2-(13/5)^2)",
+          "isoCondition_1=(x^2+z^2-(12/5)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),-Lidinoid(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))"
         ],
         "Fxyz": [
@@ -8880,10 +8880,10 @@
           "-10"
         ],
         "Zmax": [
-          "2DOTSYMBOL5"
+          "25/10"
         ],
         "Zmin": [
-          "-2DOTSYMBOL5"
+          "-25/10"
         ]
       }
     },
