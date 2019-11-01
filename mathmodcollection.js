@@ -8283,22 +8283,22 @@
     {
       "Iso3D": {
         "Description": [
-          "D_Skeletal Sphere by Abderrahman Taha 08/12/2015"
+          "D_Skeletal Sphere by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "D_Skeletal Sphere"
+          "D_Skeletal_Sphere"
         ],
         "Component": [
-          "D_Skeletal Sphere"
+          "D_SkeletalSphere"
         ],
         "Const": [
           "M=4",
           "N=8",
-          "P=0DOTSYMBOL3"
+          "P=3/10"
         ],
         "Funct": [
-          "D_Skeletal =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-0DOTSYMBOL07*(cos(4*x)+cos(4*y)+cos(4*z))+0DOTSYMBOL95",
-          "isoCondition_0=((x-pi)^2-(pi-P+0DOTSYMBOL01)^2)",
+          "D_Skeletal =sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-(7/100)*(cos(4*x)+cos(4*y)+cos(4*z))+95/100",
+          "isoCondition_0=((x-pi)^2-(pi-P+1/100)^2)",
           "isoCondition_1=((x-pi)^2-(pi-P)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),D_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+y*y+z*z)-13),N*pi*atan2(y, sqrt(x*x+z*z)),N*atan2(z,x),t)"
@@ -8329,13 +8329,13 @@
     {
       "Iso3D": {
         "Description": [
-          "W_Skeletal Cylinder by Abderrahman Taha 07/12/2015"
+          "W_Skeletal Cylinder by Abderrahman Taha 01/11/2019"
         ],
         "Name": [
-          "W_Skeletal Cylinder"
+          "W_Skeletal_Cylinder"
         ],
         "Component": [
-          "W_Skeletal Cylinder"
+          "W_SkeletalCylinder"
         ],
         "Const": [
           "M=1",
@@ -8343,9 +8343,9 @@
           "P=4"
         ],
         "Funct": [
-          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-1DOTSYMBOL95*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+2DOTSYMBOL8",
-          "isoCondition_0=(x^2-(pi+0DOTSYMBOL5)^2)",
-          "isoCondition_1=(x^2-(pi+0DOTSYMBOL3)^2)",
+          "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
+          "isoCondition_0=(x^2-(pi+1/2)^2)",
+          "isoCondition_1=(x^2-(pi+3/10)^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),W_Skeletal(x,y,z,t),1)+M*exp(isoCondition_1(x,y,z,t))",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-8),y,N*atan2(z,x),t)"
         ],
