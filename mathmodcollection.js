@@ -8893,13 +8893,13 @@
           "4D Tube"
         ],
         "Description": [
-          "4D Tube by Abderrahman Taha 03/12/2015"
+          "4D Tube by Abderrahman Taha 31/10/2019"
         ],
         "Component": [
           "4DTube"
         ],
         "Fw": [
-          "0DOTSYMBOL3*(sin(v)+cos(4*u))"
+          "(3/10)*(sin(v)+cos(4*u))"
         ],
         "Fx": [
           "cos(u)"
@@ -8908,7 +8908,7 @@
           "sin(u)"
         ],
         "Fz": [
-          "0DOTSYMBOL3*(cos(v)+sin(4*u))"
+          "(3/10)*(cos(v)+sin(4*u))"
         ],
         "Umax": [
           "pi"
@@ -8926,18 +8926,18 @@
     },
     {
       "Iso3D": {
+        "Description": [
+          "Double Twist Neovius Torus by Abderrahman Taha 31/10/2019"
+        ],
         "Name": [
-          "Double Twist Neovius Torus"
+          "Double_Twist_Neovius_Torus"
         ],
         "Component": [
           "Neovius Torus"
         ],
-        "Description": [
-          "Double Twist Neovius Torus by Abderrahman Taha 02/12/2015"
-        ],
         "Funct": [
           "Iso=3*(cos(x)+cos(y)+cos(z))+4*cos(x)*cos(y)*cos(z)",
-          "isoCondition_0=(x^2+(z/9)^2-3DOTSYMBOL2^2)",
+          "isoCondition_0=(x^2+(z/9)^2-(32/10)^2)",
           "isoCondition_1=(x^2+(z/9)^2-3^2)",
           "isoTransform_1=if(isoCondition_0(x,y,z,t)<(0),Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
           "isoTransform_2=if(isoCondition_0(x,y,z,t)<(0),-Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))",
@@ -8969,20 +8969,20 @@
     {
       "Iso3D": {
         "Description": [
-          "Neovius Torus_1 by Abderrahman Taha 02/12/2015"
+          "Neovius Torus_1 by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
-          "Neovius Torus"
+          "Neovius_Torus"
         ],
         "Component": [
-          "Neovius Torus_1"
+          "Neovius_Torus"
         ],
         "Const": [
           "N=12"
         ],
         "Funct": [
           "Iso=3*(cos(x)+cos(y)+cos(z))+4*cos(x)*cos(y)*cos(z)",
-          "isoCondition_0=(x^2+z^2-3DOTSYMBOL2^2)",
+          "isoCondition_0=(x^2+z^2-(16/5)^2)",
           "isoCondition_1=(x^2+z^2-3^2)",
           "isoTransform=if(isoCondition_0(x,y,z,t)<(0),-Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))"
         ],
@@ -9002,17 +9002,17 @@
           "-10"
         ],
         "Zmax": [
-          "3DOTSYMBOL5"
+          "35/10"
         ],
         "Zmin": [
-          "-3DOTSYMBOL5"
+          "-35/10"
         ]
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Vase_3 by Abderrahman Taha 30/11/2015"
+          "Vase_3 by Abderrahman Taha 31/10/2019"
         ],
         "Name": [
           "Vase"
