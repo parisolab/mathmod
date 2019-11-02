@@ -7726,7 +7726,7 @@
           "r=abs(if(r(x,y,z,t)<(0),r(x,y,z,t)+B,r(x,y,z,t)-B))*C",
           "r2=(y-cos(x*th)*D)*E",
           "fmesh0=(-max(-sqrt(r2(x,y,z,t)*r2(x,y,z,t)+r(x,y,z,t)*r(x,y,z,t)),temp(x,y,z,t)))",
-          "fmesh1=-fmesh0(atan2(y,x),sqrt(x*x+y*y)-(1),z,t)+0DOTSYMBOL03",
+          "fmesh1=-fmesh0(atan2(y,x),sqrt(x*x+y*y)-(1),z,t)+(3/100)",
           "fmesh2=fmesh1(sqrt(x*x+z*z)-(2),y,atan2(z,x),t)"
         ],
         "Fxyz": [
