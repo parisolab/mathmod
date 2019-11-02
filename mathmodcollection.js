@@ -7692,19 +7692,19 @@
     {
       "Iso3D": {
         "Description": [
-          "Wired Torus_01 by Abderrahman Taha 26/12/2015DOTSYMBOL The mesh formula is from the PovRay team: http://www.povray.org/ "
+          "Wired Torus (ref: http://www.povray.org/) by Abderrahman Taha 26/12/2019"
         ],
         "Name": [
-          "Wired Torus_01"
+          "Wired_Torus_v1"
         ],
         "Component": [
-          "Wired Torus"
+          "WiredTorus"
         ],
         "Const": [
-          "A=0DOTSYMBOL2",
-          "B=0DOTSYMBOL2",
+          "A=1/5",
+          "B=1/5",
           "C=1",
-          "D=0DOTSYMBOL04",
+          "D=1/25",
           "E=1",
           "th=pi/A",
           "ph=pi/B"
@@ -7733,44 +7733,44 @@
           "fmesh2(x,y,z,t)"
         ],
         "Xmax": [
-          "3DOTSYMBOL1"
+          "31/10"
         ],
         "Xmin": [
-          "-3DOTSYMBOL1"
+          "-31/10"
         ],
         "Ymax": [
-          "1DOTSYMBOL1"
+          "11/10"
         ],
         "Ymin": [
-          "-1DOTSYMBOL1"
+          "-11/10"
         ],
         "Zmax": [
-          "3DOTSYMBOL1"
+          "31/10"
         ],
         "Zmin": [
-          "-3DOTSYMBOL1"
+          "-31/10"
         ]
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Wired Sphere-01 by Abderrahman Taha 25/12/2015DOTSYMBOL The mesh formula is from the PovRay team: http://www.povray.org/ "
+          "Wired Sphere-01 (ref: http://www.povray.org/) by Abderrahman Taha 02/11/2019"
         ],
         "Name": [
-          "Wired Sphere_01"
+          "Wired_Sphere_v1"
         ],
         "Component": [
-          "Wired Sphere"
+          "WiredSphere"
         ],
         "Const": [
-          "A = 0DOTSYMBOL15",
-          "B = 0DOTSYMBOL15",
+          "A = 3/20",
+          "B = 3/20",
           "C = 1",
-          "D = 0DOTSYMBOL02",
+          "D = 1/50",
           "E = 1",
-          "th = pi / A",
-          "ph = pi/ B"
+          "th = pi/A",
+          "ph = pi/B"
         ],
         "Funct": [
           "r = (x % (A * 2))",
@@ -7788,51 +7788,51 @@
           "r = ((z- B) % (B * 2))",
           "r = abs(if (r(x,y,z,t) < (0), r(x,y,z,t) + B, r(x,y,z,t) - B)) * C",
           "r2 = (y - cos(x * th) * D) * E",
-          "fmesh0 = max( -sqrt(r2(x,y,z,t) * r2(x,y,z,t) + r(x,y,z,t) * r(x,y,z,t)), temp(x,y,z,t)) +0DOTSYMBOL03",
+          "fmesh0 = max( -sqrt(r2(x,y,z,t) * r2(x,y,z,t) + r(x,y,z,t) * r(x,y,z,t)), temp(x,y,z,t)) +(3/100)",
           "fmesh0= fmesh0(atan2(y,x),sqrt(x*x+y*y+z*z) -(1),atan2(z,sqrt(x*x+y*y)),t)"
         ],
         "Fxyz": [
           "fmesh0(x,y,z,t)"
         ],
         "Xmax": [
-          "1DOTSYMBOL1"
+          "11/10"
         ],
         "Xmin": [
-          "-1DOTSYMBOL1"
+          "-11/10"
         ],
         "Ymax": [
-          "1DOTSYMBOL1"
+          "11/10"
         ],
         "Ymin": [
-          "-1DOTSYMBOL1"
+          "-11/10"
         ],
         "Zmax": [
-          "1DOTSYMBOL1"
+          "11/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL1"
+          "-11/10"
         ]
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Straw Basket-01 by Abderrahman Taha 22/12/2015. The mesh formula is from the PovRay team: http://www.povray.org/ "
+          "Straw Basket (ref : http://www.povray.org/ ) by Abderrahman Taha 02/11/2019"
         ],
         "Name": [
-          "Straw Basket_01"
+          "Straw_Basket_v1"
         ],
         "Component": [
-          "Straw Basket"
+          "StrawBasket"
         ],
         "Const": [
-          "A = 0DOTSYMBOL5",
-          "B = 0DOTSYMBOL2",
+          "A = 1/2",
+          "B = 1/5",
           "C = 1",
-          "D = 0DOTSYMBOL09",
+          "D = 9/100",
           "E = 1",
-          "th = pi / A",
-          "ph = pi/ B"
+          "th = pi/A",
+          "ph = pi/B"
         ],
         "Funct": [
           "r = (x % (A * 2))",
@@ -7850,8 +7850,8 @@
           "r = ((z- B) % (B * 2))",
           "r = abs(if (r(x,y,z,t) < (0), r(x,y,z,t) + B, r(x,y,z,t) - B)) * C",
           "r2 = (y - cos(x * th) * D) * E",
-          "fmesh0 = max( -sqrt(r2(x,y,z,t) * r2(x,y,z,t) + r(x,y,z,t) * r(x,y,z,t)), temp(x,y,z,t)) +0DOTSYMBOL08",
-          "fmesh0= if(atan2(z,sqrt(x*x+y*y)) < 0DOTSYMBOL89, fmesh0(atan2(y,x),sqrt(x*x+y*y+z*z) -(4),atan2(z,sqrt(x*x+y*y)),t), 1)*(atan2(z,sqrt(x*x+y*y)) < 0DOTSYMBOL89)"
+          "fmesh0 = max( -sqrt(r2(x,y,z,t) * r2(x,y,z,t) + r(x,y,z,t) * r(x,y,z,t)), temp(x,y,z,t)) +(2/25)",
+          "fmesh0= if(atan2(z,sqrt(x*x+y*y)) < (9/10), fmesh0(atan2(y,x),sqrt(x*x+y*y+z*z) -(4),atan2(z,sqrt(x*x+y*y)),t), 1)*(atan2(z,sqrt(x*x+y*y)) < (9/10))"
         ],
         "Fxyz": [
           "fmesh0(x,y,z,t)"
