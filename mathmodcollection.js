@@ -7879,20 +7879,20 @@
     {
       "Iso3D": {
         "Description": [
-          "Mesh Torus_01 by Abderrahman Taha 22/12/2015DOTSYMBOL The mesh formula is from the PovRay team: http://www.povray.org/ "
+          "Mesh Torus ( reference : http://www.povray.org/ ) by Abderrahman Taha 02/11/2019   "
         ],
         "Name": [
-          "Mesh Torus_01"
+          "Mesh_Torus_01"
         ],
         "Component": [
-          "Mesh Torus"
+          "MeshTorus"
         ],
         "Const": [
-          "A = 0DOTSYMBOL5",
-          "B = 0DOTSYMBOL35",
-          "C = 0DOTSYMBOL7",
-          "D = 0DOTSYMBOL2",
-          "E = 0DOTSYMBOL5",
+          "A = 1/2",
+          "B = 7/20",
+          "C = 7/10",
+          "D = 1/5",
+          "E = 1/2",
           "th = pi / A",
           "ph = pi/ B"
         ],
@@ -7913,7 +7913,7 @@
           "r = abs(if (r(x,y,z,t) < (0), r(x,y,z,t) + B, r(x,y,z,t) - B)) * C",
           "r2 = (y - cos(x * th) * D) * E",
           "fmesh0 = (-max(-sqrt(r2(x,y,z,t) * r2(x,y,z,t) + r(x,y,z,t) * r(x,y,z,t)), temp(x,y,z,t)))",
-          "fmesh1= -fmesh0(atan2(y,x),sqrt(x*x+y*y)-(4),z,t) +0DOTSYMBOL08",
+          "fmesh1= -fmesh0(atan2(y,x),sqrt(x*x+y*y)-(4),z,t) +2/25",
           "fmesh2= fmesh1(sqrt(x*x+z*z)-(7),y,2*atan2(z,x),t)"
         ],
         "Fxyz": [
@@ -7941,11 +7941,14 @@
     },
     {
       "Param3D": {
+        "Description ": [
+          "Bottle shape surface by Robert Israel 01/11/2019"
+        ],
+        "Name": [
+           "Bottle shape"
+        ],
         "Component": [
           "Bottle shape"
-        ],
-        "Description ": [
-          "Bottle shape surface (found by Robert Israel) by Abderrahman Taha 14/12/2015"
         ],
         "Fx": [
           " (-2/15)*(cos(u)*(3*cos(v)-30*sin(u) + 90*cos(u)^4*sin(u) -60*cos(u)^6*sin(u) +5*cos(u)*cos(v)*sin(u))) "
@@ -7955,9 +7958,6 @@
         ],
         "Fz": [
           " (2/15)*(3+5*cos(u)*sin(u))*sin(v) "
-        ],
-        "Name": [
-          "Bottle shape"
         ],
         "Umax": [
           "pi"
@@ -7974,13 +7974,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=0DOTSYMBOL8*abs(cos((pi*(x*x+y*y+z*z))))",
-          "B=0DOTSYMBOL6*abs(cos(cos(pi*(x*x+y*y+z*z))))",
+          "R=(9/10)",
+          "G=(4/5)*abs(cos((pi*(x*x+y*y+z*z))))",
+          "B=(3/5)*abs(cos(cos(pi*(x*x+y*y+z*z))))",
           "T=1"
         ],
         "Name": "Dream",
-        "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),0)"
+        "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),(0))"
       }
     },
     {
