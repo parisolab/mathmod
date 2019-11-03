@@ -7478,77 +7478,83 @@
     {
       "Iso3D": {
         "Description": [
-          "Wall Pattern Sphere-01 by Abderrahman Taha 05/01/2016DOTSYMBOL The f_hex_y formula is from the PovRay team: http://www.povray.org/ "
+          "Wall Pattern Sphere (ref: http://www.povray.org/) by Abderrahman Taha 02/11/2019 "
         ],
         "Name": [
-          "Wall Pattern Sphere-01"
+          "Wall_Pattern_Sphere_v1"
         ],
         "Component": [
           "f_hex_y"
         ],
+        "Const": [
+           "A=sqrt(3)"
+        ],
         "Funct": [
-          "x1=abs((abs(x) % sqrt(3DOTSYMBOL0))-sqrt(3DOTSYMBOL0)/2)",
-          "y1 = abs((abs(y) % 3)-1DOTSYMBOL5)",
-          "x2=sqrt(3DOTSYMBOL0)/2-x1(x,y,z,t)",
-          "y2=1DOTSYMBOL5-y1(x,y,z,t)",
+          "x1=abs((abs(x) % A)-A/2)",
+          "y1=abs((abs(y) % 3)-(3/2))",
+          "x2=A/2-x1(x,y,z,t)",
+          "y2=(3/2)-y1(x,y,z,t)",
           "x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
           "y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
           "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
           "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-          "f_hex_y_1=if(z*z-0DOTSYMBOL01 < (0),f_hex_y(sin(x),1DOTSYMBOL3*sin(y),2*z,0),1)-0DOTSYMBOL1",
-          "Cylinder=-f_hex_y_1(x,4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z)-1DOTSYMBOL5,t)",
-          "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),4DOTSYMBOL5*atan2(z,y),sqrt(y*y+z*z+x*x)-4DOTSYMBOL5,t)",
+          "f_hex_y_1=if(z*z-(1/100) < (0),f_hex_y(sin(x),(13/10)*sin(y),2*z,0),1)-(1/10)",
+          "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
+          "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
           "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
         ],
         "Fxyz": [
           "Sphere(x,y,z,t)"
         ],
         "Xmax": [
-          "4DOTSYMBOL6"
+          "23/5"
         ],
         "Xmin": [
-          "-4DOTSYMBOL6"
+          "-23/5"
         ],
         "Ymax": [
-          "4DOTSYMBOL6"
+          "23/5"
         ],
         "Ymin": [
-          "-4DOTSYMBOL6"
+          "-23/5"
         ],
         "Zmax": [
-          "4DOTSYMBOL6"
+          "23/5"
         ],
         "Zmin": [
-          "-4DOTSYMBOL6"
+          "-23/5"
         ]
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Wall Pattern Torus-01 by Abderrahman Taha 05/01/2016DOTSYMBOL The f_hex_y formula is from the PovRay team: http://www.povray.org/ "
+          "Wall Pattern Torus (ref: http://www.povray.org/) by Abderrahman Taha 02/11/2019"
         ],
         "Name": [
-          "Wall Pattern Torus-01"
+          "Wall_Pattern_Torus_v1"
         ],
         "Component": [
           "f_hex_y"
         ],
+        "Const": [
+          "A=sqrt(3)"
+        ],
         "Funct": [
-          "x1=abs((abs(x) % sqrt(3DOTSYMBOL0))-sqrt(3DOTSYMBOL0)/2)",
-          "y1 = abs((abs(y) % 3)-1DOTSYMBOL5)",
-          "x2=sqrt(3DOTSYMBOL0)/2-x1(x,y,z,t)",
-          "y2=1DOTSYMBOL5-y1(x,y,z,t)",
+          "x1=abs((abs(x) % A)-A/2)",
+          "y1=abs((abs(y) % 3)-3/2)",
+          "x2=A/2-x1(x,y,z,t)",
+          "y2=(3/2)-y1(x,y,z,t)",
           "x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
           "y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
           "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
           "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-          "f_hex_y_1=if(z*z-0DOTSYMBOL01 < (0),f_hex_y(sin(x),1DOTSYMBOL3*sin(y),2*z,0),1)-0DOTSYMBOL1",
-          "Cylinder=-f_hex_y_1(x,4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z)-1DOTSYMBOL5,t)",
-          "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z+x*x)-4DOTSYMBOL5,t)",
-          "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
+          "f_hex_y_1=if(z*z-(1/100) < (0),f_hex_y(sin(x),(13/10)*sin(y),2*z,0),1)-(1/10)",
+          "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(15/10),t)",
+          "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(43/10)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
+          "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)  +exp((sqrt(x*x+y*y)-9/2)^2+z*z-1)"
         ],
         "Fxyz": [
           "Torus(x,y,z,t)"
@@ -7566,10 +7572,10 @@
           "-6"
         ],
         "Zmax": [
-          "1DOTSYMBOL6"
+          "8/5"
         ],
         "Zmin": [
-          "-1DOTSYMBOL6"
+          "-8/5"
         ]
       }
     },
