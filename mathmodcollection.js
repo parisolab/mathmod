@@ -7377,84 +7377,87 @@
         ]
       }
     },
+        {
+            "Iso3D": {
+                "Description": [
+                    "Wall Pattern Sphere v3 by Abderrahman Taha 02/11/2019"
+                ],
+                "Name": [
+                    "Wall_Pattern_Sphere_v3"
+                ],
+                "Component": [
+                    "f_hex_y"
+                ],
+                "Const": [
+                    "A=sqrt(3)"
+                ],
+                "Funct": [
+                    "x1=abs((abs(x) % A)-A/2)",
+                    "y1=abs((abs(y) % 3)-(3/2))",
+                    "x2=A/2-x1(x,y,z,t)",
+                    "y2=(3/2)-y1(x,y,z,t)",
+                    "x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
+                    "y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
+                    "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
+                    "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
+                    "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
+                    "f_hex_y_1=if(abs(z)<(3/50),f_hex_y(x,y,z,0)-(2/25),1)",
+                    "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
+                    "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
+                    "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
+                ],
+                "Fxyz": [
+                    "Sphere(x,y,z,t)"
+                ],
+                "Xmax": [
+                    "24/5"
+                ],
+                "Xmin": [
+                    "-24/5"
+                ],
+                "Ymax": [
+                    "24/5"
+                ],
+                "Ymin": [
+                    "-24/5"
+                ],
+                "Zmax": [
+                    "24/5"
+                ],
+                "Zmin": [
+                    "-24/5"
+                ]
+            }
+        },
     {
       "Iso3D": {
-        "Name": [
-          "Wall Pattern Sphere-03"
-        ],
         "Description": [
-          "Wall Pattern Sphere-03 by Abderrahman Taha 10/01/2016"
+          "Wall Pattern Sphere v2 by Abderrahman Taha 02/11/2019"
+        ],
+        "Name": [
+          "Wall_Pattern_Sphere_v2"
         ],
         "Component": [
           "f_hex_y"
         ],
+        "Const": [
+           "A=sqrt(3)"
+        ],
         "Funct": [
-          "x1=abs((abs(x) % sqrt(3DOTSYMBOL0))-sqrt(3DOTSYMBOL0)/2)",
-          "y1 = abs((abs(y) % 3)-1DOTSYMBOL5)",
-          "x2=sqrt(3DOTSYMBOL0)/2-x1(x,y,z,t)",
-          "y2=1DOTSYMBOL5-y1(x,y,z,t)",
+          "x1=abs((abs(x) % A)-A/2)",
+          "y1=abs((abs(y) % 3)-(3/2))",
+          "x2=A/2-x1(x,y,z,t)",
+          "y2=(3/2)-y1(x,y,z,t)",
           "x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
           "y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
           "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
           "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-          "f_hex_y_1=if(abs(z)<0DOTSYMBOL06,f_hex_y(x,y,z,0)-0DOTSYMBOL08,1)",
-          "Cylinder=-f_hex_y_1(x,4DOTSYMBOL3*atan2(z,y),sqrt(y*y+z*z)-1DOTSYMBOL5,t)",
-          "Sphere=f_hex_y_1(6DOTSYMBOL3*atan2(x,sqrt(y*y+z*z)),3DOTSYMBOL815*atan2(z,y),sqrt(y*y+z*z+x*x)-4DOTSYMBOL6,t)",
-          "Torus=Cylinder(6DOTSYMBOL03*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
+          "f_hex_y_1=if(abs(z)<(3/50),f_hex_y(sqrt(x*x+y*y)-2,(475/100)*atan2(y,x),z,0)-(2/25),1)",
+          "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
+          "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
+          "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
         ],
-        "Fxyz": [
-          "Sphere(x,y,z,t)"
-        ],
-        "Xmax": [
-          "4DOTSYMBOL8"
-        ],
-        "Xmin": [
-          "-4DOTSYMBOL8"
-        ],
-        "Ymax": [
-          "4DOTSYMBOL8"
-        ],
-        "Ymin": [
-          "-4DOTSYMBOL8"
-        ],
-        "Zmax": [
-          "4DOTSYMBOL8"
-        ],
-        "Zmin": [
-          "-4DOTSYMBOL8"
-        ]
-      }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "Wall Pattern Sphere-02 by Abderrahman Taha 02/11/2019"
-        ],
-        "Name": [
-          "Wall Pattern Sphere-02"
-        ],
-        "Component": [
-          "f_hex_y"
-        ],
-                "Const": [
-                   "A=sqrt(3)"
-                ],
-                "Funct": [
-                  "x1=abs((abs(x) % A)-A/2)",
-                  "y1=abs((abs(y) % 3)-(3/2))",
-                  "x2=A/2-x1(x,y,z,t)",
-                  "y2=(3/2)-y1(x,y,z,t)",
-                  "x1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), x2(x,y,z,t), x1(x,y,z,t))",
-                  "y1=if ((x1(x,y,z,t)*x1(x,y,z,t)+y1(x,y,z,t)*y1(x,y,z,t))>(x2(x,y,z,t)*x2(x,y,z,t)+y2(x,y,z,t)*y2(x,y,z,t)), y2(x,y,z,t), y1(x,y,z,t))",
-                  "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
-                  "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
-                  "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-                  "f_hex_y_1=if(abs(z)<(3/50),f_hex_y(sqrt(x*x+y*y)-2,(475/100)*atan2(y,x),z,0)-(2/25),1)",
-                  "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
-                  "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
-                  "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
-                ],
         "Fxyz": [
           "Sphere(x,y,z,t)"
         ],
