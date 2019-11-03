@@ -7576,18 +7576,18 @@
     {
       "Iso3D": {
         "Description": [
-          "Interlocked Torus-01 by Abderrahman Taha 22/12/2015DOTSYMBOL The Helix formula is from the PovRay team: http://www.povray.org/ "
+          "Interlocked Torus (ref:http://www.povray.org/) by Abderrahman Taha 02/11/2019"
         ],
         "Name": [
-          "Interlocked Torus_02"
+          "Interlocked_Torus_v2"
         ],
         "Component": [
-          "Interlocked Torus"
+          "InterlockedTorus"
         ],
         "Const": [
           "A = 4",
           "B = 1",
-          "C = 0DOTSYMBOL5",
+          "C = 1/2",
           "D = 1",
           "E = 1",
           "F = 1",
@@ -7597,15 +7597,15 @@
           "X = x",
           "Z = z",
           "r = sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t))",
-          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),0DOTSYMBOL001,X(x,y,z,t))",
+          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),(1/1000),X(x,y,z,t))",
           "th = atan2(Z(x,y,z,t), X(x,y,z,t))",
           "th = ((th(x,y,z,t) * A + y * B * A) % (2*pi))",
-          "th = if (th(x,y,z,t) < (0),        th(x,y,z,t)+2*pi, th(x,y,z,t))",
+          "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "Z = (th(x,y,z,t) - pi) / E / (B * A)",
           "X = r(x,y,z,t) - D",
           "Z = if ((F = 1 | G = 0)=(0), X(x,y,z,t) * sin(G * pi/180) + Z(x,y,z,t) * cos(G * pi/180) , Z(x,y,z,t))",
           "X = if ((F = 1 | G = 0)=(0), X(x,y,z,t) * cos(G * pi/180) - Z(x,y,z,t) * sin(G * pi/180) , X(x,y,z,t))",
-          "r2 = if (F = (1),        sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t)),                if ((F = 0)=(0),                        pow((pow(abs(X(x,y,z,t)), 2/F) + pow(abs(Z(x,y,z,t)), 2/F)), F *0DOTSYMBOL5),                        if (abs(X(x,y,z,t)) > abs(Z(x,y,z,t)) ,                     abs(X(x,y,z,t)) ,   abs(Z(x,y,z,t))            )    )          )",
+          "r2 = if (F = (1),        sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t)), if ((F = 0)=(0), pow((pow(abs(X(x,y,z,t)), 2/F) + pow(abs(Z(x,y,z,t)), 2/F)), F/2), if (abs(X(x,y,z,t)) > abs(Z(x,y,z,t)), abs(X(x,y,z,t)), abs(Z(x,y,z,t)))))",
           "r3 = if((D + r(x,y,z,t)) < r2(x,y,z,t) , (D + r(x,y,z,t)) , r2(x,y,z,t))",
           "helix = (-C + r3(x,y,z,t))"
         ],
@@ -7633,22 +7633,22 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))+0DOTSYMBOL3",
-          "B=0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=(9/10)",
+          "G=(4/5)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))+(3/10)",
+          "B=(4/5)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
-        "Noise": "NoiseW(2*x,2*y,2*z,(4),(2),(0))+NoiseP(2*x,2*y,2*z,(4),(12),1/10)"
+        "Noise": "NoiseW(2*x,2*y,2*z,(4),(2),(0))+NoiseP(2*x,2*y,2*z,(4),(12),(1/10))"
       }
     },
     {
       "Iso3D": {
         "Description": [
-          "Perlin Schwarz_01 by Abderrahman Taha 26/12/2015DOTSYMBOL"
+          "Perlin Schwarz  by Abderrahman Taha 02/11/2019"
         ],
         "Name": [
-          "Perlin Schwarz"
+          "Perlin_Schwarz"
         ],
         "Component": [
           "PerlinSchwarz"
@@ -7657,7 +7657,7 @@
           "Schwarz=cos(x)+cos(y)+cos(z)"
         ],
         "Fxyz": [
-          "Schwarz(x,y,z,t)-NoiseP(x,y,z,(4),(11),1/10)"
+          "Schwarz(x,y,z,t)-NoiseP(x,y,z,(4),(11),(1/10))"
         ],
         "Xmax": [
           "4"
@@ -7680,13 +7680,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL82",
-          "G=1DOTSYMBOL62*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=1DOTSYMBOL72*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=4/5",
+          "G=(8/5)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "B=(9/5)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "Perlin",
-        "Noise": "NoiseP(x,y,z,(4),(11),1/10)"
+        "Noise": "NoiseP(x,y,z,(4),(11),(1/10))"
       }
     },
     {
