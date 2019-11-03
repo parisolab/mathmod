@@ -7286,13 +7286,13 @@
         "Iso3D": {
         "Description": ["The Dome by Abderrahman Taha 10/08/2018"
         ],
-        "Name": ["The_Dome_01"
+        "Name": ["The_Dome_v1"
+        ],
+        "Component": ["The_Dome_01"
         ],
         "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","Scherk2=Scherk(N*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-R),N*atan2(z,y),t)","IsoExterior=Scherk2(x,y,z,t)","DFx2=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy2=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz2=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=x/sqrt(x*x+y*y+z*z)","Iso3=(IsoExterior(x- Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y-Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z-Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","Iso2=(IsoExterior(x+ Th*Rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),y+Th*Rapp(DFy2(x,y,z,t),DFx2(x,y,z,t),DFz2(x,y,z,t),t),z+Th*Rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t), t))","TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
         ],
         "Fxyz": ["if((sqrt(x*x+y*y+z*z)-24)<(0),TickIsoExterior(z,y,x,t),(1))"
-        ],
-        "Component": ["The_Dome_01"
         ],
         "Const": ["c=1/1000","Th=6/10","N=10","R=16"
         ],
@@ -7331,27 +7331,28 @@
     {
       "Iso3D": {
         "Description": [
-          "Wall Pattern Torus-03 by Abderrahman Taha 18/10/2019"
+          "Wall Pattern Torus by Abderrahman Taha 18/10/2019"
         ],
          "Name": [
-          "Wall Pattern Torus-02"
+          "Wall_Pattern_Torus_v2"
         ],
         "Component": [
           "f_hex_y"
         ],
         "Const": [
-          "X=(57/10)"
+          "X=(57/10)",
+          "A=sqrt(3)"
         ],
         "Funct": [
-          "x1=abs((abs(x) % sqrt(3))-sqrt(3)/2)",
-          "y1 = abs((abs(y) % 3)-(15/10))",
-          "x2=sqrt(3)/2-x1(x,y,z,t)",
-          "y2=(15/10)-y1(x,y,z,t)",
+          "x1=abs((abs(x) % A)-A/2)",
+          "y1=abs((abs(y) % 3)-(3/2))",
+          "x2=A/2-x1(x,y,z,t)",
+          "y2=(3/2)-y1(x,y,z,t)",
           "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
-          "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
-          "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-          "f_hex_y_1=if(100*abs(z)<6,f_hex_y(x,y,z,0)-(8/100),1)",
-          "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(15/10),t)",
+          "th=if(th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
+          "f_hex_y=if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
+          "f_hex_y_1=if(100*abs(z)<6,f_hex_y(x,y,z,0)-(2/25),1)",
+          "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
           "Torus=Cylinder(6*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
         ],
         "Fxyz": [
@@ -7370,10 +7371,10 @@
           "-X"
         ],
         "Zmax": [
-          "16/10"
+          "8/5"
         ],
         "Zmin": [
-          "-16/10"
+          "-8/5"
         ]
       }
     },
