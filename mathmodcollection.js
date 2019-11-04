@@ -6622,20 +6622,22 @@
     },
     {
       "Param3D": {
+        "Description": ["Torus_Noise by Abderrahman Taha 04/11/2019"
+        ],
         "Name": [
-          "Torus Noise"
+          "Torus_Noise"
         ],
         "Component": [
           "TorusNoise"
         ],
         "Fx": [
-          "(1+(1/2)*cos(u))*cos(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),0))"
+          "(1+(1/2)*cos(u))*cos(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),(0)))"
         ],
         "Fy": [
-          "(1+(1/2)*cos(u))*sin(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),0))"
+          "(1+(1/2)*cos(u))*sin(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),(0)))"
         ],
         "Fz": [
-          "sin(u)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),0))"
+          "sin(u)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),(0)))"
         ],
         "Umax": [
           "2*pi"
@@ -6652,86 +6654,93 @@
       },
       "Texture": {
         "Colors": [
-          "R=2*0DOTSYMBOL41",
-          "G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=(4/5)",
+          "G=(8/5)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "B=(9/5)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "PerlinNoise",
-        "Noise": "NoiseP(x,y,z,(4),(4),8/10)"
+        "Noise": "NoiseP(x,y,z,(4),(4),(4/5))"
       }
     },
     {
       "Param3D": {
+        "Description": ["Breather_Noise by Abderrahman Taha 04/11/2019"
+        ],
         "Name": [
-          "Breather Noise"
+          "Breather_Noise"
         ],
         "Component": [
           "BreatherNoise"
         ],
+        "Const": [
+          "A= sqrt(21/25)",
+          "B= 2/5",
+          "C= 42/25"
+        ],
         "Fx": [
-          "((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1-NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(1),(2),0))"
+          "((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1-NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),(0)))"
         ],
         "Fy": [
-          "((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1-NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(1),(2),0))"
+          "((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1-NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),(0)))"
         ],
         "Fz": [
-          "(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2)))*(1-NoiseW(((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),((2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))),(1),(2),0))"
+          "(-u+(C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1-NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),(0)))"
         ],
         "Umax": [
-          "13DOTSYMBOL2"
+          "66/5"
         ],
         "Umin": [
-          "-13DOTSYMBOL2"
+          "-66/5"
         ],
         "Vmax": [
-          "37DOTSYMBOL2"
+          "186/5"
         ],
         "Vmin": [
-          "-37DOTSYMBOL2"
+          "-186/5"
         ]
       }
     },
     {
-          "Iso3D": {
-            "Description": ["P_Skeletal Tori-2.0 by Abderrahman Taha 04/11/2019"
-            ],
-            "Name": ["P_Skeletal_Tori"
-            ],
-            "Component": ["P_SkeletalTori"
-            ],
-            "Const": ["M=1","N1=15","N2=15","P=5","R=15"
-            ],
-            "Funct": ["P_Skeletal=cos(x)+cos(y)+cos(z)+(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))/2+6/5","isoCondition_0=((x-pi)^2-(pi +1/20)^2)","isoCondition_1=((x-pi)^2-(pi)^2)","isoTransform=if(isoCondition_0(x,y,z,t)<(0),P_Skeletal(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))","isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
-            ],
-            "Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"
-            ],
-            "Xmax": ["30"
-            ],
-            "Xmin": ["-30"
-            ],
-            "Ymax": ["30"
-            ],
-            "Ymin": ["-30"
-            ],
-            "Zmax": ["15"
-            ],
-            "Zmin": ["-15"
-            ]
-          },
-          "Sliders": {
-            "Max": ["50","10","25","25","25","50","10","25","25","25","50","10","25","25","25","50","10","25","25","25"
-            ],
-            "Min": ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"
-            ],
-            "Name": ["M","P","R","N1","N2"
-            ],
-            "Position": ["1","5","15","15","15","10","7","18","3","11","0","5","19","7","14","33","8","18","2","11"
-            ],
-            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"
-            ]
-          }
-        },
+      "Iso3D": {
+        "Description": ["P_Skeletal Tori-2.0 by Abderrahman Taha 04/11/2019"
+        ],
+        "Name": ["P_Skeletal_Tori"
+        ],
+        "Component": ["P_SkeletalTori"
+        ],
+        "Const": ["M=1","N1=15","N2=15","P=5","R=15"
+        ],
+        "Funct": ["P_Skeletal=cos(x)+cos(y)+cos(z)+(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))/2+6/5","isoCondition_0=((x-pi)^2-(pi +1/20)^2)","isoCondition_1=((x-pi)^2-(pi)^2)","isoTransform=if(isoCondition_0(x,y,z,t)<(0),P_Skeletal(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))","isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
+        ],
+        "Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"
+        ],
+        "Xmax": ["30"
+        ],
+        "Xmin": ["-30"
+        ],
+        "Ymax": ["30"
+        ],
+        "Ymin": ["-30"
+        ],
+        "Zmax": ["15"
+        ],
+        "Zmin": ["-15"
+        ]
+      },
+      "Sliders": {
+        "Max": ["50","10","25","25","25","50","10","25","25","25","50","10","25","25","25","50","10","25","25","25"
+        ],
+        "Min": ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"
+        ],
+        "Name": ["M","P","R","N1","N2"
+        ],
+        "Position": ["1","5","15","15","15","10","7","18","3","11","0","5","19","7","14","33","8","18","2","11"
+        ],
+        "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"
+        ]
+      }
+    },
     {
           "Iso3D": {
             "Name": ["fhelix"
