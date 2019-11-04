@@ -7054,37 +7054,37 @@
     {
       "Param3D": {
         "Description ": [
-          "Inka Star by Abderrahman Taha 06/02/2016"
+          "Inka Star by Abderrahman Taha 04/11/2019"
         ],
         "Name": [
-          "Inka Star"
+          "Inka_Star"
         ],
         "Component": [
           "InkaStar"
         ],
         "Const": [
-          "cu=0DOTSYMBOL001",
-          "cv=0DOTSYMBOL001",
+          "c=1/10000",
+          "A=sqrt(2)",
           "N=2"
         ],
         "Funct": [
-          "Thickness= ((sin(15*u)*cos(15*u)))^5 + (sin(5*N*v))",
-          "Fx=-cos(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
-          "Fz=sin(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
-          "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
-          "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
-          "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
-          "DFyv=((Fy(u,v,t)-Fy(u,v+cv,t))/cv)",
-          "DFzu=((Fz(u,v,t)-Fz(u+cu,v,t))/cu)",
-          "DFzv=((Fz(u,v,t)-Fz(u,v+cv,t))/cv)",
-          "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-          "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-          "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-          "R=(sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2))^2",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
+          "Th= ((sin(15*u)*cos(15*u)))^5 + (sin(5*N*v))",
+          "Fx=-cos(u+v)/(A+cos(v-u))",
+          "Fy=sin(v-u)/(A+cos(v-u))",
+          "Fz=sin(u+v)/(A+cos(v-u))",
+          "DFxu= ((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv= ((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu= ((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv= ((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu= ((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv= ((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+          "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+          "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+          "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+          "R=u/(u*u+v*v+t*t)",
+          "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
@@ -7112,13 +7112,13 @@
     {
       "Iso3D": {
         "Description": [
-          "Strapped Torus (implicit version) by Abderrahman Taha 06/02/2016"
+          "Strapped Torus (implicit version) by Abderrahman Taha 04/11/2019"
         ],
         "Name": [
-          "Strapped Torus"
+          "Strapped_Torus"
         ],
         "Component": [
-          "Strapped Torus"
+          "StrappedTorus"
         ],
         "Const": [
           "A = 2",
@@ -7133,7 +7133,7 @@
           "X = x",
           "Z = z",
           "r = sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t))",
-          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),         (0DOTSYMBOL000001),X(x,y,z,t))",
+          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),         (1/100000),X(x,y,z,t))",
           "th = atan2(Z(x,y,z,t), X(x,y,z,t))",
           "th = ((th(x,y,z,t) * A + y * B * A) % (2*pi))",
           "th = if (th(x,y,z,t) < (0),        th(x,y,z,t)+2*pi, th(x,y,z,t))",
