@@ -6693,150 +6693,45 @@
       }
     },
     {
-      "Iso3D": {
-        "Description": [
-          "P_Skeletal Tori-2.0 by Abderrahman Taha 22/02/2016"
-        ],
-        "Name": [
-          "P_Skeletal Tori"
-        ],
-        "Component": [
-          "P_SkeletalTori"
-        ],
-        "Const": [
-          "M=1",
-          "N1=15",
-          "N2=15",
-          "P=5",
-          "R=15"
-        ],
-        "Funct": [
-          "P_Skeletal=cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL2",
-          "isoCondition_0=((x-pi)^2-(pi +0DOTSYMBOL05)^2)",
-          "isoCondition_1=((x-pi)^2-(pi)^2)",
-          "isoTransform=if(isoCondition_0(x,y,z,t)<(0),P_Skeletal(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))",
-          "isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
-        ],
-        "Fxyz": [
-          "-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"
-        ],
-        "Xmax": [
-          "30"
-        ],
-        "Xmin": [
-          "-30"
-        ],
-        "Ymax": [
-          "30"
-        ],
-        "Ymin": [
-          "-30"
-        ],
-        "Zmax": [
-          "15"
-        ],
-        "Zmin": [
-          "-15"
-        ]
-      },
-      "Sliders": {
-        "Max": [
-          "50",
-          "10",
-          "25",
-          "25",
-          "25",
-          "50",
-          "10",
-          "25",
-          "25",
-          "25",
-          "50",
-          "10",
-          "25",
-          "25",
-          "25",
-          "50",
-          "10",
-          "25",
-          "25",
-          "25"
-        ],
-        "Min": [
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0",
-          "0"
-        ],
-        "Name": [
-          "M",
-          "P",
-          "R",
-          "N1",
-          "N2"
-        ],
-        "Position": [
-          "1",
-          "5",
-          "15",
-          "15",
-          "15",
-          "10",
-          "7",
-          "18",
-          "3",
-          "11",
-          "0",
-          "5",
-          "19",
-          "7",
-          "14",
-          "33",
-          "8",
-          "18",
-          "2",
-          "11"
-        ],
-        "Step": [
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1",
-          "1"
-        ]
-      }
-    },
+          "Iso3D": {
+            "Description": ["P_Skeletal Tori-2.0 by Abderrahman Taha 04/11/2019"
+            ],
+            "Name": ["P_Skeletal_Tori"
+            ],
+            "Component": ["P_SkeletalTori"
+            ],
+            "Const": ["M=1","N1=15","N2=15","P=5","R=15"
+            ],
+            "Funct": ["P_Skeletal=cos(x)+cos(y)+cos(z)+(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))/2+6/5","isoCondition_0=((x-pi)^2-(pi +1/20)^2)","isoCondition_1=((x-pi)^2-(pi)^2)","isoTransform=if(isoCondition_0(x,y,z,t)<(0),P_Skeletal(x,y,z,t),(1))+M*exp(isoCondition_1(x,y,z,t))","isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)"
+            ],
+            "Fxyz": ["-isoTransform2((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"
+            ],
+            "Xmax": ["30"
+            ],
+            "Xmin": ["-30"
+            ],
+            "Ymax": ["30"
+            ],
+            "Ymin": ["-30"
+            ],
+            "Zmax": ["15"
+            ],
+            "Zmin": ["-15"
+            ]
+          },
+          "Sliders": {
+            "Max": ["50","10","25","25","25","50","10","25","25","25","50","10","25","25","25","50","10","25","25","25"
+            ],
+            "Min": ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"
+            ],
+            "Name": ["M","P","R","N1","N2"
+            ],
+            "Position": ["1","5","15","15","15","10","7","18","3","11","0","5","19","7","14","33","8","18","2","11"
+            ],
+            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"
+            ]
+          }
+        },
     {
           "Iso3D": {
             "Name": ["fhelix"
