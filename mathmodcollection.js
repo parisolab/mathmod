@@ -6539,8 +6539,10 @@
     },
     {
       "Iso3D": {
+        "Description": ["Models Intersection by Abderrahman Taha 04/11/2019"
+        ],
         "Name": [
-          "Models Intersection"
+          "Models_Intersection"
         ],
         "Component": [
           "Schwarz",
@@ -6548,14 +6550,14 @@
           "Plan"
         ],
         "Cnd": [
-          "((x^2+y^2)>0DOTSYMBOL4)&(x-y-1DOTSYMBOL5*z<0)",
+          "((x^2+y^2)>(2/5))&(x-y-(3/2)*z<0)",
           "1>0",
           "1>0"
         ],
         "Fxyz": [
           "cos(x-4*sin(t*pi))+cos(y)+cos(z)",
-          "-(x^2+y^2)+0DOTSYMBOL39",
-          "x-y-1DOTSYMBOL5*z-0DOTSYMBOL01"
+          "-(x^2+y^2)+(39/100)",
+          "x-y-(3/2)*z-(1/100)"
         ],
         "Xmax": [
           "4+4*sin(t*pi)",
@@ -6591,20 +6593,32 @@
     },
     {
       "Param3D": {
+        "Description": ["Torus_Noise by Abderrahman Taha 04/11/2019"
+        ],
         "Name": [
           "Fresnel Noise"
         ],
         "Component": [
           "FresnelNoise"
         ],
+        "Const": [
+          "A=941/6000",
+          "B=965/3000",
+          "C=935/3000",
+          "D=4/5",
+          "E=1309/6000",
+          "F=374/1000",
+          "G=1221/1000"
+        ],
+
         "Fx": [
-          "(cos(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8))*(1-NoiseW((cos(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(sin(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(sin(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(1),(2),0))"
+          "(cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D))*(1-NoiseW((cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(1),(2),0))"
         ],
         "Fy": [
-          "(sin(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8))*(1-NoiseW((cos(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(sin(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(sin(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(1),(2),0))"
+          "(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D))*(1-NoiseW((cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(1),(2),0))"
         ],
         "Fz": [
-          "(sin(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8))*(1-NoiseW((cos(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(sin(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(sin(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3DOTSYMBOL)+0DOTSYMBOL8)),(1),(2),0))"
+          "(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D))*(1-NoiseW((cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(1),(2),0))"
         ],
         "Umax": [
           "2*pi"
