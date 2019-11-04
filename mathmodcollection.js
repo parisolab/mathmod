@@ -6478,6 +6478,8 @@
     },
     {
       "Param3D": {
+        "Description": ["Shells by Abderrahman Taha 04/11/2019"
+        ],
         "Name": [
           "Shells"
         ],
@@ -6488,28 +6490,28 @@
           "Shell4"
         ],
         "Const": [
-          "a=0DOTSYMBOL2",
+          "a=1/5",
           "b=1",
-          "c=0DOTSYMBOL1",
+          "c=1/10",
           "n=2"
         ],
         "Fx": [
           "2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2",
           "((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4",
           "2^v*(sin(u)*cos(u))/35",
-          "1DOTSYMBOL2^v*(sin(u)^2*sin(v))+2"
+          "(6/5)^v*(sin(u)^2*sin(v))+2"
         ],
         "Fy": [
           "2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2",
           "((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4",
           "2^v*(sin(u)^2*sin(v))/35-4",
-          "1DOTSYMBOL2^v*(sin(u)*cos(u))+5"
+          "(6/5)^v*(sin(u)*cos(u))+5"
         ],
         "Fz": [
           "1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)",
           "(b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6",
           "2^v*(sin(u)^2*cos(v))/35-12",
-          "1DOTSYMBOL2^v*(sin(u)^2*cos(v))-12"
+          "(6/5)^v*(sin(u)^2*cos(v))-12"
         ],
         "Umax": [
           "6*pi",
