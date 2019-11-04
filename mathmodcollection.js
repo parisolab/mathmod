@@ -6388,32 +6388,33 @@
           "The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')WhereT=Thicknessvalue;'n1=(a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))','n2=(a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))','n3=(a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))','R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)''a1=dFx/du','a2=dFy/du','a3=dFz/du','b1=dFx/dv','b2=dFy/dv','b3=dFz/dv'"
         ],
         "Name": [
-          "Thick Parametric Torus"
+          "Thick_Parametric_Torus"
         ],
         "Component": [
           "Torus_1",
           "Torus_2"
         ],
         "Const": [
-          "T=1DOTSYMBOL3"
+          "T=13/10",
+          "c=1/10000"
         ],
         "Funct": [
-          "Fx=(1+0DOTSYMBOL5*cos(u))*cos(v)",
-          "Fy=(1+0DOTSYMBOL5*cos(u))*sin(v)",
-          "Fz=0DOTSYMBOL5*sin(u)",
-          "a1=(-0DOTSYMBOL5*sin(u)*cos(v))",
-          "a2=(-0DOTSYMBOL5*sin(u)*sin(v))",
-          "a3=(0DOTSYMBOL5*cos(u))",
-          "b1=(-(1+0DOTSYMBOL5*cos(u))*sin(v))",
-          "b2=((1+0DOTSYMBOL5*cos(u))*cos(v))",
-          "b3=0",
-          "n1=(a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))",
-          "n2=(a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))",
-          "n3=(a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))",
-          "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Gx=Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)",
-          "Gy=Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)",
-          "Gz=Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)"
+          "Fx=(1+cos(u)/2)*cos(v)",
+          "Fy=(1+cos(u)/2)*sin(v)",
+          "Fz=sin(u)/2",
+          "DFxu= ((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv= ((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu= ((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv= ((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu= ((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv= ((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+          "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+          "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+          "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+          "R=u/sqrt(u*u+v*v+t*t)",
+          "Gx=Fx(u,v,t)+T*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+T*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Fx(u,v,t)",
@@ -6447,8 +6448,10 @@
     },
     {
       "Param3D": {
+        "Description": ["Helicoid_Catenoid by Abderrahman Taha 04/11/2019"
+        ],
         "Name": [
-          "HelicoidCatenoid"
+          "Helicoid_Catenoid"
         ],
         "Component": [
           "HelicoidCatenoid"
