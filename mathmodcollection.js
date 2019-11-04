@@ -7171,35 +7171,35 @@
     {
       "Param3D": {
         "Description ": [
-          "Spiky Fresnel-01 by Abderrahman Taha 5/02/2015"
+          "Spiky Fresnel by Abderrahman Taha 04/11/2019"
         ],
         "Name": [
-          "Spiky Fresnel"
+          "Spiky_Fresnel"
         ],
         "Component": [
           "SpikyFresnel"
         ],
         "Const": [
-          "c=0DOTSYMBOL001"
+          "c=1/10000"
         ],
         "Funct": [
           "Th= -(3/10)*(abs(sin(25*u)*cos(27*v)))^(3*sin(17*u-15*v))^2",
-          "Fx=(cos(u)*cos(v)/(-2*sqrt((32/100)-(31/100)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-(17/100)+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-(6/5)*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt((32/100)-(31/100)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+4/5))",
-          "Fy= sin(v)/(-2*sqrt((32/100)-(31/100)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-(6/5)*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt((32/100)-(31/100)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+4/5)",
-          "Fz= sin(u)*cos(v)/(-2*sqrt((32/100)-(31/100)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-(6/5)*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt((32/100)-(31/100)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+4/5)",
-                      "DFxu= ((Fx(u+c,v,t)-Fx(u,v,t))/c)",
-                      "DFxv= ((Fx(u,v+c,t)-Fx(u,v,t))/c)",
-                      "DFyu= ((Fy(u+c,v,t)-Fy(u,v,t))/c)",
-                      "DFyv= ((Fy(u,v+c,t)-Fy(u,v,t))/c)",
-                      "DFzu= ((Fz(u+c,v,t)-Fz(u,v,t))/c)",
-                      "DFzv= ((Fz(u,v+c,t)-Fz(u,v,t))/c)",
-                      "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-                      "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-                      "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-                      "R=u/sqrt(u*u+v*v+t*t)",
-                      "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-                      "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
-                      "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
+          "Fx=(cos(u)*cos(v)/(-2*sqrt(965/3000-935/3000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-941/6000+374/1000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1309/6000*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1221/1000*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(965/3000-935/3000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+4/5))",
+          "Fy= sin(v)/(-2*sqrt(965/3000-935/3000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-941/6000+374/1000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1309/6000*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1221/1000*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(965/3000-935/3000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+4/5)",
+          "Fz= sin(u)*cos(v)/(-2*sqrt(965/3000-935/3000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-941/6000+374/1000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1309/6000*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1221/1000*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(965/3000-935/3000*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+4/5)",
+          "DFxu= ((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+          "DFxv= ((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+          "DFyu= ((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+          "DFyv= ((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+          "DFzu= ((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+          "DFzv= ((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+          "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+          "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+          "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+          "R=u/sqrt(u*u+v*v+t*t)",
+          "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
         ],
         "Fx": [
           "Gx(u,v,t)"
