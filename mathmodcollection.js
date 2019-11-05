@@ -5608,35 +5608,35 @@
       }
     },
     {
-      "Param3D": {
-        "Name": [
-          "Star_7"
-        ],
-        "Component": [
-          "Star_7"
-        ],
-        "Fx": [
-          "cos(u)*cos(v)*(abs(cos(7*v/4))^1DOTSYMBOL7+abs(sin(7*v/4))^1DOTSYMBOL7)^(-1/0DOTSYMBOL2)*(abs(cos(7*u/4))^1DOTSYMBOL7+abs(sin(7*u/4))^1DOTSYMBOL7)^(-1/0DOTSYMBOL2)"
-        ],
-        "Fy": [
-          "cos(u)*sin(v)*(abs(cos(7*v/4))^1DOTSYMBOL7+abs(sin(7*v/4))^1DOTSYMBOL7)^(-1/0DOTSYMBOL2)*(abs(cos(7*u/4))^1DOTSYMBOL7+abs(sin(7*u/4))^1DOTSYMBOL7)^(-1/0DOTSYMBOL2)"
-        ],
-        "Fz": [
-          "sin(u)*(abs(cos(7*u/4))^1DOTSYMBOL7+abs(sin(7*u/4))^1DOTSYMBOL7)^(-1/0DOTSYMBOL2)"
-        ],
-        "Umin": [
-          "-pi/2"
-        ],
-        "Umax": [
-          "pi/2"
-        ],
-        "Vmin": [
-          "1/10000"
-        ],
-        "Vmax": [
-          "2*pi"
-        ]
-      }
+        "Param3D": {
+            "Name": [
+                "Star_7"
+            ],
+            "Component": [
+                "Star_7"
+            ],
+            "Fx": [
+                "cos(u)*cos(v)*(abs(cos(7*v/4))^(17/10)+abs(sin(7*v/4))^(17/10))^(-5)*(abs(cos(7*u/4))^(17/10)+abs(sin(7*u/4))^(17/10))^(-5)"
+            ],
+            "Fy": [
+                "cos(u)*sin(v)*(abs(cos(7*v/4))^(17/10)+abs(sin(7*v/4))^(17/10))^(-5)*(abs(cos(7*u/4))^(17/10)+abs(sin(7*u/4))^(17/10))^(-5)"
+            ],
+            "Fz": [
+                "sin(u)*(abs(cos(7*u/4))^(17/10)+abs(sin(7*u/4))^(17/10))^(-5)"
+            ],
+            "Umax": [
+                "pi/2"
+            ],
+            "Umin": [
+                "-pi/2"
+            ],
+            "Vmax": [
+                "2*pi"
+            ],
+            "Vmin": [
+                "1/10000"
+            ]
+        }
     },
     {
       "Param3D": {
@@ -6105,11 +6105,14 @@
     },
     {
       "Param3D": {
+        "Description": [
+          "Pseudo Sphere by Abderrahman Taha 05/11/2019"
+        ],
         "Name": [
           "Pseudo_Sphere"
         ],
         "Component": [
-          "Pseudo_Sphere"
+          "PseudoSphere"
         ],
         "Fx": [
           "cos(u)*cos(v)+sin((sin(u)+1)*2*pi)"
