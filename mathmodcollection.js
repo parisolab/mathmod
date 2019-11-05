@@ -6298,13 +6298,13 @@
           "Pseudo_Torus"
         ],
         "Fx": [
-          "(1+0DOTSYMBOL5*cos(u))*cos(v)"
+          "(1+cos(u)/2)*cos(v)"
         ],
         "Fy": [
-          "0DOTSYMBOL632456*((1+0DOTSYMBOL5*cos(u))*sin(v)*cos(((1+0DOTSYMBOL5*cos(u))*cos(v)--1DOTSYMBOL5)*2*pi*0DOTSYMBOL9/3)-0DOTSYMBOL5*sin(u)*sin(((1+0DOTSYMBOL5*cos(u))*cos(v)--1DOTSYMBOL5)*2*pi*0DOTSYMBOL9/3))"
+          "(63/100)*((1+cos(u)/2)*sin(v)*cos(((1+cos(u)/2)*cos(v)+(3/2))*(3/5)*pi)-(1/2)*sin(u)*sin(((1+cos(u)/2)*cos(v)+(3/2))*(3/5)*pi))"
         ],
         "Fz": [
-          "0DOTSYMBOL632456*((1+0DOTSYMBOL5*cos(u))*sin(v)*sin(((1+0DOTSYMBOL5*cos(u))*cos(v)--1DOTSYMBOL5)*2*pi*0DOTSYMBOL9/3)+0DOTSYMBOL5*sin(u)*cos(((1+0DOTSYMBOL5*cos(u))*cos(v)--1DOTSYMBOL5)*2*pi*0DOTSYMBOL9/3))"
+          "(63/100)*((1+cos(u)/2)*sin(v)*sin(((1+cos(u)/2)*cos(v)+(3/2))*(3/5)*pi)+(1/2)*sin(u)*cos(((1+cos(u)/2)*cos(v)+(3/2))*(3/5)*pi))"
         ],
         "Umin": [
           "0"
