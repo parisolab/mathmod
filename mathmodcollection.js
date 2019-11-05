@@ -6260,20 +6260,23 @@
     },
     {
       "Param3D": {
+        "Description": [
+          "Pseudo_Cube by Abderrahman Taha 05/11/2019"
+        ],
         "Name": [
           "Pseudo_Cube"
         ],
         "Component": [
-          "Pseudo_Cube"
+          "PseudoCube"
         ],
         "Fx": [
-          "0DOTSYMBOL848528*(cos(u)*cos(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)*cos((1DOTSYMBOL6*(sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100))--1DOTSYMBOL6)*2*pi*0DOTSYMBOL3/3DOTSYMBOL2)-cos(u)*sin(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)*sin((1DOTSYMBOL6*(sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100))--1DOTSYMBOL6)*2*pi*0DOTSYMBOL3/3DOTSYMBOL2))"
+          "(17/20)*(cos(u)*cos(v)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100)*(abs(cos(v))^100+abs(sin(v))^100)^(-1/100)*cos(((8/5)*(sin(u)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100))+(8/5))*(19/100)*pi)-cos(u)*sin(v)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100)*(abs(cos(v))^100+abs(sin(v))^100)^(-1/100)*sin(((8/5)*(sin(u)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100))+(8/5))*(19/100)*pi))"
         ],
         "Fy": [
-          "0DOTSYMBOL848528*(cos(u)*cos(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)*sin((1DOTSYMBOL6*(sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100))--1DOTSYMBOL6)*2*pi*0DOTSYMBOL3/3DOTSYMBOL2)+cos(u)*sin(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)*cos((1DOTSYMBOL6*(sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100))--1DOTSYMBOL6)*2*pi*0DOTSYMBOL3/3DOTSYMBOL2))"
+          "(17/20)*(cos(u)*cos(v)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100)*(abs(cos(v))^100+abs(sin(v))^100)^(-1/100)*sin(((8/5)*(sin(u)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100))+(8/5))*(19/100)*pi)+cos(u)*sin(v)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100)*(abs(cos(v))^100+abs(sin(v))^100)^(-1/100)*cos(((8/5)*(sin(u)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100))+(8/5))*(19/100)*pi))"
         ],
         "Fz": [
-          "1DOTSYMBOL6*(sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100))"
+          "(8/5)*(sin(u)*(abs(cos(u))^100+abs(sin(u))^100)^(-1/100))"
         ],
         "Umin": [
           "-pi/2"
@@ -6291,6 +6294,9 @@
     },
     {
       "Param3D": {
+        "Description": [
+           "Pseudo_Torus by Abderrahman Taha 05/11/2019"
+        ],
         "Name": [
           "Pseudo_Torus"
         ],
