@@ -6352,35 +6352,42 @@
       }
     },
     {
-      "Param3D": {
-        "Name": [
-          "Breather"
-        ],
-        "Component": [
-          "Breather"
-        ],
-        "Fx": [
-          "(2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*cos(v)*cos(sqrt(0DOTSYMBOL84)*v))-sin(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))"
-        ],
-        "Fy": [
-          "(2*sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u)*(-(sqrt(0DOTSYMBOL84)*sin(v)*cos(sqrt(0DOTSYMBOL84)*v))+cos(v)*sin(sqrt(0DOTSYMBOL84)*v)))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))"
-        ],
-        "Fz": [
-          "-u+(2*0DOTSYMBOL84*cosh(0DOTSYMBOL4*u)*sinh(0DOTSYMBOL4*u))/(0DOTSYMBOL4*((sqrt(0DOTSYMBOL84)*cosh(0DOTSYMBOL4*u))^2+(0DOTSYMBOL4*sin(sqrt(0DOTSYMBOL84)*v))^2))"
-        ],
-        "Umin": [
-          "-13DOTSYMBOL2"
-        ],
-        "Umax": [
-          "13DOTSYMBOL2"
-        ],
-        "Vmin": [
-          "-37DOTSYMBOL2"
-        ],
-        "Vmax": [
-          "37DOTSYMBOL2"
-        ]
-      }
+        "Param3D": {
+            "Description": [
+                "Breather by Abderrahman Taha 05/11/2019"
+            ],
+            "Component": [
+                "Breather"
+            ],
+            "Const": [
+                "A=sqrt(21/25)",
+                "B=2/5"
+            ],
+            "Fx": [
+                "(2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))"
+            ],
+            "Fy": [
+                "(2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))"
+            ],
+            "Fz": [
+                "-u+(2*0.84*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))"
+            ],
+            "Name": [
+                "Breather"
+            ],
+            "Umax": [
+                "66/5"
+            ],
+            "Umin": [
+                "-66/5"
+            ],
+            "Vmax": [
+                "186/5"
+            ],
+            "Vmin": [
+                "-186/5"
+            ]
+        }
     },
     {
       "Param3D": {
