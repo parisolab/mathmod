@@ -6321,35 +6321,38 @@
       }
     },
     {
-      "Param3D": {
-        "Name": [
-          "Hurricane"
-        ],
-        "Component": [
-          "Hurricane"
-        ],
-        "Fx": [
-          "1*(2*cosh(v/2)*cos(u)*cos((2DOTSYMBOL1*(2*cosh(v/2)*sin(u)*sin((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367)+2*(v)*cos((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367))--13DOTSYMBOL1947)*2*pi*1DOTSYMBOL5/26DOTSYMBOL3894)-2DOTSYMBOL1*(2*cosh(v/2)*sin(u)*cos((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367)-2*(v)*sin((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367))*sin((2DOTSYMBOL1*(2*cosh(v/2)*sin(u)*sin((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367)+2*(v)*cos((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367))--13DOTSYMBOL1947)*2*pi*1DOTSYMBOL5/26DOTSYMBOL3894))"
-        ],
-        "Fy": [
-          "1*(2*cosh(v/2)*cos(u)*sin((2DOTSYMBOL1*(2*cosh(v/2)*sin(u)*sin((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367)+2*(v)*cos((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367))--13DOTSYMBOL1947)*2*pi*1DOTSYMBOL5/26DOTSYMBOL3894)+2DOTSYMBOL1*(2*cosh(v/2)*sin(u)*cos((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367)-2*(v)*sin((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367))*cos((2DOTSYMBOL1*(2*cosh(v/2)*sin(u)*sin((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367)+2*(v)*cos((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367))--13DOTSYMBOL1947)*2*pi*1DOTSYMBOL5/26DOTSYMBOL3894))"
-        ],
-        "Fz": [
-          "2DOTSYMBOL1*(2*cosh(v/2)*sin(u)*sin((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367)+2*(v)*cos((2*cosh(v/2)*cos(u)--5DOTSYMBOL01836)*2*pi*0/10DOTSYMBOL0367))"
-        ],
-        "Umin": [
-          "-pi"
-        ],
-        "Umax": [
-          "pi"
-        ],
-        "Vmin": [
-          "-pi"
-        ],
-        "Vmax": [
-          "pi"
-        ]
-      }
+        "Param3D": {
+            "Description": [
+                "Hurricane by Abderrahman Taha 05/11/2019"
+            ],
+            "Name": [
+                "Hurricane"
+            ],
+            "Component": [
+                "Hurricane"
+            ],
+            "Fx": [
+                "1*(2*cosh(v/2)*cos(u)*cos(((41/10)*v+(66/5))*(113/1000)*pi)-(21/5)*cosh(v/2)*sin(u)*sin(((41/10)*v+(66/5))*(113/1000)*pi))"
+            ],
+            "Fy": [
+                "1*(2*cosh(v/2)*cos(u)*sin(((41/10)*v+(66/5))*(113/1000)*pi)+(21/5)*cosh(v/2)*sin(u)*cos(((41/10)*v+(66/5))*(113/1000)*pi))"
+            ],
+            "Fz": [
+                "(41/10)*v"
+            ],
+            "Umax": [
+                "pi"
+            ],
+            "Umin": [
+                "-pi"
+            ],
+            "Vmax": [
+                "pi"
+            ],
+            "Vmin": [
+                "-pi"
+            ]
+        }
     },
     {
         "Param3D": {
