@@ -6136,6 +6136,9 @@
     },
     {
       "Param3D": {
+        "Description": [
+           "Pseudo Catenoid by Abderrahman Taha 05/11/2019"
+        ],
         "Name": [
           "Pseudo_Catenoid"
         ],
@@ -6143,13 +6146,13 @@
           "Pseudo_Catenoid"
         ],
         "Fx": [
-          "2DOTSYMBOL2*(2*cosh(v/2)*cos(u))"
+          "(22/5)*(cosh(v/2)*cos(u))"
         ],
         "Fy": [
-          "1DOTSYMBOL51166*(2*cosh(v/2)*sin(u)*cos((2DOTSYMBOL2*(2*cosh(v/2)*cos(u))--11DOTSYMBOL0404)*2*pi*1/22DOTSYMBOL0513)-1DOTSYMBOL8*(v)*sin((2DOTSYMBOL2*(2*cosh(v/2)*cos(u))--11DOTSYMBOL0404)*2*pi*1/22DOTSYMBOL0513))"
+          "(3/2)*(2*cosh(v/2)*sin(u)*cos(((22/5)*(cosh(v/2)*cos(u))+11)*(9/100)*pi)-(9/5)*(v)*sin(((22/5)*(cosh(v/2)*cos(u))+11)*(9/100)*pi))"
         ],
         "Fz": [
-          "1DOTSYMBOL51166*(2*cosh(v/2)*sin(u)*sin((2DOTSYMBOL2*(2*cosh(v/2)*cos(u))--11DOTSYMBOL0404)*2*pi*1/22DOTSYMBOL0513)+1DOTSYMBOL8*(v)*cos((2DOTSYMBOL2*(2*cosh(v/2)*cos(u))--11DOTSYMBOL0404)*2*pi*1/22DOTSYMBOL0513))"
+          "(3/2)*(2*cosh(v/2)*sin(u)*sin(((22/5)*(cosh(v/2)*cos(u))+11)*(9/100)*pi)+(9/5)*(v)*cos(((22/5)*(cosh(v/2)*cos(u))+11)*(9/100)*pi))"
         ],
         "Umin": [
           "-pi"
@@ -6162,37 +6165,6 @@
         ],
         "Vmax": [
           "pi"
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Name": [
-          "Pseudo_Helix"
-        ],
-        "Component": [
-          "Pseudo_Helix"
-        ],
-        "Fx": [
-          "0DOTSYMBOL717627*((1-0DOTSYMBOL1*cos(v))*cos(u)*cos(((1-0DOTSYMBOL1*cos(v))*sin(u)--1DOTSYMBOL1)*2*pi*0DOTSYMBOL2/2DOTSYMBOL2)-0DOTSYMBOL1*(sin(v)+u/1DOTSYMBOL7-10)*sin(((1-0DOTSYMBOL1*cos(v))*sin(u)--1DOTSYMBOL1)*2*pi*0DOTSYMBOL2/2DOTSYMBOL2))"
-        ],
-        "Fy": [
-          "(1-0DOTSYMBOL1*cos(v))*sin(u)"
-        ],
-        "Fz": [
-          "0DOTSYMBOL717627*((1-0DOTSYMBOL1*cos(v))*cos(u)*sin(((1-0DOTSYMBOL1*cos(v))*sin(u)--1DOTSYMBOL1)*2*pi*0DOTSYMBOL2/2DOTSYMBOL2)+0DOTSYMBOL1*(sin(v)+u/1DOTSYMBOL7-10)*cos(((1-0DOTSYMBOL1*cos(v))*sin(u)--1DOTSYMBOL1)*2*pi*0DOTSYMBOL2/2DOTSYMBOL2))"
-        ],
-        "Umin": [
-          "0"
-        ],
-        "Umax": [
-          "4*pi"
-        ],
-        "Vmin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
         ]
       }
     },
@@ -6202,7 +6174,7 @@
            "Cone Distorsion by Abderrahman Taha 05/11/2019"
         ],
         "Name": [
-          "Cone Distorsion"
+          "Cone_Distorsion"
         ],
         "Component": [
           "Pseudo_Cone"
