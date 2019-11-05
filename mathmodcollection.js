@@ -6198,6 +6198,9 @@
     },
     {
       "Param3D": {
+        "Description": [
+           "Cone Distorsion by Abderrahman Taha 05/11/2019"
+        ],
         "Name": [
           "Cone Distorsion"
         ],
@@ -6208,10 +6211,10 @@
           "u*cos(v)"
         ],
         "Fy": [
-          "0DOTSYMBOL848528*(u*sin(v)*cos((u*cos(v)+1)*2*pi*1/2)-u*sin((u*cos(v)+1)*2*pi*1/2))"
+          "(17/20)*(u*sin(v)*cos((u*cos(v)+1)*pi)-u*sin((u*cos(v)+1)*pi))"
         ],
         "Fz": [
-          "0DOTSYMBOL848528*(u*sin(v)*sin((u*cos(v)+1)*2*pi*1/2)+u*cos((u*cos(v)+1)*2*pi*1/2))"
+          "(17/20)*(u*sin(v)*sin((u*cos(v)+1)*pi)+u*cos((u*cos(v)+1)*pi))"
         ],
         "Umin": [
           "-1"
