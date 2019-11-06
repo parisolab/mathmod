@@ -5461,13 +5461,13 @@
           "Cube"
         ],
         "Fx": [
-          "cos(u)*cos(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)"
+          "cos(u)*cos(v)/((abs(cos(u))^100+abs(sin(u))^100)*(abs(cos(v))^100+abs(sin(v))^100))^(1/100)"
         ],
         "Fy": [
-          "cos(u)*sin(v)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)*(abs(cos(4*v/4))^100+abs(sin(4*v/4))^100)^(-1/100)"
+          "cos(u)*sin(v)/((abs(cos(u))^100+abs(sin(u))^100)*(abs(cos(v))^100+abs(sin(v))^100))^(1/100)"
         ],
         "Fz": [
-          "sin(u)*(abs(cos(4*u/4))^100+abs(sin(4*u/4))^100)^(-1/100)"
+          "sin(u)/(abs(cos(u))^100+abs(sin(u))^100)^(1/100)"
         ],
         "Umin": [
           "-pi/2"
