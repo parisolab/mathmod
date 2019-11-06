@@ -5554,13 +5554,13 @@
           "Diamond"
         ],
         "Fx": [
-          "cos(u)*cos(v)*(abs(cos(4*u/4))^1+abs(sin(4*u/4))^1)^(-1/1)*(abs(cos(4*v/4))^1+abs(sin(4*v/4))^1)^(-1/1)"
+          "cos(u)*cos(v)/((abs(cos(u))+abs(sin(u)))*(abs(cos(v))+abs(sin(v))))"
         ],
         "Fy": [
-          "cos(u)*sin(v)*(abs(cos(4*u/4))^1+abs(sin(4*u/4))^1)^(-1/1)*(abs(cos(4*v/4))^1+abs(sin(4*v/4))^1)^(-1/1)"
+          "cos(u)*sin(v)/((abs(cos(u))+abs(sin(u)))*(abs(cos(v))+abs(sin(v))))"
         ],
         "Fz": [
-          "sin(u)*(abs(cos(4*u/4))^1+abs(sin(4*u/4))^1)^(-1/1)"
+          "sin(u)/(abs(cos(u))+abs(sin(u)))"
         ],
         "Umin": [
           "-pi/2"
