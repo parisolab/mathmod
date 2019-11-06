@@ -5523,13 +5523,13 @@
           "Hexagon"
         ],
         "Fx": [
-          "cos(u)*cos(v)*(abs(cos(4*u/4))^300+abs(sin(4*u/4))^300)^(-1/300)*(abs(cos(6*v/4))^400+abs(sin(6*v/4))^400)^(-1/1000)"
+          "cos(u)*cos(v)*(abs(cos(u))^300+abs(sin(u))^300)^(-1/300)*(abs(cos(3*v/2))^400+abs(sin(3*v/2))^400)^(-1/1000)"
         ],
         "Fy": [
-          "cos(u)*sin(v)*(abs(cos(4*u/4))^300+abs(sin(4*u/4))^300)^(-1/300)*(abs(cos(6*v/4))^400+abs(sin(6*v/4))^400)^(-1/1000)"
+          "cos(u)*sin(v)*(abs(cos(u))^300+abs(sin(u))^300)^(-1/300)*(abs(cos(3*v/2))^400+abs(sin(3*v/2))^400)^(-1/1000)"
         ],
         "Fz": [
-          "sin(u)*(abs(cos(4*u/4))^300+abs(sin(4*u/4))^300)^(-1/300)"
+          "sin(u)*(abs(cos(u))^300+abs(sin(u))^300)^(-1/300)"
         ],
         "Umin": [
           "-pi/2"
