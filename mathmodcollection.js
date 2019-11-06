@@ -5585,13 +5585,13 @@
           "Star"
         ],
         "Fx": [
-          "cos(u)*cos(v)*(abs(cos(1*u/4))^0DOTSYMBOL5+abs(sin(1*u/4))^0DOTSYMBOL5)^(-1/0DOTSYMBOL3)*(abs(cos(5*v/4))^1DOTSYMBOL7+abs(sin(5*v/4))^1DOTSYMBOL7)^(-1/0DOTSYMBOL1)"
+          "cos(u)*cos(v)*(abs(cos(1*u/4))^(1/2)+abs(sin(1*u/4))^(1/2))^(-10/3)*(abs(cos(5*v/4))^(17/10)+abs(sin(5*v/4))^(17/10))^(-10)"
         ],
         "Fy": [
-          "cos(u)*sin(v)*(abs(cos(1*u/4))^0DOTSYMBOL5+abs(sin(1*u/4))^0DOTSYMBOL5)^(-1/0DOTSYMBOL3)*(abs(cos(5*v/4))^1DOTSYMBOL7+abs(sin(5*v/4))^1DOTSYMBOL7)^(-1/0DOTSYMBOL1)"
+          "cos(u)*sin(v)*(abs(cos(1*u/4))^(1/2)+abs(sin(1*u/4))^(1/2))^(-10/3)*(abs(cos(5*v/4))^(17/10)+abs(sin(5*v/4))^(17/10))^(-10)"
         ],
         "Fz": [
-          "sin(u)*(abs(cos(1*u/4))^0DOTSYMBOL5+abs(sin(1*u/4))^0DOTSYMBOL5)^(-1/0DOTSYMBOL3)"
+          "sin(u)*(abs(cos(1*u/4))^(1/2)+abs(sin(1*u/4))^(1/2))^(-10/3)"
         ],
         "Umin": [
           "-pi/2"
