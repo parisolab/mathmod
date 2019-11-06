@@ -5492,13 +5492,13 @@
           "Prism"
         ],
         "Fx": [
-          "cos(u)*cos(v)*(abs(cos(3*v/4))^500+abs(sin(3*v/4))^500)^(-1/260)*(abs(cos(4*u/4))^200+abs(sin(4*u/4))^200)^(-1/200)"
+          "cos(u)*cos(v)*(abs(cos(3*v/4))^500+abs(sin(3*v/4))^500)^(-1/260)*(abs(cos(u))^200+abs(sin(u))^200)^(-1/200)"
         ],
         "Fy": [
-          "cos(u)*sin(v)*(abs(cos(3*v/4))^500+abs(sin(3*v/4))^500)^(-1/260)*(abs(cos(4*u/4))^200+abs(sin(4*u/4))^200)^(-1/200)"
+          "cos(u)*sin(v)*(abs(cos(3*v/4))^500+abs(sin(3*v/4))^500)^(-1/260)*(abs(cos(u))^200+abs(sin(u))^200)^(-1/200)"
         ],
         "Fz": [
-          "sin(u)*(abs(cos(4*u/4))^200+abs(sin(4*u/4))^200)^(-1/200)"
+          "sin(u)*(abs(cos(u))^200+abs(sin(u))^200)^(-1/200)"
         ],
         "Umin": [
           "-pi/2"
