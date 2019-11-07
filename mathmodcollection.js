@@ -4159,13 +4159,13 @@
           "Helix"
         ],
         "Fx": [
-          "(1-0DOTSYMBOL1*cos(v))*cos(u)"
+          "(1-cos(v)/10)*cos(u)"
         ],
         "Fy": [
-          "(1-0DOTSYMBOL1*cos(v))*sin(u)"
+          "(1-cos(v)/10)*sin(u)"
         ],
         "Fz": [
-          "0DOTSYMBOL1*(sin(v)+u/1DOTSYMBOL7-10)"
+          "(sin(v)/10+u/17-1)"
         ],
         "Umin": [
           "0"
@@ -4199,10 +4199,10 @@
           "sin(u)^3"
         ],
         "Umin": [
-          "-1DOTSYMBOL3"
+          "-13/10"
         ],
         "Umax": [
-          "1DOTSYMBOL3"
+          "13/10"
         ],
         "Vmin": [
           "0"
@@ -4329,7 +4329,7 @@
           "2*pi"
         ],
         "Vmin": [
-          "0DOTSYMBOL03"
+          "3/100"
         ],
         "Vmax": [
           "2"
