@@ -3353,25 +3353,25 @@
           "D_SkeletalGraph"
         ],
         "Fxyz": [
-          "sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-0DOTSYMBOL07*(cos(4*x)+cos(4*y)+cos(4*z))+1DOTSYMBOL17"
+          "sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)-(7/100)*(cos(4*x)+cos(4*y)+cos(4*z))+(117/100)"
         ],
         "Xmax": [
-          "2DOTSYMBOL75*pi"
+          "(11/4)*pi"
         ],
         "Xmin": [
-          "-0DOTSYMBOL25*pi"
+          "-pi/4"
         ],
         "Ymax": [
-          "2DOTSYMBOL75*pi"
+          "(11/4)*pi"
         ],
         "Ymin": [
-          "-0DOTSYMBOL25*pi"
+          "-pi/4"
         ],
         "Zmax": [
-          "2DOTSYMBOL75*pi"
+          "(11/4)*pi"
         ],
         "Zmin": [
-          "-0DOTSYMBOL25*pi"
+          "-pi/4"
         ]
       }
     },
