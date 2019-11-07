@@ -3580,24 +3580,24 @@
     },
     {
       "Iso3D": {
+        "Name": [
+          "pseudo_Duplin"
+        ],
         "Component": [
           "pseudo_Duplin"
         ],
         "Varu": [
-          "A=cos(0DOTSYMBOL9589716*u)",
-          "B=sin(0DOTSYMBOL9589716*u)"
+          "A=cos(24*u/25)",
+          "B=sin(24*u/25)"
         ],
         "Fxyz": [
-          "-49DOTSYMBOL95*((x/2DOTSYMBOL34)^4+(y*Ax-z*Bx)^4+(y*Bx+z*Ax)^4)+(-99DOTSYMBOL95)*((x/2DOTSYMBOL34)^2*(y*Ax-z*Bx)^2+(x/2DOTSYMBOL34)^2*(y*Bx+z*Ax)^2+(y*Ax-z*Bx)^2*(y*Bx+z*Ax)^2)+(141DOTSYMBOL12*(x/2DOTSYMBOL34-1))*((x/2DOTSYMBOL34)^2+(y*Ax-z*Bx)^2+(y*Bx+z*Ax)^2)+(54DOTSYMBOL7*x)*(-4+0DOTSYMBOL8547*x)+262DOTSYMBOL4*(y*Ax-z*Bx)^2+256"
-        ],
-        "Name": [
-          "pseudo_Duplin"
+          "-50*(((10/23)*x)^4+(y*Ax-z*Bx)^4+(y*Bx+z*Ax)^4)+(-100)*(((10/23)*x)^2*(y*Ax-z*Bx)^2+((10/23)*x)^2*(y*Bx+z*Ax)^2+(y*Ax-z*Bx)^2*(y*Bx+z*Ax)^2)+(141*(10*x/23-1))*((10*x/23)^2+(y*Ax-z*Bx)^2+(y*Bx+z*Ax)^2)+(55*x)*(-4+(4/5)*x)+262*(y*Ax-z*Bx)^2+256"
         ],
         "Xmax": [
-          "2DOTSYMBOL2*3DOTSYMBOL9*0DOTSYMBOL6"
+          "5"
         ],
         "Xmin": [
-          "-2*3DOTSYMBOL9*0DOTSYMBOL6"
+          "-5"
         ],
         "Ymax": [
           "2"
