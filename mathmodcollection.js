@@ -4562,13 +4562,13 @@
           "Roman"
         ],
         "Fx": [
-          "1/2*sin(2*u)*sin(v)^2"
+          "sin(2*u)*sin(v)^2"
         ],
         "Fy": [
-          "1/2*sin(u)*cos(2*v)"
+          "sin(u)*cos(2*v)"
         ],
         "Fz": [
-          "1/2*cos(u)*sin(2*v)"
+          "cos(u)*sin(2*v)"
         ],
         "Umin": [
           "0"
@@ -4593,13 +4593,13 @@
           "Snake"
         ],
         "Fx": [
-          "1DOTSYMBOL2*(1-v/(2*pi))*cos(3*v)*(1+cos(u))+3*cos(3*v)"
+          "(6/5)*(1-v/(2*pi))*cos(3*v)*(1+cos(u))+3*cos(3*v)"
         ],
         "Fy": [
-          "1DOTSYMBOL2*(1-v/(2*pi))*sin(3*v)*(1+cos(u))+3*sin(3*v)"
+          "(6/5)*(1-v/(2*pi))*sin(3*v)*(1+cos(u))+3*sin(3*v)"
         ],
         "Fz": [
-          "9*v/(2*pi)+1DOTSYMBOL2*(1-v/(2*pi))*sin(u)"
+          "9*v/(2*pi)+(6/5)*(1-v/(2*pi))*sin(u)"
         ],
         "Umin": [
           "0"
