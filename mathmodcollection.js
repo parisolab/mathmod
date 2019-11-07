@@ -3322,25 +3322,25 @@
           "G_SkeletalGraph"
         ],
         "Fxyz": [
-          "cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)+0DOTSYMBOL08*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+1DOTSYMBOL47"
+          "cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)+(2/25)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+(147/100)"
         ],
         "Xmax": [
-          "2DOTSYMBOL75*pi"
+          "(11/4)*pi"
         ],
         "Xmin": [
-          "-0DOTSYMBOL25*pi"
+          "-pi/4"
         ],
         "Ymax": [
-          "2DOTSYMBOL75*pi"
+          "(11/4)*pi"
         ],
         "Ymin": [
-          "-0DOTSYMBOL25*pi"
+          "-pi/4"
         ],
         "Zmax": [
-          "2DOTSYMBOL75*pi"
+          "(11/4)*pi"
         ],
         "Zmin": [
-          "-0DOTSYMBOL25*pi"
+          "-pi/4"
         ]
       }
     },
