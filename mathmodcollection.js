@@ -4872,13 +4872,13 @@
           "Maeder's_Owl"
         ],
         "Fx": [
-          "v*cos(u)-0DOTSYMBOL5*v^2*cos(2*u)"
+          "v*cos(u)-v^2*cos(2*u)/2"
         ],
         "Fy": [
-          "-v*sin(u)-0DOTSYMBOL5*v^2*sin(2*u)"
+          "-v*sin(u)-v^2*sin(2*u)/2"
         ],
         "Fz": [
-          "4*v^1DOTSYMBOL5*cos(3*u/2)/3"
+          "4*v^(3/2)*cos(3*u/2)/3"
         ],
         "Umin": [
           "0"
@@ -4940,16 +4940,16 @@
           "sin(u)*sin(v)"
         ],
         "Fz": [
-          "(cos(v)+log(tan(v/2)))+0DOTSYMBOL2*u"
+          "(cos(v)+log(tan(v/2)))+u/5"
         ],
         "Umin": [
           "0"
         ],
         "Umax": [
-          "12DOTSYMBOL4"
+          "62/5"
         ],
         "Vmin": [
-          "0DOTSYMBOL1"
+          "1/10"
         ],
         "Vmax": [
           "2"
@@ -4990,7 +4990,7 @@
     {
       "Param3D": {
         "Name": [
-          "Helliptic paraboloid"
+          "Helliptic_paraboloid"
         ],
         "Component": [
           "Hellipticparaboloid"
@@ -5058,13 +5058,13 @@
           "Apple"
         ],
         "Fx": [
-          "cos(u)*(4+3DOTSYMBOL8*cos(v))"
+          "cos(u)*(4+(19/5)*cos(v))"
         ],
         "Fy": [
-          "sin(u)*(4+3DOTSYMBOL8*cos(v))"
+          "sin(u)*(4+(19/5)*cos(v))"
         ],
         "Fz": [
-          "(cos(v)+sin(v)-1)*(1+sin(v))*log(1-pi*v/10)+7DOTSYMBOL5*sin(v)"
+          "(cos(v)+sin(v)-1)*(1+sin(v))*log(1-pi*v/10)+(15/2)*sin(v)"
         ],
         "Umin": [
           "0"
