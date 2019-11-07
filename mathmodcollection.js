@@ -3686,11 +3686,11 @@
         "Component": [
           "Schwarz"
         ],
-        "Fxyz": [
-          "Ax+Ay+Az-NoiseW(x,y,z,(1),(2),(0))"
-        ],
         "Varu": [
           "A=cos(u)"
+        ],
+        "Fxyz": [
+          "Ax+Ay+Az-NoiseW(x,y,z,(1),(2),(0))"
         ],
         "Xmax": [
           "4"
@@ -3713,9 +3713,9 @@
       },
       "Texture": {
         "Colors": [
-          "R=2*0DOTSYMBOL41",
-          "G=2*0DOTSYMBOL81*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=2*0DOTSYMBOL8601*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "R=4/5",
+          "G=(8/5)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "B=(9/5)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
@@ -3771,9 +3771,6 @@
         ],
         "Funct": [
           "KleinFunction=(3*(1+sin(v))+2*(1-cos(v)/2)*cos(u))*cos(v)"
-        ],
-        "Const": [
-          "T1=2"
         ],
         "Fx": [
           "KleinFunction(u,v,t)"
@@ -3834,33 +3831,33 @@
     },
     {
       "Param4D": {
+        "Name": [
+          "4DMathModels"
+        ],
         "Component": [
           "4DTorus4D",
           "4DPTorus",
           "4DCliffordTorus"
         ],
-        "Fw": [
-          "cos(v)",
-          "cos(3*v)",
-          "cos(u)"
-        ],
         "Fx": [
           "sin(u)",
           "sin(u)+2",
-          "cos(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))"
+          "cos(u+v)/(sqrt(2)+cos(v-u))"
         ],
         "Fy": [
           "cos(u)",
           "cos(u)",
-          "sin(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))+3"
+          "sin(u+v)/(sqrt(2)+cos(v-u))+3"
         ],
         "Fz": [
           "sin(v)",
           "sin(2*v)",
-          "(sin(v-u)/(sqrt(2DOTSYMBOL)+cos(v-u)))*1DOTSYMBOL5"
+          "(3/2)*(sin(v-u)/(sqrt(2)+cos(v-u)))"
         ],
-        "Name": [
-          "4DMathModels"
+        "Fw": [
+          "cos(v)",
+          "cos(3*v)",
+          "cos(u)"
         ],
         "Umax": [
           "2*pi",
