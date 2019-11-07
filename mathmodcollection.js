@@ -3890,34 +3890,19 @@
           "Shell"
         ],
         "Cnd": [
-          "(x^2+y^2)>2DOTSYMBOL0"
-        ],
-        "Varu": [
-          "A=(u-4*sin(3DOTSYMBOL14/10))^2",
-          "B=(u-2*cos(3DOTSYMBOL14/10))^2",
-          "C=(u-2*sin(3DOTSYMBOL14)-4*sin(3DOTSYMBOL14/10))^2",
-          "D=(u-2*cos(3DOTSYMBOL14)-2*cos(3DOTSYMBOL14/10))^2"
-        ],
-        "Funct": [
-          "Schwarz1=cos(u)",
-          "Schwarz2=cos(u)+sin(v)"
+          "(x^2+y^2)>2"
         ],
         "Component": [
           "Shell"
         ],
-        "Const": [
-          "r=(1/4)*(1+3*sqrt(5))",
-          "a=-(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
-          "c=(1/2)*sqrt(5-sqrt(5))"
-        ],
         "Fx": [
-          "1DOTSYMBOL2^v*(sin(u)^2*sin(v))"
+          "(6/5)^v*(sin(u)^2*sin(v))"
         ],
         "Fy": [
-          "1DOTSYMBOL2^v*(sin(u)^2*cos(v))"
+          "(6/5)^v*(sin(u)^2*cos(v))"
         ],
         "Fz": [
-          "1DOTSYMBOL2^v*(sin(u)*cos(u))"
+          "(6/5)^v*(sin(u)*cos(u))"
         ],
         "Umax": [
           "pi"
@@ -3942,13 +3927,13 @@
           "Torus"
         ],
         "Fx": [
-          "(1+0DOTSYMBOL5*cos(u))*cos(v)"
+          "(1+cos(u)/2)*cos(v)"
         ],
         "Fy": [
-          "(1+0DOTSYMBOL5*cos(u))*sin(v)"
+          "(1+cos(u)/2)*sin(v)"
         ],
         "Fz": [
-          "0DOTSYMBOL5*sin(u)"
+          "sin(u)/2"
         ],
         "Umin": [
           "0"
@@ -4013,10 +3998,10 @@
           "u*sin(v/2)"
         ],
         "Umin": [
-          "-0DOTSYMBOL4"
+          "-2/5"
         ],
         "Umax": [
-          "0DOTSYMBOL4"
+          "2/5"
         ],
         "Vmin": [
           "0"
