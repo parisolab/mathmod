@@ -2980,13 +2980,13 @@
     {
       "Iso3D": {
         "Description": [
-          " To make  \"thick\" isosurfaces, you can use this formula:G(x, y, z) = F(x, y, z) * F(x - (T/R)*dF()/dx, y - (T/R)*dF()/dy, z - (T/R)*df()/dz)dF()/dx == partial derivative of F() to the variable xDOTSYMBOLF(x, y, z)  : The original Isosurface formulaDOTSYMBOLG(x, y, z) : The new Isosurface formulaDOTSYMBOLR = sqrt((dF()/dx)^2 + (dF()/dy)^2 + (dF()/dz)^2)T = Tickness valueApplied to Schwarz (F()= cos(x) + cos(y) + cos(z) , T = 1/2) ,we obtain the following formula:"
+          " ThickIso by Abderrahman Taha 08/11/2019"
         ],
         "Name": [
-          "TickIso"
+          "ThickIso"
         ],
         "Component": [
-          "TickIso"
+          "ThickIso"
         ],
         "Fxyz": [
           "(cos(x) + cos(y) + cos(z))*((cos(x + sin(x)/(2*sqrt(sin(x)^2 + sin(y)^2 + sin(z)^2))) +cos(y + sin(y)/(2*sqrt(sin(x)^2 + sin(y)^2 + sin(z)^2))) +cos(z + sin(z)/(2*sqrt(sin(x)^2 + sin(y)^2 + sin(z)^2)))))"
