@@ -4773,19 +4773,19 @@
     {
       "Param3D": {
         "Name": [
-          "Cliffordtorus"
+          "Clifford_Torus"
         ],
         "Component": [
-          "Cliffordtorus"
+          "CliffordTorus"
         ],
         "Fx": [
-          "cos(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))"
+          "cos(u+v)/(sqrt(2)+cos(v-u))"
         ],
         "Fy": [
-          "sin(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))"
+          "sin(u+v)/(sqrt(2)+cos(v-u))"
         ],
         "Fz": [
-          "sin(v-u)/(sqrt(2DOTSYMBOL)+cos(v-u))"
+          "sin(v-u)/(sqrt(2)+cos(v-u))"
         ],
         "Umin": [
           "0"
@@ -4810,13 +4810,13 @@
           "Stereosphere"
         ],
         "Fx": [
-          "2DOTSYMBOL*u/(u*u+v*v+1DOTSYMBOL)"
+          "2*u/(u*u+v*v+1)"
         ],
         "Fy": [
-          "2DOTSYMBOL*v/(u*u+v*v+1DOTSYMBOL)"
+          "2*v/(u*u+v*v+1)"
         ],
         "Fz": [
-          "(u*u+v*v-1DOTSYMBOL)/(u*u+v*v+1DOTSYMBOL)"
+          "(u*u+v*v-1)/(u*u+v*v+1)"
         ],
         "Umin": [
           "-2"
@@ -4844,7 +4844,7 @@
           "u*cos(v)-u^3/3*cos(3*v)"
         ],
         "Fy": [
-          "-u*sin(v)-u^(3)/3*sin(3*v)"
+          "-u*sin(v)-u^3/3*sin(3*v)"
         ],
         "Fz": [
           "u^2*cos(2*v)"
@@ -4853,7 +4853,7 @@
           "0"
         ],
         "Umax": [
-          "1DOTSYMBOL2"
+          "6/5"
         ],
         "Vmin": [
           "-pi"
