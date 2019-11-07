@@ -3618,10 +3618,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL20",
-                "R=0DOTSYMBOL4",
-                "G=0DOTSYMBOL4",
-                "B=0DOTSYMBOL70",
+                "V=1/5",
+                "R=2/5",
+                "G=2/5",
+                "B=7/10",
                 "A=1"
               ]
             }
@@ -3630,10 +3630,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL3",
+                "V=3/10",
                 "R=1",
-                "G=0DOTSYMBOL1",
-                "B=0DOTSYMBOL31",
+                "G=1/10",
+                "B=3/10",
                 "A=1"
               ]
             }
@@ -3642,9 +3642,9 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
-                "R=0DOTSYMBOL51",
-                "G=0DOTSYMBOL17",
+                "V=3/5",
+                "R=1/2",
+                "G=1/5",
                 "B=1",
                 "A=1"
               ]
@@ -3654,10 +3654,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
+                "V=3/5",
                 "R=1",
-                "G=0DOTSYMBOL3",
-                "B=0DOTSYMBOL1",
+                "G=3/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -3667,9 +3667,9 @@
               "Name": "Red",
               "Vrgba": [
                 "V=1",
-                "R=0DOTSYMBOL915",
-                "G=0DOTSYMBOL17",
-                "B=0DOTSYMBOL1",
+                "R=9/10",
+                "G=1/5",
+                "B=1/10",
                 "A=1"
               ]
             }
