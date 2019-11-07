@@ -3459,7 +3459,7 @@
     {
       "Iso3D": {
         "Description": [
-          "The formula : G(x,y,z)=F(x-2*P(x,y,z)*a/R,y-2*P(x,y,z)*b/R,z-2*P(x,y,z)*c/R)Where: P(x,y,z)=ax+by+cz+d(EquationofthePlan)R=(a^2+b^2+c^2)ThisexampleshowstheresultforaTorus(F)andaPlan(P=y-z+4)"
+          "The formula : G(x,y,z)=F(x-2*P(x,y,z)*a/R,y-2*P(x,y,z)*b/R,z-2*P(x,y,z)*c/R)Where: P(x,y,z)=ax+by+cz+d(Equation of the Plan) R=(a^2+b^2+c^2)This example shows the result for a Torus(F) and a Plan(P=y-z+4)"
         ],
         "Name": [
           "MirroredTorus"
