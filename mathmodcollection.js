@@ -3251,13 +3251,13 @@
           "LinoidLatice"
         ],
         "Const": [
-          "T=0DOTSYMBOL05",
-          "G=-0DOTSYMBOL05"
+          "T=(1/20)",
+          "G=-T"
         ],
         "Funct": [
           "df=((1/2)*(2*cos(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*cos(x)-sin(2*z)*sin(x)*sin(y))-(1/2)*(-2*sin(2*x)*cos(2*y)-2*cos(2*z)*sin(2*x)))",
           "R=sqrt(df(x,y,z,t)^2+df(y,z,x,t)^2+df(z,y,x,t)^2)",
-          "Linoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0DOTSYMBOL15)"
+          "Linoid=((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+(3/20))"
         ],
         "Fxyz": [
           "Linoid(x-df(x,y,z,t)*T/R(x,y,z,t),y-df(y,z,x,t)*T/R(x,y,z,t),z-df(z,x,y,t)*T/R(x,y,z,t),t)*Linoid(x-df(x,y,z,t)*G/R(x,y,z,t),y-df(y,z,x,t)*G/R(x,y,z,t),z-df(z,x,y,t)*G/R(x,y,z,t),t)"
@@ -3291,7 +3291,7 @@
           "Lidinoid"
         ],
         "Fxyz": [
-          "-((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+0DOTSYMBOL15)"
+          "-((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+(3/20))"
         ],
         "Xmax": [
           "3"
