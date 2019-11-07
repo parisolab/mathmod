@@ -4655,13 +4655,13 @@
           "Fresnel_1"
         ],
         "Fx": [
-          "cos(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)+pi)/3DOTSYMBOL)+0DOTSYMBOL8)"
+          "cos(u)*cos(v)/(-2*sqrt((965/3000)-(935/3000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-(941/6000)+(374/1000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-(1309/6000)*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-(1221/1000)*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt((965/3000)-(935/3000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)+pi)/3)+(4/5))"
         ],
         "Fy": [
-          "sin(u)*cos(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)+pi)/3DOTSYMBOL)+0DOTSYMBOL8)"
+          "sin(u)*cos(v)/(-2*sqrt((965/3000)-(935/3000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-(941/6000)+(374/1000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-(1309/6000)*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-(1221/1000)*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt((965/3000)-(935/3000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)+pi)/3)+(4/5))"
         ],
         "Fz": [
-          "sin(v)/(-2DOTSYMBOL*sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-0DOTSYMBOL941/6DOTSYMBOL+0DOTSYMBOL374*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-1DOTSYMBOL309/6DOTSYMBOL*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-1DOTSYMBOL221*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(0DOTSYMBOL965/3DOTSYMBOL-0DOTSYMBOL935/3DOTSYMBOL*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)+pi)/3DOTSYMBOL)+0DOTSYMBOL8)"
+          "sin(v)/(-2*sqrt((965/3000)-(935/3000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-(941/6000)+(374/1000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-(1309/6000)*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-(1221/1000)*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt((965/3000)-(935/3000)*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)+pi)/3)+(4/5))"
         ],
         "Umin": [
           "0"
