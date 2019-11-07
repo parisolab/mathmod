@@ -3384,7 +3384,7 @@
           "P_SkeletalGraph"
         ],
         "Fxyz": [
-          "cos(x)+cos(y)+cos(z)+0DOTSYMBOL51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1DOTSYMBOL47"
+          "cos(x)+cos(y)+cos(z)+(51/100)*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+(147/100)"
         ],
         "Xmax": [
           "4*pi"
