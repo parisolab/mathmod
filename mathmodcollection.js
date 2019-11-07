@@ -3088,19 +3088,19 @@
           "Chain"
         ],
         "Fxyz": [
-          "((sqrt(x*x+y*y)-3)^2+z*z-0DOTSYMBOL4)*((sqrt((x-4DOTSYMBOL5)*(x-4DOTSYMBOL5)+z*z)-3)^2+y*y-0DOTSYMBOL4)*((sqrt((x+4DOTSYMBOL5)*(x+4DOTSYMBOL5)+z*z)-3)^2+y*y-0DOTSYMBOL4)*((sqrt((y+4DOTSYMBOL5)*(y+4DOTSYMBOL5)+z*z)-3)^2+x*x-0DOTSYMBOL4)*((sqrt((y-4DOTSYMBOL5)*(y-4DOTSYMBOL5)+z*z)-3)^2+x*x-0DOTSYMBOL4)*((sqrt(x*x+y*y)-5)^2+z*z-0DOTSYMBOL4)"
+          "((sqrt(x*x+y*y)-3)^2+z*z-2/5)*((sqrt((x-9/2)*(x-9/2)+z*z)-3)^2+y*y-2/5)*((sqrt((x+9/2)*(x+9/2)+z*z)-3)^2+y*y-2/5)*((sqrt((y+9/2)*(y+9/2)+z*z)-3)^2+x*x-2/5)*((sqrt((y-9/2)*(y-9/2)+z*z)-3)^2+x*x-2/5)*((sqrt(x*x+y*y)-5)^2+z*z-2/5)"
         ],
         "Xmin": [
-          "-8DOTSYMBOL2"
+          "-41/5"
         ],
         "Xmax": [
-          "8DOTSYMBOL2"
+          "41/5"
         ],
         "Ymin": [
-          "-8DOTSYMBOL2"
+          "-41/5"
         ],
         "Ymax": [
-          "8DOTSYMBOL2"
+          "41/5"
         ],
         "Zmin": [
           "-4"
@@ -3112,6 +3112,9 @@
     },
     {
       "Iso3D": {
+        "Name": [
+          "DiamondLatice"
+        ],
         "Cnd": [
           "(sqrt(x^2+y^2+z^2))<8"
         ],
@@ -3130,9 +3133,6 @@
         "Fxyz": [
           "Diamond(x-df(x,y,z,t)*T/R(x,y,z,t),y-df(y,z,x,t)*T/R(x,y,z,t),z-df(z,x,y,t)*T/R(x,y,z,t),t)*Diamond(x-df(x,y,z,t)*G/R(x,y,z,t),y-df(y,z,x,t)*G/R(x,y,z,t),z-df(z,x,y,t)*G/R(x,y,z,t),t)"
         ],
-        "Name": [
-          "DiamondLatice"
-        ],
         "Xmax": [
           "8"
         ],
@@ -3166,7 +3166,7 @@
         ],
         "Const": [
           "T=1",
-          "G=-1"
+          "G=-T"
         ],
         "Funct": [
           "R=sqrt((-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2)",
@@ -3208,8 +3208,8 @@
           "(sqrt(x^2+y^2+z^2))<9"
         ],
         "Const": [
-          "T=0DOTSYMBOL3",
-          "G=-0DOTSYMBOL3"
+          "T=3/10",
+          "G=-T"
         ],
         "Funct": [
           "df=(-3*sin(x)-4*sin(x)*cos(y)*cos(z))",
