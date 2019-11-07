@@ -3528,7 +3528,7 @@
         "Fxyz": [
           "x*x+y*y+z*z-36",
           "(x+14)^100+y^100+z^100-6*10^77",
-          "cos(x/1DOTSYMBOL5)+cos((y+16)/1DOTSYMBOL5)+cos(z/1DOTSYMBOL5)",
+          "cos(2*x/3)+cos((y+16)*2/3)+cos(2*z/3)",
           "sin(2*pi*(((x+14)/4)^2+((y+14)/4)^2))/8+z/4"
         ],
         "Xmax": [
@@ -3571,7 +3571,7 @@
       "Texture": {
         "Colors": [
           "R=(int(abs(x))+int(abs(y))+int(abs(z)))%2",
-          "G=0DOTSYMBOL1",
+          "G=1/10",
           "B=1",
           "T=1"
         ],
