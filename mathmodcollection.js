@@ -3409,7 +3409,7 @@
     {
       "Iso3D": {
         "Description": [
-          "Constructive Solid Geometry(CSG)with mathematics"
+          "Constructive Solid Geometry (CSG) with mathematics"
         ],
         "Name": [
           "CSGS pheres"
@@ -3420,12 +3420,12 @@
           "IntersectSpheres"
         ],
         "Fxyz": [
-          "((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1)*min(((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1),((x+0DOTSYMBOL3)*(x+0DOTSYMBOL3)+y*y+z*z-1))+0DOTSYMBOL02",
-          "min(((x-4DOTSYMBOL7)*(x-4DOTSYMBOL7)+y*y+z*z-1),((x-3DOTSYMBOL5)*(x-3DOTSYMBOL5)+y*y+z*z-1))",
-          "max(((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7)+y*y+z*z-1),((x-2DOTSYMBOL)*(x-2DOTSYMBOL)+y*y+z*z-1))"
+          "((x-7/10)*(x-7/10)+y*y+z*z-1)*min(((x-7/10)*(x-7/10)+y*y+z*z-1),((x+3/10)*(x+3/10)+y*y+z*z-1))+1/50",
+          "min(((x-47/10)*(x-47/10)+y*y+z*z-1),((x-7/2)*(x-7/2)+y*y+z*z-1))",
+          "max(((x-7/10)*(x-7/10)+y*y+z*z-1),((x-2)*(x-2)+y*y+z*z-1))"
         ],
         "Xmax": [
-          "0DOTSYMBOL5",
+          "1/2",
           "6",
           "2"
         ],
