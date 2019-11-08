@@ -1951,25 +1951,25 @@
           "Chmutov"
         ],
         "Fxyz": [
-          "(x^2)^2 + (y^2)^2 + (z^2)^2 - (x^2 + y^2 + z^2-0DOTSYMBOL3)"
+          "(x^2)^2 + (y^2)^2 + (z^2)^2 - (x^2 + y^2 + z^2-3/10)"
         ],
         "Xmin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Xmax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ],
         "Ymin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Ymax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ],
         "Zmin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Zmax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ]
       }
     },
@@ -1985,22 +1985,22 @@
           "2*(x^2*(3-4*x^2)^2+y^2*(3-4*y^2)^2+z^2*(3-4*z^2)^2) -3"
         ],
         "Xmin": [
-          "-1DOTSYMBOL3"
+          "-13/10"
         ],
         "Xmax": [
-          " 1DOTSYMBOL3"
+          "13/10"
         ],
         "Ymin": [
-          "-1DOTSYMBOL3"
+          "-13/10"
         ],
         "Ymax": [
-          " 1DOTSYMBOL3"
+          "13/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL3"
+          "-13/10"
         ],
         "Zmax": [
-          " 1DOTSYMBOL3"
+          "13/10"
         ]
       }
     },
@@ -2017,45 +2017,45 @@
         ],
         "Fxyz": [
           "2*(x^2*(3-4*x^2)^2+y^2*(3-4*y^2)^2+z^2*(3-4*z^2)^2) -3",
-          "((x-3)^2)^2 + (y^2)^2 + (z^2)^2 - ((x-3)^2 + y^2 + z^2-0DOTSYMBOL3)",
-          "-(-(x^2 + (y-3) ^2 + z^2) +cos(5*x)*cos(5*(y-3))*cos(5*z)+0DOTSYMBOL215)",
-          "((x-3)^8 + z^30 + (y-3)^8 - ((x-3)^4 + z^50 + (y-3)^4 -0DOTSYMBOL3))*((x-3)^2 + (y-3)^2 + z^2 -0DOTSYMBOL5)"
+          "((x-3)^2)^2 + (y^2)^2 + (z^2)^2 - ((x-3)^2 + y^2 + z^2-3/10)",
+          "-(-(x^2 + (y-3) ^2 + z^2) +cos(5*x)*cos(5*(y-3))*cos(5*z)+(43/200))",
+          "((x-3)^8 + z^30 + (y-3)^8 - ((x-3)^4 + z^50 + (y-3)^4 -3/10))*((x-3)^2 + (y-3)^2 + z^2 -1/2)"
         ],
         "Xmin": [
-          "-1DOTSYMBOL3",
-          "1DOTSYMBOL5",
-          "-0DOTSYMBOL8",
-          "1DOTSYMBOL8  "
+          "-13/10",
+          "3/2",
+          "-4/5",
+          "9/5"
         ],
         "Xmax": [
-          " 1DOTSYMBOL3",
-          "4DOTSYMBOL5",
-          "0DOTSYMBOL8",
-          "4DOTSYMBOL2"
+          "13/10",
+          "9/2",
+          "4/5",
+          "21/5"
         ],
         "Ymin": [
-          "-1DOTSYMBOL3",
-          "-1DOTSYMBOL5",
-          "2DOTSYMBOL2",
-          "1DOTSYMBOL8 "
+          "-13/10",
+          "-3/2",
+          "11/5",
+          "9/5"
         ],
         "Ymax": [
-          " 1DOTSYMBOL3",
-          "1DOTSYMBOL5",
-          "3DOTSYMBOL8",
-          "4DOTSYMBOL3"
+          "13/10",
+          "3/2",
+          "19/5",
+          "43/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL3",
-          "-1DOTSYMBOL5",
-          "-0DOTSYMBOL8",
-          "-1DOTSYMBOL5 "
+          "-13/10",
+          "-3/2",
+          "-4/5",
+          "-3/2 "
         ],
         "Zmax": [
-          " 1DOTSYMBOL3",
-          "1DOTSYMBOL5",
-          "0DOTSYMBOL8",
-          "1DOTSYMBOL5"
+          "13/10",
+          "3/2",
+          "4/5",
+          "3/2"
         ]
       }
     },
@@ -2090,40 +2090,40 @@
         ]
       }
     },
-        {
-            "Iso3D": {
-            "Description": ["Clebsch surface by Abderrahman Taha 18/05/2019"
-            ],
-            "Name": ["Clebsch_01"
-            ],
-            "Funct": ["Clebsch =81*(x^3+y^3+z^3)-189*(x^2*y+x^2*z+y^2*x+y^2*z+z^2*x+z^2*y) +54*x*y*z+126*(x*y+x*z+y*z)-9*(x^2+y^2+z^2)-9*(x+y+z)+1 ","DFx=((Clebsch(x,y,z,t)-Clebsch(x+cx,y,z,t))/cx)","DFy=((Clebsch(x,y,z,t)-Clebsch(x,y+cx,z,t))/cx)","DFz=((Clebsch(x,y,z,t)-Clebsch(x,y,z+cx,t))/cx)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso3=Clebsch(x-T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-T*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)","Iso2=Clebsch(x+T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y+T*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z+T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)","Iso=if( x*x+y*y+z*z-1<0, Iso2(x,y,z,t)*Iso3(x,y,z,t) , (1/2)*exp((x*x+y*y+z*z-1))) "
-            ],
-            "Component": ["Schwarz"
-            ],
-            "Const": ["X=1","Y=1","Z=1","N=4","cx=1/1000","T=2/100","k1=1","k2=14/10"
-            ],
-            "Fxyz": ["Iso(x,y,z,t)"
-            ],
-            "Xmax": [" X"
-            ],
-            "Xmin": ["-X"
-            ],
-            "Ymax": [" Y"
-            ],
-            "Ymin": ["-Y"
-            ],
-            "Zmax": [" Z"
-            ],
-            "Zmin": ["-Z"
-            ]
-            },
-            "Texture": {
-            "Colors": ["R=(7/10)","G=(7/10)","B=(7/10)","T=1"
-            ],
-            "Name": "Gray",
-            "Noise": ""
-            }
-            },
+    {
+        "Iso3D": {
+        "Description": ["Clebsch surface by Abderrahman Taha 18/05/2019"
+        ],
+        "Name": ["Clebsch_01"
+        ],
+        "Funct": ["Clebsch =81*(x^3+y^3+z^3)-189*(x^2*y+x^2*z+y^2*x+y^2*z+z^2*x+z^2*y) +54*x*y*z+126*(x*y+x*z+y*z)-9*(x^2+y^2+z^2)-9*(x+y+z)+1 ","DFx=((Clebsch(x,y,z,t)-Clebsch(x+cx,y,z,t))/cx)","DFy=((Clebsch(x,y,z,t)-Clebsch(x,y+cx,z,t))/cx)","DFz=((Clebsch(x,y,z,t)-Clebsch(x,y,z+cx,t))/cx)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso3=Clebsch(x-T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-T*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)","Iso2=Clebsch(x+T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y+T*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z+T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)","Iso=if( x*x+y*y+z*z-1<0, Iso2(x,y,z,t)*Iso3(x,y,z,t) , (1/2)*exp((x*x+y*y+z*z-1))) "
+        ],
+        "Component": ["Schwarz"
+        ],
+        "Const": ["X=1","Y=1","Z=1","N=4","cx=1/1000","T=2/100","k1=1","k2=14/10"
+        ],
+        "Fxyz": ["Iso(x,y,z,t)"
+        ],
+        "Xmax": [" X"
+        ],
+        "Xmin": ["-X"
+        ],
+        "Ymax": [" Y"
+        ],
+        "Ymin": ["-Y"
+        ],
+        "Zmax": [" Z"
+        ],
+        "Zmin": ["-Z"
+        ]
+        },
+        "Texture": {
+        "Colors": ["R=(7/10)","G=(7/10)","B=(7/10)","T=1"
+        ],
+        "Name": "Gray",
+        "Noise": ""
+        }
+        },
     {
       "Iso3D": {
         "Name": [
@@ -2136,22 +2136,22 @@
           "if( (x^2 + y^2 +z^2 < 35), 2 - (cos(x + (1+sqrt(5))/2*y) + cos(x - (1+sqrt(5))/2*y) + cos(y + (1+sqrt(5))/2*z) + cos(y - (1+sqrt(5))/2*z) + cos(z - (1+sqrt(5))/2*x) + cos(z + (1+sqrt(5))/2*x)) , 1)"
         ],
         "Xmin": [
-          "-5DOTSYMBOL5"
+          "-11/2"
         ],
         "Xmax": [
-          " 5DOTSYMBOL5"
+          "11/2"
         ],
         "Ymin": [
-          "-5DOTSYMBOL5"
+          "-11/2"
         ],
         "Ymax": [
-          " 5DOTSYMBOL5"
+          " 11/2"
         ],
         "Zmin": [
-          "-5DOTSYMBOL5"
+          "-11/2"
         ],
         "Zmax": [
-          " 5DOTSYMBOL5"
+          "11/2"
         ]
       }
     },
@@ -2167,16 +2167,16 @@
           "x^2 +y^2 -(1-z)*z^2"
         ],
         "Xmin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Xmax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ],
         "Ymin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Ymax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ],
         "Zmin": [
           "-1"
@@ -2195,25 +2195,25 @@
           "Trap"
         ],
         "Fxyz": [
-          "(x^8 + z^30 + y^8 - (x^4 + z^50 + y^4 -0DOTSYMBOL3))*(x^2 + y^2 + z^2 -0DOTSYMBOL5)"
+          "(x^8 + z^30 + y^8 - (x^4 + z^50 + y^4 -3/10))*(x^2 + y^2 + z^2 -1/2)"
         ],
         "Xmin": [
-          "-1DOTSYMBOL2"
+          "-6/5"
         ],
         "Xmax": [
-          " 1DOTSYMBOL2"
+          "6/5"
         ],
         "Ymin": [
-          "-1DOTSYMBOL3"
+          "-13/10"
         ],
         "Ymax": [
-          " 1DOTSYMBOL3"
+          " 13/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Zmax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ]
       }
     },
@@ -2226,25 +2226,25 @@
           "OrthoCircle"
         ],
         "Fxyz": [
-          "((x^2 + y^2 - 1)^2 + z^2)* ((y^2 + z^2 - 1)^2 + x^2)* ((z^2 + x^2 - 1)^2 + y^2) - 0DOTSYMBOL075^2 *(1 + 3* (x^2 + y^2 + z^2))"
+          "((x^2 + y^2 - 1)^2 + z^2)* ((y^2 + z^2 - 1)^2 + x^2)* ((z^2 + x^2 - 1)^2 + y^2) - (3/40)^2 *(1 + 3* (x^2 + y^2 + z^2))"
         ],
         "Xmin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Xmax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ],
         "Ymin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Ymax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ],
         "Zmin": [
-          "-1DOTSYMBOL5"
+          "-3/2"
         ],
         "Zmax": [
-          " 1DOTSYMBOL5"
+          "3/2"
         ]
       }
     },
@@ -2257,7 +2257,7 @@
           "CubeSphere_2"
         ],
         "Fxyz": [
-          "12 - ((1/2DOTSYMBOL3)^2 *(x^2 + y^2 + z^2))^-6 - ( (1/2)^8 * (x^8 + y^8 + z^8) )^6"
+          "12 - ((10/23)^2 *(x^2 + y^2 + z^2))^-6 - ((1/2)^8 * (x^8 + y^8 + z^8))^6"
         ],
         "Xmin": [
           "-2"
@@ -2288,7 +2288,7 @@
           "UnionSpheres"
         ],
         "Fxyz": [
-          "min( ((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1),  ((x+0DOTSYMBOL5)*(x+0DOTSYMBOL5) + y*y + z*z - 1))"
+          "min( ((x-7/10)*(x-7/10) + y*y + z*z - 1),  ((x+1/2)*(x+1/2) + y*y + z*z - 1))"
         ],
         "Xmin": [
           "-2"
