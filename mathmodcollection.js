@@ -2319,13 +2319,13 @@
           "DifferenceSpheres"
         ],
         "Fxyz": [
-          "((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1)*min( ((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1), ((x+0DOTSYMBOL3)*(x+0DOTSYMBOL3) + y*y + z*z - 1)) +0DOTSYMBOL02"
+          "((x-7/10)*(x-7/10) + y*y + z*z - 1)*min( ((x-7/10)*(x-7/10) + y*y + z*z - 1), ((x+3/10)*(x+3/10) + y*y + z*z - 1)) +1/50"
         ],
         "Xmin": [
           "-2"
         ],
         "Xmax": [
-          " 0DOTSYMBOL1"
+          "1/10"
         ],
         "Ymin": [
           "-1"
@@ -2350,7 +2350,7 @@
           "BlendSpheres"
         ],
         "Fxyz": [
-          "((x-0DOTSYMBOL9)*(x-0DOTSYMBOL9) + y*y + z*z - 1)*((x+0DOTSYMBOL9)*(x+0DOTSYMBOL9) + y*y + z*z - 1) -0DOTSYMBOL3"
+          "((x-9/10)*(x-9/10) + y*y + z*z - 1)*((x+9/10)*(x+9/10) + y*y + z*z - 1) -3/10"
         ],
         "Xmin": [
           "-2"
@@ -2381,7 +2381,7 @@
           "IntersectSpheres"
         ],
         "Fxyz": [
-          "max( ((x-0DOTSYMBOL7)*(x-0DOTSYMBOL7) + y*y + z*z - 1),  ((x+0DOTSYMBOL5)*(x+0DOTSYMBOL5) + y*y + z*z - 1))"
+          "max( ((x-7/10)*(x-7/10) + y*y + z*z - 1),((x+1/2)*(x+1/2) + y*y + z*z - 1))"
         ],
         "Xmin": [
           "-2"
