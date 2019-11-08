@@ -1349,7 +1349,7 @@
           "(x^2+y^2+z^2)>13"
         ],
         "Const": [
-          " w  = 1DOTSYMBOL0"
+          " w  = 1"
         ],
         "Fxyz": [
           "243*(33*sqrt(5)*(((Ax*Ay+Az*w^2)^2*(Ax*Az+Ay*w^2)-(Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)^2)+((Ax*Az+Ay*w^2)^2*(Ax*w^2+Ay*Az)-(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)^2)+((Ax*w^2+Ay*Az)^2*(Ax*Ay+Az*w^2)-(Ax*w^2+Ay*Az)*(Ax*Ay+Az*w^2)^2))+19*(((Ax*Ay+Az*w^2)^2*(Ax*Az+Ay*w^2)+(Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)^2)+((Ax*Az+Ay*w^2)^2*(Ax*w^2+Ay*Az)+(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)^2)+((Ax*w^2+Ay*Az)^2*(Ax*Ay+Az*w^2)+(Ax*w^2+Ay*Az)*(Ax*Ay+Az*w^2)^2))+10*((Ax*Ay+Az*w^2)^3+(Ax*Az+Ay*w^2)^3+(Ax*w^2+Ay*Az)^3)-14*(Bx+By+Bz+w^4)*((Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)+(Ax*Ay+Az*w^2)*(Ax*w^2+Ay*Az)+(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az))+2*(Bx+By+Bz+w^4)^2*((Ax*Ay+Az*w^2)+(Ax*Az+Ay*w^2)+(Ax*w^2+Ay*Az))-6*(Bx+By+Bz+w^4)*((Ax*Ay+Az*w^2)^2+(Ax*Az+Ay*w^2)^2+(Ax*w^2+Ay*Az)^2)-352*(x*y*z*w)^2*((Ax*Ay+Az*w^2)+(Ax*Az+Ay*w^2)+(Ax*w^2+Ay*Az))+336*(x*y*z*w)^2*(Bx+By+Bz+w^4)+48*((Ax*Ay+Az*w^2)*(Ax*Az+Ay*w^2)*(Ax*w^2+Ay*Az)))-22*(Ax+Ay+Az+w^2)^6"
@@ -1359,22 +1359,22 @@
           " B  = u^4"
         ],
         "Xmax": [
-          "3DOTSYMBOL7"
+          "37/10"
         ],
         "Xmin": [
-          "-3DOTSYMBOL7"
+          "-37/10"
         ],
         "Ymax": [
-          "3DOTSYMBOL7"
+          "37/10"
         ],
         "Ymin": [
-          "-3DOTSYMBOL7"
+          "-37/10"
         ],
         "Zmax": [
-          "3DOTSYMBOL7"
+          "37/10"
         ],
         "Zmin": [
-          "-3DOTSYMBOL7"
+          "-37/10"
         ]
       }
     },
@@ -1418,7 +1418,7 @@
           "Blobs"
         ],
         "Fxyz": [
-          "x^2 + y ^2 + z^2 +cos(4*x)+cos(4*y)+cos(4*z)-0DOTSYMBOL2"
+          "x^2 + y ^2 + z^2 +cos(4*x)+cos(4*y)+cos(4*z)-1/10"
         ],
         "Xmin": [
           "-2"
