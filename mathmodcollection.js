@@ -1669,10 +1669,10 @@
           "4*x^2*(x^2+y^2+z^2+z)+y^2*(y^2+z^2-1)"
         ],
         "Xmin": [
-          "-0DOTSYMBOL5"
+          "-1/2"
         ],
         "Xmax": [
-          " 0DOTSYMBOL5"
+          "1/2"
         ],
         "Ymin": [
           "-1"
@@ -1712,10 +1712,10 @@
           " 2"
         ],
         "Zmin": [
-          "-1DOTSYMBOL7"
+          "-17/10"
         ],
         "Zmax": [
-          " 1DOTSYMBOL7"
+          " 17/10"
         ]
       }
     },
@@ -1726,12 +1726,6 @@
         ],
         "Component": [
           "Sinus"
-        ],
-        "Colors": [
-          "R=cos(30*x*pi)",
-          "G=cos(30*y*pi)",
-          "B=cos(4*z*pi)",
-          "T=1DOTSYMBOL0"
         ],
         "Fxyz": [
           "sin(3*pi*((x)^2+(y)^2))/10+z"
