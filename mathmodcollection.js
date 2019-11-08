@@ -1511,13 +1511,13 @@
           "Devil Surface"
         ],
         "Fxyz": [
-          "x^4+2*x^2*z^2-0DOTSYMBOL36*x^2-y^4+0DOTSYMBOL25*y^2+z^4"
+          "x^4+2*x^2*z^2-(9/25)*x^2-y^4+(1/4)*y^2+z^4"
         ],
         "Xmin": [
-          "-1"
+          "-11/10"
         ],
         "Xmax": [
-          " 1"
+          "11/10"
         ],
         "Ymin": [
           "-1"
@@ -1542,7 +1542,7 @@
           "Hyperboloid"
         ],
         "Fxyz": [
-          "x^2 + y^2 - z^2 -0DOTSYMBOL3"
+          "x^2 + y^2 - z^2 - 3/10"
         ],
         "Xmin": [
           "-2"
@@ -1557,10 +1557,10 @@
           " 2"
         ],
         "Zmin": [
-          "-1DOTSYMBOL8"
+          "-9/10"
         ],
         "Zmax": [
-          " 1DOTSYMBOL8"
+          "9/10"
         ]
       }
     },
