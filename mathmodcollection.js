@@ -2703,51 +2703,6 @@
     {
       "Iso3D": {
         "Name": [
-          "Noise_Duplin"
-        ],
-        "Component": [
-          "Noise_Duplin"
-        ],
-        "Varu": [
-          "A=cos(0DOTSYMBOL9589716*u)",
-          "B=sin(0DOTSYMBOL9589716*u)"
-        ],
-        "Fxyz": [
-          "-49DOTSYMBOL95*((x/2DOTSYMBOL34)^4+(y*Ax - z*Bx)^4+ (y*Bx + z*Ax)^4) +(-99DOTSYMBOL95)* ((x/2DOTSYMBOL34)^2 * (y*Ax - z*Bx)^2+(x/2DOTSYMBOL34)^2 * (y*Bx + z*Ax)^2+(y*Ax - z*Bx)^2 * (y*Bx + z*Ax)^2)+(141DOTSYMBOL12* (x/2DOTSYMBOL34-1))*((x/2DOTSYMBOL34)^2 +(y*Ax - z*Bx)^2+(y*Bx + z*Ax)^2)+(54DOTSYMBOL7 *x)* (-4 +0DOTSYMBOL8547 * x) + 262DOTSYMBOL4 * (y*Ax - z*Bx)^2 + 256"
-        ],
-        "Xmax": [
-          " 2DOTSYMBOL5*3DOTSYMBOL9*0DOTSYMBOL6"
-        ],
-        "Xmin": [
-          "-2*3DOTSYMBOL9*0DOTSYMBOL6"
-        ],
-        "Ymax": [
-          " 2"
-        ],
-        "Ymin": [
-          "-2"
-        ],
-        "Zmax": [
-          " 2"
-        ],
-        "Zmin": [
-          "-2"
-        ]
-      },
-      "Noise": "",
-      "Texture": {
-        "Colors": [
-          "R=1",
-          "G=0DOTSYMBOL8*abs(cos(2*(z*z+(y+1)*(y+1)+x*x)))",
-          "B=0DOTSYMBOL5+0DOTSYMBOL3*abs(cos(2*(z*z +x*x +y*y)))",
-          "T=1"
-        ],
-        "Name": "Granit"
-      }
-    },
-    {
-      "Iso3D": {
-        "Name": [
           "pseudo_Torus"
         ],
         "Component": [
