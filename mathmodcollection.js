@@ -2853,14 +2853,17 @@
         "Component": [
           "pseudo_Torus"
         ],
+        "Const": [
+          "A=436332/1000000"
+        ],
         "Fxyz": [
-          "(sqrt((x/2DOTSYMBOL7)*(x/2DOTSYMBOL7)+(y*sin(0DOTSYMBOL436332*x) + z*cos(0DOTSYMBOL436332*x))*(y*sin(0DOTSYMBOL436332*x) + z*cos(0DOTSYMBOL436332*x)))-3)^2 + (y*cos(0DOTSYMBOL436332*x) - z*sin(0DOTSYMBOL436332*x))*(y*cos(0DOTSYMBOL436332*x) - z*sin(0DOTSYMBOL436332*x)) - 1"
+          "(sqrt((10*x/27)*(10*x/27)+(y*sin(A*x) + z*cos(A*x))*(y*sin(A*x) + z*cos(A*x)))-3)^2 + (y*cos(A*x) - z*sin(A*x))*(y*cos(A*x) - z*sin(A*x)) - 1"
         ],
         "Xmin": [
-          "-4*2DOTSYMBOL7"
+          "-54/5"
         ],
         "Xmax": [
-          " 4*2DOTSYMBOL7"
+          " 54/5"
         ],
         "Ymin": [
           "-4"
@@ -2876,45 +2879,28 @@
         ]
       }
     },
-        {
-            "Iso3D": {
-                "Description": ["Chmutov like surface with three parameters to increase the holes number by Abderrahman Taha 22/04/2019"
-                ],
-                "Fxyz": ["(x^k + y ^k + z^k ) -(cos(n*l*x/5) +cos(n*l*y/5) +cos(n*l*z/5)) -p"
-                ],
-                "Name": ["ChmutovSchwarz"
-                ],
-                "Component": ["ChmutySchwarz"
-                ],
-                "Const": ["k=12","l=7","p=1/100","n=1", "c=11/10"
-                ],
-                "Xmax": [" c"
-                ],
-                "Xmin": ["-c"
-                ],
-                "Ymax": [" c"
-                ],
-                "Ymin": ["-c"
-                ],
-                "Zmax": [" c"
-                ],
-                "Zmin": ["-c"
-                ]
-            },
-            "Sliders": {
-                "Max": ["30","30","30"
-                ],
-                "Min": ["0","0","0"
-                ],
-                "Name": ["k","l","n"
-                ],
-                "Position": ["12","7","5"
-                ],
-                "Step": ["1","1","1"
-                ]
-            }
+    {
+        "Iso3D": {
+            "Description": ["Chmutov_Schwarz surface by Abderrahman Taha 22/04/2019"],
+            "Name": ["Chmutov_Schwarz"],
+            "Fxyz": ["(x^k + y ^k + z^k ) -(cos(n*l*x/5) +cos(n*l*y/5) +cos(n*l*z/5)) -p"],
+            "Component": ["ChmutySchwarz"],
+            "Const": ["k=12","l=7","p=1/100","n=1", "c=11/10"],
+            "Xmax": [" c"],
+            "Xmin": ["-c"],
+            "Ymax": [" c"],
+            "Ymin": ["-c"],
+            "Zmax": [" c"],
+            "Zmin": ["-c"]
+        },
+        "Sliders": {
+            "Max": ["30","30","30"],
+            "Min": ["0","0","0"],
+            "Name": ["k","l","n"],
+            "Position": ["12","7","5"],
+            "Step": ["1","1","1"]
         }
-    ,
+    },
     {
       "Iso3D": {
         "Name": [
@@ -2924,25 +2910,25 @@
           "Virus"
         ],
         "Fxyz": [
-          "-(x^2 + y ^2 + z^2) +cos(5*x)*cos(5*y)*cos(5*z)+0DOTSYMBOL215"
+          "-(x^2 + y ^2 + z^2) +cos(5*x)*cos(5*y)*cos(5*z)+43/200"
         ],
         "Xmin": [
-          "-0DOTSYMBOL8"
+          "-4/5"
         ],
         "Xmax": [
-          " 0DOTSYMBOL8"
+          "4/5"
         ],
         "Ymin": [
-          "-0DOTSYMBOL8"
+          "-4/5"
         ],
         "Ymax": [
-          " 0DOTSYMBOL8"
+          "4/5"
         ],
         "Zmin": [
-          "-0DOTSYMBOL8"
+          "-4/5"
         ],
         "Zmax": [
-          " 0DOTSYMBOL8"
+          "4/5"
         ]
       }
     },
@@ -2955,7 +2941,7 @@
           "BlobySchwarz"
         ],
         "Fxyz": [
-          "-(x^2 + y ^2 + z^2) +cos(5*x)+cos(5*y)+cos(5*z) -0DOTSYMBOL1"
+          "-(x^2 + y ^2 + z^2) +cos(5*x)+cos(5*y)+cos(5*z) -1/10"
         ],
         "Xmin": [
           "-2"
