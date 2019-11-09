@@ -417,50 +417,6 @@
       }
     },
     {
-      "Texture": {
-        "Colors": [
-          "R=0DOTSYMBOL82",
-          "G=1DOTSYMBOL62*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=1DOTSYMBOL72*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "T=1"
-        ],
-        "Noise": "NoiseP(x,y,z,(4),(1),(1))",
-        "Name": "Granit_4"
-      },
-      "Iso3D": {
-        "Name": [
-          "SchwarzFunction"
-        ],
-        "Component": [
-          " SchwarzFunction"
-        ],
-        "Funct": [
-          " Schwarz1=cos(x) + cos(y) + cos(z)"
-        ],
-        "Fxyz": [
-          " Schwarz1(x,y,z,t)"
-        ],
-        "Xmax": [
-          " 4"
-        ],
-        "Xmin": [
-          "-4"
-        ],
-        "Ymax": [
-          " 4"
-        ],
-        "Ymin": [
-          "-4"
-        ],
-        "Zmax": [
-          " 4"
-        ],
-        "Zmin": [
-          "-4"
-        ]
-      }
-    },
-    {
       "Iso3D": {
         "Name": [
           "Moon"
