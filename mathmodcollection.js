@@ -461,15 +461,6 @@
       }
     },
     {
-      "Texture": {
-        "Name": "Lines4",
-        "Colors": [
-          "R=cos(x*pi)",
-          "G=sin(y*pi)",
-          "B=cos(z*pi)",
-          "T=1"
-        ]
-      },
       "Iso3D": {
         "Name": [
           "Moon"
@@ -480,9 +471,9 @@
           "MoonPlanet"
         ],
         "Fxyz": [
-          "((x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3)) + z*z - 0DOTSYMBOL6)*min( (x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + z*z - 0DOTSYMBOL6, z) +0DOTSYMBOL2",
-          "(x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + (z-0DOTSYMBOL2)*(z-0DOTSYMBOL2) - 0DOTSYMBOL6 ",
-          "(x-2*sin(t*pi)-4*sin(t*pi/3))*(x-2*sin(t*pi)-4*sin(t*pi/3)) + (y-2*cos(t*pi)-2*cos(t*pi/3))*(y-2*cos(t*pi)-2*cos(t*pi/3)) + (z-0DOTSYMBOL2)*(z-0DOTSYMBOL2) - 0DOTSYMBOL1"
+          "((x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3)) + z*z - 3/5)*min( (x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + z*z - 3/5, z) +1/5",
+          "(x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + (z-1/5)*(z-1/5) - 3/5 ",
+          "(x-2*sin(t*pi)-4*sin(t*pi/3))*(x-2*sin(t*pi)-4*sin(t*pi/3)) + (y-2*cos(t*pi)-2*cos(t*pi/3))*(y-2*cos(t*pi)-2*cos(t*pi/3)) + (z-1/5)*(z-1/5) - 1/10"
         ],
         "Xmin": [
           "-5",
@@ -511,21 +502,12 @@
         ],
         "Zmax": [
           " 1",
-          "1DOTSYMBOL5",
+          "3/2",
           "1"
         ]
       }
     },
     {
-      "Texture": {
-        "Colors": [
-          "R=cos((x*x +y*y +z*z)*pi)",
-          "G=cos((x*x +y*y +z*z)*pi)*cos(x*pi)",
-          "B=sin(y*pi)*cos(x*pi)",
-          "T=1"
-        ],
-        "Name": "Lines6"
-      },
       "Iso3D": {
         "Name": [
           "Moon2"
@@ -536,15 +518,15 @@
           "MoonPlanet"
         ],
         "Varu": [
-          " A=(u-4*sin(tm*pi/10))^2",
-          " B=(u-2*cos(tm*pi/10))^2",
+          "A=(u-4*sin(tm*pi/10))^2",
+          "B=(u-2*cos(tm*pi/10))^2",
           "C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
-          " D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"
+          "D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"
         ],
         "Fxyz": [
-          "(Ax + By+ z*z - 0DOTSYMBOL6)*min( Ax + By  + z*z - 0DOTSYMBOL6, z) +0DOTSYMBOL2",
-          "Ax+ By + (z-0DOTSYMBOL2)*(z-0DOTSYMBOL2) - 0DOTSYMBOL6 ",
-          "Cx + Dy  + (z-0DOTSYMBOL2)*(z-0DOTSYMBOL2) - 0DOTSYMBOL1"
+          "(Ax + By+ z*z - 3/5)*min( Ax + By  + z*z - 3/5, z) +1/5",
+          "Ax+ By + (z-1/5)*(z-1/5) - 3/5",
+          "Cx + Dy  + (z-1/5)*(z-1/5) - 1/10"
         ],
         "Xmin": [
           "-5",
@@ -573,7 +555,7 @@
         ],
         "Zmax": [
           " 1",
-          "1DOTSYMBOL10",
+          "11/10",
           "1"
         ]
       }
@@ -588,34 +570,39 @@
           "EarthPlanet",
           "MoonPlanet"
         ],
+        "Const": [
+            "A=pi*100/311",
+            "B=1/5",
+            "C=521/1000"
+        ],
         "Fxyz": [
-          "((x-4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2 + (y-2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2+ z*z - 0DOTSYMBOL6)*min( (x-4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2+ (y-2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2 + z*z - 0DOTSYMBOL6, z) +0DOTSYMBOL2",
-          "(x-4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2+ (y-2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2  + (z-0DOTSYMBOL2)*(z-0DOTSYMBOL2) - 0DOTSYMBOL6 ",
-          "(x-2*sin((0DOTSYMBOL521*t)*pi)-4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2 + (y-2*cos((0DOTSYMBOL521*t)*pi)-2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11))^2 + (z-0DOTSYMBOL2)*(z-0DOTSYMBOL2) - 0DOTSYMBOL05"
+          "((x-4*sin((C*t)*A))^2 + (y-2*cos((C*t)*A))^2+ z*z - (3/5))*min( (x-4*sin((C*t)*A))^2+ (y-2*cos((C*t)*A))^2 + z*z - (3/5), z) +B",
+          "(x-4*sin((C*t)*A))^2+ (y-2*cos((C*t)*A))^2  + (z-B)*(z-B) - (3/5)",
+          "(x-2*sin((C*t)*pi)-4*sin((C*t)*A))^2 + (y-2*cos((C*t)*pi)-2*cos((C*t)*A))^2 + (z-B)*(z-B) - 1/20"
         ],
         "Xmax": [
           " 5",
-          "1+4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "1+2*sin((0DOTSYMBOL521*t)*pi)+4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)"
+          "1+4*sin((C*t)*A)",
+          "1+2*sin((C*t)*pi)+4*sin((C*t)*A)"
         ],
         "Xmin": [
           "-5",
-          "-1+4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "-1+2*sin((0DOTSYMBOL521*t)*pi)+4*sin((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)"
+          "-1+4*sin((C*t)*A)",
+          "-1+2*sin((C*t)*pi)+4*sin((C*t)*A)"
         ],
         "Ymax": [
           " 4",
-          "1+2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "1+2*cos((0DOTSYMBOL521*t)*pi)+2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)"
+          "1+2*cos((C*t)*A)",
+          "1+2*cos((C*t)*pi)+2*cos((C*t)*A)"
         ],
         "Ymin": [
           "-4",
-          "-1+2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)",
-          "-1+2*cos((0DOTSYMBOL521*t)*pi)+2*cos((0DOTSYMBOL521*t)*pi/3DOTSYMBOL11)"
+          "-1+2*cos((C*t)*A)",
+          "-1+2*cos((C*t)*pi)+2*cos((C*t)*A)"
         ],
         "Zmax": [
           " 1",
-          "1DOTSYMBOL5",
+          "3/2",
           "1"
         ],
         "Zmin": [
