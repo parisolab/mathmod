@@ -626,15 +626,6 @@
       }
     },
     {
-      "Texture": {
-        "Name": "Lines4",
-        "Colors": [
-          "R=cos(7*x*y*pi)",
-          "G=sin(7*y*z*pi)",
-          "B=sin(7*z*x*pi)",
-          "T=1"
-        ]
-      },
       "Iso3D": {
         "Name": [
           "BlackHole"
@@ -650,60 +641,69 @@
           "B=(u-2*cos(tm*pi/10))^2",
           "C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
           "D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2",
-          "E=(u-0DOTSYMBOL2)*(u-0DOTSYMBOL2) - 0DOTSYMBOL6 ",
-          "F =u*u - 0DOTSYMBOL6",
+          "E=(u-1/5)*(u-1/5) - 3/5",
+          "F =u*u - 3/5",
           "H=u*cos(2*tm*pi)",
           "G=u*sin(2*tm*pi)"
         ],
         "Grid": [
-          " 20",
+          "20",
           "20",
           "20",
           "20"
         ],
         "Fxyz": [
-          "(1DOTSYMBOL5*(Hx-Gy)^2 + (Gx+ Hy)^2 +(z+0DOTSYMBOL8)^2 -(abs(2DOTSYMBOL2*sin(t*pi/10))))*(Ax + By+ Fz)*min( (1DOTSYMBOL5*(Hx-Gy)^2 + (Gx+ Hy)^2 +(z+0DOTSYMBOL8)^2 -(abs(2DOTSYMBOL2*sin(t*pi/10))))*(Ax + By + Fz), z) +1DOTSYMBOL",
+          "((3/2)*(Hx-Gy)^2 + (Gx+ Hy)^2 +(z+4/5)^2 -(abs((11/5)*sin(t*pi/10))))*(Ax + By+ Fz)*min( ((3/2)*(Hx-Gy)^2 + (Gx+ Hy)^2 +(z+4/5)^2 -(abs((11/5)*sin(t*pi/10))))*(Ax + By + Fz), z) +1",
           "Ax+ By + Ez",
-          "Cx + Dy  + Ez + 0DOTSYMBOL5",
-          "1DOTSYMBOL5*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+0DOTSYMBOL2)^2 -(abs(0DOTSYMBOL2*sin(t*pi/10)+0DOTSYMBOL05))"
+          "Cx + Dy  + Ez + 1/2",
+          "(3/2)*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+1/5)^2 -(abs((1/5)*sin(t*pi/10)+1/20))"
         ],
         "Xmin": [
           "-5",
           "-1+4*sin(t*pi/10)",
           "-1+2*sin(t*pi)+4*sin(t*pi/10)",
-          " -0DOTSYMBOL5"
+          " -1/2"
         ],
         "Xmax": [
           "5",
           "1+4*sin(t*pi/10)",
           "1+2*sin(t*pi)+4*sin(t*pi/10)",
-          " 0DOTSYMBOL5"
+          " 1/2"
         ],
         "Ymin": [
           "-4",
           "-1+2*cos(t*pi/10)",
           "-1+2*cos(t*pi)+2*cos(t*pi/10)",
-          " -0DOTSYMBOL5"
+          " -1/2"
         ],
         "Ymax": [
           "4",
           "1+2*cos(t*pi/10)",
           "1+2*cos(t*pi)+2*cos(t*pi/10)",
-          " 0DOTSYMBOL5"
+          " 1/2"
         ],
         "Zmin": [
           "-2",
           "-1",
           "-1",
-          " -0DOTSYMBOL7"
+          " -7/10"
         ],
         "Zmax": [
           "1",
-          "1DOTSYMBOL10",
+          "11/10",
           "1",
-          "0DOTSYMBOL5"
+          "1/2"
         ]
-      }
+      },
+    "Texture": {
+      "Name": "Lines4",
+      "Colors": [
+        "R=cos(7*x*y*pi)",
+        "G=sin(7*y*z*pi)",
+        "B=sin(7*z*x*pi)",
+        "T=1"
+      ]
+    }
     },
     {
       "Iso3D": {
@@ -714,7 +714,7 @@
           "fallingdrop"
         ],
         "Fxyz": [
-          "-((z-6*(1-cos(sqrt(x^2+y^2)-t*2*pi))/sqrt(x^2+y^2+4))*(2*(x^2+y^2)+(z-40*sin((t+0DOTSYMBOL19)*pi)+1)^2-10)-1000)"
+          "-((z-6*(1-cos(sqrt(x^2+y^2)-t*2*pi))/sqrt(x^2+y^2+4))*(2*(x^2+y^2)+(z-40*sin((t+19/100)*pi)+1)^2-10)-1000)"
         ],
         "Xmax": [
           "20"
@@ -741,10 +741,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL20",
-                "R=0DOTSYMBOL90",
-                "G=0DOTSYMBOL9",
-                "B=0DOTSYMBOL40",
+                "V=1/5",
+                "R=9/10",
+                "G=9/10",
+                "B=2/5",
                 "A=1"
               ]
             }
@@ -753,10 +753,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL3",
+                "V=3/10",
                 "R=1",
-                "G=0DOTSYMBOL1",
-                "B=0DOTSYMBOL31",
+                "G=1/10",
+                "B=31/100",
                 "A=1"
               ]
             }
@@ -765,9 +765,9 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
+                "V=3/5",
                 "R=1",
-                "G=0DOTSYMBOL7",
+                "G=7/10",
                 "B=1",
                 "A=1"
               ]
@@ -777,10 +777,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL6",
+                "V=3/5",
                 "R=1",
-                "G=0DOTSYMBOL3",
-                "B=0DOTSYMBOL1",
+                "G=3/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -789,10 +789,10 @@
             "Color": {
               "Name": "Red",
               "Vrgba": [
-                "V=0DOTSYMBOL8",
-                "R=0DOTSYMBOL15",
-                "G=0DOTSYMBOL6",
-                "B=0DOTSYMBOL1",
+                "V=2/5",
+                "R=3/20",
+                "G=6/10",
+                "B=1/10",
                 "A=1"
               ]
             }
@@ -819,22 +819,22 @@
           "-(Dx + Dy + Dz -1)*(((abs(x) >1/3 | abs(y) > 1/3)*(abs(z) >1/3 | abs(y) > 1/3)*(abs(x) >1/3 | abs(z) > 1/3))*((Cx*(Cy+Cz) + Cz*Cy) =0)*((Bx*(By+Bz)+Bz*By) =0)*((Ax*(Ay+Az)+Az*Ay)=0))"
         ],
         "Xmin": [
-          "-1DOTSYMBOL001"
+          "-1001/1000"
         ],
         "Xmax": [
-          " 1DOTSYMBOL001"
+          " 1001/1000"
         ],
         "Ymin": [
-          "-1DOTSYMBOL001"
+          "-1001/1000"
         ],
         "Ymax": [
-          " 1DOTSYMBOL001"
+          " 1001/1000"
         ],
         "Zmin": [
-          "-1DOTSYMBOL001"
+          "-1001/1000"
         ],
         "Zmax": [
-          " 1DOTSYMBOL001"
+          " 1001/1000"
         ]
       }
     },
@@ -870,64 +870,64 @@
           "-(Dx + Dy + Dz -1)*(((abs(x) >1/3 | abs(y) > 1/3)*(abs(z) >1/3 | abs(y) > 1/3)*(abs(x) >1/3 | abs(z) > 1/3))*( (Cx*(Cy+Cz) + Cz*Cy) =0)*( (Bx*(By+Bz) + Bz*By) =0)*( (Ax*(Ay+Az) + Az*Ay) =0) )"
         ],
         "Xmin": [
-          "-1DOTSYMBOL001",
-          " -1DOTSYMBOL001",
-          " -1DOTSYMBOL001",
-          " -1DOTSYMBOL001",
-          "  0DOTSYMBOL000",
-          "  0DOTSYMBOL000",
-          "  0DOTSYMBOL000",
-          "  0DOTSYMBOL000"
+          "-1001/1000",
+          "-1001/1000",
+          "-1001/1000",
+          "-1001/1000",
+          "0",
+          "0",
+          "0",
+          "0"
         ],
         "Xmax": [
-          "   0DOTSYMBOL000 ",
-          "   0DOTSYMBOL000",
-          "  0DOTSYMBOL000",
-          " 0DOTSYMBOL000",
-          " 1DOTSYMBOL001",
-          " 1DOTSYMBOL001",
-          " 1DOTSYMBOL001",
-          " 1DOTSYMBOL001"
+          "0 ",
+          "0",
+          "0",
+          "0",
+          "1001/1000",
+          "1001/1000",
+          "1001/1000",
+          "1001/1000"
         ],
         "Ymin": [
-          "-1DOTSYMBOL001",
-          " -1DOTSYMBOL001",
-          "  0DOTSYMBOL000",
-          "  0DOTSYMBOL000",
-          " -1DOTSYMBOL001",
-          " -1DOTSYMBOL001",
-          "  0DOTSYMBOL000",
-          "  0DOTSYMBOL000 "
+          "-1001/1000",
+          " -1001/1000",
+          "  0",
+          "  0",
+          " -1001/1000",
+          " -1001/1000",
+          "  0",
+          "  0 "
         ],
         "Ymax": [
-          "  0DOTSYMBOL000 ",
-          "  0DOTSYMBOL000",
-          " 1DOTSYMBOL001",
-          " 1DOTSYMBOL001",
-          "  0DOTSYMBOL000 ",
-          "  0DOTSYMBOL000",
-          " 1DOTSYMBOL001",
-          " 1DOTSYMBOL001"
+          "  0 ",
+          "  0",
+          " 1001/1000",
+          " 1001/1000",
+          "  0 ",
+          "  0",
+          " 1001/1000",
+          " 1001/1000"
         ],
         "Zmin": [
-          "-1DOTSYMBOL001",
-          " 0DOTSYMBOL000 ",
-          " -1DOTSYMBOL001",
-          "  0DOTSYMBOL000",
-          " -1DOTSYMBOL001",
-          " 0DOTSYMBOL000 ",
-          " -1DOTSYMBOL001",
-          "  0DOTSYMBOL000 "
+          "-1001/1000",
+          " 0 ",
+          " -1001/1000",
+          "  0",
+          " -1001/1000",
+          " 0 ",
+          " -1001/1000",
+          "  0 "
         ],
         "Zmax": [
-          "   0DOTSYMBOL000 ",
-          " 1DOTSYMBOL001",
-          "  0DOTSYMBOL000",
-          " 1DOTSYMBOL001",
-          " 0DOTSYMBOL000 ",
-          " 1DOTSYMBOL001",
-          "  0DOTSYMBOL000",
-          " 1DOTSYMBOL001"
+          "   0 ",
+          " 1001/1000",
+          "  0",
+          " 1001/1000",
+          " 0 ",
+          " 1001/1000",
+          "  0",
+          " 1001/1000"
         ]
       }
     },
@@ -943,7 +943,7 @@
           "(x^2 + y ^2 - x^2 *z + y ^2 *z + z ^2 -1)"
         ],
         "Cnd": [
-          "   (sqrt(x^2  + y ^2 + z ^2)) < 4"
+          "(sqrt(x^2  + y ^2 + z ^2)) < 4"
         ],
         "Xmin": [
           "-4 "
@@ -974,10 +974,10 @@
           "Cayley_2"
         ],
         "Fxyz": [
-          "-5*(x*x*y + x*x*z + y*y*x + y*y*z + z*z*y + z*z*x)   +2*(x*y + x*z + y*z)"
+          "-5*(x*x*y + x*x*z + y*y*x + y*y*z + z*z*y + z*z*x)+2*(x*y + x*z + y*z)"
         ],
         "Cnd": [
-          "   (sqrt(x^2  + y ^2 + z ^2)) < 1"
+          "(sqrt(x^2  + y ^2 + z ^2)) < 1"
         ],
         "Xmin": [
           "-1 "
@@ -1005,31 +1005,31 @@
           "Nordstrand"
         ],
         "Cnd": [
-          "((x-0DOTSYMBOL1)^2+(y-0DOTSYMBOL1)^2+(z-0DOTSYMBOL1)^2)>1"
+          "((x-1/10)^2+(y-1/10)^2+(z-1/10)^2)>1"
         ],
         "Component": [
           " Nordstrand"
         ],
         "Fxyz": [
-          "  25*(x^3*(y+z)+y^3*(x+z)+z^3*(x+y))+50*(x^2*y^2+x^2*z^2+y^2*z^2)-125*(x^2*y*z+y^2*x*z+z^2*x*y)+60*x*y*z-4*(x*y+x*z+y*z)"
+          "25*(x^3*(y+z)+y^3*(x+z)+z^3*(x+y))+50*(x^2*y^2+x^2*z^2+y^2*z^2)-125*(x^2*y*z+y^2*x*z+z^2*x*y)+60*x*y*z-4*(x*y+x*z+y*z)"
         ],
         "Xmax": [
-          " 1DOTSYMBOL1"
+          "11/10"
         ],
         "Xmin": [
-          "-1DOTSYMBOL1"
+          "-11/10"
         ],
         "Ymax": [
-          " 1DOTSYMBOL1"
+          "11/10"
         ],
         "Ymin": [
-          "-1DOTSYMBOL1"
+          "-11/10"
         ],
         "Zmax": [
-          " 1DOTSYMBOL1"
+          "11/10"
         ],
         "Zmin": [
-          "-1DOTSYMBOL1"
+          "-11/10"
         ]
       }
     },
@@ -1045,7 +1045,7 @@
           "Togliatti"
         ],
         "Const": [
-          " w=1DOTSYMBOL3"
+          " w=13/10"
         ],
         "Fxyz": [
           "64*(x -w)*(x^4 - 4*w*x^3 -10*x^2*y^2 - 4*x^2*w^2 + 16*w^3*x - 20*w*x*y^2 + 5*y^4 + 16*w^4 - 20*y^2*w^2) -5*sqrt(5 - sqrt(5))*(2*z - sqrt(5 - sqrt(5))*w)*(4*(x^2 + y^2 - z^2) + (1 + 3*sqrt(5))*w^2)^2"
@@ -1121,7 +1121,7 @@
           "(x^2+y^2+z^2)>9"
         ],
         "Const": [
-          " w=1DOTSYMBOL0",
+          " w=1",
           " phi=(1/2)*(1+sqrt(5))"
         ],
         "Fxyz": [
