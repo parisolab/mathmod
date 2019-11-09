@@ -5363,37 +5363,6 @@
     {
       "Param3D": {
         "Name": [
-          "Shape_8"
-        ],
-        "Component": [
-          "Shape_8"
-        ],
-        "Fx": [
-          "cos(u)*cos(v)*(abs(cos(3*u/4))^100+abs(sin(3*u/4))^100)^(-1/100)*(abs(cos(2*v/4))^0DOTSYMBOL3+abs(sin(2*v/4))^0DOTSYMBOL2)^(-1/0DOTSYMBOL7)"
-        ],
-        "Fy": [
-          "cos(u)*sin(v)*(abs(cos(3*u/4))^100+abs(sin(3*u/4))^100)^(-1/100)*(abs(cos(2*v/4))^0DOTSYMBOL3+abs(sin(2*v/4))^0DOTSYMBOL2)^(-1/0DOTSYMBOL7)"
-        ],
-        "Fz": [
-          "sin(u)*(abs(cos(3*u/4))^100+abs(sin(3*u/4))^100)^(-1/100)"
-        ],
-        "Umin": [
-          "-pi/2"
-        ],
-        "Umax": [
-          "pi/2"
-        ],
-        "Vmin": [
-          "0"
-        ],
-        "Vmax": [
-          "2*pi"
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Name": [
           "Shape_9"
         ],
         "Component": [
@@ -6588,24 +6557,24 @@
           "A = 2",
           "B = 2",
           "C = 23/15",
-          "D = 9/15",
-          "E = 3/15",
-          "F = 20/10",
-          "G = 3*pi/15"
+          "D = 3/5",
+          "E = 1/5",
+          "F = 2",
+          "G = pi/5"
         ],
         "Funct": [
           "X = x",
           "Z = z",
           "r = sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t))",
-          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),         (1/100000),X(x,y,z,t))",
+          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),(1/100000),X(x,y,z,t))",
           "th = atan2(Z(x,y,z,t), X(x,y,z,t))",
           "th = ((th(x,y,z,t) * A + y * B * A) % (2*pi))",
-          "th = if (th(x,y,z,t) < (0),        th(x,y,z,t)+2*pi, th(x,y,z,t))",
+          "th = if (th(x,y,z,t) < (0),th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "Z = (th(x,y,z,t) - pi) / E / (B * A)",
           "X = r(x,y,z,t) - D",
           "Z = if ((F = 1 | G = 0)=(0), X(x,y,z,t) * sin(G * pi/180) + Z(x,y,z,t) * cos(G * pi/180) , Z(x,y,z,t))",
           "X = if ((F = 1 | G = 0)=(0), X(x,y,z,t) * cos(G * pi/180) - Z(x,y,z,t) * sin(G * pi/180) , X(x,y,z,t))",
-          "r2 = if (F = (1),        sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t)),                if ((F = 0)=(0),                        pow((pow(abs(X(x,y,z,t)), 2/F) + pow(abs(Z(x,y,z,t)), 2/F)), F *0DOTSYMBOL5),                        if (abs(X(x,y,z,t)) > abs(Z(x,y,z,t)) ,                     abs(X(x,y,z,t)) ,   abs(Z(x,y,z,t))            )    )          )",
+          "r2 = if (F = (1),sqrt(X(x,y,z,t) * X(x,y,z,t) + Z(x,y,z,t) * Z(x,y,z,t)),if ((F = 0)=(0),pow((pow(abs(X(x,y,z,t)), 2/F) + pow(abs(Z(x,y,z,t)), 2/F)), F/2),if (abs(X(x,y,z,t)) > abs(Z(x,y,z,t)),abs(X(x,y,z,t)),abs(Z(x,y,z,t)))))",
           "r3 = if((D + r(x,y,z,t)) < r2(x,y,z,t) , (D + r(x,y,z,t)) , r2(x,y,z,t))",
           "helix = (-C + r3(x,y,z,t))"
         ],
@@ -6625,10 +6594,10 @@
           "-5"
         ],
         "Zmax": [
-          "2"
+          "7/3"
         ],
         "Zmin": [
-          "-2"
+          "-7/3"
         ]
       }
     },
