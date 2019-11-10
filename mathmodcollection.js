@@ -10955,7 +10955,7 @@
           "TheBeginning2"
         ],
         "Funct": [
-          "tail=x^2+y^2+z^2-0DOTSYMBOL1*t",
+          "tail=x^2+y^2+z^2-(1/10)*t",
           "tail2=(x+sin(5*pi*y/20))^2 + (y/10)^2 + (z)^2 - 1",
           "tail3=tail2((x*30),(y*30-30),(z*30),1)"
         ],
@@ -10981,11 +10981,11 @@
         ],
         "Zmax": [
           "1",
-          "0DOTSYMBOL1"
+          "(1/10)"
         ],
         "Zmin": [
           "-1",
-          "-0DOTSYMBOL1"
+          "-(1/10)"
         ]
       },
       "Texture": {
@@ -11314,7 +11314,7 @@
           "Lamp"
         ],
         "Funct": [
-          "Hyperboloid=x^2+y^2-z^2-0DOTSYMBOL1",
+          "Hyperboloid=x^2+y^2-z^2-(1/10)",
           "Intersection=max(Hyperboloid(x,y,(z*3),1),Hyperboloid((x*3),(z*3),(y*3),2))",
           "Intersection2=max(Hyperboloid(x,y,(z+5),1),Hyperboloid(x,y,(z-5),1))",
           "Cylinders=((sqrt((x-(9/2))*(x-(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((x+(9/2))*(x+(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((y+(9/2))*(y+(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt((y-(9/2))*(y-(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-0DOTSYMBOL02)"
@@ -11683,7 +11683,7 @@
           "SpinyTorus"
         ],
         "Funct": [
-          "Thickness=-(0DOTSYMBOL27*abs(cos(11*(u+v))^2 - sin(13*(v-u))^5 ))^2DOTSYMBOL9"
+          "Thickness=-((27/100)*abs(cos(11*(u+v))^2 - sin(13*(v-u))^5 ))^(29/10)"
         ],
         "Fx": [
           "-(1+ (1/2)*cos(u))*cos(v)+Thickness(u,v,t)*((1/2)*cos(u)*(1+ (1/2)*cos(u))*cos(v))/sqrt(((1/2)*cos(u)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*sin(u)*sin(v)*sin(v)*(1+ (1/2)*cos(u))-(1/2)*sin(u)*cos(v)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*cos(u)*sin(v)*(1+ (1/2)*cos(u)))^2)"
@@ -13369,8 +13369,8 @@
       "Texture": {
         "Colors": [
           "R= if(int(i)%(M/6)>P | int(j)%(M)>P,(4/5),(4/5)) ",
-          "G= if(int(i)%(M/6)>P | int(j)%(M)>P,0DOTSYMBOL1,(4/5)) ",
-          "B= if(int(i)%(M/6)>P | int(j)%(M)>P,0DOTSYMBOL1,(4/5)) ",
+          "G= if(int(i)%(M/6)>P | int(j)%(M)>P,(1/10),(4/5)) ",
+          "B= if(int(i)%(M/6)>P | int(j)%(M)>P,(1/10),(4/5)) ",
           "T= 1 "
         ],
         "Name": "Candy",
@@ -13465,7 +13465,7 @@
           "MinV=0"
         ],
         "Funct": [
-          "th=if((M=1), (3/10)*((abs(sin(11*u)*cos(11*v)))^19+0DOTSYMBOL1*((sin(2*N*u)))),if((M=2), (9/10)*sin((N*v)% pi/3), if((M=3), (((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3) ,if((M=4), ((2/5)*sin(N*v-u)^100) , if((M=5), (2/5)*sin(N*v),if((M=6), (2/5)*sin(2*N*v-u),if((M=7), ((2/5)*sin(N*v)^10),if((M=8), -(3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(9/5))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2)),if((M=9), ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if((M=10), ((sin(9*u)*cos(9*v)))^2 +(1/2)* (sin(2*N*u)), ((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
+          "th=if((M=1), (3/10)*((abs(sin(11*u)*cos(11*v)))^19+(1/10)*((sin(2*N*u)))),if((M=2), (9/10)*sin((N*v)% pi/3), if((M=3), (((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3) ,if((M=4), ((2/5)*sin(N*v-u)^100) , if((M=5), (2/5)*sin(N*v),if((M=6), (2/5)*sin(2*N*v-u),if((M=7), ((2/5)*sin(N*v)^10),if((M=8), -(3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(9/5))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2)),if((M=9), ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if((M=10), ((sin(9*u)*cos(9*v)))^2 +(1/2)* (sin(2*N*u)), ((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
           "Fx=if(v<2*pi, (A-(A-1)*cos(v))*cos(u),if(v<3*pi, -B+(B+cos(u))*cos(v),-B+B*cos(v)-cos(u)))",
           "Fy=if(v<2*pi,(A-(A-1)*cos(v))*sin(u), sin(u))",
           "Fz=if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,((D-1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
