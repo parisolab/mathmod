@@ -677,71 +677,6 @@
         "Zmin": [
           "-1"
         ]
-      },
-      "Pigment": {
-        "Colors": [
-          {
-            "Color": {
-              "Name": "Red",
-              "Vrgba": [
-                "V=1/5",
-                "R=9/10",
-                "G=9/10",
-                "B=2/5",
-                "A=1"
-              ]
-            }
-          },
-          {
-            "Color": {
-              "Name": "Red",
-              "Vrgba": [
-                "V=3/10",
-                "R=1",
-                "G=1/10",
-                "B=31/100",
-                "A=1"
-              ]
-            }
-          },
-          {
-            "Color": {
-              "Name": "Red",
-              "Vrgba": [
-                "V=3/5",
-                "R=1",
-                "G=7/10",
-                "B=1",
-                "A=1"
-              ]
-            }
-          },
-          {
-            "Color": {
-              "Name": "Red",
-              "Vrgba": [
-                "V=3/5",
-                "R=1",
-                "G=3/10",
-                "B=1/10",
-                "A=1"
-              ]
-            }
-          },
-          {
-            "Color": {
-              "Name": "Red",
-              "Vrgba": [
-                "V=2/5",
-                "R=3/20",
-                "G=6/10",
-                "B=1/10",
-                "A=1"
-              ]
-            }
-          }
-        ],
-        "Gradient": "3*cos((x*x +y*y)*pi)*cos(x*y*pi)*cos((x*y +z*z)*pi)*cos(z*y*pi)"
       }
     },
     {
@@ -6993,7 +6928,7 @@
           "f_hex_y_1=if(z*z-(1/100) < (0),f_hex_y(sin(x),(13/10)*sin(y),2*z,0),1)-(1/10)",
           "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(15/10),t)",
           "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(43/10)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
-          "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)  +exp((sqrt(x*x+y*y)-9/2)^2+z*z-1)"
+          "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
         ],
         "Fxyz": [
           "Torus(x,y,z,t)"
