@@ -6071,10 +6071,10 @@
     },
     {
       "Param3D": {
-        "Description": ["Helicoid_Catenoid by Abderrahman Taha 04/11/2019"
+        "Description": ["Helicoid to Catenoid by Abderrahman Taha 04/11/2019"
         ],
         "Name": [
-          "Helicoid_Catenoid"
+          "Helicoid_To_Catenoid"
         ],
         "Component": [
           "HelicoidCatenoid"
@@ -10034,40 +10034,6 @@
         "Vmin": [
           "0",
           "0"
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Description": [
-          "Helicoid to Catenoid by Abderrahman Taha 05/11/2015"
-        ],
-        "Name": [
-          "Helicoid to Catenoid"
-        ],
-        "Component": [
-          "HelicoidCatenoid"
-        ],
-        "Fx": [
-          "cos(2*t*pi)*sinh(v)*sin(u) + sin(2*t*pi)*cosh(v)*cos(u)"
-        ],
-        "Fy": [
-          "-cos(2*t*pi)*sinh(v)*cos(u) + sin(2*t*pi)*cosh(v)*sin(u)"
-        ],
-        "Fz": [
-          "3*(u*cos(2*t*pi) + v*sin(2*t*pi))"
-        ],
-        "Umax": [
-          "pi"
-        ],
-        "Umin": [
-          "-pi"
-        ],
-        "Vmax": [
-          "pi"
-        ],
-        "Vmin": [
-          "-pi"
         ]
       }
     },
