@@ -10446,7 +10446,7 @@
                   "C=1/4"
                 ],
                 "Cnd": [
-                  "(z-C)*(z+C)*(z-2*C)*(z+2*C)*(z-3*C)*(z+3*C)*(z-1)*(z+1)*(z-6*C)*(z+1DOTSYMBOL5)*(z-5*C)*(z+5*C)>0"
+                  "(z-C)*(z+C)*(z-2*C)*(z+2*C)*(z-3*C)*(z+3*C)*(z-1)*(z+1)*(z-6*C)*(z+(3/2))*(z-5*C)*(z+5*C)>0"
                 ],
                 "Component": [
                   "Drope"
@@ -10818,7 +10818,7 @@
         "Colors": [
           "R=0DOTSYMBOL9",
           "G=1DOTSYMBOL5*abs(cos((x*x+y*y+z*z)/3)*sin((x*x+y*y+z*z)/3))",
-          "B=0DOTSYMBOL2*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
+          "B=(1/5)*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
           "T=1"
         ],
         "Name": "WorleyNoise",
@@ -11018,7 +11018,7 @@
           "N3=6"
         ],
         "Funct": [
-          "Thickness= (0DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^7 + 0DOTSYMBOL2*((sin(N3*u))))",
+          "Thickness= ((1/5)*(abs(sin(N1*u)*cos(N2*v)))^7 + (1/5)*((sin(N3*u))))",
           "Fx=-(abs(u)-1)^2 * cos(v)",
           "Fy=u",
           "Fz=(abs(u)-1)^2 * sin(v)",
@@ -11078,7 +11078,7 @@
           "N3=5"
         ],
         "Funct": [
-          "Thickness= (0DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
+          "Thickness= ((1/5)*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
           "Fx=-(abs(u)-1)^2 * cos(v)",
           "Fy=u",
           "Fz=(abs(u)-1)^2 * sin(v)",
@@ -11138,7 +11138,7 @@
           "N3=5"
         ],
         "Funct": [
-          "Thickness= -(0DOTSYMBOL2*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
+          "Thickness= -((1/5)*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
           "Fx=-(abs(u)-1)^2 * cos(v)",
           "Fy=u",
           "Fz=(abs(u)-1)^2 * sin(v)",
@@ -11195,7 +11195,7 @@
           "cv=0DOTSYMBOL0001"
         ],
         "Funct": [
-          "Thickness= 0DOTSYMBOL2*(abs(sin(14*u)*cos(14*v)))^9 + 0DOTSYMBOL4*((sin(8*u)))",
+          "Thickness= (1/5)*(abs(sin(14*u)*cos(14*v)))^9 + 0DOTSYMBOL4*((sin(8*u)))",
           "Fx=-cos(u) / (sqrt(2) + sin(v))",
           "Fy=1 / (sqrt(2) + cos(v))",
           "Fz=sin(u) / (sqrt(2) + sin(v))",
@@ -11254,7 +11254,7 @@
           "N=1DOTSYMBOL5"
         ],
         "Funct": [
-          "Thickness1=if((t = 1), -if (sin(u*(sin(14*v-10*u))) <0DOTSYMBOL4,(-1),0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >0DOTSYMBOL4,(-1),0DOTSYMBOL2*(13*u-pi)*(cos(u)-sin(u))))",
+          "Thickness1=if((t = 1), -if (sin(u*(sin(14*v-10*u))) <0DOTSYMBOL4,(-1),(1/5)*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >0DOTSYMBOL4,(-1),(1/5)*(13*u-pi)*(cos(u)-sin(u))))",
           "Fx=cos(u)*cos(v)",
           "Fy=sin(u)",
           "Fz=cos(u)*sin(v)",
@@ -11317,7 +11317,7 @@
           "Hyperboloid=x^2+y^2-z^2-0DOTSYMBOL1",
           "Intersection=max(Hyperboloid(x,y,(z*3),1),Hyperboloid((x*3),(z*3),(y*3),2))",
           "Intersection2=max(Hyperboloid(x,y,(z+5),1),Hyperboloid(x,y,(z-5),1))",
-          "Cylinders=((sqrt((x-4DOTSYMBOL5)*(x-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-0DOTSYMBOL25)*((sqrt((x+4DOTSYMBOL5)*(x+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-0DOTSYMBOL25)*((sqrt((y+4DOTSYMBOL5)*(y+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-0DOTSYMBOL25)*((sqrt((y-4DOTSYMBOL5)*(y-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-0DOTSYMBOL25)*((sqrt(x*x+y*y)-5)^2+z*z-0DOTSYMBOL25)*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-0DOTSYMBOL02)"
+          "Cylinders=((sqrt((x-4DOTSYMBOL5)*(x-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-(1/4))*((sqrt((x+4DOTSYMBOL5)*(x+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-(1/4))*((sqrt((y+4DOTSYMBOL5)*(y+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-(1/4))*((sqrt((y-4DOTSYMBOL5)*(y-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-0DOTSYMBOL02)"
         ],
         "Fxyz": [
           "(Intersection2(x,y,z,t)*Cylinders(x,y,z,t))-50000"
@@ -12605,9 +12605,9 @@
           "cy=0DOTSYMBOL0001",
           "cz=0DOTSYMBOL0001",
           "S=6",
-          "Thickness2=(0DOTSYMBOL25)",
-          "Thickness4=(0DOTSYMBOL2)",
-          "Thickness5=(0DOTSYMBOL2)",
+          "Thickness2=(1/4)",
+          "Thickness4=(1/5)",
+          "Thickness5=(1/5)",
           "Thickness6=(1DOTSYMBOL2)",
           "Thickness7=(1DOTSYMBOL2)"
         ],
@@ -12712,16 +12712,16 @@
           "cy=0DOTSYMBOL0001",
           "cz=0DOTSYMBOL0001",
           "S=6",
-          "Thickness2=(0DOTSYMBOL25)",
-          "Thickness4=(0DOTSYMBOL2)",
-          "Thickness5=(0DOTSYMBOL2)",
-          "Thickness6=(1DOTSYMBOL2)",
-          "Thickness7=(1DOTSYMBOL2)"
+          "Thickness2=(1/4)",
+          "Thickness4=(1/5)",
+          "Thickness5=(1/5)",
+          "Thickness6=(6/5)",
+          "Thickness7=(6/5)"
         ],
         "Funct": [
           "Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
           "Angle2=atan2(x,(y+cx))",
-          "CarvinCondition=abs((z-1)-0DOTSYMBOL8*cos(18*Angle2(x,y,z,t)/pi))<10DOTSYMBOL3|abs((z+3)-0DOTSYMBOL3*cos(18*Angle2(x,y,z,t)/pi+pi/4))<0DOTSYMBOL5",
+          "CarvinCondition=abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(103/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<0DOTSYMBOL5",
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
           "Bottom=(x*x+y*y+z*z-1)",
           "IsoExterior=x*x/3DOTSYMBOL+y*y/3DOTSYMBOL-abs(1DOTSYMBOL5*sin(2*z/pi+0DOTSYMBOL3)+1DOTSYMBOL8)",
@@ -12809,9 +12809,9 @@
           "cx=0DOTSYMBOL0001",
           "cy=0DOTSYMBOL0001",
           "cz=0DOTSYMBOL0001",
-          "Thickness2=(0DOTSYMBOL25)",
-          "Thickness4=(0DOTSYMBOL2)",
-          "Thickness5=(0DOTSYMBOL2)",
+          "Thickness2=(1/4)",
+          "Thickness4=(1/5)",
+          "Thickness5=(1/5)",
           "Thickness6=(1DOTSYMBOL2)",
           "Thickness7=(1DOTSYMBOL2)"
         ],
