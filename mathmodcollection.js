@@ -13825,7 +13825,7 @@
           "Twisted_Strip by Abderrahman Taha 04/10/2019"
         ],
         "Name": [
-          "Twisted_Strip_02"
+          "Twisted_Strip"
         ],
         "Component": [
           "TwistedStrip"
@@ -14362,40 +14362,6 @@
         ],
         "Zmin": [
           "-11 "
-        ]
-      }
-    },
-    {
-      "Param3D": {
-        "Description": [
-          "Twisted Strip by Abderrahman Taha 07/10/2019"
-        ],
-        "Name": [
-          "Twisted_Strip"
-        ],
-        "Component": [
-          "TwistedStrip"
-        ],
-        "Fx": [
-          "cos(v)+(14/10)*u*cos(6*v+5*sin(t+v))*cos(v)"
-        ],
-        "Fy": [
-          "sin(v)+(14/10)*u*cos(6*v+5*sin(t+v))*sin(v)"
-        ],
-        "Fz": [
-          "(14/10)*u*sin(6*v+5*sin(t+v))"
-        ],
-        "Umax": [
-          "4/10"
-        ],
-        "Umin": [
-          "-4/10"
-        ],
-        "Vmax": [
-          "2*pi"
-        ],
-        "Vmin": [
-          "0"
         ]
       }
     },
