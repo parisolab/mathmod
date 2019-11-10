@@ -10749,22 +10749,22 @@
           "D = u^100"
         ],
         "Xmax": [
-          " 1DOTSYMBOL001"
+          " (1001/1000)"
         ],
         "Xmin": [
-          "-1DOTSYMBOL001"
+          "-(1001/1000)"
         ],
         "Ymax": [
-          " 1DOTSYMBOL001"
+          " (1001/1000)"
         ],
         "Ymin": [
-          "-1DOTSYMBOL001"
+          "-(1001/1000)"
         ],
         "Zmax": [
-          " 1DOTSYMBOL001"
+          " (1001/1000)"
         ],
         "Zmin": [
-          "-1DOTSYMBOL001"
+          "-(1001/1000)"
         ]
       }
     },
@@ -10902,9 +10902,9 @@
         ],
         "Funct": [
           "Thickness= ((sin(15*u)*cos(15*v)))^4 + (sin(2*N*u))",
-          "Fx=-cos(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
+          "Fx=-cos(u+v)/(sqrt(2)+cos(v-u))",
           "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
-          "Fz=sin(u+v)/(sqrt(2DOTSYMBOL)+cos(v-u))",
+          "Fz=sin(u+v)/(sqrt(2)+cos(v-u))",
           "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
           "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
           "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
@@ -10973,7 +10973,7 @@
         ],
         "Ymax": [
           "1",
-          "1DOTSYMBOL4"
+          "(7/5)"
         ],
         "Ymin": [
           "-1",
@@ -10991,7 +10991,7 @@
       "Texture": {
         "Colors": [
           "R=(3/5)",
-          "G=2DOTSYMBOL4*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
+          "G=(12/5)*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
           "B=(7/10)*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
@@ -11011,8 +11011,8 @@
           "SpaceShip"
         ],
         "Const": [
-          "cu=0DOTSYMBOL000001",
-          "cv=0DOTSYMBOL000001",
+          "cu=(1/1000000)",
+          "cv=(1/1000000)",
           "N1=16",
           "N2=11",
           "N3=6"
@@ -11071,14 +11071,14 @@
           "SpaceShip"
         ],
         "Const": [
-          "cu=0DOTSYMBOL000001",
-          "cv=0DOTSYMBOL000001",
+          "cu=(1/1000000)",
+          "cv=(1/1000000)",
           "N1=12",
           "N2=7",
           "N3=5"
         ],
         "Funct": [
-          "Thickness= ((1/5)*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
+          "Thickness= ((1/5)*(abs(sin(N1*u)*cos(N2*v)))^6 + (1/100)*((sin(N3*u))))",
           "Fx=-(abs(u)-1)^2 * cos(v)",
           "Fy=u",
           "Fz=(abs(u)-1)^2 * sin(v)",
@@ -11131,14 +11131,14 @@
           "SpaceShip"
         ],
         "Const": [
-          "cu=0DOTSYMBOL000001",
-          "cv=0DOTSYMBOL000001",
+          "cu=(1/1000000)",
+          "cv=(1/1000000)",
           "N1=12",
           "N2=7",
           "N3=5"
         ],
         "Funct": [
-          "Thickness= -((1/5)*(abs(sin(N1*u)*cos(N2*v)))^6 + 0DOTSYMBOL01*((sin(N3*u))))",
+          "Thickness= -((1/5)*(abs(sin(N1*u)*cos(N2*v)))^6 + (1/100)*((sin(N3*u))))",
           "Fx=-(abs(u)-1)^2 * cos(v)",
           "Fy=u",
           "Fz=(abs(u)-1)^2 * sin(v)",
@@ -11249,8 +11249,8 @@
           "SphereModelling2"
         ],
         "Const": [
-          "cu=0DOTSYMBOL00001",
-          "cv=0DOTSYMBOL00001",
+          "cu=(1/100000)",
+          "cv=(1/100000)",
           "N=(3/2)"
         ],
         "Funct": [
@@ -11317,7 +11317,7 @@
           "Hyperboloid=x^2+y^2-z^2-(1/10)",
           "Intersection=max(Hyperboloid(x,y,(z*3),1),Hyperboloid((x*3),(z*3),(y*3),2))",
           "Intersection2=max(Hyperboloid(x,y,(z+5),1),Hyperboloid(x,y,(z-5),1))",
-          "Cylinders=((sqrt((x-(9/2))*(x-(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((x+(9/2))*(x+(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((y+(9/2))*(y+(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt((y-(9/2))*(y-(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-0DOTSYMBOL02)"
+          "Cylinders=((sqrt((x-(9/2))*(x-(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((x+(9/2))*(x+(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((y+(9/2))*(y+(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt((y-(9/2))*(y-(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-(1/50))"
         ],
         "Fxyz": [
           "(Intersection2(x,y,z,t)*Cylinders(x,y,z,t))-50000"
@@ -11364,7 +11364,7 @@
           "Pseudo-4-Noids"
         ],
         "Fxyz": [
-          "((x^2) - (685/1000)*(y)^2)^2 - (5/2)*(z)^2 - (x^2 + (3/4)*abs(y*cos((3/10)*x) - z*sin((3/5)*x))^2 + (y*sin((3/2)*x) + z*cos(0DOTSYMBOL05*x))^2-(1/2))"
+          "((x^2) - (685/1000)*(y)^2)^2 - (5/2)*(z)^2 - (x^2 + (3/4)*abs(y*cos((3/10)*x) - z*sin((3/5)*x))^2 + (y*sin((3/2)*x) + z*cos((1/20)*x))^2-(1/2))"
         ],
         "Xmax": [
           " (19/10)"
@@ -12608,8 +12608,8 @@
           "Thickness2=(1/4)",
           "Thickness4=(1/5)",
           "Thickness5=(1/5)",
-          "Thickness6=(1DOTSYMBOL2)",
-          "Thickness7=(1DOTSYMBOL2)"
+          "Thickness6=(6/5)",
+          "Thickness7=(6/5)"
         ],
         "Funct": [
           "Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
@@ -12642,7 +12642,7 @@
         ],
         "Fxyz": [
           "VaseBottom(x*cos(-pi/5)-y*sin(-pi/5),x*sin(-pi/5)+y*cos(-pi/5),z,t)",
-          "((x*x+y*y)/5DOTSYMBOL76+4*(z+5DOTSYMBOL1)*(z+5DOTSYMBOL1)-1)",
+          "((x*x+y*y)/(576/100)+4*(z+(51/10))*(z+(51/10))-1)",
           "VaseHead2(x*cos(pi/2)-y*sin(pi/2)-(5),(x*sin(pi/2)+y*cos(pi/2)+6),z,t)",
           "Torus3((x*cos(pi/2)-y*sin(pi/2)-5),(x*sin(pi/2)+y*cos(pi/2)+6),z,t)"
         ],
@@ -12687,7 +12687,7 @@
         "Colors": [
           "R=abs(cos(z*y*x*y))",
           "G=(9/20)*abs(cos(z*y*x*y))",
-          "B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
+          "B=(1/50)*abs(cos(-z*x*z*x*y*y))",
           "T=1"
         ],
         "Name": "Granit_1",
@@ -12745,7 +12745,7 @@
         "Fxyz": [
           "isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
           "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
-          "Bottom(x/2DOTSYMBOL4,y/2DOTSYMBOL4,2*(z+5DOTSYMBOL1),t)"
+          "Bottom(x/(12/5),y/(12/5),2*(z+5DOTSYMBOL1),t)"
         ],
         "Xmax": [
           "7/2",
@@ -12782,7 +12782,7 @@
         "Colors": [
           "R=abs(cos(z*y*x*y))",
           "G=(9/20)*abs(cos(z*y*x*y))",
-          "B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
+          "B=(1/50)*abs(cos(-z*x*z*x*y*y))",
           "T=1"
         ],
         "Name": "Granit_1",
@@ -12812,13 +12812,13 @@
           "Thickness2=(1/4)",
           "Thickness4=(1/5)",
           "Thickness5=(1/5)",
-          "Thickness6=(1DOTSYMBOL2)",
-          "Thickness7=(1DOTSYMBOL2)"
+          "Thickness6=(6/5)",
+          "Thickness7=(6/5)"
         ],
         "Funct": [
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
           "Bottom=(x*x + y*y + z*z - 1)",
-          "CarvinCondition=sin(atan2(sqrt(x*x+y*y),(-z+cx)))>1/1DOTSYMBOL1",
+          "CarvinCondition=sin(atan2(sqrt(x*x+y*y),(-z+cx)))>1/(11/10)",
           "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
           "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
           "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
@@ -12845,7 +12845,7 @@
           "isoTransform_4(x,y,-z,t)",
           "isoTransform_5(x,y,-z,t)",
           "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
-          "Bottom(x/2DOTSYMBOL4,y/2DOTSYMBOL4,2*(z+5DOTSYMBOL1),t)"
+          "Bottom(x/(12/5),y/(12/5),2*(z+5DOTSYMBOL1),t)"
         ],
         "Xmax": [
           "5",
@@ -13316,7 +13316,7 @@
           "k1=5",
           "L=(3/2)",
           "r0=6",
-          "dv=0DOTSYMBOL01",
+          "dv=(1/100)",
           "P=5",
           "MM=10"
         ],
@@ -13392,7 +13392,7 @@
           "k=7",
           "L=(3/2)",
           "r0=12",
-          "dv=0DOTSYMBOL01"
+          "dv=(1/100)"
         ],
         "Funct": [
           "Fx=(1+(1/2)*cos(t+v))*cos(pi-k*(v))",
