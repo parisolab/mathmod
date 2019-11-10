@@ -10990,7 +10990,7 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL6",
+          "R=(3/5)",
           "G=2DOTSYMBOL4*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
           "B=(7/10)*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
@@ -11364,7 +11364,7 @@
           "Pseudo-4-Noids"
         ],
         "Fxyz": [
-          "((x^2) - 0DOTSYMBOL685*(y)^2)^2 - (5/2)*(z)^2 - (x^2 + (3/4)*abs(y*cos((3/10)*x) - z*sin((3/5)*x))^2 + (y*sin((3/2)*x) + z*cos(0DOTSYMBOL05*x))^2-(1/2))"
+          "((x^2) - (685/1000)*(y)^2)^2 - (5/2)*(z)^2 - (x^2 + (3/4)*abs(y*cos((3/10)*x) - z*sin((3/5)*x))^2 + (y*sin((3/2)*x) + z*cos(0DOTSYMBOL05*x))^2-(1/2))"
         ],
         "Xmax": [
           " (19/10)"
@@ -12636,7 +12636,7 @@
           "isoTransform_6=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0) ,-ThickIso2(S*x,S*y,S*z,t)*Iso6(x*S,y*S,z*S,-1)*(Iso6(x*S,y*S,z*S,1)),1)",
           "VaseHead=if(CarvinCondition2(x,y,z,t),isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t),1)",
           "VaseHead2=VaseHead((x+6)*cos(-pi/2)-(z+(5/2))*sin(-pi/2),y,(x+6)*sin(-pi/2)+(z+(5/2))*cos(-pi/2),t)",
-          "Torus2=Torus((17/10)*x,(17/10)*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
+          "Torus2=Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
           "Torus3=Torus2((x+6)*cos(-pi/2)-(z+(5/2))*sin(-pi/2),y,(x+6)*sin(-pi/2)+(z+(5/2))*cos(-pi/2),t)",
           "VaseBottom=if((CarvinCondition2(x,y,z,t)=0),isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t),1)"
         ],
@@ -12744,7 +12744,7 @@
         ],
         "Fxyz": [
           "isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
-          "Torus((17/10)*x,(17/10)*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
+          "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
           "Bottom(x/2DOTSYMBOL4,y/2DOTSYMBOL4,2*(z+5DOTSYMBOL1),t)"
         ],
         "Xmax": [
@@ -12844,7 +12844,7 @@
           "isoTransform_3(x,y,-z,t)",
           "isoTransform_4(x,y,-z,t)",
           "isoTransform_5(x,y,-z,t)",
-          "Torus((17/10)*x,(17/10)*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
+          "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
           "Bottom(x/2DOTSYMBOL4,y/2DOTSYMBOL4,2*(z+5DOTSYMBOL1),t)"
         ],
         "Xmax": [
@@ -12954,8 +12954,8 @@
           "PseudoDuplin"
         ],
         "Const": [
-          "Th1= 9/10",
-          "Th2= 4/10"
+          "Th1=9/10",
+          "Th2=2/5"
         ],
         "Funct": [
           "Iso=cos(x)+cos(y)+cos(z)",
@@ -12969,9 +12969,9 @@
           "Iso4=(Iso(x-Th2*Rap(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-Th2*Rap(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z-Th2*Rap(DFz(x,y,z,t),DFy(x,y,z,t),DFx(x,y,z,t),t),t))",
           "Iso5=(Iso(x+Th2*Rap(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th2*Rap(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z+Th2*Rap(DFz(x,y,z,t),DFy(x,y,z,t),DFx(x,y,z,t),t),t))",
           "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
-          "isoCondition=(-51DOTSYMBOL11)*(x^4+y^4+z^4)-99DOTSYMBOL92*(x^2*y^2+x^2*z^2+y^2*z^2)+141DOTSYMBOL12*(x-1)*(x^2+y^2+z^2)+256*x*(x-2)+282DOTSYMBOL24*y^2+270",
-          "isoTransform_2=if((isoCondition((x/4),(y/4),(z/4),t)>0),ThickIso2(4*x,2*y,2*z,t),1)+0DOTSYMBOL05*exp((ThickIso2(4*x,2*y,2*z,t)+isoCondition((x/4),(y/4),(z/4),t))/300)",
-          "isoTransform_6=isoTransform_2(x,y*cos((4944/10000)*(x))-z*sin( (4944/10000)*(x)),y*sin( (4944/10000)*(x))+z*cos( (4944/10000)*(x)),t)"
+          "isoCondition=(-51)*(x^4+y^4+z^4)-100*(x^2*y^2+x^2*z^2+y^2*z^2)+(14112/100)*(x-1)*(x^2+y^2+z^2)+256*x*(x-2)+(28224/100)*y^2+270",
+          "isoTransform_2=if((isoCondition((x/4),(y/4),(z/4),t)>0),ThickIso2(4*x,2*y,2*z,t),1)+(1/20)*exp((ThickIso2(4*x,2*y,2*z,t)+isoCondition((x/4),(y/4),(z/4),t))/300)",
+          "isoTransform_6=isoTransform_2(x,y*cos((4944/10000)*(x))-z*sin((4944/10000)*(x)),y*sin( (4944/10000)*(x))+z*cos( (4944/10000)*(x)),t)"
         ],
         "Fxyz": [
           "-isoTransform_6((x/2),y,z,t)"
