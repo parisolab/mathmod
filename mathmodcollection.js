@@ -10780,7 +10780,7 @@
           "Virus"
         ],
         "Funct": [
-          "Thickness= -0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5)",
+          "Thickness= -(3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(9/5))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2))",
           "n1= (-(cos(u))*(cos(u)*cos(v)))",
           "n2= ((cos(u))*(-sin(v)*cos(u)))",
           "n3= ((-sin(u)*cos(v))*(cos(u)*cos(v))-(-sin(u)*sin(v))*(-sin(v)*cos(u)))",
@@ -10816,8 +10816,8 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL9",
-          "G=1DOTSYMBOL5*abs(cos((x*x+y*y+z*z)/3)*sin((x*x+y*y+z*z)/3))",
+          "R=(9/10)",
+          "G=(3/2)*abs(cos((x*x+y*y+z*z)/3)*sin((x*x+y*y+z*z)/3))",
           "B=(1/5)*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
           "T=1"
         ],
@@ -10965,7 +10965,7 @@
         ],
         "Xmax": [
           "1",
-          "-0DOTSYMBOL5"
+          "-(1/2)"
         ],
         "Xmin": [
           "-1",
@@ -10977,7 +10977,7 @@
         ],
         "Ymin": [
           "-1",
-          "0DOTSYMBOL5"
+          "(1/2)"
         ],
         "Zmax": [
           "1",
@@ -10992,7 +10992,7 @@
         "Colors": [
           "R=0DOTSYMBOL6",
           "G=2DOTSYMBOL4*(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))*sin((x*x+y*y+z*z)/2)",
-          "B=0DOTSYMBOL7*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
+          "B=(7/10)*(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
           "T=1"
         ],
         "Name": "WorleyNoise",
@@ -11191,11 +11191,11 @@
           "LumpetTori"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
+          "cu=(1/10000)",
+          "cv=(1/10000)"
         ],
         "Funct": [
-          "Thickness= (1/5)*(abs(sin(14*u)*cos(14*v)))^9 + 0DOTSYMBOL4*((sin(8*u)))",
+          "Thickness= (1/5)*(abs(sin(14*u)*cos(14*v)))^9 + (2/5)*((sin(8*u)))",
           "Fx=-cos(u) / (sqrt(2) + sin(v))",
           "Fy=1 / (sqrt(2) + cos(v))",
           "Fz=sin(u) / (sqrt(2) + sin(v))",
@@ -11251,10 +11251,10 @@
         "Const": [
           "cu=0DOTSYMBOL00001",
           "cv=0DOTSYMBOL00001",
-          "N=1DOTSYMBOL5"
+          "N=(3/2)"
         ],
         "Funct": [
-          "Thickness1=if((t = 1), -if (sin(u*(sin(14*v-10*u))) <0DOTSYMBOL4,(-1),(1/5)*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >0DOTSYMBOL4,(-1),(1/5)*(13*u-pi)*(cos(u)-sin(u))))",
+          "Thickness1=if((t = 1), -if (sin(u*(sin(14*v-10*u))) <(2/5),(-1),(1/5)*(13*u-pi)*(cos(u)-sin(u))) ,-if (sin(u*(sin(14*v-10*u))) >(2/5),(-1),(1/5)*(13*u-pi)*(cos(u)-sin(u))))",
           "Fx=cos(u)*cos(v)",
           "Fy=sin(u)",
           "Fz=cos(u)*sin(v)",
@@ -11317,22 +11317,22 @@
           "Hyperboloid=x^2+y^2-z^2-0DOTSYMBOL1",
           "Intersection=max(Hyperboloid(x,y,(z*3),1),Hyperboloid((x*3),(z*3),(y*3),2))",
           "Intersection2=max(Hyperboloid(x,y,(z+5),1),Hyperboloid(x,y,(z-5),1))",
-          "Cylinders=((sqrt((x-4DOTSYMBOL5)*(x-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-(1/4))*((sqrt((x+4DOTSYMBOL5)*(x+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+y*y-(1/4))*((sqrt((y+4DOTSYMBOL5)*(y+4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-(1/4))*((sqrt((y-4DOTSYMBOL5)*(y-4DOTSYMBOL5)+z*z)-2DOTSYMBOL5)^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-0DOTSYMBOL02)"
+          "Cylinders=((sqrt((x-(9/2))*(x-(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((x+(9/2))*(x+(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((y+(9/2))*(y+(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt((y-(9/2))*(y-(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-0DOTSYMBOL02)"
         ],
         "Fxyz": [
           "(Intersection2(x,y,z,t)*Cylinders(x,y,z,t))-50000"
         ],
         "Xmax": [
-          "8DOTSYMBOL5"
+          "(17/2)"
         ],
         "Xmin": [
-          "-8DOTSYMBOL5"
+          "-(17/2)"
         ],
         "Ymax": [
-          "8DOTSYMBOL5"
+          "(17/2)"
         ],
         "Ymin": [
-          "-8DOTSYMBOL5"
+          "-(17/2)"
         ],
         "Zmax": [
           "6"
@@ -11343,13 +11343,13 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL88*abs(cos(z*y*x))",
-          "G=0DOTSYMBOL43*abs(cos(z*y*x))",
-          "B=0DOTSYMBOL019*abs(cos(-z*x*z*x*y*y))",
+          "R=(22/25)*abs(cos(z*y*x))",
+          "G=(2/5)*abs(cos(z*y*x))",
+          "B=(1/50)*abs(cos(-z*x*z*x*y*y))",
           "T=1"
         ],
         "Name": "Granit_1",
-        "Noise": "NoiseP((x-14),(y-17),(z-16),(10),(7),(2/10))/1DOTSYMBOL1"
+        "Noise": "NoiseP((x-14),(y-17),(z-16),(10),(7),(2/10))*(10/11)"
       }
     },
     {
@@ -11364,25 +11364,25 @@
           "Pseudo-4-Noids"
         ],
         "Fxyz": [
-          "((x^2) - 0DOTSYMBOL685*(y)^2)^2 - 2DOTSYMBOL5*(z)^2 - (x^2 + 0DOTSYMBOL75*abs(y*cos(0DOTSYMBOL3*x) - z*sin(0DOTSYMBOL6*x))^2 + (y*sin(1DOTSYMBOL5*x) + z*cos(0DOTSYMBOL05*x))^2-0DOTSYMBOL5)"
+          "((x^2) - 0DOTSYMBOL685*(y)^2)^2 - (5/2)*(z)^2 - (x^2 + (3/4)*abs(y*cos((3/10)*x) - z*sin((3/5)*x))^2 + (y*sin((3/2)*x) + z*cos(0DOTSYMBOL05*x))^2-(1/2))"
         ],
         "Xmax": [
-          " 1DOTSYMBOL9"
+          " (19/10)"
         ],
         "Xmin": [
-          "-1DOTSYMBOL9"
+          "-(19/10)"
         ],
         "Ymax": [
-          " 1DOTSYMBOL5"
+          " (3/2)"
         ],
         "Ymin": [
-          "-1DOTSYMBOL5"
+          "-(3/2)"
         ],
         "Zmax": [
-          " 1DOTSYMBOL8"
+          " (9/5)"
         ],
         "Zmin": [
-          "-1DOTSYMBOL8"
+          "-(9/5)"
         ]
       }
     },
@@ -11570,8 +11570,8 @@
           "Alien"
         ],
         "Const": [
-          "cu=0DOTSYMBOL0001",
-          "cv=0DOTSYMBOL0001"
+          "cu=(1/10000)",
+          "cv=(1/10000)"
         ],
         "Funct": [
           "Fx=-cos(u) *(3 *cos(v) - cos(3 *v))",
@@ -11587,10 +11587,10 @@
           "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
           "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
           "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-          "Thickness= (0DOTSYMBOL4*abs(cos(11*(u))^2 - sin(13*(v))^5 ))^3",
-          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/(R(u,v,t)+0DOTSYMBOL0001)",
-          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/(R(u,v,t)+0DOTSYMBOL0001)",
-          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/(R(u,v,t)+0DOTSYMBOL0001)"
+          "Thickness= ((2/5)*abs(cos(11*(u))^2 - sin(13*(v))^5 ))^3",
+          "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/(R(u,v,t)+(1/10000))",
+          "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/(R(u,v,t)+(1/10000))",
+          "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/(R(u,v,t)+(1/10000))"
         ],
         "Fx": [
           "Gx(u*cos(v),v*sin(u),t)"
@@ -11686,13 +11686,13 @@
           "Thickness=-(0DOTSYMBOL27*abs(cos(11*(u+v))^2 - sin(13*(v-u))^5 ))^2DOTSYMBOL9"
         ],
         "Fx": [
-          "-(1+ 0DOTSYMBOL5*cos(u))*cos(v)+Thickness(u,v,t)*(0DOTSYMBOL5*cos(u)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))/sqrt((0DOTSYMBOL5*cos(u)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))^2+(-0DOTSYMBOL5*sin(u)*sin(v)*sin(v)*(1+ 0DOTSYMBOL5*cos(u))-0DOTSYMBOL5*sin(u)*cos(v)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))^2+(-0DOTSYMBOL5*cos(u)*sin(v)*(1+ 0DOTSYMBOL5*cos(u)))^2)"
+          "-(1+ (1/2)*cos(u))*cos(v)+Thickness(u,v,t)*((1/2)*cos(u)*(1+ (1/2)*cos(u))*cos(v))/sqrt(((1/2)*cos(u)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*sin(u)*sin(v)*sin(v)*(1+ (1/2)*cos(u))-(1/2)*sin(u)*cos(v)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*cos(u)*sin(v)*(1+ (1/2)*cos(u)))^2)"
         ],
         "Fy": [
-          "0DOTSYMBOL5*sin(u)+Thickness(u,v,t)*(-0DOTSYMBOL5*sin(u)*sin(v)*sin(v)*(1+ 0DOTSYMBOL5*cos(u))-0DOTSYMBOL5*sin(u)*cos(v)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))/sqrt((0DOTSYMBOL5*cos(u)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))^2+(-0DOTSYMBOL5*sin(u)*sin(v)*sin(v)*(1+ 0DOTSYMBOL5*cos(u))-0DOTSYMBOL5*sin(u)*cos(v)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))^2+(-0DOTSYMBOL5*cos(u)*sin(v)*(1+ 0DOTSYMBOL5*cos(u)))^2)"
+          "(1/2)*sin(u)+Thickness(u,v,t)*(-(1/2)*sin(u)*sin(v)*sin(v)*(1+ (1/2)*cos(u))-(1/2)*sin(u)*cos(v)*(1+ (1/2)*cos(u))*cos(v))/sqrt(((1/2)*cos(u)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*sin(u)*sin(v)*sin(v)*(1+ (1/2)*cos(u))-(1/2)*sin(u)*cos(v)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*cos(u)*sin(v)*(1+ (1/2)*cos(u)))^2)"
         ],
         "Fz": [
-          "(1+ 0DOTSYMBOL5*cos(u))*sin(v)+Thickness(u,v,t)*(-0DOTSYMBOL5*cos(u)*sin(v)*(1+ 0DOTSYMBOL5*cos(u)))/sqrt((0DOTSYMBOL5*cos(u)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))^2+(-0DOTSYMBOL5*sin(u)*sin(v)*sin(v)*(1+ 0DOTSYMBOL5*cos(u))-0DOTSYMBOL5*sin(u)*cos(v)*(1+ 0DOTSYMBOL5*cos(u))*cos(v))^2+(-0DOTSYMBOL5*cos(u)*sin(v)*(1+ 0DOTSYMBOL5*cos(u)))^2)"
+          "(1+ (1/2)*cos(u))*sin(v)+Thickness(u,v,t)*(-(1/2)*cos(u)*sin(v)*(1+ (1/2)*cos(u)))/sqrt(((1/2)*cos(u)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*sin(u)*sin(v)*sin(v)*(1+ (1/2)*cos(u))-(1/2)*sin(u)*cos(v)*(1+ (1/2)*cos(u))*cos(v))^2+(-(1/2)*cos(u)*sin(v)*(1+ (1/2)*cos(u)))^2)"
         ],
         "Umax": [
           "2*pi"
@@ -12601,9 +12601,9 @@
           "Vase4"
         ],
         "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001",
+          "cx=(1/10000)",
+          "cy=(1/10000)",
+          "cz=(1/10000)",
           "S=6",
           "Thickness2=(1/4)",
           "Thickness4=(1/5)",
@@ -12614,10 +12614,10 @@
         "Funct": [
           "Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
           "Angle2=atan2(x,(y+cx))",
-          "CarvinCondition=(abs((z-1)-0DOTSYMBOL8*cos(18*Angle2(x,y,z,t)/pi))<1DOTSYMBOL3|abs((z+3)-0DOTSYMBOL3*cos(18*Angle2(x,y,z,t)/pi+pi/4))<0DOTSYMBOL5)",
-          "CarvinCondition2=(z-3*sin(3DOTSYMBOL2*Angle2(x,y,z,t)/pi))>0",
+          "CarvinCondition=(abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(13/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2))",
+          "CarvinCondition2=(z-3*sin((16/5)*Angle2(x,y,z,t)/pi))>0",
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
-          "IsoExterior=if(-z<(5),(x*x/3+y*y/3-abs(1DOTSYMBOL5*sin(2*z/pi+0DOTSYMBOL3)+1DOTSYMBOL8)),(z+5))",
+          "IsoExterior=if(-z<(5),(x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))),(z+5))",
           "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
           "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
           "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
@@ -12635,9 +12635,9 @@
           "Iso6=(Iso(x+t*DFx(x,y,z,t)*Thickness6/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness6/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness6/Rapport(x,y,z,t),t))",
           "isoTransform_6=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0) ,-ThickIso2(S*x,S*y,S*z,t)*Iso6(x*S,y*S,z*S,-1)*(Iso6(x*S,y*S,z*S,1)),1)",
           "VaseHead=if(CarvinCondition2(x,y,z,t),isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t),1)",
-          "VaseHead2=VaseHead((x+6)*cos(-pi/2)-(z+2DOTSYMBOL5)*sin(-pi/2),y,(x+6)*sin(-pi/2)+(z+2DOTSYMBOL5)*cos(-pi/2),t)",
-          "Torus2=Torus(1DOTSYMBOL7*x,1DOTSYMBOL7*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
-          "Torus3=Torus2((x+6)*cos(-pi/2)-(z+2DOTSYMBOL5)*sin(-pi/2),y,(x+6)*sin(-pi/2)+(z+2DOTSYMBOL5)*cos(-pi/2),t)",
+          "VaseHead2=VaseHead((x+6)*cos(-pi/2)-(z+(5/2))*sin(-pi/2),y,(x+6)*sin(-pi/2)+(z+(5/2))*cos(-pi/2),t)",
+          "Torus2=Torus((17/10)*x,(17/10)*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
+          "Torus3=Torus2((x+6)*cos(-pi/2)-(z+(5/2))*sin(-pi/2),y,(x+6)*sin(-pi/2)+(z+(5/2))*cos(-pi/2),t)",
           "VaseBottom=if((CarvinCondition2(x,y,z,t)=0),isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t),1)"
         ],
         "Fxyz": [
@@ -12647,46 +12647,46 @@
           "Torus3((x*cos(pi/2)-y*sin(pi/2)-5),(x*sin(pi/2)+y*cos(pi/2)+6),z,t)"
         ],
         "Xmax": [
-          "3DOTSYMBOL5",
+          "7/2",
           "3",
           "-3",
           "-2"
         ],
         "Xmin": [
-          "-3DOTSYMBOL5",
+          "-7/2",
           "-3",
           "-9",
           "-9"
         ],
         "Ymax": [
-          "3DOTSYMBOL5",
+          "7/2",
           "3",
-          "5DOTSYMBOL47",
+          "11/2",
           "8"
         ],
         "Ymin": [
-          "-3DOTSYMBOL5",
+          "-7/2",
           "-3",
-          "-2DOTSYMBOL5",
+          "-5/2",
           "5"
         ],
         "Zmax": [
           "3",
-          "-4DOTSYMBOL5",
-          "1DOTSYMBOL5",
+          "-9/2",
+          "3/2",
           "0"
         ],
         "Zmin": [
           "-5",
-          "-5DOTSYMBOL7",
+          "-57/10",
           "-6",
           "-5"
         ]
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL95*abs(cos(z*y*x*y))",
-          "G=0DOTSYMBOL45*abs(cos(z*y*x*y))",
+          "R=abs(cos(z*y*x*y))",
+          "G=(9/20)*abs(cos(z*y*x*y))",
           "B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
           "T=1"
         ],
@@ -12708,9 +12708,9 @@
           "Vase6"
         ],
         "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001",
+          "cx=(1/10000)",
+          "cy=(1/10000)",
+          "cz=(1/10000)",
           "S=6",
           "Thickness2=(1/4)",
           "Thickness4=(1/5)",
@@ -12721,10 +12721,10 @@
         "Funct": [
           "Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
           "Angle2=atan2(x,(y+cx))",
-          "CarvinCondition=abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(103/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<0DOTSYMBOL5",
+          "CarvinCondition=abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(103/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2)",
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
           "Bottom=(x*x+y*y+z*z-1)",
-          "IsoExterior=x*x/3DOTSYMBOL+y*y/3DOTSYMBOL-abs(1DOTSYMBOL5*sin(2*z/pi+0DOTSYMBOL3)+1DOTSYMBOL8)",
+          "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
           "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
           "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
           "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
@@ -12744,31 +12744,31 @@
         ],
         "Fxyz": [
           "isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
-          "Torus(1DOTSYMBOL7*x,1DOTSYMBOL7*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
+          "Torus((17/10)*x,(17/10)*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
           "Bottom(x/2DOTSYMBOL4,y/2DOTSYMBOL4,2*(z+5DOTSYMBOL1),t)"
         ],
         "Xmax": [
-          "3DOTSYMBOL5",
+          "7/2",
           "5",
           "3"
         ],
         "Xmin": [
-          "-3DOTSYMBOL5",
+          "-7/2",
           "-5",
           "-3"
         ],
         "Ymax": [
-          "3DOTSYMBOL5",
+          "7/2",
           "5",
           "3"
         ],
         "Ymin": [
-          "-3DOTSYMBOL5",
+          "-7/2",
           "-5",
           "-3"
         ],
         "Zmax": [
-          "4DOTSYMBOL5",
+          "(9/2)",
           "10",
           "-2"
         ],
@@ -12780,8 +12780,8 @@
       },
       "Texture": {
         "Colors": [
-          "R=0DOTSYMBOL95*abs(cos(z*y*x*y))",
-          "G=0DOTSYMBOL45*abs(cos(z*y*x*y))",
+          "R=abs(cos(z*y*x*y))",
+          "G=(9/20)*abs(cos(z*y*x*y))",
           "B=0DOTSYMBOL02*abs(cos(-z*x*z*x*y*y))",
           "T=1"
         ],
@@ -12806,9 +12806,9 @@
           "Vase6"
         ],
         "Const": [
-          "cx=0DOTSYMBOL0001",
-          "cy=0DOTSYMBOL0001",
-          "cz=0DOTSYMBOL0001",
+          "cx=(1/10000)",
+          "cy=(1/10000)",
+          "cz=(1/10000)",
           "Thickness2=(1/4)",
           "Thickness4=(1/5)",
           "Thickness5=(1/5)",
@@ -12819,7 +12819,7 @@
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
           "Bottom=(x*x + y*y + z*z - 1)",
           "CarvinCondition=sin(atan2(sqrt(x*x+y*y),(-z+cx)))>1/1DOTSYMBOL1",
-          "IsoExterior=x*x/3DOTSYMBOL+y*y/3DOTSYMBOL-abs(1DOTSYMBOL5*sin(2*z/pi+0DOTSYMBOL3)+1DOTSYMBOL8)",
+          "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
           "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
           "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
           "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
@@ -12844,43 +12844,43 @@
           "isoTransform_3(x,y,-z,t)",
           "isoTransform_4(x,y,-z,t)",
           "isoTransform_5(x,y,-z,t)",
-          "Torus(1DOTSYMBOL7*x,1DOTSYMBOL7*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
+          "Torus((17/10)*x,(17/10)*y,2DOTSYMBOL2*(z+cos(pi/4*sqrt(x*x+y*y)))-10DOTSYMBOL6,t)",
           "Bottom(x/2DOTSYMBOL4,y/2DOTSYMBOL4,2*(z+5DOTSYMBOL1),t)"
         ],
         "Xmax": [
           "5",
-          "3DOTSYMBOL5",
-          "3DOTSYMBOL5",
-          "3DOTSYMBOL5",
+          "7/2",
+          "7/2",
+          "7/2",
           "3",
           "3"
         ],
         "Xmin": [
           "-5",
-          "-3DOTSYMBOL5",
-          "-3DOTSYMBOL5",
-          "-3DOTSYMBOL5",
+          "-7/2",
+          "-7/2",
+          "-7/2",
           "-3",
           "-3"
         ],
         "Ymax": [
           "5",
-          "3DOTSYMBOL5",
-          "3DOTSYMBOL5",
-          "3DOTSYMBOL5",
+          "7/2",
+          "7/2",
+          "7/2",
           "3",
           "3"
         ],
         "Ymin": [
           "-5",
-          "-3DOTSYMBOL5",
-          "-3DOTSYMBOL5",
-          "-3DOTSYMBOL5",
+          "-7/2",
+          "-7/2",
+          "-7/2",
           "-3",
           "-3"
         ],
         "Zmax": [
-          "4DOTSYMBOL5",
+          "(9/2)",
           "2",
           "2",
           "2",
@@ -12971,7 +12971,7 @@
           "ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))",
           "isoCondition=(-51DOTSYMBOL11)*(x^4+y^4+z^4)-99DOTSYMBOL92*(x^2*y^2+x^2*z^2+y^2*z^2)+141DOTSYMBOL12*(x-1)*(x^2+y^2+z^2)+256*x*(x-2)+282DOTSYMBOL24*y^2+270",
           "isoTransform_2=if((isoCondition((x/4),(y/4),(z/4),t)>0),ThickIso2(4*x,2*y,2*z,t),1)+0DOTSYMBOL05*exp((ThickIso2(4*x,2*y,2*z,t)+isoCondition((x/4),(y/4),(z/4),t))/300)",
-          "isoTransform_6=isoTransform_2(x,y*cos( 0DOTSYMBOL4944*(x))-z*sin( 0DOTSYMBOL4944*(x)),y*sin( 0DOTSYMBOL4944*(x))+z*cos( 0DOTSYMBOL4944*(x)),t)"
+          "isoTransform_6=isoTransform_2(x,y*cos((4944/10000)*(x))-z*sin( (4944/10000)*(x)),y*sin( (4944/10000)*(x))+z*cos( (4944/10000)*(x)),t)"
         ],
         "Fxyz": [
           "-isoTransform_6((x/2),y,z,t)"
@@ -13015,15 +13015,15 @@
           "B1=1",
           "M1=9",
           "N11=25",
-          "N21=1DOTSYMBOL7",
-          "N31=1DOTSYMBOL7",
+          "N21=17/10",
+          "N31=17/10",
           "A2=50",
           "B2=1",
           "M2=9",
           "N12=20",
-          "N22=1DOTSYMBOL7",
-          "N32=1DOTSYMBOL7",
-          "S=0DOTSYMBOL41"
+          "N22=17/10",
+          "N32=17/10",
+          "S=41/100"
         ],
         "Funct": [
           "Ru=(abs(cos(M1*u/4)*50/A1)^N21+abs(sin(M1*u/4)*50/B1)^N31)^(-100/N11)",
@@ -13314,15 +13314,15 @@
           "k=5",
           "k0=5",
           "k1=5",
-          "L=1DOTSYMBOL5",
+          "L=(3/2)",
           "r0=6",
           "dv=0DOTSYMBOL01",
           "P=5",
           "MM=10"
         ],
         "Funct": [
-          "Fx=(1+0DOTSYMBOL5*cos(v+t))*cos(u-k*(v)+t)",
-          "Fy=(1+0DOTSYMBOL5*cos(v+t))*sin(u-k*(v)+t)",
+          "Fx=(1+(1/2)*cos(v+t))*cos(u-k*(v)+t)",
+          "Fy=(1+(1/2)*cos(v+t))*sin(u-k*(v)+t)",
           "Fz=L*sin(v+t)",
           "DFxv = (Fx(u,v+dv,t) - Fx(u,v,t))/dv",
           "DFyv = (Fy(u,v+dv,t) - Fy(u,v,t))/dv",
@@ -13368,9 +13368,9 @@
       },
       "Texture": {
         "Colors": [
-          "R= if(int(i)%(M/6)>P | int(j)%(M)>P,0DOTSYMBOL8,0DOTSYMBOL8) ",
-          "G= if(int(i)%(M/6)>P | int(j)%(M)>P,0DOTSYMBOL1,0DOTSYMBOL8) ",
-          "B= if(int(i)%(M/6)>P | int(j)%(M)>P,0DOTSYMBOL1,0DOTSYMBOL8) ",
+          "R= if(int(i)%(M/6)>P | int(j)%(M)>P,(4/5),(4/5)) ",
+          "G= if(int(i)%(M/6)>P | int(j)%(M)>P,0DOTSYMBOL1,(4/5)) ",
+          "B= if(int(i)%(M/6)>P | int(j)%(M)>P,0DOTSYMBOL1,(4/5)) ",
           "T= 1 "
         ],
         "Name": "Candy",
@@ -13390,13 +13390,13 @@
         ],
         "Const": [
           "k=7",
-          "L=1DOTSYMBOL5",
+          "L=(3/2)",
           "r0=12",
           "dv=0DOTSYMBOL01"
         ],
         "Funct": [
-          "Fx=(1+0DOTSYMBOL5*cos(t+v))*cos(pi-k*(v))",
-          "Fy=(1+0DOTSYMBOL5*cos(t+v))*sin(pi-k*(v))",
+          "Fx=(1+(1/2)*cos(t+v))*cos(pi-k*(v))",
+          "Fy=(1+(1/2)*cos(t+v))*sin(pi-k*(v))",
           "Fz=L*sin(t+v)",
           "DFxv = (Fx(u,v+dv,t) - Fx(u,v,t))/dv",
           "DFyv = (Fy(u,v+dv,t) - Fy(u,v,t))/dv",
@@ -13451,11 +13451,11 @@
           "TwinKlein"
         ],
         "Const": [
-          "cu=0DOTSYMBOL001",
-          "cv=0DOTSYMBOL001",
+          "cu=(1/1000)",
+          "cv=(1/1000)",
           "N=5",
           "M=3",
-          "A=3DOTSYMBOL5",
+          "A=7/2",
           "B=2",
           "C=3",
           "D=3",
@@ -13465,7 +13465,7 @@
           "MinV=0"
         ],
         "Funct": [
-          "th=if((M=1), 0DOTSYMBOL3*((abs(sin(11*u)*cos(11*v)))^19+0DOTSYMBOL1*((sin(2*N*u)))),if((M=2), 0DOTSYMBOL9*sin((N*v)% pi/3), if((M=3), ((0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3) ,if((M=4), (0DOTSYMBOL4*sin(N*v-u)^100) , if((M=5), 0DOTSYMBOL4*sin(N*v),if((M=6), 0DOTSYMBOL4*sin(2*N*v-u),if((M=7), (0DOTSYMBOL4*sin(N*v)^10),if((M=8), -0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2)),if((M=9), ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if((M=10), ((sin(9*u)*cos(9*v)))^2 +(1/2)* (sin(2*N*u)), ((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
+          "th=if((M=1), (3/10)*((abs(sin(11*u)*cos(11*v)))^19+0DOTSYMBOL1*((sin(2*N*u)))),if((M=2), (9/10)*sin((N*v)% pi/3), if((M=3), (((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3) ,if((M=4), ((2/5)*sin(N*v-u)^100) , if((M=5), (2/5)*sin(N*v),if((M=6), (2/5)*sin(2*N*v-u),if((M=7), ((2/5)*sin(N*v)^10),if((M=8), -(3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(9/5))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2)),if((M=9), ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if((M=10), ((sin(9*u)*cos(9*v)))^2 +(1/2)* (sin(2*N*u)), ((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
           "Fx=if(v<2*pi, (A-(A-1)*cos(v))*cos(u),if(v<3*pi, -B+(B+cos(u))*cos(v),-B+B*cos(v)-cos(u)))",
           "Fy=if(v<2*pi,(A-(A-1)*cos(v))*sin(u), sin(u))",
           "Fz=if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,((D-1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
