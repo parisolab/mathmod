@@ -2109,7 +2109,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 (QObj1["Pigment"].isObject())))
             {
                 QPigmentObj = QObj1["Pigment"].toObject();
-                LoadTexture(QPigmentObj, ISO_PIGM_FIELD);
+                LoadPigment(QPigmentObj, ISO_PIGM_FIELD);
             }
 
             // Grid

@@ -1473,7 +1473,75 @@
         "Zmax": [
           "13/10"
         ]
-      }
+      },
+              "Pigment": {
+                "Colors": [
+                  {
+                    "Color": {
+                      "Name": "Red",
+                      "Vrgba": [
+                        "V=4/10",
+                        "R=1",
+                        "G=85/100",
+                        "B=4/10",
+                        "A=1"
+                      ]
+                    }
+                  },
+                  {
+                    "Color": {
+                      "Name": "Red",
+                      "Vrgba": [
+                        "V=5/10",
+                        "R=1",
+                        "G=1/10",
+                        "B=31/100",
+                        "A=1"
+                      ]
+                    }
+                  },
+                  {
+                    "Color": {
+                      "Name": "Red",
+                      "Vrgba": [
+                        "V=5/10",
+                        "R=31/100",
+                        "G=31/100",
+                        "B=1",
+                        "A=1"
+                      ]
+                    }
+                  },
+                  {
+                    "Color": {
+                      "Name": "Red",
+                      "Vrgba": [
+                        "V=7/10",
+                        "R=1",
+                        "G=3/10",
+                        "B=1/10",
+                        "A=1"
+                      ]
+                    }
+                  },
+                  {
+                    "Color": {
+                      "Name": "Red",
+                      "Vrgba": [
+                        "V=1",
+                        "R=4/10",
+                        "G=6/10",
+                        "B=1/10",
+                        "A=1"
+                      ]
+                    }
+                  }
+                ],
+                "Gradient": "3*cos(x*x+y*y)*cos(y*z-y*x)*(cos(x*y*z)+sin(x*y*z))",
+                "Name": "Pigment_5",
+                "Noise": "NoiseW(x,y,z,(1),(2),(0))"
+              }
+
     },
     {
       "Iso3D": {
@@ -2682,40 +2750,40 @@
         ]
       }
     },
-        {
-          "Iso3D": {
-              "Description": [
-              " CloseIso_1 by Abderrahman taha 28/11/2018"
-            ],
-            "Name": [
-              "CloseIso_1"
-            ],
-            "Component": [
-              "CloseIso_1"
-            ],
-            "Fxyz": [
-              "-max((cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2))))),(x^10+y^10+z^10-((39/10)^10)))"
-            ],
-            "Xmin": [
-              "-4"
-            ],
-            "Xmax": [
-              "4"
-            ],
-            "Ymin": [
-              "-4"
-            ],
-            "Ymax": [
-              "4"
-            ],
-            "Zmin": [
-              "-4"
-            ],
-            "Zmax": [
-              "4"
-            ]
-          }
-        },
+    {
+      "Iso3D": {
+          "Description": [
+          " CloseIso_1 by Abderrahman taha 28/11/2018"
+        ],
+        "Name": [
+          "CloseIso_1"
+        ],
+        "Component": [
+          "CloseIso_1"
+        ],
+        "Fxyz": [
+          "-max((cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2))))),(x^10+y^10+z^10-((39/10)^10)))"
+        ],
+        "Xmin": [
+          "-4"
+        ],
+        "Xmax": [
+          "4"
+        ],
+        "Ymin": [
+          "-4"
+        ],
+        "Ymax": [
+          "4"
+        ],
+        "Zmin": [
+          "-4"
+        ],
+        "Zmax": [
+          "4"
+        ]
+      }
+    },
     {
       "Iso3D": {
         "Description": [
