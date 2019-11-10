@@ -11317,7 +11317,7 @@
           "Hyperboloid=x^2+y^2-z^2-(1/10)",
           "Intersection=max(Hyperboloid(x,y,(z*3),1),Hyperboloid((x*3),(z*3),(y*3),2))",
           "Intersection2=max(Hyperboloid(x,y,(z+5),1),Hyperboloid(x,y,(z-5),1))",
-          "Cylinders=((sqrt((x-(9/2))*(x-(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((x+(9/2))*(x+(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((y+(9/2))*(y+(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt((y-(9/2))*(y-(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-5DOTSYMBOL85)*(z-5DOTSYMBOL85)-(1/50))"
+          "Cylinders=((sqrt((x-(9/2))*(x-(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((x+(9/2))*(x+(9/2))+z*z)-(5/2))^2+y*y-(1/4))*((sqrt((y+(9/2))*(y+(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt((y-(9/2))*(y-(9/2))+z*z)-(5/2))^2+x*x-(1/4))*((sqrt(x*x+y*y)-5)^2+z*z-(1/4))*((sqrt(x*x+y*y)-1)^2+(z-(585/100))*(z-(585/100))-(1/50))"
         ],
         "Fxyz": [
           "(Intersection2(x,y,z,t)*Cylinders(x,y,z,t))-50000"
@@ -12745,7 +12745,7 @@
         "Fxyz": [
           "isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
           "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
-          "Bottom(x/(12/5),y/(12/5),2*(z+5DOTSYMBOL1),t)"
+          "Bottom(x/(12/5),y/(12/5),2*(z+(51/10)),t)"
         ],
         "Xmax": [
           "7/2",
@@ -12845,7 +12845,7 @@
           "isoTransform_4(x,y,-z,t)",
           "isoTransform_5(x,y,-z,t)",
           "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
-          "Bottom(x/(12/5),y/(12/5),2*(z+5DOTSYMBOL1),t)"
+          "Bottom(x/(12/5),y/(12/5),2*(z+(51/10)),t)"
         ],
         "Xmax": [
           "5",
