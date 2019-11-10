@@ -13465,7 +13465,7 @@
           "MinV=0"
         ],
         "Funct": [
-          "th=if((M=1), 0DOTSYMBOL3*((abs(sin(11*u)*cos(11*v)))^19+0DOTSYMBOL1*((sin(2*N*u)))),if((M=2), 0DOTSYMBOL9*sin((N*v)% pi/3), if((M=3), ((0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3) ,if((M=4), (0DOTSYMBOL4*sin(N*v-u)^100) , if((M=5), 0DOTSYMBOL4*sin(N*v),if((M=6), 0DOTSYMBOL4*sin(2*N*v-u),if((M=7), (0DOTSYMBOL4*sin(N*v)^10),if((M=8), -0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/1DOTSYMBOL9)^5DOTSYMBOL5),if((M=9), ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if((M=10), ((sin(9*u)*cos(9*v)))^2 +0DOTSYMBOL5* (sin(2*N*u)), (0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
+          "th=if((M=1), 0DOTSYMBOL3*((abs(sin(11*u)*cos(11*v)))^19+0DOTSYMBOL1*((sin(2*N*u)))),if((M=2), 0DOTSYMBOL9*sin((N*v)% pi/3), if((M=3), ((0DOTSYMBOL4*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3) ,if((M=4), (0DOTSYMBOL4*sin(N*v-u)^100) , if((M=5), 0DOTSYMBOL4*sin(N*v),if((M=6), 0DOTSYMBOL4*sin(2*N*v-u),if((M=7), (0DOTSYMBOL4*sin(N*v)^10),if((M=8), -0DOTSYMBOL3*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/1DOTSYMBOL8)^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2)),if((M=9), ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v)),if((M=10), ((sin(9*u)*cos(9*v)))^2 +(1/2)* (sin(2*N*u)), ((2/5)*abs(cos(7*(u))^2 - sin(9*(v))^5 ))^3))))))))))",
           "Fx=if(v<2*pi, (A-(A-1)*cos(v))*cos(u),if(v<3*pi, -B+(B+cos(u))*cos(v),-B+B*cos(v)-cos(u)))",
           "Fy=if(v<2*pi,(A-(A-1)*cos(v))*sin(u), sin(u))",
           "Fz=if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,((D-1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
@@ -13601,9 +13601,9 @@
         ],
         "Funct": [
           "th=(2/10)*((1-abs(u-pi/2)/MaxU)*(v/MaxV+5/100)*abs(cos(N*(u))^3-sin(N*(v))^2))^3",
-          "Fx=if((M=1),(2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4),if((M=3),(2^v*(sin(u)*cos(u))/35),if((M=4),(1DOTSYMBOL2^v*(sin(u)^2*sin(v))+2),2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2))))",
-          "Fy=if((M=1),(2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4),if((M=3),(2^v*(sin(u)^2*sin(v))/35-4),if((M=4),(1DOTSYMBOL2^v*(sin(u)*cos(u))+5),2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2))))",
-          "Fz=if((M=1),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v),if((M=2),((b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6),if((M=3),(2^v*(sin(u)^2*cos(v))/35-12),if((M=4),(1DOTSYMBOL2^v*(sin(u)^2*cos(v))-12),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)))))",
+          "Fx=if((M=1),(2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4),if((M=3),(2^v*(sin(u)*cos(u))/35),if((M=4),((6/5)^v*(sin(u)^2*sin(v))+2),2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2))))",
+          "Fy=if((M=1),(2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2),if((M=2),(((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4),if((M=3),(2^v*(sin(u)^2*sin(v))/35-4),if((M=4),((6/5)^v*(sin(u)*cos(u))+5),2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2))))",
+          "Fz=if((M=1),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v),if((M=2),((b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6),if((M=3),(2^v*(sin(u)^2*cos(v))/35-12),if((M=4),((6/5)^v*(sin(u)^2*cos(v))-12),1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)))))",
           "DFxu=((Fx(u,v,t)-Fx(u+c,v,t))/c)",
           "DFxv=((Fx(u,v,t)-Fx(u,v+c,t))/c)",
           "DFyu=((Fy(u,v,t)-Fy(u+c,v,t))/c)",
@@ -14394,7 +14394,7 @@
           "Iso3=(Scherk(x-DFx(x,y,z,t)*th/Rapport2(x,y,z,t),y-DFy(x,y,z,t)*th/Rapport2(x,y,z,t),z-DFz(x,y,z,t)*th/Rapport2(x,y,z,t),t))",
           "Iso2=(Scherk(x+DFx(x,y,z,t)*th/Rapport2(x,y,z,t),y+DFy(x,y,z,t)*th/Rapport2(x,y,z,t),z+DFz(x,y,z,t)*th/Rapport2(x,y,z,t),t))",
           "TickScherk=(Iso2(x,y,z,t)*Iso3(x,y,z,t))",
-          "ScherkTorus=if(sqrt(x*x+y*y)<3DOTSYMBOL2, TickScherk(x,y,z,t),1)",
+          "ScherkTorus=if(sqrt(x*x+y*y)<(16/5), TickScherk(x,y,z,t),1)",
           "Torus = ScherkTorus( (sqrt(x*x+z*z)-R), y, N*atan2(z,x),t)"
         ],
         "Fxyz": [
@@ -16841,7 +16841,7 @@
                 ],
                 "Name": ["p","q","R","r","r0"
                 ],
-                "Position": ["3","2","1DOTSYMBOL2","6","42","5","2","2","7","62","4","3","4DOTSYMBOL2","22","120","5","2","2","5","22","3","2","1","5","18","4","3","4","22","55","8","1","5","23","60","1","5","4","28","45"
+                "Position": ["3","2","6/5","6","42","5","2","2","7","62","4","3","21/5","22","120","5","2","2","5","22","3","2","1","5","18","4","3","4","22","55","8","1","5","23","60","1","5","4","28","45"
                 ],
                 "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"
                 ]
@@ -16888,7 +16888,7 @@
         ],
         "Name": ["p","q","R","r","r0","r1"
         ],
-        "Position": ["3","2","1DOTSYMBOL25","6","42","5","5","2","2DOTSYMBOL2","7","62","5","4","3","4DOTSYMBOL2","22","100","5","8","1","5","23","60","5","1","5","4","28","45","5"
+        "Position": ["3","2","5/4","6","42","5","5","2","11/5","7","62","5","4","3","21/5","22","100","5","8","1","5","23","60","5","1","5","4","28","45","5"
         ],
         "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"
         ]
