@@ -1838,8 +1838,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
            arg = "Funct";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull=QObj[arg].isArray();
            break;
-         case ISO_TEXT_FIELD : break;
-         case ISO_PIGM_FIELD : break;
     }
     if(argnotnull)
     {
@@ -1875,8 +1873,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VaruSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_TEXT_FIELD : break;
-            case ISO_PIGM_FIELD : break;
         }
     }
 }
@@ -1907,8 +1903,6 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
             arg = "Cnd";
             argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull=QObj[arg].isArray();
             break;
-         case PAR_TEXT_FIELD : break;
-         case PAR_PIGM_FIELD : break;
     }
     if(argnotnull)
     {
@@ -1947,8 +1941,6 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_TEXT_FIELD : break;
-            case PAR_PIGM_FIELD : break;
         }
     }
 }
@@ -1960,9 +1952,7 @@ void DrawingOptions::BuildAllVect()
         ISO_CND_FIELD,
         ISO_CONST_FIELD,
         ISO_FUNCT_FIELD,
-        ISO_VAR_FIELD,
-        ISO_TEXT_FIELD,
-        ISO_PIGM_FIELD
+        ISO_VAR_FIELD
     };
     OptIsoFields=std::vector<OptionnalIsoScriptFIELD>(optiso, optiso + sizeof(optiso) / sizeof(OptionnalIsoScriptFIELD));
 
@@ -1971,9 +1961,7 @@ void DrawingOptions::BuildAllVect()
         PAR_CND_FIELD,
         PAR_CONST_FIELD,
         PAR_FUNCT_FIELD,
-        PAR_VAR_FIELD,
-        PAR_TEXT_FIELD,
-        PAR_PIGM_FIELD
+        PAR_VAR_FIELD
     };
     OptParFields=std::vector<OptionnalParScriptFIELD>(optpar, optpar + sizeof(optpar) / sizeof(OptionnalParScriptFIELD));
 

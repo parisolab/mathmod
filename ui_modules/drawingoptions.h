@@ -45,9 +45,7 @@ enum OptionnalParScriptFIELD
     PAR_CND_FIELD,
     PAR_CONST_FIELD,
     PAR_FUNCT_FIELD,
-    PAR_VAR_FIELD,
-    PAR_TEXT_FIELD,
-    PAR_PIGM_FIELD
+    PAR_VAR_FIELD
 };
 
 enum OptionnalIsoScriptFIELD
@@ -56,9 +54,7 @@ enum OptionnalIsoScriptFIELD
     ISO_CND_FIELD,
     ISO_CONST_FIELD,
     ISO_FUNCT_FIELD,
-    ISO_VAR_FIELD,
-    ISO_TEXT_FIELD,
-    ISO_PIGM_FIELD
+    ISO_VAR_FIELD
 };
 
 enum MandatoryIsoField
