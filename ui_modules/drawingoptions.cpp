@@ -1897,9 +1897,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
     }
 }
 
-
-
-
 void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, OptionnalParScriptFIELD idx)
 {
     QString result, arg="";
@@ -1971,7 +1968,6 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
         }
     }
 }
-
 
 void DrawingOptions::BuildAllVect()
 {
