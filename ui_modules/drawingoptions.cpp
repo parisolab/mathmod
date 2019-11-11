@@ -1460,6 +1460,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     QJsonArray lst;
     QJsonObject QObj;
     QJsonObject QTextureObj, QPigmentObj;
+    bool loadtext, loadpigm;
 
     if(textureIndex != -1)
     {
@@ -1484,21 +1485,15 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     {
         QObj = Jobj["Iso3D"].toObject();
 
-        LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE);
-
         // Colors
-        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
-            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
-        {
-            LoadTexture(QTextureObj, ISO_TYPE);
-        }
+        loadtext= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
+            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
 
         // Pigment
-        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
-            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)))))
-        {
-            LoadPigment(QPigmentObj, ISO_TYPE);
-        }
+        loadpigm = MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
+            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
+
+        LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -1529,21 +1524,15 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     else if(Jobj["Param3D"].isObject())
     {
         QObj = Jobj["Param3D"].toObject();
-
-        LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE);
         // Colors
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
-            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
-        {
-            LoadTexture(QTextureObj, PAR_TYPE);
-        }
+        loadtext= MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
+                (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
 
         // Pigment
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
-            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)))))
-        {
-            LoadPigment(QPigmentObj, PAR_TYPE);
-        }
+        loadpigm = MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
+                (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)));
+
+        LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -1574,20 +1563,15 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     {
         QObj = Jobj["Param4D"].toObject();
 
-        LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE);
         // Colors
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
-            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
-        {
-            LoadTexture(QTextureObj, PAR_TYPE);
-        }
+        loadtext= MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
+                (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
 
         // Pigment
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
-            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)))))
-        {
-            LoadPigment(QPigmentObj, PAR_TYPE);
-        }
+        loadpigm = MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
+                (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)));
+
+        LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -2029,6 +2013,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     QJsonArray lst;
     QJsonObject QObj, QObj1;
     QJsonObject QTextureObj, QPigmentObj;
+    bool loadtext, loadpigm;
 
     updateCurrentTreestruct();
     for(int i=0; i< array.size(); i++)
@@ -2041,23 +2026,17 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             ShowSliders(array[i].toObject());
 
-            LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE);
-
             // Colors
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
-                (QObj1["Texture"].isObject())))
-            {
+            if((loadtext= MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
+                    QObj1["Texture"].isObject()))
                 QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, ISO_TYPE);
-            }
 
             // Pigment
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
-                (QObj1["Pigment"].isObject())))
-            {
+            if((loadpigm = MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
+                    QObj1["Pigment"].isObject()))
                 QPigmentObj = QObj1["Pigment"].toObject();
-                LoadPigment(QPigmentObj, ISO_TYPE);
-            }
+
+            LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2077,23 +2056,18 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
-            LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE);
 
             // Colors
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
-                (QObj1["Texture"].isObject())))
-            {
+            if((loadtext= MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
+                    QObj1["Texture"].isObject()))
                 QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, PAR_TYPE);
-            }
 
             // Pigment
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
-                (QObj1["Pigment"].isObject())))
-            {
+            if((loadpigm = MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
+                    QObj1["Pigment"].isObject()))
                 QPigmentObj = QObj1["Pigment"].toObject();
-                LoadPigment(QPigmentObj, PAR_TYPE);
-            }
+
+            LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2112,23 +2086,17 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 return (0);
             ShowSliders(array[i].toObject());
 
-            LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE);
-
             // Colors
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
-                (QObj1["Texture"].isObject())))
-            {
+            if((loadtext= MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
+                    QObj1["Texture"].isObject()))
                 QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, PAR_TYPE);
-            }
 
             // Pigment
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
-                (QObj1["Pigment"].isObject())))
-            {
+            if((loadpigm = MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
+                    QObj1["Pigment"].isObject()))
                 QPigmentObj = QObj1["Pigment"].toObject();
-                LoadPigment(QPigmentObj, PAR_TYPE);
-            }
+
+            LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2143,7 +2111,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     }
     return(0);
 }
-void DrawingOptions::LoadMandatoryAndOptionnalFields(const QJsonObject &qobj, const ModelType & mod)
+void DrawingOptions::LoadMandatoryAndOptionnalFields(const QJsonObject &qobj,
+                                                     const ModelType & mod,
+                                                     bool loadtext, const QJsonObject & QTextureObj,
+                                                     bool loadpigm, const QJsonObject & QPigmentObj)
 {
     switch(mod) {
         case  PAR_TYPE:
@@ -2179,6 +2150,18 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(const QJsonObject &qobj, co
                 OptionalIsoScriptFieldprocess(qobj, Opt);
             }
             break;
+    }
+
+    // Colors
+    if(loadtext)
+    {
+        LoadTexture(QTextureObj, mod);
+    }
+
+    // Pigment
+    if(loadpigm)
+    {
+        LoadPigment(QPigmentObj, mod);
     }
 }
 

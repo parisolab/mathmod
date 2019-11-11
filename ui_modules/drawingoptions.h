@@ -130,8 +130,10 @@ public slots:
     void OptionalParScriptFieldprocess(const QJsonObject &, OptionnalParScriptFIELD);
     void MandatoryIsoFieldprocess(const QJsonObject &, const MandatoryIsoField &);
     void MandatoryParFieldprocess(const QJsonObject &, const MandatoryParField &, const ModelType & mod=PAR_TYPE);
-
-    void LoadMandatoryAndOptionnalFields(const QJsonObject &, const ModelType &);
+    void LoadMandatoryAndOptionnalFields(const QJsonObject &,
+                                         const ModelType &,
+                                         bool, const QJsonObject &,
+                                         bool, const QJsonObject &);
     void LoadTexture(const QJsonObject &, const ModelType &);
     void LoadPigment(const QJsonObject &, const ModelType &);
     void updateCurrentTreestruct();
