@@ -152,6 +152,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     connect( &select, SIGNAL(UpdateSignal()), this, SLOT(SearchListModels()));
     statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
+    BuildAllVect();
 }
 
 // --------------------------
@@ -1377,7 +1378,7 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
     return true;
 }
 
-void DrawingOptions::LoadTexture(const QJsonObject &QObj, const OptionnalScriptFIELD & opt)
+void DrawingOptions::LoadTexture(const QJsonObject &QObj, const ModelType & opt)
 {
     QString noise1 = QObj["Noise"].toString();
     QJsonArray lst = QObj["Colors"].toArray();
@@ -1393,12 +1394,12 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj, const OptionnalScriptF
     result.replace("\n","");
     result.replace("\t","");
     result.replace(" ","");
-    if(opt == ISO_TEXT_FIELD)
+    if(opt == ISO_TYPE)
     {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise1.toStdString();
     }
-    else if(opt == PAR_TEXT_FIELD)
+    else if(opt == PAR_TYPE)
     {
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Noise = noise1.toStdString();
@@ -1407,7 +1408,7 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj, const OptionnalScriptF
     MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 }
 
-void DrawingOptions::LoadPigment(const QJsonObject &QObj, const OptionnalScriptFIELD & opt)
+void DrawingOptions::LoadPigment(const QJsonObject &QObj, const ModelType & opt)
 {
     QString noise = "";
     QJsonArray tmp;
@@ -1436,13 +1437,13 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj, const OptionnalScriptF
     result.replace("\t","");
     result.replace(" ","");
 
-    if(opt == ISO_PIGM_FIELD)
+    if(opt == ISO_TYPE)
     {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise.toStdString();
     }
-    else if(opt == PAR_PIGM_FIELD)
+    else if(opt == PAR_TYPE)
     {
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbt = result.toStdString();
@@ -1482,37 +1483,9 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     if(Jobj["Iso3D"].isObject())
     {
         QObj = Jobj["Iso3D"].toObject();
-
+/*
         // Fxyz
         MandatoryIsoFieldprocess(QObj, ISO_FXYZ_FIELD);
-
-        // Condition:
-        OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
-
-        // Varu
-        OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
-
-        // Const
-        OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
-
-        // Funct
-        OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
-
-        // Colors
-        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
-            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
-        {
-            LoadTexture(QTextureObj, ISO_TEXT_FIELD);
-        }
-
-        // Pigment
-        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
-            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)))))
-        {
-            LoadPigment(QPigmentObj, ISO_PIGM_FIELD);
-        }
-        // Grid
-        OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
         // XlimitSup
         MandatoryIsoFieldprocess(QObj, ISO_XMAX_FIELD);
@@ -1537,6 +1510,44 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         // Name
         MandatoryIsoFieldprocess(QObj, ISO_NAME_FIELD);
+        */
+        for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
+            MandatoryIsoField Opt = *it;
+            MandatoryIsoFieldprocess(QObj, Opt);
+        }
+/*
+        // Condition:
+        OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
+
+        // Varu
+        OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
+
+        // Const
+        OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
+
+        // Funct
+        OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
+
+        // Grid
+        OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
+*/
+        for (std::vector<OptionnalIsoScriptFIELD>::const_iterator it = OptIsoFields.begin(); it != OptIsoFields.end(); ++it) {
+            OptionnalIsoScriptFIELD Opt = *it;
+            OptionalIsoScriptFieldprocess(QObj, Opt);
+        }
+        // Colors
+        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
+            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
+        {
+            LoadTexture(QTextureObj, ISO_TYPE);
+        }
+
+        // Pigment
+        if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
+            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)))))
+        {
+            LoadPigment(QPigmentObj, ISO_TYPE);
+        }
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -1588,6 +1599,12 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // sup_v
         MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
 
+        // Component
+        MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
+
+        // Name
+        MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+/*
         // Varu
         OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
@@ -1600,28 +1617,28 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // Funct
         OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
 
+        // Grid
+        OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
+*/
+
+        for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
+            OptionnalParScriptFIELD Opt = *it;
+            OptionalParScriptFieldprocess(QObj, Opt);
+        }
+
         // Colors
         if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
             (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
         {
-            LoadTexture(QTextureObj, PAR_TEXT_FIELD);
+            LoadTexture(QTextureObj, PAR_TYPE);
         }
 
         // Pigment
         if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
             (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)))))
         {
-            LoadPigment(QPigmentObj, PAR_PIGM_FIELD);
+            LoadPigment(QPigmentObj, PAR_TYPE);
         }
-
-        // Grid
-        OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
-
-        // Component
-        MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
-
-        // Name
-        MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -1675,6 +1692,32 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // sup_v
         MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
 
+        // Component
+        MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
+
+        // Name
+        MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+
+        for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
+            OptionnalParScriptFIELD Opt = *it;
+            OptionalParScriptFieldprocess(QObj, Opt);
+        }
+
+        // Colors
+        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
+            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
+        {
+            LoadTexture(QTextureObj, PAR_TYPE);
+        }
+
+        // Pigment
+        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
+            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)))))
+        {
+            LoadPigment(QPigmentObj, PAR_TYPE);
+        }
+
+/*
         // Varu
         OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
@@ -1687,28 +1730,9 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // Funct
         OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
 
-        // Colors
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
-            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
-        {
-            LoadTexture(QTextureObj, PAR_TEXT_FIELD);
-        }
-
-        // Pigment
-        if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
-            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)))))
-        {
-            LoadPigment(QPigmentObj, PAR_PIGM_FIELD);
-        }
-
         // Grid
         OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
-
-        // Component
-        MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
-
-        // Name
-        MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+        */
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -1944,7 +1968,8 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj, const Man
         }
 }
 
-void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const OptionnalScriptFIELD & idx)
+
+void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, OptionnalIsoScriptFIELD idx)
 {
     QString result, arg="";
     QJsonArray lst;
@@ -1970,28 +1995,6 @@ void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const O
            arg = "Funct";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull=QObj[arg].isArray();
            break;
-        case PAR_GRID_FIELD :
-           arg = "Grid";
-           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull=QObj[arg].isArray();
-           break;
-        case PAR_VAR_FIELD :
-           arg = "Varu";
-           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->varunotnull=QObj[arg].isArray();
-           break;
-        case PAR_CONST_FIELD :
-           arg = "Const";
-           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->constnotnull=QObj[arg].isArray();
-           break;
-        case PAR_FUNCT_FIELD :
-           arg = "Funct";
-           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull=QObj[arg].isArray();
-           break;
-         case PAR_CND_FIELD :
-            arg = "Cnd";
-            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull=QObj[arg].isArray();
-            break;
-         case PAR_TEXT_FIELD : break;
-         case PAR_PIGM_FIELD : break;
          case ISO_TEXT_FIELD : break;
          case ISO_PIGM_FIELD : break;
     }
@@ -2029,6 +2032,56 @@ void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const O
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VaruSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
                 break;
+            case ISO_TEXT_FIELD : break;
+            case ISO_PIGM_FIELD : break;
+        }
+    }
+}
+
+
+
+
+void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, OptionnalParScriptFIELD idx)
+{
+    QString result, arg="";
+    QJsonArray lst;
+    bool argnotnull=false;
+    switch(idx) {
+        case PAR_GRID_FIELD :
+           arg = "Grid";
+           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull=QObj[arg].isArray();
+           break;
+        case PAR_VAR_FIELD :
+           arg = "Varu";
+           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->varunotnull=QObj[arg].isArray();
+           break;
+        case PAR_CONST_FIELD :
+           arg = "Const";
+           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->constnotnull=QObj[arg].isArray();
+           break;
+        case PAR_FUNCT_FIELD :
+           arg = "Funct";
+           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull=QObj[arg].isArray();
+           break;
+         case PAR_CND_FIELD :
+            arg = "Cnd";
+            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull=QObj[arg].isArray();
+            break;
+         case PAR_TEXT_FIELD : break;
+         case PAR_PIGM_FIELD : break;
+    }
+    if(argnotnull)
+    {
+        lst = QObj[arg].toArray();
+        result = "";
+        for(int j=0; j < lst.size()-1; j++)
+            result += lst[j].toString() + ";";
+        if(lst.size() >= 1)
+            result += lst[lst.size()-1].toString();
+        result.replace("\n","");
+        result.replace("\t","");
+        result.replace(" ","");
+        switch(idx) {
             case PAR_GRID_FIELD :
                 for(int j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
@@ -2056,10 +2109,61 @@ void DrawingOptions::OptionalScriptFieldprocess(const QJsonObject &QObj, const O
                 break;
             case PAR_TEXT_FIELD : break;
             case PAR_PIGM_FIELD : break;
-            case ISO_TEXT_FIELD : break;
-            case ISO_PIGM_FIELD : break;
         }
     }
+}
+
+
+void DrawingOptions::BuildAllVect()
+{
+    const OptionnalIsoScriptFIELD optiso[] = {
+        ISO_GRID_FIELD,
+        ISO_CND_FIELD,
+        ISO_CONST_FIELD,
+        ISO_FUNCT_FIELD,
+        ISO_VAR_FIELD,
+        ISO_TEXT_FIELD,
+        ISO_PIGM_FIELD
+    };
+    OptIsoFields=std::vector<OptionnalIsoScriptFIELD>(optiso, optiso + sizeof(optiso) / sizeof(OptionnalIsoScriptFIELD));
+
+    const OptionnalParScriptFIELD optpar[] = {
+        PAR_GRID_FIELD,
+        PAR_CND_FIELD,
+        PAR_CONST_FIELD,
+        PAR_FUNCT_FIELD,
+        PAR_VAR_FIELD,
+        PAR_TEXT_FIELD,
+        PAR_PIGM_FIELD
+    };
+    OptParFields=std::vector<OptionnalParScriptFIELD>(optpar, optpar + sizeof(optpar) / sizeof(OptionnalParScriptFIELD));
+
+    const MandatoryIsoField maniso[] = {
+        ISO_FXYZ_FIELD,
+        ISO_XMIN_FIELD,
+        ISO_XMAX_FIELD,
+        ISO_YMIN_FIELD,
+        ISO_YMAX_FIELD,
+        ISO_ZMIN_FIELD,
+        ISO_ZMAX_FIELD,
+        ISO_COMP_FIELD,
+        ISO_NAME_FIELD
+    };
+    MandIsoFields=std::vector<MandatoryIsoField>(maniso, maniso + sizeof(maniso) / sizeof(MandatoryIsoField));
+
+    const MandatoryParField manpar[] = {
+        PAR_FX_FIELD,
+        PAR_FY_FIELD,
+        PAR_FZ_FIELD,
+        PAR_FW_FIELD,
+        PAR_UMIN_FIELD,
+        PAR_UMAX_FIELD,
+        PAR_VMIN_FIELD,
+        PAR_VMAX_FIELD,
+        PAR_COMP_FIELD,
+        PAR_NAME_FIELD
+    };
+    MandParFields=std::vector<MandatoryParField>(manpar, manpar + sizeof(manpar) / sizeof(MandatoryParField));
 }
 
 // --------------------------
@@ -2081,39 +2185,9 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 return (0);
 
             ShowSliders(array[i].toObject());
+            /*
             // Fxyz
             MandatoryIsoFieldprocess(QObj, ISO_FXYZ_FIELD);
-
-            // Cnd
-            OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
-
-            // Varu
-            OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
-
-            // Const
-            OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
-
-            // Funct
-            OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
-
-            // Colors
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
-                (QObj1["Texture"].isObject())))
-            {
-                QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, ISO_TEXT_FIELD);
-            }
-
-            // Pigment
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
-                (QObj1["Pigment"].isObject())))
-            {
-                QPigmentObj = QObj1["Pigment"].toObject();
-                LoadPigment(QPigmentObj, ISO_PIGM_FIELD);
-            }
-
-            // Grid
-            OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
 
             // XlimitSup
             MandatoryIsoFieldprocess(QObj, ISO_XMAX_FIELD);
@@ -2138,6 +2212,64 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             // Name
             MandatoryIsoFieldprocess(QObj, ISO_NAME_FIELD);
+            */
+            for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
+                MandatoryIsoField Opt = *it;
+                MandatoryIsoFieldprocess(QObj, Opt);
+            }
+
+            for (std::vector<OptionnalIsoScriptFIELD>::const_iterator it = OptIsoFields.begin(); it != OptIsoFields.end(); ++it) {
+                OptionnalIsoScriptFIELD Opt = *it;
+                OptionalIsoScriptFieldprocess(QObj, Opt);
+            }
+            // Colors
+            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
+                (QObj1["Texture"].isObject())))
+            {
+                QTextureObj = QObj1["Texture"].toObject();
+                LoadTexture(QTextureObj, ISO_TYPE);
+            }
+
+            // Pigment
+            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
+                (QObj1["Pigment"].isObject())))
+            {
+                QPigmentObj = QObj1["Pigment"].toObject();
+                LoadPigment(QPigmentObj, ISO_TYPE);
+            }
+
+/*
+            // Cnd
+            OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
+
+            // Varu
+            OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
+
+            // Const
+            OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
+
+            // Funct
+            OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
+
+            // Colors
+            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
+                (QObj1["Texture"].isObject())))
+            {
+                QTextureObj = QObj1["Texture"].toObject();
+                LoadTexture(QTextureObj, ISO_TYPE);
+            }
+
+            // Pigment
+            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
+                (QObj1["Pigment"].isObject())))
+            {
+                QPigmentObj = QObj1["Pigment"].toObject();
+                LoadPigment(QPigmentObj, ISO_PIGM_FIELD);
+            }
+
+            // Grid
+            OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
+*/
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2179,6 +2311,33 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             // sup_v
             MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
 
+            // Component
+            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
+
+            // Name
+            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+
+
+            for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
+                OptionnalParScriptFIELD Opt = *it;
+                OptionalParScriptFieldprocess(QObj, Opt);
+            }
+            // Colors
+            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
+                (QObj1["Texture"].isObject())))
+            {
+                QTextureObj = QObj1["Texture"].toObject();
+                LoadTexture(QTextureObj, PAR_TYPE);
+            }
+
+            // Pigment
+            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
+                (QObj1["Pigment"].isObject())))
+            {
+                QPigmentObj = QObj1["Pigment"].toObject();
+                LoadPigment(QPigmentObj, PAR_TYPE);
+            }
+/*
             // Varu
             OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
@@ -2196,7 +2355,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 (QObj1["Texture"].isObject())))
             {
                 QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, PAR_TEXT_FIELD);
+                LoadTexture(QTextureObj, PAR_TYPE);
             }
 
             // Pigment
@@ -2209,12 +2368,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             // Grid
             OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
+*/
 
-            // Component
-            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
-
-            // Name
-            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2232,6 +2387,13 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
+
+            // Component
+            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
+
+            // Name
+            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+
             // Fx
             MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
 
@@ -2256,6 +2418,26 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             // sup_v
             MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
 
+            for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
+                OptionnalParScriptFIELD Opt = *it;
+                OptionalParScriptFieldprocess(QObj, Opt);
+            }
+            // Colors
+            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
+                (QObj1["Texture"].isObject())))
+            {
+                QTextureObj = QObj1["Texture"].toObject();
+                LoadTexture(QTextureObj, PAR_TYPE);
+            }
+
+            // Pigment
+            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
+                (QObj1["Pigment"].isObject())))
+            {
+                QPigmentObj = QObj1["Pigment"].toObject();
+                LoadPigment(QPigmentObj, PAR_TYPE);
+            }
+            /*
             // Varu
             OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
 
@@ -2265,33 +2447,12 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             // Cnd
             OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
 
-            // Funct
-            OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
-
-            // Colors
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
-                (QObj1["Texture"].isObject())))
-            {
-                QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, PAR_TEXT_FIELD);
-            }
-
-            // Pigment
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
-                (QObj1["Pigment"].isObject())))
-            {
-                QPigmentObj = QObj1["Pigment"].toObject();
-                LoadPigment(QPigmentObj, PAR_PIGM_FIELD);
-            }
-
             // Grid
             OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
 
-            // Component
-            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
-
-            // Name
-            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+            // Funct
+            OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
+            */
 
             QJsonDocument document;
             document.setObject(array[i].toObject());

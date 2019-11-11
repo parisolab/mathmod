@@ -33,20 +33,29 @@
 #include "selectoptions.h"
 #include <QMainWindow>
 
-enum OptionnalScriptFIELD
+enum ModelType
 {
-    ISO_GRID_FIELD,
-    ISO_CND_FIELD,
-    ISO_CONST_FIELD,
-    ISO_FUNCT_FIELD,
-    ISO_VAR_FIELD,
+    PAR_TYPE,
+    ISO_TYPE
+};
+enum OptionnalParScriptFIELD
+{
     PAR_GRID_FIELD,
     PAR_CND_FIELD,
     PAR_CONST_FIELD,
     PAR_FUNCT_FIELD,
     PAR_VAR_FIELD,
     PAR_TEXT_FIELD,
-    PAR_PIGM_FIELD,
+    PAR_PIGM_FIELD
+};
+
+enum OptionnalIsoScriptFIELD
+{
+    ISO_GRID_FIELD,
+    ISO_CND_FIELD,
+    ISO_CONST_FIELD,
+    ISO_FUNCT_FIELD,
+    ISO_VAR_FIELD,
     ISO_TEXT_FIELD,
     ISO_PIGM_FIELD
 };
@@ -109,14 +118,19 @@ public:
     SliderStruct * SliderArray;
     ScriptErrorType scriptErrorType;
     int evalErrorType;
-
+    std::vector<OptionnalIsoScriptFIELD> OptIsoFields;
+    std::vector<OptionnalParScriptFIELD> OptParFields;
+    std::vector<MandatoryIsoField> MandIsoFields;
+    std::vector<MandatoryParField> MandParFields;
 public slots:
     void CIndextoolButton_clicked(int);
-    void OptionalScriptFieldprocess(const QJsonObject &, const OptionnalScriptFIELD &);
+    void BuildAllVect();
+    void OptionalIsoScriptFieldprocess(const QJsonObject &, OptionnalIsoScriptFIELD);
+    void OptionalParScriptFieldprocess(const QJsonObject &, OptionnalParScriptFIELD);
     void MandatoryIsoFieldprocess(const QJsonObject &, const MandatoryIsoField &);
     void MandatoryParFieldprocess(const QJsonObject &, const MandatoryParField &);
-    void LoadTexture(const QJsonObject &, const OptionnalScriptFIELD &);
-    void LoadPigment(const QJsonObject &, const OptionnalScriptFIELD &);
+    void LoadTexture(const QJsonObject &, const ModelType &);
+    void LoadPigment(const QJsonObject &, const ModelType &);
     void updateCurrentTreestruct();
     void ErrorMsg() const;
     void MemoryErrorMsg(int) const;
