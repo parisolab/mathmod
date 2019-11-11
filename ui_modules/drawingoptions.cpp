@@ -1484,15 +1484,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     {
         QObj = Jobj["Iso3D"].toObject();
 
-        for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
-            MandatoryIsoField Opt = *it;
-            MandatoryIsoFieldprocess(QObj, Opt);
-        }
+        LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE);
 
-        for (std::vector<OptionnalIsoScriptFIELD>::const_iterator it = OptIsoFields.begin(); it != OptIsoFields.end(); ++it) {
-            OptionnalIsoScriptFIELD Opt = *it;
-            OptionalIsoScriptFieldprocess(QObj, Opt);
-        }
         // Colors
         if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
             (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
@@ -1537,16 +1530,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     {
         QObj = Jobj["Param3D"].toObject();
 
-        for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
-            MandatoryParField Opt = *it;
-            MandatoryParFieldprocess(QObj, Opt);
-        }
-
-        for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
-            OptionnalParScriptFIELD Opt = *it;
-            OptionalParScriptFieldprocess(QObj, Opt);
-        }
-
+        LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE);
         // Colors
         if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
             (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
@@ -1590,15 +1574,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     {
         QObj = Jobj["Param4D"].toObject();
 
-        for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
-            MandatoryParField Opt = *it;
-            MandatoryParFieldprocess(QObj, Opt, PAR_4D_TYPE);
-        }
-        for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
-            OptionnalParScriptFIELD Opt = *it;
-            OptionalParScriptFieldprocess(QObj, Opt);
-        }
-
+        LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE);
         // Colors
         if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
             (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)))))
@@ -2069,15 +2045,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             ShowSliders(array[i].toObject());
 
-            for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
-                MandatoryIsoField Opt = *it;
-                MandatoryIsoFieldprocess(QObj, Opt);
-            }
+            LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE);
 
-            for (std::vector<OptionnalIsoScriptFIELD>::const_iterator it = OptIsoFields.begin(); it != OptIsoFields.end(); ++it) {
-                OptionnalIsoScriptFIELD Opt = *it;
-                OptionalIsoScriptFieldprocess(QObj, Opt);
-            }
             // Colors
             if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
                 (QObj1["Texture"].isObject())))
@@ -2112,15 +2081,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
+            LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE);
 
-            for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
-                MandatoryParField Opt = *it;
-                MandatoryParFieldprocess(QObj, Opt);
-            }
-            for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
-                OptionnalParScriptFIELD Opt = *it;
-                OptionalParScriptFieldprocess(QObj, Opt);
-            }
             // Colors
             if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
                 (QObj1["Texture"].isObject())))
@@ -2154,15 +2116,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 return (0);
             ShowSliders(array[i].toObject());
 
-            for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
-                MandatoryParField Opt = *it;
-                MandatoryParFieldprocess(QObj, Opt, PAR_4D_TYPE);
-            }
+            LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE);
 
-            for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
-                OptionnalParScriptFIELD Opt = *it;
-                OptionalParScriptFieldprocess(QObj, Opt);
-            }
             // Colors
             if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
                 (QObj1["Texture"].isObject())))
@@ -2195,44 +2150,42 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 void DrawingOptions::LoadMandatoryAndOptionnalFields(const QJsonObject &qobj, const ModelType & mod)
 {
     switch(mod) {
-    case  PAR_TYPE:
-        for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
-            MandatoryParField Opt = *it;
-            MandatoryParFieldprocess(qobj, Opt);
-        }
+        case  PAR_TYPE:
+            for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
+                MandatoryParField Opt = *it;
+                MandatoryParFieldprocess(qobj, Opt);
+            }
 
-        for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
-            OptionnalParScriptFIELD Opt = *it;
-            OptionalParScriptFieldprocess(qobj, Opt);
-        }
-        break;
-    case PAR_4D_TYPE:
-        for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
-            MandatoryParField Opt = *it;
-            MandatoryParFieldprocess(qobj, Opt, PAR_4D_TYPE);
-        }
+            for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
+                OptionnalParScriptFIELD Opt = *it;
+                OptionalParScriptFieldprocess(qobj, Opt);
+            }
+            break;
+        case PAR_4D_TYPE:
+            for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
+                MandatoryParField Opt = *it;
+                MandatoryParFieldprocess(qobj, Opt, PAR_4D_TYPE);
+            }
 
-        for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
-            OptionnalParScriptFIELD Opt = *it;
-            OptionalParScriptFieldprocess(qobj, Opt);
-        }
-        break;
-    case ISO_TYPE:
-        for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
-            MandatoryIsoField Opt = *it;
-            MandatoryIsoFieldprocess(qobj, Opt);
-        }
+            for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
+                OptionnalParScriptFIELD Opt = *it;
+                OptionalParScriptFieldprocess(qobj, Opt);
+            }
+            break;
+        case ISO_TYPE:
+            for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
+                MandatoryIsoField Opt = *it;
+                MandatoryIsoFieldprocess(qobj, Opt);
+            }
 
-        for (std::vector<OptionnalIsoScriptFIELD>::const_iterator it = OptIsoFields.begin(); it != OptIsoFields.end(); ++it) {
-            OptionnalIsoScriptFIELD Opt = *it;
-            OptionalIsoScriptFieldprocess(qobj, Opt);
-        }
-        break;
+            for (std::vector<OptionnalIsoScriptFIELD>::const_iterator it = OptIsoFields.begin(); it != OptIsoFields.end(); ++it) {
+                OptionnalIsoScriptFIELD Opt = *it;
+                OptionalIsoScriptFieldprocess(qobj, Opt);
+            }
+            break;
     }
-
-
-
 }
+
 // --------------------------
 int DrawingOptions::on_choice_activated(const QString &arg)
 {
