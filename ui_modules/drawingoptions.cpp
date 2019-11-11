@@ -1638,35 +1638,35 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const Man
     QString result, arg="";
     QJsonArray lst;
     switch(idx) {
-         case PAR_FX_FIELD :
+         case PAR_FX :
             arg = "Fx";
             break;
-        case PAR_FY_FIELD :
+        case PAR_FY :
            arg = "Fy";
            break;
-        case PAR_FZ_FIELD :
+        case PAR_FZ :
            arg = "Fz";
            break;
-        case PAR_FW_FIELD :
+        case PAR_FW :
            if(mod==PAR_4D_TYPE)
                arg = "Fw";
            break;
-        case PAR_UMAX_FIELD :
+        case PAR_UMAX :
            arg = "Umax";
            break;
-        case PAR_UMIN_FIELD :
+        case PAR_UMIN :
            arg = "Umin";
            break;
-        case PAR_VMAX_FIELD :
+        case PAR_VMAX :
            arg = "Vmax";
            break;
-        case PAR_VMIN_FIELD :
+        case PAR_VMIN :
            arg = "Vmin";
            break;
-        case PAR_NAME_FIELD :
+        case PAR_NAME :
            arg = "Name";
            break;
-        case PAR_COMP_FIELD :
+        case PAR_COMP :
            arg = "Component";
            break;
     }
@@ -1681,48 +1681,48 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const Man
         result.replace("\t","");
         result.replace(" ","");
         switch(idx) {
-             case PAR_FX_FIELD :
+             case PAR_FX :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_FY_FIELD :
+            case PAR_FY :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Y = result.toStdString();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_YSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.fy = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_FZ_FIELD :
+            case PAR_FZ :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_Z = result.toStdString();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_ZSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_FW_FIELD :
+            case PAR_FW :
                 if(mod==PAR_4D_TYPE)
                 {
                     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_W = result.toStdString();
                     MathmodRef->RootObjet.CurrentTreestruct.fw = result.split(";", QString::SkipEmptyParts);
                 }
                 break;
-            case PAR_UMIN_FIELD :
+            case PAR_UMIN :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_u = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.umin = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_UMAX_FIELD :
+            case PAR_UMAX :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_u = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.umax = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_VMAX_FIELD :
+            case PAR_VMAX :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->sup_v = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.vmax = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_VMIN_FIELD :
+            case PAR_VMIN :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_v = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.vmin = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_COMP_FIELD :
+            case PAR_COMP :
                 MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_NAME_FIELD :
+            case PAR_NAME :
                 MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
                 break;
         }
@@ -1733,31 +1733,31 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj, const Man
     QString result, arg="";
     QJsonArray lst;
     switch(idx) {
-         case ISO_FXYZ_FIELD :
+         case ISO_FXYZ :
             arg = "Fxyz";
             break;
-        case ISO_XMAX_FIELD :
+        case ISO_XMAX :
            arg = "Xmax";
            break;
-        case ISO_YMAX_FIELD :
+        case ISO_YMAX :
            arg = "Ymax";
            break;
-        case ISO_ZMAX_FIELD :
+        case ISO_ZMAX :
            arg = "Zmax";
            break;
-        case ISO_XMIN_FIELD :
+        case ISO_XMIN :
            arg = "Xmin";
            break;
-        case ISO_YMIN_FIELD :
+        case ISO_YMIN :
            arg = "Ymin";
            break;
-        case ISO_ZMIN_FIELD :
+        case ISO_ZMIN :
            arg = "Zmin";
            break;
-        case ISO_NAME_FIELD :
+        case ISO_NAME :
            arg = "Name";
            break;
-        case ISO_COMP_FIELD :
+        case ISO_COMP :
            arg = "Component";
            break;
 
@@ -1773,39 +1773,39 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj, const Man
         result.replace("\t","");
         result.replace(" ","");
         switch(idx) {
-             case ISO_FXYZ_FIELD :
+             case ISO_FXYZ :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunctionSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_XMAX_FIELD :
+            case ISO_XMAX :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitSup = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.xmax = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_YMAX_FIELD :
+            case ISO_YMAX :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitSup = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.ymax = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_ZMAX_FIELD :
+            case ISO_ZMAX :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitSup = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.zmax = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_XMIN_FIELD :
+            case ISO_XMIN :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->XlimitInf = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.xmin = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_YMIN_FIELD :
+            case ISO_YMIN :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->YlimitInf = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.ymin = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_ZMIN_FIELD :
+            case ISO_ZMIN :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ZlimitInf = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.zmin = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_COMP_FIELD :
+            case ISO_COMP :
                 MathmodRef->RootObjet.CurrentTreestruct.Component = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_NAME_FIELD :
+            case ISO_NAME :
                 MathmodRef->RootObjet.CurrentTreestruct.name = result.split(";", QString::SkipEmptyParts);
                 break;
         }
@@ -1818,23 +1818,23 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
     QJsonArray lst;
     bool argnotnull=false;
     switch(idx) {
-         case ISO_GRID_FIELD :
+         case ISO_GRID :
             arg = "Grid";
             argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->gridnotnull=QObj[arg].isArray();
             break;
-        case ISO_CND_FIELD :
+        case ISO_CND :
            arg = "Cnd";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->cndnotnull=QObj[arg].isArray();
            break;
-        case ISO_VAR_FIELD :
+        case ISO_VAR :
            arg = "Varu";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->varunotnull=QObj[arg].isArray();
            break;
-        case ISO_CONST_FIELD :
+        case ISO_CONST :
            arg = "Const";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->constnotnull=QObj[arg].isArray();
            break;
-        case ISO_FUNCT_FIELD :
+        case ISO_FUNCT :
            arg = "Funct";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull=QObj[arg].isArray();
            break;
@@ -1851,24 +1851,24 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
         result.replace("\t","");
         result.replace(" ","");
         switch(idx) {
-             case ISO_GRID_FIELD :
+             case ISO_GRID :
                 for(int j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
                 break;
-            case ISO_CND_FIELD :
+            case ISO_CND :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Condition = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_FUNCT_FIELD :
+            case ISO_FUNCT :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_CONST_FIELD :
+            case ISO_CONST :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
                 break;
-            case ISO_VAR_FIELD :
+            case ISO_VAR :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Varu = result.toStdString();
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VaruSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
@@ -1883,23 +1883,23 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
     QJsonArray lst;
     bool argnotnull=false;
     switch(idx) {
-        case PAR_GRID_FIELD :
+        case PAR_GRID :
            arg = "Grid";
            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull=QObj[arg].isArray();
            break;
-        case PAR_VAR_FIELD :
+        case PAR_VAR :
            arg = "Varu";
            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->varunotnull=QObj[arg].isArray();
            break;
-        case PAR_CONST_FIELD :
+        case PAR_CONST :
            arg = "Const";
            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->constnotnull=QObj[arg].isArray();
            break;
-        case PAR_FUNCT_FIELD :
+        case PAR_FUNCT :
            arg = "Funct";
            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->functnotnull=QObj[arg].isArray();
            break;
-         case PAR_CND_FIELD :
+         case PAR_CND :
             arg = "Cnd";
             argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull=QObj[arg].isArray();
             break;
@@ -1916,27 +1916,27 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
         result.replace("\t","");
         result.replace(" ","");
         switch(idx) {
-            case PAR_GRID_FIELD :
+            case PAR_GRID :
                 for(int j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
 
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_CND_FIELD :
+            case PAR_CND :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_CONST_FIELD :
+            case PAR_CONST :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_VAR_FIELD :
+            case PAR_VAR :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_FUNCT_FIELD :
+            case PAR_FUNCT :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
                 MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
@@ -1948,47 +1948,47 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
 void DrawingOptions::BuildAllVect()
 {
     const OptionnalIsoScriptFIELD optiso[] = {
-        ISO_GRID_FIELD,
-        ISO_CND_FIELD,
-        ISO_CONST_FIELD,
-        ISO_FUNCT_FIELD,
-        ISO_VAR_FIELD
+        ISO_GRID,
+        ISO_CND,
+        ISO_CONST,
+        ISO_FUNCT,
+        ISO_VAR
     };
     OptIsoFields=std::vector<OptionnalIsoScriptFIELD>(optiso, optiso + sizeof(optiso) / sizeof(OptionnalIsoScriptFIELD));
 
     const OptionnalParScriptFIELD optpar[] = {
-        PAR_GRID_FIELD,
-        PAR_CND_FIELD,
-        PAR_CONST_FIELD,
-        PAR_FUNCT_FIELD,
-        PAR_VAR_FIELD
+        PAR_GRID,
+        PAR_CND,
+        PAR_CONST,
+        PAR_FUNCT,
+        PAR_VAR
     };
     OptParFields=std::vector<OptionnalParScriptFIELD>(optpar, optpar + sizeof(optpar) / sizeof(OptionnalParScriptFIELD));
 
     const MandatoryIsoField maniso[] = {
-        ISO_FXYZ_FIELD,
-        ISO_XMIN_FIELD,
-        ISO_XMAX_FIELD,
-        ISO_YMIN_FIELD,
-        ISO_YMAX_FIELD,
-        ISO_ZMIN_FIELD,
-        ISO_ZMAX_FIELD,
-        ISO_COMP_FIELD,
-        ISO_NAME_FIELD
+        ISO_FXYZ,
+        ISO_XMIN,
+        ISO_XMAX,
+        ISO_YMIN,
+        ISO_YMAX,
+        ISO_ZMIN,
+        ISO_ZMAX,
+        ISO_COMP,
+        ISO_NAME
     };
     MandIsoFields=std::vector<MandatoryIsoField>(maniso, maniso + sizeof(maniso) / sizeof(MandatoryIsoField));
 
     const MandatoryParField manpar[] = {
-        PAR_FX_FIELD,
-        PAR_FY_FIELD,
-        PAR_FZ_FIELD,
-        PAR_FW_FIELD,
-        PAR_UMIN_FIELD,
-        PAR_UMAX_FIELD,
-        PAR_VMIN_FIELD,
-        PAR_VMAX_FIELD,
-        PAR_COMP_FIELD,
-        PAR_NAME_FIELD
+        PAR_FX,
+        PAR_FY,
+        PAR_FZ,
+        PAR_FW,
+        PAR_UMIN,
+        PAR_UMAX,
+        PAR_VMIN,
+        PAR_VMAX,
+        PAR_COMP,
+        PAR_NAME
     };
     MandParFields=std::vector<MandatoryParField>(manpar, manpar + sizeof(manpar) / sizeof(MandatoryParField));
 }

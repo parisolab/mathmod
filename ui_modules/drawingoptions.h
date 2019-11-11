@@ -41,47 +41,47 @@ enum ModelType
 };
 enum OptionnalParScriptFIELD
 {
-    PAR_GRID_FIELD,
-    PAR_CND_FIELD,
-    PAR_CONST_FIELD,
-    PAR_FUNCT_FIELD,
-    PAR_VAR_FIELD
+    PAR_GRID,
+    PAR_CND,
+    PAR_CONST,
+    PAR_FUNCT,
+    PAR_VAR
 };
 
 enum OptionnalIsoScriptFIELD
 {
-    ISO_GRID_FIELD,
-    ISO_CND_FIELD,
-    ISO_CONST_FIELD,
-    ISO_FUNCT_FIELD,
-    ISO_VAR_FIELD
+    ISO_GRID,
+    ISO_CND,
+    ISO_CONST,
+    ISO_FUNCT,
+    ISO_VAR
 };
 
 enum MandatoryIsoField
 {
-    ISO_FXYZ_FIELD,
-    ISO_XMIN_FIELD,
-    ISO_XMAX_FIELD,
-    ISO_YMIN_FIELD,
-    ISO_YMAX_FIELD,
-    ISO_ZMIN_FIELD,
-    ISO_ZMAX_FIELD,
-    ISO_COMP_FIELD,
-    ISO_NAME_FIELD
+    ISO_FXYZ,
+    ISO_XMIN,
+    ISO_XMAX,
+    ISO_YMIN,
+    ISO_YMAX,
+    ISO_ZMIN,
+    ISO_ZMAX,
+    ISO_COMP,
+    ISO_NAME
 };
 
 enum MandatoryParField
 {
-    PAR_FX_FIELD,
-    PAR_FY_FIELD,
-    PAR_FZ_FIELD,
-    PAR_FW_FIELD,
-    PAR_UMIN_FIELD,
-    PAR_UMAX_FIELD,
-    PAR_VMIN_FIELD,
-    PAR_VMAX_FIELD,
-    PAR_COMP_FIELD,
-    PAR_NAME_FIELD
+    PAR_FX,
+    PAR_FY,
+    PAR_FZ,
+    PAR_FW,
+    PAR_UMIN,
+    PAR_UMAX,
+    PAR_VMIN,
+    PAR_VMAX,
+    PAR_COMP,
+    PAR_NAME
 };
 
 struct SliderStruct
