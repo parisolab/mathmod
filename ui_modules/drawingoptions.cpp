@@ -1592,7 +1592,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
             MandatoryParField Opt = *it;
-            MandatoryParFieldprocess(QObj, Opt);
+            MandatoryParFieldprocess(QObj, Opt, PAR_4D_TYPE);
         }
         for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
             OptionnalParScriptFIELD Opt = *it;
@@ -1673,7 +1673,7 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.text = "";
 }
 
-void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const MandatoryParField & idx)
+void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const MandatoryParField & idx, const ModelType & mod)
 {
     QString result, arg="";
     QJsonArray lst;
@@ -1688,7 +1688,8 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const Man
            arg = "Fz";
            break;
         case PAR_FW_FIELD :
-           arg = "Fw";
+           if(mod==PAR_4D_TYPE)
+               arg = "Fw";
            break;
         case PAR_UMAX_FIELD :
            arg = "Umax";
@@ -1736,8 +1737,11 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const Man
                 MathmodRef->RootObjet.CurrentTreestruct.fz = result.split(";", QString::SkipEmptyParts);
                 break;
             case PAR_FW_FIELD :
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_W = result.toStdString();
-                MathmodRef->RootObjet.CurrentTreestruct.fw = result.split(";", QString::SkipEmptyParts);
+                if(mod==PAR_4D_TYPE)
+                {
+                    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_W = result.toStdString();
+                    MathmodRef->RootObjet.CurrentTreestruct.fw = result.split(";", QString::SkipEmptyParts);
+                }
                 break;
             case PAR_UMIN_FIELD :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->inf_u = result.toStdString();
@@ -2152,7 +2156,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
                 MandatoryParField Opt = *it;
-                MandatoryParFieldprocess(QObj, Opt);
+                MandatoryParFieldprocess(QObj, Opt, PAR_4D_TYPE);
             }
 
             for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {

@@ -36,6 +36,7 @@
 enum ModelType
 {
     PAR_TYPE,
+    PAR_4D_TYPE,
     ISO_TYPE
 };
 enum OptionnalParScriptFIELD
@@ -128,7 +129,7 @@ public slots:
     void OptionalIsoScriptFieldprocess(const QJsonObject &, OptionnalIsoScriptFIELD);
     void OptionalParScriptFieldprocess(const QJsonObject &, OptionnalParScriptFIELD);
     void MandatoryIsoFieldprocess(const QJsonObject &, const MandatoryIsoField &);
-    void MandatoryParFieldprocess(const QJsonObject &, const MandatoryParField &);
+    void MandatoryParFieldprocess(const QJsonObject &, const MandatoryParField &, const ModelType & mod=PAR_TYPE);
     void LoadTexture(const QJsonObject &, const ModelType &);
     void LoadPigment(const QJsonObject &, const ModelType &);
     void updateCurrentTreestruct();
@@ -140,7 +141,7 @@ public slots:
     void colorsoptions();
     void on_xyzg_valueChanged(int);
     void on_ChangeGrid_clicked();
-    int    on_choice_activated(const QString &);
+    int  on_choice_activated(const QString &);
     void LoadK3DSurfScript (QString filename, int type);
     void slot_comboBox18_3_activated(const QString &arg1);
     void slot_checkBox_clicked();
