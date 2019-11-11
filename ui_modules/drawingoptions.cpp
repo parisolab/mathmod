@@ -1483,50 +1483,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     if(Jobj["Iso3D"].isObject())
     {
         QObj = Jobj["Iso3D"].toObject();
-/*
-        // Fxyz
-        MandatoryIsoFieldprocess(QObj, ISO_FXYZ_FIELD);
-
-        // XlimitSup
-        MandatoryIsoFieldprocess(QObj, ISO_XMAX_FIELD);
-
-        // YlimitSup
-        MandatoryIsoFieldprocess(QObj, ISO_YMAX_FIELD);
-
-        // ZlimitSup
-        MandatoryIsoFieldprocess(QObj, ISO_ZMAX_FIELD);
-
-        // XlimitInf
-        MandatoryIsoFieldprocess(QObj, ISO_XMIN_FIELD);
-
-        // YlimitInf
-        MandatoryIsoFieldprocess(QObj, ISO_YMIN_FIELD);
-
-        // ZlimitInf
-        MandatoryIsoFieldprocess(QObj, ISO_ZMIN_FIELD);
-
-        // Component
-        MandatoryIsoFieldprocess(QObj, ISO_COMP_FIELD);
-
-        // Name
-        MandatoryIsoFieldprocess(QObj, ISO_NAME_FIELD);
-        */
-        /*
-                // Condition:
-                OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
-
-                // Varu
-                OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
-
-                // Const
-                OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
-
-                // Funct
-                OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
-
-                // Grid
-                OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
-        */
 
         for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
             MandatoryIsoField Opt = *it;
@@ -1581,56 +1537,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     {
         QObj = Jobj["Param3D"].toObject();
 
-        /*
-        // Fx
-        MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
-
-        // Fy
-        MandatoryParFieldprocess(QObj, PAR_FY_FIELD);
-
-        // Fz
-        MandatoryParFieldprocess(QObj, PAR_FZ_FIELD);
-
-        // inf_u
-        MandatoryParFieldprocess(QObj, PAR_UMIN_FIELD);
-
-        // sup_u
-        MandatoryParFieldprocess(QObj, PAR_UMAX_FIELD);
-
-        // inf_v
-        MandatoryParFieldprocess(QObj, PAR_VMIN_FIELD);
-
-        // sup_v
-        MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
-
-        // Component
-        MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
-
-        // Name
-        MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
-        */
-
         for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
             MandatoryParField Opt = *it;
             MandatoryParFieldprocess(QObj, Opt);
         }
-
-/*
-        // Varu
-        OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
-
-        // Cnd
-        OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
-
-        // Const
-        OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
-
-        // Funct
-        OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
-
-        // Grid
-        OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
-*/
 
         for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
             OptionnalParScriptFIELD Opt = *it;
@@ -1679,37 +1589,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     else if(Jobj["Param4D"].isObject())
     {
         QObj = Jobj["Param4D"].toObject();
-        /*
-        // Fx
-        MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
-
-        // Fy
-        MandatoryParFieldprocess(QObj, PAR_FY_FIELD);
-
-        // Fz
-        MandatoryParFieldprocess(QObj, PAR_FZ_FIELD);
-
-        //Fw
-        MandatoryParFieldprocess(QObj, PAR_FW_FIELD);
-
-        // inf_u
-        MandatoryParFieldprocess(QObj, PAR_UMIN_FIELD);
-
-        // sup_u
-        MandatoryParFieldprocess(QObj, PAR_UMAX_FIELD);
-
-        // inf_v
-        MandatoryParFieldprocess(QObj, PAR_VMIN_FIELD);
-
-        // sup_v
-        MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
-
-        // Component
-        MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
-
-        // Name
-        MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
-        */
 
         for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
             MandatoryParField Opt = *it;
@@ -1733,23 +1612,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         {
             LoadPigment(QPigmentObj, PAR_TYPE);
         }
-
-/*
-        // Varu
-        OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
-
-        // Const
-        OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
-
-        // Cnd
-        OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
-
-        // Funct
-        OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
-
-        // Grid
-        OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
-        */
 
         QJsonObject Jobjtmp = Jobj;
         //Some keys cleaning..
@@ -2202,34 +2064,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 return (0);
 
             ShowSliders(array[i].toObject());
-            /*
-            // Fxyz
-            MandatoryIsoFieldprocess(QObj, ISO_FXYZ_FIELD);
 
-            // XlimitSup
-            MandatoryIsoFieldprocess(QObj, ISO_XMAX_FIELD);
-
-            // YlimitSup
-            MandatoryIsoFieldprocess(QObj, ISO_YMAX_FIELD);
-
-            // ZlimitSup
-            MandatoryIsoFieldprocess(QObj, ISO_ZMAX_FIELD);
-
-            // XlimitInf
-            MandatoryIsoFieldprocess(QObj, ISO_XMIN_FIELD);
-
-            // YlimitInf
-            MandatoryIsoFieldprocess(QObj, ISO_YMIN_FIELD);
-
-            // ZlimitInf
-            MandatoryIsoFieldprocess(QObj, ISO_ZMIN_FIELD);
-
-            // Component
-            MandatoryIsoFieldprocess(QObj, ISO_COMP_FIELD);
-
-            // Name
-            MandatoryIsoFieldprocess(QObj, ISO_NAME_FIELD);
-            */
             for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
                 MandatoryIsoField Opt = *it;
                 MandatoryIsoFieldprocess(QObj, Opt);
@@ -2255,39 +2090,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 LoadPigment(QPigmentObj, ISO_TYPE);
             }
 
-/*
-            // Cnd
-            OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
-
-            // Varu
-            OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
-
-            // Const
-            OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
-
-            // Funct
-            OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
-
-            // Colors
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->rgbtnotnull =
-                (QObj1["Texture"].isObject())))
-            {
-                QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, ISO_TYPE);
-            }
-
-            // Pigment
-            if((MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->vrgbtnotnull =
-                (QObj1["Pigment"].isObject())))
-            {
-                QPigmentObj = QObj1["Pigment"].toObject();
-                LoadPigment(QPigmentObj, ISO_PIGM_FIELD);
-            }
-
-            // Grid
-            OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
-*/
-
             QJsonDocument document;
             document.setObject(array[i].toObject());
             MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
@@ -2306,34 +2108,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
-            /*
-            // Fx
-            MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
-
-            // Fy
-            MandatoryParFieldprocess(QObj, PAR_FY_FIELD);
-
-            // Fz
-            MandatoryParFieldprocess(QObj, PAR_FZ_FIELD);
-
-            // inf_u
-            MandatoryParFieldprocess(QObj, PAR_UMIN_FIELD);
-
-            // sup_u
-            MandatoryParFieldprocess(QObj, PAR_UMAX_FIELD);
-
-            // inf_v
-            MandatoryParFieldprocess(QObj, PAR_VMIN_FIELD);
-
-            // sup_v
-            MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
-
-            // Component
-            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
-
-            // Name
-            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
-            */
 
             for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
                 MandatoryParField Opt = *it;
@@ -2358,39 +2132,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 QPigmentObj = QObj1["Pigment"].toObject();
                 LoadPigment(QPigmentObj, PAR_TYPE);
             }
-/*
-            // Varu
-            OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
-
-            // Const
-            OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
-
-            // Cnd
-            OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
-
-            // Funct
-            OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
-
-            // Colors
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->rgbtnotnull =
-                (QObj1["Texture"].isObject())))
-            {
-                QTextureObj = QObj1["Texture"].toObject();
-                LoadTexture(QTextureObj, PAR_TYPE);
-            }
-
-            // Pigment
-            if((MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->vrgbtnotnull =
-                (QObj1["Pigment"].isObject())))
-            {
-                QPigmentObj = QObj1["Pigment"].toObject();
-                LoadPigment(QPigmentObj, PAR_PIGM_FIELD);
-            }
-
-            // Grid
-            OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
-*/
-
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
@@ -2408,37 +2149,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
-            /*
-            // Component
-            MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
 
-            // Name
-            MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
-
-            // Fx
-            MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
-
-            // Fy
-            MandatoryParFieldprocess(QObj, PAR_FY_FIELD);
-
-            // Fz
-            MandatoryParFieldprocess(QObj, PAR_FZ_FIELD);
-
-            // Fw
-            MandatoryParFieldprocess(QObj, PAR_FW_FIELD);
-
-            // inf_u
-            MandatoryParFieldprocess(QObj, PAR_UMIN_FIELD);
-
-            // sup_u
-            MandatoryParFieldprocess(QObj, PAR_UMAX_FIELD);
-
-            // inf_v
-            MandatoryParFieldprocess(QObj, PAR_VMIN_FIELD);
-
-            // sup_v
-            MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
-            */
             for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
                 MandatoryParField Opt = *it;
                 MandatoryParFieldprocess(QObj, Opt);
@@ -2463,22 +2174,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 QPigmentObj = QObj1["Pigment"].toObject();
                 LoadPigment(QPigmentObj, PAR_TYPE);
             }
-            /*
-            // Varu
-            OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
-
-            // Const
-            OptionalScriptFieldprocess(QObj, PAR_CONST_FIELD);
-
-            // Cnd
-            OptionalScriptFieldprocess(QObj, PAR_CND_FIELD);
-
-            // Grid
-            OptionalScriptFieldprocess(QObj, PAR_GRID_FIELD);
-
-            // Funct
-            OptionalScriptFieldprocess(QObj, PAR_FUNCT_FIELD);
-            */
 
             QJsonDocument document;
             document.setObject(array[i].toObject());
