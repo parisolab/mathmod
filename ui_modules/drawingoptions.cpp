@@ -2172,27 +2172,8 @@ void DrawingOptions::Run_JsonObject_activeted()
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
-        QMessageBox message ;
-        message.setWindowTitle("Error at : ");
-        sortie = (script);
-        int before, after;
-        if(sortie.length() > (err.offset +30))
-            after = 30;
-        else after = sortie.length() - err.offset;
-        sortie.truncate(err.offset +after);
-        if(err.offset-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,err.offset-before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, " >>> Error <<< ");
-        message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
+        ShowErrorMessage(err, script);
+        return ;
     }
 
     // Draw here
@@ -5228,6 +5209,34 @@ void DrawingOptions::on_InitTButton_clicked()
 }
 
 // --------------------------
+void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
+{
+    QString sortie;
+    QMessageBox message;
+
+    message.setWindowTitle("Error at : ");
+    sortie = (script);
+    int before, after;
+    if(sortie.length() > (err.offset +30))
+        after = 30;
+    else after = sortie.length() - err.offset;
+    sortie.truncate(err.offset +after);
+    if(err.offset-30 > 0)
+        before = 30;
+    else
+        before = 0;
+    sortie = sortie.remove(0,err.offset-before);
+    sortie.replace("\t", " ");
+    sortie.replace("\n", " ");
+    sortie.insert(before, " >>> Error <<< ");
+    message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
+                    "..." + sortie + "..."
+                   );
+    message.adjustSize () ;
+    message.exec();
+    return ;
+}
+// --------------------------
 void DrawingOptions::on_pushButton_2_clicked()
 {
     QJsonParseError err;
@@ -5236,27 +5245,7 @@ void DrawingOptions::on_pushButton_2_clicked()
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
-        QMessageBox message ;
-        message.setWindowTitle("Error at : ");
-        sortie = (script);
-        int before, after;
-        if(sortie.length() > (err.offset +30))
-            after = 30;
-        else after = sortie.length() - err.offset;
-        sortie.truncate(err.offset +after);
-        if(err.offset-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,err.offset-before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, " >>> Error <<< ");
-        message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
+        ShowErrorMessage(err, script);
         return ;
     }
 
@@ -5433,28 +5422,8 @@ void DrawingOptions::on_pushButton_5_clicked()
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
-        QMessageBox message ;
-        message.setWindowTitle("Error at : ");
-        sortie = (script);
-        int before, after;
-        if(sortie.length() > (err.offset +30))
-            after = 30;
-        else after = sortie.length() - err.offset;
-        sortie.truncate(err.offset +after);
-        if(err.offset-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,err.offset-before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, " >>> Error <<< ");
-        message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
-        return;
+        ShowErrorMessage(err, script);
+        return ;
     }
 
     QJsonObject tmp = doc.object();
