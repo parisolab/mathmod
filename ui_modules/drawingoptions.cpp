@@ -1511,26 +1511,28 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         // Name
         MandatoryIsoFieldprocess(QObj, ISO_NAME_FIELD);
         */
+        /*
+                // Condition:
+                OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
+
+                // Varu
+                OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
+
+                // Const
+                OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
+
+                // Funct
+                OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
+
+                // Grid
+                OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
+        */
+
         for (std::vector<MandatoryIsoField>::const_iterator it = MandIsoFields.begin(); it != MandIsoFields.end(); ++it) {
             MandatoryIsoField Opt = *it;
             MandatoryIsoFieldprocess(QObj, Opt);
         }
-/*
-        // Condition:
-        OptionalScriptFieldprocess(QObj, ISO_CND_FIELD);
 
-        // Varu
-        OptionalScriptFieldprocess(QObj, ISO_VAR_FIELD);
-
-        // Const
-        OptionalScriptFieldprocess(QObj, ISO_CONST_FIELD);
-
-        // Funct
-        OptionalScriptFieldprocess(QObj, ISO_FUNCT_FIELD);
-
-        // Grid
-        OptionalScriptFieldprocess(QObj, ISO_GRID_FIELD);
-*/
         for (std::vector<OptionnalIsoScriptFIELD>::const_iterator it = OptIsoFields.begin(); it != OptIsoFields.end(); ++it) {
             OptionnalIsoScriptFIELD Opt = *it;
             OptionalIsoScriptFieldprocess(QObj, Opt);
@@ -1578,6 +1580,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     else if(Jobj["Param3D"].isObject())
     {
         QObj = Jobj["Param3D"].toObject();
+
+        /*
         // Fx
         MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
 
@@ -1604,6 +1608,13 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         // Name
         MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+        */
+
+        for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
+            MandatoryParField Opt = *it;
+            MandatoryParFieldprocess(QObj, Opt);
+        }
+
 /*
         // Varu
         OptionalScriptFieldprocess(QObj, PAR_VAR_FIELD);
@@ -1668,6 +1679,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     else if(Jobj["Param4D"].isObject())
     {
         QObj = Jobj["Param4D"].toObject();
+        /*
         // Fx
         MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
 
@@ -1697,7 +1709,12 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         // Name
         MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+        */
 
+        for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
+            MandatoryParField Opt = *it;
+            MandatoryParFieldprocess(QObj, Opt);
+        }
         for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
             OptionnalParScriptFIELD Opt = *it;
             OptionalParScriptFieldprocess(QObj, Opt);
@@ -2289,7 +2306,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
-
+            /*
             // Fx
             MandatoryParFieldprocess(QObj, PAR_FX_FIELD);
 
@@ -2316,8 +2333,12 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             // Name
             MandatoryParFieldprocess(QObj, PAR_NAME_FIELD);
+            */
 
-
+            for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
+                MandatoryParField Opt = *it;
+                MandatoryParFieldprocess(QObj, Opt);
+            }
             for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
                 OptionnalParScriptFIELD Opt = *it;
                 OptionalParScriptFieldprocess(QObj, Opt);
@@ -2387,7 +2408,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if(!VerifiedJsonModel((array[i].toObject())))
                 return (0);
             ShowSliders(array[i].toObject());
-
+            /*
             // Component
             MandatoryParFieldprocess(QObj, PAR_COMP_FIELD);
 
@@ -2417,6 +2438,11 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             // sup_v
             MandatoryParFieldprocess(QObj, PAR_VMAX_FIELD);
+            */
+            for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {
+                MandatoryParField Opt = *it;
+                MandatoryParFieldprocess(QObj, Opt);
+            }
 
             for (std::vector<OptionnalParScriptFIELD>::const_iterator it = OptParFields.begin(); it != OptParFields.end(); ++it) {
                 OptionnalParScriptFIELD Opt = *it;
