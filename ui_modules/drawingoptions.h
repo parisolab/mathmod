@@ -155,7 +155,6 @@ public slots:
     void on_actionFill_triggered();
     void on_actionSmooth_triggered();
     void on_ObjectClasse_clicked(const QModelIndex &index);
-    void AddModel(QString, int where=0);
     void UpdateCurrentTreeObject();
     void on_updateButton_clicked();
     void slot_pushButton_2_clicked();
