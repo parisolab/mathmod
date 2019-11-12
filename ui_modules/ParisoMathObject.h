@@ -51,8 +51,8 @@ struct ParamStruct
     QString comment;
     QString name;
     QString Component;
-    int          Nbcomponent;
-    int          index;
+    int     Nbcomponent;
+    int     index;
 };
 
 struct IsoStruct

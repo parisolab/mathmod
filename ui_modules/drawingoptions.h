@@ -122,6 +122,7 @@ public:
 public slots:
     void CIndextoolButton_clicked(int);
     void BuildAllVect();
+    void AddTreeParam();
     void ShowErrorMessage(QJsonParseError &, QString &);
     void OptionalIsoScriptFieldprocess(const QJsonObject &, OptionnalIsoScriptFIELD);
     void OptionalParScriptFieldprocess(const QJsonObject &, OptionnalParScriptFIELD);

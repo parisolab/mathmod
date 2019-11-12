@@ -328,7 +328,7 @@ void DrawingOptions::AddModel(QString model, int where)
             QStringList listcmp = cmp.split(";", QString::SkipEmptyParts);
             QTreeWidgetItem *cmpitem = new QTreeWidgetItem(ParlistItem);
             cmpitem->setText(0,  "Components:");
-
+/*
             QString fx        = MathmodRef->RootObjet.ParamTable[position].fx;
             QString fy        = MathmodRef->RootObjet.ParamTable[position].fy;
             QString fz        = MathmodRef->RootObjet.ParamTable[position].fz;
@@ -336,14 +336,14 @@ void DrawingOptions::AddModel(QString model, int where)
             QString umax = MathmodRef->RootObjet.ParamTable[position].umax;
             QString vmin  = MathmodRef->RootObjet.ParamTable[position].vmin;
             QString vmax = MathmodRef->RootObjet.ParamTable[position].vmax;
-
-            QStringList listformulax        = fx.split(";", QString::SkipEmptyParts);
-            QStringList listformulay        = fy.split(";", QString::SkipEmptyParts);
-            QStringList listformulaz        = fz.split(";", QString::SkipEmptyParts);
-            QStringList listumin              = umin.split(";", QString::SkipEmptyParts);
-            QStringList listumax             = umax.split(";", QString::SkipEmptyParts);
-            QStringList listvmin              = vmin.split(";", QString::SkipEmptyParts);
-            QStringList listvmax             = vmax.split(";", QString::SkipEmptyParts);
+*/
+            QStringList listformulax        = (MathmodRef->RootObjet.ParamTable[position].fx).split(";", QString::SkipEmptyParts);
+            QStringList listformulay        = (MathmodRef->RootObjet.ParamTable[position].fy).split(";", QString::SkipEmptyParts);
+            QStringList listformulaz        = (MathmodRef->RootObjet.ParamTable[position].fz).split(";", QString::SkipEmptyParts);
+            QStringList listumin            = (MathmodRef->RootObjet.ParamTable[position].umin).split(";", QString::SkipEmptyParts);
+            QStringList listumax            = (MathmodRef->RootObjet.ParamTable[position].umax).split(";", QString::SkipEmptyParts);
+            QStringList listvmin            = (MathmodRef->RootObjet.ParamTable[position].vmin).split(";", QString::SkipEmptyParts);
+            QStringList listvmax            = (MathmodRef->RootObjet.ParamTable[position].vmax).split(";", QString::SkipEmptyParts);
 
             //Grid resolution:
             QString grid = MathmodRef->RootObjet.ParamTable[position].Grid;
@@ -381,9 +381,9 @@ void DrawingOptions::AddModel(QString model, int where)
         }
 
         //Add Global parameters:
-        if((cmp = MathmodRef->RootObjet.ParamTable[position].Varu)   != ""      ||
-                (cmp = MathmodRef->RootObjet.ParamTable[position].Const) != "" ||
-                (cmp = MathmodRef->RootObjet.ParamTable[position].Funct) != "")
+        if((cmp = MathmodRef->RootObjet.ParamTable[position].Varu)   != ""  ||
+           (cmp = MathmodRef->RootObjet.ParamTable[position].Const) != ""   ||
+           (cmp = MathmodRef->RootObjet.ParamTable[position].Funct) != "")
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(ParlistItem);
             parameteritem->setText(0,  "Parameters:");
