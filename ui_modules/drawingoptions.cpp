@@ -306,7 +306,6 @@ void DrawingOptions::on_ChangeGrid_clicked()
 // --------------------------
 void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
 {
-    //QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(MyselectionItemReference);
     paramlistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
     paramlistItem->setBackgroundColor(0, greenColor);
@@ -335,7 +334,6 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
             cmpitem6->setText(0,  "U = ["+ MathmodRef->RootObjet.CurrentTreestruct.umin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.umax.at(j) +"]");
             QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
             cmpitem7->setText(0,  "V = ["+ MathmodRef->RootObjet.CurrentTreestruct.vmin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.vmax.at(j) +"]");
-
             //Grid resolution:
             if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && (2*j+1) < MathmodRef->RootObjet.CurrentTreestruct.Grid.size() && !MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
             {
@@ -351,7 +349,6 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
 // --------------------------
 void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem)
 {
-    //QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(MyselectionItemReference);
     IsolistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
     IsolistItem->setBackgroundColor(0, greenColor);
