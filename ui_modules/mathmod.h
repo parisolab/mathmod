@@ -66,6 +66,7 @@ public slots:
     void slot_triangles_clicked();
     int ParseIso();
     int ParsePar();
+    void ShowErrormessage();
     void frames_clicked();
 public:
     Ui::MathMod ui;

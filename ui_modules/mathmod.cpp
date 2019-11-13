@@ -231,31 +231,38 @@ void MathMod::zg_valueChanged( int cl)
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::ShowErrormessage()
+{
+    message.setTextFormat(Qt::RichText);
+    int before, after;
+    QString sortie = QString::fromStdString(stError.strError);
+    if(sortie.length() > (stError.iErrorIndex +30))
+        after = 30;
+    else after = sortie.length() - stError.iErrorIndex;
+    sortie.truncate(stError.iErrorIndex +after);
+    if(stError.iErrorIndex-30 > 0)
+        before = 30;
+    else
+        before = 0;
+    sortie = sortie.remove(0,stError.iErrorIndex - before);
+    sortie.replace("\t", " ");
+    sortie.replace("\n", " ");
+    sortie.insert(before, " <font size=14  color=#FF0033>Error => </font>");
+    message.setText("Error at position: " + QString::number(stError.iErrorIndex) + "<br><br>" +
+                    "..." + sortie + "..."
+                   );
+    message.adjustSize () ;
+    message.exec();
+    return;
+
+}
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int MathMod::ParsePar()
 {
     stError = (ui.glWidget)->ParObjetThread->ParObjet->masterthread->parse_expression();
     if(stError.iErrorIndex >= 0)
     {
-        message.setTextFormat(Qt::RichText);
-        int before, after;
-        QString sortie = QString::fromStdString(stError.strError);
-        if(sortie.length() > (stError.iErrorIndex +30))
-            after = 30;
-        else after = sortie.length() - stError.iErrorIndex;
-        sortie.truncate(stError.iErrorIndex +after);
-        if(stError.iErrorIndex-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,stError.iErrorIndex - before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, " <font size=14  color=#FF0033>Error => </font>");
-        message.setText("Error at position: " + QString::number(stError.iErrorIndex) + "<br><br>" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
+        ShowErrormessage();
         return -1;
     }
     else
@@ -294,41 +301,14 @@ int MathMod::ParseIso()
     stError = (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->ParserIso();
     if(stError.iErrorIndex >= 0)
     {
-        message.setTextFormat(Qt::RichText);
-        int before, after;
-        QString sortie = QString::fromStdString(stError.strError);
-        if(sortie.length() > (stError.iErrorIndex +30))
-            after = 30;
-        else after = sortie.length() - stError.iErrorIndex;
-        sortie.truncate(stError.iErrorIndex +after);
-        if(stError.iErrorIndex-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,stError.iErrorIndex - before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, " <font size=14  color=#FF0033>Error => </font>");
-        message.setText("Error at position: " + QString::number(stError.iErrorIndex) + "<br><br>" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
+        ShowErrormessage();
         return -1;
     }
     else
         (ui.glWidget)->IsoObjetThread->IsoObjet->ThreadParsersCopy();
     return 1;
 }
-/*
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::UpdateFrame()
-{
-    //(ui.glWidget)->LocalScene.typedrawing = 1;
-    (ui.glWidget)->initialize_GL();
-    (ui.glWidget)->update();
-}
-*/
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ProcessNewIsoSurface()
 {
@@ -350,93 +330,18 @@ void MathMod::ProcessParisoSurface()
     stError = (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->ParserIso();
     if(stError.iErrorIndex >= 0)
     {
-        message.setTextFormat(Qt::RichText);
-        int before, after;
-        QString sortie = QString::fromStdString(stError.strError);
-        if(sortie.length() > (stError.iErrorIndex +30))
-            after = 30;
-        else after = sortie.length() - stError.iErrorIndex;
-        sortie.truncate(stError.iErrorIndex +after);
-        if(stError.iErrorIndex-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,stError.iErrorIndex - before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, " <font size=14  color=#FF0033>Error ==> </font>");
-        message.setText("Error at position: " + QString::number(stError.iErrorIndex) + "\n\n***********\n" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
+        ShowErrormessage();
         return;
     }
     else
-        //for(int nbthreds=1; nbthreds < maxnbthreads ; nbthreds++)
-        //(ui.glWidget)->IsoObjetThread->IsoObjet->workerthreads[nbthreds].ParserIso();
-        /*
-            (ui.glWidget)->LocalScene.typedrawing = 11;
-
-            (ui.glWidget)->IsoObjetThread->IsoObjet->IsoBuild(
-                (ui.glWidget)->LocalScene.ArrayNorVer_localPt,
-                (ui.glWidget)->LocalScene.PolyIndices_localPt,
-                &(ui.glWidget)->LocalScene.PolyNumberTmp1,
-                &(ui.glWidget)->LocalScene.VertxNumberTmp1,
-                (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
-                &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin),
-                &((ui.glWidget)->LocalScene.componentsinfos),
-                (ui.glWidget)->LocalScene.Typetriangles,
-                (ui.glWidget)->LocalScene.WichPointVerifyCond
-            );
-        */
         stError = (ui.glWidget)->ParObjetThread->ParObjet->masterthread->parse_expression();
     if(stError.iErrorIndex >= 0)
     {
-        message.setTextFormat(Qt::RichText);
-        int before, after;
-        QString sortie = QString::fromStdString(stError.strError);
-        if(sortie.length() > (stError.iErrorIndex +30))
-            after = 30;
-        else after = sortie.length() - stError.iErrorIndex;
-        sortie.truncate(stError.iErrorIndex +after);
-        if(stError.iErrorIndex-30 > 0)
-            before = 30;
-        else
-            before = 0;
-        sortie = sortie.remove(0,stError.iErrorIndex - before);
-        sortie.replace("\t", " ");
-        sortie.replace("\n", " ");
-        sortie.insert(before, " <font size=14  color=#FF0033>Error => </font>");
-        message.setText("Error at position: " + QString::number(stError.iErrorIndex) + "<br><br>" +
-                        "..." + sortie + "..."
-                       );
-        message.adjustSize () ;
-        message.exec();
+        ShowErrormessage();
         return;
     }
     else
         (ui.glWidget)->ParObjetThread->ParObjet->ThreadParsersCopy();
-    /*
-        (ui.glWidget)->ParObjetThread->ParObjet->ParamBuild(
-            &((ui.glWidget)->LocalScene.ArrayNorVer_localPt[TypeDrawin*((ui.glWidget)->LocalScene.VertxNumberTmp1)]),
-            (ui.glWidget)->LocalScene.ArrayNorVerExtra_localPt,
-            &((ui.glWidget)->LocalScene.PolyIndices_localPt[(ui.glWidget)->LocalScene.PolyNumberTmp1]),
-            &(ui.glWidget)->LocalScene.PolyNumberTmp2,
-            &(ui.glWidget)->LocalScene.VertxNumberTmp2,
-            (ui.glWidget)->LocalScene.VertxNumberTmp1,
-            &((ui.glWidget)->LocalScene.componentsinfos),
-            (ui.glWidget)->LocalScene.Typetriangles,
-            (ui.glWidget)->LocalScene.WichPointVerifyCond,
-            (ui.glWidget)->LocalScene.PolyIndices_localPtMin,
-            &((ui.glWidget)->LocalScene.NbPolygnNbVertexPtMin)
-        );
-        (ui.glWidget)->LocalScene.PolyNumber = (ui.glWidget)->LocalScene.PolyNumberTmp1 + (ui.glWidget)->LocalScene.PolyNumberTmp2;
-        (ui.glWidget)->LocalScene.VertxNumber= (ui.glWidget)->LocalScene.VertxNumberTmp1  + (ui.glWidget)->LocalScene.VertxNumberTmp2;
-
-        (ui.glWidget)->initialize_GL();
-        (ui.glWidget)->update();
-        */
 }
 
 //++++++++++++++++++++++++++++++++++++++++
