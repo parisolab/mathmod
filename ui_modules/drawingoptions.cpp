@@ -337,7 +337,7 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
             cmpitem7->setText(0,  "V = ["+ MathmodRef->RootObjet.CurrentTreestruct.vmin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.vmax.at(j) +"]");
 
             //Grid resolution:
-            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && (2*j+1) < MathmodRef->RootObjet.CurrentTreestruct.Grid.size())
+            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && (2*j+1) < MathmodRef->RootObjet.CurrentTreestruct.Grid.size() && !MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
             {
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
                 cmpitem7->setText(0,  "Grid = ("+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(2*j)+" , "+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(2*j+1)+")");
@@ -374,7 +374,7 @@ void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem)
             QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
             cmpitem6->setText(0,  "Z = ["+ MathmodRef->RootObjet.CurrentTreestruct.zmin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.zmax.at(j) +"]");
             //Grid resolution:
-            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0)
+            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && j < MathmodRef->RootObjet.CurrentTreestruct.Grid.size())
             {
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
                 cmpitem7->setText(0,  "Grid = "+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(j));
@@ -1345,6 +1345,8 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
              case ISO_GRID :
                 for(int j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Grid = result.toStdString();
+                MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
                 break;
             case ISO_CND :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Condition = result.toStdString();
