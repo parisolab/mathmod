@@ -337,10 +337,10 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
             cmpitem7->setText(0,  "V = ["+ MathmodRef->RootObjet.CurrentTreestruct.vmin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.vmax.at(j) +"]");
 
             //Grid resolution:
-            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && j < MathmodRef->RootObjet.CurrentTreestruct.Grid.size())
+            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && (2*j+1) < MathmodRef->RootObjet.CurrentTreestruct.Grid.size())
             {
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-                cmpitem7->setText(0,  "Grid = "+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(j));
+                cmpitem7->setText(0,  "Grid = ("+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(2*j)+" , "+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(2*j+1)+")");
             }
         }
         //Add Global parameters:
