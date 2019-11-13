@@ -1206,7 +1206,7 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.tmin =
     MathmodRef->RootObjet.CurrentTreestruct.tmax =
     MathmodRef->RootObjet.CurrentTreestruct.name =
-    MathmodRef->RootObjet.CurrentTreestruct.Component = QStringList("");
+    MathmodRef->RootObjet.CurrentTreestruct.Component = QStringList();
     MathmodRef->RootObjet.CurrentTreestruct.Noise =
     MathmodRef->RootObjet.CurrentTreestruct.text = "";
 }
