@@ -187,9 +187,8 @@ public slots:
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);
     void on_ZhorizontalScrollBar_valueChanged(int value);
-    void on_IsoComponent_activated(int index);
-    void on_ParamComponent_activated(int index);
-    void createActions();
+    void on_IsoComponent_activated(int);
+    void on_ParamComponent_activated(int);
     void on_xycheckBox_clicked();
     void on_xyhorizontalScrollBar_valueChanged(int value);
     void on_xzcheckBox_clicked();
