@@ -122,7 +122,6 @@ public:
 public slots:
     void CIndextoolButton_clicked(int);
     void BuildAllVect();
-    void AddTreeParam();
     void ShowErrorMessage(QJsonParseError &, QString &);
     void OptionalIsoScriptFieldprocess(const QJsonObject &, OptionnalIsoScriptFIELD);
     void OptionalParScriptFieldprocess(const QJsonObject &, OptionnalParScriptFIELD);
@@ -182,6 +181,9 @@ public slots:
     void DrawJsonModel(const QJsonObject & Jobj, int textureIndex=-1, bool Inspect=true);
     bool VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect=true);
     void AddObjectToMySelectionTree();
+    void AddIsoObjectToMySelectionTree();
+    void AddParObjectToMySelectionTree();
+    void AddParametersToMySelectionTree(QTreeWidgetItem*);
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);
     void on_ZhorizontalScrollBar_valueChanged(int value);
