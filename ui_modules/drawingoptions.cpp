@@ -2324,17 +2324,6 @@ void DrawingOptions::AddListModels(bool update)
                     grditem2->setText(0,  MathmodRef->pariso.JPar[i].Grid.at(j));
                 }
             }
-
-            if(MathmodRef->pariso.JPar[i].RGBT.count() > 0)
-            {
-                QTreeWidgetItem *grbitem = new QTreeWidgetItem(parameteritem);
-                grbitem->setText(0,  "Colors:");
-                for(int j=0; j<MathmodRef->pariso.JPar[i].RGBT.count(); j++)
-                {
-                    QTreeWidgetItem *grbitem2 = new QTreeWidgetItem(grbitem);
-                    grbitem2->setText(0,  MathmodRef->pariso.JPar[i].RGBT.at(j));
-                }
-            }
         }
     }
     ParlistItem->sortChildren(0, Qt::AscendingOrder);
@@ -2424,17 +2413,6 @@ void DrawingOptions::AddListModels(bool update)
                 {
                     QTreeWidgetItem *grditem2 = new QTreeWidgetItem(grditem);
                     grditem2->setText(0,  MathmodRef->pariso.JIso[i].Grid.at(j));
-                }
-            }
-
-            if(MathmodRef->pariso.JIso[i].RGBT.count() > 0)
-            {
-                QTreeWidgetItem *grbitem = new QTreeWidgetItem(parameteritem);
-                grbitem->setText(0,  "Colors:");
-                for(int j=0; j<MathmodRef->pariso.JIso[i].RGBT.count(); j++)
-                {
-                    QTreeWidgetItem *grbitem2 = new QTreeWidgetItem(grbitem);
-                    grbitem2->setText(0,  MathmodRef->pariso.JIso[i].RGBT.at(j));
                 }
             }
         }
