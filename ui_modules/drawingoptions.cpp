@@ -1116,7 +1116,6 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.fy=
     MathmodRef->RootObjet.CurrentTreestruct.fz=
     MathmodRef->RootObjet.CurrentTreestruct.Cnd=
-    MathmodRef->RootObjet.CurrentTreestruct.Grid=
     MathmodRef->RootObjet.CurrentTreestruct.RGBT=
     MathmodRef->RootObjet.CurrentTreestruct.Varu=
     MathmodRef->RootObjet.CurrentTreestruct.Const=
@@ -1137,7 +1136,8 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.tmin =
     MathmodRef->RootObjet.CurrentTreestruct.tmax =
     MathmodRef->RootObjet.CurrentTreestruct.name =
-    MathmodRef->RootObjet.CurrentTreestruct.Component = QStringList();
+    MathmodRef->RootObjet.CurrentTreestruct.Component = QStringList("");
+    MathmodRef->RootObjet.CurrentTreestruct.Grid = QStringList();
     MathmodRef->RootObjet.CurrentTreestruct.Noise =
     MathmodRef->RootObjet.CurrentTreestruct.text = "";
 }
