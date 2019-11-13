@@ -20,6 +20,9 @@
 #include <QtGui>
 #include <math.h>
 #include "parametersoptions.h"
+#include <string>
+#include <sstream>
+#include "../fparser/fparser.hh"
 
 static bool MACOS = false;
 
@@ -382,18 +385,15 @@ void Parametersoptions::SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObjec
     }
 }
 
-#include <string>
-#include <sstream>
 bool Parametersoptions::isFloat(std::string myString)
 {
     std::istringstream iss(myString);
     float f;
-    iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
-    // Check the entire string was consumed and if either failbit or badbit is set
+    iss >> std::noskipws >> f;
     return iss.eof() && !iss.fail();
 }
 
-#include "../fparser/fparser.hh"
+
 
 void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 {
@@ -609,7 +609,7 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             std::cerr << "Cannot open file for writing: "
                       << qPrintable(file.errorString()) << std::endl;
             return;
-        };
+        }
         QTextStream out(&file);
         out << str << endl;
         file.close();
