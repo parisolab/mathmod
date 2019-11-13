@@ -2267,6 +2267,13 @@ void DrawingOptions::AddListModels(bool update)
 
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
                 cmpitem7->setText(0,  "V = ["+ MathmodRef->pariso.JPar[i].Vmin.at(j)  +", "+ MathmodRef->pariso.JPar[i].Vmax.at(j)  +"]");
+
+                //Grid resolution:
+                if(MathmodRef->pariso.JPar[i].Grid.size() > 0 && 2*j+1 < MathmodRef->pariso.JPar[i].Grid.size())
+                {
+                    QTreeWidgetItem *cmpitem8 = new QTreeWidgetItem(cmpitem2);
+                    cmpitem8->setText(0,  "Grid = ("+MathmodRef->pariso.JPar[i].Grid.at(2*j)+" , "+MathmodRef->pariso.JPar[i].Grid.at(2*j+1)+")");
+                }
             }
         }
 
@@ -2274,8 +2281,7 @@ void DrawingOptions::AddListModels(bool update)
         if (
             MathmodRef->pariso.JPar[i].Varu.count() ||
             MathmodRef->pariso.JPar[i].Csts.count() ||
-            MathmodRef->pariso.JPar[i].Funct.count() ||
-            MathmodRef->pariso.JPar[i].Grid.count()
+            MathmodRef->pariso.JPar[i].Funct.count()
         )
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
@@ -2313,17 +2319,6 @@ void DrawingOptions::AddListModels(bool update)
                     fctitem2->setText(0,  MathmodRef->pariso.JPar[i].Funct.at(j));
                 }
             }
-
-            if(MathmodRef->pariso.JPar[i].Grid.count() > 0)
-            {
-                QTreeWidgetItem *grditem = new QTreeWidgetItem(parameteritem);
-                grditem->setText(0,  "Grid:");
-                for(int j=0; j<MathmodRef->pariso.JPar[i].Grid.count(); j++)
-                {
-                    QTreeWidgetItem *grditem2 = new QTreeWidgetItem(grditem);
-                    grditem2->setText(0,  MathmodRef->pariso.JPar[i].Grid.at(j));
-                }
-            }
         }
     }
     ParlistItem->sortChildren(0, Qt::AscendingOrder);
@@ -2358,6 +2353,13 @@ void DrawingOptions::AddListModels(bool update)
 
                 QTreeWidgetItem *cmpitem8 = new QTreeWidgetItem(cmpitem2);
                 cmpitem8->setText(0,  "Z = ["+ MathmodRef->pariso.JIso[i].Zmin.at(j)  +", "+ MathmodRef->pariso.JIso[i].Zmax.at(j)  +"]");
+
+                //Grid resolution:
+                if(MathmodRef->pariso.JIso[i].Grid.size() > 0 && j < MathmodRef->pariso.JIso[i].Grid.size())
+                {
+                    QTreeWidgetItem *cmpitem9 = new QTreeWidgetItem(cmpitem2);
+                    cmpitem9->setText(0,  "Grid = "+MathmodRef->pariso.JIso[i].Grid.at(j));
+                }
             }
         }
 
@@ -2365,8 +2367,7 @@ void DrawingOptions::AddListModels(bool update)
         if (
             MathmodRef->pariso.JIso[i].Varu.count() ||
             MathmodRef->pariso.JIso[i].Csts.count() ||
-            MathmodRef->pariso.JIso[i].Funct.count() ||
-            MathmodRef->pariso.JIso[i].Grid.count()
+            MathmodRef->pariso.JIso[i].Funct.count()
         )
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
@@ -2402,17 +2403,6 @@ void DrawingOptions::AddListModels(bool update)
                 {
                     QTreeWidgetItem *fctitem2 = new QTreeWidgetItem(fctitem);
                     fctitem2->setText(0,  MathmodRef->pariso.JIso[i].Funct.at(j));
-                }
-            }
-
-            if(MathmodRef->pariso.JIso[i].Grid.count() > 0)
-            {
-                QTreeWidgetItem *grditem = new QTreeWidgetItem(parameteritem);
-                grditem->setText(0,  "Grid:");
-                for(int j=0; j<MathmodRef->pariso.JIso[i].Grid.count(); j++)
-                {
-                    QTreeWidgetItem *grditem2 = new QTreeWidgetItem(grditem);
-                    grditem2->setText(0,  MathmodRef->pariso.JIso[i].Grid.at(j));
                 }
             }
         }
