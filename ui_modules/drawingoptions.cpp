@@ -547,46 +547,16 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         // Min
         lst = QObj["Min"].toArray();
         ObjArrayToString(lst, result);
-        /*
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        */
         qlstmin = result.split(";", QString::SkipEmptyParts);
 
         // Max
         lst = QObj["Max"].toArray();
         ObjArrayToString(lst, result);
-        /*
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        */
         qlstmax = result.split(";", QString::SkipEmptyParts);
 
         // Position
         lst = QObj["Position"].toArray();
         ObjArrayToString(lst, result);
-        /*
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        */
         qlstPos = result.split(";", QString::SkipEmptyParts);
 
         for (int i = 0; i < qlstPos.size(); ++i)
@@ -598,16 +568,6 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         // Name
         lst = QObj["Name"].toArray();
         ObjArrayToString(lst, result);
-        /*
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
-        */
         qlstnames = result.split(";", QString::SkipEmptyParts);
 
         for (int i = 0; i < qlstnames.size(); ++i)
@@ -630,14 +590,7 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
         // Step
         lst = QObj["Step"].toArray();
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
+        ObjArrayToString(lst, result);
         qlstStep = result.split(";", QString::SkipEmptyParts);
         QStringList qlist;
         if(qlstPos.size() >= qlstnames.size())
@@ -647,14 +600,7 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
             qlist += "Predefined Sets (" + QString::number(NbSets) + ")";
             if( QObj["SetNames"].isArray()   && (lst = QObj["SetNames"].toArray()).size())
             {
-                result = "";
-                for(int j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
+                ObjArrayToString(lst, result);
                 qlist += result.split(";", QString::SkipEmptyParts);
             }
             else
@@ -895,13 +841,7 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
             else
             {
                 // Grid
-                for(int j=0; j < lst.size()-1; j++)
-                    result += lst[j].toString() + ";";
-                if(lst.size() >= 1)
-                    result += lst[lst.size()-1].toString();
-                result.replace("\n","");
-                result.replace("\t","");
-                result.replace(" ","");
+                ObjArrayToString(lst, result);
                 if(result!="")
                 {
                     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull = true;
@@ -964,14 +904,8 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj, const ModelType & opt)
     noise1.replace("\t","");
     noise1.replace(" ","");
 
-    QString result = "";
-    for(int j=0; j < lst.size()-1; j++)
-        result += lst[j].toString() + ";";
-    if(lst.size() >= 1)
-        result += lst[lst.size()-1].toString();
-    result.replace("\n","");
-    result.replace("\t","");
-    result.replace(" ","");
+    QString result;
+    ObjArrayToString(lst, result);
     if(opt == ISO_TYPE)
     {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Rgbt = result.toStdString();
@@ -1250,14 +1184,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const Man
     }
 
         lst = QObj[arg].toArray();
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
+        ObjArrayToString(lst, result);
         switch(idx) {
              case PAR_FX :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
@@ -1342,14 +1269,7 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj, const Man
     }
 
         lst = QObj[arg].toArray();
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
+        ObjArrayToString(lst, result);
         switch(idx) {
              case ISO_FXYZ :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
@@ -1420,14 +1340,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
     if(argnotnull)
     {
         lst = QObj[arg].toArray();
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
+        ObjArrayToString(lst, result);
         switch(idx) {
              case ISO_GRID :
                 for(int j=0; j < lst.size(); j++)
@@ -1485,14 +1398,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
     if(argnotnull)
     {
         lst = QObj[arg].toArray();
-        result = "";
-        for(int j=0; j < lst.size()-1; j++)
-            result += lst[j].toString() + ";";
-        if(lst.size() >= 1)
-            result += lst[lst.size()-1].toString();
-        result.replace("\n","");
-        result.replace("\t","");
-        result.replace(" ","");
+        ObjArrayToString(lst, result);
         switch(idx) {
             case PAR_GRID :
                 for(int j=0; j < lst.size(); j++)
