@@ -183,6 +183,7 @@ public slots:
     void AddObjectToMySelectionTree();
     void AddIsoObjectToTree(QTreeWidgetItem *);
     void AddParObjectToTree(QTreeWidgetItem *);
+    void ObjArrayToString(QJsonArray &, QString &);
     void AddParametersToMySelectionTree(QTreeWidgetItem*);
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);

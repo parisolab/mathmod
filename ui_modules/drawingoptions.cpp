@@ -519,6 +519,19 @@ void DrawingOptions::HideSliders()
 }
 
 // --------------------------
+void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
+{
+    str = "";
+    for(int j=0; j < lst.size()-1; j++)
+        str += lst[j].toString() + ";";
+    if(lst.size() >= 1)
+        str += lst[lst.size()-1].toString();
+    str.replace("\n","");
+    str.replace("\t","");
+    str.replace(" ","");
+}
+
+// --------------------------
 void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 {
     QString result;
@@ -533,6 +546,8 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
         // Min
         lst = QObj["Min"].toArray();
+        ObjArrayToString(lst, result);
+        /*
         result = "";
         for(int j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -541,10 +556,13 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        */
         qlstmin = result.split(";", QString::SkipEmptyParts);
 
         // Max
         lst = QObj["Max"].toArray();
+        ObjArrayToString(lst, result);
+        /*
         result = "";
         for(int j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -553,10 +571,13 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        */
         qlstmax = result.split(";", QString::SkipEmptyParts);
 
         // Position
         lst = QObj["Position"].toArray();
+        ObjArrayToString(lst, result);
+        /*
         result = "";
         for(int j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -565,6 +586,7 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        */
         qlstPos = result.split(";", QString::SkipEmptyParts);
 
         for (int i = 0; i < qlstPos.size(); ++i)
@@ -575,6 +597,8 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
         // Name
         lst = QObj["Name"].toArray();
+        ObjArrayToString(lst, result);
+        /*
         result = "";
         for(int j=0; j < lst.size()-1; j++)
             result += lst[j].toString() + ";";
@@ -583,6 +607,7 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
         result.replace("\n","");
         result.replace("\t","");
         result.replace(" ","");
+        */
         qlstnames = result.split(";", QString::SkipEmptyParts);
 
         for (int i = 0; i < qlstnames.size(); ++i)
