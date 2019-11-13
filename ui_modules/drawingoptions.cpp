@@ -4182,26 +4182,6 @@ void DrawingOptions::on_ParamComponent_activated(int index)
 }
 
 // --------------------------
-void DrawingOptions::createActions()
-{
-    /*
-     QAction* newAct = new QAction(tr("&Select"), this);
-     newAct->setShortcuts(QKeySequence::New);
-     newAct->setStatusTip(tr("Add Current Model to MySelection"));
-     connect(newAct, SIGNAL(triggered()), this, SLOT(slot_pushButton_2_clicked()));
-
-     QAction*  openAct = new QAction(tr("&Deselect"), this);
-     openAct->setShortcuts(QKeySequence::Open);
-     openAct->setStatusTip(tr("Erase selected row from MySelection"));
-     connect(openAct, SIGNAL(triggered()), this, SLOT(slot_unselect_clicked()));
-
-     QMenu*  qm;
-     qm->addAction(newAct);
-     qm->addAction(newAct);
-     */
-}
-
-// --------------------------
 void DrawingOptions::on_xyzcheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animxyz *= -1;
