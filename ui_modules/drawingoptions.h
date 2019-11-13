@@ -181,8 +181,8 @@ public slots:
     void DrawJsonModel(const QJsonObject & Jobj, int textureIndex=-1, bool Inspect=true);
     bool VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect=true);
     void AddObjectToMySelectionTree();
-    void AddIsoObjectToMySelectionTree();
-    void AddParObjectToMySelectionTree();
+    void AddIsoObjectToTree(QTreeWidgetItem *);
+    void AddParObjectToTree(QTreeWidgetItem *);
     void AddParametersToMySelectionTree(QTreeWidgetItem*);
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);
