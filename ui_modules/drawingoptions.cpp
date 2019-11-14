@@ -1116,6 +1116,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
 void DrawingOptions::updateCurrentTreestruct()
 {
+    //Initialize the current Object struct
     MathmodRef->RootObjet.CurrentTreestruct.fw=
     MathmodRef->RootObjet.CurrentTreestruct.fx=
     MathmodRef->RootObjet.CurrentTreestruct.fy=
@@ -1141,10 +1142,12 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.tmin =
     MathmodRef->RootObjet.CurrentTreestruct.tmax =
     MathmodRef->RootObjet.CurrentTreestruct.name =
-    MathmodRef->RootObjet.CurrentTreestruct.Component = /*QStringList("");*/
+    MathmodRef->RootObjet.CurrentTreestruct.Component =
     MathmodRef->RootObjet.CurrentTreestruct.Grid = QStringList();
     MathmodRef->RootObjet.CurrentTreestruct.Noise =
     MathmodRef->RootObjet.CurrentTreestruct.text = "";
+    //Initialize the current JSON Object
+    MathmodRef->RootObjet.CurrentJsonObject= QJsonObject();
 }
 
 void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const MandatoryParField & idx, const ModelType & mod)
