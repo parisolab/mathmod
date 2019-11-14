@@ -16716,7 +16716,7 @@
                 ],
                 "Name": ["Wireframe_Shell"
                 ],
-                "Component": ["Wireframe_Shell_00","Wireframe_Shell_01","Wireframe_Shell_02","Wireframe_Shell_03","Wireframe_Shell_04","Wireframe_Shell_05","Wireframe_Shell_06","Wireframe_Shell_07","Wireframe_Shell_08","Wireframe_Shell_09","Wireframe_Shell_10","Wireframe_Shell_11","Wireframe_Shell_12","Wireframe_Shell_13","Wireframe_Shell_14","Wireframe_Shell_15","Wireframe_Shell_16","Wireframe_Shell_17","Wireframe_Shell_18","Wireframe_Shell_19","Wireframe_Shell_20","Wireframe_Shell_00","Wireframe_Shell_01","Wireframe_Shell_02","Wireframe_Shell_03","Wireframe_Shell_04","Wireframe_Shell_05","Wireframe_Shell_06","Wireframe_Shell_07","Wireframe_Shell_08","Wireframe_Shell_09","Wireframe_Shell_10","Wireframe_Shell_11","Wireframe_Shell_12","Wireframe_Shell_13","Wireframe_Shell_14","Wireframe_Shell_15","Wireframe_Shell_16","Wireframe_Shell_17","Wireframe_Shell_18","Wireframe_Shell_19","Wireframe_Shell_20"
+                "Component": ["WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20"
                 ],
                 "Const": ["u1min=1/100000","u1max=pi","v1min=-pi/4","v1max=5*pi/2","M=20","N=20","r0=5","H=r0/99","c=1/10000","umin=0","umax=2*pi","vmin=0","vmax=2*pi","Gu=(u1max-u1min)/N","Gv=(v1max-v1min)/M"
                 ],
