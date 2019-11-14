@@ -306,7 +306,8 @@ void DrawingOptions::on_ChangeGrid_clicked()
 // --------------------------
 void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
 {
-    paramlistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
+    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+        paramlistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
     paramlistItem->setBackgroundColor(0, greenColor);
 
@@ -349,7 +350,8 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
 // --------------------------
 void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem)
 {
-    IsolistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
+    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+        IsolistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
     IsolistItem->setBackgroundColor(0, greenColor);
 
@@ -459,7 +461,8 @@ void DrawingOptions::UpdateCurrentTreeObject()
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         ui.stackedProperties->setCurrentIndex(1);
-        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+        if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+            ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
         ui.IsoComponent->clear();
         ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         UpdateDescription(0);
@@ -467,7 +470,8 @@ void DrawingOptions::UpdateCurrentTreeObject()
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject())
     {
         ui.ParamComponent->clear();
-        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+        if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+            ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
         ui.ParamComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         ui.stackedProperties->setCurrentIndex(2);
         UpdateDescription(0);
@@ -475,7 +479,8 @@ void DrawingOptions::UpdateCurrentTreeObject()
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
         ui.ParamComponent_2->clear();
-        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+        if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+            ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
         ui.ParamComponent_2->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
         ui.stackedProperties->setCurrentIndex(3);
         UpdateDescription(0);
@@ -1136,7 +1141,7 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.tmin =
     MathmodRef->RootObjet.CurrentTreestruct.tmax =
     MathmodRef->RootObjet.CurrentTreestruct.name =
-    MathmodRef->RootObjet.CurrentTreestruct.Component = QStringList("");
+    MathmodRef->RootObjet.CurrentTreestruct.Component = /*QStringList("");*/
     MathmodRef->RootObjet.CurrentTreestruct.Grid = QStringList();
     MathmodRef->RootObjet.CurrentTreestruct.Noise =
     MathmodRef->RootObjet.CurrentTreestruct.text = "";
@@ -1641,8 +1646,11 @@ int DrawingOptions::on_choice_activated(const QString &arg)
 {
     // Draw here
     int Result =JSON_choice_activated(arg);
-    ui.ObjectClasseCurrent->takeTopLevelItem(0);
-    UpdateCurrentTreeObject();
+    if(Result != 0)
+    {
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        UpdateCurrentTreeObject();
+    }
     return Result;
 }
 
