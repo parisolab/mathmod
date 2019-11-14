@@ -153,6 +153,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
     BuildAllVect();
+    ui.ObjectClasseCurrent->hide();
 }
 
 // --------------------------
@@ -5617,4 +5618,18 @@ void DrawingOptions::on_actionAnimation_Rotation_triggered()
 void DrawingOptions::on_actionMorph_use_t_parameter_triggered()
 {
     MathmodRef->ui.glWidget->morph();
+}
+
+void DrawingOptions::on_TreeViewButton_clicked()
+{
+    static int checked=-1;
+    checked *=-1;
+    if(checked == 1)
+    {
+        ui.ObjectClasseCurrent->show();
+    }
+    else
+    {
+        ui.ObjectClasseCurrent->hide();
+    }
 }

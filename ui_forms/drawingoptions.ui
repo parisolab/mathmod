@@ -791,7 +791,7 @@
                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Schwarz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                </property>
                               </widget>
@@ -901,7 +901,7 @@ p, li { white-space: pre-wrap; }
                           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;cos(x) + cos(y) + cos(z)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
                         </widget>
@@ -1104,7 +1104,7 @@ p, li { white-space: pre-wrap; }
                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                </property>
                               </widget>
@@ -1133,7 +1133,7 @@ p, li { white-space: pre-wrap; }
                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;-4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                </property>
                               </widget>
@@ -1220,6 +1220,15 @@ p, li { white-space: pre-wrap; }
                                     </color>
                                    </brush>
                                   </colorrole>
+                                  <colorrole role="PlaceholderText">
+                                   <brush brushstyle="NoBrush">
+                                    <color alpha="128">
+                                     <red>255</red>
+                                     <green>0</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
                                  </active>
                                  <inactive>
                                   <colorrole role="WindowText">
@@ -1258,6 +1267,15 @@ p, li { white-space: pre-wrap; }
                                     </color>
                                    </brush>
                                   </colorrole>
+                                  <colorrole role="PlaceholderText">
+                                   <brush brushstyle="NoBrush">
+                                    <color alpha="128">
+                                     <red>255</red>
+                                     <green>0</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
                                  </inactive>
                                  <disabled>
                                   <colorrole role="WindowText">
@@ -1292,6 +1310,15 @@ p, li { white-space: pre-wrap; }
                                     <color alpha="255">
                                      <red>255</red>
                                      <green>255</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
+                                  <colorrole role="PlaceholderText">
+                                   <brush brushstyle="NoBrush">
+                                    <color alpha="128">
+                                     <red>255</red>
+                                     <green>0</green>
                                      <blue>0</blue>
                                     </color>
                                    </brush>
@@ -1341,7 +1368,7 @@ p, li { white-space: pre-wrap; }
                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;-4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                </property>
                               </widget>
@@ -1370,7 +1397,7 @@ p, li { white-space: pre-wrap; }
                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;-4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                </property>
                               </widget>
@@ -1522,7 +1549,7 @@ p, li { white-space: pre-wrap; }
                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                </property>
                               </widget>
@@ -1559,7 +1586,7 @@ p, li { white-space: pre-wrap; }
                               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                              </property>
                             </widget>
@@ -1617,22 +1644,6 @@ p, li { white-space: pre-wrap; }
                              <column>
                               <property name="text">
                                <string>Variable</string>
-                              </property>
-                             </column>
-                            </widget>
-                           </item>
-                          </layout>
-                         </widget>
-                         <widget class="QWidget" name="tab_21">
-                          <attribute name="title">
-                           <string>Tree</string>
-                          </attribute>
-                          <layout class="QGridLayout" name="gridLayout_18">
-                           <item row="0" column="0">
-                            <widget class="QTreeWidget" name="ObjectClasseCurrent">
-                             <column>
-                              <property name="text">
-                               <string>Current Model:</string>
                               </property>
                              </column>
                             </widget>
@@ -2089,11 +2100,29 @@ p, li { white-space: pre-wrap; }
                                  </color>
                                 </brush>
                                </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
+                                  <red>255</red>
+                                  <green>0</green>
+                                  <blue>0</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
                               </active>
                               <inactive>
                                <colorrole role="Text">
                                 <brush brushstyle="SolidPattern">
                                  <color alpha="255">
+                                  <red>255</red>
+                                  <green>0</green>
+                                  <blue>0</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
                                   <red>255</red>
                                   <green>0</green>
                                   <blue>0</blue>
@@ -2108,6 +2137,15 @@ p, li { white-space: pre-wrap; }
                                   <red>120</red>
                                   <green>120</green>
                                   <blue>120</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
+                                  <red>255</red>
+                                  <green>0</green>
+                                  <blue>0</blue>
                                  </color>
                                 </brush>
                                </colorrole>
@@ -2195,11 +2233,29 @@ p, li { white-space: pre-wrap; }
                                  </color>
                                 </brush>
                                </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
+                                  <red>0</red>
+                                  <green>170</green>
+                                  <blue>0</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
                               </active>
                               <inactive>
                                <colorrole role="Text">
                                 <brush brushstyle="SolidPattern">
                                  <color alpha="255">
+                                  <red>0</red>
+                                  <green>170</green>
+                                  <blue>0</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
                                   <red>0</red>
                                   <green>170</green>
                                   <blue>0</blue>
@@ -2214,6 +2270,15 @@ p, li { white-space: pre-wrap; }
                                   <red>120</red>
                                   <green>120</green>
                                   <blue>120</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
+                                  <red>0</red>
+                                  <green>170</green>
+                                  <blue>0</blue>
                                  </color>
                                 </brush>
                                </colorrole>
@@ -2301,11 +2366,29 @@ p, li { white-space: pre-wrap; }
                                  </color>
                                 </brush>
                                </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
+                                  <red>0</red>
+                                  <green>0</green>
+                                  <blue>255</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
                               </active>
                               <inactive>
                                <colorrole role="Text">
                                 <brush brushstyle="SolidPattern">
                                  <color alpha="255">
+                                  <red>0</red>
+                                  <green>0</green>
+                                  <blue>255</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
                                   <red>0</red>
                                   <green>0</green>
                                   <blue>255</blue>
@@ -2320,6 +2403,15 @@ p, li { white-space: pre-wrap; }
                                   <red>120</red>
                                   <green>120</green>
                                   <blue>120</blue>
+                                 </color>
+                                </brush>
+                               </colorrole>
+                               <colorrole role="PlaceholderText">
+                                <brush brushstyle="NoBrush">
+                                 <color alpha="128">
+                                  <red>0</red>
+                                  <green>0</green>
+                                  <blue>255</blue>
                                  </color>
                                 </brush>
                                </colorrole>
@@ -3004,7 +3096,7 @@ p, li { white-space: pre-wrap; }
                            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                           </property>
                          </widget>
@@ -4207,55 +4299,74 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string/>
               </property>
-              <layout class="QGridLayout" name="gridLayout_39">
+              <layout class="QGridLayout" name="gridLayout_38" rowstretch="0" columnstretch="0">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>4</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>4</number>
+               </property>
+               <property name="spacing">
+                <number>4</number>
+               </property>
                <item row="0" column="0">
                 <widget class="QGroupBox" name="groupBox_8">
                  <property name="title">
-                  <string>Script Editor:</string>
+                  <string/>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
-                 <layout class="QGridLayout" name="gridLayout_38">
+                 <layout class="QGridLayout" name="gridLayout_18">
                   <property name="leftMargin">
-                   <number>4</number>
+                   <number>2</number>
                   </property>
                   <property name="topMargin">
-                   <number>4</number>
+                   <number>2</number>
                   </property>
                   <property name="rightMargin">
-                   <number>4</number>
+                   <number>2</number>
                   </property>
                   <property name="bottomMargin">
                    <number>2</number>
                   </property>
                   <item row="0" column="0">
-                   <widget class="QTextEdit" name="ParamEdit">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
+                   <widget class="QSplitter" name="splitter_7">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
                     </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>10</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>14</pointsize>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::StyledPanel</enum>
-                    </property>
-                    <property name="html">
-                     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                    <widget class="QTextEdit" name="ParamEdit">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>10</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>14</pointsize>
+                      </font>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="html">
+                      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:14pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:14pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;{&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;  &amp;quot;Iso3D&amp;quot;:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;  {&lt;/span&gt;&lt;/p&gt;
@@ -4270,49 +4381,100 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;    &amp;quot;Zmax&amp;quot;:[&amp;quot; 4&amp;quot;]&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;  }&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;}&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                    </property>
+                     </property>
+                    </widget>
+                    <widget class="QTreeWidget" name="ObjectClasseCurrent">
+                     <property name="horizontalScrollBarPolicy">
+                      <enum>Qt::ScrollBarAlwaysOn</enum>
+                     </property>
+                     <property name="sizeAdjustPolicy">
+                      <enum>QAbstractScrollArea::AdjustToContents</enum>
+                     </property>
+                     <property name="autoScroll">
+                      <bool>false</bool>
+                     </property>
+                     <property name="autoScrollMargin">
+                      <number>6</number>
+                     </property>
+                     <property name="editTriggers">
+                      <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+                     </property>
+                     <column>
+                      <property name="text">
+                       <string>Tree View:</string>
+                      </property>
+                     </column>
+                    </widget>
                    </widget>
                   </item>
                   <item row="1" column="0">
                    <layout class="QVBoxLayout" name="verticalLayout_8">
                     <property name="spacing">
-                     <number>0</number>
+                     <number>2</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>4</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>4</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>4</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>2</number>
                     </property>
                     <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_24">
+                     <widget class="QPushButton" name="calculate">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>40</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>13</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Run Script</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_3">
                       <property name="spacing">
-                       <number>0</number>
+                       <number>3</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>2</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>2</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>2</number>
                       </property>
                       <property name="bottomMargin">
-                       <number>0</number>
+                       <number>2</number>
                       </property>
                       <item>
-                       <widget class="QPushButton" name="calculate">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>40</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>10</pointsize>
-                         </font>
-                        </property>
+                       <widget class="QPushButton" name="StopCalculationsButton">
                         <property name="text">
-                         <string>Run Script</string>
+                         <string>Stop calculations</string>
                         </property>
                        </widget>
                       </item>
@@ -4323,14 +4485,20 @@ p, li { white-space: pre-wrap; }
                         </property>
                        </widget>
                       </item>
+                      <item>
+                       <widget class="QPushButton" name="TreeViewButton">
+                        <property name="maximumSize">
+                         <size>
+                          <width>50</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Tree</string>
+                        </property>
+                       </widget>
+                      </item>
                      </layout>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="StopCalculationsButton">
-                      <property name="text">
-                       <string>Stop calculations</string>
-                      </property>
-                     </widget>
                     </item>
                    </layout>
                   </item>
@@ -6309,7 +6477,7 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>327</width>
+                 <width>320</width>
                  <height>1145</height>
                 </rect>
                </property>
@@ -6571,6 +6739,15 @@ p, li { white-space: pre-wrap; }
                            </color>
                           </brush>
                          </colorrole>
+                         <colorrole role="PlaceholderText">
+                          <brush brushstyle="NoBrush">
+                           <color alpha="128">
+                            <red>255</red>
+                            <green>85</green>
+                            <blue>0</blue>
+                           </color>
+                          </brush>
+                         </colorrole>
                         </active>
                         <inactive>
                          <colorrole role="WindowText">
@@ -6585,6 +6762,15 @@ p, li { white-space: pre-wrap; }
                          <colorrole role="Text">
                           <brush brushstyle="SolidPattern">
                            <color alpha="255">
+                            <red>255</red>
+                            <green>85</green>
+                            <blue>0</blue>
+                           </color>
+                          </brush>
+                         </colorrole>
+                         <colorrole role="PlaceholderText">
+                          <brush brushstyle="NoBrush">
+                           <color alpha="128">
                             <red>255</red>
                             <green>85</green>
                             <blue>0</blue>
@@ -6608,6 +6794,15 @@ p, li { white-space: pre-wrap; }
                             <red>120</red>
                             <green>120</green>
                             <blue>120</blue>
+                           </color>
+                          </brush>
+                         </colorrole>
+                         <colorrole role="PlaceholderText">
+                          <brush brushstyle="NoBrush">
+                           <color alpha="128">
+                            <red>255</red>
+                            <green>85</green>
+                            <blue>0</blue>
                            </color>
                           </brush>
                          </colorrole>
@@ -9258,9 +9453,9 @@ p, li { white-space: pre-wrap; }
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Math calcul phase (cmp: 1)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.SF NS Text'; font-size:9pt;&quot;&gt;Math calcul phase (cmp: 1)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.SF NS Text'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="tabStopWidth">
            <number>80</number>
