@@ -315,7 +315,7 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
     if(MathmodRef->RootObjet.CurrentTreestruct.Component.size() > 0)
     {
         QTreeWidgetItem *cmpitem = new QTreeWidgetItem(paramlistItem);
-        cmpitem->setText(0,  "Components:");
+        cmpitem->setText(0,  "Components ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.size()) +"):");
 
         for(int j=0; j<MathmodRef->RootObjet.CurrentTreestruct.Component.size(); j++)
         {
@@ -359,7 +359,7 @@ void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem)
     if(MathmodRef->RootObjet.CurrentTreestruct.Component.size() > 0)
     {
         QTreeWidgetItem *cmpitem = new QTreeWidgetItem(IsolistItem);
-        cmpitem->setText(0,  "Components:");
+        cmpitem->setText(0,  "Components ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.size()) +"):");
 
         for(int j=0; j<MathmodRef->RootObjet.CurrentTreestruct.Component.size(); j++)
         {
