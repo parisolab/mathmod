@@ -12578,7 +12578,7 @@
         "Const": [
           "c=(1/10000)",
           "S=6",
-          "Thickness2=(1/4)",
+          "Th2=(1/4)",
           "Thickness4=(1/5)",
           "Thickness5=(1/5)",
           "Thickness6=(6/5)",
@@ -12587,6 +12587,7 @@
         "Funct": [
           "Angle1=atan2(sqrt(x*x+y*y),(-z+c))",
           "Angle2=atan2(x,(y+c))",
+          "rapp=x/sqrt(x*x+y*y+z*z)",
           "CarvinCondition=(abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(13/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2))",
           "CarvinCondition2=(z-3*sin((16/5)*Angle2(x,y,z,t)/pi))>0",
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
@@ -12595,7 +12596,10 @@
           "DFy2=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)",
           "DFz2=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
           "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso2=(IsoExterior(x+t*DFx2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),y+t*DFy2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),z+t*DFz2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),t))",
+                    "Iso2=(IsoExterior(
+          x+t*Th2*rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),
+          y+t*Th2*rapp(DFy2(x,y,z,t),DFz2(x,y,z,t),DFx2(x,y,z,t),t),
+          z+t*Th2*rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t),t))",
           "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))",
           "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
           "DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)",
