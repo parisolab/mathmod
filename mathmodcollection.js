@@ -12576,9 +12576,7 @@
             "60"
         ],
         "Const": [
-          "cx=(1/10000)",
-          "cy=(1/10000)",
-          "cz=(1/10000)",
+          "c=(1/10000)",
           "S=6",
           "Thickness2=(1/4)",
           "Thickness4=(1/5)",
@@ -12587,22 +12585,22 @@
           "Thickness7=(6/5)"
         ],
         "Funct": [
-          "Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
-          "Angle2=atan2(x,(y+cx))",
+          "Angle1=atan2(sqrt(x*x+y*y),(-z+c))",
+          "Angle2=atan2(x,(y+c))",
           "CarvinCondition=(abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(13/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2))",
           "CarvinCondition2=(z-3*sin((16/5)*Angle2(x,y,z,t)/pi))>0",
           "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
           "IsoExterior=if(-z<(5),(x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))),(z+5))",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
+          "DFx2=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)",
+          "DFy2=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)",
+          "DFz2=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
           "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
           "Iso2=(IsoExterior(x+t*DFx2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),y+t*DFy2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),z+t*DFz2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),t))",
           "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))",
           "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-          "DFx=((Iso(x,y,z,t)-Iso(x+cx,y,z,t))/cx)",
-          "DFy=((Iso(x,y,z,t)-Iso(x,y+cy,z,t))/cy)",
-          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+cz,t))/cz)",
+          "DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)",
+          "DFy=((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)",
+          "DFz=((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)",
           "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
           "Iso4=(Iso(x+t*DFx(x,y,z,t)*Thickness4/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness4/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness4/Rapport(x,y,z,t),t))",
           "ThickIso2=(Iso4(x,y,z,-1)*Iso4(x,y,z,1))",
@@ -12658,16 +12656,16 @@
           "-5"
         ]
       },
-      "Texture": {
-        "Colors": [
-          "R=abs(cos(z*y*x*y))",
-          "G=(9/20)*abs(cos(z*y*x*y))",
-          "B=(1/50)*abs(cos(-z*x*z*x*y*y))",
-          "T=1"
-        ],
-        "Name": "Granit_1",
-        "Noise": "NoiseP(x,y,z,(10),(7),12/100)"
-      }
+        "Texture": {
+            "Colors": [
+                "R=8/10",
+                "G=4/10",
+                "B=1/10",
+                "T=1"
+            ],
+            "Name": "Granit_1",
+            "Noise": ""
+        }
     },
     {
       "Iso3D": {
