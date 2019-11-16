@@ -4345,6 +4345,9 @@ p, li { white-space: pre-wrap; }
                <property name="editTriggers">
                 <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
                </property>
+               <attribute name="headerStretchLastSection">
+                <bool>false</bool>
+               </attribute>
                <column>
                 <property name="text">
                  <string>Tree View:</string>

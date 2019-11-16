@@ -154,6 +154,7 @@ DrawingOptions::DrawingOptions(QWidget *parent)
     SaveSlidersRef();
     BuildAllVect();
     ui.ObjectClasseCurrent->hide();
+    ui.ObjectClasseCurrent->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 // --------------------------
