@@ -12579,9 +12579,9 @@
           "c=(1/10000)",
           "S=6",
           "Th2=(1/4)",
-          "Thickness4=(1/5)",
+          "Th4=(1/5)",
           "Thickness5=(1/5)",
-          "Thickness6=(6/5)",
+          "Th6=(6/5)",
           "Thickness7=(6/5)"
         ],
         "Funct": [
@@ -12601,15 +12601,25 @@
           y+t*Th2*rapp(DFy2(x,y,z,t),DFz2(x,y,z,t),DFx2(x,y,z,t),t),
           z+t*Th2*rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t),t))",
           "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))",
+
+
           "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
           "DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)",
           "DFy=((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)",
           "DFz=((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)",
-          "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
-          "Iso4=(Iso(x+t*DFx(x,y,z,t)*Thickness4/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness4/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness4/Rapport(x,y,z,t),t))",
+          "Iso4=(Iso(
+          x+t*Th4*rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),
+          y+t*Th4*rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),
+          z+t*Th4*rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
+
           "ThickIso2=(Iso4(x,y,z,-1)*Iso4(x,y,z,1))",
           "isoTransform_2=if((CarvinCondition(x,y,z,t)=0),ThickIsoExterior(x,y,z,t),1)",
-          "Iso6=(Iso(x+t*DFx(x,y,z,t)*Thickness6/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness6/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness6/Rapport(x,y,z,t),t))",
+                    "Iso6=(Iso(
+                    x+t*Th6*rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),
+                    y+t*Th6*rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),
+                    z+t*Th6*rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
+
+
           "isoTransform_6=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0) ,-ThickIso2(S*x,S*y,S*z,t)*Iso6(x*S,y*S,z*S,-1)*(Iso6(x*S,y*S,z*S,1)),1)",
           "VaseHead=if(CarvinCondition2(x,y,z,t),isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t),1)",
           "VaseHead2=VaseHead((x+6)*cos(-pi/2)-(z+(5/2))*sin(-pi/2),y,(x+6)*sin(-pi/2)+(z+(5/2))*cos(-pi/2),t)",
