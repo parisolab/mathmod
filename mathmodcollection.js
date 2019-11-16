@@ -12691,9 +12691,7 @@
                 "S=6",
                 "Th2=(1/4)",
                 "Th4=(1/5)",
-                "Thickness5=(1/5)",
-                "Th6=(6/5)",
-                "Thickness7=(6/5)"
+                "Th6=(6/5)"
             ],
             "Funct": [
                 "Angle1=atan2(sqrt(x*x+y*y),(-z+c))",
@@ -12764,114 +12762,6 @@
             "Name": "Granit_1",
             "Noise": ""
         }
-    },
-    {
-      "Iso3D": {
-        "Description": [
-          "Vases_1 by Abderrahman Taha 19/09/2015"
-        ],
-        "Name": [
-          "Vases_1"
-        ],
-        "Component": [
-          "Vase1",
-          "Vase2",
-          "Vase3",
-          "Vase4",
-          "Vase5",
-          "Vase6"
-        ],
-        "Const": [
-          "cx=(1/10000)",
-          "cy=(1/10000)",
-          "cz=(1/10000)",
-          "Thickness2=(1/4)",
-          "Thickness4=(1/5)",
-          "Thickness5=(1/5)",
-          "Thickness6=(6/5)",
-          "Thickness7=(6/5)"
-        ],
-        "Funct": [
-          "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
-          "Bottom=(x*x + y*y + z*z - 1)",
-          "CarvinCondition=sin(atan2(sqrt(x*x+y*y),(-z+cx)))>1/(11/10)",
-          "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso2=(IsoExterior(x+t*DFx2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),y+t*DFy2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),z+t*DFz2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))",
-          "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-          "DFx=((Iso(x,y,z,t)-Iso(x+cx,y,z,t))/cx)",
-          "DFy=((Iso(x,y,z,t)-Iso(x,y+cy,z,t))/cy)",
-          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+cz,t))/cz)",
-          "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
-          "Iso4=(Iso(x+t*DFx(x,y,z,t)*Thickness4/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness4/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness4/Rapport(x,y,z,t),t))",
-          "ThickIso2=(Iso4(x,y,z,-1)*Iso4(x,y,z,1))",
-          "isoTransform_2=if((CarvinCondition(x,y,z,t)=0),ThickIsoExterior(x,y,z,t),1)",
-          "isoTransform_3=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0),ThickIso2(5*x,5*y,5*z,t),1)",
-          "Iso6=(Iso(x+t*DFx(x,y,z,t)*Thickness6/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness6/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness6/Rapport(x,y,z,t),t))",
-          "isoTransform_4=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0),Iso6(5*x,5*y,5*z,(-1)),1)",
-          "isoTransform_5=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0),-Iso6(5*x,5*y,5*z,1),1)"
-        ],
-        "Fxyz": [
-          "isoTransform_2(x,y,-z,t)",
-          "isoTransform_3(x,y,-z,t)",
-          "isoTransform_4(x,y,-z,t)",
-          "isoTransform_5(x,y,-z,t)",
-          "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
-          "Bottom(x/(12/5),y/(12/5),2*(z+(51/10)),t)"
-        ],
-        "Xmax": [
-          "5",
-          "7/2",
-          "7/2",
-          "7/2",
-          "3",
-          "3"
-        ],
-        "Xmin": [
-          "-5",
-          "-7/2",
-          "-7/2",
-          "-7/2",
-          "-3",
-          "-3"
-        ],
-        "Ymax": [
-          "5",
-          "7/2",
-          "7/2",
-          "7/2",
-          "3",
-          "3"
-        ],
-        "Ymin": [
-          "-5",
-          "-7/2",
-          "-7/2",
-          "-7/2",
-          "-3",
-          "-3"
-        ],
-        "Zmax": [
-          "(9/2)",
-          "2",
-          "2",
-          "2",
-          "7",
-          "-2"
-        ],
-        "Zmin": [
-          "-5",
-          "-2",
-          "-2",
-          "-2",
-          "0",
-          "-7"
-        ]
-      }
     },
     {
       "Param3D": {
