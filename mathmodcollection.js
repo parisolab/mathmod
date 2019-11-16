@@ -12674,99 +12674,101 @@
         }
     },
     {
-      "Iso3D": {
+        "Iso3D": {
         "Description": [
-          "Old Vase by Abderrahman Taha 23/09/2015"
+        "Old Vase by Abderrahman Taha 16/11/2019"
         ],
         "Name": [
-          "OldVase"
+        "OldVase"
         ],
         "Component": [
-          "Vase1",
-          "Vase5",
-          "Vase6"
+        "Vase1",
+        "Vase5",
+        "Vase6"
         ],
         "Const": [
-          "cx=(1/10000)",
-          "cy=(1/10000)",
-          "cz=(1/10000)",
-          "S=6",
-          "Thickness2=(1/4)",
-          "Thickness4=(1/5)",
-          "Thickness5=(1/5)",
-          "Thickness6=(6/5)",
-          "Thickness7=(6/5)"
+        "c=(1/10000)",
+        "S=6",
+        "Th2=(1/4)",
+        "Thickness4=(1/5)",
+        "Thickness5=(1/5)",
+        "Thickness6=(6/5)",
+        "Thickness7=(6/5)"
         ],
         "Funct": [
-          "Angle1=atan2(sqrt(x*x+y*y),(-z+cx))",
-          "Angle2=atan2(x,(y+cx))",
-          "CarvinCondition=abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(103/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2)",
-          "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
-          "Bottom=(x*x+y*y+z*z-1)",
-          "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
-          "DFx2=((IsoExterior(x,y,z,t)-IsoExterior(x+cx,y,z,t))/cx)",
-          "DFy2=((IsoExterior(x,y,z,t)-IsoExterior(x,y+cy,z,t))/cy)",
-          "DFz2=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+cz,t))/cz)",
-          "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
-          "Iso2=(IsoExterior(x+t*DFx2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),y+t*DFy2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),z+t*DFz2(x,y,z,t)*Thickness2/Rapport2(x,y,z,t),t))",
-          "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))",
-          "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-          "DFx=((Iso(x,y,z,t)-Iso(x+cx,y,z,t))/cx)",
-          "DFy=((Iso(x,y,z,t)-Iso(x,y+cy,z,t))/cy)",
-          "DFz=((Iso(x,y,z,t)-Iso(x,y,z+cz,t))/cz)",
-          "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
-          "Iso4=(Iso(x+t*DFx(x,y,z,t)*Thickness4/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness4/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness4/Rapport(x,y,z,t),t))",
-          "ThickIso2=(Iso4(x,y,z,-1)*Iso4(x,y,z,1))",
-          "isoTransform_2=if((CarvinCondition(x,y,z,t)=0),ThickIsoExterior(x,y,z,t),1)",
-          "Iso6=(Iso(x+t*DFx(x,y,z,t)*Thickness6/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness6/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness6/Rapport(x,y,z,t),t))",
-          "isoTransform_6=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0),-ThickIso2(S*x,S*y,S*z,t)*Iso6(x*S,y*S,z*S,-1)*(Iso6(x*S,y*S,z*S,1)),1)"
+        "Angle1=atan2(sqrt(x*x+y*y),(-z+c))",
+        "Angle2=atan2(x,(y+c))",
+        "rapp=x/sqrt(x*x+y*y+z*z)",
+        "CarvinCondition=abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(103/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2)",
+        "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
+        "Bottom=(x*x+y*y+z*z-1)",
+        "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
+        "DFx2=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)",
+        "DFy2=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)",
+        "DFz2=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
+        "Rapport2=(sqrt(DFx2(x,y,z,t)*DFx2(x,y,z,t)+DFy2(x,y,z,t)*DFy2(x,y,z,t)+DFz2(x,y,z,t)*DFz2(x,y,z,t)))",
+        "Iso2=(IsoExterior(
+        x+t*Th2*rapp(DFx2(x,y,z,t),DFy2(x,y,z,t),DFz2(x,y,z,t),t),
+        y+t*Th2*rapp(DFy2(x,y,z,t),DFz2(x,y,z,t),DFx2(x,y,z,t),t),
+        z+t*Th2*rapp(DFz2(x,y,z,t),DFx2(x,y,z,t),DFy2(x,y,z,t),t),t))",
+        "ThickIsoExterior=(Iso2(x,y,z,1)*Iso2(x,y,z,-1))",
+        "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
+        "DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)",
+        "DFy=((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)",
+        "DFz=((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)",
+        "Rapport=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
+        "Iso4=(Iso(x+t*DFx(x,y,z,t)*Thickness4/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness4/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness4/Rapport(x,y,z,t),t))",
+        "ThickIso2=(Iso4(x,y,z,-1)*Iso4(x,y,z,1))",
+        "isoTransform_2=if((CarvinCondition(x,y,z,t)=0),ThickIsoExterior(x,y,z,t),1)",
+        "Iso6=(Iso(x+t*DFx(x,y,z,t)*Thickness6/Rapport(x,y,z,t),y+t*DFy(x,y,z,t)*Thickness6/Rapport(x,y,z,t),z+t*DFz(x,y,z,t)*Thickness6/Rapport(x,y,z,t),t))",
+        "isoTransform_6=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0),-ThickIso2(S*x,S*y,S*z,t)*Iso6(x*S,y*S,z*S,-1)*(Iso6(x*S,y*S,z*S,1)),1)"
         ],
         "Fxyz": [
-          "isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
-          "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
-          "Bottom(x/(12/5),y/(12/5),2*(z+(51/10)),t)"
+        "isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
+        "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
+        "Bottom(x/(12/5),y/(12/5),2*(z+(51/10)),t)"
         ],
         "Xmax": [
-          "7/2",
-          "5",
-          "3"
+        "7/2",
+        "5",
+        "3"
         ],
         "Xmin": [
-          "-7/2",
-          "-5",
-          "-3"
+        "-7/2",
+        "-5",
+        "-3"
         ],
         "Ymax": [
-          "7/2",
-          "5",
-          "3"
+        "7/2",
+        "5",
+        "3"
         ],
         "Ymin": [
-          "-7/2",
-          "-5",
-          "-3"
+        "-7/2",
+        "-5",
+        "-3"
         ],
         "Zmax": [
-          "(9/2)",
-          "10",
-          "-2"
+        "(9/2)",
+        "10",
+        "-2"
         ],
         "Zmin": [
-          "-5",
-          "0",
-          "-7"
+        "-5",
+        "0",
+        "-7"
         ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=abs(cos(z*y*x*y))",
-          "G=(9/20)*abs(cos(z*y*x*y))",
-          "B=(1/50)*abs(cos(-z*x*z*x*y*y))",
-          "T=1"
-        ],
-        "Name": "Granit_1",
-        "Noise": "NoiseP(x,y,z,(10),(7),12/100)"
-      }
+        },
+        "Texture": {
+            "Colors": [
+                "R=8/10",
+                "G=4/10",
+                "B=1/10",
+                "T=1"
+            ],
+            "Name": "Granit_1",
+            "Noise": ""
+        }
     },
     {
       "Iso3D": {
