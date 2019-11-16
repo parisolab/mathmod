@@ -12558,16 +12558,22 @@
     {
       "Iso3D": {
         "Description": [
-          "Broken Jar by Abderrahman Taha 24/09/2015"
+          "Broken Jar by Abderrahman Taha 16/11/2019"
         ],
         "Name": [
           "BrokenJar"
         ],
         "Component": [
-          "Vase1",
-          "Vase2",
-          "Vase3",
-          "Vase4"
+            "BoottomHalf",
+            "Boottom",
+            "TopHalf",
+            "Head"
+        ],
+        "Grid": [
+            "150",
+            "60",
+            "150",
+            "60"
         ],
         "Const": [
           "cx=(1/10000)",
