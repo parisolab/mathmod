@@ -441,24 +441,56 @@ void DrawingOptions::AddObjectToMySelectionTree()
     }
 }
 
+// -------------------------
+void DrawingOptions::UpdateTreeObject()
+{
+    //Update the "Script Edit" page
+    if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
+    {
+        if(ShowCurrentObjectTree)
+        {
+            ui.ObjectClasseCurrent->takeTopLevelItem(0);
+            QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            AddIsoObjectToTree(IsolistItem);
+        }
+    }
+    else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
+               MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
+    {
+        if(ShowCurrentObjectTree)
+        {
+            ui.ObjectClasseCurrent->takeTopLevelItem(0);
+            QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            AddParObjectToTree(paramlistItem);
+        }
+    }
+}
 // --------------------------
-void DrawingOptions::UpdateCurrentTreeObject()
+void DrawingOptions::UpdateScriptEditorAndTreeObject()
 {
     //Update the "Script Edit" page
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
     {
         // Update MathMod editor
         ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
-        QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-        AddIsoObjectToTree(IsolistItem);
+        if(ShowCurrentObjectTree)
+        {
+            ui.ObjectClasseCurrent->takeTopLevelItem(0);
+            QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            AddIsoObjectToTree(IsolistItem);
+        }
     }
     else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
                MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
         // Update MathMod editor
         ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
-        QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-        AddParObjectToTree(paramlistItem);
+        if(ShowCurrentObjectTree)
+        {
+            ui.ObjectClasseCurrent->takeTopLevelItem(0);
+            QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            AddParObjectToTree(paramlistItem);
+        }
     }
 
     //Update the "Model Details" page
@@ -655,8 +687,7 @@ void DrawingOptions::DrawJsonModel(const QJsonObject & Jobj, int textureIndex, b
         if(Inspect & !VerifiedJsonModel(Jobj, Inspect))
             return;
         ShowJsonModel(Jobj, textureIndex);
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        UpdateCurrentTreeObject();
+        UpdateScriptEditorAndTreeObject();
     }
 }
 
@@ -1655,8 +1686,7 @@ int DrawingOptions::on_choice_activated(const QString &arg)
     int Result =JSON_choice_activated(arg);
     if(Result != 0)
     {
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        UpdateCurrentTreeObject();
+        UpdateScriptEditorAndTreeObject();
     }
     return Result;
 }
@@ -5019,8 +5049,6 @@ void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
     MathmodRef->ui.glWidget->LocalScene.slider = -1;
 }
 
-
-
 // --------------------------
 void DrawingOptions::on_PredefinedSets_activated(int index)
 {
@@ -5034,7 +5062,6 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
         }
-
 
         for(int sl=0; sl<20; sl++)
         {
@@ -5626,5 +5653,14 @@ void DrawingOptions::on_actionMorph_use_t_parameter_triggered()
 void DrawingOptions::on_TreeViewButton_clicked()
 {
     ShowCurrentObjectTree = !ShowCurrentObjectTree;
-    ShowCurrentObjectTree ? ui.ObjectClasseCurrent->show() : ui.ObjectClasseCurrent->hide();
+    if(ShowCurrentObjectTree)
+    {
+        UpdateTreeObject();
+        ui.ObjectClasseCurrent->show();
+    }
+    else
+    {
+        UpdateTreeObject();
+        ui.ObjectClasseCurrent->hide();
+    }
 }
