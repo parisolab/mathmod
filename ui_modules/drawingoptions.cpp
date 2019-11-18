@@ -465,32 +465,22 @@ void DrawingOptions::UpdateTreeObject()
         }
     }
 }
+
 // --------------------------
 void DrawingOptions::UpdateScriptEditorAndTreeObject()
 {
+    //Update the current Tree Object:
+    UpdateTreeObject();
+
     //Update the "Script Edit" page
-    if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
+    if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
-        // Update MathMod editor
         ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
-        if(ShowCurrentObjectTree)
-        {
-            ui.ObjectClasseCurrent->takeTopLevelItem(0);
-            QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-            AddIsoObjectToTree(IsolistItem);
-        }
     }
     else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
                MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
-        // Update MathMod editor
         ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
-        if(ShowCurrentObjectTree)
-        {
-            ui.ObjectClasseCurrent->takeTopLevelItem(0);
-            QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-            AddParObjectToTree(paramlistItem);
-        }
     }
 
     //Update the "Model Details" page
