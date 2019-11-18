@@ -2037,6 +2037,9 @@
             "Description": [
                 "Clebsch surface by Abderrahman Taha 18/05/2019"
             ],
+            "Name": [
+                "Clebsch_01"
+            ],
             "Component": [
                 "Clebsch"
             ],
@@ -2064,9 +2067,6 @@
             ],
             "Fxyz": [
                 "Iso(x,y,z,t)"
-            ],
-            "Name": [
-                "Clebsch_01"
             ],
             "Xmax": [
                 " X"

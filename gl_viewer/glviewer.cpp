@@ -413,11 +413,11 @@ void OpenGlWidget::PutObjectInsideCube()
         if (difY > float(difMaximum))
         {
             difMaximum = double(difY);
-        };
+        }
         if (difZ > float(difMaximum))
         {
             difMaximum = double(difZ);
-        };
+        }
 
         /// On va inclure cet objet dans un cube de langueur maximum
         /// egale a "hauteur_fenetre"
@@ -725,7 +725,7 @@ void OpenGlWidget::smoothline()
     {
         glDisable(GL_LINE_SMOOTH);
         glDisable(GL_BLEND);
-    };
+    }
 
     update();
 }
