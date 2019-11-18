@@ -5011,7 +5011,7 @@ void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[idx] = val;
     MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[idx] = val;
-    ui.C20label->setText(qlstnames.at(idx) + " = " +QString::number(val));
+    SliderArray[idx].SliderLabel->setText(qlstnames.at(idx) + " = " +QString::number(val));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
     else
