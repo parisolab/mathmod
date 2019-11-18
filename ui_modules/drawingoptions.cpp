@@ -345,7 +345,7 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
             }
         }
         //Add Global parameters:
-        AddParametersToMySelectionTree(paramlistItem);
+        AddParametersToTree(paramlistItem);
     }
 }
 
@@ -382,12 +382,12 @@ void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem)
             }
         }
         //Add Global parameters:
-        AddParametersToMySelectionTree(IsolistItem);
+        AddParametersToTree(IsolistItem);
     }
 }
 
 // --------------------------
-void DrawingOptions::AddParametersToMySelectionTree(QTreeWidgetItem* parameterslistItem)
+void DrawingOptions::AddParametersToTree(QTreeWidgetItem* parameterslistItem)
 {
     QTreeWidgetItem *parameteritem = new QTreeWidgetItem(parameterslistItem);
     parameteritem->setText(0,  "Parameters:");
@@ -444,6 +444,7 @@ void DrawingOptions::AddObjectToMySelectionTree()
 // --------------------------
 void DrawingOptions::UpdateCurrentTreeObject()
 {
+    //Update the "Script Edit" page
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
     {
         // Update MathMod editor
@@ -460,6 +461,7 @@ void DrawingOptions::UpdateCurrentTreeObject()
         AddParObjectToTree(paramlistItem);
     }
 
+    //Update the "Model Details" page
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         ui.stackedProperties->setCurrentIndex(1);
@@ -5623,14 +5625,6 @@ void DrawingOptions::on_actionMorph_use_t_parameter_triggered()
 
 void DrawingOptions::on_TreeViewButton_clicked()
 {
-    static int checked=-1;
-    checked *=-1;
-    if(checked == 1)
-    {
-        ui.ObjectClasseCurrent->show();
-    }
-    else
-    {
-        ui.ObjectClasseCurrent->hide();
-    }
+    ShowCurrentObjectTree = !ShowCurrentObjectTree;
+    ShowCurrentObjectTree ? ui.ObjectClasseCurrent->show() : ui.ObjectClasseCurrent->hide();
 }

@@ -119,6 +119,7 @@ public:
     std::vector<OptionnalParScriptFIELD> OptParFields;
     std::vector<MandatoryIsoField> MandIsoFields;
     std::vector<MandatoryParField> MandParFields;
+    bool ShowCurrentObjectTree=false;
 public slots:
     void CIndextoolButton_clicked(int);
     void BuildAllVect();
@@ -184,7 +185,7 @@ public slots:
     void AddIsoObjectToTree(QTreeWidgetItem *);
     void AddParObjectToTree(QTreeWidgetItem *);
     void ObjArrayToString(QJsonArray &, QString &);
-    void AddParametersToMySelectionTree(QTreeWidgetItem*);
+    void AddParametersToTree(QTreeWidgetItem*);
     void on_XhorizontalScrollBar_valueChanged(int value);
     void on_YhorizontalScrollBar_valueChanged(int value);
     void on_ZhorizontalScrollBar_valueChanged(int value);
