@@ -447,22 +447,16 @@ void DrawingOptions::UpdateTreeObject()
     //Update the "Script Edit" page
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
     {
-        if(ShowCurrentObjectTree)
-        {
-            ui.ObjectClasseCurrent->takeTopLevelItem(0);
-            QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-            AddIsoObjectToTree(IsolistItem);
-        }
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+        AddIsoObjectToTree(IsolistItem);
     }
     else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
                MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
-        if(ShowCurrentObjectTree)
-        {
-            ui.ObjectClasseCurrent->takeTopLevelItem(0);
-            QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-            AddParObjectToTree(paramlistItem);
-        }
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+        AddParObjectToTree(paramlistItem);
     }
 }
 
@@ -470,7 +464,8 @@ void DrawingOptions::UpdateTreeObject()
 void DrawingOptions::UpdateScriptEditorAndTreeObject()
 {
     //Update the current Tree Object:
-    UpdateTreeObject();
+    if(ShowCurrentObjectTree)
+        UpdateTreeObject();
 
     //Update the "Script Edit" page
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
