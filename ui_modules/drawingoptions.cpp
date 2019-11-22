@@ -2186,8 +2186,6 @@ void DrawingOptions::SearchListModels()
                         ParseItemTree(Childlevel->child(m), select.selectedoptions.complist);
                 }
 
-
-
                 // now look in the search results
                 if(select.selectedoptions.AND)
                 {
@@ -2212,7 +2210,7 @@ void DrawingOptions::SearchListModels()
                     {
                         ParseItemTree(SubChildlevel, select.selectedoptions.functlist, true);
                     }
-                // Components names and their childes:
+                // Components names and their childs:
                 if((Childlevel=ChildItemTreeProperty(Toplevel->child(j), "Components")) != nullptr)
                 {
                     ParseItemTree(Childlevel, select.selectedoptions.cmpnamelist, true);
@@ -2261,8 +2259,6 @@ void DrawingOptions::AddListModels(bool update)
         connect(addElement,    SIGNAL(triggered()), this, SLOT(slot_pushButton_2_clicked()));
         connect(deleteElement, SIGNAL(triggered()), this, SLOT(slot_unselect_clicked()));
     }
-
-
     QColor greenColor = QColor(0, 255, 0, 50);
     // Parametric:
     QTreeWidgetItem *ParlistItem = new QTreeWidgetItem(ui.ObjectClasse);
@@ -2277,7 +2273,6 @@ void DrawingOptions::AddListModels(bool update)
         {
             QTreeWidgetItem *cmpitem = new QTreeWidgetItem(nameitem);
             cmpitem->setText(0,  "Components");
-
             for(int j=0; j<MathmodRef->pariso.JPar[i].Component.count(); j++)
             {
                 QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
