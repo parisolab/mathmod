@@ -2106,8 +2106,11 @@
         "Component": [
           "Icosahedron"
         ],
+        "Const": [
+          "C=(1+sqrt(5))/2"
+        ],
         "Fxyz": [
-          "if( (x^2 + y^2 +z^2 < 35), 2 - (cos(x + (1+sqrt(5))/2*y) + cos(x - (1+sqrt(5))/2*y) + cos(y + (1+sqrt(5))/2*z) + cos(y - (1+sqrt(5))/2*z) + cos(z - (1+sqrt(5))/2*x) + cos(z + (1+sqrt(5))/2*x)) , 1)"
+          "if( (x^2 + y^2 +z^2 < 35), 2 - (cos(x + C*y) + cos(x - C*y) + cos(y + C*z) + cos(y - C*z) + cos(z - C*x) + cos(z + C*x)) , 1)"
         ],
         "Xmin": [
           "-11/2"
