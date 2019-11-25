@@ -94,6 +94,15 @@ double TurbulencePerlin(const double* p)
                    float (p[5])));
 }
 
+double MarblePerlin(const double* p)
+{
+    return double (
+               PNoise->Marble(
+                   float (p[0]),
+                   float (p[1]),
+                   float (p[2]),
+                   int (p[3])));
+}
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::run()
 {
@@ -369,6 +378,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
+            workerthreads[nbthreads].Fct[ii].AddFunction("MarbleP",MarblePerlin, 4);
             for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
@@ -413,6 +423,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
 
             for(uint j=0; j<masterthread->Nb_functs; j++)
             {
@@ -1184,6 +1195,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                 RgbtParser[i].AddConstant("Octaves", double(Octaves));
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+                RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
             }
         }
     }
@@ -1206,6 +1218,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         GradientParser->AddConstant("Octaves", Octaves);
         GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
         GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
+        GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
 
         for(uint i=0; i<Nb_vrgbts; i++)
         {
@@ -1217,6 +1230,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                 VRgbtParser[i].AddConstant("Octaves", Octaves);
                 VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+                VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
             }
         }
     }
@@ -1332,6 +1346,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                 RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+                RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
             }
 
     // Add defined functions :
@@ -1342,6 +1357,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             GradientParser->AddFunction(FunctNames[j], Fct[j]);
             GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
             GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
+            GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
         }
 
         for(int i=0; i<4; i++)
@@ -1350,6 +1366,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                 VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
                 VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+                VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
             }
     }
 
@@ -1374,10 +1391,12 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+        implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
 
     }
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
+    NoiseParser->AddFunction("MarbleP",MarblePerlin, 4);
 
     return ParseExpression(varliste);
 }
@@ -1604,6 +1623,7 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         Fct[i].AddFunction("fmesh",fmesh, 8);
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+        Fct[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
 
     for(uint i=0; i<NbTextures; i++)
@@ -1614,6 +1634,7 @@ void IsoMasterThread::InitMasterParsers()
         RgbtParser[i].AddConstant("Octaves", Octaves);
         RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+        RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
 
     for(uint i=0; i<NbTextures; i++)
@@ -1624,6 +1645,7 @@ void IsoMasterThread::InitMasterParsers()
         VRgbtParser[i].AddConstant("Octaves", Octaves);
         VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
+        VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
 
     GradientParser->AddConstant("pi", PI);
@@ -1632,6 +1654,7 @@ void IsoMasterThread::InitMasterParsers()
     GradientParser->AddConstant("Octaves", Octaves);
     GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
+    GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
