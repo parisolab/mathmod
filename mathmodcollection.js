@@ -7899,8 +7899,7 @@
         ],
         "Const": [
           "M=1",
-          "N=8",
-          "P=7"
+          "N=8"
         ],
         "Funct": [
           "W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
