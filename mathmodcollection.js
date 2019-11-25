@@ -9280,7 +9280,37 @@
     }
     },
     {
-      "Iso3D": {
+        "Iso3D": {
+            "Description": ["icosahedral crystal field, by Abderrahman Taha  (ref: https://core.ac.uk/download/pdf/97962.pdf) 24/11/2019"
+            ],
+            "Name": ["Icosahedral_crystal"
+            ],
+            "Component": ["icosahedral"
+            ],
+            "Const": ["X=2","Y=2","Z=15/10","c=1/1000","T=2/100","r=1"
+            ],
+            "Funct": ["Patrice=(231*z^6-315*r^2*z^4+105*r^4*z^2-5*r^6+42*x*z*(x^4-10*x^2*y^2+5*y^4))","DFx=((Patrice(x+c,y,z,t)-Patrice(x,y,z,t))/c)","DFy=((Patrice(x,y+c,z,t)-Patrice(x,y,z,t))/c)","DFz=((Patrice(x,y,z+c,t)-Patrice(x,y,z,t))/c)","Rapport=(x/sqrt(x*x+y*y+z*z))","Iso=Patrice(x-t*T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-t*T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-t*T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)","TickIsoExterior=(Iso(x,y,z,1)*Iso(x,y,z,-1))"
+            ],
+            "Fxyz": ["-if((sqrt(x*x+y*y+z*z)-X)<(0),TickIsoExterior(x,y,z,t),(1))"
+            ],
+            "Grid": ["150"
+            ],
+            "Xmax": [" X"
+            ],
+            "Xmin": ["-X"
+            ],
+            "Ymax": [" Y"
+            ],
+            "Ymin": ["-Y"
+            ],
+            "Zmax": [" Z"
+            ],
+            "Zmin": ["-Z"
+            ]
+        }
+    },
+    {
+        "Iso3D": {
         "Description": [
           "iWP Skeletal Graphis by Abderrahman Taha 30/10/2019"
         ],
@@ -9311,7 +9341,7 @@
         "Zmin": [
           "0"
         ]
-      }
+        }
     },
     {
       "Iso3D": {
