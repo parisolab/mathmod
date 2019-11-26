@@ -2530,7 +2530,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
     uint I, J, JK, IJK, IPLUSONEJK, IMINUSONEJK,
         IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
-    uint limitX = Xgrid;
     /// We have to compute the edges for the Grid limits ie: i=0, j=0 and k=0
 
     i_Start = 1/*+masterthread->iStart*/;
@@ -2821,7 +2820,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
     /// 2) Case i = nb_ligne-1
 
-    i = limitX-1;
+    i = Xgrid-1;
     I = i*maxgrscalemaxgr;
     for(j=0; j < Ygrid; j++)
     {
@@ -2938,14 +2937,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     /// 3) Case j = 0
     j= 0;
 
-    for(i=0; i < limitX; i++)
+    for(i=0; i < Xgrid; i++)
         for(k=0; k < Zgrid; k++)
         {
 
             IsoValue_1 = Results[i*maxgrscalemaxgr+k];
 
             // First Case P(i+1)(j)(k)
-            if( i != (limitX -1))
+            if( i != (Xgrid -1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
@@ -3075,7 +3074,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     /// 4) Case j = nb_colon -1
     j = Ygrid-1;
 
-    for(i=0; i < limitX; i++)
+    for(i=0; i < Xgrid; i++)
         for(k=0; k < Zgrid; k++)
         {
 
@@ -3083,7 +3082,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
 
             // First Case P(i+1)(j)(k)
-            if( i != (limitX-1))
+            if( i != (Xgrid-1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
@@ -3188,12 +3187,12 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
     k =0;
 
-    for(i=0; i < limitX; i++)
+    for(i=0; i < Xgrid; i++)
         for(j=0; j < Ygrid; j++)
         {
             IsoValue_1 = Results[i*maxgrscalemaxgr+j*NbMaxGrid];
             // First Case P(i+1)(j)(k)
-            if(i != (limitX -1))
+            if(i != (Xgrid -1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
@@ -3324,7 +3323,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
     k = Zgrid -1;
 
-    for(i=0; i < limitX; i++)
+    for(i=0; i < Xgrid; i++)
         for(j=0; j < Ygrid; j++)
         {
 
@@ -3332,7 +3331,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
 
             // First Case P(i+1)(j)(k)
-            if( i != (limitX -1) )
+            if( i != (Xgrid -1) )
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
