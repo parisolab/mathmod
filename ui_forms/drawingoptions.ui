@@ -4279,8 +4279,11 @@ p, li { white-space: pre-wrap; }
             <property name="bottomMargin">
              <number>2</number>
             </property>
-            <property name="spacing">
+            <property name="horizontalSpacing">
              <number>0</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>4</number>
             </property>
             <item row="0" column="0">
              <widget class="QSplitter" name="splitter_7">
@@ -4359,7 +4362,13 @@ p, li { white-space: pre-wrap; }
             <item row="1" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <property name="spacing">
-               <number>0</number>
+               <number>4</number>
+              </property>
+              <property name="leftMargin">
+               <number>4</number>
+              </property>
+              <property name="rightMargin">
+               <number>4</number>
               </property>
               <item>
                <widget class="QPushButton" name="calculate">
