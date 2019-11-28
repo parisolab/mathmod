@@ -11535,7 +11535,7 @@
           "N=10"
         ],
         "Funct": [
-          "Thickness2=if(sin(N*u)>0, (5/10)*t*((sin(N*u)))^(1/4), -(5/10)*t*(abs(sin(N*u)))^(1/4)) ",
+          "Thickness2=if(sin(N*u)>(0), (5/10)*t*((sin(N*u)))^(1/4), -(5/10)*t*(abs(sin(N*u)))^(1/4)) ",
           "Thickness= Thickness2(u,v,1) + Thickness2(15*v-5*u,v,(5/100))",
           "Fx=(4+ 2*cos(u))*cos(v)",
           "Fy=2*sin(u)",
