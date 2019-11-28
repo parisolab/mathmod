@@ -11593,8 +11593,8 @@
           "N=10"
         ],
         "Funct": [
-          "Thickness=if(sin(N*u)>0, (5/10)*((sin(N*u)))^(1/4), -(5/10)*(abs(sin(N*u)))^(1/4)) ",
-          "Fx=(4+ 2*cos(u))*cos(v)",
+          "Thickness=if(sin(N*u)>(0), (5/10)*((sin(N*u)))^(1/4), -(5/10)*(abs(sin(N*u)))^(1/4)) ",
+          "Fx=(4+2*cos(u))*cos(v)",
           "Fy=2*sin(u)",
           "Fz=(4+2*cos(u))*sin(v)",
           "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
