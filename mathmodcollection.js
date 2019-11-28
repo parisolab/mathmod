@@ -2063,7 +2063,7 @@
                 "DFz=((Clebsch(x,y,z+c,t)-Clebsch(x,y,z,t))/c)",
                 "Rapp=(x/sqrt(x*x+y*y+z*z))",
                 "Iso=Clebsch(x-t*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-t*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-t*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
-                "Iso=if( x*x+y*y+z*z-1<0, Iso(x,y,z,T)*Iso(x,y,z,-T) , (1/2)*exp((x*x+y*y+z*z-1))) "
+                "Iso=if( x*x+y*y+z*z-1<(0), Iso(x,y,z,T)*Iso(x,y,z,-T) , (1/2)*exp((x*x+y*y+z*z-1))) "
             ],
             "Fxyz": [
                 "Iso(x,y,z,t)"
