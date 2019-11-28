@@ -10157,7 +10157,7 @@
       },
       "Texture": {
         "Colors": [
-          "R=if(cmpId=0,(1/2)*cos(5*(x*x+y*y)), cos(5*(x*x+y*y)))",
+          "R=if((cmpId=0),(1/2)*cos(5*(x*x+y*y)), cos(5*(x*x+y*y)))",
           "G=cos(5*(x*x+y*y+z*z))/2",
           "B=cos(5*(x*x+y*y+z*z))/2",
           "T=1"
