@@ -10773,34 +10773,34 @@
         "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),(0)) +NoiseW(4*x,4*y,4*z,(4),(12),(0))"
       }
     },
-        {
-            "Iso3D": {
-                "Description": ["PrettyBall_1 by Abderrahman Taha 28/10/2019"
-                ],
-                "Name": ["Pretty_Ball_1"
-                ],
-                "Component": ["PrettyBall_1","PrettyBall_2","PrettyBall_3"
-                ],
-                "Const": ["k=1.3","X=9","Y=8","c=1/10000","Th2=-8/10","Th1=5/10"
-                ],
-                "Funct": ["Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)","DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)","DFy=((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)","DFz=((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso2=(Iso(x+Th2*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th2*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+Th2*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso3=(Iso(x-Th2*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-Th2*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-Th2*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso4=(Iso(x+Th1*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th1*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+Th1*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso5=(Iso(x-Th1*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-Th1*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-Th1*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","isoCondition=(x*x+y*y+z*z-k*k*Y*Y)","ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))","GyroidLatice_1=if(isoCondition(x,y,z,t)<(0),Iso2(x,y,z,t),1)-exp(isoCondition(x,y,z,t)/5)","GyroidLatice_2=if(isoCondition(x,y,z,t)<(0),Iso3(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/5)","GyroidLatice_3=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/5)"
-                ],
-                "Fxyz": ["GyroidLatice_1(k*x,k*y,k*z,t)","GyroidLatice_2(k*x,k*y,k*z,t)","GyroidLatice_3(k*x,k*y,k*z,t)"
-                ],
-                "Xmax": ["X","X","X"
-                ],
-                "Xmin": ["-X","-X","-X"
-                ],
-                "Ymax": ["X","X","X"
-                ],
-                "Ymin": ["-X","-X","-X"
-                ],
-                "Zmax": ["X","X","X"
-                ],
-                "Zmin": ["-X","-X","-X"
-                ]
-            }
-        },
+    {
+        "Iso3D": {
+            "Description": ["PrettyBall_1 by Abderrahman Taha 28/10/2019"
+            ],
+            "Name": ["Pretty_Ball_1"
+            ],
+            "Component": ["PrettyBall_1","PrettyBall_2","PrettyBall_3"
+            ],
+            "Const": ["k=13/10","X=9","Y=8","c=1/10000","Th2=-8/10","Th1=5/10"
+            ],
+            "Funct": ["Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)","DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)","DFy=((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)","DFz=((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso2=(Iso(x+Th2*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th2*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+Th2*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso3=(Iso(x-Th2*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-Th2*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-Th2*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso4=(Iso(x+Th1*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th1*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+Th1*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso5=(Iso(x-Th1*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-Th1*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-Th1*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","isoCondition=(x*x+y*y+z*z-k*k*Y*Y)","ThickIso2=(Iso4(x,y,z,t)*Iso5(x,y,z,t))","GyroidLatice_1=if(isoCondition(x,y,z,t)<(0),Iso2(x,y,z,t),1)-exp(isoCondition(x,y,z,t)/5)","GyroidLatice_2=if(isoCondition(x,y,z,t)<(0),Iso3(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/5)","GyroidLatice_3=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/5)"
+            ],
+            "Fxyz": ["GyroidLatice_1(k*x,k*y,k*z,t)","GyroidLatice_2(k*x,k*y,k*z,t)","GyroidLatice_3(k*x,k*y,k*z,t)"
+            ],
+            "Xmax": ["X","X","X"
+            ],
+            "Xmin": ["-X","-X","-X"
+            ],
+            "Ymax": ["X","X","X"
+            ],
+            "Ymin": ["-X","-X","-X"
+            ],
+            "Zmax": ["X","X","X"
+            ],
+            "Zmin": ["-X","-X","-X"
+            ]
+        }
+    },
     {
       "Iso3D": {
         "Description ": [
