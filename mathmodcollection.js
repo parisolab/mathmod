@@ -6110,6 +6110,9 @@
             "Description": [
                 "Breather by Abderrahman Taha 05/11/2019"
             ],
+            "Name": [
+                "Breather"
+            ],
             "Component": [
                 "Breather"
             ],
@@ -6124,10 +6127,7 @@
                 "(2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))"
             ],
             "Fz": [
-                "-u+(2*0.84*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))"
-            ],
-            "Name": [
-                "Breather"
+                "-u+((42/25)*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))"
             ],
             "Umax": [
                 "66/5"
