@@ -6856,7 +6856,7 @@
           "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
           "th=if(th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "f_hex_y=if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-          "f_hex_y_1=if(100*abs(z)<6,f_hex_y(x,y,z,0)-(2/25),1)",
+          "f_hex_y_1=if(100*abs(z)<(6),f_hex_y(x,y,z,0)-(2/25),1)",
           "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
           "Torus=Cylinder(6*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
         ],
@@ -6959,7 +6959,7 @@
           "th=atan2(y1(x,y,z,t),x1(x,y,z,t))",
           "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
           "f_hex_y = if(th(x,y,z,t)<pi/(6), y1(x,y,z,t), abs(-sin(pi/3)*x1(x,y,z,t)+cos(pi/3)*y1(x,y,z,t)))",
-          "f_hex_y_1=if(abs(z)<(3/50),f_hex_y(sqrt(x*x+y*y)-2,(475/100)*atan2(y,x),z,0)-(2/25),1)",
+          "f_hex_y_1=if(abs(z)<(3/50),f_hex_y(sqrt(x*x+y*y)-(2),(475/100)*atan2(y,x),z,0)-(2/25),1)",
           "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
           "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
           "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"
