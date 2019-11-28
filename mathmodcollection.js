@@ -480,7 +480,7 @@
           "D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2"
         ],
         "Fxyz": [
-          "(Ax + By+ z*z - 3/5)*min( Ax + By  + z*z - 3/5, z) +1/5",
+          "(Ax + By+ z*z - 3/5)*min( Ax + By  + z*z - (3/5), z) +1/5",
           "Ax+ By + (z-1/5)*(z-1/5) - 3/5",
           "Cx + Dy  + (z-1/5)*(z-1/5) - 1/10"
         ],
