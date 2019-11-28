@@ -13828,7 +13828,7 @@
           "ph = B*pi/10"
         ],
         "Funct": [
-          "fmesh0=-fmesh(x,y,z,A/10,B/10,C/10,D/10,E/10) +(8/100) ",
+          "fmesh0=-fmesh(x,y,z,(A/10),(B/10),(C/10),(D/10),(E/10)) +(8/100) ",
           "fmesh3= if(atan2(z,sqrt(x*x+y*y))<(9/10), fmesh0(atan2(y,x),(sqrt(x*x+y*y+z*z)-4),atan2(z,sqrt(x*x+y*y)),t), 1)*(atan2(z,sqrt(x*x+y*y))<(9/10))"
         ],
         "Fxyz": [
