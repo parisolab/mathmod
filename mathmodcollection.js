@@ -13798,9 +13798,9 @@
       },
       "Texture": {
         "Colors": [
-          "R= if(int(i)%MM>P & int(i)%MM<P+2 ,(8/10),(8/10)) ",
-          "G= if((int(i)%MM>P & int(i)%MM<P+2), (8/10),(1/10)) ",
-          "B= if((int(i)%MM>P & int(i)%MM<P+2), (8/10),(1/10)) ",
+          "R= if((int(i)%MM>P & int(i)%MM<P+2),(8/10),(8/10)) ",
+          "G= if((int(i)%MM>P & int(i)%MM<P+2),(8/10),(1/10)) ",
+          "B= if((int(i)%MM>P & int(i)%MM<P+2),(8/10),(1/10)) ",
           "T= 1 "
         ],
         "Name": "Rings",
