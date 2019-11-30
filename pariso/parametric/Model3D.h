@@ -95,8 +95,6 @@ public :
     std::string *VarName, *Varus,
         *Consts, *ConstNames,
         *Functs, *FunctNames,
-        /**Rgbts, *RgbtNames,
-        *VRgbts, *VRgbtNames,*/
         Gradient, Noise, NoiseShape, *SliderNames;
 
     std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames;

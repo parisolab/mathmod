@@ -399,8 +399,8 @@ void ParMasterThread::AllocateParsersForMasterThread()
         myParserCND  = new FunctionParser[expression_XSize];
         Fct          = new FunctionParser[FunctSize];
         Var          = new FunctionParser[VaruSize];
-        RgbtParser       = new FunctionParser[NbTextures];
-        VRgbtParser      = new FunctionParser[NbTextures];
+        RgbtParser       = new FunctionParser[4];
+        VRgbtParser      = new FunctionParser[VRgbtSize];
         GradientParser   = new FunctionParser;
         NoiseParser      = new FunctionParser;
         NoiseShapeParser = new FunctionParser;
@@ -508,14 +508,17 @@ void ParMasterThread::InitMasterParsers()
         myParserCND[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
-    for(uint i=0; i<NbTextures; i++)
+
+    for(uint i=0; i<4; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
-        VRgbtParser[i].AddConstant("pi", PI);
+    }
 
-        RgbtParser[i].AddConstant("pi", PI);
+    for(int i=0; i<VRgbtSize; i++)
+    {
         VRgbtParser[i].AddConstant("pi", PI);
     }
+
     for(int i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
