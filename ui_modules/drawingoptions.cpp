@@ -978,14 +978,14 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj, const ModelType & opt)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise.toStdString();
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbtSize = VRgbtSize;
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
     else if(opt == PAR_TYPE)
     {
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Noise = noise.toStdString();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbtSize = VRgbtSize;
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
