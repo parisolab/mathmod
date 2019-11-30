@@ -97,9 +97,9 @@ public :
         Varu, *Varus, *VarName,
         Funct,*Functs, *FunctNames,
         Rgbt, *Rgbts, *RgbtNames,
-        VRgbt, *VRgbts, *VRgbtNames,
+        VRgbt, /*VRgbts, *VRgbtNames,*/
         Gradient, Noise, varliste;
-
+    std::vector<std::string> VRgbts, VRgbtNames;
     bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,

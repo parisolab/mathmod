@@ -176,10 +176,10 @@ void IsoMasterThread::IsoMasterTable()
     ConstNames   = new std::string[NbConstantes];
     Functs       = new std::string[NbDefinedFunctions];
     FunctNames   = new std::string[NbDefinedFunctions];
-    Rgbts        = new std::string[NbTextures];
-    RgbtNames    = new std::string[NbTextures];
-    VRgbts       = new std::string[NbTextures];
-    VRgbtNames   = new std::string[NbTextures];
+    Rgbts        = new std::string[4];
+    RgbtNames    = new std::string[4];
+    //VRgbts       = new std::string[NbTextures];
+    //VRgbtNames   = new std::string[NbTextures];
     x_Step       = new double[NbComponent];
     y_Step       = new double[NbComponent];
     z_Step       = new double[NbComponent];
@@ -227,8 +227,8 @@ IsoMasterThread::~IsoMasterThread()
     delete[] FunctNames;
     delete[] Rgbts;
     delete[] RgbtNames;
-    delete[] VRgbts;
-    delete[] VRgbtNames;
+    VRgbts.clear();
+    VRgbtNames.clear();
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
@@ -576,8 +576,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 4)
             {
-                VRgbtNames[Nb_variables] = tmp2.substr(0,jpos);
-                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                VRgbtNames.push_back(tmp2.substr(0,jpos));
+                VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
             NewVariables = tmp2;
@@ -609,8 +609,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 4)
             {
-                VRgbtNames[Nb_variables] = tmp2.substr(0, jpos);
-                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                VRgbtNames.push_back(tmp2.substr(0, jpos));
+                VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
 
             NewVariables = "";
@@ -2001,12 +2001,12 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
     double tmp,
             *ValCol,
             val[10];
-    ValCol = new double[NbTextures+5];
+    ValCol = new double[masterthread->Nb_vrgbts+5];
     val[3] = masterthread->stepMorph;
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(uint i=0; i<masterthread->Nb_vrgbts && i<NbTextures; i++)
+        for(uint i=0; i<masterthread->Nb_vrgbts; i++)
         {
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
@@ -2030,14 +2030,14 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 
             int c= int(tmp);
             tmp = std::abs(tmp - double(c));
-            for (uint j=0; j < masterthread->Nb_vrgbts && j < NbTextures; j+=5)
+            for (uint j=0; j < masterthread->Nb_vrgbts; j+=5)
                 if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin  ] = float(ValCol[j+1]);
                     NormVertexTab[i*TypeDrawin+1] = float(ValCol[j+2]);
                     NormVertexTab[i*TypeDrawin+2] = float(ValCol[j+3]);
                     NormVertexTab[i*TypeDrawin+3] = float(ValCol[j+4]);
-                    j = NbTextures;
+                    j = masterthread->Nb_vrgbts;
                 }
         }
     }
