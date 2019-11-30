@@ -69,7 +69,6 @@ public:
         NbConstantes,
         NbDefinedFunctions,
         NbVariables,
-        NbTextures,
         InitParGrid,
         InitIsoGrid;
 

@@ -147,7 +147,6 @@ public :
           uint NbVar=NbVariables,
           uint NbCst=NbConstantes,
           uint NbdeFct=NbDefinedFunctions,
-          uint NbText=NbTextures,
           int nbSlid=NbSliders,
           int nbSlidV=NbSliderValues,
           uint nbThreads=6,

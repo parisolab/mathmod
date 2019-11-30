@@ -45,7 +45,6 @@ uint NbComponent = 30;
 uint NbConstantes = 30;
 uint NbDefinedFunctions = 50;
 uint NbVariables = 30;
-uint NbTextures = 30;
 int NbSliders = 50;
 int NbSliderValues = 500;
 
@@ -453,7 +452,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
               uint NbVariabl,
               uint NbConstant,
               uint NbDefinedFunct,
-              uint NbText,
               int NbSlid,
               int NbSliderV,
               uint nbThreads,
@@ -466,7 +464,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     OrignbY= factY;
     OrignbZ=factZ;
     Stack_Factor = factX*factY*factZ;
-    NbTextures=NbText;
     NbComponent=NbCompo;
     NbVariables = NbVariabl;
     NbSliders  = NbSlid;

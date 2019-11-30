@@ -77,7 +77,7 @@ public:
     void Shininess(int);
     void boxok();
     void initbox();
-    int  memoryallocation(uint, uint, uint,uint,uint,uint,uint,uint,int,int, uint,
+    int  memoryallocation(uint, uint, uint,uint,uint,uint,uint,int,int, uint,
                           uint initgrid=40, uint factx=4, uint facty=4,uint factz=4);
     void VBOmemoryallocation();
     void deleteAllListes();

@@ -44,7 +44,6 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     NbConstantes = 30;
     NbDefinedFunctions = 30;
     NbVariables = 20;
-    NbTextures = 10;
     NbSliders = 20;
     NbSliderValues = 200;
 
@@ -474,8 +473,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                 NbConstantes= (IsoParam)["NbConstantes"].toInt();
             if((IsoParam)["NbDefinedFunctions"].isDouble())
                 NbDefinedFunctions= (IsoParam)["NbDefinedFunctions"].toInt();
-            if((IsoParam)["NbTextures"].isDouble())
-                NbTextures= (IsoParam)["NbTextures"].toInt();
             if((IsoParam)["NbSliders"].isDouble())
                 NbSliders= (IsoParam)["NbSliders"].toInt();
             if((IsoParam)["NbSliderValues"].isDouble())

@@ -57,7 +57,6 @@ static const char* ScriptErrorMessage[]=
     "NBVARIABLES_OUT_OF_RANGE",       //23
     "NBCONSTANTES_OUT_OF_RANGE",      //24
     "NBDEFINEDFUNCTIONS_OUT_OF_RANGE",//25
-    "NBTEXTURES_OUT_OF_RANGE",        //26
     "NBSLIDERS_OUT_OF_RANGE",         //27
     "NBSLIDERSVALUES_OUT_OF_RANGE",   //28
     "VERTEX_TAB_MEM_OVERFLOW",        //29

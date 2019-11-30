@@ -122,7 +122,6 @@ enum ScriptErrorType
     NBVARIABLES_OUT_OF_RANGE,
     NBCONSTANTES_OUT_OF_RANGE,
     NBDEFINEDFUNCTIONS_OUT_OF_RANGE,
-    NBTEXTURES_OUT_OF_RANGE,
     NBSLIDERS_OUT_OF_RANGE,
     NBSLIDERSVALUES_OUT_OF_RANGE,
     VERTEX_TAB_MEM_OVERFLOW,
@@ -291,7 +290,6 @@ public:
     float lookup(float, float, float);
 };
 
-extern uint NbTextures;
 extern uint NbComponent;
 extern uint NbVariables;
 extern int NbSliders;
