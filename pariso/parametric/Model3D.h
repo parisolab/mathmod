@@ -91,7 +91,7 @@ public :
         Varu, Const,  Funct, Rgbt, Grid;
     int Nb_Sliders, ParConditionRequired, expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
-        VaruSize, ConstSize,  FunctSize, RgbtSize, GridSize;
+        VaruSize, ConstSize,  FunctSize, RgbtSize, VRgbtSize, GridSize;
     std::string *VarName, *Varus,
         *Consts, *ConstNames,
         *Functs, *FunctNames,

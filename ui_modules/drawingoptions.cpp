@@ -950,12 +950,14 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj, const ModelType & opt)
     noise = QObj["Noise"].toString();
     QJsonArray lst =  QObj["Colors"].toArray();
     QString result = "";
+    int VRgbtSize=0;
     for(int j=0; j < lst.size(); j++)
     {
         tmp = (lst[j].toObject())["Color"].toObject()["Vrgba"].toArray();
         for(int k=0; k < tmp.count(); k++)
         {
             result += tmp[k].toString() + ";";
+            VRgbtSize++;
         }
     }
 
@@ -976,12 +978,14 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj, const ModelType & opt)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbtSize = VRgbtSize;
     }
     else if(opt == PAR_TYPE)
     {
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbtSize = VRgbtSize;
     }
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);

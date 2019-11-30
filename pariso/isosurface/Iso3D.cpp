@@ -652,7 +652,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     else if(type == 1)  //xmin
     {
         ImplicitStructs[0].xmin = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) != std::string::npos)
@@ -1626,7 +1625,7 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
 
-    for(uint i=0; i<NbTextures; i++)
+    for(uint i=0; i<4; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
         RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1637,7 +1636,7 @@ void IsoMasterThread::InitMasterParsers()
         RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
 
-    for(uint i=0; i<NbTextures; i++)
+    for(int i=0; i<VRgbtSize; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1674,8 +1673,8 @@ void IsoMasterThread::AllocateMasterParsers()
         Fct = new FunctionParser[FunctSize];
         Var = new FunctionParser[VaruSize];
 
-        RgbtParser = new FunctionParser[NbTextures];
-        VRgbtParser = new FunctionParser[NbTextures];
+        RgbtParser = new FunctionParser[4];
+        VRgbtParser = new FunctionParser[VRgbtSize];
         GradientParser = new FunctionParser;
         ParsersAllocated = true;
     }
