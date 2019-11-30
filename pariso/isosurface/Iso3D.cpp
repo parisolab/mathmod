@@ -176,10 +176,6 @@ void IsoMasterThread::IsoMasterTable()
     ConstNames   = new std::string[NbConstantes];
     Functs       = new std::string[NbDefinedFunctions];
     FunctNames   = new std::string[NbDefinedFunctions];
-    Rgbts        = new std::string[4];
-    RgbtNames    = new std::string[4];
-    //VRgbts       = new std::string[NbTextures];
-    //VRgbtNames   = new std::string[NbTextures];
     x_Step       = new double[NbComponent];
     y_Step       = new double[NbComponent];
     z_Step       = new double[NbComponent];
@@ -225,8 +221,8 @@ IsoMasterThread::~IsoMasterThread()
     delete[] ConstNames;
     delete[] Functs;
     delete[] FunctNames;
-    delete[] Rgbts;
-    delete[] RgbtNames;
+    Rgbts.clear();
+    RgbtNames.clear();
     VRgbts.clear();
     VRgbtNames.clear();
     delete[] x_Step;
@@ -571,8 +567,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 3)
             {
-                RgbtNames[Nb_variables] = tmp2.substr(0,jpos);
-                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                RgbtNames.push_back(tmp2.substr(0,jpos));
+                Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
@@ -604,8 +600,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 3)
             {
-                RgbtNames[Nb_variables] = tmp2.substr(0, jpos);
-                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                RgbtNames.push_back(tmp2.substr(0, jpos));
+                Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
@@ -1574,6 +1570,10 @@ void IsoMasterThread::DeleteMasterParsers()
         delete NoiseParser;
         ParsersAllocated = false;
     }
+    Rgbts.clear();
+    RgbtNames.clear();
+    VRgbts.clear();
+    VRgbtNames.clear();
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++

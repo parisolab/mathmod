@@ -96,10 +96,10 @@ public :
         *SliderNames,
         Varu, *Varus, *VarName,
         Funct,*Functs, *FunctNames,
-        Rgbt, *Rgbts, *RgbtNames,
-        VRgbt, /*VRgbts, *VRgbtNames,*/
+        Rgbt,
+        VRgbt,
         Gradient, Noise, varliste;
-    std::vector<std::string> VRgbts, VRgbtNames;
+    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames;
     bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,
