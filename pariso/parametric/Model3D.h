@@ -88,16 +88,18 @@ public :
     uint Nb_paramfunctions, Nb_functs, Nb_constants;
     uint Nb_rgbts, Nb_vrgbts, Nb_newvariables;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
-        Varu, Const,  Funct, Rgbt, Grid;
+        Varu, Const,  Funct, Rgbt, VRgbt, Grid;
     int Nb_Sliders, ParConditionRequired, expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
         VaruSize, ConstSize,  FunctSize, RgbtSize, VRgbtSize, GridSize;
     std::string *VarName, *Varus,
         *Consts, *ConstNames,
         *Functs, *FunctNames,
-        *Rgbts, *RgbtNames,
-        VRgbt, *VRgbts, *VRgbtNames,
+        /**Rgbts, *RgbtNames,
+        *VRgbts, *VRgbtNames,*/
         Gradient, Noise, NoiseShape, *SliderNames;
+
+    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames;
     double *ConstValues, *SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     double Lacunarity, Gain;

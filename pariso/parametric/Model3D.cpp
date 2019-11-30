@@ -112,10 +112,10 @@ ParMasterThread::~ParMasterThread()
     delete[] VarName;
     delete[] Functs;
     delete[] FunctNames;
-    delete[] Rgbts;
-    delete[] RgbtNames;
-    delete[] VRgbts;
-    delete[] VRgbtNames;
+    Rgbts.clear();
+    RgbtNames.clear();
+    VRgbts.clear();
+    VRgbtNames.clear();
     delete[] ParamStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
@@ -138,10 +138,6 @@ ParMasterThread::ParMasterThread()
     ConstNames   = new std::string[NbConstantes];
     Functs       = new std::string[NbDefinedFunctions];
     FunctNames   = new std::string[NbDefinedFunctions];
-    Rgbts        = new std::string[NbTextures];
-    RgbtNames    = new std::string[NbTextures];
-    VRgbts       = new std::string[NbTextures];
-    VRgbtNames   = new std::string[NbTextures];
     SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
     ConstValues  = new double[NbConstantes];
@@ -449,6 +445,10 @@ void ParMasterThread::DeleteMasterParsers()
         delete NoiseShapeParser;
         ParsersAllocated = false;
     }
+    Rgbts.clear();
+    RgbtNames.clear();
+    VRgbts.clear();
+    VRgbtNames.clear();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1032,13 +1032,13 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             }
             else if(type == 3)
             {
-                RgbtNames[Nb_variables] = tmp2.substr(0,jpos);
-                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                RgbtNames.push_back(tmp2.substr(0,jpos));
+                Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
-                VRgbtNames[Nb_variables] = tmp2.substr(0,jpos);
-                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                VRgbtNames.push_back(tmp2.substr(0,jpos));
+                VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
             NewVariables = tmp2;
@@ -1065,13 +1065,13 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             }
             else if(type == 3)
             {
-                RgbtNames[Nb_variables] = tmp2.substr(0, jpos);
-                Rgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                RgbtNames.push_back(tmp2.substr(0, jpos));
+                Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
-                VRgbtNames[Nb_variables] = tmp2.substr(0, jpos);
-                VRgbts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                VRgbtNames.push_back(tmp2.substr(0, jpos));
+                VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             NewVariables = "";
             Nb_variables++;
