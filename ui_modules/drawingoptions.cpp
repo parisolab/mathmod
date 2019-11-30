@@ -924,18 +924,19 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj, const ModelType & opt)
     noise1.replace("\n","");
     noise1.replace("\t","");
     noise1.replace(" ","");
-
     QString result;
     ObjArrayToString(lst, result);
     if(opt == ISO_TYPE)
     {
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->RgbtSize = uint(lst.size());
     }
     else if(opt == PAR_TYPE)
     {
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->RgbtSize = uint(lst.size());
     }
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
     MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);

@@ -514,7 +514,7 @@ void ParMasterThread::InitMasterParsers()
         RgbtParser[i].AddConstant("pi", PI);
     }
 
-    for(int i=0; i<VRgbtSize; i++)
+    for(uint i=0; i<VRgbtSize; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
     }
@@ -593,9 +593,9 @@ ErrorMessage  ParMasterThread::parse_expression()
     //Colors
     if(rgbtnotnull)
     {
-        Nb_rgbts = HowManyVariables(Rgbt, 3);
+        RgbtSize = HowManyVariables(Rgbt, 3);
 
-        for(uint i=0; i<Nb_rgbts; i++)
+        for(uint i=0; i<RgbtSize; i++)
         {
             for(uint j=0; j<Nb_constants; j++)
             {
@@ -605,20 +605,20 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     else
     {
-        Nb_rgbts =0;
+        RgbtSize =0;
     }
 
 
     //Texture:
     if(vrgbtnotnull)
     {
-        Nb_vrgbts = HowManyVariables(VRgbt, 4);
+        VRgbtSize = HowManyVariables(VRgbt, 4);
         for(uint j=0; j<Nb_constants; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
 
-        for(uint i=0; i<Nb_vrgbts; i++)
+        for(uint i=0; i<VRgbtSize; i++)
         {
             for(uint j=0; j<Nb_constants; j++)
             {
@@ -628,7 +628,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     else
     {
-        Nb_vrgbts =0;
+        VRgbtSize =0;
     }
 
     if(varunotnull)
@@ -732,7 +732,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     // Parse
     if(rgbtnotnull)
-        for(uint i=0; i<Nb_rgbts; i++)
+        for(uint i=0; i<RgbtSize; i++)
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,grid,cmpId")) >= 0)
             {
                 stdError.strError = Rgbts[i];
@@ -741,7 +741,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 
 
     // Parse
-    if(vrgbtnotnull && (Nb_vrgbts % 5) ==0)
+    if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
         if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
         {
@@ -749,7 +749,7 @@ ErrorMessage  ParMasterThread::parse_expression()
             return stdError;
         }
 
-        for(uint i=0; i<Nb_vrgbts; i++)
+        for(uint i=0; i<VRgbtSize; i++)
             if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
             {
                 stdError.strError = VRgbts[i];
@@ -1219,7 +1219,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(uint i=0; i<masterthread->Nb_vrgbts && i<100; i++)
+        for(uint i=0; i<masterthread->VRgbtSize && i<100; i++)
         {
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
@@ -1243,7 +1243,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 
             int c= int(tmp);
             tmp = std::abs(tmp - double(c));
-            for (uint j=0; j < masterthread->Nb_vrgbts && j < 100; j+=5)
+            for (uint j=0; j < masterthread->VRgbtSize && j < 100; j+=5)
                 if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin  ] = float(ValCol[j+1]);
@@ -1998,15 +1998,15 @@ void  Par3D::ParamBuild(
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
     // Pigment, Texture and Noise :
-    if(masterthread->vrgbtnotnull && (masterthread->Nb_vrgbts %5)==0 )
+    if(masterthread->vrgbtnotnull && (masterthread->VRgbtSize %5)==0 )
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments
         components->NoiseParam.VRgbtParser = masterthread->VRgbtParser;
         components->NoiseParam.GradientParser = masterthread->GradientParser;
-        components->NoiseParam.Nb_vrgbts = masterthread->Nb_vrgbts;
+        components->NoiseParam.Nb_vrgbts = masterthread->VRgbtSize;
     }
-    else if(masterthread->Nb_rgbts >= 4)
+    else if(masterthread->RgbtSize >= 4)
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 1; //Texture

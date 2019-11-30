@@ -1175,9 +1175,9 @@ ErrorMessage IsoMasterThread::ParserIso()
 
     if(rgbtnotnull)
     {
-        Nb_rgbts = HowManyVariables(Rgbt, 3);
+        RgbtSize = HowManyVariables(Rgbt, 3);
 
-        for(uint i=0; i<Nb_rgbts; i++)
+        for(uint i=0; i<RgbtSize; i++)
         {
             for(uint j=0; j<Nb_constants; j++)
             {
@@ -1193,13 +1193,13 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
     else
     {
-        Nb_rgbts =0;
+        RgbtSize =0;
     }
 
     //For Solid Texture :
     if(vrgbtnotnull)
     {
-        Nb_vrgbts = HowManyVariables(VRgbt, 4);
+        VRgbtSize = HowManyVariables(VRgbt, 4);
         for(uint j=0; j<Nb_constants; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
@@ -1212,7 +1212,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
         GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
 
-        for(uint i=0; i<Nb_vrgbts; i++)
+        for(uint i=0; i<VRgbtSize; i++)
         {
             for(uint j=0; j<Nb_constants; j++)
             {
@@ -1228,7 +1228,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
     else
     {
-        Nb_vrgbts =0;
+        VRgbtSize =0;
     }
 
     if(Noise != "")
@@ -1408,8 +1408,8 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
     vals[3]          = stepMorph;
 
     // Parse
-    if(rgbtnotnull && Nb_rgbts == 4)
-        for(uint i=0; i<Nb_rgbts; i++)
+    if(rgbtnotnull && RgbtSize == 4)
+        for(uint i=0; i<RgbtSize; i++)
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId")) >= 0)
             {
                 stdError.strError = Rgbts[i];
@@ -1417,7 +1417,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             }
 
     // Parse
-    if(vrgbtnotnull && (Nb_vrgbts % 5) ==0)
+    if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
         if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
         {
@@ -1425,7 +1425,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             return stdError;
         }
 
-        for(uint i=0; i<Nb_vrgbts; i++)
+        for(uint i=0; i<VRgbtSize; i++)
             if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
             {
                 stdError.strError = VRgbts[i];
@@ -1622,7 +1622,7 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
 
-    for(uint i=0; i<4; i++)
+    for(uint i=0; i< RgbtSize; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
         RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1633,7 +1633,7 @@ void IsoMasterThread::InitMasterParsers()
         RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
 
-    for(int i=0; i<VRgbtSize; i++)
+    for(uint i=0; i<VRgbtSize; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
         VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1913,16 +1913,16 @@ void Iso3D::IsoBuild (
     }
 
     // Pigment, Texture and Noise :
-    if(masterthread->vrgbtnotnull && (masterthread->Nb_vrgbts %5)==0 )
+    if(masterthread->vrgbtnotnull && (masterthread->VRgbtSize %5)==0 )
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments
         components->NoiseParam.VRgbtParser = masterthread->VRgbtParser;
         components->NoiseParam.GradientParser = masterthread->GradientParser;
         components->NoiseParam.NoiseParser =  masterthread->NoiseParser;
-        components->NoiseParam.Nb_vrgbts = masterthread->Nb_vrgbts;
+        components->NoiseParam.Nb_vrgbts = masterthread->VRgbtSize;
     }
-    else if(masterthread->Nb_rgbts >= 4)
+    else if(masterthread->RgbtSize >= 4)
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 1; //Texture
@@ -1998,12 +1998,12 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
     double tmp,
             *ValCol,
             val[10];
-    ValCol = new double[masterthread->Nb_vrgbts+5];
+    ValCol = new double[masterthread->VRgbtSize+5];
     val[3] = masterthread->stepMorph;
 
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
-        for(uint i=0; i<masterthread->Nb_vrgbts; i++)
+        for(uint i=0; i<masterthread->VRgbtSize; i++)
         {
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
@@ -2027,14 +2027,14 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 
             int c= int(tmp);
             tmp = std::abs(tmp - double(c));
-            for (uint j=0; j < masterthread->Nb_vrgbts; j+=5)
+            for (uint j=0; j < masterthread->VRgbtSize; j+=5)
                 if(tmp <= ValCol[j])
                 {
                     NormVertexTab[i*TypeDrawin  ] = float(ValCol[j+1]);
                     NormVertexTab[i*TypeDrawin+1] = float(ValCol[j+2]);
                     NormVertexTab[i*TypeDrawin+2] = float(ValCol[j+3]);
                     NormVertexTab[i*TypeDrawin+3] = float(ValCol[j+4]);
-                    j = masterthread->Nb_vrgbts;
+                    j = masterthread->VRgbtSize;
                 }
         }
     }

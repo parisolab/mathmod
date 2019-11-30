@@ -103,7 +103,7 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     {
         LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjetThread->IsoObjet->masterthread->VRgbtParser;
         LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjetThread->IsoObjet->masterthread->GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjetThread->IsoObjet->masterthread->Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjetThread->IsoObjet->masterthread->VRgbtSize;
         LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjetThread->IsoObjet->masterthread->NoiseParser;
         IsoObjetThread->IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }
@@ -111,7 +111,7 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     {
         LocalScene.componentsinfos.NoiseParam.VRgbtParser = ParObjetThread->ParObjet->masterthread->VRgbtParser;
         LocalScene.componentsinfos.NoiseParam.GradientParser = ParObjetThread->ParObjet->masterthread->GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjetThread->ParObjet->masterthread->Nb_vrgbts;
+        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjetThread->ParObjet->masterthread->VRgbtSize;
         LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjetThread->ParObjet->masterthread->NoiseParser;
         ParObjetThread->ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
     }

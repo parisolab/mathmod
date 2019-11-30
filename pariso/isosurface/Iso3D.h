@@ -103,8 +103,8 @@ public :
     bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,
-        ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize, RgbtSize, VRgbtSize;
-    uint Nb_rgbts, Nb_vrgbts, Nb_constants, Nb_implicitfunctions, Nb_functs;
+        ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize;
+    uint RgbtSize, VRgbtSize, Nb_constants, Nb_implicitfunctions, Nb_functs;
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
     uint *grid;
