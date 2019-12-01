@@ -32,7 +32,6 @@
 struct ParamStruct
 {
     QString text;
-    QString Varu;
     QString Const;
     QString Funct;
     QString Cnd;
@@ -60,7 +59,6 @@ struct IsoStruct
     QString text;
     QString comment;
     QString name;
-    QString Varu;
     QString Const;
     QString Funct;
     QString Cnd;
@@ -83,7 +81,6 @@ struct TreeStruct
 {
     QStringList name;
     QStringList Component;
-    QStringList Varu;
     QStringList Const;
     QStringList Funct;
     QStringList Grid;
@@ -91,10 +88,8 @@ struct TreeStruct
     QStringList RGBT;
     QStringList VRGBT;
     QStringList Gradient;
-
-    QString       Noise;
-    QString       text;
-
+    QString     Noise;
+    QString     text;
     QStringList fxyz;
     QStringList xmin;
     QStringList xmax;
@@ -102,7 +97,6 @@ struct TreeStruct
     QStringList ymax;
     QStringList zmin;
     QStringList zmax;
-
     QStringList fx;
     QStringList fy;
     QStringList fz;

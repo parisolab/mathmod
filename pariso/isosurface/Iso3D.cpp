@@ -44,7 +44,6 @@ uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbComponent = 30;
 uint NbConstantes = 30;
 uint NbDefinedFunctions = 50;
-uint NbVariables = 30;
 int NbSliders = 50;
 int NbSliderValues = 500;
 
@@ -158,19 +157,16 @@ IsoMasterThread::IsoMasterThread()
     Octaves = 4;
     Cstparser.AddConstant("pi", PI);
     Nb_implicitfunctions = 0;
-    ImplicitFunctionSize = ConditionSize = ConstSize = VaruSize = FunctSize = RgbtSize = VRgbtSize = 0;
+    ImplicitFunctionSize = ConditionSize = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::IsoMasterTable()
 {
-    vr2     = new double[3*(NbVariables+1)*NbComponent*NbMaxGrid];
+    vr2     = new double[3*NbComponent*NbMaxGrid];
     xLocal2 = new double[NbComponent*NbMaxGrid];
     yLocal2 = new double[NbComponent*NbMaxGrid];
     zLocal2 = new double[NbComponent*NbMaxGrid];
-
-    Varus        = new std::string[NbVariables];
-    VarName      = new std::string[NbVariables];
     Consts       = new std::string[NbConstantes];
     ConstNames   = new std::string[NbConstantes];
     Functs       = new std::string[NbDefinedFunctions];
@@ -214,8 +210,6 @@ IsoMasterThread::~IsoMasterThread()
     delete[] SliderNames;
     delete[] SliderValues;
     delete[] ConstValues;
-    delete[] Varus;
-    delete[] VarName;
     delete[] Consts;
     delete[] ConstNames;
     delete[] Functs;
@@ -261,7 +255,7 @@ IsoWorkerThread::IsoWorkerThread()
 //+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::IsoWorkerTable()
 {
-    vr2     = new double[3*(NbVariables+1)*NbComponent*NbMaxGrid];
+    vr2     = new double[3*NbComponent*NbMaxGrid];
     xLocal2 = new double[NbComponent*NbMaxGrid];
     yLocal2 = new double[NbComponent*NbMaxGrid];
     zLocal2 = new double[NbComponent*NbMaxGrid];
@@ -275,7 +269,6 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].Xgrid = masterthread->Xgrid;
         WorkerThreadsTmp[nbthreads].Ygrid = masterthread->Ygrid;
         WorkerThreadsTmp[nbthreads].Zgrid = masterthread->Zgrid;
-        WorkerThreadsTmp[nbthreads].VaruSize = masterthread->VaruSize;
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         WorkerThreadsTmp[nbthreads].maximumgrid = NbMaxGrid;
@@ -319,8 +312,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
         memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
         memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*(masterthread->VaruSize+1)*NbComponent*NbMaxGrid)*sizeof(double));
-        workerthreads[nbthreads].VaruSize = masterthread->VaruSize;
+        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*NbComponent*NbMaxGrid)*sizeof(double));
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
         workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
@@ -448,7 +440,6 @@ ErrorMessage  Iso3D::parse_expression2()
 /// +++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
               uint NbCompo,
-              uint NbVariabl,
               uint NbConstant,
               uint NbDefinedFunct,
               int NbSlid,
@@ -464,7 +455,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     OrignbZ=factZ;
     Stack_Factor = factX*factY*factZ;
     NbComponent=NbCompo;
-    NbVariables = NbVariabl;
     NbSliders  = NbSlid;
     NbSliderValues = NbSliderV;
     NbConstantes = NbConstant;
@@ -546,12 +536,7 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             tmp = NewVariables;
             tmp2= tmp3 = (tmp.substr(0,position));
             jpos = tmp2.find("=");
-            if(type == 0)
-            {
-                VarName[Nb_variables] = tmp2.substr(0,jpos);
-                Varus[Nb_variables] = tmp3.substr(jpos+1,position-1);
-            }
-            else if(type == 1)
+            if(type == 1)
             {
                 ConstNames[Nb_variables] = tmp2.substr(0,jpos);
                 Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
@@ -579,12 +564,7 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
         {
             tmp = tmp2 = tmp3 = NewVariables;
             jpos = tmp2.find("=");
-            if(type == 0)
-            {
-                VarName[Nb_variables] = tmp2.substr(0, jpos);
-                Varus[Nb_variables] = tmp3.substr(jpos+1,position-1);
-            }
-            else if(type == 1)
+            if(type == 1)
             {
                 ConstNames[Nb_variables] = tmp2.substr(0, jpos);
                 Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
@@ -802,7 +782,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
 void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    double vals2[] = {0,0};
     const uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
 
     vals[3]          = masterthread->stepMorph;
@@ -839,40 +818,6 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
                               masterthread->ImplicitStructs[IsoIndex].xmin   +
                               masterthread->ImplicitStructs[IsoIndex].ymin   +
                               masterthread->ImplicitStructs[IsoIndex].zmin;
-
-
-    for(uint l=0; l<masterthread->VaruSize; l++)
-    {
-        if(stringtoparse.find(masterthread->VarName [l]+"x") !=std::string::npos )
-            for(uint i=0; i<limitX; i++)
-            {
-                vals2[0] = masterthread->xLocal2[IsoIndex*NbMaxGrid+i];
-                vals2[1] = masterthread->stepMorph;
-                masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-                    workerthreads[nbthreads].vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
-            }
-
-        if(stringtoparse.find(masterthread->VarName [l]+"y") !=std::string::npos )
-            for(uint i=0; i<limitY; i++)
-            {
-                vals2[0] = masterthread->yLocal2[IsoIndex*NbMaxGrid+i];
-                vals2[1] = masterthread->stepMorph;
-                masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-                    workerthreads[nbthreads].vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
-            }
-
-        if(stringtoparse.find(masterthread->VarName [l]+"z") !=std::string::npos )
-            for(uint i=0; i<limitZ; i++)
-            {
-                vals2[0] = masterthread->zLocal2[IsoIndex*NbMaxGrid+i];
-                vals2[1] = masterthread->stepMorph;
-                masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->Var[l] .Eval(vals2);
-                for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-                    workerthreads[nbthreads].vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =masterthread->vr2[(l*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i];
-            }
-    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -947,18 +892,12 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 }
                 nbstack = nbX*nbY*nbZ;
                 // X, Y and Z arrays construction:
+
                 for(uint l=0; l<nbstack; l++)
                 {
                     vals[l*34  ]= xLocal2[IsoIndex*NbMaxGrid+Iindice+uint(l*nbX/nbstack)];
                     vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+Jindice+((uint(l/nbZ))%nbY)];
                     vals[l*34+2]= zLocal2[IsoIndex*NbMaxGrid+Kindice+(l%nbZ)];
-
-                    for(uint p=0; p<VaruSize; p++)
-                    {
-                        vals[l*34+4 + p*3] = vr2[(p*3  )*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Iindice +uint(l*nbX/nbstack)];
-                        vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Jindice +((uint(l/nbZ))%nbY)];
-                        vals[l*34+6 + p*3] = vr2[(p*3+2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Kindice +(l%nbZ)];
-                    }
                 }
 
                 IJK = J+Kindice;
@@ -1246,41 +1185,6 @@ ErrorMessage IsoMasterThread::ParserIso()
 
     }
 
-    if(varunotnull)
-    {
-        VaruSize = HowManyVariables(Varu, 0);
-
-        for(uint i=0; i<VaruSize; i++)
-        {
-            for(uint j=0; j<Nb_constants; j++)
-            {
-                Var[i].AddConstant(ConstNames[j], ConstValues[j]);
-            }
-
-
-            //Add predefined constatnts:
-            for(int k=0; k<Nb_Sliders; k++)
-            {
-                Var[i].AddConstant(SliderNames[k], SliderValues[k]);
-            }
-
-        }
-
-        for(uint i=0; i<VaruSize; i++)
-        {
-            if ((stdError.iErrorIndex = Var[i].Parse(Varus[i],"u,tm")) >= 0)
-            {
-                stdError.strError = Varus[i];
-                return stdError;
-            }
-            varliste += ","+VarName[i]+"x,"+VarName[i]+"y,"+VarName[i]+"z";
-        }
-    }
-    else
-    {
-        VaruSize =0;
-    }
-
     //ImplicitFunction is composed of more than one isosurface:
     Nb_implicitfunctions = HowManyIsosurface(ImplicitFunction, 0);
     HowManyIsosurface(XlimitInf, 1);
@@ -1396,10 +1300,9 @@ ErrorMessage IsoMasterThread::ParserIso()
 ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    double vals2[] = {0,0};
     uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
 
-    if(AllComponentTraited /*&& morph_activated != 1*/)
+    if(AllComponentTraited)
     {
         stepMorph += pace;
     }
@@ -1513,34 +1416,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
                                   ImplicitStructs[IsoIndex].xmin   +
                                   ImplicitStructs[IsoIndex].ymin   +
                                   ImplicitStructs[IsoIndex].zmin;
-
-
-        for(uint l=0; l<VaruSize; l++)
-        {
-            if(stringtoparse.find(VarName [l]+"x") !=std::string::npos )
-                for(uint i=0; i<limitX; i++)
-                {
-                    vals2[0] = xLocal2[IsoIndex*NbMaxGrid+i];
-                    vals2[1] = stepMorph;
-                    vr2[(l*3)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =Var[l] .Eval(vals2);
-                }
-
-            if(stringtoparse.find(VarName [l]+"y") !=std::string::npos )
-                for(uint i=0; i<limitY; i++)
-                {
-                    vals2[0] = yLocal2[IsoIndex*NbMaxGrid+i];
-                    vals2[1] = stepMorph;
-                    vr2[(l*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =Var[l] .Eval(vals2);
-                }
-
-            if(stringtoparse.find(VarName [l]+"z") !=std::string::npos )
-                for(uint i=0; i<limitZ; i++)
-                {
-                    vals2[0] = zLocal2[IsoIndex*NbMaxGrid+i];
-                    vals2[1] = stepMorph;
-                    vr2[(l*3 + 2)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + i] =Var[l] .Eval(vals2);
-                }
-        }
     }
     return stdError;
 }
@@ -1602,11 +1477,6 @@ void IsoMasterThread::InitMasterParsers()
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    for(uint i=0; i<VaruSize; i++)
-    {
-        Var[i].AddConstant("pi", PI);
-    }
-
     for(int i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
@@ -1667,7 +1537,6 @@ void IsoMasterThread::AllocateMasterParsers()
         zInfParser = new FunctionParser[ImplicitFunctionSize];
         IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
         Fct = new FunctionParser[FunctSize];
-        Var = new FunctionParser[VaruSize];
 
         RgbtParser = new FunctionParser[4];
         VRgbtParser = new FunctionParser[VRgbtSize];
@@ -1803,7 +1672,7 @@ void Iso3D::IsoBuild (
                     workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
             }
             // Recalculate some tables values:
-            ReinitVarTablesWhenMorphActiv(fctnb);
+            //ReinitVarTablesWhenMorphActiv(fctnb);
         }
 
         masterthread->start();

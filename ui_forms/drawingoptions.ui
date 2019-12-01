@@ -1631,25 +1631,6 @@ p, li { white-space: pre-wrap; }
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="tab_12">
-                          <attribute name="title">
-                           <string>Var</string>
-                          </attribute>
-                          <layout class="QGridLayout" name="gridLayout_45">
-                           <item row="0" column="0">
-                            <widget class="QTableWidget" name="tableWidget_Var">
-                             <attribute name="horizontalHeaderStretchLastSection">
-                              <bool>true</bool>
-                             </attribute>
-                             <column>
-                              <property name="text">
-                               <string>Variable</string>
-                              </property>
-                             </column>
-                            </widget>
-                           </item>
-                          </layout>
-                         </widget>
                         </widget>
                        </item>
                       </layout>
@@ -3135,25 +3116,6 @@ p, li { white-space: pre-wrap; }
                           <column>
                            <property name="text">
                             <string>Constante </string>
-                           </property>
-                          </column>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                      <widget class="QWidget" name="tab_17">
-                       <attribute name="title">
-                        <string>Var</string>
-                       </attribute>
-                       <layout class="QGridLayout" name="gridLayout_49">
-                        <item row="0" column="0">
-                         <widget class="QTableWidget" name="tableWidget_Var_2">
-                          <attribute name="horizontalHeaderStretchLastSection">
-                           <bool>true</bool>
-                          </attribute>
-                          <column>
-                           <property name="text">
-                            <string>Variable</string>
                            </property>
                           </column>
                          </widget>

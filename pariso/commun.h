@@ -119,7 +119,6 @@ enum ScriptErrorType
     GRID_NBCOMPONENT_MISMATCH,
     COMPONENT_NBCOMPONENT_MISMATCH,
     CND_NBCOMPONENT_MISMATCH,
-    NBVARIABLES_OUT_OF_RANGE,
     NBCONSTANTES_OUT_OF_RANGE,
     NBDEFINEDFUNCTIONS_OUT_OF_RANGE,
     NBSLIDERS_OUT_OF_RANGE,
@@ -291,7 +290,6 @@ public:
 };
 
 extern uint NbComponent;
-extern uint NbVariables;
 extern int NbSliders;
 extern int NbSliderValues;
 extern uint NbConstantes;

@@ -4,7 +4,6 @@
         "MaxPt": 1,
         "MaxTri": 2,
         "NbComponent": 200,
-        "NbVariables": 10,
         "NbConstantes": 40,
         "NbDefinedFunctions": 100,
         "NbSliders": 30,

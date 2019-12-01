@@ -391,16 +391,6 @@ void DrawingOptions::AddParametersToTree(QTreeWidgetItem* parameterslistItem)
     QTreeWidgetItem *parameteritem = new QTreeWidgetItem(parameterslistItem);
     parameteritem->setText(0,  "Parameters:");
     int size= 0;
-    if((size = MathmodRef->RootObjet.CurrentTreestruct.Varu.size()) > 0)
-    {
-        QTreeWidgetItem *varitem = new QTreeWidgetItem(parameteritem);
-        varitem->setText(0,  "Variables:");
-        for(int j=0; j<size; j++)
-        {
-            QTreeWidgetItem *varitem2 = new QTreeWidgetItem(varitem);
-            varitem2->setText(0,  MathmodRef->RootObjet.CurrentTreestruct.Varu.at(j));
-        }
-    }
 
     if((size = MathmodRef->RootObjet.CurrentTreestruct.Const.size()) > 0)
     {
@@ -760,12 +750,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         if((QObj["Const"].toArray()).size() > Parameters->NbConstantes)
         {
             scriptErrorType = NBCONSTANTES_OUT_OF_RANGE;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Varu"].toArray()).size() > Parameters->NbVariables)
-        {
-            scriptErrorType = NBVARIABLES_OUT_OF_RANGE;
             ErrorMsg();
             return false;
         }
@@ -1147,7 +1131,6 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.fz=
     MathmodRef->RootObjet.CurrentTreestruct.Cnd=
     MathmodRef->RootObjet.CurrentTreestruct.RGBT=
-    MathmodRef->RootObjet.CurrentTreestruct.Varu=
     MathmodRef->RootObjet.CurrentTreestruct.Const=
     MathmodRef->RootObjet.CurrentTreestruct.Funct=
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT=
@@ -1353,10 +1336,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
            arg = "Cnd";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->cndnotnull=QObj[arg].isArray();
            break;
-        case ISO_VAR :
-           arg = "Varu";
-           argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->varunotnull=QObj[arg].isArray();
-           break;
         case ISO_CONST :
            arg = "Const";
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->constnotnull=QObj[arg].isArray();
@@ -1389,11 +1368,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
             case ISO_CONST :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
-                break;
-            case ISO_VAR :
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Varu = result.toStdString();
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VaruSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
                 break;
         }
     }
@@ -1457,8 +1431,7 @@ void DrawingOptions::BuildAllVect()
         ISO_GRID,
         ISO_CND,
         ISO_CONST,
-        ISO_FUNCT,
-        ISO_VAR
+        ISO_FUNCT
     };
     OptIsoFields=std::vector<OptionnalIsoScriptFIELD>(optiso, optiso + sizeof(optiso) / sizeof(OptionnalIsoScriptFIELD));
 
@@ -2298,24 +2271,12 @@ void DrawingOptions::AddListModels(bool update)
 
         //Add Global parameters:
         if (
-            MathmodRef->pariso.JPar[i].Varu.count() ||
             MathmodRef->pariso.JPar[i].Csts.count() ||
             MathmodRef->pariso.JPar[i].Funct.count()
         )
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
             parameteritem->setText(0,  "Parameters:");
-
-            if(MathmodRef->pariso.JPar[i].Varu.count() > 0)
-            {
-                QTreeWidgetItem *varitem = new QTreeWidgetItem(parameteritem);
-                varitem->setText(0,  "Variables:");
-                for(int j=0; j<MathmodRef->pariso.JPar[i].Varu.count(); j++)
-                {
-                    QTreeWidgetItem *varitem2 = new QTreeWidgetItem(varitem);
-                    varitem2->setText(0,  MathmodRef->pariso.JPar[i].Varu.at(j));
-                }
-            }
 
             if(MathmodRef->pariso.JPar[i].Csts.count() > 0)
             {
@@ -2384,24 +2345,12 @@ void DrawingOptions::AddListModels(bool update)
 
         //Add Global parameters:
         if (
-            MathmodRef->pariso.JIso[i].Varu.count() ||
             MathmodRef->pariso.JIso[i].Csts.count() ||
             MathmodRef->pariso.JIso[i].Funct.count()
         )
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
             parameteritem->setText(0,  "Parameters:");
-
-            if(MathmodRef->pariso.JIso[i].Varu.count() > 0)
-            {
-                QTreeWidgetItem *varitem = new QTreeWidgetItem(parameteritem);
-                varitem->setText(0,  "Variables:");
-                for(int j=0; j<MathmodRef->pariso.JIso[i].Varu.count(); j++)
-                {
-                    QTreeWidgetItem *varitem2 = new QTreeWidgetItem(varitem);
-                    varitem2->setText(0,  MathmodRef->pariso.JIso[i].Varu.at(j));
-                }
-            }
 
             if(MathmodRef->pariso.JIso[i].Csts.count() > 0)
             {
@@ -2643,23 +2592,6 @@ void DrawingOptions::UpdateDescription(int position)
                 ui.tableWidget_Cst_2->clearContents();
                 ui.tableWidget_Cst_2->setRowCount(0);
             }
-
-            //Variables:
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Varu.empty())
-            {
-                ui.tableWidget_Var_2->clearContents();
-                ui.tableWidget_Var_2->setRowCount(0);
-                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Varu.size(); i++)
-                {
-                    ui.tableWidget_Var_2->setRowCount(i+1);
-                    ui.tableWidget_Var_2->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Varu.at(i)));
-                }
-            }
-            else
-            {
-                ui.tableWidget_Var_2->clearContents();
-                ui.tableWidget_Var_2->setRowCount(0);
-            }
         }
         ui.stackedProperties->setCurrentIndex(2);
     }
@@ -2756,29 +2688,10 @@ void DrawingOptions::UpdateDescription(int position)
                 ui.tableWidget_Cst->clearContents();
                 ui.tableWidget_Cst->setRowCount(0);
             }
-
-            //Variables:
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Varu.empty())
-            {
-                ui.tableWidget_Var->clearContents();
-                ui.tableWidget_Var->setRowCount(0);
-                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Varu.size(); i++)
-                {
-                    ui.tableWidget_Var->setRowCount(i+1);
-                    ui.tableWidget_Var->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Varu.at(i)));
-                }
-            }
-            else
-            {
-                ui.tableWidget_Var->clearContents();
-                ui.tableWidget_Var->setRowCount(0);
-            }
         }
 
         ui.stackedProperties->setCurrentIndex(1);
     }
-
-    //MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
@@ -2952,23 +2865,6 @@ void DrawingOptions::on_updateButton_clicked()
                     copyCurrentObject2.remove("Cnd");
 
                 /************************************************************************************************/
-                //Variables:
-                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for(int i=0; i< ui.tableWidget_Var->rowCount(); i++)
-                    {
-                        if( (ui.tableWidget_Var->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Var->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Varu"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Varu");
-
-
                 //Functions:
                 if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct->rowCount() > 0)
                 {
@@ -3067,24 +2963,6 @@ void DrawingOptions::on_updateButton_clicked()
                 }
                 else
                     copyCurrentObject2.remove("Grid");
-
-
-                //Variables:
-                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for(int i=0; i< ui.tableWidget_Var->rowCount(); i++)
-                    {
-                        if( (ui.tableWidget_Var->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Var->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Varu"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Varu");
-
 
                 //Functions:
                 if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct->rowCount() > 0)
@@ -3249,23 +3127,6 @@ void DrawingOptions::on_updateButton_clicked()
                 }
 
                 /************************************************************************************************/
-                //Variables:
-                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for(int i=0; i< ui.tableWidget_Var->rowCount(); i++)
-                    {
-                        if( (ui.tableWidget_Var->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Var->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Varu"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Varu");
-
-
                 //Functions:
                 if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct->rowCount() > 0)
                 {
@@ -3371,22 +3232,6 @@ void DrawingOptions::on_updateButton_clicked()
                     copyCurrentObject2.remove("Cnd");
 
                 /************************************************************************************************/
-                //Variables:
-                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var_2->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for(int i=0; i< ui.tableWidget_Var_2->rowCount(); i++)
-                    {
-                        if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Varu"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Varu");
-
                 //Functions:
                 if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct_2->rowCount() > 0)
                 {
@@ -3486,23 +3331,6 @@ void DrawingOptions::on_updateButton_clicked()
                     copyCurrentObject2.remove("Cnd");
 
                 /************************************************************************************************/
-                //Variables:
-                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var_2->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for(int i=0; i< ui.tableWidget_Var_2->rowCount(); i++)
-                    {
-                        if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Varu"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Varu");
-
-
                 //Functions:
                 if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct_2->rowCount() > 0)
                 {
@@ -3603,8 +3431,6 @@ void DrawingOptions::on_updateButton_clicked()
                     }
                     else
                         copyCurrentObject2.remove("Cnd");
-
-                    //copyCurrentObject["Param3D"] = copyCurrentObject2;
                 }
                 else
                 {
@@ -3673,23 +3499,6 @@ void DrawingOptions::on_updateButton_clicked()
                 }
 
                 /************************************************************************************************/
-                //Variables:
-                if(copyCurrentObject2["Varu"].isArray() && ui.tableWidget_Var_2->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for(int i=0; i< ui.tableWidget_Var_2->rowCount(); i++)
-                    {
-                        if( (ui.tableWidget_Var_2->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Var_2->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Varu"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Varu");
-
-
                 //Functions:
                 if(copyCurrentObject2["Funct"].isArray() && ui.tableWidget_Fct_2->rowCount() > 0)
                 {

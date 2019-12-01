@@ -56,7 +56,7 @@ public :
     uint iStart, iFinish;
     bool AllComponentTraited;
     int morph_activated;
-    uint maximumgrid, VaruSize, MyIndex, WorkerThreadsNumber;
+    uint maximumgrid, MyIndex, WorkerThreadsNumber;
     double stepMorph, pace;
     uint CurrentIso;
     double *xLocal2, *yLocal2, *zLocal2;
@@ -94,13 +94,12 @@ public :
         ZlimitSup, ZlimitInf, Grid,
         Const, *Consts, *ConstNames,
         *SliderNames,
-        Varu, *Varus, *VarName,
         Funct,*Functs, *FunctNames,
         Rgbt,
         VRgbt,
         Gradient, Noise, varliste;
     std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames;
-    bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull,
+    bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,
         ImplicitFunctionSize, ConditionSize, ConstSize, FunctSize;
@@ -144,7 +143,6 @@ public :
     Iso3D(uint, uint,
           uint gridmax=NbMaxGrid,
           uint NbCmp=NbComponent,
-          uint NbVar=NbVariables,
           uint NbCst=NbConstantes,
           uint NbdeFct=NbDefinedFunctions,
           int nbSlid=NbSliders,

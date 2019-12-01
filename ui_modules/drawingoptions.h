@@ -52,8 +52,7 @@ enum OptionnalIsoScriptFIELD
     ISO_GRID,
     ISO_CND,
     ISO_CONST,
-    ISO_FUNCT,
-    ISO_VAR
+    ISO_FUNCT
 };
 
 enum MandatoryIsoField

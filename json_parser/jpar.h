@@ -47,9 +47,6 @@ public:
     QStringList comment() const;
     void setComment(const QStringList &);
 
-    QStringList varu() const;
-    void setVaru(const QStringList &);
-
     QStringList csts() const;
     void setConst(const QStringList &);
 
@@ -93,7 +90,6 @@ public:
     QStringList Text;
     QStringList Comment;
     QStringList Name;
-    QStringList Varu;
     QStringList Csts;
     QStringList Funct;
     QStringList Grid;

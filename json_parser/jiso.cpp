@@ -48,16 +48,6 @@ void jiso::setComment(const QStringList &cmt)
     Comment = cmt;
 }
 
-QStringList jiso::varu() const
-{
-    return Varu;
-}
-
-void jiso::setVaru(const QStringList &var)
-{
-    Varu = var;
-}
-
 QStringList jiso::csts() const
 {
     return Csts;
@@ -200,12 +190,6 @@ void jiso::read(const QJsonObject & jason)
         array = jason["Name"].toArray();
         for (int i=0; i< array.size(); i++)
             Name.append(array[i].toString());
-    }
-    if(jason["Varu"].isArray())
-    {
-        array = jason["Varu"].toArray();
-        for (int i=0; i< array.size(); i++)
-            Varu.append(array[i].toString());
     }
     if(jason["Csts"].isArray())
     {

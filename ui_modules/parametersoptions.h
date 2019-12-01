@@ -68,7 +68,6 @@ public:
     int NbComponent,
         NbConstantes,
         NbDefinedFunctions,
-        NbVariables,
         InitParGrid,
         InitIsoGrid;
 
