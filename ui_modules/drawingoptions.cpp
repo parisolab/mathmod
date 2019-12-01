@@ -1409,10 +1409,6 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
            arg = "Grid";
            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->gridnotnull=QObj[arg].isArray();
            break;
-        case PAR_VAR :
-           arg = "Varu";
-           argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->varunotnull=QObj[arg].isArray();
-           break;
         case PAR_CONST :
            arg = "Const";
            argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->constnotnull=QObj[arg].isArray();
@@ -1446,11 +1442,6 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
                 break;
-            case PAR_VAR :
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Varu = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VaruSize = lst.size();
-                MathmodRef->RootObjet.CurrentTreestruct.Varu = result.split(";", QString::SkipEmptyParts);
-                break;
             case PAR_FUNCT :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
@@ -1475,8 +1466,7 @@ void DrawingOptions::BuildAllVect()
         PAR_GRID,
         PAR_CND,
         PAR_CONST,
-        PAR_FUNCT,
-        PAR_VAR
+        PAR_FUNCT
     };
     OptParFields=std::vector<OptionnalParScriptFIELD>(optpar, optpar + sizeof(optpar) / sizeof(OptionnalParScriptFIELD));
 

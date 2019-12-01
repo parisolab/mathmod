@@ -44,8 +44,7 @@ enum OptionnalParScriptFIELD
     PAR_GRID,
     PAR_CND,
     PAR_CONST,
-    PAR_FUNCT,
-    PAR_VAR
+    PAR_FUNCT
 };
 
 enum OptionnalIsoScriptFIELD

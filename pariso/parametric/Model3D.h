@@ -80,20 +80,19 @@ public :
     FunctionParser *myParserCND,
                    *myParserUmin,*myParserUmax,
                    *myParserVmin,*myParserVmax,
-                   *Var, Cstparser;
+                   Cstparser;
     ParStruct *ParamStructs;
     bool*UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     uint *grid;
     uint Nb_paramfunctions, Nb_functs, Nb_constants;
-    uint RgbtSize, VRgbtSize, Nb_newvariables;
+    uint RgbtSize, VRgbtSize;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
-        Varu, Const,  Funct, Rgbt, VRgbt, Grid;
+        Const,  Funct, Rgbt, VRgbt, Grid;
     int Nb_Sliders, ParConditionRequired, expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
-        VaruSize, ConstSize,  FunctSize, GridSize;
-    std::string *VarName, *Varus,
-        *Consts, *ConstNames,
+        ConstSize,  FunctSize, GridSize;
+    std::string *Consts, *ConstNames,
         *Functs, *FunctNames,
         Gradient, Noise, NoiseShape, *SliderNames;
 

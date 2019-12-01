@@ -108,8 +108,6 @@ ParMasterThread::~ParMasterThread()
     delete[] ConstValues;
     delete[] Consts;
     delete[] ConstNames;
-    delete[] Varus;
-    delete[] VarName;
     delete[] Functs;
     delete[] FunctNames;
     Rgbts.clear();
@@ -131,9 +129,6 @@ ParMasterThread::ParMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Lacunarity = 0.5;
-
-    Varus        = new std::string[NbVariables];
-    VarName      = new std::string[NbVariables];
     Consts       = new std::string[NbConstantes];
     ConstNames   = new std::string[NbConstantes];
     Functs       = new std::string[NbDefinedFunctions];
@@ -398,7 +393,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         myParserVmax = new FunctionParser[expression_XSize];
         myParserCND  = new FunctionParser[expression_XSize];
         Fct          = new FunctionParser[FunctSize];
-        Var          = new FunctionParser[VaruSize];
         RgbtParser       = new FunctionParser[4];
         VRgbtParser      = new FunctionParser[VRgbtSize];
         GradientParser   = new FunctionParser;
@@ -435,7 +429,6 @@ void ParMasterThread::DeleteMasterParsers()
         delete[] myParserVmin;
         delete[] myParserUmax;
         delete[] myParserVmax;
-        delete[] Var;
         delete[] myParserCND;
         delete[] Fct;
         delete[] RgbtParser;
@@ -629,40 +622,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     else
     {
         VRgbtSize =0;
-    }
-
-    if(varunotnull)
-    {
-        Nb_newvariables = HowManyVariables(Varu, 0);
-
-        for(uint i=0; i<Nb_newvariables; i++)
-        {
-            for(uint j=0; j<Nb_constants; j++)
-            {
-                Var[i].AddConstant(ConstNames[j], ConstValues[j]);
-                Var[i].AddConstant("pi", PI);
-            }
-
-            //Add predefined constatnts:
-            for(int k=0; k<Nb_Sliders; k++)
-            {
-                Var[i].AddConstant(SliderNames[k], SliderValues[k]);
-            }
-        }
-
-        for(uint i=0; i<Nb_newvariables; i++)
-        {
-            if ((stdError.iErrorIndex =Var[i].Parse(Varus[i],"u,tm")) >= 0)
-            {
-                stdError.strError = Varus[i];
-                return stdError;
-            }
-            varliste += ","+VarName[i]+"x,"+VarName[i]+"y,"+VarName[i]+"z";
-        }
-    }
-    else
-    {
-        Nb_newvariables =0;
     }
 
     Nb_paramfunctions = HowManyParamSurface(expression_X, 0);
@@ -1018,12 +977,7 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             tmp = NewVariables;
             tmp2= tmp3 = (tmp.substr(0,position));
             jpos = tmp2.find("=");
-            if(type == 0)
-            {
-                VarName[Nb_variables] = tmp2.substr(0,jpos);
-                Varus[Nb_variables] = tmp3.substr(jpos+1,position-1);
-            }
-            else if(type == 1)
+            if(type == 1)
             {
                 ConstNames[Nb_variables] = tmp2.substr(0,jpos);
                 Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
@@ -1051,12 +1005,7 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
         {
             tmp = tmp2 = tmp3 = NewVariables;
             jpos = tmp2.find("=");
-            if(type == 0)
-            {
-                VarName[Nb_variables] = tmp2.substr(0, jpos);
-                Varus[Nb_variables] = tmp3.substr(jpos+1,position-1);
-            }
-            else if(type == 1)
+            if(type == 1)
             {
                 ConstNames[Nb_variables] = tmp2.substr(0, jpos);
                 Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
