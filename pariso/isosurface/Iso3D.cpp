@@ -275,7 +275,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].Xgrid = masterthread->Xgrid;
         WorkerThreadsTmp[nbthreads].Ygrid = masterthread->Ygrid;
         WorkerThreadsTmp[nbthreads].Zgrid = masterthread->Zgrid;
-        WorkerThreadsTmp[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
+        WorkerThreadsTmp[nbthreads].VaruSize = masterthread->VaruSize;
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         WorkerThreadsTmp[nbthreads].maximumgrid = NbMaxGrid;
@@ -316,12 +316,11 @@ ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-
         memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
         memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
         memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*(masterthread->Nb_newvariables)*NbComponent*NbMaxGrid)*sizeof(double));
-        workerthreads[nbthreads].Nb_newvariables = masterthread->Nb_newvariables;
+        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*(masterthread->VaruSize+1)*NbComponent*NbMaxGrid)*sizeof(double));
+        workerthreads[nbthreads].VaruSize = masterthread->VaruSize;
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
         workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
@@ -842,7 +841,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
                               masterthread->ImplicitStructs[IsoIndex].zmin;
 
 
-    for(uint l=0; l<masterthread->Nb_newvariables; l++)
+    for(uint l=0; l<masterthread->VaruSize; l++)
     {
         if(stringtoparse.find(masterthread->VarName [l]+"x") !=std::string::npos )
             for(uint i=0; i<limitX; i++)
@@ -954,7 +953,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+Jindice+((uint(l/nbZ))%nbY)];
                     vals[l*34+2]= zLocal2[IsoIndex*NbMaxGrid+Kindice+(l%nbZ)];
 
-                    for(uint p=0; p<Nb_newvariables; p++)
+                    for(uint p=0; p<VaruSize; p++)
                     {
                         vals[l*34+4 + p*3] = vr2[(p*3  )*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Iindice +uint(l*nbX/nbstack)];
                         vals[l*34+5 + p*3] = vr2[(p*3+1)*NbComponent*NbMaxGrid + IsoIndex*NbMaxGrid + Jindice +((uint(l/nbZ))%nbY)];
@@ -1249,9 +1248,9 @@ ErrorMessage IsoMasterThread::ParserIso()
 
     if(varunotnull)
     {
-        Nb_newvariables = HowManyVariables(Varu, 0);
+        VaruSize = HowManyVariables(Varu, 0);
 
-        for(uint i=0; i<Nb_newvariables; i++)
+        for(uint i=0; i<VaruSize; i++)
         {
             for(uint j=0; j<Nb_constants; j++)
             {
@@ -1267,7 +1266,7 @@ ErrorMessage IsoMasterThread::ParserIso()
 
         }
 
-        for(uint i=0; i<Nb_newvariables; i++)
+        for(uint i=0; i<VaruSize; i++)
         {
             if ((stdError.iErrorIndex = Var[i].Parse(Varus[i],"u,tm")) >= 0)
             {
@@ -1279,7 +1278,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
     else
     {
-        Nb_newvariables =0;
+        VaruSize =0;
     }
 
     //ImplicitFunction is composed of more than one isosurface:
@@ -1516,7 +1515,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
                                   ImplicitStructs[IsoIndex].zmin;
 
 
-        for(uint l=0; l<Nb_newvariables; l++)
+        for(uint l=0; l<VaruSize; l++)
         {
             if(stringtoparse.find(VarName [l]+"x") !=std::string::npos )
                 for(uint i=0; i<limitX; i++)
@@ -1603,7 +1602,7 @@ void IsoMasterThread::InitMasterParsers()
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    for(int i=0; i<VaruSize; i++)
+    for(uint i=0; i<VaruSize; i++)
     {
         Var[i].AddConstant("pi", PI);
     }

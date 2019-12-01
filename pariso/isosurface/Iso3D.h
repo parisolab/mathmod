@@ -56,7 +56,7 @@ public :
     uint iStart, iFinish;
     bool AllComponentTraited;
     int morph_activated;
-    uint maximumgrid, Nb_newvariables, MyIndex, WorkerThreadsNumber;
+    uint maximumgrid, VaruSize, MyIndex, WorkerThreadsNumber;
     double stepMorph, pace;
     uint CurrentIso;
     double *xLocal2, *yLocal2, *zLocal2;
@@ -103,7 +103,7 @@ public :
     bool *UsedFunct, *UsedFunct2, gridnotnull, varunotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,
-        ImplicitFunctionSize, ConditionSize, ConstSize, VaruSize, FunctSize;
+        ImplicitFunctionSize, ConditionSize, ConstSize, FunctSize;
     uint RgbtSize, VRgbtSize, Nb_constants, Nb_implicitfunctions, Nb_functs;
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
