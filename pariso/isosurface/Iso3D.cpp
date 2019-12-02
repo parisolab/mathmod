@@ -805,19 +805,16 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
         for (uint k= 0; k < limitX; k++)
         {
             workerthreads[nbthreads].xLocal2[IsoIndex*NbMaxGrid+k] = masterthread->xLocal2[IsoIndex*NbMaxGrid+k];
+        }
+        for (uint k= 0; k < limitY; k++)
+        {
             workerthreads[nbthreads].yLocal2[IsoIndex*NbMaxGrid+k] = masterthread->yLocal2[IsoIndex*NbMaxGrid+k];
+        }
+        for (uint k= 0; k < limitZ; k++)
+        {
             workerthreads[nbthreads].zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k];
         }
     }
-
-    std::string stringtoparse=masterthread->ImplicitStructs[IsoIndex].fxyz    +
-                              masterthread->ImplicitStructs[IsoIndex].cnd  +
-                              masterthread->ImplicitStructs[IsoIndex].xmax  +
-                              masterthread->ImplicitStructs[IsoIndex].ymax  +
-                              masterthread->ImplicitStructs[IsoIndex].zmax  +
-                              masterthread->ImplicitStructs[IsoIndex].xmin   +
-                              masterthread->ImplicitStructs[IsoIndex].ymin   +
-                              masterthread->ImplicitStructs[IsoIndex].zmin;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
