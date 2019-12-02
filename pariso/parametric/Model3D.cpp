@@ -108,12 +108,12 @@ ParMasterThread::~ParMasterThread()
     delete[] ConstValues;
     delete[] Consts;
     delete[] ConstNames;
-    delete[] Functs;
-    delete[] FunctNames;
     Rgbts.clear();
     RgbtNames.clear();
     VRgbts.clear();
     VRgbtNames.clear();
+    Functs.clear();
+    FunctNames.clear();
     delete[] ParamStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
@@ -131,8 +131,6 @@ ParMasterThread::ParMasterThread()
     Lacunarity = 0.5;
     Consts       = new std::string[NbConstantes];
     ConstNames   = new std::string[NbConstantes];
-    Functs       = new std::string[NbDefinedFunctions];
-    FunctNames   = new std::string[NbDefinedFunctions];
     SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
     ConstValues  = new double[NbConstantes];
@@ -454,6 +452,8 @@ void ParMasterThread::DeleteMasterParsers()
     RgbtNames.clear();
     VRgbts.clear();
     VRgbtNames.clear();
+    Functs.clear();
+    FunctNames.clear();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -997,8 +997,8 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             }
             else if(type == 2)
             {
-                FunctNames[Nb_variables] = tmp2.substr(0,jpos);
-                Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                FunctNames.push_back(tmp2.substr(0,jpos));
+                Functs.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 3)
             {

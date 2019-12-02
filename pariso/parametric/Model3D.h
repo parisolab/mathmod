@@ -93,10 +93,11 @@ public :
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
         ConstSize, GridSize;
     std::string *Consts, *ConstNames,
-        *Functs, *FunctNames,
         Gradient, Noise, NoiseShape, *SliderNames;
 
-    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames;
+    std::vector<std::string> Rgbts, RgbtNames,
+                             VRgbts, VRgbtNames,
+                             Functs, FunctNames;
     double *ConstValues, *SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     double Lacunarity, Gain;
@@ -121,8 +122,6 @@ public:
     ObjectProperties *LocalScene;
     ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
-    //unsigned int *IndexPolyTab;
-    //unsigned int *IndexPolyTabMin;
     float *Border;
     bool *WichPointVerifyCond, StopCalculations;
     int *TypeIsoSurfaceTriangleListeCND;
