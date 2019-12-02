@@ -213,10 +213,6 @@ IsoMasterThread::~IsoMasterThread()
     delete[] ConstNames;
     delete[] Functs;
     delete[] FunctNames;
-    Rgbts.clear();
-    RgbtNames.clear();
-    VRgbts.clear();
-    VRgbtNames.clear();
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
@@ -224,6 +220,11 @@ IsoMasterThread::~IsoMasterThread()
     delete[] ImplicitStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
+
+    Rgbts.clear();
+    RgbtNames.clear();
+    VRgbts.clear();
+    VRgbtNames.clear();
 }
 
 IsoWorkerThread::~IsoWorkerThread()

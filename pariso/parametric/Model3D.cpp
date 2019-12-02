@@ -526,7 +526,7 @@ void ParMasterThread::InitMasterParsers()
             VRgbtParser[i].AddConstant("pi", PI);
         }
 
-        for(int i=0; i<FunctSize; i++)
+        for(uint i=0; i<FunctSize; i++)
         {
             Fct[i].AddConstant("pi", PI);
             Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
@@ -562,9 +562,9 @@ ErrorMessage  ParMasterThread::parse_expression()
 
     if(functnotnull)
     {
-        Nb_functs = HowManyVariables(Funct, 2);
+        FunctSize = HowManyVariables(Funct, 2);
 
-        for(uint i=0; i<Nb_functs; i++)
+        for(uint i=0; i<FunctSize; i++)
         {
             for(uint j=0; j<Nb_constants; j++)
             {
@@ -579,7 +579,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
 
 
-        for(uint i=0; i<Nb_functs; i++)
+        for(uint i=0; i<FunctSize; i++)
         {
             for(uint j=0; j<i; j++)
                 if( (UsedFunct2[i*NbDefinedFunctions+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
@@ -594,7 +594,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     else
     {
-        Nb_functs =0;
+        FunctSize =0;
     }
 
     //Colors
@@ -691,7 +691,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     // Add defined functions :
     for(uint i=0; i<Nb_paramfunctions+1; i++)
     {
-        for(uint j=0; j<Nb_functs; j++)
+        for(uint j=0; j<FunctSize; j++)
         {
             if((UsedFunct[i*4*NbDefinedFunctions+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
                 myParserX[i].AddFunction(FunctNames[j], Fct[j]);
@@ -817,13 +817,13 @@ ErrorMessage  Par3D::parse_expression2()
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         //Functions:
-        for(uint ij=0; ij<masterthread->Nb_functs; ij++)
+        for(uint ij=0; ij<masterthread->FunctSize; ij++)
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
         }
 
-        for(uint ii=0; ii<masterthread->Nb_functs; ii++)
+        for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             for(uint jj=0; jj<masterthread->Nb_constants; jj++)
             {
@@ -837,7 +837,7 @@ ErrorMessage  Par3D::parse_expression2()
             }
         }
 
-        for(uint ii=0; ii<masterthread->Nb_functs; ii++)
+        for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
@@ -894,7 +894,7 @@ ErrorMessage  Par3D::parse_expression2()
         // Add defined functions :
         for(uint i=0; i<masterthread->Nb_paramfunctions+1; i++)
         {
-            for(uint j=0; j<masterthread->Nb_functs; j++)
+            for(uint j=0; j<masterthread->FunctSize; j++)
             {
                 if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j])
                     workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
@@ -972,7 +972,7 @@ ErrorMessage Par3D::ThreadParsersCopy()
         workerthreads[nbthreads].DeleteWorkerParsers();
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1, masterthread->Nb_functs);
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1, masterthread->FunctSize);
 
     return(parse_expression2());
 }
