@@ -1681,7 +1681,7 @@ void Iso3D::IsoBuild (
                     workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
             }
             // Recalculate some tables values:
-            //ReinitVarTablesWhenMorphActiv(fctnb);
+            ReinitVarTablesWhenMorphActiv(fctnb);
         }
 
         masterthread->start();
