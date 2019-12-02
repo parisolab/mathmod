@@ -93,11 +93,11 @@ public :
         ZlimitSup, ZlimitInf, Grid,
         Const, *Consts, *ConstNames,
         *SliderNames,
-        Funct,*Functs, *FunctNames,
+        Funct,
         Rgbt,
         VRgbt,
         Gradient, Noise, varliste;
-    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames;
+    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames,Functs, FunctNames;
     bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,

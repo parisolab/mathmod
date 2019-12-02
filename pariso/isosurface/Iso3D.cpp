@@ -169,8 +169,6 @@ void IsoMasterThread::IsoMasterTable()
     zLocal2 = new double[NbComponent*NbMaxGrid];
     Consts       = new std::string[NbConstantes];
     ConstNames   = new std::string[NbConstantes];
-    Functs       = new std::string[NbDefinedFunctions];
-    FunctNames   = new std::string[NbDefinedFunctions];
     x_Step       = new double[NbComponent];
     y_Step       = new double[NbComponent];
     z_Step       = new double[NbComponent];
@@ -211,8 +209,6 @@ IsoMasterThread::~IsoMasterThread()
     delete[] ConstValues;
     delete[] Consts;
     delete[] ConstNames;
-    delete[] Functs;
-    delete[] FunctNames;
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
@@ -225,6 +221,8 @@ IsoMasterThread::~IsoMasterThread()
     RgbtNames.clear();
     VRgbts.clear();
     VRgbtNames.clear();
+    Functs.clear();
+    FunctNames.clear();
 }
 
 IsoWorkerThread::~IsoWorkerThread()
@@ -543,8 +541,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 2)
             {
-                FunctNames[Nb_variables] = tmp2.substr(0,jpos);
-                Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                FunctNames.push_back(tmp2.substr(0,jpos));
+                Functs.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 3)
             {
@@ -571,8 +569,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 2)
             {
-                FunctNames[Nb_variables] = tmp2.substr(0, jpos);
-                Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                FunctNames.push_back(tmp2.substr(0, jpos));
+                Functs.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 3)
             {
@@ -1441,6 +1439,8 @@ void IsoMasterThread::DeleteMasterParsers()
     RgbtNames.clear();
     VRgbts.clear();
     VRgbtNames.clear();
+    Functs.clear();
+    FunctNames.clear();
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
