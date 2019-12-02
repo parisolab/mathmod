@@ -1025,8 +1025,8 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             }
             else if(type == 2)
             {
-                FunctNames[Nb_variables] = tmp2.substr(0, jpos);
-                Functs[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                FunctNames.push_back(tmp2.substr(0, jpos));
+                Functs.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 3)
             {
