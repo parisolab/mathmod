@@ -199,7 +199,6 @@ IsoMasterThread::~IsoMasterThread()
         delete[] yInfParser;
         delete[] zInfParser;
         delete[] Fct;
-        delete[] Var;
         delete[] IsoConditionParser;
         delete[] VRgbtParser;
         delete[] RgbtParser;
@@ -1433,7 +1432,6 @@ void IsoMasterThread::DeleteMasterParsers()
         delete[] yInfParser;
         delete[] zInfParser;
         delete[] Fct;
-        delete[] Var;
         delete[] IsoConditionParser;
         delete[] VRgbtParser;
         delete[] RgbtParser;
@@ -1527,7 +1525,6 @@ void IsoMasterThread::AllocateMasterParsers()
 {
     if(!ParsersAllocated)
     {
-        NoiseParser = new FunctionParser;
         implicitFunctionParser = new FunctionParser[ImplicitFunctionSize];
         xSupParser = new FunctionParser[ImplicitFunctionSize];
         ySupParser = new FunctionParser[ImplicitFunctionSize];
@@ -1536,11 +1533,22 @@ void IsoMasterThread::AllocateMasterParsers()
         yInfParser = new FunctionParser[ImplicitFunctionSize];
         zInfParser = new FunctionParser[ImplicitFunctionSize];
         IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
-        Fct = new FunctionParser[FunctSize];
 
-        RgbtParser = new FunctionParser[4];
-        VRgbtParser = new FunctionParser[VRgbtSize];
+        functnotnull ?
+            Fct = new FunctionParser[FunctSize] :
+            Fct = new FunctionParser[(FunctSize = 0)];
+
+        rgbtnotnull ?
+            RgbtParser = new FunctionParser[(RgbtSize = 4)] :
+            RgbtParser = new FunctionParser[(RgbtSize = 0)];
+
+
+        vrgbtnotnull ?
+            VRgbtParser = new FunctionParser[VRgbtSize] :
+            VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
+
         GradientParser = new FunctionParser;
+        NoiseParser = new FunctionParser;
         ParsersAllocated = true;
     }
 }
@@ -1781,7 +1789,7 @@ void Iso3D::IsoBuild (
     }
 
     // Pigment, Texture and Noise :
-    if(masterthread->vrgbtnotnull && (masterthread->VRgbtSize %5)==0 )
+    if(masterthread->vrgbtnotnull)
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments

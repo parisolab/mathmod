@@ -916,7 +916,7 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj, const ModelType & opt)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise1.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->RgbtSize = uint(lst.size());
     }
-    else if(opt == PAR_TYPE)
+    else if(opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Noise = noise1.toStdString();
@@ -964,13 +964,14 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj, const ModelType & opt)
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Noise = noise.toStdString();
         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
-    else if(opt == PAR_TYPE)
+    else if(opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Noise = noise.toStdString();
         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
+
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
 }
@@ -1481,7 +1482,9 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     QJsonObject QTextureObj, QPigmentObj;
     bool loadtext, loadpigm;
 
+    QMessageBox msgBox;
     updateCurrentTreestruct();
+
     for(int i=0; i< array.size(); i++)
     {
         if((QObj1=array[i].toObject())["Iso3D"].isObject()  &&
@@ -1570,6 +1573,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
             MathmodRef->RootObjet.CurrentJsonObject = array[i].toObject();
             CurrentFormulaType = 3;
+
             /// process the new surface
             MathmodRef->ParametricSurfaceProcess(3);
             return(3);

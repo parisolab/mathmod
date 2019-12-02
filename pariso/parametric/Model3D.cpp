@@ -392,9 +392,20 @@ void ParMasterThread::AllocateParsersForMasterThread()
         myParserUmax = new FunctionParser[expression_XSize];
         myParserVmax = new FunctionParser[expression_XSize];
         myParserCND  = new FunctionParser[expression_XSize];
-        Fct          = new FunctionParser[FunctSize];
-        RgbtParser       = new FunctionParser[4];
-        VRgbtParser      = new FunctionParser[VRgbtSize];
+
+        functnotnull ?
+            Fct = new FunctionParser[FunctSize] :
+            Fct = new FunctionParser[(FunctSize = 0)];
+
+        rgbtnotnull ?
+            RgbtParser = new FunctionParser[(RgbtSize = 4)] :
+            RgbtParser = new FunctionParser[(RgbtSize = 0)];
+
+
+        vrgbtnotnull ?
+            VRgbtParser = new FunctionParser[VRgbtSize] :
+            VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
+
         GradientParser   = new FunctionParser;
         NoiseParser      = new FunctionParser;
         NoiseShapeParser = new FunctionParser;
@@ -438,6 +449,7 @@ void ParMasterThread::DeleteMasterParsers()
         delete NoiseShapeParser;
         ParsersAllocated = false;
     }
+
     Rgbts.clear();
     RgbtNames.clear();
     VRgbts.clear();
@@ -458,10 +470,12 @@ void ParWorkerThread::DeleteWorkerParsers()
     }
 }
 
+
 //+++++++++++++++++++++++++++++++++++++++++
 void ParMasterThread::InitMasterParsers()
 {
     DeleteMasterParsers();
+
     AllocateParsersForMasterThread();
 
     GradientParser->AddConstant("pi", PI);
@@ -502,21 +516,21 @@ void ParMasterThread::InitMasterParsers()
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
 
-    for(uint i=0; i<4; i++)
-    {
-        RgbtParser[i].AddConstant("pi", PI);
-    }
+        for(uint i=0; i<RgbtSize; i++)
+        {
+            RgbtParser[i].AddConstant("pi", PI);
+        }
 
-    for(uint i=0; i<VRgbtSize; i++)
-    {
-        VRgbtParser[i].AddConstant("pi", PI);
-    }
+        for(uint i=0; i<VRgbtSize; i++)
+        {
+            VRgbtParser[i].AddConstant("pi", PI);
+        }
 
-    for(int i=0; i<FunctSize; i++)
-    {
-        Fct[i].AddConstant("pi", PI);
-        Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
-    }
+        for(int i=0; i<FunctSize; i++)
+        {
+            Fct[i].AddConstant("pi", PI);
+            Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
+        }
 }
 
 ErrorMessage  Par3D::ParMorph()
@@ -534,6 +548,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 
     (constnotnull) ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
     InitMasterParsers();
+
     for(uint j=0; j<Nb_constants; j++)
     {
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
@@ -581,7 +596,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         Nb_functs =0;
     }
-
 
     //Colors
     if(rgbtnotnull)
@@ -697,7 +711,6 @@ ErrorMessage  ParMasterThread::parse_expression()
                 stdError.strError = Rgbts[i];
                 return stdError;
             }
-
 
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
@@ -1947,7 +1960,7 @@ void  Par3D::ParamBuild(
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
 
     // Pigment, Texture and Noise :
-    if(masterthread->vrgbtnotnull && (masterthread->VRgbtSize %5)==0 )
+    if(masterthread->vrgbtnotnull)
     {
         components->ThereisRGBA = true;
         components->NoiseParam.NoiseType = 0; //Pigments

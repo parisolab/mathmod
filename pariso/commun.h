@@ -141,8 +141,8 @@ struct  ComponentInfos
     uint *Parametricpositions;
     uint *ParPts;
     int selectedComponent;
-    bool ThereisCND;
-    bool ThereisRGBA;
+    bool ThereisCND=false;
+    bool ThereisRGBA=false;
     uint NbTrianglesVerifyCND;
     bool DMTrianglesVerifyCND;
     bool DFTrianglesVerifyCND;
@@ -193,7 +193,7 @@ struct  ObjectProperties
     int    morphstep;
     int    typedrawing;
     int    mesh;
-    int    fill;
+    int    fill=1;
     int    front;
     int    back;
     int    smoothline;

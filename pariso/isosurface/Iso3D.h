@@ -86,8 +86,7 @@ public :
     FunctionParser *IsoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
                    *xSupParser, *xInfParser,
                    *ySupParser, *yInfParser,
-                   *zSupParser, *zInfParser,
-                   *Var;
+                   *zSupParser, *zInfParser;
     std::string ImplicitFunction, Condition,
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
