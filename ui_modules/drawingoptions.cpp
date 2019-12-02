@@ -1419,7 +1419,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
                 break;
             case PAR_FUNCT :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = lst.size();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
                 break;
         }

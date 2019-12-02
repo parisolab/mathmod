@@ -108,16 +108,16 @@ ParMasterThread::~ParMasterThread()
     delete[] ConstValues;
     delete[] Consts;
     delete[] ConstNames;
+    delete[] ParamStructs;
+    delete[] UsedFunct;
+    delete[] UsedFunct2;
+    delete[] grid;
     Rgbts.clear();
     RgbtNames.clear();
     VRgbts.clear();
     VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
-    delete[] ParamStructs;
-    delete[] UsedFunct;
-    delete[] UsedFunct2;
-    delete[] grid;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -135,9 +135,9 @@ ParMasterThread::ParMasterThread()
     SliderValues = new double[NbSliderValues];
     ConstValues  = new double[NbConstantes];
     ParamStructs = new ParStruct[NbComponent];
-    UsedFunct    = new bool[4*NbComponent*NbDefinedFunctions];
-    UsedFunct2   = new bool[NbDefinedFunctions*NbDefinedFunctions];
     grid         = new uint[2*NbComponent];
+    UsedFunct    = new bool[0];
+    UsedFunct2   = new bool[0];
     //Add predefined constatnts:
     for(int i=0; i<NbSliders; i++)
     {
@@ -391,14 +391,15 @@ void ParMasterThread::AllocateParsersForMasterThread()
         myParserVmax = new FunctionParser[expression_XSize];
         myParserCND  = new FunctionParser[expression_XSize];
 
-        functnotnull ?
-            Fct = new FunctionParser[FunctSize] :
-            Fct = new FunctionParser[(FunctSize = 0)];
+        if(!functnotnull)
+            FunctSize = 0;
+         Fct          = new FunctionParser[FunctSize];
+         UsedFunct    = new bool[4*uint(expression_XSize)*FunctSize];
+         UsedFunct2   = new bool[FunctSize*FunctSize];
 
         rgbtnotnull ?
             RgbtParser = new FunctionParser[(RgbtSize = 4)] :
             RgbtParser = new FunctionParser[(RgbtSize = 0)];
-
 
         vrgbtnotnull ?
             VRgbtParser = new FunctionParser[VRgbtSize] :
@@ -440,6 +441,8 @@ void ParMasterThread::DeleteMasterParsers()
         delete[] myParserVmax;
         delete[] myParserCND;
         delete[] Fct;
+        delete[] UsedFunct;
+        delete[] UsedFunct2;
         delete[] RgbtParser;
         delete[] VRgbtParser;
         delete GradientParser;
@@ -492,7 +495,7 @@ void ParMasterThread::InitMasterParsers()
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-    for(int i=0; i<expression_XSize; i++)
+    for(uint i=0; i<expression_XSize; i++)
     {
         myParserX[i].AddConstant("pi", PI);
         myParserY[i].AddConstant("pi", PI);
@@ -578,11 +581,10 @@ ErrorMessage  ParMasterThread::parse_expression()
             }
         }
 
-
         for(uint i=0; i<FunctSize; i++)
         {
             for(uint j=0; j<i; j++)
-                if( (UsedFunct2[i*NbDefinedFunctions+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
+                if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
             if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"u,v,t")) >= 0)
             {
@@ -637,8 +639,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         VRgbtSize =0;
     }
-
-    Nb_paramfunctions = HowManyParamSurface(expression_X, 0);
+    HowManyParamSurface(expression_X, 0);
     HowManyParamSurface(expression_Y, 1);
     HowManyParamSurface(expression_Z, 2);
     HowManyParamSurface(inf_u, 3);
@@ -657,7 +658,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 
 
     //Add defined constantes:
-    for(uint i=0; i<Nb_paramfunctions+1; i++)
+    for(uint i=0; i<expression_XSize; i++)
     {
         for(uint j=0; j<Nb_constants; j++)
         {
@@ -689,20 +690,21 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
     }
     // Add defined functions :
-    for(uint i=0; i<Nb_paramfunctions+1; i++)
+    for(uint i=0; i<expression_XSize; i++)
     {
         for(uint j=0; j<FunctSize; j++)
         {
-            if((UsedFunct[i*4*NbDefinedFunctions+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
+            if((UsedFunct[i*4*FunctSize+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
                 myParserX[i].AddFunction(FunctNames[j], Fct[j]);
-            if((UsedFunct[i*4*NbDefinedFunctions+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
+            if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
                 myParserY[i].AddFunction(FunctNames[j], Fct[j]);
-            if((UsedFunct[i*4*NbDefinedFunctions+4*j+2]=(ParamStructs[i].fz.find(FunctNames[j]) != std::string::npos)))
+            if((UsedFunct[i*4*FunctSize+4*j+2]=(ParamStructs[i].fz.find(FunctNames[j]) != std::string::npos)))
                 myParserZ[i].AddFunction(FunctNames[j], Fct[j]);
-            if((UsedFunct[i*4*NbDefinedFunctions+4*j+3]=(ParamStructs[i].fw.find(FunctNames[j]) != std::string::npos)))
+            if((UsedFunct[i*4*FunctSize+4*j+3]=(ParamStructs[i].fw.find(FunctNames[j]) != std::string::npos)))
                 myParserW[i].AddFunction(FunctNames[j], Fct[j]);
         }
     }
+
     // Parse
     if(rgbtnotnull)
         for(uint i=0; i<RgbtSize; i++)
@@ -743,7 +745,7 @@ ErrorMessage  ParMasterThread::parse_expression()
             return stdError;
         }
 
-    for(uint index=0; index< Nb_paramfunctions + 1; index++)
+    for(uint index=0; index< expression_XSize; index++)
     {
         if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, "u,v,t")) >= 0)
         {
@@ -840,7 +842,7 @@ ErrorMessage  Par3D::parse_expression2()
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             for(uint jj=0; jj<ii; jj++)
-                if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
+                if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"u,v,t")) >= 0)
             {
@@ -854,7 +856,7 @@ ErrorMessage  Par3D::parse_expression2()
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         //Add defined constantes:
-        for(uint i=0; i<masterthread->Nb_paramfunctions+1; i++)
+        for(uint i=0; i<masterthread->expression_XSize; i++)
         {
             workerthreads[nbthreads].param4D   = masterthread->param4D;
             workerthreads[nbthreads].myParserX[i].AddConstant("pi", PI);
@@ -892,17 +894,17 @@ ErrorMessage  Par3D::parse_expression2()
         }
 
         // Add defined functions :
-        for(uint i=0; i<masterthread->Nb_paramfunctions+1; i++)
+        for(uint i=0; i<masterthread->expression_XSize; i++)
         {
             for(uint j=0; j<masterthread->FunctSize; j++)
             {
-                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j])
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j])
                     workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
-                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+1])
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+1])
                     workerthreads[nbthreads].myParserY[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
-                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+2])
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+2])
                     workerthreads[nbthreads].myParserZ[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
-                if(masterthread->UsedFunct[i*4*NbDefinedFunctions+4*j+3])
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+3])
                     workerthreads[nbthreads].myParserW[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
             }
 
@@ -910,7 +912,7 @@ ErrorMessage  Par3D::parse_expression2()
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint index=0; index< masterthread->Nb_paramfunctions + 1; index++)
+        for(uint index=0; index< masterthread->expression_XSize; index++)
         {
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
             {
@@ -958,7 +960,7 @@ ErrorMessage Par3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint i=0; i< masterthread->Nb_paramfunctions+1; i++)
+        for(uint i=0; i< masterthread->expression_XSize; i++)
         {
             workerthreads[nbthreads].dif_u[i] = masterthread->dif_u[i];
             workerthreads[nbthreads].dif_v[i] = masterthread->dif_v[i];
@@ -972,7 +974,7 @@ ErrorMessage Par3D::ThreadParsersCopy()
         workerthreads[nbthreads].DeleteWorkerParsers();
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->Nb_paramfunctions+1, masterthread->FunctSize);
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->expression_XSize, masterthread->FunctSize);
 
     return(parse_expression2());
 }
@@ -1046,7 +1048,7 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-uint ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
+void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 {
     std::string tmp, tmp2;
     size_t position =0;
@@ -1158,7 +1160,6 @@ uint ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
             ParamFct ="";
         }
     }
-    return Nb_paramfunction;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1223,7 +1224,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             if((i >= uint(components->Parametricpositions[3*cmpId+2])))
             {
                 K = cmpId;
-                if(masterthread->Nb_paramfunctions>cmpId)
+                if((masterthread->expression_XSize -1)>cmpId)
                 {
                     cmpId++;
                 }
@@ -1266,7 +1267,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 ///+++++++++++++++++++++++++++++++++++++++++
 uint Par3D::CNDtoUse(uint index, struct ComponentInfos *components)
 {
-    for(uint fctnb= 0; fctnb < (masterthread->Nb_paramfunctions+1); fctnb++)
+    for(uint fctnb= 0; fctnb < (masterthread->expression_XSize); fctnb++)
         if( index <= components->ParPts[2*fctnb +1] && index >= components->ParPts[2*fctnb])
             return fctnb;
     return 30;
@@ -1566,7 +1567,7 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
         components->NbTrianglesNotVerifyCND = l;
         components->NbTrianglesBorderCND = M;
 
-        for(uint fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
+        for(uint fctnb= 0; fctnb< masterthread->expression_XSize; fctnb++)
         {
             if(components != nullptr)
             {
@@ -1838,7 +1839,7 @@ void  Par3D::ParamBuild(
     PreviousSizeMinimalTopology =0;
 
     if(components != nullptr)
-        components->NbParametric = masterthread->Nb_paramfunctions+1;
+        components->NbParametric = masterthread->expression_XSize;
 
     if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
@@ -1860,11 +1861,11 @@ void  Par3D::ParamBuild(
         ptime.restart();
     }
 
-    for(uint fctnb= 0; fctnb< masterthread->Nb_paramfunctions+1; fctnb++)
+    for(uint fctnb= 0; fctnb< masterthread->expression_XSize; fctnb++)
     {
         if(masterthread->activeMorph != 1)
         {
-            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->Nb_paramfunctions+1)+"==> Math calculation");
+            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->expression_XSize)+"==> Math calculation");
             emitUpdateMessageSignal();
         }
 
@@ -1993,7 +1994,7 @@ void  Par3D::ParamBuild(
 
     if(masterthread->activeMorph != 1)
     {
-        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->Nb_paramfunctions+1)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
+        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->expression_XSize)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();
     }
 

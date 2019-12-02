@@ -85,11 +85,11 @@ public :
     bool*UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     uint *grid;
-    uint Nb_paramfunctions, Nb_constants;
-    uint RgbtSize, VRgbtSize,  FunctSize;
+    uint Nb_constants;
+    uint expression_XSize, RgbtSize, VRgbtSize,  FunctSize;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Const,  Funct, Rgbt, VRgbt, Grid;
-    int Nb_Sliders, ParConditionRequired, expression_XSize, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
+    int Nb_Sliders, ParConditionRequired, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
         ConstSize, GridSize;
     std::string *Consts, *ConstNames,
@@ -104,7 +104,7 @@ public :
     int Octaves;
 public :
     void InitMasterParsers();
-    uint  HowManyParamSurface(std::string, int);
+    void  HowManyParamSurface(std::string, int);
     uint  HowManyVariables(std::string, int);
     ErrorMessage parse_expression();
     void AllocateParsersForMasterThread();
