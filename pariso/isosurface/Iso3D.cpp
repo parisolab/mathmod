@@ -42,7 +42,7 @@ uint NbMaxGrid = 100;
 uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbComponent = 30;
-int NbSliderValues = 500;
+int NbSliderValues = 5000;
 
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
@@ -168,7 +168,6 @@ void IsoMasterThread::IsoMasterTable()
     y_Step       = new double[NbComponent];
     z_Step       = new double[NbComponent];
     grid         = new uint[NbComponent];
-    SliderValues = new double[NbSliderValues];
     ImplicitStructs = new ImplicitStructure[NbComponent];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
@@ -193,7 +192,7 @@ IsoMasterThread::~IsoMasterThread()
         delete NoiseParser;
         ParsersAllocated = false;
     }
-    delete[] SliderValues;
+
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
@@ -201,7 +200,7 @@ IsoMasterThread::~IsoMasterThread()
     delete[] ImplicitStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
-
+    SliderValues.clear();
     SliderNames.clear();
     Consts.clear();
     ConstNames.clear();
@@ -1424,6 +1423,7 @@ void IsoMasterThread::DeleteMasterParsers()
         ParsersAllocated = false;
     }
 
+    SliderValues.clear();
     SliderNames.clear();
     Consts.clear();
     ConstNames.clear();

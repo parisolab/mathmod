@@ -103,12 +103,12 @@ ParWorkerThread::~ParWorkerThread()
 //+++++++++++++++++++++++++++++++++++++++++
 ParMasterThread::~ParMasterThread()
 {
-    delete[] SliderValues;
     delete[] ParamStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
     delete[] grid;
 
+    SliderValues.clear();
     SliderNames.clear();
     Rgbts.clear();
     RgbtNames.clear();
@@ -130,7 +130,6 @@ ParMasterThread::ParMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Lacunarity = 0.5;
-    SliderValues = new double[NbSliderValues];
     ParamStructs = new ParStruct[NbComponent];
     grid         = new uint[2*NbComponent];
     UsedFunct    = new bool[0];
@@ -443,6 +442,7 @@ void ParMasterThread::DeleteMasterParsers()
         ParsersAllocated = false;
     }
 
+    SliderValues.clear();
     SliderNames.clear();
     Rgbts.clear();
     RgbtNames.clear();

@@ -98,8 +98,7 @@ public :
                              Functs, FunctNames,
                              Consts, ConstNames,
                              SliderNames;
-    std::vector<double> ConstValues;
-    double *SliderValues;
+    std::vector<double> ConstValues, SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     double Lacunarity, Gain;
     int Octaves;

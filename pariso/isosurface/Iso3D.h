@@ -97,13 +97,12 @@ public :
         VRgbt,
         Gradient, Noise, varliste;
     std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames,Functs, FunctNames, Consts, ConstNames, SliderNames;
-    std::vector<double> ConstValues;
+    std::vector<double> ConstValues, SliderValues;
     bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired,
         ConditionSize;
     uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_implicitfunctions, Nb_Sliders;
-    double *SliderValues;
     double *x_Step, *y_Step, *z_Step;
     uint *grid;
     double Octaves, Lacunarity, Gain;

@@ -573,8 +573,8 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
         for (int i = 0; i < qlstPos.size(); ++i)
         {
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[i] = qlstPos.at(i).toDouble();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[i] = qlstPos.at(i).toDouble();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues.push_back(qlstPos.at(i).toDouble());
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues.push_back(qlstPos.at(i).toDouble());
         }
 
         // Name
@@ -4804,8 +4804,8 @@ void DrawingOptions::on_C20ScrollBar_valueChanged(int val)
 void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
 {
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[idx] = val;
-    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[idx] = val;
+    MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[uint(idx)] = val;
+    MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[uint(idx)] = val;
     SliderArray[idx].SliderLabel->setText(qlstnames.at(idx) + " = " +QString::number(val));
     if(CurrentFormulaType==2)
         MathmodRef->ProcessNewIsoSurface( );
@@ -5018,8 +5018,8 @@ void DrawingOptions::update_slider_param()
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
 
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[sl] = qlstPos.at(sl).toDouble();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[sl] = qlstPos.at(sl).toDouble();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
         }
     }
 
