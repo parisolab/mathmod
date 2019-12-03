@@ -91,18 +91,18 @@ public :
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
         ZlimitSup, ZlimitInf, Grid,
-        Const, *Consts, *ConstNames,
+        Const,
         *SliderNames,
         Funct,
         Rgbt,
         VRgbt,
         Gradient, Noise, varliste;
-    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames,Functs, FunctNames;
+    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames,Functs, FunctNames, Consts, ConstNames;
     bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,
-        ConditionSize, ConstSize;
-    uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, Nb_constants, Nb_implicitfunctions;
+        ConditionSize;
+    uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_implicitfunctions;
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
     uint *grid;

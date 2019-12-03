@@ -166,8 +166,6 @@ void IsoMasterThread::IsoMasterTable()
     xLocal2 = new double[NbComponent*NbMaxGrid];
     yLocal2 = new double[NbComponent*NbMaxGrid];
     zLocal2 = new double[NbComponent*NbMaxGrid];
-    Consts       = new std::string[NbConstantes];
-    ConstNames   = new std::string[NbConstantes];
     x_Step       = new double[NbComponent];
     y_Step       = new double[NbComponent];
     z_Step       = new double[NbComponent];
@@ -206,8 +204,6 @@ IsoMasterThread::~IsoMasterThread()
     delete[] SliderNames;
     delete[] SliderValues;
     delete[] ConstValues;
-    delete[] Consts;
-    delete[] ConstNames;
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
@@ -216,6 +212,8 @@ IsoMasterThread::~IsoMasterThread()
     delete[] UsedFunct;
     delete[] UsedFunct2;
 
+    Consts.clear();
+    ConstNames.clear();
     Rgbts.clear();
     RgbtNames.clear();
     VRgbts.clear();
@@ -340,7 +338,7 @@ ErrorMessage  Iso3D::parse_expression2()
 
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
-            for(uint jj=0; jj<masterthread->Nb_constants; jj++)
+            for(uint jj=0; jj<masterthread->ConstSize; jj++)
             {
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
             }
@@ -382,7 +380,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
 
 
-            for(uint j=0; j<masterthread->Nb_constants; j++)
+            for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
             }
@@ -533,8 +531,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             jpos = tmp2.find("=");
             if(type == 1)
             {
-                ConstNames[Nb_variables] = tmp2.substr(0,jpos);
-                Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                ConstNames.push_back(tmp2.substr(0,jpos));
+                Consts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 2)
             {
@@ -561,8 +559,8 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             jpos = tmp2.find("=");
             if(type == 1)
             {
-                ConstNames[Nb_variables] = tmp2.substr(0, jpos);
-                Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                ConstNames.push_back(tmp2.substr(0, jpos));
+                Consts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 2)
             {
@@ -1050,12 +1048,12 @@ ErrorMessage IsoMasterThread::ParserIso()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     varliste = "x,y,z,t";
 
-    (constnotnull) ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
+    (constnotnull) ? ConstSize = HowManyVariables(Const, 1) : ConstSize =0;
 
     initparser();
 
     //Evaluates defined constantes:
-    for(uint j=0; j<Nb_constants; j++)
+    for(uint j=0; j<ConstSize; j++)
     {
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
         {
@@ -1071,7 +1069,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         FunctSize = HowManyVariables(Funct, 2);
         for(uint i=0; i<FunctSize; i++)
         {
-            for(uint j=0; j<Nb_constants; j++)
+            for(uint j=0; j<ConstSize; j++)
             {
                 Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
@@ -1109,7 +1107,7 @@ ErrorMessage IsoMasterThread::ParserIso()
 
         for(uint i=0; i<RgbtSize; i++)
         {
-            for(uint j=0; j<Nb_constants; j++)
+            for(uint j=0; j<ConstSize; j++)
             {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
                 RgbtParser[i].AddConstant("Lacunarity", double(Lacunarity));
@@ -1130,7 +1128,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     if(vrgbtnotnull)
     {
         VRgbtSize = HowManyVariables(VRgbt, 4);
-        for(uint j=0; j<Nb_constants; j++)
+        for(uint j=0; j<ConstSize; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
@@ -1144,7 +1142,7 @@ ErrorMessage IsoMasterThread::ParserIso()
 
         for(uint i=0; i<VRgbtSize; i++)
         {
-            for(uint j=0; j<Nb_constants; j++)
+            for(uint j=0; j<ConstSize; j++)
             {
                 VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
                 VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
@@ -1163,7 +1161,7 @@ ErrorMessage IsoMasterThread::ParserIso()
 
     if(Noise != "")
     {
-        for(uint j=0; j<Nb_constants; j++)
+        for(uint j=0; j<ConstSize; j++)
             NoiseParser->AddConstant(ConstNames[j], ConstValues[j]);
         NoiseParser->AddConstant("Lacunarity", Lacunarity);
         NoiseParser->AddConstant("Gain", Gain);
@@ -1197,7 +1195,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     //Add defined constantes:
     for(uint i=0; i<Nb_implicitfunctions+1; i++)
     {
-        for(uint j=0; j<Nb_constants; j++)
+        for(uint j=0; j<ConstSize; j++)
         {
             implicitFunctionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             if(cndnotnull)
@@ -1434,6 +1432,9 @@ void IsoMasterThread::DeleteMasterParsers()
         delete NoiseParser;
         ParsersAllocated = false;
     }
+
+    Consts.clear();
+    ConstNames.clear();
     Rgbts.clear();
     RgbtNames.clear();
     VRgbts.clear();

@@ -1356,6 +1356,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
                 break;
             case ISO_CONST :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ConstSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
                 break;
         }
