@@ -42,7 +42,6 @@ uint NbMaxGrid = 100;
 uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbComponent = 30;
-uint NbConstantes = 30;
 int NbSliders = 50;
 int NbSliderValues = 500;
 
@@ -437,7 +436,6 @@ ErrorMessage  Iso3D::parse_expression2()
 /// +++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
               uint NbCompo,
-              uint NbConstant,
               int NbSlid,
               int NbSliderV,
               uint nbThreads,
@@ -453,7 +451,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     NbComponent=NbCompo;
     NbSliders  = NbSlid;
     NbSliderValues = NbSliderV;
-    NbConstantes = NbConstant;
     NbMaxGrid = nbmaxgrid;
     NbMaxTri = maxtri;
     NbMaxPts = maxpts;

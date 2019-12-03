@@ -119,7 +119,6 @@ enum ScriptErrorType
     GRID_NBCOMPONENT_MISMATCH,
     COMPONENT_NBCOMPONENT_MISMATCH,
     CND_NBCOMPONENT_MISMATCH,
-    NBCONSTANTES_OUT_OF_RANGE,
     NBSLIDERS_OUT_OF_RANGE,
     NBSLIDERSVALUES_OUT_OF_RANGE,
     VERTEX_TAB_MEM_OVERFLOW,
@@ -291,7 +290,6 @@ public:
 extern uint NbComponent;
 extern int NbSliders;
 extern int NbSliderValues;
-extern uint NbConstantes;
 extern uint NbMaxGrid;  // Should use the defined value in mathmodconfig.js
 extern uint NbMaxTri;
 extern uint NbMaxPts;

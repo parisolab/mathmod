@@ -236,14 +236,14 @@ void OpenGlWidget::CalculateColorsPoints()
 }
 
 int OpenGlWidget::memoryallocation(uint maxtri, uint maxpts, uint gridmax,
-                                   uint NbComponent,uint NbConstantes,
+                                   uint NbComponent,
                                    int NbSliders,int NbSliderValues, uint nbthreads,
                                    uint initGrid, uint FactX, uint FactY, uint FactZ)
 {
     //memoryallocation
     try
     {
-        IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,NbComponent,NbConstantes,
+        IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,NbComponent,
                                        NbSliders,NbSliderValues, nbthreads,
                                        initGrid, FactX, FactY, FactZ));
 
@@ -1746,8 +1746,7 @@ void OpenGlWidget::transparency(int cl, int currentposition)
         LocalScene.groundcol[3] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 
@@ -1768,8 +1767,7 @@ void OpenGlWidget::transparencypar(int cl, int currentposition)
         LocalScene.groundcol[3] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 
@@ -1790,8 +1788,7 @@ void OpenGlWidget::red(int cl, int currentposition)
         LocalScene.groundcol[0] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 
@@ -1812,8 +1809,7 @@ void OpenGlWidget::redpar(int cl, int currentposition)
         LocalScene.groundcol[0] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 
@@ -1834,8 +1830,7 @@ void OpenGlWidget::green(int cl, int currentposition)
         LocalScene.groundcol[1] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1], LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 
@@ -1856,8 +1851,7 @@ void OpenGlWidget::greenpar(int cl, int currentposition)
         LocalScene.groundcol[1] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1], LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 
@@ -1878,8 +1872,7 @@ void OpenGlWidget::blue(int cl, int currentposition)
         LocalScene.groundcol[2] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 
@@ -1900,8 +1893,7 @@ void OpenGlWidget::bluepar(int cl, int currentposition)
         LocalScene.groundcol[2] = (cl/255.0f);
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
         break;
-    };
-
+    }
     update();
 }
 

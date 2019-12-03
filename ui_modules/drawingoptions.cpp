@@ -741,12 +741,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
             ErrorMsg();
             return false;
         }
-        if((QObj["Const"].toArray()).size() > Parameters->NbConstantes)
-        {
-            scriptErrorType = NBCONSTANTES_OUT_OF_RANGE;
-            ErrorMsg();
-            return false;
-        }
 
         return true;
     }
@@ -876,12 +870,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFx))
         {
             scriptErrorType = CND_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Const"].toArray()).size() > Parameters->NbConstantes)
-        {
-            scriptErrorType = NBCONSTANTES_OUT_OF_RANGE;
             ErrorMsg();
             return false;
         }

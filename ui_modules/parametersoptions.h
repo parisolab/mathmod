@@ -66,7 +66,6 @@ public:
     int NbSliders, NbSliderValues;
     int MaxTri, MaxPt, MaxGrid;
     int NbComponent,
-        NbConstantes,
         InitParGrid,
         InitIsoGrid;
 

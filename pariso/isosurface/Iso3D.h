@@ -143,7 +143,6 @@ public :
     Iso3D(uint, uint,
           uint gridmax=NbMaxGrid,
           uint NbCmp=NbComponent,
-          uint NbCst=NbConstantes,
           int nbSlid=NbSliders,
           int nbSlidV=NbSliderValues,
           uint nbThreads=6,
