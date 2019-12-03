@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
     //Creation of the two most important objects:
     MathMod mm(nullptr, uint(Parameters.MaxTri), uint(Parameters.MaxPt), uint(Parameters.MaxGrid),
                uint(Parameters.NbComponent),
-               Parameters.NbSliders,
-               Parameters.NbSliderValues, uint(Parameters.Threads[0]), 40,
+               Parameters.NbSliders,Parameters.NbSliderValues,
+               uint(Parameters.Threads[0]), 40,
                uint(Parameters.CalculFactor[0]), uint(Parameters.CalculFactor[1]), uint(Parameters.CalculFactor[2])
             );
 
