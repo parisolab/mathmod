@@ -105,7 +105,6 @@ ParMasterThread::~ParMasterThread()
 {
     delete[] SliderNames;
     delete[] SliderValues;
-    delete[] ConstValues;
     delete[] ParamStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
@@ -118,6 +117,7 @@ ParMasterThread::~ParMasterThread()
     FunctNames.clear();
     Consts.clear();
     ConstNames.clear();
+    ConstValues.clear();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -131,7 +131,6 @@ ParMasterThread::ParMasterThread()
     Lacunarity = 0.5;
     SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
-    ConstValues  = new double[NbConstantes];
     ParamStructs = new ParStruct[NbComponent];
     grid         = new uint[2*NbComponent];
     UsedFunct    = new bool[0];
@@ -457,6 +456,7 @@ void ParMasterThread::DeleteMasterParsers()
     FunctNames.clear();
     Consts.clear();
     ConstNames.clear();
+    ConstValues.clear();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -559,7 +559,7 @@ ErrorMessage  ParMasterThread::parse_expression()
             stdError.strError = Consts[j];
             return stdError;
         }
-        ConstValues[j] = Cstparser.Eval(vals);
+        ConstValues.push_back(Cstparser.Eval(vals));
         Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
 

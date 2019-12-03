@@ -97,7 +97,8 @@ public :
                              VRgbts, VRgbtNames,
                              Functs, FunctNames,
                              Consts, ConstNames;
-    double *ConstValues, *SliderValues;
+    std::vector<double> ConstValues;
+    double *SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     double Lacunarity, Gain;
     int Octaves;
