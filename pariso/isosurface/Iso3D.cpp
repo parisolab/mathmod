@@ -43,7 +43,6 @@ uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbComponent = 30;
 uint NbConstantes = 30;
-uint NbDefinedFunctions = 50;
 int NbSliders = 50;
 int NbSliderValues = 500;
 
@@ -177,8 +176,8 @@ void IsoMasterThread::IsoMasterTable()
     SliderValues = new double[NbSliderValues];
     ConstValues  = new double[NbConstantes];
     ImplicitStructs = new ImplicitStructure[NbComponent];
-    UsedFunct    = new bool[NbComponent*NbDefinedFunctions];
-    UsedFunct2   = new bool[NbDefinedFunctions*NbDefinedFunctions];
+    UsedFunct    = new bool[0];
+    UsedFunct2   = new bool[0];
     for(int i=0; i<NbSliders; i++)
     {
         SliderNames[i]= "Param_"+QString::number(i).toStdString();
@@ -333,13 +332,13 @@ ErrorMessage  Iso3D::parse_expression2()
     // Functions :
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint ij=0; ij<masterthread->Nb_functs; ij++)
+        for(uint ij=0; ij<masterthread->FunctSize; ij++)
         {
             workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentIsoCmpId, 1);
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
         }
 
-        for(uint ii=0; ii<masterthread->Nb_functs; ii++)
+        for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             for(uint jj=0; jj<masterthread->Nb_constants; jj++)
             {
@@ -353,7 +352,7 @@ ErrorMessage  Iso3D::parse_expression2()
             }
         }
 
-        for(uint ii=0; ii<masterthread->Nb_functs; ii++)
+        for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseW",TurbulenceWorley, 6);
             workerthreads[nbthreads].Fct[ii].AddFunction("fhelix1",fhelix1, 10);
@@ -364,7 +363,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].Fct[ii].AddFunction("MarbleP",MarblePerlin, 4);
             for(uint jj=0; jj<ii; jj++)
-                if(masterthread->UsedFunct2[ii*NbDefinedFunctions+jj])
+                if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
             {
@@ -409,9 +408,9 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
 
-            for(uint j=0; j<masterthread->Nb_functs; j++)
+            for(uint j=0; j<masterthread->FunctSize; j++)
             {
-                if(masterthread->UsedFunct[i*NbDefinedFunctions+j])
+                if(masterthread->UsedFunct[i*masterthread->FunctSize+j])
                 {
                     workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
                 }
@@ -439,7 +438,6 @@ ErrorMessage  Iso3D::parse_expression2()
 Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
               uint NbCompo,
               uint NbConstant,
-              uint NbDefinedFunct,
               int NbSlid,
               int NbSliderV,
               uint nbThreads,
@@ -456,7 +454,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     NbSliders  = NbSlid;
     NbSliderValues = NbSliderV;
     NbConstantes = NbConstant;
-    NbDefinedFunctions = NbDefinedFunct;
     NbMaxGrid = nbmaxgrid;
     NbMaxTri = maxtri;
     NbMaxPts = maxpts;
@@ -1071,8 +1068,8 @@ ErrorMessage IsoMasterThread::ParserIso()
 
     if(functnotnull)
     {
-        Nb_functs = HowManyVariables(Funct, 2);
-        for(uint i=0; i<Nb_functs; i++)
+        FunctSize = HowManyVariables(Funct, 2);
+        for(uint i=0; i<FunctSize; i++)
         {
             for(uint j=0; j<Nb_constants; j++)
             {
@@ -1086,11 +1083,11 @@ ErrorMessage IsoMasterThread::ParserIso()
             }
         }
 
-        for(uint i=0; i<Nb_functs; i++)
+        for(uint i=0; i<FunctSize; i++)
         {
 
             for(uint j=0; j<i; j++)
-                if( (UsedFunct2[i*NbDefinedFunctions+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
+                if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
             if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"x,y,z,t"))>=0)
             {
@@ -1102,7 +1099,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
     else
     {
-        Nb_functs =0;
+        FunctSize =0;
     }
 
 
@@ -1231,7 +1228,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     // Add defined functions :
     if(rgbtnotnull)
         for(int i=0; i<4; i++)
-            for(uint j=0; j<Nb_functs; j++)
+            for(uint j=0; j<FunctSize; j++)
             {
                 RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -1242,7 +1239,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     // Add defined functions :
     if(vrgbtnotnull)
     {
-        for(uint j=0; j<Nb_functs; j++)
+        for(uint j=0; j<FunctSize; j++)
         {
             GradientParser->AddFunction(FunctNames[j], Fct[j]);
             GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -1251,7 +1248,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         }
 
         for(int i=0; i<4; i++)
-            for(uint j=0; j<Nb_functs; j++)
+            for(uint j=0; j<FunctSize; j++)
             {
                 VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
                 VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -1266,9 +1263,9 @@ ErrorMessage IsoMasterThread::ParserIso()
 
     for(uint i=0; i<Nb_implicitfunctions+1; i++)
     {
-        for(uint j=0; j<Nb_functs; j++)
+        for(uint j=0; j<FunctSize; j++)
         {
-            if((UsedFunct[i*NbDefinedFunctions+j]=(ImplicitStructs[i].fxyz.find(FunctNames[j]) != std::string::npos)))
+            if((UsedFunct[i*FunctSize+j]=(ImplicitStructs[i].fxyz.find(FunctNames[j]) != std::string::npos)))
             {
                 implicitFunctionParser[i].AddFunction(FunctNames[j], Fct[j]);
                 IsoConditionParser[i].AddFunction(FunctNames[j], Fct[j]);
@@ -1428,6 +1425,8 @@ void IsoMasterThread::DeleteMasterParsers()
         delete[] yInfParser;
         delete[] zInfParser;
         delete[] Fct;
+        delete[] UsedFunct;
+        delete[] UsedFunct2;
         delete[] IsoConditionParser;
         delete[] VRgbtParser;
         delete[] RgbtParser;
@@ -1457,7 +1456,7 @@ void IsoWorkerThread::DeleteWorkerParsers()
 ///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::InitMasterParsers()
 {
-    for(int i=0; i<ImplicitFunctionSize; i++)
+    for(uint i=0; i<ImplicitFunctionSize; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
         IsoConditionParser[i].AddConstant("pi", PI);
@@ -1473,7 +1472,7 @@ void IsoMasterThread::InitMasterParsers()
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    for(int i=0; i<FunctSize; i++)
+    for(uint i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
         Fct[i].AddFunction("CmpId",CurrentIsoCmpId, 1);
@@ -1532,9 +1531,11 @@ void IsoMasterThread::AllocateMasterParsers()
         zInfParser = new FunctionParser[ImplicitFunctionSize];
         IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
 
-        functnotnull ?
-            Fct = new FunctionParser[FunctSize] :
-            Fct = new FunctionParser[(FunctSize = 0)];
+        if(!functnotnull)
+            FunctSize = 0;
+         Fct          = new FunctionParser[FunctSize];
+         UsedFunct    = new bool[4*ImplicitFunctionSize*FunctSize];
+         UsedFunct2   = new bool[FunctSize*FunctSize];
 
         rgbtnotnull ?
             RgbtParser = new FunctionParser[(RgbtSize = 4)] :
@@ -1552,7 +1553,7 @@ void IsoMasterThread::AllocateMasterParsers()
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::AllocateParsersForWorkerThread(int nbcomp, int nbfunct)
+void IsoWorkerThread::AllocateParsersForWorkerThread(uint nbcomp, uint nbfunct)
 {
     if(!ParsersAllocated)
     {

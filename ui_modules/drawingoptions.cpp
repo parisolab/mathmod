@@ -741,12 +741,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
             ErrorMsg();
             return false;
         }
-        if((QObj["Funct"].toArray()).size() > Parameters->NbDefinedFunctions)
-        {
-            scriptErrorType = NBDEFINEDFUNCTIONS_OUT_OF_RANGE;
-            ErrorMsg();
-            return false;
-        }
         if((QObj["Const"].toArray()).size() > Parameters->NbConstantes)
         {
             scriptErrorType = NBCONSTANTES_OUT_OF_RANGE;
@@ -882,12 +876,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFx))
         {
             scriptErrorType = CND_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Funct"].toArray()).size() > Parameters->NbDefinedFunctions)
-        {
-            scriptErrorType = NBDEFINEDFUNCTIONS_OUT_OF_RANGE;
             ErrorMsg();
             return false;
         }
@@ -1286,7 +1274,7 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj, const Man
         switch(idx) {
              case ISO_FXYZ :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunctionSize = lst.size();
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ImplicitFunctionSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
                 break;
             case ISO_XMAX :
@@ -1363,7 +1351,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
                 break;
             case ISO_FUNCT :
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
-                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = lst.size();
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
                 break;
             case ISO_CONST :

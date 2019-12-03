@@ -67,7 +67,6 @@ public:
     int MaxTri, MaxPt, MaxGrid;
     int NbComponent,
         NbConstantes,
-        NbDefinedFunctions,
         InitParGrid,
         InitIsoGrid;
 

@@ -68,7 +68,7 @@ public :
 public :
     void IsoCompute(uint);
     void VoxelEvaluation(uint);
-    void AllocateParsersForWorkerThread(int,int);
+    void AllocateParsersForWorkerThread(uint,uint);
     void DeleteWorkerParsers();
     void IsoWorkerTable();
     void run() Q_DECL_OVERRIDE;
@@ -101,8 +101,8 @@ public :
     bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired, Nb_Sliders,
-        ImplicitFunctionSize, ConditionSize, ConstSize, FunctSize;
-    uint RgbtSize, VRgbtSize, Nb_constants, Nb_implicitfunctions, Nb_functs;
+        ConditionSize, ConstSize;
+    uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, Nb_constants, Nb_implicitfunctions;
     double *ConstValues, *SliderValues;
     double *x_Step, *y_Step, *z_Step;
     uint *grid;
@@ -143,7 +143,6 @@ public :
           uint gridmax=NbMaxGrid,
           uint NbCmp=NbComponent,
           uint NbCst=NbConstantes,
-          uint NbdeFct=NbDefinedFunctions,
           int nbSlid=NbSliders,
           int nbSlidV=NbSliderValues,
           uint nbThreads=6,

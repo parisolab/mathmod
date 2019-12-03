@@ -5,7 +5,6 @@
         "MaxTri": 2,
         "NbComponent": 200,
         "NbConstantes": 40,
-        "NbDefinedFunctions": 100,
         "NbSliders": 30,
         "NbSliderValues": 500,
         "InitParGrid": 50,
