@@ -172,7 +172,6 @@ void IsoMasterThread::IsoMasterTable()
     grid         = new uint[NbComponent];
     SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
-    ConstValues  = new double[NbConstantes];
     ImplicitStructs = new ImplicitStructure[NbComponent];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
@@ -203,7 +202,6 @@ IsoMasterThread::~IsoMasterThread()
     }
     delete[] SliderNames;
     delete[] SliderValues;
-    delete[] ConstValues;
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
@@ -214,10 +212,14 @@ IsoMasterThread::~IsoMasterThread()
 
     Consts.clear();
     ConstNames.clear();
+    ConstValues.clear();
+
     Rgbts.clear();
     RgbtNames.clear();
+
     VRgbts.clear();
     VRgbtNames.clear();
+
     Functs.clear();
     FunctNames.clear();
 }
@@ -1060,7 +1062,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             stdError.strError = Consts[j];
             return stdError;
         }
-        ConstValues[j] = Cstparser.Eval(&vals[3]);
+        ConstValues.push_back(Cstparser.Eval(&vals[3]));
         Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
 
@@ -1435,10 +1437,14 @@ void IsoMasterThread::DeleteMasterParsers()
 
     Consts.clear();
     ConstNames.clear();
+    ConstValues.clear();
+
     Rgbts.clear();
     RgbtNames.clear();
+
     VRgbts.clear();
     VRgbtNames.clear();
+
     Functs.clear();
     FunctNames.clear();
 }
