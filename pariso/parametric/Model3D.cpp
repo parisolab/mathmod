@@ -103,12 +103,13 @@ ParWorkerThread::~ParWorkerThread()
 //+++++++++++++++++++++++++++++++++++++++++
 ParMasterThread::~ParMasterThread()
 {
-    delete[] SliderNames;
     delete[] SliderValues;
     delete[] ParamStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
     delete[] grid;
+
+    SliderNames.clear();
     Rgbts.clear();
     RgbtNames.clear();
     VRgbts.clear();
@@ -125,21 +126,15 @@ ParMasterThread::ParMasterThread()
 {
     activeMorph = -1;
     ParConditionRequired = -1;
-    Nb_Sliders = -1;
+    Nb_Sliders = 0;
     Gain = 1.0;
     Octaves = 4;
     Lacunarity = 0.5;
-    SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
     ParamStructs = new ParStruct[NbComponent];
     grid         = new uint[2*NbComponent];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
-    //Add predefined constatnts:
-    for(int i=0; i<NbSliders; i++)
-    {
-        SliderNames[i] = "Param_"+QString::number(i).toStdString();
-    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -448,6 +443,7 @@ void ParMasterThread::DeleteMasterParsers()
         ParsersAllocated = false;
     }
 
+    SliderNames.clear();
     Rgbts.clear();
     RgbtNames.clear();
     VRgbts.clear();
@@ -575,7 +571,7 @@ ErrorMessage  ParMasterThread::parse_expression()
             }
 
             //Add predefined constatnts:
-            for(int k=0; k<Nb_Sliders; k++)
+            for(uint k=0; k<Nb_Sliders; k++)
             {
                 Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
@@ -675,7 +671,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
 
         //Add predefined constatnts:
-        for(int k=0; k<Nb_Sliders; k++)
+        for(uint k=0; k<Nb_Sliders; k++)
         {
             if(cndnotnull)
                 myParserCND[i].AddConstant(SliderNames[k], SliderValues[k]);
@@ -833,7 +829,7 @@ ErrorMessage  Par3D::parse_expression2()
             }
 
             //Add predefined constatnts:
-            for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
+            for(uint kk=0; kk<masterthread->Nb_Sliders; kk++)
             {
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
             }
@@ -884,7 +880,7 @@ ErrorMessage  Par3D::parse_expression2()
                 workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
             }
             //Add predefined sliders constatnts:
-            for(int k=0; k<masterthread->Nb_Sliders; k++)
+            for(uint k=0; k<masterthread->Nb_Sliders; k++)
             {
                 workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
                 workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);

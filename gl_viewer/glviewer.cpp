@@ -237,14 +237,14 @@ void OpenGlWidget::CalculateColorsPoints()
 
 int OpenGlWidget::memoryallocation(uint maxtri, uint maxpts, uint gridmax,
                                    uint NbComponent,
-                                   int NbSliders,int NbSliderValues, uint nbthreads,
+                                   int NbSliderValues, uint nbthreads,
                                    uint initGrid, uint FactX, uint FactY, uint FactZ)
 {
     //memoryallocation
     try
     {
         IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,NbComponent,
-                                       NbSliders,NbSliderValues, nbthreads,
+                                       NbSliderValues, nbthreads,
                                        initGrid, FactX, FactY, FactZ));
 
         ParObjetThread = new ParThread(new Par3D(maxpts, nbthreads));

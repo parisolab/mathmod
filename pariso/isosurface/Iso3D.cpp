@@ -42,7 +42,6 @@ uint NbMaxGrid = 100;
 uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbComponent = 30;
-int NbSliders = 50;
 int NbSliderValues = 500;
 
 uint OrignbX, OrignbY, OrignbZ;
@@ -169,15 +168,10 @@ void IsoMasterThread::IsoMasterTable()
     y_Step       = new double[NbComponent];
     z_Step       = new double[NbComponent];
     grid         = new uint[NbComponent];
-    SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
     ImplicitStructs = new ImplicitStructure[NbComponent];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
-    for(int i=0; i<NbSliders; i++)
-    {
-        SliderNames[i]= "Param_"+QString::number(i).toStdString();
-    }
 }
 
 IsoMasterThread::~IsoMasterThread()
@@ -199,7 +193,6 @@ IsoMasterThread::~IsoMasterThread()
         delete NoiseParser;
         ParsersAllocated = false;
     }
-    delete[] SliderNames;
     delete[] SliderValues;
     delete[] x_Step;
     delete[] y_Step;
@@ -209,6 +202,7 @@ IsoMasterThread::~IsoMasterThread()
     delete[] UsedFunct;
     delete[] UsedFunct2;
 
+    SliderNames.clear();
     Consts.clear();
     ConstNames.clear();
     ConstValues.clear();
@@ -345,7 +339,7 @@ ErrorMessage  Iso3D::parse_expression2()
             }
 
             //Add predefined constatnts:
-            for(int kk=0; kk<masterthread->Nb_Sliders; kk++)
+            for(uint kk=0; kk<masterthread->Nb_Sliders; kk++)
             {
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
             }
@@ -386,7 +380,7 @@ ErrorMessage  Iso3D::parse_expression2()
                 workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
             }
             //Add predefined sliders constatnts:
-            for(int k=0; k<masterthread->Nb_Sliders; k++)
+            for(uint k=0; k<masterthread->Nb_Sliders; k++)
             {
                 workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
             }
@@ -436,7 +430,6 @@ ErrorMessage  Iso3D::parse_expression2()
 /// +++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
               uint NbCompo,
-              int NbSlid,
               int NbSliderV,
               uint nbThreads,
               uint nbGrid,
@@ -449,7 +442,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     OrignbZ=factZ;
     Stack_Factor = factX*factY*factZ;
     NbComponent=NbCompo;
-    NbSliders  = NbSlid;
     NbSliderValues = NbSliderV;
     NbMaxGrid = nbmaxgrid;
     NbMaxTri = maxtri;
@@ -1074,7 +1066,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             }
 
             //Add predefined constatnts:
-            for(int k=0; k<Nb_Sliders; k++)
+            for(uint k=0; k<Nb_Sliders; k++)
             {
                 Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
@@ -1167,7 +1159,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         NoiseParser->AddConstant("Octaves", Octaves);
 
         //Add predefined constatnts:
-        for(int k=0; k<Nb_Sliders; k++)
+        for(uint k=0; k<Nb_Sliders; k++)
         {
             NoiseParser->AddConstant(SliderNames[k], SliderValues[k]);
         }
@@ -1208,7 +1200,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         }
 
         //Add predefined constatnts:
-        for(int k=0; k<Nb_Sliders; k++)
+        for(uint k=0; k<Nb_Sliders; k++)
         {
             implicitFunctionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             if(cndnotnull)
@@ -1432,6 +1424,7 @@ void IsoMasterThread::DeleteMasterParsers()
         ParsersAllocated = false;
     }
 
+    SliderNames.clear();
     Consts.clear();
     ConstNames.clear();
     ConstValues.clear();

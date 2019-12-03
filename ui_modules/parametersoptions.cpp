@@ -41,7 +41,6 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxPt=150000;
     MaxGrid=80;
     NbComponent = 10;
-    NbSliders = 20;
     NbSliderValues = 200;
 
     dotsymbol =".";
@@ -464,8 +463,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                 MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
             if((IsoParam)["NbComponent"].isDouble())
                 NbComponent= (IsoParam)["NbComponent"].toInt();
-            if((IsoParam)["NbSliders"].isDouble())
-                NbSliders= (IsoParam)["NbSliders"].toInt();
             if((IsoParam)["NbSliderValues"].isDouble())
                 NbSliderValues= (IsoParam)["NbSliderValues"].toInt();
         }

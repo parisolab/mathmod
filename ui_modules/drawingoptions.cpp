@@ -584,11 +584,11 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
 
         for (int i = 0; i < qlstnames.size(); ++i)
         {
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderNames[i] = qlstnames.at(i).toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderNames[i] = qlstnames.at(i).toStdString();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderNames.push_back(qlstnames.at(i).toStdString());
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderNames.push_back(qlstnames.at(i).toStdString());
         }
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Nb_Sliders = qlstnames.size();
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Nb_Sliders = qlstnames.size();
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Nb_Sliders = uint(qlstnames.size());
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Nb_Sliders = uint(qlstnames.size());
 
 
 
@@ -645,8 +645,8 @@ void DrawingOptions::ShowSliders(const QJsonObject & Jobj)
     }
     else
     {
-        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Nb_Sliders =  -1;
-        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Nb_Sliders =  -1;
+        MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Nb_Sliders =  0;
+        MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Nb_Sliders =  0;
 
         HideSliders();
     }
@@ -5015,8 +5015,8 @@ void DrawingOptions::update_slider_param()
             (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
             (SliderArray[sl].SliderScrollBar)->blockSignals(false);
 
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderNames[sl] = qlstnames.at(sl).toStdString();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderNames[sl] = qlstnames.at(sl).toStdString();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
 
             MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[sl] = qlstPos.at(sl).toDouble();
             MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[sl] = qlstPos.at(sl).toDouble();
