@@ -1201,7 +1201,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const Man
         switch(idx) {
              case PAR_FX :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_X = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = lst.size();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_XSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
                 break;
             case PAR_FY :
