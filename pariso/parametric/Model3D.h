@@ -85,19 +85,18 @@ public :
     bool*UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     uint *grid;
-    uint Nb_constants;
-    uint expression_XSize, RgbtSize, VRgbtSize,  FunctSize;
+    uint expression_XSize, RgbtSize, VRgbtSize,  FunctSize, ConstSize;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Const,  Funct, Rgbt, VRgbt, Grid;
     int Nb_Sliders, ParConditionRequired, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
-        ConstSize, GridSize;
-    std::string *Consts, *ConstNames,
-        Gradient, Noise, NoiseShape, *SliderNames;
+        GridSize;
+    std::string Gradient, Noise, NoiseShape, *SliderNames;
 
     std::vector<std::string> Rgbts, RgbtNames,
                              VRgbts, VRgbtNames,
-                             Functs, FunctNames;
+                             Functs, FunctNames,
+                             Consts, ConstNames;
     double *ConstValues, *SliderValues;
     unsigned int NbPolygnNbVertex[2], nbBorderPts;
     double Lacunarity, Gain;

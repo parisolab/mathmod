@@ -1404,6 +1404,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
                 break;
             case PAR_CONST :
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = result.toStdString();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->ConstSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
                 break;
             case PAR_FUNCT :

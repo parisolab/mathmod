@@ -106,8 +106,6 @@ ParMasterThread::~ParMasterThread()
     delete[] SliderNames;
     delete[] SliderValues;
     delete[] ConstValues;
-    delete[] Consts;
-    delete[] ConstNames;
     delete[] ParamStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
@@ -118,6 +116,8 @@ ParMasterThread::~ParMasterThread()
     VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
+    Consts.clear();
+    ConstNames.clear();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -129,8 +129,6 @@ ParMasterThread::ParMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Lacunarity = 0.5;
-    Consts       = new std::string[NbConstantes];
-    ConstNames   = new std::string[NbConstantes];
     SliderNames  = new std::string[NbSliders];
     SliderValues = new double[NbSliderValues];
     ConstValues  = new double[NbConstantes];
@@ -457,6 +455,8 @@ void ParMasterThread::DeleteMasterParsers()
     VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
+    Consts.clear();
+    ConstNames.clear();
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -549,10 +549,10 @@ ErrorMessage  ParMasterThread::parse_expression()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     std::string varliste = "x,y,z,t";
 
-    (constnotnull) ? Nb_constants = HowManyVariables(Const, 1) : Nb_constants =0;
+    (constnotnull) ? ConstSize = HowManyVariables(Const, 1) : ConstSize =0;
     InitMasterParsers();
 
-    for(uint j=0; j<Nb_constants; j++)
+    for(uint j=0; j<ConstSize; j++)
     {
         if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
         {
@@ -569,7 +569,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 
         for(uint i=0; i<FunctSize; i++)
         {
-            for(uint j=0; j<Nb_constants; j++)
+            for(uint j=0; j<ConstSize; j++)
             {
                 Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
@@ -606,7 +606,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 
         for(uint i=0; i<RgbtSize; i++)
         {
-            for(uint j=0; j<Nb_constants; j++)
+            for(uint j=0; j<ConstSize; j++)
             {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
@@ -622,14 +622,14 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(vrgbtnotnull)
     {
         VRgbtSize = HowManyVariables(VRgbt, 4);
-        for(uint j=0; j<Nb_constants; j++)
+        for(uint j=0; j<ConstSize; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
 
         for(uint i=0; i<VRgbtSize; i++)
         {
-            for(uint j=0; j<Nb_constants; j++)
+            for(uint j=0; j<ConstSize; j++)
             {
                 VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
@@ -660,7 +660,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     //Add defined constantes:
     for(uint i=0; i<expression_XSize; i++)
     {
-        for(uint j=0; j<Nb_constants; j++)
+        for(uint j=0; j<ConstSize; j++)
         {
             if(cndnotnull)
                 myParserCND[i].AddConstant(ConstNames[j], ConstValues[j]);
@@ -827,7 +827,7 @@ ErrorMessage  Par3D::parse_expression2()
 
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
-            for(uint jj=0; jj<masterthread->Nb_constants; jj++)
+            for(uint jj=0; jj<masterthread->ConstSize; jj++)
             {
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
             }
@@ -876,7 +876,7 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
 
-            for(uint j=0; j<masterthread->Nb_constants; j++)
+            for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
                 workerthreads[nbthreads].myParserY[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
@@ -994,8 +994,8 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             jpos = tmp2.find("=");
             if(type == 1)
             {
-                ConstNames[Nb_variables] = tmp2.substr(0,jpos);
-                Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                ConstNames.push_back(tmp2.substr(0,jpos));
+                Consts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 2)
             {
@@ -1022,8 +1022,8 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             jpos = tmp2.find("=");
             if(type == 1)
             {
-                ConstNames[Nb_variables] = tmp2.substr(0, jpos);
-                Consts[Nb_variables] = tmp3.substr(jpos+1,position-1);
+                ConstNames.push_back(tmp2.substr(0, jpos));
+                Consts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 2)
             {
