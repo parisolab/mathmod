@@ -4,7 +4,6 @@
         "MaxPt": 1,
         "MaxTri": 2,
         "NbComponent": 200,
-        "NbSliderValues": 500,
         "InitParGrid": 50,
         "InitIsoGrid": 40
 

@@ -288,7 +288,6 @@ public:
 };
 
 extern uint NbComponent;
-extern int NbSliderValues;
 extern uint NbMaxGrid;  // Should use the defined value in mathmodconfig.js
 extern uint NbMaxTri;
 extern uint NbMaxPts;

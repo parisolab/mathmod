@@ -41,7 +41,6 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxPt=150000;
     MaxGrid=80;
     NbComponent = 10;
-    NbSliderValues = 200;
 
     dotsymbol =".";
     model = "CloseIso_2";
@@ -463,8 +462,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                 MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
             if((IsoParam)["NbComponent"].isDouble())
                 NbComponent= (IsoParam)["NbComponent"].toInt();
-            if((IsoParam)["NbSliderValues"].isDouble())
-                NbSliderValues= (IsoParam)["NbSliderValues"].toInt();
         }
 
         QJsonObject tmp;

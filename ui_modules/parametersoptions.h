@@ -63,7 +63,6 @@ public:
     int Threads[3];
     int CalculFactor[3];
     int Shininess;
-    int NbSliderValues;
     int MaxTri, MaxPt, MaxGrid;
     int NbComponent,
         InitParGrid,
