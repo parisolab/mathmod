@@ -27,6 +27,7 @@ static float * NormOriginaltmp;
 static Voxel *GridVoxelVarPt;
 static double *Results;
 
+bool SwichAccomplished=true;
 static uint TypeDrawin=10;
 static uint TypeDrawinNormStep = 4;
 static uint PreviousSizeMinimalTopology =0;
@@ -477,9 +478,9 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         Results                  = new double[NbMaxGrid*NbMaxGrid*NbMaxGrid];
-        NormVertexTab            = new float [10*maxpts];
-        IndexPolyTab             = new unsigned int [4*maxtri];
-        IndexPolyTabMin          = new unsigned int [5*maxtri];
+        //NormVertexTab            = new float [10*maxpts];
+        //IndexPolyTab             = new unsigned int [4*maxtri];
+        //IndexPolyTabMin          = new unsigned int [5*maxtri];
         staticaction            *= -1;
     }
     else
@@ -496,9 +497,9 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new  Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         Results                  = new double[NbMaxGrid*NbMaxGrid*NbMaxGrid];
-        NormVertexTab            = new float [10*maxpts];
-        IndexPolyTab             = new unsigned int [4*maxtri];
-        IndexPolyTabMin          = new unsigned int [5*maxtri];
+        //NormVertexTab            = new float [10*maxpts];
+        //IndexPolyTab             = new unsigned int [4*maxtri];
+        //IndexPolyTabMin          = new unsigned int [5*maxtri];
         staticaction            *= -1;
     }
 }
@@ -1627,6 +1628,23 @@ void Iso3D::IsoBuild (
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
 
+    if(SwichAccomplished)
+    {
+        unsigned int *tmp01= IndexPolyTab  ;
+        IndexPolyTab = IndexPolyTabPt;
+        IndexPolyTabPt = tmp01;
+
+        unsigned int *tmp02= IndexPolyTabMin   ;
+        IndexPolyTabMin = IndexPolyTabMinPt;
+        IndexPolyTabMinPt = tmp02;
+
+        float *tmp03= NormVertexTab ;
+        NormVertexTab = NormVertexTabPt;
+        NormVertexTabPt = tmp03;
+    }
+    else
+        SwichAccomplished =false;
+
     if(components != nullptr)
         components->NbIso = masterthread->Nb_implicitfunctions+1;
 
@@ -1826,9 +1844,21 @@ void Iso3D::IsoBuild (
         emitUpdateMessageSignal();
     }
 
-    memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
-    memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
-    memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
+    unsigned int *tmp1=IndexPolyTabPt;
+    IndexPolyTabPt = IndexPolyTab;
+    IndexPolyTab = tmp1;
+
+    unsigned int *tmp2= IndexPolyTabMinPt;
+    IndexPolyTabMinPt = IndexPolyTabMin;
+    IndexPolyTabMin = tmp2;
+
+    float *tmp3= NormVertexTabPt;
+    NormVertexTabPt = NormVertexTab;
+    NormVertexTab = tmp3;
+    SwichAccomplished = true;
+    //memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
+    //memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
+    //memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
     copycomponent(componentsPt, components);
 
     Setgrid(PreviousGridVal);

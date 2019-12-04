@@ -1834,6 +1834,23 @@ void  Par3D::ParamBuild(
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
 
+    if(SwichAccomplished)
+    {
+        unsigned int *tmp01= IndexPolyTab  ;
+        IndexPolyTab = IndexPolyTabPt;
+        IndexPolyTabPt = tmp01;
+
+        unsigned int *tmp02= IndexPolyTabMin   ;
+        IndexPolyTabMin = IndexPolyTabMinPt;
+        IndexPolyTabMinPt = tmp02;
+
+        float *tmp03= NormVertexTab ;
+        NormVertexTab = NormVertexTabPt;
+        NormVertexTabPt = tmp03;
+    }
+    else
+        SwichAccomplished = false;
+
     if(components != nullptr)
         components->NbParametric = masterthread->expression_XSize;
 
@@ -1998,9 +2015,22 @@ void  Par3D::ParamBuild(
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
-    memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
-    memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
-    memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
+
+    unsigned int *tmp1=IndexPolyTabPt;
+    IndexPolyTabPt = IndexPolyTab;
+    IndexPolyTab = tmp1;
+
+    unsigned int *tmp2= IndexPolyTabMinPt;
+    IndexPolyTabMinPt = IndexPolyTabMin;
+    IndexPolyTabMin = tmp2;
+
+    float *tmp3= NormVertexTabPt;
+    NormVertexTabPt = NormVertexTab;
+    NormVertexTab = tmp3;
+    SwichAccomplished = true;
+    //memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
+    //memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
+    //memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
     memcpy(ExtraDimensionPt, ExtraDimension, NbVertexTmp*sizeof(float));
     copycomponent(componentsPt, components);
 }
