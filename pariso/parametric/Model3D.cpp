@@ -142,7 +142,6 @@ Par3D::Par3D(uint maxpoints,
              uint nbGrid)
 {
     initialiser_parametres(nbThreads, nbGrid);
-    ExtraDimension = new float [maxpoints];
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1847,6 +1846,10 @@ void  Par3D::ParamBuild(
         float *tmp03= NormVertexTab ;
         NormVertexTab = NormVertexTabPt;
         NormVertexTabPt = tmp03;
+
+        float *tmp04= ExtraDimension ;
+        ExtraDimension = ExtraDimensionPt;
+        ExtraDimensionPt = tmp04;
     }
     else
         SwichAccomplished = false;
@@ -2027,11 +2030,12 @@ void  Par3D::ParamBuild(
     float *tmp3= NormVertexTabPt;
     NormVertexTabPt = NormVertexTab;
     NormVertexTab = tmp3;
+
+    float *tmp4= ExtraDimensionPt ;
+    ExtraDimensionPt = ExtraDimension;
+    ExtraDimension = tmp4;
+
     SwichAccomplished = true;
-    //memcpy(IndexPolyTabPt, IndexPolyTab, 4*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
-    //memcpy(IndexPolyTabMinPt, IndexPolyTabMin, 5*NbTriangleIsoSurfaceTmp*sizeof(unsigned int));
-    //memcpy(NormVertexTabPt, NormVertexTab, 10*NbVertexTmp*sizeof(float));
-    memcpy(ExtraDimensionPt, ExtraDimension, NbVertexTmp*sizeof(float));
     copycomponent(componentsPt, components);
 }
 
