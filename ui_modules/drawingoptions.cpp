@@ -4371,14 +4371,24 @@ void DrawingOptions::on_Multiplier_clicked()
 void DrawingOptions::UpdateGui(int argc)
 {
     int maxgrd = int(Parameters->MaxGrid);
+    ui.xyzg->blockSignals(true);
     ui.xyzg->setMaximum(maxgrd);
     ui.XhorizontalScrollBar->setMaximum(maxgrd);
     ui.YhorizontalScrollBar->setMaximum(maxgrd);
     ui.ZhorizontalScrollBar->setMaximum(maxgrd);
+    ui.xyzg->setValue(int(Parameters->InitIsoGrid));
+    ui.xyzg->blockSignals(false);
 
     int sqr = (Parameters->MaxPt > Parameters->MaxTri ? int(sqrt(Parameters->MaxTri)): int(sqrt(Parameters->MaxPt)));
+    ui.linecolumn_2->blockSignals(true);
     ui.linecolumn_2->setMaximum(sqr);
+    ui.linecolumn_2->setValue(int(Parameters->InitParGrid));
+    ui.linecolumn_2->blockSignals(false);
+
+    ui.linecolumn_3->blockSignals(true);
     ui.linecolumn_3->setMaximum(sqr);
+    ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
+    ui.linecolumn_3->blockSignals(false);
 
     ListeModelTexture LstModelTexture =
         (Parameters->LoadCollectionModels(

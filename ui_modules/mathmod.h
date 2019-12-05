@@ -29,8 +29,8 @@ class MathMod : public QWidget
     Q_OBJECT
 
 public:
-    MathMod(QWidget *,uint,uint,uint,uint,uint,
-            uint initgrid=40, uint factx=4, uint facty=4,uint factz=4);
+    MathMod(QWidget *,uint,uint,uint,uint,uint,uint initpargrid=50,
+            uint initisogrid=40, uint factx=4, uint facty=4,uint factz=4);
     ~MathMod();
     void keyPressEvent ( QKeyEvent *);
     void resizeEvent( QResizeEvent  *);

@@ -237,16 +237,16 @@ void OpenGlWidget::CalculateColorsPoints()
 
 int OpenGlWidget::memoryallocation(uint maxtri, uint maxpts, uint gridmax,
                                    uint NbComponent,uint nbthreads,
-                                   uint initGrid, uint FactX, uint FactY, uint FactZ)
+                                   uint initparGrid, uint initisoGrid,
+                                   uint FactX, uint FactY, uint FactZ)
 {
     //memoryallocation
     try
     {
         IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,NbComponent,
-                                       nbthreads,
-                                       initGrid, FactX, FactY, FactZ));
+                                       nbthreads, initisoGrid, FactX, FactY, FactZ));
 
-        ParObjetThread = new ParThread(new Par3D(maxpts, nbthreads));
+        ParObjetThread = new ParThread(new Par3D(nbthreads, initparGrid));
 
         LocalScene     = (new ObjectParameters(maxpts, maxtri))->objectproperties;
         return 1;
@@ -971,7 +971,7 @@ void OpenGlWidget::PrintInfos()
     QString nbl="";
     (LocalScene.typedrawing == 1) ?
     nbl = QString::number(IsoObjetThread->IsoObjet->masterthread->Xgrid-CutX)+"x"+QString::number(IsoObjetThread->IsoObjet->masterthread->Ygrid-CutY)+"x"+QString::number(IsoObjetThread->IsoObjet->masterthread->Zgrid-CutZ) :
-          nbl = QString::number(Ugrid-CutU)+"x"+QString::number(Vgrid-CutV)+" = "+QString::number((Ugrid-CutU)*(Vgrid-CutV));
+          nbl = QString::number(ParObjetThread->ParObjet->masterthread->Ugrid-CutU)+"x"+QString::number(ParObjetThread->ParObjet->masterthread->Vgrid-CutV)+" = "+QString::number((ParObjetThread->ParObjet->masterthread->Ugrid-CutU)*(ParObjetThread->ParObjet->masterthread->Vgrid-CutV));
     glDisable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();

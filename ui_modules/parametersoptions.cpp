@@ -41,7 +41,8 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxPt=150000;
     MaxGrid=80;
     NbComponent = 10;
-
+    InitParGrid=50;
+    InitIsoGrid=40;
     dotsymbol =".";
     model = "CloseIso_2";
     Shininess = 110;
@@ -462,6 +463,12 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                 MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
             if((IsoParam)["NbComponent"].isDouble())
                 NbComponent= (IsoParam)["NbComponent"].toInt();
+
+            if((IsoParam)["InitParGrid"].isDouble())
+                InitParGrid= (IsoParam)["InitParGrid"].toInt();
+
+            if((IsoParam)["InitIsoGrid"].isDouble())
+                InitIsoGrid= (IsoParam)["InitIsoGrid"].toInt();
         }
 
         QJsonObject tmp;

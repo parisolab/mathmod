@@ -64,9 +64,9 @@ public:
     int CalculFactor[3];
     int Shininess;
     int MaxTri, MaxPt, MaxGrid;
-    int NbComponent,
-        InitParGrid,
-        InitIsoGrid;
+    int NbComponent;
+    int InitParGrid;
+    int InitIsoGrid;
 
 public slots:
     void ReadJsonFile(QString, QJsonObject &);

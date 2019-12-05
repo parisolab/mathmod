@@ -142,9 +142,7 @@ public:
     ScriptErrorType messageerror;
     QString message;
 public:
-    Par3D(uint,
-          uint nbThreads=16,
-          uint nbGrid=50);
+    Par3D(uint nbThreads=16, uint nbGrid=50);
     ~Par3D()  override;
     void rotation4();
     void calcul_points4(uint idx=0);

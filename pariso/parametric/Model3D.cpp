@@ -137,9 +137,7 @@ ParMasterThread::ParMasterThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-Par3D::Par3D(uint maxpoints,
-             uint nbThreads,
-             uint nbGrid)
+Par3D::Par3D(uint nbThreads, uint nbGrid)
 {
     initialiser_parametres(nbThreads, nbGrid);
 }
