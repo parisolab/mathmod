@@ -502,14 +502,6 @@ void OpenGlWidget::blueSpec(int cl)
     LocalScene.specReflection[2] =  float(cl/100.0);
 }
 
-
-
-
-
-
-
-
-
 static void DrawParametric (ObjectProperties *scene)
 {
     float frontcl[4], backcl[4];
@@ -1036,7 +1028,7 @@ void OpenGlWidget::PrintInfos()
         glCallLists(strlen("Morph="),GL_UNSIGNED_BYTE, (GLubyte *)"Morph=");
         glColor3f (1.0, 0.0, 0.0);
         glRasterPos2i(80, 100);
-        glCallLists(strlen("On"),GL_UNSIGNED_BYTE, (GLubyte *)"On");
+        glCallLists(strlen("On"),GL_UNSIGNED_BYTE, (GLubyte *)("On"));
     }
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
@@ -1502,7 +1494,6 @@ void OpenGlWidget::paintGL()
         }
         initialize_GL();
     }
-
     draw(&LocalScene);
 
     if (LocalScene.infos == 1)  PrintInfos();
