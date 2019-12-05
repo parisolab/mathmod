@@ -159,9 +159,7 @@ struct  ObjectProperties
     uint vboId_ArrayNorVer_localPt;
     float         * ArrayNorVerExtra_localPt;
     float         * OriginalArrayNorVerExtra_localPt;
-    uint vboId_ArrayNorVerExtra_localPt;
     unsigned int  * PolyIndices_localPt;
-    uint vboId_PolyIndices_localPt;
     unsigned int  * PolyIndices_localPtMin;
     float  * BorderPoints;
     int  * TypeSurfaceTriangleListeCND;

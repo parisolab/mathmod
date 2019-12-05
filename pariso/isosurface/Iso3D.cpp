@@ -492,9 +492,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         NormOriginaltmp          = new float[3*maxtri];
         GridVoxelVarPt           = new  Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
         Results                  = new double[NbMaxGrid*NbMaxGrid*NbMaxGrid];
-        //NormVertexTab            = new float [10*maxpts];
-        //IndexPolyTab             = new unsigned int [4*maxtri];
-        //IndexPolyTabMin          = new unsigned int [5*maxtri];
         staticaction            *= -1;
     }
 }
