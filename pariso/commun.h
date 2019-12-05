@@ -298,4 +298,3 @@ extern unsigned int * IndexPolyTab;
 extern unsigned int * IndexPolyTabMin;
 extern struct  ComponentInfos componentsStr;
 extern struct ComponentInfos * components;
-extern bool SwichAccomplished;

@@ -1833,32 +1833,16 @@ void  Par3D::ParamBuild(
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
 
-    if(SwichAccomplished)
-    {
-        unsigned int *tmp01= IndexPolyTab  ;
-        IndexPolyTab = IndexPolyTabPt;
-        IndexPolyTabPt = tmp01;
-
-        unsigned int *tmp02= IndexPolyTabMin   ;
-        IndexPolyTabMin = IndexPolyTabMinPt;
-        IndexPolyTabMinPt = tmp02;
-
-        float *tmp03= NormVertexTab ;
-        NormVertexTab = NormVertexTabPt;
-        NormVertexTabPt = tmp03;
-
-        float *tmp04= ExtraDimension ;
-        ExtraDimension = ExtraDimensionPt;
-        ExtraDimensionPt = tmp04;
-    }
-    else
-        SwichAccomplished = false;
-
-    if(components != nullptr)
-        components->NbParametric = masterthread->expression_XSize;
-
+    //*******/
+    IndexPolyTab = IndexPolyTabPt;
+    IndexPolyTabMin = IndexPolyTabMinPt;
+    NormVertexTab = NormVertexTabPt;
+    ExtraDimension = ExtraDimensionPt;
     if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
+    //*******/
+    if(components != nullptr)
+        components->NbParametric = masterthread->expression_XSize;
 
     if(typeCND != nullptr)
         WichPointVerifyCond = typeCND;
@@ -2018,24 +2002,6 @@ void  Par3D::ParamBuild(
     *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
-
-    unsigned int *tmp1=IndexPolyTabPt;
-    IndexPolyTabPt = IndexPolyTab;
-    IndexPolyTab = tmp1;
-
-    unsigned int *tmp2= IndexPolyTabMinPt;
-    IndexPolyTabMinPt = IndexPolyTabMin;
-    IndexPolyTabMin = tmp2;
-
-    float *tmp3= NormVertexTabPt;
-    NormVertexTabPt = NormVertexTab;
-    NormVertexTab = tmp3;
-
-    float *tmp4= ExtraDimensionPt ;
-    ExtraDimensionPt = ExtraDimension;
-    ExtraDimension = tmp4;
-
-    SwichAccomplished = true;
     copycomponent(componentsPt, components);
 }
 
