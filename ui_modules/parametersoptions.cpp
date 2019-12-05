@@ -204,15 +204,22 @@ void Parametersoptions::GuiUpdate()
     //Grid
     int mg =    (isoparam)["MaxGrid"].toInt();
     ui.maxgriLabel->setText("MaxGrid="+ QString::number(mg));
+
+    ui.maxgri->blockSignals(true);
     ui.maxgri->setValue(mg);
+    ui.maxgri->blockSignals(false);
     //Triangles
     mg = (isoparam)["MaxTri"].toInt();
     ui.maxtriLabel->setText("MaxTri="+ QString::number(mg)+"M");
+    ui.maxtri->blockSignals(true);
     ui.maxtri->setValue(mg);
+    ui.maxtri->blockSignals(false);
     //Points
     mg = (isoparam)["MaxPt"].toInt();
     ui.maxptLabel->setText("MaxPt="+ QString::number(mg)+"M");
+    ui.maxpt->blockSignals(true);
     ui.maxpt->setValue(mg);
+    ui.maxpt->blockSignals(false);
     //Styles:
     QString Style = ((JConfig["Styles"].toObject())["UsedStyle"].toString());
     ui.comboBox_2->setCurrentText(Style);
