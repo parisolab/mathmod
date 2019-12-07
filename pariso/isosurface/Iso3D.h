@@ -102,7 +102,7 @@ public :
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     int IsoConditionRequired,
         ConditionSize;
-    uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_implicitfunctions, Nb_Sliders;
+    uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
     double *x_Step, *y_Step, *z_Step;
     uint *grid;
     double Octaves, Lacunarity, Gain;
