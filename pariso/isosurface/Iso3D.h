@@ -133,7 +133,6 @@ public :
     uint *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
-    //unsigned int *  IndexPolyTab;
     uint NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
     QString message;

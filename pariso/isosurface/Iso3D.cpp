@@ -770,9 +770,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     double* vals;
     double* Res;
-    maximumgrid = NbMaxGrid;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
-    //uint maxgrscalemaxgr = maximumgrid*maximumgrid;
+    uint maxgrscalemaxgr = maximumgrid*maximumgrid;
     const uint limitY = Ygrid, limitZ = Zgrid;
     uint I, J, IJK;
     uint id=0;
@@ -1606,7 +1604,7 @@ void Iso3D::IsoBuild (
     masterthread->maximumgrid = NbMaxGrid = maxx;
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        workerthreads[nbthreads].maximumgrid = NbMaxGrid;
+        workerthreads[nbthreads].maximumgrid = masterthread->maximumgrid;
     }
     if(GridVoxelVarPt != nullptr)
         delete[] GridVoxelVarPt;
