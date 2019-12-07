@@ -4835,8 +4835,8 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
         MathmodRef->ui.glWidget->LocalScene.slider = 1;
         for (int i = 0; i < size; ++i)
         {
-            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
-            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[i] = qlstPos.at(i+(index-1)*size).toDouble();
+            MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->SliderValues[uint(i)] = qlstPos.at(i+(index-1)*size).toDouble();
+            MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->SliderValues[uint(i)] = qlstPos.at(i+(index-1)*size).toDouble();
         }
 
         for(int sl=0; sl<20; sl++)
