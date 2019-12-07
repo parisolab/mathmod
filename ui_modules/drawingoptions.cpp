@@ -679,7 +679,7 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         QObj = Jobj["Iso3D"].toObject();
         // Fxyz
         NbFxyz = (QObj["Fxyz"].toArray()).size();
-        if(NbFxyz > Parameters->NbComponent || NbFxyz == 0)
+        if(NbFxyz > Parameters->NbIsoComponent || NbFxyz == 0)
         {
             scriptErrorType = FXYZ_OUT_OF_RANGE;
             ErrorMsg();
@@ -749,7 +749,7 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         QObj = Jobj["Param3D"].toObject();
         // Fx
         NbFx = (QObj["Fx"].toArray()).size();
-        if(NbFx > Parameters->NbComponent || NbFx == 0)
+        if(NbFx > Parameters->NbParComponent || NbFx == 0)
         {
             scriptErrorType = FX_OUT_OF_RANGE;
             ErrorMsg();
@@ -1622,6 +1622,7 @@ int DrawingOptions::on_choice_activated(const QString &arg)
     {
         UpdateScriptEditorAndTreeObject();
     }
+
     return Result;
 }
 
@@ -4830,7 +4831,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
     indexcurrentSet = index;
     if(index >0)
     {
-        int size = qlstnames.size();
+        int size = (qlstnames.size());
         MathmodRef->ui.glWidget->LocalScene.slider = 1;
         for (int i = 0; i < size; ++i)
         {

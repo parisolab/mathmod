@@ -3,7 +3,8 @@
         "MaxGrid": 200,
         "MaxPt": 1,
         "MaxTri": 2,
-        "NbComponent": 200,
+        "NbIsoComponent": 20,
+        "NbParComponent": 200,
         "InitParGrid": 50,
         "InitIsoGrid": 40
 

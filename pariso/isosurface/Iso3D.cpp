@@ -40,7 +40,7 @@ struct ComponentInfos * components=&componentsStr;
 uint NbMaxGrid = 100;
 uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
-uint NbComponent = 30;
+uint NbIsoComponent = 30;
 
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
@@ -267,7 +267,7 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     WorkerThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
     for(uint i=0; i+1<WorkerThreadsNumber; i++)
-        workerthreadstmp[i].IsoWorkerTable(NbComponent, NbMaxGrid);
+        workerthreadstmp[i].IsoWorkerTable(NbIsoComponent, NbMaxGrid);
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
     for(uint i=0; i+1<OldWorkerThreadsNumber; i++)
@@ -295,10 +295,10 @@ ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*NbComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*NbIsoComponent*NbMaxGrid)*sizeof(double));
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
         workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
@@ -436,7 +436,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     OrignbY= factY;
     OrignbZ=factZ;
     Stack_Factor = factX*factY*factZ;
-    NbComponent=NbCompo;
+    NbIsoComponent=NbCompo;
     NbMaxGrid = nbmaxgrid;
     NbMaxTri = maxtri;
     NbMaxPts = maxpts;
@@ -1552,9 +1552,10 @@ void Iso3D::stopcalculations(bool calculation)
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbComponent+1)*sizeof(uint));
-    memcpy(copy->IsoPts, origin->IsoPts, (2*NbComponent+1)*sizeof(uint));
-    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbComponent+1)*sizeof(uint));
+    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbIsoComponent+1)*sizeof(uint));
+    memcpy(copy->IsoPts, origin->IsoPts, (2*NbIsoComponent+1)*sizeof(uint));
+    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbParComponent+1)*sizeof(uint));
+    memcpy(copy->ParPts, origin->ParPts, (2*NbParComponent+1)*sizeof(uint));
 
     copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
     copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;

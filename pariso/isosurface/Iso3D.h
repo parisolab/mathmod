@@ -139,7 +139,7 @@ public :
 public :
     Iso3D(uint, uint,
           uint gridmax=NbMaxGrid,
-          uint NbCmp=NbComponent,
+          uint NbCmp=NbIsoComponent,
           uint nbThreads=6,
           uint nbGrid=40,
           uint factX=4,

@@ -40,7 +40,8 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     MaxTri=300000;
     MaxPt=150000;
     MaxGrid=80;
-    NbComponent = 10;
+    NbIsoComponent = 10;
+    NbParComponent = 10;
     InitParGrid=50;
     InitIsoGrid=40;
     dotsymbol =".";
@@ -468,8 +469,12 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
                 MaxPt     = (IsoParam)["MaxPt"].toInt() * 1000000;
             if((IsoParam)["MaxGrid"].isDouble())
                 MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
-            if((IsoParam)["NbComponent"].isDouble())
-                NbComponent= (IsoParam)["NbComponent"].toInt();
+
+            if((IsoParam)["NbIsoComponent"].isDouble())
+                NbIsoComponent= (IsoParam)["NbIsoComponent"].toInt();
+
+            if((IsoParam)["NbParComponent"].isDouble())
+                NbParComponent= (IsoParam)["NbParComponent"].toInt();
 
             if((IsoParam)["InitParGrid"].isDouble())
                 InitParGrid= (IsoParam)["InitParGrid"].toInt();

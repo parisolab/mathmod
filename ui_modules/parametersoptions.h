@@ -64,7 +64,8 @@ public:
     int CalculFactor[3];
     int Shininess;
     int MaxTri, MaxPt, MaxGrid;
-    int NbComponent;
+    int NbIsoComponent;
+    int NbParComponent;
     int InitParGrid;
     int InitIsoGrid;
 

@@ -34,6 +34,8 @@ static double ParamThreadId=0;
 
 static QElapsedTimer ptime;
 
+uint NbParComponent = 30;
+
 double CurrentParamCmpId(const double* p)
 {
     int pp = int(p[0]);
@@ -81,12 +83,12 @@ ParWorkerThread::ParWorkerThread()
     stepMorph = 0;
     pace = 1.0/30.0;
     ParsersAllocated = false;
-    v_inf = new double[NbComponent];
-    u_inf = new double[NbComponent];
-    v_sup = new double[NbComponent];
-    u_sup = new double[NbComponent];
-    dif_v = new double[NbComponent];
-    dif_u = new double[NbComponent];
+    v_inf = new double[NbParComponent];
+    u_inf = new double[NbParComponent];
+    v_sup = new double[NbParComponent];
+    u_sup = new double[NbParComponent];
+    dif_v = new double[NbParComponent];
+    dif_u = new double[NbParComponent];
 }
 
 //++++++++++++++++++++++++++++++++++++
@@ -130,16 +132,16 @@ ParMasterThread::ParMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Lacunarity = 0.5;
-    ParamStructs = new ParStruct[NbComponent];
-    grid         = new uint[2*NbComponent];
+    ParamStructs = new ParStruct[NbParComponent];
+    grid         = new uint[2*NbParComponent];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-Par3D::Par3D(uint nbThreads, uint nbGrid)
+Par3D::Par3D(uint nbThreads, uint nbGrid, uint nbparcomp)
 {
-    initialiser_parametres(nbThreads, nbGrid);
+    initialiser_parametres(nbThreads, nbGrid, nbparcomp);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -154,12 +156,13 @@ void ParWorkerThread::ParCompute(uint fctnb, uint idx)
     calcul_objet(fctnb, idx);
 }
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
+void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid, uint nbparcomp)
 {
     Ugrid = nbGrid;
     Vgrid = nbGrid;
     largeur_fenetre = 620;
     hauteur_fenetre = 620;
+    NbParComponent = nbparcomp;
     CutV = CutU = 0;
     tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
     tetazw_ok = tetaxy_ok =  tetaxz_ok = tetayz_ok = tetaxw_ok = tetayw_ok =  param4D = -1;
@@ -1785,9 +1788,10 @@ void Par3D::emitErrorSignal()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbComponent+1)*sizeof(uint));
-    memcpy(copy->IsoPts, origin->IsoPts, (2*NbComponent+1)*sizeof(uint));
-    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbComponent+1)*sizeof(uint));
+    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbIsoComponent+1)*sizeof(uint));
+    memcpy(copy->IsoPts, origin->IsoPts, (2*NbIsoComponent+1)*sizeof(uint));
+    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbParComponent+1)*sizeof(uint));
+    memcpy(copy->ParPts, origin->ParPts, (2*NbParComponent+1)*sizeof(uint));
 
     copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
     copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;

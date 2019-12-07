@@ -56,19 +56,19 @@ ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
     objectproperties.view_rotz      = 1.0;
     objectproperties.IndexCurrentFormula = -1;
 
-    objectproperties.IsoColorliste          = new unsigned int[NbComponent];
-    objectproperties.ParColorliste          = new unsigned int[NbComponent];
-    objectproperties.FillIsoliste           = new unsigned int[NbComponent];
-    objectproperties.FillParliste           = new unsigned int[NbComponent];
-    objectproperties.CNDverifyIsoliste      = new unsigned int[NbComponent];
-    objectproperties.CNDverifyParliste      = new unsigned int[NbComponent];
-    objectproperties.CNDnotverifyIsoliste   = new unsigned int[NbComponent];
-    objectproperties.CNDnotverifyParliste   = new unsigned int[NbComponent];
+    objectproperties.IsoColorliste          = new unsigned int[NbIsoComponent];
+    objectproperties.ParColorliste          = new unsigned int[NbParComponent];
+    objectproperties.FillIsoliste           = new unsigned int[NbIsoComponent];
+    objectproperties.FillParliste           = new unsigned int[NbParComponent];
+    objectproperties.CNDverifyIsoliste      = new unsigned int[NbIsoComponent];
+    objectproperties.CNDverifyParliste      = new unsigned int[NbParComponent];
+    objectproperties.CNDnotverifyIsoliste   = new unsigned int[NbIsoComponent];
+    objectproperties.CNDnotverifyParliste   = new unsigned int[NbParComponent];
 
-    objectproperties.frontcols    = new float[4*NbComponent];
-    objectproperties.backcols     = new float[4*NbComponent];
-    objectproperties.frontcolsPar = new float[4*NbComponent];
-    objectproperties.backcolsPar  = new float[4*NbComponent];
+    objectproperties.frontcols    = new float[4*std::max(NbParComponent,NbIsoComponent)];
+    objectproperties.backcols     = new float[4*std::max(NbParComponent,NbIsoComponent)];
+    objectproperties.frontcolsPar = new float[4*std::max(NbParComponent,NbIsoComponent)];
+    objectproperties.backcolsPar  = new float[4*std::max(NbParComponent,NbIsoComponent)];
 
     objectproperties.red[0]   = 1.0;
     objectproperties.red[1]   = 0.0;
@@ -187,7 +187,7 @@ ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
     objectproperties.frontcols[9*4+3] = objectproperties.frontcolsPar[9*4+3] = 1.0f;
 
     uint step = 4;
-    for(uint i=step; i<NbComponent; i++)
+    for(uint i=step; i<std::max(NbParComponent,NbIsoComponent); i++)
     {
         objectproperties.frontcols[i*4+0] = objectproperties.frontcolsPar[i*4+0] = objectproperties.frontcolsPar[(i%step)*4+0];
         objectproperties.frontcols[i*4+1] = objectproperties.frontcolsPar[i*4+1] = objectproperties.frontcolsPar[(i%step)*4+1];
@@ -245,10 +245,10 @@ ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
 
 void ObjectParameters::InitComponentinfos(struct  ComponentInfos & compinfos)
 {
-    compinfos.IsoPositions        = new uint[2*NbComponent+1];
-    compinfos.IsoPts              = new uint[2*NbComponent+1];
-    compinfos.Parametricpositions = new uint[3*NbComponent+1];
-    compinfos.ParPts              = new uint[2*NbComponent+1];
+    compinfos.IsoPositions        = new uint[2*NbIsoComponent+1];
+    compinfos.IsoPts              = new uint[2*NbIsoComponent+1];
+    compinfos.Parametricpositions = new uint[3*NbParComponent+1];
+    compinfos.ParPts              = new uint[2*NbParComponent+1];
 
     compinfos.NoiseParam.Octaves     = 4;
     compinfos.NoiseParam.Lacunarity  = 0.5;
