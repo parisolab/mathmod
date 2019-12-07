@@ -731,36 +731,36 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     const uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
-
+    uint maxgridval = NbMaxGrid;
     vals[3]          = masterthread->stepMorph;
-    masterthread->xLocal2[IsoIndex*NbMaxGrid]=masterthread->xSupParser[IsoIndex].Eval(vals);
-    masterthread->yLocal2[IsoIndex*NbMaxGrid]=masterthread->ySupParser[IsoIndex].Eval(vals);
-    masterthread->zLocal2[IsoIndex*NbMaxGrid]=masterthread->zSupParser[IsoIndex].Eval(vals);
+    masterthread->xLocal2[IsoIndex*maxgridval]=masterthread->xSupParser[IsoIndex].Eval(vals);
+    masterthread->yLocal2[IsoIndex*maxgridval]=masterthread->ySupParser[IsoIndex].Eval(vals);
+    masterthread->zLocal2[IsoIndex*maxgridval]=masterthread->zSupParser[IsoIndex].Eval(vals);
 
-    masterthread->x_Step[IsoIndex] =  (masterthread->xLocal2[IsoIndex*NbMaxGrid] - masterthread->xInfParser[IsoIndex].Eval(vals))/(limitX-1);
-    masterthread->y_Step[IsoIndex] =  (masterthread->yLocal2[IsoIndex*NbMaxGrid] - masterthread->yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-    masterthread->z_Step[IsoIndex] =  (masterthread->zLocal2[IsoIndex*NbMaxGrid] - masterthread->zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+    masterthread->x_Step[IsoIndex] =  (masterthread->xLocal2[IsoIndex*maxgridval] - masterthread->xInfParser[IsoIndex].Eval(vals))/(limitX-1);
+    masterthread->y_Step[IsoIndex] =  (masterthread->yLocal2[IsoIndex*maxgridval] - masterthread->yInfParser[IsoIndex].Eval(vals))/(limitY-1);
+    masterthread->z_Step[IsoIndex] =  (masterthread->zLocal2[IsoIndex*maxgridval] - masterthread->zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
     for (uint i= 1; i < limitX; i++)
-        masterthread->xLocal2[IsoIndex*NbMaxGrid+i] = masterthread->xLocal2[IsoIndex*NbMaxGrid+i-1] - masterthread->x_Step[IsoIndex];
+        masterthread->xLocal2[IsoIndex*maxgridval+i] = masterthread->xLocal2[IsoIndex*maxgridval+i-1] - masterthread->x_Step[IsoIndex];
     for (uint j= 1; j < limitY; j++)
-        masterthread->yLocal2[IsoIndex*NbMaxGrid+j] = masterthread->yLocal2[IsoIndex*NbMaxGrid+j-1] - masterthread->y_Step[IsoIndex];
+        masterthread->yLocal2[IsoIndex*maxgridval+j] = masterthread->yLocal2[IsoIndex*maxgridval+j-1] - masterthread->y_Step[IsoIndex];
     for (uint k= 1; k < limitZ; k++)
-        masterthread->zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k-1] - masterthread->z_Step[IsoIndex];
+        masterthread->zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k-1] - masterthread->z_Step[IsoIndex];
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for (uint k= 0; k < limitX; k++)
         {
-            workerthreads[nbthreads].xLocal2[IsoIndex*NbMaxGrid+k] = masterthread->xLocal2[IsoIndex*NbMaxGrid+k];
+            workerthreads[nbthreads].xLocal2[IsoIndex*maxgridval+k] = masterthread->xLocal2[IsoIndex*maxgridval+k];
         }
         for (uint k= 0; k < limitY; k++)
         {
-            workerthreads[nbthreads].yLocal2[IsoIndex*NbMaxGrid+k] = masterthread->yLocal2[IsoIndex*NbMaxGrid+k];
+            workerthreads[nbthreads].yLocal2[IsoIndex*maxgridval+k] = masterthread->yLocal2[IsoIndex*maxgridval+k];
         }
         for (uint k= 0; k < limitZ; k++)
         {
-            workerthreads[nbthreads].zLocal2[IsoIndex*NbMaxGrid+k] = masterthread->zLocal2[IsoIndex*NbMaxGrid+k];
+            workerthreads[nbthreads].zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k];
         }
     }
 }
@@ -1601,7 +1601,7 @@ void Iso3D::IsoBuild (
         for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
             maxx = std::max(maxx, masterthread->grid[fctnb]);
 
-    masterthread->maximumgrid = NbMaxGrid = maxx;
+    masterthread->maximumgrid = /*NbMaxGrid =*/ maxx;
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].maximumgrid = masterthread->maximumgrid;
@@ -1609,10 +1609,10 @@ void Iso3D::IsoBuild (
 
     if(GridVoxelVarPt != nullptr)
         delete[] GridVoxelVarPt;
-    GridVoxelVarPt = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+    GridVoxelVarPt = new Voxel[maxx*maxx*maxx];
     if(Results != nullptr)
         delete[] Results;
-    Results = new double[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+    Results = new double[maxx*maxx*maxx];
 
     //*****//
     //*****//
@@ -2265,7 +2265,7 @@ Iso3D::~Iso3D()
 uint Iso3D::SetMiniMmeshStruct()
 {
     uint I, J, IJK, i, j, k, Index, lnew, iter, nbpl, iterpl;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
 
     lnew = 0;
     NbPolyMin = 0;
@@ -2275,7 +2275,7 @@ uint Iso3D::SetMiniMmeshStruct()
         I  = i*maxgrscalemaxgr;
         for(j=0; j+1 < Ygrid; j++)
         {
-            J  = I+j*NbMaxGrid;
+            J  = I+j*masterthread->maximumgrid;
             for(k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
@@ -2342,7 +2342,7 @@ uint Iso3D::ConstructIsoSurface()
 {
     uint IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
     uint I, J, IJK;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
 
     NbTriangleIsoSurface = 0;
     limitX = Xgrid;
@@ -2351,7 +2351,7 @@ uint Iso3D::ConstructIsoSurface()
         I   = i*maxgrscalemaxgr;
         for(uint j=0; j+1 < Ygrid; j++)
         {
-            J   = I+j*NbMaxGrid;
+            J   = I+j*masterthread->maximumgrid;
             for(uint k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
@@ -2389,7 +2389,8 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     uint index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
     double vals[7], IsoValue_1, IsoValue_2, rapport;
     double factor;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint maxgridval=masterthread->maximumgrid;
+    uint maxgrscalemaxgr = maxgridval*maxgridval;
     uint I, J, JK, IJK, IPLUSONEJK, IMINUSONEJK,
         IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
     /// We have to compute the edges for the Grid limits ie: i=0, j=0 and k=0
@@ -2408,15 +2409,15 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
         I = i*maxgrscalemaxgr;
         for(j = j_Start; j < j_End; j++)
         {
-            J = I + j*NbMaxGrid;
+            J = I + j*maxgridval;
             for(k = k_Start; k < k_End; k++)
             {
                 IJK                 = J+k;
                 IPLUSONEJK          = IJK + maxgrscalemaxgr;
                 IMINUSONEJK         = IJK - maxgrscalemaxgr;
-                IJPLUSONEK          = IJK + NbMaxGrid;
-                IJMINUSONEK         = IJK - NbMaxGrid;
-                IMINUSONEJMINUSONEK = IMINUSONEJK - NbMaxGrid;
+                IJPLUSONEK          = IJK + maxgridval;
+                IJMINUSONEK         = IJK - maxgridval;
+                IMINUSONEJMINUSONEK = IMINUSONEJK - maxgridval;
 
                 IsoValue_1 = Results[IJK];
                 /// First Case P(i+1)(j)(k)
@@ -2546,7 +2547,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     i =0;
     for(j=0; j < Ygrid; j++)
     {
-        J = j*NbMaxGrid;
+        J = j*maxgridval;
         for(k=0; k < Zgrid; k++)
         {
             JK = J +k;
@@ -2582,8 +2583,8 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 // The same Point is used in three other Voxels
                 if( j != 0)
                 {
-                    GridVoxelVarPt[JK-NbMaxGrid].Edge_Points[4] = NbPointIsoMap_local;
-                    GridVoxelVarPt[JK-NbMaxGrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[JK-maxgridval].Edge_Points[4] = NbPointIsoMap_local;
+                    GridVoxelVarPt[JK-maxgridval].NbEdgePoint += 1;
                 }
                 if ( k != 0 )
                 {
@@ -2592,8 +2593,8 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 }
                 if( j != 0 && k != 0)
                 {
-                    GridVoxelVarPt[JK-NbMaxGrid-1].Edge_Points[6] = NbPointIsoMap_local;
-                    GridVoxelVarPt[JK-NbMaxGrid-1].NbEdgePoint += 1;
+                    GridVoxelVarPt[JK-maxgridval-1].Edge_Points[6] = NbPointIsoMap_local;
+                    GridVoxelVarPt[JK-maxgridval-1].NbEdgePoint += 1;
                 }
 
                 NbPointIsoMap_local++;
@@ -2602,7 +2603,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             // Second Case P(0)(j+1)(k)
             if ( j != (Ygrid -1))
             {
-                IsoValue_2 = Results[JK+NbMaxGrid];
+                IsoValue_2 = Results[JK+maxgridval];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
@@ -2667,8 +2668,8 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     // The same Point is used in three other Voxels
                     if ( j != 0)
                     {
-                        GridVoxelVarPt[JK-NbMaxGrid].Edge_Points[7]   =NbPointIsoMap_local;
-                        GridVoxelVarPt[JK-NbMaxGrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[JK-maxgridval].Edge_Points[7]   =NbPointIsoMap_local;
+                        GridVoxelVarPt[JK-maxgridval].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2686,7 +2687,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     I = i*maxgrscalemaxgr;
     for(j=0; j < Ygrid; j++)
     {
-        J = I + j*NbMaxGrid;
+        J = I + j*maxgridval;
         for(k=0; k < Zgrid; k++)
         {
             JK = J + k;
@@ -2697,7 +2698,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             // Second Case P(i)(j+1)(k)
             if ( j != (Ygrid -1))
             {
-                IsoValue_2 = Results[JK+NbMaxGrid];
+                IsoValue_2 = Results[JK+maxgridval];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
@@ -2778,13 +2779,13 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     }
                     if(j != 0)
                     {
-                        GridVoxelVarPt[JK-NbMaxGrid].Edge_Points[7]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[JK-NbMaxGrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[JK-maxgridval].Edge_Points[7]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[JK-maxgridval].NbEdgePoint += 1;
                     }
                     if( i !=0 && j != 0)
                     {
-                        GridVoxelVarPt[JK-maxgrscalemaxgr-NbMaxGrid].Edge_Points[5] = NbPointIsoMap_local;
-                        GridVoxelVarPt[JK-maxgrscalemaxgr-NbMaxGrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[JK-maxgrscalemaxgr-maxgridval].Edge_Points[5] = NbPointIsoMap_local;
+                        GridVoxelVarPt[JK-maxgrscalemaxgr-maxgridval].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2846,7 +2847,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
             // Second Case P(i)(j+1)(k)
 
-            IsoValue_2 = Results[i*maxgrscalemaxgr+NbMaxGrid+k];
+            IsoValue_2 = Results[i*maxgrscalemaxgr+maxgridval+k];
             // Edge Point computation and  save in IsoPointMap
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
             {
@@ -2940,13 +2941,13 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
         for(k=0; k < Zgrid; k++)
         {
 
-            IsoValue_1 = Results[i*maxgrscalemaxgr+j*NbMaxGrid+k];
+            IsoValue_1 = Results[i*maxgrscalemaxgr+j*maxgridval+k];
 
 
             // First Case P(i+1)(j)(k)
             if( i != (Xgrid-1))
             {
-                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid+k];
+                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*maxgridval+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
 
@@ -2968,24 +2969,24 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         return 0;
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].Edge_Points[0] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[0] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if( j != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].Edge_Points[4] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k].Edge_Points[4] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k].NbEdgePoint += 1;
                     }
                     if(k != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k-1].Edge_Points[2]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k-1].Edge_Points[2]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k-1].NbEdgePoint += 1;
                     }
                     if(j != 0 && k != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k-1].Edge_Points[6] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k-1].Edge_Points[6] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k-1].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -2997,7 +2998,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             // Third Case P(i)(j)(k+1)
             if( k != (Zgrid -1))
             {
-                IsoValue_2 = Results[i*maxgrscalemaxgr+j*NbMaxGrid+k+1];
+                IsoValue_2 = Results[i*maxgrscalemaxgr+j*maxgridval+k+1];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
@@ -3018,24 +3019,24 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         return 0;
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].Edge_Points[3] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[3] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if(i !=0)
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid+k].Edge_Points[1]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[1]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval+k].NbEdgePoint += 1;
                     }
                     if( j!=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].Edge_Points[7]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k].Edge_Points[7]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k].NbEdgePoint += 1;
                     }
                     if(i != 0 && j !=0)
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].Edge_Points[5] = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*maxgridval+k].Edge_Points[5] = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*maxgridval+k].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -3052,11 +3053,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     for(i=0; i < Xgrid; i++)
         for(j=0; j < Ygrid; j++)
         {
-            IsoValue_1 = Results[i*maxgrscalemaxgr+j*NbMaxGrid];
+            IsoValue_1 = Results[i*maxgrscalemaxgr+j*maxgridval];
             // First Case P(i+1)(j)(k)
             if(i != (Xgrid -1))
             {
-                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid];
+                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*maxgridval];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     // Edge Point computation and  save in IsoPointMap
@@ -3077,14 +3078,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         return 0;
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid].Edge_Points[0] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[0] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].NbEdgePoint += 1;
 
                     // The same Point is used in one other Voxel
                     if(j !=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid].Edge_Points[4] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval].Edge_Points[4] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -3096,7 +3097,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             // Second Case P(i)(j+1)(k)
             if(j != Ygrid -1)
             {
-                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*NbMaxGrid];
+                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*maxgridval];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
@@ -3117,14 +3118,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         return 0;
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid].Edge_Points[8] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[8] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].NbEdgePoint += 1;
 
                     // The same Point is used in one other Voxels
                     if ( i !=0 )
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid].Edge_Points[9]    = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval].Edge_Points[9]    = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -3134,7 +3135,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
             // Third Case P(i)(j)(k+1)
 
-            IsoValue_2 = Results[i*maxgrscalemaxgr+j*NbMaxGrid+1];
+            IsoValue_2 = Results[i*maxgrscalemaxgr+j*maxgridval+1];
             // Edge Point computation and  save in IsoPointMap
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
             {
@@ -3155,24 +3156,24 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     return 0;
 
                 // save The reference to this point
-                GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid].Edge_Points[3] = NbPointIsoMap_local;
-                GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid].NbEdgePoint += 1;
+                GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[3] = NbPointIsoMap_local;
+                GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].NbEdgePoint += 1;
 
                 // The same Point is used in three other Voxels
                 if ( i !=0 )
                 {
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid].Edge_Points[1]   = NbPointIsoMap_local;
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval].Edge_Points[1]   = NbPointIsoMap_local;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval].NbEdgePoint += 1;
                 }
                 if (j != 0 )
                 {
-                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid].Edge_Points[7]   = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval].Edge_Points[7]   = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval].NbEdgePoint += 1;
                 }
                 if ( i !=0 && j != 0 )
                 {
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*NbMaxGrid].Edge_Points[5] = NbPointIsoMap_local;
-                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*NbMaxGrid].NbEdgePoint += 1;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*maxgridval].Edge_Points[5] = NbPointIsoMap_local;
+                    GridVoxelVarPt[(i-1)*maxgrscalemaxgr+(j-1)*maxgridval].NbEdgePoint += 1;
                 }
 
                 NbPointIsoMap_local++;
@@ -3189,13 +3190,13 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
         for(j=0; j < Ygrid; j++)
         {
 
-            IsoValue_1 = Results[i*maxgrscalemaxgr+j*NbMaxGrid+k];
+            IsoValue_1 = Results[i*maxgrscalemaxgr+j*maxgridval+k];
 
 
             // First Case P(i+1)(j)(k)
             if( i != (Xgrid -1) )
             {
-                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*NbMaxGrid+k];
+                IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*maxgridval+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
 
@@ -3217,24 +3218,24 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         return 0;
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].Edge_Points[0] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[0] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if(j !=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].Edge_Points[4] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k].Edge_Points[4] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k].NbEdgePoint += 1;
                     }
                     if(k !=0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k-1].Edge_Points[2]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k-1].Edge_Points[2]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k-1].NbEdgePoint += 1;
                     }
                     if(j !=0 && k != 0)
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k-1].Edge_Points[6] = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*NbMaxGrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k-1].Edge_Points[6] = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+(j-1)*maxgridval+k-1].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -3246,7 +3247,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             // Second Case P(i)(j+1)(k)
             if( j != (Ygrid -1) )
             {
-                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*NbMaxGrid+k];
+                IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*maxgridval+k];
                 // Edge Point computation and  save in IsoPointMap
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
@@ -3267,24 +3268,24 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         return 0;
 
                     // save The reference to this point
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].Edge_Points[8] = NbPointIsoMap_local;
-                    GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k].NbEdgePoint += 1;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[8] = NbPointIsoMap_local;
+                    GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].NbEdgePoint += 1;
 
                     // The same Point is used in three other Voxels
                     if( i !=0 )
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid+k].Edge_Points[9]    = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid+k].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[9]    = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval+k].NbEdgePoint += 1;
                     }
                     if( k !=0 )
                     {
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k-1].Edge_Points[11]   = NbPointIsoMap_local;
-                        GridVoxelVarPt[i*maxgrscalemaxgr+j*NbMaxGrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k-1].Edge_Points[11]   = NbPointIsoMap_local;
+                        GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k-1].NbEdgePoint += 1;
                     }
                     if( i !=0 && k !=0 )
                     {
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid+k-1].Edge_Points[10] = NbPointIsoMap_local;
-                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*NbMaxGrid+k-1].NbEdgePoint += 1;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval+k-1].Edge_Points[10] = NbPointIsoMap_local;
+                        GridVoxelVarPt[(i-1)*maxgrscalemaxgr+j*maxgridval+k-1].NbEdgePoint += 1;
                     }
 
                     NbPointIsoMap_local++;
@@ -3300,20 +3301,20 @@ void Iso3D::SignatureComputation()
 {
     uint I, J, IJK, IPLUSONEJK,
         IJPLUSONEK,  IPLUSONEJPLUSONEK;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
     uint limitX = Xgrid;
     for(uint i=0; i < limitX; i++)
     {
         I = i*maxgrscalemaxgr;
         for(uint j=0; j < Ygrid; j++)
         {
-            J = I + j*NbMaxGrid;
+            J = I + j*masterthread->maximumgrid;
             for(uint k=0; k < Zgrid; k++)
             {
                 IJK               = J + k;
                 IPLUSONEJK        = IJK + maxgrscalemaxgr;
-                IJPLUSONEK        = IJK + NbMaxGrid;
-                IPLUSONEJPLUSONEK = IPLUSONEJK + NbMaxGrid;
+                IJPLUSONEK        = IJK + masterthread->maximumgrid;
+                IPLUSONEJPLUSONEK = IPLUSONEJK + masterthread->maximumgrid;
 
                 if(Results[IJK] <= 0) GridVoxelVarPt[IJK].Signature +=1;
 
