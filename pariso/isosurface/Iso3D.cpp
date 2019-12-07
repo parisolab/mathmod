@@ -155,17 +155,17 @@ IsoMasterThread::IsoMasterThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void IsoMasterThread::IsoMasterTable()
+void IsoMasterThread::IsoMasterTable(uint nbcomp, uint maxgrid)
 {
-    vr2     = new double[3*NbComponent*NbMaxGrid];
-    xLocal2 = new double[NbComponent*NbMaxGrid];
-    yLocal2 = new double[NbComponent*NbMaxGrid];
-    zLocal2 = new double[NbComponent*NbMaxGrid];
-    x_Step       = new double[NbComponent];
-    y_Step       = new double[NbComponent];
-    z_Step       = new double[NbComponent];
-    grid         = new uint[NbComponent];
-    ImplicitStructs = new ImplicitStructure[NbComponent];
+    vr2     = new double[3*nbcomp*maxgrid];
+    xLocal2 = new double[nbcomp*maxgrid];
+    yLocal2 = new double[nbcomp*maxgrid];
+    zLocal2 = new double[nbcomp*maxgrid];
+    x_Step       = new double[nbcomp];
+    y_Step       = new double[nbcomp];
+    z_Step       = new double[nbcomp];
+    grid         = new uint[nbcomp];
+    ImplicitStructs = new ImplicitStructure[nbcomp];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
@@ -239,12 +239,12 @@ IsoWorkerThread::IsoWorkerThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::IsoWorkerTable()
+void IsoWorkerThread::IsoWorkerTable(uint nbcomp, uint maxgrid)
 {
-    vr2     = new double[3*NbComponent*NbMaxGrid];
-    xLocal2 = new double[NbComponent*NbMaxGrid];
-    yLocal2 = new double[NbComponent*NbMaxGrid];
-    zLocal2 = new double[NbComponent*NbMaxGrid];
+    vr2     = new double[3*nbcomp*maxgrid];
+    xLocal2 = new double[nbcomp*maxgrid];
+    yLocal2 = new double[nbcomp*maxgrid];
+    zLocal2 = new double[nbcomp*maxgrid];
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -267,7 +267,7 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     WorkerThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
     for(uint i=0; i+1<WorkerThreadsNumber; i++)
-        workerthreadstmp[i].IsoWorkerTable();
+        workerthreadstmp[i].IsoWorkerTable(NbComponent, NbMaxGrid);
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
     for(uint i=0; i+1<OldWorkerThreadsNumber; i++)
@@ -445,10 +445,10 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     Xgrid = Ygrid = Zgrid = nbGrid;
     WorkerThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
-    masterthread->IsoMasterTable();
+    masterthread->IsoMasterTable(NbCompo, nbmaxgrid);
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
     for(uint i=0; i+1<WorkerThreadsNumber; i++)
-        workerthreads[i].IsoWorkerTable();
+        workerthreads[i].IsoWorkerTable(NbCompo, nbmaxgrid);
 
     masterthread->Xgrid = Xgrid;
     masterthread->Ygrid = Ygrid;
@@ -466,26 +466,9 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
-    //static int staticaction = 1;
-    /// Things to do one time...
-   /* if(staticaction == 1)
-    {*/
-        IsoSurfaceTriangleListe  = new uint[3*maxtri];
-        NormOriginaltmp          = new float[3*maxtri];
-   /*     staticaction            *= -1;
-    }
-    else
-    {
-        delete[] IsoSurfaceTriangleListe;
-        delete[] NormOriginaltmp;
-        delete[] NormVertexTab;
-        delete[] IndexPolyTab;
-        delete[] IndexPolyTabMin;
-        IsoSurfaceTriangleListe  = new uint[3*maxtri];
-        NormOriginaltmp          = new float[3*maxtri];
-        staticaction            *= -1;
-    }
-    */
+
+    IsoSurfaceTriangleListe  = new uint[3*maxtri];
+    NormOriginaltmp          = new float[3*maxtri];
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++

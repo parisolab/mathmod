@@ -70,7 +70,7 @@ public :
     void VoxelEvaluation(uint);
     void AllocateParsersForWorkerThread(uint,uint);
     void DeleteWorkerParsers();
-    void IsoWorkerTable();
+    void IsoWorkerTable(uint, uint);
     void run() Q_DECL_OVERRIDE;
     IsoWorkerThread();
     ~IsoWorkerThread() override;
@@ -115,7 +115,7 @@ public :
     uint HowManyIsosurface(std::string,uint);
     uint HowManyVariables(std::string, uint);
     ErrorMessage ParserIso();
-    void IsoMasterTable();
+    void IsoMasterTable(uint, uint);
     void initparser();
     IsoMasterThread();
     ~IsoMasterThread();
