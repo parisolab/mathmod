@@ -1601,7 +1601,7 @@ void Iso3D::IsoBuild (
         for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
             maxx = std::max(maxx, masterthread->grid[fctnb]);
 
-    masterthread->maximumgrid = /*NbMaxGrid =*/ maxx;
+    masterthread->maximumgrid = maxx;
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].maximumgrid = masterthread->maximumgrid;
