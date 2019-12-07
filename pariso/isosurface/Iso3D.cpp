@@ -840,9 +840,9 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 
                 for(uint l=0; l<nbstack; l++)
                 {
-                    vals[l*34  ]= xLocal2[IsoIndex*NbMaxGrid+Iindice+uint(l*nbX/nbstack)];
-                    vals[l*34+1]= yLocal2[IsoIndex*NbMaxGrid+Jindice+((uint(l/nbZ))%nbY)];
-                    vals[l*34+2]= zLocal2[IsoIndex*NbMaxGrid+Kindice+(l%nbZ)];
+                    vals[l*34  ]= xLocal2[IsoIndex*maximumgrid+Iindice+uint(l*nbX/nbstack)];
+                    vals[l*34+1]= yLocal2[IsoIndex*maximumgrid+Jindice+((uint(l/nbZ))%nbY)];
+                    vals[l*34+2]= zLocal2[IsoIndex*maximumgrid+Kindice+(l%nbZ)];
                 }
 
                 IJK = J+Kindice;
@@ -1606,6 +1606,7 @@ void Iso3D::IsoBuild (
     {
         workerthreads[nbthreads].maximumgrid = masterthread->maximumgrid;
     }
+
     if(GridVoxelVarPt != nullptr)
         delete[] GridVoxelVarPt;
     GridVoxelVarPt = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
