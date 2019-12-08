@@ -982,12 +982,13 @@
           "(x^2+y^2+z^2)>15"
         ],
         "Const": [
-          "r = (1/4)*(1+3*sqrt(5))",
-          "a = -(8/5)*(1+1/(sqrt(5)))*sqrt(5-sqrt(5))",
-          "c = (1/2)*sqrt(5-sqrt(5))"
+          "B=sqrt(5)",
+          "R = (1/4)*(1+3*B)",
+          "A = -8*(1+1/B)*sqrt(5-B)/5",
+          "C = sqrt(5-B)/2"
         ],
         "Fxyz": [
-          " a*(x-z)*(cos((2*pi)/5)*x-sin((2*pi)/5)*y-z) *(cos((4*pi)/5)*x-sin((4*pi)/5)*y-z) *(cos((6*pi)/5)*x-sin((6*pi)/5)*y-z) *(cos((8*pi)/5)*x-sin((8*pi)/5)*y-z)  + (1-c*z)*(x^2+y^2-1+r*z^2)^2"
+          " A*(x-z)*(cos((2*pi)/5)*x-sin((2*pi)/5)*y-z) *(cos((4*pi)/5)*x-sin((4*pi)/5)*y-z) *(cos((6*pi)/5)*x-sin((6*pi)/5)*y-z) *(cos((8*pi)/5)*x-sin((8*pi)/5)*y-z)  + (1-C*z)*(x^2+y^2-1+R*z^2)^2"
         ],
         "Xmin": [
           "-4"
