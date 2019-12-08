@@ -73,8 +73,8 @@ struct IsoStruct
     QString zmin;
     QString zmax;
     QString Component;
-    int          Nbcomponent;
-    int          index;
+    int     Nbcomponent;
+    int     index;
 };
 
 struct TreeStruct

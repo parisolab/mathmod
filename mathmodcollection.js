@@ -570,6 +570,9 @@
     },
     {
       "Iso3D": {
+        "Description": [
+          "BlackHole by Abderrahman Taha 06/12/2019"
+        ],
         "Name": [
           "BlackHole"
         ],
@@ -579,15 +582,34 @@
           " MoonPlanet",
           " WhiteStar "
         ],
-        "Varu": [
-          "A=(u-4*sin(tm*pi/10))^2",
-          "B=(u-2*cos(tm*pi/10))^2",
-          "C=(u-2*sin(tm*pi)-4*sin(tm*pi/10))^2",
-          "D=(u-2*cos(tm*pi)-2*cos(tm*pi/10))^2",
-          "E=(u-1/5)*(u-1/5) - 3/5",
-          "F =u*u - 3/5",
-          "H=u*cos(2*tm*pi)",
-          "G=u*sin(2*tm*pi)"
+        "Const": [
+          "M=pi/10"
+        ],
+        "Funct": [
+          "Ax=(x-4*sin(t*M))^2",
+          "Ay=(y-4*sin(t*M))^2",
+          "Az=(z-4*sin(t*M))^2",
+          "Bx=(x-2*cos(t*M))^2",
+          "By=(y-2*cos(t*M))^2",
+          "Bz=(z-2*cos(t*M))^2",
+          "Cx=(x-2*sin(t*pi)-4*sin(t*M))^2",
+          "Cy=(y-2*sin(t*pi)-4*sin(t*M))^2",
+          "Cz=(z-2*sin(t*pi)-4*sin(t*M))^2",
+          "Dx=(x-2*cos(t*pi)-2*cos(t*M))^2",
+          "Dy=(y-2*cos(t*pi)-2*cos(t*M))^2",
+          "Dz=(z-2*cos(t*pi)-2*cos(t*M))^2",
+          "Ex=(x-1/5)*(x-1/5) - 3/5",
+          "Ey=(y-1/5)*(y-1/5) - 3/5",
+          "Ez=(z-1/5)*(z-1/5) - 3/5",
+          "Fx =x*x - 3/5",
+          "Fy =y*y - 3/5",
+          "Fz =z*z - 3/5",
+          "Hx=x*cos(2*t*pi)",
+          "Hy=y*cos(2*t*pi)",
+          "Hz=z*cos(2*t*pi)",
+          "Gx=x*sin(2*t*pi)",
+          "Gy=y*sin(2*t*pi)",
+          "Gz=z*sin(2*t*pi)"
         ],
         "Grid": [
           "20",
@@ -596,33 +618,33 @@
           "20"
         ],
         "Fxyz": [
-          "((3/2)*(Hx-Gy)^2 + (Gx+ Hy)^2 +(z+4/5)^2 -(abs((11/5)*sin(t*pi/10))))*(Ax + By+ Fz)*min( ((3/2)*(Hx-Gy)^2 + (Gx+ Hy)^2 +(z+4/5)^2 -(abs((11/5)*sin(t*pi/10))))*(Ax + By + Fz), z) +1",
-          "Ax+ By + Ez",
-          "Cx + Dy  + Ez + 1/2",
-          "(3/2)*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+1/5)^2 -(abs((1/5)*sin(t*pi/10)+1/20))"
+          "((3/2)*(Hx(x,y,z,t)-Gy(x,y,z,t))^2 + (Gx(x,y,z,t)+ Hy(x,y,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(Ax(x,y,z,t) + By(x,y,z,t)+ Fz(x,y,z,t))*min( ((3/2)*(Hx(x,y,z,t)-Gy(x,y,z,t))^2 + (Gx(x,y,z,t)+ Hy(x,y,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(Ax(x,y,z,t) + By(x,y,z,t) + Fz(x,y,z,t)), z) +1",
+          "Ax(x,y,z,t)+ By(x,y,z,t) + Ez(x,y,z,t)",
+          "Cx(x,y,z,t) + Dy(x,y,z,t)  + Ez(x,y,z,t) + 1/2",
+          "(3/2)*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+1/5)^2 -(abs((1/5)*sin(t*M)+1/20))"
         ],
         "Xmin": [
           "-5",
-          "-1+4*sin(t*pi/10)",
-          "-1+2*sin(t*pi)+4*sin(t*pi/10)",
+          "-1+4*sin(t*M)",
+          "-1+2*sin(t*pi)+4*sin(t*M)",
           " -1/2"
         ],
         "Xmax": [
           "5",
-          "1+4*sin(t*pi/10)",
-          "1+2*sin(t*pi)+4*sin(t*pi/10)",
+          "1+4*sin(t*M)",
+          "1+2*sin(t*pi)+4*sin(t*M)",
           " 1/2"
         ],
         "Ymin": [
           "-4",
-          "-1+2*cos(t*pi/10)",
-          "-1+2*cos(t*pi)+2*cos(t*pi/10)",
+          "-1+2*cos(t*M)",
+          "-1+2*cos(t*pi)+2*cos(t*M)",
           " -1/2"
         ],
         "Ymax": [
           "4",
-          "1+2*cos(t*pi/10)",
-          "1+2*cos(t*pi)+2*cos(t*pi/10)",
+          "1+2*cos(t*M)",
+          "1+2*cos(t*pi)+2*cos(t*M)",
           " 1/2"
         ],
         "Zmin": [
@@ -639,11 +661,11 @@
         ]
       },
     "Texture": {
-      "Name": "Lines4",
+      "Name": "Gray",
       "Colors": [
-        "R=cos(7*x*y*pi)",
-        "G=sin(7*y*z*pi)",
-        "B=sin(7*z*x*pi)",
+        "R=7/10",
+        "G=7/10",
+        "B=7/10",
         "T=1"
       ]
     }
