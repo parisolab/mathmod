@@ -1003,8 +1003,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     varliste = "x,y,z,t";
 
-    //(constnotnull) ?
-
     initparser();
 
     //Evaluates defined constantes:

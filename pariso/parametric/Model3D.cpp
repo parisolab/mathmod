@@ -474,19 +474,16 @@ void ParWorkerThread::DeleteWorkerParsers()
 void ParMasterThread::InitMasterParsers()
 {
     DeleteMasterParsers();
-
     AllocateParsersForMasterThread();
 
     GradientParser->AddConstant("pi", PI);
     Cstparser.AddConstant("pi", PI);
-
     NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
-
     NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -515,21 +512,21 @@ void ParMasterThread::InitMasterParsers()
         myParserCND[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
 
-        for(uint i=0; i<RgbtSize; i++)
-        {
-            RgbtParser[i].AddConstant("pi", PI);
-        }
+    for(uint i=0; i<RgbtSize; i++)
+    {
+        RgbtParser[i].AddConstant("pi", PI);
+    }
 
-        for(uint i=0; i<VRgbtSize; i++)
-        {
-            VRgbtParser[i].AddConstant("pi", PI);
-        }
+    for(uint i=0; i<VRgbtSize; i++)
+    {
+        VRgbtParser[i].AddConstant("pi", PI);
+    }
 
-        for(uint i=0; i<FunctSize; i++)
-        {
-            Fct[i].AddConstant("pi", PI);
-            Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
-        }
+    for(uint i=0; i<FunctSize; i++)
+    {
+        Fct[i].AddConstant("pi", PI);
+        Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
+    }
 }
 
 ErrorMessage  Par3D::ParMorph()
@@ -545,18 +542,21 @@ ErrorMessage  ParMasterThread::parse_expression()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     std::string varliste = "x,y,z,t";
 
-    (constnotnull) ? ConstSize = HowManyVariables(Const, 1) : ConstSize =0;
     InitMasterParsers();
 
-    for(uint j=0; j<ConstSize; j++)
+    if(constnotnull)
     {
-        if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+        ConstSize = HowManyVariables(Const, 1);
+        for(uint j=0; j<ConstSize; j++)
         {
-            stdError.strError = Consts[j];
-            return stdError;
+            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+            {
+                stdError.strError = Consts[j];
+                return stdError;
+            }
+            ConstValues.push_back(Cstparser.Eval(vals));
+            Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
         }
-        ConstValues.push_back(Cstparser.Eval(vals));
-        Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
 
     if(functnotnull)
@@ -569,7 +569,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             {
                 Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
-
             //Add predefined constatnts:
             for(uint k=0; k<Nb_Sliders; k++)
             {
@@ -613,7 +612,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         RgbtSize =0;
     }
 
-
     //Texture:
     if(vrgbtnotnull)
     {
@@ -651,7 +649,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     else
         ParConditionRequired = -1;
-
 
     //Add defined constantes:
     for(uint i=0; i<expression_XSize; i++)
