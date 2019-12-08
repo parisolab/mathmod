@@ -1827,7 +1827,7 @@ void  Par3D::ParamBuild(
 )
 {
     uint NbTriangleIsoSurfaceTmp;
-    uint nbline_save=0, nbcolone_save=0, NextPosition=0, NextIndex=0;
+    uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0, NextIndex=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
@@ -1847,12 +1847,7 @@ void  Par3D::ParamBuild(
         WichPointVerifyCond = typeCND;
 
     stopcalculations(false);
-    if(masterthread->gridnotnull)
-    {
-        nbline_save   = Ugrid;
-        nbcolone_save = Vgrid;
-    }
-    else
+    if(!masterthread->gridnotnull)
         NbVertex  = (Ugrid)*(Vgrid);
 
     if(masterthread->activeMorph != 1)
