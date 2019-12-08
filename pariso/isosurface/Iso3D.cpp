@@ -1003,20 +1003,24 @@ ErrorMessage IsoMasterThread::ParserIso()
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     varliste = "x,y,z,t";
 
-    (constnotnull) ? ConstSize = HowManyVariables(Const, 1) : ConstSize =0;
+    //(constnotnull) ?
 
     initparser();
 
     //Evaluates defined constantes:
-    for(uint j=0; j<ConstSize; j++)
+    if(constnotnull)
     {
-        if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+        ConstSize = HowManyVariables(Const, 1);
+        for(uint j=0; j<ConstSize; j++)
         {
-            stdError.strError = Consts[j];
-            return stdError;
+            if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
+            {
+                stdError.strError = Consts[j];
+                return stdError;
+            }
+            ConstValues.push_back(Cstparser.Eval(&vals[3]));
+            Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
         }
-        ConstValues.push_back(Cstparser.Eval(&vals[3]));
-        Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
     }
 
     if(functnotnull)
