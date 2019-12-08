@@ -1199,10 +1199,10 @@
     {
       "Iso3D": {
         "Name": [
-          "Barth-Dedic"
+          "BarthDedic"
         ],
         "Component": [
-          "Barth-Dedic"
+          "Barth_Dedic"
         ],
         "Cnd": [
           "(x^2+y^2+z^2)> (1+sqrt(5))+1/5"
@@ -1212,12 +1212,16 @@
           "phi= (1+sqrt(5))/2",
           "C = sqrt(1+sqrt(5))"
         ],
-        "Fxyz": [
-          "8*(Ax-phi^4*Ay)*(Ay-phi^4*Az)*(Az-phi^4*Ax)*(Bx+By+Bz-2*(Ax*Ay+Ax*Az+Ay*Az)) + (3+5*phi)*(Ax+Ay+Az-w^2)^2 * (Ax+Ay+Az- (2-phi)*w^2)^2 * w^2"
+        "Funct": [
+          " Ax  = x^2",
+          " Ay  = y^2",
+          " Az  = z^2",
+          " Bx  = x^4",
+          " By  = y^4",
+          " Bz  = z^4"
         ],
-        "Varu": [
-          " A  = u^2",
-          " B  = u^4"
+        "Fxyz": [
+          "8*(Ax(x,y,z,t)-phi^4*Ay(x,y,z,t))*(Ay(x,y,z,t)-phi^4*Az(x,y,z,t))*(Az(x,y,z,t)-phi^4*Ax(x,y,z,t))*(Bx(x,y,z,t)+By(x,y,z,t)+Bz(x,y,z,t)-2*(Ax(x,y,z,t)*Ay(x,y,z,t)+Ax(x,y,z,t)*Az(x,y,z,t)+Ay(x,y,z,t)*Az(x,y,z,t))) + (3+5*phi)*(Ax(x,y,z,t)+Ay(x,y,z,t)+Az(x,y,z,t)-w^2)^2 * (Ax(x,y,z,t)+Ay(x,y,z,t)+Az(x,y,z,t)- (2-phi)*w^2)^2 * w^2"
         ],
         "Xmax": [
           "C"
