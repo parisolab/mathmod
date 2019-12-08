@@ -3525,11 +3525,13 @@
         "Component": [
           "Schwarz"
         ],
-        "Varu": [
-          "A=cos(u)"
+        "Funct": [
+          "Ax=cos(x)",
+          "Ay=cos(y)",
+          "Az=cos(z)"
         ],
         "Fxyz": [
-          "Ax+Ay+Az-NoiseW(x,y,z,(1),(2),(0))"
+          "Ax(x,y,z,t)+Ay(x,y,z,t)+Az(x,y,z,t)-NoiseW(x,y,z,(1),(2),(0))"
         ],
         "Xmax": [
           "4"
