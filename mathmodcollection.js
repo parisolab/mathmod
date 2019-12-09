@@ -7651,40 +7651,73 @@
         ]
       }
     },
-        {
-            "Iso3D": {
-                "Description": ["Menger L4 SchwarzP by Abderrahman Taha 01/11/2019"
-                ],
-                "Name": ["Menger_4_SchwarzP"
-                ],
-                "Component": ["MengerSchwarzP"
-                ],
-                "Const": ["c1=254469/1000","c2=2/1000","c3=3333/10000","c4=10005/10000"
-                ],
-                "Fxyz": ["if(-(Dx+Dy+Dz-(102/100))*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx*(Cy+Cz)+Cz*Cy)=0)*((Bx*(By+Bz)+Bz*By)=0)*((Ax*(Ay+Az)+Az*Ay)=0)),(cos(c1*(x+Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y+Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z+Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez))))*(cos(c1*(x-Ex*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(y-Ey*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))+cos(c1*(z-Ez*c2/sqrt(Ex*Ex+Ey*Ey+Ez*Ez)))),1)"
-                ],
-                "Varu": ["A=((abs(u-2/3)<1/81)+(abs(u-20/27)<1/81)+(abs(u-16/27)<1/81)+(abs(u-8/9)<1/81)+(abs(u-26/27)<1/81)+(abs(u-22/27)<1/81)+(abs(u-4/9)<1/81)+(abs(u-14/27)<1/81)+(abs(u-10/27)<1/81)+(abs(u+2/3)<1/81)+(abs(u+16/27)<1/81)+(abs(u+20/27)<1/81)+(abs(u+4/9)<1/81)+(abs(u+10/27)<1/81)+(abs(u+14/27)<1/81)+(abs(u+8/9)<1/81)+(abs(u+22/27)<1/81)+(abs(u+26/27)<1/81)+(abs(u)<1/81)+(abs(u-2/27)<1/81)+(abs(u+2/27)<1/81)+(abs(u-2/9)<1/81)+(abs(u-8/27)<1/81)+(abs(u-4/27)<1/81)+(abs(u+2/9)<1/81)+(abs(u+4/27)<1/81)+(abs(u+8/27)<1/81))","B=((abs(u-2/3)<1/27)+(abs(u-8/9)<1/27)+(abs(u-4/9)<1/27)+(abs(u+2/3)<1/27)+(abs(u+4/9)<1/27)+(abs(u+8/9)<1/27)+(abs(u)<1/27)+(abs(u-2/9)<1/27)+(abs(u+2/9)<1/27))","C=((abs(u-2/3)<1/9)+(abs(u+2/3)<1/9)+(abs(u)<1/9))","D=u^600","E=sin(c1*u)"
-                ],
-                "Xmax": ["c4"
-                ],
-                "Xmin": ["c3"
-                ],
-                "Ymax": ["c4"
-                ],
-                "Ymin": ["c3"
-                ],
-                "Zmax": ["c4"
-                ],
-                "Zmin": ["c3"
-                ]
-            },
-            "Texture": {
-                "Colors": ["R=(6/10)*sqrt(4*x^40+y^4+z^4)","G=(3/10)*sqrt(x^4+y^4+4*z^20)","B=(4/10)*sqrt(x^4+4*y^20+z^4)","T=1"
-                ],
-                "Name": "ll",
-                "Noise": "1"
-            }
+    {
+        "Iso3D": {
+            "Description": [
+                "Menger L4 SchwarzP by Abderrahman Taha 01/11/2019"
+            ],
+            "Name": [
+                "Menger_4_SchwarzP"
+            ],
+            "Component": [
+                "MengerSchwarzP"
+            ],
+            "Const": [
+                "c1=254469/1000",
+                "c2=2/1000",
+                "c3=3333/10000",
+                "c4=10005/10000"
+            ],
+            "Funct": [
+                " Ax = ((abs(x-2/3) <1/81)+ (abs(x-20/27) <1/81)+ (abs(x-16/27) <1/81)+(abs(x-8/9) <1/81) + (abs(x-26/27) <1/81) + (abs(x-22/27) <1/81) +(abs(x-4/9) <1/81) +(abs(x-14/27) <1/81) +(abs(x-10/27) <1/81) +(abs(x+2/3) <1/81) +(abs(x+16/27) <1/81) +(abs(x+20/27) <1/81) +(abs(x+4/9) <1/81) +(abs(x+10/27) <1/81) +(abs(x+14/27) <1/81) +(abs(x+8/9) <1/81) +(abs(x+22/27) <1/81) +(abs(x+26/27) <1/81) +(abs(x) <1/81) + (abs(x-2/27) <1/81) +(abs(x+2/27) <1/81) +(abs(x-2/9) <1/81) + (abs(x-8/27) <1/81) + (abs(x-4/27) <1/81) +(abs(x+2/9) <1/81)+(abs(x+4/27) <1/81)+(abs(x+8/27) <1/81))",
+                " Ay = ((abs(y-2/3) <1/81)+ (abs(y-20/27) <1/81)+ (abs(y-16/27) <1/81)+(abs(y-8/9) <1/81) + (abs(y-26/27) <1/81) + (abs(y-22/27) <1/81) +(abs(y-4/9) <1/81) +(abs(y-14/27) <1/81) +(abs(y-10/27) <1/81) +(abs(y+2/3) <1/81) +(abs(y+16/27) <1/81) +(abs(y+20/27) <1/81) +(abs(y+4/9) <1/81) +(abs(y+10/27) <1/81) +(abs(y+14/27) <1/81) +(abs(y+8/9) <1/81) +(abs(y+22/27) <1/81) +(abs(y+26/27) <1/81) +(abs(y) <1/81) + (abs(y-2/27) <1/81) +(abs(y+2/27) <1/81) +(abs(y-2/9) <1/81) + (abs(y-8/27) <1/81) + (abs(y-4/27) <1/81) +(abs(y+2/9) <1/81)+(abs(y+4/27) <1/81)+(abs(y+8/27) <1/81))",
+                " Az = ((abs(z-2/3) <1/81)+ (abs(z-20/27) <1/81)+ (abs(z-16/27) <1/81)+(abs(z-8/9) <1/81) + (abs(z-26/27) <1/81) + (abs(z-22/27) <1/81) +(abs(z-4/9) <1/81) +(abs(z-14/27) <1/81) +(abs(z-10/27) <1/81) +(abs(z+2/3) <1/81) +(abs(z+16/27) <1/81) +(abs(z+20/27) <1/81) +(abs(z+4/9) <1/81) +(abs(z+10/27) <1/81) +(abs(z+14/27) <1/81) +(abs(z+8/9) <1/81) +(abs(z+22/27) <1/81) +(abs(z+26/27) <1/81) +(abs(z) <1/81) + (abs(z-2/27) <1/81) +(abs(z+2/27) <1/81) +(abs(z-2/9) <1/81) + (abs(z-8/27) <1/81) + (abs(z-4/27) <1/81) +(abs(z+2/9) <1/81)+(abs(z+4/27) <1/81)+(abs(z+8/27) <1/81))",
+                " Bx = ((abs(x-2/3) <1/27)+(abs(x-8/9) <1/27) + (abs(x-4/9) <1/27) +(abs(x+2/3) <1/27) +(abs(x+4/9) <1/27) + (abs(x+8/9) <1/27) +(abs(x) <1/27) + (abs(x-2/9) <1/27) + (abs(x+2/9) <1/27))",
+                " By = ((abs(y-2/3) <1/27)+(abs(y-8/9) <1/27) + (abs(y-4/9) <1/27) +(abs(y+2/3) <1/27) +(abs(y+4/9) <1/27) + (abs(y+8/9) <1/27) +(abs(y) <1/27) + (abs(y-2/9) <1/27) + (abs(y+2/9) <1/27))",
+                " Bz = ((abs(z-2/3) <1/27)+(abs(z-8/9) <1/27) + (abs(z-4/9) <1/27) +(abs(z+2/3) <1/27) +(abs(z+4/9) <1/27) + (abs(z+8/9) <1/27) +(abs(z) <1/27) + (abs(z-2/9) <1/27) + (abs(z+2/9) <1/27))",
+                "Cx = ((abs(x-2/3) <1/9) + (abs(x+2/3) <1/9) + (abs(x) <1/9))",
+                "Cy = ((abs(y-2/3) <1/9) + (abs(y+2/3) <1/9) + (abs(y) <1/9))",
+                "Cz = ((abs(z-2/3) <1/9) + (abs(z+2/3) <1/9) + (abs(z) <1/9))",
+                "Dx = x^600",
+                "Dy = y^600",
+                "Dz = z^600",
+                "Ex=sin(c1*x)",
+                "Ey=sin(c1*y)",
+                "Ez=sin(c1*z)"
+            ],
+            "Fxyz": [
+                "if(-(Dx(x,y,z,t)+Dy(x,y,z,t)+Dz(x,y,z,t)-(102/100))*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx(x,y,z,t)*(Cy(x,y,z,t)+Cz(x,y,z,t))+Cz(x,y,z,t)*Cy(x,y,z,t))=0)*((Bx(x,y,z,t)*(By(x,y,z,t)+Bz(x,y,z,t))+Bz(x,y,z,t)*By(x,y,z,t))=0)*((Ax(x,y,z,t)*(Ay(x,y,z,t)+Az(x,y,z,t))+Az(x,y,z,t)*Ay(x,y,z,t))=0)),(cos(c1*(x+Ex(x,y,z,t)*c2/sqrt(Ex(x,y,z,t)*Ex(x,y,z,t)+Ey(x,y,z,t)*Ey(x,y,z,t)+Ez(x,y,z,t)*Ez(x,y,z,t))))+cos(c1*(y+Ey(x,y,z,t)*c2/sqrt(Ex(x,y,z,t)*Ex(x,y,z,t)+Ey(x,y,z,t)*Ey(x,y,z,t)+Ez(x,y,z,t)*Ez(x,y,z,t))))+cos(c1*(z+Ez(x,y,z,t)*c2/sqrt(Ex(x,y,z,t)*Ex(x,y,z,t)+Ey(x,y,z,t)*Ey(x,y,z,t)+Ez(x,y,z,t)*Ez(x,y,z,t)))))*(cos(c1*(x-Ex(x,y,z,t)*c2/sqrt(Ex(x,y,z,t)*Ex(x,y,z,t)+Ey(x,y,z,t)*Ey(x,y,z,t)+Ez(x,y,z,t)*Ez(x,y,z,t))))+cos(c1*(y-Ey(x,y,z,t)*c2/sqrt(Ex(x,y,z,t)*Ex(x,y,z,t)+Ey(x,y,z,t)*Ey(x,y,z,t)+Ez(x,y,z,t)*Ez(x,y,z,t))))+cos(c1*(z-Ez(x,y,z,t)*c2/sqrt(Ex(x,y,z,t)*Ex(x,y,z,t)+Ey(x,y,z,t)*Ey(x,y,z,t)+Ez(x,y,z,t)*Ez(x,y,z,t))))),1)"
+            ],
+            "Xmax": [
+                "c4"
+            ],
+            "Xmin": [
+                "c3"
+            ],
+            "Ymax": [
+                "c4"
+            ],
+            "Ymin": [
+                "c3"
+            ],
+            "Zmax": [
+                "c4"
+            ],
+            "Zmin": [
+                "c3"
+            ]
         },
+        "Texture": {
+            "Colors": [
+                "R=(6/10)*sqrt(4*x^40+y^4+z^4)",
+                "G=(3/10)*sqrt(x^4+y^4+4*z^20)",
+                "B=(4/10)*sqrt(x^4+4*y^20+z^4)",
+                "T=1"
+            ],
+            "Name": "ll",
+            "Noise": "1"
+        }
+    },
     {
       "Iso3D": {
         "Description": [
