@@ -15169,20 +15169,16 @@
     {
       "Iso3D": {
         "Description": [
-          "PrettyBall_2 by Abderrahman Taha 08/10/2019"
+          "PrettyBall_2 by Abderrahman Taha 11/12/2019"
         ],
         "Name": [
           "Pretty_Ball_2"
         ],
         "Component": [
-          "PrettyBall_1"
-        ],
-        "Varu": [
-          "Cos = cos(u)",
-          "Sin = sin(u)"
+          "PrettyBall"
         ],
         "Fxyz": [
-          "if( (x*x+y*y+z*z<64) ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -(6/10) ,(1))  + exp(((x)*(x)+y*y+z*z-64)/3)"
+          "if( (x*x+y*y+z*z<64) ,(cos(x-t)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x-t)) * (cos(x-t)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x-t)) -(6/10) ,(1))  + exp(((x)*(x)+y*y+z*z-64)/3)"
         ],
         "Xmax": [
           "8"
