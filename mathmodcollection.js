@@ -3320,12 +3320,8 @@
           "A=24/25",
           "B=100/234"
         ],
-        "Varu": [
-          "A=cos(A*u)",
-          "B=sin(A*u)"
-        ],
         "Fxyz": [
-          "-50*((B*x)^4+(y*Ax-z*Bx)^4+(y*Bx+z*Ax)^4)+(-100)*((B*x)^2*(y*Ax-z*Bx)^2+(B*x)^2*(y*Bx+z*Ax)^2+(y*Ax-z*Bx)^2*(y*Bx+z*Ax)^2)+(141*(B*x-1))*((B*x)^2+(y*Ax-z*Bx)^2+(y*Bx+z*Ax)^2)+(55*x)*(-4+(17/20)*x)+262*(y*Ax-z*Bx)^2+256"
+          "-50*((B*x)^4+(y*cos(A*x)-z*sin(A*x))^4+(y*sin(A*x)+z*cos(A*x))^4)+(-100)*((B*x)^2*(y*cos(A*x)-z*sin(A*x))^2+(B*x)^2*(y*sin(A*x)+z*cos(A*x))^2+(y*cos(A*x)-z*sin(A*x))^2*(y*sin(A*x)+z*cos(A*x))^2)+(141*(B*x-1))*((B*x)^2+(y*cos(A*x)-z*sin(A*x))^2+(y*sin(A*x)+z*cos(A*x))^2)+(55*x)*(-4+(17/20)*x)+262*(y*cos(A*x)-z*sin(A*x))^2+256"
         ],
         "Xmax": [
           "6"
@@ -15173,7 +15169,7 @@
     {
       "Iso3D": {
         "Description": [
-          "PrettyBall_2 by Abderrahman Taha 08/10/2019"
+          "PrettyBall_2 by Abderrahman Taha 11/12/2019"
         ],
         "Name": [
           "Pretty_Ball_2"
@@ -15181,12 +15177,8 @@
         "Component": [
           "PrettyBall_1"
         ],
-        "Varu": [
-          "Cos = cos(u)",
-          "Sin = sin(u)"
-        ],
         "Fxyz": [
-          "if( (x*x+y*y+z*z<64) ,(cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) * (cos(x-t)*Siny+Cosy*Sinz+Cosz*sin(x-t)) -(6/10) ,(1))  + exp(((x)*(x)+y*y+z*z-64)/3)"
+          "if( (x*x+y*y+z*z<64) ,(cos(x-t)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x-t)) * (cos(x-t)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x-t)) -(6/10) ,(1))  + exp(((x)*(x)+y*y+z*z-64)/3)"
         ],
         "Xmax": [
           "8"

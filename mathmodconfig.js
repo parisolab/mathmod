@@ -1,9 +1,9 @@
 {
     "IsoParam": {
-        "MaxGrid": 200,
-        "MaxPt": 1,
-        "MaxTri": 2,
-        "NbIsoComponent": 20,
+        "MaxGrid": 300,
+        "MaxPt": 6,
+        "MaxTri": 10,
+        "NbIsoComponent": 10,
         "NbParComponent": 200,
         "InitParGrid": 50,
         "InitIsoGrid": 40
