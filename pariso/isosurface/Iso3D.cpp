@@ -1020,6 +1020,10 @@ ErrorMessage IsoMasterThread::ParserIso()
             Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
         }
     }
+    else
+    {
+        ConstSize = 0;
+    }
 
     if(functnotnull)
     {
@@ -1509,6 +1513,9 @@ void IsoMasterThread::AllocateMasterParsers()
         vrgbtnotnull ?
             VRgbtParser = new FunctionParser[VRgbtSize] :
             VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
+
+        if(constnotnull)
+            ConstSize=0;
 
         GradientParser = new FunctionParser;
         NoiseParser = new FunctionParser;

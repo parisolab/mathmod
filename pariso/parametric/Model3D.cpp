@@ -396,6 +396,9 @@ void ParMasterThread::AllocateParsersForMasterThread()
             VRgbtParser = new FunctionParser[VRgbtSize] :
             VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
 
+        if(constnotnull)
+            ConstSize=0;
+
         GradientParser   = new FunctionParser;
         NoiseParser      = new FunctionParser;
         NoiseShapeParser = new FunctionParser;
@@ -557,6 +560,10 @@ ErrorMessage  ParMasterThread::parse_expression()
             ConstValues.push_back(Cstparser.Eval(vals));
             Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
         }
+    }
+    else
+    {
+        ConstSize =0;
     }
 
     if(functnotnull)
