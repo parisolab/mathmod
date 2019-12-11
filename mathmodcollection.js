@@ -9931,7 +9931,7 @@
     {
       "Iso3D": {
         "Description ": [
-          "Torus Distortion due to moving surface by Abderrahman Taha 29/10/2019"
+          "Torus Distortion due to moving surface by Abderrahman Taha 11/12/2019"
         ],
         "Name": [
           "Torus_Distortion"
@@ -9941,13 +9941,8 @@
           "Torus"
         ],
         "Fxyz": [
-          "z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey)",
-          "(sqrt((x-Sx*exp(Ex+Ey))^2 + (y-Cy*exp(Ex+Ey))^2) -1)^2 +(z-Sx*exp(Ex+Ey)-Cy*exp(Ex+Ey))^2 -(1/10)"
-        ],
-        "Varu": [
-          "S=(15/10)*u*sin(2*tm)",
-          "C=2*u*cos(3*tm)",
-          "E=-u*u"
+          "z-(15/10)*x*sin(2*t)*exp(-x*x-y*y)-2*y*cos(3*t)*exp(-x*x-y*y)",
+          "(sqrt((x-(15/10)*x*sin(2*t)*exp(-x*x-y*y))^2 + (y-2*y*cos(3*t)*exp(-x*x-y*y))^2) -1)^2 +(z-(3/2)*x*sin(2*t)*exp(-x*x-y*y)-2*y*cos(3*t)*exp(-x*x-y*y))^2 -(1/10)"
         ],
         "Xmax": [
           "2",
