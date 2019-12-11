@@ -466,7 +466,7 @@
     {
       "Iso3D": {
         "Description": [
-          "BlackHole by Abderrahman Taha 06/12/2019"
+          "BlackHole by Abderrahman Taha 10/12/2019"
         ],
         "Name": [
           "BlackHole"
@@ -481,30 +481,14 @@
           "M=pi/10"
         ],
         "Funct": [
-          "Ax=(x-4*sin(t*M))^2",
-          "Ay=(y-4*sin(t*M))^2",
-          "Az=(z-4*sin(t*M))^2",
-          "Bx=(x-2*cos(t*M))^2",
-          "By=(y-2*cos(t*M))^2",
-          "Bz=(z-2*cos(t*M))^2",
-          "Cx=(x-2*sin(t*pi)-4*sin(t*M))^2",
-          "Cy=(y-2*sin(t*pi)-4*sin(t*M))^2",
-          "Cz=(z-2*sin(t*pi)-4*sin(t*M))^2",
-          "Dx=(x-2*cos(t*pi)-2*cos(t*M))^2",
-          "Dy=(y-2*cos(t*pi)-2*cos(t*M))^2",
-          "Dz=(z-2*cos(t*pi)-2*cos(t*M))^2",
-          "Ex=(x-1/5)*(x-1/5) - 3/5",
-          "Ey=(y-1/5)*(y-1/5) - 3/5",
-          "Ez=(z-1/5)*(z-1/5) - 3/5",
-          "Fx =x*x - 3/5",
-          "Fy =y*y - 3/5",
-          "Fz =z*z - 3/5",
-          "Hx=x*cos(2*t*pi)",
-          "Hy=y*cos(2*t*pi)",
-          "Hz=z*cos(2*t*pi)",
-          "Gx=x*sin(2*t*pi)",
-          "Gy=y*sin(2*t*pi)",
-          "Gz=z*sin(2*t*pi)"
+          "A=(x-4*sin(t*M))^2",
+          "B=(x-2*cos(t*M))^2",
+          "C=(x-2*sin(t*pi)-4*sin(t*M))^2",
+          "D=(x-2*cos(t*pi)-2*cos(t*M))^2",
+          "E=(x-1/5)*(x-1/5) - 3/5",
+          "F=x*x - 3/5",
+          "H=x*cos(2*t*pi)",
+          "G=x*sin(2*t*pi)"
         ],
         "Grid": [
           "20",
@@ -513,9 +497,9 @@
           "20"
         ],
         "Fxyz": [
-          "((3/2)*(Hx(x,y,z,t)-Gy(x,y,z,t))^2 + (Gx(x,y,z,t)+ Hy(x,y,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(Ax(x,y,z,t) + By(x,y,z,t)+ Fz(x,y,z,t))*min( ((3/2)*(Hx(x,y,z,t)-Gy(x,y,z,t))^2 + (Gx(x,y,z,t)+ Hy(x,y,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(Ax(x,y,z,t) + By(x,y,z,t) + Fz(x,y,z,t)), z) +1",
-          "Ax(x,y,z,t)+ By(x,y,z,t) + Ez(x,y,z,t)",
-          "Cx(x,y,z,t) + Dy(x,y,z,t)  + Ez(x,y,z,t) + 1/2",
+          "((3/2)*(H(x,y,z,t)-G(y,x,z,t))^2 + (G(x,y,z,t)+ H(y,x,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(A(x,y,z,t) + B(y,x,z,t)+ F(z,y,x,t))*min( ((3/2)*(H(x,y,z,t)-G(y,x,z,t))^2 + (G(x,y,z,t)+ H(y,x,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(A(x,y,z,t) + B(y,x,z,t) + F(z,y,x,t)), z) +1",
+          "A(x,y,z,t)+ B(y,x,z,t) + E(z,y,x,t)",
+          "C(x,y,z,t) + D(y,x,z,t)  + E(z,y,x,t) + 1/2",
           "(3/2)*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+1/5)^2 -(abs((1/5)*sin(t*M)+1/20))"
         ],
         "Xmin": [
