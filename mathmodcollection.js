@@ -3320,12 +3320,8 @@
           "A=24/25",
           "B=100/234"
         ],
-        "Varu": [
-          "A=cos(A*u)",
-          "B=sin(A*u)"
-        ],
         "Fxyz": [
-          "-50*((B*x)^4+(y*Ax-z*Bx)^4+(y*Bx+z*Ax)^4)+(-100)*((B*x)^2*(y*Ax-z*Bx)^2+(B*x)^2*(y*Bx+z*Ax)^2+(y*Ax-z*Bx)^2*(y*Bx+z*Ax)^2)+(141*(B*x-1))*((B*x)^2+(y*Ax-z*Bx)^2+(y*Bx+z*Ax)^2)+(55*x)*(-4+(17/20)*x)+262*(y*Ax-z*Bx)^2+256"
+          "-50*((B*x)^4+(y*cos(A*x)-z*sin(A*x))^4+(y*sin(A*x)+z*cos(A*x))^4)+(-100)*((B*x)^2*(y*cos(A*x)-z*sin(A*x))^2+(B*x)^2*(y*sin(A*x)+z*cos(A*x))^2+(y*cos(A*x)-z*sin(A*x))^2*(y*sin(A*x)+z*cos(A*x))^2)+(141*(B*x-1))*((B*x)^2+(y*cos(A*x)-z*sin(A*x))^2+(y*sin(A*x)+z*cos(A*x))^2)+(55*x)*(-4+(17/20)*x)+262*(y*cos(A*x)-z*sin(A*x))^2+256"
         ],
         "Xmax": [
           "6"
