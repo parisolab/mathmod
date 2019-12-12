@@ -1322,8 +1322,11 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull=QObj[arg].isArray();
            break;
     }
-    lst = QObj[arg].toArray();
-    ObjArrayToString(lst, result);
+    if(argnotnull)
+    {
+        lst = QObj[arg].toArray();
+        ObjArrayToString(lst, result);
+    }
     switch(idx) {
          case ISO_GRID :
             if(argnotnull)
@@ -1332,6 +1335,10 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
                         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Grid = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Grid = "";
             }
             break;
         case ISO_CND :
@@ -1397,9 +1404,11 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
             argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull=QObj[arg].isArray();
             break;
     }
-
-    lst = QObj[arg].toArray();
-    ObjArrayToString(lst, result);
+    if(argnotnull)
+    {
+        lst = QObj[arg].toArray();
+        ObjArrayToString(lst, result);
+    }
     switch(idx) {
         case PAR_GRID :
             if(argnotnull)
@@ -1408,6 +1417,10 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
                         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = "";
             }
             break;
         case PAR_CND :
@@ -1424,7 +1437,8 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
         case PAR_CONST :
             if(argnotnull)
             {
-
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = result.toStdString();
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->ConstSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
             }
             else
