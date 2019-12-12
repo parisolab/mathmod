@@ -1322,32 +1322,55 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
            argnotnull=MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->functnotnull=QObj[arg].isArray();
            break;
     }
-    if(argnotnull)
-    {
-        lst = QObj[arg].toArray();
-        ObjArrayToString(lst, result);
-        switch(idx) {
-             case ISO_GRID :
+    lst = QObj[arg].toArray();
+    ObjArrayToString(lst, result);
+    switch(idx) {
+         case ISO_GRID :
+            if(argnotnull)
+            {
                 for(int j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Grid = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
-                break;
-            case ISO_CND :
+            }
+            break;
+        case ISO_CND :
+            if(argnotnull)
+            {
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Condition = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
-                break;
-            case ISO_FUNCT :
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Condition = "";
+            }
+            break;
+        case ISO_FUNCT :
+            if(argnotnull)
+            {
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = result.toStdString();
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
-                break;
-            case ISO_CONST :
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Funct = "";
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->FunctSize = 0;
+            }
+            break;
+        case ISO_CONST :
+            if(argnotnull)
+            {
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = result.toStdString();
                 MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ConstSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
-                break;
-        }
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->Const = "";
+                MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread->ConstSize = 0;
+            }
+            break;
     }
 }
 
@@ -1374,34 +1397,56 @@ void DrawingOptions::OptionalParScriptFieldprocess(const QJsonObject &QObj, Opti
             argnotnull=MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->cndnotnull=QObj[arg].isArray();
             break;
     }
-    if(argnotnull)
-    {
-        lst = QObj[arg].toArray();
-        ObjArrayToString(lst, result);
-        switch(idx) {
-            case PAR_GRID :
+
+    lst = QObj[arg].toArray();
+    ObjArrayToString(lst, result);
+    switch(idx) {
+        case PAR_GRID :
+            if(argnotnull)
+            {
                 for(int j=0; j < lst.size(); j++)
                         MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
-
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Grid = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
-                break;
-            case PAR_CND :
+            }
+            break;
+        case PAR_CND :
+            if(argnotnull)
+            {
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
-                break;
-            case PAR_CONST :
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = result.toStdString();
-                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->ConstSize = uint(lst.size());
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->expression_CND = "";
+            }
+            break;
+        case PAR_CONST :
+            if(argnotnull)
+            {
+
                 MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
-                break;
-            case PAR_FUNCT :
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Const = "";
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->ConstSize = 0;
+            }
+            break;
+        case PAR_FUNCT :
+            if(argnotnull)
+            {
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = result.toStdString();
                 MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
-                break;
+            }
+            else
+            {
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->Funct = "";
+                MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->FunctSize = 0;
+            }
+            break;
         }
-    }
 }
 
 void DrawingOptions::BuildAllVect()
