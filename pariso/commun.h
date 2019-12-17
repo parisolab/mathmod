@@ -157,13 +157,13 @@ struct  ObjectProperties
 {
     float         * ArrayNorVer_localPt;
     float         * OriginalArrayNorVer_localPt;
-    uint vboId_ArrayNorVer_localPt;
+    uint            vboId_ArrayNorVer_localPt;
     float         * ArrayNorVerExtra_localPt;
     float         * OriginalArrayNorVerExtra_localPt;
     unsigned int  * PolyIndices_localPt;
     unsigned int  * PolyIndices_localPtMin;
-    int  * TypeSurfaceTriangleListeCND;
-    bool *     WichPointVerifyCond;
+    int           * TypeSurfaceTriangleListeCND;
+    bool          * WichPointVerifyCond;
     unsigned int    NbPolygnNbVertexPtMin ;
     unsigned int    PolyNumber;
     unsigned int    VertxNumber;
