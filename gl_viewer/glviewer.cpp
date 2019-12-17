@@ -1436,7 +1436,7 @@ void OpenGlWidget::paintGL()
         {
             IsoObjetThread->IsoObjet->IsoBuild(
                 &(LocalScene.ArrayNorVer_localPt),
-                LocalScene.PolyIndices_localPt,
+                &(LocalScene.PolyIndices_localPt),
                 &LocalScene.PolyNumberTmp1,
                 &LocalScene.VertxNumberTmp1,
                 LocalScene.PolyIndices_localPtMin,
@@ -1486,7 +1486,7 @@ void OpenGlWidget::paintGL()
             IsoObjetThread->IsoObjet->IsoBuild
             (
                 &(LocalScene.ArrayNorVer_localPt),
-                LocalScene.PolyIndices_localPt,
+                &(LocalScene.PolyIndices_localPt),
                 &(LocalScene.PolyNumber),
                 &(LocalScene.VertxNumber),
                 LocalScene.PolyIndices_localPtMin,
