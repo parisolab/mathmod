@@ -42,6 +42,7 @@ uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbIsoComponent = 30;
 
+static uint Maxpoints = 10000;
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 
@@ -125,15 +126,15 @@ void Iso3D::emitUpdateMessageSignal()
 void Iso3D::BuildIso()
 {
     IsoBuild(
-        LocalScene->ArrayNorVer_localPt,
+        &(LocalScene->ArrayNorVer_localPt),
         LocalScene->PolyIndices_localPt,
-        &LocalScene->PolyNumber,
+        &(LocalScene->PolyNumber),
         &(LocalScene->VertxNumber),
         LocalScene->PolyIndices_localPtMin,
         &(LocalScene->NbPolygnNbVertexPtMin),
         &(LocalScene->componentsinfos),
         LocalScene->Typetriangles,
-        LocalScene->WichPointVerifyCond);
+        &(LocalScene->WichPointVerifyCond));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -440,6 +441,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     NbMaxGrid = nbmaxgrid;
     NbMaxTri = maxtri;
     NbMaxPts = maxpts;
+    Maxpoints = maxnbpoints = 10*maxpts;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     Xgrid = Ygrid = Zgrid = nbGrid;
@@ -1566,6 +1568,7 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbParComponent+1)*sizeof(uint));
     memcpy(copy->ParPts, origin->ParPts, (2*NbParComponent+1)*sizeof(uint));
 
+    copy->InterleavedArrays         = origin->InterleavedArrays;
     copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
     copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
     copy->NoiseParam.Gain           = origin->NoiseParam.Gain;
@@ -1588,7 +1591,7 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
-    float *NormVertexTabPt,
+    float ** NormVertexTabPt,
     unsigned int *IndexPolyTabPt,
     unsigned   int *PolyNumber,
     unsigned int *VertexNumberpt,
@@ -1596,7 +1599,7 @@ void Iso3D::IsoBuild (
     unsigned  int *NbPolyMinPt,
     struct ComponentInfos * componentsPt,
     int *TriangleListeCND,
-    bool *typeCND
+    bool **typeCND
 )
 {
     uint l, NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
@@ -1628,7 +1631,15 @@ void Iso3D::IsoBuild (
     //*****//
     IndexPolyTab = IndexPolyTabPt;
     IndexPolyTabMin = IndexPolyTabMinPt;
-    NormVertexTab = NormVertexTabPt;
+    /*
+    static int first = 1;
+    if(first == 1)
+    {
+        NormVertexTab = new float[Maxpoints];
+        first = 0;
+    }*/
+
+    NormVertexTab = *NormVertexTabPt;
     if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
     //*****//
@@ -1636,8 +1647,8 @@ void Iso3D::IsoBuild (
     if(components != nullptr)
         components->NbIso = masterthread->ImplicitFunctionSize;
 
-    if(typeCND != nullptr)
-        PointVerifyCond = typeCND;
+    if(*typeCND != nullptr)
+        PointVerifyCond = *typeCND;
 
     stopcalculations(false);
 
@@ -1707,7 +1718,7 @@ void Iso3D::IsoBuild (
             emitUpdateMessageSignal();
         }
 
-        uint result = PointEdgeComputation(fctnb);
+        uint result = PointEdgeComputation(fctnb, NormVertexTabPt);
         if(result == 0)
         {
             messageerror = VERTEX_TAB_MEM_OVERFLOW;
@@ -1750,10 +1761,19 @@ void Iso3D::IsoBuild (
         {
             for (uint i=0; i < NbTriangleIsoSurface ; ++i)
             {
+                if((IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp) > Maxpoints ||
+                   (IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp) > Maxpoints ||
+                   (IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp) > Maxpoints)
+                {
+                    messageerror = MINPOLY_TAB_MEM_OVERFLOW;
+                    emitErrorSignal();
+                    return;
+                }
                 IndexPolyTab[l  ] = IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp;
                 IndexPolyTab[l+1] = IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp;
                 IndexPolyTab[l+2] = IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp;
                 l+=3;
+
             }
         }
         else
@@ -1778,6 +1798,13 @@ void Iso3D::IsoBuild (
     }
 
     //CND calculation for the triangles results:
+    if(Maxpoints > maxnbpoints)
+    {
+        IncreaseTableSize2(Maxpoints, &PointVerifyCond, typeCND);
+        components->InterleavedArrays =true;
+        maxnbpoints = Maxpoints;
+    }
+
     uint result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
     if(result == 0)
     {
@@ -2093,7 +2120,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //***********
                 //Add points:
                 //***********
-                if((TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep +20)  < 10*NbMaxPts )
+                if((TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep +20)  < Maxpoints )
                 {
                     //Add Bprime:
                     NormVertexTab[TypeDrawin*NbVertexTmp+3+ TypeDrawinNormStep] = float(Bprime[0]);
@@ -2393,8 +2420,58 @@ uint Iso3D::ConstructIsoSurface()
     return 1;
 }
 
+void Iso3D::IncreaseTableSize2(uint newSize, bool **tableToexpend, bool **tableToShow)
+{
+    /*
+    *tableToShow = (float*) realloc((*tableToShow), (newSize+100000) * sizeof (float));
+    *tableToexpend = *tableToShow;
+    previousSize = newSize+100000;
+    */
+    QMessageBox msgBox;
+    bool * tmp= (bool *)malloc((newSize)*sizeof(bool));
+    if(tmp)
+    {
+        free(*tableToShow);
+        *tableToShow = tmp;
+        *tableToexpend = *tableToShow;
+    }
+    else
+    {
+        free(tmp);
+        msgBox.setText("Malloc failed");
+        msgBox.exec();
+        return;
+    }
+}
+
+void Iso3D::IncreaseTableSize(uint & previousSize, uint newSize, float **tableToexpend, float **tableToShow)
+{
+    /*
+    *tableToShow = (float*) realloc((*tableToShow), (newSize+100000) * sizeof (float));
+    *tableToexpend = *tableToShow;
+    previousSize = newSize+100000;
+    */
+    QMessageBox msgBox;
+    float * tmp= (float *)malloc((newSize+1000000)*sizeof(float));
+    if(tmp)
+    {
+        memcpy(tmp, *tableToexpend, previousSize*sizeof(float));
+        free(*tableToexpend);
+        *tableToexpend = tmp;
+        *tableToShow = *tableToexpend;
+        previousSize = (newSize+1000000);
+    }
+    else
+    {
+        free(tmp);
+        msgBox.setText("Malloc failed");
+        msgBox.exec();
+        return;
+    }
+}
+
 ///+++++++++++++++++++++++++++++++++++++++++
-uint Iso3D::PointEdgeComputation(uint isoindex)
+uint Iso3D::PointEdgeComputation(uint isoindex, float** tabletoshow)
 {
     uint index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
     double vals[7], IsoValue_1, IsoValue_2, rapport;
@@ -2404,7 +2481,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     uint I, J, JK, IJK, IPLUSONEJK, IMINUSONEJK,
         IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
     /// We have to compute the edges for the Grid limits ie: i=0, j=0 and k=0
-
+    ///
     i_Start = 1/*+masterthread->iStart*/;
     j_Start = 1;
     k_Start = 1;
@@ -2443,14 +2520,15 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
                     ///===========================================================///
-                    if((3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep + 2) < 10*NbMaxPts)
+                    if((3+ TypeDrawin*NbVertexTmp +index+2    + TypeDrawinNormStep ) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
                     {
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
                         NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
                     }
-                    else
-                        return 0;
+                    /*else
+                        return 0;*/
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[0] = NbPointIsoMap_local;
@@ -2482,14 +2560,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[8] = NbPointIsoMap_local;
@@ -2521,14 +2596,12 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
+
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[3] = NbPointIsoMap_local;
                     GridVoxelVarPt[IJK].NbEdgePoint += 1;
@@ -2577,14 +2650,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                {
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                }
-                else
-                    return 0;
+                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                    IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                 // save The reference to this point
                 GridVoxelVarPt[JK].Edge_Points[0] = NbPointIsoMap_local;
@@ -2624,14 +2694,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor *masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[8] = NbPointIsoMap_local;
@@ -2662,14 +2729,13 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
+                    /*else
+                        return 0;*/
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[3] = NbPointIsoMap_local;
@@ -2719,14 +2785,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor *masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[8] = NbPointIsoMap_local;
@@ -2768,14 +2831,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[3] = NbPointIsoMap_local;
@@ -2831,14 +2891,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -2868,14 +2925,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                {
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                }
-                else
-                    return 0;
+                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                    IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                 // save The reference to this point
                 GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[8] = NbPointIsoMap_local;
@@ -2917,14 +2971,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[3] = NbPointIsoMap_local;
@@ -2969,14 +3020,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -3019,14 +3067,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[3] = NbPointIsoMap_local;
@@ -3078,14 +3123,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[0] = NbPointIsoMap_local;
@@ -3118,14 +3160,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[8] = NbPointIsoMap_local;
@@ -3156,14 +3195,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                {
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                }
-                else
-                    return 0;
+                if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                    IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                 // save The reference to this point
                 GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[3] = NbPointIsoMap_local;
@@ -3218,14 +3254,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -3268,14 +3301,11 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) < 10*NbMaxPts)
-                    {
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
-                        NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
-                    }
-                    else
-                        return 0;
+                    if((3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep) >= Maxpoints)
+                        IncreaseTableSize(Maxpoints, (3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep), &NormVertexTab, tabletoshow);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index    + TypeDrawinNormStep] = float(vals[0]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+1  + TypeDrawinNormStep] = float(vals[1]);
+                    NormVertexTab[3+ TypeDrawin*NbVertexTmp +index+2  + TypeDrawinNormStep] = float(vals[2]);
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[8] = NbPointIsoMap_local;

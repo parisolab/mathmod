@@ -464,9 +464,9 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         {
             IsoParam = JConfig["IsoParam"].toObject();
             if((IsoParam)["MaxTri"].isDouble())
-                MaxTri     = ((IsoParam)["MaxTri"]).toInt() * 1000000;
+                MaxTri     = int(((IsoParam)["MaxTri"]).toDouble() * 1000000.0);
             if((IsoParam)["MaxPt"].isDouble())
-                MaxPt     = (IsoParam)["MaxPt"].toInt() * 1000000;
+                MaxPt     = int((IsoParam)["MaxPt"].toDouble() * 1000000.0);
             if((IsoParam)["MaxGrid"].isDouble())
                 MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
 

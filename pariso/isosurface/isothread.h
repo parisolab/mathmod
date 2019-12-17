@@ -39,6 +39,5 @@ public  slots:
 
 public:
     Iso3D *IsoObjet;
-    ObjectProperties*  LocalScene;
 };
 #endif // ISOTHREAD_H

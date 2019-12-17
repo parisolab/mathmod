@@ -38,13 +38,12 @@ ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
     MaximumNumberPoints            = maxpoints;
     MaximumNumberTriangles         = maxtriangles;
 
-    objectproperties.ArrayNorVer_localPt           = new float[10*MaximumNumberPoints];
-    objectproperties.ArrayNorVerExtra_localPt      = new float[MaximumNumberPoints   ];
+    objectproperties.ArrayNorVer_localPt           = (float*) malloc(sizeof(float)*10*MaximumNumberPoints);//new float[10*MaximumNumberPoints];
+    objectproperties.ArrayNorVerExtra_localPt      = (float*) malloc(sizeof(float)*MaximumNumberPoints);
     objectproperties.PolyIndices_localPt           = new unsigned int [4*MaximumNumberTriangles]; //size is 4*MaximumNumberTriangles because of parametric surface
     objectproperties.PolyIndices_localPtMin        = new unsigned int [5*MaximumNumberTriangles];
-    objectproperties.BorderPoints                  = new float[3*MaximumNumberPoints ];
     objectproperties.Typetriangles                 = new int  [MaximumNumberTriangles];
-    objectproperties.WichPointVerifyCond           = new bool [MaximumNumberPoints];
+    objectproperties.WichPointVerifyCond           = (bool*) malloc(sizeof(bool)*3*MaximumNumberPoints);
     objectproperties.VertxNumber    = objectproperties.PolyNumber = objectproperties.NbPolygnNbVertexPtMin = 0;
     objectproperties.RotStrength    = 0;
     objectproperties.zminim         = -350.0;
