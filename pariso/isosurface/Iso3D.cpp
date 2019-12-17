@@ -1568,7 +1568,6 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbParComponent+1)*sizeof(uint));
     memcpy(copy->ParPts, origin->ParPts, (2*NbParComponent+1)*sizeof(uint));
 
-    copy->InterleavedArrays         = origin->InterleavedArrays;
     copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
     copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
     copy->NoiseParam.Gain           = origin->NoiseParam.Gain;
@@ -1627,17 +1626,8 @@ void Iso3D::IsoBuild (
         delete[] Results;
     Results = new double[maxx*maxx*maxx];
 
-    //*****//
-    //*****//
     IndexPolyTab = IndexPolyTabPt;
     IndexPolyTabMin = IndexPolyTabMinPt;
-    /*
-    static int first = 1;
-    if(first == 1)
-    {
-        NormVertexTab = new float[Maxpoints];
-        first = 0;
-    }*/
 
     NormVertexTab = *NormVertexTabPt;
     if(TriangleListeCND != nullptr)
@@ -1801,7 +1791,7 @@ void Iso3D::IsoBuild (
     if(Maxpoints > maxnbpoints)
     {
         IncreaseTableSize2(Maxpoints, &PointVerifyCond, typeCND);
-        components->InterleavedArrays =true;
+        componentsPt->InterleavedArrays =true;
         maxnbpoints = Maxpoints;
     }
 
