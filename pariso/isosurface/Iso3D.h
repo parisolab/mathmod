@@ -129,7 +129,7 @@ public :
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
     uint   Xgrid, Ygrid, Zgrid;
-    uint WorkerThreadsNumber, maxnbpoints;
+    uint WorkerThreadsNumber;
     uint *     IsoSurfaceTriangleListe;
     bool *     PointVerifyCond, StopCalculations;
     int *     TypeIsoSurfaceTriangleListeCND;
@@ -149,12 +149,10 @@ public :
     inline   void SignatureComputation();
     inline   uint ConstructIsoSurface();
     inline   void ConstructIsoNormale();
-    inline   uint PointEdgeComputation(uint, float** );
-    inline   void IncreaseTableSize(uint&, uint, float **, float **);
-    inline   void IncreaseTableSize2(uint, bool **, bool **);
+    inline   uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
-    void IsoBuild(float **, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool **);
+    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool *);
     void SaveIsoGLMap();
     uint SetMiniMmeshStruct();
     uint CNDtoUse(uint index, struct ComponentInfos *);

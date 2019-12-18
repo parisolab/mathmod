@@ -138,8 +138,7 @@ struct  ComponentInfos
     uint *IsoPts;
     uint *Parametricpositions;
     uint *ParPts;
-    int  selectedComponent;
-    bool InterleavedArrays=false;
+    int selectedComponent;
     bool ThereisCND=false;
     bool ThereisRGBA=false;
     uint NbTrianglesVerifyCND;
@@ -162,6 +161,7 @@ struct  ObjectProperties
     float         * OriginalArrayNorVerExtra_localPt;
     unsigned int  * PolyIndices_localPt;
     unsigned int  * PolyIndices_localPtMin;
+    float  * BorderPoints;
     int  * TypeSurfaceTriangleListeCND;
     bool *     WichPointVerifyCond;
     unsigned int    NbPolygnNbVertexPtMin ;
