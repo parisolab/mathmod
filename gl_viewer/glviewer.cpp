@@ -1439,7 +1439,7 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.PolyIndices_localPt),
                 &LocalScene.PolyNumberTmp1,
                 &LocalScene.VertxNumberTmp1,
-                LocalScene.PolyIndices_localPtMin,
+                &(LocalScene.PolyIndices_localPtMin),
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos),
                 LocalScene.Typetriangles
@@ -1486,7 +1486,7 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.PolyIndices_localPt),
                 &(LocalScene.PolyNumber),
                 &(LocalScene.VertxNumber),
-                LocalScene.PolyIndices_localPtMin,
+                &(LocalScene.PolyIndices_localPtMin),
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos),
                 LocalScene.Typetriangles

@@ -32,6 +32,7 @@ static uint NbVertexTmp = 0;
 
 static std::vector<float> NormVertexTabVector;
 static std::vector<uint> IndexPolyTabVector;
+static std::vector<uint> IndexPolyTabMinVector;
 
 float* NormVertexTab;
 unsigned int * IndexPolyTab;
@@ -131,7 +132,7 @@ void Iso3D::BuildIso()
         &(LocalScene->PolyIndices_localPt),
         &LocalScene->PolyNumber,
         &(LocalScene->VertxNumber),
-        LocalScene->PolyIndices_localPtMin,
+        &(LocalScene->PolyIndices_localPtMin),
         &(LocalScene->NbPolygnNbVertexPtMin),
         &(LocalScene->componentsinfos),
         LocalScene->Typetriangles);
@@ -1593,7 +1594,7 @@ void Iso3D::IsoBuild (
     unsigned int **IndexPolyTabPt,
     unsigned   int *PolyNumber,
     unsigned int *VertexNumberpt,
-    unsigned int *IndexPolyTabMinPt,
+    unsigned int **IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt,
     struct ComponentInfos * componentsPt,
     int *TriangleListeCND
@@ -1608,6 +1609,7 @@ void Iso3D::IsoBuild (
     NormVertexTabVector.clear();
     PointVerifyCond.clear();
     IndexPolyTabVector.clear();
+    IndexPolyTabMinVector.clear();
 
     //*****//
     uint maxx = std::max(std::max(std::max(Xgrid, Ygrid), Zgrid), masterthread->maximumgrid);
@@ -1630,8 +1632,7 @@ void Iso3D::IsoBuild (
 
     //*****//
     //*****//
-    IndexPolyTabVector;
-    IndexPolyTabMin = IndexPolyTabMinPt;
+    //IndexPolyTabMin = IndexPolyTabMinPt;
     //NormVertexTabVector = NormVertexTabVectPt;
     if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
@@ -1845,6 +1846,7 @@ void Iso3D::IsoBuild (
 
     *NormVertexTabVectorPt = NormVertexTabVector.data();
     *IndexPolyTabPt = IndexPolyTabVector.data();
+    *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     componentsPt->Interleave = true;
     copycomponent(componentsPt, components);
     Setgrid(PreviousGridVal);
@@ -2180,11 +2182,16 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                     TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
                     NbTriangleIsoSurfaceTmp++;
-
+                    /*
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = Aindex;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;*/
+                    IndexPolyTabMinVector.push_back(3);
+                    IndexPolyTabMinVector.push_back(Aindex);
+                    IndexPolyTabMinVector.push_back(IndexBprime);
+                    IndexPolyTabMinVector.push_back(IndexCprime);
+                    PreviousSizeMinimalTopology+=4;
                     NbPolyMinimalTopology++;
 
                     /// (Bprime, B, C)
@@ -2201,11 +2208,17 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                     TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
                     NbTriangleIsoSurfaceTmp++;
-
+                    /*
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = Bindex;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
+                    */
+                    IndexPolyTabMinVector.push_back(3);
+                    IndexPolyTabMinVector.push_back(IndexBprime);
+                    IndexPolyTabMinVector.push_back(Bindex);
+                    IndexPolyTabMinVector.push_back(Cindex);
+                    PreviousSizeMinimalTopology+=4;
                     NbPolyMinimalTopology++;
 
                     /// (Bprime, C, Cprime)
@@ -2222,11 +2235,16 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                     TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1 : TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
                     NbTriangleIsoSurfaceTmp++;
-
+                    /*
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
-                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                    IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;*/
+                    IndexPolyTabMinVector.push_back(3);
+                    IndexPolyTabMinVector.push_back(IndexBprime);
+                    IndexPolyTabMinVector.push_back(Cindex);
+                    IndexPolyTabMinVector.push_back(IndexCprime);
+                    PreviousSizeMinimalTopology+=4;
                     NbPolyMinimalTopology++;
 
                     /// (Bprime, Cprime) --> the border
@@ -2242,11 +2260,17 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
                     TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 4; /// Type = 4-->Border
                     NbTriangleIsoSurfaceTmp++;
-
+                    /*
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
                     IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                    */
+                    IndexPolyTabMinVector.push_back(3);
+                    IndexPolyTabMinVector.push_back(IndexBprime);
+                    IndexPolyTabMinVector.push_back(IndexCprime);
+                    IndexPolyTabMinVector.push_back(IndexCprime);
+                    PreviousSizeMinimalTopology+=4;
                     NbPolyMinimalTopology++;
                 }
                 else return 2;
@@ -2370,9 +2394,18 @@ uint Iso3D::SetMiniMmeshStruct()
                     NbPolyMin += nbpl;
                     if((PreviousSizeMinimalTopology + lnew +1 + triTable_min[Index][17]) < 5*NbMaxTri)
                     {
+                        /*
                         IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][17];
                         for(iter = 0; iter < triTable_min[Index][17]; iter++)
                             IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
+                        */
+
+                        IndexPolyTabMinVector.push_back(triTable_min[Index][17]);
+                        lnew++;
+                        for(iter = 0; iter < triTable_min[Index][17]; iter++)
+                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp);
+                        lnew+=triTable_min[Index][17];
+
                     }
                     else
                         return 0;
@@ -2382,6 +2415,7 @@ uint Iso3D::SetMiniMmeshStruct()
                     NbPolyMin += nbpl;
                     if((PreviousSizeMinimalTopology + lnew +2 + triTable_min[Index][17] + triTable_min[Index][18]) < 5*NbMaxTri)
                     {
+                        /*
                         /// First Poly:
                         IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][17];
                         for(iter = 0; iter < triTable_min[Index][17]; iter++)
@@ -2390,6 +2424,19 @@ uint Iso3D::SetMiniMmeshStruct()
                         IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = triTable_min[Index][18];
                         for(iter = triTable_min[Index][17]; iter < triTable_min[Index][17]+triTable_min[Index][18]; iter++)
                             IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp;
+                            */
+                        /// First Poly:
+                        IndexPolyTabMinVector.push_back(triTable_min[Index][17]);
+                        lnew++;
+                        for(iter = 0; iter < triTable_min[Index][17]; iter++)
+                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp);
+                        lnew+=triTable_min[Index][17];
+                        /// Second Poly:
+                        IndexPolyTabMinVector.push_back(triTable_min[Index][18]);
+                        lnew++;
+                        for(iter = triTable_min[Index][17]; iter < triTable_min[Index][17]+triTable_min[Index][18]; iter++)
+                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp);
+                        lnew+=triTable_min[Index][17]+triTable_min[Index][18];
                     }
                     else
                         return 0;
@@ -2402,10 +2449,17 @@ uint Iso3D::SetMiniMmeshStruct()
                     if((PreviousSizeMinimalTopology + lnew + 4*nbpl) < 5*NbMaxTri)
                         for(iterpl = 0; iterpl < nbpl; iterpl++)
                         {
+                            /*
                             IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = 3;
                             IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter  ]]  + NbVertexTmp;
                             IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+1]]  + NbVertexTmp;
                             IndexPolyTabMin[PreviousSizeMinimalTopology + lnew++] = GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+2]]  + NbVertexTmp;
+                            */
+                            IndexPolyTabMinVector.push_back(3);
+                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter  ]]  + NbVertexTmp);
+                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+1]]  + NbVertexTmp);
+                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+2]]  + NbVertexTmp);
+                            lnew += 4;
                             iter +=3;
                         }
                     else
