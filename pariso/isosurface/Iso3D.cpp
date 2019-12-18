@@ -30,7 +30,7 @@ static uint PreviousSizeMinimalTopology =0;
 static uint NbPolyMinimalTopology =0;
 static uint NbVertexTmp = 0;
 float* NormVertexTab;
-static std::vector<float*> NormVertexTabVector;
+static std::vector<float> NormVertexTabVector;
 unsigned int * IndexPolyTab;
 unsigned int * IndexPolyTabMin;
 struct ComponentInfos componentsStr;
@@ -2096,27 +2096,47 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 {
                     //Add Bprime:
                     NormVertexTab[10*NbVertexTmp   ] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp+1 ] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp+2 ] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp+3 ] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp+4 ] = NormVertexTab[10*Bindex + 4];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 4]);
                     NormVertexTab[10*NbVertexTmp+5 ] = NormVertexTab[10*Bindex + 5];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 5]);
                     NormVertexTab[10*NbVertexTmp+6 ] = NormVertexTab[10*Bindex + 6];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 6]);
                     NormVertexTab[10*NbVertexTmp+7 ] = float(Bprime[0]);
+                    NormVertexTabVector.push_back(float(Bprime[0]));
                     NormVertexTab[10*NbVertexTmp+8 ] = float(Bprime[1]);
+                    NormVertexTabVector.push_back(float(Bprime[1]));
                     NormVertexTab[10*NbVertexTmp+9 ] = float(Bprime[2]);
+                    NormVertexTabVector.push_back(float(Bprime[2]));
 
                     //Add Cprime:
                     NormVertexTab[10*NbVertexTmp +10] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp +11] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp +12] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp +13] = 1.0;
+                    NormVertexTabVector.push_back(1.0);
                     NormVertexTab[10*NbVertexTmp +14] = NormVertexTab[10*Cindex + 4];
+                    NormVertexTabVector.push_back(NormVertexTab[10*Cindex + 4]);
                     NormVertexTab[10*NbVertexTmp +15] = NormVertexTab[10*Cindex + 5];
+                    NormVertexTabVector.push_back(NormVertexTab[10*Cindex + 5]);
                     NormVertexTab[10*NbVertexTmp +16] = NormVertexTab[10*Cindex + 6];
+                    NormVertexTabVector.push_back(NormVertexTab[10*Cindex + 6]);
                     NormVertexTab[10*NbVertexTmp +17] = float(Cprime[0]);
+                    NormVertexTabVector.push_back(float(Cprime[0]));
                     NormVertexTab[10*NbVertexTmp +18] = float(Cprime[1]);
+                    NormVertexTabVector.push_back(float(Cprime[1]));
                     NormVertexTab[10*NbVertexTmp +19] = float(Cprime[2]);
+                    NormVertexTabVector.push_back(float(Cprime[2]));
 
                     NbVertexTmp += 2;
                 }
@@ -2483,9 +2503,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2522,9 +2547,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2578,9 +2608,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
-                    NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                    NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                    NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                    NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                    NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                    NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                    for(int iter=0; iter<7; iter++)
+                        NormVertexTabVector.push_back(1.0);
+                    NormVertexTabVector.push_back(float(vals[0]));
+                    NormVertexTabVector.push_back(float(vals[1]));
+                    NormVertexTabVector.push_back(float(vals[2]));
                 }
                 else
                     return 0;
@@ -2625,9 +2660,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2663,9 +2703,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2720,9 +2765,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2769,9 +2819,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2832,9 +2887,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2869,9 +2929,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
-                    NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                    NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                    NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                    NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                    NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                    NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                    for(int iter=0; iter<7; iter++)
+                        NormVertexTabVector.push_back(1.0);
+                    NormVertexTabVector.push_back(float(vals[0]));
+                    NormVertexTabVector.push_back(float(vals[1]));
+                    NormVertexTabVector.push_back(float(vals[2]));
                 }
                 else
                     return 0;
@@ -2918,9 +2983,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2970,9 +3040,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -3020,9 +3095,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -3079,9 +3159,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -3119,9 +3204,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -3157,9 +3247,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
-                    NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                    NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                    NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                    NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                    NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                    NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                    for(int iter=0; iter<7; iter++)
+                        NormVertexTabVector.push_back(1.0);
+                    NormVertexTabVector.push_back(float(vals[0]));
+                    NormVertexTabVector.push_back(float(vals[1]));
+                    NormVertexTabVector.push_back(float(vals[2]));
                 }
                 else
                     return 0;
@@ -3219,9 +3314,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -3269,9 +3369,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
+                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
+                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
