@@ -37,16 +37,12 @@ unsigned int * IndexPolyTabMin;
 struct ComponentInfos componentsStr;
 struct ComponentInfos * components=&componentsStr;
 
-uint NbMaxGrid    = 100;
-uint NbMaxTri     = 3*100;
+uint NbMaxGrid = 100;
+uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbIsoComponent = 30;
 
-static uint Maxpoints    = 10000;
-static uint Maxtriangles = 2*Maxpoints;
-static uint NbMaxPoly    = 4*Maxtriangles;
-static uint NbMaxPolyMin = 5*Maxtriangles;
-
+static uint Maxpoints = 10000;
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 
@@ -131,7 +127,7 @@ void Iso3D::BuildIso()
 {
     IsoBuild(
         &(LocalScene->ArrayNorVer_localPt),
-        &(LocalScene->PolyIndices_localPt),
+        LocalScene->PolyIndices_localPt,
         &(LocalScene->PolyNumber),
         &(LocalScene->VertxNumber),
         LocalScene->PolyIndices_localPtMin,
@@ -446,8 +442,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     NbMaxTri = maxtri;
     NbMaxPts = maxpts;
     Maxpoints = maxnbpoints = 10*maxpts;
-    Maxtriangles = maxnbtriangles = 2*3*maxpts;
-
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     Xgrid = Ygrid = Zgrid = nbGrid;
@@ -475,8 +469,8 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 
-    IsoSurfaceTriangleListe  = new uint[Maxtriangles];
-    NormOriginaltmp          = new float[Maxtriangles];
+    IsoSurfaceTriangleListe  = new uint[3*maxtri];
+    NormOriginaltmp          = new float[3*maxtri];
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1597,7 +1591,7 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float ** NormVertexTabPt,
-    unsigned int **IndexPolyTabPt,
+    unsigned int *IndexPolyTabPt,
     unsigned   int *PolyNumber,
     unsigned int *VertexNumberpt,
     unsigned int *IndexPolyTabMinPt,
@@ -1632,7 +1626,7 @@ void Iso3D::IsoBuild (
         delete[] Results;
     Results = new double[maxx*maxx*maxx];
 
-    IndexPolyTab = *IndexPolyTabPt;
+    IndexPolyTab = IndexPolyTabPt;
     IndexPolyTabMin = IndexPolyTabMinPt;
 
     NormVertexTab = *NormVertexTabPt;
@@ -1753,20 +1747,31 @@ void Iso3D::IsoBuild (
             components->IsoPts[2*fctnb    ] = NbVertexTmp;
             components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
         }
-
-        if( (l+3*NbTriangleIsoSurface) > NbMaxPoly)
+        if( (l+3*NbTriangleIsoSurface) < 4*NbMaxTri)
         {
-            IncreasePolytab(NbMaxPoly, (l+3*NbTriangleIsoSurface) + 4*200000, &IndexPolyTab, IndexPolyTabPt);
+            for (uint i=0; i < NbTriangleIsoSurface ; ++i)
+            {
+                if((IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp) > Maxpoints ||
+                   (IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp) > Maxpoints ||
+                   (IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp) > Maxpoints)
+                {
+                    messageerror = MINPOLY_TAB_MEM_OVERFLOW;
+                    emitErrorSignal();
+                    return;
+                }
+                IndexPolyTab[l  ] = IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp;
+                IndexPolyTab[l+1] = IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp;
+                IndexPolyTab[l+2] = IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp;
+                l+=3;
+
+            }
         }
-        for (uint i=0; i < NbTriangleIsoSurface ; ++i)
+        else
         {
-            IndexPolyTab[l  ] = IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp;
-            IndexPolyTab[l+1] = IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp;
-            IndexPolyTab[l+2] = IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp;
-            l+=3;
-
+            messageerror = POLY_TAB_MEM_OVERFLOW;
+            emitErrorSignal();
+            return;
         }
-
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
@@ -2385,22 +2390,21 @@ uint Iso3D::ConstructIsoSurface()
                     IndexFirstPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l  ]];
                     IndexSeconPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+1]];
                     IndexThirdPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+2]];
-
-                    if((NbTriangleIsoSurface*3+2) >= Maxtriangles)
                     {
-                        IncreaseIsoSurfaceTriangleListe(Maxtriangles, (NbTriangleIsoSurface*3+2) + 3*200000, // We add 200k triangles
-                                                        &IsoSurfaceTriangleListe);
-                        IncreaseNormOriginaltmp((NbTriangleIsoSurface*3+2) + 3*200000, // We add 200k normals
-                                                        &NormOriginaltmp);
+                        if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
+                        {
+                            //if(IndexFirstPoint != -20 && IndexSeconPoint != -20 && IndexThirdPoint != -20)
+                            {
+                                IndexNbTriangle = NbTriangleIsoSurface*3;
+                                IsoSurfaceTriangleListe[IndexNbTriangle  ] = IndexFirstPoint;
+                                IsoSurfaceTriangleListe[IndexNbTriangle+1] = IndexSeconPoint;
+                                IsoSurfaceTriangleListe[IndexNbTriangle+2] = IndexThirdPoint;
+                                NbTriangleIsoSurface++;
+                            }
+                        }
+                        else
+                            return 0;
                     }
-                    {
-                        IndexNbTriangle = NbTriangleIsoSurface*3;
-                        IsoSurfaceTriangleListe[IndexNbTriangle  ] = IndexFirstPoint;
-                        IsoSurfaceTriangleListe[IndexNbTriangle+1] = IndexSeconPoint;
-                        IsoSurfaceTriangleListe[IndexNbTriangle+2] = IndexThirdPoint;
-                        NbTriangleIsoSurface++;
-                    }
-
                 }
             }
         }
@@ -2408,46 +2412,13 @@ uint Iso3D::ConstructIsoSurface()
     return 1;
 }
 
-void Iso3D::IncreaseIsoSurfaceTriangleListe(uint& previousSize, uint newSize, uint **tableToexpend)
-{
-    QMessageBox msgBox;
-    uint * tmp= (uint *)malloc((newSize)*sizeof(uint));
-    if(tmp)
-    {
-        memcpy(tmp, *tableToexpend, previousSize*sizeof(uint));
-        free(*tableToexpend);
-        *tableToexpend = tmp;
-        previousSize = newSize;
-    }
-    else
-    {
-        free(tmp);
-        msgBox.setText("Malloc failed");
-        msgBox.exec();
-        return;
-    }
-}
-
-void Iso3D::IncreaseNormOriginaltmp(uint newSize, float **tableToexpend)
-{
-    QMessageBox msgBox;
-    float * tmp= (float *)malloc((newSize)*sizeof(float));
-    if(tmp)
-    {
-        free(*tableToexpend);
-        *tableToexpend = tmp;
-    }
-    else
-    {
-        free(tmp);
-        msgBox.setText("Malloc failed");
-        msgBox.exec();
-        return;
-    }
-}
-
 void Iso3D::IncreaseTableSize2(uint newSize, bool **tableToexpend, bool **tableToShow)
 {
+    /*
+    *tableToShow = (float*) realloc((*tableToShow), (newSize+100000) * sizeof (float));
+    *tableToexpend = *tableToShow;
+    previousSize = newSize+100000;
+    */
     QMessageBox msgBox;
     bool * tmp= (bool *)malloc((newSize)*sizeof(bool));
     if(tmp)
@@ -2464,40 +2435,17 @@ void Iso3D::IncreaseTableSize2(uint newSize, bool **tableToexpend, bool **tableT
         return;
     }
 }
-///+++++++++++++++++++++++++++++++++++++++++
 
-void Iso3D::IncreasePolytab(uint& previousSize, uint newSize, uint**tableToexpend, uint**tableToShow)
-{
-    QMessageBox msgBox;
-    uint * tmp= (uint *)malloc(newSize*sizeof(uint));
-    if(tmp)
-    {
-        memcpy(tmp, *tableToShow, previousSize*sizeof(float));
-        free(*tableToShow);
-        *tableToShow = tmp;
-        *tableToexpend = *tableToShow;
-        previousSize = newSize;
-    }
-    else
-    {
-        free(tmp);
-        msgBox.setText("Malloc failed");
-        msgBox.exec();
-        return;
-    }
-}
-
-///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IncreaseTableSize(uint & previousSize, uint newSize, float **tableToexpend, float **tableToShow, ComponentInfos * cpt)
 {
     QMessageBox msgBox;
     float * tmp= (float *)malloc((newSize+1000000)*sizeof(float));
     if(tmp)
     {
-        memcpy(tmp, *tableToShow, previousSize*sizeof(float));
-        free(*tableToShow);
-        *tableToShow = tmp;
-        *tableToexpend = *tableToShow;
+        memcpy(tmp, *tableToexpend, previousSize*sizeof(float));
+        free(*tableToexpend);
+        *tableToexpend = tmp;
+        *tableToShow = *tableToexpend;
         previousSize = (newSize+1000000);
         cpt->InterleavedArrays = true;
     }
