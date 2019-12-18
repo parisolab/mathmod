@@ -150,12 +150,12 @@ public :
     inline   uint ConstructIsoSurface();
     inline   void ConstructIsoNormale();
     inline   uint PointEdgeComputation(uint, float** , ComponentInfos *);
-    inline   void IncreaseTableSize(uint&, uint, float **, float **, ComponentInfos *);
+    inline   void IncreaseNormVertexTab(uint&, uint, float **, float **, ComponentInfos *);
     inline   void IncreasePolytab(uint&, uint, uint **, uint **);
     inline   void IncreaseTableSize2(uint, bool **, bool **);
     inline   void IncreaseIsoSurfaceTriangleListe(uint&, uint, uint **);
     inline   void IncreaseNormOriginaltmp(uint, float **);
-    inline uint CNDCalculation(uint &, struct ComponentInfos *);
+    inline uint CNDCalculation(uint &, struct ComponentInfos *, float**, uint **);
     void Setgrid(uint);
     void IsoBuild(float **, unsigned int **, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool **);
     void SaveIsoGLMap();
