@@ -149,8 +149,8 @@ public :
     inline   void SignatureComputation();
     inline   uint ConstructIsoSurface();
     inline   void ConstructIsoNormale();
-    inline   uint PointEdgeComputation(uint, float** , ComponentInfos *);
-    inline   void IncreaseTableSize(uint&, uint, float **, float **, ComponentInfos *);
+    inline   uint PointEdgeComputation(uint, float** );
+    inline   void IncreaseTableSize(uint&, uint, float **, float **);
     inline   void IncreaseTableSize2(uint, bool **, bool **);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
