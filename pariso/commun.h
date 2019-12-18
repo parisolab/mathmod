@@ -150,6 +150,7 @@ struct  ComponentInfos
     uint NbTrianglesBorderCND;
     bool DMTrianglesBorderCND;
     NoiseParemeters NoiseParam;
+    bool Interleave=false;
 };
 
 struct  ObjectProperties
@@ -161,9 +162,7 @@ struct  ObjectProperties
     float         * OriginalArrayNorVerExtra_localPt;
     unsigned int  * PolyIndices_localPt;
     unsigned int  * PolyIndices_localPtMin;
-    float  * BorderPoints;
-    int  * TypeSurfaceTriangleListeCND;
-    bool *     WichPointVerifyCond;
+    int           * TypeSurfaceTriangleListeCND;
     unsigned int    NbPolygnNbVertexPtMin ;
     unsigned int    PolyNumber;
     unsigned int    VertxNumber;

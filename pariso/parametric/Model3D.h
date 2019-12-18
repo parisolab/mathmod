@@ -162,7 +162,6 @@ public:
                     unsigned int *, uint  IsoPos=0,
                     ComponentInfos *components = nullptr,
                     int *TriangleListeCND = nullptr,
-                    bool *typeCND = nullptr,
                     unsigned int *IndexPolyTabMinPt = nullptr,
                     unsigned  int *NbPolyMinPt = nullptr);
     void BuildPar();

@@ -1596,7 +1596,6 @@ void Par3D::BuildPar()
         0,
         &(LocalScene->componentsinfos),
         LocalScene->Typetriangles,
-        LocalScene->WichPointVerifyCond,
         LocalScene->PolyIndices_localPtMin,
         &(LocalScene->NbPolygnNbVertexPtMin)
     );
@@ -1828,7 +1827,6 @@ void  Par3D::ParamBuild(
     uint  IsoPos,
     ComponentInfos *componentsPt,
     int *TriangleListeCND,
-    bool *typeCND,
     unsigned int *IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt
 )
@@ -1849,9 +1847,6 @@ void  Par3D::ParamBuild(
     //*******/
     if(components != nullptr)
         components->NbParametric = masterthread->expression_XSize;
-
-    if(typeCND != nullptr)
-        WichPointVerifyCond = typeCND;
 
     stopcalculations(false);
     if(!masterthread->gridnotnull)

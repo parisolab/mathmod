@@ -1358,6 +1358,12 @@ static void draw(ObjectProperties *scene)
     if (scene->infos == 1)
         glCallList(scene->gridplanliste);
 
+    if(scene->componentsinfos.Interleave)
+    {
+        glInterleavedArrays (GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
+        scene->componentsinfos.Interleave = false;
+    }
+
     // Axe :
     if (scene->infos == 1)
         DrawAxe();
@@ -1429,15 +1435,14 @@ void OpenGlWidget::paintGL()
         if(LocalScene.typedrawing == 11)
         {
             IsoObjetThread->IsoObjet->IsoBuild(
-                LocalScene.ArrayNorVer_localPt,
+                &(LocalScene.ArrayNorVer_localPt),
                 LocalScene.PolyIndices_localPt,
                 &LocalScene.PolyNumberTmp1,
                 &LocalScene.VertxNumberTmp1,
                 LocalScene.PolyIndices_localPtMin,
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos),
-                LocalScene.Typetriangles,
-                LocalScene.WichPointVerifyCond
+                LocalScene.Typetriangles
             );
 
             ParObjetThread->ParObjet->ParamBuild(
@@ -1449,7 +1454,6 @@ void OpenGlWidget::paintGL()
                 LocalScene.VertxNumberTmp1,
                 &(LocalScene.componentsinfos),
                 LocalScene.Typetriangles,
-                LocalScene.WichPointVerifyCond,
                 LocalScene.PolyIndices_localPtMin,
                 &(LocalScene.NbPolygnNbVertexPtMin)
             );
@@ -1470,7 +1474,6 @@ void OpenGlWidget::paintGL()
                 0,
                 &(LocalScene.componentsinfos),
                 LocalScene.Typetriangles,
-                LocalScene.WichPointVerifyCond,
                 LocalScene.PolyIndices_localPtMin,
                 &(LocalScene.NbPolygnNbVertexPtMin)
             );
@@ -1479,15 +1482,14 @@ void OpenGlWidget::paintGL()
         {
             IsoObjetThread->IsoObjet->IsoBuild
             (
-                LocalScene.ArrayNorVer_localPt,
+                &(LocalScene.ArrayNorVer_localPt),
                 LocalScene.PolyIndices_localPt,
                 &(LocalScene.PolyNumber),
                 &(LocalScene.VertxNumber),
                 LocalScene.PolyIndices_localPtMin,
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos),
-                LocalScene.Typetriangles,
-                LocalScene.WichPointVerifyCond
+                LocalScene.Typetriangles
             );
         }
         initialize_GL();

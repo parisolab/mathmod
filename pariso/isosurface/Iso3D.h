@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <deque>
 #include <cmath>
 #include "../objectparameters.h"
 
@@ -130,8 +131,9 @@ public :
     IsoMasterThread *masterthread;
     uint   Xgrid, Ygrid, Zgrid;
     uint WorkerThreadsNumber;
-    uint *     IsoSurfaceTriangleListe;
-    bool *     PointVerifyCond, StopCalculations;
+    uint *    IsoSurfaceTriangleListe;
+    bool      StopCalculations;
+    std::vector<int> PointVerifyCond;
     int *     TypeIsoSurfaceTriangleListeCND;
     uint NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
@@ -152,7 +154,7 @@ public :
     inline   uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
-    void IsoBuild(float *, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *, bool *);
+    void IsoBuild(float **, unsigned int *, unsigned int *,unsigned  int *, unsigned int *,unsigned  int *, struct ComponentInfos *, int *);
     void SaveIsoGLMap();
     uint SetMiniMmeshStruct();
     uint CNDtoUse(uint index, struct ComponentInfos *);

@@ -31,6 +31,7 @@ static uint NbPolyMinimalTopology =0;
 static uint NbVertexTmp = 0;
 float* NormVertexTab;
 static std::vector<float> NormVertexTabVector;
+static std::vector<bool> PointVerifyCondVector;
 unsigned int * IndexPolyTab;
 unsigned int * IndexPolyTabMin;
 struct ComponentInfos componentsStr;
@@ -124,15 +125,14 @@ void Iso3D::emitUpdateMessageSignal()
 void Iso3D::BuildIso()
 {
     IsoBuild(
-        LocalScene->ArrayNorVer_localPt,
+        &(LocalScene->ArrayNorVer_localPt),
         LocalScene->PolyIndices_localPt,
         &LocalScene->PolyNumber,
         &(LocalScene->VertxNumber),
         LocalScene->PolyIndices_localPtMin,
         &(LocalScene->NbPolygnNbVertexPtMin),
         &(LocalScene->componentsinfos),
-        LocalScene->Typetriangles,
-        LocalScene->WichPointVerifyCond);
+        LocalScene->Typetriangles);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -911,17 +911,17 @@ void Iso3D::ConstructIsoNormale()
         IndexSecondPoint = 3+10*IsoSurfaceTriangleListe[ThreeTimesI+1    ]+ 10*NbVertexTmp +4;
         IndexThirdPoint  = 3+10*IsoSurfaceTriangleListe[ThreeTimesI+2    ]+ 10*NbVertexTmp +4;
 
-        pt1_x= NormVertexTab[IndexFirstPoint   ];
-        pt1_y= NormVertexTab[IndexFirstPoint+1 ];
-        pt1_z= NormVertexTab[IndexFirstPoint+2 ];
+        pt1_x= NormVertexTabVector[IndexFirstPoint   ];
+        pt1_y= NormVertexTabVector[IndexFirstPoint+1 ];
+        pt1_z= NormVertexTabVector[IndexFirstPoint+2 ];
 
-        pt2_x= NormVertexTab[IndexSecondPoint    ];
-        pt2_y= NormVertexTab[IndexSecondPoint+1];
-        pt2_z= NormVertexTab[IndexSecondPoint+2];
+        pt2_x= NormVertexTabVector[IndexSecondPoint    ];
+        pt2_y= NormVertexTabVector[IndexSecondPoint+1];
+        pt2_z= NormVertexTabVector[IndexSecondPoint+2];
 
-        pt3_x= NormVertexTab[IndexThirdPoint     ];
-        pt3_y= NormVertexTab[IndexThirdPoint+1 ];
-        pt3_z= NormVertexTab[IndexThirdPoint+2 ];
+        pt3_x= NormVertexTabVector[IndexThirdPoint     ];
+        pt3_y= NormVertexTabVector[IndexThirdPoint+1 ];
+        pt3_z= NormVertexTabVector[IndexThirdPoint+2 ];
 
         val1 = pt2_y - pt1_y;
         val2 = pt3_z - pt1_z;
@@ -956,9 +956,9 @@ void Iso3D::SaveIsoGLMap()
     for (uint i=0; i < NbPointIsoMap ; i++)
     {
         ThreeTimesI = 10*i  + 4;
-        NormVertexTab[ 10*NbVertexTmp +ThreeTimesI  ] = 0;
-        NormVertexTab[ 10*NbVertexTmp +ThreeTimesI+1] = 0;
-        NormVertexTab[ 10*NbVertexTmp +ThreeTimesI+2] = 0;
+        NormVertexTabVector[ 10*NbVertexTmp +ThreeTimesI  ] = 0;
+        NormVertexTabVector[ 10*NbVertexTmp +ThreeTimesI+1] = 0;
+        NormVertexTabVector[ 10*NbVertexTmp +ThreeTimesI+2] = 0;
     }
 
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
@@ -968,17 +968,17 @@ void Iso3D::SaveIsoGLMap()
         IndexSecondPoint = 10*IsoSurfaceTriangleListe[ThreeTimesI +1] + 10*NbVertexTmp  + 4;
         IndexThirdPoint  = 10*IsoSurfaceTriangleListe[ThreeTimesI +2] + 10*NbVertexTmp  + 4;
 
-        NormVertexTab[IndexFirstPoint  ] += NormOriginaltmp[ThreeTimesI  ];
-        NormVertexTab[IndexFirstPoint+1] += NormOriginaltmp[ThreeTimesI+1];
-        NormVertexTab[IndexFirstPoint+2] += NormOriginaltmp[ThreeTimesI+2];
+        NormVertexTabVector[IndexFirstPoint  ] += NormOriginaltmp[ThreeTimesI  ];
+        NormVertexTabVector[IndexFirstPoint+1] += NormOriginaltmp[ThreeTimesI+1];
+        NormVertexTabVector[IndexFirstPoint+2] += NormOriginaltmp[ThreeTimesI+2];
 
-        NormVertexTab[IndexSecondPoint  ] += NormOriginaltmp[ThreeTimesI  ];
-        NormVertexTab[IndexSecondPoint+1] += NormOriginaltmp[ThreeTimesI+1];
-        NormVertexTab[IndexSecondPoint+2] += NormOriginaltmp[ThreeTimesI+2];
+        NormVertexTabVector[IndexSecondPoint  ] += NormOriginaltmp[ThreeTimesI  ];
+        NormVertexTabVector[IndexSecondPoint+1] += NormOriginaltmp[ThreeTimesI+1];
+        NormVertexTabVector[IndexSecondPoint+2] += NormOriginaltmp[ThreeTimesI+2];
 
-        NormVertexTab[IndexThirdPoint  ]  += NormOriginaltmp[ThreeTimesI  ];
-        NormVertexTab[IndexThirdPoint+1]  += NormOriginaltmp[ThreeTimesI+1];
-        NormVertexTab[IndexThirdPoint+2]  += NormOriginaltmp[ThreeTimesI+2];
+        NormVertexTabVector[IndexThirdPoint  ]  += NormOriginaltmp[ThreeTimesI  ];
+        NormVertexTabVector[IndexThirdPoint+1]  += NormOriginaltmp[ThreeTimesI+1];
+        NormVertexTabVector[IndexThirdPoint+2]  += NormOriginaltmp[ThreeTimesI+2];
     }
 
 /// Normalisation
@@ -986,13 +986,13 @@ void Iso3D::SaveIsoGLMap()
     for (uint i=0; i < NbPointIsoMap  ; i++)
     {
         idx = 10*i + 4;
-        scalar = double(sqrt((NormVertexTab[idx  ]*NormVertexTab[idx  ]) +
-                             (NormVertexTab[idx+1]*NormVertexTab[idx+1]) +
-                             (NormVertexTab[idx+2]*NormVertexTab[idx+2])));
+        scalar = double(sqrt((NormVertexTabVector[idx  ]*NormVertexTabVector[idx  ]) +
+                             (NormVertexTabVector[idx+1]*NormVertexTabVector[idx+1]) +
+                             (NormVertexTabVector[idx+2]*NormVertexTabVector[idx+2])));
         if(scalar < 0.000000001)  scalar = 0.000000001;
-        NormVertexTab[idx  ] /= float(scalar);
-        NormVertexTab[idx+1] /= float(scalar);
-        NormVertexTab[idx+2] /= float(scalar);
+        NormVertexTabVector[idx  ] /= float(scalar);
+        NormVertexTabVector[idx+1] /= float(scalar);
+        NormVertexTabVector[idx+2] /= float(scalar);
     }
 }
 
@@ -1587,15 +1587,14 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 }
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
-    float *NormVertexTabPt,
+    float **NormVertexTabVectorPt,
     unsigned int *IndexPolyTabPt,
     unsigned   int *PolyNumber,
     unsigned int *VertexNumberpt,
     unsigned int *IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt,
     struct ComponentInfos * componentsPt,
-    int *TriangleListeCND,
-    bool *typeCND
+    int *TriangleListeCND
 )
 {
     uint l, NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
@@ -1603,7 +1602,8 @@ void Iso3D::IsoBuild (
     NbPolyMinimalTopology = 0;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
-
+    NormVertexTabVector.clear();
+    PointVerifyCond.clear();
     //*****//
     uint maxx = std::max(std::max(std::max(Xgrid, Ygrid), Zgrid), masterthread->maximumgrid);
     if(masterthread->gridnotnull)
@@ -1627,17 +1627,17 @@ void Iso3D::IsoBuild (
     //*****//
     IndexPolyTab = IndexPolyTabPt;
     IndexPolyTabMin = IndexPolyTabMinPt;
-    NormVertexTab = NormVertexTabPt;
+    //NormVertexTabVector = NormVertexTabVectPt;
     if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
     //*****//
 
     if(components != nullptr)
         components->NbIso = masterthread->ImplicitFunctionSize;
-
+/*
     if(typeCND != nullptr)
-        PointVerifyCond = typeCND;
-
+        PointVerifyCond = *typeCND;
+*/
     stopcalculations(false);
 
     if(masterthread->morph_activated != 1)
@@ -1836,6 +1836,9 @@ void Iso3D::IsoBuild (
         emitUpdateMessageSignal();
     }
 
+    *NormVertexTabVectorPt = NormVertexTabVector.data();
+    //*typeCND = PointVerifyCond.data();
+    componentsPt->Interleave = true;
     copycomponent(componentsPt, components);
     Setgrid(PreviousGridVal);
 }
@@ -1885,18 +1888,18 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= double(NormVertexTab[i*10  + 3 + 4 ]);
-            val[1]= double(NormVertexTab[i*10  + 4 + 4 ]);
-            val[2]= double(NormVertexTab[i*10  + 5 + 4 ]);
+            val[0]= double(NormVertexTabVector[i*10  + 3 + 4 ]);
+            val[1]= double(NormVertexTabVector[i*10  + 4 + 4 ]);
+            val[2]= double(NormVertexTabVector[i*10  + 5 + 4 ]);
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*double(NormVertexTab[i*10  + 3 + 4 ]);
-            val[1]= tmp*double(NormVertexTab[i*10  + 4 + 4 ]);
-            val[2]= tmp*double(NormVertexTab[i*10  + 5 + 4 ]);
+            val[0]= tmp*double(NormVertexTabVector[i*10  + 3 + 4 ]);
+            val[1]= tmp*double(NormVertexTabVector[i*10  + 4 + 4 ]);
+            val[2]= tmp*double(NormVertexTabVector[i*10  + 5 + 4 ]);
 
             tmp  = masterthread->GradientParser->Eval(val);
 
@@ -1905,10 +1908,10 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
             for (uint j=0; j < masterthread->VRgbtSize; j+=5)
                 if(tmp <= ValCol[j])
                 {
-                    NormVertexTab[i*10  ] = float(ValCol[j+1]);
-                    NormVertexTab[i*10+1] = float(ValCol[j+2]);
-                    NormVertexTab[i*10+2] = float(ValCol[j+3]);
-                    NormVertexTab[i*10+3] = float(ValCol[j+4]);
+                    NormVertexTabVector[i*10  ] = float(ValCol[j+1]);
+                    NormVertexTabVector[i*10+1] = float(ValCol[j+2]);
+                    NormVertexTabVector[i*10+2] = float(ValCol[j+3]);
+                    NormVertexTabVector[i*10+3] = float(ValCol[j+4]);
                     j = masterthread->VRgbtSize;
                 }
         }
@@ -1926,23 +1929,23 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
                     }
                 }
 
-            val[0]= double(NormVertexTab[i*10  + 3 + 4 ]);
-            val[1]= double(NormVertexTab[i*10  + 4 + 4 ]);
-            val[2]= double(NormVertexTab[i*10  + 5 + 4 ]);
+            val[0]= double(NormVertexTabVector[i*10  + 3 + 4 ]);
+            val[1]= double(NormVertexTabVector[i*10  + 4 + 4 ]);
+            val[2]= double(NormVertexTabVector[i*10  + 5 + 4 ]);
             val[4]= double(K);
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*double(NormVertexTab[i*10  +3+4 ]);
-            val[1]= tmp*double(NormVertexTab[i*10  +4+4 ]);
-            val[2]= tmp*double(NormVertexTab[i*10  +5+4 ]);
+            val[0]= tmp*double(NormVertexTabVector[i*10  +3+4 ]);
+            val[1]= tmp*double(NormVertexTabVector[i*10  +4+4 ]);
+            val[2]= tmp*double(NormVertexTabVector[i*10  +5+4 ]);
 
-            NormVertexTab[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
-            NormVertexTab[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));
-            NormVertexTab[i*10+2] = float(masterthread->RgbtParser[2].Eval(val));
-            NormVertexTab[i*10+3] = float(masterthread->RgbtParser[3].Eval(val));
+            NormVertexTabVector[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
+            NormVertexTabVector[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));
+            NormVertexTabVector[i*10+2] = float(masterthread->RgbtParser[2].Eval(val));
+            NormVertexTabVector[i*10+3] = float(masterthread->RgbtParser[3].Eval(val));
         }
     }
     delete[] ValCol;
@@ -1957,23 +1960,23 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            vals[0] = double(NormVertexTab[i*10+3+ 4]);
-            vals[1] = double(NormVertexTab[i*10+4+ 4]);
-            vals[2] = double(NormVertexTab[i*10+5+ 4]);
-            PointVerifyCond[i] = (masterthread->IsoConditionParser[CNDtoUse(i, components)].Eval(vals) == 1.0);
+            vals[0] = double(NormVertexTabVector[i*10+7]);
+            vals[1] = double(NormVertexTabVector[i*10+8]);
+            vals[2] = double(NormVertexTabVector[i*10+9]);
+            PointVerifyCond.push_back(int(masterthread->IsoConditionParser[CNDtoUse(i, components)].Eval(vals)));
             if(PointVerifyCond[i])
             {
-                NormVertexTab[i*10    ] = float(0.1);
-                NormVertexTab[i*10  +1] = float(0.9);
-                NormVertexTab[i*10  +2] = 0.0;
-                NormVertexTab[i*10  +3] = 1.0;
+                NormVertexTabVector[i*10    ] = float(0.1);
+                NormVertexTabVector[i*10  +1] = float(0.9);
+                NormVertexTabVector[i*10  +2] = 0.0;
+                NormVertexTabVector[i*10  +3] = 1.0;
             }
             else
             {
-                NormVertexTab[i*10    ] = float(0.9);
-                NormVertexTab[i*10  +1] = float(0.1);
-                NormVertexTab[i*10  +2] = 0.0;
-                NormVertexTab[i*10  +3] = 1.0;
+                NormVertexTabVector[i*10    ] = float(0.9);
+                NormVertexTabVector[i*10  +1] = float(0.1);
+                NormVertexTabVector[i*10  +2] = 0.0;
+                NormVertexTabVector[i*10  +3] = 1.0;
             }
         }
         uint Aindex, Bindex, Cindex;
@@ -2028,14 +2031,14 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
-                Bprime[0] = double(NormVertexTab[3+10*Aindex  + 4]);
-                Bprime[1] = double(NormVertexTab[3+10*Aindex+1+ 4]);
-                Bprime[2] = double(NormVertexTab[3+10*Aindex+2+ 4]);
+                Bprime[0] = double(NormVertexTabVector[10*Aindex+7]);
+                Bprime[1] = double(NormVertexTabVector[10*Aindex+8]);
+                Bprime[2] = double(NormVertexTabVector[10*Aindex+9]);
                 Bprime[3] = masterthread->stepMorph;
 
-                DiffX = double(NormVertexTab[3+10*Bindex  + 4] - NormVertexTab[3+10*Aindex  + 4])/20.0;
-                DiffY = double(NormVertexTab[3+10*Bindex+1+ 4] - NormVertexTab[3+10*Aindex+1+ 4])/20.0;
-                DiffZ = double(NormVertexTab[3+10*Bindex+2+ 4] - NormVertexTab[3+10*Aindex+2+ 4])/20.0;
+                DiffX = double(NormVertexTabVector[3+10*Bindex  + 4] - NormVertexTabVector[3+10*Aindex  + 4])/20.0;
+                DiffY = double(NormVertexTabVector[3+10*Bindex+1+ 4] - NormVertexTabVector[3+10*Aindex+1+ 4])/20.0;
+                DiffZ = double(NormVertexTabVector[3+10*Bindex+2+ 4] - NormVertexTabVector[3+10*Aindex+2+ 4])/20.0;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -2059,14 +2062,14 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
 
                 /// Cprime
-                Cprime[0] = double(NormVertexTab[3+10*Aindex  + 4]);
-                Cprime[1] = double(NormVertexTab[3+10*Aindex+1+ 4]);
-                Cprime[2] = double(NormVertexTab[3+10*Aindex+2+ 4]);
+                Cprime[0] = double(NormVertexTabVector[3+10*Aindex  + 4]);
+                Cprime[1] = double(NormVertexTabVector[3+10*Aindex+1+ 4]);
+                Cprime[2] = double(NormVertexTabVector[3+10*Aindex+2+ 4]);
                 Cprime[3] = masterthread->stepMorph;
 
-                DiffX = double(NormVertexTab[3+10*Cindex  + 4] - NormVertexTab[3+10*Aindex     + 4])/20;
-                DiffY = double(NormVertexTab[3+10*Cindex+1+ 4] - NormVertexTab[3+10*Aindex+1+ 4])/20;
-                DiffZ = double(NormVertexTab[3+10*Cindex+2+ 4] - NormVertexTab[3+10*Aindex+2+ 4])/20;
+                DiffX = double(NormVertexTabVector[3+10*Cindex  + 4] - NormVertexTabVector[3+10*Aindex     + 4])/20;
+                DiffY = double(NormVertexTabVector[3+10*Cindex+1+ 4] - NormVertexTabVector[3+10*Aindex+1+ 4])/20;
+                DiffZ = double(NormVertexTabVector[3+10*Cindex+2+ 4] - NormVertexTabVector[3+10*Aindex+2+ 4])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -2095,47 +2098,47 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
                 {
                     //Add Bprime:
-                    NormVertexTab[10*NbVertexTmp   ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp   ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp+1 ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp+1 ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp+2 ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp+2 ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp+3 ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp+3 ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp+4 ] = NormVertexTab[10*Bindex + 4];
+                    NormVertexTabVector[10*NbVertexTmp+4 ] = NormVertexTabVector[10*Bindex + 4];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 4]);
-                    NormVertexTab[10*NbVertexTmp+5 ] = NormVertexTab[10*Bindex + 5];
+                    NormVertexTabVector[10*NbVertexTmp+5 ] = NormVertexTabVector[10*Bindex + 5];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 5]);
-                    NormVertexTab[10*NbVertexTmp+6 ] = NormVertexTab[10*Bindex + 6];
+                    NormVertexTabVector[10*NbVertexTmp+6 ] = NormVertexTabVector[10*Bindex + 6];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 6]);
-                    NormVertexTab[10*NbVertexTmp+7 ] = float(Bprime[0]);
+                    NormVertexTabVector[10*NbVertexTmp+7 ] = float(Bprime[0]);
                     NormVertexTabVector.push_back(float(Bprime[0]));
-                    NormVertexTab[10*NbVertexTmp+8 ] = float(Bprime[1]);
+                    NormVertexTabVector[10*NbVertexTmp+8 ] = float(Bprime[1]);
                     NormVertexTabVector.push_back(float(Bprime[1]));
-                    NormVertexTab[10*NbVertexTmp+9 ] = float(Bprime[2]);
+                    NormVertexTabVector[10*NbVertexTmp+9 ] = float(Bprime[2]);
                     NormVertexTabVector.push_back(float(Bprime[2]));
 
                     //Add Cprime:
-                    NormVertexTab[10*NbVertexTmp +10] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp +10] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp +11] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp +11] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp +12] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp +12] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp +13] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp +13] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTab[10*NbVertexTmp +14] = NormVertexTab[10*Cindex + 4];
-                    NormVertexTabVector.push_back(NormVertexTab[10*Cindex + 4]);
-                    NormVertexTab[10*NbVertexTmp +15] = NormVertexTab[10*Cindex + 5];
-                    NormVertexTabVector.push_back(NormVertexTab[10*Cindex + 5]);
-                    NormVertexTab[10*NbVertexTmp +16] = NormVertexTab[10*Cindex + 6];
-                    NormVertexTabVector.push_back(NormVertexTab[10*Cindex + 6]);
-                    NormVertexTab[10*NbVertexTmp +17] = float(Cprime[0]);
+                    NormVertexTabVector[10*NbVertexTmp +14] = NormVertexTabVector[10*Cindex + 4];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 4]);
+                    NormVertexTabVector[10*NbVertexTmp +15] = NormVertexTabVector[10*Cindex + 5];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 5]);
+                    NormVertexTabVector[10*NbVertexTmp +16] = NormVertexTabVector[10*Cindex + 6];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 6]);
+                    NormVertexTabVector[10*NbVertexTmp +17] = float(Cprime[0]);
                     NormVertexTabVector.push_back(float(Cprime[0]));
-                    NormVertexTab[10*NbVertexTmp +18] = float(Cprime[1]);
+                    NormVertexTabVector[10*NbVertexTmp +18] = float(Cprime[1]);
                     NormVertexTabVector.push_back(float(Cprime[1]));
-                    NormVertexTab[10*NbVertexTmp +19] = float(Cprime[2]);
+                    NormVertexTabVector[10*NbVertexTmp +19] = float(Cprime[2]);
                     NormVertexTabVector.push_back(float(Cprime[2]));
 
                     NbVertexTmp += 2;
@@ -2277,10 +2280,10 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            NormVertexTab[i*10  ] = 0.5f;
-            NormVertexTab[i*10+1] = 0.6f;
-            NormVertexTab[i*10+2] = 0.8f;
-            NormVertexTab[i*10+3] = 1.0;
+            NormVertexTabVector[i*10  ] = 0.5f;
+            NormVertexTabVector[i*10+1] = 0.6f;
+            NormVertexTabVector[i*10+2] = 0.8f;
+            NormVertexTabVector[i*10+3] = 1.0;
         }
     }
     return 1;
@@ -2462,11 +2465,13 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
                     ///===========================================================///
-                    if((3+ 10*NbVertexTmp +index    + 4 + 2) < 10*NbMaxPts)
+                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[3+ 10*NbVertexTmp +index    + 4] = float(vals[0]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+1  + 4] = float(vals[1]);
-                        NormVertexTab[3+ 10*NbVertexTmp +index+2  + 4] = float(vals[2]);
+                        for(int iter=0; iter<7; iter++)
+                            NormVertexTabVector.push_back(1.0);
+                        NormVertexTabVector.push_back(float(vals[0]));
+                        NormVertexTabVector.push_back(float(vals[1]));
+                        NormVertexTabVector.push_back(float(vals[2]));
                     }
                     else
                         return 0;
@@ -2503,9 +2508,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -2547,9 +2549,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -2608,9 +2607,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
-                    NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                    NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                    NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2660,9 +2656,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -2703,9 +2696,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -2765,9 +2755,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -2819,9 +2806,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -2887,9 +2871,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -2929,9 +2910,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
-                    NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                    NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                    NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2983,9 +2961,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -3040,9 +3015,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -3095,9 +3067,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -3159,9 +3128,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -3204,9 +3170,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -3247,9 +3210,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                 if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
-                    NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                    NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                    NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -3314,9 +3274,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
@@ -3369,9 +3326,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
-                        NormVertexTab[10*NbVertexTmp +index    + 7] = float(vals[0]);
-                        NormVertexTab[10*NbVertexTmp +index    + 8] = float(vals[1]);
-                        NormVertexTab[10*NbVertexTmp +index    + 9] = float(vals[2]);
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
                         NormVertexTabVector.push_back(float(vals[0]));
