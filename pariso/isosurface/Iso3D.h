@@ -134,7 +134,8 @@ public :
     uint *    IsoSurfaceTriangleListe;
     bool      StopCalculations;
     std::vector<int> PointVerifyCond;
-    int *     TypeIsoSurfaceTriangleListeCND;
+    //int *     TypeIsoSurfaceTriangleListeCND;
+    std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
     uint NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
     QString message;
@@ -154,7 +155,7 @@ public :
     inline   uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
-    void IsoBuild(float **, unsigned int **, unsigned int *,unsigned  int *, unsigned int **,unsigned  int *, struct ComponentInfos *, int *);
+    void IsoBuild(float **, unsigned int **, unsigned int *,unsigned  int *, unsigned int **,unsigned  int *, struct ComponentInfos *, int **);
     void SaveIsoGLMap();
     uint SetMiniMmeshStruct();
     uint CNDtoUse(uint index, struct ComponentInfos *);

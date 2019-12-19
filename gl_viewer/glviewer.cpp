@@ -1443,7 +1443,7 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.PolyIndices_localPtMin),
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos),
-                LocalScene.Typetriangles
+                &(LocalScene.Typetriangles)
             );
 
             ParObjetThread->ParObjet->ParamBuild(
@@ -1490,7 +1490,7 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.PolyIndices_localPtMin),
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos),
-                LocalScene.Typetriangles
+                &(LocalScene.Typetriangles)
             );
         }
         initialize_GL();
