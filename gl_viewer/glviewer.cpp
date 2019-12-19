@@ -1330,6 +1330,12 @@ static void DrawMeshParametric(ObjectProperties *scene)
 static void draw(ObjectProperties *scene)
 {
     scene->box =1;
+
+    if(scene->componentsinfos.Interleave)
+    {
+        glInterleavedArrays (GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
+        scene->componentsinfos.Interleave = false;
+    }
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (staticaction < 1)
     {
@@ -1358,11 +1364,6 @@ static void draw(ObjectProperties *scene)
     if (scene->infos == 1)
         glCallList(scene->gridplanliste);
 
-    if(scene->componentsinfos.Interleave)
-    {
-        glInterleavedArrays (GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
-        scene->componentsinfos.Interleave = false;
-    }
 
     // Axe :
     if (scene->infos == 1)
@@ -1496,7 +1497,8 @@ void OpenGlWidget::paintGL()
     }
     draw(&LocalScene);
 
-    if (LocalScene.infos == 1)  PrintInfos();
+    if (LocalScene.infos == 1)
+        PrintInfos();
     if (LocalScene.morph == 1 && LocalScene.frame == 1)  FramesSave();
 }
 

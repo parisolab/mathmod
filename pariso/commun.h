@@ -201,7 +201,7 @@ struct  ObjectProperties
     int    triangles;
     int    interior;
     int    exterior;
-    int    infos;
+    int    infos=1;
     int    frame;
     int    infosdetails[10];
     int    line;
