@@ -20,10 +20,8 @@
 #include "TableMap.h"
 #include "Iso3D.h"
 #include "povfunctions.cpp"
-#include <qmessagebox.h>
 
 static uint NbPolyMin;
-//static float * NormOriginaltmp;
 static Voxel *GridVoxelVarPt;
 static double *Results;
 static uint PreviousSizeMinimalTopology =0;
@@ -469,8 +467,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
-
-    //NormOriginaltmp          = new float[3*maxtri];
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -965,7 +961,7 @@ void Iso3D::SaveIsoGLMap()
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI   = i*3;
-        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI   ] + 10*NbVertexTmp  + 4 ;
+        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI   ] + 10*NbVertexTmp  + 4;
         IndexSecondPoint = 10*IsoSurfaceTriangleListeVector[ThreeTimesI +1] + 10*NbVertexTmp  + 4;
         IndexThirdPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI +2] + 10*NbVertexTmp  + 4;
 
@@ -1930,18 +1926,18 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
                     }
                 }
 
-            val[0]= double(NormVertexTabVector[i*10  + 3 + 4 ]);
-            val[1]= double(NormVertexTabVector[i*10  + 4 + 4 ]);
-            val[2]= double(NormVertexTabVector[i*10  + 5 + 4 ]);
+            val[0]= double(NormVertexTabVector[i*10 + 7]);
+            val[1]= double(NormVertexTabVector[i*10 + 8]);
+            val[2]= double(NormVertexTabVector[i*10 + 9]);
             val[4]= double(K);
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*double(NormVertexTabVector[i*10  +3+4 ]);
-            val[1]= tmp*double(NormVertexTabVector[i*10  +4+4 ]);
-            val[2]= tmp*double(NormVertexTabVector[i*10  +5+4 ]);
+            val[0]= tmp*double(NormVertexTabVector[i*10+7]);
+            val[1]= tmp*double(NormVertexTabVector[i*10+8]);
+            val[2]= tmp*double(NormVertexTabVector[i*10+9]);
 
             NormVertexTabVector[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
             NormVertexTabVector[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));

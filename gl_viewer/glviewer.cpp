@@ -1445,9 +1445,9 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.componentsinfos),
                 &(LocalScene.Typetriangles)
             );
-
+/*
             ParObjetThread->ParObjet->ParamBuild(
-                &(LocalScene.ArrayNorVer_localPt[TypeDrawin*(LocalScene.VertxNumberTmp1)]),
+                &(&(LocalScene.ArrayNorVer_localPt[TypeDrawin*(LocalScene.VertxNumberTmp1)])),
                 LocalScene.ArrayNorVer_localPt,
                 &(LocalScene.PolyIndices_localPt[LocalScene.PolyNumberTmp1]),
                 &LocalScene.PolyNumberTmp2,
@@ -1458,7 +1458,7 @@ void OpenGlWidget::paintGL()
                 LocalScene.PolyIndices_localPtMin,
                 &(LocalScene.NbPolygnNbVertexPtMin)
             );
-
+*/
             LocalScene.PolyNumber = LocalScene.PolyNumberTmp1 + LocalScene.PolyNumberTmp2;
             LocalScene.VertxNumber= LocalScene.VertxNumberTmp1  + LocalScene.VertxNumberTmp2;
 
@@ -1467,7 +1467,7 @@ void OpenGlWidget::paintGL()
         {
             ParObjetThread->ParObjet->ParamBuild
             (
-                LocalScene.ArrayNorVer_localPt,
+                &(LocalScene.ArrayNorVer_localPt),
                 LocalScene.ArrayNorVerExtra_localPt,
                 LocalScene.PolyIndices_localPt,
                 &LocalScene.PolyNumber,
