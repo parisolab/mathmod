@@ -23,7 +23,7 @@
 #include <qmessagebox.h>
 
 static uint NbPolyMin;
-static float * NormOriginaltmp;
+//static float * NormOriginaltmp;
 static Voxel *GridVoxelVarPt;
 static double *Results;
 static uint PreviousSizeMinimalTopology =0;
@@ -33,6 +33,7 @@ static uint NbVertexTmp = 0;
 static std::vector<float> NormVertexTabVector;
 static std::vector<uint> IndexPolyTabVector;
 static std::vector<uint> IndexPolyTabMinVector;
+static std::vector<float> NormOriginaltmpVector;
 
 float* NormVertexTab;
 unsigned int * IndexPolyTab;
@@ -469,8 +470,7 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 
-    IsoSurfaceTriangleListe  = new uint[3*maxtri];
-    NormOriginaltmp          = new float[3*maxtri];
+    //NormOriginaltmp          = new float[3*maxtri];
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -908,11 +908,10 @@ void Iso3D::ConstructIsoNormale()
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
 
-        ThreeTimesI   = i*3;
-
-        IndexFirstPoint  = 3+10*IsoSurfaceTriangleListe[ThreeTimesI      ]+ 10*NbVertexTmp +4;
-        IndexSecondPoint = 3+10*IsoSurfaceTriangleListe[ThreeTimesI+1    ]+ 10*NbVertexTmp +4;
-        IndexThirdPoint  = 3+10*IsoSurfaceTriangleListe[ThreeTimesI+2    ]+ 10*NbVertexTmp +4;
+        ThreeTimesI      = i*3;
+        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI      ]+ 10*NbVertexTmp +7;
+        IndexSecondPoint = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+1    ]+ 10*NbVertexTmp +7;
+        IndexThirdPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+2    ]+ 10*NbVertexTmp +7;
 
         pt1_x= NormVertexTabVector[IndexFirstPoint   ];
         pt1_y= NormVertexTabVector[IndexFirstPoint+1 ];
@@ -933,18 +932,17 @@ void Iso3D::ConstructIsoNormale()
         val5 = pt3_x - pt1_x;
         val6 = pt2_x - pt1_x;
 
-        NormOriginaltmp[ThreeTimesI  ] = val1*val2 - val3*val4;
-        NormOriginaltmp[ThreeTimesI+1] = val3*val5 - val6*val2;
-        NormOriginaltmp[ThreeTimesI+2] = val6*val4 - val1*val5;
-
-        scalar = float(sqrt((NormOriginaltmp[ThreeTimesI  ]*NormOriginaltmp[ThreeTimesI  ]) +
-                              (NormOriginaltmp[ThreeTimesI+1]*NormOriginaltmp[ThreeTimesI+1]) +
-                              (NormOriginaltmp[ThreeTimesI+2]*NormOriginaltmp[ThreeTimesI+2])));
+        NormOriginaltmpVector.push_back(val1*val2 - val3*val4);
+        NormOriginaltmpVector.push_back(val3*val5 - val6*val2);
+        NormOriginaltmpVector.push_back(val6*val4 - val1*val5);
+        scalar = float(sqrt((NormOriginaltmpVector[ThreeTimesI  ]*NormOriginaltmpVector[ThreeTimesI  ]) +
+                            (NormOriginaltmpVector[ThreeTimesI+1]*NormOriginaltmpVector[ThreeTimesI+1]) +
+                            (NormOriginaltmpVector[ThreeTimesI+2]*NormOriginaltmpVector[ThreeTimesI+2])));
 
         if(scalar < float(0.0000001))  scalar  = float(0.0000001);
-        (NormOriginaltmp[ThreeTimesI  ]/=scalar);
-        (NormOriginaltmp[ThreeTimesI+1]/=scalar);
-        (NormOriginaltmp[ThreeTimesI+2]/=scalar);
+        (NormOriginaltmpVector[ThreeTimesI  ]/=scalar);
+        (NormOriginaltmpVector[ThreeTimesI+1]/=scalar);
+        (NormOriginaltmpVector[ThreeTimesI+2]/=scalar);
     }
 }
 
@@ -967,21 +965,21 @@ void Iso3D::SaveIsoGLMap()
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI   = i*3;
-        IndexFirstPoint  = 10*IsoSurfaceTriangleListe[ThreeTimesI   ] + 10*NbVertexTmp  + 4 ;
-        IndexSecondPoint = 10*IsoSurfaceTriangleListe[ThreeTimesI +1] + 10*NbVertexTmp  + 4;
-        IndexThirdPoint  = 10*IsoSurfaceTriangleListe[ThreeTimesI +2] + 10*NbVertexTmp  + 4;
+        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI   ] + 10*NbVertexTmp  + 4 ;
+        IndexSecondPoint = 10*IsoSurfaceTriangleListeVector[ThreeTimesI +1] + 10*NbVertexTmp  + 4;
+        IndexThirdPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI +2] + 10*NbVertexTmp  + 4;
 
-        NormVertexTabVector[IndexFirstPoint  ] += NormOriginaltmp[ThreeTimesI  ];
-        NormVertexTabVector[IndexFirstPoint+1] += NormOriginaltmp[ThreeTimesI+1];
-        NormVertexTabVector[IndexFirstPoint+2] += NormOriginaltmp[ThreeTimesI+2];
+        NormVertexTabVector[IndexFirstPoint  ] += NormOriginaltmpVector[ThreeTimesI  ];
+        NormVertexTabVector[IndexFirstPoint+1] += NormOriginaltmpVector[ThreeTimesI+1];
+        NormVertexTabVector[IndexFirstPoint+2] += NormOriginaltmpVector[ThreeTimesI+2];
 
-        NormVertexTabVector[IndexSecondPoint  ] += NormOriginaltmp[ThreeTimesI  ];
-        NormVertexTabVector[IndexSecondPoint+1] += NormOriginaltmp[ThreeTimesI+1];
-        NormVertexTabVector[IndexSecondPoint+2] += NormOriginaltmp[ThreeTimesI+2];
+        NormVertexTabVector[IndexSecondPoint  ] += NormOriginaltmpVector[ThreeTimesI  ];
+        NormVertexTabVector[IndexSecondPoint+1] += NormOriginaltmpVector[ThreeTimesI+1];
+        NormVertexTabVector[IndexSecondPoint+2] += NormOriginaltmpVector[ThreeTimesI+2];
 
-        NormVertexTabVector[IndexThirdPoint  ]  += NormOriginaltmp[ThreeTimesI  ];
-        NormVertexTabVector[IndexThirdPoint+1]  += NormOriginaltmp[ThreeTimesI+1];
-        NormVertexTabVector[IndexThirdPoint+2]  += NormOriginaltmp[ThreeTimesI+2];
+        NormVertexTabVector[IndexThirdPoint  ]  += NormOriginaltmpVector[ThreeTimesI  ];
+        NormVertexTabVector[IndexThirdPoint+1]  += NormOriginaltmpVector[ThreeTimesI+1];
+        NormVertexTabVector[IndexThirdPoint+2]  += NormOriginaltmpVector[ThreeTimesI+2];
     }
 
 /// Normalisation
@@ -1611,6 +1609,8 @@ void Iso3D::IsoBuild (
     IndexPolyTabVector.clear();
     IndexPolyTabMinVector.clear();
     TypeIsoSurfaceTriangleListeCNDVector.clear();
+    IsoSurfaceTriangleListeVector.clear();
+    NormOriginaltmpVector.clear();
 
     //*****//
     uint maxx = std::max(std::max(std::max(Xgrid, Ygrid), Zgrid), masterthread->maximumgrid);
@@ -1722,7 +1722,7 @@ void Iso3D::IsoBuild (
 
         ConstructIsoNormale();
         SaveIsoGLMap();
-
+        NormOriginaltmpVector.clear();
         result = SetMiniMmeshStruct();
         if(result == 0)
         {
@@ -1745,9 +1745,9 @@ void Iso3D::IsoBuild (
         {
             for (uint i=0; i < NbTriangleIsoSurface ; ++i)
             {
-                IndexPolyTabVector.push_back(IsoSurfaceTriangleListe[3*i  ] + NbVertexTmp);
-                IndexPolyTabVector.push_back(IsoSurfaceTriangleListe[3*i+1] + NbVertexTmp);
-                IndexPolyTabVector.push_back(IsoSurfaceTriangleListe[3*i+2] + NbVertexTmp);
+                IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i  ] + NbVertexTmp);
+                IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+1] + NbVertexTmp);
+                IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+2] + NbVertexTmp);
                 l+=3;
             }
         }
@@ -1757,10 +1757,13 @@ void Iso3D::IsoBuild (
             emitErrorSignal();
             return;
         }
+        IsoSurfaceTriangleListeVector.clear();
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
     }
+
+
 
     delete[] GridVoxelVarPt;
     GridVoxelVarPt = nullptr;
@@ -2410,9 +2413,9 @@ uint Iso3D::ConstructIsoSurface()
                         {
                             {
                                 IndexNbTriangle = NbTriangleIsoSurface*3;
-                                IsoSurfaceTriangleListe[IndexNbTriangle  ] = IndexFirstPoint;
-                                IsoSurfaceTriangleListe[IndexNbTriangle+1] = IndexSeconPoint;
-                                IsoSurfaceTriangleListe[IndexNbTriangle+2] = IndexThirdPoint;
+                                IsoSurfaceTriangleListeVector.push_back(IndexFirstPoint);
+                                IsoSurfaceTriangleListeVector.push_back(IndexSeconPoint);
+                                IsoSurfaceTriangleListeVector.push_back(IndexThirdPoint);
                                 NbTriangleIsoSurface++;
                             }
                         }
