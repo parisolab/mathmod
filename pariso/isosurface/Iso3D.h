@@ -129,11 +129,12 @@ public :
     ObjectProperties *LocalScene;
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
-    uint Xgrid, Ygrid, Zgrid;
+    uint   Xgrid, Ygrid, Zgrid;
     uint WorkerThreadsNumber;
-    std::vector<uint> IsoSurfaceTriangleListeVector;
-    bool StopCalculations;
+    uint *    IsoSurfaceTriangleListe;
+    bool      StopCalculations;
     std::vector<int> PointVerifyCond;
+    //int *     TypeIsoSurfaceTriangleListeCND;
     std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
     uint NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
@@ -148,10 +149,10 @@ public :
           uint factY=4,
           uint factZ=4);
     ~Iso3D() override;
-    inline void SignatureComputation();
-    inline uint ConstructIsoSurface();
-    inline void ConstructIsoNormale();
-    inline uint PointEdgeComputation(uint);
+    inline   void SignatureComputation();
+    inline   uint ConstructIsoSurface();
+    inline   void ConstructIsoNormale();
+    inline   uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
     void IsoBuild(float **, unsigned int **, unsigned int *,unsigned  int *, unsigned int **,unsigned  int *, struct ComponentInfos *, int **);
