@@ -28,14 +28,15 @@ static uint PreviousSizeMinimalTopology =0;
 static uint NbPolyMinimalTopology =0;
 static uint NbVertexTmp = 0;
 
-static std::vector<float> NormVertexTabVector;
-static std::vector<uint> IndexPolyTabVector;
-static std::vector<uint> IndexPolyTabMinVector;
+std::vector<uint> IndexPolyTabMinVector;
+std::vector<float> NormVertexTabVector;
+std::vector<uint> IndexPolyTabVector;
 static std::vector<float> NormOriginaltmpVector;
-
+/*
 float* NormVertexTab;
 unsigned int * IndexPolyTab;
 unsigned int * IndexPolyTabMin;
+*/
 struct ComponentInfos componentsStr;
 struct ComponentInfos * components=&componentsStr;
 

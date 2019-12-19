@@ -33,11 +33,6 @@ static QElapsedTimer ptime;
 
 uint NbParComponent = 30;
 
-
-
-static float * NormvertexTableLocalised;
-static std::vector<float> NormVertexTabVector;
-
 double CurrentParamCmpId(const double* p)
 {
     int pp = int(p[0]);
@@ -1309,9 +1304,9 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
         uint nbtriangle = Tmpo;
         for(uint i= 0; i < nbtriangle; i++)
         {
-            Aindex = IndexPolyTab[3*i    ];
-            Bindex = IndexPolyTab[3*i + 1];
-            Cindex = IndexPolyTab[3*i + 2];
+            Aindex = IndexPolyTabVector[3*i    ];
+            Bindex = IndexPolyTabVector[3*i + 1];
+            Cindex = IndexPolyTabVector[3*i + 2];
             //Init this triangle type to 1:
             TypeIsoSurfaceTriangleListeCND[i] = 1;
             int TypeTriangle = -1;
@@ -1340,15 +1335,15 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
 
             if(TypeTriangle == 2 || TypeTriangle == 3)
             {
-                Aindex = IndexPolyTab[3*i  +1];
-                Bindex = IndexPolyTab[3*i + 2];
-                Cindex = IndexPolyTab[3*i    ];
+                Aindex = IndexPolyTabVector[3*i  +1];
+                Bindex = IndexPolyTabVector[3*i + 2];
+                Cindex = IndexPolyTabVector[3*i    ];
             }
             else if(TypeTriangle == 4 || TypeTriangle == 5)
             {
-                Aindex = IndexPolyTab[3*i  + 2];
-                Bindex = IndexPolyTab[3*i     ];
-                Cindex = IndexPolyTab[3*i  + 1];
+                Aindex = IndexPolyTabVector[3*i  + 2];
+                Bindex = IndexPolyTabVector[3*i     ];
+                Cindex = IndexPolyTabVector[3*i  + 1];
             }
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
@@ -1466,64 +1461,64 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
 
                 /// (A, Bprime, Cprime)
                 IndexNbTriangle = Tmpo*3;
-                IndexPolyTab[IndexNbTriangle  ] = Aindex;
-                IndexPolyTab[IndexNbTriangle+1] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
+                IndexPolyTabVector[IndexNbTriangle  ] = Aindex;
+                IndexPolyTabVector[IndexNbTriangle+1] = IndexBprime;
+                IndexPolyTabVector[IndexNbTriangle+2] = IndexCprime;
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                 TypeIsoSurfaceTriangleListeCND[Tmpo] = 1 : TypeIsoSurfaceTriangleListeCND[Tmpo] = -1;
                 //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = -1;
                 Tmpo++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Aindex;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = 3;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = Aindex;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexBprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexCprime;
                 NbPolyMinimalTopology++;
 
                 /// (Bprime, B, C)
                 IndexNbTriangle = Tmpo*3;
-                IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+1] = Bindex;
-                IndexPolyTab[IndexNbTriangle+2] = Cindex;
+                IndexPolyTabVector[IndexNbTriangle  ] = IndexBprime;
+                IndexPolyTabVector[IndexNbTriangle+1] = Bindex;
+                IndexPolyTabVector[IndexNbTriangle+2] = Cindex;
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                 TypeIsoSurfaceTriangleListeCND[Tmpo] = -1 : TypeIsoSurfaceTriangleListeCND[Tmpo] = 1;
                 //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
                 Tmpo++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Bindex;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = 3;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexBprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = Bindex;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = Cindex;
                 NbPolyMinimalTopology++;
 
                 /// (Bprime, C, Cprime)
                 IndexNbTriangle = Tmpo*3;
-                IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+1] = Cindex;
-                IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
+                IndexPolyTabVector[IndexNbTriangle  ] = IndexBprime;
+                IndexPolyTabVector[IndexNbTriangle+1] = Cindex;
+                IndexPolyTabVector[IndexNbTriangle+2] = IndexCprime;
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
                 TypeIsoSurfaceTriangleListeCND[Tmpo] = -1 : TypeIsoSurfaceTriangleListeCND[Tmpo] = 1;
                 //TypeIsoSurfaceTriangleListeCND[NbTriangleIsoSurfaceTmp] = 1;
                 Tmpo++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = Cindex;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = 3;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexBprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = Cindex;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexCprime;
                 NbPolyMinimalTopology++;
 
                 /// (Bprime, Cprime) --> the border
                 IndexNbTriangle = Tmpo*3;
-                IndexPolyTab[IndexNbTriangle  ] = IndexBprime;
-                IndexPolyTab[IndexNbTriangle+1] = IndexCprime;
-                IndexPolyTab[IndexNbTriangle+2] = IndexCprime;
+                IndexPolyTabVector[IndexNbTriangle  ] = IndexBprime;
+                IndexPolyTabVector[IndexNbTriangle+1] = IndexCprime;
+                IndexPolyTabVector[IndexNbTriangle+2] = IndexCprime;
                 TypeIsoSurfaceTriangleListeCND[Tmpo] = 4; /// Type = 4-->Border
                 Tmpo++;
 
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = 3;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexBprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
-                IndexPolyTabMin[PreviousSizeMinimalTopology++] = IndexCprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = 3;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexBprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexCprime;
+                IndexPolyTabMinVector[PreviousSizeMinimalTopology++] = IndexCprime;
                 NbPolyMinimalTopology++;
             }
 
@@ -1538,32 +1533,32 @@ uint Par3D::CNDCalculation(uint &Tmpo, struct ComponentInfos *components)
         for(uint i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 1)
             {
-                NewIndexPolyTab[3*k    ] =  IndexPolyTab[3*i    ];
-                NewIndexPolyTab[3*k + 1] =  IndexPolyTab[3*i + 1];
-                NewIndexPolyTab[3*k + 2] =  IndexPolyTab[3*i + 2];
+                NewIndexPolyTab[3*k    ] =  IndexPolyTabVector[3*i    ];
+                NewIndexPolyTab[3*k + 1] =  IndexPolyTabVector[3*i + 1];
+                NewIndexPolyTab[3*k + 2] =  IndexPolyTabVector[3*i + 2];
                 k++;
             }
 
         for(uint i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == -1)
             {
-                NewIndexPolyTab[3*(l + k)    ] =  IndexPolyTab[3*i    ];
-                NewIndexPolyTab[3*(l + k) + 1] =  IndexPolyTab[3*i + 1];
-                NewIndexPolyTab[3*(l + k) + 2] =  IndexPolyTab[3*i + 2];
+                NewIndexPolyTab[3*(l + k)    ] =  IndexPolyTabVector[3*i    ];
+                NewIndexPolyTab[3*(l + k) + 1] =  IndexPolyTabVector[3*i + 1];
+                NewIndexPolyTab[3*(l + k) + 2] =  IndexPolyTabVector[3*i + 2];
                 l++;
             }
 
         for(uint i=0; i<Tmpo; i++)
             if(TypeIsoSurfaceTriangleListeCND[i] == 4)
             {
-                NewIndexPolyTab[3*(M + l + k)    ] =  IndexPolyTab[3*i    ];
-                NewIndexPolyTab[3*(M + l + k) + 1] =  IndexPolyTab[3*i + 1];
-                NewIndexPolyTab[3*(M + l + k) + 2] =  IndexPolyTab[3*i + 2];
+                NewIndexPolyTab[3*(M + l + k)    ] =  IndexPolyTabVector[3*i    ];
+                NewIndexPolyTab[3*(M + l + k) + 1] =  IndexPolyTabVector[3*i + 1];
+                NewIndexPolyTab[3*(M + l + k) + 2] =  IndexPolyTabVector[3*i + 2];
                 M++;
             }
 
         //Copy the new index in the original one:
-        memcpy(IndexPolyTab, NewIndexPolyTab, 3*(M + l + k)*sizeof(uint));
+        //memcpy(IndexPolyTabVector, NewIndexPolyTab, 3*(M + l + k)*sizeof(uint));
         Tmpo = M + l + k;
         delete[] (NewIndexPolyTab);
         components->NbTrianglesVerifyCND = k;
@@ -1593,13 +1588,13 @@ void Par3D::BuildPar()
     ParamBuild(
         &(LocalScene->ArrayNorVer_localPt),
         LocalScene->ArrayNorVerExtra_localPt,
-        LocalScene->PolyIndices_localPt,
+        &(LocalScene->PolyIndices_localPt),
         &LocalScene->PolyNumber,
         &(LocalScene->VertxNumber),
         0,
         &(LocalScene->componentsinfos),
         LocalScene->Typetriangles,
-        LocalScene->PolyIndices_localPtMin,
+        &(LocalScene->PolyIndices_localPtMin),
         &(LocalScene->NbPolygnNbVertexPtMin)
     );
 }
@@ -1824,13 +1819,13 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 void  Par3D::ParamBuild(
     float **NormVertexTabPt,
     float *ExtraDimensionPt,
-    unsigned int *IndexPolyTabPt,
+    unsigned int **IndexPolyTabPt,
     unsigned int *PolyNumber,
     unsigned int *VertxNumber,
     uint  IsoPos,
     ComponentInfos *componentsPt,
     int *TriangleListeCND,
-    unsigned int *IndexPolyTabMinPt,
+    unsigned int **IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt
 )
 {
@@ -1841,10 +1836,11 @@ void  Par3D::ParamBuild(
     PreviousSizeMinimalTopology =0;
 
     NormVertexTabVector.clear();
-
+    IndexPolyTabMinVector.clear();
+    IndexPolyTabVector.clear();
     //*******/
-    IndexPolyTab = IndexPolyTabPt;
-    IndexPolyTabMin = IndexPolyTabMinPt;
+    //IndexPolyTabVector = IndexPolyTabPt;
+    //IndexPolyTabMinVector = IndexPolyTabMinPt;
     ExtraDimension = ExtraDimensionPt;
     if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
@@ -1910,8 +1906,6 @@ void  Par3D::ParamBuild(
             workerthreads[nbthreads].CurrentIndex = NextIndex;
         }
 
-        //NormvertexTableLocalised = new float[10*(Ugrid+1)*(Vgrid+1)];
-
         for(uint i=0; i<Ugrid; i++)
             for(uint j=0; j<Vgrid; j++)
                 for(uint k=0; k<10; k++)
@@ -1927,14 +1921,7 @@ void  Par3D::ParamBuild(
         masterthread->wait();
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].wait();
-/*
-        for(uint i=0; i<Ugrid; i++)
-            for(uint j=0; j<Vgrid; j++)
-                for(uint k=0; k<10; k++)
-                    NormVertexTabVector.push_back(NormvertexTableLocalised[10*i*Vgrid+10*j+k]);
 
-        delete[] NormvertexTableLocalised;
-*/
         if(StopCalculations)
         {
             initialiser_LineColumn(nbline_save, nbcolone_save);
@@ -2017,7 +2004,9 @@ void  Par3D::ParamBuild(
     *VertxNumber     = NbVertexTmp;
     *NbPolyMinPt     = NbPolyMinimalTopology;
 
-    *NormVertexTabPt = NormVertexTabVector.data();
+    *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
+    *NormVertexTabPt   = NormVertexTabVector.data();
+    *IndexPolyTabPt    = IndexPolyTabVector.data();
     componentsPt->Interleave = true;
     copycomponent(componentsPt, components);
 }
@@ -2026,16 +2015,15 @@ void  Par3D::ParamBuild(
 void  Par3D::make_PolyIndexMin(uint NewPo, uint index, uint IsoPos)
 {
     uint k=0;
-    uint NewPosition = 5*NewPo;
     uint nbVertex       = index;
     for (uint i=0; i+CutU+1 < Ugrid ; i++)
         for (uint j=0; j+CutV+1< Vgrid ; j++)
         {
-            IndexPolyTabMin[k  +NewPosition] = 4;
-            IndexPolyTabMin[k+1+NewPosition] = i*Vgrid + j+nbVertex + IsoPos;
-            IndexPolyTabMin[k+2+NewPosition] = (i+1)*Vgrid + j +nbVertex + IsoPos;
-            IndexPolyTabMin[k+3+NewPosition] = (i+1)*Vgrid + (j+1)+nbVertex + IsoPos;
-            IndexPolyTabMin[k+4+NewPosition] = i*Vgrid + (j+1)+nbVertex + IsoPos;
+            IndexPolyTabMinVector.push_back(4);
+            IndexPolyTabMinVector.push_back(i*Vgrid + j+nbVertex + IsoPos);
+            IndexPolyTabMinVector.push_back((i+1)*Vgrid + j +nbVertex + IsoPos);
+            IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+nbVertex + IsoPos);
+            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+nbVertex + IsoPos);
             k+=5;
         }
 }
@@ -2049,13 +2037,13 @@ void  Par3D::make_PolyIndexTri(uint NewPo, uint index, uint IsoPos)
     for (uint i=0; i+CutU+1< Ugrid; i++)
         for (uint j=0; j+CutV+1< Vgrid; j++)
         {
-            IndexPolyTab[k  +NewPosition] =  i*Vgrid + j+nbVertex + IsoPos;
-            IndexPolyTab[k+1+NewPosition] = (i+1)*Vgrid + j +nbVertex + IsoPos;
-            IndexPolyTab[k+2+NewPosition] = (i+1)*Vgrid + (j+1)+nbVertex + IsoPos;
+            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex + IsoPos);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + j +nbVertex + IsoPos);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex + IsoPos);
 
-            IndexPolyTab[k+3+NewPosition] = i*Vgrid + j+nbVertex + IsoPos;
-            IndexPolyTab[k+4+NewPosition] = (i+1)*Vgrid + (j+1)+nbVertex + IsoPos;
-            IndexPolyTab[k+5+NewPosition] = i*Vgrid + (j+1)+nbVertex + IsoPos;
+            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex + IsoPos);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex + IsoPos);
+            IndexPolyTabVector.push_back(i*Vgrid + (j+1)+nbVertex + IsoPos);
             k+=6;
         }
 }

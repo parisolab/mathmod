@@ -158,12 +158,12 @@ public:
     uint CNDtoUse(uint, struct ComponentInfos*);
     uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
-    void ParamBuild(float **, float *,unsigned int *, unsigned int *,
-                    unsigned int *, uint  IsoPos=0,
+    void ParamBuild(float **, float *,uint **, uint *,
+                    uint *, uint  IsoPos=0,
                     ComponentInfos *components = nullptr,
                     int *TriangleListeCND = nullptr,
-                    unsigned int *IndexPolyTabMinPt = nullptr,
-                    unsigned  int *NbPolyMinPt = nullptr);
+                    uint **IndexPolyTabMinPt = nullptr,
+                    uint *NbPolyMinPt = nullptr);
     void BuildPar();
     void UpdateThredsNumber(uint);
     void stopcalculations(bool);

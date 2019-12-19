@@ -291,8 +291,13 @@ extern uint NbMaxTri;
 extern uint NbMaxPts;
 extern uint IsoNbCmp;
 
+extern std::vector<float> NormVertexTabVector;
+extern std::vector<uint> IndexPolyTabMinVector;
+extern std::vector<uint> IndexPolyTabVector;
+/*
 extern float* NormVertexTab;
 extern unsigned int * IndexPolyTab;
 extern unsigned int * IndexPolyTabMin;
+*/
 extern struct  ComponentInfos componentsStr;
 extern struct ComponentInfos * components;
