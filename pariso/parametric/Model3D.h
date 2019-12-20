@@ -77,7 +77,7 @@ class ParMasterThread : public ParWorkerThread
 public :
     ErrorMessage stdError;
     FunctionParser *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser *myParserCND,
+    FunctionParser *ParConditionParser,
                    *myParserUmin,*myParserUmax,
                    *myParserVmin,*myParserVmax,
                    Cstparser;
@@ -123,7 +123,9 @@ public:
     ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
     float *Border;
-    bool *WichPointVerifyCond, StopCalculations;
+    bool StopCalculations;
+    std::vector<int> PointVerifyCond;
+    std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
     int *TypeIsoSurfaceTriangleListeCND;
     int VerifCND[1000000];
     uint NbVertex, WorkerThreadsNumber;
@@ -161,7 +163,7 @@ public:
     void ParamBuild(float **, float *,uint **, uint *,
                     uint *, uint  IsoPos=0,
                     ComponentInfos *components = nullptr,
-                    int *TriangleListeCND = nullptr,
+                    int **TriangleListeCND = nullptr,
                     uint **IndexPolyTabMinPt = nullptr,
                     uint *NbPolyMinPt = nullptr);
     void BuildPar();
