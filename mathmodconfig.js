@@ -1,11 +1,12 @@
 {
-    "IsoParam": {
-        "MaxGrid": 300,
+    "Parameters": {
+        "IsoMaxGrid": 300,
+        "InitIsoGrid": 40,
         "NbIsoComponent": 10,
-        "NbParComponent": 200,
-        "InitParGrid": 50,
-        "InitIsoGrid": 40
 
+        "ParMaxGrid": 1000,
+        "InitParGrid": 50,
+        "NbParComponent": 200
     },
     "WindowPosition": {
         "ControlX": 20,

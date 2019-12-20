@@ -4433,7 +4433,7 @@ void DrawingOptions::on_Multiplier_clicked()
 // --------------------------
 void DrawingOptions::UpdateGui(int argc)
 {
-    int maxgrd = int(Parameters->MaxGrid);
+    int maxgrd = int(Parameters->IsoMaxGrid);
     ui.xyzg->blockSignals(true);
     ui.xyzg->setMaximum(maxgrd);
     ui.XhorizontalScrollBar->setMaximum(maxgrd);
@@ -4443,10 +4443,12 @@ void DrawingOptions::UpdateGui(int argc)
     ui.xyzg->blockSignals(false);
 
     ui.linecolumn_2->blockSignals(true);
+    ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
     ui.linecolumn_2->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_2->blockSignals(false);
 
     ui.linecolumn_3->blockSignals(true);
+    ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
     ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_3->blockSignals(false);
 

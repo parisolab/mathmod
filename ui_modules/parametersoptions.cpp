@@ -37,7 +37,8 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     ControlH=700;
     GlwinW=780;
     GlwinH=700;
-    MaxGrid=80;
+    IsoMaxGrid=80;
+    ParMaxGrid=300;
     NbIsoComponent = 10;
     NbParComponent = 10;
     InitParGrid=50;
@@ -199,10 +200,10 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & j
 
 void Parametersoptions::GuiUpdate()
 {
-    QJsonObject isoparam = (JConfig)["IsoParam"].toObject();
+    QJsonObject isoparam = (JConfig)["Parameters"].toObject();
     //Grid
-    int mg =    (isoparam)["MaxGrid"].toInt();
-    ui.maxgriLabel->setText("MaxGrid="+ QString::number(mg));
+    int mg =    (isoparam)["IsoMaxGrid"].toInt();
+    ui.maxgriLabel->setText("IsoMaxGrid="+ QString::number(mg));
 
     ui.maxgri->blockSignals(true);
     ui.maxgri->setValue(mg);
@@ -233,10 +234,10 @@ void Parametersoptions::GuiUpdate()
 
 void Parametersoptions::on_maxgri_valueChanged(int value)
 {
-    ui.maxgriLabel->setText("MaxGrid="+QString::number(value));
-    QJsonObject tmp = JConfig["IsoParam"].toObject();
-    tmp["MaxGrid"] = value;
-    JConfig["IsoParam"]= tmp;
+    ui.maxgriLabel->setText("IsoMaxGrid="+QString::number(value));
+    QJsonObject tmp = JConfig["Parameters"].toObject();
+    tmp["IsoMaxGrid"] = value;
+    JConfig["Parameters"]= tmp;
 }
 
 void Parametersoptions::on_maxtri_valueChanged(int value)
@@ -247,9 +248,9 @@ void Parametersoptions::on_maxtri_valueChanged(int value)
 
     ui.MaxParametricGrid->setText("MaxParametricGrid = "+QString::number(MaxParametricGrid));
 
-    QJsonObject tmp = JConfig["IsoParam"].toObject();
+    QJsonObject tmp = JConfig["Parameters"].toObject();
     tmp["MaxTri"] = value;
-    JConfig["IsoParam"]= tmp;
+    JConfig["Parameters"]= tmp;
 }
 
 void Parametersoptions::on_maxpt_valueChanged(int value)
@@ -260,9 +261,9 @@ void Parametersoptions::on_maxpt_valueChanged(int value)
     int MaxParametricGrid = value > val? int(sqrt(val)*1000.0) : int(sqrt(value)*1000.0);
     ui.MaxParametricGrid->setText("MaxParametricGrid = "+QString::number(MaxParametricGrid));
 
-    QJsonObject tmp = JConfig["IsoParam"].toObject();
+    QJsonObject tmp = JConfig["Parameters"].toObject();
     tmp["MaxPt"] = value;
-    JConfig["IsoParam"]= tmp;
+    JConfig["Parameters"]= tmp;
 }
 
 void Parametersoptions::on_loadconfig_clicked()
@@ -458,11 +459,14 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
             model = tmp["Model"].toString();
         }
 
-        if(JConfig["IsoParam"].isObject())
+        if(JConfig["Parameters"].isObject())
         {
-            IsoParam = JConfig["IsoParam"].toObject();
-            if((IsoParam)["MaxGrid"].isDouble())
-                MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
+            IsoParam = JConfig["Parameters"].toObject();
+            if((IsoParam)["IsoMaxGrid"].isDouble())
+                IsoMaxGrid = ((IsoParam)["IsoMaxGrid"]).toInt();
+
+            if((IsoParam)["ParMaxGrid"].isDouble())
+                ParMaxGrid = ((IsoParam)["ParMaxGrid"]).toInt();
 
             if((IsoParam)["NbIsoComponent"].isDouble())
                 NbIsoComponent= (IsoParam)["NbIsoComponent"].toInt();
