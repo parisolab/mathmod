@@ -849,18 +849,21 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
                         TotalTri += (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j  ] - 1)*
                                     (MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread->grid[2*j+1] - 1);
                     }
+                    /*
                     if(TotalPts > NbMaxPts)
                     {
                         scriptErrorType = DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW;
                         ErrorMsg();
                         return false;
                     }
+
                     if(TotalTri > NbMaxTri)
                     {
                         scriptErrorType = DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW;
                         ErrorMsg();
                         return false;
                     }
+                    */
                 }
             }
         }
@@ -4439,14 +4442,11 @@ void DrawingOptions::UpdateGui(int argc)
     ui.xyzg->setValue(int(Parameters->InitIsoGrid));
     ui.xyzg->blockSignals(false);
 
-    int sqr = (Parameters->MaxPt > Parameters->MaxTri ? int(sqrt(Parameters->MaxTri)): int(sqrt(Parameters->MaxPt)));
     ui.linecolumn_2->blockSignals(true);
-    ui.linecolumn_2->setMaximum(sqr);
     ui.linecolumn_2->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_2->blockSignals(false);
 
     ui.linecolumn_3->blockSignals(true);
-    ui.linecolumn_3->setMaximum(sqr);
     ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_3->blockSignals(false);
 

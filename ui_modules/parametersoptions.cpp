@@ -37,8 +37,6 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     ControlH=700;
     GlwinW=780;
     GlwinH=700;
-    MaxTri=300000;
-    MaxPt=150000;
     MaxGrid=80;
     NbIsoComponent = 10;
     NbParComponent = 10;
@@ -463,10 +461,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
         if(JConfig["IsoParam"].isObject())
         {
             IsoParam = JConfig["IsoParam"].toObject();
-            if((IsoParam)["MaxTri"].isDouble())
-                MaxTri     = ((IsoParam)["MaxTri"]).toInt() * 1000000;
-            if((IsoParam)["MaxPt"].isDouble())
-                MaxPt     = (IsoParam)["MaxPt"].toInt() * 1000000;
             if((IsoParam)["MaxGrid"].isDouble())
                 MaxGrid = ((IsoParam)["MaxGrid"]).toInt();
 

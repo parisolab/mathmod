@@ -287,17 +287,11 @@ public:
 extern uint NbIsoComponent;
 extern uint NbParComponent;
 extern uint NbMaxGrid;  // Should use the defined value in mathmodconfig.js
-extern uint NbMaxTri;
-extern uint NbMaxPts;
 extern uint IsoNbCmp;
 
 extern std::vector<float> NormVertexTabVector;
 extern std::vector<uint> IndexPolyTabMinVector;
 extern std::vector<uint> IndexPolyTabVector;
-/*
-extern float* NormVertexTab;
-extern uint * IndexPolyTab;
-extern uint * IndexPolyTabMin;
-*/
+
 extern struct  ComponentInfos componentsStr;
 extern struct ComponentInfos * components;

@@ -235,7 +235,7 @@ void OpenGlWidget::CalculateColorsPoints()
     update();
 }
 
-int OpenGlWidget::memoryallocation(uint maxtri, uint maxpts, uint gridmax,
+int OpenGlWidget::memoryallocation(uint gridmax,
                                    uint nbisocomponent,uint nbparcomponent,uint nbthreads,
                                    uint initparGrid, uint initisoGrid,
                                    uint FactX, uint FactY, uint FactZ)
@@ -243,7 +243,7 @@ int OpenGlWidget::memoryallocation(uint maxtri, uint maxpts, uint gridmax,
     //memoryallocation
     try
     {
-        IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,nbisocomponent,
+        IsoObjetThread = new IsoThread(new Iso3D(gridmax,nbisocomponent,
                                        nbthreads, initisoGrid, FactX, FactY, FactZ));
         ParObjetThread = new ParThread(new Par3D(nbthreads, initparGrid, nbparcomponent));
         LocalScene     = (new ObjectParameters())->objectproperties;
@@ -251,7 +251,7 @@ int OpenGlWidget::memoryallocation(uint maxtri, uint maxpts, uint gridmax,
     }
     catch(std::bad_alloc&)
     {
-        message.setText("Not enough memory available to complete this operation.\n Parameters in mathmodconfig.js are too high : \n (MaxGrid, MaxPt, MaxTri)=( "+QString::number(gridmax)+", "+QString::number(maxpts/1000000.0,'g',  6)+", "+QString::number(maxtri/1000000.0,'g',  6)+" )");
+        message.setText("Not enough memory available to complete this operation");
         message.adjustSize () ;
         message.exec();
         return -1;

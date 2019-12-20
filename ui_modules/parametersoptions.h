@@ -63,7 +63,7 @@ public:
     int Threads[3];
     int CalculFactor[3];
     int Shininess;
-    int MaxTri, MaxPt, MaxGrid;
+    int MaxGrid;
     int NbIsoComponent;
     int NbParComponent;
     int InitParGrid;

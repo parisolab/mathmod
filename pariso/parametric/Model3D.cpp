@@ -1416,7 +1416,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //***********
                 //Add points:
                 //***********
-                if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
+                //if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
                 {
                     //Add Bprime:
                     NormVertexTabVector[10*NbVertexTmp   ] = 1.0;
@@ -1464,8 +1464,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
                     NbVertexTmp += 2;
                 }
-                else
-                    return 0;
+                //else return 0;
 
                 //***********
                 //Add triangles:
@@ -1478,7 +1477,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCNDVector[i]=0;
 
-                if(3*(NbTriangleIsoSurfaceTmp+4) < 4*NbMaxTri)
+                //if(3*(NbTriangleIsoSurfaceTmp+4) < 4*NbMaxTri)
                 {
                     /// (A, Bprime, Cprime)
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -1543,7 +1542,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     PreviousSizeMinimalTopology+=4;
                     NbPolyMinimalTopology++;
                 }
-                else return 2;
+                //else return 2;
             }
         }
 
@@ -1913,7 +1912,7 @@ void  Par3D::ParamBuild(
         NbPolyMinimalTopology       += (Ugrid  - CutU -1)*(Vgrid - CutV -1);
         PreviousSizeMinimalTopology += 5*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         NbVertex  = (Ugrid)*(Vgrid);
-
+/*
         if(NbVertexTmp > NbMaxPts)
         {
             messageerror = VERTEX_TAB_MEM_OVERFLOW;
@@ -1927,7 +1926,7 @@ void  Par3D::ParamBuild(
             emitErrorSignal();
             return;
         }
-
+*/
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         {
             workerthreads[nbthreads].CurrentPar = fctnb;

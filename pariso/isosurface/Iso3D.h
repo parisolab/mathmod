@@ -139,8 +139,7 @@ public :
     ScriptErrorType messageerror;
     QString message;
 public :
-    Iso3D(uint, uint,
-          uint gridmax=NbMaxGrid,
+    Iso3D(uint gridmax=NbMaxGrid,
           uint NbCmp=NbIsoComponent,
           uint nbThreads=6,
           uint nbGrid=40,

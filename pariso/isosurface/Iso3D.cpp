@@ -32,17 +32,11 @@ std::vector<uint> IndexPolyTabMinVector;
 std::vector<float> NormVertexTabVector;
 std::vector<uint> IndexPolyTabVector;
 static std::vector<float> NormOriginaltmpVector;
-/*
-float* NormVertexTab;
-uint * IndexPolyTab;
-uint * IndexPolyTabMin;
-*/
+
 struct ComponentInfos componentsStr;
 struct ComponentInfos * components=&componentsStr;
 
 uint NbMaxGrid = 100;
-uint NbMaxTri = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
-uint NbMaxPts = 3*NbMaxGrid*NbMaxGrid*NbMaxGrid;
 uint NbIsoComponent = 30;
 
 uint OrignbX, OrignbY, OrignbZ;
@@ -426,7 +420,7 @@ ErrorMessage  Iso3D::parse_expression2()
 }
 
 /// +++++++++++++++++++++++++++++++++++++++++
-Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
+Iso3D::Iso3D( uint nbmaxgrid,
               uint NbCompo,
               uint nbThreads,
               uint nbGrid,
@@ -440,8 +434,6 @@ Iso3D::Iso3D( uint maxtri, uint maxpts, uint nbmaxgrid,
     Stack_Factor = factX*factY*factZ;
     NbIsoComponent=NbCompo;
     NbMaxGrid = nbmaxgrid;
-    NbMaxTri = maxtri;
-    NbMaxPts = maxpts;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     Xgrid = Ygrid = Zgrid = nbGrid;
@@ -1738,7 +1730,7 @@ void Iso3D::IsoBuild (
             components->IsoPts[2*fctnb    ] = NbVertexTmp;
             components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
         }
-        if( (l+3*NbTriangleIsoSurface) < 4*NbMaxTri)
+        //if( (l+3*NbTriangleIsoSurface) < 4*NbMaxTri)
         {
             for (uint i=0; i < NbTriangleIsoSurface ; ++i)
             {
@@ -1748,12 +1740,14 @@ void Iso3D::IsoBuild (
                 l+=3;
             }
         }
+        /*
         else
         {
             messageerror = POLY_TAB_MEM_OVERFLOW;
             emitErrorSignal();
             return;
         }
+        */
         IsoSurfaceTriangleListeVector.clear();
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
@@ -2095,7 +2089,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //***********
                 //Add points:
                 //***********
-                if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
+                //if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
                 {
                     //Add Bprime:
                     NormVertexTabVector[10*NbVertexTmp   ] = 1.0;
@@ -2143,8 +2137,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
                     NbVertexTmp += 2;
                 }
-                else
-                    return 0;
+                //else return 0;
 
                 //***********
                 //Add triangles:
@@ -2157,7 +2150,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCNDVector[i]=0;
 
-                if(3*(NbTriangleIsoSurfaceTmp+4) < 4*NbMaxTri)
+                //if(3*(NbTriangleIsoSurfaceTmp+4) < 4*NbMaxTri)
                 {
                     /// (A, Bprime, Cprime)
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -2222,7 +2215,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     PreviousSizeMinimalTopology+=4;
                     NbPolyMinimalTopology++;
                 }
-                else return 2;
+                //else return 2;
             }
         }
 
@@ -2321,7 +2314,7 @@ uint Iso3D::SetMiniMmeshStruct()
                 if( nbpl == 1)
                 {
                     NbPolyMin += nbpl;
-                    if((PreviousSizeMinimalTopology + lnew +1 + triTable_min[Index][17]) < 5*NbMaxTri)
+                    //if((PreviousSizeMinimalTopology + lnew +1 + triTable_min[Index][17]) < 5*NbMaxTri)
                     {
                         IndexPolyTabMinVector.push_back(triTable_min[Index][17]);
                         lnew++;
@@ -2330,13 +2323,12 @@ uint Iso3D::SetMiniMmeshStruct()
                         lnew+=triTable_min[Index][17];
 
                     }
-                    else
-                        return 0;
+                    //else return 0;
                 }
                 else if( nbpl == 2)
                 {
                     NbPolyMin += nbpl;
-                    if((PreviousSizeMinimalTopology + lnew +2 + triTable_min[Index][17] + triTable_min[Index][18]) < 5*NbMaxTri)
+                    //if((PreviousSizeMinimalTopology + lnew +2 + triTable_min[Index][17] + triTable_min[Index][18]) < 5*NbMaxTri)
                     {
                         /// First Poly:
                         IndexPolyTabMinVector.push_back(triTable_min[Index][17]);
@@ -2351,15 +2343,14 @@ uint Iso3D::SetMiniMmeshStruct()
                             IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter]]  + NbVertexTmp);
                         lnew+=triTable_min[Index][17]+triTable_min[Index][18];
                     }
-                    else
-                        return 0;
+                    //else return 0;
                 }
                 else if( nbpl > 2)
                 {
                     NbPolyMin += nbpl;
                     /// In this case we have only Triangles (3 or 4):
                     iter = 0;
-                    if((PreviousSizeMinimalTopology + lnew + 4*nbpl) < 5*NbMaxTri)
+                    //if((PreviousSizeMinimalTopology + lnew + 4*nbpl) < 5*NbMaxTri)
                         for(iterpl = 0; iterpl < nbpl; iterpl++)
                         {
                             IndexPolyTabMinVector.push_back(3);
@@ -2369,8 +2360,7 @@ uint Iso3D::SetMiniMmeshStruct()
                             lnew += 4;
                             iter +=3;
                         }
-                    else
-                        return 0;
+                    //else return 0;
                 }
             } /// End of for(k=0;
         } /// End of for(j=0;
@@ -2406,7 +2396,7 @@ uint Iso3D::ConstructIsoSurface()
                     IndexSeconPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+1]];
                     IndexThirdPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+2]];
                     {
-                        if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
+                        //if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
                         {
                             {
                                 IndexNbTriangle = NbTriangleIsoSurface*3;
@@ -2416,8 +2406,7 @@ uint Iso3D::ConstructIsoSurface()
                                 NbTriangleIsoSurface++;
                             }
                         }
-                        else
-                            return 0;
+                        //else return 0;
                     }
                 }
             }
@@ -2476,7 +2465,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
                     ///===========================================================///
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2484,8 +2473,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[0] = NbPointIsoMap_local;
@@ -2517,7 +2505,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2525,8 +2513,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[8] = NbPointIsoMap_local;
@@ -2558,7 +2545,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2566,8 +2553,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
                     // save The reference to this point
                     GridVoxelVarPt[IJK].Edge_Points[3] = NbPointIsoMap_local;
                     GridVoxelVarPt[IJK].NbEdgePoint += 1;
@@ -2616,7 +2602,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
@@ -2624,8 +2610,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     NormVertexTabVector.push_back(float(vals[1]));
                     NormVertexTabVector.push_back(float(vals[2]));
                 }
-                else
-                    return 0;
+                //else return 0;
 
                 // save The reference to this point
                 GridVoxelVarPt[JK].Edge_Points[0] = NbPointIsoMap_local;
@@ -2665,7 +2650,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor *masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2673,8 +2658,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[8] = NbPointIsoMap_local;
@@ -2705,7 +2689,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2713,8 +2697,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[3] = NbPointIsoMap_local;
@@ -2764,7 +2747,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor *masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2772,8 +2755,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[8] = NbPointIsoMap_local;
@@ -2815,7 +2797,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2823,8 +2805,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[JK].Edge_Points[3] = NbPointIsoMap_local;
@@ -2880,7 +2861,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2888,8 +2869,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -2919,7 +2899,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
@@ -2927,8 +2907,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     NormVertexTabVector.push_back(float(vals[1]));
                     NormVertexTabVector.push_back(float(vals[2]));
                 }
-                else
-                    return 0;
+                //else return 0;
 
                 // save The reference to this point
                 GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[8] = NbPointIsoMap_local;
@@ -2970,7 +2949,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -2978,8 +2957,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+k].Edge_Points[3] = NbPointIsoMap_local;
@@ -3024,7 +3002,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -3032,8 +3010,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -3076,7 +3053,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -3084,8 +3061,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[3] = NbPointIsoMap_local;
@@ -3137,7 +3113,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -3145,8 +3121,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[0] = NbPointIsoMap_local;
@@ -3179,7 +3154,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -3187,8 +3162,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[8] = NbPointIsoMap_local;
@@ -3219,7 +3193,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                 vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k] - factor * masterthread->z_Step[isoindex];
 
-                if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                 {
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
@@ -3227,8 +3201,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     NormVertexTabVector.push_back(float(vals[1]));
                     NormVertexTabVector.push_back(float(vals[2]));
                 }
-                else
-                    return 0;
+                //else return 0;
 
                 // save The reference to this point
                 GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval].Edge_Points[3] = NbPointIsoMap_local;
@@ -3283,7 +3256,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -3291,8 +3264,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[0] = NbPointIsoMap_local;
@@ -3335,7 +3307,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     vals[1] = masterthread->yLocal2[isoindex*NbMaxGrid+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*NbMaxGrid+k];
 
-                    if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
+                    //if((3+ 10*NbVertexTmp +index+2  + 4) < 10*NbMaxPts)
                     {
                         for(int iter=0; iter<7; iter++)
                             NormVertexTabVector.push_back(1.0);
@@ -3343,8 +3315,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                         NormVertexTabVector.push_back(float(vals[1]));
                         NormVertexTabVector.push_back(float(vals[2]));
                     }
-                    else
-                        return 0;
+                    //else return 0;
 
                     // save The reference to this point
                     GridVoxelVarPt[i*maxgrscalemaxgr+j*maxgridval+k].Edge_Points[8] = NbPointIsoMap_local;
