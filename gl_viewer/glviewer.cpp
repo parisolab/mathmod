@@ -1298,6 +1298,7 @@ static void DrawMinimalTopology (ObjectProperties *scene)
             startpl++;
         }
         glEnd();
+        i+=polysize;
     }
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
@@ -1323,6 +1324,7 @@ static void DrawMeshParametric(ObjectProperties *scene)
             startpl++;
         }
         glEnd();
+        i+=polysize;
     }
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

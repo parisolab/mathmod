@@ -2030,9 +2030,10 @@ void  Par3D::ParamBuild(
     }
 
     // 3) Nb Poly & Vertex :
-    *PolyNumber      = 3*NbTriangleIsoSurfaceTmp;
-    *VertxNumber     = NbVertexTmp;
-    *NbPolyMinPt     = NbPolyMinimalTopology;
+    *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
+    *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
+    *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
+
 
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     *NormVertexTabPt   = NormVertexTabVector.data();

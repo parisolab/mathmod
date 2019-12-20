@@ -1578,7 +1578,7 @@ void Iso3D::IsoBuild (
     unsigned   int *PolyNumber,
     uint *VertexNumberpt,
     uint **IndexPolyTabMinPt,
-    unsigned  int *NbPolyMinPt,
+    unsigned  int *VertxNumber,
     struct ComponentInfos * componentsPt,
     int **TriangleListeCND
 )
@@ -1806,7 +1806,7 @@ void Iso3D::IsoBuild (
         components->NoiseParam.NoiseShape = 1;
 
     CalculateColorsPoints(components);
-
+/*
     // Save Number of Polys and vertex :
     *PolyNumber = 3*NbTriangleIsoSurfaceTmp;
 
@@ -1815,6 +1815,11 @@ void Iso3D::IsoBuild (
 
     // Vertex :
     *VertexNumberpt = NbVertexTmp;
+*/
+    *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
+    *VertexNumberpt  = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
+    *VertxNumber     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
+
 
     if(masterthread->morph_activated != 1)
     {
