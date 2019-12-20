@@ -153,7 +153,6 @@ IsoMasterThread::IsoMasterThread()
 //+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::IsoMasterTable(uint nbcomp, uint maxgrid)
 {
-    vr2     = new double[3*nbcomp*maxgrid];
     xLocal2 = new double[nbcomp*maxgrid];
     yLocal2 = new double[nbcomp*maxgrid];
     zLocal2 = new double[nbcomp*maxgrid];
@@ -217,7 +216,6 @@ IsoWorkerThread::~IsoWorkerThread()
         delete[] Fct;
         ParsersAllocated = false;
     }
-    delete[] vr2;
     delete[] xLocal2;
     delete[] yLocal2;
     delete[] zLocal2;
@@ -237,7 +235,6 @@ IsoWorkerThread::IsoWorkerThread()
 //+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::IsoWorkerTable(uint nbcomp, uint maxgrid)
 {
-    vr2     = new double[3*nbcomp*maxgrid];
     xLocal2 = new double[nbcomp*maxgrid];
     yLocal2 = new double[nbcomp*maxgrid];
     zLocal2 = new double[nbcomp*maxgrid];
@@ -294,7 +291,6 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
         memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
         memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].vr2, masterthread->vr2, unsigned(3*NbIsoComponent*NbMaxGrid)*sizeof(double));
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
         workerthreads[nbthreads].Xgrid = masterthread->Xgrid;

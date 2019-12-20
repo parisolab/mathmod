@@ -61,7 +61,6 @@ public :
     double stepMorph, pace;
     uint CurrentIso;
     double *xLocal2, *yLocal2, *zLocal2;
-    double *vr2;
     ErrorMessage stdError;
     uint NbPolygn, NbPolygnNbVertex[2];
     bool StopCalculations, ParsersAllocated;
