@@ -33,16 +33,8 @@ static float StaticColor[20]=
     1.0f,0.2f,0.0f,1.0f
 }; // greencol, goldcol,...
 
-ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
+ObjectParameters::ObjectParameters()
 {
-    MaximumNumberPoints            = maxpoints;
-    MaximumNumberTriangles         = maxtriangles;
-
-    //objectproperties.ArrayNorVer_localPt           = new float[10*MaximumNumberPoints];
-    objectproperties.ArrayNorVerExtra_localPt      = new float[MaximumNumberPoints   ];
-    //objectproperties.PolyIndices_localPt           = new unsigned int [4*MaximumNumberTriangles]; //size is 4*MaximumNumberTriangles because of parametric surface
-    //objectproperties.PolyIndices_localPtMin        = new unsigned int [5*MaximumNumberTriangles];
-    //objectproperties.Typetriangles                 = new int  [MaximumNumberTriangles];
     objectproperties.VertxNumber    = objectproperties.PolyNumber = objectproperties.NbPolygnNbVertexPtMin = 0;
     objectproperties.RotStrength    = 0;
     objectproperties.zminim         = -350.0;
@@ -54,14 +46,14 @@ ObjectParameters::ObjectParameters(uint maxpoints, uint maxtriangles)
     objectproperties.view_rotz      = 1.0;
     objectproperties.IndexCurrentFormula = -1;
 
-    objectproperties.IsoColorliste          = new unsigned int[NbIsoComponent];
-    objectproperties.ParColorliste          = new unsigned int[NbParComponent];
-    objectproperties.FillIsoliste           = new unsigned int[NbIsoComponent];
-    objectproperties.FillParliste           = new unsigned int[NbParComponent];
-    objectproperties.CNDverifyIsoliste      = new unsigned int[NbIsoComponent];
-    objectproperties.CNDverifyParliste      = new unsigned int[NbParComponent];
-    objectproperties.CNDnotverifyIsoliste   = new unsigned int[NbIsoComponent];
-    objectproperties.CNDnotverifyParliste   = new unsigned int[NbParComponent];
+    objectproperties.IsoColorliste          = new uint[NbIsoComponent];
+    objectproperties.ParColorliste          = new uint[NbParComponent];
+    objectproperties.FillIsoliste           = new uint[NbIsoComponent];
+    objectproperties.FillParliste           = new uint[NbParComponent];
+    objectproperties.CNDverifyIsoliste      = new uint[NbIsoComponent];
+    objectproperties.CNDverifyParliste      = new uint[NbParComponent];
+    objectproperties.CNDnotverifyIsoliste   = new uint[NbIsoComponent];
+    objectproperties.CNDnotverifyParliste   = new uint[NbParComponent];
 
     objectproperties.frontcols    = new float[4*std::max(NbParComponent,NbIsoComponent)];
     objectproperties.backcols     = new float[4*std::max(NbParComponent,NbIsoComponent)];

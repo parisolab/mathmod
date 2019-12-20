@@ -63,7 +63,7 @@ public :
     double *xLocal2, *yLocal2, *zLocal2;
     double *vr2;
     ErrorMessage stdError;
-    unsigned int NbPolygn, NbPolygnNbVertex[2];
+    uint NbPolygn, NbPolygnNbVertex[2];
     bool StopCalculations, ParsersAllocated;
     int signalVal;
 public :
@@ -154,7 +154,7 @@ public :
     inline uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
-    void IsoBuild(float **, unsigned int **, unsigned int *,unsigned  int *, unsigned int **,unsigned  int *, struct ComponentInfos *, int **);
+    void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *, int **);
     void SaveIsoGLMap();
     uint SetMiniMmeshStruct();
     uint CNDtoUse(uint index, struct ComponentInfos *);

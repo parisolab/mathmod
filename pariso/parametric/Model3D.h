@@ -55,7 +55,7 @@ public :
     uint iStart, iFinish;
 
     bool StopCalculations, ParsersAllocated;
-    unsigned int CurrentPar, CurrentIndex;
+    uint CurrentPar, CurrentIndex;
     int signalVal;
 
 public :
@@ -99,7 +99,7 @@ public :
                              Consts, ConstNames,
                              SliderNames;
     std::vector<double> ConstValues, SliderValues;
-    unsigned int NbPolygnNbVertex[2], nbBorderPts;
+    uint NbPolygnNbVertex[2], nbBorderPts;
     double Lacunarity, Gain;
     int Octaves;
 public :

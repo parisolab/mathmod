@@ -1852,13 +1852,13 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 void  Par3D::ParamBuild(
     float **NormVertexTabPt,
     float **ExtraDimensionPt,
-    unsigned int **IndexPolyTabPt,
-    unsigned int *PolyNumber,
-    unsigned int *VertxNumber,
+    uint **IndexPolyTabPt,
+    uint *PolyNumber,
+    uint *VertxNumber,
     uint  IsoPos,
     ComponentInfos *componentsPt,
     int **TriangleListeCND,
-    unsigned int **IndexPolyTabMinPt,
+    uint **IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt
 )
 {
@@ -1873,14 +1873,8 @@ void  Par3D::ParamBuild(
     IndexPolyTabVector.clear();
     PointVerifyCond.clear();
     TypeIsoSurfaceTriangleListeCNDVector.clear();
-    //*******/
-    //IndexPolyTabVector = IndexPolyTabPt;
-    //IndexPolyTabMinVector = IndexPolyTabMinPt;
-    //ExtraDimensionVector = ExtraDimensionPt;
-    /*
-    if(TriangleListeCND != nullptr)
-        TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
-     */
+    ExtraDimensionVector.clear();
+
     //*******/
     if(components != nullptr)
         components->NbParametric = masterthread->expression_XSize;

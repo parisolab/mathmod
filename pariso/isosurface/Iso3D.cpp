@@ -34,8 +34,8 @@ std::vector<uint> IndexPolyTabVector;
 static std::vector<float> NormOriginaltmpVector;
 /*
 float* NormVertexTab;
-unsigned int * IndexPolyTab;
-unsigned int * IndexPolyTabMin;
+uint * IndexPolyTab;
+uint * IndexPolyTabMin;
 */
 struct ComponentInfos componentsStr;
 struct ComponentInfos * components=&componentsStr;
@@ -1586,10 +1586,10 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,
-    unsigned int **IndexPolyTabPt,
+    uint **IndexPolyTabPt,
     unsigned   int *PolyNumber,
-    unsigned int *VertexNumberpt,
-    unsigned int **IndexPolyTabMinPt,
+    uint *VertexNumberpt,
+    uint **IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt,
     struct ComponentInfos * componentsPt,
     int **TriangleListeCND

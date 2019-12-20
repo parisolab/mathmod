@@ -246,7 +246,7 @@ int OpenGlWidget::memoryallocation(uint maxtri, uint maxpts, uint gridmax,
         IsoObjetThread = new IsoThread(new Iso3D(maxtri, maxpts, gridmax,nbisocomponent,
                                        nbthreads, initisoGrid, FactX, FactY, FactZ));
         ParObjetThread = new ParThread(new Par3D(nbthreads, initparGrid, nbparcomponent));
-        LocalScene     = (new ObjectParameters(maxpts, maxtri))->objectproperties;
+        LocalScene     = (new ObjectParameters())->objectproperties;
         return 1;
     }
     catch(std::bad_alloc&)
@@ -269,7 +269,7 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
     QFile data(fileName);
     if (data.open(QFile::ReadWrite | QFile::Truncate))
     {
-        unsigned int i;
+        uint i;
         QTextStream stream(&data);
         stream.setRealNumberNotation(QTextStream::FixedNotation);
         stream.setRealNumberPrecision(3);
@@ -320,7 +320,7 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
     QFile data(fileName);
     if (data.open(QFile::ReadWrite | QFile::Truncate))
     {
-        unsigned int i;
+        uint i;
         QTextStream stream(&data);
         stream.setRealNumberNotation(QTextStream::FixedNotation);
         stream.setRealNumberPrecision(3);
@@ -391,7 +391,7 @@ void OpenGlWidget::PutObjectInsideCube()
     maxz =-999999999;
     if((LocalScene.morph != 1 || (LocalScene.morph == 1 && FistTimecalibrate ==1))   && LocalScene.slider != 1)
     {
-        for (unsigned int i=0; i< LocalScene.VertxNumber; i++)
+        for (uint i=0; i< LocalScene.VertxNumber; i++)
         {
             if (minx >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep])  minx = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep];
             if (miny >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep])  miny = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep];
@@ -423,7 +423,7 @@ void OpenGlWidget::PutObjectInsideCube()
         decalage_zo = -double(minz +maxz)/2;
     }
 
-    for (unsigned int i=0; i< LocalScene.VertxNumber; i++)
+    for (uint i=0; i< LocalScene.VertxNumber; i++)
     {
         LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]) + decalage_xo)/difMaximum);
         LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]) + decalage_yo)/difMaximum);
