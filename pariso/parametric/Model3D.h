@@ -155,8 +155,8 @@ public:
     void initialiser_parametres(uint, uint, uint);
     void initialiser_LineColumn(uint, uint);
     void calcul_Norm(uint i=0);
-    void make_PolyIndexTri(uint p=0, uint  IsoPos=0);
-    void make_PolyIndexMin(uint p=0, uint  IsoPos=0);
+    void make_PolyIndexTri(uint i=0, uint p=0, uint  IsoPos=0);
+    void make_PolyIndexMin(uint i=0, uint p=0, uint  IsoPos=0);
     uint CNDtoUse(uint, struct ComponentInfos*);
     uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);

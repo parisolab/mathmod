@@ -1613,6 +1613,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     }
     return 1;
 }
+///+++++++++++++++++++++++++++++++++++++++++
 
 //++++++++++++++++++++++++++++++++++++
 void Par3D::BuildPar()
@@ -1799,6 +1800,8 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                     NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
                     if(param4D == 1)
                         ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
+                    else
+                        ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = 1;
                     p++;
                 }
         }
@@ -1936,11 +1939,8 @@ void  Par3D::ParamBuild(
 
         for(uint i=0; i<Ugrid; i++)
             for(uint j=0; j<Vgrid; j++)
-            {
-                ExtraDimensionVector.push_back(1.0);
                 for(uint k=0; k<10; k++)
                     NormVertexTabVector.push_back(1.0);
-            }
 
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
@@ -1970,8 +1970,8 @@ void  Par3D::ParamBuild(
             Anim_Rot4D (NextIndex);
         }
         calcul_Norm(10*NextIndex);
-        make_PolyIndexMin(NextIndex,  IsoPos);
-        make_PolyIndexTri(NextIndex, IsoPos);
+        make_PolyIndexMin( NextPosition, NextIndex,  IsoPos);
+        make_PolyIndexTri( NextPosition, NextIndex, IsoPos);
         if(components != nullptr)
         {
             components->Parametricpositions[3*fctnb  ] = 6*NextPosition; //save the starting position of this component
@@ -2045,7 +2045,7 @@ void  Par3D::ParamBuild(
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::make_PolyIndexMin(uint index, uint IsoPos)
+void  Par3D::make_PolyIndexMin(uint NewPo, uint index, uint IsoPos)
 {
     uint k=0;
     uint nbVertex       = index;
@@ -2062,9 +2062,10 @@ void  Par3D::make_PolyIndexMin(uint index, uint IsoPos)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::make_PolyIndexTri(uint index, uint IsoPos)
+void  Par3D::make_PolyIndexTri(uint NewPo, uint index, uint IsoPos)
 {
     uint k=0;
+    uint NewPosition = 6*NewPo;
     uint nbVertex    = index;
     for (uint i=0; i+CutU+1< Ugrid; i++)
         for (uint j=0; j+CutV+1< Vgrid; j++)
