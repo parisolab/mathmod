@@ -4436,11 +4436,20 @@ void DrawingOptions::UpdateGui(int argc)
     int maxgrd = int(Parameters->IsoMaxGrid);
     ui.xyzg->blockSignals(true);
     ui.xyzg->setMaximum(maxgrd);
-    ui.XhorizontalScrollBar->setMaximum(maxgrd);
-    ui.YhorizontalScrollBar->setMaximum(maxgrd);
-    ui.ZhorizontalScrollBar->setMaximum(maxgrd);
     ui.xyzg->setValue(int(Parameters->InitIsoGrid));
     ui.xyzg->blockSignals(false);
+
+    ui.XhorizontalScrollBar->blockSignals(true);
+    ui.XhorizontalScrollBar->setMaximum(maxgrd);
+    ui.XhorizontalScrollBar->blockSignals(false);
+
+    ui.YhorizontalScrollBar->blockSignals(true);
+    ui.YhorizontalScrollBar->setMaximum(maxgrd);
+    ui.YhorizontalScrollBar->blockSignals(false);
+
+    ui.ZhorizontalScrollBar->blockSignals(true);
+    ui.ZhorizontalScrollBar->setMaximum(maxgrd);
+    ui.ZhorizontalScrollBar->blockSignals(false);
 
     ui.linecolumn_2->blockSignals(true);
     ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));

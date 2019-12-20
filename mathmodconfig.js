@@ -8,6 +8,9 @@
         "InitParGrid": 50,
         "NbParComponent": 200
     },
+    "StartOptions": {
+        "Model": "CloseIso_1"
+    },
     "WindowPosition": {
         "ControlX": 20,
         "ControlY": 20,
@@ -42,9 +45,6 @@
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
         "UsedStyle": "Fusion"
-    },
-    "StartOptions": {
-        "Model": "CloseIso_1"
     },
     "Themes": {
         "PredefinedThemes": [ "Default", "Dark", "MyTheme"],
