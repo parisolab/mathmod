@@ -22,7 +22,7 @@
 static uint PreviousSizeMinimalTopology =0;
 static uint NbPolyMinimalTopology =0;
 static uint NbVertexTmp = 0;
-static float*     ExtraDimension;
+static std::vector<float>     ExtraDimensionVector;
 static CellNoise *NoiseFunction2 = new CellNoise();
 static ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
 
@@ -243,12 +243,12 @@ void  Par3D::boite_englobante4D(uint idx)
             if(MINX > NormVertexTabVector[IDX + 3 + idx*10 + 4] ) MINX = NormVertexTabVector[IDX + 3 + idx*10 + 4];
             if(MINY > NormVertexTabVector[IDX + 4 + idx*10 + 4] ) MINY = NormVertexTabVector[IDX + 4 + idx*10 + 4];
             if(MINZ > NormVertexTabVector[IDX + 5 + idx*10 + 4] ) MINZ = NormVertexTabVector[IDX + 5 + idx*10 + 4];
-            if(MINW > ExtraDimension[i*Vgrid + j + idx] ) MINW = ExtraDimension[i*Vgrid + j + idx];
+            if(MINW > ExtraDimensionVector[i*Vgrid + j + idx] ) MINW = ExtraDimensionVector[i*Vgrid + j + idx];
 
             if(MAXX < NormVertexTabVector[IDX + 3 + idx*10 + 4] ) MAXX = NormVertexTabVector[IDX + 3 + idx*10 + 4];
             if(MAXY < NormVertexTabVector[IDX + 4 + idx*10 + 4] ) MAXY = NormVertexTabVector[IDX + 4 + idx*10 + 4];
             if(MAXZ < NormVertexTabVector[IDX + 5 + idx*10 + 4] ) MAXZ = NormVertexTabVector[IDX + 5 + idx*10 + 4];
-            if(MAXW < ExtraDimension[i*Vgrid + j + idx] ) MAXW = ExtraDimension[i*Vgrid + j + idx];
+            if(MAXW < ExtraDimensionVector[i*Vgrid + j + idx] ) MAXW = ExtraDimensionVector[i*Vgrid + j + idx];
             IDX +=10;
         }
 
@@ -284,7 +284,7 @@ void  Par3D::boite_englobante4D(uint idx)
             NormVertexTabVector[IDX + 3 + idx*10+ 4]= (NormVertexTabVector[IDX + 3 + idx*10+ 4] + decalage_xo)/DIFMAXIMUM ;
             NormVertexTabVector[IDX + 4 + idx*10+ 4] = (NormVertexTabVector[IDX + 4 + idx*10+ 4] + decalage_yo)/DIFMAXIMUM ;
             NormVertexTabVector[IDX + 5 + idx*10+ 4] = (NormVertexTabVector[IDX + 5 + idx*10+ 4] + decalage_zo)/DIFMAXIMUM ;
-            ExtraDimension[i*Vgrid + j + idx] = (ExtraDimension[i*Vgrid + j + idx] + decalage_wo)/DIFMAXIMUM ;
+            ExtraDimensionVector[i*Vgrid + j + idx] = (ExtraDimensionVector[i*Vgrid + j + idx] + decalage_wo)/DIFMAXIMUM ;
             IDX +=10;
         }
 }
@@ -330,13 +330,13 @@ void  Par3D::calcul_points4(uint idx)
             tp1 = double(NormVertexTabVector[lndex + 3 + idx*10+ 4]);
             tp2 = double(NormVertexTabVector[lndex + 4 + idx*10+ 4]);
             tp3 = double(NormVertexTabVector[lndex + 5 + idx*10+ 4]);
-            tp4 = double(ExtraDimension[i*Vgrid + j + idx]);
+            tp4 = double(ExtraDimensionVector[i*Vgrid + j + idx]);
             if(param4D == 1)
             {
                 NormVertexTabVector[lndex + 3 + idx*10+ 4] = float(mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo);
                 NormVertexTabVector[lndex + 4 + idx*10+ 4] = float(mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo);
                 NormVertexTabVector[lndex + 5 + idx*10+ 4] = float(mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo);
-                ExtraDimension[i*Vgrid + j + idx] = float(mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo);
+                ExtraDimensionVector[i*Vgrid + j + idx] = float(mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo);
             }
             else
             {
@@ -356,7 +356,7 @@ void  Par3D::project_4D_to_3D(uint idx)
     for (uint i=0; i < Ugrid; ++i)
         for (uint j=0; j < Vgrid  ; ++j)
         {
-            c4 = 1.0/double(ExtraDimension[i*Vgrid + j + idx] - 2);
+            c4 = 1.0/double(ExtraDimensionVector[i*Vgrid + j + idx] - 2);
             NormVertexTabVector[I + 3 + idx*10 + 4] *= float(c4);
             NormVertexTabVector[I + 4 + idx*10 + 4] *= float(c4);
             NormVertexTabVector[I + 5 + idx*10 + 4] *= float(c4);
@@ -1620,7 +1620,7 @@ void Par3D::BuildPar()
 {
     ParamBuild(
         &(LocalScene->ArrayNorVer_localPt),
-        LocalScene->ArrayNorVerExtra_localPt,
+        &(LocalScene->ArrayNorVerExtra_localPt),
         &(LocalScene->PolyIndices_localPt),
         &LocalScene->PolyNumber,
         &(LocalScene->VertxNumber),
@@ -1799,9 +1799,9 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                     NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +8 +NewPosition] = float(ResY[p]);
                     NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
                     if(param4D == 1)
-                        ExtraDimension[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
+                        ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
                     else
-                        ExtraDimension[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = 1;
+                        ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = 1;
                     p++;
                 }
         }
@@ -1851,7 +1851,7 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 //*************************
 void  Par3D::ParamBuild(
     float **NormVertexTabPt,
-    float *ExtraDimensionPt,
+    float **ExtraDimensionPt,
     unsigned int **IndexPolyTabPt,
     unsigned int *PolyNumber,
     unsigned int *VertxNumber,
@@ -1876,7 +1876,7 @@ void  Par3D::ParamBuild(
     //*******/
     //IndexPolyTabVector = IndexPolyTabPt;
     //IndexPolyTabMinVector = IndexPolyTabMinPt;
-    ExtraDimension = ExtraDimensionPt;
+    //ExtraDimensionVector = ExtraDimensionPt;
     /*
     if(TriangleListeCND != nullptr)
         TypeIsoSurfaceTriangleListeCND = TriangleListeCND;
@@ -2044,7 +2044,8 @@ void  Par3D::ParamBuild(
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     *NormVertexTabPt   = NormVertexTabVector.data();
     *IndexPolyTabPt    = IndexPolyTabVector.data();
-    *TriangleListeCND = TypeIsoSurfaceTriangleListeCNDVector.data();
+    *TriangleListeCND  = TypeIsoSurfaceTriangleListeCNDVector.data();
+    *ExtraDimensionPt  = ExtraDimensionVector.data();
     componentsPt->Interleave = true;
     copycomponent(componentsPt, components);
 }

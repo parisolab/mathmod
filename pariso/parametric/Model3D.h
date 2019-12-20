@@ -160,7 +160,7 @@ public:
     uint CNDtoUse(uint, struct ComponentInfos*);
     uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
-    void ParamBuild(float **, float *,uint **, uint *,
+    void ParamBuild(float **, float **,uint **, uint *,
                     uint *, uint  IsoPos=0,
                     ComponentInfos *components = nullptr,
                     int **TriangleListeCND = nullptr,

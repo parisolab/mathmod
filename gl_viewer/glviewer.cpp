@@ -1468,7 +1468,7 @@ void OpenGlWidget::paintGL()
             ParObjetThread->ParObjet->ParamBuild
             (
                 &(LocalScene.ArrayNorVer_localPt),
-                LocalScene.ArrayNorVerExtra_localPt,
+                &(LocalScene.ArrayNorVerExtra_localPt),
                 &(LocalScene.PolyIndices_localPt),
                 &LocalScene.PolyNumber,
                 &LocalScene.VertxNumber,
