@@ -157,8 +157,6 @@ void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid, uint nbparcomp)
 {
     Ugrid = nbGrid;
     Vgrid = nbGrid;
-    largeur_fenetre = 620;
-    hauteur_fenetre = 620;
     NbParComponent = nbparcomp;
     CutV = CutU = 0;
     tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
@@ -311,7 +309,7 @@ void Par3D::Anim_Rot4D (uint idx)
 {
     rotation4();
     calcul_points4(idx);         // On applique la rotation 4D
-    boite_englobante4D(idx);
+    //boite_englobante4D(idx);
     if(param4D == 1)
         project_4D_to_3D(idx);
     Invert_boite_englobante4D(idx);

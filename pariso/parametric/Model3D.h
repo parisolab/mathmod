@@ -140,7 +140,6 @@ public:
     double tetaxy, tetaxz, tetayz, tetaxw, tetayw, tetazw;
 
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
-    int largeur_fenetre,hauteur_fenetre;
     ScriptErrorType messageerror;
     QString message;
 public:
