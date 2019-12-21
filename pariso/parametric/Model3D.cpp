@@ -2036,23 +2036,22 @@ void  Par3D::make_PolyIndexMin(uint index)
 void  Par3D::make_PolyIndexTri(uint index)
 {
     uint k=0;
-    uint nbVertex    = index;
     for (uint i=0; i+CutU+1< Ugrid; i++)
         for (uint j=0; j+CutV+1< Vgrid; j++)
         {
-            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex);
-            IndexPolyTabVector.push_back((i+1)*Vgrid + j +nbVertex);
-            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex);
+            IndexPolyTabVector.push_back(i*Vgrid + j+index);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + j +index);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+index);
 
-            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex);
-            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex);
-            IndexPolyTabVector.push_back(i*Vgrid + (j+1)+nbVertex);
+            IndexPolyTabVector.push_back(i*Vgrid + j+index);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+index);
+            IndexPolyTabVector.push_back(i*Vgrid + (j+1)+index);
             k+=6;
         }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::calcul_Norm(uint NewPosition)
+void  Par3D::calcul_Norm(uint idx)
 {
 //calculate Normals
     uint  i, j, deplacement = 10*Vgrid;
@@ -2061,27 +2060,27 @@ void  Par3D::calcul_Norm(uint NewPosition)
     for (i=0; i+1 < Ugrid  ; i++)
         for (j=0; j+1 < Vgrid  ; j++)
         {
-            caa = NormVertexTabVector[(i+1)*deplacement+j*10+4+NewPosition+ 4] - NormVertexTabVector[i*deplacement +j*10+4+NewPosition+ 4];
-            bab = NormVertexTabVector[i*deplacement+(j+1)*10+5+NewPosition+ 4] - NormVertexTabVector[i*deplacement +j*10+5+NewPosition+ 4];
-            cab = NormVertexTabVector[(i+1)*deplacement+j*10+5+NewPosition+ 4] - NormVertexTabVector[i*deplacement +j*10+5+NewPosition+ 4];
-            baa = NormVertexTabVector[i*deplacement+(j+1)*10+4+NewPosition+ 4] - NormVertexTabVector[i*deplacement +j*10+4+NewPosition+ 4];
-            ba  = NormVertexTabVector[i*deplacement+(j+1)*10+3+NewPosition+ 4] - NormVertexTabVector[i*deplacement +j*10+3+NewPosition+ 4];
-            ca  = NormVertexTabVector[(i+1)*deplacement+j*10+3+NewPosition+ 4] - NormVertexTabVector[i*deplacement +j*10+3+NewPosition+ 4];
+            caa = NormVertexTabVector[(i+1)*deplacement+j*10+4+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+4+idx+ 4];
+            bab = NormVertexTabVector[i*deplacement+(j+1)*10+5+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+5+idx+ 4];
+            cab = NormVertexTabVector[(i+1)*deplacement+j*10+5+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+5+idx+ 4];
+            baa = NormVertexTabVector[i*deplacement+(j+1)*10+4+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+4+idx+ 4];
+            ba  = NormVertexTabVector[i*deplacement+(j+1)*10+3+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+3+idx+ 4];
+            ca  = NormVertexTabVector[(i+1)*deplacement+j*10+3+idx+ 4] - NormVertexTabVector[i*deplacement +j*10+3+idx+ 4];
 
-            NormVertexTabVector[i*deplacement +j*10   +NewPosition+ 4] = caa*bab - cab*baa;
-            NormVertexTabVector[i*deplacement +j*10 +1+NewPosition+ 4] = cab*ba  - ca*bab;
-            NormVertexTabVector[i*deplacement +j*10 +2+NewPosition+ 4] = ca*baa  - caa*ba;
+            NormVertexTabVector[i*deplacement +j*10   +idx+ 4] = caa*bab - cab*baa;
+            NormVertexTabVector[i*deplacement +j*10 +1+idx+ 4] = cab*ba  - ca*bab;
+            NormVertexTabVector[i*deplacement +j*10 +2+idx+ 4] = ca*baa  - caa*ba;
 
-            b4  = sqrt((NormVertexTabVector[i*deplacement +j*10  +NewPosition+ 4]*NormVertexTabVector[i*deplacement +j*10  +NewPosition+ 4]) +
-                       (NormVertexTabVector[i*deplacement +j*10+1+NewPosition+ 4]*NormVertexTabVector[i*deplacement +j*10+1+NewPosition+ 4]) +
-                       (NormVertexTabVector[i*deplacement +j*10+2+NewPosition+ 4]*NormVertexTabVector[i*deplacement +j*10+2+NewPosition+ 4]));
+            b4  = sqrt((NormVertexTabVector[i*deplacement +j*10  +idx+ 4]*NormVertexTabVector[i*deplacement +j*10  +idx+ 4]) +
+                       (NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]*NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]) +
+                       (NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]*NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]));
 
             if( b4 < float(0.000001))  b4 = float(0.000001);
 
 //Normalise:
-            NormVertexTabVector[i*deplacement +j*10  +NewPosition+ 4]/=b4;
-            NormVertexTabVector[i*deplacement +j*10+1+NewPosition+ 4]/=b4;
-            NormVertexTabVector[i*deplacement +j*10+2+NewPosition+ 4]/=b4;
+            NormVertexTabVector[i*deplacement +j*10  +idx+ 4]/=b4;
+            NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]/=b4;
+            NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]/=b4;
         }
 
     if(Ugrid>1)
@@ -2089,9 +2088,9 @@ void  Par3D::calcul_Norm(uint NewPosition)
     i = Ugrid -1;
     for (j=0; j+1 < Vgrid   ; j++)
     {
-        NormVertexTabVector[i*deplacement +j*10  +NewPosition+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10  +NewPosition+ 4];
-        NormVertexTabVector[i*deplacement +j*10+1+NewPosition+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10+1+NewPosition+ 4];
-        NormVertexTabVector[i*deplacement +j*10+2+NewPosition+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10+2+NewPosition+ 4];
+        NormVertexTabVector[i*deplacement +j*10  +idx+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10  +idx+ 4];
+        NormVertexTabVector[i*deplacement +j*10+1+idx+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10+1+idx+ 4];
+        NormVertexTabVector[i*deplacement +j*10+2+idx+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10+2+idx+ 4];
     }
     }
 
@@ -2100,17 +2099,17 @@ void  Par3D::calcul_Norm(uint NewPosition)
     j =Vgrid -1;
     for (i=0; i+1< Ugrid  ; i++)
     {
-        NormVertexTabVector[i*deplacement +j*10  +NewPosition+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10  +NewPosition+ 4];
-        NormVertexTabVector[i*deplacement +j*10+1+NewPosition+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+1+NewPosition+ 4];
-        NormVertexTabVector[i*deplacement +j*10+2+NewPosition+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+2+NewPosition+ 4];
+        NormVertexTabVector[i*deplacement +j*10  +idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10  +idx+ 4];
+        NormVertexTabVector[i*deplacement +j*10+1+idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+1+idx+ 4];
+        NormVertexTabVector[i*deplacement +j*10+2+idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+2+idx+ 4];
     }
     }
     if(Ugrid>1 && Vgrid>1)
     {
     i = Ugrid -1;
     j =Vgrid -1;
-    NormVertexTabVector[i*deplacement +j*10  +NewPosition+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10  +NewPosition+ 4];
-    NormVertexTabVector[i*deplacement +j*10+1+NewPosition+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+1+NewPosition+ 4];
-    NormVertexTabVector[i*deplacement +j*10+2+NewPosition+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+2+NewPosition+ 4];
+    NormVertexTabVector[i*deplacement +j*10  +idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10  +idx+ 4];
+    NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+1+idx+ 4];
+    NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+2+idx+ 4];
     }
     }
