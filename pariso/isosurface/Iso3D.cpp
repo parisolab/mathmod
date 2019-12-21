@@ -1583,7 +1583,7 @@ void Iso3D::IsoBuild (
     int **TriangleListeCND
 )
 {
-    uint l, NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
+    uint NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
     PreviousSizeMinimalTopology = 0;
     NbPolyMinimalTopology = 0;
     NbPointIsoMap= 0;
@@ -1717,11 +1717,10 @@ void Iso3D::IsoBuild (
         }
 
         // Save the Index:
-        l = 3*NbTriangleIsoSurfaceTmp;
         if(components != nullptr)
         {
-            components->IsoPositions[2*fctnb    ] = l; //save the starting position of this component
-            components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurface; //save the number of triangles of this component
+            components->IsoPositions[2*fctnb    ] = 3*NbTriangleIsoSurfaceTmp; //save the starting position of this component
+            components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurface;      //save the number of triangles of this component
 
             components->IsoPts[2*fctnb    ] = NbVertexTmp;
             components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
@@ -1733,7 +1732,6 @@ void Iso3D::IsoBuild (
                 IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i  ] + NbVertexTmp);
                 IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+1] + NbVertexTmp);
                 IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+2] + NbVertexTmp);
-                l+=3;
             }
         }
         /*
