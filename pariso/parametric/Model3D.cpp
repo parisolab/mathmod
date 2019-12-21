@@ -308,10 +308,12 @@ void  Par3D::Invert_boite_englobante4D(uint idx)
 void Par3D::Anim_Rot4D (uint idx)
 {
     rotation4();
-    calcul_points4(idx);         // On applique la rotation 4D
-    //boite_englobante4D(idx);
-    if(param4D == 1)
+    calcul_points4(idx);
+    if(param4D == 1)// On applique la rotation 4D
+    {
+        boite_englobante4D(idx);
         project_4D_to_3D(idx);
+    }
     Invert_boite_englobante4D(idx);
 }
 
@@ -1173,18 +1175,18 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
 
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            val[0]= double(NormVertexTabVector[i*10  + 3 + 4 ]);
-            val[1]= double(NormVertexTabVector[i*10  + 4 + 4 ]);
-            val[2]= double(NormVertexTabVector[i*10  + 5 + 4 ]);
+            val[0]= double(NormVertexTabVector[i*10+7]);
+            val[1]= double(NormVertexTabVector[i*10+8]);
+            val[2]= double(NormVertexTabVector[i*10+9]);
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*double(NormVertexTabVector[i*10  + 3 + 4 ]);
-            val[1]= tmp*double(NormVertexTabVector[i*10  + 4 + 4 ]);
-            val[2]= tmp*double(NormVertexTabVector[i*10  + 5 + 4 ]);
+            val[0]= tmp*double(NormVertexTabVector[i*10+7]);
+            val[1]= tmp*double(NormVertexTabVector[i*10+8]);
+            val[2]= tmp*double(NormVertexTabVector[i*10+9]);
 
             tmp  = masterthread->GradientParser->Eval(val);
 
@@ -1213,9 +1215,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
                     cmpId++;
                 }
             }
-            val[0]= double(NormVertexTabVector[i*10  + 3 + 4 ]);
-            val[1]= double(NormVertexTabVector[i*10  + 4 + 4 ]);
-            val[2]= double(NormVertexTabVector[i*10  + 5 + 4 ]);
+            val[0]= double(NormVertexTabVector[i*10+7]);
+            val[1]= double(NormVertexTabVector[i*10+8]);
+            val[2]= double(NormVertexTabVector[i*10+9]);
 
             val[7] = double(i);
             val[8] = double(Vgrid);
@@ -1235,9 +1237,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
             else
                 tmp =1.0;
 
-            val[0]= tmp*double(NormVertexTabVector[i*10  +3+4 ]);
-            val[1]= tmp*double(NormVertexTabVector[i*10  +4+4 ]);
-            val[2]= tmp*double(NormVertexTabVector[i*10  +5+4 ]);
+            val[0]= tmp*double(NormVertexTabVector[i*10+7]);
+            val[1]= tmp*double(NormVertexTabVector[i*10+8]);
+            val[2]= tmp*double(NormVertexTabVector[i*10+9]);
             val[3]*= tmp;
             val[4]*= tmp;
 
@@ -1272,17 +1274,17 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             PointVerifyCond.push_back(int(masterthread->ParConditionParser[CNDtoUse(i, components)].Eval(vals)));
             if(PointVerifyCond[i])
             {
-                NormVertexTabVector[i*10    ] = float(0.1);
-                NormVertexTabVector[i*10  +1] = float(0.9);
-                NormVertexTabVector[i*10  +2] = 0.0;
-                NormVertexTabVector[i*10  +3] = 1.0;
+                NormVertexTabVector[i*10  ] = float(0.1);
+                NormVertexTabVector[i*10+1] = float(0.9);
+                NormVertexTabVector[i*10+2] = 0.0;
+                NormVertexTabVector[i*10+3] = 1.0;
             }
             else
             {
-                NormVertexTabVector[i*10    ] = float(0.9);
-                NormVertexTabVector[i*10  +1] = float(0.1);
-                NormVertexTabVector[i*10  +2] = 0.0;
-                NormVertexTabVector[i*10  +3] = 1.0;
+                NormVertexTabVector[i*10  ] = float(0.9);
+                NormVertexTabVector[i*10+1] = float(0.1);
+                NormVertexTabVector[i*10+2] = 0.0;
+                NormVertexTabVector[i*10+3] = 1.0;
             }
         }
         uint Aindex, Bindex, Cindex;
@@ -1292,9 +1294,9 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
         for(uint i= 0; i < nbtriangle; i++)
         {
-            Aindex = IndexPolyTabVector[3*i    ];
-            Bindex = IndexPolyTabVector[3*i + 1];
-            Cindex = IndexPolyTabVector[3*i + 2];
+            Aindex = IndexPolyTabVector[3*i  ];
+            Bindex = IndexPolyTabVector[3*i+1];
+            Cindex = IndexPolyTabVector[3*i+2];
 
             int TypeTriangle = -1;
             if(PointVerifyCond[Aindex] && !PointVerifyCond[Bindex] && !PointVerifyCond[Cindex])
@@ -1322,15 +1324,15 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
             if(TypeTriangle == 2 || TypeTriangle == 3)
             {
-                Aindex = IndexPolyTabVector[3*i  +1];
-                Bindex = IndexPolyTabVector[3*i + 2];
-                Cindex = IndexPolyTabVector[3*i    ];
+                Aindex = IndexPolyTabVector[3*i+1];
+                Bindex = IndexPolyTabVector[3*i+2];
+                Cindex = IndexPolyTabVector[3*i  ];
             }
             else if(TypeTriangle == 4 || TypeTriangle == 5)
             {
-                Aindex = IndexPolyTabVector[3*i  + 2];
-                Bindex = IndexPolyTabVector[3*i     ];
-                Cindex = IndexPolyTabVector[3*i  + 1];
+                Aindex = IndexPolyTabVector[3*i+2];
+                Bindex = IndexPolyTabVector[3*i  ];
+                Cindex = IndexPolyTabVector[3*i+1];
             }
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
@@ -1344,9 +1346,9 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Bprime[2] = double(NormVertexTabVector[10*Aindex+9]);
                 Bprime[3] = masterthread->stepMorph;
 
-                DiffX = double(NormVertexTabVector[10*Bindex+7] - NormVertexTabVector[3+10*Aindex  + 4])/20.0;
-                DiffY = double(NormVertexTabVector[10*Bindex+8] - NormVertexTabVector[3+10*Aindex+1+ 4])/20.0;
-                DiffZ = double(NormVertexTabVector[10*Bindex+9] - NormVertexTabVector[3+10*Aindex+2+ 4])/20.0;
+                DiffX = double(NormVertexTabVector[10*Bindex+7] - NormVertexTabVector[10*Aindex+7])/20.0;
+                DiffY = double(NormVertexTabVector[10*Bindex+8] - NormVertexTabVector[10*Aindex+8])/20.0;
+                DiffZ = double(NormVertexTabVector[10*Bindex+9] - NormVertexTabVector[10*Aindex+9])/20.0;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -1375,9 +1377,9 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Cprime[2] = double(NormVertexTabVector[10*Aindex+9]);
                 Cprime[3] = masterthread->stepMorph;
 
-                DiffX = double(NormVertexTabVector[3+10*Cindex  + 4] - NormVertexTabVector[3+10*Aindex     + 4])/20;
-                DiffY = double(NormVertexTabVector[3+10*Cindex+1+ 4] - NormVertexTabVector[3+10*Aindex+1+ 4])/20;
-                DiffZ = double(NormVertexTabVector[3+10*Cindex+2+ 4] - NormVertexTabVector[3+10*Aindex+2+ 4])/20;
+                DiffX = double(NormVertexTabVector[10*Cindex+7] - NormVertexTabVector[10*Aindex+7])/20;
+                DiffY = double(NormVertexTabVector[10*Cindex+8] - NormVertexTabVector[10*Aindex+8])/20;
+                DiffZ = double(NormVertexTabVector[10*Cindex+9] - NormVertexTabVector[10*Aindex+9])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -1406,25 +1408,25 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
                 {
                     //Add Bprime:
-                    NormVertexTabVector[10*NbVertexTmp   ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp  ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+1 ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp+1] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+2 ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp+2] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+3 ] = 1.0;
+                    NormVertexTabVector[10*NbVertexTmp+3] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+4 ] = NormVertexTabVector[10*Bindex + 4];
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 4]);
-                    NormVertexTabVector[10*NbVertexTmp+5 ] = NormVertexTabVector[10*Bindex + 5];
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 5]);
-                    NormVertexTabVector[10*NbVertexTmp+6 ] = NormVertexTabVector[10*Bindex + 6];
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 6]);
-                    NormVertexTabVector[10*NbVertexTmp+7 ] = float(Bprime[0]);
+                    NormVertexTabVector[10*NbVertexTmp+4] = NormVertexTabVector[10*Bindex+4];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+4]);
+                    NormVertexTabVector[10*NbVertexTmp+5] = NormVertexTabVector[10*Bindex+5];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+5]);
+                    NormVertexTabVector[10*NbVertexTmp+6] = NormVertexTabVector[10*Bindex+6];
+                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+6]);
+                    NormVertexTabVector[10*NbVertexTmp+7] = float(Bprime[0]);
                     NormVertexTabVector.push_back(float(Bprime[0]));
-                    NormVertexTabVector[10*NbVertexTmp+8 ] = float(Bprime[1]);
+                    NormVertexTabVector[10*NbVertexTmp+8] = float(Bprime[1]);
                     NormVertexTabVector.push_back(float(Bprime[1]));
-                    NormVertexTabVector[10*NbVertexTmp+9 ] = float(Bprime[2]);
+                    NormVertexTabVector[10*NbVertexTmp+9] = float(Bprime[2]);
                     NormVertexTabVector.push_back(float(Bprime[2]));
 
                     //Add Cprime:
