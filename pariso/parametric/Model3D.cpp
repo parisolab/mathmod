@@ -1857,11 +1857,10 @@ void  Par3D::ParamBuild(
 )
 {
     uint NbTriangleIsoSurfaceTmp;
-    uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0, NextIndex=0;
+    uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
-
     NormVertexTabVector.clear();
     IndexPolyTabMinVector.clear();
     IndexPolyTabVector.clear();
@@ -1874,8 +1873,6 @@ void  Par3D::ParamBuild(
         components->NbParametric = masterthread->expression_XSize;
 
     stopcalculations(false);
-    if(!masterthread->gridnotnull)
-        NbVertex  = (Ugrid)*(Vgrid);
 
     if(masterthread->activeMorph != 1)
     {
@@ -1898,18 +1895,17 @@ void  Par3D::ParamBuild(
         }
 
         masterthread->CurrentPar   = fctnb;
-        masterthread->CurrentIndex = NextIndex;
+        masterthread->CurrentIndex = NbVertexTmp;
         // Save Number of Polys and vertex :
         if(components != nullptr)
         {
             components->ParPts[2*fctnb    ] = NbVertexTmp;
             components->ParPts[2*fctnb  +1] = NbVertexTmp + (Ugrid)*(Vgrid)  -1;
         }
-        NbVertexTmp                 += (Ugrid)*(Vgrid);
+
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         NbPolyMinimalTopology       += (Ugrid  - CutU -1)*(Vgrid - CutV -1);
         PreviousSizeMinimalTopology += 5*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
-        NbVertex  = (Ugrid)*(Vgrid);
 /*
         if(NbVertexTmp > NbMaxPts)
         {
@@ -1928,7 +1924,7 @@ void  Par3D::ParamBuild(
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         {
             workerthreads[nbthreads].CurrentPar = fctnb;
-            workerthreads[nbthreads].CurrentIndex = NextIndex;
+            workerthreads[nbthreads].CurrentIndex = NbVertexTmp;
         }
 
         for(uint i=0; i<Ugrid; i++)
@@ -1964,20 +1960,20 @@ void  Par3D::ParamBuild(
 
         if(param4D == 1)
         {
-            Anim_Rot4D (NextIndex);
+            Anim_Rot4D (NbVertexTmp);
         }
-        calcul_Norm(10*NextIndex);
-        make_PolyIndexMin(NextIndex,  IsoPos);
-        make_PolyIndexTri(NextIndex, IsoPos);
+        calcul_Norm(10*NbVertexTmp);
+        make_PolyIndexMin(NbVertexTmp,  IsoPos);
+        make_PolyIndexTri(NbVertexTmp, IsoPos);
         if(components != nullptr)
         {
             components->Parametricpositions[3*fctnb  ] = 6*NextPosition; //save the starting position of this component
             components->Parametricpositions[3*fctnb+1] = 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1); //save the number of Polygones of this component
-            components->Parametricpositions[3*fctnb+2] = NextIndex;
+            components->Parametricpositions[3*fctnb+2] = NbVertexTmp;
         }
 
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
-        NextIndex    += (Ugrid)*(Vgrid);
+        NbVertexTmp    += (Ugrid)*(Vgrid);
     }
 
     if(masterthread->activeMorph != 1)

@@ -1589,10 +1589,15 @@ void Iso3D::IsoBuild (
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
 
+    /*
+    NbVertexTmp = uint(NormVertexTabVector.size()/10);
+    NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
+    */
     NormVertexTabVector.clear();
-    PointVerifyCond.clear();
     IndexPolyTabVector.clear();
     IndexPolyTabMinVector.clear();
+
+    PointVerifyCond.clear();
     TypeIsoSurfaceTriangleListeCNDVector.clear();
     IsoSurfaceTriangleListeVector.clear();
     NormOriginaltmpVector.clear();

@@ -127,8 +127,7 @@ public:
     std::vector<int> PointVerifyCond;
     std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
     int *TypeIsoSurfaceTriangleListeCND;
-    int VerifCND[1000000];
-    uint NbVertex, WorkerThreadsNumber;
+    uint WorkerThreadsNumber;
     uint Ugrid, Vgrid;
     uint CutV, CutU;
     float MINX,MINY,MINZ,MINW,
