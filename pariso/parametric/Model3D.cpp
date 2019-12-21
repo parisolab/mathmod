@@ -1164,17 +1164,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     double tmp, ValCol[100], val[10];
     val[3] = masterthread->stepMorph;
 
-    static int recalculate = 1;
-
-    if((masterthread->activeMorph == 1) &&   (recalculate !=1))
-    {
-        return;
-    }
-    if(masterthread->activeMorph == 1)
-        recalculate = -1;
-    else
-        recalculate = 1;
-
     if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize && i<100; i++)
@@ -1216,7 +1205,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *components)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            if((i >= uint(components->Parametricpositions[3*cmpId+2])))
+            if((i >= uint(components->ParPts[2*cmpId])))
             {
                 K = cmpId;
                 if((masterthread->expression_XSize -1)>cmpId)
@@ -1861,6 +1850,10 @@ void  Par3D::ParamBuild(
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
+    /*
+        NbVertexTmp = uint(NormVertexTabVector.size()/10);
+        NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
+    */
     NormVertexTabVector.clear();
     IndexPolyTabMinVector.clear();
     IndexPolyTabVector.clear();
