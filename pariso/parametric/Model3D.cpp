@@ -2020,15 +2020,14 @@ void  Par3D::ParamBuild(
 void  Par3D::make_PolyIndexMin(uint index)
 {
     uint k=0;
-    uint nbVertex       = index;
     for (uint i=0; i+CutU+1 < Ugrid ; i++)
         for (uint j=0; j+CutV+1< Vgrid ; j++)
         {
             IndexPolyTabMinVector.push_back(4);
-            IndexPolyTabMinVector.push_back(i*Vgrid + j+nbVertex);
-            IndexPolyTabMinVector.push_back((i+1)*Vgrid + j +nbVertex);
-            IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+nbVertex);
-            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+nbVertex);
+            IndexPolyTabMinVector.push_back(i*Vgrid + j+index);
+            IndexPolyTabMinVector.push_back((i+1)*Vgrid + j +index);
+            IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+index);
+            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+index);
             k+=5;
         }
 }
