@@ -238,16 +238,16 @@ void  Par3D::boite_englobante4D(uint idx)
     for (uint i=0; i < Ugrid; i++)
         for (uint j=0; j < Vgrid; j++)
         {
-            if(MINX > NormVertexTabVector[IDX + 3 + idx*10 + 4] ) MINX = NormVertexTabVector[IDX + 3 + idx*10 + 4];
-            if(MINY > NormVertexTabVector[IDX + 4 + idx*10 + 4] ) MINY = NormVertexTabVector[IDX + 4 + idx*10 + 4];
-            if(MINZ > NormVertexTabVector[IDX + 5 + idx*10 + 4] ) MINZ = NormVertexTabVector[IDX + 5 + idx*10 + 4];
+            if(MINX > NormVertexTabVector[IDX+idx*10+7] ) MINX = NormVertexTabVector[IDX+idx*10+7];
+            if(MINY > NormVertexTabVector[IDX+idx*10+8] ) MINY = NormVertexTabVector[IDX+idx*10+8];
+            if(MINZ > NormVertexTabVector[IDX+idx*10+9] ) MINZ = NormVertexTabVector[IDX+idx*10+9];
             if(MINW > ExtraDimensionVector[i*Vgrid + j + idx] ) MINW = ExtraDimensionVector[i*Vgrid + j + idx];
 
-            if(MAXX < NormVertexTabVector[IDX + 3 + idx*10 + 4] ) MAXX = NormVertexTabVector[IDX + 3 + idx*10 + 4];
-            if(MAXY < NormVertexTabVector[IDX + 4 + idx*10 + 4] ) MAXY = NormVertexTabVector[IDX + 4 + idx*10 + 4];
-            if(MAXZ < NormVertexTabVector[IDX + 5 + idx*10 + 4] ) MAXZ = NormVertexTabVector[IDX + 5 + idx*10 + 4];
+            if(MAXX < NormVertexTabVector[IDX+idx*10+7] ) MAXX = NormVertexTabVector[IDX+idx*10+7];
+            if(MAXY < NormVertexTabVector[IDX+idx*10+8] ) MAXY = NormVertexTabVector[IDX+idx*10+8];
+            if(MAXZ < NormVertexTabVector[IDX+idx*10+9] ) MAXZ = NormVertexTabVector[IDX+idx*10+9];
             if(MAXW < ExtraDimensionVector[i*Vgrid + j + idx] ) MAXW = ExtraDimensionVector[i*Vgrid + j + idx];
-            IDX +=10;
+            IDX+=10;
         }
 
     DIFX = MAXX - MINX ;
@@ -274,16 +274,16 @@ void  Par3D::boite_englobante4D(uint idx)
     float decalage_xo  = -(MINX +MAXX)/2 ;
     float decalage_yo  = -(MINY +MAXY)/2 ;
     float decalage_zo  = -(MINZ +MAXZ)/2 ;
-    float decalage_wo = -(MINW +MAXW)/2 ;
+    float decalage_wo  = -(MINW +MAXW)/2 ;
     IDX =0;
     for (uint i=0; i < Ugrid   ; i++)
         for (uint j=0; j < Vgrid   ; j++)
         {
-            NormVertexTabVector[IDX + 3 + idx*10+ 4]= (NormVertexTabVector[IDX + 3 + idx*10+ 4] + decalage_xo)/DIFMAXIMUM ;
-            NormVertexTabVector[IDX + 4 + idx*10+ 4] = (NormVertexTabVector[IDX + 4 + idx*10+ 4] + decalage_yo)/DIFMAXIMUM ;
-            NormVertexTabVector[IDX + 5 + idx*10+ 4] = (NormVertexTabVector[IDX + 5 + idx*10+ 4] + decalage_zo)/DIFMAXIMUM ;
+            NormVertexTabVector[IDX+idx*10+7] = (NormVertexTabVector[IDX+idx*10+7] + decalage_xo)/DIFMAXIMUM ;
+            NormVertexTabVector[IDX+idx*10+8] = (NormVertexTabVector[IDX+idx*10+8] + decalage_yo)/DIFMAXIMUM ;
+            NormVertexTabVector[IDX+idx*10+9] = (NormVertexTabVector[IDX+idx*10+9] + decalage_zo)/DIFMAXIMUM ;
             ExtraDimensionVector[i*Vgrid + j + idx] = (ExtraDimensionVector[i*Vgrid + j + idx] + decalage_wo)/DIFMAXIMUM ;
-            IDX +=10;
+            IDX+=10;
         }
 }
 
@@ -297,10 +297,10 @@ void  Par3D::Invert_boite_englobante4D(uint idx)
     for (uint i=0; i < Ugrid   ; i++)
         for (uint j=0; j < Vgrid   ; j++)
         {
-            NormVertexTabVector[IDX + 3 + idx*10+ 4] = (NormVertexTabVector[IDX + 3 + idx*10+ 4]*DIFMAXIMUM -  decalage_xo);
-            NormVertexTabVector[IDX + 4 + idx*10+ 4] = (NormVertexTabVector[IDX + 4 + idx*10+ 4]*DIFMAXIMUM -  decalage_yo);
-            NormVertexTabVector[IDX + 5 + idx*10+ 4] = (NormVertexTabVector[IDX + 5 + idx*10+ 4]*DIFMAXIMUM -  decalage_zo);
-            IDX +=10;
+            NormVertexTabVector[IDX+idx*10+7] = (NormVertexTabVector[IDX+idx*10+7]*DIFMAXIMUM -  decalage_xo);
+            NormVertexTabVector[IDX+idx*10+8] = (NormVertexTabVector[IDX+idx*10+8]*DIFMAXIMUM -  decalage_yo);
+            NormVertexTabVector[IDX+idx*10+9] = (NormVertexTabVector[IDX+idx*10+9]*DIFMAXIMUM -  decalage_zo);
+            IDX+=10;
         }
 }
 
@@ -327,22 +327,22 @@ void  Par3D::calcul_points4(uint idx)
     for (uint i=0; i < Ugrid  ; i++)
         for (uint j=0; j < Vgrid   ; j++)
         {
-            tp1 = double(NormVertexTabVector[lndex + 3 + idx*10+ 4]);
-            tp2 = double(NormVertexTabVector[lndex + 4 + idx*10+ 4]);
-            tp3 = double(NormVertexTabVector[lndex + 5 + idx*10+ 4]);
+            tp1 = double(NormVertexTabVector[lndex+idx*10+7]);
+            tp2 = double(NormVertexTabVector[lndex+idx*10+8]);
+            tp3 = double(NormVertexTabVector[lndex+idx*10+9]);
             tp4 = double(ExtraDimensionVector[i*Vgrid + j + idx]);
             if(param4D == 1)
             {
-                NormVertexTabVector[lndex + 3 + idx*10+ 4] = float(mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo);
-                NormVertexTabVector[lndex + 4 + idx*10+ 4] = float(mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo);
-                NormVertexTabVector[lndex + 5 + idx*10+ 4] = float(mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo);
+                NormVertexTabVector[lndex+idx*10+7] = float(mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xw*tp4 + mat4D.xo);
+                NormVertexTabVector[lndex+idx*10+8] = float(mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yw*tp4 + mat4D.yo);
+                NormVertexTabVector[lndex+idx*10+9] = float(mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zw*tp4 + mat4D.zo);
                 ExtraDimensionVector[i*Vgrid + j + idx] = float(mat4D.wx*tp1 + mat4D.wy*tp2 + mat4D.wz*tp3 + mat4D.ww*tp4 + mat4D.wo);
             }
             else
             {
-                NormVertexTabVector[lndex + 3 + idx*10+ 4] = float(mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xo);
-                NormVertexTabVector[lndex + 4 + idx*10+ 4] = float(mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yo);
-                NormVertexTabVector[lndex + 5 + idx*10+ 4] = float(mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zo);
+                NormVertexTabVector[lndex+idx*10+7] = float(mat4D.xx*tp1 + mat4D.xy*tp2 + mat4D.xz*tp3 + mat4D.xo);
+                NormVertexTabVector[lndex+idx*10+8] = float(mat4D.yx*tp1 + mat4D.yy*tp2 + mat4D.yz*tp3 + mat4D.yo);
+                NormVertexTabVector[lndex+idx*10+9] = float(mat4D.zx*tp1 + mat4D.zy*tp2 + mat4D.zz*tp3 + mat4D.zo);
             }
             lndex += 10;
         }
@@ -357,9 +357,9 @@ void  Par3D::project_4D_to_3D(uint idx)
         for (uint j=0; j < Vgrid  ; ++j)
         {
             c4 = 1.0/double(ExtraDimensionVector[i*Vgrid + j + idx] - 2);
-            NormVertexTabVector[I + 3 + idx*10 + 4] *= float(c4);
-            NormVertexTabVector[I + 4 + idx*10 + 4] *= float(c4);
-            NormVertexTabVector[I + 5 + idx*10 + 4] *= float(c4);
+            NormVertexTabVector[I+idx*10+7] *= float(c4);
+            NormVertexTabVector[I+idx*10+8] *= float(c4);
+            NormVertexTabVector[I+idx*10+9] *= float(c4);
             I += 10;
         }
 }
@@ -1611,7 +1611,6 @@ void Par3D::BuildPar()
         &(LocalScene->PolyIndices_localPt),
         &LocalScene->PolyNumber,
         &(LocalScene->VertxNumber),
-        0,
         &(LocalScene->componentsinfos),
         &(LocalScene->Typetriangles),
         &(LocalScene->PolyIndices_localPtMin),
@@ -1840,7 +1839,6 @@ void  Par3D::ParamBuild(
     uint **IndexPolyTabPt,
     uint *PolyNumber,
     uint *VertxNumber,
-    uint  IsoPos,
     ComponentInfos *componentsPt,
     int **TriangleListeCND,
     uint **IndexPolyTabMinPt,
@@ -1901,21 +1899,6 @@ void  Par3D::ParamBuild(
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         NbPolyMinimalTopology       += (Ugrid  - CutU -1)*(Vgrid - CutV -1);
         PreviousSizeMinimalTopology += 5*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
-/*
-        if(NbVertexTmp > NbMaxPts)
-        {
-            messageerror = VERTEX_TAB_MEM_OVERFLOW;
-            emitErrorSignal();
-            return;
-        }
-
-        if(NbTriangleIsoSurfaceTmp > NbMaxTri)
-        {
-            messageerror = TRIANGLES_TAB_MEM_OVERFLOW;
-            emitErrorSignal();
-            return;
-        }
-*/
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         {
             workerthreads[nbthreads].CurrentPar = fctnb;
@@ -1958,8 +1941,8 @@ void  Par3D::ParamBuild(
             Anim_Rot4D (NbVertexTmp);
         }
         calcul_Norm(10*NbVertexTmp);
-        make_PolyIndexMin(NbVertexTmp,  IsoPos);
-        make_PolyIndexTri(NbVertexTmp, IsoPos);
+        make_PolyIndexMin(NbVertexTmp);
+        make_PolyIndexTri(NbVertexTmp);
         if(components != nullptr)
         {
             components->Parametricpositions[3*fctnb  ] = 6*NextPosition; //save the starting position of this component
@@ -2034,7 +2017,7 @@ void  Par3D::ParamBuild(
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::make_PolyIndexMin(uint index, uint IsoPos)
+void  Par3D::make_PolyIndexMin(uint index)
 {
     uint k=0;
     uint nbVertex       = index;
@@ -2042,29 +2025,29 @@ void  Par3D::make_PolyIndexMin(uint index, uint IsoPos)
         for (uint j=0; j+CutV+1< Vgrid ; j++)
         {
             IndexPolyTabMinVector.push_back(4);
-            IndexPolyTabMinVector.push_back(i*Vgrid + j+nbVertex + IsoPos);
-            IndexPolyTabMinVector.push_back((i+1)*Vgrid + j +nbVertex + IsoPos);
-            IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+nbVertex + IsoPos);
-            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+nbVertex + IsoPos);
+            IndexPolyTabMinVector.push_back(i*Vgrid + j+nbVertex);
+            IndexPolyTabMinVector.push_back((i+1)*Vgrid + j +nbVertex);
+            IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+nbVertex);
+            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+nbVertex);
             k+=5;
         }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++
-void  Par3D::make_PolyIndexTri(uint index, uint IsoPos)
+void  Par3D::make_PolyIndexTri(uint index)
 {
     uint k=0;
     uint nbVertex    = index;
     for (uint i=0; i+CutU+1< Ugrid; i++)
         for (uint j=0; j+CutV+1< Vgrid; j++)
         {
-            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex + IsoPos);
-            IndexPolyTabVector.push_back((i+1)*Vgrid + j +nbVertex + IsoPos);
-            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex + IsoPos);
+            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + j +nbVertex);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex);
 
-            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex + IsoPos);
-            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex + IsoPos);
-            IndexPolyTabVector.push_back(i*Vgrid + (j+1)+nbVertex + IsoPos);
+            IndexPolyTabVector.push_back(i*Vgrid + j+nbVertex);
+            IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+nbVertex);
+            IndexPolyTabVector.push_back(i*Vgrid + (j+1)+nbVertex);
             k+=6;
         }
 }

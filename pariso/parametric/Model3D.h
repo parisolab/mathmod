@@ -153,14 +153,13 @@ public:
     void initialiser_parametres(uint, uint, uint);
     void initialiser_LineColumn(uint, uint);
     void calcul_Norm(uint i=0);
-    void make_PolyIndexTri(uint p=0, uint  IsoPos=0);
-    void make_PolyIndexMin(uint p=0, uint  IsoPos=0);
+    void make_PolyIndexTri(uint p=0);
+    void make_PolyIndexMin(uint p=0);
     uint CNDtoUse(uint, struct ComponentInfos*);
     uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void ParamBuild(float **, float **,uint **, uint *,
-                    uint *, uint  IsoPos=0,
-                    ComponentInfos *components = nullptr,
+                    uint *, ComponentInfos *components = nullptr,
                     int **TriangleListeCND = nullptr,
                     uint **IndexPolyTabMinPt = nullptr,
                     uint *NbPolyMinPt = nullptr);
