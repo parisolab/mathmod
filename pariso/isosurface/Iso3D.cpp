@@ -24,7 +24,6 @@
 static uint NbPolyMin;
 static Voxel *GridVoxelVarPt;
 static double *Results;
-static uint PreviousSizeMinimalTopology =0;
 static uint NbVertexTmp = 0;
 
 std::vector<uint> IndexPolyTabMinVector;
@@ -1583,7 +1582,6 @@ void Iso3D::IsoBuild (
 )
 {
     uint NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
-    PreviousSizeMinimalTopology = 0;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
 
@@ -2148,7 +2146,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(Aindex);
                     IndexPolyTabMinVector.push_back(IndexBprime);
                     IndexPolyTabMinVector.push_back(IndexCprime);
-                    PreviousSizeMinimalTopology+=4;
 
                     /// (Bprime, B, C)
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -2163,7 +2160,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(IndexBprime);
                     IndexPolyTabMinVector.push_back(Bindex);
                     IndexPolyTabMinVector.push_back(Cindex);
-                    PreviousSizeMinimalTopology+=4;
 
                     /// (Bprime, C, Cprime)
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -2178,7 +2174,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(IndexBprime);
                     IndexPolyTabMinVector.push_back(Cindex);
                     IndexPolyTabMinVector.push_back(IndexCprime);
-                    PreviousSizeMinimalTopology+=4;
 
                     /// (Bprime, Cprime) --> the border
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -2192,7 +2187,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(IndexBprime);
                     IndexPolyTabMinVector.push_back(IndexCprime);
                     IndexPolyTabMinVector.push_back(IndexCprime);
-                    PreviousSizeMinimalTopology+=4;
                 }
                 //else return 2;
             }
@@ -2344,8 +2338,6 @@ uint Iso3D::SetMiniMmeshStruct()
             } /// End of for(k=0;
         } /// End of for(j=0;
     } /// End of for(i=0;
-
-    PreviousSizeMinimalTopology += lnew;
     return 1;
 }
 
