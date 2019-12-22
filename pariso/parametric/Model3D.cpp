@@ -20,7 +20,6 @@
 #include "Model3D.h"
 
 static uint PreviousSizeMinimalTopology =0;
-static uint NbPolyMinimalTopology =0;
 static uint NbVertexTmp = 0;
 static std::vector<float>     ExtraDimensionVector;
 static CellNoise *NoiseFunction2 = new CellNoise();
@@ -1482,7 +1481,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(IndexBprime);
                     IndexPolyTabMinVector.push_back(IndexCprime);
                     PreviousSizeMinimalTopology+=4;
-                    NbPolyMinimalTopology++;
 
                     /// (Bprime, B, C)
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -1498,7 +1496,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(Bindex);
                     IndexPolyTabMinVector.push_back(Cindex);
                     PreviousSizeMinimalTopology+=4;
-                    NbPolyMinimalTopology++;
 
                     /// (Bprime, C, Cprime)
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -1514,7 +1511,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(Cindex);
                     IndexPolyTabMinVector.push_back(IndexCprime);
                     PreviousSizeMinimalTopology+=4;
-                    NbPolyMinimalTopology++;
 
                     /// (Bprime, Cprime) --> the border
                     IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
@@ -1529,7 +1525,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(IndexCprime);
                     IndexPolyTabMinVector.push_back(IndexCprime);
                     PreviousSizeMinimalTopology+=4;
-                    NbPolyMinimalTopology++;
                 }
                 //else return 2;
             }
@@ -1848,7 +1843,6 @@ void  Par3D::ParamBuild(
     uint NbTriangleIsoSurfaceTmp;
     uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
-    NbPolyMinimalTopology = 0;
     PreviousSizeMinimalTopology =0;
     /*
         NbVertexTmp = uint(NormVertexTabVector.size()/10);
@@ -1897,7 +1891,6 @@ void  Par3D::ParamBuild(
         }
 
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
-        NbPolyMinimalTopology       += (Ugrid  - CutU -1)*(Vgrid - CutV -1);
         PreviousSizeMinimalTopology += 5*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         {
