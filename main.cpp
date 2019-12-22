@@ -55,12 +55,12 @@ int main(int argc, char *argv[])
     if(drawingopt.IsolistItemRef != nullptr)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
 
-    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
-    QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjetThread->ParObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
-    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet, SIGNAL(ErrorSignal(int)), &drawingopt, SLOT(MemoryErrorMsg(int)));
-    QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjetThread->ParObjet, SIGNAL(ErrorSignal(int)), &drawingopt, SLOT(MemoryErrorMsg(int)));
-    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjetThread->IsoObjet, SIGNAL(UpdateMessageSignal(QString)), drawingopt.ui.Messagetext, SLOT(setText(QString)));
-    QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjetThread->ParObjet, SIGNAL(UpdateMessageSignal(QString)), drawingopt.ui.Messagetext, SLOT(setText(QString)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjet->masterthread, SIGNAL(mySignal(int)), drawingopt.ui.progressBar, SLOT(setValue(int)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjet, SIGNAL(ErrorSignal(int)), &drawingopt, SLOT(MemoryErrorMsg(int)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjet, SIGNAL(ErrorSignal(int)), &drawingopt, SLOT(MemoryErrorMsg(int)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjet, SIGNAL(UpdateMessageSignal(QString)), drawingopt.ui.Messagetext, SLOT(setText(QString)));
+    QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjet, SIGNAL(UpdateMessageSignal(QString)), drawingopt.ui.Messagetext, SLOT(setText(QString)));
     drawingopt.show();
     mm.show();
     drawingopt.on_choice_activated(Parameters.model);

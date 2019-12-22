@@ -34,8 +34,6 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include "../pariso/isosurface/Iso3D.h"
-#include "../pariso/isosurface/isothread.h"
-#include "../pariso/parametric/parthread.h"
 #include "../pariso/parametric/Model3D.h"
 #include "qglthread.h"
 #include "raster.h"
@@ -54,8 +52,8 @@ public :
     double Axe_x, Axe_y, Axe_z, angle, val1, val2, val3, old_x, old_y, old_z;
     ObjectProperties  LocalScene;
     QString FramesDir;
-    IsoThread *IsoObjetThread;
-    ParThread *ParObjetThread;
+    Iso3D *IsoObjet;
+    Par3D *ParObjet;
     int TypeFormule;
     QMessageBox message;
     ErrorMessage stError;

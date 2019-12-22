@@ -1730,23 +1730,14 @@ void Iso3D::IsoBuild (
             components->IsoPts[2*fctnb    ] = NbVertexTmp;
             components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
         }
-        //if( (l+3*NbTriangleIsoSurface) < 4*NbMaxTri)
+
+        for (uint i=0; i < NbTriangleIsoSurface ; ++i)
         {
-            for (uint i=0; i < NbTriangleIsoSurface ; ++i)
-            {
-                IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i  ] + NbVertexTmp);
-                IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+1] + NbVertexTmp);
-                IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+2] + NbVertexTmp);
-            }
+            IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i  ] + NbVertexTmp);
+            IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+1] + NbVertexTmp);
+            IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+2] + NbVertexTmp);
         }
-        /*
-        else
-        {
-            messageerror = POLY_TAB_MEM_OVERFLOW;
-            emitErrorSignal();
-            return;
-        }
-        */
+
         IsoSurfaceTriangleListeVector.clear();
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
@@ -1809,19 +1800,9 @@ void Iso3D::IsoBuild (
         components->NoiseParam.NoiseShape = 1;
 
     CalculateColorsPoints(components);
-/*
-    // Save Number of Polys and vertex :
-    *PolyNumber = 3*NbTriangleIsoSurfaceTmp;
-
-    // Index Polygones:
-    *NbPolyMinPt = NbPolyMinimalTopology;
-
-    // Vertex :
-    *VertexNumberpt = NbVertexTmp;
-*/
-    *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
-    *VertexNumberpt  = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
-    *VertxNumber     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
+    *PolyNumber      = uint(IndexPolyTabVector.size());
+    *VertexNumberpt  = uint(NormVertexTabVector.size()/10);
+    *VertxNumber     = uint(IndexPolyTabMinVector.size());
 
 
     if(masterthread->morph_activated != 1)

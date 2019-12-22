@@ -94,41 +94,41 @@ void MathMod::frames_clicked()
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->Vgrid =
-    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->Ugrid    = uint(cl);
+    (ui.glWidget)->ParObjet->Vgrid = (ui.glWidget)->Vgrid =
+    (ui.glWidget)->ParObjet->Ugrid  = (ui.glWidget)->Ugrid    = uint(cl);
 
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid =
-        (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = uint(cl);
+    (ui.glWidget)->ParObjet->masterthread->Ugrid =
+        (ui.glWidget)->ParObjet->masterthread->Vgrid = uint(cl);
 
-    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid =
-            (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = uint(cl);
+        (ui.glWidget)->ParObjet->workerthreads[nbthreads].Ugrid =
+            (ui.glWidget)->ParObjet->workerthreads[nbthreads].Vgrid = uint(cl);
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::line_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->Ugrid  = (ui.glWidget)->Ugrid =
+    (ui.glWidget)->ParObjet->Ugrid  = (ui.glWidget)->Ugrid =
 
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Ugrid = uint(cl);
+    (ui.glWidget)->ParObjet->masterthread->Ugrid = uint(cl);
 
-    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Ugrid = uint(cl);
+        (ui.glWidget)->ParObjet->workerthreads[nbthreads].Ugrid = uint(cl);
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::column_valueupdate( int cl)
 {
-    (ui.glWidget)->ParObjetThread->ParObjet->Vgrid = (ui.glWidget)->Vgrid =
-    (ui.glWidget)->ParObjetThread->ParObjet->masterthread->Vgrid = uint(cl);
+    (ui.glWidget)->ParObjet->Vgrid = (ui.glWidget)->Vgrid =
+    (ui.glWidget)->ParObjet->masterthread->Vgrid = uint(cl);
 
-    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjetThread->ParObjet->WorkerThreadsNumber-1; nbthreads++)
+    for(uint nbthreads=0; nbthreads<(ui.glWidget)->ParObjet->WorkerThreadsNumber-1; nbthreads++)
     {
-        (ui.glWidget)->ParObjetThread->ParObjet->workerthreads[nbthreads].Vgrid = uint(cl);
+        (ui.glWidget)->ParObjet->workerthreads[nbthreads].Vgrid = uint(cl);
     }
 }
 
@@ -178,13 +178,13 @@ void MathMod::Initparametricpage()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::xyzg_valueupdate(int cl)
 {
-    (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Zgrid  =
-        (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Ygrid  =
-            (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->Xgrid  = uint(cl);
+    (ui.glWidget)->IsoObjet->masterthread->Zgrid  =
+        (ui.glWidget)->IsoObjet->masterthread->Ygrid  =
+            (ui.glWidget)->IsoObjet->masterthread->Xgrid  = uint(cl);
 
-    (ui.glWidget)->IsoObjetThread->IsoObjet->Zgrid  =
-        (ui.glWidget)->IsoObjetThread->IsoObjet->Ygrid  =
-            (ui.glWidget)->IsoObjetThread->IsoObjet->Xgrid  = uint(cl);
+    (ui.glWidget)->IsoObjet->Zgrid  =
+        (ui.glWidget)->IsoObjet->Ygrid  =
+            (ui.glWidget)->IsoObjet->Xgrid  = uint(cl);
 
     (ui.glWidget)->Xgrid   =
         (ui.glWidget)->Ygrid =
@@ -256,67 +256,67 @@ void MathMod::ShowErrormessage()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int MathMod::ParsePar()
 {
-    stError = (ui.glWidget)->ParObjetThread->ParObjet->masterthread->parse_expression();
+    stError = (ui.glWidget)->ParObjet->masterthread->parse_expression();
     if(stError.iErrorIndex >= 0)
     {
         ShowErrormessage();
         return -1;
     }
     else
-        (ui.glWidget)->ParObjetThread->ParObjet->ThreadParsersCopy();
+        (ui.glWidget)->ParObjet->ThreadParsersCopy();
     return 1;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ParametricSurfaceProcess(int type)
 {
-    if(!(ui.glWidget)->ParObjetThread->ParObjet->isRunning())
+    if(!(ui.glWidget)->ParObjet->isRunning())
     {
         if(type == 3)
         {
-            (ui.glWidget)->ParObjetThread->ParObjet->masterthread->param4D =  1;
-            (ui.glWidget)->ParObjetThread->ParObjet->param4D =  1;
+            (ui.glWidget)->ParObjet->masterthread->param4D =  1;
+            (ui.glWidget)->ParObjet->param4D =  1;
         }
         else
         {
-            (ui.glWidget)->ParObjetThread->ParObjet->masterthread->param4D = -1;
-            (ui.glWidget)->ParObjetThread->ParObjet->param4D = -1;
+            (ui.glWidget)->ParObjet->masterthread->param4D = -1;
+            (ui.glWidget)->ParObjet->param4D = -1;
         }
 
         int result = ParsePar();
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = -1;
-        (ui.glWidget)->ParObjetThread->ParObjet->LocalScene = &((ui.glWidget)->LocalScene);
-        connect((ui.glWidget)->ParObjetThread->ParObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
-        (ui.glWidget)->ParObjetThread->ParObjet->start(QThread::LowPriority);
+        (ui.glWidget)->ParObjet->LocalScene = &((ui.glWidget)->LocalScene);
+        connect((ui.glWidget)->ParObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
+        (ui.glWidget)->ParObjet->start(QThread::LowPriority);
     }
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int MathMod::ParseIso()
 {
-    stError = (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->ParserIso();
+    stError = (ui.glWidget)->IsoObjet->masterthread->ParserIso();
     if(stError.iErrorIndex >= 0)
     {
         ShowErrormessage();
         return -1;
     }
     else
-        (ui.glWidget)->IsoObjetThread->IsoObjet->ThreadParsersCopy();
+        (ui.glWidget)->IsoObjet->ThreadParsersCopy();
     return 1;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ProcessNewIsoSurface()
 {
-    if(!(ui.glWidget)->IsoObjetThread->IsoObjet->isRunning())
+    if(!(ui.glWidget)->IsoObjet->isRunning())
     {
         int result = ParseIso();
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = 1;
-        (ui.glWidget)->IsoObjetThread->IsoObjet->LocalScene = &((ui.glWidget)->LocalScene);
-        connect((ui.glWidget)->IsoObjetThread->IsoObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
-        (ui.glWidget)->IsoObjetThread->IsoObjet->start(QThread::LowPriority);
+        (ui.glWidget)->IsoObjet->LocalScene = &((ui.glWidget)->LocalScene);
+        connect((ui.glWidget)->IsoObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
+        (ui.glWidget)->IsoObjet->start(QThread::LowPriority);
     }
 }
 
@@ -324,21 +324,21 @@ void MathMod::ProcessNewIsoSurface()
 void MathMod::ProcessParisoSurface()
 {
     /// process the new surface
-    stError = (ui.glWidget)->IsoObjetThread->IsoObjet->masterthread->ParserIso();
+    stError = (ui.glWidget)->IsoObjet->masterthread->ParserIso();
     if(stError.iErrorIndex >= 0)
     {
         ShowErrormessage();
         return;
     }
     else
-        stError = (ui.glWidget)->ParObjetThread->ParObjet->masterthread->parse_expression();
+        stError = (ui.glWidget)->ParObjet->masterthread->parse_expression();
     if(stError.iErrorIndex >= 0)
     {
         ShowErrormessage();
         return;
     }
     else
-        (ui.glWidget)->ParObjetThread->ParObjet->ThreadParsersCopy();
+        (ui.glWidget)->ParObjet->ThreadParsersCopy();
 }
 
 //++++++++++++++++++++++++++++++++++++++++
@@ -399,8 +399,8 @@ void MathMod::updateThreads(int *thr)
     (ui.glWidget)->LocalScene.threads[2]= thr[2];
     if(thr[0] > 0)
     {
-        (ui.glWidget)->IsoObjetThread->IsoObjet->UpdateThredsNumber(uint(thr[0]));
-        (ui.glWidget)->ParObjetThread->ParObjet->UpdateThredsNumber(uint(thr[0]));
+        (ui.glWidget)->IsoObjet->UpdateThredsNumber(uint(thr[0]));
+        (ui.glWidget)->ParObjet->UpdateThredsNumber(uint(thr[0]));
     }
 }
 
