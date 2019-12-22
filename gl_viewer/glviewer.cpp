@@ -23,8 +23,6 @@
 #define BUFFER_OFFSET(i) ((float *)(i))
 static int Wresult, Hresult;
 static double anglefinal=0;
-static uint TypeDrawin=10;
-static uint TypeDrawinNormStep = 4;
 static int FistTimecalibrate =-1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo, decalage_zo;
 
@@ -57,9 +55,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
     for(uint i =0; i < LocalScene.VertxNumber; i++)
     {
-        val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep])/hauteur_fenetre -decalage_xo;
-        val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep])/hauteur_fenetre -decalage_yo;
-        val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep])/hauteur_fenetre -decalage_zo;
+        val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 3 + 4])/hauteur_fenetre -decalage_xo;
+        val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 4 + 4])/hauteur_fenetre -decalage_yo;
+        val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 5 + 4])/hauteur_fenetre -decalage_zo;
 
         if(type != 1)
         {
@@ -87,10 +85,10 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         val[3] *= tmp;
         val[4] *= tmp;
 
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin   ] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10   ] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +1] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +2] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +3] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val));
     }
 }
 
@@ -123,9 +121,9 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
 
     for(uint i= 0; i < LocalScene.VertxNumber; i++)
     {
-        val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep])/hauteur_fenetre -decalage_xo;
-        val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep])/hauteur_fenetre -decalage_yo;
-        val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep])/hauteur_fenetre -decalage_zo;
+        val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 3 + 4])/hauteur_fenetre -decalage_xo;
+        val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 4 + 4])/hauteur_fenetre -decalage_yo;
+        val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 5 + 4])/hauteur_fenetre -decalage_zo;
 
         if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
             tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
@@ -143,10 +141,10 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
         for (uint j=0; j < LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && j < 100; j+=5)
             if(tmp <= ValCol[j])
             {
-                LocalScene.ArrayNorVer_localPt[i*TypeDrawin  ] = float(ValCol[j+1]);
-                LocalScene.ArrayNorVer_localPt[i*TypeDrawin+1] = float(ValCol[j+2]);
-                LocalScene.ArrayNorVer_localPt[i*TypeDrawin+2] = float(ValCol[j+3]);
-                LocalScene.ArrayNorVer_localPt[i*TypeDrawin+3] = float(ValCol[j+4]);
+                LocalScene.ArrayNorVer_localPt[i*10  ] = float(ValCol[j+1]);
+                LocalScene.ArrayNorVer_localPt[i*10+1] = float(ValCol[j+2]);
+                LocalScene.ArrayNorVer_localPt[i*10+2] = float(ValCol[j+3]);
+                LocalScene.ArrayNorVer_localPt[i*10+3] = float(ValCol[j+4]);
                 j = 100;
             }
     }
@@ -163,9 +161,9 @@ void OpenGlWidget::CalculateColorsPoints()
         LocalScene.componentsinfos.ThereisRGBA = true;
         for(uint i =0; i < LocalScene.VertxNumber; i++)
         {
-            val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep])/hauteur_fenetre -decalage_xo;
-            val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep])/hauteur_fenetre -decalage_yo;
-            val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep])/hauteur_fenetre -decalage_zo;
+            val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 3 + 4])/hauteur_fenetre -decalage_xo;
+            val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 4 + 4])/hauteur_fenetre -decalage_yo;
+            val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 5 + 4])/hauteur_fenetre -decalage_zo;
 
             Jprime = (i) %  (ParObjetThread->ParObjet->Vgrid);
             val[3] = double(Jprime)/double(ParObjetThread->ParObjet->Vgrid) ;
@@ -186,10 +184,10 @@ void OpenGlWidget::CalculateColorsPoints()
             val[3] *= tmp;
             val[4] *= tmp;
 
-            LocalScene.ArrayNorVer_localPt[i*TypeDrawin   ] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val));
-            LocalScene.ArrayNorVer_localPt[i*TypeDrawin +1] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val));
-            LocalScene.ArrayNorVer_localPt[i*TypeDrawin +2] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val));
-            LocalScene.ArrayNorVer_localPt[i*TypeDrawin +3] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val));
+            LocalScene.ArrayNorVer_localPt[i*10   ] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val));
+            LocalScene.ArrayNorVer_localPt[i*10 +1] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val));
+            LocalScene.ArrayNorVer_localPt[i*10 +2] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val));
+            LocalScene.ArrayNorVer_localPt[i*10 +3] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val));
         }
     }
 
@@ -204,9 +202,9 @@ void OpenGlWidget::CalculateColorsPoints()
 
         for(uint i= 0; i < LocalScene.VertxNumber; i++)
         {
-            val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 3 + TypeDrawinNormStep])/hauteur_fenetre -decalage_xo;
-            val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 4 + TypeDrawinNormStep])/hauteur_fenetre -decalage_yo;
-            val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*TypeDrawin  + 5 + TypeDrawinNormStep])/hauteur_fenetre -decalage_zo;
+            val[0]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 3 + 4])/hauteur_fenetre -decalage_xo;
+            val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 4 + 4])/hauteur_fenetre -decalage_yo;
+            val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 5 + 4])/hauteur_fenetre -decalage_zo;
 
             if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
                 tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
@@ -224,10 +222,10 @@ void OpenGlWidget::CalculateColorsPoints()
             for (uint j=0; j < LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && j < 100; j+=5)
                 if(tmp <= ValCol[j])
                 {
-                    LocalScene.ArrayNorVer_localPt[i*TypeDrawin  ] = float(ValCol[j+1]);
-                    LocalScene.ArrayNorVer_localPt[i*TypeDrawin+1] = float(ValCol[j+2]);
-                    LocalScene.ArrayNorVer_localPt[i*TypeDrawin+2] = float(ValCol[j+3]);
-                    LocalScene.ArrayNorVer_localPt[i*TypeDrawin+3] = float(ValCol[j+4]);
+                    LocalScene.ArrayNorVer_localPt[i*10  ] = float(ValCol[j+1]);
+                    LocalScene.ArrayNorVer_localPt[i*10+1] = float(ValCol[j+2]);
+                    LocalScene.ArrayNorVer_localPt[i*10+2] = float(ValCol[j+3]);
+                    LocalScene.ArrayNorVer_localPt[i*10+3] = float(ValCol[j+4]);
                     j = 100;
                 }
         }
@@ -278,21 +276,21 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
         {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
-                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i  ]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2]<<"\n";
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+3 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+4 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+5 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i  ]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+1]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+2]<<"\n";
             }
         }
         else
         {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
-                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+3 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+4 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+5 + 4]<<"\n";
             }
         }
 
@@ -329,21 +327,21 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
         {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
-                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i     ]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+1   ]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+2   ]<<"\n";
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+3 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+4 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+5 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i     ]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+1   ]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+2   ]<<"\n";
             }
         }
         else
         {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
-                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]<<"\n";
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+3 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+4 + 4]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+5 + 4]<<"\n";
             }
         }
         for (i = 0; i < LocalScene.PolyNumber ; i+=3)
@@ -393,13 +391,13 @@ void OpenGlWidget::PutObjectInsideCube()
     {
         for (uint i=0; i< LocalScene.VertxNumber; i++)
         {
-            if (minx >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep])  minx = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep];
-            if (miny >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep])  miny = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep];
-            if (minz >LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep])  minz = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep];
+            if (minx >LocalScene.ArrayNorVer_localPt[10*i+3 + 4])  minx = LocalScene.ArrayNorVer_localPt[10*i+3 + 4];
+            if (miny >LocalScene.ArrayNorVer_localPt[10*i+4 + 4])  miny = LocalScene.ArrayNorVer_localPt[10*i+4 + 4];
+            if (minz >LocalScene.ArrayNorVer_localPt[10*i+5 + 4])  minz = LocalScene.ArrayNorVer_localPt[10*i+5 + 4];
 
-            if (maxx <LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep])  maxx = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep];
-            if (maxy <LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep])  maxy = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep];
-            if (maxz <LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep])  maxz = LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep];
+            if (maxx <LocalScene.ArrayNorVer_localPt[10*i+3 + 4])  maxx = LocalScene.ArrayNorVer_localPt[10*i+3 + 4];
+            if (maxy <LocalScene.ArrayNorVer_localPt[10*i+4 + 4])  maxy = LocalScene.ArrayNorVer_localPt[10*i+4 + 4];
+            if (maxz <LocalScene.ArrayNorVer_localPt[10*i+5 + 4])  maxz = LocalScene.ArrayNorVer_localPt[10*i+5 + 4];
         }
         FistTimecalibrate = -1;
         difX = maxx - minx;
@@ -425,9 +423,9 @@ void OpenGlWidget::PutObjectInsideCube()
 
     for (uint i=0; i< LocalScene.VertxNumber; i++)
     {
-        LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+3 + TypeDrawinNormStep]) + decalage_xo)/difMaximum);
-        LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+4 + TypeDrawinNormStep]) + decalage_yo)/difMaximum);
-        LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[TypeDrawin*i+5 + TypeDrawinNormStep]) + decalage_zo)/difMaximum);
+        LocalScene.ArrayNorVer_localPt[10*i+3 + 4] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+3 + 4]) + decalage_xo)/difMaximum);
+        LocalScene.ArrayNorVer_localPt[10*i+4 + 4] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+4 + 4]) + decalage_yo)/difMaximum);
+        LocalScene.ArrayNorVer_localPt[10*i+5 + 4] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+5 + 4]) + decalage_zo)/difMaximum);
     }
 }
 
@@ -1137,14 +1135,14 @@ static void DrawNormals(ObjectProperties *scene)
     glColor4f (0.8f, 0., 0.7f, 1.0);
     for (uint i=0; i< scene->PolyNumber; i+=4)
     {
-        j =   TypeDrawin*scene->PolyIndices_localPt[i];
+        j =   10*scene->PolyIndices_localPt[i];
         glBegin( GL_LINES );
-        glVertex3f(scene->ArrayNorVer_localPt[j+3  + TypeDrawinNormStep],
-                   scene->ArrayNorVer_localPt[j+4  + TypeDrawinNormStep],
-                   scene->ArrayNorVer_localPt[j+5  + TypeDrawinNormStep]);
-        glVertex3f(scene->ArrayNorVer_localPt[j+3  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j    + TypeDrawinNormStep],
-                   scene->ArrayNorVer_localPt[j+4  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j+1  + TypeDrawinNormStep],
-                   scene->ArrayNorVer_localPt[j+5  + TypeDrawinNormStep]+40*scene->ArrayNorVer_localPt[j+2  + TypeDrawinNormStep]);
+        glVertex3f(scene->ArrayNorVer_localPt[j+3  + 4],
+                   scene->ArrayNorVer_localPt[j+4  + 4],
+                   scene->ArrayNorVer_localPt[j+5  + 4]);
+        glVertex3f(scene->ArrayNorVer_localPt[j+3  + 4]+40*scene->ArrayNorVer_localPt[j    + 4],
+                   scene->ArrayNorVer_localPt[j+4  + 4]+40*scene->ArrayNorVer_localPt[j+1  + 4],
+                   scene->ArrayNorVer_localPt[j+5  + 4]+40*scene->ArrayNorVer_localPt[j+2  + 4]);
         glEnd();
     }
 }
@@ -1172,7 +1170,7 @@ void OpenGlWidget::initialize_GL()
 
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
 
-        boxok();
+        plan();
         InitFont();
         glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
         count +=1;
@@ -1291,9 +1289,9 @@ static void DrawMinimalTopology (ObjectProperties *scene)
         {
             uint actualpointindice = scene->PolyIndices_localPtMin[startpl];
             glVertex3f(
-                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
-                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
-                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5 + TypeDrawinNormStep]
+                scene->ArrayNorVer_localPt[10*actualpointindice+3 + 4],
+                scene->ArrayNorVer_localPt[10*actualpointindice+4 + 4],
+                scene->ArrayNorVer_localPt[10*actualpointindice+5 + 4]
             );
             startpl++;
         }
@@ -1317,9 +1315,9 @@ static void DrawMeshParametric(ObjectProperties *scene)
         {
             uint actualpointindice = scene->PolyIndices_localPtMin[startpl];
             glVertex3f(
-                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+3 + TypeDrawinNormStep],
-                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+4 + TypeDrawinNormStep],
-                scene->ArrayNorVer_localPt[TypeDrawin*actualpointindice+5 + TypeDrawinNormStep]
+                scene->ArrayNorVer_localPt[10*actualpointindice+3 + 4],
+                scene->ArrayNorVer_localPt[10*actualpointindice+4 + 4],
+                scene->ArrayNorVer_localPt[10*actualpointindice+5 + 4]
             );
             startpl++;
         }
@@ -1364,8 +1362,7 @@ static void draw(ObjectProperties *scene)
 
     // Plan:
     if (scene->infos == 1)
-        glCallList(scene->gridplanliste);
-
+          glCallList(scene->gridplanliste);
 
     // Axe :
     if (scene->infos == 1)
@@ -1508,10 +1505,10 @@ void OpenGlWidget::timerEvent(QTimerEvent*)
     update();
 }
 
-void OpenGlWidget::boxok()
+void OpenGlWidget::plan()
 {
     LocalScene.gridplanliste = glGenLists(1);
-    glNewList(LocalScene.gridplanliste, GL_COMPILE );
+    glNewList(LocalScene.gridplanliste, GL_COMPILE);
     glLineWidth(1);
     glColor3f (0.8f, 0.0, 0.7f);
     glBegin( GL_LINES );

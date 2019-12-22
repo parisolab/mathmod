@@ -2060,27 +2060,27 @@ void  Par3D::calcul_Norm(uint idx)
     for (i=0; i+1 < Ugrid  ; i++)
         for (j=0; j+1 < Vgrid  ; j++)
         {
-            caa = NormVertexTabVector[(i+1)*deplacement+j*10+4+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+4+idx+ 4];
-            bab = NormVertexTabVector[i*deplacement+(j+1)*10+5+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+5+idx+ 4];
-            cab = NormVertexTabVector[(i+1)*deplacement+j*10+5+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+5+idx+ 4];
-            baa = NormVertexTabVector[i*deplacement+(j+1)*10+4+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+4+idx+ 4];
-            ba  = NormVertexTabVector[i*deplacement+(j+1)*10+3+idx+ 4] - NormVertexTabVector[i*deplacement+j*10+3+idx+ 4];
-            ca  = NormVertexTabVector[(i+1)*deplacement+j*10+3+idx+ 4] - NormVertexTabVector[i*deplacement +j*10+3+idx+ 4];
+            caa = NormVertexTabVector[(i+1)*deplacement+j*10+idx+8] - NormVertexTabVector[i*deplacement+j*10+idx+8];
+            bab = NormVertexTabVector[i*deplacement+(j+1)*10+idx+9] - NormVertexTabVector[i*deplacement+j*10+idx+9];
+            cab = NormVertexTabVector[(i+1)*deplacement+j*10+idx+9] - NormVertexTabVector[i*deplacement+j*10+idx+9];
+            baa = NormVertexTabVector[i*deplacement+(j+1)*10+idx+8] - NormVertexTabVector[i*deplacement+j*10+idx+8];
+            ba  = NormVertexTabVector[i*deplacement+(j+1)*10+idx+7] - NormVertexTabVector[i*deplacement+j*10+idx+7];
+            ca  = NormVertexTabVector[(i+1)*deplacement+j*10+idx+7] - NormVertexTabVector[i*deplacement+j*10+idx+7];
 
-            NormVertexTabVector[i*deplacement +j*10   +idx+ 4] = caa*bab - cab*baa;
-            NormVertexTabVector[i*deplacement +j*10 +1+idx+ 4] = cab*ba  - ca*bab;
-            NormVertexTabVector[i*deplacement +j*10 +2+idx+ 4] = ca*baa  - caa*ba;
+            NormVertexTabVector[i*deplacement+j*10+idx+4] = caa*bab - cab*baa;
+            NormVertexTabVector[i*deplacement+j*10+idx+5] = cab*ba  - ca*bab;
+            NormVertexTabVector[i*deplacement+j*10+idx+6] = ca*baa  - caa*ba;
 
-            b4  = sqrt((NormVertexTabVector[i*deplacement +j*10  +idx+ 4]*NormVertexTabVector[i*deplacement +j*10  +idx+ 4]) +
-                       (NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]*NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]) +
-                       (NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]*NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]));
+            b4  = sqrt((NormVertexTabVector[i*deplacement+j*10+idx+4]*NormVertexTabVector[i*deplacement+j*10+idx+4]) +
+                       (NormVertexTabVector[i*deplacement+j*10+idx+5]*NormVertexTabVector[i*deplacement+j*10+idx+5]) +
+                       (NormVertexTabVector[i*deplacement+j*10+idx+6]*NormVertexTabVector[i*deplacement+j*10+idx+6]));
 
             if( b4 < float(0.000001))  b4 = float(0.000001);
 
 //Normalise:
-            NormVertexTabVector[i*deplacement +j*10  +idx+ 4]/=b4;
-            NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]/=b4;
-            NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]/=b4;
+            NormVertexTabVector[i*deplacement +j*10+idx+4]/=b4;
+            NormVertexTabVector[i*deplacement +j*10+idx+5]/=b4;
+            NormVertexTabVector[i*deplacement +j*10+idx+6]/=b4;
         }
 
     if(Ugrid>1)
@@ -2088,9 +2088,9 @@ void  Par3D::calcul_Norm(uint idx)
     i = Ugrid -1;
     for (j=0; j+1 < Vgrid   ; j++)
     {
-        NormVertexTabVector[i*deplacement +j*10  +idx+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10  +idx+ 4];
-        NormVertexTabVector[i*deplacement +j*10+1+idx+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10+1+idx+ 4];
-        NormVertexTabVector[i*deplacement +j*10+2+idx+ 4] = NormVertexTabVector[(i-1)*deplacement +j*10+2+idx+ 4];
+        NormVertexTabVector[i*deplacement+j*10+idx+4] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+4];
+        NormVertexTabVector[i*deplacement+j*10+idx+5] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+5];
+        NormVertexTabVector[i*deplacement+j*10+idx+6] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+6];
     }
     }
 

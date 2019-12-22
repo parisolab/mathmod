@@ -75,7 +75,7 @@ public:
     virtual   void run();
     void InitSpecularParameters();
     void Shininess(int);
-    void boxok();
+    void plan();
     void initbox();
     int  memoryallocation(uint,uint,uint,uint,uint initpargrid=50,
                           uint initgrid=40, uint factx=4, uint facty=4,uint factz=4);
