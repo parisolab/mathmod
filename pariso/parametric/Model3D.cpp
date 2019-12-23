@@ -1570,7 +1570,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         {
             if(components != nullptr)
             {
-                components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
+                components->ParPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
             }
         }
         components->ThereisCND = true;
@@ -1795,10 +1795,11 @@ void Par3D::emitErrorSignal()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbIsoComponent+1)*sizeof(uint));
-    memcpy(copy->IsoPts, origin->IsoPts, (2*NbIsoComponent+1)*sizeof(uint));
-    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbParComponent+1)*sizeof(uint));
-    memcpy(copy->ParPts, origin->ParPts, (2*NbParComponent+1)*sizeof(uint));
+    clear(copy);
+    copy->IsoPositions = origin->IsoPositions;
+    copy->IsoPts       = origin->IsoPts;
+    copy->ParPositions = origin->ParPositions;
+    copy->ParPts       = origin->ParPts;
 
     copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
     copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
@@ -1821,7 +1822,14 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->NbTrianglesBorderCND    = origin->NbTrianglesBorderCND;
 }
 
-//*************************
+void Par3D::clear(struct ComponentInfos *cp)
+{
+    cp->IsoPts.clear();
+    cp->ParPts.clear();
+    cp->IsoPositions.clear();
+    cp->ParPositions.clear();
+}
+
 void  Par3D::ParamBuild(
     float **NormVertexTabPt,
     float **ExtraDimensionPt,
@@ -1841,6 +1849,7 @@ void  Par3D::ParamBuild(
         NbVertexTmp = uint(NormVertexTabVector.size()/10);
         NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
     */
+    clear(components);
     NormVertexTabVector.clear();
     IndexPolyTabMinVector.clear();
     IndexPolyTabVector.clear();
@@ -1879,8 +1888,8 @@ void  Par3D::ParamBuild(
         // Save Number of Polys and vertex :
         if(components != nullptr)
         {
-            components->ParPts[2*fctnb    ] = NbVertexTmp;
-            components->ParPts[2*fctnb  +1] = NbVertexTmp + (Ugrid)*(Vgrid)  -1;
+            components->ParPts.push_back(NbVertexTmp);
+            components->ParPts.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
         }
 
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
@@ -1930,9 +1939,9 @@ void  Par3D::ParamBuild(
         make_PolyIndexTri(NbVertexTmp);
         if(components != nullptr)
         {
-            components->Parametricpositions[3*fctnb  ] = 6*NextPosition; //save the starting position of this component
-            components->Parametricpositions[3*fctnb+1] = 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1); //save the number of Polygones of this component
-            components->Parametricpositions[3*fctnb+2] = NbVertexTmp;
+            components->ParPositions.push_back(6*NextPosition); //save the starting position of this component
+            components->ParPositions.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
+            components->ParPositions.push_back(NbVertexTmp);
         }
 
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);

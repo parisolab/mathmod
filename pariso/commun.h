@@ -132,12 +132,12 @@ enum ScriptErrorType
 };
 struct  ComponentInfos
 {
+    std::vector<uint> IsoPositions;
+    std::vector<uint> IsoPts;
+    std::vector<uint> ParPositions;
+    std::vector<uint> ParPts;
     uint NbIso=0;
     uint NbParametric=0;
-    uint *IsoPositions;
-    uint *IsoPts;
-    uint *Parametricpositions;
-    uint *ParPts;
     int selectedComponent;
     bool ThereisCND=false;
     bool ThereisRGBA=false;

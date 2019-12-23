@@ -542,9 +542,9 @@ static void DrawParametric (ObjectProperties *scene)
         else
             glDrawElements(
                 GL_TRIANGLES,
-                3*int(scene->componentsinfos.Parametricpositions[3*i+1]),
+                3*int(scene->componentsinfos.ParPositions[3*i+1]),
                 GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[scene->componentsinfos.Parametricpositions[3*i]])
+                &(scene->PolyIndices_localPt[scene->componentsinfos.ParPositions[3*i]])
             );
     }
 

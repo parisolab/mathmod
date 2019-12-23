@@ -1544,10 +1544,11 @@ void Iso3D::stopcalculations(bool calculation)
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    memcpy(copy->IsoPositions, origin->IsoPositions, (2*NbIsoComponent+1)*sizeof(uint));
-    memcpy(copy->IsoPts, origin->IsoPts, (2*NbIsoComponent+1)*sizeof(uint));
-    memcpy(copy->Parametricpositions, origin->Parametricpositions, (3*NbParComponent+1)*sizeof(uint));
-    memcpy(copy->ParPts, origin->ParPts, (2*NbParComponent+1)*sizeof(uint));
+    clear(copy);
+    copy->IsoPositions = origin->IsoPositions;
+    copy->IsoPts       = origin->IsoPts;
+    copy->ParPositions = origin->ParPositions;
+    copy->ParPts       = origin->ParPts;
 
     copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
     copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
@@ -1569,6 +1570,14 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->NbTrianglesNotVerifyCND = origin->NbTrianglesNotVerifyCND;
     copy->NbTrianglesBorderCND    = origin->NbTrianglesBorderCND;
 }
+
+void Iso3D::clear(struct ComponentInfos *cp)
+{
+    cp->IsoPts.clear();
+    cp->ParPts.clear();
+    cp->IsoPositions.clear();
+    cp->ParPositions.clear();
+}
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,
@@ -1589,6 +1598,7 @@ void Iso3D::IsoBuild (
     NbVertexTmp = uint(NormVertexTabVector.size()/10);
     NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
     */
+    clear(components);
     NormVertexTabVector.clear();
     IndexPolyTabVector.clear();
     IndexPolyTabMinVector.clear();
@@ -1720,11 +1730,11 @@ void Iso3D::IsoBuild (
         // Save the Index:
         if(components != nullptr)
         {
-            components->IsoPositions[2*fctnb    ] = 3*NbTriangleIsoSurfaceTmp; //save the starting position of this component
-            components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurface;      //save the number of triangles of this component
+            components->IsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
+            components->IsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
 
-            components->IsoPts[2*fctnb    ] = NbVertexTmp;
-            components->IsoPts[2*fctnb  +1] = NbVertexTmp + NbPointIsoMap -1;
+            components->IsoPts.push_back(NbVertexTmp);
+            components->IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
         }
 
         for (uint i=0; i < NbTriangleIsoSurface ; ++i)
