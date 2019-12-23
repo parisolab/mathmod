@@ -106,7 +106,7 @@ public :
     double *x_Step, *y_Step, *z_Step;
     std::vector<uint> grid;
     double Octaves, Lacunarity, Gain;
-    ImplicitStructure *ImplicitStructs;
+    std::vector<ImplicitStructure> ImplicitStructs;
 public :
     void DeleteMasterParsers();
     void AllocateMasterParsers();

@@ -157,7 +157,6 @@ void IsoMasterThread::IsoMasterTable(uint nbcomp, uint maxgrid)
     x_Step       = new double[nbcomp];
     y_Step       = new double[nbcomp];
     z_Step       = new double[nbcomp];
-    ImplicitStructs = new ImplicitStructure[nbcomp];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
@@ -185,7 +184,7 @@ IsoMasterThread::~IsoMasterThread()
     delete[] x_Step;
     delete[] y_Step;
     delete[] z_Step;
-    delete[] ImplicitStructs;
+    //delete[] ImplicitStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
     grid.clear();
@@ -1367,6 +1366,7 @@ void IsoMasterThread::DeleteMasterParsers()
         ParsersAllocated = false;
     }
 
+    ImplicitStructs.clear();
     SliderValues.clear();
     SliderNames.clear();
     Consts.clear();
@@ -1471,6 +1471,9 @@ void IsoMasterThread::AllocateMasterParsers()
         yInfParser = new FunctionParser[ImplicitFunctionSize];
         zInfParser = new FunctionParser[ImplicitFunctionSize];
         IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
+
+
+        ImplicitStructs.resize(ImplicitFunctionSize);
 
         if(!functnotnull)
             FunctSize = 0;
@@ -1636,7 +1639,8 @@ void Iso3D::IsoBuild (
             emitUpdateMessageSignal();
         }
 
-        Setgrid(masterthread->grid[fctnb]);
+        if(masterthread->gridnotnull)
+            Setgrid(masterthread->grid[fctnb]);
 
         IsoComponentId = fctnb;
         masterthread->CurrentIso = fctnb;
