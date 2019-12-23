@@ -46,24 +46,10 @@ ObjectParameters::ObjectParameters()
     objectproperties.view_rotz      = 1.0;
     objectproperties.IndexCurrentFormula = -1;
 
-    objectproperties.IsoColorliste          = new uint[NbIsoComponent];
-    objectproperties.ParColorliste          = new uint[NbParComponent];
-    objectproperties.FillIsoliste           = new uint[NbIsoComponent];
-    objectproperties.FillParliste           = new uint[NbParComponent];
-    objectproperties.CNDverifyIsoliste      = new uint[NbIsoComponent];
-    objectproperties.CNDverifyParliste      = new uint[NbParComponent];
-    objectproperties.CNDnotverifyIsoliste   = new uint[NbIsoComponent];
-    objectproperties.CNDnotverifyParliste   = new uint[NbParComponent];
-
-    objectproperties.frontcols    = new float[4*std::max(NbParComponent,NbIsoComponent)];
-    objectproperties.backcols     = new float[4*std::max(NbParComponent,NbIsoComponent)];
-    objectproperties.frontcolsPar = new float[4*std::max(NbParComponent,NbIsoComponent)];
-    objectproperties.backcolsPar  = new float[4*std::max(NbParComponent,NbIsoComponent)];
-
-    objectproperties.red[0]   = 1.0;
-    objectproperties.red[1]   = 0.0;
-    objectproperties.red[2]   = 0.0;
-    objectproperties.red[3]   = 1.0;
+    objectproperties.frontcols    = new float[40];
+    objectproperties.backcols     = new float[40];
+    objectproperties.frontcolsPar = new float[40];
+    objectproperties.backcolsPar  = new float[40];
 
     objectproperties.gridcol[0]   = StaticColor[8];
     objectproperties.gridcol[1]   = StaticColor[9];
@@ -73,8 +59,6 @@ ObjectParameters::ObjectParameters()
     objectproperties.groundcol[1] = StaticColor[13];
     objectproperties.groundcol[2] = StaticColor[14];
     objectproperties.groundcol[3] = 1.0;
-
-    //objectproperties.specReflection[0] = objectproperties.specReflection[1] = objectproperties.specReflection[2] = 0.2; objectproperties.specReflection[3] = 1.0;
 
     objectproperties.backcol[0]   = objectproperties.backcols[0]   = objectproperties.backcolsPar[0]   = 0.2f;
     objectproperties.backcol[1]   = objectproperties.backcols[1]   = objectproperties.backcolsPar[1]   = 0.8f;
@@ -151,8 +135,8 @@ ObjectParameters::ObjectParameters()
     objectproperties.frontcols[4*4+2] = objectproperties.frontcolsPar[4*4+2] = 0.3f;
     objectproperties.frontcols[4*4+3] = objectproperties.frontcolsPar[4*4+3] = 1.0f;
 
-    objectproperties.frontcols[5*4+0] = objectproperties.frontcolsPar[5*4+0] = 0.1f;
-    objectproperties.frontcols[5*4+1] = objectproperties.frontcolsPar[5*4+1] = 0.2f;
+    objectproperties.frontcols[5*4+0] = objectproperties.frontcolsPar[5*4+0] = 0.4f;
+    objectproperties.frontcols[5*4+1] = objectproperties.frontcolsPar[5*4+1] = 0.4f;
     objectproperties.frontcols[5*4+2] = objectproperties.frontcolsPar[5*4+2] = 0.9f;
     objectproperties.frontcols[5*4+3] = objectproperties.frontcolsPar[5*4+3] = 1.0f;
 
@@ -176,19 +160,6 @@ ObjectParameters::ObjectParameters()
     objectproperties.frontcols[9*4+2] = objectproperties.frontcolsPar[9*4+2] = 0.3f;
     objectproperties.frontcols[9*4+3] = objectproperties.frontcolsPar[9*4+3] = 1.0f;
 
-    uint step = 4;
-    for(uint i=step; i<std::max(NbParComponent,NbIsoComponent); i++)
-    {
-        objectproperties.frontcols[i*4+0] = objectproperties.frontcolsPar[i*4+0] = objectproperties.frontcolsPar[(i%step)*4+0];
-        objectproperties.frontcols[i*4+1] = objectproperties.frontcolsPar[i*4+1] = objectproperties.frontcolsPar[(i%step)*4+1];
-        objectproperties.frontcols[i*4+2] = objectproperties.frontcolsPar[i*4+2] = objectproperties.frontcolsPar[(i%step)*4+2];
-        objectproperties.frontcols[i*4+3] = objectproperties.frontcolsPar[i*4+3] = 1;
-
-        objectproperties.backcols[i*4+0] = objectproperties.backcolsPar[i*4+0] = objectproperties.backcolsPar[(i%step)*4+0];
-        objectproperties.backcols[i*4+1] = objectproperties.backcolsPar[i*4+1] = objectproperties.backcolsPar[(i%step)*4+1];
-        objectproperties.backcols[i*4+2] = objectproperties.backcolsPar[i*4+2] = objectproperties.backcolsPar[(i%step)*4+2];
-        objectproperties.backcols[i*4+3] = objectproperties.backcolsPar[i*4+3] = 1;
-    }
     objectproperties.border              = 1;
     objectproperties.mesh                = 1;
     objectproperties.activarecnd         = true;

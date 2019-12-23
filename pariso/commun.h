@@ -219,14 +219,6 @@ struct  ObjectProperties
     uint   MeshIsoliste;
     uint   MeshIsoMinimalTopliste;
     uint   MeshParliste;
-    uint   *IsoColorliste;
-    uint   *ParColorliste;
-    uint   *FillIsoliste;
-    uint   *FillParliste;
-    uint   *CNDverifyIsoliste;
-    uint   *CNDverifyParliste;
-    uint   *CNDnotverifyIsoliste;
-    uint   *CNDnotverifyParliste;
     float  specReflection[4];
     int    threads[3];
     int    shininess;
@@ -234,10 +226,8 @@ struct  ObjectProperties
     float  backcol[4];
     float  *frontcols;
     float  *backcols;
-
     float  *frontcolsPar;
     float  *backcolsPar;
-    float red[4];
     float  gridcol[4];
     float  groundcol[4];
     float  polyfactor;
