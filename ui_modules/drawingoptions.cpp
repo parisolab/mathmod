@@ -743,12 +743,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         QObj = Jobj["Param3D"].toObject();
         // Fx
         NbFx = (QObj["Fx"].toArray()).size();
-        if(NbFx > Parameters->NbParComponent || NbFx == 0)
-        {
-            scriptErrorType = FX_OUT_OF_RANGE;
-            ErrorMsg();
-            return false;
-        }
         // Fy
         if((QObj["Fy"].toArray()).size() != NbFx)
         {

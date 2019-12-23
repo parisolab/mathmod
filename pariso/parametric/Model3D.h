@@ -49,7 +49,7 @@ class ParWorkerThread : public QThread, public ParisoObject
 public :
     uint MyIndex, WorkerThreadsNumber, Ugrid, Vgrid;
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
-    double  *v_inf, *v_sup,*u_inf,*u_sup,*dif_v,*dif_u;
+    std::vector<double>  v_inf, v_sup,u_inf,u_sup,dif_v,dif_u;
     double stepMorph, pace;
     int activeMorph, param4D;
     uint iStart, iFinish;
@@ -142,7 +142,7 @@ public:
     ScriptErrorType messageerror;
     QString message;
 public:
-    Par3D(uint nbThreads, uint nbGrid, uint nbparcomp);
+    Par3D(uint nbThreads, uint nbGrid);
     ~Par3D()  override;
     void rotation4();
     void calcul_points4(uint idx=0);
@@ -150,7 +150,7 @@ public:
     void project_4D_to_3D(uint idx=0);
     void Invert_boite_englobante4D(uint idx=0);
     void boite_englobante4D(uint index=0);
-    void initialiser_parametres(uint, uint, uint);
+    void initialiser_parametres(uint, uint);
     void initialiser_LineColumn(uint, uint);
     void calcul_Norm(uint i=0);
     void make_PolyIndexTri(uint p=0);

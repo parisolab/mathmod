@@ -39,7 +39,6 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     GlwinH=700;
     IsoMaxGrid=80;
     ParMaxGrid=300;
-    NbParComponent = 10;
     InitParGrid=50;
     InitIsoGrid=40;
     dotsymbol =".";
@@ -466,9 +465,6 @@ void Parametersoptions::LoadConfig(QApplication &app,int argc, char *argv[])
 
             if((IsoParam)["ParMaxGrid"].isDouble())
                 ParMaxGrid = ((IsoParam)["ParMaxGrid"]).toInt();
-
-            if((IsoParam)["NbParComponent"].isDouble())
-                NbParComponent= (IsoParam)["NbParComponent"].toInt();
 
             if((IsoParam)["InitParGrid"].isDouble())
                 InitParGrid= (IsoParam)["InitParGrid"].toInt();

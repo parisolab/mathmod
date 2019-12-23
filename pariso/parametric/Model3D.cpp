@@ -78,23 +78,27 @@ ParWorkerThread::ParWorkerThread()
     stepMorph = 0;
     pace = 1.0/30.0;
     ParsersAllocated = false;
+    /*
     v_inf = new double[NbParComponent];
     u_inf = new double[NbParComponent];
     v_sup = new double[NbParComponent];
     u_sup = new double[NbParComponent];
     dif_v = new double[NbParComponent];
     dif_u = new double[NbParComponent];
+    */
 }
 
 //++++++++++++++++++++++++++++++++++++
 ParWorkerThread::~ParWorkerThread()
 {
+    /*
     delete[] u_inf;
     delete[] v_inf;
     delete[] u_sup;
     delete[] v_sup;
     delete[] dif_u;
     delete[] dif_v;
+    */
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -135,9 +139,9 @@ ParMasterThread::ParMasterThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-Par3D::Par3D(uint nbThreads, uint nbGrid, uint nbparcomp)
+Par3D::Par3D(uint nbThreads, uint nbGrid)
 {
-    initialiser_parametres(nbThreads, nbGrid, nbparcomp);
+    initialiser_parametres(nbThreads, nbGrid);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -152,11 +156,10 @@ void ParWorkerThread::ParCompute(uint fctnb, uint idx)
     calcul_objet(fctnb, idx);
 }
 //+++++++++++++++++++++++++++++++++++++++++
-void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid, uint nbparcomp)
+void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
 {
     Ugrid = nbGrid;
     Vgrid = nbGrid;
-    NbParComponent = nbparcomp;
     CutV = CutU = 0;
     tetazw = tetaxy =  tetaxz = tetayz = tetaxw = tetayw =  0;
     tetazw_ok = tetaxy_ok =  tetaxz_ok = tetayz_ok = tetaxw_ok = tetayw_ok =  param4D = -1;
@@ -379,6 +382,12 @@ void ParMasterThread::AllocateParsersForMasterThread()
         ParConditionParser  = new FunctionParser[expression_XSize];
 
         ParamStructs.resize(expression_XSize);
+        v_inf.resize(expression_XSize);
+        v_sup.resize(expression_XSize);
+        u_inf.resize(expression_XSize);
+        u_sup.resize(expression_XSize);
+        dif_v.resize(expression_XSize);
+        dif_u.resize(expression_XSize);
 
         if(!functnotnull)
             FunctSize = 0;
@@ -444,6 +453,12 @@ void ParMasterThread::DeleteMasterParsers()
     }
 
     ParamStructs.clear();
+    v_inf.clear();
+    v_sup.clear();
+    u_inf.clear();
+    u_sup.clear();
+    dif_v.clear();
+    dif_u.clear();
     SliderValues.clear();
     SliderNames.clear();
     Rgbts.clear();
@@ -959,14 +974,15 @@ ErrorMessage Par3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint i=0; i< masterthread->expression_XSize; i++)
-        {
-            workerthreads[nbthreads].dif_u[i] = masterthread->dif_u[i];
-            workerthreads[nbthreads].dif_v[i] = masterthread->dif_v[i];
-            workerthreads[nbthreads].u_inf[i] = masterthread->u_inf[i];
-            workerthreads[nbthreads].v_inf[i] = masterthread->v_inf[i];
-            workerthreads[nbthreads].param4D  = masterthread->param4D;
-        }
+        workerthreads[nbthreads].dif_u.clear();
+        workerthreads[nbthreads].dif_u = masterthread->dif_u;
+        workerthreads[nbthreads].dif_v.clear();
+        workerthreads[nbthreads].dif_v = masterthread->dif_v;
+        workerthreads[nbthreads].u_inf.clear();
+        workerthreads[nbthreads].u_inf = masterthread->u_inf;
+        workerthreads[nbthreads].v_inf.clear();
+        workerthreads[nbthreads].v_inf = masterthread->v_inf;
+        workerthreads[nbthreads].param4D  = masterthread->param4D;
     }
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)

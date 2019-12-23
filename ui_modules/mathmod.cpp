@@ -25,12 +25,12 @@ MathMod::~MathMod()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 MathMod::MathMod(QWidget *parent, uint gridmax,
-                 uint nbparcomponent, uint nbthreads, uint initparGrid, uint initisoGrid, uint FactX, uint FactY, uint FactZ)
+                 uint nbthreads, uint initparGrid, uint initisoGrid, uint FactX, uint FactY, uint FactZ)
     : QWidget(parent)
 {
     ui.setupUi(this);
     xyzactivated = uvactivated = uvactivated4D= 1;
-    if((ui.glWidget)->memoryallocation(gridmax, nbparcomponent,
+    if((ui.glWidget)->memoryallocation(gridmax,
                                        nbthreads, initparGrid, initisoGrid, FactX, FactY, FactZ)!=1)
         exit(0);
 }
