@@ -103,7 +103,7 @@ public :
     int IsoConditionRequired,
         ConditionSize;
     uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
-    double *x_Step, *y_Step, *z_Step;
+    std::vector<double> x_Step, y_Step, z_Step;
     std::vector<uint> grid;
     double Octaves, Lacunarity, Gain;
     std::vector<ImplicitStructure> ImplicitStructs;

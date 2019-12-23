@@ -154,9 +154,9 @@ void IsoMasterThread::IsoMasterTable(uint nbcomp, uint maxgrid)
     xLocal2 = new double[nbcomp*maxgrid];
     yLocal2 = new double[nbcomp*maxgrid];
     zLocal2 = new double[nbcomp*maxgrid];
-    x_Step       = new double[nbcomp];
-    y_Step       = new double[nbcomp];
-    z_Step       = new double[nbcomp];
+    //x_Step       = new double[nbcomp];
+    //y_Step       = new double[nbcomp];
+    //z_Step       = new double[nbcomp];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
@@ -181,9 +181,9 @@ IsoMasterThread::~IsoMasterThread()
         ParsersAllocated = false;
     }
 
-    delete[] x_Step;
-    delete[] y_Step;
-    delete[] z_Step;
+    //delete[] x_Step;
+    //delete[] y_Step;
+    //delete[] z_Step;
     //delete[] ImplicitStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
@@ -1367,6 +1367,7 @@ void IsoMasterThread::DeleteMasterParsers()
     }
 
     ImplicitStructs.clear();
+    x_Step.clear(); y_Step.clear(); z_Step.clear();
     SliderValues.clear();
     SliderNames.clear();
     Consts.clear();
@@ -1474,6 +1475,9 @@ void IsoMasterThread::AllocateMasterParsers()
 
 
         ImplicitStructs.resize(ImplicitFunctionSize);
+        x_Step.resize(ImplicitFunctionSize);
+        y_Step.resize(ImplicitFunctionSize);
+        z_Step.resize(ImplicitFunctionSize);
 
         if(!functnotnull)
             FunctSize = 0;
