@@ -1341,15 +1341,6 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*NbMaxGrid+i] = xLocal2[IsoIndex*NbMaxGrid+i-1] - x_Step[IsoIndex];
         for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*NbMaxGrid+j] = yLocal2[IsoIndex*NbMaxGrid+j-1] - y_Step[IsoIndex];
         for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*NbMaxGrid+k] = zLocal2[IsoIndex*NbMaxGrid+k-1] - z_Step[IsoIndex];
-
-        std::string stringtoparse=ImplicitStructs[IsoIndex].fxyz    +
-                                  ImplicitStructs[IsoIndex].cnd  +
-                                  ImplicitStructs[IsoIndex].xmax  +
-                                  ImplicitStructs[IsoIndex].ymax  +
-                                  ImplicitStructs[IsoIndex].zmax  +
-                                  ImplicitStructs[IsoIndex].xmin   +
-                                  ImplicitStructs[IsoIndex].ymin   +
-                                  ImplicitStructs[IsoIndex].zmin;
     }
     return stdError;
 }
