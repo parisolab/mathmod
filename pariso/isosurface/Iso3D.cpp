@@ -149,14 +149,8 @@ IsoMasterThread::IsoMasterThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void IsoMasterThread::IsoMasterTable(uint nbcomp, uint maxgrid)
+void IsoMasterThread::IsoMasterTable()
 {
-    //xLocal2 = new double[nbcomp*maxgrid];
-    //yLocal2 = new double[nbcomp*maxgrid];
-    //zLocal2 = new double[nbcomp*maxgrid];
-    //x_Step       = new double[nbcomp];
-    //y_Step       = new double[nbcomp];
-    //z_Step       = new double[nbcomp];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
@@ -229,11 +223,8 @@ IsoWorkerThread::IsoWorkerThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::IsoWorkerTable(uint nbcomp, uint maxgrid)
+void IsoWorkerThread::IsoWorkerTable()
 {
-    //xLocal2 = new double[nbcomp*maxgrid];
-    //yLocal2 = new double[nbcomp*maxgrid];
-    //zLocal2 = new double[nbcomp*maxgrid];
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -256,7 +247,7 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     WorkerThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
     for(uint i=0; i+1<WorkerThreadsNumber; i++)
-        workerthreadstmp[i].IsoWorkerTable(NbIsoComponent, NbMaxGrid);
+        workerthreadstmp[i].IsoWorkerTable();
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
     for(uint i=0; i+1<OldWorkerThreadsNumber; i++)
@@ -437,10 +428,10 @@ Iso3D::Iso3D( uint nbmaxgrid,
     Xgrid = Ygrid = Zgrid = nbGrid;
     WorkerThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
-    masterthread->IsoMasterTable(NbCompo, nbmaxgrid);
+    masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
     for(uint i=0; i+1<WorkerThreadsNumber; i++)
-        workerthreads[i].IsoWorkerTable(NbCompo, nbmaxgrid);
+        workerthreads[i].IsoWorkerTable();
 
     masterthread->Xgrid = Xgrid;
     masterthread->Ygrid = Ygrid;
