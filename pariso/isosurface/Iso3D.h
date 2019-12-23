@@ -104,7 +104,7 @@ public :
         ConditionSize;
     uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
     double *x_Step, *y_Step, *z_Step;
-    uint *grid;
+    std::vector<uint> grid;
     double Octaves, Lacunarity, Gain;
     ImplicitStructure *ImplicitStructs;
 public :

@@ -1334,8 +1334,9 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(const QJsonObject &QObj, Opti
          case ISO_GRID :
             if(argnotnull)
             {
+                MathmodRef->ui.glWidget->IsoObjet->masterthread->grid.clear();
                 for(int j=0; j < lst.size(); j++)
-                        MathmodRef->ui.glWidget->IsoObjet->masterthread->grid[j] = (lst[j].toString()).toUInt();
+                        MathmodRef->ui.glWidget->IsoObjet->masterthread->grid.push_back((lst[j].toString()).toUInt());
                 MathmodRef->ui.glWidget->IsoObjet->masterthread->Grid = result.toStdString();
                 MathmodRef->RootObjet.CurrentTreestruct.Grid = result.split(";", QString::SkipEmptyParts);
             }
