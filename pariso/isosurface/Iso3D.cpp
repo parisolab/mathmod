@@ -151,9 +151,9 @@ IsoMasterThread::IsoMasterThread()
 //+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::IsoMasterTable(uint nbcomp, uint maxgrid)
 {
-    xLocal2 = new double[nbcomp*maxgrid];
-    yLocal2 = new double[nbcomp*maxgrid];
-    zLocal2 = new double[nbcomp*maxgrid];
+    //xLocal2 = new double[nbcomp*maxgrid];
+    //yLocal2 = new double[nbcomp*maxgrid];
+    //zLocal2 = new double[nbcomp*maxgrid];
     //x_Step       = new double[nbcomp];
     //y_Step       = new double[nbcomp];
     //z_Step       = new double[nbcomp];
@@ -212,9 +212,9 @@ IsoWorkerThread::~IsoWorkerThread()
         delete[] Fct;
         ParsersAllocated = false;
     }
-    delete[] xLocal2;
-    delete[] yLocal2;
-    delete[] zLocal2;
+    //delete[] xLocal2;
+    //delete[] yLocal2;
+    //delete[] zLocal2;
 }
 
 IsoWorkerThread::IsoWorkerThread()
@@ -231,9 +231,9 @@ IsoWorkerThread::IsoWorkerThread()
 //+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::IsoWorkerTable(uint nbcomp, uint maxgrid)
 {
-    xLocal2 = new double[nbcomp*maxgrid];
-    yLocal2 = new double[nbcomp*maxgrid];
-    zLocal2 = new double[nbcomp*maxgrid];
+    //xLocal2 = new double[nbcomp*maxgrid];
+    //yLocal2 = new double[nbcomp*maxgrid];
+    //zLocal2 = new double[nbcomp*maxgrid];
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -284,9 +284,15 @@ ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
+        /*memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
         memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
+        memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));*/
+        workerthreads[nbthreads].xLocal2.clear();
+        workerthreads[nbthreads].xLocal2 = masterthread->xLocal2;
+        workerthreads[nbthreads].yLocal2.clear();
+        workerthreads[nbthreads].yLocal2 = masterthread->yLocal2;
+        workerthreads[nbthreads].zLocal2.clear();
+        workerthreads[nbthreads].zLocal2 = masterthread->zLocal2;
         workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
         workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
@@ -1367,7 +1373,12 @@ void IsoMasterThread::DeleteMasterParsers()
     }
 
     ImplicitStructs.clear();
-    x_Step.clear(); y_Step.clear(); z_Step.clear();
+    xLocal2.clear();
+    yLocal2.clear();
+    zLocal2.clear();
+    x_Step.clear();
+    y_Step.clear();
+    z_Step.clear();
     SliderValues.clear();
     SliderNames.clear();
     Consts.clear();
@@ -1472,9 +1483,10 @@ void IsoMasterThread::AllocateMasterParsers()
         yInfParser = new FunctionParser[ImplicitFunctionSize];
         zInfParser = new FunctionParser[ImplicitFunctionSize];
         IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
-
-
         ImplicitStructs.resize(ImplicitFunctionSize);
+        xLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
+        yLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
+        zLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
         x_Step.resize(ImplicitFunctionSize);
         y_Step.resize(ImplicitFunctionSize);
         z_Step.resize(ImplicitFunctionSize);
