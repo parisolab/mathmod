@@ -65,7 +65,6 @@ public:
     int Shininess;
     int IsoMaxGrid;
     int ParMaxGrid;
-    int NbIsoComponent;
     int NbParComponent;
     int InitParGrid;
     int InitIsoGrid;

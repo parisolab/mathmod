@@ -274,7 +274,6 @@ public:
     float lookup(float, float, float);
 };
 
-extern uint NbIsoComponent;
 extern uint NbParComponent;
 extern uint NbMaxGrid;  // Should use the defined value in mathmodconfig.js
 extern uint IsoNbCmp;

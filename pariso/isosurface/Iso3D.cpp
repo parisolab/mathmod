@@ -35,7 +35,6 @@ struct ComponentInfos componentsStr;
 struct ComponentInfos * components=&componentsStr;
 
 uint NbMaxGrid = 100;
-uint NbIsoComponent = 30;
 
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
@@ -223,11 +222,6 @@ IsoWorkerThread::IsoWorkerThread()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void IsoWorkerThread::IsoWorkerTable()
-{
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -246,8 +240,6 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     uint OldWorkerThreadsNumber = WorkerThreadsNumber;
     WorkerThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
-    for(uint i=0; i+1<WorkerThreadsNumber; i++)
-        workerthreadstmp[i].IsoWorkerTable();
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
     for(uint i=0; i+1<OldWorkerThreadsNumber; i++)
@@ -410,7 +402,6 @@ ErrorMessage  Iso3D::parse_expression2()
 
 /// +++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( uint nbmaxgrid,
-              uint NbCompo,
               uint nbThreads,
               uint nbGrid,
               uint factX,
@@ -421,7 +412,6 @@ Iso3D::Iso3D( uint nbmaxgrid,
     OrignbY= factY;
     OrignbZ=factZ;
     Stack_Factor = factX*factY*factZ;
-    NbIsoComponent=NbCompo;
     NbMaxGrid = nbmaxgrid;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
@@ -430,8 +420,6 @@ Iso3D::Iso3D( uint nbmaxgrid,
     masterthread  = new IsoMasterThread();
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
-    for(uint i=0; i+1<WorkerThreadsNumber; i++)
-        workerthreads[i].IsoWorkerTable();
 
     masterthread->Xgrid = Xgrid;
     masterthread->Ygrid = Ygrid;

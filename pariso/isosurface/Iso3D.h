@@ -70,7 +70,6 @@ public :
     void VoxelEvaluation(uint);
     void AllocateParsersForWorkerThread(uint,uint);
     void DeleteWorkerParsers();
-    void IsoWorkerTable();
     void run() Q_DECL_OVERRIDE;
     IsoWorkerThread();
     ~IsoWorkerThread() override;
@@ -139,7 +138,6 @@ public :
     QString message;
 public :
     Iso3D(uint gridmax=NbMaxGrid,
-          uint NbCmp=NbIsoComponent,
           uint nbThreads=6,
           uint nbGrid=40,
           uint factX=4,

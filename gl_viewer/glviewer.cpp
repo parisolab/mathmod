@@ -233,16 +233,14 @@ void OpenGlWidget::CalculateColorsPoints()
     update();
 }
 
-int OpenGlWidget::memoryallocation(uint gridmax,
-                                   uint nbisocomponent,uint nbparcomponent,uint nbthreads,
+int OpenGlWidget::memoryallocation(uint gridmax, uint nbparcomponent,uint nbthreads,
                                    uint initparGrid, uint initisoGrid,
                                    uint FactX, uint FactY, uint FactZ)
 {
     //memoryallocation
     try
     {
-        IsoObjet = new Iso3D(gridmax,nbisocomponent,
-                                       nbthreads, initisoGrid, FactX, FactY, FactZ);
+        IsoObjet = new Iso3D(gridmax,nbthreads, initisoGrid, FactX, FactY, FactZ);
         ParObjet = new Par3D(nbthreads, initparGrid, nbparcomponent);
         LocalScene     = (new ObjectParameters())->objectproperties;
         return 1;

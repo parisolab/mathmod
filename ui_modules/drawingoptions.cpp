@@ -679,12 +679,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         QObj = Jobj["Iso3D"].toObject();
         // Fxyz
         NbFxyz = (QObj["Fxyz"].toArray()).size();
-        if(NbFxyz > Parameters->NbIsoComponent || NbFxyz == 0)
-        {
-            scriptErrorType = FXYZ_OUT_OF_RANGE;
-            ErrorMsg();
-            return false;
-        }
         if((QObj["Xmax"].toArray()).size() != NbFxyz)
         {
             scriptErrorType = XMAX_NBCOMPONENT_MISMATCH;
