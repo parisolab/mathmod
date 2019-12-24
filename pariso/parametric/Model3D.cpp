@@ -23,13 +23,9 @@ static uint NbVertexTmp = 0;
 static std::vector<float>     ExtraDimensionVector;
 static CellNoise *NoiseFunction2 = new CellNoise();
 static ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
-
 static double ParamComponentId=0;
 static double ParamThreadId=0;
-
 static QElapsedTimer ptime;
-
-uint NbParComponent = 30;
 
 double CurrentParamCmpId(const double* p)
 {

@@ -1,15 +1,17 @@
 {
     "Parameters": {
-        "IsoMaxGrid": 300,
-        "InitIsoGrid": 40,
-        "NbIsoComponent": 10,
-
-        "ParMaxGrid": 1000,
-        "InitParGrid": 50,
-        "NbParComponent": 200
+        "IsoMaxGrid": 200,
+        "InitIsoGrid": 40
+        "ParMaxGrid": 5000,
+        "InitParGrid": 50
     },
     "StartOptions": {
         "Model": "CloseIso_1"
+    },
+    "CalculFactorConfig": {
+        "FactX": 4,
+        "FactY": 4,
+        "FactZ": 4
     },
     "WindowPosition": {
         "ControlX": 20,
@@ -36,11 +38,6 @@
         "ThreadsNumber": 4,
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
-    },
-    "CalculFactorConfig": {
-        "FactX": 4,
-        "FactY": 4,
-        "FactZ": 4
     },
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
