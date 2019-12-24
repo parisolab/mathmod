@@ -4380,8 +4380,7 @@ void DrawingOptions::on_Multiplier_clicked()
     ui.zcomboBox->setCurrentIndex(0);
 }
 
-// --------------------------
-void DrawingOptions::UpdateGui(int argc)
+void DrawingOptions::UpdateGuiMaxgrid()
 {
     int maxgrd = int(Parameters->IsoMaxGrid);
     ui.xyzg->blockSignals(true);
@@ -4410,7 +4409,11 @@ void DrawingOptions::UpdateGui(int argc)
     ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
     ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_3->blockSignals(false);
-
+}
+// --------------------------
+void DrawingOptions::UpdateGui(int argc)
+{
+    UpdateGuiMaxgrid();
     ListeModelTexture LstModelTexture =
         (Parameters->LoadCollectionModels(
              JSONMathModels,

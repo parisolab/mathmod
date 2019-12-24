@@ -37,8 +37,8 @@ Parametersoptions::Parametersoptions(QWidget *parent)
     ControlH=700;
     GlwinW=780;
     GlwinH=700;
-    IsoMaxGrid=80;
-    ParMaxGrid=300;
+    IsoMaxGrid=305;
+    ParMaxGrid=505;
     InitParGrid=50;
     InitIsoGrid=40;
     dotsymbol =".";
@@ -102,7 +102,8 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
                                                 "",
                                                 QObject::tr("Json (*.js)"));
     }
-
+    if(JsonFile == "")
+        JsonFile = ":/mathmodconfig.js";
     QFile file(JsonFile);
     //QFileDevice::Permissions p = file.permissions();
     if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
@@ -199,25 +200,14 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & j
 void Parametersoptions::GuiUpdate()
 {
     QJsonObject isoparam = (JConfig)["Parameters"].toObject();
-    //Grid
+    //Iso Grid
     int mg =    (isoparam)["IsoMaxGrid"].toInt();
-    ui.maxgriLabel->setText("IsoMaxGrid="+ QString::number(mg));
+    ui.IsoMaxGridLineEdit->setText(QString::number(mg));
 
-    ui.maxgri->blockSignals(true);
-    ui.maxgri->setValue(mg);
-    ui.maxgri->blockSignals(false);
-    //Triangles
-    mg = (isoparam)["MaxTri"].toInt();
-    ui.maxtriLabel->setText("MaxTri="+ QString::number(mg)+"M");
-    ui.maxtri->blockSignals(true);
-    ui.maxtri->setValue(mg);
-    ui.maxtri->blockSignals(false);
-    //Points
-    mg = (isoparam)["MaxPt"].toInt();
-    ui.maxptLabel->setText("MaxPt="+ QString::number(mg)+"M");
-    ui.maxpt->blockSignals(true);
-    ui.maxpt->setValue(mg);
-    ui.maxpt->blockSignals(false);
+    //Par Grid
+    mg = (isoparam)["ParMaxGrid"].toInt();
+    ui.ParMaxGridLineEdit->setText(QString::number(mg));
+
     //Styles:
     QString Style = ((JConfig["Styles"].toObject())["UsedStyle"].toString());
     ui.comboBox_2->setCurrentText(Style);
@@ -230,37 +220,19 @@ void Parametersoptions::GuiUpdate()
         ui.groupBox->hide();
 }
 
-void Parametersoptions::on_maxgri_valueChanged(int value)
+void Parametersoptions::on_maxisogri_valueChanged(int value)
 {
-    ui.maxgriLabel->setText("IsoMaxGrid="+QString::number(value));
+    IsoMaxGrid = value;
     QJsonObject tmp = JConfig["Parameters"].toObject();
     tmp["IsoMaxGrid"] = value;
     JConfig["Parameters"]= tmp;
 }
 
-void Parametersoptions::on_maxtri_valueChanged(int value)
+void Parametersoptions::on_maxpargri_valueChanged(int value)
 {
-    ui.maxtriLabel->setText("MaxTri="+QString::number(value)+"M");
-    int val = ui.maxpt->value();
-    int MaxParametricGrid = value > val? int(sqrt(val)*10000.0) : int(sqrt(value)*10000.0);
-
-    ui.MaxParametricGrid->setText("MaxParametricGrid = "+QString::number(MaxParametricGrid));
-
+    ParMaxGrid = value;
     QJsonObject tmp = JConfig["Parameters"].toObject();
-    tmp["MaxTri"] = value;
-    JConfig["Parameters"]= tmp;
-}
-
-void Parametersoptions::on_maxpt_valueChanged(int value)
-{
-    ui.maxptLabel->setText("MaxPt="+QString::number(value)+"M");
-
-    int val = ui.maxtri->value();
-    int MaxParametricGrid = value > val? int(sqrt(val)*1000.0) : int(sqrt(value)*1000.0);
-    ui.MaxParametricGrid->setText("MaxParametricGrid = "+QString::number(MaxParametricGrid));
-
-    QJsonObject tmp = JConfig["Parameters"].toObject();
-    tmp["MaxPt"] = value;
+    tmp["ParMaxGrid"] = value;
     JConfig["Parameters"]= tmp;
 }
 
@@ -770,4 +742,14 @@ void Parametersoptions::on_TestConfig_clicked()
         }
         SetStyleAndTheme(*MainApp, style, theme);
     }
+}
+
+void Parametersoptions::on_ApplypushButton_clicked()
+{
+    int maxisogrid=0;
+    int maxpargrid=0;
+    if((maxisogrid = (ui.IsoMaxGridLineEdit->text()).toInt()) != IsoMaxGrid)
+        on_maxisogri_valueChanged(maxisogrid);
+    if((maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) != ParMaxGrid)
+        on_maxpargri_valueChanged(maxpargrid);
 }

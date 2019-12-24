@@ -873,21 +873,20 @@ void Iso3D::ConstructIsoNormale()
 
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
-
         ThreeTimesI      = i*3;
-        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI      ]+ 10*NbVertexTmp +7;
-        IndexSecondPoint = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+1    ]+ 10*NbVertexTmp +7;
-        IndexThirdPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+2    ]+ 10*NbVertexTmp +7;
+        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI  ]+ 10*NbVertexTmp +7;
+        IndexSecondPoint = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+1]+ 10*NbVertexTmp +7;
+        IndexThirdPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+2]+ 10*NbVertexTmp +7;
 
-        pt1_x= NormVertexTabVector[IndexFirstPoint   ];
-        pt1_y= NormVertexTabVector[IndexFirstPoint+1 ];
-        pt1_z= NormVertexTabVector[IndexFirstPoint+2 ];
+        pt1_x= NormVertexTabVector[IndexFirstPoint  ];
+        pt1_y= NormVertexTabVector[IndexFirstPoint+1];
+        pt1_z= NormVertexTabVector[IndexFirstPoint+2];
 
-        pt2_x= NormVertexTabVector[IndexSecondPoint    ];
+        pt2_x= NormVertexTabVector[IndexSecondPoint  ];
         pt2_y= NormVertexTabVector[IndexSecondPoint+1];
         pt2_z= NormVertexTabVector[IndexSecondPoint+2];
 
-        pt3_x= NormVertexTabVector[IndexThirdPoint     ];
+        pt3_x= NormVertexTabVector[IndexThirdPoint   ];
         pt3_y= NormVertexTabVector[IndexThirdPoint+1 ];
         pt3_z= NormVertexTabVector[IndexThirdPoint+2 ];
 
@@ -1566,6 +1565,12 @@ void Iso3D::clear(struct ComponentInfos *cp)
     cp->IsoPositions.clear();
     cp->ParPositions.clear();
 }
+
+void Iso3D::UpdateMaxGrid(int newmaxgrid)
+{
+    NbMaxGrid = uint(newmaxgrid);
+}
+
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,

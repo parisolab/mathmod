@@ -74,23 +74,23 @@ public slots:
     void SetStyleAndTheme(QApplication &, QString, QString);
     void slot_about_clicked();
     void GuiUpdate();
-    void on_maxgri_valueChanged(int value);
-    void on_maxtri_valueChanged(int value);
-    void on_maxpt_valueChanged(int value);
+    void on_maxisogri_valueChanged(int);
+    void on_maxpargri_valueChanged(int);
     void on_loadconfig_clicked();
     void SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject);
     void on_save_clicked();
     void LoadConfig(QApplication &,int argc, char *argv[]);
-    ListeModelTexture LoadCollectionModels(QJsonObject &JIso, jpariso &Jcollection, int argc);
+    ListeModelTexture LoadCollectionModels(QJsonObject &, jpariso &, int);
     bool isFloat(std::string);
-private slots:
-    void on_comboBox_2_activated(const QString &arg1);
-    void on_comboBox_3_activated(const QString &arg1);
-    void on_comboBox_activated(const QString &arg1);
-    void onred_2valueChanged(int value);
-    void ongreen_2valueChanged(int value);
-    void onblue_2valueChanged(int value);
+    void on_comboBox_2_activated(const QString &);
+    void on_comboBox_3_activated(const QString &);
+    void on_comboBox_activated(const QString &);
+    void onred_2valueChanged(int);
+    void ongreen_2valueChanged(int);
+    void onblue_2valueChanged(int);
     void on_TestConfig_clicked();
+    void on_ApplypushButton_clicked();
+
 private:
     Ui::Parametersoptions ui;
 };

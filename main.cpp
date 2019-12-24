@@ -61,6 +61,8 @@ int main(int argc, char *argv[])
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjet, SIGNAL(ErrorSignal(int)), &drawingopt, SLOT(MemoryErrorMsg(int)));
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjet, SIGNAL(UpdateMessageSignal(QString)), drawingopt.ui.Messagetext, SLOT(setText(QString)));
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjet, SIGNAL(UpdateMessageSignal(QString)), drawingopt.ui.Messagetext, SLOT(setText(QString)));
+
+    //QObject::connect( drawingopt.Parameters, SIGNAL(on_maxgri_valueChanged(int)), drawingopt.MathmodRef->ui.glWidget->IsoObjet, SLOT(UpdateMaxGrid(int)));
     drawingopt.show();
     mm.show();
     drawingopt.on_choice_activated(Parameters.model);

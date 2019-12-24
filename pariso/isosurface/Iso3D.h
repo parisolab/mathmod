@@ -150,6 +150,7 @@ public :
     inline uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void clear(struct ComponentInfos *);
+    void UpdateMaxGrid(int);
     void Setgrid(uint);
     void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *, int **);
     void SaveIsoGLMap();

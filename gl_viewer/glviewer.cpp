@@ -956,8 +956,8 @@ void OpenGlWidget::PrintInfos()
 {
     QString nbl="";
     (LocalScene.typedrawing == 1) ?
-    nbl = QString::number(IsoObjet->masterthread->Xgrid-CutX)+"x"+QString::number(IsoObjet->masterthread->Ygrid-CutY)+"x"+QString::number(IsoObjet->masterthread->Zgrid-CutZ) :
-          nbl = QString::number(ParObjet->masterthread->Ugrid-CutU)+"x"+QString::number(ParObjet->masterthread->Vgrid-CutV)+" = "+QString::number((ParObjet->masterthread->Ugrid-CutU)*(ParObjet->masterthread->Vgrid-CutV));
+    nbl = QString::number(Xgrid-CutX)+"x"+QString::number(Ygrid-CutY)+"x"+QString::number(Zgrid-CutZ) :
+          nbl = QString::number(Ugrid-CutU)+"x"+QString::number(Vgrid-CutV)+" = "+QString::number((Ugrid-CutU)*(Vgrid-CutV));
     glDisable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();

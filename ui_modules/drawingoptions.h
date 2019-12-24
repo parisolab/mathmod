@@ -228,6 +228,7 @@ public slots:
     void on_blue_ParIso_valueChanged(int value);
     void Multiplier(int, int, int, QJsonObject &iso, int index =0);
     void UpdateGui(int);
+    void UpdateGuiMaxgrid();
     void ShowSliders(const QJsonObject &);
     void on_actionScreenshot_triggered();
     void on_actionEditor_triggered();
