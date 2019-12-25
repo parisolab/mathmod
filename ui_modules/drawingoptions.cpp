@@ -5464,7 +5464,6 @@ void DrawingOptions::on_TreeViewButton_clicked()
     }
 }
 
-
 void DrawingOptions::on_ApplypushButton_clicked()
 {
     int maxisogrid=0;

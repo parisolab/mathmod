@@ -796,13 +796,3 @@ void Parametersoptions::on_TestConfig_clicked()
         SetStyleAndTheme(*MainApp, style, theme);
     }
 }
-
-void Parametersoptions::on_ApplypushButton_clicked()
-{
-    int maxisogrid=0;
-    int maxpargrid=0;
-    if((maxisogrid = (ui.IsoMaxGridLineEdit->text()).toInt()) != IsoMaxGrid)
-        on_maxisogri_valueChanged(maxisogrid);
-    if((maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) != ParMaxGrid)
-        on_maxpargri_valueChanged(maxpargrid);
-}

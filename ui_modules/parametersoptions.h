@@ -90,8 +90,6 @@ public slots:
     void ongreen_2valueChanged(int);
     void onblue_2valueChanged(int);
     void on_TestConfig_clicked();
-    void on_ApplypushButton_clicked();
-
 public:
     Ui::Parametersoptions ui;
 };
