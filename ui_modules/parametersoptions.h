@@ -75,8 +75,8 @@ public slots:
     void SetStyleAndTheme(QApplication &, QString, QString);
     void slot_about_clicked();
     void GuiUpdate();
-    void on_maxisogri_valueChanged(int);
-    void on_maxpargri_valueChanged(int);
+    void maxisogri_valueChanged(int);
+    void maxpargri_valueChanged(int);
     void on_loadconfig_clicked();
     void SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject);
     void on_save_clicked();

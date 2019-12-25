@@ -5464,11 +5464,10 @@ void DrawingOptions::on_TreeViewButton_clicked()
     }
 }
 
-void DrawingOptions::on_ApplypushButton_clicked()
+void DrawingOptions::ApplypushButton_clicked()
 {
     int maxisogrid=0;
     int maxpargrid=0;
-
     if((maxisogrid = (Parameters->ui.IsoMaxGridLineEdit->text()).toInt()) != Parameters->IsoMaxGrid)
     {
         Parameters->IsoMaxGrid = maxisogrid;

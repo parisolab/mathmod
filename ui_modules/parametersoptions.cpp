@@ -273,7 +273,7 @@ void Parametersoptions::GuiUpdate()
         ui.groupBox->hide();
 }
 
-void Parametersoptions::on_maxisogri_valueChanged(int value)
+void Parametersoptions::maxisogri_valueChanged(int value)
 {
     IsoMaxGrid = value;
     QJsonObject tmp = JConfig["Parameters"].toObject();
@@ -281,7 +281,7 @@ void Parametersoptions::on_maxisogri_valueChanged(int value)
     JConfig["Parameters"]= tmp;
 }
 
-void Parametersoptions::on_maxpargri_valueChanged(int value)
+void Parametersoptions::maxpargri_valueChanged(int value)
 {
     ParMaxGrid = value;
     QJsonObject tmp = JConfig["Parameters"].toObject();

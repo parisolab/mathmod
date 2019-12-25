@@ -348,6 +348,6 @@ private slots:
     void on_actionAnimation_Rotation_triggered();
     void on_actionMorph_use_t_parameter_triggered();
     void on_TreeViewButton_clicked();
-    void on_ApplypushButton_clicked();
+    void ApplypushButton_clicked();
 };
 #endif
