@@ -5463,3 +5463,32 @@ void DrawingOptions::on_TreeViewButton_clicked()
         ui.ObjectClasseCurrent->hide();
     }
 }
+
+
+void DrawingOptions::on_ApplypushButton_clicked()
+{
+    int maxisogrid=0;
+    int maxpargrid=0;
+
+    if((maxisogrid = (Parameters->ui.IsoMaxGridLineEdit->text()).toInt()) != Parameters->IsoMaxGrid)
+    {
+        Parameters->IsoMaxGrid = maxisogrid;
+        MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
+        ui.xyzg->blockSignals(true);
+        ui.xyzg->setMaximum(maxisogrid);
+        ui.xyzg->blockSignals(false);
+    }
+
+    if((maxpargrid = (Parameters->ui.ParMaxGridLineEdit->text()).toInt()) != Parameters->ParMaxGrid)
+    {
+        Parameters->ParMaxGrid = maxpargrid;
+
+        ui.linecolumn_2->blockSignals(true);
+        ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_2->blockSignals(false);
+
+        ui.linecolumn_3->blockSignals(true);
+        ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_3->blockSignals(false);
+    }
+}

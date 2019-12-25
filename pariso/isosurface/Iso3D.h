@@ -150,7 +150,7 @@ public :
     inline uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void clear(struct ComponentInfos *);
-    void UpdateMaxGrid(int);
+    void UpdateMaxGrid(uint);
     void Setgrid(uint);
     void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *, int **);
     void SaveIsoGLMap();
@@ -158,6 +158,7 @@ public :
     uint CNDtoUse(uint index, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);
     void BuildIso();
+    void UpdateNbMaxGrid(int);
     void UpdateThredsNumber(uint);
     void stopcalculations(bool);
     void WorkerThreadCopy(IsoWorkerThread *);

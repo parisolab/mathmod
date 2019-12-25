@@ -89,8 +89,9 @@ void Parametersoptions::SetStyleAndTheme(QApplication & appli, QString style, QS
         appli.setPalette(mypalette);
     }
 }
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
-void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
+void Parametersoptions::ReadConfigFile(QString JsonFile, QJsonObject & js)
 {
     QJsonParseError err;
     QString sortie;
@@ -104,6 +105,60 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
     }
     if(JsonFile == "")
         JsonFile = ":/mathmodconfig.js";
+    QFile file(JsonFile);
+    //QFileDevice::Permissions p = file.permissions();
+    if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(((file.readAll()).trimmed()).replace("\n","").replace("\t","").replace("DOTSYMBOL",dotsymbol.toStdString().c_str()),&err);
+        if (err.error)
+        {
+            QMessageBox message ;
+            message.setWindowTitle("Error at : "+JsonFile);
+            file.close();
+            file.open( QIODevice::ReadOnly | QIODevice::Text );
+            sortie = (file.readAll());
+            int before, after;
+            if(sortie.length() > (err.offset +30))
+                after = 30;
+            else after = sortie.length() - err.offset;
+            sortie.truncate(err.offset +after);
+            if(err.offset-30 > 0)
+                before = 30;
+            else
+                before = 0;
+            sortie = sortie.remove(0,err.offset-before);
+            sortie.replace("\t", " ");
+            sortie.replace("\n", " ");
+            sortie.insert(before, " >>> Error <<< ");
+            message.setText("Error : " + err.errorString() + " at position: " + QString::number(err.offset) + "\n\n***********\n" +
+                            "..." + sortie + "..."
+                           );
+            message.adjustSize () ;
+            message.exec();
+            file.close();
+            return ;
+        }
+        js = doc.object();
+        file.close();
+    }
+    return;
+}
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject & js)
+{
+    QJsonParseError err;
+    QString sortie;
+
+    QFile file1(JsonFile);
+    if ( !file1.exists())
+    {
+        JsonFile = QFileDialog::getOpenFileName(nullptr, QObject::tr("Open mathmodconfig.js File"),
+                                                "",
+                                                QObject::tr("Json (*.js)"));
+    }
+
     QFile file(JsonFile);
     //QFileDevice::Permissions p = file.permissions();
     if (file.open( QIODevice::ReadOnly | QIODevice::Text ) )
@@ -195,8 +250,6 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName, QJsonObject & j
     return;
 }
 
-
-
 void Parametersoptions::GuiUpdate()
 {
     QJsonObject isoparam = (JConfig)["Parameters"].toObject();
@@ -238,7 +291,7 @@ void Parametersoptions::on_maxpargri_valueChanged(int value)
 
 void Parametersoptions::on_loadconfig_clicked()
 {
-    ReadJsonFile(fullpath, JConfig);
+    ReadConfigFile(fullpath, JConfig);
     GuiUpdate();
 }
 

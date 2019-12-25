@@ -133,7 +133,6 @@ ParMasterThread::ParMasterThread()
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
-
 //+++++++++++++++++++++++++++++++++++++++++
 Par3D::Par3D(uint nbThreads, uint nbGrid)
 {
@@ -151,6 +150,7 @@ void ParWorkerThread::ParCompute(uint fctnb, uint idx)
 {
     calcul_objet(fctnb, idx);
 }
+
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
 {

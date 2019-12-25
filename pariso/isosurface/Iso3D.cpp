@@ -400,7 +400,18 @@ ErrorMessage  Iso3D::parse_expression2()
     return NodError;
 }
 
-/// +++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++
+void Iso3D::UpdateMaxGrid(uint newNbMaxgrid)
+{
+    NbMaxGrid = newNbMaxgrid;
+    masterthread->maximumgrid = newNbMaxgrid;
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        workerthreads[nbthreads].maximumgrid = newNbMaxgrid;
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( uint nbmaxgrid,
               uint nbThreads,
               uint nbGrid,
@@ -1558,6 +1569,7 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->NbTrianglesBorderCND    = origin->NbTrianglesBorderCND;
 }
 
+//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::clear(struct ComponentInfos *cp)
 {
     cp->IsoPts.clear();
@@ -1566,12 +1578,7 @@ void Iso3D::clear(struct ComponentInfos *cp)
     cp->ParPositions.clear();
 }
 
-void Iso3D::UpdateMaxGrid(int newmaxgrid)
-{
-    NbMaxGrid = uint(newmaxgrid);
-}
-
-///+++++++++++++++++++++++++++++++++++++++++
+//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,
     uint **IndexPolyTabPt,

@@ -69,6 +69,7 @@ public:
     int InitIsoGrid;
 
 public slots:
+    void ReadConfigFile(QString, QJsonObject &);
     void ReadJsonFile(QString, QJsonObject &);
     void ReadCollectionFile(QString, QJsonObject &);
     void SetStyleAndTheme(QApplication &, QString, QString);
@@ -91,7 +92,7 @@ public slots:
     void on_TestConfig_clicked();
     void on_ApplypushButton_clicked();
 
-private:
+public:
     Ui::Parametersoptions ui;
 };
 
