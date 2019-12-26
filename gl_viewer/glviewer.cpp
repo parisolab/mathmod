@@ -274,9 +274,9 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
         {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
-                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+3 + 4]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[10*i+4 + 4]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[10*i+5 + 4]<<"  "\
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+7]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+8]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+9]<<"  "\
                          <<LocalScene.ArrayNorVer_localPt[10*i  ]<<"  "\
                          <<LocalScene.ArrayNorVer_localPt[10*i+1]<<"  "\
                          <<LocalScene.ArrayNorVer_localPt[10*i+2]<<"\n";
@@ -286,9 +286,9 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
         {
             for (i=0; i< LocalScene.VertxNumber; i++)
             {
-                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+3 + 4]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[10*i+4 + 4]<<"  "\
-                         <<LocalScene.ArrayNorVer_localPt[10*i+5 + 4]<<"\n";
+                (stream) <<"v "<<LocalScene.ArrayNorVer_localPt[10*i+7]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+8]<<"  "\
+                         <<LocalScene.ArrayNorVer_localPt[10*i+9]<<"\n";
             }
         }
 
@@ -304,6 +304,7 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
                 startpl++;
             }
             (stream) <<"\n";
+            i+=polysize;
         }
     }
 }
@@ -421,10 +422,18 @@ void OpenGlWidget::PutObjectInsideCube()
 
     for (uint i=0; i< LocalScene.VertxNumber; i++)
     {
-        LocalScene.ArrayNorVer_localPt[10*i+3 + 4] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+3 + 4]) + decalage_xo)/difMaximum);
-        LocalScene.ArrayNorVer_localPt[10*i+4 + 4] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+4 + 4]) + decalage_yo)/difMaximum);
-        LocalScene.ArrayNorVer_localPt[10*i+5 + 4] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+5 + 4]) + decalage_zo)/difMaximum);
+        LocalScene.ArrayNorVer_localPt[10*i+7] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+7]) + decalage_xo)/difMaximum);
+        LocalScene.ArrayNorVer_localPt[10*i+8] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+8]) + decalage_yo)/difMaximum);
+        LocalScene.ArrayNorVer_localPt[10*i+9] = float(hauteur_fenetre*(double(LocalScene.ArrayNorVer_localPt[10*i+9]) + decalage_zo)/difMaximum);
     }
+    /*
+    for (uint i=0; i< LocalScene.VertxNumber; i++)
+    {
+        LocalScene.ArrayNorVer_localPt[10*i+7] = float(double(LocalScene.ArrayNorVer_localPt[10*i+7])*(difMaximum/hauteur_fenetre) - decalage_xo);
+        LocalScene.ArrayNorVer_localPt[10*i+8] = float(double(LocalScene.ArrayNorVer_localPt[10*i+8])*(difMaximum/hauteur_fenetre) - decalage_yo);
+        LocalScene.ArrayNorVer_localPt[10*i+9] = float(double(LocalScene.ArrayNorVer_localPt[10*i+9])*(difMaximum/hauteur_fenetre) - decalage_zo);
+    }
+    */
 }
 
 void OpenGlWidget::mouseReleaseEvent( QMouseEvent *)
@@ -1287,9 +1296,9 @@ static void DrawMinimalTopology (ObjectProperties *scene)
         {
             uint actualpointindice = scene->PolyIndices_localPtMin[startpl];
             glVertex3f(
-                scene->ArrayNorVer_localPt[10*actualpointindice+3 + 4],
-                scene->ArrayNorVer_localPt[10*actualpointindice+4 + 4],
-                scene->ArrayNorVer_localPt[10*actualpointindice+5 + 4]
+                scene->ArrayNorVer_localPt[10*actualpointindice+7],
+                scene->ArrayNorVer_localPt[10*actualpointindice+8],
+                scene->ArrayNorVer_localPt[10*actualpointindice+9]
             );
             startpl++;
         }
