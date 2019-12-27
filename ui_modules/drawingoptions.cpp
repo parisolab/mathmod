@@ -4272,11 +4272,12 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
 {
     QString Minx, Miny, Minz, Maxx, Maxy, Maxz;
     QString Difx, Dify, Difz;
-    QString componentName, fct, cnd;
+    QString componentName, fct, cnd, grid;
     QJsonArray    oldminx, oldminy, oldminz,
                   oldmaxx, oldmaxy, oldmaxz,
-                  oldcmpname, oldfxyz, oldcnd;
+                  oldcmpname, oldfxyz, oldcnd, oldgrid;
     bool cndb=false;
+    bool gridb=false;
 
     oldminx = iso["Iso3D"].toObject()["Xmin"].toArray();
     oldminy = iso["Iso3D"].toObject()["Ymin"].toArray();
@@ -4288,6 +4289,9 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
 
     oldcmpname = iso["Iso3D"].toObject()["Component"].toArray();
     oldfxyz = iso["Iso3D"].toObject()["Fxyz"].toArray();
+
+    if((gridb = (iso["Iso3D"].toObject()["Grid"].isArray())))
+        grid = ( oldgrid = iso["Iso3D"].toObject()["Grid"].toArray())[index].toString();
 
     if((cndb = (iso["Iso3D"].toObject()["Cnd"].isArray())))
         cnd = ( oldcnd = iso["Iso3D"].toObject()["Cnd"].toArray())[index].toString();
@@ -4327,6 +4331,9 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
                 if(cndb)
                     oldcnd.append(cnd);
 
+                if(gridb)
+                    oldgrid.append(grid);
+
                 l++;
             }
 
@@ -4340,8 +4347,12 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
 
     oldcmpname.removeAt(index);
     oldfxyz.removeAt(index);
+
     if(cndb)
         oldcnd.removeAt(index);
+
+    if(gridb)
+        oldgrid.removeAt(index);
 
     QJsonObject tmp = iso["Iso3D"].toObject();
     tmp["Xmin"] = oldminx;
@@ -4354,6 +4365,8 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso, int index
     tmp["Fxyz"] = oldfxyz;
     if(cndb)
         tmp["Cnd"] = oldcnd;
+    if(gridb)
+        tmp["Grid"] = oldgrid;
     iso["Iso3D"] = tmp;
 }
 
