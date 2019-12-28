@@ -879,8 +879,10 @@ void Iso3D::ConstructIsoNormale()
           pt1_x, pt1_y, pt1_z,
           pt2_x, pt2_y, pt2_z,
           pt3_x, pt3_y, pt3_z,
-          scalar;
+          scalar, n1, n2, n3;
     uint ThreeTimesI, IndexFirstPoint, IndexSecondPoint, IndexThirdPoint;
+
+    NormOriginaltmpVector.resize(NormOriginaltmpVector.size()+ 3*NbTriangleIsoSurface);
 
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
@@ -908,17 +910,16 @@ void Iso3D::ConstructIsoNormale()
         val5 = pt3_x - pt1_x;
         val6 = pt2_x - pt1_x;
 
-        NormOriginaltmpVector.push_back(val1*val2 - val3*val4);
-        NormOriginaltmpVector.push_back(val3*val5 - val6*val2);
-        NormOriginaltmpVector.push_back(val6*val4 - val1*val5);
-        scalar = float(sqrt((NormOriginaltmpVector[ThreeTimesI  ]*NormOriginaltmpVector[ThreeTimesI  ]) +
-                            (NormOriginaltmpVector[ThreeTimesI+1]*NormOriginaltmpVector[ThreeTimesI+1]) +
-                            (NormOriginaltmpVector[ThreeTimesI+2]*NormOriginaltmpVector[ThreeTimesI+2])));
+        n1 = (val1*val2 - val3*val4);
+        n2 = (val3*val5 - val6*val2);
+        n3 = (val6*val4 - val1*val5);
 
+        scalar = float(sqrt(n1*n1+n2*n2+n3*n3));
         if(scalar < float(0.0000001))  scalar  = float(0.0000001);
-        (NormOriginaltmpVector[ThreeTimesI  ]/=scalar);
-        (NormOriginaltmpVector[ThreeTimesI+1]/=scalar);
-        (NormOriginaltmpVector[ThreeTimesI+2]/=scalar);
+        (NormOriginaltmpVector[ThreeTimesI  ] = n1/scalar);
+        (NormOriginaltmpVector[ThreeTimesI+1] = n2/scalar);
+        (NormOriginaltmpVector[ThreeTimesI+2] = n3/scalar);
+
     }
 }
 
@@ -1738,6 +1739,7 @@ void Iso3D::IsoBuild (
             components->IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
         }
 
+        IndexPolyTabVector.reserve(IndexPolyTabVector.size()+3*NbTriangleIsoSurface);
         for (uint i=0; i < NbTriangleIsoSurface ; ++i)
         {
             IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i  ] + NbVertexTmp);
@@ -2377,17 +2379,11 @@ uint Iso3D::ConstructIsoSurface()
                     IndexSeconPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+1]];
                     IndexThirdPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+2]];
                     {
-                        //if(((IndexNbTriangle = NbTriangleIsoSurface*3)+2) < 3*NbMaxTri)
-                        {
-                            {
-                                IndexNbTriangle = NbTriangleIsoSurface*3;
-                                IsoSurfaceTriangleListeVector.push_back(IndexFirstPoint);
-                                IsoSurfaceTriangleListeVector.push_back(IndexSeconPoint);
-                                IsoSurfaceTriangleListeVector.push_back(IndexThirdPoint);
-                                NbTriangleIsoSurface++;
-                            }
-                        }
-                        //else return 0;
+                        IndexNbTriangle = NbTriangleIsoSurface*3;
+                        IsoSurfaceTriangleListeVector.push_back(IndexFirstPoint);
+                        IsoSurfaceTriangleListeVector.push_back(IndexSeconPoint);
+                        IsoSurfaceTriangleListeVector.push_back(IndexThirdPoint);
+                        NbTriangleIsoSurface++;
                     }
                 }
             }

@@ -1915,6 +1915,9 @@ void  Par3D::ParamBuild(
             workerthreads[nbthreads].CurrentIndex = NbVertexTmp;
         }
 
+        ExtraDimensionVector.resize(ExtraDimensionVector.size()+Ugrid*Vgrid);
+        NormVertexTabVector.resize(NormVertexTabVector.size()+10*Ugrid*Vgrid);
+        /*
         for(uint i=0; i<Ugrid; i++)
             for(uint j=0; j<Vgrid; j++)
             {
@@ -1922,7 +1925,7 @@ void  Par3D::ParamBuild(
                 for(uint k=0; k<10; k++)
                     NormVertexTabVector.push_back(1.0);
             }
-
+*/
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
 
