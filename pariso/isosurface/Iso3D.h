@@ -129,7 +129,6 @@ public :
     IsoMasterThread *masterthread;
     uint Xgrid, Ygrid, Zgrid;
     uint WorkerThreadsNumber;
-    std::vector<uint> IsoSurfaceTriangleListeVector;
     bool StopCalculations;
     std::vector<int> PointVerifyCond;
     std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
@@ -146,14 +145,14 @@ public :
     ~Iso3D() override;
     inline void SignatureComputation();
     inline uint ConstructIsoSurface();
-    inline void ConstructIsoNormale();
+    inline void ConstructIsoNormale(uint);
     inline uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void clear(struct ComponentInfos *);
     void UpdateMaxGrid(uint);
     void Setgrid(uint);
     void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *, int **);
-    void SaveIsoGLMap();
+    void SaveIsoGLMap(uint);
     uint SetMiniMmeshStruct();
     uint CNDtoUse(uint index, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *);

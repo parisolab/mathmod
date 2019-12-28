@@ -873,7 +873,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::ConstructIsoNormale()
+void Iso3D::ConstructIsoNormale(uint idx)
 {
     float val1, val2, val3, val4, val5, val6,
           pt1_x, pt1_y, pt1_z,
@@ -887,9 +887,9 @@ void Iso3D::ConstructIsoNormale()
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI      = i*3;
-        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI  ]+ 10*NbVertexTmp +7;
-        IndexSecondPoint = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+1]+ 10*NbVertexTmp +7;
-        IndexThirdPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI+2]+ 10*NbVertexTmp +7;
+        IndexFirstPoint  = 10*IndexPolyTabVector[ThreeTimesI  +3*idx] + 7;
+        IndexSecondPoint = 10*IndexPolyTabVector[ThreeTimesI+1+3*idx] + 7;
+        IndexThirdPoint  = 10*IndexPolyTabVector[ThreeTimesI+2+3*idx] + 7;
 
         pt1_x= NormVertexTabVector[IndexFirstPoint  ];
         pt1_y= NormVertexTabVector[IndexFirstPoint+1];
@@ -925,7 +925,7 @@ void Iso3D::ConstructIsoNormale()
 
 ///++++++++++++++++++++ OutPut The IsoSurface +++++++++++++++++++++++
 
-void Iso3D::SaveIsoGLMap()
+void Iso3D::SaveIsoGLMap(uint indx)
 {
     uint IndexFirstPoint, IndexSecondPoint, IndexThirdPoint, ThreeTimesI;
     double scalar;
@@ -942,9 +942,10 @@ void Iso3D::SaveIsoGLMap()
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI   = i*3;
-        IndexFirstPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI   ] + 10*NbVertexTmp  + 4;
-        IndexSecondPoint = 10*IsoSurfaceTriangleListeVector[ThreeTimesI +1] + 10*NbVertexTmp  + 4;
-        IndexThirdPoint  = 10*IsoSurfaceTriangleListeVector[ThreeTimesI +2] + 10*NbVertexTmp  + 4;
+        IndexFirstPoint  = 10*IndexPolyTabVector[ThreeTimesI  +3*indx] + 4;
+        IndexSecondPoint = 10*IndexPolyTabVector[ThreeTimesI+1+3*indx] + 4;
+        IndexThirdPoint  = 10*IndexPolyTabVector[ThreeTimesI+2+3*indx] + 4;
+
 
         NormVertexTabVector[IndexFirstPoint  ] += NormOriginaltmpVector[ThreeTimesI  ];
         NormVertexTabVector[IndexFirstPoint+1] += NormOriginaltmpVector[ThreeTimesI+1];
@@ -1606,7 +1607,6 @@ void Iso3D::IsoBuild (
 
     PointVerifyCond.clear();
     TypeIsoSurfaceTriangleListeCNDVector.clear();
-    IsoSurfaceTriangleListeVector.clear();
     NormOriginaltmpVector.clear();
 
     //*****//
@@ -1718,8 +1718,8 @@ void Iso3D::IsoBuild (
             return;
         }
 
-        ConstructIsoNormale();
-        SaveIsoGLMap();
+        ConstructIsoNormale(NbTriangleIsoSurfaceTmp);
+        SaveIsoGLMap(NbTriangleIsoSurfaceTmp);
         NormOriginaltmpVector.clear();
         result = SetMiniMmeshStruct();
         if(result == 0)
@@ -1739,15 +1739,6 @@ void Iso3D::IsoBuild (
             components->IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
         }
 
-        IndexPolyTabVector.reserve(IndexPolyTabVector.size()+3*NbTriangleIsoSurface);
-        for (uint i=0; i < NbTriangleIsoSurface ; ++i)
-        {
-            IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i  ] + NbVertexTmp);
-            IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+1] + NbVertexTmp);
-            IndexPolyTabVector.push_back(IsoSurfaceTriangleListeVector[3*i+2] + NbVertexTmp);
-        }
-
-        IsoSurfaceTriangleListeVector.clear();
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
@@ -2380,9 +2371,15 @@ uint Iso3D::ConstructIsoSurface()
                     IndexThirdPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+2]];
                     {
                         IndexNbTriangle = NbTriangleIsoSurface*3;
+                        /*
                         IsoSurfaceTriangleListeVector.push_back(IndexFirstPoint);
                         IsoSurfaceTriangleListeVector.push_back(IndexSeconPoint);
                         IsoSurfaceTriangleListeVector.push_back(IndexThirdPoint);
+                        */
+
+                        IndexPolyTabVector.push_back(IndexFirstPoint + NbVertexTmp);
+                        IndexPolyTabVector.push_back(IndexSeconPoint + NbVertexTmp);
+                        IndexPolyTabVector.push_back(IndexThirdPoint + NbVertexTmp);
                         NbTriangleIsoSurface++;
                     }
                 }
