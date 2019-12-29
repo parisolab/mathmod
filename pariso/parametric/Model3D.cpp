@@ -1856,10 +1856,6 @@ void  Par3D::ParamBuild(
     uint NbTriangleIsoSurfaceTmp;
     uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
-    /*
-        NbVertexTmp = uint(NormVertexTabVector.size()/10);
-        NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
-    */
     clear(components);
     NormVertexTabVector.clear();
     IndexPolyTabMinVector.clear();

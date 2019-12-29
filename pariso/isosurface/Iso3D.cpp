@@ -167,11 +167,6 @@ IsoMasterThread::~IsoMasterThread()
         delete NoiseParser;
         ParsersAllocated = false;
     }
-
-    //delete[] x_Step;
-    //delete[] y_Step;
-    //delete[] z_Step;
-    //delete[] ImplicitStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
     grid.clear();
@@ -199,9 +194,6 @@ IsoWorkerThread::~IsoWorkerThread()
         delete[] Fct;
         ParsersAllocated = false;
     }
-    //delete[] xLocal2;
-    //delete[] yLocal2;
-    //delete[] zLocal2;
 }
 
 IsoWorkerThread::IsoWorkerThread()
@@ -261,9 +253,6 @@ ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        /*memcpy(workerthreads[nbthreads].xLocal2, masterthread->xLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].yLocal2, masterthread->yLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));
-        memcpy(workerthreads[nbthreads].zLocal2, masterthread->zLocal2, unsigned(NbIsoComponent*NbMaxGrid)*sizeof(double));*/
         workerthreads[nbthreads].xLocal2.clear();
         workerthreads[nbthreads].xLocal2 = masterthread->xLocal2;
         workerthreads[nbthreads].yLocal2.clear();
@@ -3310,8 +3299,7 @@ void Iso3D::SignatureComputation()
     uint I, J, IJK, IPLUSONEJK,
         IJPLUSONEK,  IPLUSONEJPLUSONEK;
     uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
-    uint limitX = Xgrid;
-    for(uint i=0; i < limitX; i++)
+    for(uint i=0; i < Xgrid; i++)
     {
         I = i*maxgrscalemaxgr;
         for(uint j=0; j < Ygrid; j++)
@@ -3326,10 +3314,10 @@ void Iso3D::SignatureComputation()
 
                 if(Results[IJK] <= 0) GridVoxelVarPt[IJK].Signature +=1;
 
-                if(i != (limitX-1))
+                if(i != (Xgrid-1))
                     if(Results[IPLUSONEJK] <= 0) GridVoxelVarPt[IJK].Signature +=2;
 
-                if(i != (limitX-1) && k != (Zgrid-1))
+                if(i != (Xgrid-1) && k != (Zgrid-1))
                     if(Results[IPLUSONEJK+1] <= 0) GridVoxelVarPt[IJK].Signature +=4;
 
                 if(k != (Zgrid-1))
@@ -3338,10 +3326,10 @@ void Iso3D::SignatureComputation()
                 if(j != (Ygrid-1))
                     if(Results[IJPLUSONEK] <= 0) GridVoxelVarPt[IJK].Signature +=16;
 
-                if(i != (limitX-1) && j != (Ygrid-1))
+                if(i != (Xgrid-1) && j != (Ygrid-1))
                     if(Results[IPLUSONEJPLUSONEK] <= 0) GridVoxelVarPt[IJK].Signature +=32;
 
-                if(i != (limitX-1) && j != (Ygrid-1) && k != (Zgrid-1))
+                if(i != (Xgrid-1) && j != (Ygrid-1) && k != (Zgrid-1))
                     if(Results[IPLUSONEJPLUSONEK+1] <= 0) GridVoxelVarPt[IJK].Signature +=64;
 
                 if(j != (Ygrid-1) && k != (Zgrid-1))
