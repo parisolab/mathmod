@@ -26,13 +26,7 @@ static Voxel *GridVoxelVarPt;
 static double *Results;
 static uint NbVertexTmp = 0;
 
-std::vector<uint> IndexPolyTabMinVector;
-std::vector<float> NormVertexTabVector;
-std::vector<uint> IndexPolyTabVector;
 static std::vector<float> NormOriginaltmpVector;
-
-struct ComponentInfos componentsStr;
-struct ComponentInfos * components=&componentsStr;
 
 uint NbMaxGrid = 100;
 

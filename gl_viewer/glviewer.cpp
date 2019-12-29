@@ -1148,7 +1148,7 @@ static void DrawNormals(ObjectProperties *scene)
 
 static int staticaction = 0;
 
-void OpenGlWidget::initialize_GL()
+void OpenGlWidget::Winitialize_GL()
 {
     static int count =0;
     if(count <2)
@@ -1179,7 +1179,7 @@ void OpenGlWidget::initialize_GL()
 
 void OpenGlWidget::UpdateGL()
 {
-    initialize_GL();
+    Winitialize_GL();
     update();
 }
 
@@ -1504,7 +1504,7 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.Typetriangles)
             );
         }
-        initialize_GL();
+        Winitialize_GL();
     }
     draw(&LocalScene);
 

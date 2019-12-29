@@ -62,7 +62,7 @@ public :
 public:
     OpenGlWidget( QWidget *parent=nullptr);
     ~OpenGlWidget();
-    void initialize_GL();
+    void Winitialize_GL();
     void resizeGL(int, int);
     void paintGL();
     void timerEvent( QTimerEvent * );
@@ -130,7 +130,7 @@ public slots:
     void colorstypeParam(int);
     void SaveSceneAsObjPoly(int n=0);
     void SaveSceneAsObjTrian(int n=0);
-    void CalculateColorsPoints(void);
+    void CalculateColorsPoints();
     void CalculateTexturePoints(int type);
     void CalculatePigmentPoints(int type);
     void UpdateGL();
