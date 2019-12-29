@@ -2342,13 +2342,12 @@ uint Iso3D::SetMiniMmeshStruct()
 ///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 uint Iso3D::ConstructIsoSurface()
 {
-    uint IndexNbTriangle, Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint, limitX;
+    uint Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint;
     uint I, J, IJK;
     uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
 
     NbTriangleIsoSurface = 0;
-    limitX = Xgrid;
-    for(uint i=0; i+1 < limitX; i++)
+    for(uint i=0; i+1 < Xgrid; i++)
     {
         I   = i*maxgrscalemaxgr;
         for(uint j=0; j+1 < Ygrid; j++)
@@ -2363,19 +2362,10 @@ uint Iso3D::ConstructIsoSurface()
                     IndexFirstPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l  ]];
                     IndexSeconPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+1]];
                     IndexThirdPoint = GridVoxelVarPt[IJK].Edge_Points[triTable[Index][l+2]];
-                    {
-                        IndexNbTriangle = NbTriangleIsoSurface*3;
-                        /*
-                        IsoSurfaceTriangleListeVector.push_back(IndexFirstPoint);
-                        IsoSurfaceTriangleListeVector.push_back(IndexSeconPoint);
-                        IsoSurfaceTriangleListeVector.push_back(IndexThirdPoint);
-                        */
-
-                        IndexPolyTabVector.push_back(IndexFirstPoint + NbVertexTmp);
-                        IndexPolyTabVector.push_back(IndexSeconPoint + NbVertexTmp);
-                        IndexPolyTabVector.push_back(IndexThirdPoint + NbVertexTmp);
-                        NbTriangleIsoSurface++;
-                    }
+                    IndexPolyTabVector.push_back(IndexFirstPoint + NbVertexTmp);
+                    IndexPolyTabVector.push_back(IndexSeconPoint + NbVertexTmp);
+                    IndexPolyTabVector.push_back(IndexThirdPoint + NbVertexTmp);
+                    NbTriangleIsoSurface++;
                 }
             }
         }

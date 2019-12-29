@@ -1475,7 +1475,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 /// Add Three new triangles :
                 uint IndexBprime = (NbVertexTmp-2);
                 uint IndexCprime = (NbVertexTmp-1);
-                uint IndexNbTriangle;
 
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCNDVector[i]=0;
@@ -1483,7 +1482,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //if(3*(NbTriangleIsoSurfaceTmp+4) < 4*NbMaxTri)
                 {
                     /// (A, Bprime, Cprime)
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                     IndexPolyTabVector.push_back(Aindex);
                     IndexPolyTabVector.push_back(IndexBprime);
                     IndexPolyTabVector.push_back(IndexCprime);
@@ -1497,7 +1495,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(IndexCprime);
 
                     /// (Bprime, B, C)
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                     IndexPolyTabVector.push_back(IndexBprime);
                     IndexPolyTabVector.push_back(Bindex);
                     IndexPolyTabVector.push_back(Cindex);
@@ -1511,7 +1508,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(Cindex);
 
                     /// (Bprime, C, Cprime)
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                     IndexPolyTabVector.push_back(IndexBprime);
                     IndexPolyTabVector.push_back(Cindex);
                     IndexPolyTabVector.push_back(IndexCprime);
@@ -1525,7 +1521,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                     IndexPolyTabMinVector.push_back(IndexCprime);
 
                     /// (Bprime, Cprime) --> the border
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                     IndexPolyTabVector.push_back(IndexBprime);
                     IndexPolyTabVector.push_back(IndexCprime);
                     IndexPolyTabVector.push_back(IndexCprime);
@@ -1917,15 +1912,7 @@ void  Par3D::ParamBuild(
 
         ExtraDimensionVector.resize(ExtraDimensionVector.size()+Ugrid*Vgrid);
         NormVertexTabVector.resize(NormVertexTabVector.size()+10*Ugrid*Vgrid);
-        /*
-        for(uint i=0; i<Ugrid; i++)
-            for(uint j=0; j<Vgrid; j++)
-            {
-                ExtraDimensionVector.push_back(1.0);
-                for(uint k=0; k<10; k++)
-                    NormVertexTabVector.push_back(1.0);
-            }
-*/
+
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
 
