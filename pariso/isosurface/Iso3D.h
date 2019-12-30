@@ -124,7 +124,7 @@ class Iso3D  : public QThread
 {
     Q_OBJECT
 public :
-    ObjectProperties *LocalScene;
+    ObjectProperties *localScene;
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
     uint Xgrid, Ygrid, Zgrid;

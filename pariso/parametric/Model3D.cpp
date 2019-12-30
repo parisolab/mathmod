@@ -1606,15 +1606,15 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 void Par3D::BuildPar()
 {
     ParamBuild(
-        &(LocalScene->ArrayNorVer_localPt),
-        &(LocalScene->ArrayNorVerExtra_localPt),
-        &(LocalScene->PolyIndices_localPt),
-        &LocalScene->PolyNumber,
-        &(LocalScene->VertxNumber),
-        &(LocalScene->componentsinfos),
-        &(LocalScene->Typetriangles),
-        &(LocalScene->PolyIndices_localPtMin),
-        &(LocalScene->NbPolygnNbVertexPtMin)
+        &(localScene->ArrayNorVer_localPt),
+        &(localScene->ArrayNorVerExtra_localPt),
+        &(localScene->PolyIndices_localPt),
+        &localScene->PolyNumber,
+        &(localScene->VertxNumber),
+        &(localScene->componentsinfos),
+        &(localScene->Typetriangles),
+        &(localScene->PolyIndices_localPtMin),
+        &(localScene->NbPolygnNbVertexPtMin)
     );
 }
 
@@ -1867,7 +1867,7 @@ void  Par3D::ParamBuild(
     ExtraDimensionVector.clear();
 
     //*******/
-    if(components != nullptr)
+    //if(components != nullptr)
         components->NbParametric = masterthread->expression_XSize;
 
     stopcalculations(false);
@@ -1895,7 +1895,7 @@ void  Par3D::ParamBuild(
         masterthread->CurrentPar   = fctnb;
         masterthread->CurrentIndex = NbVertexTmp;
         // Save Number of Polys and vertex :
-        if(components != nullptr)
+        //if(components != nullptr)
         {
             components->ParPts.push_back(NbVertexTmp);
             components->ParPts.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
@@ -1941,7 +1941,7 @@ void  Par3D::ParamBuild(
         calcul_Norm(10*NbVertexTmp);
         make_PolyIndexMin(NbVertexTmp);
         make_PolyIndexTri(NbVertexTmp);
-        if(components != nullptr)
+        //if(components != nullptr)
         {
             components->ParPositions.push_back(6*NextPosition); //save the starting position of this component
             components->ParPositions.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component

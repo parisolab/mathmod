@@ -159,7 +159,7 @@ ObjectParameters::ObjectParameters()
     objectproperties.frontcols[9*4+1] = objectproperties.frontcolsPar[9*4+1] = 0.91f;
     objectproperties.frontcols[9*4+2] = objectproperties.frontcolsPar[9*4+2] = 0.3f;
     objectproperties.frontcols[9*4+3] = objectproperties.frontcolsPar[9*4+3] = 1.0f;
-
+    objectproperties.gridplanliste       = 1;
     objectproperties.border              = 1;
     objectproperties.mesh                = 1;
     objectproperties.activarecnd         = true;

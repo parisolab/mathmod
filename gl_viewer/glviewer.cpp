@@ -26,12 +26,11 @@ static double anglefinal=0;
 static int FistTimecalibrate =-1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo, decalage_zo;
 
-
 static GLfloat minx   = 999999999,  miny  = 999999999,  minz  = 999999999,
         maxx =-999999999,   maxy =-999999999, maxz =-999999999;
 
 static GLfloat  difX, difY, difZ;
-
+static ObjectParameters objpar;
 
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
@@ -242,7 +241,8 @@ int OpenGlWidget::memoryallocation(uint gridmax, uint nbthreads,
     {
         IsoObjet = new Iso3D(gridmax,nbthreads, initisoGrid, FactX, FactY, FactZ);
         ParObjet = new Par3D(nbthreads, initparGrid);
-        LocalScene     = (new ObjectParameters())->objectproperties;
+        LocalScene = objpar.objectproperties;
+        //LocalScene     = (new ObjectParameters())->objectproperties;
         return 1;
     }
     catch(std::bad_alloc&)
@@ -722,7 +722,7 @@ void OpenGlWidget::boundingboxOk()
 }
 
 static GLuint fontOffset=0;
-void makeRasterFont()
+static void makeRasterFont()
 {
     GLuint i;
     if(fontOffset < 128)
@@ -1169,8 +1169,8 @@ void OpenGlWidget::Winitialize_GL()
 
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
 
-        plan();
-        InitFont();
+        //plan();
+        //InitFont();
         glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
         count +=1;
     }
@@ -1325,6 +1325,83 @@ static void DrawMeshParametric(ObjectProperties *scene)
     }
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
+static void plan(ObjectProperties *scene)
+{
+    scene->gridplanliste = glGenLists(1);
+    glNewList(scene->gridplanliste, GL_COMPILE);
+    glLineWidth(1);
+    glColor3f (0.8f, 0.0, 0.7f);
+    glBegin( GL_LINES );
+    glVertex3f(-150.0, 600.0, -500);
+    glVertex3f(-150.0,-600.0, -500);
+    glVertex3f(0.0, 600.0, -500);
+    glVertex3f(0.0,-600.0, -500);
+
+    glVertex3f(150.0, 600.0, -500);
+    glVertex3f(150.0,-600.0, -500);
+    glVertex3f(600.0, -150.0, -500);
+    glVertex3f(-600.0,-150.0, -500);
+
+    glVertex3f(600.0, 0.0, -500);
+    glVertex3f(-600.0, 0.0, -500);
+    glVertex3f(600.0, 150.0, -500);
+    glVertex3f(-600.0, 150.0, -500);
+
+    glVertex3f(-75.0, 600.0, -500);
+    glVertex3f(-75.0,-600.0, -500);
+    glVertex3f(-225.0, 600.0, -500);
+    glVertex3f(-225.0,-600.0, -500);
+    glVertex3f(-300.0, 600.0, -500);
+    glVertex3f(-300.0,-600.0, -500);
+    glVertex3f(-375.0, 600.0, -500);
+    glVertex3f(-375.0,-600.0, -500);
+    glVertex3f(-450.0, 600.0, -500);
+    glVertex3f(-450.0,-600.0, -500);
+    glVertex3f(-525.0, 600.0, -500);
+    glVertex3f(-525.0,-600.0, -500);
+
+    glVertex3f(75.0, 600.0, -500);
+    glVertex3f(75.0,-600.0, -500);
+    glVertex3f(225.0, 600.0, -500);
+    glVertex3f(225.0,-600.0, -500);
+    glVertex3f(300.0, 600.0, -500);
+    glVertex3f(300.0,-600.0, -500);
+    glVertex3f(375.0, 600.0, -500);
+    glVertex3f(375.0,-600.0, -500);
+    glVertex3f(450.0, 600.0, -500);
+    glVertex3f(450.0,-600.0, -500);
+    glVertex3f(525.0, 600.0, -500);
+    glVertex3f(525.0,-600.0, -500);
+
+    glVertex3f(600.0,-75.0, -500);
+    glVertex3f(-600.0,-75.0, -500);
+    glVertex3f(600.0,-225.0, -500);
+    glVertex3f(-600.0,-225.0, -500);
+    glVertex3f(600.0,-300.0, -500);
+    glVertex3f(-600.0,-300.0, -500);
+    glVertex3f(600.0,-375.0, -500);
+    glVertex3f(-600.0,-375.0, -500);
+    glVertex3f(600.0,-450.0, -500);
+    glVertex3f(-600.0,-450.0, -500);
+    glVertex3f(600.0,-525.0, -500);
+    glVertex3f(-600.0,-525.0, -500);
+
+    glVertex3f(600.0,75.0, -500);
+    glVertex3f(-600.0,75.0, -500);
+    glVertex3f(600.0,225.0, -500);
+    glVertex3f(-600.0,225.0, -500);
+    glVertex3f(600.0,300.0, -500);
+    glVertex3f(-600.0,300.0, -500);
+    glVertex3f(600.0,375.0, -500);
+    glVertex3f(-600.0,375.0, -500);
+    glVertex3f(600.0,450.0, -500);
+    glVertex3f(-600.0,450.0, -500);
+    glVertex3f(600.0,525.0, -500);
+    glVertex3f(-600.0,525.0, -500);
+    glEnd();
+    glLineWidth(4.18f);
+    glEndList();
+}
 
 static void draw(ObjectProperties *scene)
 {
@@ -1347,6 +1424,9 @@ static void draw(ObjectProperties *scene)
         glEnable (GL_BLEND);
         glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint (GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+        // Gl listes generation (Plan & Fonts):
+        plan(scene);
+        makeRasterFont();
     }
 
     // Blend Effect activation:
@@ -1518,83 +1598,7 @@ void OpenGlWidget::timerEvent(QTimerEvent*)
     update();
 }
 
-void OpenGlWidget::plan()
-{
-    LocalScene.gridplanliste = glGenLists(1);
-    glNewList(LocalScene.gridplanliste, GL_COMPILE);
-    glLineWidth(1);
-    glColor3f (0.8f, 0.0, 0.7f);
-    glBegin( GL_LINES );
-    glVertex3f(-150.0, 600.0, -500);
-    glVertex3f(-150.0,-600.0, -500);
-    glVertex3f(0.0, 600.0, -500);
-    glVertex3f(0.0,-600.0, -500);
 
-    glVertex3f(150.0, 600.0, -500);
-    glVertex3f(150.0,-600.0, -500);
-    glVertex3f(600.0, -150.0, -500);
-    glVertex3f(-600.0,-150.0, -500);
-
-    glVertex3f(600.0, 0.0, -500);
-    glVertex3f(-600.0, 0.0, -500);
-    glVertex3f(600.0, 150.0, -500);
-    glVertex3f(-600.0, 150.0, -500);
-
-    glVertex3f(-75.0, 600.0, -500);
-    glVertex3f(-75.0,-600.0, -500);
-    glVertex3f(-225.0, 600.0, -500);
-    glVertex3f(-225.0,-600.0, -500);
-    glVertex3f(-300.0, 600.0, -500);
-    glVertex3f(-300.0,-600.0, -500);
-    glVertex3f(-375.0, 600.0, -500);
-    glVertex3f(-375.0,-600.0, -500);
-    glVertex3f(-450.0, 600.0, -500);
-    glVertex3f(-450.0,-600.0, -500);
-    glVertex3f(-525.0, 600.0, -500);
-    glVertex3f(-525.0,-600.0, -500);
-
-    glVertex3f(75.0, 600.0, -500);
-    glVertex3f(75.0,-600.0, -500);
-    glVertex3f(225.0, 600.0, -500);
-    glVertex3f(225.0,-600.0, -500);
-    glVertex3f(300.0, 600.0, -500);
-    glVertex3f(300.0,-600.0, -500);
-    glVertex3f(375.0, 600.0, -500);
-    glVertex3f(375.0,-600.0, -500);
-    glVertex3f(450.0, 600.0, -500);
-    glVertex3f(450.0,-600.0, -500);
-    glVertex3f(525.0, 600.0, -500);
-    glVertex3f(525.0,-600.0, -500);
-
-    glVertex3f(600.0,-75.0, -500);
-    glVertex3f(-600.0,-75.0, -500);
-    glVertex3f(600.0,-225.0, -500);
-    glVertex3f(-600.0,-225.0, -500);
-    glVertex3f(600.0,-300.0, -500);
-    glVertex3f(-600.0,-300.0, -500);
-    glVertex3f(600.0,-375.0, -500);
-    glVertex3f(-600.0,-375.0, -500);
-    glVertex3f(600.0,-450.0, -500);
-    glVertex3f(-600.0,-450.0, -500);
-    glVertex3f(600.0,-525.0, -500);
-    glVertex3f(-600.0,-525.0, -500);
-
-    glVertex3f(600.0,75.0, -500);
-    glVertex3f(-600.0,75.0, -500);
-    glVertex3f(600.0,225.0, -500);
-    glVertex3f(-600.0,225.0, -500);
-    glVertex3f(600.0,300.0, -500);
-    glVertex3f(-600.0,300.0, -500);
-    glVertex3f(600.0,375.0, -500);
-    glVertex3f(-600.0,375.0, -500);
-    glVertex3f(600.0,450.0, -500);
-    glVertex3f(-600.0,450.0, -500);
-    glVertex3f(600.0,525.0, -500);
-    glVertex3f(-600.0,525.0, -500);
-    glEnd();
-    glLineWidth(4.18f);
-    glEndList();
-}
 
 void OpenGlWidget::mouseMoveEvent( QMouseEvent *e )
 {

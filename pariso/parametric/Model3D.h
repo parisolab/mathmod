@@ -119,7 +119,7 @@ class Par3D   : public QThread
 {
     Q_OBJECT
 public:
-    ObjectProperties *LocalScene;
+    ObjectProperties *localScene;
     ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
     float *Border;

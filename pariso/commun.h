@@ -155,9 +155,8 @@ struct  ComponentInfos
 
 struct  ObjectProperties
 {
-    float         * ArrayNorVer_localPt;
-    float         * OriginalArrayNorVer_localPt;
-    uint vboId_ArrayNorVer_localPt;
+    float *ArrayNorVer_localPt;
+    float *OriginalArrayNorVer_localPt;
     float *ArrayNorVerExtra_localPt;
     float *OriginalArrayNorVerExtra_localPt;
     uint  *PolyIndices_localPt;
@@ -239,8 +238,6 @@ struct  ObjectProperties
     double matrixInverse[16];
     double axe_x, axe_y, axe_z, ScalCoeff, view_rotx, view_roty, view_rotz;
 };
-
-
 
 class CellNoise
 {

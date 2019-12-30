@@ -286,7 +286,7 @@ void MathMod::ParametricSurfaceProcess(int type)
         int result = ParsePar();
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = -1;
-        (ui.glWidget)->ParObjet->LocalScene = &((ui.glWidget)->LocalScene);
+        (ui.glWidget)->ParObjet->localScene = &((ui.glWidget)->LocalScene);
         connect((ui.glWidget)->ParObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
         (ui.glWidget)->ParObjet->start(QThread::LowPriority);
     }
@@ -314,7 +314,7 @@ void MathMod::ProcessNewIsoSurface()
         int result = ParseIso();
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = 1;
-        (ui.glWidget)->IsoObjet->LocalScene = &((ui.glWidget)->LocalScene);
+        (ui.glWidget)->IsoObjet->localScene = &((ui.glWidget)->LocalScene);
         connect((ui.glWidget)->IsoObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
         (ui.glWidget)->IsoObjet->start(QThread::LowPriority);
     }

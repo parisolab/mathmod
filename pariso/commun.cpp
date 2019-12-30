@@ -168,6 +168,7 @@ int CellNoise::hash(int i, int j, int k)
 
 ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 {
+    correction = 1.0f/100000000.0f;
     passes = int(std::log(xsize)/std::log(MAGIC_SCALE) + 0.5f);
     passes = std::max(passes, int(std::log(ysize)/std::log(MAGIC_SCALE) + 0.5f));
     passes = std::max(passes, int(std::log(zsize)/std::log(MAGIC_SCALE) + 0.5f));

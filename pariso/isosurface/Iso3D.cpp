@@ -113,14 +113,14 @@ void Iso3D::emitUpdateMessageSignal()
 void Iso3D::BuildIso()
 {
     IsoBuild(
-        &(LocalScene->ArrayNorVer_localPt),
-        &(LocalScene->PolyIndices_localPt),
-        &LocalScene->PolyNumber,
-        &(LocalScene->VertxNumber),
-        &(LocalScene->PolyIndices_localPtMin),
-        &(LocalScene->NbPolygnNbVertexPtMin),
-        &(LocalScene->componentsinfos),
-        &(LocalScene->Typetriangles));
+        &(localScene->ArrayNorVer_localPt),
+        &(localScene->PolyIndices_localPt),
+        &localScene->PolyNumber,
+        &(localScene->VertxNumber),
+        &(localScene->PolyIndices_localPtMin),
+        &(localScene->NbPolygnNbVertexPtMin),
+        &(localScene->componentsinfos),
+        &(localScene->Typetriangles));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1612,7 +1612,7 @@ void Iso3D::IsoBuild (
         delete[] Results;
     Results = new double[maxx*maxx*maxx];
 
-    if(components != nullptr)
+    //if(components != nullptr)
         components->NbIso = masterthread->ImplicitFunctionSize;
 
     stopcalculations(false);
@@ -1714,7 +1714,7 @@ void Iso3D::IsoBuild (
         }
 
         // Save the Index:
-        if(components != nullptr)
+        //if(components != nullptr)
         {
             components->IsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
             components->IsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component

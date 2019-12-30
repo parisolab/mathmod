@@ -73,7 +73,6 @@ public:
     virtual   void run();
     void InitSpecularParameters();
     void Shininess(int);
-    void plan();
     void initbox();
     int  memoryallocation(uint,uint,uint initpargrid=50,
                           uint initgrid=40, uint factx=4, uint facty=4,uint factz=4);
@@ -107,7 +106,6 @@ public slots:
     void infosOk();
     void boundingboxOk();
     void smoothline();
-    //void lineOk();
     void transparency(int, int currentposition=0);
     void red(int, int currentposition=0);
     void green(int, int currentposition=0);
