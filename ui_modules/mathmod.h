@@ -72,7 +72,7 @@ public:
     Ui::MathMod ui;
     int xyzactivated, isomesh, uvactivated, uvactivated4D;
     ParisoMathObject RootObjet;
-    jpariso pariso;
+    jcollection collection;
     QWidget* Parent;
     QMessageBox message;
     ErrorMessage stError;

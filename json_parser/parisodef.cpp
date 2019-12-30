@@ -22,11 +22,11 @@
 
 
 
-jpariso::jpariso()
+jcollection::jcollection()
 {
 }
 
-jpariso::~jpariso()
+jcollection::~jcollection()
 {
 }
 

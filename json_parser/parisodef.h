@@ -19,15 +19,20 @@
  ***************************************************************************/
 #ifndef PARISODEF_H
 #define PARISODEF_H
-
-#include <math.h>
-#include <stdlib.h>
-#include <string>
-#include <iostream>
-#include <QStringList>
-#include <qthread.h>
 #include "jiso.h"
 #include "jpar.h"
+
+class jcollection
+{
+public:
+    jcollection();
+    ~jcollection();
+
+    QList<jpar> JPar;
+    QList<jiso> JIso;
+    QJsonArray JTextures;
+    QJsonArray JPigments;
+};
 
 class jpariso
 {
@@ -35,15 +40,9 @@ public:
     jpariso();
     ~jpariso();
 
-//private:
-    QList<jpar> JPar;
-    QList<jiso> JIso;
-    QJsonArray JTextures;
-    QJsonArray JPigments;
+    jpar JPar;
+    jiso JIso;
 };
-
-
-
 
 
 

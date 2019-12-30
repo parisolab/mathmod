@@ -81,7 +81,7 @@ public slots:
     void SaveToFile_CurentMathModel(QJsonObject  CurrentJsonObject);
     void on_save_clicked();
     void LoadConfig(QApplication &,int argc, char *argv[]);
-    ListeModelTexture LoadCollectionModels(QJsonObject &, jpariso &, int);
+    ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
     bool isFloat(std::string);
     void on_comboBox_2_activated(const QString &);
     void on_comboBox_3_activated(const QString &);

@@ -915,9 +915,9 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
     if(textureIndex != -1)
     {
         if(textureIndex < 1000)
-            QTextureObj = MathmodRef->pariso.JTextures[textureIndex].toObject()["Texture"].toObject();
+            QTextureObj = MathmodRef->collection.JTextures[textureIndex].toObject()["Texture"].toObject();
         else
-            QPigmentObj = MathmodRef->pariso.JPigments[textureIndex-1000].toObject()["Pigment"].toObject();
+            QPigmentObj = MathmodRef->collection.JPigments[textureIndex-1000].toObject()["Pigment"].toObject();
     }
     else
     {
@@ -1711,8 +1711,8 @@ void DrawingOptions::LoadNewFileModels(bool upd)
         for(int i=0; i<MathmodRef->RootObjet.MyJsonObjectSelection.count(); i++)
             MathmodRef->RootObjet.MyJsonObjectSelection.removeAt(i);
         MathmodRef->RootObjet.NbIsoStruct = MathmodRef->RootObjet.NbParamStruct = 0;
-        MathmodRef->pariso.JPar.clear();
-        MathmodRef->pariso.JIso.clear();
+        MathmodRef->collection.JPar.clear();
+        MathmodRef->collection.JIso.clear();
     }
 
     MathmodRef->RootObjet.ReadJsonFile(mathmodcollection, JSONMathModels);
@@ -1729,7 +1729,7 @@ void DrawingOptions::LoadNewFileModels(bool upd)
             jiso newjiso;
             jsobj = (array[i].toObject())["Iso3D"].toObject();
             newjiso.read( jsobj );
-            MathmodRef->pariso.JIso.append(newjiso);
+            MathmodRef->collection.JIso.append(newjiso);
             a = (jsobj)["Name"].toArray()[0].toString();
             lst.append(a);
         }
@@ -1738,7 +1738,7 @@ void DrawingOptions::LoadNewFileModels(bool upd)
             jpar newjpar;
             jsobj = ((array[i].toObject())["Param3D"].toObject());
             newjpar.read( jsobj );
-            MathmodRef->pariso.JPar.append(newjpar);
+            MathmodRef->collection.JPar.append(newjpar);
             a = ( jsobj )["Name"].toArray()[0].toString();
             lst.append(a);
         }
@@ -1747,7 +1747,7 @@ void DrawingOptions::LoadNewFileModels(bool upd)
             jpar newjpar;
             jsobj = ((array[i].toObject())["Param4D"].toObject());
             newjpar.read( jsobj );
-            MathmodRef->pariso.JPar.append(newjpar);
+            MathmodRef->collection.JPar.append(newjpar);
             a = ( jsobj )["Name"].toArray()[0].toString();
             lst.append(a);
         }
@@ -2224,74 +2224,74 @@ void DrawingOptions::AddListModels(bool update)
     QColor greenColor = QColor(0, 255, 0, 50);
     // Parametric:
     QTreeWidgetItem *ParlistItem = new QTreeWidgetItem(ui.ObjectClasse);
-    QString Text = "Parametric (" + QString::number(MathmodRef->pariso.JPar.count()) + ")" ;
+    QString Text = "Parametric (" + QString::number(MathmodRef->collection.JPar.count()) + ")" ;
     ParlistItem->setBackgroundColor(0, greenColor);
     ParlistItem->setText(0, Text);
-    for (int i = 0; i < MathmodRef->pariso.JPar.count(); ++i)
+    for (int i = 0; i < MathmodRef->collection.JPar.count(); ++i)
     {
         QTreeWidgetItem *nameitem = new QTreeWidgetItem(ParlistItem);
-        nameitem->setText(0,  MathmodRef->pariso.JPar[i].Name[0]);
-        if(MathmodRef->pariso.JPar[i].Component.count() > 0)
+        nameitem->setText(0,  MathmodRef->collection.JPar[i].Name[0]);
+        if(MathmodRef->collection.JPar[i].Component.count() > 0)
         {
             QTreeWidgetItem *cmpitem = new QTreeWidgetItem(nameitem);
             cmpitem->setText(0,  "Components");
-            for(int j=0; j<MathmodRef->pariso.JPar[i].Component.count(); j++)
+            for(int j=0; j<MathmodRef->collection.JPar[i].Component.count(); j++)
             {
                 QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
-                cmpitem2->setText(0,  MathmodRef->pariso.JPar[i].Component.at(j));
+                cmpitem2->setText(0,  MathmodRef->collection.JPar[i].Component.at(j));
 
                 QTreeWidgetItem *cmpitem3 = new QTreeWidgetItem(cmpitem2);
-                cmpitem3->setText(0,  "X(u,v) = "+MathmodRef->pariso.JPar[i].Fx.at(j));
+                cmpitem3->setText(0,  "X(u,v) = "+MathmodRef->collection.JPar[i].Fx.at(j));
 
                 QTreeWidgetItem *cmpitem4 = new QTreeWidgetItem(cmpitem2);
-                cmpitem4->setText(0,  "Y(u,v) = "+MathmodRef->pariso.JPar[i].Fy.at(j));
+                cmpitem4->setText(0,  "Y(u,v) = "+MathmodRef->collection.JPar[i].Fy.at(j));
 
                 QTreeWidgetItem *cmpitem5 = new QTreeWidgetItem(cmpitem2);
-                cmpitem5->setText(0,  "Z(u,v) = "+MathmodRef->pariso.JPar[i].Fz.at(j));
+                cmpitem5->setText(0,  "Z(u,v) = "+MathmodRef->collection.JPar[i].Fz.at(j));
 
                 QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
-                cmpitem6->setText(0,  "U = ["+ MathmodRef->pariso.JPar[i].Umin.at(j)  +", "+ MathmodRef->pariso.JPar[i].Umax.at(j) +"]");
+                cmpitem6->setText(0,  "U = ["+ MathmodRef->collection.JPar[i].Umin.at(j)  +", "+ MathmodRef->collection.JPar[i].Umax.at(j) +"]");
 
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-                cmpitem7->setText(0,  "V = ["+ MathmodRef->pariso.JPar[i].Vmin.at(j)  +", "+ MathmodRef->pariso.JPar[i].Vmax.at(j)  +"]");
+                cmpitem7->setText(0,  "V = ["+ MathmodRef->collection.JPar[i].Vmin.at(j)  +", "+ MathmodRef->collection.JPar[i].Vmax.at(j)  +"]");
 
                 //Grid resolution:
-                if(MathmodRef->pariso.JPar[i].Grid.size() > 0 && 2*j+1 < MathmodRef->pariso.JPar[i].Grid.size())
+                if(MathmodRef->collection.JPar[i].Grid.size() > 0 && 2*j+1 < MathmodRef->collection.JPar[i].Grid.size())
                 {
                     QTreeWidgetItem *cmpitem8 = new QTreeWidgetItem(cmpitem2);
-                    cmpitem8->setText(0,  "Grid = ("+MathmodRef->pariso.JPar[i].Grid.at(2*j)+" , "+MathmodRef->pariso.JPar[i].Grid.at(2*j+1)+")");
+                    cmpitem8->setText(0,  "Grid = ("+MathmodRef->collection.JPar[i].Grid.at(2*j)+" , "+MathmodRef->collection.JPar[i].Grid.at(2*j+1)+")");
                 }
             }
         }
 
         //Add Global parameters:
         if (
-            MathmodRef->pariso.JPar[i].Csts.count() ||
-            MathmodRef->pariso.JPar[i].Funct.count()
+            MathmodRef->collection.JPar[i].Csts.count() ||
+            MathmodRef->collection.JPar[i].Funct.count()
         )
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
             parameteritem->setText(0,  "Parameters:");
 
-            if(MathmodRef->pariso.JPar[i].Csts.count() > 0)
+            if(MathmodRef->collection.JPar[i].Csts.count() > 0)
             {
                 QTreeWidgetItem *cstitem = new QTreeWidgetItem(parameteritem);
                 cstitem->setText(0,  "Constantes:");
-                for(int j=0; j<MathmodRef->pariso.JPar[i].Csts.count(); j++)
+                for(int j=0; j<MathmodRef->collection.JPar[i].Csts.count(); j++)
                 {
                     QTreeWidgetItem *cstitem2 = new QTreeWidgetItem(cstitem);
-                    cstitem2->setText(0,  MathmodRef->pariso.JPar[i].Csts.at(j));
+                    cstitem2->setText(0,  MathmodRef->collection.JPar[i].Csts.at(j));
                 }
             }
 
-            if(MathmodRef->pariso.JPar[i].Funct.count() > 0)
+            if(MathmodRef->collection.JPar[i].Funct.count() > 0)
             {
                 QTreeWidgetItem *fctitem = new QTreeWidgetItem(parameteritem);
                 fctitem->setText(0,  "Functions:");
-                for(int j=0; j<MathmodRef->pariso.JPar[i].Funct.count(); j++)
+                for(int j=0; j<MathmodRef->collection.JPar[i].Funct.count(); j++)
                 {
                     QTreeWidgetItem *fctitem2 = new QTreeWidgetItem(fctitem);
-                    fctitem2->setText(0,  MathmodRef->pariso.JPar[i].Funct.at(j));
+                    fctitem2->setText(0,  MathmodRef->collection.JPar[i].Funct.at(j));
                 }
             }
         }
@@ -2300,72 +2300,72 @@ void DrawingOptions::AddListModels(bool update)
 
     // Iso:
     QTreeWidgetItem *IsolistItem = IsolistItemRef = new QTreeWidgetItem(ui.ObjectClasse);
-    Text = "IsoSurfaces (" + QString::number(MathmodRef->pariso.JIso.count()) + ")" ;
+    Text = "IsoSurfaces (" + QString::number(MathmodRef->collection.JIso.count()) + ")" ;
     IsolistItem->setBackgroundColor(0, greenColor);
     IsolistItem->setText(0, Text);
-    for (int i = 0; i < MathmodRef->pariso.JIso.count(); ++i)
+    for (int i = 0; i < MathmodRef->collection.JIso.count(); ++i)
     {
         QTreeWidgetItem *nameitem = new QTreeWidgetItem(IsolistItem);
-        nameitem->setText(0,  MathmodRef->pariso.JIso[i].Name[0]);
-        if(MathmodRef->pariso.JIso[i].Component.count() > 0)
+        nameitem->setText(0,  MathmodRef->collection.JIso[i].Name[0]);
+        if(MathmodRef->collection.JIso[i].Component.count() > 0)
         {
             QTreeWidgetItem *cmpitem = new QTreeWidgetItem(nameitem);
             cmpitem->setText(0,  "Components");
 
-            for(int j=0; j<MathmodRef->pariso.JIso[i].Component.count(); j++)
+            for(int j=0; j<MathmodRef->collection.JIso[i].Component.count(); j++)
             {
                 QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
-                cmpitem2->setText(0,  MathmodRef->pariso.JIso[i].Component.at(j));
+                cmpitem2->setText(0,  MathmodRef->collection.JIso[i].Component.at(j));
 
                 QTreeWidgetItem *cmpitem3 = new QTreeWidgetItem(cmpitem2);
-                cmpitem3->setText(0,  "F(x,y,z) = "+MathmodRef->pariso.JIso[i].Fxyz.at(j));
+                cmpitem3->setText(0,  "F(x,y,z) = "+MathmodRef->collection.JIso[i].Fxyz.at(j));
 
                 QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
-                cmpitem6->setText(0,  "X = ["+ MathmodRef->pariso.JIso[i].Xmin.at(j)  +", "+ MathmodRef->pariso.JIso[i].Xmax.at(j) +"]");
+                cmpitem6->setText(0,  "X = ["+ MathmodRef->collection.JIso[i].Xmin.at(j)  +", "+ MathmodRef->collection.JIso[i].Xmax.at(j) +"]");
 
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-                cmpitem7->setText(0,  "Y = ["+ MathmodRef->pariso.JIso[i].Ymin.at(j)  +", "+ MathmodRef->pariso.JIso[i].Ymax.at(j)  +"]");
+                cmpitem7->setText(0,  "Y = ["+ MathmodRef->collection.JIso[i].Ymin.at(j)  +", "+ MathmodRef->collection.JIso[i].Ymax.at(j)  +"]");
 
                 QTreeWidgetItem *cmpitem8 = new QTreeWidgetItem(cmpitem2);
-                cmpitem8->setText(0,  "Z = ["+ MathmodRef->pariso.JIso[i].Zmin.at(j)  +", "+ MathmodRef->pariso.JIso[i].Zmax.at(j)  +"]");
+                cmpitem8->setText(0,  "Z = ["+ MathmodRef->collection.JIso[i].Zmin.at(j)  +", "+ MathmodRef->collection.JIso[i].Zmax.at(j)  +"]");
 
                 //Grid resolution:
-                if(MathmodRef->pariso.JIso[i].Grid.size() > 0 && j < MathmodRef->pariso.JIso[i].Grid.size())
+                if(MathmodRef->collection.JIso[i].Grid.size() > 0 && j < MathmodRef->collection.JIso[i].Grid.size())
                 {
                     QTreeWidgetItem *cmpitem9 = new QTreeWidgetItem(cmpitem2);
-                    cmpitem9->setText(0,  "Grid = "+MathmodRef->pariso.JIso[i].Grid.at(j));
+                    cmpitem9->setText(0,  "Grid = "+MathmodRef->collection.JIso[i].Grid.at(j));
                 }
             }
         }
 
         //Add Global parameters:
         if (
-            MathmodRef->pariso.JIso[i].Csts.count() ||
-            MathmodRef->pariso.JIso[i].Funct.count()
+            MathmodRef->collection.JIso[i].Csts.count() ||
+            MathmodRef->collection.JIso[i].Funct.count()
         )
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
             parameteritem->setText(0,  "Parameters:");
 
-            if(MathmodRef->pariso.JIso[i].Csts.count() > 0)
+            if(MathmodRef->collection.JIso[i].Csts.count() > 0)
             {
                 QTreeWidgetItem *cstitem = new QTreeWidgetItem(parameteritem);
                 cstitem->setText(0,  "Constantes:");
-                for(int j=0; j<MathmodRef->pariso.JIso[i].Csts.count(); j++)
+                for(int j=0; j<MathmodRef->collection.JIso[i].Csts.count(); j++)
                 {
                     QTreeWidgetItem *cstitem2 = new QTreeWidgetItem(cstitem);
-                    cstitem2->setText(0,  MathmodRef->pariso.JIso[i].Csts.at(j));
+                    cstitem2->setText(0,  MathmodRef->collection.JIso[i].Csts.at(j));
                 }
             }
 
-            if(MathmodRef->pariso.JIso[i].Funct.count() > 0)
+            if(MathmodRef->collection.JIso[i].Funct.count() > 0)
             {
                 QTreeWidgetItem *fctitem = new QTreeWidgetItem(parameteritem);
                 fctitem->setText(0,  "Functions:");
-                for(int j=0; j<MathmodRef->pariso.JIso[i].Funct.count(); j++)
+                for(int j=0; j<MathmodRef->collection.JIso[i].Funct.count(); j++)
                 {
                     QTreeWidgetItem *fctitem2 = new QTreeWidgetItem(fctitem);
-                    fctitem2->setText(0,  MathmodRef->pariso.JIso[i].Funct.at(j));
+                    fctitem2->setText(0,  MathmodRef->collection.JIso[i].Funct.at(j));
                 }
             }
         }
@@ -4430,7 +4430,7 @@ void DrawingOptions::UpdateGui(int argc)
     ListeModelTexture LstModelTexture =
         (Parameters->LoadCollectionModels(
              JSONMathModels,
-             MathmodRef->pariso,
+             MathmodRef->collection,
              argc));
 
     //Load the script containing isosurface and parametric formulas:
@@ -4610,7 +4610,7 @@ void DrawingOptions::on_comboBoxTexture_activated(int index)
     if(index > 0)
     {
         QJsonDocument document;
-        document.setObject(MathmodRef->pariso.JTextures[index - 1].toObject());
+        document.setObject(MathmodRef->collection.JTextures[index - 1].toObject());
         ui.textureEdit->setText(QString (document.toJson()));
         DrawJsonModel(tmp, index-1);
     }
@@ -4625,7 +4625,7 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
     if(index > 0)
     {
         QJsonDocument document;
-        document.setObject(MathmodRef->pariso.JPigments[index - 1].toObject());
+        document.setObject(MathmodRef->collection.JPigments[index - 1].toObject());
         ui.textureEdit->setText(QString (document.toJson()));
         DrawJsonModel(tmp, 1000+index-1);
     }
@@ -4717,12 +4717,12 @@ void DrawingOptions::on_pushButton_5_clicked()
     QJsonObject tmp = doc.object();
     if(tmp["Texture"].isObject())
     {
-        MathmodRef->pariso.JTextures[ui.comboBoxTexture->currentIndex() - 1] = doc.object() ;
+        MathmodRef->collection.JTextures[ui.comboBoxTexture->currentIndex() - 1] = doc.object() ;
         on_comboBoxTexture_activated(ui.comboBoxTexture->currentIndex());
     }
     else
     {
-        MathmodRef->pariso.JPigments[ui.comboBoxPigment->currentIndex() - 1] = doc.object();
+        MathmodRef->collection.JPigments[ui.comboBoxPigment->currentIndex() - 1] = doc.object();
         on_comboBoxPigment_activated(ui.comboBoxPigment->currentIndex());
     }
 }

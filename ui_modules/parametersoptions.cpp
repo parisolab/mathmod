@@ -295,7 +295,7 @@ void Parametersoptions::on_loadconfig_clicked()
     GuiUpdate();
 }
 
-ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jpariso &pariso, int argc)
+ListeModelTexture Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection, jcollection &pariso, int argc)
 {
 
     QFile fconllect(filecollection);
