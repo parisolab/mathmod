@@ -1839,6 +1839,8 @@ void Par3D::clear(struct ComponentInfos *cp)
     cp->ParPts.clear();
     cp->IsoPositions.clear();
     cp->ParPositions.clear();
+    cp->ThereisCND = false;
+    cp->ThereisRGBA = false;
 }
 
 void  Par3D::ParamBuild(

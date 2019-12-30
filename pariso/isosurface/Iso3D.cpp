@@ -1543,7 +1543,6 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->NoiseParam.GradientParser = origin->NoiseParam.GradientParser;
     copy->NoiseParam.NoiseParser    = origin->NoiseParam.NoiseParser;
     copy->NoiseParam.RgbtParser     = origin->NoiseParam.RgbtParser;
-
     copy->ThereisRGBA             = origin->ThereisRGBA;
     copy->NbIso                   = origin->NbIso;
     copy->NbParametric            = origin->NbParametric;
@@ -1561,6 +1560,8 @@ void Iso3D::clear(struct ComponentInfos *cp)
     cp->ParPts.clear();
     cp->IsoPositions.clear();
     cp->ParPositions.clear();
+    cp->ThereisCND = false;
+    cp->ThereisRGBA = false;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
