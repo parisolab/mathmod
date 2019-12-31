@@ -1586,12 +1586,17 @@ void Iso3D::IsoBuild (
     */
     clear(components);
     NormVertexTabVector.clear();
+    NormVertexTabVector.shrink_to_fit();
     IndexPolyTabVector.clear();
+    IndexPolyTabVector.shrink_to_fit();
     IndexPolyTabMinVector.clear();
-
+    IndexPolyTabMinVector.shrink_to_fit();
     PointVerifyCond.clear();
+    PointVerifyCond.shrink_to_fit();
     TypeIsoSurfaceTriangleListeCNDVector.clear();
+    TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     NormOriginaltmpVector.clear();
+    NormOriginaltmpVector.shrink_to_fit();
 
     //*****//
     uint maxx = std::max(std::max(std::max(Xgrid, Ygrid), Zgrid), masterthread->maximumgrid);
@@ -1612,8 +1617,7 @@ void Iso3D::IsoBuild (
         delete[] Results;
     Results = new double[maxx*maxx*maxx];
 
-    //if(components != nullptr)
-        components.NbIso = masterthread->ImplicitFunctionSize;
+    components.NbIso = masterthread->ImplicitFunctionSize;
 
     stopcalculations(false);
 
@@ -1714,14 +1718,10 @@ void Iso3D::IsoBuild (
         }
 
         // Save the Index:
-        //if(components != nullptr)
-        {
-            components.IsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
-            components.IsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
-
-            components.IsoPts.push_back(NbVertexTmp);
-            components.IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
-        }
+        components.IsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
+        components.IsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
+        components.IsoPts.push_back(NbVertexTmp);
+        components.IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
 
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
@@ -1788,7 +1788,6 @@ void Iso3D::IsoBuild (
     *VertexNumberpt  = uint(NormVertexTabVector.size()/10);
     *VertxNumber     = uint(IndexPolyTabMinVector.size());
 
-
     if(masterthread->morph_activated != 1)
     {
         message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->ImplicitFunctionSize)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
@@ -1803,6 +1802,7 @@ void Iso3D::IsoBuild (
     copycomponent(componentsPt, &components);
     Setgrid(PreviousGridVal);
 }
+
 ///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::Setgrid(uint NewGridVal)
 {
@@ -2061,47 +2061,27 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
                 {
                     //Add Bprime:
-                    NormVertexTabVector[10*NbVertexTmp   ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+1 ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+2 ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+3 ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+4 ] = NormVertexTabVector[10*Bindex + 4];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 4]);
-                    NormVertexTabVector[10*NbVertexTmp+5 ] = NormVertexTabVector[10*Bindex + 5];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 5]);
-                    NormVertexTabVector[10*NbVertexTmp+6 ] = NormVertexTabVector[10*Bindex + 6];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 6]);
-                    NormVertexTabVector[10*NbVertexTmp+7 ] = float(Bprime[0]);
                     NormVertexTabVector.push_back(float(Bprime[0]));
-                    NormVertexTabVector[10*NbVertexTmp+8 ] = float(Bprime[1]);
                     NormVertexTabVector.push_back(float(Bprime[1]));
-                    NormVertexTabVector[10*NbVertexTmp+9 ] = float(Bprime[2]);
                     NormVertexTabVector.push_back(float(Bprime[2]));
 
                     //Add Cprime:
-                    NormVertexTabVector[10*NbVertexTmp +10] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +11] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +12] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +13] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +14] = NormVertexTabVector[10*Cindex + 4];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 4]);
-                    NormVertexTabVector[10*NbVertexTmp +15] = NormVertexTabVector[10*Cindex + 5];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 5]);
-                    NormVertexTabVector[10*NbVertexTmp +16] = NormVertexTabVector[10*Cindex + 6];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 6]);
-                    NormVertexTabVector[10*NbVertexTmp +17] = float(Cprime[0]);
                     NormVertexTabVector.push_back(float(Cprime[0]));
-                    NormVertexTabVector[10*NbVertexTmp +18] = float(Cprime[1]);
                     NormVertexTabVector.push_back(float(Cprime[1]));
-                    NormVertexTabVector[10*NbVertexTmp +19] = float(Cprime[2]);
                     NormVertexTabVector.push_back(float(Cprime[2]));
 
                     NbVertexTmp += 2;

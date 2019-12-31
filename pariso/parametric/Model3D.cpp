@@ -1854,11 +1854,17 @@ void  Par3D::ParamBuild(
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     clear(components);
     NormVertexTabVector.clear();
+    NormVertexTabVector.shrink_to_fit();
     IndexPolyTabMinVector.clear();
+    IndexPolyTabMinVector.shrink_to_fit();
     IndexPolyTabVector.clear();
+    IndexPolyTabVector.shrink_to_fit();
     PointVerifyCond.clear();
+    PointVerifyCond.shrink_to_fit();
     TypeIsoSurfaceTriangleListeCNDVector.clear();
+    TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     ExtraDimensionVector.clear();
+    ExtraDimensionVector.shrink_to_fit();
 
     //*******/
     components.NbParametric = masterthread->expression_XSize;
