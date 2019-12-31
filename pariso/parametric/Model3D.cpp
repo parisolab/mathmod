@@ -1549,6 +1549,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
         //Copy the new index in the original one:
         IndexPolyTabVector.clear();
+        NewIndexPolyTabVector.shrink_to_fit();
         IndexPolyTabVector = NewIndexPolyTabVector;
         NewIndexPolyTabVector.clear();
         NewIndexPolyTabVector.shrink_to_fit();
