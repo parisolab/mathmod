@@ -1419,34 +1419,30 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //***********
                 //Add points:
                 //***********
-                //if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
-                {
-                    //Add Bprime:
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+4]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+5]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+6]);
-                    NormVertexTabVector.push_back(float(Bprime[0]));
-                    NormVertexTabVector.push_back(float(Bprime[1]));
-                    NormVertexTabVector.push_back(float(Bprime[2]));
+                //Add Bprime:
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+4]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+5]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+6]);
+                NormVertexTabVector.push_back(float(Bprime[0]));
+                NormVertexTabVector.push_back(float(Bprime[1]));
+                NormVertexTabVector.push_back(float(Bprime[2]));
 
-                    //Add Cprime:
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 4]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 5]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 6]);
-                    NormVertexTabVector.push_back(float(Cprime[0]));
-                    NormVertexTabVector.push_back(float(Cprime[1]));
-                    NormVertexTabVector.push_back(float(Cprime[2]));
-                    NbVertexTmp += 2;
-                }
-                //else return 0;
+                //Add Cprime:
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 4]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 5]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 6]);
+                NormVertexTabVector.push_back(float(Cprime[0]));
+                NormVertexTabVector.push_back(float(Cprime[1]));
+                NormVertexTabVector.push_back(float(Cprime[2]));
+                NbVertexTmp += 2;
 
                 //***********
                 //Add triangles:
