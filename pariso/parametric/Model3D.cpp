@@ -1422,49 +1422,28 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
                 {
                     //Add Bprime:
-                    NormVertexTabVector[10*NbVertexTmp  ] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+1] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+2] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+3] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp+4] = NormVertexTabVector[10*Bindex+4];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+4]);
-                    NormVertexTabVector[10*NbVertexTmp+5] = NormVertexTabVector[10*Bindex+5];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+5]);
-                    NormVertexTabVector[10*NbVertexTmp+6] = NormVertexTabVector[10*Bindex+6];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+6]);
-                    NormVertexTabVector[10*NbVertexTmp+7] = float(Bprime[0]);
                     NormVertexTabVector.push_back(float(Bprime[0]));
-                    NormVertexTabVector[10*NbVertexTmp+8] = float(Bprime[1]);
                     NormVertexTabVector.push_back(float(Bprime[1]));
-                    NormVertexTabVector[10*NbVertexTmp+9] = float(Bprime[2]);
                     NormVertexTabVector.push_back(float(Bprime[2]));
 
                     //Add Cprime:
-                    NormVertexTabVector[10*NbVertexTmp +10] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +11] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +12] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +13] = 1.0;
                     NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector[10*NbVertexTmp +14] = NormVertexTabVector[10*Cindex + 4];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 4]);
-                    NormVertexTabVector[10*NbVertexTmp +15] = NormVertexTabVector[10*Cindex + 5];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 5]);
-                    NormVertexTabVector[10*NbVertexTmp +16] = NormVertexTabVector[10*Cindex + 6];
                     NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 6]);
-                    NormVertexTabVector[10*NbVertexTmp +17] = float(Cprime[0]);
                     NormVertexTabVector.push_back(float(Cprime[0]));
-                    NormVertexTabVector[10*NbVertexTmp +18] = float(Cprime[1]);
                     NormVertexTabVector.push_back(float(Cprime[1]));
-                    NormVertexTabVector[10*NbVertexTmp +19] = float(Cprime[2]);
                     NormVertexTabVector.push_back(float(Cprime[2]));
-
                     NbVertexTmp += 2;
                 }
                 //else return 0;
@@ -1571,6 +1550,8 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         //Copy the new index in the original one:
         IndexPolyTabVector.clear();
         IndexPolyTabVector = NewIndexPolyTabVector;
+        NewIndexPolyTabVector.clear();
+        NewIndexPolyTabVector.shrink_to_fit();
         NbTriangleIsoSurfaceTmp = M + l + k;
 
         components.NbTrianglesVerifyCND = k;
