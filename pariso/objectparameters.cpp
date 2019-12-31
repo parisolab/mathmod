@@ -199,22 +199,22 @@ ObjectParameters::ObjectParameters()
     objectproperties.quality_image  = 50;
     objectproperties.colortype      = 0;
     objectproperties.colortypeParam = 0;
-    InitComponentinfos(&(objectproperties.componentsinfos));
+    InitComponentinfos(objectproperties.componentsinfos);
     InitComponentinfos(components);
 }
 
-void ObjectParameters::InitComponentinfos(struct  ComponentInfos*  compinfos)
+void ObjectParameters::InitComponentinfos(struct  ComponentInfos&  compinfos)
 {
-    compinfos->NoiseParam.Octaves     = 4;
-    compinfos->NoiseParam.Lacunarity  = 0.5;
-    compinfos->NoiseParam.Gain        = 0.5;
-    compinfos->NoiseParam.NoiseActive = 1;
+    compinfos.NoiseParam.Octaves     = 4;
+    compinfos.NoiseParam.Lacunarity  = 0.5;
+    compinfos.NoiseParam.Gain        = 0.5;
+    compinfos.NoiseParam.NoiseActive = 1;
 
-    compinfos->DFTrianglesNotVerifyCND =
-        compinfos->DFTrianglesVerifyCND =
-            compinfos->DMTrianglesBorderCND = true;
-    compinfos->DMTrianglesNotVerifyCND =
-        compinfos->DMTrianglesVerifyCND = false;
+    compinfos.DFTrianglesNotVerifyCND =
+        compinfos.DFTrianglesVerifyCND =
+            compinfos.DMTrianglesBorderCND = true;
+    compinfos.DMTrianglesNotVerifyCND =
+        compinfos.DMTrianglesVerifyCND = false;
 
-    compinfos->ThereisCND = false;
+    compinfos.ThereisCND = false;
 }

@@ -155,10 +155,10 @@ public:
     void calcul_Norm(uint i=0);
     void make_PolyIndexTri(uint p=0);
     void make_PolyIndexMin(uint p=0);
-    uint CNDtoUse(uint, struct ComponentInfos*);
-    uint CNDCalculation(uint &, struct ComponentInfos *);
-    void CalculateColorsPoints(struct ComponentInfos *);
-    void clear(struct ComponentInfos *);
+    uint CNDtoUse(uint, struct ComponentInfos&);
+    uint CNDCalculation(uint &, struct ComponentInfos &);
+    void CalculateColorsPoints(struct ComponentInfos &);
+    void clear(struct ComponentInfos &);
     void ParamBuild(float **, float **,uint **, uint *,
                     uint *, ComponentInfos *,
                     int **,

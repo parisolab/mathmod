@@ -268,13 +268,7 @@ public:
     float lookup(float, float, float);
 };
 
-extern uint NbMaxGrid;  // Should use the defined value in mathmodconfig.js
-extern uint IsoNbCmp;
-
 static std::vector<float> NormVertexTabVector;
 static std::vector<uint>  IndexPolyTabMinVector;
 static std::vector<uint>  IndexPolyTabVector;
-
-static struct  ComponentInfos componentsStr;
-static struct  ComponentInfos* components= &componentsStr;
-//components= (ComponentInfos*)malloc(sizeof(*components)); not working since each call to commun.h will create a new pointer...
+static struct  ComponentInfos components;

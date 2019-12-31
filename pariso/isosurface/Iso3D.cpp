@@ -28,7 +28,7 @@ static uint NbVertexTmp = 0;
 
 static std::vector<float> NormOriginaltmpVector;
 
-uint NbMaxGrid = 100;
+static uint NbMaxGrid = 100;
 
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
@@ -1527,7 +1527,7 @@ void Iso3D::stopcalculations(bool calculation)
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    clear(copy);
+    clear(*copy);
     copy->IsoPositions = origin->IsoPositions;
     copy->IsoPts       = origin->IsoPts;
     copy->ParPositions = origin->ParPositions;
@@ -1554,14 +1554,14 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::clear(struct ComponentInfos *cp)
+void Iso3D::clear(struct ComponentInfos &cp)
 {
-    cp->IsoPts.clear();
-    cp->ParPts.clear();
-    cp->IsoPositions.clear();
-    cp->ParPositions.clear();
-    cp->ThereisCND = false;
-    cp->ThereisRGBA = false;
+    cp.IsoPts.clear();
+    cp.ParPts.clear();
+    cp.IsoPositions.clear();
+    cp.ParPositions.clear();
+    cp.ThereisCND = false;
+    cp.ThereisRGBA = false;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1613,7 +1613,7 @@ void Iso3D::IsoBuild (
     Results = new double[maxx*maxx*maxx];
 
     //if(components != nullptr)
-        components->NbIso = masterthread->ImplicitFunctionSize;
+        components.NbIso = masterthread->ImplicitFunctionSize;
 
     stopcalculations(false);
 
@@ -1716,11 +1716,11 @@ void Iso3D::IsoBuild (
         // Save the Index:
         //if(components != nullptr)
         {
-            components->IsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
-            components->IsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
+            components.IsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
+            components.IsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
 
-            components->IsoPts.push_back(NbVertexTmp);
-            components->IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
+            components.IsoPts.push_back(NbVertexTmp);
+            components.IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
         }
 
         // Save Number of Polys and vertex :
@@ -1758,30 +1758,30 @@ void Iso3D::IsoBuild (
     // Pigment, Texture and Noise :
     if(masterthread->vrgbtnotnull)
     {
-        components->ThereisRGBA = true;
-        components->NoiseParam.NoiseType = 0; //Pigments
-        components->NoiseParam.VRgbtParser = masterthread->VRgbtParser;
-        components->NoiseParam.GradientParser = masterthread->GradientParser;
-        components->NoiseParam.NoiseParser =  masterthread->NoiseParser;
-        components->NoiseParam.Nb_vrgbts = masterthread->VRgbtSize;
+        components.ThereisRGBA = true;
+        components.NoiseParam.NoiseType = 0; //Pigments
+        components.NoiseParam.VRgbtParser = masterthread->VRgbtParser;
+        components.NoiseParam.GradientParser = masterthread->GradientParser;
+        components.NoiseParam.NoiseParser =  masterthread->NoiseParser;
+        components.NoiseParam.Nb_vrgbts = masterthread->VRgbtSize;
     }
     else if(masterthread->RgbtSize >= 4)
     {
-        components->ThereisRGBA = true;
-        components->NoiseParam.NoiseType = 1; //Texture
-        components->NoiseParam.RgbtParser = masterthread->RgbtParser;
-        components->NoiseParam.NoiseParser =  masterthread->NoiseParser;
+        components.ThereisRGBA = true;
+        components.NoiseParam.NoiseType = 1; //Texture
+        components.NoiseParam.RgbtParser = masterthread->RgbtParser;
+        components.NoiseParam.NoiseParser =  masterthread->NoiseParser;
     }
     else
     {
-        components->ThereisRGBA = false;
-        components->NoiseParam.NoiseType = -1; //No Pigments or texture
+        components.ThereisRGBA = false;
+        components.NoiseParam.NoiseType = -1; //No Pigments or texture
     }
 
     if(masterthread->Noise == "")
-        components->NoiseParam.NoiseShape = 0;
+        components.NoiseParam.NoiseShape = 0;
     else
-        components->NoiseParam.NoiseShape = 1;
+        components.NoiseParam.NoiseShape = 1;
 
     CalculateColorsPoints(components);
     *PolyNumber      = uint(IndexPolyTabVector.size());
@@ -1800,7 +1800,7 @@ void Iso3D::IsoBuild (
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     *TriangleListeCND = TypeIsoSurfaceTriangleListeCNDVector.data();
     componentsPt->Interleave = true;
-    copycomponent(componentsPt, components);
+    copycomponent(componentsPt, &components);
     Setgrid(PreviousGridVal);
 }
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1822,16 +1822,16 @@ void Iso3D::Setgrid(uint NewGridVal)
     }
 }
 ///+++++++++++++++++++++++++++++++++++++++++
-uint Iso3D::CNDtoUse(uint index, struct ComponentInfos *components)
+uint Iso3D::CNDtoUse(uint index, struct ComponentInfos &components)
 {
     for(uint fctnb= 0; fctnb < (masterthread->ImplicitFunctionSize); fctnb++)
-        if( index <= components->IsoPts[2*fctnb +1] && index >= components->IsoPts[2*fctnb])
+        if( index <= components.IsoPts[2*fctnb +1] && index >= components.IsoPts[2*fctnb])
             return fctnb;
     return 30;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
+void Iso3D::CalculateColorsPoints(struct ComponentInfos &components)
 {
     uint cmpId=0, K=0;
     double tmp,
@@ -1840,7 +1840,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
     ValCol = new double[masterthread->VRgbtSize+5];
     val[3] = masterthread->stepMorph;
 
-    if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 0)
+    if(components.ThereisRGBA == true &&  components.NoiseParam.NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize; i++)
         {
@@ -1877,11 +1877,11 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
                 }
         }
     }
-    else if(components->ThereisRGBA == true &&  components->NoiseParam.NoiseType == 1)
+    else if(components.ThereisRGBA == true &&  components.NoiseParam.NoiseType == 1)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-                if((i >= uint(components->IsoPts[2*cmpId])))
+                if((i >= uint(components.IsoPts[2*cmpId])))
                 {
                     K = cmpId;
                     if((masterthread->ImplicitFunctionSize-1)>cmpId)
@@ -1913,7 +1913,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos *components)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *components)
+uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos &components)
 {
     double vals[4];
     vals[3] = masterthread->stepMorph;
@@ -2218,23 +2218,17 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         IndexPolyTabVector = NewIndexPolyTabVector;
         NbTriangleIsoSurfaceTmp = M + l + k;
 
-        components->NbTrianglesVerifyCND = k;
-        components->NbTrianglesNotVerifyCND = l;
-        components->NbTrianglesBorderCND = M;
+        components.NbTrianglesVerifyCND = k;
+        components.NbTrianglesNotVerifyCND = l;
+        components.NbTrianglesBorderCND = M;
 
         for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
-        {
-            if(components != nullptr)
-            {
-                components->IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
-            }
-        }
-        components->ThereisCND = true;
-
+            components.IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
+        components.ThereisCND = true;
     }
     else
     {
-        components->ThereisCND = false;
+        components.ThereisCND = false;
 
         for(uint i= 0; i < NbVertexTmp; i++)
         {
