@@ -2058,35 +2058,31 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 //***********
                 //Add points:
                 //***********
-                //if((10*NbVertexTmp+3+ 4 +20)  < 10*NbMaxPts )
-                {
-                    //Add Bprime:
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 4]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 5]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 6]);
-                    NormVertexTabVector.push_back(float(Bprime[0]));
-                    NormVertexTabVector.push_back(float(Bprime[1]));
-                    NormVertexTabVector.push_back(float(Bprime[2]));
+                //Add Bprime:
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 4]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 5]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 6]);
+                NormVertexTabVector.push_back(float(Bprime[0]));
+                NormVertexTabVector.push_back(float(Bprime[1]));
+                NormVertexTabVector.push_back(float(Bprime[2]));
 
-                    //Add Cprime:
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(1.0);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 4]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 5]);
-                    NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 6]);
-                    NormVertexTabVector.push_back(float(Cprime[0]));
-                    NormVertexTabVector.push_back(float(Cprime[1]));
-                    NormVertexTabVector.push_back(float(Cprime[2]));
+                //Add Cprime:
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(1.0);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 4]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 5]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Cindex + 6]);
+                NormVertexTabVector.push_back(float(Cprime[0]));
+                NormVertexTabVector.push_back(float(Cprime[1]));
+                NormVertexTabVector.push_back(float(Cprime[2]));
 
-                    NbVertexTmp += 2;
-                }
-                //else return 0;
+                NbVertexTmp += 2;
 
                 //***********
                 //Add triangles:
@@ -2099,64 +2095,60 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCNDVector[i]=0;
 
-                //if(3*(NbTriangleIsoSurfaceTmp+4) < 4*NbMaxTri)
-                {
-                    /// (A, Bprime, Cprime)
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                    IndexPolyTabVector.push_back(Aindex);
-                    IndexPolyTabVector.push_back(IndexBprime);
-                    IndexPolyTabVector.push_back(IndexCprime);
+                /// (A, Bprime, Cprime)
+                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexPolyTabVector.push_back(Aindex);
+                IndexPolyTabVector.push_back(IndexBprime);
+                IndexPolyTabVector.push_back(IndexCprime);
 
-                    (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                    TypeIsoSurfaceTriangleListeCNDVector.push_back(1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(-1);
-                    NbTriangleIsoSurfaceTmp++;
-                    IndexPolyTabMinVector.push_back(3);
-                    IndexPolyTabMinVector.push_back(Aindex);
-                    IndexPolyTabMinVector.push_back(IndexBprime);
-                    IndexPolyTabMinVector.push_back(IndexCprime);
+                (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(-1);
+                NbTriangleIsoSurfaceTmp++;
+                IndexPolyTabMinVector.push_back(3);
+                IndexPolyTabMinVector.push_back(Aindex);
+                IndexPolyTabMinVector.push_back(IndexBprime);
+                IndexPolyTabMinVector.push_back(IndexCprime);
 
-                    /// (Bprime, B, C)
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                    IndexPolyTabVector.push_back(IndexBprime);
-                    IndexPolyTabVector.push_back(Bindex);
-                    IndexPolyTabVector.push_back(Cindex);
+                /// (Bprime, B, C)
+                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexPolyTabVector.push_back(IndexBprime);
+                IndexPolyTabVector.push_back(Bindex);
+                IndexPolyTabVector.push_back(Cindex);
 
-                    (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                    TypeIsoSurfaceTriangleListeCNDVector.push_back(-1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
-                    NbTriangleIsoSurfaceTmp++;
-                    IndexPolyTabMinVector.push_back(3);
-                    IndexPolyTabMinVector.push_back(IndexBprime);
-                    IndexPolyTabMinVector.push_back(Bindex);
-                    IndexPolyTabMinVector.push_back(Cindex);
+                (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(-1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
+                NbTriangleIsoSurfaceTmp++;
+                IndexPolyTabMinVector.push_back(3);
+                IndexPolyTabMinVector.push_back(IndexBprime);
+                IndexPolyTabMinVector.push_back(Bindex);
+                IndexPolyTabMinVector.push_back(Cindex);
 
-                    /// (Bprime, C, Cprime)
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                    IndexPolyTabVector.push_back(IndexBprime);
-                    IndexPolyTabVector.push_back(Cindex);
-                    IndexPolyTabVector.push_back(IndexCprime);
+                /// (Bprime, C, Cprime)
+                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexPolyTabVector.push_back(IndexBprime);
+                IndexPolyTabVector.push_back(Cindex);
+                IndexPolyTabVector.push_back(IndexCprime);
 
-                    (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                    TypeIsoSurfaceTriangleListeCNDVector.push_back(-1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
-                    NbTriangleIsoSurfaceTmp++;
-                    IndexPolyTabMinVector.push_back(3);
-                    IndexPolyTabMinVector.push_back(IndexBprime);
-                    IndexPolyTabMinVector.push_back(Cindex);
-                    IndexPolyTabMinVector.push_back(IndexCprime);
+                (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(-1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
+                NbTriangleIsoSurfaceTmp++;
+                IndexPolyTabMinVector.push_back(3);
+                IndexPolyTabMinVector.push_back(IndexBprime);
+                IndexPolyTabMinVector.push_back(Cindex);
+                IndexPolyTabMinVector.push_back(IndexCprime);
 
-                    /// (Bprime, Cprime) --> the border
-                    IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
-                    IndexPolyTabVector.push_back(IndexBprime);
-                    IndexPolyTabVector.push_back(IndexCprime);
-                    IndexPolyTabVector.push_back(IndexCprime);
+                /// (Bprime, Cprime) --> the border
+                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
+                IndexPolyTabVector.push_back(IndexBprime);
+                IndexPolyTabVector.push_back(IndexCprime);
+                IndexPolyTabVector.push_back(IndexCprime);
 
-                    TypeIsoSurfaceTriangleListeCNDVector.push_back(4); /// Type = 4-->Border
-                    NbTriangleIsoSurfaceTmp++;
-                    IndexPolyTabMinVector.push_back(3);
-                    IndexPolyTabMinVector.push_back(IndexBprime);
-                    IndexPolyTabMinVector.push_back(IndexCprime);
-                    IndexPolyTabMinVector.push_back(IndexCprime);
-                }
-                //else return 2;
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(4); /// Type = 4-->Border
+                NbTriangleIsoSurfaceTmp++;
+                IndexPolyTabMinVector.push_back(3);
+                IndexPolyTabMinVector.push_back(IndexBprime);
+                IndexPolyTabMinVector.push_back(IndexCprime);
+                IndexPolyTabMinVector.push_back(IndexCprime);
             }
         }
 
