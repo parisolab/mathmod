@@ -33,7 +33,7 @@ public:
     ObjectProperties objectproperties;
 public:
     ObjectParameters();
-    void InitComponentinfos(struct  ComponentInfos &);
+    void InitComponentinfos(struct  ComponentInfos *);
 };
 
 #endif // OBJECTPARAMETERS_H

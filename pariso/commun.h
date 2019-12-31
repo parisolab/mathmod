@@ -136,20 +136,20 @@ struct  ComponentInfos
     std::vector<uint> IsoPts;
     std::vector<uint> ParPositions;
     std::vector<uint> ParPts;
+    int selectedComponent;
     uint NbIso=0;
     uint NbParametric=0;
-    int selectedComponent;
+    uint NbTrianglesVerifyCND=0;
+    uint NbTrianglesNotVerifyCND=0;
+    uint NbTrianglesBorderCND=0;
+    NoiseParemeters NoiseParam;
     bool ThereisCND=false;
     bool ThereisRGBA=false;
-    uint NbTrianglesVerifyCND=0;
     bool DMTrianglesVerifyCND=false;
     bool DFTrianglesVerifyCND=false;
-    uint NbTrianglesNotVerifyCND=0;
     bool DMTrianglesNotVerifyCND=false;
     bool DFTrianglesNotVerifyCND=false;
-    uint NbTrianglesBorderCND=0;
     bool DMTrianglesBorderCND=false;
-    NoiseParemeters NoiseParam;
     bool Interleave=false;
 };
 
@@ -276,4 +276,5 @@ static std::vector<uint>  IndexPolyTabMinVector;
 static std::vector<uint>  IndexPolyTabVector;
 
 static struct  ComponentInfos componentsStr;
-static struct  ComponentInfos * components = &componentsStr;
+static struct  ComponentInfos* components= &componentsStr;
+//components= (ComponentInfos*)malloc(sizeof(*components)); not working since each call to commun.h will create a new pointer...
