@@ -2074,10 +2074,10 @@ void  Par3D::calcul_Norm(uint idx)
     }
     if(Ugrid>1 && Vgrid>1)
     {
-    i = Ugrid -1;
-    j =Vgrid -1;
-    NormVertexTabVector[i*deplacement +j*10  +idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10  +idx+ 4];
-    NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+1+idx+ 4];
-    NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+2+idx+ 4];
+        i = Ugrid -1;
+        j =Vgrid -1;
+        NormVertexTabVector[i*deplacement +j*10  +idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10  +idx+ 4];
+        NormVertexTabVector[i*deplacement +j*10+1+idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+1+idx+ 4];
+        NormVertexTabVector[i*deplacement +j*10+2+idx+ 4]  = NormVertexTabVector[(i-1)*deplacement +(j-1)*10+2+idx+ 4];
     }
-    }
+}

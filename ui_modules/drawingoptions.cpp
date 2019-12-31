@@ -2440,6 +2440,7 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
     if(!MathmodRef->ui.glWidget->IsoObjet->isRunning() &&
          !MathmodRef->ui.glWidget->ParObjet->isRunning())
     {
+        on_InitTButton_clicked();
         //int result;
         QString tst;
         MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1;
