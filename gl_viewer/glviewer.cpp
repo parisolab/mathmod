@@ -1515,11 +1515,12 @@ void OpenGlWidget::paintGL()
     {
         if(LocalScene.typedrawing == 11)
         {
+            /*
             IsoObjet->IsoBuild(
                 &(LocalScene.ArrayNorVer_localPt),
                 &(LocalScene.PolyIndices_localPt),
-                &LocalScene.PolyNumberTmp1,
-                &LocalScene.VertxNumberTmp1,
+                &LocalScene.PolyNumber,
+                &LocalScene.VertxNumber,
                 &(LocalScene.PolyIndices_localPtMin),
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos),
@@ -1537,23 +1538,7 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.PolyIndices_localPtMin),
                 &(LocalScene.NbPolygnNbVertexPtMin)
             );
-/*
-            ParObjet->ParamBuild(
-                &(&(LocalScene.ArrayNorVer_localPt[TypeDrawin*(LocalScene.VertxNumberTmp1)])),
-                LocalScene.ArrayNorVer_localPt,
-                &(LocalScene.PolyIndices_localPt[LocalScene.PolyNumberTmp1]),
-                &LocalScene.PolyNumberTmp2,
-                &LocalScene.VertxNumberTmp2,
-                LocalScene.VertxNumberTmp1,
-                &(LocalScene.componentsinfos),
-                LocalScene.Typetriangles,
-                LocalScene.PolyIndices_localPtMin,
-                &(LocalScene.NbPolygnNbVertexPtMin)
-            );
-*/
-            LocalScene.PolyNumber = LocalScene.PolyNumberTmp1 + LocalScene.PolyNumberTmp2;
-            LocalScene.VertxNumber= LocalScene.VertxNumberTmp1  + LocalScene.VertxNumberTmp2;
-
+            */
         }
         else if(LocalScene.typedrawing == -1)
         {
