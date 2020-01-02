@@ -2,6 +2,54 @@
   "MathModels": [
     {
         "Param3D": {
+            "Description": ["Twisted_Multisided_Torus by Abderrahman Taha 01/01/2020"
+            ],
+            "Name": ["Twisted_Multisided_Torus"
+            ],
+            "Component": ["knot"
+            ],
+            "Const": ["N=5","M=16","P=13","k=5","k0=5","k1=2","L=(3/2)","r0=6","dv=(1/100)","P=5","MM=10","p=7","q=2","R=3","r=1","r0=20","r00=30","dv=1/1000"
+            ],
+            "Funct": ["Rapp = (u/sqrt(u*u+v*v+t*t))","Bx = 1/sqrt(u*u+v*v+t*t)","Fx = (cos(q*v)*(R+(r/10)*cos(p*v))) + (r0/100)*Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v)))*cos(u) + (r0/100)*((R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))) * Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v)))) - (p*r/10)*cos(p*v) * Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","Fy = (sin(q*v)*(R+(r/10)*cos(p*v))) + (r0/100)*Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v)))*cos(u) + (r0/100)*((p*r/10)*cos(p*v) * Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))) - (-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))) * Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v)))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","Fz = (r/10)*(sin(p*v)) + (r0/100)*Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))))*cos(u) + (r0/100)*((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))) * Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))) - (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))) * Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","DFxv = (Fx(u,v+dv,t) - Fx(u,v,t))/dv","DFyv = (Fy(u,v+dv,t) - Fy(u,v,t))/dv","DFzv = (Fz(u,v+dv,t) - Fz(u,v,t))/dv","DFxv2 = (DFxv(u,v+dv,t) - DFxv(u,v,t))/dv","DFyv2 = (DFyv(u,v+dv,t) - DFyv(u,v,t))/dv","DFzv2 = (DFzv(u,v+dv,t) - DFzv(u,v,t))/dv","Rapp = (u/sqrt(u*u+v*v+t*t))","Nx = Rapp(DFxv2(u,v,t),DFyv2(u,v,t),DFzv2(u,v,t))","Ny = Rapp(DFyv2(u,v,t),DFxv2(u,v,t),DFzv2(u,v,t))","Nz = Rapp(DFzv2(u,v,t),DFyv2(u,v,t),DFxv2(u,v,t))","Bx = 1/sqrt(u*u+v*v+t*t)","Binx = (DFyv(u,v,t) * Nz(u,v,t) - DFzv(u,v,t) * Ny(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","Biny = (DFzv(u,v,t) * Nx(u,v,t) - DFxv(u,v,t) * Nz(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","Binz = (DFxv(u,v,t) * Ny(u,v,t) - DFyv(u,v,t) * Nx(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","S = (r0/100)*((k0-1)*cos(u+k1*t) + cos((k0-1)*u+k1*t))","C = (r0/100)*((k0-1)*sin(u+k1*t) - sin((k0-1)*u+k1*t))","Sx = Fx(pi,v,t) + Nx(pi,v,t)*C(u,v,t) + Binx(pi,v,t)*S(u,v,t)","Sy = Fy(pi,v,t) + Ny(pi,v,t)*C(u,v,t) + Biny(pi,v,t)*S(u,v,t)","Sz = Fz(pi,v,t) + Nz(pi,v,t)*C(u,v,t) + Binz(pi,v,t)*S(u,v,t)"
+            ],
+            "Fx": ["Sx(u,v,t)"
+            ],
+            "Fy": ["Sy(u,v,t)"
+            ],
+            "Fz": ["Sz(u,v,t)"
+            ],
+            "Grid": ["80","200"
+            ],
+            "Umax": ["pi"
+            ],
+            "Umin": ["-pi"
+            ],
+            "Vmax": ["2*pi"
+            ],
+            "Vmin": ["0"
+            ]
+        },
+        "Sliders": {
+            "Max": ["20","20","10","50","100"
+            ],
+            "Min": ["0","0","0","0","0"
+            ],
+            "Name": ["p","q","R","r","r0"
+            ],
+            "Position": ["5","1","2","7","11"
+            ],
+            "Step": ["1","1","1","1","1"
+            ]
+        },
+        "Texture": {
+            "Colors": ["R=abs(cos(u))","G=abs(cos(v))","B=abs(sin(v)+sin(u))","T=1"
+            ],
+            "Name": "Rainbow",
+            "Noise": ""
+        }
+    },
+    {
+        "Param3D": {
             "Description": ["Apples on Moebius by Abderrahman Taha 24/03/2019"
             ],
             "Name": ["Apples_on_Moebius"
