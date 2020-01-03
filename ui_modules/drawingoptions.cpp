@@ -908,9 +908,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 {
     QString result;
     QJsonArray lst;
-    QJsonObject QObj;
+    QJsonObject QObj, QIso, QPar;
     QJsonObject QTextureObj, QPigmentObj;
     bool loadtext, loadpigm;
+    QJsonDocument document;
 
     if(textureIndex != -1)
     {
@@ -930,8 +931,31 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
     ShowSliders(Jobj);
     updateCurrentTreestruct();
-
-    if(Jobj["Iso3D"].isObject())
+    if(Jobj["ParIso"].isObject())
+    {
+        loadtext = loadpigm = false;
+        QObj = Jobj["ParIso"].toObject();
+        QPar = QObj["Param3D"].toObject();
+        QIso = QObj["Iso3D"].toObject();
+        LoadMandatoryAndOptionnalFields(QPar, PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+        LoadMandatoryAndOptionnalFields(QIso, ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+        document.setObject(Jobj);
+        MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
+        CurrentFormulaType = 2;
+        /// process the new surface
+        /*
+        if(textureIndex == -1)
+        {
+            if(MathmodRef->RootObjet.CurrentTreestruct.fxyz.count() > 0)
+                MathmodRef->ProcessNewIsoSurface( );
+        }
+        */
+        if(textureIndex == -1)
+        {
+            MathmodRef->ParametricSurfaceProcess(1);
+        }
+    }
+    else if(Jobj["Iso3D"].isObject())
     {
         QObj = Jobj["Iso3D"].toObject();
 
@@ -949,8 +973,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         //Some keys cleaning..
         Jobjtmp.remove("Param3D");
         Jobjtmp.remove("Param4D");
-
-        QJsonDocument document;
         document.setObject(Jobjtmp);
         MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
 
