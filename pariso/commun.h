@@ -151,6 +151,7 @@ struct  ComponentInfos
     bool DFTrianglesNotVerifyCND=false;
     bool DMTrianglesBorderCND=false;
     bool Interleave=false;
+    bool pariso = false;
 };
 
 struct  ObjectProperties
@@ -194,6 +195,7 @@ struct  ObjectProperties
     int   boundingbox;
     int   isobox;
     bool  activarecnd;
+    bool  updategl=true;
     int   triangles;
     int   interior;
     int   exterior;
@@ -268,7 +270,7 @@ public:
     float lookup(float, float, float);
 };
 
-static std::vector<float> NormVertexTabVector;
-static std::vector<uint>  IndexPolyTabMinVector;
-static std::vector<uint>  IndexPolyTabVector;
+extern std::vector<float> NormVertexTabVector;
+extern std::vector<uint>  IndexPolyTabMinVector;
+extern std::vector<uint>  IndexPolyTabVector;
 static struct  ComponentInfos components;

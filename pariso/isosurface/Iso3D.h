@@ -165,7 +165,7 @@ public :
     ErrorMessage parse_expression2();
     ErrorMessage ThreadParsersCopy();
     void ReinitVarTablesWhenMorphActiv(uint);
-    void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
+    void copycomponent(struct ComponentInfos*, struct ComponentInfos*, bool pariso=false);
     void run() Q_DECL_OVERRIDE;
 public :
     void emitErrorSignal();

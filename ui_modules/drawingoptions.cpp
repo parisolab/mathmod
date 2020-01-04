@@ -931,145 +931,180 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
     ShowSliders(Jobj);
     updateCurrentTreestruct();
-    if(Jobj["ParIso"].isObject())
+    if(Jobj["ParIso"].isArray())
     {
+        QJsonArray listeObj    = Jobj["ParIso"].toArray();
+        QJsonArray listeIsoObj;
+        QJsonArray listeParObj;
+        for(int i=0; i<listeObj.size(); i++)
+            if((listeObj[i].toObject())["Iso3D"].isObject())
+                listeIsoObj.append(listeObj[i].toObject());
+        else
+                listeParObj.append(listeObj[i].toObject());
+
+
+        //QObj = Jobj["ParIso"].toObject();
+        QPar = listeParObj[0].toObject();
+        QIso = listeIsoObj[0].toObject();
+
         loadtext = loadpigm = false;
-        QObj = Jobj["ParIso"].toObject();
-        QPar = QObj["Param3D"].toObject();
-        QIso = QObj["Iso3D"].toObject();
-        LoadMandatoryAndOptionnalFields(QPar, PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
-        LoadMandatoryAndOptionnalFields(QIso, ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+        if(QPar["Texture"].isObject())
+            QTextureObj = QPar["Texture"].toObject();
+        if(QPar["Pigment"].isObject())
+            QPigmentObj = QPar["Pigment"].toObject();
+        // Colors
+        loadtext= MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+            (QPar["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
+        // Pigment
+        loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+            (QPar["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
+        LoadMandatoryAndOptionnalFields(QPar["Param3D"].toObject(), PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+
+
+        loadtext = loadpigm = false;
+        if(QIso["Texture"].isObject())
+            QTextureObj = QIso["Texture"].toObject();
+        if(QIso["Pigment"].isObject())
+            QPigmentObj = QIso["Pigment"].toObject();
+        // Colors
+        loadtext= MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
+            (QIso["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
+        // Pigment
+        loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
+            (QIso["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
+        LoadMandatoryAndOptionnalFields(QIso["Iso3D"].toObject(), ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+
+
         document.setObject(Jobj);
         MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
         CurrentFormulaType = 2;
         /// process the new surface
-        /*
         if(textureIndex == -1)
         {
-            if(MathmodRef->RootObjet.CurrentTreestruct.fxyz.count() > 0)
-                MathmodRef->ProcessNewIsoSurface( );
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
+            MathmodRef->ParametricSurfaceProcess2();
         }
-        */
-        if(textureIndex == -1)
-        {
-            MathmodRef->ParametricSurfaceProcess(1);
-        }
+
     }
-    else if(Jobj["Iso3D"].isObject())
+    else
     {
-        QObj = Jobj["Iso3D"].toObject();
-
-        // Colors
-        loadtext= MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
-            (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
-
-        // Pigment
-        loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
-            (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
-
-        LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
-
-        QJsonObject Jobjtmp = Jobj;
-        //Some keys cleaning..
-        Jobjtmp.remove("Param3D");
-        Jobjtmp.remove("Param4D");
-        document.setObject(Jobjtmp);
-        MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
-
-        //Update the current parametric struct
-        MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
-        CurrentFormulaType = 2;
-        /// process the new surface
-        if(textureIndex == -1)
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
+        if(Jobj["Iso3D"].isObject())
         {
-            if(MathmodRef->RootObjet.CurrentTreestruct.fxyz.count() > 0)
-                MathmodRef->ProcessNewIsoSurface( );
-        }
-        else
-        {
-            int result = MathmodRef->ParseIso();
-            if(result == -1) return;
-            textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(1) : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
-            MathmodRef->ui.glWidget->update();
-        }
-    }
-    else if(Jobj["Param3D"].isObject())
-    {
-        QObj = Jobj["Param3D"].toObject();
-        // Colors
-        loadtext= MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+            QObj = Jobj["Iso3D"].toObject();
+
+            // Colors
+            loadtext= MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
                 (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
 
-        // Pigment
-        loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
-                (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex >999)));
+            // Pigment
+            loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
+                (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
 
-        LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+            LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
-        QJsonObject Jobjtmp = Jobj;
-        //Some keys cleaning..
-        Jobjtmp.remove("Iso3D");
-        Jobjtmp.remove("Param4D");
+            QJsonObject Jobjtmp = Jobj;
+            //Some keys cleaning..
+            Jobjtmp.remove("Param3D");
+            Jobjtmp.remove("Param4D");
+            document.setObject(Jobjtmp);
+            MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
 
-        QJsonDocument document;
-        document.setObject(Jobjtmp);
-        MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
-
-        MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
-        CurrentFormulaType = 1;
-        /// process the new surface
-        if(textureIndex == -1)
-        {
-            MathmodRef->ParametricSurfaceProcess(1);
+            //Update the current parametric struct
+            MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
+            CurrentFormulaType = 2;
+            /// process the new surface
+            if(textureIndex == -1)
+            {
+                if(MathmodRef->RootObjet.CurrentTreestruct.fxyz.count() > 0)
+                    MathmodRef->ProcessNewIsoSurface( );
+            }
+            else
+            {
+                int result = MathmodRef->ParseIso();
+                if(result == -1) return;
+                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(1) : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
+                MathmodRef->ui.glWidget->update();
+            }
         }
-        else
+        else if(Jobj["Param3D"].isObject())
         {
-            int result = MathmodRef->ParsePar();
-            if(result == -1) return;
-            textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
-            MathmodRef->ui.glWidget->update();
+            QObj = Jobj["Param3D"].toObject();
+            // Colors
+            loadtext= MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+                    (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
+
+            // Pigment
+            loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+                    (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex >999)));
+
+            LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+
+            QJsonObject Jobjtmp = Jobj;
+            //Some keys cleaning..
+            Jobjtmp.remove("Iso3D");
+            Jobjtmp.remove("Param4D");
+
+            QJsonDocument document;
+            document.setObject(Jobjtmp);
+            MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
+
+            MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
+            CurrentFormulaType = 1;
+            /// process the new surface
+            if(textureIndex == -1)
+            {
+                MathmodRef->ParametricSurfaceProcess(1);
+            }
+            else
+            {
+                int result = MathmodRef->ParsePar();
+                if(result == -1) return;
+                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+                MathmodRef->ui.glWidget->update();
+            }
         }
-    }
 
-    else if(Jobj["Param4D"].isObject())
-    {
-        QObj = Jobj["Param4D"].toObject();
-
-        // Colors
-        loadtext= MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
-                (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
-
-        // Pigment
-        loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
-                (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)));
-
-        LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
-
-        QJsonObject Jobjtmp = Jobj;
-        //Some keys cleaning..
-        Jobjtmp.remove("Iso3D");
-        Jobjtmp.remove("Param3D");
-
-        QJsonDocument document;
-        document.setObject(Jobjtmp);
-        MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
-
-        MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
-        CurrentFormulaType = 3;
-
-        /// process the new surface
-        if(textureIndex == -1)
+        else if(Jobj["Param4D"].isObject())
         {
-            MathmodRef->ParametricSurfaceProcess(3);
+            QObj = Jobj["Param4D"].toObject();
+
+            // Colors
+            loadtext= MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+                    (Jobj["Texture"].isObject() || ((textureIndex < 1000) && (textureIndex != -1)));
+
+            // Pigment
+            loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+                    (Jobj["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 1000)));
+
+            LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+
+            QJsonObject Jobjtmp = Jobj;
+            //Some keys cleaning..
+            Jobjtmp.remove("Iso3D");
+            Jobjtmp.remove("Param3D");
+
+            QJsonDocument document;
+            document.setObject(Jobjtmp);
+            MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
+
+            MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
+            CurrentFormulaType = 3;
+
+            /// process the new surface
+            if(textureIndex == -1)
+            {
+                MathmodRef->ParametricSurfaceProcess(3);
+            }
+            else
+            {
+                int result = MathmodRef->ParsePar();
+                if(result == -1) return;
+                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+                MathmodRef->ui.glWidget->update();
+            }
         }
-        else
-        {
-            int result = MathmodRef->ParsePar();
-            if(result == -1) return;
-            textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
-            MathmodRef->ui.glWidget->update();
         }
-    }
 }
 
 void DrawingOptions::updateCurrentTreestruct()
@@ -1598,6 +1633,8 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(const QJsonObject &qobj,
                                                      bool loadtext, const QJsonObject & QTextureObj,
                                                      bool loadpigm, const QJsonObject & QPigmentObj)
 {
+    // We First deactivate the pariso flag
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
     switch(mod) {
         case  PAR_TYPE:
             for (std::vector<MandatoryParField>::const_iterator it = MandParFields.begin(); it != MandParFields.end(); ++it) {

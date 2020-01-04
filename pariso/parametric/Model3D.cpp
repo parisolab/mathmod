@@ -1840,7 +1840,6 @@ void  Par3D::ParamBuild(
     TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
-
     //*******/
     components.NbParametric = masterthread->expression_XSize;
 
@@ -1970,6 +1969,9 @@ void  Par3D::ParamBuild(
     }
 
     // 3) Nb Poly & Vertex :
+
+    //if(!componentsPt->pariso)
+    {
     *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
     *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
@@ -1981,6 +1983,7 @@ void  Par3D::ParamBuild(
     *TriangleListeCND  = TypeIsoSurfaceTriangleListeCNDVector.data();
     *ExtraDimensionPt  = ExtraDimensionVector.data();
     componentsPt->Interleave = true;
+    }
     copycomponent(componentsPt, &components);
 }
 

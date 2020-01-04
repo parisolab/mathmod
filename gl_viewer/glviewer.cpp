@@ -1179,8 +1179,13 @@ void OpenGlWidget::Winitialize_GL()
 
 void OpenGlWidget::UpdateGL()
 {
-    Winitialize_GL();
-    update();
+    if(LocalScene.updategl)
+    {
+        Winitialize_GL();
+        update();
+    }
+    else
+        LocalScene.updategl = true;
 }
 
 static void DrawIsoCND(ObjectProperties *scene)
@@ -1300,31 +1305,6 @@ static void DrawMinimalTopology (ObjectProperties *scene)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-static void DrawMeshParametric(ObjectProperties *scene)
-{
-    glColor4f (scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-    uint startpl = 0;
-    for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
-    {
-        uint polysize       =  scene->PolyIndices_localPtMin[startpl++];
-        glBegin(GL_POLYGON);
-        for (uint j = 0; j < polysize; j++)
-        {
-            uint actualpointindice = scene->PolyIndices_localPtMin[startpl];
-            glVertex3f(
-                scene->ArrayNorVer_localPt[10*actualpointindice+3 + 4],
-                scene->ArrayNorVer_localPt[10*actualpointindice+4 + 4],
-                scene->ArrayNorVer_localPt[10*actualpointindice+5 + 4]
-            );
-            startpl++;
-        }
-        glEnd();
-        i+=polysize;
-    }
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
 static void plan(ObjectProperties *scene)
 {
     scene->gridplanliste = glGenLists(1);
@@ -1469,31 +1449,28 @@ static void draw(ObjectProperties *scene)
         glRotatef(scene->animzValue, 0, 0, 1.0);
     }
 
-    if (scene->fill == 1 && scene->typedrawing == 1)
+    if (scene->fill == 1 && (scene->typedrawing == 1 || scene->componentsinfos.pariso))
         DrawIso(scene);
 
-    if (scene->fill == 1 && scene->typedrawing == -1)
+    if (scene->fill == 1 && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
         DrawParametric(scene);
 
     // Draw Mesh Object:
     if (scene->triangles == 1)
         DrawMeshIso(scene);
 
-    if (scene->mesh == 1 && scene->typedrawing == -1)
-        DrawMeshParametric(scene);
-
     // Bounding Box:
     if (scene->boundingbox == 1)
         drawCube(350);
 
     // Draw Minimal topology for isosurfaces:
-    if (scene->mesh == 1  && scene->typedrawing == 1)
+    if (scene->mesh == 1)
         DrawMinimalTopology(scene);
 
-    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && scene->typedrawing == 1)
+    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && (scene->typedrawing == 1|| scene->componentsinfos.pariso))
         DrawIsoCND(scene);
 
-    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && scene->typedrawing == -1)
+    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
         DrawParCND(scene);
 
     //Draw Normales:

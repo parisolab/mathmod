@@ -287,8 +287,27 @@ void MathMod::ParametricSurfaceProcess(int type)
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = -1;
         (ui.glWidget)->ParObjet->localScene = &((ui.glWidget)->LocalScene);
-        connect((ui.glWidget)->ParObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
+        //connect((ui.glWidget)->ParObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
         (ui.glWidget)->ParObjet->start(QThread::LowPriority);
+    }
+}
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::ParametricSurfaceProcess2()
+{
+    if(!(ui.glWidget)->ParObjet->isRunning())
+    {
+        (ui.glWidget)->ParObjet->masterthread->param4D =
+        (ui.glWidget)->ParObjet->param4D = -1;
+
+        int result = ParsePar();
+        if(result == -1) return;
+        (ui.glWidget)->LocalScene.typedrawing = -1;
+        (ui.glWidget)->LocalScene.updategl = false;
+        (ui.glWidget)->LocalScene.componentsinfos.pariso = true;
+        (ui.glWidget)->ParObjet->localScene = &((ui.glWidget)->LocalScene);
+        (ui.glWidget)->ParObjet->start(QThread::LowPriority);
+        (ui.glWidget)->ParObjet->wait();
+        ProcessNewIsoSurface();
     }
 }
 
@@ -315,7 +334,7 @@ void MathMod::ProcessNewIsoSurface()
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = 1;
         (ui.glWidget)->IsoObjet->localScene = &((ui.glWidget)->LocalScene);
-        connect((ui.glWidget)->IsoObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
+        //connect((ui.glWidget)->IsoObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
         (ui.glWidget)->IsoObjet->start(QThread::LowPriority);
     }
 }
