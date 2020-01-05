@@ -54,9 +54,6 @@ static const char* ScriptErrorMessage[]=
     "GRID_NBCOMPONENT_MISMATCH",      //20
     "COMPONENT_NBCOMPONENT_MISMATCH", //21
     "CND_NBCOMPONENT_MISMATCH",       //22
-    "NBVARIABLES_OUT_OF_RANGE",       //23
-    "NBCONSTANTES_OUT_OF_RANGE",      //24
-    "NBDEFINEDFUNCTIONS_OUT_OF_RANGE",//25
     "NBSLIDERS_OUT_OF_RANGE",         //27
     "NBSLIDERSVALUES_OUT_OF_RANGE",   //28
     "VERTEX_TAB_MEM_OVERFLOW",        //29
@@ -65,8 +62,9 @@ static const char* ScriptErrorMessage[]=
     "POLY_TAB_MEM_OVERFLOW",          //32
     "CND_TAB_MEM_OVERFLOW",           //33
     "CND_POL_MEM_OVERFLOW",           //34
-    "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW", //35
-    "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW"  //36
+    "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",  //35
+    "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW",//36
+    "GRID_SUPERIOR_TO_GRIDMAX"  //37
 };
 
 // --------------------------
@@ -665,165 +663,213 @@ void DrawingOptions::DrawJsonModel(const QJsonObject & Jobj, int textureIndex, b
     }
 }
 
+
+bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject & QObj)
+{
+    QJsonArray lst;
+    int NbFxyz;
+
+    // Fxyz
+    NbFxyz = (QObj["Fxyz"].toArray()).size();
+    if((QObj["Xmax"].toArray()).size() != NbFxyz)
+    {
+        scriptErrorType = XMAX_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if((QObj["Ymax"].toArray()).size() != NbFxyz)
+    {
+        scriptErrorType = YMAX_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if((QObj["Zmax"].toArray()).size() != NbFxyz)
+    {
+        scriptErrorType = ZMAX_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    if((QObj["Xmin"].toArray()).size() != NbFxyz)
+    {
+        scriptErrorType = XMIN_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if((QObj["Ymin"].toArray()).size() != NbFxyz)
+    {
+        scriptErrorType = YMIN_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if((QObj["Zmin"].toArray()).size() != NbFxyz)
+    {
+        scriptErrorType = ZMIN_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    if((QObj["Component"].toArray()).size() != NbFxyz)
+    {
+        scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if(((lst = QObj["Grid"].toArray()).size() > 0) && (lst.size() != NbFxyz))
+    {
+        scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if(lst.size() > 0)
+    {
+        for(int i=0; i<lst.size(); i++)
+            if((lst[i].toString()).toUInt() >= uint(Parameters->IsoMaxGrid))
+            {
+                scriptErrorType = GRID_SUPERIOR_TO_GRIDMAX;
+                ErrorMsg();
+                return false;
+            }
+    }
+
+    if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFxyz))
+    {
+        scriptErrorType = CND_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    return true;
+}
+
+// --------------------------
+bool DrawingOptions::VerifiedParJsonModel(const QJsonObject & QObj)
+{
+    QJsonArray lst;
+    int NbFx;
+    // Fx
+    NbFx = (QObj["Fx"].toArray()).size();
+    // Fy
+    if((QObj["Fy"].toArray()).size() != NbFx)
+    {
+        scriptErrorType = FY_FX_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    // Fz
+    if((QObj["Fz"].toArray()).size() != NbFx)
+    {
+        scriptErrorType = FZ_FX_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if(((QObj["Fw"].toArray()).size()!=0) && ((QObj["Fw"].toArray()).size() != NbFx))
+    {
+        scriptErrorType = FW_FX_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    if((QObj["Umax"].toArray()).size() != NbFx)
+    {
+        scriptErrorType = UMAX_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if((QObj["Vmax"].toArray()).size() != NbFx)
+    {
+        scriptErrorType = VMAX_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if(((QObj["Wmax"].toArray()).size() > 0) && ((QObj["Wmax"].toArray()).size() != NbFx))
+    {
+        scriptErrorType = WMAX_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    if((QObj["Umin"].toArray()).size() != NbFx)
+    {
+        scriptErrorType = UMIN_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if((QObj["Vmin"].toArray()).size() != NbFx)
+    {
+        scriptErrorType = VMIN_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if(((QObj["Wmin"].toArray()).size() > 0) && ((QObj["Wmin"].toArray()).size() != NbFx))
+    {
+        scriptErrorType = WMIN_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    if((QObj["Component"].toArray()).size() != NbFx)
+    {
+        scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    //Start Grid field processing
+    QString result = "";
+    if((lst = QObj["Grid"].toArray()).size() > 0  && (lst.size() != 2*NbFx))
+    {
+        scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFx))
+    {
+        scriptErrorType = CND_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    return true;
+}
+
 // --------------------------
 bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
 {
     QJsonArray lst;
     QJsonObject QObj;
-    int NbFxyz, NbFx;
 
     if(!Inspect)
         return true;
     if(Jobj["Iso3D"].isObject())
     {
         QObj = Jobj["Iso3D"].toObject();
-        // Fxyz
-        NbFxyz = (QObj["Fxyz"].toArray()).size();
-        if((QObj["Xmax"].toArray()).size() != NbFxyz)
-        {
-            scriptErrorType = XMAX_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Ymax"].toArray()).size() != NbFxyz)
-        {
-            scriptErrorType = YMAX_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Zmax"].toArray()).size() != NbFxyz)
-        {
-            scriptErrorType = ZMAX_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-
-        if((QObj["Xmin"].toArray()).size() != NbFxyz)
-        {
-            scriptErrorType = XMIN_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Ymin"].toArray()).size() != NbFxyz)
-        {
-            scriptErrorType = YMIN_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Zmin"].toArray()).size() != NbFxyz)
-        {
-            scriptErrorType = ZMIN_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-
-        if((QObj["Component"].toArray()).size() != NbFxyz)
-        {
-            scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if(((QObj["Grid"].toArray()).size() > 0) && ((QObj["Grid"].toArray()).size() != NbFxyz))
-        {
-            scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFxyz))
-        {
-            scriptErrorType = CND_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-
-        return true;
+        return(VerifiedIsoJsonModel(QObj));
     }
     if(Jobj["Param3D"].isObject())
     {
         QObj = Jobj["Param3D"].toObject();
-        // Fx
-        NbFx = (QObj["Fx"].toArray()).size();
-        // Fy
-        if((QObj["Fy"].toArray()).size() != NbFx)
-        {
-            scriptErrorType = FY_FX_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        // Fz
-        if((QObj["Fz"].toArray()).size() != NbFx)
-        {
-            scriptErrorType = FZ_FX_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if(((QObj["Fw"].toArray()).size()!=0) && ((QObj["Fw"].toArray()).size() != NbFx))
-        {
-            scriptErrorType = FW_FX_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
+        return(VerifiedParJsonModel(QObj));
+    }
 
-        if((QObj["Umax"].toArray()).size() != NbFx)
-        {
-            scriptErrorType = UMAX_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Vmax"].toArray()).size() != NbFx)
-        {
-            scriptErrorType = VMAX_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if(((QObj["Wmax"].toArray()).size() > 0) && ((QObj["Wmax"].toArray()).size() != NbFx))
-        {
-            scriptErrorType = WMAX_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
+    if(Jobj["ParIso"].isArray())
+    {
+        QJsonArray listeObj    = Jobj["ParIso"].toArray();
+        QJsonArray listeIsoObj;
+        QJsonArray listeParObj;
+        for(int i=0; i<listeObj.size(); i++)
+            if((listeObj[i].toObject())["Iso3D"].isObject())
+                listeIsoObj.append(listeObj[i].toObject()["Iso3D"].toObject());
+        else
+                listeParObj.append(listeObj[i].toObject()["Param3D"].toObject());
 
-        if((QObj["Umin"].toArray()).size() != NbFx)
-        {
-            scriptErrorType = UMIN_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if((QObj["Vmin"].toArray()).size() != NbFx)
-        {
-            scriptErrorType = VMIN_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-        if(((QObj["Wmin"].toArray()).size() > 0) && ((QObj["Wmin"].toArray()).size() != NbFx))
-        {
-            scriptErrorType = WMIN_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
+        for(int i=0; i<listeIsoObj.size(); i++)
+            if(!VerifiedIsoJsonModel(listeIsoObj[i].toObject()))
+                    return (false);
 
-        if((QObj["Component"].toArray()).size() != NbFx)
-        {
-            scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-
-        //Start Grid field processing
-        QString result = "";
-        if((lst = QObj["Grid"].toArray()).size() > 0  && (lst.size() != 2*NbFx))
-        {
-            scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
-
-        if(((QObj["Cnd"].toArray()).size() > 0) && ((QObj["Cnd"].toArray()).size() != NbFx))
-        {
-            scriptErrorType = CND_NBCOMPONENT_MISMATCH;
-            ErrorMsg();
-            return false;
-        }
+        for(int i=0; i<listeParObj.size(); i++)
+            if(!VerifiedParJsonModel(listeParObj[i].toObject()))
+                    return (false);
     }
     return true;
 }
@@ -942,8 +988,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         else
                 listeParObj.append(listeObj[i].toObject());
 
-
-        //QObj = Jobj["ParIso"].toObject();
         QPar = listeParObj[0].toObject();
         QIso = listeIsoObj[0].toObject();
 

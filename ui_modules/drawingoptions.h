@@ -180,6 +180,8 @@ public slots:
     void ShowJsonModel(const QJsonObject &, int textureIndex=-1);
     void DrawJsonModel(const QJsonObject & Jobj, int textureIndex=-1, bool Inspect=true);
     bool VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect=true);
+    bool VerifiedIsoJsonModel(const QJsonObject & Jobj);
+    bool VerifiedParJsonModel(const QJsonObject & Jobj);
     void AddObjectToMySelectionTree();
     void AddIsoObjectToTree(QTreeWidgetItem *);
     void AddParObjectToTree(QTreeWidgetItem *);
