@@ -205,16 +205,19 @@ ObjectParameters::ObjectParameters()
 
 void ObjectParameters::InitComponentinfos(struct  ComponentInfos&  compinfos)
 {
-    compinfos.NoiseParam.Octaves     = 4;
-    compinfos.NoiseParam.Lacunarity  = 0.5;
-    compinfos.NoiseParam.Gain        = 0.5;
-    compinfos.NoiseParam.NoiseActive = 1;
+    for(int i=0; i<2; i++)
+    {
+    compinfos.NoiseParam[i].Octaves     = 4;
+    compinfos.NoiseParam[i].Lacunarity  = 0.5;
+    compinfos.NoiseParam[i].Gain        = 0.5;
+    compinfos.NoiseParam[i].NoiseActive = 1;
 
-    compinfos.DFTrianglesNotVerifyCND =
-        compinfos.DFTrianglesVerifyCND =
-            compinfos.DMTrianglesBorderCND = true;
-    compinfos.DMTrianglesNotVerifyCND =
-        compinfos.DMTrianglesVerifyCND = false;
+    compinfos.DFTrianglesNotVerifyCND[i] =
+        compinfos.DFTrianglesVerifyCND[i] =
+            compinfos.DMTrianglesBorderCND[i] = true;
+    compinfos.DMTrianglesNotVerifyCND[i] =
+        compinfos.DMTrianglesVerifyCND[i] = false;
 
-    compinfos.ThereisCND = false;
+    compinfos.ThereisCND[i] = false;
+    }
 }

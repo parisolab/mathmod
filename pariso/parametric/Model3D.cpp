@@ -1174,13 +1174,13 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Par3D::CalculateColorsPoints(struct ComponentInfos &components)
+void Par3D::CalculateColorsPoints(struct ComponentInfos &comp)
 {
     uint Jprime,cmpId=0, K=0;
     double tmp, ValCol[100], val[10];
     val[3] = masterthread->stepMorph;
 
-    if(components.ThereisRGBA == true &&  components.NoiseParam.NoiseType == 0)
+    if(comp.ThereisRGBA[0] == true &&  comp.NoiseParam[0].NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize && i<100; i++)
         {
@@ -1217,11 +1217,11 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos &components)
                 }
         }
     }
-    else if(components.ThereisRGBA == true &&  components.NoiseParam.NoiseType == 1)
+    else if(comp.ThereisRGBA[0] == true &&  comp.NoiseParam[0].NoiseType == 1)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            if((i >= uint(components.ParPts[2*cmpId])))
+            if((i >= uint(comp.ParPts[2*cmpId])))
             {
                 K = cmpId;
                 if((masterthread->expression_XSize -1)>cmpId)
@@ -1548,17 +1548,17 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         NewIndexPolyTabVector.shrink_to_fit();
         NbTriangleIsoSurfaceTmp = M + l + k;
 
-        components.NbTrianglesVerifyCND = k;
-        components.NbTrianglesNotVerifyCND = l;
-        components.NbTrianglesBorderCND = M;
+        components.NbTrianglesVerifyCND[0] = k;
+        components.NbTrianglesNotVerifyCND[0] = l;
+        components.NbTrianglesBorderCND[0] = M;
 
         for(uint fctnb= 0; fctnb< masterthread->expression_XSize; fctnb++)
             components.ParPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
-        components.ThereisCND = true;
+        components.ThereisCND[0] = true;
     }
     else
     {
-        components.ThereisCND = false;
+        components.ThereisCND[0] = false;
 
         for(uint i= 0; i < NbVertexTmp; i++)
         {
@@ -1780,26 +1780,24 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->IsoPts       = origin->IsoPts;
     copy->ParPositions = origin->ParPositions;
     copy->ParPts       = origin->ParPts;
+    copy->NbIso        = origin->NbIso;
+    copy->NbParametric = origin->NbParametric;
 
-    copy->NoiseParam.Octaves        = origin->NoiseParam.Octaves;
-    copy->NoiseParam.Lacunarity     = origin->NoiseParam.Lacunarity;
-    copy->NoiseParam.Gain           = origin->NoiseParam.Gain;
-    copy->NoiseParam.NoiseActive    = origin->NoiseParam.NoiseActive;
-    copy->NoiseParam.NoiseType      = origin->NoiseParam.NoiseType;
-    copy->NoiseParam.Nb_vrgbts      = origin->NoiseParam.Nb_vrgbts;
-    copy->NoiseParam.VRgbtParser    = origin->NoiseParam.VRgbtParser;
-    copy->NoiseParam.GradientParser = origin->NoiseParam.GradientParser;
-    copy->NoiseParam.NoiseParser    = origin->NoiseParam.NoiseParser;
-    copy->NoiseParam.RgbtParser     = origin->NoiseParam.RgbtParser;
-
-    copy->ThereisRGBA             = origin->ThereisRGBA;
-    copy->NbIso                   = origin->NbIso;
-    copy->NbParametric            = origin->NbParametric;
-    copy->selectedComponent       = origin->selectedComponent;
-    copy->ThereisCND              = origin->ThereisCND;
-    copy->NbTrianglesVerifyCND    = origin->NbTrianglesVerifyCND;
-    copy->NbTrianglesNotVerifyCND = origin->NbTrianglesNotVerifyCND;
-    copy->NbTrianglesBorderCND    = origin->NbTrianglesBorderCND;
+    copy->NoiseParam[0].Octaves        = origin->NoiseParam[0].Octaves;
+    copy->NoiseParam[0].Lacunarity     = origin->NoiseParam[0].Lacunarity;
+    copy->NoiseParam[0].Gain           = origin->NoiseParam[0].Gain;
+    copy->NoiseParam[0].NoiseActive    = origin->NoiseParam[0].NoiseActive;
+    copy->NoiseParam[0].NoiseType      = origin->NoiseParam[0].NoiseType;
+    copy->NoiseParam[0].Nb_vrgbts      = origin->NoiseParam[0].Nb_vrgbts;
+    copy->NoiseParam[0].VRgbtParser    = origin->NoiseParam[0].VRgbtParser;
+    copy->NoiseParam[0].GradientParser = origin->NoiseParam[0].GradientParser;
+    copy->NoiseParam[0].NoiseParser    = origin->NoiseParam[0].NoiseParser;
+    copy->NoiseParam[0].RgbtParser     = origin->NoiseParam[0].RgbtParser;
+    copy->ThereisRGBA[0]               = origin->ThereisRGBA[0];
+    copy->ThereisCND[0]                = origin->ThereisCND[0];
+    copy->NbTrianglesVerifyCND[0]      = origin->NbTrianglesVerifyCND[0];
+    copy->NbTrianglesNotVerifyCND[0]   = origin->NbTrianglesNotVerifyCND[0];
+    copy->NbTrianglesBorderCND[0]      = origin->NbTrianglesBorderCND[0];
 }
 
 void Par3D::clear(struct ComponentInfos &cp)
@@ -1808,8 +1806,8 @@ void Par3D::clear(struct ComponentInfos &cp)
     cp.ParPts.clear();
     cp.IsoPositions.clear();
     cp.ParPositions.clear();
-    cp.ThereisCND = false;
-    cp.ThereisRGBA = false;
+    cp.ThereisCND[0] = false;
+    cp.ThereisRGBA[0] = false;
 }
 
 void  Par3D::ParamBuild(
@@ -1933,28 +1931,28 @@ void  Par3D::ParamBuild(
     // Pigment, Texture and Noise :
     if(masterthread->vrgbtnotnull)
     {
-        components.ThereisRGBA = true;
-        components.NoiseParam.NoiseType = 0; //Pigments
-        components.NoiseParam.VRgbtParser = masterthread->VRgbtParser;
-        components.NoiseParam.GradientParser = masterthread->GradientParser;
-        components.NoiseParam.Nb_vrgbts = masterthread->VRgbtSize;
+        components.ThereisRGBA[0] = true;
+        components.NoiseParam[0].NoiseType = 0; //Pigments
+        components.NoiseParam[0].VRgbtParser = masterthread->VRgbtParser;
+        components.NoiseParam[0].GradientParser = masterthread->GradientParser;
+        components.NoiseParam[0].Nb_vrgbts = masterthread->VRgbtSize;
     }
     else if(masterthread->RgbtSize >= 4)
     {
-        components.ThereisRGBA = true;
-        components.NoiseParam.NoiseType = 1; //Texture
-        components.NoiseParam.RgbtParser = masterthread->RgbtParser;
+        components.ThereisRGBA[0] = true;
+        components.NoiseParam[0].NoiseType = 1; //Texture
+        components.NoiseParam[0].RgbtParser = masterthread->RgbtParser;
     }
     else
     {
-        components.ThereisRGBA = false;
-        components.NoiseParam.NoiseType = -1; //No Pigments or texture
+        components.ThereisRGBA[0] = false;
+        components.NoiseParam[0].NoiseType = -1; //No Pigments or texture
     }
 
     if(masterthread->Noise == "")
-        components.NoiseParam.NoiseShape = 0;
+        components.NoiseParam[0].NoiseShape = 0;
     else
-        components.NoiseParam.NoiseShape = 1;
+        components.NoiseParam[0].NoiseShape = 1;
 
     CalculateColorsPoints(components);
 

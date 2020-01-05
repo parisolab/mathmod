@@ -4157,35 +4157,42 @@ void DrawingOptions::on_ActivateCND_clicked(bool checked)
 // --------------------------
 void DrawingOptions::on_TCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesVerifyCND = checked;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesVerifyCND[0] =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesVerifyCND[1] =
+            checked;
     MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesVerifyCND = checked;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesVerifyCND[0] =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesVerifyCND[1] =
+            checked;
     MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_TNCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesNotVerifyCND = checked;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesNotVerifyCND[0] =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesNotVerifyCND[1] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesNotVerifyCND = checked;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesNotVerifyCND[0] =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesNotVerifyCND[1] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_TBordercheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesBorderCND = checked;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesBorderCND[0] =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesBorderCND[1] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
@@ -4707,7 +4714,9 @@ void DrawingOptions::on_actionColorTrianglesWavefront_obj_triggered()
 // --------------------------
 void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 {
-    int Octaves = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Octaves = value;
+    int Octaves = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].Octaves =
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].Octaves =
+            value;
     MathmodRef->ui.glWidget->IsoObjet->masterthread->Octaves = Octaves;
     MathmodRef->ui.glWidget->ParObjet->masterthread->Octaves = Octaves;
 
@@ -4719,7 +4728,9 @@ void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 {
     double Lacunarity = double(value)/10.0;
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Lacunarity = float(Lacunarity);
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].Lacunarity =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].Lacunarity =
+            float(Lacunarity);
     MathmodRef->ui.glWidget->IsoObjet->masterthread->Lacunarity = Lacunarity;
     MathmodRef->ui.glWidget->ParObjet->masterthread->Lacunarity = Lacunarity;
     ui.LacunarityLabel->setText("Lacunarity = "+QString::number(Lacunarity));
@@ -4730,7 +4741,9 @@ void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 void DrawingOptions::on_GainScrollBar_valueChanged(int value)
 {
     double Gain = double(value)/10.0;
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.Gain = float(Gain);
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].Gain =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].Gain =
+            float(Gain);
     MathmodRef->ui.glWidget->IsoObjet->masterthread->Gain = Gain;
     MathmodRef->ui.glWidget->ParObjet->masterthread->Gain = Gain;
     ui.GainLabel->setText("Gain = "+QString::number(Gain));
@@ -4757,7 +4770,8 @@ void DrawingOptions::on_ShowtextureScript_clicked()
 // --------------------------
 void DrawingOptions::on_TurbulenceCheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam.NoiseActive *= -1;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].NoiseActive *= -1;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].NoiseActive *= -1;
     on_pushButton_5_clicked();
 }
 

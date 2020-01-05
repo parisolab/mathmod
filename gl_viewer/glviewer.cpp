@@ -36,20 +36,22 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 {
     double tmp, val[6];
     uint Jprime;
-    LocalScene.componentsinfos.ThereisRGBA = true;
-    LocalScene.componentsinfos.NoiseParam.NoiseType = 1; //Texture
 
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.RgbtParser = IsoObjet->masterthread->RgbtParser;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjet->masterthread->NoiseParser;
-        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.ThereisRGBA[1] = true;
+        LocalScene.componentsinfos.NoiseParam[1].NoiseType = 1;
+        LocalScene.componentsinfos.NoiseParam[1].RgbtParser = IsoObjet->masterthread->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam[1].NoiseParser = IsoObjet->masterthread->NoiseParser;
+        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 1;
     }
-    else
+    if(type == 0)
     {
-        LocalScene.componentsinfos.NoiseParam.RgbtParser = ParObjet->masterthread->RgbtParser;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjet->masterthread->NoiseParser;
-        ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.ThereisRGBA[0] = true;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseType = 1;
+        LocalScene.componentsinfos.NoiseParam[0].RgbtParser = ParObjet->masterthread->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseParser = ParObjet->masterthread->NoiseParser;
+        ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
 
     for(uint i =0; i < LocalScene.VertxNumber; i++)
@@ -69,9 +71,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
             val[4] = val[4] * ParObjet->masterthread->dif_v[0]  + ParObjet->masterthread->v_inf[0];
         }
 
-        if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
+        if(LocalScene.componentsinfos.NoiseParam[type].NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam[type].NoiseActive == 1)
         {
-            tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
+            tmp  = LocalScene.componentsinfos.NoiseParam[type].NoiseParser->Eval(val);
         }
         else
         {
@@ -84,38 +86,41 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         val[3] *= tmp;
         val[4] *= tmp;
 
-        LocalScene.ArrayNorVer_localPt[i*10   ] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[0].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*10 +1] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[1].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*10 +2] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[2].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*10 +3] = float(LocalScene.componentsinfos.NoiseParam.RgbtParser[3].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10   ] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[0].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +1] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[1].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +2] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[2].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +3] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[3].Eval(val));
     }
 }
 
 void OpenGlWidget::CalculatePigmentPoints(int type)
 {
     double tmp, ValCol[100], val[4];
-    LocalScene.componentsinfos.ThereisRGBA = true;
-    LocalScene.componentsinfos.NoiseParam.NoiseType = 0; //Pigments
+
     if(type == 1)
     {
-        LocalScene.componentsinfos.NoiseParam.VRgbtParser = IsoObjet->masterthread->VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam.GradientParser = IsoObjet->masterthread->GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = IsoObjet->masterthread->VRgbtSize;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = IsoObjet->masterthread->NoiseParser;
-        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.ThereisRGBA[1] = true;
+        LocalScene.componentsinfos.NoiseParam[1].NoiseType = 0; //Pigments
+        LocalScene.componentsinfos.NoiseParam[1].VRgbtParser = IsoObjet->masterthread->VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam[1].GradientParser = IsoObjet->masterthread->GradientParser;
+        LocalScene.componentsinfos.NoiseParam[1].Nb_vrgbts = IsoObjet->masterthread->VRgbtSize;
+        LocalScene.componentsinfos.NoiseParam[1].NoiseParser = IsoObjet->masterthread->NoiseParser;
+        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 1;
     }
-    else
+    if(type == 0)
     {
-        LocalScene.componentsinfos.NoiseParam.VRgbtParser = ParObjet->masterthread->VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam.GradientParser = ParObjet->masterthread->GradientParser;
-        LocalScene.componentsinfos.NoiseParam.Nb_vrgbts = ParObjet->masterthread->VRgbtSize;
-        LocalScene.componentsinfos.NoiseParam.NoiseParser = ParObjet->masterthread->NoiseParser;
-        ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam.NoiseShape = 0: LocalScene.componentsinfos.NoiseParam.NoiseShape = 1;
+        LocalScene.componentsinfos.ThereisRGBA[0] = true;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseType = 0; //Pigments
+        LocalScene.componentsinfos.NoiseParam[0].VRgbtParser = ParObjet->masterthread->VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam[0].GradientParser = ParObjet->masterthread->GradientParser;
+        LocalScene.componentsinfos.NoiseParam[0].Nb_vrgbts = ParObjet->masterthread->VRgbtSize;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseParser = ParObjet->masterthread->NoiseParser;
+        ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
 
-    for(uint i=0; i<LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && i<100; i++)
+    for(uint i=0; i<LocalScene.componentsinfos.NoiseParam[type].Nb_vrgbts && i<100; i++)
     {
-        ValCol[i] = LocalScene.componentsinfos.NoiseParam.VRgbtParser[i].Eval(val);
+        ValCol[i] = LocalScene.componentsinfos.NoiseParam[type].VRgbtParser[i].Eval(val);
     }
 
     for(uint i= 0; i < LocalScene.VertxNumber; i++)
@@ -124,8 +129,8 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
         val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 4 + 4])/hauteur_fenetre -decalage_yo;
         val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 5 + 4])/hauteur_fenetre -decalage_zo;
 
-        if(LocalScene.componentsinfos.NoiseParam.NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam.NoiseActive == 1)
-            tmp  = LocalScene.componentsinfos.NoiseParam.NoiseParser->Eval(val);
+        if(LocalScene.componentsinfos.NoiseParam[type].NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam[type].NoiseActive == 1)
+            tmp  = LocalScene.componentsinfos.NoiseParam[type].NoiseParser->Eval(val);
         else
             tmp =1.0;
 
@@ -133,11 +138,11 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
         val[1] *= tmp;
         val[2] *= tmp;
 
-        tmp  = LocalScene.componentsinfos.NoiseParam.GradientParser->Eval(val);
+        tmp  = LocalScene.componentsinfos.NoiseParam[type].GradientParser->Eval(val);
 
         int c= int(tmp);
         tmp = std::abs(tmp - double(c));
-        for (uint j=0; j < LocalScene.componentsinfos.NoiseParam.Nb_vrgbts && j < 100; j+=5)
+        for (uint j=0; j < LocalScene.componentsinfos.NoiseParam[type].Nb_vrgbts && j < 100; j+=5)
             if(tmp <= ValCol[j])
             {
                 LocalScene.ArrayNorVer_localPt[i*10  ] = float(ValCol[j+1]);
@@ -148,7 +153,7 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
             }
     }
 }
-
+/*
 void OpenGlWidget::CalculateColorsPoints()
 {
     double tmp, ValCol[100], val[6];
@@ -231,7 +236,7 @@ void OpenGlWidget::CalculateColorsPoints()
     }
     update();
 }
-
+*/
 int OpenGlWidget::memoryallocation(uint gridmax, uint nbthreads,
                                    uint initparGrid, uint initisoGrid,
                                    uint FactX, uint FactY, uint FactZ)
@@ -504,13 +509,13 @@ static void DrawParametric (ObjectProperties *scene)
     glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
 
-    if(scene->componentsinfos.ThereisRGBA)
+    if(scene->componentsinfos.ThereisRGBA[0])
         glEnable(GL_COLOR_MATERIAL);
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
     for(uint i=0; i< scene->componentsinfos.NbParametric; i++)
     {
-        if(!scene->componentsinfos.ThereisRGBA)
+        if(!scene->componentsinfos.ThereisRGBA[0])
         {
             for(uint j=0; j<4; j++)
             {
@@ -520,22 +525,22 @@ static void DrawParametric (ObjectProperties *scene)
             glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE,  backcl);
             glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
         }
-        if(scene->componentsinfos.ThereisCND)
+        if(scene->componentsinfos.ThereisCND[0])
         {
-            if(scene->componentsinfos.DFTrianglesVerifyCND)
+            if(scene->componentsinfos.DFTrianglesVerifyCND[0])
                 glDrawElements(
                     GL_TRIANGLES,
-                    3*int(scene->componentsinfos.NbTrianglesVerifyCND),
+                    3*int(scene->componentsinfos.NbTrianglesVerifyCND[0]),
                     GL_UNSIGNED_INT,
                     &(scene->PolyIndices_localPt[0])
                 );
 
-            if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+            if(scene->componentsinfos.DFTrianglesNotVerifyCND[0])
                 glDrawElements(
                     GL_TRIANGLES,
-                    3*int(scene->componentsinfos.NbTrianglesNotVerifyCND),
+                    3*int(scene->componentsinfos.NbTrianglesNotVerifyCND[0]),
                     GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                    &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[0]])
                 );
         }
         else
@@ -547,7 +552,7 @@ static void DrawParametric (ObjectProperties *scene)
             );
     }
 
-    if(scene->componentsinfos.ThereisRGBA)
+    if(scene->componentsinfos.ThereisRGBA[0])
         glDisable(GL_COLOR_MATERIAL);
 
     glDisable(GL_POLYGON_OFFSET_FILL);
@@ -622,7 +627,7 @@ static void DrawIso (ObjectProperties *scene)
     glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
 
-    if(scene->componentsinfos.ThereisRGBA)
+    if(scene->componentsinfos.ThereisRGBA[1])
         glEnable(GL_COLOR_MATERIAL);
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
@@ -630,7 +635,7 @@ static void DrawIso (ObjectProperties *scene)
     for(uint i=0; i< scene->componentsinfos.NbIso; i++)
     {
         {
-            if(!scene->componentsinfos.ThereisRGBA)
+            if(!scene->componentsinfos.ThereisRGBA[1])
             {
                 for(uint j=0; j<4; j++)
                 {
@@ -642,22 +647,22 @@ static void DrawIso (ObjectProperties *scene)
             }
 
 
-            if(scene->componentsinfos.ThereisCND)
+            if(scene->componentsinfos.ThereisCND[1])
             {
-                if(scene->componentsinfos.DFTrianglesVerifyCND)
+                if(scene->componentsinfos.DFTrianglesVerifyCND[1])
                     glDrawElements(
                         GL_TRIANGLES,
-                        int(3*(scene->componentsinfos.NbTrianglesVerifyCND)),
+                        int(3*(scene->componentsinfos.NbTrianglesVerifyCND[1])),
                         GL_UNSIGNED_INT,
                         &(scene->PolyIndices_localPt[0])
                     );
 
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND)
+                if(scene->componentsinfos.DFTrianglesNotVerifyCND[1])
                     glDrawElements(
                         GL_TRIANGLES,
-                        int(3*(scene->componentsinfos.NbTrianglesNotVerifyCND)),
+                        int(3*(scene->componentsinfos.NbTrianglesNotVerifyCND[1])),
                         GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND])
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]])
                     );
             }
             else
@@ -671,7 +676,7 @@ static void DrawIso (ObjectProperties *scene)
             }
         }
     }
-    if(scene->componentsinfos.ThereisRGBA)
+    if(scene->componentsinfos.ThereisRGBA[1])
         glDisable(GL_COLOR_MATERIAL);
     glDisable(GL_POLYGON_OFFSET_FILL);
     glDisable(GL_LIGHTING);
@@ -1190,41 +1195,41 @@ void OpenGlWidget::UpdateGL()
 
 static void DrawIsoCND(ObjectProperties *scene)
 {
-    if(scene->componentsinfos.DMTrianglesVerifyCND)
+    if(scene->componentsinfos.DMTrianglesVerifyCND[1])
     {
         glLineWidth(1);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            int(3*scene->componentsinfos.NbTrianglesVerifyCND),
+            int(3*scene->componentsinfos.NbTrianglesVerifyCND[1]),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[0]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
 
-    if(scene->componentsinfos.DMTrianglesNotVerifyCND)
+    if(scene->componentsinfos.DMTrianglesNotVerifyCND[1])
     {
         glLineWidth(1);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            int(3*scene->componentsinfos.NbTrianglesNotVerifyCND),
+            int(3*scene->componentsinfos.NbTrianglesNotVerifyCND[1]),
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
+            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
 
-    if(scene->componentsinfos.DMTrianglesBorderCND)
+    if(scene->componentsinfos.DMTrianglesBorderCND[1])
     {
         glLineWidth(4);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            int(3*scene->componentsinfos.NbTrianglesBorderCND),
+            int(3*scene->componentsinfos.NbTrianglesBorderCND[1]),
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
+            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND[1] + scene->componentsinfos.NbTrianglesNotVerifyCND[1]) ]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
@@ -1232,41 +1237,41 @@ static void DrawIsoCND(ObjectProperties *scene)
 
 static void DrawParCND(ObjectProperties *scene)
 {
-    if(scene->componentsinfos.DMTrianglesVerifyCND)
+    if(scene->componentsinfos.DMTrianglesVerifyCND[0])
     {
         glLineWidth(1);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            int(3*scene->componentsinfos.NbTrianglesVerifyCND),
+            int(3*scene->componentsinfos.NbTrianglesVerifyCND[0]),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[0]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
 
-    if(scene->componentsinfos.DMTrianglesNotVerifyCND)
+    if(scene->componentsinfos.DMTrianglesNotVerifyCND[0])
     {
         glLineWidth(1);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            int(3*scene->componentsinfos.NbTrianglesNotVerifyCND),
+            int(3*scene->componentsinfos.NbTrianglesNotVerifyCND[0]),
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND]));
+            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[0]]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
 
-    if(scene->componentsinfos.DMTrianglesBorderCND)
+    if(scene->componentsinfos.DMTrianglesBorderCND[0])
     {
         glLineWidth(4);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
-            int(3*scene->componentsinfos.NbTrianglesBorderCND),
+            int(3*scene->componentsinfos.NbTrianglesBorderCND[0]),
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND + scene->componentsinfos.NbTrianglesNotVerifyCND) ]));
+            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND[0] + scene->componentsinfos.NbTrianglesNotVerifyCND[0]) ]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
@@ -1467,10 +1472,10 @@ static void draw(ObjectProperties *scene)
     if (scene->mesh == 1)
         DrawMinimalTopology(scene);
 
-    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && (scene->typedrawing == 1|| scene->componentsinfos.pariso))
+    if(scene->activarecnd && scene->componentsinfos.ThereisCND[1]  && (scene->typedrawing == 1|| scene->componentsinfos.pariso))
         DrawIsoCND(scene);
 
-    if(scene->activarecnd && scene->componentsinfos.ThereisCND  && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
+    if(scene->activarecnd && scene->componentsinfos.ThereisCND[0]  && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
         DrawParCND(scene);
 
     //Draw Normales:
