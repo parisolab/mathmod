@@ -1,8 +1,8 @@
 {
     "Parameters": {
-        "IsoMaxGrid": 201,
+        "IsoMaxGrid": 500,
         "InitIsoGrid": 40,
-        "ParMaxGrid": 5001,
+        "ParMaxGrid": 5000,
         "InitParGrid": 50
     },
     "StartOptions": {
