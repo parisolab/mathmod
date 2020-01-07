@@ -1944,16 +1944,17 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             {
                 NormVertexTabVector[i*10  ] = 0.9f;
                 NormVertexTabVector[i*10+1] = 0.1f;
-                NormVertexTabVector[i*10+2] = 0.0;
+                NormVertexTabVector[i*10+2] = 0.9;
                 NormVertexTabVector[i*10+3] = 1.0;
             }
         }
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
         uint starttri = uint(comp.IsoPositions[0]/3);
+
         for(uint i= starttri; i < NbTriangleIsoSurfaceTmp; i++)
-            //Init this triangle type to 1:
-            TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
+            TypeIsoSurfaceTriangleListeCNDVector.push_back(1); //Init this triangle type to 1:
+
         for(uint i= starttri; i < nbtriangle; i++)
         {
             Aindex = IndexPolyTabVector[3*i    ];
@@ -1992,9 +1993,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             }
             else if(TypeTriangle == 4 || TypeTriangle == 5)
             {
-                Aindex = IndexPolyTabVector[3*i  + 2];
-                Bindex = IndexPolyTabVector[3*i     ];
-                Cindex = IndexPolyTabVector[3*i  + 1];
+                Aindex = IndexPolyTabVector[3*i+2];
+                Bindex = IndexPolyTabVector[3*i  ];
+                Cindex = IndexPolyTabVector[3*i+1];
             }
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
@@ -2099,13 +2100,11 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 /// Add Three new triangles :
                 uint IndexBprime = (NbVertexTmp-2);
                 uint IndexCprime = (NbVertexTmp-1);
-                uint IndexNbTriangle;
 
                 // The original triangle will be replaced by four other triangles:
                 TypeIsoSurfaceTriangleListeCNDVector[i-starttri]=0;
 
                 /// (A, Bprime, Cprime)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                 IndexPolyTabVector.push_back(Aindex);
                 IndexPolyTabVector.push_back(IndexBprime);
                 IndexPolyTabVector.push_back(IndexCprime);
@@ -2119,7 +2118,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 IndexPolyTabMinVector.push_back(IndexCprime);
 
                 /// (Bprime, B, C)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                 IndexPolyTabVector.push_back(IndexBprime);
                 IndexPolyTabVector.push_back(Bindex);
                 IndexPolyTabVector.push_back(Cindex);
@@ -2133,7 +2131,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 IndexPolyTabMinVector.push_back(Cindex);
 
                 /// (Bprime, C, Cprime)
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                 IndexPolyTabVector.push_back(IndexBprime);
                 IndexPolyTabVector.push_back(Cindex);
                 IndexPolyTabVector.push_back(IndexCprime);
@@ -2147,7 +2144,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 IndexPolyTabMinVector.push_back(IndexCprime);
 
                 /// (Bprime, Cprime) --> the border
-                IndexNbTriangle = NbTriangleIsoSurfaceTmp*3;
                 IndexPolyTabVector.push_back(IndexBprime);
                 IndexPolyTabVector.push_back(IndexCprime);
                 IndexPolyTabVector.push_back(IndexCprime);
@@ -2169,38 +2165,38 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         k = l = M =0;
 
         // In case we have a ParIso object, this will save the triangle arrangement for the parametric CND
-        for(uint i=0; i<uint(comp.IsoPositions[0]/3); i++)
+        for(uint i=0; i<starttri; i++)
         {
-            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i    ]);
-            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 1]);
-            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 2]);
+            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
         }
 
         // Now we start sorting the Isosurfaces triangles according to the CND. We have 3 cases
-        for(uint i=uint(comp.IsoPositions[0]/3); i<NbTriangleIsoSurfaceTmp; i++)
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == 1)
             {
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i    ]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 1]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 2]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 k++;
             }
 
-        for(uint i=uint(comp.IsoPositions[0]/3); i<NbTriangleIsoSurfaceTmp; i++)
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == -1)
             {
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i    ]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 1]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 2]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 l++;
             }
 
-        for(uint i=uint(comp.IsoPositions[0]/3); i<NbTriangleIsoSurfaceTmp; i++)
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == 4)
             {
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i    ]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 1]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 2]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 M++;
             }
 
@@ -2213,12 +2209,15 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
         NbTriangleIsoSurfaceTmp = M + l + k;
 
-        comp.NbTrianglesVerifyCND[1] = k;
+        comp.NbTrianglesVerifyCND[1]    = k;
         comp.NbTrianglesNotVerifyCND[1] = l;
-        comp.NbTrianglesBorderCND[1] = M;
+        comp.NbTrianglesBorderCND[1]    = M;
 
+        //????????????????????????
         for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
             comp.IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
+        //???????????????????????
+
         comp.ThereisCND[1] = true;
     }
     else
@@ -2238,6 +2237,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     return 1;
 }
+
 ///+++++++++++++++++++++++++++++++++++++++++
 Iso3D::~Iso3D()
 {
