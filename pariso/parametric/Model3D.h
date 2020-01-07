@@ -124,8 +124,6 @@ public:
     ParWorkerThread *workerthreads;
     float *Border;
     bool StopCalculations;
-    std::vector<int> PointVerifyCond;
-    std::vector<int> TypeParSurfaceTriangleListeCNDVector;
     uint WorkerThreadsNumber;
     uint Ugrid, Vgrid;
     uint CutV, CutU;
@@ -160,7 +158,6 @@ public:
     void clear(struct ComponentInfos &);
     void ParamBuild(float **, float **,uint **, uint *,
                     uint *, ComponentInfos *,
-                    int **,
                     uint **,
                     uint *);
     void BuildPar();

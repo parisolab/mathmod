@@ -1277,6 +1277,8 @@ uint Par3D::CNDtoUse(uint index, struct ComponentInfos &compts)
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos &components)
 {
     double vals[4];
+    std::vector<int> PointVerifyCond;
+    std::vector<int> TypeParSurfaceTriangleListeCNDVector;
     vals[3] = masterthread->stepMorph;
     if (masterthread->ParConditionRequired == 1)
     {
@@ -1568,6 +1570,10 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             NormVertexTabVector[i*10+3] = 1.0;
         }
     }
+    PointVerifyCond.clear();
+    PointVerifyCond.shrink_to_fit();
+    TypeParSurfaceTriangleListeCNDVector.clear();
+    TypeParSurfaceTriangleListeCNDVector.shrink_to_fit();
     return 1;
 }
 
@@ -1581,7 +1587,6 @@ void Par3D::BuildPar()
         &localScene->PolyNumber,
         &(localScene->VertxNumber),
         &(localScene->componentsinfos),
-        &(localScene->Typetriangles),
         &(localScene->PolyIndices_localPtMin),
         &(localScene->NbPolygnNbVertexPtMin)
     );
@@ -1817,7 +1822,6 @@ void  Par3D::ParamBuild(
     uint *PolyNumber,
     uint *VertxNumber,
     ComponentInfos *componentsPt,
-    int **TriangleListeCND,
     uint **IndexPolyTabMinPt,
     unsigned  int *NbPolyMinPt
 )
@@ -1832,10 +1836,6 @@ void  Par3D::ParamBuild(
     IndexPolyTabMinVector.shrink_to_fit();
     IndexPolyTabVector.clear();
     IndexPolyTabVector.shrink_to_fit();
-    PointVerifyCond.clear();
-    PointVerifyCond.shrink_to_fit();
-    TypeParSurfaceTriangleListeCNDVector.clear();
-    TypeParSurfaceTriangleListeCNDVector.shrink_to_fit();
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
     //*******/
@@ -1978,7 +1978,6 @@ void  Par3D::ParamBuild(
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     *NormVertexTabPt   = NormVertexTabVector.data();
     *IndexPolyTabPt    = IndexPolyTabVector.data();
-    *TriangleListeCND  = TypeParSurfaceTriangleListeCNDVector.data();
     *ExtraDimensionPt  = ExtraDimensionVector.data();
     componentsPt->Interleave = true;
     }

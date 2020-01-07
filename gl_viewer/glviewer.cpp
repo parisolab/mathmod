@@ -1450,7 +1450,6 @@ void OpenGlWidget::paintGL()
                 &LocalScene.PolyNumber,
                 &LocalScene.VertxNumber,
                 &(LocalScene.componentsinfos),
-                &(LocalScene.Typetriangles),
                 &(LocalScene.PolyIndices_localPtMin),
                 &(LocalScene.NbPolygnNbVertexPtMin)
             );

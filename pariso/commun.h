@@ -166,7 +166,6 @@ struct  ObjectProperties
     uint    VertxNumber;
     uint    NbBorderpoints;
     struct ComponentInfos  componentsinfos;
-    int   *Typetriangles;
     int   IndexCurrentFormula;
     int   border;
     int   anim;
