@@ -130,8 +130,6 @@ public :
     uint Xgrid, Ygrid, Zgrid;
     uint WorkerThreadsNumber;
     bool StopCalculations;
-    std::vector<int> PointVerifyCond;
-    std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
     uint NbTriangleIsoSurface,NbPointIsoMap;
     ScriptErrorType messageerror;
     QString message;
@@ -151,7 +149,7 @@ public :
     void clear(struct ComponentInfos &);
     void UpdateMaxGrid(uint);
     void Setgrid(uint);
-    void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *, int **);
+    void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *);
     void SaveIsoGLMap(uint);
     uint SetMiniMmeshStruct();
     uint CNDtoUse(uint index, struct ComponentInfos &);

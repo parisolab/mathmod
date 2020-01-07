@@ -122,8 +122,7 @@ void Iso3D::BuildIso()
         &(localScene->VertxNumber),
         &(localScene->PolyIndices_localPtMin),
         &(localScene->NbPolygnNbVertexPtMin),
-        &(localScene->componentsinfos),
-        &(localScene->Typetriangles));
+        &(localScene->componentsinfos));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1580,8 +1579,7 @@ void Iso3D::IsoBuild (
     uint *VertexNumberpt,
     uint **IndexPolyTabMinPt,
     unsigned  int *VertxNumber,
-    struct ComponentInfos * componentsPt,
-    int **TriangleListeCND
+    struct ComponentInfos * componentsPt
 )
 {
     uint NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
@@ -1603,10 +1601,6 @@ void Iso3D::IsoBuild (
     }
 
     clear(components);
-    PointVerifyCond.clear();
-    PointVerifyCond.shrink_to_fit();
-    TypeIsoSurfaceTriangleListeCNDVector.clear();
-    TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     NormOriginaltmpVector.clear();
     NormOriginaltmpVector.shrink_to_fit();
 
@@ -1809,7 +1803,6 @@ void Iso3D::IsoBuild (
     *NormVertexTabVectorPt = NormVertexTabVector.data();
     *IndexPolyTabPt = IndexPolyTabVector.data();
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
-    *TriangleListeCND = TypeIsoSurfaceTriangleListeCNDVector.data();
     componentsPt->Interleave = true;
     copycomponent(componentsPt, &components, componentsPt->pariso);
     Setgrid(PreviousGridVal);
@@ -1928,6 +1921,8 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos &comp)
 uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos &comp)
 {
     double vals[4];
+    std::vector<int> PointVerifyCond;
+    std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
     vals[3] = masterthread->stepMorph;
     if (masterthread->IsoConditionRequired == 1)
     {
@@ -1939,17 +1934,17 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             PointVerifyCond.push_back(int(masterthread->IsoConditionParser[CNDtoUse(i, comp)].Eval(vals)));
             if(PointVerifyCond[i])
             {
-                NormVertexTabVector[i*10    ] = float(0.1);
-                NormVertexTabVector[i*10  +1] = float(0.9);
-                NormVertexTabVector[i*10  +2] = 0.0;
-                NormVertexTabVector[i*10  +3] = 1.0;
+                NormVertexTabVector[i*10  ] = 0.1f;
+                NormVertexTabVector[i*10+1] = 0.9f;
+                NormVertexTabVector[i*10+2] = 0.0;
+                NormVertexTabVector[i*10+3] = 1.0;
             }
             else
             {
-                NormVertexTabVector[i*10    ] = float(0.9);
-                NormVertexTabVector[i*10  +1] = float(0.1);
-                NormVertexTabVector[i*10  +2] = 0.0;
-                NormVertexTabVector[i*10  +3] = 1.0;
+                NormVertexTabVector[i*10  ] = 0.9f;
+                NormVertexTabVector[i*10+1] = 0.1f;
+                NormVertexTabVector[i*10+2] = 0.0;
+                NormVertexTabVector[i*10+3] = 1.0;
             }
         }
         uint Aindex, Bindex, Cindex;
@@ -2226,6 +2221,10 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             NormVertexTabVector[i*10+3] = 1.0;
         }
     }
+    PointVerifyCond.clear();
+    PointVerifyCond.shrink_to_fit();
+    TypeIsoSurfaceTriangleListeCNDVector.clear();
+    TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     return 1;
 }
 ///+++++++++++++++++++++++++++++++++++++++++

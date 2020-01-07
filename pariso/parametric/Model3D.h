@@ -125,8 +125,7 @@ public:
     float *Border;
     bool StopCalculations;
     std::vector<int> PointVerifyCond;
-    std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
-    int *TypeIsoSurfaceTriangleListeCND;
+    std::vector<int> TypeParSurfaceTriangleListeCNDVector;
     uint WorkerThreadsNumber;
     uint Ugrid, Vgrid;
     uint CutV, CutU;
