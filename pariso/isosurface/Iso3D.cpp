@@ -1931,7 +1931,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     vals[3] = masterthread->stepMorph;
     if (masterthread->IsoConditionRequired == 1)
     {
-        for(uint i= 0; i < NbVertexTmp; i++)
+        for(uint i= comp.IsoPts[0]; i < NbVertexTmp; i++)
         {
             vals[0] = double(NormVertexTabVector[i*10+7]);
             vals[1] = double(NormVertexTabVector[i*10+8]);
@@ -1989,9 +1989,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
             if(TypeTriangle == 2 || TypeTriangle == 3)
             {
-                Aindex = IndexPolyTabVector[3*i  +1];
-                Bindex = IndexPolyTabVector[3*i + 2];
-                Cindex = IndexPolyTabVector[3*i    ];
+                Aindex = IndexPolyTabVector[3*i+1];
+                Bindex = IndexPolyTabVector[3*i+2];
+                Cindex = IndexPolyTabVector[3*i  ];
             }
             else if(TypeTriangle == 4 || TypeTriangle == 5)
             {
@@ -2042,7 +2042,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Cprime[2] = double(NormVertexTabVector[10*Aindex+9]);
                 Cprime[3] = masterthread->stepMorph;
 
-                DiffX = double(NormVertexTabVector[3+10*Cindex  + 4] - NormVertexTabVector[3+10*Aindex     + 4])/20;
+                DiffX = double(NormVertexTabVector[3+10*Cindex  + 4] - NormVertexTabVector[3+10*Aindex  + 4])/20;
                 DiffY = double(NormVertexTabVector[3+10*Cindex+1+ 4] - NormVertexTabVector[3+10*Aindex+1+ 4])/20;
                 DiffZ = double(NormVertexTabVector[3+10*Cindex+2+ 4] - NormVertexTabVector[3+10*Aindex+2+ 4])/20;
                 Alfa = 0;

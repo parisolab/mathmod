@@ -987,9 +987,11 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
                 listeIsoObj.append(listeObj[i].toObject());
         else
                 listeParObj.append(listeObj[i].toObject());
-
-        QPar = listeParObj[0].toObject();
-        QIso = listeIsoObj[0].toObject();
+        //Right now, we only support pariso object with 1 Iso3D and 1 Param3D objects.
+        if(listeParObj.size()>0)
+            QPar = listeParObj[0].toObject();
+        if(listeIsoObj.size()>0)
+            QIso = listeIsoObj[0].toObject();
 
         loadtext = loadpigm = false;
         if(QPar["Texture"].isObject())
@@ -1004,7 +1006,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             (QPar["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
         LoadMandatoryAndOptionnalFields(QPar["Param3D"].toObject(), PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
-
         loadtext = loadpigm = false;
         if(QIso["Texture"].isObject())
             QTextureObj = QIso["Texture"].toObject();
@@ -1018,7 +1019,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             (QIso["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
         LoadMandatoryAndOptionnalFields(QIso["Iso3D"].toObject(), ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
 
-
         document.setObject(Jobj);
         MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
         CurrentFormulaType = 2;
@@ -1028,7 +1028,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
             MathmodRef->ParametricSurfaceProcess2();
         }
-
     }
     else
     {
