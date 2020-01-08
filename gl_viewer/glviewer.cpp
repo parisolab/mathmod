@@ -431,6 +431,36 @@ static void DrawParametric (ObjectProperties *scene)
         glEnable(GL_COLOR_MATERIAL);
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
+    if(scene->componentsinfos.ThereisCND[0])
+    {
+        if(!scene->componentsinfos.ThereisRGBA[0])
+        {
+            for(uint j=0; j<4; j++)
+            {
+                frontcl[j]=scene->frontcolsPar[j];
+                backcl[j]=scene->backcolsPar[j];
+            }
+            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE,  backcl);
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+        }
+
+        if(scene->componentsinfos.DFTrianglesVerifyCND[0])
+            glDrawElements(
+                GL_TRIANGLES,
+                3*int(scene->componentsinfos.NbTrianglesVerifyCND[0]),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[0])
+            );
+
+        if(scene->componentsinfos.DFTrianglesNotVerifyCND[0])
+            glDrawElements(
+                GL_TRIANGLES,
+                3*int(scene->componentsinfos.NbTrianglesNotVerifyCND[0]),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[0]])
+            );
+    }
+
     for(uint i=0; i< scene->componentsinfos.NbParametric; i++)
     {
         if(!scene->componentsinfos.ThereisRGBA[0])
@@ -443,25 +473,8 @@ static void DrawParametric (ObjectProperties *scene)
             glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE,  backcl);
             glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
         }
-        if(scene->componentsinfos.ThereisCND[0])
-        {
-            if(scene->componentsinfos.DFTrianglesVerifyCND[0])
-                glDrawElements(
-                    GL_TRIANGLES,
-                    3*int(scene->componentsinfos.NbTrianglesVerifyCND[0]),
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[0])
-                );
 
-            if(scene->componentsinfos.DFTrianglesNotVerifyCND[0])
-                glDrawElements(
-                    GL_TRIANGLES,
-                    3*int(scene->componentsinfos.NbTrianglesNotVerifyCND[0]),
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[0]])
-                );
-        }
-        else
+        if(!scene->componentsinfos.ThereisCND[0])
             glDrawElements(
                 GL_TRIANGLES,
                 3*int(scene->componentsinfos.ParPositions[3*i+1]),
