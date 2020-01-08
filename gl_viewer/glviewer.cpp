@@ -540,6 +540,7 @@ static void drawCube(float x)
 
 static void DrawIso (ObjectProperties *scene)
 {
+    int start_triangle= scene->componentsinfos.IsoPositions[0];
     float frontcl[4], backcl[4];
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -572,7 +573,7 @@ static void DrawIso (ObjectProperties *scene)
                         GL_TRIANGLES,
                         int(3*(scene->componentsinfos.NbTrianglesVerifyCND[1])),
                         GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[0])
+                        &(scene->PolyIndices_localPt[start_triangle])
                     );
 
                 if(scene->componentsinfos.DFTrianglesNotVerifyCND[1])
@@ -580,7 +581,7 @@ static void DrawIso (ObjectProperties *scene)
                         GL_TRIANGLES,
                         int(3*(scene->componentsinfos.NbTrianglesNotVerifyCND[1])),
                         GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]])
+                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]+start_triangle])
                     );
             }
             else
@@ -1113,6 +1114,7 @@ void OpenGlWidget::UpdateGL()
 
 static void DrawIsoCND(ObjectProperties *scene)
 {
+    int start_triangle= scene->componentsinfos.IsoPositions[0];
     if(scene->componentsinfos.DMTrianglesVerifyCND[1])
     {
         glLineWidth(1);
@@ -1121,7 +1123,7 @@ static void DrawIsoCND(ObjectProperties *scene)
             GL_TRIANGLES,
             int(3*scene->componentsinfos.NbTrianglesVerifyCND[1]),
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[0]));
+            &(scene->PolyIndices_localPt[start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
@@ -1134,7 +1136,7 @@ static void DrawIsoCND(ObjectProperties *scene)
             GL_TRIANGLES,
             int(3*scene->componentsinfos.NbTrianglesNotVerifyCND[1]),
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]]));
+            &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]+start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
@@ -1147,7 +1149,8 @@ static void DrawIsoCND(ObjectProperties *scene)
             GL_TRIANGLES,
             int(3*scene->componentsinfos.NbTrianglesBorderCND[1]),
             GL_UNSIGNED_INT,
-            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND[1] + scene->componentsinfos.NbTrianglesNotVerifyCND[1]) ]));
+            &(scene->PolyIndices_localPt[3*(scene->componentsinfos.NbTrianglesVerifyCND[1] + scene->componentsinfos.NbTrianglesNotVerifyCND[1]) +
+                start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
