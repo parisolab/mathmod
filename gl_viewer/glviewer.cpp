@@ -551,48 +551,58 @@ static void DrawIso (ObjectProperties *scene)
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
 
+    if(!scene->componentsinfos.ThereisRGBA[1])
+    {
+        for(uint j=0; j<4; j++)
+        {
+            frontcl[j]=scene->frontcols[j];
+            backcl[j]=scene->backcols[j];
+        }
+        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
+        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+    }
+    if(scene->componentsinfos.ThereisCND[1])
+    {
+        if(scene->componentsinfos.DFTrianglesVerifyCND[1])
+            glDrawElements(
+                GL_TRIANGLES,
+                int(3*(scene->componentsinfos.NbTrianglesVerifyCND[1])),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[start_triangle])
+            );
+
+        if(scene->componentsinfos.DFTrianglesNotVerifyCND[1])
+            glDrawElements(
+                GL_TRIANGLES,
+                int(3*(scene->componentsinfos.NbTrianglesNotVerifyCND[1])),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]+start_triangle])
+            );
+    }
+
+
+
     for(uint i=0; i< scene->componentsinfos.NbIso; i++)
     {
+        if(!scene->componentsinfos.ThereisRGBA[1])
         {
-            if(!scene->componentsinfos.ThereisRGBA[1])
+            for(uint j=0; j<4; j++)
             {
-                for(uint j=0; j<4; j++)
-                {
-                    frontcl[j]=scene->frontcols[4*(i%10)+j];
-                    backcl[j]=scene->backcols[4*(i%10)+j];
-                }
-                glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
-                glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+                frontcl[j]=scene->frontcols[4*(i%10)+j];
+                backcl[j]=scene->backcols[4*(i%10)+j];
             }
+            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+        }
 
-
-            if(scene->componentsinfos.ThereisCND[1])
-            {
-                if(scene->componentsinfos.DFTrianglesVerifyCND[1])
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        int(3*(scene->componentsinfos.NbTrianglesVerifyCND[1])),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[start_triangle])
-                    );
-
-                if(scene->componentsinfos.DFTrianglesNotVerifyCND[1])
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        int(3*(scene->componentsinfos.NbTrianglesNotVerifyCND[1])),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]+start_triangle])
-                    );
-            }
-            else
-            {
-                glDrawElements(
-                    GL_TRIANGLES,
-                    int(3*scene->componentsinfos.IsoPositions[2*i+1]),
-                    GL_UNSIGNED_INT,
-                    &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
-                );
-            }
+        if(!scene->componentsinfos.ThereisCND[1])
+        {
+            glDrawElements(
+                GL_TRIANGLES,
+                int(3*scene->componentsinfos.IsoPositions[2*i+1]),
+                GL_UNSIGNED_INT,
+                &(scene->PolyIndices_localPt[scene->componentsinfos.IsoPositions[2*i]])
+            );
         }
     }
     if(scene->componentsinfos.ThereisRGBA[1])
@@ -1375,10 +1385,10 @@ static void draw(ObjectProperties *scene)
         glRotatef(scene->animzValue, 0, 0, 1.0);
     }
 
-    if (scene->fill == 1 && (scene->typedrawing == 1 || scene->componentsinfos.pariso))
+    if ((scene->componentsinfos.NbIso !=0) && scene->fill == 1 && (scene->typedrawing == 1 || scene->componentsinfos.pariso))
         DrawIso(scene);
 
-    if (scene->fill == 1 && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
+    if ((scene->componentsinfos.NbParametric !=0) && scene->fill == 1 && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
         DrawParametric(scene);
 
     // Draw Mesh Object:
@@ -1393,10 +1403,10 @@ static void draw(ObjectProperties *scene)
     if (scene->mesh == 1)
         DrawMinimalTopology(scene);
 
-    if(scene->activarecnd && scene->componentsinfos.ThereisCND[1]  && (scene->typedrawing == 1|| scene->componentsinfos.pariso))
+    if((scene->componentsinfos.NbIso !=0) && scene->activarecnd && scene->componentsinfos.ThereisCND[1]  && (scene->typedrawing == 1|| scene->componentsinfos.pariso))
         DrawIsoCND(scene);
 
-    if(scene->activarecnd && scene->componentsinfos.ThereisCND[0]  && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
+    if((scene->componentsinfos.NbParametric !=0) && scene->activarecnd && scene->componentsinfos.ThereisCND[0]  && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
         DrawParCND(scene);
 
     //Draw Normales:
