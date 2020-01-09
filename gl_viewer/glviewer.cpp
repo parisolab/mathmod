@@ -829,7 +829,20 @@ void OpenGlWidget::morph()
             ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
         ParObjet->ParMorph();
     }
+    else //Pariso objects
+    {
+        //Parametric surfaces:
+        ParObjet->masterthread->activeMorph = LocalScene.morph;
+        for(uint nbthreads=0; nbthreads< ParObjet->WorkerThreadsNumber-1; nbthreads++)
+            ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+        ParObjet->ParMorph();
+        //Isosurfaces:
+        IsoObjet->masterthread->morph_activated = LocalScene.morph;
+        for(uint nbthreads=0; nbthreads< IsoObjet->WorkerThreadsNumber-1; nbthreads++)
+            IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
+        IsoObjet->IsoMorph();
 
+    }
     if (LocalScene.morph == 1)
         timer->start( latence);
     else if(LocalScene.anim == -1)
@@ -1439,47 +1452,20 @@ void OpenGlWidget::paintGL()
 {
     if (LocalScene.morph == 1)
     {
-        if(LocalScene.typedrawing == 11)
-        {
-            /*
-            IsoObjet->IsoBuild(
-                &(LocalScene.ArrayNorVer_localPt),
-                &(LocalScene.PolyIndices_localPt),
-                &LocalScene.PolyNumber,
-                &LocalScene.VertxNumber,
-                &(LocalScene.PolyIndices_localPtMin),
-                &(LocalScene.NbPolygnNbVertexPtMin),
-                &(LocalScene.componentsinfos),
-                &(LocalScene.Typetriangles)
-            );
-            ParObjet->ParamBuild
-            (
-                &(LocalScene.ArrayNorVer_localPt),
-                &(LocalScene.ArrayNorVerExtra_localPt),
-                &(LocalScene.PolyIndices_localPt),
-                &LocalScene.PolyNumber,
-                &LocalScene.VertxNumber,
-                &(LocalScene.componentsinfos),
-                &(LocalScene.Typetriangles),
-                &(LocalScene.PolyIndices_localPtMin),
-                &(LocalScene.NbPolygnNbVertexPtMin)
-            );
-            */
-        }
-        else if(LocalScene.typedrawing == -1)
-        {
-            ParObjet->ParamBuild
-            (
-                &(LocalScene.ArrayNorVer_localPt),
-                &(LocalScene.ArrayNorVerExtra_localPt),
-                &(LocalScene.PolyIndices_localPt),
-                &LocalScene.PolyNumber,
-                &LocalScene.VertxNumber,
-                &(LocalScene.componentsinfos),
-                &(LocalScene.PolyIndices_localPtMin),
-                &(LocalScene.NbPolygnNbVertexPtMin)
-            );
-        }
+        if(LocalScene.typedrawing == -1)
+                {
+                    ParObjet->ParamBuild
+                    (
+                        &(LocalScene.ArrayNorVer_localPt),
+                        &(LocalScene.ArrayNorVerExtra_localPt),
+                        &(LocalScene.PolyIndices_localPt),
+                        &LocalScene.PolyNumber,
+                        &LocalScene.VertxNumber,
+                        &(LocalScene.componentsinfos),
+                        &(LocalScene.PolyIndices_localPtMin),
+                        &(LocalScene.NbPolygnNbVertexPtMin)
+                    );
+                }
         else if(LocalScene.typedrawing == 1)
         {
             IsoObjet->IsoBuild
@@ -1492,6 +1478,31 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.NbPolygnNbVertexPtMin),
                 &(LocalScene.componentsinfos)
             );
+        }
+        else {
+
+            ParObjet->ParamBuild
+            (
+                &(LocalScene.ArrayNorVer_localPt),
+                &(LocalScene.ArrayNorVerExtra_localPt),
+                &(LocalScene.PolyIndices_localPt),
+                &LocalScene.PolyNumber,
+                &LocalScene.VertxNumber,
+                &(LocalScene.componentsinfos),
+                &(LocalScene.PolyIndices_localPtMin),
+                &(LocalScene.NbPolygnNbVertexPtMin)
+            );
+            IsoObjet->IsoBuild
+            (
+                &(LocalScene.ArrayNorVer_localPt),
+                &(LocalScene.PolyIndices_localPt),
+                &(LocalScene.PolyNumber),
+                &(LocalScene.VertxNumber),
+                &(LocalScene.PolyIndices_localPtMin),
+                &(LocalScene.NbPolygnNbVertexPtMin),
+                &(LocalScene.componentsinfos)
+            );
+
         }
         Winitialize_GL();
     }

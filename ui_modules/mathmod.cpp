@@ -294,6 +294,11 @@ void MathMod::ParametricSurfaceProcess(int type)
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ParametricSurfaceProcess2()
 {
+
+    (ui.glWidget)->LocalScene.typedrawing = 0;
+    (ui.glWidget)->LocalScene.updategl = false;
+    (ui.glWidget)->LocalScene.componentsinfos.pariso = true;
+
     if(!(ui.glWidget)->ParObjet->isRunning())
     {
         (ui.glWidget)->ParObjet->masterthread->param4D =
@@ -301,13 +306,16 @@ void MathMod::ParametricSurfaceProcess2()
 
         int result = ParsePar();
         if(result == -1) return;
-        (ui.glWidget)->LocalScene.typedrawing = -1;
-        (ui.glWidget)->LocalScene.updategl = false;
-        (ui.glWidget)->LocalScene.componentsinfos.pariso = true;
         (ui.glWidget)->ParObjet->localScene = &((ui.glWidget)->LocalScene);
         (ui.glWidget)->ParObjet->start(QThread::LowPriority);
         (ui.glWidget)->ParObjet->wait();
-        ProcessNewIsoSurface();
+    }
+    if(!(ui.glWidget)->IsoObjet->isRunning())
+    {
+        int result = ParseIso();
+        if(result == -1) return;
+        (ui.glWidget)->IsoObjet->localScene = &((ui.glWidget)->LocalScene);
+        (ui.glWidget)->IsoObjet->start(QThread::LowPriority);
     }
 }
 
