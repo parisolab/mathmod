@@ -455,15 +455,7 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
         UpdateTreeObject();
 
     //Update the "Script Edit" page
-    if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
-    {
-        ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
-    }
-    else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
-               MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
-    {
-        ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
-    }
+    ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
 
     //Update the "Model Details" page
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
@@ -1021,6 +1013,9 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
         document.setObject(Jobj);
         MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
+
+        //Update the current pariso struct
+        MathmodRef->RootObjet.CurrentJsonObject = Jobj;
         CurrentFormulaType = 2;
         /// process the new surface
         if(textureIndex == -1)
