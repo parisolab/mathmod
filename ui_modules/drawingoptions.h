@@ -154,6 +154,9 @@ public slots:
     void on_actionSmooth_triggered();
     void on_ObjectClasse_clicked(const QModelIndex &index);
     void UpdateScriptEditorAndTreeObject();
+    void UpdatePar3DModelDetailsPage();
+    void UpdatePar4DModelDetailsPage();
+    void UpdateIsoModelDetailsPage();
     void UpdateTreeObject();
     void on_updateButton_clicked();
     void slot_pushButton_2_clicked();

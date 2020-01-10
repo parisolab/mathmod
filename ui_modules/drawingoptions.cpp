@@ -446,7 +446,36 @@ void DrawingOptions::UpdateTreeObject()
         AddParObjectToTree(paramlistItem);
     }
 }
-
+// --------------------------
+void DrawingOptions::UpdatePar4DModelDetailsPage()
+{
+    ui.ParamComponent_2->clear();
+    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+    ui.ParamComponent_2->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
+    ui.stackedProperties->setCurrentIndex(3);
+    UpdateDescription(0);
+}
+// --------------------------
+void DrawingOptions::UpdatePar3DModelDetailsPage()
+{
+    ui.ParamComponent->clear();
+    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+    ui.ParamComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
+    ui.stackedProperties->setCurrentIndex(2);
+    UpdateDescription(0);
+}
+// --------------------------
+void DrawingOptions::UpdateIsoModelDetailsPage()
+{
+    ui.stackedProperties->setCurrentIndex(1);
+    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
+        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+    ui.IsoComponent->clear();
+    ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
+    UpdateDescription(0);
+}
 // --------------------------
 void DrawingOptions::UpdateScriptEditorAndTreeObject()
 {
@@ -459,32 +488,11 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
 
     //Update the "Model Details" page
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
-    {
-        ui.stackedProperties->setCurrentIndex(1);
-        if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-            ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
-        ui.IsoComponent->clear();
-        ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
-        UpdateDescription(0);
-    }
+        UpdateIsoModelDetailsPage();
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject())
-    {
-        ui.ParamComponent->clear();
-        if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-            ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
-        ui.ParamComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
-        ui.stackedProperties->setCurrentIndex(2);
-        UpdateDescription(0);
-    }
+        UpdatePar3DModelDetailsPage();
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
-    {
-        ui.ParamComponent_2->clear();
-        if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-            ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
-        ui.ParamComponent_2->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
-        ui.stackedProperties->setCurrentIndex(3);
-        UpdateDescription(0);
-    }
+        UpdatePar4DModelDetailsPage();
     else
         ui.stackedProperties->setCurrentIndex(0);
 }
