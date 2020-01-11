@@ -29,54 +29,6 @@
 #include <QDialog>
 #include <QTranslator>
 
-struct ParamStruct
-{
-    QString text;
-    QString Const;
-    QString Funct;
-    QString Cnd;
-    QString Grid;
-    QString RGBT;
-    QString fx;
-    QString fy;
-    QString fz;
-    QString fw;
-    QString umin;
-    QString umax;
-    QString vmin;
-    QString vmax;
-    QString tmin;
-    QString tmax;
-    QString comment;
-    QString name;
-    QString Component;
-    int     Nbcomponent;
-    int     index;
-};
-
-struct IsoStruct
-{
-    QString text;
-    QString comment;
-    QString name;
-    QString Const;
-    QString Funct;
-    QString Cnd;
-    QString Grid;
-    QString RGBT;
-    QString VRGBT;
-    QString fxyz;
-    QString xmin;
-    QString xmax;
-    QString ymin;
-    QString ymax;
-    QString zmin;
-    QString zmax;
-    QString Component;
-    int     Nbcomponent;
-    int     index;
-};
-
 struct TreeStruct
 {
     QStringList name;
@@ -112,22 +64,15 @@ struct TreeStruct
 class ParisoMathObject
 {
 public :
-    IsoStruct  IsoTable[2000];
-    ParamStruct ParamTable[2000];
-
     int NbIsoStruct;
     int NbParamStruct;
-    ParamStruct CurrentParamStruct;
-    IsoStruct        CurrentIsoStruct;
     QJsonObject CurrentJsonObject;
-    QJsonArray MyJsonObjectSelection;
-    TreeStruct CurrentTreestruct;
+    QJsonArray  MyJsonObjectSelection;
+    TreeStruct  CurrentTreestruct;
     QString dotsymbol;
 
 public :
     ParisoMathObject();
     ~ParisoMathObject();
     void ReadJsonFile(QString, QJsonObject &);
-    QStringList ParObject();
-    QStringList IsoObject();
 };

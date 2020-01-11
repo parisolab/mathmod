@@ -84,20 +84,3 @@ void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject & js)
     }
     return;
 }
-
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
-QStringList ParisoMathObject::ParObject ()
-{
-    QStringList liste;
-    for(int i=0; i<NbParamStruct; i++)
-        liste << ParamTable[i].name;
-    return liste;
-}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
-QStringList ParisoMathObject::IsoObject()
-{
-    QStringList liste;
-    for(int i=0; i<NbIsoStruct; i++)
-        liste << IsoTable[i].name;
-    return liste;
-}
