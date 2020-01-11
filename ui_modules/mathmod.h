@@ -35,7 +35,7 @@ public:
     void keyPressEvent ( QKeyEvent *);
     void resizeEvent( QResizeEvent  *);
     void ParametricSurfaceProcess(int type = 1);
-    void ParametricSurfaceProcess2();
+    void ParisoObjectProcess();
     void Initparametricpage();
     void updateGL();
     void updateGLspectrale(float *);

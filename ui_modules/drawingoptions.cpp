@@ -431,7 +431,7 @@ void DrawingOptions::AddObjectToMySelectionTree()
 // -------------------------
 void DrawingOptions::UpdateTreeObject()
 {
-    //Update the "Script Edit" page
+    //Update Object Tree
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
     {
         ui.ObjectClasseCurrent->takeTopLevelItem(0);
@@ -1005,6 +1005,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
             (QPar["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
         LoadMandatoryAndOptionnalFields(QPar["Param3D"].toObject(), PAR_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+        //Save this Current Parametric Tree struct
+        MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(MathmodRef->RootObjet.CurrentTreestruct);
 
         loadtext = loadpigm = false;
         if(QIso["Texture"].isObject())
@@ -1018,6 +1020,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
             (QIso["Pigment"].isObject() || ((textureIndex != -1) && (textureIndex > 999)));
         LoadMandatoryAndOptionnalFields(QIso["Iso3D"].toObject(), ISO_TYPE, loadtext, QTextureObj, loadpigm, QPigmentObj);
+        //Save this Current Isosurface Tree struct
+        MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(MathmodRef->RootObjet.CurrentTreestruct);
 
         document.setObject(Jobj);
         MathmodRef->RootObjet.CurrentTreestruct.text = QString (document.toJson());
@@ -1029,7 +1033,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
         if(textureIndex == -1)
         {
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
-            MathmodRef->ParametricSurfaceProcess2();
+            MathmodRef->ParisoObjectProcess();
         }
     }
     else
@@ -1186,6 +1190,8 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentTreestruct.text = "";
     //Initialize the current JSON Object
     MathmodRef->RootObjet.CurrentJsonObject= QJsonObject();
+    //Initialize the Current Pariso Trees truct
+    MathmodRef->RootObjet.CurrentParisoTreestruct.clear();
 }
 
 void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const MandatoryParField & idx, const ModelType & mod)

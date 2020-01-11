@@ -287,12 +287,11 @@ void MathMod::ParametricSurfaceProcess(int type)
         if(result == -1) return;
         (ui.glWidget)->LocalScene.typedrawing = -1;
         (ui.glWidget)->ParObjet->localScene = &((ui.glWidget)->LocalScene);
-        //connect((ui.glWidget)->ParObjet, SIGNAL(finished()), (ui.glWidget), SLOT(UpdateGL()), Qt::UniqueConnection);
         (ui.glWidget)->ParObjet->start(QThread::LowPriority);
     }
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::ParametricSurfaceProcess2()
+void MathMod::ParisoObjectProcess()
 {
 
     (ui.glWidget)->LocalScene.typedrawing = 0;

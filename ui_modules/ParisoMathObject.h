@@ -69,6 +69,7 @@ public :
     QJsonObject CurrentJsonObject;
     QJsonArray  MyJsonObjectSelection;
     TreeStruct  CurrentTreestruct;
+    std::vector<TreeStruct>  CurrentParisoTreestruct;
     QString dotsymbol;
 
 public :
