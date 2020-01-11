@@ -432,7 +432,20 @@ void DrawingOptions::AddObjectToMySelectionTree()
 void DrawingOptions::UpdateTreeObject()
 {
     //Update Object Tree
-    if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
+    if(MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray())  //isoObject
+    {
+        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        QTreeWidgetItem *PaIsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+        for(uint i=0; i<MathmodRef->RootObjet.CurrentParisoTreestruct.size(); i++)
+        {
+            QTreeWidgetItem *parisochild = new QTreeWidgetItem(PaIsolistItem);
+            if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fxyz.size() != 0)
+                AddIsoObjectToTree(parisochild, MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+            else
+                AddParObjectToTree(parisochild, MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+        }
+    }
+    else if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
     {
         ui.ObjectClasseCurrent->takeTopLevelItem(0);
         QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
