@@ -37,7 +37,8 @@ enum ModelType
 {
     PAR_TYPE,
     PAR_4D_TYPE,
-    ISO_TYPE
+    ISO_TYPE,
+    PARISO_TYPE
 };
 enum OptionnalParScriptFIELD
 {
@@ -154,15 +155,15 @@ public slots:
     void on_actionSmooth_triggered();
     void on_ObjectClasse_clicked(const QModelIndex &);
     void UpdateScriptEditorAndTreeObject();
-    void UpdatePar3DModelDetailsPage();
-    void UpdatePar4DModelDetailsPage();
-    void UpdateIsoModelDetailsPage();
+    void UpdatePar3DModelDetailsPage(TreeStruct&);
+    void UpdatePar4DModelDetailsPage(TreeStruct&);
+    void UpdateIsoModelDetailsPage(TreeStruct&);
     void UpdateTreeObject();
     void on_updateButton_clicked();
     void slot_pushButton_2_clicked();
     void slot_unselect_clicked();
     void slot_XYZscrollBar_valueChanged(int);
-    void UpdateDescription(int);
+    void UpdateDescription(int, ModelType, TreeStruct&);
     void oncolor_2activated(int index);
     void onred_2valueChanged(int);
     void ongreen_2valueChanged(int);

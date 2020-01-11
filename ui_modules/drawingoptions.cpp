@@ -459,34 +459,34 @@ void DrawingOptions::UpdateTreeObject()
     }
 }
 // --------------------------
-void DrawingOptions::UpdatePar4DModelDetailsPage()
+void DrawingOptions::UpdatePar4DModelDetailsPage(TreeStruct& currentstruct)
 {
     ui.ParamComponent_2->clear();
-    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
-    ui.ParamComponent_2->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
+    if(!currentstruct.name.empty())
+        ui.groupBox->setTitle(currentstruct.name.at(0));
+    ui.ParamComponent_2->insertItems(0, currentstruct.Component);
     ui.stackedProperties->setCurrentIndex(3);
-    UpdateDescription(0);
+    UpdateDescription(0, PAR_4D_TYPE, currentstruct);
 }
 // --------------------------
-void DrawingOptions::UpdatePar3DModelDetailsPage()
+void DrawingOptions::UpdatePar3DModelDetailsPage(TreeStruct& currentstruct)
 {
     ui.ParamComponent->clear();
-    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
-    ui.ParamComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
+    if(!currentstruct.name.empty())
+        ui.groupBox->setTitle(currentstruct.name.at(0));
+    ui.ParamComponent->insertItems(0, currentstruct.Component);
     ui.stackedProperties->setCurrentIndex(2);
-    UpdateDescription(0);
+    UpdateDescription(0, PAR_TYPE, currentstruct);
 }
 // --------------------------
-void DrawingOptions::UpdateIsoModelDetailsPage()
+void DrawingOptions::UpdateIsoModelDetailsPage(TreeStruct& currentstruct)
 {
     ui.stackedProperties->setCurrentIndex(1);
-    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-        ui.groupBox->setTitle(MathmodRef->RootObjet.CurrentTreestruct.name.at(0));
+    if(!currentstruct.name.empty())
+        ui.groupBox->setTitle(currentstruct.name.at(0));
     ui.IsoComponent->clear();
-    ui.IsoComponent->insertItems(0, MathmodRef->RootObjet.CurrentTreestruct.Component);
-    UpdateDescription(0);
+    ui.IsoComponent->insertItems(0, currentstruct.Component);
+    UpdateDescription(0, ISO_TYPE, currentstruct);
 }
 // --------------------------
 void DrawingOptions::UpdateScriptEditorAndTreeObject()
@@ -499,12 +499,24 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
 
     //Update the "Model Details" page
+    if(MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray())
+    {
+        for(uint i=0; i<MathmodRef->RootObjet.CurrentParisoTreestruct.size(); i++)
+        {
+            if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fxyz.size() != 0)
+                UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+            else if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fw.size() != 0)
+                UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+            else if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fx.size() != 0)
+                UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+        }
+    }
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
-        UpdateIsoModelDetailsPage();
+        UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject())
-        UpdatePar3DModelDetailsPage();
+        UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
-        UpdatePar4DModelDetailsPage();
+        UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
     else
         ui.stackedProperties->setCurrentIndex(0);
 }
@@ -1733,6 +1745,8 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(const QJsonObject &qobj,
                 OptionalIsoScriptFieldprocess(qobj, Opt);
             }
             break;
+        case PARISO_TYPE:
+            break;
     }
 
     // Colors
@@ -2644,9 +2658,9 @@ void DrawingOptions::slot_XYZscrollBar_valueChanged(int value)
 }
 
 // --------------------------
-void DrawingOptions::UpdateDescription(int position)
+void DrawingOptions::UpdateDescription(int position, ModelType type, TreeStruct& currentstruct)
 {
-    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject())
+    if(type == PAR_TYPE)
     {
         if(position > -1)
         {
@@ -2655,23 +2669,23 @@ void DrawingOptions::UpdateDescription(int position)
             MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1:
                     MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = position;
             //currentFormula = sparent;
-            ui.paramNameEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Component.at(position));
-            ui.XEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.fx.at(position));
-            ui.YEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.fy.at(position));
-            ui.ZEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.fz.at(position));
-            ui.umin->setText(MathmodRef->RootObjet.CurrentTreestruct.umin.at(position));
-            ui.vmin->setText(MathmodRef->RootObjet.CurrentTreestruct.vmin.at(position));
-            ui.umax->setText(MathmodRef->RootObjet.CurrentTreestruct.umax.at(position));
-            ui.vmax->setText(MathmodRef->RootObjet.CurrentTreestruct.vmax.at(position));
+            ui.paramNameEdit->setText(currentstruct.Component.at(position));
+            ui.XEdit->setText(currentstruct.fx.at(position));
+            ui.YEdit->setText(currentstruct.fy.at(position));
+            ui.ZEdit->setText(currentstruct.fz.at(position));
+            ui.umin->setText(currentstruct.umin.at(position));
+            ui.vmin->setText(currentstruct.vmin.at(position));
+            ui.umax->setText(currentstruct.umax.at(position));
+            ui.vmax->setText(currentstruct.vmax.at(position));
 
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Component.empty())
-                ui.paramNameEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Component.at(position));
+            if(!currentstruct.Component.empty())
+                ui.paramNameEdit->setText(currentstruct.Component.at(position));
             else
                 ui.paramNameEdit->setText("");
 
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Cnd.empty())
+            if(!currentstruct.Cnd.empty())
             {
-                ui.CndUpdateEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
+                ui.CndUpdateEdit_2->setText(currentstruct.Cnd.at(0));
             }
             else
             {
@@ -2679,14 +2693,14 @@ void DrawingOptions::UpdateDescription(int position)
             }
 
             //Function:
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Funct.empty())
+            if(!currentstruct.Funct.empty())
             {
                 ui.tableWidget_Fct_2->clearContents();
                 ui.tableWidget_Fct_2->setRowCount(0);
-                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Funct.size(); i++)
+                for(int i=0; i < currentstruct.Funct.size(); i++)
                 {
                     ui.tableWidget_Fct_2->setRowCount(i+1);
-                    ui.tableWidget_Fct_2->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Funct.at(i)));
+                    ui.tableWidget_Fct_2->setItem(i, 0, new QTableWidgetItem(currentstruct.Funct.at(i)));
                 }
             }
             else
@@ -2696,14 +2710,14 @@ void DrawingOptions::UpdateDescription(int position)
             }
 
             //Constantes:
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Const.empty())
+            if(!currentstruct.Const.empty())
             {
                 ui.tableWidget_Cst_2->clearContents();
                 ui.tableWidget_Cst_2->setRowCount(0);
-                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Const.size(); i++)
+                for(int i=0; i < currentstruct.Const.size(); i++)
                 {
                     ui.tableWidget_Cst_2->setRowCount(i+1);
-                    ui.tableWidget_Cst_2->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Const.at(i)));
+                    ui.tableWidget_Cst_2->setItem(i, 0, new QTableWidgetItem(currentstruct.Const.at(i)));
                 }
             }
             else
@@ -2715,7 +2729,7 @@ void DrawingOptions::UpdateDescription(int position)
         ui.stackedProperties->setCurrentIndex(2);
     }
 
-    if(MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
+    if(type == PAR_4D_TYPE)
     {
         if(position > -1)
         {
@@ -2724,24 +2738,24 @@ void DrawingOptions::UpdateDescription(int position)
             MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1:
                     MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = position;
             //currentFormula = sparent;
-            ui.paramNameEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.Component.at(position));
-            ui.XEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.fx.at(position));
-            ui.YEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.fy.at(position));
-            ui.ZEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.fz.at(position));
-            ui.WEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.fw.at(position));
-            ui.umin_2->setText(MathmodRef->RootObjet.CurrentTreestruct.umin.at(position));
-            ui.vmin_2->setText(MathmodRef->RootObjet.CurrentTreestruct.vmin.at(position));
-            ui.umax_2->setText(MathmodRef->RootObjet.CurrentTreestruct.umax.at(position));
-            ui.vmax_2->setText(MathmodRef->RootObjet.CurrentTreestruct.vmax.at(position));
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Component.empty())
-                ui.paramNameEdit_2->setText(MathmodRef->RootObjet.CurrentTreestruct.Component.at(position));
+            ui.paramNameEdit_2->setText(currentstruct.Component.at(position));
+            ui.XEdit_2->setText(currentstruct.fx.at(position));
+            ui.YEdit_2->setText(currentstruct.fy.at(position));
+            ui.ZEdit_2->setText(currentstruct.fz.at(position));
+            ui.WEdit_2->setText(currentstruct.fw.at(position));
+            ui.umin_2->setText(currentstruct.umin.at(position));
+            ui.vmin_2->setText(currentstruct.vmin.at(position));
+            ui.umax_2->setText(currentstruct.umax.at(position));
+            ui.vmax_2->setText(currentstruct.vmax.at(position));
+            if(!currentstruct.Component.empty())
+                ui.paramNameEdit_2->setText(currentstruct.Component.at(position));
             else
                 ui.paramNameEdit_2->setText("");
         }
         ui.stackedProperties->setCurrentIndex(3);
     }
 
-    if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
+    if(type == ISO_TYPE)
     {
         if(position > -1)
         {
@@ -2750,24 +2764,24 @@ void DrawingOptions::UpdateDescription(int position)
             MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1:
                     MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = position;
 
-            ui.UpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.fxyz.at(position));
-            ui.xmin->setText(MathmodRef->RootObjet.CurrentTreestruct.xmin.at(position));
-            ui.ymin->setText(MathmodRef->RootObjet.CurrentTreestruct.ymin.at(position));
-            ui.zmin->setText(MathmodRef->RootObjet.CurrentTreestruct.zmin.at(position));
-            ui.xmax->setText(MathmodRef->RootObjet.CurrentTreestruct.xmax.at(position));
-            ui.ymax->setText(MathmodRef->RootObjet.CurrentTreestruct.ymax.at(position));
-            ui.zmax->setText(MathmodRef->RootObjet.CurrentTreestruct.zmax.at(position));
+            ui.UpdateEdit->setText(currentstruct.fxyz.at(position));
+            ui.xmin->setText(currentstruct.xmin.at(position));
+            ui.ymin->setText(currentstruct.ymin.at(position));
+            ui.zmin->setText(currentstruct.zmin.at(position));
+            ui.xmax->setText(currentstruct.xmax.at(position));
+            ui.ymax->setText(currentstruct.ymax.at(position));
+            ui.zmax->setText(currentstruct.zmax.at(position));
 
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Component.empty())
-                ui.isoNameEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Component.at(position));
+            if(!currentstruct.Component.empty())
+                ui.isoNameEdit->setText(currentstruct.Component.at(position));
             else
                 ui.isoNameEdit->setText("");
 
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Cnd.empty())
+            if(!currentstruct.Cnd.empty())
             {
-                position < MathmodRef->RootObjet.CurrentTreestruct.Cnd.size() ?
-                ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(position)) :
-                ui.CndUpdateEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.Cnd.at(0));
+                position < currentstruct.Cnd.size() ?
+                ui.CndUpdateEdit->setText(currentstruct.Cnd.at(position)) :
+                ui.CndUpdateEdit->setText(currentstruct.Cnd.at(0));
             }
             else
             {
@@ -2775,14 +2789,14 @@ void DrawingOptions::UpdateDescription(int position)
             }
 
             //Function:
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Funct.empty())
+            if(!currentstruct.Funct.empty())
             {
                 ui.tableWidget_Fct->clearContents();
                 ui.tableWidget_Fct->setRowCount(0);
-                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Funct.size(); i++)
+                for(int i=0; i < currentstruct.Funct.size(); i++)
                 {
                     ui.tableWidget_Fct->setRowCount(i+1);
-                    ui.tableWidget_Fct->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Funct.at(i)));
+                    ui.tableWidget_Fct->setItem(i, 0, new QTableWidgetItem(currentstruct.Funct.at(i)));
                 }
             }
             else
@@ -2792,14 +2806,14 @@ void DrawingOptions::UpdateDescription(int position)
             }
 
             //Constantes:
-            if(!MathmodRef->RootObjet.CurrentTreestruct.Const.empty())
+            if(!currentstruct.Const.empty())
             {
                 ui.tableWidget_Cst->clearContents();
                 ui.tableWidget_Cst->setRowCount(0);
-                for(int i=0; i < MathmodRef->RootObjet.CurrentTreestruct.Const.size(); i++)
+                for(int i=0; i < currentstruct.Const.size(); i++)
                 {
                     ui.tableWidget_Cst->setRowCount(i+1);
-                    ui.tableWidget_Cst->setItem(i, 0, new QTableWidgetItem(MathmodRef->RootObjet.CurrentTreestruct.Const.at(i)));
+                    ui.tableWidget_Cst->setItem(i, 0, new QTableWidgetItem(currentstruct.Const.at(i)));
                 }
             }
             else
@@ -4017,13 +4031,13 @@ void DrawingOptions::on_ZhorizontalScrollBar_valueChanged(int value)
 // --------------------------
 void DrawingOptions::on_IsoComponent_activated(int index)
 {
-    UpdateDescription(index);
+    UpdateDescription(index, ISO_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
 }
 
 // --------------------------
 void DrawingOptions::on_ParamComponent_activated(int index)
 {
-    UpdateDescription(index);
+    UpdateDescription(index, PAR_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
 }
 
 // --------------------------
@@ -4389,7 +4403,7 @@ void DrawingOptions::on_Load_clicked()
 // --------------------------
 void DrawingOptions::on_ParamComponent_2_activated(int index)
 {
-    UpdateDescription(index);
+    UpdateDescription(index, PAR_4D_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
 }
 
 // --------------------------
