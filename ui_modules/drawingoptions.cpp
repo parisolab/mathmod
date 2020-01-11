@@ -511,7 +511,7 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
                 UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
         }
     }
-    if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
+    else if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
         UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
     else if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject())
         UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
