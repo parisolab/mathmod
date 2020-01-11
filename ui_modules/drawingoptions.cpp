@@ -434,11 +434,10 @@ void DrawingOptions::UpdateTreeObject()
     //Update Object Tree
     if(MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray())  //isoObject
     {
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
-        QTreeWidgetItem *PaIsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+        ui.ObjectClasseCurrent->model()->removeRows(0,ui.ObjectClasseCurrent->model()->rowCount());
         for(uint i=0; i<MathmodRef->RootObjet.CurrentParisoTreestruct.size(); i++)
         {
-            QTreeWidgetItem *parisochild = new QTreeWidgetItem(PaIsolistItem);
+            QTreeWidgetItem *parisochild = new QTreeWidgetItem(ui.ObjectClasseCurrent);
             if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fxyz.size() != 0)
                 AddIsoObjectToTree(parisochild, MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
             else
@@ -447,14 +446,14 @@ void DrawingOptions::UpdateTreeObject()
     }
     else if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
     {
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        ui.ObjectClasseCurrent->model()->removeRows(0,ui.ObjectClasseCurrent->model()->rowCount());
         QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
         AddIsoObjectToTree(IsolistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
     else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
                MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
-        ui.ObjectClasseCurrent->takeTopLevelItem(0);
+        ui.ObjectClasseCurrent->model()->removeRows(0,ui.ObjectClasseCurrent->model()->rowCount());
         QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
         AddParObjectToTree(paramlistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
