@@ -303,111 +303,111 @@ void DrawingOptions::on_ChangeGrid_clicked()
 }
 
 // --------------------------
-void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem)
+void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem, TreeStruct& currentstruct)
 {
-    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-        paramlistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
+    if(!currentstruct.name.empty())
+        paramlistItem->setText(0, currentstruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
     paramlistItem->setBackgroundColor(0, greenColor);
 
-    if(MathmodRef->RootObjet.CurrentTreestruct.Component.size() > 0)
+    if(currentstruct.Component.size() > 0)
     {
         QTreeWidgetItem *cmpitem = new QTreeWidgetItem(paramlistItem);
-        cmpitem->setText(0,  "Components ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.size()) +"):");
+        cmpitem->setText(0,  "Components ("+QString::number(currentstruct.Component.size()) +"):");
 
-        for(int j=0; j<MathmodRef->RootObjet.CurrentTreestruct.Component.size(); j++)
+        for(int j=0; j<currentstruct.Component.size(); j++)
         {
             QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
-            cmpitem2->setText(0,  MathmodRef->RootObjet.CurrentTreestruct.Component.at(j));
+            cmpitem2->setText(0,  currentstruct.Component.at(j));
             QTreeWidgetItem *cmpitem3 = new QTreeWidgetItem(cmpitem2);
-            cmpitem3->setText(0,  "fx(u,v,t) = "+MathmodRef->RootObjet.CurrentTreestruct.fx.at(j));
+            cmpitem3->setText(0,  "fx(u,v,t) = "+currentstruct.fx.at(j));
             QTreeWidgetItem *cmpitem4 = new QTreeWidgetItem(cmpitem2);
-            cmpitem4->setText(0,  "fy(u,v,t) = "+MathmodRef->RootObjet.CurrentTreestruct.fy.at(j));
+            cmpitem4->setText(0,  "fy(u,v,t) = "+currentstruct.fy.at(j));
             QTreeWidgetItem *cmpitem5 = new QTreeWidgetItem(cmpitem2);
-            cmpitem5->setText(0,  "fz(u,v,t) = "+MathmodRef->RootObjet.CurrentTreestruct.fz.at(j));
+            cmpitem5->setText(0,  "fz(u,v,t) = "+currentstruct.fz.at(j));
             if(MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
             {
                 QTreeWidgetItem *cmpitem8 = new QTreeWidgetItem(cmpitem2);
-                cmpitem8->setText(0,  "fw(u,v,t) = "+MathmodRef->RootObjet.CurrentTreestruct.fw.at(j));
+                cmpitem8->setText(0,  "fw(u,v,t) = "+currentstruct.fw.at(j));
             }
             QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
-            cmpitem6->setText(0,  "U = ["+ MathmodRef->RootObjet.CurrentTreestruct.umin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.umax.at(j) +"]");
+            cmpitem6->setText(0,  "U = ["+ currentstruct.umin.at(j) +", "+ currentstruct.umax.at(j) +"]");
             QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-            cmpitem7->setText(0,  "V = ["+ MathmodRef->RootObjet.CurrentTreestruct.vmin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.vmax.at(j) +"]");
+            cmpitem7->setText(0,  "V = ["+ currentstruct.vmin.at(j) +", "+ currentstruct.vmax.at(j) +"]");
             //Grid resolution:
-            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && (2*j+1) < MathmodRef->RootObjet.CurrentTreestruct.Grid.size() && !MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
+            if(currentstruct.Grid.size() > 0 && (2*j+1) < currentstruct.Grid.size() && !MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
             {
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-                cmpitem7->setText(0,  "Grid = ("+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(2*j)+" , "+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(2*j+1)+")");
+                cmpitem7->setText(0,  "Grid = ("+currentstruct.Grid.at(2*j)+" , "+currentstruct.Grid.at(2*j+1)+")");
             }
         }
         //Add Global parameters:
-        AddParametersToTree(paramlistItem);
+        AddParametersToTree(paramlistItem, currentstruct);
     }
 }
 
 // --------------------------
-void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem)
+void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem, TreeStruct& currentstruct)
 {
-    if(!MathmodRef->RootObjet.CurrentTreestruct.name.empty())
-        IsolistItem->setText(0, MathmodRef->RootObjet.CurrentTreestruct.name[0]);
+    if(!currentstruct.name.empty())
+        IsolistItem->setText(0, currentstruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
     IsolistItem->setBackgroundColor(0, greenColor);
 
-    if(MathmodRef->RootObjet.CurrentTreestruct.Component.size() > 0)
+    if(currentstruct.Component.size() > 0)
     {
         QTreeWidgetItem *cmpitem = new QTreeWidgetItem(IsolistItem);
-        cmpitem->setText(0,  "Components ("+QString::number(MathmodRef->RootObjet.CurrentTreestruct.Component.size()) +"):");
+        cmpitem->setText(0,  "Components ("+QString::number(currentstruct.Component.size()) +"):");
 
-        for(int j=0; j<MathmodRef->RootObjet.CurrentTreestruct.Component.size(); j++)
+        for(int j=0; j<currentstruct.Component.size(); j++)
         {
             QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
-            cmpitem2->setText(0,  MathmodRef->RootObjet.CurrentTreestruct.Component.at(j));
+            cmpitem2->setText(0,  currentstruct.Component.at(j));
             QTreeWidgetItem *cmpitem3 = new QTreeWidgetItem(cmpitem2);
-            cmpitem3->setText(0,  "f(x,y,z) = "+MathmodRef->RootObjet.CurrentTreestruct.fxyz.at(j));
+            cmpitem3->setText(0,  "f(x,y,z) = "+currentstruct.fxyz.at(j));
             QTreeWidgetItem *cmpitem4 = new QTreeWidgetItem(cmpitem2);
-            cmpitem4->setText(0,  "X = ["+ MathmodRef->RootObjet.CurrentTreestruct.xmin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.xmax.at(j) +"]");
+            cmpitem4->setText(0,  "X = ["+ currentstruct.xmin.at(j) +", "+ currentstruct.xmax.at(j) +"]");
             QTreeWidgetItem *cmpitem5 = new QTreeWidgetItem(cmpitem2);
-            cmpitem5->setText(0,  "Y = ["+ MathmodRef->RootObjet.CurrentTreestruct.ymin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.ymax.at(j) +"]");
+            cmpitem5->setText(0,  "Y = ["+ currentstruct.ymin.at(j) +", "+ currentstruct.ymax.at(j) +"]");
             QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
-            cmpitem6->setText(0,  "Z = ["+ MathmodRef->RootObjet.CurrentTreestruct.zmin.at(j) +", "+ MathmodRef->RootObjet.CurrentTreestruct.zmax.at(j) +"]");
+            cmpitem6->setText(0,  "Z = ["+ currentstruct.zmin.at(j) +", "+ currentstruct.zmax.at(j) +"]");
             //Grid resolution:
-            if(MathmodRef->RootObjet.CurrentTreestruct.Grid.size() > 0 && j < MathmodRef->RootObjet.CurrentTreestruct.Grid.size())
+            if(currentstruct.Grid.size() > 0 && j < currentstruct.Grid.size())
             {
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-                cmpitem7->setText(0,  "Grid = "+MathmodRef->RootObjet.CurrentTreestruct.Grid.at(j));
+                cmpitem7->setText(0,  "Grid = "+currentstruct.Grid.at(j));
             }
         }
         //Add Global parameters:
-        AddParametersToTree(IsolistItem);
+        AddParametersToTree(IsolistItem, currentstruct);
     }
 }
 
 // --------------------------
-void DrawingOptions::AddParametersToTree(QTreeWidgetItem* parameterslistItem)
+void DrawingOptions::AddParametersToTree(QTreeWidgetItem* parameterslistItem, TreeStruct& currentstruct)
 {
     QTreeWidgetItem *parameteritem = new QTreeWidgetItem(parameterslistItem);
     parameteritem->setText(0,  "Parameters:");
     int size= 0;
 
-    if((size = MathmodRef->RootObjet.CurrentTreestruct.Const.size()) > 0)
+    if((size = currentstruct.Const.size()) > 0)
     {
         QTreeWidgetItem *cstitem = new QTreeWidgetItem(parameteritem);
         cstitem->setText(0,  "Constantes:");
         for(int j=0; j<size; j++)
         {
             QTreeWidgetItem *cstitem2 = new QTreeWidgetItem(cstitem);
-            cstitem2->setText(0,  MathmodRef->RootObjet.CurrentTreestruct.Const.at(j));
+            cstitem2->setText(0,  currentstruct.Const.at(j));
         }
     }
-    if((size = MathmodRef->RootObjet.CurrentTreestruct.Funct.size()) > 0)
+    if((size = currentstruct.Funct.size()) > 0)
     {
         QTreeWidgetItem *fctitem = new QTreeWidgetItem(parameteritem);
         fctitem->setText(0,  "Functions:");
         for(int j=0; j<size; j++)
         {
             QTreeWidgetItem *fctitem2 = new QTreeWidgetItem(fctitem);
-            fctitem2->setText(0,  MathmodRef->RootObjet.CurrentTreestruct.Funct.at(j));
+            fctitem2->setText(0,  currentstruct.Funct.at(j));
         }
     }
 }
@@ -418,13 +418,13 @@ void DrawingOptions::AddObjectToMySelectionTree()
     if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
     {
         QTreeWidgetItem *isolistItem = new QTreeWidgetItem(MyselectionItemReference);
-        AddIsoObjectToTree(isolistItem);
+        AddIsoObjectToTree(isolistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
     else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
                MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
         QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(MyselectionItemReference);
-        AddParObjectToTree(paramlistItem);
+        AddParObjectToTree(paramlistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
 }
 
@@ -436,14 +436,14 @@ void DrawingOptions::UpdateTreeObject()
     {
         ui.ObjectClasseCurrent->takeTopLevelItem(0);
         QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-        AddIsoObjectToTree(IsolistItem);
+        AddIsoObjectToTree(IsolistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
     else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
                MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
     {
         ui.ObjectClasseCurrent->takeTopLevelItem(0);
         QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-        AddParObjectToTree(paramlistItem);
+        AddParObjectToTree(paramlistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
 }
 // --------------------------
