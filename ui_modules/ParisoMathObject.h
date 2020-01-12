@@ -26,8 +26,17 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QFileDialog>
-#include <QDialog>
-#include <QTranslator>
+//#include <QDialog>
+
+
+enum ModelType
+{
+    PAR_TYPE,
+    PAR_4D_TYPE,
+    ISO_TYPE,
+    PARISO_TYPE,
+    UNDEFINED_TYPE
+};
 
 struct TreeStruct
 {
@@ -59,6 +68,7 @@ struct TreeStruct
     QStringList vmax;
     QStringList tmin;
     QStringList tmax;
+    ModelType   type;
 };
 
 class ParisoMathObject

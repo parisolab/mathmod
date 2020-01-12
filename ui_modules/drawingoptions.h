@@ -33,13 +33,6 @@
 #include "selectoptions.h"
 #include <QMainWindow>
 
-enum ModelType
-{
-    PAR_TYPE,
-    PAR_4D_TYPE,
-    ISO_TYPE,
-    PARISO_TYPE
-};
 enum OptionnalParScriptFIELD
 {
     PAR_GRID,
@@ -355,5 +348,6 @@ private slots:
     void on_actionMorph_use_t_parameter_triggered();
     void on_TreeViewButton_clicked();
     void ApplypushButton_clicked();
+    void on_ObjectClasseCurrent_clicked(const QModelIndex &index);
 };
 #endif
