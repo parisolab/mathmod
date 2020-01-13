@@ -349,6 +349,6 @@ private slots:
     void on_TreeViewButton_clicked();
     void ApplypushButton_clicked();
     void on_ObjectClasseCurrent_clicked(const QModelIndex &index);
-    void on_parisocomboBox_activated(int index);
+    void on_parisocomboBox_currentIndexChanged(int index);
 };
 #endif

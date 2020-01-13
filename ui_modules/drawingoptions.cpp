@@ -504,14 +504,18 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     //Update the "Model Details" page
     if(MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray())
     {
-        for(uint i=0; i<MathmodRef->RootObjet.CurrentParisoTreestruct.size(); i++)
+        ui.parisocomboBox->clear();
+        if(MathmodRef->RootObjet.CurrentParisoTreestruct.size()>0)
         {
-            if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fxyz.size() != 0)
-                UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
-            else if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fw.size() != 0)
-                UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
-            else if(MathmodRef->RootObjet.CurrentParisoTreestruct[i].fx.size() != 0)
-                UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+            for(uint i=0; i<MathmodRef->RootObjet.CurrentParisoTreestruct.size(); i++)
+                ui.parisocomboBox->insertItem(i, MathmodRef->RootObjet.CurrentParisoTreestruct[i].name[0]);
+
+            if(MathmodRef->RootObjet.CurrentParisoTreestruct[0].fxyz.size() != 0)
+                UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
+            else if(MathmodRef->RootObjet.CurrentParisoTreestruct[0].fw.size() != 0)
+                UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
+            else if(MathmodRef->RootObjet.CurrentParisoTreestruct[0].fx.size() != 0)
+                UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
         }
     }
     else if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
@@ -1620,10 +1624,12 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     {
         if((QObj1=array[i].toObject())["ParIso"].isArray())
         {
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
             ui.parisogroupbox->show();
         }
         else
         {
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
             ui.parisogroupbox->hide();
             if((QObj1=array[i].toObject())["Iso3D"].isObject()  &&
                 (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"].toArray()[0].toString() == arg1)
@@ -5678,42 +5684,17 @@ void DrawingOptions::on_ObjectClasseCurrent_clicked(const QModelIndex &idx)
         int row = idx.row();
         if(MathmodRef->RootObjet.CurrentParisoTreestruct.size() > 0 &&
         int(MathmodRef->RootObjet.CurrentParisoTreestruct.size()) > row)
-        {
-            ModelType type= MathmodRef->RootObjet.CurrentParisoTreestruct[row].type;
-            if(type == ISO_TYPE)
-                ui.stackedProperties->setCurrentIndex(1);
-            else if(type == PAR_TYPE)
-                ui.stackedProperties->setCurrentIndex(2);
-            else if(type == PAR_4D_TYPE)
-                ui.stackedProperties->setCurrentIndex(3);
-        }
+            ui.parisocomboBox->setCurrentIndex(row);
     }
-    /*
-    else
-    {
-        QModelIndex parentItem2 = idx.model()->index(0, 0, QModelIndex());
-        int row = parentItem2.row();
-        if(MathmodRef->RootObjet.CurrentParisoTreestruct.size() > 0 &&
-        int(MathmodRef->RootObjet.CurrentParisoTreestruct.size()) > row)
-        {
-            ModelType type= MathmodRef->RootObjet.CurrentParisoTreestruct[row].type;
-            if(type == ISO_TYPE)
-                ui.stackedProperties->setCurrentIndex(1);
-            else if(type == PAR_TYPE)
-                ui.stackedProperties->setCurrentIndex(2);
-            else if(type == PAR_4D_TYPE)
-                ui.stackedProperties->setCurrentIndex(3);
-        }
-    }*/
 }
 
-void DrawingOptions::on_parisocomboBox_activated(int index)
+void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
 {
     ModelType type= MathmodRef->RootObjet.CurrentParisoTreestruct[index].type;
     if(type == ISO_TYPE)
-        ui.stackedProperties->setCurrentIndex(1);
+        UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
     else if(type == PAR_TYPE)
-        ui.stackedProperties->setCurrentIndex(2);
+        UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
     else if(type == PAR_4D_TYPE)
-        ui.stackedProperties->setCurrentIndex(3);
+        UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
 }
