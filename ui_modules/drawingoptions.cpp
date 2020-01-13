@@ -444,18 +444,21 @@ void DrawingOptions::UpdateTreeObject()
                 AddParObjectToTree(parisochild, MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
         }
     }
-    else if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
+    else
     {
-        ui.ObjectClasseCurrent->model()->removeRows(0,ui.ObjectClasseCurrent->model()->rowCount());
-        QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-        AddIsoObjectToTree(IsolistItem, MathmodRef->RootObjet.CurrentTreestruct);
-    }
-    else    if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
-               MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
-    {
-        ui.ObjectClasseCurrent->model()->removeRows(0,ui.ObjectClasseCurrent->model()->rowCount());
-        QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
-        AddParObjectToTree(paramlistItem, MathmodRef->RootObjet.CurrentTreestruct);
+        if(MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())  //isoObject
+        {
+            ui.ObjectClasseCurrent->model()->removeRows(0,ui.ObjectClasseCurrent->model()->rowCount());
+            QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            AddIsoObjectToTree(IsolistItem, MathmodRef->RootObjet.CurrentTreestruct);
+        }
+        else if(MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
+                   MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
+        {
+            ui.ObjectClasseCurrent->model()->removeRows(0,ui.ObjectClasseCurrent->model()->rowCount());
+            QTreeWidgetItem *paramlistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            AddParObjectToTree(paramlistItem, MathmodRef->RootObjet.CurrentTreestruct);
+        }
     }
 }
 // --------------------------
@@ -1059,9 +1062,12 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
             MathmodRef->ParisoObjectProcess();
         }
+
+        ui.parisogroupbox->show();
     }
     else
     {
+        ui.parisogroupbox->hide();
         MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
         if(Jobj["Iso3D"].isObject())
         {
@@ -1612,7 +1618,14 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
     for(int i=0; i< array.size(); i++)
     {
-        if((QObj1=array[i].toObject())["Iso3D"].isObject()  &&
+        if((QObj1=array[i].toObject())["ParIso"].isArray())
+        {
+            ui.parisogroupbox->show();
+        }
+        else
+        {
+            ui.parisogroupbox->hide();
+            if((QObj1=array[i].toObject())["Iso3D"].isObject()  &&
                 (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"].toArray()[0].toString() == arg1)
         {
             if(!VerifiedJsonModel((array[i].toObject())))
@@ -1703,6 +1716,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->ParametricSurfaceProcess(3);
             return(3);
         }
+    }
     }
     return(0);
 }
@@ -5691,4 +5705,15 @@ void DrawingOptions::on_ObjectClasseCurrent_clicked(const QModelIndex &idx)
                 ui.stackedProperties->setCurrentIndex(3);
         }
     }*/
+}
+
+void DrawingOptions::on_parisocomboBox_activated(int index)
+{
+    ModelType type= MathmodRef->RootObjet.CurrentParisoTreestruct[index].type;
+    if(type == ISO_TYPE)
+        ui.stackedProperties->setCurrentIndex(1);
+    else if(type == PAR_TYPE)
+        ui.stackedProperties->setCurrentIndex(2);
+    else if(type == PAR_4D_TYPE)
+        ui.stackedProperties->setCurrentIndex(3);
 }
