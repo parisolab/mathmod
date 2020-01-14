@@ -157,7 +157,6 @@ struct  ComponentInfos
 struct  ObjectProperties
 {
     float *ArrayNorVer_localPt;
-    float *ArrayNorVerExtra_localPt;
     uint  *PolyIndices_localPt;
     uint  *PolyIndices_localPtMin;
     int   *TypeSurfaceTriangleListeCND;
