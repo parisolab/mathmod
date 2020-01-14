@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by Abderrahman Taha                                *
+ *   Copyright (C) 2020 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -26,17 +26,8 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QFileDialog>
-//#include <QDialog>
-
-
-enum ModelType
-{
-    PAR_TYPE,
-    PAR_4D_TYPE,
-    ISO_TYPE,
-    PARISO_TYPE,
-    UNDEFINED_TYPE
-};
+#include <QFileDialog>
+#include "commun.h"
 
 struct TreeStruct
 {

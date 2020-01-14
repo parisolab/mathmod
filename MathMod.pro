@@ -1,6 +1,7 @@
 HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/colorsoptions.h \
             ui_modules/about.h \
+            ui_modules/commun.h \
             ui_modules/mathmod.h \
             ui_modules/ParisoMathObject.h \
             ui_modules/selectoptions.h \

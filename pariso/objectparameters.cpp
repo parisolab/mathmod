@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by Abderrahman Taha                                *
+ *   Copyright (C) 2020 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -199,12 +199,12 @@ ObjectParameters::ObjectParameters()
     objectproperties.quality_image  = 50;
     objectproperties.colortype      = 0;
     objectproperties.colortypeParam = 0;
-    InitComponentinfos(objectproperties.componentsinfos);
-    InitComponentinfos(components);
 }
 
 void ObjectParameters::InitComponentinfos(struct  ComponentInfos&  compinfos)
 {
+
+
     for(int i=0; i<2; i++)
     {
     compinfos.NoiseParam[i].Octaves     = 4;
@@ -219,5 +219,8 @@ void ObjectParameters::InitComponentinfos(struct  ComponentInfos&  compinfos)
         compinfos.DMTrianglesVerifyCND[i] = false;
 
     compinfos.ThereisCND[i] = false;
+    compinfos.ThereisRGBA[i] = false;
     }
+    compinfos.Interleave=false;
+    compinfos.pariso = false;
 }

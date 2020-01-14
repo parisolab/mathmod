@@ -1,5 +1,5 @@
 /***************************************************************************
-*   Copyright (C) 2019 by Abderrahman Taha                                *
+*   Copyright (C) 2020 by Abderrahman Taha                                *
 *                                                                         *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -1527,51 +1527,6 @@ void Iso3D::stopcalculations(bool calculation)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin, bool pariso)
-{
-    clear(*copy);
-    copy->IsoPositions = origin->IsoPositions;
-    copy->IsoPts       = origin->IsoPts;    
-    copy->NbIso        = origin->NbIso;
-    if(!pariso)
-    {
-        copy->ParPositions = origin->ParPositions;
-        copy->ParPts       = origin->ParPts;
-        copy->NbParametric = origin->NbParametric;
-    }
-
-    copy->NoiseParam[1].Octaves        = origin->NoiseParam[1].Octaves;
-    copy->NoiseParam[1].Lacunarity     = origin->NoiseParam[1].Lacunarity;
-    copy->NoiseParam[1].Gain           = origin->NoiseParam[1].Gain;
-    copy->NoiseParam[1].NoiseActive    = origin->NoiseParam[1].NoiseActive;
-    copy->NoiseParam[1].NoiseType      = origin->NoiseParam[1].NoiseType;
-    copy->NoiseParam[1].Nb_vrgbts      = origin->NoiseParam[1].Nb_vrgbts;
-    copy->NoiseParam[1].VRgbtParser    = origin->NoiseParam[1].VRgbtParser;
-    copy->NoiseParam[1].GradientParser = origin->NoiseParam[1].GradientParser;
-    copy->NoiseParam[1].NoiseParser    = origin->NoiseParam[1].NoiseParser;
-    copy->NoiseParam[1].RgbtParser     = origin->NoiseParam[1].RgbtParser;
-    copy->ThereisRGBA[1]               = origin->ThereisRGBA[1];
-    copy->ThereisCND[1]                = origin->ThereisCND[1];
-    copy->NbTrianglesVerifyCND[1]      = origin->NbTrianglesVerifyCND[1];
-    copy->NbTrianglesNotVerifyCND[1]   = origin->NbTrianglesNotVerifyCND[1];
-    copy->NbTrianglesBorderCND[1]      = origin->NbTrianglesBorderCND[1];
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::clear(struct ComponentInfos &cp)
-{
-    cp.IsoPts.clear();
-    cp.IsoPositions.clear();
-    if(!cp.pariso)
-    {
-        cp.ParPositions.clear();
-        cp.ParPts.clear();
-    }
-    cp.ThereisCND[1] = false;
-    cp.ThereisRGBA[1] = false;
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,
     uint **IndexPolyTabPt,
@@ -1600,7 +1555,7 @@ void Iso3D::IsoBuild (
         IndexPolyTabMinVector.shrink_to_fit();
     }
 
-    clear(components);
+    //clear(components);
     NormOriginaltmpVector.clear();
     NormOriginaltmpVector.shrink_to_fit();
 
@@ -1623,7 +1578,7 @@ void Iso3D::IsoBuild (
         delete[] Results;
     Results = new double[maxx*maxx*maxx];
 
-    components.NbIso = masterthread->ImplicitFunctionSize;
+    componentsPt->NbComponents.push_back(masterthread->ImplicitFunctionSize);
 
     stopcalculations(false);
 
@@ -1724,10 +1679,10 @@ void Iso3D::IsoBuild (
         }
 
         // Save the Index:
-        components.IsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
-        components.IsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
-        components.IsoPts.push_back(NbVertexTmp);
-        components.IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
+        componentsPt->ParisoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
+        componentsPt->ParisoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
+        componentsPt->IsoPts.push_back(NbVertexTmp);
+        componentsPt->IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
 
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
@@ -1747,7 +1702,7 @@ void Iso3D::IsoBuild (
     }
 
     //CND calculation for the triangles results:
-    uint result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
+    uint result = CNDCalculation(NbTriangleIsoSurfaceTmp, *componentsPt);
     if(result == 0)
     {
         messageerror = CND_TAB_MEM_OVERFLOW;
@@ -1764,32 +1719,32 @@ void Iso3D::IsoBuild (
     // Pigment, Texture and Noise :
     if(masterthread->vrgbtnotnull)
     {
-        components.ThereisRGBA[1] = true;
-        components.NoiseParam[1].NoiseType = 0; //Pigments
-        components.NoiseParam[1].VRgbtParser = masterthread->VRgbtParser;
-        components.NoiseParam[1].GradientParser = masterthread->GradientParser;
-        components.NoiseParam[1].NoiseParser =  masterthread->NoiseParser;
-        components.NoiseParam[1].Nb_vrgbts = masterthread->VRgbtSize;
+        componentsPt->ThereisRGBA[componentsPt->parisoindex] = true;
+        componentsPt->NoiseParam[componentsPt->parisoindex].NoiseType = 0; //Pigments
+        componentsPt->NoiseParam[componentsPt->parisoindex].VRgbtParser = masterthread->VRgbtParser;
+        componentsPt->NoiseParam[componentsPt->parisoindex].GradientParser = masterthread->GradientParser;
+        componentsPt->NoiseParam[componentsPt->parisoindex].NoiseParser =  masterthread->NoiseParser;
+        componentsPt->NoiseParam[componentsPt->parisoindex].Nb_vrgbts = masterthread->VRgbtSize;
     }
     else if(masterthread->RgbtSize >= 4)
     {
-        components.ThereisRGBA[1] = true;
-        components.NoiseParam[1].NoiseType = 1; //Texture
-        components.NoiseParam[1].RgbtParser = masterthread->RgbtParser;
-        components.NoiseParam[1].NoiseParser =  masterthread->NoiseParser;
+        componentsPt->ThereisRGBA[componentsPt->parisoindex] = true;
+        componentsPt->NoiseParam[componentsPt->parisoindex].NoiseType = 1; //Texture
+        componentsPt->NoiseParam[componentsPt->parisoindex].RgbtParser = masterthread->RgbtParser;
+        componentsPt->NoiseParam[componentsPt->parisoindex].NoiseParser =  masterthread->NoiseParser;
     }
     else
     {
-        components.ThereisRGBA[1] = false;
-        components.NoiseParam[1].NoiseType = -1; //No Pigments or texture
+        componentsPt->ThereisRGBA[componentsPt->parisoindex] = false;
+        componentsPt->NoiseParam[componentsPt->parisoindex].NoiseType = -1; //No Pigments or texture
     }
 
     if(masterthread->Noise == "")
-        components.NoiseParam[1].NoiseShape = 0;
+        componentsPt->NoiseParam[componentsPt->parisoindex].NoiseShape = 0;
     else
-        components.NoiseParam[1].NoiseShape = 1;
+        componentsPt->NoiseParam[componentsPt->parisoindex].NoiseShape = 1;
 
-    CalculateColorsPoints(components);
+    CalculateColorsPoints(*componentsPt);
     *PolyNumber      = uint(IndexPolyTabVector.size());
     *VertexNumberpt  = uint(NormVertexTabVector.size()/10);
     *VertxNumber     = uint(IndexPolyTabMinVector.size());
@@ -1803,8 +1758,11 @@ void Iso3D::IsoBuild (
     *NormVertexTabVectorPt = NormVertexTabVector.data();
     *IndexPolyTabPt = IndexPolyTabVector.data();
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
-    componentsPt->Interleave = true;
-    copycomponent(componentsPt, &components, componentsPt->pariso);
+    if(componentsPt->parisoindex == componentsPt->parisosize-1)
+        componentsPt->Interleave = true;
+    else
+        componentsPt->parisoindex++;
+    //copycomponent(componentsPt, &components, componentsPt->pariso);
     Setgrid(PreviousGridVal);
 }
 
@@ -1845,7 +1803,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos &comp)
     ValCol = new double[masterthread->VRgbtSize+5];
     val[3] = masterthread->stepMorph;
 
-    if(comp.ThereisRGBA[1] == true &&  comp.NoiseParam[1].NoiseType == 0)
+    if(comp.ThereisRGBA[comp.parisoindex] == true &&  comp.NoiseParam[comp.parisoindex].NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize; i++)
         {
@@ -1882,7 +1840,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos &comp)
                 }
         }
     }
-    else if(comp.ThereisRGBA[1] == true &&  comp.NoiseParam[1].NoiseType == 1)
+    else if(comp.ThereisRGBA[comp.parisoindex] == true &&  comp.NoiseParam[comp.parisoindex].NoiseType == 1)
     {
         for(uint i= comp.IsoPts[0]; i < NbVertexTmp; i++)
         {
@@ -1950,7 +1908,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         }
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
-        uint starttri = uint(comp.IsoPositions[0]/3);
+        uint starttri = uint(comp.ParisoPositions[0]/3);
 
         for(uint i= starttri; i < NbTriangleIsoSurfaceTmp; i++)
             TypeIsoSurfaceTriangleListeCNDVector.push_back(1); //Init this triangle type to 1:
@@ -2209,20 +2167,17 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
         NbTriangleIsoSurfaceTmp = M + l + k;
 
-        comp.NbTrianglesVerifyCND[1]    = k;
-        comp.NbTrianglesNotVerifyCND[1] = l;
-        comp.NbTrianglesBorderCND[1]    = M;
-
-        //????????????????????????
-        for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
-            comp.IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
-        //???????????????????????
-
-        comp.ThereisCND[1] = true;
+        comp.NbTrianglesVerifyCND[comp.parisoindex]=k;
+        comp.NbTrianglesNotVerifyCND[comp.parisoindex]=l;
+        comp.NbTrianglesBorderCND[comp.parisoindex]=M;
+        comp.ThereisCND[comp.parisoindex] = true;
     }
     else
     {
-        comp.ThereisCND[1] = false;
+        comp.ThereisCND[comp.parisoindex] = false;
+        comp.NbTrianglesVerifyCND[comp.parisoindex]=0;
+        comp.NbTrianglesNotVerifyCND[comp.parisoindex]=0;
+        comp.NbTrianglesBorderCND[comp.parisoindex]=0;
         for(uint i= startpoint; i < NbVertexTmp; i++)
         {
             NormVertexTabVector[i*10  ] = 0.5f;

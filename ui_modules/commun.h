@@ -18,18 +18,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
 
-#include <QtGui>
+#ifndef COMMUN_H
+#define COMMUN_H
 
-#include "about.h"
 
-About::About(QWidget *parent)
-    : QWidget(parent)
+enum ModelType
 {
-    this->setWindowFlags( Qt::WindowStaysOnTopHint );
-    ui.setupUi(this);
-}
+    PAR_TYPE,
+    PAR_4D_TYPE,
+    ISO_TYPE,
+    PARISO_TYPE,
+    UNDEFINED_TYPE
+};
 
-void About::on_about_clicked()
-{
-    this->close();
-}
+#endif

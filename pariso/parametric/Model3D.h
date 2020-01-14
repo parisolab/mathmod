@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by Abderrahman Taha                                *
+ *   Copyright (C) 2020 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -155,8 +155,7 @@ public:
     uint CNDtoUse(uint, struct ComponentInfos&);
     uint CNDCalculation(uint &, struct ComponentInfos &);
     void CalculateColorsPoints(struct ComponentInfos &);
-    void clear(struct ComponentInfos &);
-    void ParamBuild(float **, float **,uint **, uint *,
+    void ParamBuild(float **, uint **, uint *,
                     uint *, ComponentInfos *,
                     uint **,
                     uint *);
@@ -168,7 +167,6 @@ public:
     ErrorMessage ThreadParsersCopy();
     ErrorMessage  parse_expression2();
     ErrorMessage  ParMorph();
-    void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
 public :
     void emitErrorSignal();

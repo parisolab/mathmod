@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by Abderrahman Taha                                *
+ *   Copyright (C) 2020 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -133,23 +133,23 @@ enum ScriptErrorType
 };
 struct  ComponentInfos
 {
-    std::vector<uint> IsoPositions;
+    std::vector<uint> ParisoPositions;
     std::vector<uint> IsoPts;
-    std::vector<uint> ParPositions;
     std::vector<uint> ParPts;
-    uint NbIso=0;
-    uint NbParametric=0;
-    uint NbTrianglesVerifyCND[2]={0,0};
-    uint NbTrianglesNotVerifyCND[2]={0,0};
-    uint NbTrianglesBorderCND[2]={0,0};
-    NoiseParemeters NoiseParam[2];
-    bool ThereisCND[2]={false,false};
-    bool ThereisRGBA[2]={false,false};
-    bool DMTrianglesVerifyCND[2]={false,false};
-    bool DFTrianglesVerifyCND[2]={false,false};
-    bool DMTrianglesNotVerifyCND[2]={false,false};
-    bool DFTrianglesNotVerifyCND[2]={false,false};
-    bool DMTrianglesBorderCND[2]={false,false};
+    std::vector<uint> NbComponents;
+    uint parisoindex=0;
+    uint parisosize=0;
+    std::vector<uint> NbTrianglesVerifyCND;
+    std::vector<uint> NbTrianglesNotVerifyCND;
+    std::vector<uint> NbTrianglesBorderCND;
+    std::vector<NoiseParemeters> NoiseParam;
+    std::vector<bool> ThereisCND;
+    std::vector<bool> ThereisRGBA;
+    std::vector<bool> DMTrianglesVerifyCND;
+    std::vector<bool> DFTrianglesVerifyCND;
+    std::vector<bool> DMTrianglesNotVerifyCND;
+    std::vector<bool> DFTrianglesNotVerifyCND;
+    std::vector<bool> DMTrianglesBorderCND;
     bool Interleave=false;
     bool pariso = false;
 };
@@ -157,7 +157,6 @@ struct  ComponentInfos
 struct  ObjectProperties
 {
     float *ArrayNorVer_localPt;
-    float *ArrayNorVerExtra_localPt;
     uint  *PolyIndices_localPt;
     uint  *PolyIndices_localPtMin;
     int   *TypeSurfaceTriangleListeCND;
@@ -272,4 +271,4 @@ public:
 extern std::vector<float> NormVertexTabVector;
 extern std::vector<uint>  IndexPolyTabMinVector;
 extern std::vector<uint>  IndexPolyTabVector;
-static struct  ComponentInfos components;
+//static struct  ComponentInfos components;

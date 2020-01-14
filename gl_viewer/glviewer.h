@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by Abderrahman Taha                                *
+ *   Copyright (C) 2020 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -37,6 +37,7 @@
 #include "../pariso/parametric/Model3D.h"
 #include "qglthread.h"
 #include "raster.h"
+#include "../ui_modules/commun.h"
 
 class OpenGlWidget : public QGLWidget
 {
@@ -128,7 +129,7 @@ public slots:
     void colorstypeParam(int);
     void SaveSceneAsObjPoly(int n=0);
     void SaveSceneAsObjTrian(int n=0);
-    void CalculateTexturePoints(int type);
+    void CalculateTexturePoints(ModelType type);
     void CalculatePigmentPoints(int type);
     void UpdateGL();
 };
