@@ -1582,6 +1582,7 @@ void Par3D::BuildPar()
 {
     ParamBuild(
         &(localScene->ArrayNorVer_localPt),
+        &(localScene->ArrayNorVerExtra_localPt),
         &(localScene->PolyIndices_localPt),
         &localScene->PolyNumber,
         &(localScene->VertxNumber),
@@ -1816,6 +1817,7 @@ void Par3D::clear(struct ComponentInfos &cp)
 
 void  Par3D::ParamBuild(
     float **NormVertexTabPt,
+    float **ExtraDimensionPt,
     uint **IndexPolyTabPt,
     uint *PolyNumber,
     uint *VertxNumber,
@@ -1976,6 +1978,7 @@ void  Par3D::ParamBuild(
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     *NormVertexTabPt   = NormVertexTabVector.data();
     *IndexPolyTabPt    = IndexPolyTabVector.data();
+    *ExtraDimensionPt  = ExtraDimensionVector.data();
     componentsPt->Interleave = true;
     }
     copycomponent(componentsPt, &components);
