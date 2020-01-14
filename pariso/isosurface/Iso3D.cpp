@@ -2212,12 +2212,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         comp.NbTrianglesVerifyCND[1]    = k;
         comp.NbTrianglesNotVerifyCND[1] = l;
         comp.NbTrianglesBorderCND[1]    = M;
-
-        //????????????????????????
-        for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
-            comp.IsoPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
-        //???????????????????????
-
         comp.ThereisCND[1] = true;
     }
     else

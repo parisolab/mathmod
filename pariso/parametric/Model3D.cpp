@@ -1553,9 +1553,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         components.NbTrianglesVerifyCND[0] = k;
         components.NbTrianglesNotVerifyCND[0] = l;
         components.NbTrianglesBorderCND[0] = M;
-
-        for(uint fctnb= 0; fctnb< masterthread->expression_XSize; fctnb++)
-            components.ParPositions[2*fctnb + 1] = NbTriangleIsoSurfaceTmp;
         components.ThereisCND[0] = true;
     }
     else
