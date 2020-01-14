@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by Abderrahman Taha                                *
+ *   Copyright (C) 2019 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -350,7 +350,5 @@ private slots:
     void ApplypushButton_clicked();
     void on_ObjectClasseCurrent_clicked(const QModelIndex &index);
     void on_parisocomboBox_currentIndexChanged(int index);
-    void ClearComponent(ComponentInfos&);
-    void InitComponent(ComponentInfos&, int);
 };
 #endif

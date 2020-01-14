@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *   Copyright (C) 2020 by Abderrahman Taha                                *
+ *   Copyright (C) 2019 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -146,6 +146,7 @@ public :
     inline void ConstructIsoNormale(uint);
     inline uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos &);
+    void clear(struct ComponentInfos &);
     void UpdateMaxGrid(uint);
     void Setgrid(uint);
     void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *);
@@ -162,6 +163,7 @@ public :
     ErrorMessage parse_expression2();
     ErrorMessage ThreadParsersCopy();
     void ReinitVarTablesWhenMorphActiv(uint);
+    void copycomponent(struct ComponentInfos*, struct ComponentInfos*, bool pariso=false);
     void run() Q_DECL_OVERRIDE;
 public :
     void emitErrorSignal();

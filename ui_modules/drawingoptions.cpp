@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2020 by Abderrahman Taha                                *
+ *   Copyright (C) 2019 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -875,20 +875,12 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
     if(Jobj["Iso3D"].isObject())
     {
         QObj = Jobj["Iso3D"].toObject();
-        if(!VerifiedIsoJsonModel(QObj))
-            return(false);
-        //At this point we can clean and initialize the LocalScene.componentsinfos
-        ClearComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos);
-        InitComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos, 1);
+        return(VerifiedIsoJsonModel(QObj));
     }
     if(Jobj["Param3D"].isObject())
     {
         QObj = Jobj["Param3D"].toObject();
-        if(!VerifiedParJsonModel(QObj))
-            return(false);
-        //At this point we can clean and initialize the LocalScene.componentsinfos
-        ClearComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos);
-        InitComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos, 1);
+        return(VerifiedParJsonModel(QObj));
     }
 
     if(Jobj["ParIso"].isArray())
@@ -909,9 +901,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
         for(int i=0; i<listeParObj.size(); i++)
             if(!VerifiedParJsonModel(listeParObj[i].toObject()))
                     return (false);
-        //At this point we can clean and initialize the LocalScene.componentsinfos
-        ClearComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos);
-        InitComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos, listeIsoObj.size() + listeParObj.size());
     }
     return true;
 }
@@ -991,49 +980,6 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj, const ModelType & opt)
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT = result.split(";", QString::SkipEmptyParts);
 }
 
-void DrawingOptions::InitComponent(ComponentInfos& cmp, int size)
-{
-    NoiseParemeters tablenoiseparam[size];
-    cmp.parisosize = uint(size);
-    cmp.NbTrianglesVerifyCND.assign(size, 0);
-    cmp.NbTrianglesNotVerifyCND.assign(size, 0);
-    cmp.NbTrianglesBorderCND.assign(size, 0);
-    cmp.NoiseParam.assign(tablenoiseparam, tablenoiseparam+size);
-    cmp.ThereisCND.assign(size, false);
-    cmp.ThereisRGBA.assign(size, false);
-    cmp.DMTrianglesVerifyCND.assign(size, false);
-    cmp.DFTrianglesVerifyCND.assign(size, true);
-    cmp.DMTrianglesNotVerifyCND.assign(size, false);
-    cmp.DFTrianglesNotVerifyCND.assign(size, true);
-    cmp.DMTrianglesBorderCND.assign(size, true);
-}
-
-void DrawingOptions::ClearComponent(ComponentInfos& cmp)
-{
-    cmp.parisoindex=0;
-    cmp.Interleave=false;
-    cmp.pariso = false;
-
-    cmp.NbComponents.clear();
-    cmp.NbComponents.clear();
-
-    cmp.ParisoPositions.clear();
-    cmp.IsoPts.clear();
-    cmp.ParPts.clear();
-
-    cmp.NbTrianglesVerifyCND.clear();
-    cmp.NbTrianglesNotVerifyCND.clear();
-    cmp.NbTrianglesBorderCND.clear();
-    cmp.NoiseParam.clear();
-    cmp.ThereisCND.clear();
-    cmp.ThereisRGBA.clear();
-    cmp.DMTrianglesVerifyCND.clear();
-    cmp.DFTrianglesVerifyCND.clear();
-    cmp.DMTrianglesNotVerifyCND.clear();
-    cmp.DFTrianglesNotVerifyCND.clear();
-    cmp.DMTrianglesBorderCND.clear();
-}
-
 // --------------------------
 void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 {
@@ -1062,7 +1008,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
 
     ShowSliders(Jobj);
     updateCurrentTreestruct();
-    //ClearComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos);
     if(Jobj["ParIso"].isArray())
     {
         QJsonArray listeObj    = Jobj["ParIso"].toArray();
@@ -1162,7 +1107,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             {
                 int result = MathmodRef->ParseIso();
                 if(result == -1) return;
-                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(ISO_TYPE) : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
+                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(1) : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
                 MathmodRef->ui.glWidget->update();
             }
         }
@@ -1199,7 +1144,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             {
                 int result = MathmodRef->ParsePar();
                 if(result == -1) return;
-                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(PAR_TYPE) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
                 MathmodRef->ui.glWidget->update();
             }
         }
@@ -1239,7 +1184,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject & Jobj, int textureIndex)
             {
                 int result = MathmodRef->ParsePar();
                 if(result == -1) return;
-                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(PAR_4D_TYPE) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+                textureIndex < 1000 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0) : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
                 MathmodRef->ui.glWidget->update();
             }
         }
@@ -1674,7 +1619,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
     QMessageBox msgBox;
     updateCurrentTreestruct();
-    //ClearComponent(MathmodRef->ui.glWidget->LocalScene.componentsinfos);
 
     for(int i=0; i< array.size(); i++)
     {
