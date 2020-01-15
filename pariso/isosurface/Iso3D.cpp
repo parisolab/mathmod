@@ -1920,13 +1920,13 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos &comp)
 ///+++++++++++++++++++++++++++++++++++++++++
 uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos &comp)
 {
-    double vals[4];
-    std::vector<int> PointVerifyCond;
-    std::vector<int> TypeIsoSurfaceTriangleListeCNDVector;
+
     uint startpoint=comp.IsoPts[0];
-    vals[3] = masterthread->stepMorph;
     if (masterthread->IsoConditionRequired == 1)
     {
+        double vals[4];
+        std::vector<int> PointVerifyCond;
+        vals[3] = masterthread->stepMorph;
         for(uint i= startpoint; i < NbVertexTmp; i++)
         {
             vals[0] = double(NormVertexTabVector[i*10+7]);
@@ -1951,9 +1951,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
         uint starttri = uint(comp.IsoPositions[0]/3);
-
-        for(uint i= starttri; i < NbTriangleIsoSurfaceTmp; i++)
-            TypeIsoSurfaceTriangleListeCNDVector.push_back(1); //Init this triangle type to 1:
+        std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
 
         for(uint i= starttri; i < nbtriangle; i++)
         {
@@ -2213,6 +2211,11 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         comp.NbTrianglesNotVerifyCND[1] = l;
         comp.NbTrianglesBorderCND[1]    = M;
         comp.ThereisCND[1] = true;
+
+        PointVerifyCond.clear();
+        PointVerifyCond.shrink_to_fit();
+        TypeIsoSurfaceTriangleListeCNDVector.clear();
+        TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     }
     else
     {
@@ -2225,10 +2228,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             NormVertexTabVector[i*10+3] = 1.0;
         }
     }
-    PointVerifyCond.clear();
-    PointVerifyCond.shrink_to_fit();
-    TypeIsoSurfaceTriangleListeCNDVector.clear();
-    TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     return 1;
 }
 

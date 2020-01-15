@@ -1274,68 +1274,70 @@ uint Par3D::CNDtoUse(uint index, struct ComponentInfos &compts)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos &components)
+uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos &comp)
 {
-    double vals[4];
-    std::vector<int> PointVerifyCond;
-    std::vector<int> TypeParSurfaceTriangleListeCNDVector;
-    vals[3] = masterthread->stepMorph;
+    uint startpoint=comp.ParPts[0];
     if (masterthread->ParConditionRequired == 1)
     {
-        for(uint i= 0; i < NbVertexTmp; i++)
+        double vals[4];
+        std::vector<int> PointVerifyCond;
+        vals[3] = masterthread->stepMorph;
+
+        for(uint i= startpoint; i < NbVertexTmp; i++)
         {
             vals[0] = double(NormVertexTabVector[i*10+7]);
             vals[1] = double(NormVertexTabVector[i*10+8]);
             vals[2] = double(NormVertexTabVector[i*10+9]);
-            PointVerifyCond.push_back(int(masterthread->ParConditionParser[CNDtoUse(i, components)].Eval(vals)));
-            if(PointVerifyCond[i])
+            PointVerifyCond.push_back(int(masterthread->ParConditionParser[CNDtoUse(i, comp)].Eval(vals)));
+            if(PointVerifyCond[i-startpoint])
             {
-                NormVertexTabVector[i*10  ] = float(0.1);
-                NormVertexTabVector[i*10+1] = float(0.9);
+                NormVertexTabVector[i*10  ] = 0.1f;
+                NormVertexTabVector[i*10+1] = 0.9f;
                 NormVertexTabVector[i*10+2] = 0.0;
                 NormVertexTabVector[i*10+3] = 1.0;
             }
             else
             {
-                NormVertexTabVector[i*10  ] = float(0.9);
-                NormVertexTabVector[i*10+1] = float(0.1);
-                NormVertexTabVector[i*10+2] = 0.0;
+                NormVertexTabVector[i*10  ] = 0.9f;
+                NormVertexTabVector[i*10+1] = 0.1f;
+                NormVertexTabVector[i*10+2] = 0.9;
                 NormVertexTabVector[i*10+3] = 1.0;
             }
         }
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
-        for(uint i= 0; i < NbTriangleIsoSurfaceTmp; i++)
-            //Init this triangle type to 1:
-            TypeParSurfaceTriangleListeCNDVector.push_back(1);
-        for(uint i= 0; i < nbtriangle; i++)
+        uint starttri = uint(comp.ParPositions[0]/3);
+
+        std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
+
+        for(uint i= starttri; i < nbtriangle; i++)
         {
-            Aindex = IndexPolyTabVector[3*i  ];
-            Bindex = IndexPolyTabVector[3*i+1];
-            Cindex = IndexPolyTabVector[3*i+2];
+            Aindex = IndexPolyTabVector[3*i    ];
+            Bindex = IndexPolyTabVector[3*i + 1];
+            Cindex = IndexPolyTabVector[3*i + 2];
 
             int TypeTriangle = -1;
-            if(PointVerifyCond[Aindex] && !PointVerifyCond[Bindex] && !PointVerifyCond[Cindex])
+            if(PointVerifyCond[Aindex-startpoint] && !PointVerifyCond[Bindex-startpoint] && !PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 0;
-            else if(!PointVerifyCond[Aindex] && PointVerifyCond[Bindex] && PointVerifyCond[Cindex])
+            else if(!PointVerifyCond[Aindex-startpoint] && PointVerifyCond[Bindex-startpoint] && PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 1;
-            else if(!PointVerifyCond[Aindex] && PointVerifyCond[Bindex] && !PointVerifyCond[Cindex])
+            else if(!PointVerifyCond[Aindex-startpoint] && PointVerifyCond[Bindex-startpoint] && !PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 2;
-            else if(PointVerifyCond[Aindex] && !PointVerifyCond[Bindex] && PointVerifyCond[Cindex])
+            else if(PointVerifyCond[Aindex-startpoint] && !PointVerifyCond[Bindex-startpoint] && PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 3;
-            else if(!PointVerifyCond[Aindex] && !PointVerifyCond[Bindex] && PointVerifyCond[Cindex])
+            else if(!PointVerifyCond[Aindex-startpoint] && !PointVerifyCond[Bindex-startpoint] && PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 4;
-            else if(PointVerifyCond[Aindex] && PointVerifyCond[Bindex] && !PointVerifyCond[Cindex])
+            else if(PointVerifyCond[Aindex-startpoint] && PointVerifyCond[Bindex-startpoint] && !PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 5;
-            else if(!PointVerifyCond[Aindex] && !PointVerifyCond[Bindex] && !PointVerifyCond[Cindex])
+            else if(!PointVerifyCond[Aindex-startpoint] && !PointVerifyCond[Bindex-startpoint] && !PointVerifyCond[Cindex-startpoint])
             {
                 TypeTriangle = 6;
-                TypeParSurfaceTriangleListeCNDVector[i] = -1;
+                TypeIsoSurfaceTriangleListeCNDVector[i-starttri] = -1;
             }
-            else if(PointVerifyCond[Aindex] && PointVerifyCond[Bindex] && PointVerifyCond[Cindex])
+            else if(PointVerifyCond[Aindex-startpoint] && PointVerifyCond[Bindex-startpoint] && PointVerifyCond[Cindex-startpoint])
             {
                 TypeTriangle = 7;
-                TypeParSurfaceTriangleListeCNDVector[i] = 1;
+                TypeIsoSurfaceTriangleListeCNDVector[i-starttri] = 1;
             }
 
             if(TypeTriangle == 2 || TypeTriangle == 3)
@@ -1353,7 +1355,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
             double Bprime[4], Cprime[4], DiffX, DiffY, DiffZ;
             int Alfa;
-            uint cnd = CNDtoUse(Aindex, components);
+            uint cnd = CNDtoUse(Aindex, comp);
             if(TypeTriangle >=0 && TypeTriangle <= 5)
             {
                 /// Bprime
@@ -1362,9 +1364,9 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Bprime[2] = double(NormVertexTabVector[10*Aindex+9]);
                 Bprime[3] = masterthread->stepMorph;
 
-                DiffX = double(NormVertexTabVector[10*Bindex+7] - NormVertexTabVector[10*Aindex+7])/20.0;
-                DiffY = double(NormVertexTabVector[10*Bindex+8] - NormVertexTabVector[10*Aindex+8])/20.0;
-                DiffZ = double(NormVertexTabVector[10*Bindex+9] - NormVertexTabVector[10*Aindex+9])/20.0;
+                DiffX = double(NormVertexTabVector[10*Bindex+7] - NormVertexTabVector[3+10*Aindex  + 4])/20.0;
+                DiffY = double(NormVertexTabVector[10*Bindex+8] - NormVertexTabVector[3+10*Aindex+1+ 4])/20.0;
+                DiffZ = double(NormVertexTabVector[10*Bindex+9] - NormVertexTabVector[3+10*Aindex+2+ 4])/20.0;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -1393,9 +1395,9 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Cprime[2] = double(NormVertexTabVector[10*Aindex+9]);
                 Cprime[3] = masterthread->stepMorph;
 
-                DiffX = double(NormVertexTabVector[10*Cindex+7] - NormVertexTabVector[10*Aindex+7])/20;
-                DiffY = double(NormVertexTabVector[10*Cindex+8] - NormVertexTabVector[10*Aindex+8])/20;
-                DiffZ = double(NormVertexTabVector[10*Cindex+9] - NormVertexTabVector[10*Aindex+9])/20;
+                DiffX = double(NormVertexTabVector[3+10*Cindex  + 4] - NormVertexTabVector[3+10*Aindex  + 4])/20;
+                DiffY = double(NormVertexTabVector[3+10*Cindex+1+ 4] - NormVertexTabVector[3+10*Aindex+1+ 4])/20;
+                DiffZ = double(NormVertexTabVector[3+10*Cindex+2+ 4] - NormVertexTabVector[3+10*Aindex+2+ 4])/20;
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
@@ -1426,9 +1428,9 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 NormVertexTabVector.push_back(1.0);
                 NormVertexTabVector.push_back(1.0);
                 NormVertexTabVector.push_back(1.0);
-                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+4]);
-                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+5]);
-                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex+6]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 4]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 5]);
+                NormVertexTabVector.push_back(NormVertexTabVector[10*Bindex + 6]);
                 NormVertexTabVector.push_back(float(Bprime[0]));
                 NormVertexTabVector.push_back(float(Bprime[1]));
                 NormVertexTabVector.push_back(float(Bprime[2]));
@@ -1444,6 +1446,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 NormVertexTabVector.push_back(float(Cprime[0]));
                 NormVertexTabVector.push_back(float(Cprime[1]));
                 NormVertexTabVector.push_back(float(Cprime[2]));
+
                 NbVertexTmp += 2;
 
                 //***********
@@ -1454,7 +1457,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 uint IndexCprime = (NbVertexTmp-1);
 
                 // The original triangle will be replaced by four other triangles:
-                TypeParSurfaceTriangleListeCNDVector[i]=0;
+                TypeIsoSurfaceTriangleListeCNDVector[i-starttri]=0;
 
                 /// (A, Bprime, Cprime)
                 IndexPolyTabVector.push_back(Aindex);
@@ -1462,7 +1465,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 IndexPolyTabVector.push_back(IndexCprime);
 
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeParSurfaceTriangleListeCNDVector.push_back(1) : TypeParSurfaceTriangleListeCNDVector.push_back(-1);
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(-1);
                 NbTriangleIsoSurfaceTmp++;
                 IndexPolyTabMinVector.push_back(3);
                 IndexPolyTabMinVector.push_back(Aindex);
@@ -1475,7 +1478,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 IndexPolyTabVector.push_back(Cindex);
 
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeParSurfaceTriangleListeCNDVector.push_back(-1) : TypeParSurfaceTriangleListeCNDVector.push_back(1);
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(-1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
                 NbTriangleIsoSurfaceTmp++;
                 IndexPolyTabMinVector.push_back(3);
                 IndexPolyTabMinVector.push_back(IndexBprime);
@@ -1488,7 +1491,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 IndexPolyTabVector.push_back(IndexCprime);
 
                 (TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4) ?
-                TypeParSurfaceTriangleListeCNDVector.push_back(-1) : TypeParSurfaceTriangleListeCNDVector.push_back(1);
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(-1) : TypeIsoSurfaceTriangleListeCNDVector.push_back(1);
                 NbTriangleIsoSurfaceTmp++;
                 IndexPolyTabMinVector.push_back(3);
                 IndexPolyTabMinVector.push_back(IndexBprime);
@@ -1500,7 +1503,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 IndexPolyTabVector.push_back(IndexCprime);
                 IndexPolyTabVector.push_back(IndexCprime);
 
-                TypeParSurfaceTriangleListeCNDVector.push_back(4); /// Type = 4-->Border
+                TypeIsoSurfaceTriangleListeCNDVector.push_back(4); /// Type = 4-->Border
                 NbTriangleIsoSurfaceTmp++;
                 IndexPolyTabMinVector.push_back(3);
                 IndexPolyTabMinVector.push_back(IndexBprime);
@@ -1515,30 +1518,40 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         std::vector<uint>NewIndexPolyTabVector;
         uint k, l, M;
         k = l = M =0;
-        for(uint i=0; i<NbTriangleIsoSurfaceTmp; i++)
-            if(TypeParSurfaceTriangleListeCNDVector[i] == 1)
+
+        // In case we have a ParIso object, this will save the triangle arrangement for the parametric CND
+        for(uint i=0; i<starttri; i++)
+        {
+            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+            NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
+        }
+
+        // Now we start sorting the triangles list. We have 3 cases
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
+            if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == 1)
             {
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i    ]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 1]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 2]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 k++;
             }
 
-        for(uint i=0; i<NbTriangleIsoSurfaceTmp; i++)
-            if(TypeParSurfaceTriangleListeCNDVector[i] == -1)
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
+            if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == -1)
             {
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i    ]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 1]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 2]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 l++;
             }
 
-        for(uint i=0; i<NbTriangleIsoSurfaceTmp; i++)
-            if(TypeParSurfaceTriangleListeCNDVector[i] == 4)
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
+            if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == 4)
             {
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i    ]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 1]);
-                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i + 2]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 M++;
             }
 
@@ -1548,18 +1561,24 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         IndexPolyTabVector = NewIndexPolyTabVector;
         NewIndexPolyTabVector.clear();
         NewIndexPolyTabVector.shrink_to_fit();
+
         NbTriangleIsoSurfaceTmp = M + l + k;
 
-        components.NbTrianglesVerifyCND[0] = k;
-        components.NbTrianglesNotVerifyCND[0] = l;
-        components.NbTrianglesBorderCND[0] = M;
-        components.ThereisCND[0] = true;
+        comp.NbTrianglesVerifyCND[0]    = k;
+        comp.NbTrianglesNotVerifyCND[0] = l;
+        comp.NbTrianglesBorderCND[0]    = M;
+        comp.ThereisCND[0] = true;
+
+
+        PointVerifyCond.clear();
+        PointVerifyCond.shrink_to_fit();
+        TypeIsoSurfaceTriangleListeCNDVector.clear();
+        TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
     }
     else
     {
-        components.ThereisCND[0] = false;
-
-        for(uint i= 0; i < NbVertexTmp; i++)
+        comp.ThereisCND[0] = false;
+        for(uint i= startpoint; i < NbVertexTmp; i++)
         {
             NormVertexTabVector[i*10  ] = 0.5f;
             NormVertexTabVector[i*10+1] = 0.6f;
@@ -1567,10 +1586,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             NormVertexTabVector[i*10+3] = 1.0;
         }
     }
-    PointVerifyCond.clear();
-    PointVerifyCond.shrink_to_fit();
-    TypeParSurfaceTriangleListeCNDVector.clear();
-    TypeParSurfaceTriangleListeCNDVector.shrink_to_fit();
+
     return 1;
 }
 
