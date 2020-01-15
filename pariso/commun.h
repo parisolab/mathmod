@@ -139,6 +139,8 @@ struct  ComponentInfos
     std::vector<uint> ParPts;
     uint NbIso=0;
     uint NbParametric=0;
+    uint ParisoNbComponents=1;
+    uint ParisoCurrentComponentIndex=0;
     uint NbTrianglesVerifyCND[2]={0,0};
     uint NbTrianglesNotVerifyCND[2]={0,0};
     uint NbTrianglesBorderCND[2]={0,0};

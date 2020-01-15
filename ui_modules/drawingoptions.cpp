@@ -869,18 +869,34 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
 {
     QJsonArray lst;
     QJsonObject QObj;
+    bool verif=false;
 
     if(!Inspect)
         return true;
     if(Jobj["Iso3D"].isObject())
     {
         QObj = Jobj["Iso3D"].toObject();
-        return(VerifiedIsoJsonModel(QObj));
+        verif=VerifiedIsoJsonModel(QObj);
+        if(verif)
+        {
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+        }
+        return(verif);
     }
     if(Jobj["Param3D"].isObject())
     {
         QObj = Jobj["Param3D"].toObject();
-        return(VerifiedParJsonModel(QObj));
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
+        verif=VerifiedParJsonModel(QObj);
+        if(verif)
+        {
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+        }
+        return(verif);
     }
 
     if(Jobj["ParIso"].isArray())
@@ -893,7 +909,9 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject & Jobj, bool Inspect)
                 listeIsoObj.append(listeObj[i].toObject()["Iso3D"].toObject());
         else
                 listeParObj.append(listeObj[i].toObject()["Param3D"].toObject());
-
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = listeIsoObj.size() + listeParObj.size();
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
         for(int i=0; i<listeIsoObj.size(); i++)
             if(!VerifiedIsoJsonModel(listeIsoObj[i].toObject()))
                     return (false);
@@ -1630,6 +1648,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
         else
         {
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
             ui.parisogroupbox->hide();
             if((QObj1=array[i].toObject())["Iso3D"].isObject()  &&
                 (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"].toArray()[0].toString() == arg1)

@@ -422,6 +422,7 @@ void OpenGlWidget::blueSpec(int cl)
 
 static void DrawParametric (ObjectProperties *scene)
 {
+    int start_triangle= scene->componentsinfos.ParPositions[0];
     float frontcl[4], backcl[4];
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -449,7 +450,7 @@ static void DrawParametric (ObjectProperties *scene)
                 GL_TRIANGLES,
                 3*int(scene->componentsinfos.NbTrianglesVerifyCND[0]),
                 GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[0])
+                &(scene->PolyIndices_localPt[start_triangle])
             );
 
         if(scene->componentsinfos.DFTrianglesNotVerifyCND[0])
@@ -457,7 +458,7 @@ static void DrawParametric (ObjectProperties *scene)
                 GL_TRIANGLES,
                 3*int(scene->componentsinfos.NbTrianglesNotVerifyCND[0]),
                 GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[0]])
+                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[0]+start_triangle])
             );
     }
 
@@ -592,8 +593,6 @@ static void DrawIso (ObjectProperties *scene)
                 &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[1]+start_triangle])
             );
     }
-
-
 
     for(uint i=0; i< scene->componentsinfos.NbIso; i++)
     {
