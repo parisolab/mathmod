@@ -478,9 +478,9 @@ static void DrawParametric (ObjectProperties *scene)
         if(!scene->componentsinfos.ThereisCND[0])
             glDrawElements(
                 GL_TRIANGLES,
-                3*int(scene->componentsinfos.ParPositions[3*i+1]),
+                3*int(scene->componentsinfos.ParPositions[2*i+1]),
                 GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[scene->componentsinfos.ParPositions[3*i]])
+                &(scene->PolyIndices_localPt[scene->componentsinfos.ParPositions[2*i]])
             );
     }
 

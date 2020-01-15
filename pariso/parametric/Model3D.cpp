@@ -1924,7 +1924,6 @@ void  Par3D::ParamBuild(
 
         components.ParPositions.push_back(6*NextPosition); //save the starting position of this component
         components.ParPositions.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
-        components.ParPositions.push_back(NbVertexTmp);
 
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NbVertexTmp    += (Ugrid)*(Vgrid);
