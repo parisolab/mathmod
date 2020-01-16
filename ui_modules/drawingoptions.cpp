@@ -4275,42 +4275,35 @@ void DrawingOptions::on_ActivateCND_clicked(bool checked)
 // --------------------------
 void DrawingOptions::on_TCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesVerifyCND[0] =
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesVerifyCND[1] =
-            checked;
+    MathmodRef->ui.glWidget->LocalScene.cndoptions[3]= checked;
     MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesVerifyCND[0] =
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesVerifyCND[1] =
-            checked;
+    MathmodRef->ui.glWidget->LocalScene.cndoptions[0]= checked;
     MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_TNCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesNotVerifyCND[0] =
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesNotVerifyCND[1] = checked;
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->ui.glWidget->LocalScene.cndoptions[4]= checked;
+        MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesNotVerifyCND[0] =
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DFTrianglesNotVerifyCND[1] = checked;
+    MathmodRef->ui.glWidget->LocalScene.cndoptions[1]= checked;
     MathmodRef->ui.glWidget->update();
 }
 
 // --------------------------
 void DrawingOptions::on_TBordercheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesBorderCND[0] =
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.DMTrianglesBorderCND[1] = checked;
+    MathmodRef->ui.glWidget->LocalScene.cndoptions[2]= checked;
     MathmodRef->ui.glWidget->update();
 }
 
@@ -5710,11 +5703,14 @@ void DrawingOptions::on_ObjectClasseCurrent_clicked(const QModelIndex &idx)
 
 void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
 {
-    ModelType type= MathmodRef->RootObjet.CurrentParisoTreestruct[index].type;
-    if(type == ISO_TYPE)
-        UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
-    else if(type == PAR_TYPE)
-        UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
-    else if(type == PAR_4D_TYPE)
-        UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+    if(index>=0)
+    {
+        ModelType type= MathmodRef->RootObjet.CurrentParisoTreestruct[index].type;
+        if(type == ISO_TYPE)
+            UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+        else if(type == PAR_TYPE)
+            UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+        else if(type == PAR_4D_TYPE)
+            UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+    }
 }

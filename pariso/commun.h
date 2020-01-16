@@ -133,25 +133,22 @@ enum ScriptErrorType
 };
 struct  ComponentInfos
 {
-    std::vector<uint> IsoPositions;
+    std::vector<uint> ParIsoPositions;
     std::vector<uint> IsoPts;
-    std::vector<uint> ParPositions;
     std::vector<uint> ParPts;
-    uint NbIso=0;
-    uint NbParametric=0;
+    std::vector<uint> NbComponents;
+
+    std::vector<bool> ThereisCND;
+    std::vector<bool> ThereisRGBA;
+
     uint ParisoNbComponents=1;
     uint ParisoCurrentComponentIndex=0;
-    uint NbTrianglesVerifyCND[2]={0,0};
-    uint NbTrianglesNotVerifyCND[2]={0,0};
-    uint NbTrianglesBorderCND[2]={0,0};
+
+    std::vector<uint> NbTrianglesVerifyCND;
+    std::vector<uint> NbTrianglesNotVerifyCND;
+    std::vector<uint> NbTrianglesBorderCND;
+
     NoiseParemeters NoiseParam[2];
-    bool ThereisCND[2]={false,false};
-    bool ThereisRGBA[2]={false,false};
-    bool DMTrianglesVerifyCND[2]={false,false};
-    bool DFTrianglesVerifyCND[2]={false,false};
-    bool DMTrianglesNotVerifyCND[2]={false,false};
-    bool DFTrianglesNotVerifyCND[2]={false,false};
-    bool DMTrianglesBorderCND[2]={false,false};
     bool Interleave=false;
     bool pariso = false;
 };
@@ -236,6 +233,7 @@ struct  ObjectProperties
     double matrix[16];
     double matrixInverse[16];
     double axe_x, axe_y, axe_z, ScalCoeff, view_rotx, view_roty, view_rotz;
+    bool cndoptions[5]={true, true, true, false, false};
 };
 
 class CellNoise
@@ -273,4 +271,4 @@ public:
 extern std::vector<float> NormVertexTabVector;
 extern std::vector<uint>  IndexPolyTabMinVector;
 extern std::vector<uint>  IndexPolyTabVector;
-static struct  ComponentInfos components;
+static struct  ComponentInfos* components=new (struct ComponentInfos);

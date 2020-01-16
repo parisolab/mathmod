@@ -145,15 +145,15 @@ public :
     inline uint ConstructIsoSurface();
     inline void ConstructIsoNormale(uint);
     inline uint PointEdgeComputation(uint);
-    inline uint CNDCalculation(uint &, struct ComponentInfos &);
-    void clear(struct ComponentInfos &);
+    inline uint CNDCalculation(uint &, struct ComponentInfos *);
+    void clear(struct ComponentInfos*);
     void UpdateMaxGrid(uint);
     void Setgrid(uint);
     void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *);
     void SaveIsoGLMap(uint);
     uint SetMiniMmeshStruct();
-    uint CNDtoUse(uint index, struct ComponentInfos &);
-    void CalculateColorsPoints(struct ComponentInfos &);
+    uint CNDtoUse(uint index, struct ComponentInfos*);
+    void CalculateColorsPoints(struct ComponentInfos*, uint index);
     void BuildIso();
     void UpdateNbMaxGrid(int);
     void UpdateThredsNumber(uint);
@@ -163,7 +163,7 @@ public :
     ErrorMessage parse_expression2();
     ErrorMessage ThreadParsersCopy();
     void ReinitVarTablesWhenMorphActiv(uint);
-    void copycomponent(struct ComponentInfos*, struct ComponentInfos*, bool pariso=false);
+    void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
 public :
     void emitErrorSignal();

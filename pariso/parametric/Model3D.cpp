@@ -1174,13 +1174,13 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-void Par3D::CalculateColorsPoints(struct ComponentInfos &comp)
+void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Jprime,cmpId=0, K=0;
     double tmp, ValCol[100], val[10];
     val[3] = masterthread->stepMorph;
 
-    if(comp.ThereisRGBA[0] == true &&  comp.NoiseParam[0].NoiseType == 0)
+    if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[0].NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize && i<100; i++)
         {
@@ -1217,11 +1217,11 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos &comp)
                 }
         }
     }
-    else if(comp.ThereisRGBA[0] == true &&  comp.NoiseParam[0].NoiseType == 1)
+    else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[0].NoiseType == 1)
     {
         for(uint i= 0; i < NbVertexTmp; i++)
         {
-            if((i >= uint(comp.ParPts[2*cmpId])))
+            if((i >= uint(comp->ParPts[2*cmpId])))
             {
                 K = cmpId;
                 if((masterthread->expression_XSize -1)>cmpId)
@@ -1265,18 +1265,18 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos &comp)
     }
 }
 //+++++++++++++++++++++++++++++++++++++++++
-uint Par3D::CNDtoUse(uint index, struct ComponentInfos &compts)
+uint Par3D::CNDtoUse(uint index, struct ComponentInfos *compts)
 {
     for(uint fctnb= 0; fctnb < (masterthread->expression_XSize); fctnb++)
-        if( index <= compts.ParPts[2*fctnb +1] && index >= compts.ParPts[2*fctnb])
+        if( index <= compts->ParPts[2*fctnb +1] && index >= compts->ParPts[2*fctnb])
             return fctnb;
     return 30;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos &comp)
+uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
-    uint startpoint=comp.ParPts[0];
+    uint startpoint=comp->ParPts[0];
     if (masterthread->ParConditionRequired == 1)
     {
         double vals[4];
@@ -1306,7 +1306,11 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         }
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
-        uint starttri = uint(comp.ParPositions[0]/3);
+        //uint starttri = uint(comp->ParIsoPositions[0]/3);
+        uint idx=0;
+        for(uint id=0; id < comp->NbComponents.size()-1; id++)
+            idx+=comp->NbComponents[id];
+        uint starttri = uint(comp->ParIsoPositions[2*idx]/3);
 
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
 
@@ -1564,11 +1568,10 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
         NbTriangleIsoSurfaceTmp = M + l + k;
 
-        comp.NbTrianglesVerifyCND[0]    = k;
-        comp.NbTrianglesNotVerifyCND[0] = l;
-        comp.NbTrianglesBorderCND[0]    = M;
-        comp.ThereisCND[0] = true;
-
+        comp->NbTrianglesVerifyCND.push_back(k);
+        comp->NbTrianglesNotVerifyCND.push_back(l);
+        comp->NbTrianglesBorderCND.push_back(M);
+        comp->ThereisCND.push_back(true);
 
         PointVerifyCond.clear();
         PointVerifyCond.shrink_to_fit();
@@ -1577,7 +1580,10 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     }
     else
     {
-        comp.ThereisCND[0] = false;
+        comp->NbTrianglesVerifyCND.push_back(0);
+        comp->NbTrianglesNotVerifyCND.push_back(0);
+        comp->NbTrianglesBorderCND.push_back(0);
+        comp->ThereisCND.push_back(false);
         for(uint i= startpoint; i < NbVertexTmp; i++)
         {
             NormVertexTabVector[i*10  ] = 0.5f;
@@ -1792,39 +1798,45 @@ void Par3D::emitErrorSignal()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    clear(*copy);
-    copy->IsoPositions = origin->IsoPositions;
-    copy->IsoPts       = origin->IsoPts;
-    copy->ParPositions = origin->ParPositions;
-    copy->ParPts       = origin->ParPts;
-    copy->NbIso        = origin->NbIso;
-    copy->NbParametric = origin->NbParametric;
+    copy->ParIsoPositions = origin->ParIsoPositions;
+    copy->IsoPts          = origin->IsoPts;
+    copy->ParPts          = origin->ParPts;
+    copy->NbComponents    = origin->NbComponents;
 
-    copy->NoiseParam[0].Octaves        = origin->NoiseParam[0].Octaves;
-    copy->NoiseParam[0].Lacunarity     = origin->NoiseParam[0].Lacunarity;
-    copy->NoiseParam[0].Gain           = origin->NoiseParam[0].Gain;
-    copy->NoiseParam[0].NoiseActive    = origin->NoiseParam[0].NoiseActive;
-    copy->NoiseParam[0].NoiseType      = origin->NoiseParam[0].NoiseType;
-    copy->NoiseParam[0].Nb_vrgbts      = origin->NoiseParam[0].Nb_vrgbts;
-    copy->NoiseParam[0].VRgbtParser    = origin->NoiseParam[0].VRgbtParser;
-    copy->NoiseParam[0].GradientParser = origin->NoiseParam[0].GradientParser;
-    copy->NoiseParam[0].NoiseParser    = origin->NoiseParam[0].NoiseParser;
-    copy->NoiseParam[0].RgbtParser     = origin->NoiseParam[0].RgbtParser;
-    copy->ThereisRGBA[0]               = origin->ThereisRGBA[0];
-    copy->ThereisCND[0]                = origin->ThereisCND[0];
-    copy->NbTrianglesVerifyCND[0]      = origin->NbTrianglesVerifyCND[0];
-    copy->NbTrianglesNotVerifyCND[0]   = origin->NbTrianglesNotVerifyCND[0];
-    copy->NbTrianglesBorderCND[0]      = origin->NbTrianglesBorderCND[0];
+    copy->ParisoCurrentComponentIndex = origin->ParisoCurrentComponentIndex;
+    copy->ParisoNbComponents          = origin->ParisoNbComponents;
+    copy->Interleave                  = origin->Interleave;
+    copy->pariso                      = origin->pariso;
+
+    copy->ThereisCND                  = origin->ThereisCND;
+    copy->ThereisRGBA                 = origin->ThereisRGBA;
+    copy->NbTrianglesVerifyCND        = origin->NbTrianglesVerifyCND;
+    copy->NbTrianglesNotVerifyCND     = origin->NbTrianglesNotVerifyCND;
+    copy->NbTrianglesBorderCND        = origin->NbTrianglesBorderCND;
+
+    for(int i=0; i<2; i++)
+    {
+        copy->NoiseParam[i]  = origin->NoiseParam[i];
+    }
 }
 
-void Par3D::clear(struct ComponentInfos &cp)
+void Par3D::clear(struct ComponentInfos*cp)
 {
-    cp.IsoPts.clear();
-    cp.ParPts.clear();
-    cp.IsoPositions.clear();
-    cp.ParPositions.clear();
-    cp.ThereisCND[0] = false;
-    cp.ThereisRGBA[0] = false;
+    cp->ParIsoPositions.clear();
+    cp->IsoPts.clear();
+    cp->ParPts.clear();
+    cp->NbComponents.clear();
+    cp->ThereisCND.clear();
+    cp->ThereisRGBA.clear();
+
+    cp->NbTrianglesVerifyCND.clear();
+    cp->NbTrianglesNotVerifyCND.clear();
+    cp->NbTrianglesBorderCND.clear();
+
+    cp->ParisoCurrentComponentIndex = 0;
+    cp->ParisoNbComponents          = 0;
+    cp->Interleave                  = true;
+    cp->pariso                      = false;
 }
 
 void  Par3D::ParamBuild(
@@ -1841,16 +1853,31 @@ void  Par3D::ParamBuild(
     uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     clear(components);
-    NormVertexTabVector.clear();
-    NormVertexTabVector.shrink_to_fit();
-    IndexPolyTabMinVector.clear();
-    IndexPolyTabMinVector.shrink_to_fit();
-    IndexPolyTabVector.clear();
-    IndexPolyTabVector.shrink_to_fit();
+    if(componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)
+    {
+        NbVertexTmp = uint(NormVertexTabVector.size()/10);
+        NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
+        copycomponent(components, componentsPt);
+    }
+    else
+    {
+        if(componentsPt->pariso)
+        {
+            components->pariso = true;
+            components->ParisoCurrentComponentIndex = componentsPt->ParisoCurrentComponentIndex;
+            components->ParisoNbComponents = componentsPt->ParisoNbComponents;
+        }
+        NormVertexTabVector.clear();
+        NormVertexTabVector.shrink_to_fit();
+        IndexPolyTabVector.clear();
+        IndexPolyTabVector.shrink_to_fit();
+        IndexPolyTabMinVector.clear();
+        IndexPolyTabMinVector.shrink_to_fit();
+    }
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
     //*******/
-    components.NbParametric = masterthread->expression_XSize;
+    components->NbComponents.push_back(masterthread->expression_XSize);
 
     stopcalculations(false);
 
@@ -1878,8 +1905,8 @@ void  Par3D::ParamBuild(
         masterthread->CurrentIndex = NbVertexTmp;
 
         // Save Number of Polys and vertex :
-        components.ParPts.push_back(NbVertexTmp);
-        components.ParPts.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
+        components->ParPts.push_back(NbVertexTmp);
+        components->ParPts.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
 
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
@@ -1922,8 +1949,8 @@ void  Par3D::ParamBuild(
         make_PolyIndexMin(NbVertexTmp);
         make_PolyIndexTri(NbVertexTmp);
 
-        components.ParPositions.push_back(6*NextPosition); //save the starting position of this component
-        components.ParPositions.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
+        components->ParIsoPositions.push_back(6*NextPosition); //save the starting position of this component
+        components->ParIsoPositions.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
 
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NbVertexTmp    += (Ugrid)*(Vgrid);
@@ -1941,30 +1968,30 @@ void  Par3D::ParamBuild(
     // Pigment, Texture and Noise :
     if(masterthread->vrgbtnotnull)
     {
-        components.ThereisRGBA[0] = true;
-        components.NoiseParam[0].NoiseType = 0; //Pigments
-        components.NoiseParam[0].VRgbtParser = masterthread->VRgbtParser;
-        components.NoiseParam[0].GradientParser = masterthread->GradientParser;
-        components.NoiseParam[0].Nb_vrgbts = masterthread->VRgbtSize;
+        components->ThereisRGBA.push_back(true);
+        components->NoiseParam[0].NoiseType = 0; //Pigments
+        components->NoiseParam[0].VRgbtParser = masterthread->VRgbtParser;
+        components->NoiseParam[0].GradientParser = masterthread->GradientParser;
+        components->NoiseParam[0].Nb_vrgbts = masterthread->VRgbtSize;
     }
     else if(masterthread->RgbtSize >= 4)
     {
-        components.ThereisRGBA[0] = true;
-        components.NoiseParam[0].NoiseType = 1; //Texture
-        components.NoiseParam[0].RgbtParser = masterthread->RgbtParser;
+        components->ThereisRGBA.push_back(true);
+        components->NoiseParam[0].NoiseType = 1; //Texture
+        components->NoiseParam[0].RgbtParser = masterthread->RgbtParser;
     }
     else
     {
-        components.ThereisRGBA[0] = false;
-        components.NoiseParam[0].NoiseType = -1; //No Pigments or texture
+        components->ThereisRGBA.push_back(false);
+        components->NoiseParam[0].NoiseType = -1; //No Pigments or texture
     }
 
     if(masterthread->Noise == "")
-        components.NoiseParam[0].NoiseShape = 0;
+        components->NoiseParam[0].NoiseShape = 0;
     else
-        components.NoiseParam[0].NoiseShape = 1;
+        components->NoiseParam[0].NoiseShape = 1;
 
-    CalculateColorsPoints(components);
+    CalculateColorsPoints(components, components->ThereisRGBA.size()-1);
 
     //revert to their initial values:
     if(masterthread->gridnotnull)
@@ -1977,8 +2004,6 @@ void  Par3D::ParamBuild(
     }
 
     // 3) Nb Poly & Vertex :
-
-    //if(!componentsPt->pariso)
     {
     *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
     *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
@@ -1988,9 +2013,12 @@ void  Par3D::ParamBuild(
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     *NormVertexTabPt   = NormVertexTabVector.data();
     *IndexPolyTabPt    = IndexPolyTabVector.data();
-    componentsPt->Interleave = true;
     }
-    copycomponent(componentsPt, &components);
+    copycomponent(componentsPt, components);
+    componentsPt->Interleave = true;
+    componentsPt->ParisoCurrentComponentIndex += 1;
+    if(componentsPt->ParisoCurrentComponentIndex == componentsPt->ParisoNbComponents)
+        componentsPt->ParisoCurrentComponentIndex =0;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++

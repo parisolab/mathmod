@@ -200,24 +200,16 @@ ObjectParameters::ObjectParameters()
     objectproperties.colortype      = 0;
     objectproperties.colortypeParam = 0;
     InitComponentinfos(objectproperties.componentsinfos);
-    InitComponentinfos(components);
+    //InitComponentinfos(*(components=new(struct ComponentInfos)));
 }
 
 void ObjectParameters::InitComponentinfos(struct  ComponentInfos&  compinfos)
 {
     for(int i=0; i<2; i++)
     {
-    compinfos.NoiseParam[i].Octaves     = 4;
-    compinfos.NoiseParam[i].Lacunarity  = 0.5;
-    compinfos.NoiseParam[i].Gain        = 0.5;
-    compinfos.NoiseParam[i].NoiseActive = 1;
-
-    compinfos.DFTrianglesNotVerifyCND[i] =
-        compinfos.DFTrianglesVerifyCND[i] =
-            compinfos.DMTrianglesBorderCND[i] = true;
-    compinfos.DMTrianglesNotVerifyCND[i] =
-        compinfos.DMTrianglesVerifyCND[i] = false;
-
-    compinfos.ThereisCND[i] = false;
+        compinfos.NoiseParam[i].Octaves     = 4;
+        compinfos.NoiseParam[i].Lacunarity  = 0.5;
+        compinfos.NoiseParam[i].Gain        = 0.5;
+        compinfos.NoiseParam[i].NoiseActive = 1;
     }
 }
