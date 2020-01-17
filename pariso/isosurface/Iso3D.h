@@ -82,8 +82,7 @@ public:
 class IsoMasterThread : public IsoWorkerThread
 {
 public :
-    FunctionParser *ParisoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
-                   *xSupParser, *xInfParser,
+    FunctionParser *xSupParser, *xInfParser,
                    *ySupParser, *yInfParser,
                    *zSupParser, *zInfParser;
     std::string ImplicitFunction, Condition,
@@ -97,8 +96,7 @@ public :
         Gradient, Noise, varliste;
     std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames,Functs, FunctNames, Consts, ConstNames, SliderNames;
     std::vector<double> ConstValues, SliderValues;
-    bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
-    functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
+
     int ParisoCondition,
         ConditionSize;
     uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
