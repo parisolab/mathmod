@@ -3971,31 +3971,6 @@ void DrawingOptions::oncolor_3activated(int index)
 {
     MathmodRef->ui.glWidget->colorstypeParam(index);
 }
-
-// --------------------------
-void DrawingOptions::onred_3valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
-}
-
-// --------------------------
-void DrawingOptions::ongreen_3valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
-}
-
-// --------------------------
-void DrawingOptions::onblue_3valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
-}
-
-// --------------------------
-void DrawingOptions::ontransparent_3valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
-}
-
 // --------------------------
 void DrawingOptions::ontransparence_3toggled(bool checked)
 {
@@ -4165,30 +4140,6 @@ void DrawingOptions::on_linecolumn_3_valueChanged(int value)
 void DrawingOptions::oncolor_4activated(int index)
 {
     MathmodRef->ui.glWidget->colorstypeParam(index);
-}
-
-// --------------------------
-void DrawingOptions::onred_4valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
-}
-
-// --------------------------
-void DrawingOptions::ongreen_4valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
-}
-
-// --------------------------
-void DrawingOptions::onblue_4valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
-}
-
-// --------------------------
-void DrawingOptions::ontransparent_4valueChanged(int value)
-{
-    MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
 }
 
 // --------------------------
