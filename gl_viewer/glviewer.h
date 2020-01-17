@@ -100,7 +100,6 @@ public slots:
     void PrintInfos();
     void infosok();
     void FillOk();
-    void axeOk();
     void normOk();
     void infosOk();
     void boundingboxOk();

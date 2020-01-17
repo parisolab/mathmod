@@ -169,13 +169,9 @@ ObjectParameters::ObjectParameters()
     objectproperties.infos               = 1;
     objectproperties.frame               = -1;
     objectproperties.infosdetails[0]  = objectproperties.infosdetails[1] = objectproperties.infosdetails[2] = 1;
-    objectproperties.axe                 = 1;
-    objectproperties.box                 = 1;
     objectproperties.boundingbox         = -1;
-    objectproperties.isobox              = 1;
     objectproperties.triangles           = -1;
     objectproperties.typedrawing         =  1;
-    objectproperties.smoothpoly          = 1;
     objectproperties.smoothline          = -1;
     objectproperties.anim                = -1;
     objectproperties.animx               = -1;
@@ -189,8 +185,6 @@ ObjectParameters::ObjectParameters()
     objectproperties.morphstep           =-1;
     objectproperties.norm                =-1;
     objectproperties.plan                = 1;
-    objectproperties.front               = 1;
-    objectproperties.back                = 1;
     objectproperties.transparency        =-1;
     objectproperties.png_ok              = 1;
     objectproperties.jpg_ok = objectproperties.bmp_ok = -1;

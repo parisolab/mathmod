@@ -549,12 +549,6 @@ static void DrawPariso (ObjectProperties *scene, uint compindex)
     glDisable(GL_LIGHT0);
 }
 
-void OpenGlWidget::axeOk()
-{
-    LocalScene.axe *= -1;
-    update();
-}
-
 void OpenGlWidget::normOk()
 {
     LocalScene.norm *= -1;
@@ -1178,7 +1172,6 @@ static void plan(ObjectProperties *scene)
 
 static void draw(ObjectProperties *scene)
 {
-    scene->box =1;
 
     if(scene->componentsinfos.Interleave)
     {
