@@ -128,7 +128,7 @@ void Iso3D::BuildIso()
 //+++++++++++++++++++++++++++++++++++++++++
 IsoMasterThread::IsoMasterThread()
 {
-    IsoConditionRequired = -1;
+    ParisoCondition = -1;
     ImplicitFunction =  "cos(x) + cos(y) + cos(z)";
     XlimitSup = "4";
     YlimitSup = "4";
@@ -162,7 +162,7 @@ IsoMasterThread::~IsoMasterThread()
         delete[] yInfParser;
         delete[] zInfParser;
         delete[] Fct;
-        delete[] IsoConditionParser;
+        delete[] ParisoConditionParser;
         delete[] VRgbtParser;
         delete[] RgbtParser;
         delete GradientParser;
@@ -1110,11 +1110,11 @@ ErrorMessage IsoMasterThread::ParserIso()
     HowManyIsosurface(Grid, 7);
     if(cndnotnull)
     {
-        IsoConditionRequired = 1;
+        ParisoCondition = 1;
         HowManyIsosurface(Condition, 8);
     }
     else
-        IsoConditionRequired = -1;
+        ParisoCondition = -1;
 
     //Add defined constantes:
     for(uint i=0; i<ImplicitFunctionSize; i++)
@@ -1123,7 +1123,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             implicitFunctionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             if(cndnotnull)
-                IsoConditionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+                ParisoConditionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             xSupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             ySupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             zSupParser[i].AddConstant(ConstNames[j], ConstValues[j]);
@@ -1137,7 +1137,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             implicitFunctionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             if(cndnotnull)
-                IsoConditionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+                ParisoConditionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             xSupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             ySupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             zSupParser[i].AddConstant(SliderNames[k], SliderValues[k]);
@@ -1190,7 +1190,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             if((UsedFunct[i*FunctSize+j]=(ImplicitStructs[i].fxyz.find(FunctNames[j]) != std::string::npos)))
             {
                 implicitFunctionParser[i].AddFunction(FunctNames[j], Fct[j]);
-                IsoConditionParser[i].AddFunction(FunctNames[j], Fct[j]);
+                ParisoConditionParser[i].AddFunction(FunctNames[j], Fct[j]);
             }
         }
         implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -1265,7 +1265,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         }
         if(cndnotnull)
         {
-            if ((stdError.iErrorIndex = IsoConditionParser[i].Parse(ImplicitStructs[i].cnd,"x,y,z,t")) >= 0)
+            if ((stdError.iErrorIndex = ParisoConditionParser[i].Parse(ImplicitStructs[i].cnd,"x,y,z,t")) >= 0)
             {
                 stdError.strError = ImplicitStructs[i].cnd;
                 return stdError;
@@ -1340,7 +1340,7 @@ void IsoMasterThread::DeleteMasterParsers()
         delete[] Fct;
         delete[] UsedFunct;
         delete[] UsedFunct2;
-        delete[] IsoConditionParser;
+        delete[] ParisoConditionParser;
         delete[] VRgbtParser;
         delete[] RgbtParser;
         delete GradientParser;
@@ -1388,7 +1388,7 @@ void IsoMasterThread::InitMasterParsers()
     for(uint i=0; i<ImplicitFunctionSize; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
-        IsoConditionParser[i].AddConstant("pi", PI);
+        ParisoConditionParser[i].AddConstant("pi", PI);
         xSupParser[i].AddConstant("pi", PI);
         ySupParser[i].AddConstant("pi", PI);
         zSupParser[i].AddConstant("pi", PI);
@@ -1458,7 +1458,7 @@ void IsoMasterThread::AllocateMasterParsers()
         xInfParser = new FunctionParser[ImplicitFunctionSize];
         yInfParser = new FunctionParser[ImplicitFunctionSize];
         zInfParser = new FunctionParser[ImplicitFunctionSize];
-        IsoConditionParser = new FunctionParser[ImplicitFunctionSize];
+        ParisoConditionParser = new FunctionParser[ImplicitFunctionSize];
         ImplicitStructs.resize(ImplicitFunctionSize);
         xLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
         yLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
@@ -1935,24 +1935,25 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos* comp)
-{
 
+uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
+{
     uint idx=0;
     for(uint i=0; i < comp->NbComponents.size()-1; i++)
         idx+=comp->NbComponents[i];
     uint startpoint=comp->ParisoVertex[2*idx];
-    if (masterthread->IsoConditionRequired == 1)
+    if (masterthread->ParisoCondition == 1)
     {
         double vals[4];
         std::vector<int> PointVerifyCond;
         vals[3] = masterthread->stepMorph;
+
         for(uint i= startpoint; i < NbVertexTmp; i++)
         {
             vals[0] = double(NormVertexTabVector[i*10+7]);
             vals[1] = double(NormVertexTabVector[i*10+8]);
             vals[2] = double(NormVertexTabVector[i*10+9]);
-            PointVerifyCond.push_back(int(masterthread->IsoConditionParser[CNDtoUse(i, comp)].Eval(vals)));
+            PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[CNDtoUse(i, comp)].Eval(vals)));
             if(PointVerifyCond[i-startpoint])
             {
                 NormVertexTabVector[i*10  ] = 0.1f;
@@ -1970,10 +1971,12 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         }
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
+        //uint starttri = uint(comp->ParIsoPositions[0]/3);
         uint idx=0;
         for(uint id=0; id < comp->NbComponents.size()-1; id++)
             idx+=comp->NbComponents[id];
         uint starttri = uint(comp->ParisoTriangle[2*idx]/3);
+
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
 
         for(uint i= starttri; i < nbtriangle; i++)
@@ -2036,7 +2039,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1.0 && (Alfa < 20))
+                    while(masterthread->ParisoConditionParser[cnd].Eval(Bprime) == 1.0 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -2046,7 +2049,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
                 else
                 {
-                    while(!(masterthread->IsoConditionParser[cnd].Eval(Bprime) == 1.0) && (Alfa < 20))
+                    while(!(masterthread->ParisoConditionParser[cnd].Eval(Bprime) == 1.0) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -2067,7 +2070,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1.0 && (Alfa < 20))
+                    while(masterthread->ParisoConditionParser[cnd].Eval(Cprime) == 1.0 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -2077,7 +2080,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
                 else
                 {
-                    while(!(masterthread->IsoConditionParser[cnd].Eval(Cprime) == 1.0) && (Alfa < 20))
+                    while(!(masterthread->ParisoConditionParser[cnd].Eval(Cprime) == 1.0) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -2193,7 +2196,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
         }
 
-        // Now we start sorting the Isosurfaces triangles according to the CND. We have 3 cases
+        // Now we start sorting the triangles list. We have 3 cases
         for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == 1)
             {
@@ -2254,8 +2257,10 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             NormVertexTabVector[i*10+3] = 1.0;
         }
     }
+
     return 1;
 }
+
 
 ///+++++++++++++++++++++++++++++++++++++++++
 Iso3D::~Iso3D()

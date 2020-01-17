@@ -77,7 +77,7 @@ class ParMasterThread : public ParWorkerThread
 public :
     ErrorMessage stdError;
     FunctionParser *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser *ParConditionParser,
+    FunctionParser *ParisoConditionParser,
                    *myParserUmin,*myParserUmax,
                    *myParserVmin,*myParserVmax,
                    Cstparser;
@@ -88,7 +88,7 @@ public :
     uint expression_XSize, RgbtSize, VRgbtSize,  FunctSize, ConstSize, Nb_Sliders;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
         Const,  Funct, Rgbt, VRgbt, Grid;
-    int ParConditionRequired, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
+    int ParisoCondition, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize,
         GridSize;
     std::string Gradient, Noise, NoiseShape;

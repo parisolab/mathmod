@@ -123,7 +123,7 @@ ParMasterThread::~ParMasterThread()
 ParMasterThread::ParMasterThread()
 {
     activeMorph = -1;
-    ParConditionRequired = -1;
+    ParisoCondition = -1;
     Nb_Sliders = 0;
     Gain = 1.0;
     Octaves = 4;
@@ -375,7 +375,7 @@ void ParMasterThread::AllocateParsersForMasterThread()
         myParserVmin = new FunctionParser[expression_XSize];
         myParserUmax = new FunctionParser[expression_XSize];
         myParserVmax = new FunctionParser[expression_XSize];
-        ParConditionParser  = new FunctionParser[expression_XSize];
+        ParisoConditionParser  = new FunctionParser[expression_XSize];
 
         ParamStructs.resize(expression_XSize);
         v_inf.resize(expression_XSize);
@@ -436,7 +436,7 @@ void ParMasterThread::DeleteMasterParsers()
         delete[] myParserVmin;
         delete[] myParserUmax;
         delete[] myParserVmax;
-        delete[] ParConditionParser;
+        delete[] ParisoConditionParser;
         delete[] Fct;
         delete[] UsedFunct;
         delete[] UsedFunct2;
@@ -507,7 +507,7 @@ void ParMasterThread::InitMasterParsers()
         myParserY[i].AddConstant("pi", PI);
         myParserZ[i].AddConstant("pi", PI);
         myParserW[i].AddConstant("pi", PI);
-        ParConditionParser[i].AddConstant("pi", PI);
+        ParisoConditionParser[i].AddConstant("pi", PI);
         myParserUmin[i].AddConstant("pi", PI);
         myParserVmin[i].AddConstant("pi", PI);
         myParserUmax[i].AddConstant("pi", PI);
@@ -521,8 +521,8 @@ void ParMasterThread::InitMasterParsers()
         myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
         myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-        ParConditionParser[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-        ParConditionParser[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+        ParisoConditionParser[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        ParisoConditionParser[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
 
     for(uint i=0; i<RgbtSize; i++)
@@ -661,11 +661,11 @@ ErrorMessage  ParMasterThread::parse_expression()
         HowManyParamSurface(expression_W, 7);
     if(cndnotnull)
     {
-        ParConditionRequired = 1;
+        ParisoCondition = 1;
         HowManyParamSurface(expression_CND, 8);
     }
     else
-        ParConditionRequired = -1;
+        ParisoCondition = -1;
 
     //Add defined constantes:
     for(uint i=0; i<expression_XSize; i++)
@@ -673,7 +673,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         for(uint j=0; j<ConstSize; j++)
         {
             if(cndnotnull)
-                ParConditionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+                ParisoConditionParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserUmax[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserUmin[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserVmin[i].AddConstant(ConstNames[j], ConstValues[j]);
@@ -688,7 +688,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         for(uint k=0; k<Nb_Sliders; k++)
         {
             if(cndnotnull)
-                ParConditionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+                ParisoConditionParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserUmin[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserUmax[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserVmin[i].AddConstant(SliderNames[k], SliderValues[k]);
@@ -813,7 +813,7 @@ ErrorMessage  ParMasterThread::parse_expression()
             }
 
         if(cndnotnull)
-            if ((stdError.iErrorIndex = ParConditionParser[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
+            if ((stdError.iErrorIndex = ParisoConditionParser[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].cnd;
                 return stdError;
@@ -1290,7 +1290,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     for(uint i=0; i < comp->NbComponents.size()-1; i++)
         idx+=comp->NbComponents[i];
     uint startpoint=comp->ParisoVertex[2*idx];
-    if (masterthread->ParConditionRequired == 1)
+    if (masterthread->ParisoCondition == 1)
     {
         double vals[4];
         std::vector<int> PointVerifyCond;
@@ -1301,7 +1301,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             vals[0] = double(NormVertexTabVector[i*10+7]);
             vals[1] = double(NormVertexTabVector[i*10+8]);
             vals[2] = double(NormVertexTabVector[i*10+9]);
-            PointVerifyCond.push_back(int(masterthread->ParConditionParser[CNDtoUse(i, comp)].Eval(vals)));
+            PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[CNDtoUse(i, comp)].Eval(vals)));
             if(PointVerifyCond[i-startpoint])
             {
                 NormVertexTabVector[i*10  ] = 0.1f;
@@ -1387,7 +1387,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->ParConditionParser[cnd].Eval(Bprime) == 1.0 && (Alfa < 20))
+                    while(masterthread->ParisoConditionParser[cnd].Eval(Bprime) == 1.0 && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1397,7 +1397,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
                 else
                 {
-                    while(!(masterthread->ParConditionParser[cnd].Eval(Bprime) == 1.0) && (Alfa < 20))
+                    while(!(masterthread->ParisoConditionParser[cnd].Eval(Bprime) == 1.0) && (Alfa < 20))
                     {
                         Bprime[0] += DiffX;
                         Bprime[1] += DiffY;
@@ -1418,7 +1418,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 Alfa = 0;
                 if(TypeTriangle == 0 || TypeTriangle == 2 || TypeTriangle == 4)
                 {
-                    while(masterthread->ParConditionParser[cnd].Eval(Cprime) == 1.0 && (Alfa < 20))
+                    while(masterthread->ParisoConditionParser[cnd].Eval(Cprime) == 1.0 && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
@@ -1428,7 +1428,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 }
                 else
                 {
-                    while(!(masterthread->ParConditionParser[cnd].Eval(Cprime) == 1.0) && (Alfa < 20))
+                    while(!(masterthread->ParisoConditionParser[cnd].Eval(Cprime) == 1.0) && (Alfa < 20))
                     {
                         Cprime[0] += DiffX;
                         Cprime[1] += DiffY;
