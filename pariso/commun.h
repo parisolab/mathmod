@@ -220,8 +220,6 @@ struct  ObjectProperties
     float backcol[4];
     float *frontcols;
     float *backcols;
-    float *frontcolsPar;
-    float *backcolsPar;
     float gridcol[4];
     float groundcol[4];
     float polyfactor;
