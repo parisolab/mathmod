@@ -2904,6 +2904,72 @@ void DrawingOptions::ontransparence_2clicked(bool checked)
 }
 
 // --------------------------
+void DrawingOptions::on_red_ParIso_valueChanged(int value)
+{
+    switch (CurrentFormulaType)
+    {
+    case 0:
+        break;
+    case 1:
+        MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->red(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
+        break;
+
+    default:
+        break;
+    }
+}
+
+// --------------------------
+void DrawingOptions::on_green_ParIso_valueChanged(int value)
+{
+    switch (CurrentFormulaType)
+    {
+    case 0:
+        break;
+    case 1:
+        MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->green(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
+        break;
+
+    default:
+        break;
+    }
+}
+
+// --------------------------
+void DrawingOptions::on_blue_ParIso_valueChanged(int value)
+{
+    switch (CurrentFormulaType)
+    {
+    case 0:
+        break;
+    case 1:
+        MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->blue(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
+        break;
+
+    default:
+        break;
+    }
+}
+
+// --------------------------
 void DrawingOptions::on_updateButton_clicked()
 {
     //int i, j;
@@ -3954,6 +4020,29 @@ void DrawingOptions::oncolor_3activated(int index)
     MathmodRef->ui.glWidget->colorstypeParam(index);
 }
 
+// --------------------------
+void DrawingOptions::onred_3valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
+}
+
+// --------------------------
+void DrawingOptions::ongreen_3valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
+}
+
+// --------------------------
+void DrawingOptions::onblue_3valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
+}
+
+// --------------------------
+void DrawingOptions::ontransparent_3valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
+}
 
 // --------------------------
 void DrawingOptions::ontransparence_3toggled(bool checked)
@@ -4126,6 +4215,29 @@ void DrawingOptions::oncolor_4activated(int index)
     MathmodRef->ui.glWidget->colorstypeParam(index);
 }
 
+// --------------------------
+void DrawingOptions::onred_4valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->redpar(value, indexcurrentFormula);
+}
+
+// --------------------------
+void DrawingOptions::ongreen_4valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->greenpar(value, indexcurrentFormula);
+}
+
+// --------------------------
+void DrawingOptions::onblue_4valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->bluepar(value, indexcurrentFormula);
+}
+
+// --------------------------
+void DrawingOptions::ontransparent_4valueChanged(int value)
+{
+    MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
+}
 
 // --------------------------
 void DrawingOptions::ontransparence_4toggled(bool checked)
@@ -4647,21 +4759,24 @@ void DrawingOptions::on_transparence_ParIso_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
-void DrawingOptions::on_red_ParIso_valueChanged(int value)
-{
-        MathmodRef->ui.glWidget->red(value, indexcurrentFormula);
-}
 
 // --------------------------
-void DrawingOptions::on_green_ParIso_valueChanged(int value)
+void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
 {
-        MathmodRef->ui.glWidget->green(value, indexcurrentFormula);
-}
-
-// --------------------------
-void DrawingOptions::on_blue_ParIso_valueChanged(int value)
-{
-        MathmodRef->ui.glWidget->blue(value, indexcurrentFormula);
+    switch (CurrentFormulaType)
+    {
+    case 1:
+        MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
+        break;
+    case 2:
+        MathmodRef->ui.glWidget->transparency(value, indexcurrentFormula);
+        break;
+    case 3:
+        MathmodRef->ui.glWidget->transparencypar(value, indexcurrentFormula);
+        break;
+    default:
+        break;
+    }
 }
 
 // --------------------------

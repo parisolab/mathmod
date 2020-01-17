@@ -168,6 +168,10 @@ public slots:
     void on_actionColorPolygonWavefront_obj_triggered();
     void on_linecolumn_2_valueChanged(int);
     void oncolor_3activated(int index);
+    void onred_3valueChanged(int);
+    void ongreen_3valueChanged(int);
+    void onblue_3valueChanged(int);
+    void ontransparent_3valueChanged(int);
     void ontransparence_3toggled(bool);
     int JSON_choice_activated(const QString &);
     void ShowJsonModel(const QJsonObject &, int textureIndex=-1);
@@ -199,6 +203,10 @@ public slots:
     void on_zwhorizontalScrollBar_valueChanged(int);
     void on_linecolumn_3_valueChanged(int);
     void oncolor_4activated(int);
+    void onred_4valueChanged(int);
+    void ongreen_4valueChanged(int);
+    void onblue_4valueChanged(int);
+    void ontransparent_4valueChanged(int);
     void ontransparence_4toggled(bool);
     void on_uv4D_clicked();
     void on_uv_clicked();
@@ -214,6 +222,8 @@ public slots:
     void on_actionAbout_2_triggered();
     void LoadNewFileModels(bool upd=false);
     void on_actionLoad_json_script_triggered();
+    void on_red_ParIso_valueChanged(int);
+    void on_green_ParIso_valueChanged(int);
     void on_blue_ParIso_valueChanged(int);
     void Multiplier(int, int, int, QJsonObject &, int index =0);
     void UpdateGui(int);
@@ -260,9 +270,7 @@ private slots:
     void on_pushButton_4_clicked();
     void on_color_5_activated(int);
     void on_transparence_ParIso_clicked(bool);
-    void on_red_ParIso_valueChanged(int);
-    void on_green_ParIso_valueChanged(int);
-    void on_blue_ParIso_valueChanged(int);
+    void on_transparent_ParIso_valueChanged(int);
     void on_comboBoxTexture_activated(int);
     void on_comboBoxPigment_activated(int);
     void on_actionTrianglesWavefront_obj_triggered();

@@ -1501,6 +1501,27 @@ void OpenGlWidget::transparency(int cl, int currentposition)
     update();
 }
 
+void OpenGlWidget::transparencypar(int cl, int currentposition)
+{
+    switch(LocalScene.colortypeParam)
+    {
+    case 1:
+        LocalScene.frontcolsPar[(currentposition%10)*4+3] = (cl/255.0f) ;
+        break;
+    case 0:
+        LocalScene.backcolsPar[(currentposition%10)*4+3] = (cl/255.0f);
+        break;
+    case 2:
+        LocalScene.gridcol[3] = (cl/255.0f);
+        break;
+    case 3:
+        LocalScene.groundcol[3] = (cl/255.0f);
+        glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
+        break;
+    }
+    update();
+}
+
 void OpenGlWidget::red(int cl, int currentposition)
 {
     switch(LocalScene.colortype)
@@ -1510,6 +1531,27 @@ void OpenGlWidget::red(int cl, int currentposition)
         break;
     case 0:
         LocalScene.backcols[(currentposition%10)*4+0]  =  (cl/255.0f);
+        break;
+    case 2:
+        LocalScene.gridcol[0] =  (cl/255.0f);
+        break;
+    case 3:
+        LocalScene.groundcol[0] = (cl/255.0f);
+        glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
+        break;
+    }
+    update();
+}
+
+void OpenGlWidget::redpar(int cl, int currentposition)
+{
+    switch(LocalScene.colortypeParam)
+    {
+    case 1:
+        LocalScene.frontcolsPar[(currentposition%10)*4+0] = (cl/255.0f);
+        break;
+    case 0:
+        LocalScene.backcolsPar[(currentposition%10)*4+0] = (cl/255.0f);
         break;
     case 2:
         LocalScene.gridcol[0] =  (cl/255.0f);
@@ -1543,6 +1585,27 @@ void OpenGlWidget::green(int cl, int currentposition)
     update();
 }
 
+void OpenGlWidget::greenpar(int cl, int currentposition)
+{
+    switch(LocalScene.colortypeParam)
+    {
+    case 1:
+        LocalScene.frontcolsPar[(currentposition%10)*4+1] = (cl/255.0f);
+        break;
+    case 0:
+        LocalScene.backcolsPar[(currentposition%10)*4+1] = (cl/255.0f);
+        break;
+    case 2:
+        LocalScene.gridcol[1] = (cl/255.0f);
+        break;
+    case 3:
+        LocalScene.groundcol[1] = (cl/255.0f);
+        glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1], LocalScene.groundcol[2], LocalScene.groundcol[3]);
+        break;
+    }
+    update();
+}
+
 void OpenGlWidget::blue(int cl, int currentposition)
 {
     switch(LocalScene.colortype)
@@ -1564,6 +1627,26 @@ void OpenGlWidget::blue(int cl, int currentposition)
     update();
 }
 
+void OpenGlWidget::bluepar(int cl, int currentposition)
+{
+    switch(LocalScene.colortypeParam)
+    {
+    case 1:
+        LocalScene.frontcolsPar[(currentposition%10)*4+2] = (cl/255.0f);
+        break;
+    case 0:
+        LocalScene.backcolsPar[(currentposition%10)*4+2] = (cl/255.0f);
+        break;
+    case 2:
+        LocalScene.gridcol[2] = (cl/255.0f);
+        break;
+    case 3:
+        LocalScene.groundcol[2] = (cl/255.0f);
+        glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],LocalScene.groundcol[2], LocalScene.groundcol[3]);
+        break;
+    }
+    update();
+}
 
 void OpenGlWidget::transparence(bool trs)
 {

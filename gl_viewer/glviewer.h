@@ -109,6 +109,10 @@ public slots:
     void red(int, int currentposition=0);
     void green(int, int currentposition=0);
     void blue(int, int currentposition=0);
+    void transparencypar(int, int currentposition=0);
+    void redpar(int, int currentposition=0);
+    void greenpar(int, int currentposition=0);
+    void bluepar(int, int currentposition=0);
     void transparence(bool);
     void redSpec(int);
     void greenSpec(int);
