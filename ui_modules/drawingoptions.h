@@ -214,6 +214,7 @@ public slots:
     void on_actionAbout_2_triggered();
     void LoadNewFileModels(bool upd=false);
     void on_actionLoad_json_script_triggered();
+    void on_blue_ParIso_valueChanged(int);
     void Multiplier(int, int, int, QJsonObject &, int index =0);
     void UpdateGui(int);
     void UpdateGuiMaxgrid();
