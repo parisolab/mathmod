@@ -140,7 +140,7 @@ IsoMasterThread::IsoMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Cstparser.AddConstant("pi", PI);
-    ImplicitFunctionSize = ConditionSize = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
+    componentsSize = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -272,7 +272,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].DeleteWorkerParsers();
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->ImplicitFunctionSize, masterthread->FunctSize);
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->componentsSize, masterthread->FunctSize);
 
     return(parse_expression2());
 }
@@ -328,7 +328,7 @@ ErrorMessage  Iso3D::parse_expression2()
     //Add defined constantes:
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint i=0; i<masterthread->ImplicitFunctionSize; i++)
+        for(uint i=0; i<masterthread->componentsSize; i++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
 
@@ -347,7 +347,7 @@ ErrorMessage  Iso3D::parse_expression2()
     // Add defined functions :
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint i=0; i<masterthread->ImplicitFunctionSize; i++)
+        for(uint i=0; i<masterthread->componentsSize; i++)
         {
             //Functions:
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -372,7 +372,7 @@ ErrorMessage  Iso3D::parse_expression2()
     // Final step: parsing
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint index=0; index< masterthread->ImplicitFunctionSize; index++)
+        for(uint index=0; index< masterthread->componentsSize; index++)
         {
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
             {
@@ -1111,13 +1111,13 @@ ErrorMessage IsoMasterThread::ParserIso()
     if(cndnotnull)
     {
         ParisoCondition = 1;
-        HowManyIsosurface(Condition, 8);
+        HowManyIsosurface(ConditionStr, 8);
     }
     else
         ParisoCondition = -1;
 
     //Add defined constantes:
-    for(uint i=0; i<ImplicitFunctionSize; i++)
+    for(uint i=0; i<componentsSize; i++)
     {
         for(uint j=0; j<ConstSize; j++)
         {
@@ -1183,7 +1183,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     //delete NoiseFunction;
     //NoiseFunction = new CellNoise();
 
-    for(uint i=0; i<ImplicitFunctionSize; i++)
+    for(uint i=0; i<componentsSize; i++)
     {
         for(uint j=0; j<FunctSize; j++)
         {
@@ -1256,7 +1256,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             return stdError;
         }
 
-    for(uint i=0; i<ImplicitFunctionSize; i++)
+    for(uint i=0; i<componentsSize; i++)
     {
         if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,VariableListe)) >= 0)
         {
@@ -1304,7 +1304,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         }
     }
 
-    for(uint IsoIndex=0; IsoIndex<ImplicitFunctionSize; IsoIndex++)
+    for(uint IsoIndex=0; IsoIndex<componentsSize; IsoIndex++)
     {
         if(gridnotnull)
         {
@@ -1385,7 +1385,7 @@ void IsoWorkerThread::DeleteWorkerParsers()
 ///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::InitMasterParsers()
 {
-    for(uint i=0; i<ImplicitFunctionSize; i++)
+    for(uint i=0; i<componentsSize; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
         ParisoConditionParser[i].AddConstant("pi", PI);
@@ -1451,26 +1451,26 @@ void IsoMasterThread::AllocateMasterParsers()
 {
     if(!ParsersAllocated)
     {
-        implicitFunctionParser = new FunctionParser[ImplicitFunctionSize];
-        xSupParser = new FunctionParser[ImplicitFunctionSize];
-        ySupParser = new FunctionParser[ImplicitFunctionSize];
-        zSupParser = new FunctionParser[ImplicitFunctionSize];
-        xInfParser = new FunctionParser[ImplicitFunctionSize];
-        yInfParser = new FunctionParser[ImplicitFunctionSize];
-        zInfParser = new FunctionParser[ImplicitFunctionSize];
-        ParisoConditionParser = new FunctionParser[ImplicitFunctionSize];
-        ImplicitStructs.resize(ImplicitFunctionSize);
-        xLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
-        yLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
-        zLocal2.resize(NbMaxGrid*ImplicitFunctionSize);
-        x_Step.resize(ImplicitFunctionSize);
-        y_Step.resize(ImplicitFunctionSize);
-        z_Step.resize(ImplicitFunctionSize);
+        implicitFunctionParser = new FunctionParser[componentsSize];
+        xSupParser = new FunctionParser[componentsSize];
+        ySupParser = new FunctionParser[componentsSize];
+        zSupParser = new FunctionParser[componentsSize];
+        xInfParser = new FunctionParser[componentsSize];
+        yInfParser = new FunctionParser[componentsSize];
+        zInfParser = new FunctionParser[componentsSize];
+        ParisoConditionParser = new FunctionParser[componentsSize];
+        ImplicitStructs.resize(componentsSize);
+        xLocal2.resize(NbMaxGrid*componentsSize);
+        yLocal2.resize(NbMaxGrid*componentsSize);
+        zLocal2.resize(NbMaxGrid*componentsSize);
+        x_Step.resize(componentsSize);
+        y_Step.resize(componentsSize);
+        z_Step.resize(componentsSize);
 
         if(!functnotnull)
             FunctSize = 0;
          Fct          = new FunctionParser[FunctSize];
-         UsedFunct    = new bool[4*ImplicitFunctionSize*FunctSize];
+         UsedFunct    = new bool[4*componentsSize*FunctSize];
          UsedFunct2   = new bool[FunctSize*FunctSize];
 
         rgbtnotnull ?
@@ -1612,7 +1612,7 @@ void Iso3D::IsoBuild (
     //*****//
     uint maxx = std::max(std::max(std::max(Xgrid, Ygrid), Zgrid), masterthread->maximumgrid);
     if(masterthread->gridnotnull)
-        for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
+        for(uint fctnb= 0; fctnb< masterthread->componentsSize; fctnb++)
             maxx = std::max(maxx, masterthread->grid[fctnb]);
 
     masterthread->maximumgrid = maxx;
@@ -1628,7 +1628,7 @@ void Iso3D::IsoBuild (
         delete[] Results;
     Results = new double[maxx*maxx*maxx];
 
-    components->NbComponents.push_back(masterthread->ImplicitFunctionSize);
+    components->NbComponents.push_back(masterthread->componentsSize);
 
     stopcalculations(false);
 
@@ -1638,11 +1638,11 @@ void Iso3D::IsoBuild (
     }
 
     // generate Isosurface for all the implicit formulas
-    for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
+    for(uint fctnb= 0; fctnb< masterthread->componentsSize; fctnb++)
     {
         if(masterthread->morph_activated != 1)
         {
-            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->ImplicitFunctionSize)+"==> Math calculation");
+            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->componentsSize)+"==> Math calculation");
             emitUpdateMessageSignal();
         }
 
@@ -1801,7 +1801,7 @@ void Iso3D::IsoBuild (
 
     if(masterthread->morph_activated != 1)
     {
-        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->ImplicitFunctionSize)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
+        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsSize)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();
     }
 
@@ -1840,7 +1840,7 @@ uint Iso3D::CNDtoUse(uint index, struct ComponentInfos* components)
     uint idx=0;
     for(uint i=0; i < components->NbComponents.size()-1; i++)
         idx+=components->NbComponents[i];
-    for(uint fctnb= 0; fctnb < (masterthread->ImplicitFunctionSize); fctnb++)
+    for(uint fctnb= 0; fctnb < (masterthread->componentsSize); fctnb++)
         if( index <= components->ParisoVertex[2*(fctnb+idx) +1] && index >= components->ParisoVertex[2*(fctnb+idx)])
             return fctnb;
     return 30;
@@ -1906,7 +1906,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
                 if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
                 {
                     K = cmpId;
-                    if((masterthread->ImplicitFunctionSize-1)>cmpId)
+                    if((masterthread->componentsSize-1)>cmpId)
                     {
                         cmpId++;
                     }
