@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by Abderrahman Taha                                *
+ *   Copyright (C) 2020by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -154,7 +154,6 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     }
 }
 
-
 int OpenGlWidget::memoryallocation(uint gridmax, uint nbthreads,
                                    uint initparGrid, uint initisoGrid,
                                    uint FactX, uint FactY, uint FactZ)
@@ -165,7 +164,6 @@ int OpenGlWidget::memoryallocation(uint gridmax, uint nbthreads,
         IsoObjet = new Iso3D(gridmax,nbthreads, initisoGrid, FactX, FactY, FactZ);
         ParObjet = new Par3D(nbthreads, initparGrid);
         LocalScene = objpar.objectproperties;
-        //LocalScene     = (new ObjectParameters())->objectproperties;
         return 1;
     }
     catch(std::bad_alloc&)
