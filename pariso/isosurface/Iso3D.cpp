@@ -1529,9 +1529,8 @@ void Iso3D::stopcalculations(bool calculation)
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    copy->ParIsoPositions = origin->ParIsoPositions;
-    copy->IsoPts          = origin->IsoPts;
-    copy->ParPts          = origin->ParPts;
+    copy->ParisoTriangle = origin->ParisoTriangle;
+    copy->ParisoVertex          = origin->ParisoVertex;
     copy->NbComponents    = origin->NbComponents;
 
     copy->ParisoCurrentComponentIndex = origin->ParisoCurrentComponentIndex;
@@ -1555,9 +1554,8 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::clear(struct ComponentInfos* cp)
 {
-    cp->ParIsoPositions.clear();
-    cp->IsoPts.clear();
-    cp->ParPts.clear();
+    cp->ParisoTriangle.clear();
+    cp->ParisoVertex.clear();
     cp->NbComponents.clear();
     cp->ThereisCND.clear();
     cp->ThereisRGBA.clear();
@@ -1731,10 +1729,10 @@ void Iso3D::IsoBuild (
         }
 
         // Save the Index:
-        components->ParIsoPositions.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
-        components->ParIsoPositions.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
-        components->IsoPts.push_back(NbVertexTmp);
-        components->IsoPts.push_back(NbVertexTmp + NbPointIsoMap -1);
+        components->ParisoTriangle.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
+        components->ParisoTriangle.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
+        components->ParisoVertex.push_back(NbVertexTmp);
+        components->ParisoVertex.push_back(NbVertexTmp + NbPointIsoMap -1);
 
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
@@ -1839,8 +1837,11 @@ void Iso3D::Setgrid(uint NewGridVal)
 ///+++++++++++++++++++++++++++++++++++++++++
 uint Iso3D::CNDtoUse(uint index, struct ComponentInfos* components)
 {
+    uint idx=0;
+    for(uint i=0; i < components->NbComponents.size()-1; i++)
+        idx+=components->NbComponents[i];
     for(uint fctnb= 0; fctnb < (masterthread->ImplicitFunctionSize); fctnb++)
-        if( index <= components->IsoPts[2*fctnb +1] && index >= components->IsoPts[2*fctnb])
+        if( index <= components->ParisoVertex[2*(fctnb+idx) +1] && index >= components->ParisoVertex[2*(fctnb+idx)])
             return fctnb;
     return 30;
 }
@@ -1862,7 +1863,10 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
 
-        for(uint i= comp->IsoPts[0]; i < NbVertexTmp; i++)
+        uint idx=0;
+        for(uint i=0; i < comp->NbComponents.size()-1; i++)
+            idx+=comp->NbComponents[i];
+        for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
             val[0]= double(NormVertexTabVector[i*10  + 3 + 4 ]);
             val[1]= double(NormVertexTabVector[i*10  + 4 + 4 ]);
@@ -1894,9 +1898,12 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     }
     else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[1].NoiseType == 1)
     {
-        for(uint i= comp->IsoPts[0]; i < NbVertexTmp; i++)
+        uint idx=0;
+        for(uint i=0; i < comp->NbComponents.size()-1; i++)
+            idx+=comp->NbComponents[i];
+        for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
-                if((i >= uint(comp->IsoPts[2*cmpId])))
+                if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
                 {
                     K = cmpId;
                     if((masterthread->ImplicitFunctionSize-1)>cmpId)
@@ -1931,7 +1938,10 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
 uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos* comp)
 {
 
-    uint startpoint=comp->IsoPts[0];
+    uint idx=0;
+    for(uint i=0; i < comp->NbComponents.size()-1; i++)
+        idx+=comp->NbComponents[i];
+    uint startpoint=comp->ParisoVertex[2*idx];
     if (masterthread->IsoConditionRequired == 1)
     {
         double vals[4];
@@ -1963,7 +1973,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         uint idx=0;
         for(uint id=0; id < comp->NbComponents.size()-1; id++)
             idx+=comp->NbComponents[id];
-        uint starttri = uint(comp->ParIsoPositions[2*idx]/3);
+        uint starttri = uint(comp->ParisoTriangle[2*idx]/3);
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
 
         for(uint i= starttri; i < nbtriangle; i++)

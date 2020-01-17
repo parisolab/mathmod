@@ -1187,7 +1187,11 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
 
-        for(uint i= 0; i < NbVertexTmp; i++)
+        uint idx=0;
+        for(uint i=0; i < comp->NbComponents.size()-1; i++)
+            idx+=comp->NbComponents[i];
+
+        for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
             val[0]= double(NormVertexTabVector[i*10+7]);
             val[1]= double(NormVertexTabVector[i*10+8]);
@@ -1219,9 +1223,12 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
     }
     else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[0].NoiseType == 1)
     {
-        for(uint i= 0; i < NbVertexTmp; i++)
+        uint idx=0;
+        for(uint i=0; i < comp->NbComponents.size()-1; i++)
+            idx+=comp->NbComponents[i];
+        for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
-            if((i >= uint(comp->ParPts[2*cmpId])))
+            if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
             {
                 K = cmpId;
                 if((masterthread->expression_XSize -1)>cmpId)
@@ -1267,8 +1274,11 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 //+++++++++++++++++++++++++++++++++++++++++
 uint Par3D::CNDtoUse(uint index, struct ComponentInfos *compts)
 {
+    uint idx=0;
+    for(uint i=0; i < compts->NbComponents.size()-1; i++)
+        idx+=compts->NbComponents[i];
     for(uint fctnb= 0; fctnb < (masterthread->expression_XSize); fctnb++)
-        if( index <= compts->ParPts[2*fctnb +1] && index >= compts->ParPts[2*fctnb])
+        if( index <= compts->ParisoVertex[2*(fctnb+idx) +1] && index >= compts->ParisoVertex[2*(fctnb+idx)])
             return fctnb;
     return 30;
 }
@@ -1276,7 +1286,10 @@ uint Par3D::CNDtoUse(uint index, struct ComponentInfos *compts)
 //+++++++++++++++++++++++++++++++++++++++++
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
-    uint startpoint=comp->ParPts[0];
+    uint idx=0;
+    for(uint i=0; i < comp->NbComponents.size()-1; i++)
+        idx+=comp->NbComponents[i];
+    uint startpoint=comp->ParisoVertex[2*idx];
     if (masterthread->ParConditionRequired == 1)
     {
         double vals[4];
@@ -1310,7 +1323,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         uint idx=0;
         for(uint id=0; id < comp->NbComponents.size()-1; id++)
             idx+=comp->NbComponents[id];
-        uint starttri = uint(comp->ParIsoPositions[2*idx]/3);
+        uint starttri = uint(comp->ParisoTriangle[2*idx]/3);
 
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
 
@@ -1798,9 +1811,8 @@ void Par3D::emitErrorSignal()
 //+++++++++++++++++++++++++++++++++++++++++
 void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
-    copy->ParIsoPositions = origin->ParIsoPositions;
-    copy->IsoPts          = origin->IsoPts;
-    copy->ParPts          = origin->ParPts;
+    copy->ParisoTriangle = origin->ParisoTriangle;
+    copy->ParisoVertex          = origin->ParisoVertex;
     copy->NbComponents    = origin->NbComponents;
 
     copy->ParisoCurrentComponentIndex = origin->ParisoCurrentComponentIndex;
@@ -1822,9 +1834,8 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 
 void Par3D::clear(struct ComponentInfos*cp)
 {
-    cp->ParIsoPositions.clear();
-    cp->IsoPts.clear();
-    cp->ParPts.clear();
+    cp->ParisoTriangle.clear();
+    cp->ParisoVertex.clear();
     cp->NbComponents.clear();
     cp->ThereisCND.clear();
     cp->ThereisRGBA.clear();
@@ -1905,8 +1916,8 @@ void  Par3D::ParamBuild(
         masterthread->CurrentIndex = NbVertexTmp;
 
         // Save Number of Polys and vertex :
-        components->ParPts.push_back(NbVertexTmp);
-        components->ParPts.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
+        components->ParisoVertex.push_back(NbVertexTmp);
+        components->ParisoVertex.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
 
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
@@ -1949,8 +1960,8 @@ void  Par3D::ParamBuild(
         make_PolyIndexMin(NbVertexTmp);
         make_PolyIndexTri(NbVertexTmp);
 
-        components->ParIsoPositions.push_back(6*NextPosition); //save the starting position of this component
-        components->ParIsoPositions.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
+        components->ParisoTriangle.push_back(6*NextPosition); //save the starting position of this component
+        components->ParisoTriangle.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
 
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NbVertexTmp    += (Ugrid)*(Vgrid);

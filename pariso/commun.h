@@ -133,9 +133,8 @@ enum ScriptErrorType
 };
 struct  ComponentInfos
 {
-    std::vector<uint> ParIsoPositions;
-    std::vector<uint> IsoPts;
-    std::vector<uint> ParPts;
+    std::vector<uint> ParisoTriangle;
+    std::vector<uint> ParisoVertex;
     std::vector<uint> NbComponents;
 
     std::vector<bool> ThereisCND;

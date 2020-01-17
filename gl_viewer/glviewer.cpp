@@ -555,7 +555,7 @@ static void DrawPariso (ObjectProperties *scene, uint compindex)
     uint idx=0;
     for(uint i=0; i < compindex; i++)
         idx+=scene->componentsinfos.NbComponents[i];
-    int start_triangle= scene->componentsinfos.ParIsoPositions[2*idx];
+    int start_triangle= scene->componentsinfos.ParisoTriangle[2*idx];
     float frontcl[4], backcl[4];
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -612,9 +612,9 @@ static void DrawPariso (ObjectProperties *scene, uint compindex)
         {
             glDrawElements(
                 GL_TRIANGLES,
-                int(3*scene->componentsinfos.ParIsoPositions[2*(i+idx)+1]),
+                int(3*scene->componentsinfos.ParisoTriangle[2*(i+idx)+1]),
                 GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[scene->componentsinfos.ParIsoPositions[2*(i+idx)]])
+                &(scene->PolyIndices_localPt[scene->componentsinfos.ParisoTriangle[2*(i+idx)]])
             );
         }
     }
@@ -1153,7 +1153,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
     uint idx=0;
     for(uint i=0; i < compindex; i++)
         idx+=scene->componentsinfos.NbComponents[i];
-    int start_triangle= scene->componentsinfos.ParIsoPositions[2*idx];
+    int start_triangle= scene->componentsinfos.ParisoTriangle[2*idx];
     if(scene->cndoptions[3])
     {
         glLineWidth(1);
