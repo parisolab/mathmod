@@ -276,8 +276,6 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
 
 OpenGlWidget::~OpenGlWidget()
 {
-    //glDeleteBuffers(1, &LocalScene.vboId_ArrayNorVer_localPt);
-    //glDeleteBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
     delete(timer);
     delete ParObjet;
     delete IsoObjet;
@@ -285,8 +283,6 @@ OpenGlWidget::~OpenGlWidget()
 
 void OpenGlWidget::deleteVBO()
 {
-    //glDeleteBuffers(1, &LocalScene.vboId_ArrayNorVer_localPt);
-    //glDeleteBuffers(1, &LocalScene.vboId_PolyIndices_localPt);
 }
 void OpenGlWidget::initbox()
 {
@@ -417,79 +413,7 @@ void OpenGlWidget::blueSpec(int cl)
 {
     LocalScene.specReflection[2] =  float(cl/100.0);
 }
-/*
-static void DrawParametric (ObjectProperties *scene)
-{
-    int start_triangle= scene->componentsinfos.ParIsoPositions[0];
-    float frontcl[4], backcl[4];
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_POLYGON_OFFSET_FILL);
 
-    if(scene->componentsinfos.ThereisRGBA[0])
-        glEnable(GL_COLOR_MATERIAL);
-
-    glPolygonOffset(scene->polyfactor, scene->polyunits);
-    if(scene->componentsinfos.ThereisCND[0])
-    {
-        if(!scene->componentsinfos.ThereisRGBA[0])
-        {
-            for(uint j=0; j<4; j++)
-            {
-                frontcl[j]=scene->frontcolsPar[j];
-                backcl[j]=scene->backcolsPar[j];
-            }
-            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE,  backcl);
-            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
-        }
-
-        if(scene->componentsinfos.DFTrianglesVerifyCND[0])
-            glDrawElements(
-                GL_TRIANGLES,
-                3*int(scene->componentsinfos.NbTrianglesVerifyCND[0]),
-                GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[start_triangle])
-            );
-
-        if(scene->componentsinfos.DFTrianglesNotVerifyCND[0])
-            glDrawElements(
-                GL_TRIANGLES,
-                3*int(scene->componentsinfos.NbTrianglesNotVerifyCND[0]),
-                GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[3*scene->componentsinfos.NbTrianglesVerifyCND[0]+start_triangle])
-            );
-    }
-
-    for(uint i=0; i< scene->componentsinfos.NbComponents; i++)
-    {
-        if(!scene->componentsinfos.ThereisRGBA[0])
-        {
-            for(uint j=0; j<4; j++)
-            {
-                frontcl[j]=scene->frontcolsPar[4*(i%10)+j];
-                backcl[j]=scene->backcolsPar[4*(i%10)+j];
-            }
-            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE,  backcl);
-            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
-        }
-
-        if(!scene->componentsinfos.ThereisCND[0])
-            glDrawElements(
-                GL_TRIANGLES,
-                3*int(scene->componentsinfos.ParIsoPositions[2*i+1]),
-                GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[scene->componentsinfos.ParIsoPositions[2*i]])
-            );
-    }
-
-    if(scene->componentsinfos.ThereisRGBA[0])
-        glDisable(GL_COLOR_MATERIAL);
-
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-}
-*/
 static void drawCube(float x)
 {
     float  longX = x*float(difX/float(difMaximum)),
@@ -719,60 +643,6 @@ void OpenGlWidget::restarttimer(int newlatence)
         timer->stop();
         timer->start( latence);
     }
-}
-
-void OpenGlWidget::VBOmemoryallocation()
-{
-    /*
-    static int stat=0;
-    static uint previous=0;
-
-    if(stat ==0)
-    {
-    glDeleteBuffersARB(1, &LocalScene.vboId_ArrayNorVer_localPt);
-    glDeleteBuffersARB(1, &LocalScene.vboId_PolyIndices_localPt);
-    LocalScene.vboId_ArrayNorVer_localPt = LocalScene.vboId_PolyIndices_localPt = 0;
-
-    glGenBuffersARB(1, &LocalScene.vboId_ArrayNorVer_localPt);
-    glBindBufferARB(GL_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVer_localPt);
-    glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(float)*10*LocalScene.VertxNumber,LocalScene.ArrayNorVer_localPt, GL_STATIC_DRAW_ARB);
-
-
-    glGenBuffersARB(1, &LocalScene.vboId_PolyIndices_localPt);
-    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_PolyIndices_localPt);
-    glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, sizeof(uint)*4*LocalScene.PolyNumber/3, LocalScene.PolyIndices_localPt, GL_STATIC_DRAW_ARB);
-
-    glBindBufferARB(GL_ARRAY_BUFFER_ARB, LocalScene.vboId_ArrayNorVer_localPt);
-
-    glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(4, GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(0));   //The starting point of texcoords, 24 bytes away
-
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glNormalPointer(GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(16));   //The starting point of normals, 12 bytes away
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, sizeof(float)*10, BUFFER_OFFSET(28));   //The starting point of the VBO, for the vertices
-
-    glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, LocalScene.vboId_PolyIndices_localPt);
-    stat +=1;
-    previous = LocalScene.VertxNumber;
-    }
-
-    else
-    {
-
-    if(LocalScene.VertxNumber > previous)
-    {
-        glBufferDataARB(GL_ARRAY_BUFFER_ARB, sizeof(float)*10*LocalScene.VertxNumber,LocalScene.ArrayNorVer_localPt, GL_STATIC_DRAW_ARB);
-        previous = LocalScene.VertxNumber;
-    }
-    else
-        glBufferSubDataARB(GL_ARRAY_BUFFER_ARB,0, sizeof(float)*10*LocalScene.VertxNumber,LocalScene.ArrayNorVer_localPt);
-
-    glBufferDataARB(GL_ELEMENT_ARRAY_BUFFER_ARB, sizeof(uint)*4*LocalScene.PolyNumber/3, LocalScene.PolyIndices_localPt, GL_STATIC_DRAW_ARB);
-
-    }
-    */
 }
 
 void OpenGlWidget::startRendering()
@@ -1375,10 +1245,7 @@ static void draw(ObjectProperties *scene)
     if (scene->fill == 1)
         for(uint i=0; i<scene->componentsinfos.NbComponents.size(); i++)
             DrawPariso(scene, i);
-/*
-    if ((scene->componentsinfos.NbComponents !=0) && scene->fill == 1 && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
-        DrawParametric(scene);
-*/
+
     // Draw Mesh Object:
     if (scene->triangles == 1)
         DrawMeshIso(scene);
@@ -1396,10 +1263,6 @@ static void draw(ObjectProperties *scene)
             if(scene->componentsinfos.ThereisCND[i])
                 DrawParisoCND(scene, i);
 
-    /*
-    if((scene->componentsinfos.NbComponents !=0) && scene->activarecnd && scene->componentsinfos.ThereisCND[0]  && (scene->typedrawing == -1|| scene->componentsinfos.pariso))
-        DrawParCND(scene);
-*/
     //Draw Normales:
     if (scene->norm == 1 )
         DrawNormals(scene);
@@ -1480,8 +1343,6 @@ void OpenGlWidget::timerEvent(QTimerEvent*)
 {
     update();
 }
-
-
 
 void OpenGlWidget::mouseMoveEvent( QMouseEvent *e )
 {
@@ -1829,5 +1690,3 @@ void OpenGlWidget::InitSpecularParameters()
     glEnable(GL_DEPTH_TEST);
     update();
 }
-
-
