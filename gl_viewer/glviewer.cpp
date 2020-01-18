@@ -1235,12 +1235,12 @@ static void draw(ObjectProperties *scene)
         glRotatef(scene->animzValue, 0, 0, 1.0);
     }
 
-    if (scene->fill == 1)
+    if (scene->fill == 1 && scene->componentsinfos.updateviewer)
         for(uint i=0; i<scene->componentsinfos.NbComponents.size(); i++)
             DrawPariso(scene, i);
 
     // Draw Mesh Object:
-    if (scene->triangles == 1)
+    if (scene->triangles == 1 && scene->componentsinfos.updateviewer)
         DrawMeshIso(scene);
 
     // Bounding Box:
@@ -1248,16 +1248,16 @@ static void draw(ObjectProperties *scene)
         drawCube(350);
 
     // Draw Minimal topology for isosurfaces:
-    if (scene->mesh == 1)
+    if (scene->mesh == 1 && scene->componentsinfos.updateviewer)
         DrawMinimalTopology(scene);
 
-    if(scene->activarecnd)
+    if(scene->activarecnd && scene->componentsinfos.updateviewer)
         for(uint i=0; i<scene->componentsinfos.NbComponents.size(); i++)
             if(scene->componentsinfos.ThereisCND[i])
                 DrawParisoCND(scene, i);
 
     //Draw Normales:
-    if (scene->norm == 1 )
+    if (scene->norm == 1  && scene->componentsinfos.updateviewer)
         DrawNormals(scene);
 
     glPopMatrix();
@@ -1325,6 +1325,7 @@ void OpenGlWidget::paintGL()
         }
         Winitialize_GL();
     }
+
     draw(&LocalScene);
 
     if (LocalScene.infos == 1)

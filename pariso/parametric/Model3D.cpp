@@ -1812,6 +1812,7 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->ParisoNbComponents          = origin->ParisoNbComponents;
     copy->Interleave                  = origin->Interleave;
     copy->pariso                      = origin->pariso;
+    copy->updateviewer                = origin->updateviewer;
 
     copy->ThereisCND                  = origin->ThereisCND;
     copy->ThereisRGBA                 = origin->ThereisRGBA;
@@ -1841,6 +1842,7 @@ void Par3D::clear(struct ComponentInfos*cp)
     cp->ParisoNbComponents          = 0;
     cp->Interleave                  = true;
     cp->pariso                      = false;
+    cp->updateviewer                = false;
 }
 
 void  Par3D::ParamBuild(
@@ -1856,6 +1858,7 @@ void  Par3D::ParamBuild(
     uint NbTriangleIsoSurfaceTmp;
     uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
+    componentsPt->updateviewer= false;
     clear(components);
     if(componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)
     {
@@ -2023,6 +2026,7 @@ void  Par3D::ParamBuild(
     componentsPt->ParisoCurrentComponentIndex += 1;
     if(componentsPt->ParisoCurrentComponentIndex == componentsPt->ParisoNbComponents)
         componentsPt->ParisoCurrentComponentIndex =0;
+    componentsPt->updateviewer = true;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++

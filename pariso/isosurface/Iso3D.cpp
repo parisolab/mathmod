@@ -1537,13 +1537,13 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->ParisoNbComponents          = origin->ParisoNbComponents;
     copy->Interleave                  = origin->Interleave;
     copy->pariso                      = origin->pariso;
+    copy->updateviewer                = origin->updateviewer;
 
     copy->ThereisCND                  = origin->ThereisCND;
     copy->ThereisRGBA                 = origin->ThereisRGBA;
     copy->NbTrianglesVerifyCND        = origin->NbTrianglesVerifyCND;
     copy->NbTrianglesNotVerifyCND     = origin->NbTrianglesNotVerifyCND;
     copy->NbTrianglesBorderCND        = origin->NbTrianglesBorderCND;
-    copy->pariso                      = origin->pariso;
 
     for(int i=0; i<2; i++)
     {
@@ -1568,6 +1568,7 @@ void Iso3D::clear(struct ComponentInfos* cp)
     cp->ParisoNbComponents          = 0;
     cp->Interleave                  = true;
     cp->pariso                      = false;
+    cp->updateviewer                = false;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1584,6 +1585,7 @@ void Iso3D::IsoBuild (
     uint NbTriangleIsoSurfaceTmp, PreviousGridVal=Xgrid;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp = 0;
+    componentsPt->updateviewer= false;
     clear(components);
     if(componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)
     {
@@ -1814,6 +1816,7 @@ void Iso3D::IsoBuild (
     if(componentsPt->ParisoCurrentComponentIndex == componentsPt->ParisoNbComponents)
         componentsPt->ParisoCurrentComponentIndex =0;
     Setgrid(PreviousGridVal);
+    componentsPt->updateviewer = true;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++

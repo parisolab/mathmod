@@ -150,6 +150,7 @@ struct  ComponentInfos
     NoiseParemeters NoiseParam[2];
     bool Interleave=false;
     bool pariso = false;
+    bool updateviewer=false;
 };
 
 struct  ObjectProperties
