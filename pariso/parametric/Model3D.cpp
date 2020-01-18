@@ -142,7 +142,7 @@ Par3D::Par3D(uint nbThreads, uint nbGrid)
 //+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::run()
 {
-    ParCompute(CurrentPar, CurrentIndex);
+    ParCompute(CurrentComponent, CurrentIndex);
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -1912,7 +1912,7 @@ void  Par3D::ParamBuild(
 
         }
 
-        masterthread->CurrentPar   = fctnb;
+        masterthread->CurrentComponent   = fctnb;
         masterthread->CurrentIndex = NbVertexTmp;
 
         // Save Number of Polys and vertex :
@@ -1922,7 +1922,7 @@ void  Par3D::ParamBuild(
         NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         {
-            workerthreads[nbthreads].CurrentPar = fctnb;
+            workerthreads[nbthreads].CurrentComponent = fctnb;
             workerthreads[nbthreads].CurrentIndex = NbVertexTmp;
         }
 

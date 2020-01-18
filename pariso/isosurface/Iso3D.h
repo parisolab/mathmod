@@ -48,23 +48,15 @@
 */
 
 
-class IsoWorkerThread : public QThread, public ParisoObject
+class IsoWorkerThread : public WorkerThread
 {
     Q_OBJECT
 public :
     FunctionParser *implicitFunctionParser, *Fct;
     uint   Xgrid, Ygrid, Zgrid;
-    uint iStart, iFinish;
     bool AllComponentTraited;
-    int morph_activated;
-    uint maximumgrid, MyIndex, WorkerThreadsNumber;
-    double stepMorph, pace;
-    uint CurrentIso;
+    uint maximumgrid;
     std::vector<double> xLocal2, yLocal2, zLocal2;
-    ErrorMessage stdError;
-    uint NbPolygn, NbPolygnNbVertex[2];
-    bool StopCalculations, ParsersAllocated;
-    int signalVal;
 public :
     void IsoCompute(uint);
     void VoxelEvaluation(uint);
@@ -73,10 +65,9 @@ public :
     void run() Q_DECL_OVERRIDE;
     IsoWorkerThread();
     ~IsoWorkerThread() override;
+     void emitMySignal();
 signals:
-    void mySignal(int);
-public:
-    void emitMySignal();
+     void mySignal(int);
 };
 
 class IsoMasterThread : public IsoWorkerThread
@@ -106,6 +97,7 @@ public :
     std::vector<uint> grid;
     double Octaves, Lacunarity, Gain;
     std::vector<ImplicitStructure> ImplicitStructs;
+    ErrorMessage stdError;
 public :
     void DeleteMasterParsers();
     void AllocateMasterParsers();

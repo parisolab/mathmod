@@ -90,7 +90,7 @@ double MarblePerlin(const double* p)
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::run()
 {
-    IsoCompute(CurrentIso);
+    IsoCompute(CurrentComponent);
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void Iso3D::run()
@@ -203,7 +203,7 @@ IsoWorkerThread::IsoWorkerThread()
     Xgrid = Ygrid = Zgrid = 40;
     stepMorph = 0;
     pace = 1.0/30.0;
-    morph_activated = -1;
+    activeMorph = -1;
     AllComponentTraited = false;
     ParsersAllocated = false;
     StopCalculations = false;
@@ -261,7 +261,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].yLocal2 = masterthread->yLocal2;
         workerthreads[nbthreads].zLocal2.clear();
         workerthreads[nbthreads].zLocal2 = masterthread->zLocal2;
-        workerthreads[nbthreads].morph_activated = masterthread->morph_activated;
+        workerthreads[nbthreads].activeMorph = masterthread->activeMorph;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
         workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
         workerthreads[nbthreads].Ygrid = masterthread->Ygrid;
@@ -840,7 +840,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 //Signal emission:
                 id+=nbstack;
 
-                if(MyIndex == 0 && morph_activated != 1)
+                if(MyIndex == 0 && activeMorph != 1)
                 {
                     signalVal = int((id*100)/Totalpoints);
                     if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
@@ -1632,7 +1632,7 @@ void Iso3D::IsoBuild (
 
     stopcalculations(false);
 
-    if(masterthread->morph_activated != 1)
+    if(masterthread->activeMorph != 1)
     {
         times.restart();
     }
@@ -1640,7 +1640,7 @@ void Iso3D::IsoBuild (
     // generate Isosurface for all the implicit formulas
     for(uint fctnb= 0; fctnb< masterthread->ImplicitFunctionSize; fctnb++)
     {
-        if(masterthread->morph_activated != 1)
+        if(masterthread->activeMorph != 1)
         {
             message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->ImplicitFunctionSize)+"==> Math calculation");
             emitUpdateMessageSignal();
@@ -1650,14 +1650,14 @@ void Iso3D::IsoBuild (
             Setgrid(masterthread->grid[fctnb]);
 
         IsoComponentId = fctnb;
-        masterthread->CurrentIso = fctnb;
+        masterthread->CurrentComponent = fctnb;
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
-            workerthreads[nbthreads].CurrentIso = fctnb;
+            workerthreads[nbthreads].CurrentComponent = fctnb;
 
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
 
-        if(masterthread->morph_activated == 1)
+        if(masterthread->activeMorph == 1)
         {
             if(fctnb == 0)
             {
@@ -1693,7 +1693,7 @@ void Iso3D::IsoBuild (
             return;
         }
 
-        if(masterthread->morph_activated != 1)
+        if(masterthread->activeMorph != 1)
         {
             message += QString(" ==> Mesh generation");
             emitUpdateMessageSignal();
@@ -1745,7 +1745,7 @@ void Iso3D::IsoBuild (
     GridVoxelVarPt = nullptr;
     delete[] Results;
     Results = nullptr;
-    if(masterthread->morph_activated != 1)
+    if(masterthread->activeMorph != 1)
     {
         message = QString("2) Mesh Processing");
         emitUpdateMessageSignal();
@@ -1799,7 +1799,7 @@ void Iso3D::IsoBuild (
     *VertexNumberpt  = uint(NormVertexTabVector.size()/10);
     *VertxNumber     = uint(IndexPolyTabMinVector.size());
 
-    if(masterthread->morph_activated != 1)
+    if(masterthread->activeMorph != 1)
     {
         message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->ImplicitFunctionSize)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();

@@ -43,20 +43,15 @@ struct   ParStruct
     int  index;
 };
 
-class ParWorkerThread : public QThread, public ParisoObject
+class ParWorkerThread : public WorkerThread
 {
     Q_OBJECT
 public :
-    uint MyIndex, WorkerThreadsNumber, Ugrid, Vgrid;
+    uint Ugrid, Vgrid;
     FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
     std::vector<double>  v_inf, v_sup,u_inf,u_sup,dif_v,dif_u;
-    double stepMorph, pace;
-    int activeMorph, param4D;
-    uint iStart, iFinish;
-
-    bool StopCalculations, ParsersAllocated;
-    uint CurrentPar, CurrentIndex;
-    int signalVal;
+    int param4D;
+    uint CurrentIndex;
 
 public :
     void ParCompute(uint, uint);
@@ -66,10 +61,10 @@ public :
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
     ~ParWorkerThread() override;
+    void emitMySignal();
 signals:
     void mySignal(int);
-public:
-    void emitMySignal();
+
 };
 
 class ParMasterThread : public ParWorkerThread

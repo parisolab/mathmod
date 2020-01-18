@@ -23,17 +23,29 @@
 
 class ParisoObject
 {
-public:
-    GlobalParam globalparam;
+    public:
+        GlobalParam globalparam;
 };
 
+class WorkerThread : public QThread
+{
+    public:
+        WorkerThread();
+        ~WorkerThread();
+
+    public:
+        uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish;
+        double stepMorph, pace;
+        bool StopCalculations, ParsersAllocated;
+        int activeMorph, signalVal;
+};
 class ObjectParameters
 {
-public:
-    ObjectProperties objectproperties;
-public:
-    ObjectParameters();
-    void InitComponentinfos(struct  ComponentInfos &);
+    public:
+        ObjectProperties objectproperties;
+    public:
+        ObjectParameters();
+        void InitComponentinfos(struct  ComponentInfos &);
 };
 
 #endif // OBJECTPARAMETERS_H

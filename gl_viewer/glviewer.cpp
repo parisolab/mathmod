@@ -680,9 +680,9 @@ void OpenGlWidget::morph()
     if(LocalScene.typedrawing == 1)
     {
         //Isosurfaces:
-        IsoObjet->masterthread->morph_activated = LocalScene.morph;
+        IsoObjet->masterthread->activeMorph = LocalScene.morph;
         for(uint nbthreads=0; nbthreads< IsoObjet->WorkerThreadsNumber-1; nbthreads++)
-            IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
+            IsoObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
         IsoObjet->IsoMorph();
     }
     else if(LocalScene.typedrawing == -1)
@@ -701,9 +701,9 @@ void OpenGlWidget::morph()
             ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
         ParObjet->ParMorph();
         //Isosurfaces:
-        IsoObjet->masterthread->morph_activated = LocalScene.morph;
+        IsoObjet->masterthread->activeMorph = LocalScene.morph;
         for(uint nbthreads=0; nbthreads< IsoObjet->WorkerThreadsNumber-1; nbthreads++)
-            IsoObjet->workerthreads[nbthreads].morph_activated = LocalScene.morph;
+            IsoObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
         IsoObjet->IsoMorph();
 
     }
