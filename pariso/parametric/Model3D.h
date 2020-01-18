@@ -76,10 +76,14 @@ class ParMasterThread : public ParWorkerThread
 {
 public :
     ErrorMessage stdError;
-    FunctionParser *myParserUmin,*myParserUmax,
-                   *myParserVmin,*myParserVmax;
+    FunctionParser *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
+    FunctionParser *ParisoConditionParser,
+                   *myParserUmin,*myParserUmax,
+                   *myParserVmin,*myParserVmax,
+                   Cstparser;
     std::vector<ParStruct> ParamStructs;
-
+    bool*UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
+    functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
     std::vector<uint> grid;
     uint expression_XSize, RgbtSize, VRgbtSize,  FunctSize, ConstSize, Nb_Sliders;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,

@@ -23,14 +23,7 @@
 
 class ParisoObject
 {
-    public:
-    ParisoObject();
-    ~ParisoObject();
-    public:
-    FunctionParser *ParisoConditionParser, *RgbtParser, *VRgbtParser,
-                   Cstparser, *GradientParser, *NoiseParser;
-    bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
-    functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
+public:
     GlobalParam globalparam;
 };
 

@@ -404,6 +404,7 @@ void ParMasterThread::AllocateParsersForMasterThread()
 
         GradientParser   = new FunctionParser;
         NoiseParser      = new FunctionParser;
+        NoiseShapeParser = new FunctionParser;
         ParsersAllocated = true;
     }
 }
@@ -443,6 +444,7 @@ void ParMasterThread::DeleteMasterParsers()
         delete[] VRgbtParser;
         delete GradientParser;
         delete NoiseParser;
+        delete NoiseShapeParser;
         ParsersAllocated = false;
     }
 
@@ -495,6 +497,9 @@ void ParMasterThread::InitMasterParsers()
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
+    NoiseShapeParser->AddConstant("pi", PI);
+    NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
+    NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
 
     for(uint i=0; i<expression_XSize; i++)
     {
@@ -740,6 +745,13 @@ ErrorMessage  ParMasterThread::parse_expression()
         if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t")) >= 0)
         {
             stdError.strError = Noise;
+            return stdError;
+        }
+
+    if(NoiseShape != "")
+        if ((stdError.iErrorIndex = NoiseShapeParser->Parse(NoiseShape,"x,y,z,t")) >= 0)
+        {
+            stdError.strError = NoiseShape;
             return stdError;
         }
 
