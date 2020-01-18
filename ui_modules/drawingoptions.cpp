@@ -105,13 +105,6 @@ void DrawingOptions::colorsoptions()
     connect( colorwindow->ui.blue_2, SIGNAL(valueChanged(int)), this, SLOT(onblue_2valueChanged(int)));
     connect( colorwindow->ui.transparent_2, SIGNAL(valueChanged(int)), this, SLOT(ontransparent_2valueChanged(int)));
     connect( colorwindow->ui.transparence_2, SIGNAL(clicked(bool)), this, SLOT(ontransparence_2clicked(bool)));
-
-    connect( colorwindow->ui.color_3, SIGNAL(activated(int)), this, SLOT(oncolor_3activated(int)));
-    connect( colorwindow->ui.red_3, SIGNAL(valueChanged(int)), this, SLOT(onred_3valueChanged(int)));
-    connect( colorwindow->ui.green_3, SIGNAL(valueChanged(int)), this, SLOT(ongreen_3valueChanged(int)));
-    connect( colorwindow->ui.blue_3, SIGNAL(valueChanged(int)), this, SLOT(onblue_3valueChanged(int)));
-    connect( colorwindow->ui.transparent_3, SIGNAL(valueChanged(int)), this, SLOT(ontransparent_3valueChanged(int)));
-    connect( colorwindow->ui.transparence_3, SIGNAL(clicked(bool)), this, SLOT(ontransparence_3toggled(bool)));
     colorwindow->show();
 }
 
@@ -3965,7 +3958,7 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
         MathmodRef->uvactivated  = -1;
     }
 }
-
+/*
 // --------------------------
 void DrawingOptions::oncolor_3activated(int index)
 {
@@ -3976,7 +3969,7 @@ void DrawingOptions::ontransparence_3toggled(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
-
+*/
 // --------------------------
 void DrawingOptions::on_XhorizontalScrollBar_valueChanged(int value)
 {

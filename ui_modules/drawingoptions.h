@@ -167,8 +167,6 @@ public slots:
     void on_actionPolygonWavefront_obj_triggered();
     void on_actionColorPolygonWavefront_obj_triggered();
     void on_linecolumn_2_valueChanged(int);
-    void oncolor_3activated(int index);
-    void ontransparence_3toggled(bool);
     int JSON_choice_activated(const QString &);
     void ShowJsonModel(const QJsonObject &, int textureIndex=-1);
     void DrawJsonModel(const QJsonObject &, int textureIndex=-1, bool Inspect=true);
