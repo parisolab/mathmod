@@ -70,34 +70,22 @@ signals:
      void mySignal(int);
 };
 
-class IsoMasterThread : public IsoWorkerThread
+class IsoMasterThread : public MasterThread, public IsoWorkerThread
 {
 public :
-    FunctionParser *ParisoConditionParser, Cstparser, *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser,
-                   *xSupParser, *xInfParser,
+    FunctionParser *xSupParser, *xInfParser,
                    *ySupParser, *yInfParser,
                    *zSupParser, *zInfParser;
     std::string ImplicitFunction, Condition,
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
-        ZlimitSup, ZlimitInf, Grid,
-        Const,
-        Funct,
-        Rgbt,
-        VRgbt,
-        Gradient, Noise, varliste;
-    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames,Functs, FunctNames, Consts, ConstNames, SliderNames;
-    std::vector<double> ConstValues, SliderValues;
-    bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
-    functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
-    int ParisoCondition,
-        ConditionSize;
-    uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
+        ZlimitSup, ZlimitInf, varliste;
+
+
+
+    uint ImplicitFunctionSize;
     std::vector<double> x_Step, y_Step, z_Step;
-    std::vector<uint> grid;
-    double Octaves, Lacunarity, Gain;
     std::vector<ImplicitStructure> ImplicitStructs;
-    ErrorMessage stdError;
 public :
     void DeleteMasterParsers();
     void AllocateMasterParsers();

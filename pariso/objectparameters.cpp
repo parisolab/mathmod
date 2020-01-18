@@ -33,6 +33,10 @@ static float StaticColor[20]=
     1.0f,0.2f,0.0f,1.0f
 }; // greencol, goldcol,...
 
+MasterThread::MasterThread()
+{}
+MasterThread::~MasterThread()
+{}
 WorkerThread::WorkerThread()
 {
 

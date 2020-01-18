@@ -67,36 +67,18 @@ signals:
 
 };
 
-class ParMasterThread : public ParWorkerThread
+class ParMasterThread : public MasterThread, public ParWorkerThread
 {
 public :
-    ErrorMessage stdError;
-    FunctionParser *RgbtParser, *VRgbtParser, *GradientParser, *NoiseParser, *NoiseShapeParser;
-    FunctionParser *ParisoConditionParser,
-                   *myParserUmin,*myParserUmax,
-                   *myParserVmin,*myParserVmax,
-                   Cstparser;
-    std::vector<ParStruct> ParamStructs;
-    bool*UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
-    functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
-    std::vector<uint> grid;
-    uint expression_XSize, RgbtSize, VRgbtSize,  FunctSize, ConstSize, Nb_Sliders;
-    std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v,
-        Const,  Funct, Rgbt, VRgbt, Grid;
-    int ParisoCondition, expression_YSize, expression_ZSize, expression_WSize, expression_CNDSize,
-        inf_uSize, sup_uSize, inf_vSize, sup_vSize,
-        GridSize;
-    std::string Gradient, Noise, NoiseShape;
 
-    std::vector<std::string> Rgbts, RgbtNames,
-                             VRgbts, VRgbtNames,
-                             Functs, FunctNames,
-                             Consts, ConstNames,
-                             SliderNames;
-    std::vector<double> ConstValues, SliderValues;
-    uint NbPolygnNbVertex[2], nbBorderPts;
-    double Lacunarity, Gain;
-    int Octaves;
+
+    FunctionParser *myParserUmin,*myParserUmax,
+                   *myParserVmin,*myParserVmax;
+    std::vector<ParStruct> ParamStructs;
+    uint expression_XSize;
+    std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v;
+    int expression_YSize, expression_ZSize, expression_WSize,
+        inf_uSize, sup_uSize, inf_vSize, sup_vSize;
 public :
     void InitMasterParsers();
     void  HowManyParamSurface(std::string, int);

@@ -140,7 +140,7 @@ IsoMasterThread::IsoMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Cstparser.AddConstant("pi", PI);
-    ImplicitFunctionSize = ConditionSize = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
+    ImplicitFunctionSize = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
 }
 
 //+++++++++++++++++++++++++++++++++++++++++

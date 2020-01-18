@@ -748,13 +748,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             return stdError;
         }
 
-    if(NoiseShape != "")
-        if ((stdError.iErrorIndex = NoiseShapeParser->Parse(NoiseShape,"x,y,z,t")) >= 0)
-        {
-            stdError.strError = NoiseShape;
-            return stdError;
-        }
-
     for(uint index=0; index< expression_XSize; index++)
     {
         if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, "u,v,t")) >= 0)

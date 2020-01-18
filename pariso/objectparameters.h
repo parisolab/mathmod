@@ -39,6 +39,33 @@ class WorkerThread : public QThread
         bool StopCalculations, ParsersAllocated;
         int activeMorph, signalVal;
 };
+
+class MasterThread
+{
+    public:
+        FunctionParser *ParisoConditionParser, *RgbtParser, *VRgbtParser,
+        *GradientParser, *NoiseParser, *NoiseShapeParser, Cstparser;
+        std::vector<std::string> Rgbts, RgbtNames,
+        VRgbts, VRgbtNames,
+        Functs, FunctNames,
+        Consts, ConstNames,
+        SliderNames;
+        std::string Grid,Const,Funct,Rgbt,VRgbt,
+        Gradient, Noise;
+        uint RgbtSize, FunctSize, VRgbtSize,
+        ConstSize, Nb_Sliders;
+        std::vector<uint> grid;
+        bool*UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
+        functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
+        std::vector<double> ConstValues, SliderValues;
+        double Octaves, Lacunarity, Gain;
+        int ParisoCondition;
+        ErrorMessage stdError;
+    public:
+        MasterThread();
+        ~MasterThread();
+
+};
 class ObjectParameters
 {
     public:
