@@ -998,7 +998,8 @@ void OpenGlWidget::Winitialize_GL()
         glInterleavedArrays (GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
         count +=1;
     }
-    PutObjectInsideCube();
+    if(LocalScene.componentsinfos.updateviewer)
+        PutObjectInsideCube();
 }
 
 void OpenGlWidget::UpdateGL()
