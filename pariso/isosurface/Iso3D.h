@@ -85,14 +85,24 @@ public :
     FunctionParser *xSupParser, *xInfParser,
                    *ySupParser, *yInfParser,
                    *zSupParser, *zInfParser;
-    std::string ImplicitFunction,
+    std::string ImplicitFunction, Condition,
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
-        ZlimitSup, ZlimitInf,
-        varliste;
+        ZlimitSup, ZlimitInf, Grid,
+        Const,
+        Funct,
+        Rgbt,
+        VRgbt,
+        Gradient, Noise, varliste;
+    std::vector<std::string> Rgbts, RgbtNames,VRgbts, VRgbtNames,Functs, FunctNames, Consts, ConstNames, SliderNames;
+    std::vector<double> ConstValues, SliderValues;
 
+    int ParisoCondition,
+        ConditionSize;
+    uint ImplicitFunctionSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
     std::vector<double> x_Step, y_Step, z_Step;
-
+    std::vector<uint> grid;
+    double Octaves, Lacunarity, Gain;
     std::vector<ImplicitStructure> ImplicitStructs;
 public :
     void DeleteMasterParsers();

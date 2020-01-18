@@ -31,18 +31,7 @@ class ParisoObject
                    Cstparser, *GradientParser, *NoiseParser;
     bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull,
     functnotnull, cndnotnull, rgbtnotnull, vrgbtnotnull;
-    std::vector<std::string> Rgbts, RgbtNames,
-                             VRgbts, VRgbtNames,
-                             Functs, FunctNames,
-                             Consts, ConstNames,
-                             SliderNames;
-    std::vector<uint> grid;
-    uint componentsSize, RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
-    std::vector<double> ConstValues, SliderValues;
-    std::string ConditionStr, Gradient, Noise, Const,  Funct, Rgbt, VRgbt, Grid;
-    int ParisoCondition;
     GlobalParam globalparam;
-    double Octaves, Lacunarity, Gain;
 };
 
 class ObjectParameters

@@ -367,28 +367,28 @@ void ParMasterThread::AllocateParsersForMasterThread()
 {
     if(!ParsersAllocated)
     {
-        myParserX = new FunctionParser[componentsSize];
-        myParserY = new FunctionParser[componentsSize];
-        myParserZ = new FunctionParser[componentsSize];
-        myParserW = new FunctionParser[componentsSize];
-        myParserUmin = new FunctionParser[componentsSize];
-        myParserVmin = new FunctionParser[componentsSize];
-        myParserUmax = new FunctionParser[componentsSize];
-        myParserVmax = new FunctionParser[componentsSize];
-        ParisoConditionParser  = new FunctionParser[componentsSize];
+        myParserX = new FunctionParser[expression_XSize];
+        myParserY = new FunctionParser[expression_XSize];
+        myParserZ = new FunctionParser[expression_XSize];
+        myParserW = new FunctionParser[expression_XSize];
+        myParserUmin = new FunctionParser[expression_XSize];
+        myParserVmin = new FunctionParser[expression_XSize];
+        myParserUmax = new FunctionParser[expression_XSize];
+        myParserVmax = new FunctionParser[expression_XSize];
+        ParisoConditionParser  = new FunctionParser[expression_XSize];
 
-        ParamStructs.resize(componentsSize);
-        v_inf.resize(componentsSize);
-        v_sup.resize(componentsSize);
-        u_inf.resize(componentsSize);
-        u_sup.resize(componentsSize);
-        dif_v.resize(componentsSize);
-        dif_u.resize(componentsSize);
+        ParamStructs.resize(expression_XSize);
+        v_inf.resize(expression_XSize);
+        v_sup.resize(expression_XSize);
+        u_inf.resize(expression_XSize);
+        u_sup.resize(expression_XSize);
+        dif_v.resize(expression_XSize);
+        dif_u.resize(expression_XSize);
 
         if(!functnotnull)
             FunctSize = 0;
          Fct          = new FunctionParser[FunctSize];
-         UsedFunct    = new bool[4*uint(componentsSize)*FunctSize];
+         UsedFunct    = new bool[4*uint(expression_XSize)*FunctSize];
          UsedFunct2   = new bool[FunctSize*FunctSize];
 
         rgbtnotnull ?
@@ -496,7 +496,7 @@ void ParMasterThread::InitMasterParsers()
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
 
-    for(uint i=0; i<componentsSize; i++)
+    for(uint i=0; i<expression_XSize; i++)
     {
         myParserX[i].AddConstant("pi", PI);
         myParserY[i].AddConstant("pi", PI);
@@ -657,13 +657,13 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(cndnotnull)
     {
         ParisoCondition = 1;
-        HowManyParamSurface(ConditionStr, 8);
+        HowManyParamSurface(expression_CND, 8);
     }
     else
         ParisoCondition = -1;
 
     //Add defined constantes:
-    for(uint i=0; i<componentsSize; i++)
+    for(uint i=0; i<expression_XSize; i++)
     {
         for(uint j=0; j<ConstSize; j++)
         {
@@ -695,7 +695,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
     }
     // Add defined functions :
-    for(uint i=0; i<componentsSize; i++)
+    for(uint i=0; i<expression_XSize; i++)
     {
         for(uint j=0; j<FunctSize; j++)
         {
@@ -743,7 +743,7 @@ ErrorMessage  ParMasterThread::parse_expression()
             return stdError;
         }
 
-    for(uint index=0; index< componentsSize; index++)
+    for(uint index=0; index< expression_XSize; index++)
     {
         if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, "u,v,t")) >= 0)
         {
@@ -854,7 +854,7 @@ ErrorMessage  Par3D::parse_expression2()
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         //Add defined constantes:
-        for(uint i=0; i<masterthread->componentsSize; i++)
+        for(uint i=0; i<masterthread->expression_XSize; i++)
         {
             workerthreads[nbthreads].param4D   = masterthread->param4D;
             workerthreads[nbthreads].myParserX[i].AddConstant("pi", PI);
@@ -892,7 +892,7 @@ ErrorMessage  Par3D::parse_expression2()
         }
 
         // Add defined functions :
-        for(uint i=0; i<masterthread->componentsSize; i++)
+        for(uint i=0; i<masterthread->expression_XSize; i++)
         {
             for(uint j=0; j<masterthread->FunctSize; j++)
             {
@@ -910,7 +910,7 @@ ErrorMessage  Par3D::parse_expression2()
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        for(uint index=0; index< masterthread->componentsSize; index++)
+        for(uint index=0; index< masterthread->expression_XSize; index++)
         {
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t")) >= 0)
             {
@@ -973,7 +973,7 @@ ErrorMessage Par3D::ThreadParsersCopy()
         workerthreads[nbthreads].DeleteWorkerParsers();
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->componentsSize, masterthread->FunctSize);
+        workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->expression_XSize, masterthread->FunctSize);
 
     return(parse_expression2());
 }
@@ -1219,7 +1219,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
             {
                 K = cmpId;
-                if((masterthread->componentsSize -1)>cmpId)
+                if((masterthread->expression_XSize -1)>cmpId)
                 {
                     cmpId++;
                 }
@@ -1265,7 +1265,7 @@ uint Par3D::CNDtoUse(uint index, struct ComponentInfos *compts)
     uint idx=0;
     for(uint i=0; i < compts->NbComponents.size()-1; i++)
         idx+=compts->NbComponents[i];
-    for(uint fctnb= 0; fctnb < (masterthread->componentsSize); fctnb++)
+    for(uint fctnb= 0; fctnb < (masterthread->expression_XSize); fctnb++)
         if( index <= compts->ParisoVertex[2*(fctnb+idx) +1] && index >= compts->ParisoVertex[2*(fctnb+idx)])
             return fctnb;
     return 30;
@@ -1876,7 +1876,7 @@ void  Par3D::ParamBuild(
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
     //*******/
-    components->NbComponents.push_back(masterthread->componentsSize);
+    components->NbComponents.push_back(masterthread->expression_XSize);
 
     stopcalculations(false);
 
@@ -1885,11 +1885,11 @@ void  Par3D::ParamBuild(
         ptime.restart();
     }
 
-    for(uint fctnb= 0; fctnb< masterthread->componentsSize; fctnb++)
+    for(uint fctnb= 0; fctnb< masterthread->expression_XSize; fctnb++)
     {
         if(masterthread->activeMorph != 1)
         {
-            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->componentsSize)+"==> Math calculation");
+            message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->expression_XSize)+"==> Math calculation");
             emitUpdateMessageSignal();
         }
 
@@ -1998,7 +1998,7 @@ void  Par3D::ParamBuild(
 
     if(masterthread->activeMorph != 1)
     {
-        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsSize)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
+        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->expression_XSize)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();
     }
 
