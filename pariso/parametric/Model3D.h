@@ -75,7 +75,7 @@ public :
     FunctionParser *myParserUmin,*myParserUmax,
                    *myParserVmin,*myParserVmax;
     std::vector<ParStruct> ParamStructs;
-    uint expression_XSize;
+    uint componentsNumber;
     std::string  expression_X, expression_Y, expression_Z, expression_W, expression_CND, inf_u, sup_u, inf_v, sup_v;
     int expression_YSize, expression_ZSize, expression_WSize,
         inf_uSize, sup_uSize, inf_vSize, sup_vSize;

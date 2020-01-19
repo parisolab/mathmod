@@ -1284,7 +1284,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj, const Man
     switch(idx) {
          case PAR_FX :
             MathmodRef->ui.glWidget->ParObjet->masterthread->expression_X = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->masterthread->expression_XSize = uint(lst.size());
+            MathmodRef->ui.glWidget->ParObjet->masterthread->componentsNumber = uint(lst.size());
             MathmodRef->RootObjet.CurrentTreestruct.fx = result.split(";", QString::SkipEmptyParts);
             break;
         case PAR_FY :
@@ -1369,7 +1369,7 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj, const Man
         switch(idx) {
              case ISO_FXYZ :
                 MathmodRef->ui.glWidget->IsoObjet->masterthread->ImplicitFunction = result.toStdString();
-                MathmodRef->ui.glWidget->IsoObjet->masterthread->ImplicitFunctionSize = uint(lst.size());
+                MathmodRef->ui.glWidget->IsoObjet->masterthread->componentsNumber = uint(lst.size());
                 MathmodRef->RootObjet.CurrentTreestruct.fxyz = result.split(";", QString::SkipEmptyParts);
                 break;
             case ISO_XMAX :
