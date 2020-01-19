@@ -38,13 +38,9 @@ MasterThread::MasterThread()
 MasterThread::~MasterThread()
 {}
 WorkerThread::WorkerThread()
-{
-
-}
+{}
 WorkerThread::~WorkerThread()
-{
-
-}
+{}
 ObjectParameters::ObjectParameters()
 {
     objectproperties.VertxNumber    = objectproperties.PolyNumber = objectproperties.NbPolygnNbVertexPtMin = 0;

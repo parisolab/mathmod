@@ -80,9 +80,6 @@ public :
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
         ZlimitSup, ZlimitInf, varliste;
-
-
-
     uint ImplicitFunctionSize;
     std::vector<double> x_Step, y_Step, z_Step;
     std::vector<ImplicitStructure> ImplicitStructs;

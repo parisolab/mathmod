@@ -100,8 +100,6 @@ public:
     QTreeWidgetItem *IsolistItemRef;
     Parametersoptions * Parameters;
     SelectOptions select;
-    void AddListModels(bool b=false);
-    void Run_JsonObject_activeted();
     Ui::DrawingOptions ui;
     QJsonObject JSONMathModels;
     SliderStruct * SliderArray;
@@ -113,6 +111,8 @@ public:
     std::vector<MandatoryParField> MandParFields;
     bool ShowCurrentObjectTree=false;
 public slots:
+    void AddListModels(bool b=false);
+    void Run_JsonObject_activeted();
     void CIndextoolButton_clicked(int);
     void BuildAllVect();
     void ShowErrorMessage(QJsonParseError &, QString &);
