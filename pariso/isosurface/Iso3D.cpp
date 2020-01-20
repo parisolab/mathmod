@@ -27,6 +27,7 @@ static double *Results;
 static uint NbVertexTmp = 0;
 static std::vector<float> NormOriginaltmpVector;
 
+uint NbTriangleIsoSurface,NbPointIsoMap;
 static uint NbMaxGrid = 100;
 
 uint OrignbX, OrignbY, OrignbZ;
@@ -1552,26 +1553,6 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::clear(struct ComponentInfos* cp)
-{
-    cp->ParisoTriangle.clear();
-    cp->ParisoVertex.clear();
-    cp->NbComponents.clear();
-    cp->ThereisCND.clear();
-    cp->ThereisRGBA.clear();
-
-    cp->NbTrianglesVerifyCND.clear();
-    cp->NbTrianglesNotVerifyCND.clear();
-    cp->NbTrianglesBorderCND.clear();
-
-    cp->ParisoCurrentComponentIndex = 0;
-    cp->ParisoNbComponents          = 0;
-    cp->Interleave                  = true;
-    cp->pariso                      = false;
-    cp->updateviewer                = false;
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,
     uint **IndexPolyTabPt,
@@ -1836,17 +1817,6 @@ void Iso3D::Setgrid(uint NewGridVal)
             Ygrid  =
                 Xgrid  = NewGridVal;
     }
-}
-///+++++++++++++++++++++++++++++++++++++++++
-uint Iso3D::CNDtoUse(uint index, struct ComponentInfos* components)
-{
-    uint idx=0;
-    for(uint i=0; i < components->NbComponents.size()-1; i++)
-        idx+=components->NbComponents[i];
-    for(uint fctnb= 0; fctnb < (masterthread->componentsNumber); fctnb++)
-        if( index <= components->ParisoVertex[2*(fctnb+idx) +1] && index >= components->ParisoVertex[2*(fctnb+idx)])
-            return fctnb;
-    return 30;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++

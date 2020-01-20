@@ -21,10 +21,19 @@
 #define OBJECTPARAMETERS_H
 #include "commun.h"
 
-class ParisoObject
+class ParisoObject: public QThread
 {
     public:
-        GlobalParam globalparam;
+         ParisoObject();
+         ~ParisoObject();
+        uint CNDtoUse(uint, struct ComponentInfos*);
+        void clear(struct ComponentInfos*);
+    public:
+        ObjectProperties *localScene;
+        uint WorkerThreadsNumber;
+        bool StopCalculations;
+        ScriptErrorType messageerror;
+        QString message;
 };
 
 class WorkerThread : public QThread

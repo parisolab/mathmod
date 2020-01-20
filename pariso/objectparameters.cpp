@@ -41,6 +41,42 @@ WorkerThread::WorkerThread()
 {}
 WorkerThread::~WorkerThread()
 {}
+ParisoObject::ParisoObject()
+{}
+ParisoObject::~ParisoObject()
+{}
+///+++++++++++++++++++++++++++++++++++++++++
+uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos* components)
+{
+    uint idx=0;
+    for(uint i=0; i < components->NbComponents.size()-1; i++)
+        idx+=components->NbComponents[i];
+    for(uint fctnb= 0; fctnb < (components->NbComponents[components->NbComponents.size()-1]); fctnb++)
+        if( index <= components->ParisoVertex[2*(fctnb+idx) +1] && index >= components->ParisoVertex[2*(fctnb+idx)])
+            return fctnb;
+    return 30;
+}
+
+//+++++++++++++++++++++++++++++++++++++++++
+void ParisoObject::clear(struct ComponentInfos* cp)
+{
+    cp->ParisoTriangle.clear();
+    cp->ParisoVertex.clear();
+    cp->NbComponents.clear();
+    cp->ThereisCND.clear();
+    cp->ThereisRGBA.clear();
+
+    cp->NbTrianglesVerifyCND.clear();
+    cp->NbTrianglesNotVerifyCND.clear();
+    cp->NbTrianglesBorderCND.clear();
+
+    cp->ParisoCurrentComponentIndex = 0;
+    cp->ParisoNbComponents          = 0;
+    cp->Interleave                  = true;
+    cp->pariso                      = false;
+    cp->updateviewer                = false;
+}
+
 ObjectParameters::ObjectParameters()
 {
     objectproperties.VertxNumber    = objectproperties.PolyNumber = objectproperties.NbPolygnNbVertexPtMin = 0;

@@ -97,19 +97,13 @@ public :
     ~IsoMasterThread();
 };
 
-class Iso3D  : public QThread
+class Iso3D  : public ParisoObject
 {
     Q_OBJECT
 public :
-    ObjectProperties *localScene;
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
     uint Xgrid, Ygrid, Zgrid;
-    uint WorkerThreadsNumber;
-    bool StopCalculations;
-    uint NbTriangleIsoSurface,NbPointIsoMap;
-    ScriptErrorType messageerror;
-    QString message;
 public :
     Iso3D(uint,
           uint nbThreads=6,
@@ -123,13 +117,11 @@ public :
     inline void ConstructIsoNormale(uint);
     inline uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
-    void clear(struct ComponentInfos*);
     void UpdateMaxGrid(uint);
     void Setgrid(uint);
     void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *);
     void SaveIsoGLMap(uint);
     uint SetMiniMmeshStruct();
-    uint CNDtoUse(uint index, struct ComponentInfos*);
     void CalculateColorsPoints(struct ComponentInfos*, uint index);
     void BuildIso();
     void UpdateNbMaxGrid(int);

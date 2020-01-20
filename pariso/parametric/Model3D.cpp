@@ -1264,17 +1264,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
         }
     }
 }
-//+++++++++++++++++++++++++++++++++++++++++
-uint Par3D::CNDtoUse(uint index, struct ComponentInfos *compts)
-{
-    uint idx=0;
-    for(uint i=0; i < compts->NbComponents.size()-1; i++)
-        idx+=compts->NbComponents[i];
-    for(uint fctnb= 0; fctnb < (masterthread->componentsNumber); fctnb++)
-        if( index <= compts->ParisoVertex[2*(fctnb+idx) +1] && index >= compts->ParisoVertex[2*(fctnb+idx)])
-            return fctnb;
-    return 30;
-}
 
 //+++++++++++++++++++++++++++++++++++++++++
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
@@ -1826,25 +1815,6 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     }
 }
 
-void Par3D::clear(struct ComponentInfos*cp)
-{
-    cp->ParisoTriangle.clear();
-    cp->ParisoVertex.clear();
-    cp->NbComponents.clear();
-    cp->ThereisCND.clear();
-    cp->ThereisRGBA.clear();
-
-    cp->NbTrianglesVerifyCND.clear();
-    cp->NbTrianglesNotVerifyCND.clear();
-    cp->NbTrianglesBorderCND.clear();
-
-    cp->ParisoCurrentComponentIndex = 0;
-    cp->ParisoNbComponents          = 0;
-    cp->Interleave                  = true;
-    cp->pariso                      = false;
-    cp->updateviewer                = false;
-}
-
 void  Par3D::ParamBuild(
     float **NormVertexTabPt,
     uint **IndexPolyTabPt,
@@ -2006,7 +1976,7 @@ void  Par3D::ParamBuild(
 
     if(masterthread->activeMorph != 1)
     {
-        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
+        message = QString("Threads:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();
     }
 

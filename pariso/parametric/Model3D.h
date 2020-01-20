@@ -70,8 +70,6 @@ signals:
 class ParMasterThread : public MasterThread, public ParWorkerThread
 {
 public :
-
-
     FunctionParser *myParserUmin,*myParserUmax,
                    *myParserVmin,*myParserVmax;
     std::vector<ParStruct> ParamStructs;
@@ -92,16 +90,12 @@ public :
 };
 
 /** The representation of a 3D model */
-class Par3D   : public QThread
+class Par3D : public ParisoObject
 {
     Q_OBJECT
 public:
-    ObjectProperties *localScene;
     ParMasterThread *masterthread;
     ParWorkerThread *workerthreads;
-    float *Border;
-    bool StopCalculations;
-    uint WorkerThreadsNumber;
     uint Ugrid, Vgrid;
     uint CutV, CutU;
     float MINX,MINY,MINZ,MINW,
@@ -111,10 +105,7 @@ public:
     Matrix4D mat4D, mat_rotation4D, mat_rotation_save4D,
              mat_homothetie4D, mat_translation4D, mat_inversetranslation4D;
     double tetaxy, tetaxz, tetayz, tetaxw, tetayw, tetazw;
-
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
-    ScriptErrorType messageerror;
-    QString message;
 public:
     Par3D(uint nbThreads, uint nbGrid);
     ~Par3D()  override;
@@ -129,10 +120,8 @@ public:
     void calcul_Norm(uint i=0);
     void make_PolyIndexTri(uint p=0);
     void make_PolyIndexMin(uint p=0);
-    uint CNDtoUse(uint, struct ComponentInfos*);
     uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *, uint);
-    void clear(struct ComponentInfos*);
     void ParamBuild(float **, uint **, uint *,
                     uint *, ComponentInfos *,
                     uint **,
