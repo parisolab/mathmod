@@ -1170,12 +1170,12 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Jprime,cmpId=0, K=0;
-    double tmp, ValCol[100], val[10];
+    double tmp, ValCol[masterthread->VRgbtSize], val[10];
     val[3] = masterthread->stepMorph;
 
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[0].NoiseType == 0)
     {
-        for(uint i=0; i<masterthread->VRgbtSize && i<100; i++)
+        for(uint i=0; i<masterthread->VRgbtSize; i++)
         {
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }

@@ -1826,7 +1826,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     double tmp,
             *ValCol,
             val[10];
-    ValCol = new double[masterthread->VRgbtSize+5];
+    ValCol = new double[masterthread->VRgbtSize];
     val[3] = masterthread->stepMorph;
 
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[1].NoiseType == 0)
