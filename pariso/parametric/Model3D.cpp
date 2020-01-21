@@ -1173,7 +1173,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
     double tmp, ValCol[masterthread->VRgbtSize], val[10];
     val[3] = masterthread->stepMorph;
 
-    if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[0].NoiseType == 0)
+    if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize; i++)
         {
@@ -1214,7 +1214,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 }
         }
     }
-    else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[0].NoiseType == 1)
+    else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 1)
     {
         uint idx=0;
         for(uint i=0; i < comp->NbComponents.size()-1; i++)
@@ -1946,27 +1946,27 @@ void  Par3D::ParamBuild(
     if(masterthread->vrgbtnotnull)
     {
         components->ThereisRGBA.push_back(true);
-        components->NoiseParam[0].NoiseType = 0; //Pigments
-        components->NoiseParam[0].VRgbtParser = masterthread->VRgbtParser;
-        components->NoiseParam[0].GradientParser = masterthread->GradientParser;
-        components->NoiseParam[0].Nb_vrgbts = masterthread->VRgbtSize;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = 0; //Pigments
+        components->NoiseParam[components->ParisoCurrentComponentIndex].VRgbtParser = masterthread->VRgbtParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].GradientParser = masterthread->GradientParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].Nb_vrgbts = masterthread->VRgbtSize;
     }
     else if(masterthread->RgbtSize >= 4)
     {
         components->ThereisRGBA.push_back(true);
-        components->NoiseParam[0].NoiseType = 1; //Texture
-        components->NoiseParam[0].RgbtParser = masterthread->RgbtParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = 1; //Texture
+        components->NoiseParam[components->ParisoCurrentComponentIndex].RgbtParser = masterthread->RgbtParser;
     }
     else
     {
         components->ThereisRGBA.push_back(false);
-        components->NoiseParam[0].NoiseType = -1; //No Pigments or texture
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = -1; //No Pigments or texture
     }
 
     if(masterthread->Noise == "")
-        components->NoiseParam[0].NoiseShape = 0;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 0;
     else
-        components->NoiseParam[0].NoiseShape = 1;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 1;
 
     CalculateColorsPoints(components, components->ThereisRGBA.size()-1);
 
@@ -1993,9 +1993,10 @@ void  Par3D::ParamBuild(
     }
     copycomponent(componentsPt, components);
     componentsPt->Interleave = true;
-    componentsPt->ParisoCurrentComponentIndex += 1;
-    if(componentsPt->ParisoCurrentComponentIndex == componentsPt->ParisoNbComponents)
-        componentsPt->ParisoCurrentComponentIndex =0;
+    if(componentsPt->ParisoCurrentComponentIndex != (componentsPt->ParisoNbComponents-1))
+        componentsPt->ParisoCurrentComponentIndex += 1;
+    else
+        componentsPt->ParisoCurrentComponentIndex = 0;
     componentsPt->updateviewer = true;
 }
 

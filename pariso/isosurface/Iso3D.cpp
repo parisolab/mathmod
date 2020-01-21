@@ -1753,29 +1753,29 @@ void Iso3D::IsoBuild (
     if(masterthread->vrgbtnotnull)
     {
         components->ThereisRGBA.push_back(true);
-        components->NoiseParam[1].NoiseType = 0; //Pigments
-        components->NoiseParam[1].VRgbtParser = masterthread->VRgbtParser;
-        components->NoiseParam[1].GradientParser = masterthread->GradientParser;
-        components->NoiseParam[1].NoiseParser =  masterthread->NoiseParser;
-        components->NoiseParam[1].Nb_vrgbts = masterthread->VRgbtSize;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = 0; //Pigments
+        components->NoiseParam[components->ParisoCurrentComponentIndex].VRgbtParser = masterthread->VRgbtParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].GradientParser = masterthread->GradientParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseParser =  masterthread->NoiseParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].Nb_vrgbts = masterthread->VRgbtSize;
     }
     else if(masterthread->RgbtSize >= 4)
     {
         components->ThereisRGBA.push_back(true);
-        components->NoiseParam[1].NoiseType = 1; //Texture
-        components->NoiseParam[1].RgbtParser = masterthread->RgbtParser;
-        components->NoiseParam[1].NoiseParser =  masterthread->NoiseParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = 1; //Texture
+        components->NoiseParam[components->ParisoCurrentComponentIndex].RgbtParser = masterthread->RgbtParser;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseParser =  masterthread->NoiseParser;
     }
     else
     {
         components->ThereisRGBA.push_back(false);
-        components->NoiseParam[1].NoiseType = -1; //No Pigments or texture
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = -1; //No Pigments or texture
     }
 
     if(masterthread->Noise == "")
-        components->NoiseParam[1].NoiseShape = 0;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 0;
     else
-        components->NoiseParam[1].NoiseShape = 1;
+        components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 1;
 
     CalculateColorsPoints(components, components->ThereisRGBA.size()-1);
     *PolyNumber      = uint(IndexPolyTabVector.size());
@@ -1793,9 +1793,10 @@ void Iso3D::IsoBuild (
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     copycomponent(componentsPt, components);
     componentsPt->Interleave = true;
-    componentsPt->ParisoCurrentComponentIndex += 1;
-    if(componentsPt->ParisoCurrentComponentIndex == componentsPt->ParisoNbComponents)
-        componentsPt->ParisoCurrentComponentIndex =0;
+    if(componentsPt->ParisoCurrentComponentIndex != (componentsPt->ParisoNbComponents-1))
+        componentsPt->ParisoCurrentComponentIndex += 1;
+    else
+        componentsPt->ParisoCurrentComponentIndex = 0;
     Setgrid(PreviousGridVal);
     componentsPt->updateviewer = true;
 }
@@ -1829,7 +1830,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     ValCol = new double[masterthread->VRgbtSize];
     val[3] = masterthread->stepMorph;
 
-    if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[1].NoiseType == 0)
+    if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize; i++)
         {
@@ -1869,7 +1870,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
                 }
         }
     }
-    else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[1].NoiseType == 1)
+    else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 1)
     {
         uint idx=0;
         for(uint i=0; i < comp->NbComponents.size()-1; i++)
