@@ -55,9 +55,6 @@ public slots:
     void ProcessNewIsoSurface();
     void ProcessParisoSurface();
     void xyzg_valueChanged(int);
-    void xg_valueChanged(int);
-    void yg_valueChanged(int);
-    void zg_valueChanged(int);
     void xyzg_valueupdate(int);
     void slot_checkBox73_clicked();
     void slot_uv_clicked();

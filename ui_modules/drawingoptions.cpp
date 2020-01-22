@@ -3958,35 +3958,6 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
         MathmodRef->uvactivated  = -1;
     }
 }
-/*
-// --------------------------
-void DrawingOptions::oncolor_3activated(int index)
-{
-    MathmodRef->ui.glWidget->colorstypeParam(index);
-}
-// --------------------------
-void DrawingOptions::ontransparence_3toggled(bool checked)
-{
-    MathmodRef->ui.glWidget->transparence(checked);
-}
-*/
-// --------------------------
-void DrawingOptions::on_XhorizontalScrollBar_valueChanged(int value)
-{
-    MathmodRef->xg_valueChanged(value);
-}
-
-// --------------------------
-void DrawingOptions::on_YhorizontalScrollBar_valueChanged(int value)
-{
-    MathmodRef->yg_valueChanged(value);
-}
-
-// --------------------------
-void DrawingOptions::on_ZhorizontalScrollBar_valueChanged(int value)
-{
-    MathmodRef->zg_valueChanged(value);
-}
 
 // --------------------------
 void DrawingOptions::on_IsoComponent_activated(int index)
@@ -4474,18 +4445,6 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.xyzg->setMaximum(maxgrd);
     ui.xyzg->setValue(int(Parameters->InitIsoGrid));
     ui.xyzg->blockSignals(false);
-
-    ui.XhorizontalScrollBar->blockSignals(true);
-    ui.XhorizontalScrollBar->setMaximum(maxgrd);
-    ui.XhorizontalScrollBar->blockSignals(false);
-
-    ui.YhorizontalScrollBar->blockSignals(true);
-    ui.YhorizontalScrollBar->setMaximum(maxgrd);
-    ui.YhorizontalScrollBar->blockSignals(false);
-
-    ui.ZhorizontalScrollBar->blockSignals(true);
-    ui.ZhorizontalScrollBar->setMaximum(maxgrd);
-    ui.ZhorizontalScrollBar->blockSignals(false);
 
     ui.linecolumn_2->blockSignals(true);
     ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
@@ -5595,5 +5554,19 @@ void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
             UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
         else if(type == PAR_4D_TYPE)
             UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+    }
+}
+
+void DrawingOptions::on_ApplypushButton_clicked()
+{
+    int maxisogrid=0;
+    if((maxisogrid = (ui.IsoMaxGridLineEdit->text()).toInt()) != Parameters->IsoMaxGrid)
+    {
+        Parameters->IsoMaxGrid = maxisogrid;
+        MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
+        ui.Isogroupbox->setTitle("Iso Grid/max Grid ( "+QString::number(ui.xyzg->value() )+" / "+ui.IsoMaxGridLineEdit->text()+" ) :");
+        ui.xyzg->blockSignals(true);
+        ui.xyzg->setMaximum(maxisogrid);
+        ui.xyzg->blockSignals(false);
     }
 }

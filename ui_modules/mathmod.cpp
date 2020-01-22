@@ -197,34 +197,6 @@ void MathMod::xyzg_valueChanged(int cl)
     xyzg_valueupdate(cl);
     // process the new surface
     if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->update();
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::xg_valueChanged(int cl)
-{
-    xyzg_valueupdate(cl);
-    // process the new surface
-    if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->update();
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::yg_valueChanged(int cl)
-{
-    xyzg_valueupdate(cl);
-    // process the new surface
-    if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->update();
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::zg_valueChanged( int cl)
-{
-    xyzg_valueupdate(cl);
-    // process the new surface
-    if(xyzactivated  == 1)  ProcessNewIsoSurface( );
-    else (ui.glWidget)->update();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -178,9 +178,6 @@ public slots:
     void AddParObjectToTree(QTreeWidgetItem *, TreeStruct&);
     void ObjArrayToString(QJsonArray &, QString &);
     void AddParametersToTree(QTreeWidgetItem*, TreeStruct&);
-    void on_XhorizontalScrollBar_valueChanged(int);
-    void on_YhorizontalScrollBar_valueChanged(int);
-    void on_ZhorizontalScrollBar_valueChanged(int);
     void on_IsoComponent_activated(int);
     void on_ParamComponent_activated(int);
     void on_xycheckBox_clicked();
@@ -340,5 +337,6 @@ private slots:
     void ApplypushButton_clicked();
     void on_ObjectClasseCurrent_clicked(const QModelIndex &index);
     void on_parisocomboBox_currentIndexChanged(int index);
+    void on_ApplypushButton_clicked();
 };
 #endif
