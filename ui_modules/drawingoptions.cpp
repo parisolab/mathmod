@@ -5570,3 +5570,37 @@ void DrawingOptions::on_ApplypushButton_clicked()
         ui.xyzg->blockSignals(false);
     }
 }
+
+void DrawingOptions::on_ApplypushButton_2_clicked()
+{
+    int maxpargrid=0;
+    if((maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) != Parameters->ParMaxGrid)
+    {
+        Parameters->ParMaxGrid = maxpargrid;
+
+        ui.linecolumn_2->blockSignals(true);
+        ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_2->blockSignals(false);
+
+        ui.linecolumn_3->blockSignals(true);
+        ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_3->blockSignals(false);
+    }
+}
+
+void DrawingOptions::on_ApplypushButton_3_clicked()
+{
+    int maxpargrid=0;
+    if((maxpargrid = (ui.ParMaxGridLineEdit_2->text()).toInt()) != Parameters->ParMaxGrid)
+    {
+        Parameters->ParMaxGrid = maxpargrid;
+
+        ui.linecolumn_2->blockSignals(true);
+        ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_2->blockSignals(false);
+
+        ui.linecolumn_3->blockSignals(true);
+        ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_3->blockSignals(false);
+    }
+}

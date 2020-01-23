@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
                uint(Parameters.InitParGrid), uint(Parameters.InitIsoGrid),
                uint(Parameters.CalculFactor[0]), uint(Parameters.CalculFactor[1]), uint(Parameters.CalculFactor[2])
             );
-
     DrawingOptions drawingopt;
     //save references:
     drawingopt.Parameters = &Parameters;
@@ -64,8 +63,6 @@ int main(int argc, char *argv[])
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->ParObjet, SIGNAL(finished()), drawingopt.MathmodRef->ui.glWidget, SLOT(UpdateGL()), Qt::UniqueConnection);
     QObject::connect( drawingopt.MathmodRef->ui.glWidget->IsoObjet, SIGNAL(finished()), drawingopt.MathmodRef->ui.glWidget, SLOT(UpdateGL()), Qt::UniqueConnection);
     QObject::connect( drawingopt.Parameters->ui.ApplypushButton, SIGNAL(clicked()), &drawingopt, SLOT(ApplypushButton_clicked()));
-
-
     drawingopt.show();
     mm.show();
     drawingopt.on_choice_activated(Parameters.model);

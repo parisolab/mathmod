@@ -338,5 +338,7 @@ private slots:
     void on_ObjectClasseCurrent_clicked(const QModelIndex &index);
     void on_parisocomboBox_currentIndexChanged(int index);
     void on_ApplypushButton_clicked();
+    void on_ApplypushButton_2_clicked();
+    void on_ApplypushButton_3_clicked();
 };
 #endif
