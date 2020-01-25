@@ -3694,435 +3694,128 @@ p, li { white-space: pre-wrap; }
                     </attribute>
                     <layout class="QGridLayout" name="gridLayout_12">
                      <item row="0" column="0">
-                      <layout class="QHBoxLayout" name="horizontalLayout_6">
-                       <item>
-                        <widget class="QGroupBox" name="ParamgroupBox_3">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="title">
-                          <string>Param Grid:</string>
-                         </property>
-                         <layout class="QGridLayout" name="gridLayout_25">
-                          <property name="leftMargin">
-                           <number>2</number>
+                      <widget class="QGroupBox" name="ParamgroupBox_3">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="title">
+                        <string>Param Grid:</string>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_25">
+                        <property name="leftMargin">
+                         <number>2</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>2</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>2</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>2</number>
+                        </property>
+                        <property name="spacing">
+                         <number>2</number>
+                        </property>
+                        <item row="0" column="0">
+                         <widget class="QScrollBar" name="linecolumn_3">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
                           </property>
-                          <property name="topMargin">
-                           <number>2</number>
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>100</height>
+                           </size>
                           </property>
-                          <property name="rightMargin">
-                           <number>2</number>
+                          <property name="maximumSize">
+                           <size>
+                            <width>16777215</width>
+                            <height>150</height>
+                           </size>
                           </property>
-                          <property name="bottomMargin">
-                           <number>2</number>
+                          <property name="minimum">
+                           <number>1</number>
                           </property>
-                          <property name="spacing">
-                           <number>2</number>
+                          <property name="maximum">
+                           <number>1000</number>
                           </property>
+                          <property name="pageStep">
+                           <number>1</number>
+                          </property>
+                          <property name="value">
+                           <number>50</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Vertical</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QCheckBox" name="uv4D">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="text">
+                           <string>UV</string>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item row="1" column="0">
+                      <spacer name="verticalSpacer_9">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>18</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item row="2" column="0">
+                      <widget class="QGroupBox" name="groupBox_3">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="title">
+                        <string>Rotational Plans (works when Morph activated) :</string>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_7">
+                        <item row="0" column="0">
+                         <layout class="QGridLayout" name="gridLayout_11">
                           <item row="0" column="0">
-                           <widget class="QScrollBar" name="linecolumn_3">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
+                           <layout class="QHBoxLayout" name="horizontalLayout_12">
+                            <property name="spacing">
+                             <number>2</number>
                             </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>0</width>
-                              <height>100</height>
-                             </size>
-                            </property>
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>150</height>
-                             </size>
-                            </property>
-                            <property name="minimum">
-                             <number>1</number>
-                            </property>
-                            <property name="maximum">
-                             <number>1000</number>
-                            </property>
-                            <property name="pageStep">
-                             <number>1</number>
-                            </property>
-                            <property name="value">
-                             <number>50</number>
-                            </property>
-                            <property name="orientation">
-                             <enum>Qt::Vertical</enum>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="1" column="0">
-                           <widget class="QCheckBox" name="uv4D">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="text">
-                             <string>UV</string>
-                            </property>
-                            <property name="checked">
-                             <bool>true</bool>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QGroupBox" name="groupBox_3">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="title">
-                          <string>Rotational Plans (works when Morph activated) :</string>
-                         </property>
-                         <layout class="QGridLayout" name="gridLayout_7">
-                          <item row="0" column="0">
-                           <layout class="QGridLayout" name="gridLayout_11">
-                            <item row="0" column="0">
-                             <layout class="QHBoxLayout" name="horizontalLayout_12">
-                              <property name="spacing">
-                               <number>2</number>
-                              </property>
-                              <item>
-                               <widget class="QCheckBox" name="xycheckBox">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>XY</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QScrollBar" name="xyhorizontalScrollBar">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimum">
-                                 <number>-10</number>
-                                </property>
-                                <property name="maximum">
-                                 <number>10</number>
-                                </property>
-                                <property name="orientation">
-                                 <enum>Qt::Horizontal</enum>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="0" column="1">
-                             <layout class="QHBoxLayout" name="horizontalLayout_17">
-                              <property name="spacing">
-                               <number>2</number>
-                              </property>
-                              <item>
-                               <widget class="QCheckBox" name="xwcheckBox">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>XW</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QScrollBar" name="xwhorizontalScrollBar">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimum">
-                                 <number>-10</number>
-                                </property>
-                                <property name="maximum">
-                                 <number>10</number>
-                                </property>
-                                <property name="orientation">
-                                 <enum>Qt::Horizontal</enum>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="1" column="0">
-                             <layout class="QHBoxLayout" name="horizontalLayout_13">
-                              <property name="spacing">
-                               <number>2</number>
-                              </property>
-                              <item>
-                               <widget class="QCheckBox" name="xzcheckBox">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>XZ</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QScrollBar" name="xzhorizontalScrollBar">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimum">
-                                 <number>-10</number>
-                                </property>
-                                <property name="maximum">
-                                 <number>10</number>
-                                </property>
-                                <property name="orientation">
-                                 <enum>Qt::Horizontal</enum>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="1" column="1">
-                             <layout class="QHBoxLayout" name="horizontalLayout_16">
-                              <property name="spacing">
-                               <number>2</number>
-                              </property>
-                              <item>
-                               <widget class="QCheckBox" name="ywcheckBox">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>yw</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QScrollBar" name="ywhorizontalScrollBar">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimum">
-                                 <number>-10</number>
-                                </property>
-                                <property name="maximum">
-                                 <number>10</number>
-                                </property>
-                                <property name="orientation">
-                                 <enum>Qt::Horizontal</enum>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="2" column="0">
-                             <layout class="QHBoxLayout" name="horizontalLayout_14">
-                              <property name="spacing">
-                               <number>2</number>
-                              </property>
-                              <item>
-                               <widget class="QCheckBox" name="yzcheckBox">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>YZ</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QScrollBar" name="yzhorizontalScrollBar">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimum">
-                                 <number>-10</number>
-                                </property>
-                                <property name="maximum">
-                                 <number>10</number>
-                                </property>
-                                <property name="orientation">
-                                 <enum>Qt::Horizontal</enum>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                            <item row="2" column="1">
-                             <layout class="QHBoxLayout" name="horizontalLayout_15">
-                              <property name="spacing">
-                               <number>2</number>
-                              </property>
-                              <item>
-                               <widget class="QCheckBox" name="zwcheckBox">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>41</width>
-                                  <height>17</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>ZW</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QScrollBar" name="zwhorizontalScrollBar">
-                                <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                  <horstretch>0</horstretch>
-                                  <verstretch>0</verstretch>
-                                 </sizepolicy>
-                                </property>
-                                <property name="minimum">
-                                 <number>-10</number>
-                                </property>
-                                <property name="maximum">
-                                 <number>10</number>
-                                </property>
-                                <property name="orientation">
-                                 <enum>Qt::Horizontal</enum>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                           </layout>
-                          </item>
-                          <item row="1" column="0">
-                           <layout class="QHBoxLayout" name="horizontalLayout_23">
                             <item>
-                             <spacer name="horizontalSpacer_9">
-                              <property name="orientation">
-                               <enum>Qt::Horizontal</enum>
-                              </property>
-                              <property name="sizeHint" stdset="0">
-                               <size>
-                                <width>40</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </spacer>
-                            </item>
-                            <item>
-                             <widget class="QPushButton" name="InitMatrix">
+                             <widget class="QCheckBox" name="xycheckBox">
                               <property name="sizePolicy">
                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                                 <horstretch>0</horstretch>
@@ -4131,36 +3824,352 @@ p, li { white-space: pre-wrap; }
                               </property>
                               <property name="minimumSize">
                                <size>
-                                <width>150</width>
-                                <height>0</height>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
                                </size>
                               </property>
                               <property name="text">
-                               <string>InitMatrix</string>
+                               <string>XY</string>
                               </property>
                              </widget>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_10">
+                             <widget class="QScrollBar" name="xyhorizontalScrollBar">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimum">
+                               <number>-10</number>
+                              </property>
+                              <property name="maximum">
+                               <number>10</number>
+                              </property>
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
-                              <property name="sizeHint" stdset="0">
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="0" column="1">
+                           <layout class="QHBoxLayout" name="horizontalLayout_17">
+                            <property name="spacing">
+                             <number>2</number>
+                            </property>
+                            <item>
+                             <widget class="QCheckBox" name="xwcheckBox">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
                                <size>
-                                <width>40</width>
-                                <height>20</height>
+                                <width>41</width>
+                                <height>17</height>
                                </size>
                               </property>
-                             </spacer>
+                              <property name="maximumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>XW</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QScrollBar" name="xwhorizontalScrollBar">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimum">
+                               <number>-10</number>
+                              </property>
+                              <property name="maximum">
+                               <number>10</number>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="1" column="0">
+                           <layout class="QHBoxLayout" name="horizontalLayout_13">
+                            <property name="spacing">
+                             <number>2</number>
+                            </property>
+                            <item>
+                             <widget class="QCheckBox" name="xzcheckBox">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>XZ</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QScrollBar" name="xzhorizontalScrollBar">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimum">
+                               <number>-10</number>
+                              </property>
+                              <property name="maximum">
+                               <number>10</number>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="1" column="1">
+                           <layout class="QHBoxLayout" name="horizontalLayout_16">
+                            <property name="spacing">
+                             <number>2</number>
+                            </property>
+                            <item>
+                             <widget class="QCheckBox" name="ywcheckBox">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>yw</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QScrollBar" name="ywhorizontalScrollBar">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimum">
+                               <number>-10</number>
+                              </property>
+                              <property name="maximum">
+                               <number>10</number>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="2" column="0">
+                           <layout class="QHBoxLayout" name="horizontalLayout_14">
+                            <property name="spacing">
+                             <number>2</number>
+                            </property>
+                            <item>
+                             <widget class="QCheckBox" name="yzcheckBox">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>YZ</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QScrollBar" name="yzhorizontalScrollBar">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimum">
+                               <number>-10</number>
+                              </property>
+                              <property name="maximum">
+                               <number>10</number>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item row="2" column="1">
+                           <layout class="QHBoxLayout" name="horizontalLayout_15">
+                            <property name="spacing">
+                             <number>2</number>
+                            </property>
+                            <item>
+                             <widget class="QCheckBox" name="zwcheckBox">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>41</width>
+                                <height>17</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>ZW</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QScrollBar" name="zwhorizontalScrollBar">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="minimum">
+                               <number>-10</number>
+                              </property>
+                              <property name="maximum">
+                               <number>10</number>
+                              </property>
+                              <property name="orientation">
+                               <enum>Qt::Horizontal</enum>
+                              </property>
+                             </widget>
                             </item>
                            </layout>
                           </item>
                          </layout>
-                        </widget>
-                       </item>
-                      </layout>
+                        </item>
+                        <item row="1" column="0">
+                         <layout class="QHBoxLayout" name="horizontalLayout_23">
+                          <item>
+                           <spacer name="horizontalSpacer_9">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>40</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="InitMatrix">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>150</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string>InitMatrix</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <spacer name="horizontalSpacer_10">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>40</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </widget>
                      </item>
-                     <item row="1" column="0">
+                     <item row="3" column="0">
                       <spacer name="verticalSpacer_3">
                        <property name="orientation">
                         <enum>Qt::Vertical</enum>
@@ -4173,7 +4182,7 @@ p, li { white-space: pre-wrap; }
                        </property>
                       </spacer>
                      </item>
-                     <item row="2" column="0">
+                     <item row="4" column="0">
                       <layout class="QHBoxLayout" name="horizontalLayout_36">
                        <item>
                         <layout class="QHBoxLayout" name="horizontalLayout_37">
