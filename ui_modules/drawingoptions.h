@@ -153,6 +153,8 @@ public slots:
     void UpdateIsoModelDetailsPage(TreeStruct&);
     void UpdateTreeObject();
     void on_updateButton_clicked();
+    void on_updateJObject(QJsonObject&);
+    void RunUpdatedJObject(QJsonObject&);
     void slot_pushButton_2_clicked();
     void slot_unselect_clicked();
     void slot_XYZscrollBar_valueChanged(int);
