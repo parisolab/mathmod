@@ -3111,8 +3111,8 @@ void DrawingOptions::on_updateJObject(QJsonObject& copyCurrentObject)
                 }
                 else
                     copyCurrentObject2.remove("Const");
-
-
+                copyCurrentObject2.remove("Param3D");
+                copyCurrentObject2.remove("Param4D");
                 copyCurrentObject["Iso3D"] = copyCurrentObject2;
             }
             else
@@ -3281,6 +3281,7 @@ void DrawingOptions::on_updateJObject(QJsonObject& copyCurrentObject)
     }
     else if(copyCurrentObject["Param3D"].isObject())
     {
+        copyCurrentObject.remove("Iso3D");
         QJsonObject copyCurrentObject2 = copyCurrentObject["Param3D"].toObject();
         if(indexcurrentFormula != -1)
         {
@@ -3646,6 +3647,8 @@ void DrawingOptions::on_updateJObject(QJsonObject& copyCurrentObject)
     }
     else if(copyCurrentObject["Param4D"].isObject())
     {
+        copyCurrentObject.remove("Iso3D");
+        copyCurrentObject.remove("Param3D");
         QJsonObject copyCurrentObject2 = copyCurrentObject["Param4D"].toObject();
         if(indexcurrentFormula != -1)
         {
