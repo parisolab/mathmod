@@ -39,11 +39,11 @@ void OpenGlWidget::CalculateTexturePoints(int type)
 
     if(type == 1)
     {
-        LocalScene.componentsinfos.ThereisRGBA[1] = true;
-        LocalScene.componentsinfos.NoiseParam[1].NoiseType = 1;
-        LocalScene.componentsinfos.NoiseParam[1].RgbtParser = IsoObjet->masterthread->RgbtParser;
-        LocalScene.componentsinfos.NoiseParam[1].NoiseParser = IsoObjet->masterthread->NoiseParser;
-        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 1;
+        LocalScene.componentsinfos.ThereisRGBA[0] = true;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseType = 1;
+        LocalScene.componentsinfos.NoiseParam[0].RgbtParser = IsoObjet->masterthread->RgbtParser;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseParser = IsoObjet->masterthread->NoiseParser;
+        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
     if(type == 0)
     {
@@ -71,9 +71,9 @@ void OpenGlWidget::CalculateTexturePoints(int type)
             val[4] = val[4] * ParObjet->masterthread->dif_v[0]  + ParObjet->masterthread->v_inf[0];
         }
 
-        if(LocalScene.componentsinfos.NoiseParam[type].NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam[type].NoiseActive == 1)
+        if(LocalScene.componentsinfos.NoiseParam[0].NoiseShape != 0)
         {
-            tmp  = LocalScene.componentsinfos.NoiseParam[type].NoiseParser->Eval(val);
+            tmp  = LocalScene.componentsinfos.NoiseParam[0].NoiseParser->Eval(val);
         }
         else
         {
@@ -86,10 +86,10 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         val[3] *= tmp;
         val[4] *= tmp;
 
-        LocalScene.ArrayNorVer_localPt[i*10   ] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[0].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*10 +1] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[1].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*10 +2] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[2].Eval(val));
-        LocalScene.ArrayNorVer_localPt[i*10 +3] = float(LocalScene.componentsinfos.NoiseParam[type].RgbtParser[3].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10   ] = float(LocalScene.componentsinfos.NoiseParam[0].RgbtParser[0].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +1] = float(LocalScene.componentsinfos.NoiseParam[0].RgbtParser[1].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +2] = float(LocalScene.componentsinfos.NoiseParam[0].RgbtParser[2].Eval(val));
+        LocalScene.ArrayNorVer_localPt[i*10 +3] = float(LocalScene.componentsinfos.NoiseParam[0].RgbtParser[3].Eval(val));
     }
 }
 
@@ -99,13 +99,13 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
 
     if(type == 1)
     {
-        LocalScene.componentsinfos.ThereisRGBA[1] = true;
-        LocalScene.componentsinfos.NoiseParam[1].NoiseType = 0; //Pigments
-        LocalScene.componentsinfos.NoiseParam[1].VRgbtParser = IsoObjet->masterthread->VRgbtParser;
-        LocalScene.componentsinfos.NoiseParam[1].GradientParser = IsoObjet->masterthread->GradientParser;
-        LocalScene.componentsinfos.NoiseParam[1].Nb_vrgbts = IsoObjet->masterthread->VRgbtSize;
-        LocalScene.componentsinfos.NoiseParam[1].NoiseParser = IsoObjet->masterthread->NoiseParser;
-        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[1].NoiseShape = 1;
+        LocalScene.componentsinfos.ThereisRGBA[0] = true;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseType = 0; //Pigments
+        LocalScene.componentsinfos.NoiseParam[0].VRgbtParser = IsoObjet->masterthread->VRgbtParser;
+        LocalScene.componentsinfos.NoiseParam[0].GradientParser = IsoObjet->masterthread->GradientParser;
+        LocalScene.componentsinfos.NoiseParam[0].Nb_vrgbts = IsoObjet->masterthread->VRgbtSize;
+        LocalScene.componentsinfos.NoiseParam[0].NoiseParser = IsoObjet->masterthread->NoiseParser;
+        IsoObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
     if(type == 0)
     {
@@ -118,9 +118,9 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
         ParObjet->masterthread->Noise == "" ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0: LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
 
-    for(uint i=0; i<LocalScene.componentsinfos.NoiseParam[type].Nb_vrgbts && i<100; i++)
+    for(uint i=0; i<LocalScene.componentsinfos.NoiseParam[0].Nb_vrgbts && i<100; i++)
     {
-        ValCol[i] = LocalScene.componentsinfos.NoiseParam[type].VRgbtParser[i].Eval(val);
+        ValCol[i] = LocalScene.componentsinfos.NoiseParam[0].VRgbtParser[i].Eval(val);
     }
 
     for(uint i= 0; i < LocalScene.VertxNumber; i++)
@@ -129,8 +129,8 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
         val[1]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 4 + 4])/hauteur_fenetre -decalage_yo;
         val[2]= difMaximum*double(LocalScene.ArrayNorVer_localPt[i*10  + 5 + 4])/hauteur_fenetre -decalage_zo;
 
-        if(LocalScene.componentsinfos.NoiseParam[type].NoiseShape != 0 && LocalScene.componentsinfos.NoiseParam[type].NoiseActive == 1)
-            tmp  = LocalScene.componentsinfos.NoiseParam[type].NoiseParser->Eval(val);
+        if(LocalScene.componentsinfos.NoiseParam[0].NoiseShape != 0)
+            tmp  = LocalScene.componentsinfos.NoiseParam[0].NoiseParser->Eval(val);
         else
             tmp =1.0;
 
@@ -138,11 +138,11 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
         val[1] *= tmp;
         val[2] *= tmp;
 
-        tmp  = LocalScene.componentsinfos.NoiseParam[type].GradientParser->Eval(val);
+        tmp  = LocalScene.componentsinfos.NoiseParam[0].GradientParser->Eval(val);
 
         int c= int(tmp);
         tmp = std::abs(tmp - double(c));
-        for (uint j=0; j < LocalScene.componentsinfos.NoiseParam[type].Nb_vrgbts && j < 100; j+=5)
+        for (uint j=0; j < LocalScene.componentsinfos.NoiseParam[0].Nb_vrgbts && j < 100; j+=5)
             if(tmp <= ValCol[j])
             {
                 LocalScene.ArrayNorVer_localPt[i*10  ] = float(ValCol[j+1]);
