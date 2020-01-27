@@ -3074,7 +3074,6 @@ void DrawingOptions::on_updateJObject(QJsonObject& copyCurrentObject)
                 if(copyCurrentObject2["Grid"].isArray())
                 {
                     array=copyCurrentObject2["Grid"].toArray();
-                    //array.replace(indexcurrentFormula, QString::number(ui.xyzg->value()));
                     copyCurrentObject2["Grid"] = array;
                 }
                 else
@@ -3858,7 +3857,6 @@ void DrawingOptions::on_updateJObject(QJsonObject& copyCurrentObject)
                     if(copyCurrentObject2["Grid"].isArray())
                     {
                         array=copyCurrentObject2["Grid"].toArray();
-                        //array.insert(indexcurrentFormula, QString::number(ui.linecolumn_2->value()));
                         copyCurrentObject2["Grid"] = array;
                     }
                     else
