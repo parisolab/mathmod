@@ -23,15 +23,14 @@
 
 #include "ui_colorsoptions.h"
 
-class ColorsOptions : public QWidget
-{
-    Q_OBJECT
+class ColorsOptions : public QWidget {
+  Q_OBJECT
 
 public:
-    ColorsOptions(QWidget *parent = nullptr);
+  ColorsOptions(QWidget *parent = nullptr);
 
 public:
-    Ui::ColorsOptions ui;
+  Ui::ColorsOptions ui;
 };
 
 #endif

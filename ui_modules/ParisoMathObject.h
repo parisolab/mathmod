@@ -17,73 +17,63 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
-#include <iostream>
-#include <qstring.h>
-#include <qfile.h>
-#include <QTextStream>
-#include <QStringList>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
 #include <QFileDialog>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QStringList>
+#include <QTextStream>
+#include <iostream>
+#include <qfile.h>
+#include <qstring.h>
 //#include <QDialog>
 
+enum ModelType { PAR_TYPE, PAR_4D_TYPE, ISO_TYPE, PARISO_TYPE, UNDEFINED_TYPE };
 
-enum ModelType
-{
-    PAR_TYPE,
-    PAR_4D_TYPE,
-    ISO_TYPE,
-    PARISO_TYPE,
-    UNDEFINED_TYPE
+struct TreeStruct {
+  QStringList name;
+  QStringList Component;
+  QStringList Const;
+  QStringList Funct;
+  QStringList Grid;
+  QStringList Cnd;
+  QStringList RGBT;
+  QStringList VRGBT;
+  QStringList Gradient;
+  QString Noise;
+  QString text;
+  QStringList fxyz;
+  QStringList xmin;
+  QStringList xmax;
+  QStringList ymin;
+  QStringList ymax;
+  QStringList zmin;
+  QStringList zmax;
+  QStringList fx;
+  QStringList fy;
+  QStringList fz;
+  QStringList fw;
+  QStringList umin;
+  QStringList umax;
+  QStringList vmin;
+  QStringList vmax;
+  QStringList tmin;
+  QStringList tmax;
+  ModelType type;
 };
 
-struct TreeStruct
-{
-    QStringList name;
-    QStringList Component;
-    QStringList Const;
-    QStringList Funct;
-    QStringList Grid;
-    QStringList Cnd;
-    QStringList RGBT;
-    QStringList VRGBT;
-    QStringList Gradient;
-    QString     Noise;
-    QString     text;
-    QStringList fxyz;
-    QStringList xmin;
-    QStringList xmax;
-    QStringList ymin;
-    QStringList ymax;
-    QStringList zmin;
-    QStringList zmax;
-    QStringList fx;
-    QStringList fy;
-    QStringList fz;
-    QStringList fw;
-    QStringList umin;
-    QStringList umax;
-    QStringList vmin;
-    QStringList vmax;
-    QStringList tmin;
-    QStringList tmax;
-    ModelType   type;
-};
+class ParisoMathObject {
+public:
+  int NbIsoStruct;
+  int NbParamStruct;
+  QJsonObject CurrentJsonObject;
+  QJsonArray MyJsonObjectSelection;
+  TreeStruct CurrentTreestruct;
+  std::vector<TreeStruct> CurrentParisoTreestruct;
+  QString dotsymbol;
 
-class ParisoMathObject
-{
-public :
-    int NbIsoStruct;
-    int NbParamStruct;
-    QJsonObject CurrentJsonObject;
-    QJsonArray  MyJsonObjectSelection;
-    TreeStruct  CurrentTreestruct;
-    std::vector<TreeStruct>  CurrentParisoTreestruct;
-    QString dotsymbol;
-
-public :
-    ParisoMathObject();
-    ~ParisoMathObject();
-    void ReadJsonFile(QString, QJsonObject &);
+public:
+  ParisoMathObject();
+  ~ParisoMathObject();
+  void ReadJsonFile(QString, QJsonObject &);
 };

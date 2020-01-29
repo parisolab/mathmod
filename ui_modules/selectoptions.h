@@ -25,50 +25,48 @@
 
 #include "ui_selectoptions.h"
 
-struct SelectedListOptions
-{
-    QStringList selectedwords;
-    QList<bool> namelist;
-    QList<bool> functlist;
-    QList<bool> cmpnamelist;
-    QList<bool> complist;
-    bool sensitive;
-    bool showall;
-    bool AND;
-    bool parsenames;
-    bool parsecmpnames;
-    bool parsefunctions;
-    QStringList fieldnames;
+struct SelectedListOptions {
+  QStringList selectedwords;
+  QList<bool> namelist;
+  QList<bool> functlist;
+  QList<bool> cmpnamelist;
+  QList<bool> complist;
+  bool sensitive;
+  bool showall;
+  bool AND;
+  bool parsenames;
+  bool parsecmpnames;
+  bool parsefunctions;
+  QStringList fieldnames;
 };
 
-class SelectOptions : public QWidget
-{
-    Q_OBJECT
+class SelectOptions : public QWidget {
+  Q_OBJECT
 public:
-    SelectedListOptions selectedoptions;
-public:
-    SelectOptions(QWidget *parent = nullptr);
+  SelectedListOptions selectedoptions;
 
 public:
-    Ui::SelectOptions ui;
+  SelectOptions(QWidget *parent = nullptr);
+
+public:
+  Ui::SelectOptions ui;
 private slots:
-    void on_addpushButton_clicked();
-    void on_CutpushButton_clicked();
-    void on_ShowAllcheckBox_clicked(bool checked);
-    void on_CaseSensitiveCheckBox_clicked(bool checked);
-    void on_AND_clicked(bool checked);
+  void on_addpushButton_clicked();
+  void on_CutpushButton_clicked();
+  void on_ShowAllcheckBox_clicked(bool checked);
+  void on_CaseSensitiveCheckBox_clicked(bool checked);
+  void on_AND_clicked(bool checked);
 
-    void on_radioButton_clicked(bool checked);
+  void on_radioButton_clicked(bool checked);
 
-    void on_FunctcheckBox_clicked(bool checked);
+  void on_FunctcheckBox_clicked(bool checked);
 
-    void on_NamescheckBox_clicked(bool checked);
+  void on_NamescheckBox_clicked(bool checked);
 
-    void on_CompcheckBox_clicked(bool checked);
+  void on_CompcheckBox_clicked(bool checked);
 
 signals:
-    void UpdateSignal();
+  void UpdateSignal();
 public slots:
-    void emitUpdateSignal();
+  void emitUpdateSignal();
 };
-

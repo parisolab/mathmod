@@ -17,30 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
-#include <qmainwindow.h>
-#include <qlabel.h>
-#include <qimage.h>
 #include <qfiledialog.h>
-#include <qpushbutton.h>
 #include <qgroupbox.h>
+#include <qimage.h>
+#include <qlabel.h>
+#include <qmainwindow.h>
+#include <qpushbutton.h>
 #include <qscrollbar.h>
 
-class screenimage: public QMainWindow
-{
-    Q_OBJECT
+class screenimage : public QMainWindow {
+  Q_OBJECT
 
 public:
-    screenimage(QImage);
-    ~screenimage();
+  screenimage(QImage);
+  ~screenimage();
 public slots:
-    void connectcontrols();
-    void saveas();
-    void f_1(int);
+  void connectcontrols();
+  void saveas();
+  void f_1(int);
+
 public:
-    QLabel *l;
-    QGroupBox * groupBox ;
-    QScrollBar * scrollBar55;
-    QPushButton * pushScreenshot;
-    QImage buf;
-    int image_quality;
+  QLabel *l;
+  QGroupBox *groupBox;
+  QScrollBar *scrollBar55;
+  QPushButton *pushScreenshot;
+  QImage buf;
+  int image_quality;
 };
