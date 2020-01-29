@@ -22,10 +22,11 @@
 
 #include "sliderparam.h"
 
-SlidersForm::SlidersForm(QWidget *parent) : QWidget(parent) {
-  this->setWindowFlags(Qt::WindowStaysOnTopHint);
-  ui.setupUi(this);
-  currentSlider = 0;
+SlidersForm::SlidersForm(QWidget *parent) : QWidget(parent)
+{
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+    ui.setupUi(this);
+    currentSlider = 0;
 }
 
 void SlidersForm::on_SaveButton_clicked() {}

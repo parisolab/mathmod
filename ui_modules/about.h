@@ -23,16 +23,17 @@
 
 #include "ui_about.h"
 
-class About : public QWidget {
-  Q_OBJECT
+class About : public QWidget
+{
+    Q_OBJECT
 
 public:
-  About(QWidget *parent = nullptr);
+    About(QWidget *parent = nullptr);
 private slots:
-  void on_about_clicked();
+    void on_about_clicked();
 
 private:
-  Ui::About ui;
+    Ui::About ui;
 };
 
 #endif

@@ -39,24 +39,24 @@ double CurrentParamCmpId(const double* p)
 double TurbulenceWorley2(const double* p)
 {
     return double(NoiseFunction2->CellNoiseFunc(
-               float(p[0]),
-               float(p[1]),
-               float(p[2]),
-               int(p[3]),
-               int(p[4]),
-               int(p[5])));
+                      float(p[0]),
+                      float(p[1]),
+                      float(p[2]),
+                      int(p[3]),
+                      int(p[4]),
+                      int(p[5])));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
 double TurbulencePerlin2(const double* p)
 {
     return double(PNoise2->FractalNoise3D(
-               float(p[0]),
-               float(p[1]),
-               float(p[2]),
-               int(p[3]),
-               float(p[4]),
-               float(p[5])));
+                      float(p[0]),
+                      float(p[1]),
+                      float(p[2]),
+                      int(p[3]),
+                      float(p[4]),
+                      float(p[5])));
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
@@ -387,17 +387,17 @@ void ParMasterThread::AllocateParsersForMasterThread()
 
         if(!functnotnull)
             FunctSize = 0;
-         Fct          = new FunctionParser[FunctSize];
-         UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
-         UsedFunct2   = new bool[FunctSize*FunctSize];
+        Fct          = new FunctionParser[FunctSize];
+        UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
+        UsedFunct2   = new bool[FunctSize*FunctSize];
 
         rgbtnotnull ?
-            RgbtParser = new FunctionParser[(RgbtSize = 4)] :
-            RgbtParser = new FunctionParser[(RgbtSize = 0)];
+        RgbtParser = new FunctionParser[(RgbtSize = 4)] :
+        RgbtParser = new FunctionParser[(RgbtSize = 0)];
 
         vrgbtnotnull ?
-            VRgbtParser = new FunctionParser[VRgbtSize] :
-            VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
+        VRgbtParser = new FunctionParser[VRgbtSize] :
+        VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
 
         if(constnotnull)
             ConstSize=0;
@@ -1982,14 +1982,14 @@ void  Par3D::ParamBuild(
 
     // 3) Nb Poly & Vertex :
     {
-    *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
-    *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
-    *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
+        *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
+        *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
+        *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
 
 
-    *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
-    *NormVertexTabPt   = NormVertexTabVector.data();
-    *IndexPolyTabPt    = IndexPolyTabVector.data();
+        *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
+        *NormVertexTabPt   = NormVertexTabVector.data();
+        *IndexPolyTabPt    = IndexPolyTabVector.data();
     }
     copycomponent(componentsPt, components);
     componentsPt->Interleave = true;
@@ -2069,24 +2069,24 @@ void  Par3D::calcul_Norm(uint idx)
 
     if(Ugrid>1)
     {
-    i = Ugrid -1;
-    for (j=0; j+1 < Vgrid   ; j++)
-    {
-        NormVertexTabVector[i*deplacement+j*10+idx+4] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+4];
-        NormVertexTabVector[i*deplacement+j*10+idx+5] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+5];
-        NormVertexTabVector[i*deplacement+j*10+idx+6] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+6];
-    }
+        i = Ugrid -1;
+        for (j=0; j+1 < Vgrid   ; j++)
+        {
+            NormVertexTabVector[i*deplacement+j*10+idx+4] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+4];
+            NormVertexTabVector[i*deplacement+j*10+idx+5] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+5];
+            NormVertexTabVector[i*deplacement+j*10+idx+6] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+6];
+        }
     }
 
     if(Vgrid>1)
     {
-    j =Vgrid -1;
-    for (i=0; i+1< Ugrid  ; i++)
-    {
-        NormVertexTabVector[i*deplacement +j*10  +idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10  +idx+ 4];
-        NormVertexTabVector[i*deplacement +j*10+1+idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+1+idx+ 4];
-        NormVertexTabVector[i*deplacement +j*10+2+idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+2+idx+ 4];
-    }
+        j =Vgrid -1;
+        for (i=0; i+1< Ugrid  ; i++)
+        {
+            NormVertexTabVector[i*deplacement +j*10  +idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10  +idx+ 4];
+            NormVertexTabVector[i*deplacement +j*10+1+idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+1+idx+ 4];
+            NormVertexTabVector[i*deplacement +j*10+2+idx+ 4] = NormVertexTabVector[i*deplacement +(j-1)*10+2+idx+ 4];
+        }
     }
     if(Ugrid>1 && Vgrid>1)
     {

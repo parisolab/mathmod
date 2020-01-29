@@ -22,17 +22,18 @@
 #define SLIDERPARAM
 #include "ui_sliderparam.h"
 
-class SlidersForm : public QWidget {
-  Q_OBJECT
+class SlidersForm : public QWidget
+{
+    Q_OBJECT
 
 public:
-  SlidersForm(QWidget *parent = nullptr);
+    SlidersForm(QWidget *parent = nullptr);
 
 public:
-  Ui::SlidersForm ui;
-  int currentSlider;
+    Ui::SlidersForm ui;
+    int currentSlider;
 private slots:
-  void on_SaveButton_clicked();
+    void on_SaveButton_clicked();
 };
 
 #endif // SLIDERPARAM

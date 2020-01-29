@@ -20,28 +20,42 @@
 #include "qglthread.h"
 #include "glviewer.h"
 
-GLThread::GLThread(OpenGlWidget *gl) : QThread(), glw(gl) {
-  doRendering = true;
-  doResize = false;
+GLThread::GLThread(OpenGlWidget *gl) : QThread(), glw(gl)
+{
+    doRendering = true;
+    doResize = false;
 }
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void GLThread::stop() { doRendering = false; }
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void GLThread::resizeViewport(const QSize &size) {
-  w = size.width();
-  h = size.height();
-  glw->resizeGL(w, h);
-  glw->update();
+void GLThread::stop()
+{
+    doRendering = false;
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void GLThread::anim() { glw->anim(); }
+void GLThread::resizeViewport(const QSize &size)
+{
+    w = size.width();
+    h = size.height();
+    glw->resizeGL(w, h);
+    glw->update();
+}
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void GLThread::morph() { glw->morph(); }
+void GLThread::anim()
+{
+    glw->anim();
+}
 
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void GLThread::update() { glw->update(); }
+void GLThread::morph()
+{
+    glw->morph();
+}
+
+///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void GLThread::update()
+{
+    glw->update();
+}
 ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void GLThread::run() {}

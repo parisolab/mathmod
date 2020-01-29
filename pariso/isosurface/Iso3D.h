@@ -65,9 +65,9 @@ public :
     void run() Q_DECL_OVERRIDE;
     IsoWorkerThread();
     ~IsoWorkerThread() override;
-     void emitMySignal();
+    void emitMySignal();
 signals:
-     void mySignal(int);
+    void mySignal(int);
 };
 
 class IsoMasterThread : public MasterThread, public IsoWorkerThread

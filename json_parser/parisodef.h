@@ -22,24 +22,26 @@
 #include "jiso.h"
 #include "jpar.h"
 
-class jcollection {
+class jcollection
+{
 public:
-  jcollection();
-  ~jcollection();
+    jcollection();
+    ~jcollection();
 
-  QList<jpar> JPar;
-  QList<jiso> JIso;
-  QJsonArray JTextures;
-  QJsonArray JPigments;
+    QList<jpar> JPar;
+    QList<jiso> JIso;
+    QJsonArray JTextures;
+    QJsonArray JPigments;
 };
 
-class jpariso {
+class jpariso
+{
 public:
-  jpariso();
-  ~jpariso();
+    jpariso();
+    ~jpariso();
 
-  jpar JPar;
-  jiso JIso;
+    jpar JPar;
+    jiso JIso;
 };
 
 #endif // PARISODEF_H

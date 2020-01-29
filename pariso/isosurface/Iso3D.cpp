@@ -1470,18 +1470,18 @@ void IsoMasterThread::AllocateMasterParsers()
 
         if(!functnotnull)
             FunctSize = 0;
-         Fct          = new FunctionParser[FunctSize];
-         UsedFunct    = new bool[4*componentsNumber*FunctSize];
-         UsedFunct2   = new bool[FunctSize*FunctSize];
+        Fct          = new FunctionParser[FunctSize];
+        UsedFunct    = new bool[4*componentsNumber*FunctSize];
+        UsedFunct2   = new bool[FunctSize*FunctSize];
 
         rgbtnotnull ?
-            RgbtParser = new FunctionParser[(RgbtSize = 4)] :
-            RgbtParser = new FunctionParser[(RgbtSize = 0)];
+        RgbtParser = new FunctionParser[(RgbtSize = 4)] :
+        RgbtParser = new FunctionParser[(RgbtSize = 0)];
 
 
         vrgbtnotnull ?
-            VRgbtParser = new FunctionParser[VRgbtSize] :
-            VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
+        VRgbtParser = new FunctionParser[VRgbtSize] :
+        VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
 
         if(constnotnull)
             ConstSize=0;
@@ -1811,8 +1811,8 @@ void Iso3D::Setgrid(uint NewGridVal)
                 masterthread->Xgrid  = NewGridVal;
         for(uint th=0; th+1 < WorkerThreadsNumber; th++)
             workerthreads[th].Xgrid =
-            workerthreads[th].Ygrid =
-            workerthreads[th].Zgrid = NewGridVal;
+                workerthreads[th].Ygrid =
+                    workerthreads[th].Zgrid = NewGridVal;
 
         Zgrid  =
             Ygrid  =
@@ -1825,8 +1825,8 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
 {
     uint cmpId=0, K=0;
     double tmp,
-            *ValCol,
-            val[10];
+           *ValCol,
+           val[10];
     ValCol = new double[masterthread->VRgbtSize];
     val[3] = masterthread->stepMorph;
 
@@ -1877,14 +1877,14 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             idx+=comp->NbComponents[i];
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
-                if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
+            if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
+            {
+                K = cmpId;
+                if((masterthread->componentsNumber-1)>cmpId)
                 {
-                    K = cmpId;
-                    if((masterthread->componentsNumber-1)>cmpId)
-                    {
-                        cmpId++;
-                    }
+                    cmpId++;
                 }
+            }
 
             val[0]= double(NormVertexTabVector[i*10 + 7]);
             val[1]= double(NormVertexTabVector[i*10 + 8]);
@@ -2302,15 +2302,15 @@ uint Iso3D::SetMiniMmeshStruct()
                     /// In this case we have only Triangles (3 or 4):
                     iter = 0;
                     //if((PreviousSizeMinimalTopology + lnew + 4*nbpl) < 5*NbMaxTri)
-                        for(iterpl = 0; iterpl < nbpl; iterpl++)
-                        {
-                            IndexPolyTabMinVector.push_back(3);
-                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter  ]]  + NbVertexTmp);
-                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+1]]  + NbVertexTmp);
-                            IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+2]]  + NbVertexTmp);
-                            lnew += 4;
-                            iter +=3;
-                        }
+                    for(iterpl = 0; iterpl < nbpl; iterpl++)
+                    {
+                        IndexPolyTabMinVector.push_back(3);
+                        IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter  ]]  + NbVertexTmp);
+                        IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+1]]  + NbVertexTmp);
+                        IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK].Edge_Points[triTable_min[Index][iter+2]]  + NbVertexTmp);
+                        lnew += 4;
+                        iter +=3;
+                    }
                     //else return 0;
                 }
             } /// End of for(k=0;
@@ -2362,7 +2362,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     uint maxgridval=masterthread->maximumgrid;
     uint maxgrscalemaxgr = maxgridval*maxgridval;
     uint I, J, JK, IJK, IPLUSONEJK, IMINUSONEJK,
-        IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
+         IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
     /// We have to compute the edges for the Grid limits ie: i=0, j=0 and k=0
 
     i_Start = 1/*+masterthread->iStart*/;
@@ -3288,7 +3288,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 void Iso3D::SignatureComputation()
 {
     uint I, J, IJK, IPLUSONEJK,
-        IJPLUSONEK,  IPLUSONEJPLUSONEK;
+         IJPLUSONEK,  IPLUSONEJPLUSONEK;
     uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
     for(uint i=0; i < Xgrid; i++)
     {

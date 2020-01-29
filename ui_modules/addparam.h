@@ -25,12 +25,13 @@
 
 #include "ui_addparam.h"
 
-class AddParamForm : public QWidget {
-  Q_OBJECT
+class AddParamForm : public QWidget
+{
+    Q_OBJECT
 
 public:
-  AddParamForm(QWidget *parent = nullptr);
+    AddParamForm(QWidget *parent = nullptr);
 
 public:
-  Ui::AddParamForm ui;
+    Ui::AddParamForm ui;
 };

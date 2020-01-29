@@ -22,9 +22,13 @@
 
 #include "about.h"
 
-About::About(QWidget *parent) : QWidget(parent) {
-  this->setWindowFlags(Qt::WindowStaysOnTopHint);
-  ui.setupUi(this);
+About::About(QWidget *parent) : QWidget(parent)
+{
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+    ui.setupUi(this);
 }
 
-void About::on_about_clicked() { this->close(); }
+void About::on_about_clicked()
+{
+    this->close();
+}

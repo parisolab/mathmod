@@ -21,60 +21,64 @@
 #define OBJECTPARAMETERS_H
 #include "commun.h"
 
-class ParisoObject : public QThread {
+class ParisoObject : public QThread
+{
 public:
-  ParisoObject();
-  ~ParisoObject();
-  uint CNDtoUse(uint, struct ComponentInfos *);
-  void clear(struct ComponentInfos *);
+    ParisoObject();
+    ~ParisoObject();
+    uint CNDtoUse(uint, struct ComponentInfos *);
+    void clear(struct ComponentInfos *);
 
 public:
-  ObjectProperties *localScene;
-  uint WorkerThreadsNumber;
-  bool StopCalculations;
-  ScriptErrorType messageerror;
-  QString message;
+    ObjectProperties *localScene;
+    uint WorkerThreadsNumber;
+    bool StopCalculations;
+    ScriptErrorType messageerror;
+    QString message;
 };
 
-class WorkerThread : public QThread {
+class WorkerThread : public QThread
+{
 public:
-  WorkerThread();
-  ~WorkerThread();
+    WorkerThread();
+    ~WorkerThread();
 
 public:
-  uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish;
-  double stepMorph, pace;
-  bool StopCalculations, ParsersAllocated;
-  int activeMorph, signalVal;
+    uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish;
+    double stepMorph, pace;
+    bool StopCalculations, ParsersAllocated;
+    int activeMorph, signalVal;
 };
 
-class MasterThread {
+class MasterThread
+{
 public:
-  FunctionParser *ParisoConditionParser, *RgbtParser, *VRgbtParser,
-      *GradientParser, *NoiseParser, *NoiseShapeParser, Cstparser;
-  std::vector<std::string> Rgbts, RgbtNames, VRgbts, VRgbtNames, Functs,
-      FunctNames, Consts, ConstNames, SliderNames;
-  std::string Grid, Const, Funct, Rgbt, VRgbt, Gradient, Noise;
-  uint RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
-  std::vector<uint> grid;
-  bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull, functnotnull,
-      cndnotnull, rgbtnotnull, vrgbtnotnull;
-  std::vector<double> ConstValues, SliderValues;
-  double Octaves, Lacunarity, Gain;
-  int ParisoCondition;
-  ErrorMessage stdError;
+    FunctionParser *ParisoConditionParser, *RgbtParser, *VRgbtParser,
+                   *GradientParser, *NoiseParser, *NoiseShapeParser, Cstparser;
+    std::vector<std::string> Rgbts, RgbtNames, VRgbts, VRgbtNames, Functs,
+        FunctNames, Consts, ConstNames, SliderNames;
+    std::string Grid, Const, Funct, Rgbt, VRgbt, Gradient, Noise;
+    uint RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
+    std::vector<uint> grid;
+    bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull, functnotnull,
+         cndnotnull, rgbtnotnull, vrgbtnotnull;
+    std::vector<double> ConstValues, SliderValues;
+    double Octaves, Lacunarity, Gain;
+    int ParisoCondition;
+    ErrorMessage stdError;
 
 public:
-  MasterThread();
-  ~MasterThread();
+    MasterThread();
+    ~MasterThread();
 };
-class ObjectParameters {
+class ObjectParameters
+{
 public:
-  ObjectProperties objectproperties;
+    ObjectProperties objectproperties;
 
 public:
-  ObjectParameters();
-  void InitComponentinfos(struct ComponentInfos &);
+    ObjectParameters();
+    void InitComponentinfos(struct ComponentInfos &);
 };
 
 #endif // OBJECTPARAMETERS_H

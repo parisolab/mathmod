@@ -28,79 +28,80 @@
 #include <stdlib.h>
 #include <string>
 
-class jiso {
+class jiso
+{
 public:
-  jiso();
-  ~jiso();
+    jiso();
+    ~jiso();
 
-  QStringList name() const;
-  void setName(const QStringList &);
+    QStringList name() const;
+    void setName(const QStringList &);
 
-  QStringList text() const;
-  void setText(const QStringList &);
+    QStringList text() const;
+    void setText(const QStringList &);
 
-  QStringList comment() const;
-  void setComment(const QStringList &);
+    QStringList comment() const;
+    void setComment(const QStringList &);
 
-  QStringList csts() const;
-  void setConst(const QStringList &);
+    QStringList csts() const;
+    void setConst(const QStringList &);
 
-  QStringList funct() const;
-  void setFunct(const QStringList &);
+    QStringList funct() const;
+    void setFunct(const QStringList &);
 
-  QStringList grid() const;
-  void setGrid(const QStringList &);
+    QStringList grid() const;
+    void setGrid(const QStringList &);
 
-  QStringList rgbt() const;
-  void setRGBT(const QStringList &);
+    QStringList rgbt() const;
+    void setRGBT(const QStringList &);
 
-  QStringList fxyz() const;
-  void setFxyz(const QStringList &);
+    QStringList fxyz() const;
+    void setFxyz(const QStringList &);
 
-  QStringList xmin() const;
-  void setXmin(const QStringList &);
+    QStringList xmin() const;
+    void setXmin(const QStringList &);
 
-  QStringList xmax() const;
-  void setXmax(const QStringList &);
+    QStringList xmax() const;
+    void setXmax(const QStringList &);
 
-  QStringList ymin() const;
-  void setYmin(const QStringList &);
+    QStringList ymin() const;
+    void setYmin(const QStringList &);
 
-  QStringList ymax() const;
-  void setYmax(const QStringList &);
+    QStringList ymax() const;
+    void setYmax(const QStringList &);
 
-  QStringList zmin() const;
-  void setZmin(const QStringList &);
+    QStringList zmin() const;
+    void setZmin(const QStringList &);
 
-  QStringList zmax() const;
-  void setZmax(const QStringList &);
+    QStringList zmax() const;
+    void setZmax(const QStringList &);
 
-  QStringList component() const;
-  void setComponent(const QStringList &);
+    QStringList component() const;
+    void setComponent(const QStringList &);
 
-  void read(const QJsonObject &);
-  void write(QJsonObject &) const;
+    void read(const QJsonObject &);
+    void write(QJsonObject &) const;
 
 public:
-  QStringList Text;
-  QStringList Comment;
-  QStringList Name;
-  QStringList Csts;
-  QStringList Funct;
-  QStringList Grid;
-  QStringList RGBT;
-  QStringList Fxyz;
-  QStringList Xmin;
-  QStringList Xmax;
-  QStringList Ymin;
-  QStringList Ymax;
-  QStringList Zmin;
-  QStringList Zmax;
-  QStringList Cnd;
-  QStringList Component;
-  QJsonObject JisoObj;
-  int Nbcomponent;
-  int index;
+    QStringList Text;
+    QStringList Comment;
+    QStringList Name;
+    QStringList Csts;
+    QStringList Funct;
+    QStringList Grid;
+    QStringList RGBT;
+    QStringList Fxyz;
+    QStringList Xmin;
+    QStringList Xmax;
+    QStringList Ymin;
+    QStringList Ymax;
+    QStringList Zmin;
+    QStringList Zmax;
+    QStringList Cnd;
+    QStringList Component;
+    QJsonObject JisoObj;
+    int Nbcomponent;
+    int index;
 };
 
 #endif // JISO_H

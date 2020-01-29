@@ -99,9 +99,9 @@ public:
     uint Ugrid, Vgrid;
     uint CutV, CutU;
     float MINX,MINY,MINZ,MINW,
-           MAXX,MAXY,MAXZ,MAXW,
-           DIFX,DIFY,DIFZ,DIFW,
-           DIFMAXIMUM;
+          MAXX,MAXY,MAXZ,MAXW,
+          DIFX,DIFY,DIFZ,DIFW,
+          DIFMAXIMUM;
     Matrix4D mat4D, mat_rotation4D, mat_rotation_save4D,
              mat_homothetie4D, mat_translation4D, mat_inversetranslation4D;
     double tetaxy, tetaxz, tetayz, tetaxw, tetayw, tetazw;

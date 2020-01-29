@@ -27,21 +27,22 @@
 class GLThread;
 class OpenGlWidget;
 
-class GLThread : public QThread {
+class GLThread : public QThread
+{
 public:
-  GLThread(OpenGlWidget *);
-  void resizeViewport(const QSize &size);
-  void anim();
-  void morph();
-  void update();
-  void run();
-  void stop();
+    GLThread(OpenGlWidget *);
+    void resizeViewport(const QSize &size);
+    void anim();
+    void morph();
+    void update();
+    void run();
+    void stop();
 
 private:
-  bool doRendering;
-  bool doResize;
-  int w;
-  int h;
-  OpenGlWidget *glw;
+    bool doRendering;
+    bool doResize;
+    int w;
+    int h;
+    OpenGlWidget *glw;
 };
 #endif // GLWidget_h

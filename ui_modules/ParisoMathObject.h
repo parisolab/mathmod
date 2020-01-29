@@ -30,50 +30,52 @@
 
 enum ModelType { PAR_TYPE, PAR_4D_TYPE, ISO_TYPE, PARISO_TYPE, UNDEFINED_TYPE };
 
-struct TreeStruct {
-  QStringList name;
-  QStringList Component;
-  QStringList Const;
-  QStringList Funct;
-  QStringList Grid;
-  QStringList Cnd;
-  QStringList RGBT;
-  QStringList VRGBT;
-  QStringList Gradient;
-  QString Noise;
-  QString text;
-  QStringList fxyz;
-  QStringList xmin;
-  QStringList xmax;
-  QStringList ymin;
-  QStringList ymax;
-  QStringList zmin;
-  QStringList zmax;
-  QStringList fx;
-  QStringList fy;
-  QStringList fz;
-  QStringList fw;
-  QStringList umin;
-  QStringList umax;
-  QStringList vmin;
-  QStringList vmax;
-  QStringList tmin;
-  QStringList tmax;
-  ModelType type;
+struct TreeStruct
+{
+    QStringList name;
+    QStringList Component;
+    QStringList Const;
+    QStringList Funct;
+    QStringList Grid;
+    QStringList Cnd;
+    QStringList RGBT;
+    QStringList VRGBT;
+    QStringList Gradient;
+    QString Noise;
+    QString text;
+    QStringList fxyz;
+    QStringList xmin;
+    QStringList xmax;
+    QStringList ymin;
+    QStringList ymax;
+    QStringList zmin;
+    QStringList zmax;
+    QStringList fx;
+    QStringList fy;
+    QStringList fz;
+    QStringList fw;
+    QStringList umin;
+    QStringList umax;
+    QStringList vmin;
+    QStringList vmax;
+    QStringList tmin;
+    QStringList tmax;
+    ModelType type;
 };
 
-class ParisoMathObject {
+class ParisoMathObject
+{
 public:
-  int NbIsoStruct;
-  int NbParamStruct;
-  QJsonObject CurrentJsonObject;
-  QJsonArray MyJsonObjectSelection;
-  TreeStruct CurrentTreestruct;
-  std::vector<TreeStruct> CurrentParisoTreestruct;
-  QString dotsymbol;
+    int NbIsoStruct;
+    int NbParamStruct;
+    QJsonObject CurrentJsonObject;
+    QJsonArray MyJsonObjectSelection;
+    TreeStruct CurrentTreestruct;
+    std::vector<TreeStruct> CurrentParisoTreestruct;
+    QString dotsymbol;
 
 public:
-  ParisoMathObject();
-  ~ParisoMathObject();
-  void ReadJsonFile(QString, QJsonObject &);
+    ParisoMathObject();
+    ~ParisoMathObject();
+    void ReadJsonFile(QString, QJsonObject &);
 };

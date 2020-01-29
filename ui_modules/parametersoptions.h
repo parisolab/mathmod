@@ -29,68 +29,70 @@
 #include <QMessageBox>
 #include <QStyleFactory>
 
-struct ListeModelTexture {
-  QStringList listeModels;
-  QStringList listeTextures;
-  QStringList listePigments;
+struct ListeModelTexture
+{
+    QStringList listeModels;
+    QStringList listeTextures;
+    QStringList listePigments;
 };
 
-class Parametersoptions : public QWidget {
-  Q_OBJECT
+class Parametersoptions : public QWidget
+{
+    Q_OBJECT
 
 public:
-  Parametersoptions(QWidget *parent = nullptr);
-  QString dotsymbol;
-  QString model;
-  QString fullpath;
-  QString filecollection;
-  QString fileconfig;
-  QString advancedmodels;
-  QJsonObject JConfig, Collection, IsoParam;
-  QPalette mypalette, mypalette2, darkpalette;
-  QApplication *MainApp;
-  int ControlX;
-  int ControlY;
-  int GlwinX;
-  int GlwinY;
-  int ControlW;
-  int ControlH;
-  int GlwinW;
-  int GlwinH;
-  float Specular[4];
-  int Threads[3];
-  int CalculFactor[3];
-  int Shininess;
-  int IsoMaxGrid;
-  int ParMaxGrid;
-  int InitParGrid;
-  int InitIsoGrid;
+    Parametersoptions(QWidget *parent = nullptr);
+    QString dotsymbol;
+    QString model;
+    QString fullpath;
+    QString filecollection;
+    QString fileconfig;
+    QString advancedmodels;
+    QJsonObject JConfig, Collection, IsoParam;
+    QPalette mypalette, mypalette2, darkpalette;
+    QApplication *MainApp;
+    int ControlX;
+    int ControlY;
+    int GlwinX;
+    int GlwinY;
+    int ControlW;
+    int ControlH;
+    int GlwinW;
+    int GlwinH;
+    float Specular[4];
+    int Threads[3];
+    int CalculFactor[3];
+    int Shininess;
+    int IsoMaxGrid;
+    int ParMaxGrid;
+    int InitParGrid;
+    int InitIsoGrid;
 
 public slots:
-  void ReadConfigFile(QString, QJsonObject &);
-  void ReadJsonFile(QString, QJsonObject &);
-  void ReadCollectionFile(QString, QJsonObject &);
-  void SetStyleAndTheme(QApplication &, QString, QString);
-  void slot_about_clicked();
-  void GuiUpdate();
-  void maxisogri_valueChanged(int);
-  void maxpargri_valueChanged(int);
-  void on_loadconfig_clicked();
-  void SaveToFile_CurentMathModel(QJsonObject CurrentJsonObject);
-  void on_save_clicked();
-  void LoadConfig(QApplication &, int argc, char *argv[]);
-  ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
-  bool isFloat(std::string);
-  void on_comboBox_2_activated(const QString &);
-  void on_comboBox_3_activated(const QString &);
-  void on_comboBox_activated(const QString &);
-  void onred_2valueChanged(int);
-  void ongreen_2valueChanged(int);
-  void onblue_2valueChanged(int);
-  void on_TestConfig_clicked();
+    void ReadConfigFile(QString, QJsonObject &);
+    void ReadJsonFile(QString, QJsonObject &);
+    void ReadCollectionFile(QString, QJsonObject &);
+    void SetStyleAndTheme(QApplication &, QString, QString);
+    void slot_about_clicked();
+    void GuiUpdate();
+    void maxisogri_valueChanged(int);
+    void maxpargri_valueChanged(int);
+    void on_loadconfig_clicked();
+    void SaveToFile_CurentMathModel(QJsonObject CurrentJsonObject);
+    void on_save_clicked();
+    void LoadConfig(QApplication &, int argc, char *argv[]);
+    ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
+    bool isFloat(std::string);
+    void on_comboBox_2_activated(const QString &);
+    void on_comboBox_3_activated(const QString &);
+    void on_comboBox_activated(const QString &);
+    void onred_2valueChanged(int);
+    void ongreen_2valueChanged(int);
+    void onblue_2valueChanged(int);
+    void on_TestConfig_clicked();
 
 public:
-  Ui::Parametersoptions ui;
+    Ui::Parametersoptions ui;
 };
 
 #endif
