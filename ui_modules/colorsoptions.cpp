@@ -22,10 +22,7 @@
 
 #include "colorsoptions.h"
 
-
-ColorsOptions::ColorsOptions(QWidget *parent)
-    : QWidget(parent)
-{
-    this->setWindowFlags( Qt::WindowStaysOnTopHint );
-    ui.setupUi(this);
+ColorsOptions::ColorsOptions(QWidget *parent) : QWidget(parent) {
+  this->setWindowFlags(Qt::WindowStaysOnTopHint);
+  ui.setupUi(this);
 }

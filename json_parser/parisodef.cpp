@@ -20,13 +20,6 @@
 
 #include "parisodef.h"
 
+jcollection::jcollection() {}
 
-
-jcollection::jcollection()
-{
-}
-
-jcollection::~jcollection()
-{
-}
-
+jcollection::~jcollection() {}

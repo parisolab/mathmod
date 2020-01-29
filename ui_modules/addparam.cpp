@@ -22,10 +22,7 @@
 
 #include "addparam.h"
 
-
-AddParamForm::AddParamForm(QWidget *parent)
-    : QWidget(parent)
-{
-    this->setWindowFlags( Qt::WindowStaysOnTopHint );
-    ui.setupUi(this);
+AddParamForm::AddParamForm(QWidget *parent) : QWidget(parent) {
+  this->setWindowFlags(Qt::WindowStaysOnTopHint);
+  ui.setupUi(this);
 }

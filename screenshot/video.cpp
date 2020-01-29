@@ -19,61 +19,53 @@
  ***************************************************************************/
 #include "video.h"
 
-screenimage::screenimage(QImage buffer)
-    : QMainWindow( nullptr, nullptr)
-{
-    buf = buffer;
-    image_quality=1;
-    l = new QLabel(this, nullptr);
-    l->resize(320, 320);
-    resize(320, 343);
-    this->setWindowTitle("ScreenShot");
-    //setCaption( "ScreenShot" );
-    QPixmap ScreenshotIcon = QPixmap::fromImage(buf.scaled(320, 320));
-    l->setPixmap(ScreenshotIcon); //  (ScreenshotIcon);
-    groupBox = new QGroupBox(this);
-    groupBox->setGeometry( QRect( 0, 317, 320, 25 ) );
-    scrollBar55 = new QScrollBar(Qt::Horizontal, nullptr );
-    scrollBar55->setGeometry( QRect( 160, 2, 80, 16 ) );
-    scrollBar55->setPageStep( 1 );
-    scrollBar55->setValue( 1 );
-    //QLabel * text = new QLabel( "Image quality:", groupBox,0);
-    //text->setGeometry( QRect( 3, 5, 150, 16 ) );
-    pushScreenshot = new QPushButton("pushScreenshot", groupBox );
-    pushScreenshot->setGeometry( QRect( 250, 2, 75, 18 ) );
-    pushScreenshot->setText( tr( "Save Screen" ) );
+screenimage::screenimage(QImage buffer) : QMainWindow(nullptr, nullptr) {
+  buf = buffer;
+  image_quality = 1;
+  l = new QLabel(this, nullptr);
+  l->resize(320, 320);
+  resize(320, 343);
+  this->setWindowTitle("ScreenShot");
+  // setCaption( "ScreenShot" );
+  QPixmap ScreenshotIcon = QPixmap::fromImage(buf.scaled(320, 320));
+  l->setPixmap(ScreenshotIcon); //  (ScreenshotIcon);
+  groupBox = new QGroupBox(this);
+  groupBox->setGeometry(QRect(0, 317, 320, 25));
+  scrollBar55 = new QScrollBar(Qt::Horizontal, nullptr);
+  scrollBar55->setGeometry(QRect(160, 2, 80, 16));
+  scrollBar55->setPageStep(1);
+  scrollBar55->setValue(1);
+  // QLabel * text = new QLabel( "Image quality:", groupBox,0);
+  // text->setGeometry( QRect( 3, 5, 150, 16 ) );
+  pushScreenshot = new QPushButton("pushScreenshot", groupBox);
+  pushScreenshot->setGeometry(QRect(250, 2, 75, 18));
+  pushScreenshot->setText(tr("Save Screen"));
 }
 
-screenimage::~screenimage()
-{
-//delete m;
-    delete l;
+screenimage::~screenimage() {
+  // delete m;
+  delete l;
 }
 
-void screenimage::connectcontrols()
-{
-    connect( pushScreenshot, SIGNAL(clicked() ), this, SLOT(saveas()));
-    connect( scrollBar55, SIGNAL(valueChanged(int) ), this, SLOT(f_1(int)));
+void screenimage::connectcontrols() {
+  connect(pushScreenshot, SIGNAL(clicked()), this, SLOT(saveas()));
+  connect(scrollBar55, SIGNAL(valueChanged(int)), this, SLOT(f_1(int)));
 }
 //+++++++++++++++++++++++++++++++++++++++
-void screenimage::f_1(int quality)
-{
-    image_quality = quality;
-}
+void screenimage::f_1(int quality) { image_quality = quality; }
 
 //+++++++++++++++++++++++++++++++++++++++
-void screenimage::saveas()
-{
-    QString fn = QFileDialog::getSaveFileName(this,
-                 tr("Choose a filename to save under"),
-                 "",
-                 tr("Images (*.png *.bmp);; All files (*.*)")
-                                             );
+void screenimage::saveas() {
+  QString fn = QFileDialog::getSaveFileName(
+      this, tr("Choose a filename to save under"), "",
+      tr("Images (*.png *.bmp);; All files (*.*)"));
 
-    if ( !fn.isEmpty() )
-    {
-        if(fn.contains(".bmp"))  buf.save(fn, "BMP", 1);
-        else if(fn.contains(".png"))  buf.save(fn, "PNG", 1);
-        else buf.save(fn+".png", "PNG", image_quality);
-    }
+  if (!fn.isEmpty()) {
+    if (fn.contains(".bmp"))
+      buf.save(fn, "BMP", 1);
+    else if (fn.contains(".png"))
+      buf.save(fn, "PNG", 1);
+    else
+      buf.save(fn + ".png", "PNG", image_quality);
+  }
 }
