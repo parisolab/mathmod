@@ -1628,13 +1628,11 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     case ISO_CND:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition =
-                result.toStdString();
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition = result.toStdString();
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
             for(int i=0; i<lst.size(); i++)
-                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString())=="");
-            MathmodRef->RootObjet.CurrentTreestruct.Cnd =
-                result.split(";", QString::SkipEmptyParts);
+                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "")=="");
+            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1647,12 +1645,9 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     case ISO_FUNCT:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Funct =
-                result.toStdString();
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->FunctSize =
-                uint(lst.size());
-            MathmodRef->RootObjet.CurrentTreestruct.Funct =
-                result.split(";", QString::SkipEmptyParts);
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->Funct = result.toStdString();
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->FunctSize = uint(lst.size());
+            MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1735,25 +1730,26 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     case PAR_CND:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND =
-                result.toStdString();
-            MathmodRef->RootObjet.CurrentTreestruct.Cnd =
-                result.split(";", QString::SkipEmptyParts);
+            MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND = result.toStdString();
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
+            for(int i=0; i<lst.size(); i++)
+                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "") == "");
+            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
+            for(int i=0; i<lst.size(); i++)
+                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back(false);
             MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND = "";
         }
         break;
     case PAR_CONST:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Const =
-                result.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->masterthread->ConstSize =
-                uint(lst.size());
-            MathmodRef->RootObjet.CurrentTreestruct.Const =
-                result.split(";", QString::SkipEmptyParts);
+            MathmodRef->ui.glWidget->ParObjet->masterthread->Const = result.toStdString();
+            MathmodRef->ui.glWidget->ParObjet->masterthread->ConstSize = uint(lst.size());
+            MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
