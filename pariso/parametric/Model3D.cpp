@@ -1285,7 +1285,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             vals[2] = double(NormVertexTabVector[i*10+9]);
 
             uint compid= CNDtoUse(i, comp);
-            if(comp->ParisoCondition[compid])
+            if(comp->ParisoCondition[compid+idx])
                 PointVerifyCond.push_back(8);
             else
                 PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[compid].Eval(vals)));

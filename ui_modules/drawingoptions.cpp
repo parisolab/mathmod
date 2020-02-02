@@ -1107,6 +1107,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 
     ShowSliders(Jobj);
     updateCurrentTreestruct();
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
     if (Jobj["ParIso"].isArray())
     {
         QJsonArray listeObj = Jobj["ParIso"].toArray();
@@ -1813,7 +1814,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 
     QMessageBox msgBox;
     updateCurrentTreestruct();
-
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
     for (int i = 0; i < array.size(); i++)
     {
         if ((QObj1 = array[i].toObject())["ParIso"].isArray())
@@ -1950,7 +1951,6 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
 {
     // We First deactivate the pariso flag
     MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
     MathmodRef->RootObjet.CurrentTreestruct.type = mod;
     switch (mod)
     {
