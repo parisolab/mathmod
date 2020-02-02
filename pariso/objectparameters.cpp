@@ -61,9 +61,11 @@ void ParisoObject::clear(struct ComponentInfos *cp)
     cp->ParisoVertex.clear();
     cp->NbComponents.clear();
     cp->ThereisCND.clear();
+    cp->ParisoCondition.clear();
     cp->ThereisRGBA.clear();
 
     cp->NbTrianglesVerifyCND.clear();
+    cp->NbTrianglesNoCND.clear();
     cp->NbTrianglesNotVerifyCND.clear();
     cp->NbTrianglesBorderCND.clear();
 

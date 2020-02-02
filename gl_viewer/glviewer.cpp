@@ -615,11 +615,16 @@ static void DrawPariso(ObjectProperties *scene, uint compindex)
     }
     if (scene->componentsinfos.ThereisCND[compindex])
     {
+        glDrawElements(
+            GL_TRIANGLES,
+            int(3 * (scene->componentsinfos.NbTrianglesNoCND[compindex])),
+            GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[start_triangle]));
+
         if (scene->cndoptions[0])
             glDrawElements(
                 GL_TRIANGLES,
                 int(3 * (scene->componentsinfos.NbTrianglesVerifyCND[compindex])),
-                GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[start_triangle]));
+                GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[3 * scene->componentsinfos.NbTrianglesNoCND[compindex] +start_triangle]));
 
         if (scene->cndoptions[1])
             glDrawElements(
@@ -627,7 +632,7 @@ static void DrawPariso(ObjectProperties *scene, uint compindex)
                 int(3 * (scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])),
                 GL_UNSIGNED_INT,
                 &(scene->PolyIndices_localPt
-                  [3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
+                  [3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
                      start_triangle]));
     }
 
@@ -1136,7 +1141,8 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
         glDrawElements(
             GL_TRIANGLES,
             int(3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]),
-            GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[start_triangle]));
+            GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[3 * scene->componentsinfos
+                    .NbTrianglesNoCND[compindex] + start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1);
     }
@@ -1150,6 +1156,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
             int(3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt[3 * scene->componentsinfos
+                    .NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos
                                            .NbTrianglesVerifyCND[compindex] +
                                            start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1165,7 +1172,8 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
             int(3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]),
             GL_UNSIGNED_INT,
             &(scene->PolyIndices_localPt
-              [3 * (scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
+              [3 * scene->componentsinfos
+                    .NbTrianglesNoCND[compindex] + 3 * (scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
                     scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]) +
                  start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

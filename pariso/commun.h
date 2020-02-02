@@ -141,11 +141,12 @@ struct ComponentInfos
 
     std::vector<bool> ThereisCND;
     std::vector<bool> ThereisRGBA;
-
+    std::vector<bool> ParisoCondition;
     uint ParisoNbComponents = 1;
     uint ParisoCurrentComponentIndex = 0;
 
     std::vector<uint> NbTrianglesVerifyCND;
+    std::vector<uint> NbTrianglesNoCND;
     std::vector<uint> NbTrianglesNotVerifyCND;
     std::vector<uint> NbTrianglesBorderCND;
 

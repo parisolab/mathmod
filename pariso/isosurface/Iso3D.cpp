@@ -1264,7 +1264,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;
         }
-        if(cndnotnull)
+        if(cndnotnull && (ImplicitStructs[i].cnd!=""))
         {
             if ((stdError.iErrorIndex = ParisoConditionParser[i].Parse(ImplicitStructs[i].cnd,"x,y,z,t")) >= 0)
             {
@@ -1541,8 +1541,10 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->updateviewer                = origin->updateviewer;
 
     copy->ThereisCND                  = origin->ThereisCND;
+    copy->ParisoCondition             = origin->ParisoCondition;
     copy->ThereisRGBA                 = origin->ThereisRGBA;
     copy->NbTrianglesVerifyCND        = origin->NbTrianglesVerifyCND;
+    copy->NbTrianglesNoCND            = origin->NbTrianglesNoCND;
     copy->NbTrianglesNotVerifyCND     = origin->NbTrianglesNotVerifyCND;
     copy->NbTrianglesBorderCND        = origin->NbTrianglesBorderCND;
 
@@ -1568,6 +1570,7 @@ void Iso3D::IsoBuild (
     NbVertexTmp = NbTriangleIsoSurfaceTmp = 0;
     componentsPt->updateviewer= false;
     clear(components);
+    components->ParisoCondition = componentsPt->ParisoCondition;
     if(componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)
     {
         NbVertexTmp = uint(NormVertexTabVector.size()/10);
@@ -1927,7 +1930,13 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             vals[0] = double(NormVertexTabVector[i*10+7]);
             vals[1] = double(NormVertexTabVector[i*10+8]);
             vals[2] = double(NormVertexTabVector[i*10+9]);
-            PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[CNDtoUse(i, comp)].Eval(vals)));
+
+            uint compid= CNDtoUse(i, comp);
+            if(comp->ParisoCondition[compid])
+                PointVerifyCond.push_back(8);
+            else
+                PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[compid].Eval(vals)));
+
             if(PointVerifyCond[i-startpoint])
             {
                 NormVertexTabVector[i*10  ] = 0.1f;
@@ -1960,7 +1969,14 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             Cindex = IndexPolyTabVector[3*i + 2];
 
             int TypeTriangle = -1;
-            if(PointVerifyCond[Aindex-startpoint] && !PointVerifyCond[Bindex-startpoint] && !PointVerifyCond[Cindex-startpoint])
+            if((PointVerifyCond[Aindex-startpoint] == 8) ||
+                    (PointVerifyCond[Bindex-startpoint] == 8) ||
+                    (PointVerifyCond[Cindex-startpoint] == 8))
+            {
+                TypeTriangle = 8;
+                TypeIsoSurfaceTriangleListeCNDVector[i-starttri] = 8;
+            }
+            else if(PointVerifyCond[Aindex-startpoint] && !PointVerifyCond[Bindex-startpoint] && !PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 0;
             else if(!PointVerifyCond[Aindex-startpoint] && PointVerifyCond[Bindex-startpoint] && PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 1;
@@ -2159,8 +2175,8 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         //Reorganize the triangles index:
         //***********
         std::vector<uint>NewIndexPolyTabVector;
-        uint k, l, M;
-        k = l = M =0;
+        uint k, l, M, N;
+        k = l = M = N = 0;
 
         // In case we have a ParIso object, this will save the triangle arrangement for the parametric CND
         for(uint i=0; i<starttri; i++)
@@ -2171,6 +2187,16 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         }
 
         // Now we start sorting the triangles list. We have 3 cases
+
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
+            if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == 8)
+            {
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i  ]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+1]);
+                NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
+                N++;
+            }
+
         for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
             if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] == 1)
             {
@@ -2197,7 +2223,15 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 M++;
             }
-
+        /*
+        for(uint i=starttri; i<NbTriangleIsoSurfaceTmp; i++)
+            if(TypeIsoSurfaceTriangleListeCNDVector[i-starttri] != 8 &&
+               TypeIsoSurfaceTriangleListeCNDVector[i-starttri] != 1 &&
+               TypeIsoSurfaceTriangleListeCNDVector[i-starttri] != -1 &&
+               TypeIsoSurfaceTriangleListeCNDVector[i-starttri] != 4
+                    )
+              NewIndexPolyTabVector.push_back(0);
+*/
         //Copy the new index in the original one:
         IndexPolyTabVector.clear();
         NewIndexPolyTabVector.shrink_to_fit();
@@ -2205,8 +2239,9 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         NewIndexPolyTabVector.clear();
         NewIndexPolyTabVector.shrink_to_fit();
 
-        NbTriangleIsoSurfaceTmp = M + l + k;
+        NbTriangleIsoSurfaceTmp = M + l + k + N;
 
+        comp->NbTrianglesNoCND.push_back(N);
         comp->NbTrianglesVerifyCND.push_back(k);
         comp->NbTrianglesNotVerifyCND.push_back(l);
         comp->NbTrianglesBorderCND.push_back(M);
@@ -2219,6 +2254,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     }
     else
     {
+        comp->NbTrianglesNoCND.push_back(0);
         comp->NbTrianglesVerifyCND.push_back(0);
         comp->NbTrianglesNotVerifyCND.push_back(0);
         comp->NbTrianglesBorderCND.push_back(0);

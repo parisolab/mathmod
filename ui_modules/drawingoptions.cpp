@@ -1630,11 +1630,17 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         {
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition =
                 result.toStdString();
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
+            for(int i=0; i<lst.size(); i++)
+                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString())=="");
             MathmodRef->RootObjet.CurrentTreestruct.Cnd =
                 result.split(";", QString::SkipEmptyParts);
         }
         else
         {
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
+            for(int i=0; i<lst.size(); i++)
+                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back(false);
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition = "";
         }
         break;
