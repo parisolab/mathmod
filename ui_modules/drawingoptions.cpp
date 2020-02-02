@@ -1629,14 +1629,12 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         if (argnotnull)
         {
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition = result.toStdString();
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
             for(int i=0; i<lst.size(); i++)
                 MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "")=="");
             MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
             for(int i=0; i<lst.size(); i++)
                 MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back(false);
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition = "";
@@ -1731,14 +1729,12 @@ void DrawingOptions::OptionalParScriptFieldprocess(
         if (argnotnull)
         {
             MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND = result.toStdString();
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
             for(int i=0; i<lst.size(); i++)
                 MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "") == "");
             MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
             for(int i=0; i<lst.size(); i++)
                 MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back(false);
             MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND = "";
@@ -1954,6 +1950,7 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
 {
     // We First deactivate the pariso flag
     MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
     MathmodRef->RootObjet.CurrentTreestruct.type = mod;
     switch (mod)
     {
