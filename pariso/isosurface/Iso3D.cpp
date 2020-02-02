@@ -2231,7 +2231,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                TypeIsoSurfaceTriangleListeCNDVector[i-starttri] != 4
                     )
               NewIndexPolyTabVector.push_back(0);
-*/
+        */
         //Copy the new index in the original one:
         IndexPolyTabVector.clear();
         NewIndexPolyTabVector.shrink_to_fit();

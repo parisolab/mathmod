@@ -1323,12 +1323,12 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
 
             int TypeTriangle = -1;
             if((PointVerifyCond[Aindex-startpoint] == 8) ||
-               (PointVerifyCond[Bindex-startpoint] == 8) ||
-               (PointVerifyCond[Cindex-startpoint] == 8))
-              {
+                    (PointVerifyCond[Bindex-startpoint] == 8) ||
+                    (PointVerifyCond[Cindex-startpoint] == 8))
+            {
                 TypeTriangle = 8;
                 TypeIsoSurfaceTriangleListeCNDVector[i-starttri] = 8;
-              }
+            }
             else if(PointVerifyCond[Aindex-startpoint] && !PointVerifyCond[Bindex-startpoint] && !PointVerifyCond[Cindex-startpoint])
                 TypeTriangle = 0;
             else if(!PointVerifyCond[Aindex-startpoint] && PointVerifyCond[Bindex-startpoint] && PointVerifyCond[Cindex-startpoint])
