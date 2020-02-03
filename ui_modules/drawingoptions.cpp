@@ -284,9 +284,9 @@ void DrawingOptions::SaveSlidersRef(int nb)
 // --------------------------
 void DrawingOptions::on_xyzg_valueChanged(int value)
 {
-    ui.Isogroupbox->setTitle("Iso Grid/max Grid ( " +
+    ui.Isogroupbox->setTitle("Grid/MaxGrid = (" +
                              QString::number(ui.xyzg->value()) + " / " +
-                             QString::number(Parameters->IsoMaxGrid) + " ) :");
+                             QString::number(Parameters->IsoMaxGrid) + ")");
     if (!MathmodRef->ui.glWidget->IsoObjet->isRunning())
     {
         MathmodRef->xyzg_valueChanged(value);
@@ -4389,7 +4389,7 @@ void DrawingOptions::on_actionColorPolygonWavefront_obj_triggered()
 // --------------------------
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
-    ui.ParamgroupBox_2->setTitle("Grid(u,v)/ MaxGrid = (" + QString::number(value) +
+    ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
                                  ", " + QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
     if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
     {
@@ -4408,7 +4408,7 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
-        "Param Grid(u,v) = (" + QString::number(value) + ", " +
+        "Grid(u,v)/MaxGrid = (" + QString::number(value) + ", " +
         QString::number(MathmodRef->ui.glWidget->ParObjet->Ugrid) +") / "+QString::number(Parameters->ParMaxGrid));
     if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
     {
@@ -4427,7 +4427,7 @@ void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
-        "Param Grid(u,v) = (" +
+        "Param Grid(u,v)/MaxGrid = (" +
         QString::number(MathmodRef->ui.glWidget->ParObjet->Vgrid) + ", " +
         QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
     if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
@@ -4581,7 +4581,19 @@ void DrawingOptions::on_zwhorizontalScrollBar_valueChanged(int value)
 // --------------------------
 void DrawingOptions::on_linecolumn_3_valueChanged(int value)
 {
-    MathmodRef->linecolumn_valueChanged_2(value);
+    ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
+                                 ", " + QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
+    if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
+    {
+        MathmodRef->linecolumn_valueChanged_2(value);
+    }
+    else
+    {
+        ui.uv4D->blockSignals(true);
+        ui.uv4D->setChecked(false);
+        ui.uv4D->blockSignals(false);
+        MathmodRef->uvactivated4D = -1;
+    }
 }
 
 // --------------------------
@@ -6039,28 +6051,33 @@ void DrawingOptions::ApplypushButton_clicked()
 {
     int maxisogrid = 0;
     int maxpargrid = 0;
-    if ((maxisogrid = (Parameters->ui.IsoMaxGridLineEdit->text()).toInt()) !=
+    if ((Parameters->ui.IsoMaxGridLineEdit->text()).replace(" ", "")!= "" &&
+            (maxisogrid = (Parameters->ui.IsoMaxGridLineEdit->text()).toInt()) !=
             Parameters->IsoMaxGrid)
     {
         Parameters->IsoMaxGrid = maxisogrid;
         MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
-        ui.Isogroupbox->setTitle("Iso Grid/max Grid ( " +
+        ui.Isogroupbox->setTitle("Iso Grid/MaxGrid ( " +
                                  QString::number(ui.xyzg->value()) + " / " +
-                                 ui.IsoMaxGridLineEdit->text() + " ) :");
+                                 QString::number(maxisogrid) + " ) :");
         ui.xyzg->blockSignals(true);
         ui.xyzg->setMaximum(maxisogrid);
         ui.xyzg->blockSignals(false);
     }
 
-    if ((maxpargrid = (Parameters->ui.ParMaxGridLineEdit->text()).toInt()) !=
+    if ((Parameters->ui.ParMaxGridLineEdit->text()).replace(" ", "")!= "" &&
+            (maxpargrid = (Parameters->ui.ParMaxGridLineEdit->text()).toInt()) !=
             Parameters->ParMaxGrid)
     {
         Parameters->ParMaxGrid = maxpargrid;
-
+        ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = ( " + QString::number(ui.linecolumn_2->value()) +
+                                     ", " + QString::number(ui.linecolumn_2->value()) + " ) / "+QString::number(maxpargrid));
         ui.linecolumn_2->blockSignals(true);
         ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
         ui.linecolumn_2->blockSignals(false);
 
+        ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = ( " + QString::number(ui.linecolumn_3->value()) +
+                                     ", " + QString::number(ui.linecolumn_3->value()) + " ) / "+QString::number(maxpargrid));
         ui.linecolumn_3->blockSignals(true);
         ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
         ui.linecolumn_3->blockSignals(false);
@@ -6099,12 +6116,12 @@ void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
 void DrawingOptions::on_ApplypushButton_clicked()
 {
     int maxisogrid = 0;
-    if ((maxisogrid = (ui.IsoMaxGridLineEdit->text()).toInt()) !=
-            Parameters->IsoMaxGrid)
+    if ((ui.IsoMaxGridLineEdit->text()).replace(" ", "")!= "" &&
+         (maxisogrid = (ui.IsoMaxGridLineEdit->text()).toInt()) != Parameters->IsoMaxGrid)
     {
         Parameters->IsoMaxGrid = maxisogrid;
         MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
-        ui.Isogroupbox->setTitle("Iso Grid/max Grid ( " +
+        ui.Isogroupbox->setTitle("Grid/MaxGrid = ( " +
                                  QString::number(ui.xyzg->value()) + " / " +
                                  QString::number(maxisogrid) + " ) :");
         ui.xyzg->blockSignals(true);
@@ -6116,18 +6133,20 @@ void DrawingOptions::on_ApplypushButton_clicked()
 void DrawingOptions::on_ApplypushButton_2_clicked()
 {
     int maxpargrid = 0;
-    if ((maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) !=
-            Parameters->ParMaxGrid)
+    if ((ui.ParMaxGridLineEdit->text()).replace(" ", "")!= "" &&
+        (maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) != Parameters->ParMaxGrid)
     {
         Parameters->ParMaxGrid = maxpargrid;
-        ui.ParamgroupBox_2->setTitle("Grid(u,v)/ MaxGrid = ( " + QString::number(ui.linecolumn_2->value()) +
-                                     ", " + QString::number(ui.linecolumn_2->value()) + " ) / "+QString::number(Parameters->ParMaxGrid));
+        ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(ui.linecolumn_2->value()) +
+                                     ", " + QString::number(ui.linecolumn_2->value()) + ")/"+QString::number(maxpargrid));
         ui.linecolumn_2->blockSignals(true);
-        ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_2->setMaximum(int(maxpargrid));
         ui.linecolumn_2->blockSignals(false);
 
+        ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(ui.linecolumn_3->value()) +
+                                     ", " + QString::number(ui.linecolumn_3->value()) + ")/"+QString::number(maxpargrid));
         ui.linecolumn_3->blockSignals(true);
-        ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_3->setMaximum(int(maxpargrid));
         ui.linecolumn_3->blockSignals(false);
     }
 }
@@ -6135,18 +6154,20 @@ void DrawingOptions::on_ApplypushButton_2_clicked()
 void DrawingOptions::on_ApplypushButton_3_clicked()
 {
     int maxpargrid = 0;
-    if ((maxpargrid = (ui.ParMaxGridLineEdit_2->text()).toInt()) !=
-            Parameters->ParMaxGrid)
+    if ((ui.ParMaxGridLineEdit_2->text()).replace(" ", "")!= "" &&
+        (maxpargrid = (ui.ParMaxGridLineEdit_2->text()).toInt()) != Parameters->ParMaxGrid)
     {
         Parameters->ParMaxGrid = maxpargrid;
-        ui.ParamgroupBox_2->setTitle("Grid(u,v)/ MaxGrid = ( " + QString::number(ui.linecolumn_3->value()) +
-                                     ", " + QString::number(ui.linecolumn_3->value()) + " ) / "+QString::number(Parameters->ParMaxGrid));
+        ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(ui.linecolumn_2->value()) +
+                                     ", " + QString::number(ui.linecolumn_2->value()) + ")/"+QString::number(maxpargrid));
         ui.linecolumn_2->blockSignals(true);
-        ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_2->setMaximum(int(maxpargrid));
         ui.linecolumn_2->blockSignals(false);
 
+        ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = ("+ QString::number(ui.linecolumn_3->value()) +
+                                     ", " + QString::number(ui.linecolumn_3->value()) +")/"+QString::number(maxpargrid));
         ui.linecolumn_3->blockSignals(true);
-        ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
+        ui.linecolumn_3->setMaximum(int(maxpargrid));
         ui.linecolumn_3->blockSignals(false);
     }
 }
