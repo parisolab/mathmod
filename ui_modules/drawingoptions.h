@@ -333,5 +333,6 @@ private slots:
     void on_ApplypushButton_clicked();
     void on_ApplypushButton_2_clicked();
     void on_ApplypushButton_3_clicked();
+    void updateParametricGridSliders(int);
 };
 #endif
