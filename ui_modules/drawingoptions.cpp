@@ -284,7 +284,9 @@ void DrawingOptions::SaveSlidersRef(int nb)
 // --------------------------
 void DrawingOptions::on_xyzg_valueChanged(int value)
 {
-    ui.Isogroupbox->setTitle("Iso Grid ( " + QString::number(value) + " ) :");
+    ui.Isogroupbox->setTitle("Iso Grid/max Grid ( " +
+                             QString::number(ui.xyzg->value()) + " / " +
+                             QString::number(Parameters->IsoMaxGrid) + " ) :");
     if (!MathmodRef->ui.glWidget->IsoObjet->isRunning())
     {
         MathmodRef->xyzg_valueChanged(value);
@@ -4387,8 +4389,8 @@ void DrawingOptions::on_actionColorPolygonWavefront_obj_triggered()
 // --------------------------
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
-    ui.ParamgroupBox_2->setTitle("Param Grid(u,v) = ( " + QString::number(value) +
-                                 ", " + QString::number(value) + " ) :");
+    ui.ParamgroupBox_2->setTitle("Grid(u,v)/ MaxGrid = (" + QString::number(value) +
+                                 ", " + QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
     if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
     {
         MathmodRef->linecolumn_valueChanged(value);
@@ -4406,8 +4408,8 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
-        "Param Grid(u,v) = ( " + QString::number(value) + ", " +
-        QString::number(MathmodRef->ui.glWidget->ParObjet->Ugrid) + " ) :");
+        "Param Grid(u,v) = (" + QString::number(value) + ", " +
+        QString::number(MathmodRef->ui.glWidget->ParObjet->Ugrid) +") / "+QString::number(Parameters->ParMaxGrid));
     if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
     {
         MathmodRef->line_valueChanged(value);
@@ -4425,9 +4427,9 @@ void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
-        "Param Grid(u,v) = ( " +
+        "Param Grid(u,v) = (" +
         QString::number(MathmodRef->ui.glWidget->ParObjet->Vgrid) + ", " +
-        QString::number(value) + " ) :");
+        QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
     if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
     {
         MathmodRef->column_valueChanged(value);
@@ -6042,6 +6044,9 @@ void DrawingOptions::ApplypushButton_clicked()
     {
         Parameters->IsoMaxGrid = maxisogrid;
         MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
+        ui.Isogroupbox->setTitle("Iso Grid/max Grid ( " +
+                                 QString::number(ui.xyzg->value()) + " / " +
+                                 ui.IsoMaxGridLineEdit->text() + " ) :");
         ui.xyzg->blockSignals(true);
         ui.xyzg->setMaximum(maxisogrid);
         ui.xyzg->blockSignals(false);
@@ -6101,7 +6106,7 @@ void DrawingOptions::on_ApplypushButton_clicked()
         MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
         ui.Isogroupbox->setTitle("Iso Grid/max Grid ( " +
                                  QString::number(ui.xyzg->value()) + " / " +
-                                 ui.IsoMaxGridLineEdit->text() + " ) :");
+                                 QString::number(maxisogrid) + " ) :");
         ui.xyzg->blockSignals(true);
         ui.xyzg->setMaximum(maxisogrid);
         ui.xyzg->blockSignals(false);
@@ -6115,7 +6120,8 @@ void DrawingOptions::on_ApplypushButton_2_clicked()
             Parameters->ParMaxGrid)
     {
         Parameters->ParMaxGrid = maxpargrid;
-
+        ui.ParamgroupBox_2->setTitle("Grid(u,v)/ MaxGrid = ( " + QString::number(ui.linecolumn_2->value()) +
+                                     ", " + QString::number(ui.linecolumn_2->value()) + " ) / "+QString::number(Parameters->ParMaxGrid));
         ui.linecolumn_2->blockSignals(true);
         ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
         ui.linecolumn_2->blockSignals(false);
@@ -6133,7 +6139,8 @@ void DrawingOptions::on_ApplypushButton_3_clicked()
             Parameters->ParMaxGrid)
     {
         Parameters->ParMaxGrid = maxpargrid;
-
+        ui.ParamgroupBox_2->setTitle("Grid(u,v)/ MaxGrid = ( " + QString::number(ui.linecolumn_3->value()) +
+                                     ", " + QString::number(ui.linecolumn_3->value()) + " ) / "+QString::number(Parameters->ParMaxGrid));
         ui.linecolumn_2->blockSignals(true);
         ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
         ui.linecolumn_2->blockSignals(false);

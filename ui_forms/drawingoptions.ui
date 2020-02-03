@@ -1757,7 +1757,7 @@ p, li { white-space: pre-wrap; }
                              </palette>
                             </property>
                             <property name="title">
-                             <string>Iso Grid/Max Grid ( 40/300 ) :</string>
+                             <string>Iso Grid/Max Grid ( 40/500 ) :</string>
                             </property>
                             <layout class="QGridLayout" name="gridLayout_5">
                              <property name="leftMargin">
