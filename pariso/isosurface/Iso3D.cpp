@@ -26,7 +26,7 @@ static Voxel *GridVoxelVarPt;
 static double *Results;
 static uint NbVertexTmp = 0;
 static std::vector<float> NormOriginaltmpVector;
-
+static uint MaxGrid2=0;
 uint NbTriangleIsoSurface,NbPointIsoMap;
 static uint NbMaxGrid = 100;
 
@@ -735,7 +735,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     double* vals;
     double* Res;
-    uint maxgrscalemaxgr = maximumgrid*maximumgrid;
+    uint maxgrscalemaxgr = MaxGrid2*MaxGrid2;
     const uint limitY = Ygrid, limitZ = Zgrid;
     uint I, J, IJK;
     uint id=0;
@@ -791,7 +791,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 nbY = remY;
                 j= limitY;
             }
-            J = I + Jindice*maximumgrid;
+            J = I + Jindice*MaxGrid2;
             for(uint k=0; k<limitZ; k+=nbZ)
             {
                 Kindice = k;
@@ -831,7 +831,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     for(uint jj=0; jj<nbY; jj++)
                         for(uint kk=0; kk<nbZ; kk++)
                         {
-                            sect= IJK + (ii)*maxgrscalemaxgr+ (jj)*maximumgrid + (kk);
+                            sect= IJK + (ii)*MaxGrid2*MaxGrid2+ (jj)*MaxGrid2 + (kk);
                             Results[sect] = Res[p];
                             GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
                             GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
@@ -1600,19 +1600,23 @@ void Iso3D::IsoBuild (
     if(masterthread->gridnotnull)
         for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
             maxx = std::max(maxx, masterthread->grid[fctnb]);
-
     masterthread->maximumgrid = maxx;
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].maximumgrid = masterthread->maximumgrid;
     }
 
+    MaxGrid2 = std::max(std::max(Xgrid, Ygrid), Zgrid);
+    if(masterthread->gridnotnull)
+        for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
+            MaxGrid2 = std::max(MaxGrid2, masterthread->grid[fctnb]);
+
     if(GridVoxelVarPt != nullptr)
         delete[] GridVoxelVarPt;
-    GridVoxelVarPt = new Voxel[maxx*maxx*maxx];
+    GridVoxelVarPt = new Voxel[MaxGrid2*MaxGrid2*MaxGrid2];
     if(Results != nullptr)
         delete[] Results;
-    Results = new double[maxx*maxx*maxx];
+    Results = new double[MaxGrid2*MaxGrid2*MaxGrid2];
 
     components->NbComponents.push_back(masterthread->componentsNumber);
 
@@ -2281,7 +2285,7 @@ Iso3D::~Iso3D()
 uint Iso3D::SetMiniMmeshStruct()
 {
     uint I, J, IJK, i, j, k, Index, lnew, iter, nbpl, iterpl;
-    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
+    uint maxgrscalemaxgr = MaxGrid2*MaxGrid2;
 
     lnew = 0;
     NbPolyMin = 0;
@@ -2291,7 +2295,7 @@ uint Iso3D::SetMiniMmeshStruct()
         I  = i*maxgrscalemaxgr;
         for(j=0; j+1 < Ygrid; j++)
         {
-            J  = I+j*masterthread->maximumgrid;
+            J  = I+j*MaxGrid2;
             for(k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
@@ -2360,7 +2364,7 @@ uint Iso3D::ConstructIsoSurface()
 {
     uint Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint;
     uint I, J, IJK;
-    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
+    uint maxgrscalemaxgr = MaxGrid2*MaxGrid2;
 
     NbTriangleIsoSurface = 0;
     for(uint i=0; i+1 < Xgrid; i++)
@@ -2368,7 +2372,7 @@ uint Iso3D::ConstructIsoSurface()
         I   = i*maxgrscalemaxgr;
         for(uint j=0; j+1 < Ygrid; j++)
         {
-            J   = I+j*masterthread->maximumgrid;
+            J   = I+j*MaxGrid2;
             for(uint k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
@@ -2395,7 +2399,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     uint index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
     double vals[7], IsoValue_1, IsoValue_2, rapport;
     double factor;
-    uint maxgridval=masterthread->maximumgrid;
+    uint maxgridval=MaxGrid2;
     uint maxgrscalemaxgr = maxgridval*maxgridval;
     uint I, J, JK, IJK, IPLUSONEJK, IMINUSONEJK,
          IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
@@ -3325,19 +3329,19 @@ void Iso3D::SignatureComputation()
 {
     uint I, J, IJK, IPLUSONEJK,
          IJPLUSONEK,  IPLUSONEJPLUSONEK;
-    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
+    uint maxgrscalemaxgr = MaxGrid2*MaxGrid2;
     for(uint i=0; i < Xgrid; i++)
     {
         I = i*maxgrscalemaxgr;
         for(uint j=0; j < Ygrid; j++)
         {
-            J = I + j*masterthread->maximumgrid;
+            J = I + j*MaxGrid2;
             for(uint k=0; k < Zgrid; k++)
             {
                 IJK               = J + k;
                 IPLUSONEJK        = IJK + maxgrscalemaxgr;
-                IJPLUSONEK        = IJK + masterthread->maximumgrid;
-                IPLUSONEJPLUSONEK = IPLUSONEJK + masterthread->maximumgrid;
+                IJPLUSONEK        = IJK + MaxGrid2;
+                IPLUSONEJPLUSONEK = IPLUSONEJK + MaxGrid2;
 
                 if(Results[IJK] <= 0) GridVoxelVarPt[IJK].Signature +=1;
 
