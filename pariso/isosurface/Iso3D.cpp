@@ -1613,13 +1613,29 @@ void Iso3D::IsoBuild (
 
     if(GridVoxelVarPt != nullptr)
         delete[] GridVoxelVarPt;
-    GridVoxelVarPt = new Voxel[MaxGrid2*MaxGrid2*MaxGrid2];
     if(Results != nullptr)
         delete[] Results;
-    Results = new double[MaxGrid2*MaxGrid2*MaxGrid2];
+
+    try
+      {
+        GridVoxelVarPt = new Voxel[MaxGrid2*MaxGrid2*MaxGrid2];
+      }
+      catch (std::bad_alloc& e)
+      {
+        messageerror = MEM_OVERFLOW;
+        emitErrorSignal();
+        return;
+      }
+
+    Results = new (std::nothrow) double[MaxGrid2*MaxGrid2*MaxGrid2];
+    if (!Results)
+    {
+        messageerror = MEM_OVERFLOW;
+        emitErrorSignal();
+        return;
+    }
 
     components->NbComponents.push_back(masterthread->componentsNumber);
-
     stopcalculations(false);
 
     if(masterthread->activeMorph != 1)

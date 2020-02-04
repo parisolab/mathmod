@@ -64,7 +64,8 @@ static const char *ScriptErrorMessage[] =
     "CND_POL_MEM_OVERFLOW",                     // 34
     "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 35
     "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 36
-    "GRID_SUPERIOR_TO_GRIDMAX"                  // 37
+    "GRID_SUPERIOR_TO_GRIDMAX",                 // 37
+    "Not enough memory available to complete this operation" // 38
 };
 
 // --------------------------
