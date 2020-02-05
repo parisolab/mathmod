@@ -93,6 +93,7 @@ public :
     ErrorMessage ParserIso();
     void IsoMasterTable();
     void initparser();
+    void initgrid();
     IsoMasterThread();
     ~IsoMasterThread();
 };
