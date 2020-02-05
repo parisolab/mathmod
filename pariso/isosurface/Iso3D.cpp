@@ -396,8 +396,7 @@ void Iso3D::UpdateMaxGrid(uint newNbMaxgrid)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-Iso3D::Iso3D( uint nbmaxgrid,
-              uint nbThreads,
+Iso3D::Iso3D( uint nbThreads,
               uint nbGrid,
               uint factX,
               uint factY,

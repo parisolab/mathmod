@@ -203,14 +203,14 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     }
 }
 
-int OpenGlWidget::memoryallocation(uint gridmax, uint nbthreads,
+int OpenGlWidget::memoryallocation(uint nbthreads,
                                    uint initparGrid, uint initisoGrid,
                                    uint FactX, uint FactY, uint FactZ)
 {
     // memoryallocation
     try
     {
-        IsoObjet = new Iso3D(gridmax, nbthreads, initisoGrid, FactX, FactY, FactZ);
+        IsoObjet = new Iso3D(nbthreads, initisoGrid, FactX, FactY, FactZ);
         ParObjet = new Par3D(nbthreads, initparGrid);
         LocalScene = objpar.objectproperties;
         return 1;

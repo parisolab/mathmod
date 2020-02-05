@@ -106,8 +106,7 @@ public :
     IsoMasterThread *masterthread;
     uint Xgrid, Ygrid, Zgrid;
 public :
-    Iso3D(uint,
-          uint nbThreads=8,
+    Iso3D(uint nbThreads=8,
           uint nbGrid=40,
           uint factX=4,
           uint factY=4,

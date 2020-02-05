@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     Parameters.LoadConfig(app, argc, argv);
 
     // Creation of the two most important objects:
-    MathMod mm(nullptr, uint(Parameters.IsoMaxGrid), uint(Parameters.Threads[0]),
+    MathMod mm(nullptr, uint(Parameters.Threads[0]),
                uint(Parameters.InitParGrid), uint(Parameters.InitIsoGrid),
                uint(Parameters.CalculFactor[0]), uint(Parameters.CalculFactor[1]),
                uint(Parameters.CalculFactor[2]));
