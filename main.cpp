@@ -42,10 +42,13 @@ int main(int argc, char *argv[])
                uint(Parameters.CalculFactor[0]), uint(Parameters.CalculFactor[1]),
                uint(Parameters.CalculFactor[2]));
     DrawingOptions drawingopt;
+
     // save references:
     drawingopt.Parameters = &Parameters;
     drawingopt.MathmodRef = &mm;
     mm.Parent = &drawingopt;
+    mm.ui.glWidget->Xgrid = mm.ui.glWidget->Ygrid = mm.ui.glWidget->Zgrid=uint(Parameters.InitIsoGrid);
+    mm.ui.glWidget->Ugrid = mm.ui.glWidget->Vgrid = uint(Parameters.InitParGrid);
     // GUI update:
     drawingopt.UpdateGui(argc);
     if (drawingopt.IsolistItemRef != nullptr)
