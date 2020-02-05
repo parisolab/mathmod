@@ -6057,7 +6057,6 @@ void DrawingOptions::ApplypushButton_clicked()
             Parameters->IsoMaxGrid)
     {
         Parameters->IsoMaxGrid = maxisogrid;
-        MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
         ui.Isogroupbox->setTitle("Iso Grid/MaxGrid ( " +
                                  QString::number(ui.xyzg->value()) + " / " +
                                  QString::number(maxisogrid) + " ) :");
@@ -6121,7 +6120,6 @@ void DrawingOptions::on_ApplypushButton_clicked()
          (maxisogrid = (ui.IsoMaxGridLineEdit->text()).toInt()) != Parameters->IsoMaxGrid)
     {
         Parameters->IsoMaxGrid = maxisogrid;
-        MathmodRef->ui.glWidget->IsoObjet->UpdateMaxGrid(uint(maxisogrid));
         ui.Isogroupbox->setTitle("Grid/MaxGrid = (" +
                                  QString::number(ui.xyzg->value()) + "/" +
                                  QString::number(maxisogrid) + ")");

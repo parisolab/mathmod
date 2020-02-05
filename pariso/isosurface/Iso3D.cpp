@@ -386,16 +386,6 @@ ErrorMessage  Iso3D::parse_expression2()
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
-void Iso3D::UpdateMaxGrid(uint newNbMaxgrid)
-{
-    masterthread->maximumgrid = newNbMaxgrid;
-    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-    {
-        workerthreads[nbthreads].maximumgrid = newNbMaxgrid;
-    }
-}
-
-//+++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( uint nbThreads,
               uint nbGrid,
               uint factX,
