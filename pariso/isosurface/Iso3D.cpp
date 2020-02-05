@@ -219,7 +219,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].Zgrid = masterthread->Zgrid;
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
-        WorkerThreadsTmp[nbthreads].maximumgrid = NbMaxGrid;
+        WorkerThreadsTmp[nbthreads].maximumgrid = masterthread->maximumgrid;
     }
 }
 //+++++++++++++++++++++++++++++++++++++++
@@ -389,7 +389,6 @@ ErrorMessage  Iso3D::parse_expression2()
 //+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::UpdateMaxGrid(uint newNbMaxgrid)
 {
-    NbMaxGrid = newNbMaxgrid;
     masterthread->maximumgrid = newNbMaxgrid;
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
@@ -409,7 +408,6 @@ Iso3D::Iso3D( uint nbmaxgrid,
     OrignbY= factY;
     OrignbZ=factZ;
     Stack_Factor = factX*factY*factZ;
-    NbMaxGrid = nbmaxgrid;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     Xgrid = Ygrid = Zgrid = nbGrid;
@@ -421,7 +419,7 @@ Iso3D::Iso3D( uint nbmaxgrid,
     masterthread->Xgrid = Xgrid;
     masterthread->Ygrid = Ygrid;
     masterthread->Zgrid = Zgrid;
-    masterthread->maximumgrid = NbMaxGrid;
+    masterthread->maximumgrid = nbmaxgrid;
     masterthread->MyIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
@@ -430,7 +428,7 @@ Iso3D::Iso3D( uint nbmaxgrid,
         workerthreads[nbthreads].Xgrid = Xgrid;
         workerthreads[nbthreads].Ygrid = Ygrid;
         workerthreads[nbthreads].Zgrid = Zgrid;
-        workerthreads[nbthreads].maximumgrid = NbMaxGrid;
+        workerthreads[nbthreads].maximumgrid = nbmaxgrid;
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
@@ -696,7 +694,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     const uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
-    uint maxgridval = NbMaxGrid;
+    uint maxgridval = masterthread->maximumgrid;
     vals[3]          = masterthread->stepMorph;
     masterthread->xLocal2[IsoIndex*maxgridval]=masterthread->xSupParser[IsoIndex].Eval(vals);
     masterthread->yLocal2[IsoIndex*maxgridval]=masterthread->ySupParser[IsoIndex].Eval(vals);
@@ -735,7 +733,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     double* vals;
     double* Res;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint maxgrscalemaxgr = maximumgrid*maximumgrid;
     const uint limitY = Ygrid, limitZ = Zgrid;
     uint I, J, IJK;
     uint id=0;
@@ -791,7 +789,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 nbY = remY;
                 j= limitY;
             }
-            J = I + Jindice*NbMaxGrid;
+            J = I + Jindice*maximumgrid;
             for(uint k=0; k<limitZ; k+=nbZ)
             {
                 Kindice = k;
@@ -831,7 +829,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     for(uint jj=0; jj<nbY; jj++)
                         for(uint kk=0; kk<nbZ; kk++)
                         {
-                            sect= IJK + (ii)*NbMaxGrid*NbMaxGrid+ (jj)*NbMaxGrid + (kk);
+                            sect= IJK + (ii)*maximumgrid*maximumgrid+ (jj)*maximumgrid + (kk);
                             Results[sect] = Res[p];
                             GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
                             GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
@@ -1311,17 +1309,17 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         {
             limitX = limitY = limitZ = grid[IsoIndex];
         }
-        xLocal2[IsoIndex*NbMaxGrid]=xSupParser[IsoIndex].Eval(vals);
-        yLocal2[IsoIndex*NbMaxGrid]=ySupParser[IsoIndex].Eval(vals);
-        zLocal2[IsoIndex*NbMaxGrid]=zSupParser[IsoIndex].Eval(vals);
+        xLocal2[IsoIndex*maximumgrid]=xSupParser[IsoIndex].Eval(vals);
+        yLocal2[IsoIndex*maximumgrid]=ySupParser[IsoIndex].Eval(vals);
+        zLocal2[IsoIndex*maximumgrid]=zSupParser[IsoIndex].Eval(vals);
 
-        x_Step[IsoIndex] = (xLocal2[IsoIndex*NbMaxGrid] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
-        y_Step[IsoIndex] = (yLocal2[IsoIndex*NbMaxGrid] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-        z_Step[IsoIndex] = (zLocal2[IsoIndex*NbMaxGrid] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+        x_Step[IsoIndex] = (xLocal2[IsoIndex*maximumgrid] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
+        y_Step[IsoIndex] = (yLocal2[IsoIndex*maximumgrid] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
+        z_Step[IsoIndex] = (zLocal2[IsoIndex*maximumgrid] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
-        for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*NbMaxGrid+i] = xLocal2[IsoIndex*NbMaxGrid+i-1] - x_Step[IsoIndex];
-        for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*NbMaxGrid+j] = yLocal2[IsoIndex*NbMaxGrid+j-1] - y_Step[IsoIndex];
-        for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*NbMaxGrid+k] = zLocal2[IsoIndex*NbMaxGrid+k-1] - z_Step[IsoIndex];
+        for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*maximumgrid+i] = xLocal2[IsoIndex*maximumgrid+i-1] - x_Step[IsoIndex];
+        for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*maximumgrid+j] = yLocal2[IsoIndex*maximumgrid+j-1] - y_Step[IsoIndex];
+        for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*maximumgrid+k] = zLocal2[IsoIndex*maximumgrid+k-1] - z_Step[IsoIndex];
     }
     return stdError;
 }
@@ -1461,9 +1459,9 @@ void IsoMasterThread::AllocateMasterParsers()
         zInfParser = new FunctionParser[componentsNumber];
         ParisoConditionParser = new FunctionParser[componentsNumber];
         ImplicitStructs.resize(componentsNumber);
-        xLocal2.resize(NbMaxGrid*componentsNumber);
-        yLocal2.resize(NbMaxGrid*componentsNumber);
-        zLocal2.resize(NbMaxGrid*componentsNumber);
+        xLocal2.resize(maximumgrid*componentsNumber);
+        yLocal2.resize(maximumgrid*componentsNumber);
+        zLocal2.resize(maximumgrid*componentsNumber);
         x_Step.resize(componentsNumber);
         y_Step.resize(componentsNumber);
         z_Step.resize(componentsNumber);
@@ -1623,7 +1621,7 @@ void Iso3D::IsoBuild (
 
     try
       {
-        GridVoxelVarPt = new Voxel[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+        GridVoxelVarPt = new Voxel[masterthread->maximumgrid*masterthread->maximumgrid*masterthread->maximumgrid];
       }
       catch (std::bad_alloc& e)
       {
@@ -1632,7 +1630,7 @@ void Iso3D::IsoBuild (
         return;
       }
 
-    Results = new (std::nothrow) double[NbMaxGrid*NbMaxGrid*NbMaxGrid];
+    Results = new (std::nothrow) double[masterthread->maximumgrid*masterthread->maximumgrid*masterthread->maximumgrid];
     if (!Results)
     {
         messageerror = MEM_OVERFLOW;
@@ -2306,7 +2304,7 @@ Iso3D::~Iso3D()
 uint Iso3D::SetMiniMmeshStruct()
 {
     uint I, J, IJK, i, j, k, Index, lnew, iter, nbpl, iterpl;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
 
     lnew = 0;
     NbPolyMin = 0;
@@ -2316,7 +2314,7 @@ uint Iso3D::SetMiniMmeshStruct()
         I  = i*maxgrscalemaxgr;
         for(j=0; j+1 < Ygrid; j++)
         {
-            J  = I+j*NbMaxGrid;
+            J  = I+j*masterthread->maximumgrid;
             for(k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
@@ -2385,7 +2383,7 @@ uint Iso3D::ConstructIsoSurface()
 {
     uint Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint;
     uint I, J, IJK;
-    uint maxgrscalemaxgr = NbMaxGrid*NbMaxGrid;
+    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
 
     NbTriangleIsoSurface = 0;
     for(uint i=0; i+1 < Xgrid; i++)
