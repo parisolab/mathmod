@@ -1268,10 +1268,13 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 //+++++++++++++++++++++++++++++++++++++++++
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
-    uint idx=0;
+    uint idmx=0;
     for(uint i=0; i < comp->NbComponents.size()-1; i++)
-        idx+=comp->NbComponents[i];
-    uint startpoint=comp->ParisoVertex[2*idx];
+        idmx+=comp->NbComponents[i];
+    uint startpoint=comp->ParisoVertex[2*idmx];
+    //In the case the isosurface part of a Pariso object doesn't have a CND condition
+    int sz = (comp->ParisoCondition.size() ==
+              comp->NbComponents[comp->NbComponents.size()-1]) ? 0 : idmx;
     if (masterthread->ParisoCondition == 1)
     {
         double vals[4];
@@ -1285,7 +1288,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             vals[2] = double(NormVertexTabVector[i*10+9]);
 
             uint compid= CNDtoUse(i, comp);
-            if(comp->ParisoCondition[compid+idx])
+            if(comp->ParisoCondition[compid+sz])
                 PointVerifyCond.push_back(8);
             else
                 PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[compid].Eval(vals)));
@@ -1308,10 +1311,10 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
         //uint starttri = uint(comp->ParIsoPositions[0]/3);
-        uint idx=0;
+        uint idpx=0;
         for(uint id=0; id < comp->NbComponents.size()-1; id++)
-            idx+=comp->NbComponents[id];
-        uint starttri = uint(comp->ParisoTriangle[2*idx]/3);
+            idpx+=comp->NbComponents[id];
+        uint starttri = uint(comp->ParisoTriangle[2*idpx]/3);
 
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
 
