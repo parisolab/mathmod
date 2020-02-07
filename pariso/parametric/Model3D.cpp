@@ -74,36 +74,18 @@ ParWorkerThread::ParWorkerThread()
     stepMorph = 0;
     pace = 1.0/30.0;
     ParsersAllocated = false;
-    /*
-    v_inf = new double[NbParComponent];
-    u_inf = new double[NbParComponent];
-    v_sup = new double[NbParComponent];
-    u_sup = new double[NbParComponent];
-    dif_v = new double[NbParComponent];
-    dif_u = new double[NbParComponent];
-    */
 }
 
 //++++++++++++++++++++++++++++++++++++
 ParWorkerThread::~ParWorkerThread()
 {
-    /*
-    delete[] u_inf;
-    delete[] v_inf;
-    delete[] u_sup;
-    delete[] v_sup;
-    delete[] dif_u;
-    delete[] dif_v;
-    */
 }
 
 //+++++++++++++++++++++++++++++++++++++++++
 ParMasterThread::~ParMasterThread()
 {
-    //delete[] ParamStructs;
     delete[] UsedFunct;
     delete[] UsedFunct2;
-    //delete[] grid;
 
     ParamStructs.clear();
     SliderValues.clear();
@@ -128,8 +110,6 @@ ParMasterThread::ParMasterThread()
     Gain = 1.0;
     Octaves = 4;
     Lacunarity = 0.5;
-    //ParamStructs = new ParStruct[NbParComponent];
-    //grid         = new uint[2*NbParComponent];
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
