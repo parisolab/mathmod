@@ -209,12 +209,14 @@ struct ObjectProperties
     float specReflection[4];
     int threads[3];
     int shininess;
-    float frontcol[4];
-    float backcol[4];
-    float *frontcols;
-    float *backcols;
-    float gridcol[4];
-    float groundcol[4];
+    float frontcol[4]={0.9f, 0.6f, 0.1f, 1.0f};
+    float backcol[4] ={0.2f, 0.8f, 0.1f, 1.0f};
+    float frontcols[40]={0.9f, 0.6f, 0.1f, 1.0f, 0.3f, 0.8f, 0.5f, 1.0f, 0.2f, 0.5f, 0.6f, 1.0f, 0.1f, 0.3f, 0.9f, 1.0f, 0.96f, 0.71f, 0.3f, 1.0f,
+                          0.4f, 0.4f, 0.9f, 1.0f, 0.99f, 0.1f, 0.843f, 1.0f, 0.16f, 0.91f, 0.73f, 1.0f, 0.8f, 0.9f, 0.0f, 1.0f, 0.9f, 0.91f, 0.3f, 1.0f};
+    float backcols[40]={0.2f, 0.8f, 0.1f, 1.0f, 0.6f, 0.6f, 0.9f, 1.0f, 0.8f, 0.6f, 0.3f, 1.0f, 0.9f, 0.8f, 0.6f, 1.0f, 0.93f, 0.2f, 0.1f, 1.0f,
+                        0.3f, 0.72f, 0.63f, 1.0f, 0.1f, 0.5f, 0.73f, 1.0f, 0.9f, 0.5f, 0.3f, 1.0f, 0.8f, 0.8f, 0.6f, 1.0f, 0.7f, 0.9f, 0.93f, 1.0f};
+    float gridcol[4]  ={0.1f, 0.3f, 0.1f, 0.5f};
+    float groundcol[4]={0.0f, 0.0f, 0.0f, 1.0f};
     float polyfactor;
     float polyunits;
     float RotStrength, oldRotx, oldRoty;

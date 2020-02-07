@@ -19,20 +19,6 @@
  ***************************************************************************/
 #include "objectparameters.h"
 
-static float StaticColor[20] =
-{
-    // Green(Back face)
-    0.3f, 0.5f, 0.0f, 1.0f,
-    // Gold (Front face)
-    249.0f / 255.0f, 170.0f / 255.0f, 0.0f, 1.0f,
-    // grid:
-    0.1f, 0.3f, 0.1f, 0.5f,
-    // Background:
-    0.0f, 0.0f, 0.0f, 1.0f,
-    // Condition:
-    1.0f, 0.2f, 0.0f, 1.0f
-}; // greencol, goldcol,...
-
 MasterThread::MasterThread() {}
 MasterThread::~MasterThread() {}
 WorkerThread::WorkerThread() {}
@@ -90,117 +76,6 @@ ObjectParameters::ObjectParameters()
     objectproperties.view_rotz = 1.0;
     objectproperties.IndexCurrentFormula = -1;
 
-    objectproperties.frontcols = new float[40];
-    objectproperties.backcols = new float[40];
-
-    objectproperties.gridcol[0] = StaticColor[8];
-    objectproperties.gridcol[1] = StaticColor[9];
-    objectproperties.gridcol[2] = StaticColor[10];
-    objectproperties.gridcol[3] = .5;
-    objectproperties.groundcol[0] = StaticColor[12];
-    objectproperties.groundcol[1] = StaticColor[13];
-    objectproperties.groundcol[2] = StaticColor[14];
-    objectproperties.groundcol[3] = 1.0;
-
-    objectproperties.backcol[0] = objectproperties.backcols[0] = 0.2f;
-    objectproperties.backcol[1] = objectproperties.backcols[1] = 0.8f;
-    objectproperties.backcol[2] = objectproperties.backcols[2] = 0.1f;
-    objectproperties.backcol[3] = objectproperties.backcols[3] = 1.0f;
-
-    objectproperties.backcols[1 * 4 + 0] = 0.6f;
-    objectproperties.backcols[1 * 4 + 1] = 0.6f;
-    objectproperties.backcols[1 * 4 + 2] = 0.9f;
-    objectproperties.backcols[1 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[2 * 4 + 0] = 0.8f;
-    objectproperties.backcols[2 * 4 + 1] = 0.6f;
-    objectproperties.backcols[2 * 4 + 2] = 0.3f;
-    objectproperties.backcols[2 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[3 * 4 + 0] = 0.9f;
-    objectproperties.backcols[3 * 4 + 1] = 0.8f;
-    objectproperties.backcols[3 * 4 + 2] = 0.6f;
-    objectproperties.backcols[3 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[4 * 4 + 0] = 0.93f;
-    objectproperties.backcols[4 * 4 + 1] = 0.2f;
-    objectproperties.backcols[4 * 4 + 2] = 0.1f;
-    objectproperties.backcols[4 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[5 * 4 + 0] = 0.3f;
-    objectproperties.backcols[5 * 4 + 1] = 0.72f;
-    objectproperties.backcols[5 * 4 + 2] = 0.63f;
-    objectproperties.backcols[5 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[6 * 4 + 0] = 0.1f;
-    objectproperties.backcols[6 * 4 + 1] = 0.5f;
-    objectproperties.backcols[6 * 4 + 2] = 0.73f;
-    objectproperties.backcols[6 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[7 * 4 + 0] = 0.9f;
-    objectproperties.backcols[7 * 4 + 1] = 0.5f;
-    objectproperties.backcols[7 * 4 + 2] = 0.3f;
-    objectproperties.backcols[7 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[8 * 4 + 0] = 0.8f;
-    objectproperties.backcols[8 * 4 + 1] = 0.8f;
-    objectproperties.backcols[8 * 4 + 2] = 0.6f;
-    objectproperties.backcols[8 * 4 + 3] = 1.0f;
-
-    objectproperties.backcols[9 * 4 + 0] = 0.7f;
-    objectproperties.backcols[9 * 4 + 1] = 0.9f;
-    objectproperties.backcols[9 * 4 + 2] = 0.93f;
-    objectproperties.backcols[9 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcol[0] = objectproperties.frontcols[0] = 0.9f;
-    objectproperties.frontcol[1] = objectproperties.frontcols[1] = 0.6f;
-    objectproperties.frontcol[2] = objectproperties.frontcols[2] = 0.1f;
-    objectproperties.frontcol[3] = objectproperties.frontcols[3] = 1.0f;
-
-    objectproperties.frontcols[1 * 4 + 0] = 0.3f;
-    objectproperties.frontcols[1 * 4 + 1] = 0.8f;
-    objectproperties.frontcols[1 * 4 + 2] = 0.5f;
-    objectproperties.frontcols[1 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[2 * 4 + 0] = 0.2f;
-    objectproperties.frontcols[2 * 4 + 1] = 0.5f;
-    objectproperties.frontcols[2 * 4 + 2] = 0.6f;
-    objectproperties.frontcols[2 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[3 * 4 + 0] = 0.1f;
-    objectproperties.frontcols[3 * 4 + 1] = 0.3f;
-    objectproperties.frontcols[3 * 4 + 2] = 0.9f;
-    objectproperties.frontcols[3 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[4 * 4 + 0] = 0.96f;
-    objectproperties.frontcols[4 * 4 + 1] = 0.71f;
-    objectproperties.frontcols[4 * 4 + 2] = 0.3f;
-    objectproperties.frontcols[4 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[5 * 4 + 0] = 0.4f;
-    objectproperties.frontcols[5 * 4 + 1] = 0.4f;
-    objectproperties.frontcols[5 * 4 + 2] = 0.9f;
-    objectproperties.frontcols[5 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[6 * 4 + 0] = 0.99f;
-    objectproperties.frontcols[6 * 4 + 1] = 0.1f;
-    objectproperties.frontcols[6 * 4 + 2] = 0.843f;
-    objectproperties.frontcols[6 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[7 * 4 + 0] = 0.16f;
-    objectproperties.frontcols[7 * 4 + 1] = 0.91f;
-    objectproperties.frontcols[7 * 4 + 2] = 0.73f;
-    objectproperties.frontcols[7 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[8 * 4 + 0] = 0.8f;
-    objectproperties.frontcols[8 * 4 + 1] = 0.9f;
-    objectproperties.frontcols[8 * 4 + 2] = 0.0f;
-    objectproperties.frontcols[8 * 4 + 3] = 1.0f;
-
-    objectproperties.frontcols[9 * 4 + 0] = 0.9f;
-    objectproperties.frontcols[9 * 4 + 1] = 0.91f;
-    objectproperties.frontcols[9 * 4 + 2] = 0.3f;
-    objectproperties.frontcols[9 * 4 + 3] = 1.0f;
     objectproperties.gridplanliste = 1;
     objectproperties.border = 1;
     objectproperties.mesh = 1;
