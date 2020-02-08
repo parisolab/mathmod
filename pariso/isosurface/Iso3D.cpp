@@ -218,7 +218,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].Zgrid = masterthread->Zgrid;
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
-        WorkerThreadsTmp[nbthreads].maximumgrid = masterthread->maximumgrid;
+        WorkerThreadsTmp[nbthreads].GridVal = masterthread->GridVal;
     }
 }
 //+++++++++++++++++++++++++++++++++++++++
@@ -265,7 +265,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
         workerthreads[nbthreads].Ygrid = masterthread->Ygrid;
         workerthreads[nbthreads].Zgrid = masterthread->Zgrid;
-        workerthreads[nbthreads].maximumgrid = masterthread->maximumgrid;
+        workerthreads[nbthreads].GridVal = masterthread->GridVal;
     }
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -407,7 +407,7 @@ Iso3D::Iso3D( uint nbThreads,
     masterthread->Xgrid = Xgrid;
     masterthread->Ygrid = Ygrid;
     masterthread->Zgrid = Zgrid;
-    masterthread->maximumgrid = nbGrid;
+    masterthread->GridVal = nbGrid;
     masterthread->MyIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
@@ -416,7 +416,7 @@ Iso3D::Iso3D( uint nbThreads,
         workerthreads[nbthreads].Xgrid = Xgrid;
         workerthreads[nbthreads].Ygrid = Ygrid;
         workerthreads[nbthreads].Zgrid = Zgrid;
-        workerthreads[nbthreads].maximumgrid = nbGrid;
+        workerthreads[nbthreads].GridVal = nbGrid;
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
@@ -682,7 +682,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     const uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
-    uint maxgridval = masterthread->maximumgrid;
+    uint maxgridval = masterthread->GridVal;
     vals[3]          = masterthread->stepMorph;
     masterthread->xLocal2[IsoIndex*maxgridval]=masterthread->xSupParser[IsoIndex].Eval(vals);
     masterthread->yLocal2[IsoIndex*maxgridval]=masterthread->ySupParser[IsoIndex].Eval(vals);
@@ -721,7 +721,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     double* vals;
     double* Res;
-    uint maxgrscalemaxgr = maximumgrid*maximumgrid;
+    uint maxgrscalemaxgr = GridVal*GridVal;
     const uint limitY = Ygrid, limitZ = Zgrid;
     uint I, J, IJK;
     uint id=0;
@@ -777,7 +777,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 nbY = remY;
                 j= limitY;
             }
-            J = I + Jindice*maximumgrid;
+            J = I + Jindice*GridVal;
             for(uint k=0; k<limitZ; k+=nbZ)
             {
                 Kindice = k;
@@ -791,9 +791,9 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 
                 for(uint l=0; l<nbstack; l++)
                 {
-                    vals[l*34  ]= xLocal2[IsoIndex*maximumgrid+Iindice+uint(l*nbX/nbstack)];
-                    vals[l*34+1]= yLocal2[IsoIndex*maximumgrid+Jindice+((uint(l/nbZ))%nbY)];
-                    vals[l*34+2]= zLocal2[IsoIndex*maximumgrid+Kindice+(l%nbZ)];
+                    vals[l*34  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
+                    vals[l*34+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
+                    vals[l*34+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
                 }
 
                 IJK = J+Kindice;
@@ -817,7 +817,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     for(uint jj=0; jj<nbY; jj++)
                         for(uint kk=0; kk<nbZ; kk++)
                         {
-                            sect= IJK + (ii)*maximumgrid*maximumgrid+ (jj)*maximumgrid + (kk);
+                            sect= IJK + (ii)*GridVal*GridVal+ (jj)*GridVal + (kk);
                             Results[sect] = Res[p];
                             GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
                             GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
@@ -1297,17 +1297,17 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
         {
             limitX = limitY = limitZ = grid[IsoIndex];
         }
-        xLocal2[IsoIndex*maximumgrid]=xSupParser[IsoIndex].Eval(vals);
-        yLocal2[IsoIndex*maximumgrid]=ySupParser[IsoIndex].Eval(vals);
-        zLocal2[IsoIndex*maximumgrid]=zSupParser[IsoIndex].Eval(vals);
+        xLocal2[IsoIndex*GridVal]=xSupParser[IsoIndex].Eval(vals);
+        yLocal2[IsoIndex*GridVal]=ySupParser[IsoIndex].Eval(vals);
+        zLocal2[IsoIndex*GridVal]=zSupParser[IsoIndex].Eval(vals);
 
-        x_Step[IsoIndex] = (xLocal2[IsoIndex*maximumgrid] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
-        y_Step[IsoIndex] = (yLocal2[IsoIndex*maximumgrid] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-        z_Step[IsoIndex] = (zLocal2[IsoIndex*maximumgrid] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+        x_Step[IsoIndex] = (xLocal2[IsoIndex*GridVal] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
+        y_Step[IsoIndex] = (yLocal2[IsoIndex*GridVal] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
+        z_Step[IsoIndex] = (zLocal2[IsoIndex*GridVal] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
 
-        for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*maximumgrid+i] = xLocal2[IsoIndex*maximumgrid+i-1] - x_Step[IsoIndex];
-        for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*maximumgrid+j] = yLocal2[IsoIndex*maximumgrid+j-1] - y_Step[IsoIndex];
-        for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*maximumgrid+k] = zLocal2[IsoIndex*maximumgrid+k-1] - z_Step[IsoIndex];
+        for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*GridVal+i] = xLocal2[IsoIndex*GridVal+i-1] - x_Step[IsoIndex];
+        for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*GridVal+j] = yLocal2[IsoIndex*GridVal+j-1] - y_Step[IsoIndex];
+        for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*GridVal+k] = zLocal2[IsoIndex*GridVal+k-1] - z_Step[IsoIndex];
     }
     return stdError;
 }
@@ -1447,9 +1447,9 @@ void IsoMasterThread::AllocateMasterParsers()
         zInfParser = new FunctionParser[componentsNumber];
         ParisoConditionParser = new FunctionParser[componentsNumber];
         ImplicitStructs.resize(componentsNumber);
-        xLocal2.resize(maximumgrid*componentsNumber);
-        yLocal2.resize(maximumgrid*componentsNumber);
-        zLocal2.resize(maximumgrid*componentsNumber);
+        xLocal2.resize(GridVal*componentsNumber);
+        yLocal2.resize(GridVal*componentsNumber);
+        zLocal2.resize(GridVal*componentsNumber);
         x_Step.resize(componentsNumber);
         y_Step.resize(componentsNumber);
         z_Step.resize(componentsNumber);
@@ -1491,10 +1491,10 @@ void IsoWorkerThread::AllocateParsersForWorkerThread(uint nbcomp, uint nbfunct)
 ///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::initgrid()
 {
-    maximumgrid = std::max(std::max(Xgrid, Ygrid), Zgrid);
+    GridVal = std::max(std::max(Xgrid, Ygrid), Zgrid);
     if(gridnotnull)
         for(uint fctnb= 0; fctnb< componentsNumber; fctnb++)
-            maximumgrid = std::max(maximumgrid, grid[fctnb]);
+            GridVal = std::max(GridVal, grid[fctnb]);
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
@@ -1591,14 +1591,14 @@ void Iso3D::IsoBuild (
     NormOriginaltmpVector.shrink_to_fit();
 
     //*****//
-    uint maxx = std::max(std::max(std::max(Xgrid, Ygrid), Zgrid), masterthread->maximumgrid);
+    uint maxx = std::max(std::max(std::max(Xgrid, Ygrid), Zgrid), masterthread->GridVal);
     if(masterthread->gridnotnull)
         for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
             maxx = std::max(maxx, masterthread->grid[fctnb]);
-    masterthread->maximumgrid = maxx;
+    masterthread->GridVal = maxx;
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        workerthreads[nbthreads].maximumgrid = masterthread->maximumgrid;
+        workerthreads[nbthreads].GridVal = masterthread->GridVal;
     }
 
     if(GridVoxelVarPt != nullptr)
@@ -1608,7 +1608,7 @@ void Iso3D::IsoBuild (
 
     try
       {
-        GridVoxelVarPt = new Voxel[masterthread->maximumgrid*masterthread->maximumgrid*masterthread->maximumgrid];
+        GridVoxelVarPt = new Voxel[masterthread->GridVal*masterthread->GridVal*masterthread->GridVal];
       }
       catch (std::bad_alloc& e)
       {
@@ -1617,7 +1617,7 @@ void Iso3D::IsoBuild (
         return;
       }
 
-    Results = new (std::nothrow) double[masterthread->maximumgrid*masterthread->maximumgrid*masterthread->maximumgrid];
+    Results = new (std::nothrow) double[masterthread->GridVal*masterthread->GridVal*masterthread->GridVal];
     if (!Results)
     {
         messageerror = MEM_OVERFLOW;
@@ -2283,7 +2283,7 @@ Iso3D::~Iso3D()
 uint Iso3D::SetMiniMmeshStruct()
 {
     uint I, J, IJK, i, j, k, Index, lnew, iter, nbpl, iterpl;
-    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
+    uint maxgrscalemaxgr = masterthread->GridVal*masterthread->GridVal;
 
     lnew = 0;
     NbPolyMin = 0;
@@ -2293,7 +2293,7 @@ uint Iso3D::SetMiniMmeshStruct()
         I  = i*maxgrscalemaxgr;
         for(j=0; j+1 < Ygrid; j++)
         {
-            J  = I+j*masterthread->maximumgrid;
+            J  = I+j*masterthread->GridVal;
             for(k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
@@ -2351,7 +2351,7 @@ uint Iso3D::ConstructIsoSurface()
 {
     uint Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint;
     uint I, J, IJK;
-    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
+    uint maxgrscalemaxgr = masterthread->GridVal*masterthread->GridVal;
 
     NbTriangleIsoSurface = 0;
     for(uint i=0; i+1 < Xgrid; i++)
@@ -2359,7 +2359,7 @@ uint Iso3D::ConstructIsoSurface()
         I   = i*maxgrscalemaxgr;
         for(uint j=0; j+1 < Ygrid; j++)
         {
-            J   = I+j*masterthread->maximumgrid;
+            J   = I+j*masterthread->GridVal;
             for(uint k=0; k+1 < Zgrid; k++)
             {
                 IJK = J+k;
@@ -2386,7 +2386,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     uint index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
     double vals[7], IsoValue_1, IsoValue_2, rapport;
     double factor;
-    uint maxgridval=masterthread->maximumgrid;
+    uint maxgridval=masterthread->GridVal;
     uint maxgrscalemaxgr = maxgridval*maxgridval;
     uint I, J, JK, IJK, IPLUSONEJK, IMINUSONEJK,
          IJPLUSONEK, IJMINUSONEK, IMINUSONEJMINUSONEK, IsoValue=0, NbPointIsoMap_local=0;
@@ -2426,9 +2426,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i] - factor * masterthread->x_Step[isoindex];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     ///===========================================================///
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
@@ -2462,9 +2462,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local ;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j] - factor * masterthread->y_Step[isoindex];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2497,9 +2497,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k] - factor * masterthread->z_Step[isoindex];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k] - factor * masterthread->z_Step[isoindex];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2543,9 +2543,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = 10*NbPointIsoMap_local;
 
-                vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i] - factor * masterthread->x_Step[isoindex];
-                vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
+                vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                 for(int iter=0; iter<7; iter++)
                     NormVertexTabVector.push_back(1.0);
                 NormVertexTabVector.push_back(float(vals[0]));
@@ -2586,9 +2586,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j] - factor *masterthread->y_Step[isoindex];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor *masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2619,9 +2619,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k] - factor * masterthread->z_Step[isoindex];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k] - factor * masterthread->z_Step[isoindex];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2672,9 +2672,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j] - factor *masterthread->y_Step[isoindex];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor *masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2717,9 +2717,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k] - factor * masterthread->z_Step[isoindex];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k] - factor * masterthread->z_Step[isoindex];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2774,9 +2774,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i] - factor * masterthread->x_Step[isoindex];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2807,9 +2807,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = 10*NbPointIsoMap_local;
 
-                vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j] - factor * masterthread->y_Step[isoindex];
-                vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
+                vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                 for(int iter=0; iter<7; iter++)
                     NormVertexTabVector.push_back(1.0);
                 NormVertexTabVector.push_back(float(vals[0]));
@@ -2850,9 +2850,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k] - factor * masterthread->z_Step[isoindex];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k] - factor * masterthread->z_Step[isoindex];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2893,9 +2893,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i] - factor * masterthread->x_Step[isoindex];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2934,9 +2934,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k] - factor * masterthread->z_Step[isoindex];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k] - factor * masterthread->z_Step[isoindex];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -2984,9 +2984,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i] - factor * masterthread->x_Step[isoindex];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -3015,9 +3015,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j] - factor * masterthread->y_Step[isoindex];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -3043,9 +3043,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 factor = (IsoValue - IsoValue_1)/rapport;
                 index  = 10*NbPointIsoMap_local;
 
-                vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k] - factor * masterthread->z_Step[isoindex];
+                vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k] - factor * masterthread->z_Step[isoindex];
                 for(int iter=0; iter<7; iter++)
                     NormVertexTabVector.push_back(1.0);
                 NormVertexTabVector.push_back(float(vals[0]));
@@ -3091,9 +3091,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i] - factor * masterthread->x_Step[isoindex];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -3132,9 +3132,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                     factor = (IsoValue - IsoValue_1)/rapport;
                     index  = 10*NbPointIsoMap_local;
 
-                    vals[0] = masterthread->xLocal2[isoindex*masterthread->maximumgrid+i];
-                    vals[1] = masterthread->yLocal2[isoindex*masterthread->maximumgrid+j] - factor * masterthread->y_Step[isoindex];
-                    vals[2] = masterthread->zLocal2[isoindex*masterthread->maximumgrid+k];
+                    vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
+                    vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
+                    vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
                     for(int iter=0; iter<7; iter++)
                         NormVertexTabVector.push_back(1.0);
                     NormVertexTabVector.push_back(float(vals[0]));
@@ -3174,19 +3174,19 @@ void Iso3D::SignatureComputation()
 {
     uint I, J, IJK, IPLUSONEJK,
          IJPLUSONEK,  IPLUSONEJPLUSONEK;
-    uint maxgrscalemaxgr = masterthread->maximumgrid*masterthread->maximumgrid;
+    uint maxgrscalemaxgr = masterthread->GridVal*masterthread->GridVal;
     for(uint i=0; i < Xgrid; i++)
     {
         I = i*maxgrscalemaxgr;
         for(uint j=0; j < Ygrid; j++)
         {
-            J = I + j*masterthread->maximumgrid;
+            J = I + j*masterthread->GridVal;
             for(uint k=0; k < Zgrid; k++)
             {
                 IJK               = J + k;
                 IPLUSONEJK        = IJK + maxgrscalemaxgr;
-                IJPLUSONEK        = IJK + masterthread->maximumgrid;
-                IPLUSONEJPLUSONEK = IPLUSONEJK + masterthread->maximumgrid;
+                IJPLUSONEK        = IJK + masterthread->GridVal;
+                IPLUSONEJPLUSONEK = IPLUSONEJK + masterthread->GridVal;
 
                 if(Results[IJK] <= 0) GridVoxelVarPt[IJK].Signature +=1;
 

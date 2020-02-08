@@ -55,7 +55,7 @@ public :
     FunctionParser *implicitFunctionParser, *Fct;
     uint   Xgrid, Ygrid, Zgrid;
     bool AllComponentTraited;
-    uint maximumgrid;
+    uint GridVal;
     std::vector<double> xLocal2, yLocal2, zLocal2;
 public :
     void IsoCompute(uint);
