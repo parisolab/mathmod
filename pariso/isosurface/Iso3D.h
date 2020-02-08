@@ -25,7 +25,6 @@
 #include <cmath>
 #include "../parisoobject.h"
 
-
 /*
 
 
