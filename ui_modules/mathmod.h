@@ -53,7 +53,6 @@ public slots:
     void line_valueupdate(int);
     void column_valueupdate(int);
     void ProcessNewIsoSurface();
-    void ProcessParisoSurface();
     void xyzg_valueChanged(int);
     void xyzg_valueupdate(int);
     void slot_checkBox73_clicked();

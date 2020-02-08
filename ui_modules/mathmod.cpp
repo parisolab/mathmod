@@ -185,8 +185,6 @@ void MathMod::xyzg_valueupdate(int cl)
 {
     (ui.glWidget)->IsoObjet->masterthread->XYZgrid = uint(cl);
 
-    (ui.glWidget)->IsoObjet->masterthread->XYZgrid = uint(cl);
-
     (ui.glWidget)->Xgrid = (ui.glWidget)->Ygrid = (ui.glWidget)->Zgrid = cl;
 }
 
@@ -316,31 +314,8 @@ void MathMod::ProcessNewIsoSurface()
             return;
         (ui.glWidget)->LocalScene.typedrawing = 1;
         (ui.glWidget)->IsoObjet->localScene = &((ui.glWidget)->LocalScene);
-        // connect((ui.glWidget)->IsoObjet, SIGNAL(finished()), (ui.glWidget),
-        // SLOT(UpdateGL()), Qt::UniqueConnection);
         (ui.glWidget)->IsoObjet->start(QThread::LowPriority);
     }
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::ProcessParisoSurface()
-{
-    /// process the new surface
-    stError = (ui.glWidget)->IsoObjet->masterthread->ParserIso();
-    if (stError.iErrorIndex >= 0)
-    {
-        ShowErrormessage();
-        return;
-    }
-    else
-        stError = (ui.glWidget)->ParObjet->masterthread->parse_expression();
-    if (stError.iErrorIndex >= 0)
-    {
-        ShowErrormessage();
-        return;
-    }
-    else
-        (ui.glWidget)->ParObjet->ThreadParsersCopy();
 }
 
 //++++++++++++++++++++++++++++++++++++++++
