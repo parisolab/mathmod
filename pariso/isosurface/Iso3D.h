@@ -1,6 +1,6 @@
 
 /***************************************************************************
- *   Copyright (C) 2020by Abderrahman Taha                                *
+ *   Copyright (C) 2020 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
