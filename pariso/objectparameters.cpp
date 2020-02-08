@@ -64,30 +64,6 @@ void ParisoObject::clear(struct ComponentInfos *cp)
 
 ObjectParameters::ObjectParameters()
 {
-    objectproperties.VertxNumber = objectproperties.PolyNumber =
-                                       objectproperties.NbPolygnNbVertexPtMin = 0;
-    objectproperties.RotStrength = 0;
-    objectproperties.zminim = -350.0;
-    objectproperties.polyfactor = 1.0;
-    objectproperties.polyunits = 1.0;
-    objectproperties.ScalCoeff = 1.0;
-    objectproperties.view_rotx = 90.0;
-    objectproperties.view_roty = 90.0;
-    objectproperties.view_rotz = 1.0;
-    objectproperties.IndexCurrentFormula = -1;
-
-    objectproperties.gridplanliste = 1;
-    objectproperties.border = 1;
-    objectproperties.mesh = 1;
-    objectproperties.activarecnd = true;
-    objectproperties.specReflection[0] = objectproperties.specReflection[1] =
-            objectproperties.specReflection[2] = 0.2f;
-    objectproperties.specReflection[3] = 1.0;
-    objectproperties.shininess = 110;
-    objectproperties.fill = 1;
-    objectproperties.line = 1;
-    objectproperties.infos = 1;
-    objectproperties.frame = -1;
     objectproperties.infosdetails[0] = objectproperties.infosdetails[1] =
                                            objectproperties.infosdetails[2] = 1;
     objectproperties.boundingbox = -1;
@@ -114,16 +90,4 @@ ObjectParameters::ObjectParameters()
     objectproperties.quality_image = 50;
     objectproperties.colortype = 0;
     objectproperties.colortypeParam = 0;
-    InitComponentinfos(objectproperties.componentsinfos);
-}
-
-void ObjectParameters::InitComponentinfos(struct ComponentInfos &compinfos)
-{
-    for (int i = 0; i < 2; i++)
-    {
-        compinfos.NoiseParam[i].Octaves = 4;
-        compinfos.NoiseParam[i].Lacunarity = 0.5;
-        compinfos.NoiseParam[i].Gain = 0.5;
-        compinfos.NoiseParam[i].NoiseActive = 1;
-    }
 }

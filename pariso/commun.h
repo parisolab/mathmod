@@ -65,10 +65,10 @@ struct Voxel
 
 struct NoiseParemeters
 {
-    int Octaves;
-    float Lacunarity;
-    float Gain;
-    int NoiseType; // 0 :Texture ; 1 : Pigments
+    int Octaves=4;
+    float Lacunarity=0.5f;
+    float Gain=0.5f;
+    int NoiseType=1; // 0 :Texture ; 1 : Pigments
     FunctionParser *RgbtParser;
     FunctionParser *VRgbtParser, *GradientParser, *NoiseParser;
     uint Nb_vrgbts;
@@ -163,13 +163,13 @@ struct ObjectProperties
     uint *PolyIndices_localPt;
     uint *PolyIndices_localPtMin;
     int *TypeSurfaceTriangleListeCND;
-    uint NbPolygnNbVertexPtMin;
-    uint PolyNumber;
-    uint VertxNumber;
+    uint NbPolygnNbVertexPtMin = 0;
+    uint PolyNumber = 0;
+    uint VertxNumber = 0;
     uint NbBorderpoints;
     struct ComponentInfos componentsinfos;
-    int IndexCurrentFormula;
-    int border;
+    int IndexCurrentFormula = -1;
+    int border = 1;
     int anim;
     int animxyz;
     int animx;
@@ -185,18 +185,18 @@ struct ObjectProperties
     int morph;
     int morphstep;
     int typedrawing;
-    int mesh;
+    int mesh = 1;
     int fill = 1;
     int smoothline;
     int transparency;
     int boundingbox;
-    bool activarecnd;
+    bool activarecnd = true;
     bool updategl = true;
     int triangles;
     int infos = 1;
-    int frame;
+    int frame = -1;
     int infosdetails[10];
-    int line;
+    int line = 1;
     int norm;
     int plan;
     int png_ok;
@@ -205,10 +205,10 @@ struct ObjectProperties
     int quality_image;
     int colortype;
     int colortypeParam;
-    uint gridplanliste;
-    float specReflection[4];
+    uint gridplanliste = 1;
+    float specReflection[4]={0.2f, 0.2f, 0.2f, 1.0f};
     int threads[3];
-    int shininess;
+    int shininess = 110;
     float frontcol[4]={0.9f, 0.6f, 0.1f, 1.0f};
     float backcol[4] ={0.2f, 0.8f, 0.1f, 1.0f};
     float frontcols[40]={0.9f, 0.6f, 0.1f, 1.0f, 0.3f, 0.8f, 0.5f, 1.0f, 0.2f, 0.5f, 0.6f, 1.0f, 0.1f, 0.3f, 0.9f, 1.0f, 0.96f, 0.71f, 0.3f, 1.0f,
@@ -217,14 +217,18 @@ struct ObjectProperties
                         0.3f, 0.72f, 0.63f, 1.0f, 0.1f, 0.5f, 0.73f, 1.0f, 0.9f, 0.5f, 0.3f, 1.0f, 0.8f, 0.8f, 0.6f, 1.0f, 0.7f, 0.9f, 0.93f, 1.0f};
     float gridcol[4]  ={0.1f, 0.3f, 0.1f, 0.5f};
     float groundcol[4]={0.0f, 0.0f, 0.0f, 1.0f};
-    float polyfactor;
-    float polyunits;
-    float RotStrength, oldRotx, oldRoty;
-    float zminim, BoxLimits[3][6];
+    float polyfactor= 1.0;
+    float polyunits= 1.0;
+    float RotStrength=0;
+    float oldRotx, oldRoty;
+    float zminim= -350.0f;
+    float BoxLimits[3][6];
     int viewport[4];
     double matrix[16];
     double matrixInverse[16];
-    double axe_x, axe_y, axe_z, ScalCoeff, view_rotx, view_roty, view_rotz;
+    double ScalCoeff = 1.0;
+    double axe_x, axe_y, axe_z;
+    double view_rotx = 90.0, view_roty = 90.0, view_rotz = 1.0;
     bool cndoptions[5] = {true, true, true, false, false};
 };
 
