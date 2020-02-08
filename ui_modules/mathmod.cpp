@@ -185,8 +185,7 @@ void MathMod::xyzg_valueupdate(int cl)
 {
     (ui.glWidget)->IsoObjet->masterthread->XYZgrid = uint(cl);
 
-    (ui.glWidget)->IsoObjet->Zgrid = (ui.glWidget)->IsoObjet->Ygrid =
-                                         (ui.glWidget)->IsoObjet->Xgrid = uint(cl);
+    (ui.glWidget)->IsoObjet->XYZgrid = uint(cl);
 
     (ui.glWidget)->Xgrid = (ui.glWidget)->Ygrid = (ui.glWidget)->Zgrid = cl;
 }
