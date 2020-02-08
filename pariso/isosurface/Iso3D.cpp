@@ -394,20 +394,19 @@ Iso3D::Iso3D( uint nbThreads,
     Stack_Factor = factX*factY*factZ;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
-    XYZgrid = nbGrid;
     WorkerThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
 
-    masterthread->XYZgrid = XYZgrid;
+    masterthread->XYZgrid = nbGrid;
     masterthread->GridVal = nbGrid;
     masterthread->MyIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        workerthreads[nbthreads].XYZgrid = XYZgrid;
+        workerthreads[nbthreads].XYZgrid = nbGrid;
         workerthreads[nbthreads].GridVal = nbGrid;
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
@@ -673,7 +672,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
 void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    const uint limitX = XYZgrid, limitY = XYZgrid, limitZ = XYZgrid;
+    const uint limitX = masterthread->XYZgrid, limitY = masterthread->XYZgrid, limitZ = masterthread->XYZgrid;
     uint maxgridval = masterthread->GridVal;
     vals[3]          = masterthread->stepMorph;
     masterthread->xLocal2[IsoIndex*maxgridval]=masterthread->xSupParser[IsoIndex].Eval(vals);
@@ -1552,7 +1551,7 @@ void Iso3D::IsoBuild (
     struct ComponentInfos * componentsPt
 )
 {
-    uint NbTriangleIsoSurfaceTmp, PreviousGridVal=XYZgrid;
+    uint NbTriangleIsoSurfaceTmp, PreviousGridVal=masterthread->XYZgrid;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp = 0;
     componentsPt->updateviewer= false;
@@ -1583,7 +1582,7 @@ void Iso3D::IsoBuild (
     NormOriginaltmpVector.shrink_to_fit();
 
     //*****//
-    uint maxx = std::max(XYZgrid, masterthread->GridVal);
+    uint maxx = std::max(masterthread->XYZgrid, masterthread->GridVal);
     if(masterthread->gridnotnull)
         for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
             maxx = std::max(maxx, masterthread->grid[fctnb]);
@@ -1813,7 +1812,6 @@ void Iso3D::Setgrid(uint NewGridVal)
         masterthread->XYZgrid  = NewGridVal;
         for(uint th=0; th+1 < WorkerThreadsNumber; th++)
             workerthreads[th].XYZgrid = NewGridVal;
-        XYZgrid  = NewGridVal;
     }
 }
 
@@ -2273,13 +2271,13 @@ uint Iso3D::SetMiniMmeshStruct()
     lnew = 0;
     NbPolyMin = 0;
     /// Copy Index Polygons :
-    for(i=0; i+1 < XYZgrid; i++)
+    for(i=0; i+1 < masterthread->XYZgrid; i++)
     {
         I  = i*maxgrscalemaxgr;
-        for(j=0; j+1 < XYZgrid; j++)
+        for(j=0; j+1 < masterthread->XYZgrid; j++)
         {
             J  = I+j*masterthread->GridVal;
-            for(k=0; k+1 < XYZgrid; k++)
+            for(k=0; k+1 < masterthread->XYZgrid; k++)
             {
                 IJK = J+k;
                 Index = GridVoxelVarPt[IJK].Signature;
@@ -2339,13 +2337,13 @@ uint Iso3D::ConstructIsoSurface()
     uint maxgrscalemaxgr = masterthread->GridVal*masterthread->GridVal;
 
     NbTriangleIsoSurface = 0;
-    for(uint i=0; i+1 < XYZgrid; i++)
+    for(uint i=0; i+1 < masterthread->XYZgrid; i++)
     {
         I   = i*maxgrscalemaxgr;
-        for(uint j=0; j+1 < XYZgrid; j++)
+        for(uint j=0; j+1 < masterthread->XYZgrid; j++)
         {
             J   = I+j*masterthread->GridVal;
-            for(uint k=0; k+1 < XYZgrid; k++)
+            for(uint k=0; k+1 < masterthread->XYZgrid; k++)
             {
                 IJK = J+k;
                 Index = GridVoxelVarPt[IJK].Signature;
@@ -2381,9 +2379,9 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     j_Start = 1;
     k_Start = 1;
 
-    i_End = XYZgrid-1;
-    j_End = XYZgrid-1;
-    k_End = XYZgrid-1;
+    i_End = masterthread->XYZgrid-1;
+    j_End = masterthread->XYZgrid-1;
+    k_End = masterthread->XYZgrid-1;
     /// The code is doubled to eliminate conditions tests
 
     for(i = i_Start; i < i_End; i++)
@@ -2512,10 +2510,10 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     /// 1) First case : i =0;
 
     i =0;
-    for(j=0; j < XYZgrid; j++)
+    for(j=0; j < masterthread->XYZgrid; j++)
     {
         J = j*maxgridval;
-        for(k=0; k < XYZgrid; k++)
+        for(k=0; k < masterthread->XYZgrid; k++)
         {
             JK = J +k;
 
@@ -2562,7 +2560,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             }
 
             // Second Case P(0)(j+1)(k)
-            if ( j != (XYZgrid -1))
+            if ( j != (masterthread->XYZgrid -1))
             {
                 IsoValue_2 = Results[JK+maxgridval];
                 // Edge Point computation and  save in IsoPointMap
@@ -2595,7 +2593,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             } /// If ( j != nb_colon -1) ...
 
             // Third Case P(0)(j)(k+1)
-            if ( k != (XYZgrid-1))
+            if ( k != (masterthread->XYZgrid-1))
             {
                 IsoValue_2 = Results[JK+1];
                 // Edge Point computation and  save in IsoPointMap
@@ -2635,12 +2633,12 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
     /// 2) Case i = nb_ligne-1
 
-    i = XYZgrid-1;
+    i = masterthread->XYZgrid-1;
     I = i*maxgrscalemaxgr;
-    for(j=0; j < XYZgrid; j++)
+    for(j=0; j < masterthread->XYZgrid; j++)
     {
         J = I + j*maxgridval;
-        for(k=0; k < XYZgrid; k++)
+        for(k=0; k < masterthread->XYZgrid; k++)
         {
             JK = J + k;
 
@@ -2648,7 +2646,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
 
             // Second Case P(i)(j+1)(k)
-            if ( j != (XYZgrid -1))
+            if ( j != (masterthread->XYZgrid -1))
             {
                 IsoValue_2 = Results[JK+maxgridval];
                 // Edge Point computation and  save in IsoPointMap
@@ -2693,7 +2691,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             } /// End of if (j != nb_colon -1)...
 
             // Third Case P(i)(j)(k+1)
-            if ( k != (XYZgrid -1))
+            if ( k != (masterthread->XYZgrid -1))
             {
                 IsoValue_2 = Results[JK+1];
                 // Edge Point computation and  save in IsoPointMap
@@ -2742,14 +2740,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     /// 3) Case j = 0
     j= 0;
 
-    for(i=0; i < XYZgrid; i++)
-        for(k=0; k < XYZgrid; k++)
+    for(i=0; i < masterthread->XYZgrid; i++)
+        for(k=0; k < masterthread->XYZgrid; k++)
         {
 
             IsoValue_1 = Results[i*maxgrscalemaxgr+k];
 
             // First Case P(i+1)(j)(k)
-            if( i != (XYZgrid -1))
+            if( i != (masterthread->XYZgrid -1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
@@ -2826,7 +2824,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
 
             // Third Case P(i)(j)(k+1)
-            if(k != (XYZgrid -1))
+            if(k != (masterthread->XYZgrid -1))
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+k+1];
                 // Edge Point computation and  save in IsoPointMap
@@ -2861,14 +2859,14 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             } /// End of if(k != (nb_depth -1))...
         }
     /// 4) Case j = nb_colon -1
-    j = XYZgrid-1;
+    j = masterthread->XYZgrid-1;
 
-    for(i=0; i < XYZgrid; i++)
-        for(k=0; k < XYZgrid; k++)
+    for(i=0; i < masterthread->XYZgrid; i++)
+        for(k=0; k < masterthread->XYZgrid; k++)
         {
             IsoValue_1 = Results[i*maxgrscalemaxgr+j*maxgridval+k];
             // First Case P(i+1)(j)(k)
-            if( i != (XYZgrid-1))
+            if( i != (masterthread->XYZgrid-1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*maxgridval+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
@@ -2910,7 +2908,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             } /// End of if( i != (nb_ligne-1))...
 
             // Third Case P(i)(j)(k+1)
-            if( k != (XYZgrid -1))
+            if( k != (masterthread->XYZgrid -1))
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+j*maxgridval+k+1];
                 // Edge Point computation and  save in IsoPointMap
@@ -2955,12 +2953,12 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
     k =0;
 
-    for(i=0; i < XYZgrid; i++)
-        for(j=0; j < XYZgrid; j++)
+    for(i=0; i < masterthread->XYZgrid; i++)
+        for(j=0; j < masterthread->XYZgrid; j++)
         {
             IsoValue_1 = Results[i*maxgrscalemaxgr+j*maxgridval];
             // First Case P(i+1)(j)(k)
-            if(i != (XYZgrid -1))
+            if(i != (masterthread->XYZgrid -1))
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*maxgridval];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
@@ -2991,7 +2989,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             } /// End of if(i != (nb_ligne -1))
 
             // Second Case P(i)(j+1)(k)
-            if(j != XYZgrid -1)
+            if(j != masterthread->XYZgrid -1)
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*maxgridval];
                 // Edge Point computation and  save in IsoPointMap
@@ -3062,13 +3060,13 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
     /// 6) Case k = nb_depth -1
 
-    k = XYZgrid -1;
-    for(i=0; i < XYZgrid; i++)
-        for(j=0; j < XYZgrid; j++)
+    k = masterthread->XYZgrid -1;
+    for(i=0; i < masterthread->XYZgrid; i++)
+        for(j=0; j < masterthread->XYZgrid; j++)
         {
             IsoValue_1 = Results[i*maxgrscalemaxgr+j*maxgridval+k];
             // First Case P(i+1)(j)(k)
-            if( i != (XYZgrid -1) )
+            if( i != (masterthread->XYZgrid -1) )
             {
                 IsoValue_2 = Results[(i+1)*maxgrscalemaxgr+j*maxgridval+k];
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
@@ -3108,7 +3106,7 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             } /// End of if(i != nb_ligne-1)...
 
             // Second Case P(i)(j+1)(k)
-            if( j != (XYZgrid -1) )
+            if( j != (masterthread->XYZgrid -1) )
             {
                 IsoValue_2 = Results[i*maxgrscalemaxgr+(j+1)*maxgridval+k];
                 // Edge Point computation and  save in IsoPointMap
@@ -3160,13 +3158,13 @@ void Iso3D::SignatureComputation()
     uint I, J, IJK, IPLUSONEJK,
          IJPLUSONEK,  IPLUSONEJPLUSONEK;
     uint maxgrscalemaxgr = masterthread->GridVal*masterthread->GridVal;
-    for(uint i=0; i < XYZgrid; i++)
+    for(uint i=0; i < masterthread->XYZgrid; i++)
     {
         I = i*maxgrscalemaxgr;
-        for(uint j=0; j < XYZgrid; j++)
+        for(uint j=0; j < masterthread->XYZgrid; j++)
         {
             J = I + j*masterthread->GridVal;
-            for(uint k=0; k < XYZgrid; k++)
+            for(uint k=0; k < masterthread->XYZgrid; k++)
             {
                 IJK               = J + k;
                 IPLUSONEJK        = IJK + maxgrscalemaxgr;
@@ -3175,25 +3173,25 @@ void Iso3D::SignatureComputation()
 
                 if(Results[IJK] <= 0) GridVoxelVarPt[IJK].Signature +=1;
 
-                if(i != (XYZgrid-1))
+                if(i != (masterthread->XYZgrid-1))
                     if(Results[IPLUSONEJK] <= 0) GridVoxelVarPt[IJK].Signature +=2;
 
-                if(i != (XYZgrid-1) && k != (XYZgrid-1))
+                if(i != (masterthread->XYZgrid-1) && k != (masterthread->XYZgrid-1))
                     if(Results[IPLUSONEJK+1] <= 0) GridVoxelVarPt[IJK].Signature +=4;
 
-                if(k != (XYZgrid-1))
+                if(k != (masterthread->XYZgrid-1))
                     if(Results[IJK+1] <= 0) GridVoxelVarPt[IJK].Signature +=8;
 
-                if(j != (XYZgrid-1))
+                if(j != (masterthread->XYZgrid-1))
                     if(Results[IJPLUSONEK] <= 0) GridVoxelVarPt[IJK].Signature +=16;
 
-                if(i != (XYZgrid-1) && j != (XYZgrid-1))
+                if(i != (masterthread->XYZgrid-1) && j != (masterthread->XYZgrid-1))
                     if(Results[IPLUSONEJPLUSONEK] <= 0) GridVoxelVarPt[IJK].Signature +=32;
 
-                if(i != (XYZgrid-1) && j != (XYZgrid-1) && k != (XYZgrid-1))
+                if(i != (masterthread->XYZgrid-1) && j != (masterthread->XYZgrid-1) && k != (masterthread->XYZgrid-1))
                     if(Results[IPLUSONEJPLUSONEK+1] <= 0) GridVoxelVarPt[IJK].Signature +=64;
 
-                if(j != (XYZgrid-1) && k != (XYZgrid-1))
+                if(j != (masterthread->XYZgrid-1) && k != (masterthread->XYZgrid-1))
                     if(Results[IJPLUSONEK+1] <= 0) GridVoxelVarPt[IJK].Signature +=128;
             }
         }

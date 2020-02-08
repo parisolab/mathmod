@@ -104,7 +104,6 @@ class Iso3D  : public ParisoObject
 public :
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
-    uint XYZgrid;
 public :
     Iso3D(uint nbThreads=8,
           uint nbGrid=40,
