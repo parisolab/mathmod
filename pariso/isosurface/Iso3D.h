@@ -23,7 +23,7 @@
 #include <string.h>
 #include <deque>
 #include <cmath>
-#include "../objectparameters.h"
+#include "../parisoobject.h"
 
 
 /*

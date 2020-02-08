@@ -31,7 +31,6 @@ static GLfloat minx = 999999999, miny = 999999999, minz = 999999999,
                maxx = -999999999, maxy = -999999999, maxz = -999999999;
 
 static GLfloat difX, difY, difZ;
-static ObjectParameters objpar;
 
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
@@ -207,12 +206,10 @@ int OpenGlWidget::memoryallocation(uint nbthreads,
                                    uint initparGrid, uint initisoGrid,
                                    uint FactX, uint FactY, uint FactZ)
 {
-    // memoryallocation
     try
     {
         IsoObjet = new Iso3D(nbthreads, initisoGrid, FactX, FactY, FactZ);
         ParObjet = new Par3D(nbthreads, initparGrid);
-        LocalScene = objpar.objectproperties;
         return 1;
     }
     catch (std::bad_alloc &)

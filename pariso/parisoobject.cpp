@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
-#include "objectparameters.h"
+#include "parisoobject.h"
 
 MasterThread::MasterThread() {}
 MasterThread::~MasterThread() {}
@@ -60,34 +60,4 @@ void ParisoObject::clear(struct ComponentInfos *cp)
     cp->Interleave = true;
     cp->pariso = false;
     cp->updateviewer = false;
-}
-
-ObjectParameters::ObjectParameters()
-{
-    objectproperties.infosdetails[0] = objectproperties.infosdetails[1] =
-                                           objectproperties.infosdetails[2] = 1;
-    objectproperties.boundingbox = -1;
-    objectproperties.triangles = -1;
-    objectproperties.typedrawing = 1;
-    objectproperties.smoothline = -1;
-    objectproperties.anim = -1;
-    objectproperties.animx = -1;
-    objectproperties.animy = -1;
-    objectproperties.animz = -1;
-    objectproperties.animxyz = 1;
-    objectproperties.animxValue = objectproperties.animyValue =
-                                      objectproperties.animzValue = 0.0;
-    objectproperties.animxValueStep = objectproperties.animyValueStep =
-                                          objectproperties.animzValueStep = 0.0;
-    objectproperties.slider = -1;
-    objectproperties.morph = -1;
-    objectproperties.morphstep = -1;
-    objectproperties.norm = -1;
-    objectproperties.plan = 1;
-    objectproperties.transparency = -1;
-    objectproperties.png_ok = 1;
-    objectproperties.jpg_ok = objectproperties.bmp_ok = -1;
-    objectproperties.quality_image = 50;
-    objectproperties.colortype = 0;
-    objectproperties.colortypeParam = 0;
 }

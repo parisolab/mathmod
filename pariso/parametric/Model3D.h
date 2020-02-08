@@ -23,7 +23,7 @@
 #include <iostream>
 #include <string.h>
 #include <cmath>
-#include "../objectparameters.h"
+#include "../parisoobject.h"
 #include "ND/Matrix4D.h"
 #include <qthread.h>
 using std::string;

@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
-#ifndef OBJECTPARAMETERS_H
-#define OBJECTPARAMETERS_H
+#ifndef PARISOOBJECT_H
+#define PARISOOBJECT_H
 #include "commun.h"
 
 class ParisoObject : public QThread
@@ -71,13 +71,5 @@ public:
     MasterThread();
     ~MasterThread();
 };
-class ObjectParameters
-{
-public:
-    ObjectProperties objectproperties;
 
-public:
-    ObjectParameters();
-};
-
-#endif // OBJECTPARAMETERS_H
+#endif // PARISOOBJECT_H

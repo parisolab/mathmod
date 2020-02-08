@@ -10,7 +10,7 @@ HEADERS   = ui_modules/drawingoptions.h \
             pariso/isosurface/Iso3D.h \
             gl_viewer/glviewer.h \
             gl_viewer/qglthread.h \
-            pariso/objectparameters.h \
+            pariso/parisoobject.h \
             pariso/isosurface/TableMap.h \
             gl_viewer/raster.h \
             json_parser/parisodef.h \
@@ -39,7 +39,7 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             pariso/isosurface/Iso3D.cpp \
             gl_viewer/glviewer.cpp \
             gl_viewer/qglthread.cpp \
-            pariso/objectparameters.cpp \
+            pariso/parisoobject.cpp \
             main.cpp \
             json_parser/parisodef.cpp \
             json_parser/jiso.cpp \
