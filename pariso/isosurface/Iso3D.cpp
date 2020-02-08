@@ -199,7 +199,7 @@ IsoWorkerThread::~IsoWorkerThread()
 
 IsoWorkerThread::IsoWorkerThread()
 {
-    Xgrid = Ygrid = Zgrid = 40;
+    XYZgrid = 40;
     stepMorph = 0;
     pace = 1.0/30.0;
     activeMorph = -1;
@@ -213,9 +213,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        WorkerThreadsTmp[nbthreads].Xgrid = masterthread->Xgrid;
-        WorkerThreadsTmp[nbthreads].Ygrid = masterthread->Ygrid;
-        WorkerThreadsTmp[nbthreads].Zgrid = masterthread->Zgrid;
+        WorkerThreadsTmp[nbthreads].XYZgrid = masterthread->XYZgrid;
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         WorkerThreadsTmp[nbthreads].GridVal = masterthread->GridVal;
@@ -262,9 +260,7 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].zLocal2 = masterthread->zLocal2;
         workerthreads[nbthreads].activeMorph = masterthread->activeMorph;
         workerthreads[nbthreads].AllComponentTraited = masterthread->AllComponentTraited;
-        workerthreads[nbthreads].Xgrid = masterthread->Xgrid;
-        workerthreads[nbthreads].Ygrid = masterthread->Ygrid;
-        workerthreads[nbthreads].Zgrid = masterthread->Zgrid;
+        workerthreads[nbthreads].XYZgrid = masterthread->XYZgrid;
         workerthreads[nbthreads].GridVal = masterthread->GridVal;
     }
 
@@ -404,18 +400,14 @@ Iso3D::Iso3D( uint nbThreads,
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
 
-    masterthread->Xgrid = Xgrid;
-    masterthread->Ygrid = Ygrid;
-    masterthread->Zgrid = Zgrid;
+    masterthread->XYZgrid = Xgrid;
     masterthread->GridVal = nbGrid;
     masterthread->MyIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
-        workerthreads[nbthreads].Xgrid = Xgrid;
-        workerthreads[nbthreads].Ygrid = Ygrid;
-        workerthreads[nbthreads].Zgrid = Zgrid;
+        workerthreads[nbthreads].XYZgrid = Xgrid;
         workerthreads[nbthreads].GridVal = nbGrid;
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
@@ -722,7 +714,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     double* vals;
     double* Res;
     uint maxgrscalemaxgr = GridVal*GridVal;
-    const uint limitY = Ygrid, limitZ = Zgrid;
+    const uint limitY = XYZgrid, limitZ = XYZgrid;
     uint I, J, IJK;
     uint id=0;
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
@@ -735,7 +727,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint taille=0;
     iStart = 0;
     iFinish = 0;
-    for(uint i=0; i<Xgrid; i++)
+    for(uint i=0; i<XYZgrid; i++)
     {
         if((i% (WorkerThreadsNumber))  == MyIndex )
         {
@@ -1201,7 +1193,7 @@ ErrorMessage IsoMasterThread::ParserIso()
 ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    uint limitX = Xgrid, limitY = Ygrid, limitZ = Zgrid;
+    uint limitX = XYZgrid, limitY = XYZgrid, limitZ = XYZgrid;
 
     if(AllComponentTraited)
     {
@@ -1491,7 +1483,7 @@ void IsoWorkerThread::AllocateParsersForWorkerThread(uint nbcomp, uint nbfunct)
 ///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::initgrid()
 {
-    GridVal = std::max(std::max(Xgrid, Ygrid), Zgrid);
+    GridVal = XYZgrid;
     if(gridnotnull)
         for(uint fctnb= 0; fctnb< componentsNumber; fctnb++)
             GridVal = std::max(GridVal, grid[fctnb]);
@@ -1818,14 +1810,9 @@ void Iso3D::Setgrid(uint NewGridVal)
 {
     if(masterthread->gridnotnull)
     {
-        masterthread->Zgrid  =
-            masterthread->Ygrid  =
-                masterthread->Xgrid  = NewGridVal;
+        masterthread->XYZgrid  = NewGridVal;
         for(uint th=0; th+1 < WorkerThreadsNumber; th++)
-            workerthreads[th].Xgrid =
-                workerthreads[th].Ygrid =
-                    workerthreads[th].Zgrid = NewGridVal;
-
+            workerthreads[th].XYZgrid = NewGridVal;
         Zgrid  =
             Ygrid  =
                 Xgrid  = NewGridVal;

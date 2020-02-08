@@ -183,9 +183,7 @@ void MathMod::Initparametricpage()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::xyzg_valueupdate(int cl)
 {
-    (ui.glWidget)->IsoObjet->masterthread->Zgrid =
-        (ui.glWidget)->IsoObjet->masterthread->Ygrid =
-            (ui.glWidget)->IsoObjet->masterthread->Xgrid = uint(cl);
+    (ui.glWidget)->IsoObjet->masterthread->XYZgrid = uint(cl);
 
     (ui.glWidget)->IsoObjet->Zgrid = (ui.glWidget)->IsoObjet->Ygrid =
                                          (ui.glWidget)->IsoObjet->Xgrid = uint(cl);

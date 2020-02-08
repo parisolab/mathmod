@@ -53,7 +53,7 @@ class IsoWorkerThread : public WorkerThread
     Q_OBJECT
 public :
     FunctionParser *implicitFunctionParser, *Fct;
-    uint   Xgrid, Ygrid, Zgrid;
+    uint XYZgrid;
     bool AllComponentTraited;
     uint GridVal;
     std::vector<double> xLocal2, yLocal2, zLocal2;
