@@ -306,7 +306,8 @@ void DrawingOptions::on_xyzg_valueChanged(int value)
 // --------------------------
 void DrawingOptions::on_ChangeGrid_clicked()
 {
-    MathmodRef->slot_checkBox73_clicked();
+    (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
+    MathmodRef->slot_checkBox73_clicked(PARISO_TYPE) : MathmodRef->slot_checkBox73_clicked(ISO_TYPE);
 }
 
 // --------------------------

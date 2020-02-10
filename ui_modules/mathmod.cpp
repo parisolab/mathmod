@@ -193,12 +193,7 @@ void MathMod::xyzg_valueChanged(int cl, ModelType type)
     xyzg_valueupdate(cl);
     // process the new surface
     if (xyzactivated == 1)
-    {
-        if(type== PARISO_TYPE)
-            ParisoObjectProcess();
-        else
-            ProcessNewIsoSurface();
-    }
+        (type == PARISO_TYPE) ? ParisoObjectProcess() : ProcessNewIsoSurface();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
