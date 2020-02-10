@@ -45,7 +45,7 @@ public slots:
     void fill();
     void iso_infos();
     void draw_norm_clicked();
-    void linecolumn_valueChanged(int);
+    void linecolumn_valueChanged(int, ModelType type=PAR_TYPE);
     void line_valueChanged(int);
     void column_valueChanged(int);
     void linecolumn_valueChanged_2(int);
@@ -53,10 +53,10 @@ public slots:
     void line_valueupdate(int);
     void column_valueupdate(int);
     void ProcessNewIsoSurface();
-    void xyzg_valueChanged(int);
+    void xyzg_valueChanged(int, ModelType);
     void xyzg_valueupdate(int);
-    void slot_checkBox73_clicked();
-    void slot_uv_clicked();
+    void slot_checkBox73_clicked(ModelType type=ISO_TYPE);
+    void slot_uv_clicked(ModelType type=PAR_TYPE);
     void slot_uv4D_clicked();
     void smoothline();
     void Mesh();

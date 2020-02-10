@@ -282,6 +282,7 @@ void DrawingOptions::SaveSlidersRef(int nb)
     SliderArray[19].SliderLabelMin = ui.C20labelMin;
     SliderArray[19].SliderGroupeBox = ui.groupBox_28;
 }
+
 // --------------------------
 void DrawingOptions::on_xyzg_valueChanged(int value)
 {
@@ -290,7 +291,8 @@ void DrawingOptions::on_xyzg_valueChanged(int value)
                              QString::number(Parameters->IsoMaxGrid) + ")");
     if (!MathmodRef->ui.glWidget->IsoObjet->isRunning())
     {
-        MathmodRef->xyzg_valueChanged(value);
+        (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
+        MathmodRef->xyzg_valueChanged(value, PARISO_TYPE) : MathmodRef->xyzg_valueChanged(value, ISO_TYPE);
     }
     else
     {
@@ -1121,8 +1123,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 listeIsoObj.append(listeObj[i].toObject());
             else
                 listeParObj.append(listeObj[i].toObject());
-        // Right now, we only support pariso object with 1 Iso3D and 1 Param3D
-        // objects.
+        // Right now, we only support pariso object with 1 Iso3D and 1 Param3D objects.
         if (listeParObj.size() > 0)
             QPar = listeParObj[0].toObject();
         if (listeIsoObj.size() > 0)
@@ -3042,7 +3043,7 @@ void DrawingOptions::slot_unselect_clicked()
 // --------------------------
 void DrawingOptions::slot_XYZscrollBar_valueChanged(int value)
 {
-    MathmodRef->xyzg_valueChanged(value);
+    MathmodRef->xyzg_valueChanged(value, ISO_TYPE);
 }
 
 // --------------------------
@@ -4394,7 +4395,8 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
                                  ", " + QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
     if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
     {
-        MathmodRef->linecolumn_valueChanged(value);
+        (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
+        MathmodRef->linecolumn_valueChanged(value, PARISO_TYPE) : MathmodRef->linecolumn_valueChanged(value, PAR_TYPE);
     }
     else
     {
@@ -4618,7 +4620,8 @@ void DrawingOptions::on_uv4D_clicked()
 // --------------------------
 void DrawingOptions::on_uv_clicked()
 {
-    MathmodRef->slot_uv_clicked();
+    (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
+    MathmodRef->slot_uv_clicked(PARISO_TYPE) : MathmodRef->slot_uv_clicked(PAR_TYPE);
 }
 
 // --------------------------

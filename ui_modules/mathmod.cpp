@@ -138,11 +138,11 @@ void MathMod::column_valueupdate(int cl)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::linecolumn_valueChanged(int cl)
+void MathMod::linecolumn_valueChanged(int cl, ModelType type)
 {
     linecolumn_valueupdate(cl);
     if (uvactivated == 1)
-        ParametricSurfaceProcess(1);
+        (type == PARISO_TYPE) ? ParisoObjectProcess():ParametricSurfaceProcess(1);
     else
         (ui.glWidget)->update();
 }
@@ -184,17 +184,21 @@ void MathMod::Initparametricpage()
 void MathMod::xyzg_valueupdate(int cl)
 {
     (ui.glWidget)->IsoObjet->masterthread->XYZgrid = uint(cl);
-
     (ui.glWidget)->Xgrid = (ui.glWidget)->Ygrid = (ui.glWidget)->Zgrid = cl;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void MathMod::xyzg_valueChanged(int cl)
+void MathMod::xyzg_valueChanged(int cl, ModelType type)
 {
     xyzg_valueupdate(cl);
     // process the new surface
     if (xyzactivated == 1)
-        ProcessNewIsoSurface();
+    {
+        if(type== PARISO_TYPE)
+            ParisoObjectProcess();
+        else
+            ProcessNewIsoSurface();
+    }
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -319,21 +323,21 @@ void MathMod::ProcessNewIsoSurface()
 }
 
 //++++++++++++++++++++++++++++++++++++++++
-void MathMod::slot_checkBox73_clicked()
+void MathMod::slot_checkBox73_clicked(ModelType type)
 {
     xyzactivated *= -1;
     // process the new surface
     if (xyzactivated == 1)
-        ProcessNewIsoSurface();
+        (type == PARISO_TYPE) ? ParisoObjectProcess() : ProcessNewIsoSurface();
 }
 
 //++++++++++++++++++++++++++++++++++++++++
-void MathMod::slot_uv_clicked()
+void MathMod::slot_uv_clicked(ModelType type)
 {
     uvactivated *= -1;
     // process the new surface
     if (uvactivated == 1)
-        ParametricSurfaceProcess(1);
+        (type == PARISO_TYPE) ? ParisoObjectProcess() : ParametricSurfaceProcess(1);
 }
 
 //++++++++++++++++++++++++++++++++++++++++
