@@ -22,18 +22,6 @@
 #include "jiso.h"
 #include "jpar.h"
 
-class jcollection
-{
-public:
-    jcollection();
-    ~jcollection();
-
-    QList<jpar> JPar;
-    QList<jiso> JIso;
-    QJsonArray JTextures;
-    QJsonArray JPigments;
-};
-
 class jpariso
 {
 public:
@@ -42,6 +30,25 @@ public:
 
     jpar JPar;
     jiso JIso;
+public:
+    QString Name;
+    int Nbcomponent;
+    int index;
 };
+
+class jcollection
+{
+public:
+    jcollection();
+    ~jcollection();
+
+    QList<jpar> JPar;
+    QList<jiso> JIso;
+    QList<jpariso> JParIso;
+    QJsonArray JTextures;
+    QJsonArray JPigments;
+};
+
+
 
 #endif // PARISODEF_H

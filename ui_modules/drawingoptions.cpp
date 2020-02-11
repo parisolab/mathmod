@@ -1820,10 +1820,77 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
     for (int i = 0; i < array.size(); i++)
     {
-        if ((QObj1 = array[i].toObject())["ParIso"].isArray())
+        if ((QObj1 = array[i].toObject())["ParIso"].isArray() &&
+                (QObj1)["Name"].toString() == arg1)
         {
+            if (!VerifiedJsonModel((array[i].toObject())))
+                return (0);
+
+            ShowSliders(array[i].toObject());
+            QJsonArray listeObj = QObj1["ParIso"].toArray();
+            QJsonArray listeIsoObj;
+            QJsonArray listeParObj;
+            QJsonObject QPar, QIso;
+            for (int i = 0; i < listeObj.size(); i++)
+                if ((listeObj[i].toObject())["Iso3D"].isObject())
+                    listeIsoObj.append(listeObj[i].toObject());
+                else
+                    listeParObj.append(listeObj[i].toObject());
+            // Right now, we only support pariso object with 1 Iso3D and 1 Param3D objects.
+            if (listeParObj.size() > 0)
+                QPar = listeParObj[0].toObject();
+            if (listeIsoObj.size() > 0)
+                QIso = listeIsoObj[0].toObject();
+
+            loadtext = loadpigm = false;
+            if (QPar["Texture"].isObject())
+                QTextureObj = QPar["Texture"].toObject();
+            if (QPar["Pigment"].isObject())
+                QPigmentObj = QPar["Pigment"].toObject();
+            // Colors
+            loadtext = MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+                           (QPar["Texture"].isObject());
+            // Pigment
+            loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+                           (QPar["Pigment"].isObject());
+            LoadMandatoryAndOptionnalFields(QPar["Param3D"].toObject(), PAR_TYPE,
+                                            loadtext, QTextureObj, loadpigm,
+                                            QPigmentObj);
+            // Save this Current Parametric Tree struct
+            MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(
+                MathmodRef->RootObjet.CurrentTreestruct);
+
+            loadtext = loadpigm = false;
+            if (QIso["Texture"].isObject())
+                QTextureObj = QIso["Texture"].toObject();
+            if (QIso["Pigment"].isObject())
+                QPigmentObj = QIso["Pigment"].toObject();
+            // Colors
+            loadtext = MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
+                           (QIso["Texture"].isObject());
+            // Pigment
+            loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
+                           (QIso["Pigment"].isObject());
+            LoadMandatoryAndOptionnalFields(QIso["Iso3D"].toObject(), ISO_TYPE,
+                                            loadtext, QTextureObj, loadpigm,
+                                            QPigmentObj);
+            // Save this Current Isosurface Tree struct
+            MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(
+                MathmodRef->RootObjet.CurrentTreestruct);
+            QJsonDocument document;
+            document.setObject(QObj1);
+            MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
+
+            // Update the current pariso struct
+            MathmodRef->RootObjet.CurrentJsonObject = QObj1;
+            CurrentFormulaType = 2;
+            /// process the new surface
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =2;
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
+            MathmodRef->ParisoObjectProcess();
             ui.parisogroupbox->show();
+            return (1);
         }
         else
         {
@@ -2878,8 +2945,21 @@ void DrawingOptions::AddListModels(bool update)
             }
         }
     }
-
     IsolistItemRef->sortChildren(0, Qt::AscendingOrder);
+
+    // Parametric:
+    QTreeWidgetItem *ParisolistItem = new QTreeWidgetItem(ui.ObjectClasse);
+    Text = "Pariso (" +
+                   QString::number(MathmodRef->collection.JParIso.count()) + ")";
+    ParisolistItem->setBackgroundColor(0, greenColor);
+    ParisolistItem->setText(0, Text);
+    for (int i = 0; i < MathmodRef->collection.JParIso.count(); ++i)
+    {
+        QTreeWidgetItem *nameitem = new QTreeWidgetItem(ParisolistItem);
+        nameitem->setText(0, MathmodRef->collection.JParIso[i].Name);
+
+    }
+    ParisolistItem->sortChildren(0, Qt::AscendingOrder);
 
     // My Selection:
     // Isosurfaces:

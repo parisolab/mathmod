@@ -335,7 +335,7 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
     QStringList lst_2, lst_3;
     QString a;
     QJsonObject jsobj;
-
+    QJsonArray  jsarray;
     // Textures List:
     for (int i = 0; i < array2.size(); i++)
     {
@@ -387,6 +387,30 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
             newjpar.read(jsobj);
             pariso.JPar.append(newjpar);
             a = (jsobj)["Name"].toArray()[0].toString();
+            lst.append(a);
+        }
+        else if ((array[i].toObject())["ParIso"].isArray())
+        {
+            jpariso newjpariso;
+            jpar newjpar;
+            jiso newjiso;
+            jsarray = ((array[i].toObject())["ParIso"].toArray());
+            for(int i=0; i<jsarray.size(); i++)
+            {
+                if ((jsarray[i].toObject())["Param3D"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Param3D"].toObject();
+                   newjpar.read(jsobj);
+                   newjpariso.JPar = newjpar;
+                } else if ((jsarray[i].toObject())["Iso3D"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Iso3D"].toObject();
+                   newjiso.read(jsobj);
+                   newjpariso.JIso = newjiso;
+                }
+            }
+            a = newjpariso.Name = (array[i].toObject())["Name"].toString();
+            pariso.JParIso.append(newjpariso);
             lst.append(a);
         }
     }
