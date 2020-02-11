@@ -1,6 +1,102 @@
 {
   "MathModels": [
     {
+        "Name": "Pariso_01",
+        "ParIso": [
+            {
+                "Param3D": {
+                    "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"
+                    ],
+                    "Name": ["Blobby_Torus"
+                    ],
+                    "Component": ["BlobbyTorus","TwistedTorus"
+                    ],
+                    "Cnd": ["","(z<0)"
+                    ],
+                    "Const": ["N=5","M=16","P=13","k=5","k0=5","k1=5","L=(3/2)","r0=6","dv=(1/100)","P=5","MM=10"
+                    ],
+                    "Funct": ["G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)","G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)","G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))","Fx=(1+(1/2)*cos(v+t))*cos(u-k*(v)+t)","Fy=(1+(1/2)*cos(v+t))*sin(u-k*(v)+t)","Fz=L*sin(v+t)","DFxv = (Fx(u,v+dv,t) - Fx(u,v,t))/dv","DFyv = (Fy(u,v+dv,t) - Fy(u,v,t))/dv","DFzv = (Fz(u,v+dv,t) - Fz(u,v,t))/dv","DFxv2 = (DFxv(u,v+dv,t) - DFxv(u,v,t))/dv","DFyv2 = (DFyv(u,v+dv,t) - DFyv(u,v,t))/dv","DFzv2 = (DFzv(u,v+dv,t) - DFzv(u,v,t))/dv","Rapp = (u/sqrt(u*u+v*v+t*t))","Nx = Rapp(DFxv2(u,v,t),DFyv2(u,v,t),DFzv2(u,v,t))","Ny = Rapp(DFyv2(u,v,t),DFxv2(u,v,t),DFzv2(u,v,t))","Nz = Rapp(DFzv2(u,v,t),DFyv2(u,v,t),DFxv2(u,v,t))","Bx = 1/sqrt(u*u+v*v+t*t)","Binx = (DFyv(u,v,t) * Nz(u,v,t) - DFzv(u,v,t) * Ny(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","Biny = (DFzv(u,v,t) * Nx(u,v,t) - DFxv(u,v,t) * Nz(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","Binz = (DFxv(u,v,t) * Ny(u,v,t) - DFyv(u,v,t) * Nx(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","S = (r0/100)*((k0-1)*cos(u+k1*t) + cos((k0-1)*u+k1*t))","C = (r0/100)*((k0-1)*sin(u+k1*t) - sin((k0-1)*u+k1*t))","Sx = Fx(pi,v,t) + Nx(pi,v,t)*C(u,v,t) + Binx(pi,v,t)*S(u,v,t)","Sy = Fy(pi,v,t) + Ny(pi,v,t)*C(u,v,t) + Biny(pi,v,t)*S(u,v,t)","Sz = Fz(pi,v,t) + Nz(pi,v,t)*C(u,v,t) + Binz(pi,v,t)*S(u,v,t)"
+                    ],
+                    "Fx": ["-(1/2)*G1(u,v,t)+12","(5/3)*Sx(u,v,t/4)-10"
+                    ],
+                    "Fy": ["(1/2)*G2(u,v,t)-5","(5/3)*Sy(u,v,t/4)-5"
+                    ],
+                    "Fz": ["(1/2)*G3(u,v,t)","(5/3)*Sz(u,v,t/4)"
+                    ],
+                    "Grid": ["50","100","50","100"
+                    ],
+                    "Umax": ["2*pi","pi"
+                    ],
+                    "Umin": ["0","-pi"
+                    ],
+                    "Vmax": ["2*pi","2*pi"
+                    ],
+                    "Vmin": ["0","0"
+                    ]
+                },
+                "Texture": {
+                    "Colors": ["R= if(cmpId = (0),if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),(1)) , abs(cos(u)))","G=if(cmpId = (0), if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)), abs(cos(v)))","B=if(cmpId = (0), if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)),abs(sin(v)+sin(u))) ","T=1"
+                    ],
+                    "Name": "Candy",
+                    "Noise": "1"
+                }
+            },
+            {
+                "Iso3D": {
+                    "Description": ["BlackHole by Abderrahman Taha 10/12/2019"
+                    ],
+                    "Name": ["BlackHole"
+                    ],
+                    "Component": [" GravityPlan"," EarthPlanet"," MoonPlanet"," WhiteStar ","fallingdrop"
+                    ],
+                    "Cnd": ["(x-y-(3/2)*z<0)","(x-y-(3/2)*z<0)","(x-y-(3/2)*z<0)","(x-y-(3/2)*z<0)",""
+                    ],
+                    "Const": ["M=pi/10","k=5"
+                    ],
+                    "Funct": ["A=(x-4*sin(t*M))^2","B=(x-2*cos(t*M))^2","C=(x-2*sin(t*pi)-4*sin(t*M))^2","D=(x-2*cos(t*pi)-2*cos(t*M))^2","E=(x-1/5)*(x-1/5) - 3/5","F=x*x - 3/5","H=x*cos(2*t*pi)","G=x*sin(2*t*pi)","Drop=((z-6*(1-cos(sqrt(x^2+y^2)-t*2*pi))/sqrt(x^2+y^2+4))*(2*(x^2+y^2)+(z-40*sin((t+19/100)*pi)+1)^2-10)-1000)"
+                    ],
+                    "Fxyz": ["((3/2)*(H(x,y,z,t)-G(y,x,z,t))^2 + (G(x,y,z,t)+ H(y,x,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(A(x,y,z,t) + B(y,x,z,t)+ F(z,y,x,t))*min( ((3/2)*(H(x,y,z,t)-G(y,x,z,t))^2 + (G(x,y,z,t)+ H(y,x,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(A(x,y,z,t) + B(y,x,z,t) + F(z,y,x,t)), z) +1","A(x,y,z,t)+ B(y,x,z,t) + E(z,y,x,t)","C(x,y,z,t) + D(y,x,z,t)  + E(z,y,x,t) + 1/2","(3/2)*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+1/5)^2 -(abs((1/5)*sin(t*M)+1/20))","Drop(k*x,50+k*y,k*z,t)"
+                    ],
+                    "Grid": ["20","20","20","20","30"
+                    ],
+                    "Xmax": ["5","1+4*sin(t*M)","1+2*sin(t*pi)+4*sin(t*M)"," 1/2","20/k"
+                    ],
+                    "Xmin": ["-5","-1+4*sin(t*M)","-1+2*sin(t*pi)+4*sin(t*M)"," -1/2","-20/k"
+                    ],
+                    "Ymax": ["4","1+2*cos(t*M)","1+2*cos(t*pi)+2*cos(t*M)"," 1/2","20/k-50/k"
+                    ],
+                    "Ymin": ["-4","-1+2*cos(t*M)","-1+2*cos(t*pi)+2*cos(t*M)"," -1/2","-20/k-50/k"
+                    ],
+                    "Zmax": ["1","11/10","1","1/2","50/k"
+                    ],
+                    "Zmin": ["-2","-1","-1"," -7/10","-1/k"
+                    ]
+                },
+                "Texture": {
+                    "Colors": ["R=if(cmpId=(4), (7/10), (1/2))","G=if(cmpId=(4), (7/10),if(cmpId> (0),(8/5)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2)),(1/2)))","B=if(cmpId=(4), (7/10),if(cmpId> (0),(9/5)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2)), (1/6)))","T=1"
+                    ],
+                    "Name": "WorleyNoise",
+                    "Noise": "1"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Pariso_02",
+        "ParIso": [
+            {
+                "Param3D": {"Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"],"Component": ["BlobbyTorus"],"Funct": ["G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)","G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)","G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))"],"Fx": ["-G1(u,v,t)"],"Fy": ["G2(u,v,t)"],"Fz": ["G3(u,v,t)-10"],"Grid": ["100","200"],"Name": ["Blobby_Torus"],"Umax": ["2*pi"],"Umin": ["0"],"Vmax": ["2*pi"],"Vmin": ["0"]
+                },
+                "Texture": {"Colors": ["R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),1) ","G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)) ","B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)) ","T=1"],"Name": "Candy","Noise": "1"
+                }
+            },
+            {
+                "Iso3D": {"Description": ["Models Intersection by Abderrahman Taha 04/11/2019"],"Cnd": ["(x-y-(3/2)*z<0)","1>0"],"Component": ["Schwarz","Plan"],"Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],"Name": ["Models_Intersection"],"Xmax": ["4+4*sin(t*pi)","6"],"Xmin": ["-4+4*sin(t*pi)","-6"],"Ymax": ["4","6"],"Ymin": ["-4","-6"],"Zmax": ["4","6"],"Zmin": ["-4","-6"]
+                }
+            }
+        ]
+    },
+    {
         "Param3D": {
             "Description": ["Twisted_Multisided_Torus by Abderrahman Taha 01/01/2020"
             ],
