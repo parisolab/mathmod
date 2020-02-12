@@ -939,10 +939,8 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
         if (verif)
         {
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =
-                1;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos
-            .ParisoCurrentComponentIndex = 0;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =1;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
         }
         return (verif);
     }
@@ -954,10 +952,8 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
         if (verif)
         {
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =
-                1;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos
-            .ParisoCurrentComponentIndex = 0;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
         }
         return (verif);
     }
@@ -973,10 +969,8 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
             else
                 listeParObj.append(listeObj[i].toObject()["Param3D"].toObject());
         MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =
-            listeIsoObj.size() + listeParObj.size();
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos
-        .ParisoCurrentComponentIndex = 0;
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = listeIsoObj.size() + listeParObj.size();
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
         for (int i = 0; i < listeIsoObj.size(); i++)
             if (!VerifiedIsoJsonModel(listeIsoObj[i].toObject()))
                 return (false);
@@ -1000,25 +994,18 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
     ObjArrayToString(lst, result);
     if (opt == ISO_TYPE)
     {
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Rgbt =
-            result.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Noise =
-            noise1.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->RgbtSize =
-            uint(lst.size());
+        MathmodRef->ui.glWidget->IsoObjet->masterthread->Rgbt = result.toStdString();
+        MathmodRef->ui.glWidget->IsoObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->ui.glWidget->IsoObjet->masterthread->RgbtSize = uint(lst.size());
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Rgbt =
-            result.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Noise =
-            noise1.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->RgbtSize =
-            uint(lst.size());
+        MathmodRef->ui.glWidget->ParObjet->masterthread->Rgbt = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->ui.glWidget->ParObjet->masterthread->RgbtSize = uint(lst.size());
     }
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
-    MathmodRef->RootObjet.CurrentTreestruct.RGBT =
-        result.split(";", QString::SkipEmptyParts);
+    MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 }
 
 void DrawingOptions::LoadPigment(const QJsonObject &QObj,
@@ -1055,25 +1042,17 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
 
     if (opt == ISO_TYPE)
     {
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Gradient =
-            strtmp.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->VRgbt =
-            result.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Noise =
-            noise.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->VRgbtSize =
-            uint(VRgbtSize);
+        MathmodRef->ui.glWidget->IsoObjet->masterthread->Gradient = strtmp.toStdString();
+        MathmodRef->ui.glWidget->IsoObjet->masterthread->VRgbt = result.toStdString();
+        MathmodRef->ui.glWidget->IsoObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->ui.glWidget->IsoObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Gradient =
-            strtmp.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->VRgbt =
-            result.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Noise =
-            noise.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->VRgbtSize =
-            uint(VRgbtSize);
+        MathmodRef->ui.glWidget->ParObjet->masterthread->Gradient = strtmp.toStdString();
+        MathmodRef->ui.glWidget->ParObjet->masterthread->VRgbt = result.toStdString();
+        MathmodRef->ui.glWidget->ParObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->ui.glWidget->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
 
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
@@ -1895,10 +1874,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
         else
         {
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =
-                1;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos
-            .ParisoCurrentComponentIndex = 0;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
             ui.parisogroupbox->hide();
             if ((QObj1 = array[i].toObject())["Iso3D"].isObject() &&
                     (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"]
@@ -1911,15 +1888,11 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 ShowSliders(array[i].toObject());
 
                 // Colors
-                if ((loadtext =
-                            MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
-                                QObj1["Texture"].isObject()))
+                if ((loadtext = MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull = QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
 
                 // Pigment
-                if ((loadpigm =
-                            MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
-                                QObj1["Pigment"].isObject()))
+                if ((loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull = QObj1["Pigment"].isObject()))
                     QPigmentObj = QObj1["Pigment"].toObject();
 
                 LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj,
