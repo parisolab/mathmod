@@ -3702,47 +3702,15 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                         .replace(" ", "") !=
                         (ui.paramNameEdit_2->toPlainText()).replace(" ", ""))
                 {
-                    array = copyCurrentObject2["Fx"].toArray();
-                    array.append(ui.XEdit_2->toPlainText());
-                    copyCurrentObject2["Fx"] = array;
-
-                    array = copyCurrentObject2["Fy"].toArray();
-                    array.append(ui.YEdit_2->toPlainText());
-                    copyCurrentObject2["Fy"] = array;
-
-                    array = copyCurrentObject2["Fz"].toArray();
-                    array.append(ui.ZEdit_2->toPlainText());
-                    copyCurrentObject2["Fz"] = array;
-
-                    array = copyCurrentObject2["Fw"].toArray();
-                    array.append(ui.WEdit_2->toPlainText());
-                    copyCurrentObject2["Fw"] = array;
-
-                    array = copyCurrentObject2["Umin"].toArray();
-                    array.append(ui.umin_2->toPlainText());
-                    copyCurrentObject2["Umin"] = array;
-
-                    array = copyCurrentObject2["Umax"].toArray();
-                    array.append(ui.umax_2->toPlainText());
-                    copyCurrentObject2["Umax"] = array;
-
-                    array = copyCurrentObject2["Vmin"].toArray();
-                    array.append(ui.vmin_2->toPlainText());
-                    copyCurrentObject2["Vmin"] = array;
-
-                    array = copyCurrentObject2["Vmax"].toArray();
-                    array.append(ui.vmax_2->toPlainText());
-                    copyCurrentObject2["Vmax"] = array;
-
-                    if (copyCurrentObject2["Component"].isArray())
-                    {
-                        array = copyCurrentObject2["Component"].toArray();
-                        array.append(ui.paramNameEdit_2->toPlainText());
-                        copyCurrentObject2["Component"] = array;
-                    }
-                    else
-                        copyCurrentObject2.remove("Component");
-
+                    appednew(copyCurrentObject2, "Component", ui.paramNameEdit_2);
+                    appednew(copyCurrentObject2, "Fx", ui.XEdit_2);
+                    appednew(copyCurrentObject2, "Fy", ui.YEdit_2);
+                    appednew(copyCurrentObject2, "Fz", ui.ZEdit_2);
+                    appednew(copyCurrentObject2, "Fw", ui.WEdit_2);
+                    appednew(copyCurrentObject2, "Umin", ui.umin_2);
+                    appednew(copyCurrentObject2, "Umax", ui.umax_2);
+                    appednew(copyCurrentObject2, "Vmin", ui.vmin_2);
+                    appednew(copyCurrentObject2, "Vmax", ui.vmax_2);
                     if (copyCurrentObject2["Grid"].isArray())
                     {
                         array = copyCurrentObject2["Grid"].toArray();
@@ -3756,48 +3724,15 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 }
                 else
                 {
-                    array = copyCurrentObject2["Fx"].toArray();
-                    array.insert(indexcurrentFormula, ui.XEdit_2->toPlainText());
-                    copyCurrentObject2["Fx"] = array;
-
-                    array = copyCurrentObject2["Fy"].toArray();
-                    array.insert(indexcurrentFormula, ui.YEdit_2->toPlainText());
-                    copyCurrentObject2["Fy"] = array;
-
-                    array = copyCurrentObject2["Fz"].toArray();
-                    array.insert(indexcurrentFormula, ui.ZEdit_2->toPlainText());
-                    copyCurrentObject2["Fz"] = array;
-
-                    array = copyCurrentObject2["Fw"].toArray();
-                    array.insert(indexcurrentFormula, ui.WEdit_2->toPlainText());
-                    copyCurrentObject2["Fw"] = array;
-
-                    array = copyCurrentObject2["Umin"].toArray();
-                    array.insert(indexcurrentFormula, ui.umin_2->toPlainText());
-                    copyCurrentObject2["Umin"] = array;
-
-                    array = copyCurrentObject2["Umax"].toArray();
-                    array.insert(indexcurrentFormula, ui.umax_2->toPlainText());
-                    copyCurrentObject2["Umax"] = array;
-
-                    array = copyCurrentObject2["Vmin"].toArray();
-                    array.insert(indexcurrentFormula, ui.vmin_2->toPlainText());
-                    copyCurrentObject2["Vmin"] = array;
-
-                    array = copyCurrentObject2["Vmax"].toArray();
-                    array.insert(indexcurrentFormula, ui.vmax_2->toPlainText());
-                    copyCurrentObject2["Vmax"] = array;
-
-                    if (copyCurrentObject2["Component"].isArray())
-                    {
-                        array = copyCurrentObject2["Component"].toArray();
-                        array.insert(indexcurrentFormula,
-                                     ui.paramNameEdit_2->toPlainText());
-                        copyCurrentObject2["Component"] = array;
-                    }
-                    else
-                        copyCurrentObject2.remove("Component");
-
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Component", ui.paramNameEdit_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Fx", ui.XEdit_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Fy", ui.YEdit_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Fz", ui.ZEdit_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Fw", ui.WEdit_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Umin", ui.umin_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Umax", ui.umax_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Vmin", ui.vmin_2);
+                    insertat(indexcurrentFormula, copyCurrentObject2, "Vmax", ui.vmax_2);
                     if (copyCurrentObject2["Grid"].isArray())
                     {
                         array = copyCurrentObject2["Grid"].toArray();
