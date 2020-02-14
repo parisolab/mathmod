@@ -82,6 +82,10 @@ public:
     ~DrawingOptions();
     MathMod *MathmodRef;
     About ab;
+    std::vector<QString> MandatoryParmetric3DFields={"Fx", "Fy","Fz", "Umin", "Umax", "Vmin", "Vmax", "Comp", "Name"};
+    std::vector<QString> MandatoryParmetric4DFields={"Fx", "Fy","Fz", "Fw", "Umin", "Umax", "Vmin", "Vmax", "Comp", "Name"};
+    std::vector<QString> MandatoryIsosurfaceFields={"Fxyz", "Xmin", "Xmax", "Ymin", "Ymax", "Zmin", "Zmax", "Comp", "Name"};
+    std::vector<QString> OptionalFields={"Grid", "Cnd","Const", "Funct"};
     SlidersForm sliderconf;
     AddParamForm addnewparam;
     QTreeWidgetItem *IsolistItemRef;
@@ -98,6 +102,7 @@ public:
     std::vector<MandatoryParField> MandParFields;
     bool ShowCurrentObjectTree = false;
 public slots:
+    void removeat(int, QJsonObject&, QString);
     void AddListModels(bool b = false);
     void Run_JsonObject_activeted();
     void CIndextoolButton_clicked(int);

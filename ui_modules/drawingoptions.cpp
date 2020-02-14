@@ -3330,6 +3330,15 @@ void DrawingOptions::on_blue_ParIso_valueChanged(int value)
 }
 
 // --------------------------
+void DrawingOptions::removeat(int idx, QJsonObject& QObj, QString str)
+{
+    QJsonArray array;
+    array = QObj[str].toArray();
+    array.removeAt(idx);
+    QObj[str] = array;
+}
+
+// --------------------------
 void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
 {
     QJsonArray array;
@@ -3342,40 +3351,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             // Cut the component at the index indexcurrentFormula :
             if ((ui.isoNameEdit->toPlainText()).replace(" ", "") == "")
             {
-                array = copyCurrentObject2["Fxyz"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fxyz"] = array;
-
-                array = copyCurrentObject2["Xmin"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Xmin"] = array;
-
-                array = copyCurrentObject2["Xmax"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Xmax"] = array;
-
-                array = copyCurrentObject2["Ymin"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Ymin"] = array;
-
-                array = copyCurrentObject2["Ymax"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Ymax"] = array;
-
-                array = copyCurrentObject2["Zmin"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Zmin"] = array;
-
-                array = copyCurrentObject2["Zmax"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Zmax"] = array;
-
-                if (copyCurrentObject2["Component"].isArray())
-                {
-                    array = copyCurrentObject2["Component"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Component"] = array;
-                }
+                for(uint ui=0; ui<MandatoryIsosurfaceFields.size(); ui++)
+                    removeat(indexcurrentFormula, copyCurrentObject2, MandatoryIsosurfaceFields[ui]);
 
                 if (copyCurrentObject2["Grid"].isArray())
                 {
@@ -3437,18 +3414,10 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 copyCurrentObject["Iso3D"] = copyCurrentObject2;
             }
             // Update the component at the index indexcurrentFormula;
-            else if ((copyCurrentObject["Iso3D"].toObject())["Component"]
-                     .toArray()
-                     .size() > 0 &&
-                     indexcurrentFormula > -1 &&
-                     indexcurrentFormula <
-                     (copyCurrentObject["Iso3D"].toObject())["Component"]
-                     .toArray()
-                     .size() &&
-                     (((copyCurrentObject["Iso3D"].toObject())["Component"]
-                       .toArray())[indexcurrentFormula])
-                     .toString()
-                     .replace(" ", "") ==
+            else if ((copyCurrentObject["Iso3D"].toObject())["Component"].toArray().size() > 0 &&
+                     indexcurrentFormula > -1 && indexcurrentFormula <
+                     (copyCurrentObject["Iso3D"].toObject())["Component"].toArray().size() &&
+                     (((copyCurrentObject["Iso3D"].toObject())["Component"].toArray())[indexcurrentFormula]).toString().replace(" ", "") ==
                      (ui.isoNameEdit->toPlainText()).replace(" ", ""))
             {
 
@@ -3516,12 +3485,10 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                         if ((ui.tableWidget_Fct->item(i, 0))->text() != "")
                             array2.append((ui.tableWidget_Fct->item(i, 0))->text());
                     }
-
                     copyCurrentObject2["Funct"] = array2;
                 }
                 else
                     copyCurrentObject2.remove("Funct");
-
                 // Constantes:
                 if (copyCurrentObject2["Const"].isArray() &&
                         ui.tableWidget_Cst->rowCount() > 0)
@@ -3544,10 +3511,7 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             else
             {
                 // Add new component:
-                if ((((copyCurrentObject["Iso3D"].toObject())["Component"]
-                        .toArray())[indexcurrentFormula])
-                        .toString()
-                        .replace(" ", "") !=
+                if ((((copyCurrentObject["Iso3D"].toObject())["Component"].toArray())[indexcurrentFormula]).toString().replace(" ", "") !=
                         (ui.isoNameEdit->toPlainText()).replace(" ", ""))
                 {
                     array = copyCurrentObject2["Component"].toArray();
@@ -3722,42 +3686,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
         {
             if ((ui.paramNameEdit->toPlainText()).replace(" ", "") == "")
             {
-                array = copyCurrentObject2["Fx"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fx"] = array;
-
-                array = copyCurrentObject2["Fy"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fy"] = array;
-
-                array = copyCurrentObject2["Fz"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fz"] = array;
-
-                array = copyCurrentObject2["Umin"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Umin"] = array;
-
-                array = copyCurrentObject2["Umax"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Umax"] = array;
-
-                array = copyCurrentObject2["Vmin"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Vmin"] = array;
-
-                array = copyCurrentObject2["Vmax"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Vmax"] = array;
-
-                if (copyCurrentObject2["Component"].isArray())
-                {
-                    array = copyCurrentObject2["Component"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Component"] = array;
-                }
-                else
-                    copyCurrentObject2.remove("Component");
+                for(uint ui=0; ui<MandatoryParmetric3DFields.size(); ui++)
+                    removeat(indexcurrentFormula, copyCurrentObject2, MandatoryParmetric3DFields[ui]);
 
                 if (copyCurrentObject2["Grid"].isArray())
                 {
@@ -3819,18 +3749,10 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 copyCurrentObject["Param3D"] = copyCurrentObject2;
 
             }
-            else if (((copyCurrentObject["Param3D"].toObject())["Component"]
-                      .toArray())
-                     .count() > 0 &&
-                     indexcurrentFormula > -1 &&
-                     indexcurrentFormula <
-                     ((copyCurrentObject["Param3D"].toObject())["Component"]
-                      .toArray())
-                     .size() &&
-                     ((copyCurrentObject["Param3D"].toObject())["Component"]
-                      .toArray())[indexcurrentFormula]
-                     .toString()
-                     .replace(" ", "") ==
+            else if (((copyCurrentObject["Param3D"].toObject())["Component"].toArray()).count() > 0 &&
+                     indexcurrentFormula > -1 && indexcurrentFormula <
+                     ((copyCurrentObject["Param3D"].toObject())["Component"].toArray()).size() &&
+                     ((copyCurrentObject["Param3D"].toObject())["Component"].toArray())[indexcurrentFormula].toString().replace(" ", "") ==
                      (ui.paramNameEdit->toPlainText()).replace(" ", ""))
             {
                 array = copyCurrentObject2["Fx"].toArray();
@@ -3878,11 +3800,11 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     array.replace(indexcurrentFormula, ui.CndUpdateEdit_2->toPlainText());
                     copyCurrentObject2["Cnd"] = array;
                 }
-                else if (ui.CndUpdateEdit->toPlainText() != "")
+                else if (ui.CndUpdateEdit_2->toPlainText() != "")
                 {
                     array = copyCurrentObject2["Cnd"].toArray();
                     for (int i = 0; i < copyCurrentObject2["Fx"].toArray().count(); i++)
-                        array.append(ui.CndUpdateEdit->toPlainText());
+                        array.append(ui.CndUpdateEdit_2->toPlainText());
                     copyCurrentObject2["Cnd"] = array;
                 }
                 else
@@ -3927,10 +3849,7 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             }
             else
             {
-                if (((copyCurrentObject["Param3D"].toObject())["Component"]
-                        .toArray())[indexcurrentFormula]
-                        .toString()
-                        .replace(" ", "") !=
+                if (((copyCurrentObject["Param3D"].toObject())["Component"].toArray())[indexcurrentFormula].toString().replace(" ", "") !=
                         (ui.paramNameEdit->toPlainText()).replace(" ", ""))
                 {
                     array = copyCurrentObject2["Fx"].toArray();
@@ -3985,11 +3904,11 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                         array.append(ui.CndUpdateEdit_2->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
-                    else if (ui.CndUpdateEdit->toPlainText() != "")
+                    else if (ui.CndUpdateEdit_2->toPlainText() != "")
                     {
                         array = copyCurrentObject2["Cnd"].toArray();
                         for (int i = 0; i < copyCurrentObject2["Fx"].toArray().count(); i++)
-                            array.append(ui.CndUpdateEdit->toPlainText());
+                            array.append(ui.CndUpdateEdit_2->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
                     else
@@ -4040,11 +3959,11 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                         array.append(ui.CndUpdateEdit_2->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
-                    else if (ui.CndUpdateEdit->toPlainText() != "")
+                    else if (ui.CndUpdateEdit_2->toPlainText() != "")
                     {
                         array = copyCurrentObject2["Cnd"].toArray();
                         for (int i = 0; i < copyCurrentObject2["Fx"].toArray().count(); i++)
-                            array.append(ui.CndUpdateEdit->toPlainText());
+                            array.append(ui.CndUpdateEdit_2->toPlainText());
                         copyCurrentObject2["Cnd"] = array;
                     }
                     else
@@ -4108,46 +4027,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
         {
             if ((ui.paramNameEdit_2->toPlainText()).replace(" ", "") == "")
             {
-                array = copyCurrentObject2["Fx"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fx"] = array;
-
-                array = copyCurrentObject2["Fy"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fy"] = array;
-
-                array = copyCurrentObject2["Fz"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fz"] = array;
-
-                array = copyCurrentObject2["Fw"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Fw"] = array;
-
-                array = copyCurrentObject2["Umin"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Umin"] = array;
-
-                array = copyCurrentObject2["Umax"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Umax"] = array;
-
-                array = copyCurrentObject2["Vmin"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Vmin"] = array;
-
-                array = copyCurrentObject2["Vmax"].toArray();
-                array.removeAt(indexcurrentFormula);
-                copyCurrentObject2["Vmax"] = array;
-
-                if (copyCurrentObject2["Component"].isArray())
-                {
-                    array = copyCurrentObject2["Component"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Component"] = array;
-                }
-                else
-                    copyCurrentObject2.remove("Component");
+                for(uint ui=0; ui<MandatoryParmetric4DFields.size(); ui++)
+                    removeat(indexcurrentFormula, copyCurrentObject2, MandatoryParmetric4DFields[ui]);
 
                 if (copyCurrentObject2["Grid"].isArray())
                 {
@@ -4160,19 +4041,9 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
 
                 copyCurrentObject["Param4D"] = copyCurrentObject2;
             }
-            else if (((copyCurrentObject["Param4D"].toObject())["Component"]
-                      .toArray())
-                     .count() > 0 &&
-                     indexcurrentFormula > -1 &&
-                     indexcurrentFormula <
-                     ((copyCurrentObject["Param4D"].toObject())["Component"]
-                      .toArray())
-                     .size() &&
-                     ((copyCurrentObject["Param4D"].toObject())["Component"]
-                      .toArray())[indexcurrentFormula]
-                     .toString()
-                     .replace(" ", "") ==
-                     (ui.paramNameEdit_2->toPlainText()).replace(" ", ""))
+            else if (((copyCurrentObject["Param4D"].toObject())["Component"].toArray()).count() > 0 &&
+                     indexcurrentFormula > -1 && indexcurrentFormula <((copyCurrentObject["Param4D"].toObject())["Component"].toArray()).size() &&
+                     ((copyCurrentObject["Param4D"].toObject())["Component"].toArray())[indexcurrentFormula].toString().replace(" ", "") ==(ui.paramNameEdit_2->toPlainText()).replace(" ", ""))
             {
 
                 array = copyCurrentObject2["Fx"].toArray();
@@ -4394,10 +4265,6 @@ void DrawingOptions::on_updateButton_clicked()
             parisoComponent = listeIsoObj[0].toObject();
             on_updateJObject(parisoComponent);
             QJsonArray newlisteObj;
-            /*
-            for(int i=0; i<listeObj.size(); i++)
-                listeObj.removeAt(i);
-                */
             newlisteObj.append(parisoComponent);
             if (listeParObj.size() > 0)
                 newlisteObj.append(listeParObj[0].toObject());
