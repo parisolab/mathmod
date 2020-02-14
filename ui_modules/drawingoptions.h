@@ -82,9 +82,9 @@ public:
     ~DrawingOptions();
     MathMod *MathmodRef;
     About ab;
-    std::vector<QString> MandatoryParmetric3DFields={"Fx", "Fy","Fz", "Umin", "Umax", "Vmin", "Vmax", "Comp", "Name"};
-    std::vector<QString> MandatoryParmetric4DFields={"Fx", "Fy","Fz", "Fw", "Umin", "Umax", "Vmin", "Vmax", "Comp", "Name"};
-    std::vector<QString> MandatoryIsosurfaceFields={"Fxyz", "Xmin", "Xmax", "Ymin", "Ymax", "Zmin", "Zmax", "Comp", "Name"};
+    std::vector<QString> MandatoryParmetric3DFields={"Fx", "Fy","Fz", "Umin", "Umax", "Vmin", "Vmax", "Component", "Name"};
+    std::vector<QString> MandatoryParmetric4DFields={"Fx", "Fy","Fz", "Fw", "Umin", "Umax", "Vmin", "Vmax", "Component", "Name"};
+    std::vector<QString> MandatoryIsosurfaceFields={"Fxyz", "Xmin", "Xmax", "Ymin", "Ymax", "Zmin", "Zmax", "Component", "Name"};
     std::vector<QString> OptionalFields={"Grid", "Cnd","Const", "Funct"};
     SlidersForm sliderconf;
     AddParamForm addnewparam;

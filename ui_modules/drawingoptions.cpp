@@ -3825,6 +3825,7 @@ void DrawingOptions::on_updateButton_clicked()
     }
     else
     {
+        CurrentObject.remove("ParIso");
         on_updateJObject(CurrentObject);
         RunUpdatedJObject(CurrentObject);
     }
