@@ -103,6 +103,8 @@ public:
     bool ShowCurrentObjectTree = false;
 public slots:
     void removeat(int, QJsonObject&, QString);
+    void removeat2(int, QJsonObject&, QString);
+    void appendall(QJsonObject&, QString, QTableWidget*);
     void AddListModels(bool b = false);
     void Run_JsonObject_activeted();
     void CIndextoolButton_clicked(int);

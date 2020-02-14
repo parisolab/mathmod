@@ -3337,7 +3337,36 @@ void DrawingOptions::removeat(int idx, QJsonObject& QObj, QString str)
     array.removeAt(idx);
     QObj[str] = array;
 }
-
+// --------------------------
+void DrawingOptions::removeat2(int idx, QJsonObject& QObj, QString str)
+{
+    if (QObj[str].isArray())
+    {
+        QJsonArray array;
+        array = QObj[str].toArray();
+        array.removeAt(idx);
+        QObj[str] = array;
+    }
+    else
+        QObj.remove(str);
+}
+// --------------------------
+void DrawingOptions::appendall(QJsonObject& QObj, QString str, QTableWidget* table)
+{
+    if (QObj[str].isArray() &&
+            table->rowCount() > 0)
+    {
+        QJsonArray array2;
+        for (int i = 0; i < table->rowCount(); i++)
+        {
+            if ((table->item(i, 0))->text() != "")
+                array2.append((table->item(i, 0))->text());
+        }
+        QObj[str] = array2;
+    }
+    else
+        QObj.remove(str);
+}
 // --------------------------
 void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
 {
@@ -3354,59 +3383,13 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 for(uint ui=0; ui<MandatoryIsosurfaceFields.size(); ui++)
                     removeat(indexcurrentFormula, copyCurrentObject2, MandatoryIsosurfaceFields[ui]);
 
-                if (copyCurrentObject2["Grid"].isArray())
-                {
-                    array = copyCurrentObject2["Grid"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Grid"] = array;
-                }
-                else
-                    copyCurrentObject2.remove("Grid");
+                removeat2(indexcurrentFormula, copyCurrentObject2, "Grid");
+                removeat2(indexcurrentFormula, copyCurrentObject2, "Cnd");
+                /**********/
+                appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct);
+                appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst);
 
-                if (copyCurrentObject2["Cnd"].isArray() &&
-                        copyCurrentObject2["Cnd"].toArray().count() > indexcurrentFormula)
-                {
-                    array = copyCurrentObject2["Cnd"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Cnd"] = array;
-                }
-                else
-                    copyCurrentObject2.remove("Cnd");
-
-                /************************************************************************************************/
-                // Functions:
-                if (copyCurrentObject2["Funct"].isArray() &&
-                        ui.tableWidget_Fct->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for (int i = 0; i < ui.tableWidget_Fct->rowCount(); i++)
-                    {
-                        if ((ui.tableWidget_Fct->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Fct->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Funct"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Funct");
-
-                // Constantes:
-                if (copyCurrentObject2["Const"].isArray() &&
-                        ui.tableWidget_Cst->rowCount() > 0)
-                {
-                    QJsonArray array2;
-                    for (int i = 0; i < ui.tableWidget_Cst->rowCount(); i++)
-                    {
-                        if ((ui.tableWidget_Cst->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Cst->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Const"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Const");
-                /************************************************************************************************/
+                /**********/
 
                 // Some keys cleaning..
                 copyCurrentObject2.remove("Param3D");
@@ -3689,60 +3672,10 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 for(uint ui=0; ui<MandatoryParmetric3DFields.size(); ui++)
                     removeat(indexcurrentFormula, copyCurrentObject2, MandatoryParmetric3DFields[ui]);
 
-                if (copyCurrentObject2["Grid"].isArray())
-                {
-                    array = copyCurrentObject2["Grid"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Grid"] = array;
-                }
-                else
-                    copyCurrentObject2.remove("Grid");
-
-                if (copyCurrentObject2["Cnd"].isArray() &&
-                        copyCurrentObject2["Cnd"].toArray().count() > indexcurrentFormula)
-                {
-                    array = copyCurrentObject2["Cnd"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Cnd"] = array;
-                }
-                else
-                    copyCurrentObject2.remove("Cnd");
-
-                /************************************************************************************************/
-                // Functions:
-                if (copyCurrentObject2["Funct"].isArray() &&
-                        ui.tableWidget_Fct_2->rowCount() > 0)
-                {
-                    QJsonArray array2;
-
-                    for (int i = 0; i < ui.tableWidget_Fct_2->rowCount(); i++)
-                    {
-                        if ((ui.tableWidget_Fct_2->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Fct_2->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Funct"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Funct");
-
-                // Constantes:
-                if (copyCurrentObject2["Const"].isArray() &&
-                        ui.tableWidget_Cst_2->rowCount() > 0)
-                {
-                    QJsonArray array2;
-                    for (int i = 0; i < ui.tableWidget_Cst_2->rowCount(); i++)
-                    {
-                        if ((ui.tableWidget_Cst_2->item(i, 0))->text() != "")
-                            array2.append((ui.tableWidget_Cst_2->item(i, 0))->text());
-                    }
-
-                    copyCurrentObject2["Const"] = array2;
-                }
-                else
-                    copyCurrentObject2.remove("Const");
-                /************************************************************************************************/
-
+                removeat2(indexcurrentFormula, copyCurrentObject2, "Grid");
+                removeat2(indexcurrentFormula, copyCurrentObject2, "Cnd");
+                appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct_2);
+                appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst_2);
                 // Some keys cleaning..
                 copyCurrentObject2.remove("Iso3D");
                 copyCurrentObject2.remove("Param4D");
@@ -4030,14 +3963,7 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 for(uint ui=0; ui<MandatoryParmetric4DFields.size(); ui++)
                     removeat(indexcurrentFormula, copyCurrentObject2, MandatoryParmetric4DFields[ui]);
 
-                if (copyCurrentObject2["Grid"].isArray())
-                {
-                    array = copyCurrentObject2["Grid"].toArray();
-                    array.removeAt(indexcurrentFormula);
-                    copyCurrentObject2["Grid"] = array;
-                }
-                else
-                    copyCurrentObject2.remove("Grid");
+                removeat2(indexcurrentFormula, copyCurrentObject2, "Grid");
 
                 copyCurrentObject["Param4D"] = copyCurrentObject2;
             }
