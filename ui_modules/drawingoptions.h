@@ -106,6 +106,8 @@ public slots:
     void removeat2(int, QJsonObject&, QString);
     void appendall(QJsonObject&, QString, QTableWidget*);
     void replaceat(int, QJsonObject&, QString, QTextEdit*);
+    void insertat(int, QJsonObject&, QString, QTextEdit*);
+    void appednew(QJsonObject&, QString, QTextEdit*);
     void AddListModels(bool b = false);
     void Run_JsonObject_activeted();
     void CIndextoolButton_clicked(int);
