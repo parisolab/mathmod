@@ -1616,7 +1616,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition = result.toStdString();
             for(int i=0; i<lst.size(); i++)
                 MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "")=="");
-            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
+            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";");
         }
         else
         {
@@ -1716,7 +1716,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(
             MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND = result.toStdString();
             for(int i=0; i<lst.size(); i++)
                 MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "") == "");
-            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";", QString::SkipEmptyParts);
+            MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";");
         }
         else
         {
@@ -3129,7 +3129,7 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
 
             if (!currentstruct.Cnd.empty())
             {
-                ui.CndUpdateEdit_2->setText(currentstruct.Cnd.at(0));
+                ui.CndUpdateEdit_2->setText(currentstruct.Cnd.at(position));
             }
             else
             {
