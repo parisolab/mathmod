@@ -100,18 +100,12 @@ void DrawingOptions::editorwin()
 void DrawingOptions::colorsoptions()
 {
     ColorsOptions *colorwindow = new ColorsOptions();
-    connect(colorwindow->ui.color_2, SIGNAL(activated(int)), this,
-            SLOT(oncolor_2activated(int)));
-    connect(colorwindow->ui.red_2, SIGNAL(valueChanged(int)), this,
-            SLOT(onred_2valueChanged(int)));
-    connect(colorwindow->ui.green_2, SIGNAL(valueChanged(int)), this,
-            SLOT(ongreen_2valueChanged(int)));
-    connect(colorwindow->ui.blue_2, SIGNAL(valueChanged(int)), this,
-            SLOT(onblue_2valueChanged(int)));
-    connect(colorwindow->ui.transparent_2, SIGNAL(valueChanged(int)), this,
-            SLOT(ontransparent_2valueChanged(int)));
-    connect(colorwindow->ui.transparence_2, SIGNAL(clicked(bool)), this,
-            SLOT(ontransparence_2clicked(bool)));
+    connect(colorwindow->ui.color_2, SIGNAL(activated(int)), this,SLOT(oncolor_2activated(int)));
+    connect(colorwindow->ui.red_2, SIGNAL(valueChanged(int)), this,SLOT(onred_2valueChanged(int)));
+    connect(colorwindow->ui.green_2, SIGNAL(valueChanged(int)), this,SLOT(ongreen_2valueChanged(int)));
+    connect(colorwindow->ui.blue_2, SIGNAL(valueChanged(int)), this,SLOT(onblue_2valueChanged(int)));
+    connect(colorwindow->ui.transparent_2, SIGNAL(valueChanged(int)), this,SLOT(ontransparent_2valueChanged(int)));
+    connect(colorwindow->ui.transparence_2, SIGNAL(clicked(bool)), this,SLOT(ontransparence_2clicked(bool)));
     colorwindow->show();
 }
 
@@ -142,19 +136,15 @@ DrawingOptions::DrawingOptions(QWidget *parent) : QMainWindow(parent)
     select.selectedoptions.parsefunctions = true;
     select.selectedoptions.parsenames = true;
     select.selectedoptions.parsecmpnames = true;
-    connect(sliderconf.ui.SaveButton, SIGNAL(clicked()), this,
-            SLOT(update_slider_param()));
-    connect(sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this,
-            SLOT(update_infos_param(int)));
-    connect(addnewparam.ui.SaveButton, SIGNAL(clicked()), this,
-            SLOT(add_new_param()));
+    connect(sliderconf.ui.SaveButton, SIGNAL(clicked()), this,SLOT(update_slider_param()));
+    connect(sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this,SLOT(update_infos_param(int)));
+    connect(addnewparam.ui.SaveButton, SIGNAL(clicked()), this,SLOT(add_new_param()));
     connect(&select, SIGNAL(UpdateSignal()), this, SLOT(SearchListModels()));
     statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
     BuildAllVect();
     ui.ObjectClasseCurrent->hide();
-    ui.ObjectClasseCurrent->header()->setSectionResizeMode(
-        QHeaderView::ResizeToContents);
+    ui.ObjectClasseCurrent->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 // --------------------------
@@ -322,9 +312,7 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
     if (currentstruct.Component.size() > 0)
     {
         QTreeWidgetItem *cmpitem = new QTreeWidgetItem(paramlistItem);
-        cmpitem->setText(0, "Components (" +
-                         QString::number(currentstruct.Component.size()) +
-                         "):");
+        cmpitem->setText(0, "Components (" +QString::number(currentstruct.Component.size()) +"):");
 
         for (int j = 0; j < currentstruct.Component.size(); j++)
         {
@@ -342,19 +330,15 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
                 cmpitem8->setText(0, "fw(u,v,t) = " + currentstruct.fw.at(j));
             }
             QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
-            cmpitem6->setText(0, "U = [" + currentstruct.umin.at(j) + ", " +
-                              currentstruct.umax.at(j) + "]");
+            cmpitem6->setText(0, "U = [" + currentstruct.umin.at(j) + ", " +currentstruct.umax.at(j) + "]");
             QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-            cmpitem7->setText(0, "V = [" + currentstruct.vmin.at(j) + ", " +
-                              currentstruct.vmax.at(j) + "]");
+            cmpitem7->setText(0, "V = [" + currentstruct.vmin.at(j) + ", " +currentstruct.vmax.at(j) + "]");
             // Grid resolution:
-            if (currentstruct.Grid.size() > 0 &&
-                    (2 * j + 1) < currentstruct.Grid.size() &&
+            if (currentstruct.Grid.size() > 0 &&(2 * j + 1) < currentstruct.Grid.size() &&
                     !MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
             {
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
-                cmpitem7->setText(0, "Grid = (" + currentstruct.Grid.at(2 * j) + " , " +
-                                  currentstruct.Grid.at(2 * j + 1) + ")");
+                cmpitem7->setText(0, "Grid = (" + currentstruct.Grid.at(2 * j) + " , " +currentstruct.Grid.at(2 * j + 1) + ")");
             }
         }
         // Add Global parameters:
@@ -385,14 +369,11 @@ void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem,
             QTreeWidgetItem *cmpitem3 = new QTreeWidgetItem(cmpitem2);
             cmpitem3->setText(0, "f(x,y,z) = " + currentstruct.fxyz.at(j));
             QTreeWidgetItem *cmpitem4 = new QTreeWidgetItem(cmpitem2);
-            cmpitem4->setText(0, "X = [" + currentstruct.xmin.at(j) + ", " +
-                              currentstruct.xmax.at(j) + "]");
+            cmpitem4->setText(0, "X = [" + currentstruct.xmin.at(j) + ", " +currentstruct.xmax.at(j) + "]");
             QTreeWidgetItem *cmpitem5 = new QTreeWidgetItem(cmpitem2);
-            cmpitem5->setText(0, "Y = [" + currentstruct.ymin.at(j) + ", " +
-                              currentstruct.ymax.at(j) + "]");
+            cmpitem5->setText(0, "Y = [" + currentstruct.ymin.at(j) + ", " +currentstruct.ymax.at(j) + "]");
             QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
-            cmpitem6->setText(0, "Z = [" + currentstruct.zmin.at(j) + ", " +
-                              currentstruct.zmax.at(j) + "]");
+            cmpitem6->setText(0, "Z = [" + currentstruct.zmin.at(j) + ", " +currentstruct.zmax.at(j) + "]");
             // Grid resolution:
             if (currentstruct.Grid.size() > 0 && j < currentstruct.Grid.size())
             {
@@ -464,36 +445,27 @@ void DrawingOptions::UpdateTreeObject()
         for (uint i = 0; i < MathmodRef->RootObjet.CurrentParisoTreestruct.size();
                 i++)
         {
-            QTreeWidgetItem *parisochild =
-                new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            QTreeWidgetItem *parisochild = new QTreeWidgetItem(ui.ObjectClasseCurrent);
             if (MathmodRef->RootObjet.CurrentParisoTreestruct[i].type == ISO_TYPE)
-                AddIsoObjectToTree(parisochild,
-                                   MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+                AddIsoObjectToTree(parisochild,MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
             else
-                AddParObjectToTree(parisochild,
-                                   MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
+                AddParObjectToTree(parisochild,MathmodRef->RootObjet.CurrentParisoTreestruct[i]);
         }
     }
     else
     {
-        if (MathmodRef->RootObjet.CurrentJsonObject["Iso3D"]
-                .isObject()) // isoObject
+        if (MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject()) // isoObject
         {
-            ui.ObjectClasseCurrent->model()->removeRows(
-                0, ui.ObjectClasseCurrent->model()->rowCount());
-            QTreeWidgetItem *IsolistItem =
-                new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            ui.ObjectClasseCurrent->model()->removeRows(0, ui.ObjectClasseCurrent->model()->rowCount());
+            QTreeWidgetItem *IsolistItem = new QTreeWidgetItem(ui.ObjectClasseCurrent);
             AddIsoObjectToTree(IsolistItem, MathmodRef->RootObjet.CurrentTreestruct);
         }
         else if (MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
                  MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
         {
-            ui.ObjectClasseCurrent->model()->removeRows(
-                0, ui.ObjectClasseCurrent->model()->rowCount());
-            QTreeWidgetItem *paramlistItem =
-                new QTreeWidgetItem(ui.ObjectClasseCurrent);
-            AddParObjectToTree(paramlistItem,
-                               MathmodRef->RootObjet.CurrentTreestruct);
+            ui.ObjectClasseCurrent->model()->removeRows(0, ui.ObjectClasseCurrent->model()->rowCount());
+            QTreeWidgetItem *paramlistItem =new QTreeWidgetItem(ui.ObjectClasseCurrent);
+            AddParObjectToTree(paramlistItem,MathmodRef->RootObjet.CurrentTreestruct);
         }
     }
 }
@@ -533,30 +505,23 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     // Update the current Tree Object:
     if (ShowCurrentObjectTree)
         UpdateTreeObject();
-
     // Update the "Script Edit" page
     ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
-
     // Update the "Model Details" page
     if (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray())
     {
         ui.parisocomboBox->clear();
         if (MathmodRef->RootObjet.CurrentParisoTreestruct.size() > 0)
         {
-            for (uint i = 0; i < MathmodRef->RootObjet.CurrentParisoTreestruct.size();
-                    i++)
-                ui.parisocomboBox->insertItem(
-                    i, MathmodRef->RootObjet.CurrentParisoTreestruct[i].name[0]);
+            for (uint i = 0; i < MathmodRef->RootObjet.CurrentParisoTreestruct.size();i++)
+                ui.parisocomboBox->insertItem(i, MathmodRef->RootObjet.CurrentParisoTreestruct[i].name[0]);
 
             if (MathmodRef->RootObjet.CurrentParisoTreestruct[0].fxyz.size() != 0)
-                UpdateIsoModelDetailsPage(
-                    MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
+                UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
             else if (MathmodRef->RootObjet.CurrentParisoTreestruct[0].fw.size() != 0)
-                UpdatePar4DModelDetailsPage(
-                    MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
+                UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
             else if (MathmodRef->RootObjet.CurrentParisoTreestruct[0].fx.size() != 0)
-                UpdatePar3DModelDetailsPage(
-                    MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
+                UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
         }
     }
     else if (MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
@@ -3021,52 +2986,31 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                 {
                     for (int i = 0;
                             i < MathmodRef->RootObjet.MyJsonObjectSelection.size(); i++)
-                        if ((MathmodRef->RootObjet.MyJsonObjectSelection[i]
-                                .toObject()["Iso3D"]
-                                .isObject()))
+                        if ((MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Iso3D"].isObject()))
                         {
-                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i]
-                                             .toObject()["Iso3D"])
-                                            .toObject()["Name"]
-                                            .toArray()[0]
-                                            .toString()))
+                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Iso3D"]).toObject()["Name"].toArray()[0].toString()))
                             {
                                 // Draw here
 
-                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i)
-                                              .toObject());
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
                         }
-                        else if ((MathmodRef->RootObjet.MyJsonObjectSelection[i]
-                                  .toObject()["Param3D"]
-                                  .isObject()))
+                        else if ((MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param3D"].isObject()))
                         {
-                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i]
-                                             .toObject()["Param3D"])
-                                            .toObject()["Name"]
-                                            .toArray()[0]
-                                            .toString()))
+                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param3D"]).toObject()["Name"].toArray()[0].toString()))
                             {
                                 // Draw here
-                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i)
-                                              .toObject());
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
                         }
-                        else if ((MathmodRef->RootObjet.MyJsonObjectSelection[i]
-                                  .toObject()["Param4D"]
-                                  .isObject()))
+                        else if ((MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param4D"].isObject()))
                         {
-                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i]
-                                             .toObject()["Param4D"])
-                                            .toObject()["Name"]
-                                            .toArray()[0]
-                                            .toString()))
+                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param4D"]).toObject()["Name"].toArray()[0].toString()))
                             {
                                 // Draw here
-                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i)
-                                              .toObject());
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
                         }
@@ -3080,8 +3024,7 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
 // --------------------------
 void DrawingOptions::slot_pushButton_2_clicked()
 {
-    MathmodRef->RootObjet.MyJsonObjectSelection.append(
-        MathmodRef->RootObjet.CurrentJsonObject);
+    MathmodRef->RootObjet.MyJsonObjectSelection.append(MathmodRef->RootObjet.CurrentJsonObject);
     AddObjectToMySelectionTree();
 }
 
@@ -3144,8 +3087,7 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
                 for (int i = 0; i < currentstruct.Funct.size(); i++)
                 {
                     ui.tableWidget_Fct_2->setRowCount(i + 1);
-                    ui.tableWidget_Fct_2->setItem(
-                        i, 0, new QTableWidgetItem(currentstruct.Funct.at(i)));
+                    ui.tableWidget_Fct_2->setItem(i, 0, new QTableWidgetItem(currentstruct.Funct.at(i)));
                 }
             }
             else
@@ -3162,8 +3104,7 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
                 for (int i = 0; i < currentstruct.Const.size(); i++)
                 {
                     ui.tableWidget_Cst_2->setRowCount(i + 1);
-                    ui.tableWidget_Cst_2->setItem(
-                        i, 0, new QTableWidgetItem(currentstruct.Const.at(i)));
+                    ui.tableWidget_Cst_2->setItem(i, 0, new QTableWidgetItem(currentstruct.Const.at(i)));
                 }
             }
             else
@@ -3242,8 +3183,7 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
                 for (int i = 0; i < currentstruct.Funct.size(); i++)
                 {
                     ui.tableWidget_Fct->setRowCount(i + 1);
-                    ui.tableWidget_Fct->setItem(
-                        i, 0, new QTableWidgetItem(currentstruct.Funct.at(i)));
+                    ui.tableWidget_Fct->setItem(i, 0, new QTableWidgetItem(currentstruct.Funct.at(i)));
                 }
             }
             else
@@ -3260,8 +3200,7 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
                 for (int i = 0; i < currentstruct.Const.size(); i++)
                 {
                     ui.tableWidget_Cst->setRowCount(i + 1);
-                    ui.tableWidget_Cst->setItem(
-                        i, 0, new QTableWidgetItem(currentstruct.Const.at(i)));
+                    ui.tableWidget_Cst->setItem(i, 0, new QTableWidgetItem(currentstruct.Const.at(i)));
                 }
             }
             else
@@ -3696,10 +3635,7 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             }
             else
             {
-                if (((copyCurrentObject["Param4D"].toObject())["Component"]
-                        .toArray())[indexcurrentFormula]
-                        .toString()
-                        .replace(" ", "") !=
+                if (((copyCurrentObject["Param4D"].toObject())["Component"].toArray())[indexcurrentFormula].toString().replace(" ", "") !=
                         (ui.paramNameEdit_2->toPlainText()).replace(" ", ""))
                 {
                     appednew(copyCurrentObject2, "Component", ui.paramNameEdit_2);
@@ -4430,16 +4366,12 @@ void DrawingOptions::UpdateGui(int argc)
     ui.comboBoxTexture->insertItems(0, LstModelTexture.listeTextures);
     ui.comboBoxPigment->insertItems(0, LstModelTexture.listePigments);
     AddListModels();
-
     // Threads setting:
     SetThreadValues(Parameters->Threads);
-
     // OpenGl specular:
     SetSpecularValues(Parameters->Specular);
-
     // OpenGl shininess:
     SetShininessValue(Parameters->Shininess);
-
     // Show the two windows of the application:
     move(Parameters->ControlX, Parameters->ControlY);
     resize(Parameters->ControlW, Parameters->ControlH);
@@ -4523,18 +4455,13 @@ void DrawingOptions::on_pushButton_2_clicked()
     QJsonParseError err;
     QString sortie;
     QString script =
-        ui.ParamEdit->toPlainText()
-        .trimmed()
-        .replace("\n", "")
-        .replace("\t", "")
-        .replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str());
+        ui.ParamEdit->toPlainText().trimmed().replace("\n", "").replace("\t", "").replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
         ShowErrorMessage(err, script);
         return;
     }
-
     Parameters->SaveToFile_CurentMathModel(doc.object());
 }
 
@@ -4633,13 +4560,10 @@ void DrawingOptions::on_actionColorTrianglesWavefront_obj_triggered()
 void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 {
     int Octaves =
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0]
-        .Octaves =
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1]
-            .Octaves = value;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].Octaves =
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].Octaves = value;
     MathmodRef->ui.glWidget->IsoObjet->masterthread->Octaves = Octaves;
     MathmodRef->ui.glWidget->ParObjet->masterthread->Octaves = Octaves;
-
     ui.OctavesLabel->setText("Octaves = " + QString::number(Octaves));
     on_pushButton_5_clicked();
 }
@@ -4649,8 +4573,7 @@ void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 {
     double Lacunarity = double(value) / 10.0;
     MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].Lacunarity =
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1]
-        .Lacunarity = float(Lacunarity);
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].Lacunarity = float(Lacunarity);
     MathmodRef->ui.glWidget->IsoObjet->masterthread->Lacunarity = Lacunarity;
     MathmodRef->ui.glWidget->ParObjet->masterthread->Lacunarity = Lacunarity;
     ui.LacunarityLabel->setText("Lacunarity = " + QString::number(Lacunarity));
@@ -4662,8 +4585,7 @@ void DrawingOptions::on_GainScrollBar_valueChanged(int value)
 {
     double Gain = double(value) / 10.0;
     MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].Gain =
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].Gain =
-            float(Gain);
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].Gain = float(Gain);
     MathmodRef->ui.glWidget->IsoObjet->masterthread->Gain = Gain;
     MathmodRef->ui.glWidget->ParObjet->masterthread->Gain = Gain;
     ui.GainLabel->setText("Gain = " + QString::number(Gain));
@@ -4690,10 +4612,8 @@ void DrawingOptions::on_ShowtextureScript_clicked()
 // --------------------------
 void DrawingOptions::on_TurbulenceCheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0]
-    .NoiseActive *= -1;
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1]
-    .NoiseActive *= -1;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].NoiseActive *= -1;
+    MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[1].NoiseActive *= -1;
     on_pushButton_5_clicked();
 }
 
@@ -4702,12 +4622,7 @@ void DrawingOptions::on_pushButton_5_clicked()
 {
     QJsonParseError err;
     QString sortie;
-    QString script =
-        ui.textureEdit->toPlainText()
-        .trimmed()
-        .replace("\n", "")
-        .replace("\t", "")
-        .replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str());
+    QString script = ui.textureEdit->toPlainText().trimmed().replace("\n", "").replace("\t", "").replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {
@@ -4718,14 +4633,12 @@ void DrawingOptions::on_pushButton_5_clicked()
     QJsonObject tmp = doc.object();
     if (tmp["Texture"].isObject())
     {
-        MathmodRef->collection.JTextures[ui.comboBoxTexture->currentIndex() - 1] =
-            doc.object();
+        MathmodRef->collection.JTextures[ui.comboBoxTexture->currentIndex() - 1] =doc.object();
         on_comboBoxTexture_activated(ui.comboBoxTexture->currentIndex());
     }
     else
     {
-        MathmodRef->collection.JPigments[ui.comboBoxPigment->currentIndex() - 1] =
-            doc.object();
+        MathmodRef->collection.JPigments[ui.comboBoxPigment->currentIndex() - 1] =doc.object();
         on_comboBoxPigment_activated(ui.comboBoxPigment->currentIndex());
     }
 }
@@ -4854,12 +4767,9 @@ void DrawingOptions::on_C20ScrollBar_valueChanged(int val)
 void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
 {
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues[uint(idx)] =
-        val;
-    MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues[uint(idx)] =
-        val;
-    SliderArray[idx].SliderLabel->setText(qlstnames.at(idx) + " = " +
-                                          QString::number(val));
+    MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues[uint(idx)] =val;
+    MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues[uint(idx)] =val;
+    SliderArray[idx].SliderLabel->setText(qlstnames.at(idx) + " = " +QString::number(val));
     if (CurrentFormulaType == 2)
         MathmodRef->ProcessNewIsoSurface();
     else
@@ -4888,30 +4798,18 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             if (size >= (sl + 1))
             {
                 (SliderArray[sl].SliderLabel)
-                ->setText(qlstnames.at(sl) + " = " +
-                          qlstPos.at(sl + (index - 1) * size) + "(" +
-                          qlstStep.at(sl) + ")");
+                ->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl + (index - 1) * size) + "(" +qlstStep.at(sl) + ")");
                 (SliderArray[sl].SliderScrollBar)->blockSignals(true);
                 if (qlstmin.size() > qlstnames.size())
                 {
-                    (SliderArray[sl].SliderScrollBar)
-                    ->setMaximum(qlstmax.at(sl + (index - 1) * size).toInt());
-                    (SliderArray[sl].SliderScrollBar)
-                    ->setMinimum(qlstmin.at(sl + (index - 1) * size).toInt());
-                    (SliderArray[sl].SliderScrollBar)
-                    ->setSingleStep(qlstStep.at(sl + (index - 1) * size).toInt());
-
-                    (SliderArray[sl].SliderLabel)
-                    ->setText(qlstnames.at(sl) + " = " +
-                              qlstPos.at(sl + (index - 1) * size) + "(" +
-                              qlstStep.at(sl + (index - 1) * size) + ")");
-                    (SliderArray[sl].SliderLabelMin)
-                    ->setText(qlstmin.at(sl + (index - 1) * size));
-                    (SliderArray[sl].SliderLabelMax)
-                    ->setText(qlstmax.at(sl + (index - 1) * size));
+                    (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl + (index - 1) * size).toInt());
+                    (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl + (index - 1) * size).toInt());
+                    (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl + (index - 1) * size).toInt());
+                    (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " +qlstPos.at(sl + (index - 1) * size) + "(" +qlstStep.at(sl + (index - 1) * size) + ")");
+                    (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl + (index - 1) * size));
+                    (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl + (index - 1) * size));
                 }
-                (SliderArray[sl].SliderScrollBar)
-                ->setSliderPosition(qlstPos.at(sl + (index - 1) * size).toInt());
+                (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl + (index - 1) * size).toInt());
                 (SliderArray[sl].SliderScrollBar)->blockSignals(false);
             }
         }
@@ -4926,9 +4824,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
 }
 void DrawingOptions::CIndextoolButton_clicked(int idx)
 {
-    int range = (indexcurrentSet < 1)
-                ? (idx - 1)
-                : (indexcurrentSet - 1) * qlstnames.size() + (idx - 1);
+    int range = (indexcurrentSet < 1)? (idx - 1) : (indexcurrentSet - 1) * qlstnames.size() + (idx - 1);
     sliderconf.currentSlider = (idx - 1);
     sliderconf.ui.MaxEdit->setText(qlstmax[range]);
     sliderconf.ui.MinEdit->setText(qlstmin[range]);
@@ -5078,27 +4974,18 @@ void DrawingOptions::update_slider_param()
             (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toInt());
             (SliderArray[sl].SliderScrollBar)->setSingleStep(qlstStep.at(sl).toInt());
             (SliderArray[sl].SliderScrollBar)->setPageStep(qlstStep.at(sl).toInt());
-            (SliderArray[sl].SliderScrollBar)
-            ->setSliderPosition(qlstPos.at(sl).toInt());
-            (SliderArray[sl].SliderLabel)
-            ->setText(qlstnames.at(sl) + " = " + qlstPos.at(sl) + "(" +
-                      qlstStep.at(sl) + ")");
+            (SliderArray[sl].SliderScrollBar)->setSliderPosition(qlstPos.at(sl).toInt());
+            (SliderArray[sl].SliderLabel)->setText(qlstnames.at(sl) + " = " + qlstPos.at(sl) + "(" +qlstStep.at(sl) + ")");
             (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl));
             (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
             (SliderArray[sl].SliderScrollBar)->blockSignals(false);
 
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderNames.push_back(
-                qlstnames.at(sl).toStdString());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderNames.push_back(
-                qlstnames.at(sl).toStdString());
-
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues.push_back(
-                qlstPos.at(sl).toDouble());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues.push_back(
-                qlstPos.at(sl).toDouble());
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
+            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
+            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
         }
     }
-
     // Draw
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
     if (CurrentFormulaType == 2)
@@ -5113,16 +5000,13 @@ void DrawingOptions::on_AddSetButton_clicked()
 {
     QJsonArray array1, array2, array3, array4, array5;
     QJsonObject tmp, tmp2;
-
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     tmp2 = tmp["Sliders"].toObject();
-
     array2 = tmp2["Position"].toArray();
     array3 = tmp2["Min"].toArray();
     array4 = tmp2["Max"].toArray();
     array5 = tmp2["Step"].toArray();
     int size = qlstnames.size();
-
     if (tmp2["SetNames"].isArray())
     {
         array1 = tmp2["SetNames"].toArray();
@@ -5130,29 +5014,22 @@ void DrawingOptions::on_AddSetButton_clicked()
     }
     else
         tmp2.remove("SetNames");
-
     for (int sl = 0; sl < 20; sl++)
     {
         if (size >= (sl + 1))
         {
-            array2.append(
-                QString::number((SliderArray[sl].SliderScrollBar)->sliderPosition()));
-            array3.append(
-                QString::number((SliderArray[sl].SliderScrollBar)->minimum()));
-            array4.append(
-                QString::number((SliderArray[sl].SliderScrollBar)->maximum()));
-            array5.append(
-                QString::number((SliderArray[sl].SliderScrollBar)->singleStep()));
+            array2.append(QString::number((SliderArray[sl].SliderScrollBar)->sliderPosition()));
+            array3.append(QString::number((SliderArray[sl].SliderScrollBar)->minimum()));
+            array4.append(QString::number((SliderArray[sl].SliderScrollBar)->maximum()));
+            array5.append(QString::number((SliderArray[sl].SliderScrollBar)->singleStep()));
         }
     }
-
     if (tmp2["SetNames"].isArray())
     {
         tmp2["SetNames"] = array1;
     }
     else
         tmp2.remove("SetNames");
-
     tmp2["Position"] = array2;
     tmp2["Min"] = array3;
     tmp2["Max"] = array4;
@@ -5171,44 +5048,35 @@ void DrawingOptions::on_CutSetButton_clicked()
     {
         QJsonArray array1, array2, array3, array4, array5;
         QJsonObject tmp, tmp2;
-
         tmp = MathmodRef->RootObjet.CurrentJsonObject;
         tmp2 = tmp["Sliders"].toObject();
-
         if (tmp2["SetNames"].isArray())
         {
             array1 = tmp2["SetNames"].toArray();
             array1.removeAt(indexcurrentSet - 1);
         }
-
         array2 = tmp2["Position"].toArray();
         for (int i = 0; i < size; i++)
             array2.removeAt((indexcurrentSet - 1) * size);
-
         array3 = tmp2["Min"].toArray();
         for (int i = 0; i < size; i++)
             array3.removeAt((indexcurrentSet - 1) * size);
-
         array4 = tmp2["Max"].toArray();
         for (int i = 0; i < size; i++)
             array4.removeAt((indexcurrentSet - 1) * size);
-
         array5 = tmp2["Step"].toArray();
         for (int i = 0; i < size; i++)
             array5.removeAt((indexcurrentSet - 1) * size);
-
         if (tmp2["SetNames"].isArray())
         {
             tmp2["SetNames"] = array1;
         }
         else
             tmp2.remove("SetNames");
-
         tmp2["Position"] = array2;
         tmp2["Min"] = array3;
         tmp2["Max"] = array4;
         tmp2["Step"] = array5;
-
         tmp["Sliders"] = tmp2;
         // Draw here
         DrawJsonModel(tmp);
@@ -5237,36 +5105,30 @@ void DrawingOptions::on_CutParam_clicked()
         int names, position;
         tmp = MathmodRef->RootObjet.CurrentJsonObject;
         tmp2 = tmp["Sliders"].toObject();
-
         array2 = tmp2["Name"].toArray();
         names = array2.size();
         array2.removeAt(index - 1);
         tmp2["Name"] = array2;
-
         array2 = tmp2["Max"].toArray();
         position = array2.size();
         for (int i = 0; i * names < position; i++)
             array2.removeAt(index - 1 - i + i * names);
         tmp2["Max"] = array2;
-
         array2 = tmp2["Min"].toArray();
         position = array2.size();
         for (int i = 0; i * names < position; i++)
             array2.removeAt(index - 1 - i + i * names);
         tmp2["Min"] = array2;
-
         array2 = tmp2["Step"].toArray();
         position = array2.size();
         for (int i = 0; i * names < position; i++)
             array2.removeAt(index - 1 - i + i * names);
         tmp2["Step"] = array2;
-
         array2 = tmp2["Position"].toArray();
         position = array2.size();
         for (int i = 0; i * names < position; i++)
             array2.removeAt(index - 1 - i + i * names);
         tmp2["Position"] = array2;
-
         tmp["Sliders"] = tmp2;
         // Draw here
         DrawJsonModel(tmp);
@@ -5281,12 +5143,10 @@ void DrawingOptions::add_new_param()
     int names, position;
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     tmp2 = tmp["Sliders"].toObject();
-
     array2 = tmp2["Name"].toArray();
     names = array2.empty() ? 0 : array2.size();
     array2.append(addnewparam.ui.NameEdit->text());
     tmp2["Name"] = array2;
-
     array2 = tmp2["Position"].toArray();
     position = array2.empty() ? 0 : array2.size();
     if (names == 0)
@@ -5295,7 +5155,6 @@ void DrawingOptions::add_new_param()
         for (int i = 1; i * names <= position; i++)
             array2.insert(i * names + i - 1, addnewparam.ui.PosEdit->text());
     tmp2["Position"] = array2;
-
     array2 = tmp2["Max"].toArray();
     position = array2.empty() ? 0 : array2.size();
     if (names == 0)
@@ -5304,7 +5163,6 @@ void DrawingOptions::add_new_param()
         for (int i = 1; i * names <= position; i++)
             array2.insert(i * names + i - 1, addnewparam.ui.MaxEdit->text());
     tmp2["Max"] = array2;
-
     array2 = tmp2["Min"].toArray();
     position = array2.empty() ? 0 : array2.size();
     if (names == 0)
@@ -5313,7 +5171,6 @@ void DrawingOptions::add_new_param()
         for (int i = 1; i * names <= position; i++)
             array2.insert(i * names + i - 1, addnewparam.ui.MinEdit->text());
     tmp2["Min"] = array2;
-
     array2 = tmp2["Step"].toArray();
     position = array2.empty() ? 0 : array2.size();
     if (names == 0)
@@ -5322,7 +5179,6 @@ void DrawingOptions::add_new_param()
         for (int i = 1; i * names <= position; i++)
             array2.insert(i * names + i - 1, addnewparam.ui.StepEdit->text());
     tmp2["Step"] = array2;
-
     tmp["Sliders"] = tmp2;
     // Draw here
     DrawJsonModel(tmp);
@@ -5566,14 +5422,11 @@ void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
     {
         ModelType type = MathmodRef->RootObjet.CurrentParisoTreestruct[index].type;
         if (type == ISO_TYPE)
-            UpdateIsoModelDetailsPage(
-                MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+            UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
         else if (type == PAR_TYPE)
-            UpdatePar3DModelDetailsPage(
-                MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+            UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
         else if (type == PAR_4D_TYPE)
-            UpdatePar4DModelDetailsPage(
-                MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
+            UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
     }
 }
 
