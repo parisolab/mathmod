@@ -2849,7 +2849,7 @@
     {
       "Iso3D": {
           "Description": [
-          " CloseIso_1 by Abderrahman taha 28/11/2018"
+          " CloseIso_1 by Abderrahman taha 17/02/2019"
         ],
         "Name": [
           "CloseIso_1"
@@ -2857,8 +2857,11 @@
         "Component": [
           "CloseIso_1"
         ],
+        "Const": [
+          "C=1/1000000"
+        ],
         "Fxyz": [
-          "-max((cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2))))),(x^10+y^10+z^10-((39/10)^10)))"
+          "-max((cos(x)+cos(y)+cos(z))*((cos(x+sin(x)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2+C)))+cos(y+sin(y)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2+C)))+cos(z+sin(z)/(2*sqrt(sin(x)^2+sin(y)^2+sin(z)^2+C))))),(x^10+y^10+z^10-((39/10)^10)))"
         ],
         "Xmin": [
           "-4"
