@@ -3824,10 +3824,10 @@
     {
       "Param3D": {
         "Name": [
-          "Cosinus"
+          "Sinus"
         ],
         "Component": [
-          "Cosinus"
+          "Sinus"
         ],
         "Fx": [
           "u"
