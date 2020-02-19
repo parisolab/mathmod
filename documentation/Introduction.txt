@@ -1,17 +1,264 @@
-Chapter 1. Introduction
+# MathMod Overview 
 
-	MathMod is a mathematical modelling software that generate 3D and 4D surfaces by using 
-	mathematical equations such as parametric and implicit functions.
-	You can plot different functions simultaneously and combine them to build new functions.
-	You can also animate and morph your models by using the time parameter
+MathMod is a powerful yet easy to use mathematical software that allows you to perform complex 3D and 4D surface modeling and rendering. 
+MathMod support implicit and parametric surfaces and offers a very large database of model samples that can be generated with it. Apart from visualizing the actual shape, you are also free to edit the scripts and equations in order to understand how each parameter influences and reshapes the model.
 
-	MathMod three different types of surfaces:
-		Implicit surfaces, where the x, y and z coordinates are related by an expression (i.e:F(x,y,z)=0)
-		3D Parametric surfaces, where the x, y and z components are specified as functions of two independent variables u and v.
-		4D Parametric surfaces, where the x, y, z and w components are specified as functions of two independent variables u and v.
-		
+MathMod allows you to play and learn, as well as generate objects which you can then export to OBJ format and use with a multitude of 3D mesh modeling program such as Blender, Meshlab...
 
-	MathMod also provides some visual features:
-		You can study a model in detail by rotating it to any angle and zooming in. 
-		MathMod enables you to switch the mesh and fill on or off, smooth surfaces and display normals.
-		MathMod can also be used to generate animations that showcase how the model morphs as it is given new parameters to work with.
+Moreover, MathMod can also be used to generate animations that showcase how the model morphs as it is given new parameters to work with.
+
+# Supported types of mathematical equations
+## 1. Parametric equation
+### Introduction
+In mathematics, a parametric equation defines a group of quantities as functions of one or more independent variables called parameters. Parametric equations are commonly used to express the coordinates of the points that make up a geometric object such as a curve or surface, in which case the equations are collectively called a parametric representation or parameterization (alternatively spelled as parametrisation) of the object.
+
+For example, the equations : x = cos(t) y = sin(t) 
+
+form a parametric representation of the unit circle, where t is the parameter: A point (x, y) is on the unit circle if and only if there is a value of t such that these two equations generate that point.
+
+In addition to curves and surfaces, parametric equations can describe manifolds and algebraic varieties of higher dimension, with the number of parameters being equal to the dimension of the manifold or variety, and the number of equations being equal to the dimension of the space in which the manifold or variety is considered. 
+
+### Parametric surface
+
+A parametric surface is the image of an open subset of the Euclidean plane (typically R^2) by a continuous function, in a topological space, generally a Euclidean space of dimension at least three. Usually the function is supposed to be continuously differentiable.
+
+## 2. Implicit function
+### introduction
+In mathematics, an implicit equation is a relation of the form R ( x 1 , … , x n ) = 0 , where R is a function of several variables (often a polynomial). 
+
+For example, the implicit equation of the unit circle is x 2 + y 2 − 1 = 0 . 
+### Implicit surface
+An implicit surface in a Euclidean space (or, more generally, in an affine space) of dimension 3 is the set of the common zeros of a differentiable function of three variables
+
+    f ( x , y , z ) = 0. 
+
+# MathMod scripts overview
+
+## 1. Scripts file format
+MathMod scripts are in JSON file format.
+A JSON file is a file that stores simple data structures and objects in JavaScript Object Notation (JSON) format, which is a standard data interchange format. It is primarily used for transmitting data between a web application and a server.
+
+JSON objects are written in key/value pairs. Keys must be strings, and values must be a valid JSON data type (string, number, object, array, boolean or null). Keys and values are separated by a colon. Each key/value pair is separated by a comma.
+
+## 2. Supported types of mathematical equations
+There are four major type of mathematical objects supported by MathMod:
+1.  **"Iso3D"**    : Isosurfaces
+2.  **"Param3D"**  : 3D parametric surfaces
+3.  **"Param4D"**  : 4D parametric surfaces
+4.  **"ParIso"**   : Isosurfaces + 3D parametric surfaces ("Iso3D" + "Param3D")
+
+## 3. Mandatory Keys according to the mathematical object type:
+1. ### Mandatory Keys for "Iso3D", "Param3D" and "Param4D":
+
+ * **"Name"** : The script name is required and must be unique for each script. It's used to identify a script when stored in a collection file.
+ * **"Component"**: A mathematical object can a composition of more than one mathematical definitions. To help identify each component in a set of mathematically defined surfaces,  you must give each component a name (not necessarily unique though).
+
+2. ### Mandatory Keys for "Iso3D":
+ * **"Fxyz"**: implicit equations
+ * **"Xmax", "Xmin", "Ymax", "Ymin", "Zmax", "Zmin"** : Isosurface definition domain limits.
+
+3. ### Mandatory Keys for "Param3D" and "Param4D":
+ * **"Fx", "Fy" , "Fz"**: Parametric equations in the 3D space. **"Fw"** is required as the fourth dimension ("Param4D")
+ * **"Umax", "Umin", "Vmax", "Vmin"**: Domain limits for u and v parameters.
+
+4. ### Minimal Script examples for iso/parametric surfaces:
+
+>     {
+>       "Iso3D": {
+>         "Name": ["Sinus"],
+>         "Component": ["Sinus"],
+>         "Fxyz": ["sin(pi*((x)^2+(y)^2))/4+z"],
+>         "Xmax": ["1"],
+>         "Xmin": ["-1"],
+>         "Ymax": ["1"],
+>         "Ymin": ["-1"],
+>         "Zmax": ["1"],
+>         "Zmin": ["-1"],
+>       }
+>     }
+
+>     {
+>       "Param3D": {
+>         "Name": ["Sinus"],
+>         "Component": ["Sinus"],
+>         "Fx": ["u"],
+>         "Fy": ["v"],
+>         "Fz": ["-sin(pi*((u)^2+(v)^2))/3"],
+>         "Umin": ["-1"],
+>         "Umax": ["1"],
+>         "Vmin": ["-1"],
+>         "Vmax": ["1"]
+>       }
+>     }
+
+5. ### Optional Keys:
+* **"Funct"**: User defined functions.
+Example: "Funct": ["Si=sinx", "Co=cos(y), "SC=Si(x,y,z,t)*Co(x,y,z,t)"]
+
+* **"Const"**: User defined Constantes.
+Example: "Const": ["N=5", "P=pi/2", "E=N*P"]
+
+* **"Cnd"**: An implicit equation (according to x,y and z) to characterize a region in 3D space. The number of equations must be the same as the number of components.
+Example for an object including three components: "Cnd":["x>0", "", "y<0"]
+
+* **"Grid"**: User defined grid values. The number of grid values is related to the number of components:
+Isosurfaces require one grid value for each component (ie: the same grid value for parameters "x", "y" and "z") but parametric surfaces require two (ie one for "u" and one for "v")
+Example for a parametric surface with one component: "Grid":["100", "150"]
+
+* **"Description"**: Gives some information about the script author, date of release... 
+Example: "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
+* **_Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
+
+
+<body>
+<center>
+<table>
+<td width="690">
+
+<center><h1>MathMod Features</h1></center>
+<ol>
+  <li>
+.
+  </li>
+  <li>
+.
+</li>
+</ol>
+
+
+<center><h1>MathMod Usage </h1></center>
+ 
+<center><h1>MathMod Overview </h1></center>
+
+<center><h1>Supported mathematical functions: </h1></center>
+<br>
+<b>
+<center>
+
+<table border="0" cellspacing="1" cellpadding="2" width="50%" bgcolor="#CCCCCC">
+          <tr bgcolor="#CCAAAA"> 
+            <td width="225" style="background-color: #00CC99">Function</td>
+            <td width="91" style="background-color: #00CC99">Symbol</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Sine</td>
+            <td width="91">sin()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Cosine</td>
+            <td width="91">cos()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Tangent</td>
+            <td width="91">tan()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Arc Sine</td>
+            <td width="91">asin()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Arc Cosine</td>
+            <td width="91">acos()</td>
+            </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Arc Tangent</td>
+            <td width="91">atan()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Hyperbolic Sine</td>
+            <td width="91">sinh()</td>
+            </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Hyperbolic Cosine</td>
+            <td width="91">cosh()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Hyperbolic Tangent</td>
+            <td width="91">tanh()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Inverse Hyperbolic Sine</td>
+            <td width="91">asinh()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Inverse Hyperbolic Cosine</td>
+            <td width="91">acosh()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Inverse Hyperbolic Tangent</td>
+            <td width="91">atanh()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Natural Logarithm</td>
+            <td width="91">log()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Logarithm base 10</td>
+            <td width="91">log10()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Angle</td>
+            <td width="91">angle()</td>
+            </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Absolute Value / Magnitude</td>
+            <td width="91">abs()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Secant (equivalent to 1/cos()).</td>
+            <td width="91">sec()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Cscant (equivalent to 1/sin()).</td>
+            <td width="91">csc()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Cotant (equivalent to 1/tan()).</td>
+            <td width="91">cot()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Modulus</td>
+            <td width="91">mod()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF">
+            <td width="225">Square Root</td>
+            <td width="91">sqrt()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225"> Exponential</td>
+            <td width="91">exp()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF">
+            <td width="225">Min(A,B)</td>
+            <td width="91">min(A,B)</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Max(A,B)</td>
+            <td width="91">max(A,B)</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Rounds to the closest integer</td>
+            <td width="91">int()</td>
+          </tr>
+          <tr bgcolor="#FFFFFF"> 
+            <td width="225">Constants</td>
+            <td width="91">pi</td>
+          </tr> 
+        </table>
+</center>
+</b>
+<br>
+
+<center><h1>User defined functions :</h1></center>
+
+<center><h1>Animation and Morph : </h1></center>
+
+<center><h1>Forum : </h1></center>
+
+<center><h1>Download : </h1></center>
+
+
+</td>
+</table>
+</center>
+</body>
