@@ -91,7 +91,7 @@
                 }
             },
             {
-                "Iso3D": {"Description": ["Models Intersection by Abderrahman Taha 04/11/2019"],"Cnd": ["(x-y-(3/2)*z<0)","1>0"],"Component": ["Schwarz","Plan"],"Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],"Name": ["Models_Intersection"],"Xmax": ["4+4*sin(t*pi)","6"],"Xmin": ["-4+4*sin(t*pi)","-6"],"Ymax": ["4","6"],"Ymin": ["-4","-6"],"Zmax": ["4","6"],"Zmin": ["-4","-6"]
+                "Iso3D": {"Description": ["Models Intersection by Abderrahman Taha 04/11/2019"],"Cnd": ["(x-y-(3/2)*z<0)",""],"Component": ["Schwarz","Plan"],"Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],"Name": ["Models_Intersection"],"Xmax": ["4+4*sin(t*pi)","6"],"Xmin": ["-4+4*sin(t*pi)","-6"],"Ymax": ["4","6"],"Ymin": ["-4","-6"],"Zmax": ["4","6"],"Zmin": ["-4","-6"]
                 }
             }
         ]
@@ -6366,58 +6366,19 @@
       }
     },
     {
-      "Iso3D": {
-        "Description": ["Models Intersection by Abderrahman Taha 04/11/2019"
-        ],
-        "Name": [
-          "Models_Intersection"
-        ],
-        "Component": [
-          "Schwarz",
-          "Cylinder",
-          "Plan"
-        ],
-        "Cnd": [
-          "((x^2+y^2)>(2/5))&(x-y-(3/2)*z<0)",
-          "1>0",
-          "1>0"
-        ],
-        "Fxyz": [
-          "cos(x-4*sin(t*pi))+cos(y)+cos(z)",
-          "-(x^2+y^2)+(39/100)",
-          "x-y-(3/2)*z-(1/100)"
-        ],
-        "Xmax": [
-          "4+4*sin(t*pi)",
-          "4",
-          "6"
-        ],
-        "Xmin": [
-          "-4+4*sin(t*pi)",
-          "-4",
-          "-6"
-        ],
-        "Ymax": [
-          "4",
-          "4",
-          "6"
-        ],
-        "Ymin": [
-          "-4",
-          "-4",
-          "-6"
-        ],
-        "Zmax": [
-          "4",
-          "4",
-          "6"
-        ],
-        "Zmin": [
-          "-4",
-          "-4",
-          "-6"
-        ]
-      }
+        "Iso3D": {
+            "Description": ["Models Intersection by Abderrahman Taha 20/02/2020"],
+            "Cnd": ["(x-y-(3/2)*z<0)",""],
+            "Component": ["Schwarz","Plan"],
+            "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
+            "Name": ["Models_Intersection"],
+            "Xmax": ["4+4*sin(t*pi)","6"],
+            "Xmin": ["-4+4*sin(t*pi)","-6"],
+            "Ymax": ["4","6"],
+            "Ymin": ["-4","-6"],
+            "Zmax": ["4","6"],
+            "Zmin": ["-4","-6"]
+        }
     },
     {
       "Param3D": {
