@@ -51,7 +51,8 @@ There are four major type of mathematical objects supported by MathMod:
 1. ### Mandatory Keys for "Iso3D", "Param3D" and "Param4D":
 
  * **"Name"** : The script name is required and must be unique for each script. It's used to identify a script when stored in a collection file.
- * **"Component"**: A mathematical object can a composition of more than one mathematical definitions. To help identify each component in a set of mathematically defined surfaces,  you must give each component a name (not necessarily unique though).
+ * **"Component"**: A mathematical object can a composition of more than one mathematical equation.
+ To help identify each component in a set of mathematically defined surfaces,  you must give each component a name (not necessarily unique though).
 
 2. ### Mandatory Keys for "Iso3D":
  * **"Fxyz"**: implicit equations
@@ -107,7 +108,7 @@ Example for a parametric surface with one component: "Grid":["100", "150"]
 
 * **"Description"**: Gives some information about the script author, date of release... 
 Example: "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
-* **_Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
+* ** _Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
 
 
 <body>
