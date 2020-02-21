@@ -1824,7 +1824,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
            val[10];
     ValCol = new double[masterthread->VRgbtSize];
     val[3] = masterthread->stepMorph;
-
+    val[0] = val[1] = val[2] = 0.0;
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
         for(uint i=0; i<masterthread->VRgbtSize; i++)
@@ -1837,18 +1837,18 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             idx+=comp->NbComponents[i];
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
-            val[0]= double(NormVertexTabVector[i*10  + 3 + 4 ]);
-            val[1]= double(NormVertexTabVector[i*10  + 4 + 4 ]);
-            val[2]= double(NormVertexTabVector[i*10  + 5 + 4 ]);
+            val[0]= double(NormVertexTabVector[i*10  + 7 ]);
+            val[1]= double(NormVertexTabVector[i*10  + 8 ]);
+            val[2]= double(NormVertexTabVector[i*10  + 9 ]);
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
 
-            val[0]= tmp*double(NormVertexTabVector[i*10  + 3 + 4 ]);
-            val[1]= tmp*double(NormVertexTabVector[i*10  + 4 + 4 ]);
-            val[2]= tmp*double(NormVertexTabVector[i*10  + 5 + 4 ]);
+            val[0]= tmp*double(NormVertexTabVector[i*10  + 7 ]);
+            val[1]= tmp*double(NormVertexTabVector[i*10  + 8 ]);
+            val[2]= tmp*double(NormVertexTabVector[i*10  + 9 ]);
 
             tmp  = masterthread->GradientParser->Eval(val);
 

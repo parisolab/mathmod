@@ -1152,6 +1152,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
     uint Jprime,cmpId=0, K=0;
     double tmp, ValCol[masterthread->VRgbtSize], val[10];
     val[3] = masterthread->stepMorph;
+    val[0] = val[1] = val[2] = 0.0;
 
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
