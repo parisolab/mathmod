@@ -6369,6 +6369,7 @@
         "Iso3D": {
             "Description": ["Models Intersection by Abderrahman Taha 20/02/2020"],
             "Cnd": ["(x-y-(3/2)*z<0)",""],
+            "Grid": ["30","20"],
             "Component": ["Schwarz","Plan"],
             "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
             "Name": ["Models_Intersection"],
