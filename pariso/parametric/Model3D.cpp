@@ -1181,17 +1181,29 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
 
             tmp  = masterthread->GradientParser->Eval(val);
+            tmp  = masterthread->GradientParser->Eval(val);
+            for (uint j=0; j < masterthread->VRgbtSize; j+=5)
+                if(tmp < ValCol[j])
+                {
+                    float fraction=0;
+                    if(j>=5 && (ValCol[j] != ValCol[j-5]))
+                    {
+                        fraction = (tmp-ValCol[j-5])/(ValCol[j]-ValCol[j-5]);
+                        NormVertexTabVector[i*10  ] = float(ValCol[j+1])*(fraction) + (1-fraction)*float(ValCol[(j-5)+1]);
+                        NormVertexTabVector[i*10+1] = float(ValCol[j+2])*(fraction) + (1-fraction)*float(ValCol[(j-5)+2]);//float(ValCol[j+2]-ValCol[(j-5)+2])*fraction + float(ValCol[(j-5)+2]);
+                        NormVertexTabVector[i*10+2] = float(ValCol[j+3])*(fraction) + (1-fraction)*float(ValCol[(j-5)+3]);//float(ValCol[j+3]-ValCol[(j-5)+3])*fraction + float(ValCol[(j-5)+3]);
+                        NormVertexTabVector[i*10+3] = float(ValCol[(j)+4]);
+                        j = masterthread->VRgbtSize;
+                    }
 
-            int c= int(tmp);
-            tmp = std::abs(tmp - double(c));
-            for (uint j=0; j < masterthread->VRgbtSize && j < 100; j+=5)
-                if(tmp <= ValCol[j])
+                }
+                else if(tmp == ValCol[j])
                 {
                     NormVertexTabVector[i*10  ] = float(ValCol[j+1]);
                     NormVertexTabVector[i*10+1] = float(ValCol[j+2]);
                     NormVertexTabVector[i*10+2] = float(ValCol[j+3]);
                     NormVertexTabVector[i*10+3] = float(ValCol[j+4]);
-                    j = 100;
+                    j = masterthread->VRgbtSize;
                 }
         }
     }
