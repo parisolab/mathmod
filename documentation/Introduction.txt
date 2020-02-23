@@ -1,6 +1,6 @@
-# MathMod Overview 
+# MathMod Overview
 
-MathMod is a powerful yet easy to use mathematical software that allows you to perform complex 3D and 4D surface modeling and rendering. 
+MathMod is a powerful yet easy to use mathematical software that allows you to perform complex 3D and 4D surface modeling and rendering.
 MathMod support implicit and parametric surfaces and offers a very large database of model samples that can be generated with it. Apart from visualizing the actual shape, you are also free to edit the scripts and equations in order to understand how each parameter influences and reshapes the model.
 
 MathMod allows you to play and learn, as well as generate objects which you can then export to OBJ format and use with a multitude of 3D mesh modeling program such as Blender, Meshlab...
@@ -12,11 +12,11 @@ Moreover, MathMod can also be used to generate animations that showcase how the 
 ### Introduction
 In mathematics, a parametric equation defines a group of quantities as functions of one or more independent variables called parameters. Parametric equations are commonly used to express the coordinates of the points that make up a geometric object such as a curve or surface, in which case the equations are collectively called a parametric representation or parameterization (alternatively spelled as parametrisation) of the object.
 
-For example, the equations : x = cos(t) y = sin(t) 
+For example, the equations : x = cos(t) y = sin(t)
 
 form a parametric representation of the unit circle, where t is the parameter: A point (x, y) is on the unit circle if and only if there is a value of t such that these two equations generate that point.
 
-In addition to curves and surfaces, parametric equations can describe manifolds and algebraic varieties of higher dimension, with the number of parameters being equal to the dimension of the manifold or variety, and the number of equations being equal to the dimension of the space in which the manifold or variety is considered. 
+In addition to curves and surfaces, parametric equations can describe manifolds and algebraic varieties of higher dimension, with the number of parameters being equal to the dimension of the manifold or variety, and the number of equations being equal to the dimension of the space in which the manifold or variety is considered.
 
 ### Parametric surface
 
@@ -24,15 +24,35 @@ A parametric surface is the image of an open subset of the Euclidean plane (typi
 
 ## 2. Implicit function
 ### introduction
-In mathematics, an implicit equation is a relation of the form R ( x 1 , … , x n ) = 0 , where R is a function of several variables (often a polynomial). 
+In mathematics, an implicit equation is a relation of the form R ( x 1 , … , x n ) = 0 , where R is a function of several variables (often a polynomial).
 
-For example, the implicit equation of the unit circle is x 2 + y 2 − 1 = 0 . 
+For example, the implicit equation of the unit circle is x 2 + y 2 − 1 = 0 .
 ### Implicit surface
 An implicit surface in a Euclidean space (or, more generally, in an affine space) of dimension 3 is the set of the common zeros of a differentiable function of three variables
 
-    f ( x , y , z ) = 0. 
+    f ( x , y , z ) = 0.
 
-# MathMod scripts overview
+## 3. Procedural texture
+In computer graphics, a procedural texture is a texture created using a mathematical description (i.e. an algorithm) rather than directly stored data. The advantage of this approach is low storage cost, unlimited texture resolution and easy texture mapping. These kinds of textures are often used to model surface or volumetric representations of natural elements such as wood, marble, granite, metal, stone, and others.
+
+### Solid texturing
+Solid texturing is a process where the texture generating function is evaluated over R^3 at each visible surface point of the model so the resulting material properties (like color, shininess or normal) depends only on their 3D position, not their parametrized 2D surface position like in traditional 2D texture mapping. Consequently, solid textures are unaffected by distortions of the surface parameter space, such as you might see near the poles of a sphere.
+Initially these functions were based on simple combination of procedural noise functions like Simplex noise or Perlin noise.
+
+### Cellular texturing
+Cellular texturing differs from the majority of other procedural texture generating techniques as it does not depend on noise functions as its basis, although it is often used to complement the technique. Cellular textures are based on feature points which are scattered over a three-dimensional space. These points are then used to split up the space into small, randomly tiled regions called cells. These cells often look like "lizard scales", "pebbles", or "flagstones". Even though these regions are discrete, the cellular basis function itself is continuous and can be evaluated anywhere in space. Worley noise is a common type of cellular texture
+
+### Perlin noise
+Perlin noise is a type of gradient noise developed by Ken Perlin in 1983 as a result of his frustration with the "machine-like" look of computer-generated imagery (CGI) at the time. He formally described his findings in a SIGGRAPH paper in 1985 called An image Synthesizer.
+
+### Worley noise
+Worley noise is a noise function introduced by Steven Worley in 1996. In computer graphics it is used to create procedural textures,[1] that is textures that are created automatically in arbitrary precision and do not have to be drawn by hand. Worley noise comes close to simulating textures of stone, water, or cell noise.
+
+
+ref: https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing
+
+
+# MathMod scripts
 
 ## 1. Scripts file format
 MathMod scripts are in JSON file format.
@@ -40,7 +60,7 @@ A JSON file is a file that stores simple data structures and objects in JavaScri
 
 JSON objects are written in key/value pairs. Keys must be strings, and values must be a valid JSON data type (string, number, object, array, boolean or null). Keys and values are separated by a colon. Each key/value pair is separated by a comma.
 
-## 2. Supported types of mathematical equations
+## 2. Supported mathematical objects:
 There are four major type of mathematical objects supported by MathMod:
 1.  **"Iso3D"**    : Isosurfaces
 2.  **"Param3D"**  : 3D parametric surfaces
@@ -62,20 +82,122 @@ There are four major type of mathematical objects supported by MathMod:
  * **"Fx", "Fy" , "Fz"**: Parametric equations in the 3D space. **"Fw"** is required as the fourth dimension ("Param4D")
  * **"Umax", "Umin", "Vmax", "Vmin"**: Domain limits for u and v parameters.
 
-4. ### Minimal Script examples for iso/parametric surfaces:
+## 4. Optional Keys:
 
+* **"Funct"**: User defined functions.
+Example:
+>     "Funct": ["Si=sinx", "Co=cos(y), "SC=Si(x,y,z,t)*Co(x,y,z,t)"]
+
+* **"Const"**: User defined Constantes.
+Example:
+>     "Const": ["N=5", "P=pi/2", "E=N*P"]
+
+* **"Cnd"**: An implicit equation (according to x,y and z) to characterize a region in 3D space. The number of equations must be the same as the number of components.
+Example for an object including three components:
+>     "Cnd":["x>0", "", "y<0"]
+
+* **"Grid"**: User defined grid values. The number of grid values is related to the number of components:
+Isosurfaces require one grid value for each component (ie: the same grid value for parameters "x", "y" and "z") but parametric surfaces require two (ie one for "u" and one for "v")
+Example for a parametric surface with one component:
+>     "Grid":["100", "150"]
+
+* **"Description"**: Gives some information about the script author, date of release...
+Example:
+>     "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
+* ** _Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
+
+## 5. Texture and Pigment:
+* **"Noise"**: Noise function. MathMod supports two noise functions, Worley (NoiseW) and Perlin (NoiseP).
+>         "Noise": "NoiseP(x,y,z,Octaves,Lacunarity,Gain)"
+>         octaves: the number of levels of detail you want you perlin noise to have.
+>         lacunarity: number that determines how much detail is added or removed at each octave (adjusts frequency).
+>         Gain: number that determines how much each octave contributes to the overall shape (adjusts amplitude).
+
+>         "Noise": "NoiseW(x,y,z,(1),(2),(0))"
+* **"Texture"**: The texture generating function is evaluated over R^3 at each visible surface point of the model.
+
+Example:
+>     "Texture": {
+>         "Name": "Lines",
+>         "Noise": "NoiseW(x,y,z,(1),(2),(0))",
+>         "Colors": [
+>             "R=cos((x*x+y*y+z*z)*pi)",
+>             "G=cos((x*x+y*y+z*z)*pi)*cos(x*pi)",
+>             "B=sin(y*pi)*cos(x*pi)",
+>             "T=1"
+>         ]
+>     }
+
+* **"Pigment"**: Pigment definition.
+Most of the color patterns do not use abrupt color changes of just two or three colors like those in the brick, checker or hexagon patterns. They instead use smooth transitions of many colors that gradually change from one point to the next. The colors are defined in a pigment modifier that describes how the pattern blends from one color to the next.
+Each of the various pattern types available is in fact a mathematical function that takes any x, y, z location and turns it into a number. That number is used to specify what mix of colors to use from the color map: The pattern function gradient is evaluated and compared to the value of the first element in the "Vrgba" list (ie: "V=..."): if Gradient(x,y,z) is less than V[i] , color(x,y,z) = (R[i], G[i], B[i], A[i]) where "i" is the index of the "Color" object.
+In the example bellow, the gradient function is:  Gradient(x,y,z)=3*atan((x*x*y*z)*pi)*cos(y*y*z*pi);
+and V={0/10, 3/10, 5/10}
+
+>     "Pigment": {
+>         "Gradient": "3*atan((x*x*y*z)*pi)*cos(y*y*z*pi)",
+>         "Name": "Pigment",
+>         "Noise": "NoiseW(x,y,z,(1),(2),(0))",
+>         "Colors": [
+>             {
+>                 "Color": {
+>                     "Name": "Gold",
+>                     "Vrgba": [
+>                         "V=0/10",  //i=0
+>                         "R=9/10",
+>                         "G=7/10",
+>                         "B=1/10",
+>                         "A=1"
+>                     ]
+>                 }
+>             },
+>             {
+>                 "Color": {
+>                     "Name": "Red",
+>                     "Vrgba": [
+>                         "V=3/10",  //i=1
+>                         "R=1",
+>                         "G=1/10",
+>                         "B=31/100",
+>                         "A=1"
+>                     ]
+>                 }
+>             },
+>             {
+>                 "Color": {
+>                     "Name": "Green",
+>                     "Vrgba": [
+>                         "V=5/10",  //i=2
+>                         "R=1/10",
+>                         "G=7/10",
+>                         "B=1/10",
+>                         "A=1"
+>                     ]
+>                 }
+>             }
+>         ]
+>     }
+
+Ref: https://www.povray.org/documentation/view/3.6.1/335/
+
+# Script examples:
+1. * Object made out of two Isosurfaces:
 >     {
->       "Iso3D": {
->         "Name": ["Sinus"],
->         "Component": ["Sinus"],
->         "Fxyz": ["sin(pi*((x)^2+(y)^2))/4+z"],
->         "Xmax": ["1"],
->         "Xmin": ["-1"],
->         "Ymax": ["1"],
->         "Ymin": ["-1"],
->         "Zmax": ["1"],
->         "Zmin": ["-1"],
->       }
+>         "Iso3D": {
+>             "Description": ["Schwarz-Plan Intersection by Abderrahman Taha 20/02/2020"],
+>             "Cnd": ["(x-y-(3/2)*z<0)",""],
+>             "Const": ["A=4","B=6"],
+>             "Component": ["Schwarz","Plan"],
+>             "Grid": ["30","20"],
+>             "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
+>             "Name": ["Models_Intersection"],
+>             "Xmax": ["A+4*sin(t*pi)","B"],
+>             "Xmin": ["-A+4*sin(t*pi)","-B"],
+>             "Ymax": ["A","B"],
+>             "Ymin": ["-A","-B"],
+>             "Zmax": ["A","B"],
+>             "Zmin": ["-A","-B"]
+>         }
 >     }
 
 >     {
@@ -91,25 +213,6 @@ There are four major type of mathematical objects supported by MathMod:
 >         "Vmax": ["1"]
 >       }
 >     }
-
-5. ### Optional Keys:
-* **"Funct"**: User defined functions.
-Example: "Funct": ["Si=sinx", "Co=cos(y), "SC=Si(x,y,z,t)*Co(x,y,z,t)"]
-
-* **"Const"**: User defined Constantes.
-Example: "Const": ["N=5", "P=pi/2", "E=N*P"]
-
-* **"Cnd"**: An implicit equation (according to x,y and z) to characterize a region in 3D space. The number of equations must be the same as the number of components.
-Example for an object including three components: "Cnd":["x>0", "", "y<0"]
-
-* **"Grid"**: User defined grid values. The number of grid values is related to the number of components:
-Isosurfaces require one grid value for each component (ie: the same grid value for parameters "x", "y" and "z") but parametric surfaces require two (ie one for "u" and one for "v")
-Example for a parametric surface with one component: "Grid":["100", "150"]
-
-* **"Description"**: Gives some information about the script author, date of release... 
-Example: "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
-* ** _Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
-
 
 <body>
 <center>
@@ -128,7 +231,7 @@ Example: "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
 
 
 <center><h1>MathMod Usage </h1></center>
- 
+
 <center><h1>MathMod Overview </h1></center>
 
 <center><h1>Supported mathematical functions: </h1></center>
@@ -137,87 +240,87 @@ Example: "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
 <center>
 
 <table border="0" cellspacing="1" cellpadding="2" width="50%" bgcolor="#CCCCCC">
-          <tr bgcolor="#CCAAAA"> 
+          <tr bgcolor="#CCAAAA">
             <td width="225" style="background-color: #00CC99">Function</td>
             <td width="91" style="background-color: #00CC99">Symbol</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Sine</td>
             <td width="91">sin()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Cosine</td>
             <td width="91">cos()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Tangent</td>
             <td width="91">tan()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Arc Sine</td>
             <td width="91">asin()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Arc Cosine</td>
             <td width="91">acos()</td>
             </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Arc Tangent</td>
             <td width="91">atan()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Hyperbolic Sine</td>
             <td width="91">sinh()</td>
             </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Hyperbolic Cosine</td>
             <td width="91">cosh()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Hyperbolic Tangent</td>
             <td width="91">tanh()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Inverse Hyperbolic Sine</td>
             <td width="91">asinh()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Inverse Hyperbolic Cosine</td>
             <td width="91">acosh()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Inverse Hyperbolic Tangent</td>
             <td width="91">atanh()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Natural Logarithm</td>
             <td width="91">log()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Logarithm base 10</td>
             <td width="91">log10()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Angle</td>
             <td width="91">angle()</td>
             </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Absolute Value / Magnitude</td>
             <td width="91">abs()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Secant (equivalent to 1/cos()).</td>
             <td width="91">sec()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Cscant (equivalent to 1/sin()).</td>
             <td width="91">csc()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Cotant (equivalent to 1/tan()).</td>
             <td width="91">cot()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Modulus</td>
             <td width="91">mod()</td>
           </tr>
@@ -225,7 +328,7 @@ Example: "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
             <td width="225">Square Root</td>
             <td width="91">sqrt()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225"> Exponential</td>
             <td width="91">exp()</td>
           </tr>
@@ -233,18 +336,18 @@ Example: "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
             <td width="225">Min(A,B)</td>
             <td width="91">min(A,B)</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Max(A,B)</td>
             <td width="91">max(A,B)</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Rounds to the closest integer</td>
             <td width="91">int()</td>
           </tr>
-          <tr bgcolor="#FFFFFF"> 
+          <tr bgcolor="#FFFFFF">
             <td width="225">Constants</td>
             <td width="91">pi</td>
-          </tr> 
+          </tr>
         </table>
 </center>
 </b>
