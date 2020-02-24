@@ -180,8 +180,11 @@ and V={0/10, 3/10, 5/10}
 
 Ref: https://www.povray.org/documentation/view/3.6.1/335/
 
-# Script examples:
-1. * Object made out of two Isosurfaces:
+# Script example:
+ * A Pariso Object made out of two Isosurfaces and one parametric surface:
+>     {
+>         "Name": "Pariso_01",
+>         "ParIso": [
 >     {
 >         "Iso3D": {
 >             "Description": ["Schwarz-Plan Intersection by Abderrahman Taha 20/02/2020"],
@@ -199,7 +202,7 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
 >             "Zmin": ["-A","-B"]
 >         }
 >     }
-
+>     ,
 >     {
 >       "Param3D": {
 >         "Name": ["Sinus"],
@@ -213,6 +216,221 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
 >         "Vmax": ["1"]
 >       }
 >     }
+>        ]
+>     }
+
+
+
+<center><h1>Supported operators and mathematical functions: </h1></center>
+
+
+<p>The function string understood by MathMod is very similar (but not
+completely identical in all aspects) to mathematical expressions in the
+C/C++ languages.
+Arithmetic float expressions can be created from float literals, variables
+or functions using the following operators in this order of precedence:
+
+<p>MathMod supports these operators:
+
+<p><table border=2>
+ <tr>
+  <td><code>()</code></td>
+  <td>expressions in parentheses first</td>
+ </tr><tr>
+  <td><code>A unit</code></td>
+  <td>a unit multiplier (if one has been added)</td>
+ </tr><tr>
+  <td><code>A^B</code></td>
+  <td>exponentiation (A raised to the power B)</td>
+ </tr><tr>
+  <td><code>-A</code></td>
+  <td>unary minus</td>
+ </tr><tr>
+  <td><code>!A</code></td>
+  <td>unary logical not (result is 1 if <code>int(A)</code> is 0, else 0)</td>
+ </tr><tr>
+  <td><code>A*B  A/B  A%B</code></td>
+  <td>multiplication, division and modulo</td>
+ </tr><tr>
+  <td><code>A+B  A-B</code></td>
+  <td>addition and subtraction</td>
+ </tr><tr>
+  <td><code>A=B  A&lt;B  A&lt;=B<br>A!=B  A&gt;B  A&gt;=B</code></td>
+  <td>comparison between A and B (result is either 0 or 1)</td>
+ </tr><tr>
+  <td><code>A&amp;B</code></td>
+  <td>result is 1 if <code>int(A)</code> and <code>int(B)</code> differ from
+      0, else 0.<br>
+      Note: Regardless of the values, both operands are always
+      evaluated. However, if the expression is optimized, it may
+      be changed such that only one of the operands is evaluated,
+      according to standard shortcut logical operation semantics.</td>
+ </tr><tr>
+  <td><code>A|B</code></td>
+  <td>result is 1 if <code>int(A)</code> or <code>int(B)</code> differ from 0,
+      else 0.<br>
+      Note: Regardless of the values, both operands are always
+      evaluated. However, if the expression is optimized, it may
+      be changed such that only one of the operands is evaluated,
+      according to standard shortcut logical operation semantics.</td>
+ </tr>
+</table>
+
+
+<p>MathMod supports these functions:
+
+<p><table border=2>
+<tr>
+ <td><code>abs(A)</code></td>
+ <td>Absolute value (magnitude) of A.
+     With real numbers, if A is negative, returns -A otherwise returns A.
+     With complex numbers, equivalent to <code>hypot(real(x),imag(x))</code>.</td>
+</tr><tr>
+  <td><code>acos(A)</code></td>
+  <td>Arc-cosine of A. Returns the angle, measured in radians, whose cosine is A.</td>
+</tr><tr>
+  <td><code>acosh(A)</code></td>
+  <td>Same as acos() but for hyperbolic cosine.</td>
+</tr><tr>
+  <td><code>arg(A)</code></td>
+  <td>Phase angle of complex number A. Equivalent to <code>atan2(imag(x),real(x))</code>.</td>
+</tr><tr>
+  <td><code>asin(A)</code></td>
+  <td>Arc-sine of A. Returns the angle, measured in radians, whose sine is A.</td>
+</tr><tr>
+  <td><code>asinh(A)</code></td>
+  <td>Same as asin() but for hyperbolic sine.</td>
+</tr><tr>
+  <td><code>atan(A)</code></td>
+  <td>Arc-tangent of (A). Returns the angle, measured in radians,
+      whose tangent is A.</td>
+</tr><tr>
+  <td><code>atan2(A,B)</code></td>
+  <td>Principal arc-tangent of A/B, using the signs of the
+      two arguments to determine the quadrant of the result.
+      Returns the solution to the two expressions
+      hypot(A,B)*sin(x)=A, hypot(A,B)*cos(x)=B.
+      The return value is in range -pi to pi, inclusive.</td>
+</tr><tr>
+  <td><code>atanh(A)</code></td>
+  <td>Same as atan() but for hyperbolic tangent.</td>
+</tr><tr>
+  <td><code>cbrt(A)</code></td>
+  <td>Cube root of A. Returns a solution to expression pow(x,3)=A.</td>
+</tr><tr>
+  <td><code>conj(A)</code></td>
+  <td>Complex conjugate of A. Equivalent to <code>real(x) - 1i*imag(x)</code> or <code>polar(abs(x),-arg(x))</code>.</td>
+</tr><tr>
+  <td><code>ceil(A)</code></td>
+  <td>Ceiling of A. Returns the smallest integer not smaller than A.
+      Rounds up to the next higher integer. E.g. -2.9, -2.5 and -2.1 are
+    rounded to -2.0, and 2.9, 2.5 and 2.1 are rounded to 3.0.</td>
+</tr><tr>
+  <td><code>cos(A)</code></td>
+  <td>Cosine of A. Returns the cosine of the angle A, where A is
+      measured in radians.</td>
+</tr><tr>
+  <td><code>cosh(A)</code></td>
+  <td>Same as cos() but for hyperbolic cosine.</td>
+</tr><tr>
+  <td><code>cot(A)</code></td>
+  <td>Cotangent of A. Equivalent to <code>1/tan(A)</code>.</td>
+</tr><tr>
+  <td><code>csc(A)</code></td>
+  <td>Cosecant of A. Equivalent to <code>1/sin(A)</code>.</td>
+</tr><tr>
+  <td><code>eval(...)</code></td>
+  <td>This a recursive call to the function to be evaluated. The
+      number of parameters must be the same as the number of parameters
+      taken by the function. Must be called inside <code>if()</code> to avoid
+      infinite recursion.</td>
+</tr><tr>
+  <td><code>exp(A)</code></td>
+  <td>Exponential of A. Returns the value of e raised to the power
+      A where e is the base of the natural logarithm, i.e. the
+      non-repeating value approximately equal to 2.71828182846.</td>
+</tr><tr>
+  <td><code>exp2(A)</code></td>
+  <td>Base 2 exponential of A. Equivalent to <code>pow(2,A)</code>.</td>
+</tr><tr>
+  <td><code>floor(A)</code></td>
+  <td>Floor of A. Returns the largest integer not greater than A. Rounds
+      down to the next lower integer.
+      E.g. -2.9, -2.5 and -2.1 are rounded to -3.0,
+      and 2.9, 2.5 and 2.1 are rounded to 2.0.</td>
+</tr><tr>
+  <td><code>hypot(A,B)</code></td>
+  <td>Euclidean distance function. Equivalent to <code>sqrt(A^2+B^2)</code>.</td>
+</tr><tr>
+  <td><code>if(A,B,C)</code></td>
+  <td>If int(A) differs from 0, the return value of this function is B,
+      else C. Only the parameter which needs to be evaluated is
+      evaluated, the other parameter is skipped; this makes it safe to
+      use <code>eval()</code> in them.</td>
+</tr><tr>
+  <td><code>imag(A)</code></td>
+  <td>Return the imaginary part of complex number A. Equivalent to <code>abs(A)*sin(arg(A))</code>.</td>
+</tr><tr>
+  <td><code>int(A)</code></td>
+  <td>Rounds A to the closest integer. Equidistant values are rounded away from
+    zero. E.g. -2.9 and -2.5 are rounded to -3.0; -2.1 is rounded to -2.0,
+    and 2.9 and 2.5 are rounded to 3.0; 2.1 is rounded to 2.0.</td>
+</tr><tr>
+  <td><code>log(A)</code></td>
+  <td>Natural (base e) logarithm of A. Returns the solution to expression exp(x)=A.</td>
+</tr><tr>
+  <td><code>log2(A)</code></td>
+  <td>Base 2 logarithm of A. Equivalent to <code>log(A)/log(2)</code>.</td>
+</tr><tr>
+  <td><code>log10(A)</code></td>
+  <td>Base 10 logarithm of A.</td>
+</tr><tr>
+  <td><code>max(A,B)</code></td>
+  <td>If A&gt;B, the result is A, else B.</td>
+</tr><tr>
+  <td><code>min(A,B)</code></td>
+  <td>If A&lt;B, the result is A, else B.</td>
+</tr><tr>
+  <td><code>polar(A,B)</code></td>
+  <td>Returns a complex number from magnitude A, phase angle B (in radians).
+      Equivalent to <code>real(A)*(cos(real(B))+1i*sin(real(B)))</code>.</td>
+</tr><tr>
+  <td><code>pow(A,B)</code></td>
+  <td>Exponentiation (A raised to the power B).</td>
+</tr><tr>
+  <td><code>real(A)</code></td>
+  <td>Return the real part of complex number A. Equivalent to <code>abs(A)*cos(arg(A))</code>.</td>
+</tr><tr>
+  <td><code>sec(A)</code></td>
+  <td>Secant of A. Equivalent to <code>1/cos(A)</code>.</td>
+</tr><tr>
+  <td><code>sin(A)</code></td>
+  <td>Sine of A. Returns the sine of the angle A, where A is
+      measured in radians.</td>
+</tr><tr>
+  <td><code>sinh(A)</code></td>
+  <td>Same as sin() but for hyperbolic sine.</td>
+</tr><tr>
+  <td><code>sqrt(A)</code></td>
+  <td>Square root of A. Returns a solution to expression pow(x,2)=A.</td>
+</tr><tr>
+  <td><code>tan(A)</code></td>
+  <td>Tangent of A. Returns the tangent of the angle A, where A
+      is measured in radians.</td>
+</tr><tr>
+  <td><code>tanh(A)</code></td>
+  <td>Same as tan() but for hyperbolic tangent.</td>
+</tr><tr>
+  <td><code>trunc(A)</code></td>
+  <td>Truncated value of A. Returns an integer corresponding to the value
+    of A without its fractional part.
+    E.g. -2.9, -2.5 and -2.1 are rounded to -2.0,
+    and 2.9, 2.5 and 2.1 are rounded to 2.0.</td>
+</tr>
+</table>
+
+
+
 
 <body>
 <center>
