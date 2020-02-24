@@ -246,6 +246,8 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
  <li>
    <code>P0</code> : No effect (but the syntax requires at least one parameter)
 </ul>
+<br>
+   Function used in "Wall_Pattern_..." scripts (5 scripts in total)
 </td>
  </tr>
  <tr>
@@ -270,8 +272,7 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
  <li>
    <code>P4</code> : Relative thickness in the y direction
 </ul>
- <br>
-       Function used in the "Straw Basket_02" script
+ <br> Function used in the "Straw Basket_02" script
 </td>
  </tr>
   <tr>
@@ -540,6 +541,9 @@ or functions using the following operators in this order of precedence:
     and 2.9, 2.5 and 2.1 are rounded to 2.0.</td>
 </tr>
 </table>
+
+ref: http://warp.povusers.org/FunctionParser/fparser.html
+
 
 <body>
 <center>
