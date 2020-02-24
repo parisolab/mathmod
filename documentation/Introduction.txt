@@ -293,28 +293,38 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
  <li>
    <code>P4</code> : Shape parameter. If this is greater than 1 then the tube becomes fatter in the y direction
  <li>
-   <code>P5</code> : cross section type, (0.0 to 1.0 = square ... rounded to circle, over 2.0 to 3.0 = rounded to diamond and concave diamond
+   <code>P5</code> : cross section type, (0.0 to 1.0 = square ... rounded to circle, over 2.0 to 3.0 = rounded to diamond and concave diamond)
+ <li>
+   <code>P6</code> : Cross section rotation angle (degrees)
+</ul>
+Function use in "fhelix" and "Tori of helices" scripts
+   </td>
+  </tr>
+
+  <tr>
+   <td><code>fhelix2</code></td>
+   <td>
+<p>
+  <code>f_helix2(x,y,z, P0, P1, P2, P3, P4, P5, P6)</code>. Needs a negated function
+<ul>
+ <li>
+   <code>P0</code> : Not used
+ <li>
+   <code>P1</code> : Period - is related to the number of turns per unit length
+ <li>
+   <code>P2</code> : Minor radius (minor radius &gt; major radius)
+ <li>
+   <code>P3</code> : Major radius
+ <li>
+   <code>P4</code> : Not used
+ <li>
+   <code>P5</code> : cross section type, (0.0 to 1.0 = square ... rounded to circle, over 2.0 to 3.0 = rounded to diamond and concave diamond)
  <li>
    <code>P6</code> : Cross section rotation angle (degrees)
 </ul>
 
-   </td>
-  </tr>
-  <tr>
-   <td><code>fhelix2</code></td>
-   <td>f_helix2( x,y,z,<br>
-        0,    // not used,<br>
-        1.9*2*pi, // For number N of turns per heigth of y = 1 unit, use N * 2*pi<br>
-        0.38, // minor radius,<br>
-        0.50, // major radius,<br>
-        0,    // not used,<br>
-        0.5,  // cross section type, (0.0 to 1.0 = square ... rounded to circle <br>
-              // over 2.0 to 3.0 = rounded to diamond and concave diamond <br>
-        0  )  // cross section rotation angle   </td>
-  </tr
+</td>
  </tr>
-
-
 
 
 </table>
