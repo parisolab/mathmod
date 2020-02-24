@@ -236,31 +236,68 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
  </tr>
  <tr>
   <td><code>f_hex_y</code></td>
-  <td>f_hex_y</td>
+  <td>
+<p>
+  <code>f_hex_y(x,y,z, P0)</code>. This is function forms a lattice of infinite boxes stretching along the z-axis.
+ The fatness is controlled by the threshold value. These boxes are rotated 60 degrees around centers, which are
+ 0.8660254 or cos(30) away from each other. This function is also useful as pigment function.
+<ul>
+
+ <li>
+   <code>P0</code> : No effect (but the syntax requires at least one parameter)
+</ul>
+</td>
  </tr>
  <tr>
   <td><code>fmesh</code></td>
-  <td> f_mesh1( x,y,z, <br>
-       0.45, // distance between neighboring threads in the x direction, <br>
-       0.30, // distance between neighboring threads in the z direction, <br>
-       0.15, // relative thickness in the x and z directions, <br>
-       0.05, // amplitude of the weaving effect, <br>
-       0.25) // relative thickness in the y direction <br>
-       Function used in the "Straw Basket_02" script <br>
+  <td>
+
+<p>
+  <code>f_mesh1(x,y,z, P0, P1, P2, P3, P4)</code> The overall thickness of the threads is controlled by the
+ isosurface threshold, not by a parameter. If you render a mesh1 with zero threshold, the threads have zero thickness
+ and are therefore invisible. Parameters P2 and P4 control the shape of the thread relative to this threshold
+ parameter.
+<ul>
+
+ <li>
+   <code>P0</code> : Distance between neighboring threads in the x direction
+ <li>
+   <code>P1</code> : Distance between neighboring threads in the z direction
+ <li>
+   <code>P2</code> : Relative thickness in the x and z directions
+ <li>
+   <code>P3</code> : Amplitude of the weaving effect. Set to zero for a flat grid
+ <li>
+   <code>P4</code> : Relative thickness in the y direction
+</ul>
+ <br>
+       Function used in the "Straw Basket_02" script
 </td>
  </tr>
   <tr>
    <td><code>fhelix1</code></td>
-   <td>f_helix1( x,y,z, <br>
-   1,    // number of helixes, (1 = single helix, 2 = double helix etc.) <br>
-   3.5*2*pi,// For number N of turns per heigth of y = 1 unit, use N* 2*pi <br>
-   0.07, // minor radius, <br>
-   0.80, // major radius, <br>
-   1,    // shape parameter, <br>
-   0.3,  // cross section type,
-          (0.0 to 1.0 = square ... rounded to circle,
-          over 2.0 to 3.0 = rounded to diamond and concave diamond <br>
-   0 )   // cross section rotation angle <br>
+   <td>
+
+<p>
+  <code>f_helix1(x,y,z, P0, P1, P2, P3, P4, P5, P6)</code>
+<ul>
+
+ <li>
+   <code>P0</code> : Number of helixes - e.g. 2 for a double helix
+ <li>
+   <code>P1</code> : Period - is related to the number of turns per unit length
+ <li>
+   <code>P2</code> : Minor radius (major radius &gt; minor radius)
+ <li>
+   <code>P3</code> : Major radius
+ <li>
+   <code>P4</code> : Shape parameter. If this is greater than 1 then the tube becomes fatter in the y direction
+ <li>
+   <code>P5</code> : cross section type, (0.0 to 1.0 = square ... rounded to circle, over 2.0 to 3.0 = rounded to diamond and concave diamond
+ <li>
+   <code>P6</code> : Cross section rotation angle (degrees)
+</ul>
+
    </td>
   </tr>
   <tr>
@@ -282,7 +319,10 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
 
 </table>
 
-Ref: http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm
+Ref:
+1. https://www.povray.org/documentation/view/3.6.1/448/
+2. http://www.econym.demon.co.uk/isotut/substitute.htm
+3. http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm
 
 <center><h1>Supported operators and mathematical functions: </h1></center>
 
