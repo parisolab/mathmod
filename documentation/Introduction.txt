@@ -430,8 +430,6 @@ or functions using the following operators in this order of precedence:
 </table>
 
 
-
-
 <body>
 <center>
 <table>
@@ -439,139 +437,13 @@ or functions using the following operators in this order of precedence:
 
 <center><h1>MathMod Features</h1></center>
 <ol>
-  <li>
-.
-  </li>
-  <li>
-.
-</li>
+  <li> </li>
+  <li> </li>
 </ol>
-
 
 <center><h1>MathMod Usage </h1></center>
 
 <center><h1>MathMod Overview </h1></center>
-
-<center><h1>Supported mathematical functions: </h1></center>
-<br>
-<b>
-<center>
-
-<table border="0" cellspacing="1" cellpadding="2" width="50%" bgcolor="#CCCCCC">
-          <tr bgcolor="#CCAAAA">
-            <td width="225" style="background-color: #00CC99">Function</td>
-            <td width="91" style="background-color: #00CC99">Symbol</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Sine</td>
-            <td width="91">sin()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Cosine</td>
-            <td width="91">cos()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Tangent</td>
-            <td width="91">tan()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Arc Sine</td>
-            <td width="91">asin()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Arc Cosine</td>
-            <td width="91">acos()</td>
-            </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Arc Tangent</td>
-            <td width="91">atan()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Hyperbolic Sine</td>
-            <td width="91">sinh()</td>
-            </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Hyperbolic Cosine</td>
-            <td width="91">cosh()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Hyperbolic Tangent</td>
-            <td width="91">tanh()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Inverse Hyperbolic Sine</td>
-            <td width="91">asinh()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Inverse Hyperbolic Cosine</td>
-            <td width="91">acosh()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Inverse Hyperbolic Tangent</td>
-            <td width="91">atanh()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Natural Logarithm</td>
-            <td width="91">log()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Logarithm base 10</td>
-            <td width="91">log10()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Angle</td>
-            <td width="91">angle()</td>
-            </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Absolute Value / Magnitude</td>
-            <td width="91">abs()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Secant (equivalent to 1/cos()).</td>
-            <td width="91">sec()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Cscant (equivalent to 1/sin()).</td>
-            <td width="91">csc()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Cotant (equivalent to 1/tan()).</td>
-            <td width="91">cot()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Modulus</td>
-            <td width="91">mod()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Square Root</td>
-            <td width="91">sqrt()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225"> Exponential</td>
-            <td width="91">exp()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Min(A,B)</td>
-            <td width="91">min(A,B)</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Max(A,B)</td>
-            <td width="91">max(A,B)</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Rounds to the closest integer</td>
-            <td width="91">int()</td>
-          </tr>
-          <tr bgcolor="#FFFFFF">
-            <td width="225">Constants</td>
-            <td width="91">pi</td>
-          </tr>
-        </table>
-</center>
-</b>
-<br>
-
-<center><h1>User defined functions :</h1></center>
 
 <center><h1>Animation and Morph : </h1></center>
 
