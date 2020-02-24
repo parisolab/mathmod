@@ -430,29 +430,20 @@ or functions using the following operators in this order of precedence:
 </tr>
 </table>
 
-
 <body>
 <center>
 <table>
 <td width="690">
-
 <center><h1>MathMod Features</h1></center>
 <ol>
   <li> </li>
   <li> </li>
 </ol>
-
 <center><h1>MathMod Usage </h1></center>
-
 <center><h1>MathMod Overview </h1></center>
-
 <center><h1>Animation and Morph : </h1></center>
-
 <center><h1>Forum : </h1></center>
-
 <center><h1>Download : </h1></center>
-
-
 </td>
 </table>
 </center>
