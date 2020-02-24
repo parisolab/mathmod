@@ -221,6 +221,16 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
 
 
 <center><h1>MathMod internal functions: </h1></center>
+<p><table border=2>
+ <tr>
+  <td><code>NoiseP</code></td>
+  <td>Perlin Noise function</td>
+ </tr>
+ <tr>
+  <td><code>NoiseW</code></td>
+  <td>Worly Noise function</td>
+ </tr>
+</table>
 
 
 <center><h1>Supported operators and mathematical functions: </h1></center>
