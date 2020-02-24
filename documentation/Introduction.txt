@@ -220,9 +220,10 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
 >     }
 
 
+<center><h1>MathMod internal functions: </h1></center>
+
 
 <center><h1>Supported operators and mathematical functions: </h1></center>
-
 
 <p>The function string understood by MathMod is very similar (but not
 completely identical in all aspects) to mathematical expressions in the
