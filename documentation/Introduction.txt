@@ -228,10 +228,61 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
  </tr>
  <tr>
   <td><code>NoiseW</code></td>
-  <td>Worly Noise function</td>
+  <td>Worley Noise function</td>
  </tr>
+ <tr>
+  <td><code>p_skeletal_int</code></td>
+  <td>p_skeletal_int</td>
+ </tr>
+ <tr>
+  <td><code>f_hex_y</code></td>
+  <td>f_hex_y</td>
+ </tr>
+ <tr>
+  <td><code>fmesh</code></td>
+  <td> f_mesh1( x,y,z, <br>
+       0.45, // distance between neighboring threads in the x direction, <br>
+       0.30, // distance between neighboring threads in the z direction, <br>
+       0.15, // relative thickness in the x and z directions, <br>
+       0.05, // amplitude of the weaving effect, <br>
+       0.25) // relative thickness in the y direction <br>
+       Function used in the "Straw Basket_02" script <br>
+</td>
+ </tr>
+  <tr>
+   <td><code>fhelix1</code></td>
+   <td>f_helix1( x,y,z, <br>
+   1,    // number of helixes, (1 = single helix, 2 = double helix etc.) <br>
+   3.5*2*pi,// For number N of turns per heigth of y = 1 unit, use N* 2*pi <br>
+   0.07, // minor radius, <br>
+   0.80, // major radius, <br>
+   1,    // shape parameter, <br>
+   0.3,  // cross section type,
+          (0.0 to 1.0 = square ... rounded to circle,
+          over 2.0 to 3.0 = rounded to diamond and concave diamond <br>
+   0 )   // cross section rotation angle <br>
+   </td>
+  </tr>
+  <tr>
+   <td><code>fhelix2</code></td>
+   <td>f_helix2( x,y,z,<br>
+        0,    // not used,<br>
+        1.9*2*pi, // For number N of turns per heigth of y = 1 unit, use N * 2*pi<br>
+        0.38, // minor radius,<br>
+        0.50, // major radius,<br>
+        0,    // not used,<br>
+        0.5,  // cross section type, (0.0 to 1.0 = square ... rounded to circle <br>
+              // over 2.0 to 3.0 = rounded to diamond and concave diamond <br>
+        0  )  // cross section rotation angle   </td>
+  </tr
+ </tr>
+
+
+
+
 </table>
 
+Ref: http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm
 
 <center><h1>Supported operators and mathematical functions: </h1></center>
 
