@@ -74,15 +74,7 @@ Initially these functions were based on simple combination of procedural noise f
 ### Cellular texturing
 Cellular texturing differs from the majority of other procedural texture generating techniques as it does not depend on noise functions as its basis, although it is often used to complement the technique. Cellular textures are based on feature points which are scattered over a three-dimensional space. These points are then used to split up the space into small, randomly tiled regions called cells. These cells often look like "lizard scales", "pebbles", or "flagstones". Even though these regions are discrete, the cellular basis function itself is continuous and can be evaluated anywhere in space. Worley noise is a common type of cellular texture
 
-### Perlin noise
-Perlin noise is a type of gradient noise developed by Ken Perlin in 1983 as a result of his frustration with the "machine-like" look of computer-generated imagery (CGI) at the time. He formally described his findings in a SIGGRAPH paper in 1985 called An image Synthesizer.
-
-### Worley noise
-Worley noise is a noise function introduced by Steven Worley in 1996. In computer graphics it is used to create procedural textures,[1] that is textures that are created automatically in arbitrary precision and do not have to be drawn by hand. Worley noise comes close to simulating textures of stone, water, or cell noise.
-
-
 ref: https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing
-
 
 # MathMod scripts
 
@@ -139,13 +131,7 @@ Example:
 * ** _Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
 
 ## 5. Texture and Pigment:
-* **"Noise"**: Noise function. MathMod supports two noise functions, Worley (NoiseW) and Perlin (NoiseP).
->         "Noise": "NoiseP(x,y,z,Octaves,Lacunarity,Gain)"
->         octaves: the number of levels of detail you want you perlin noise to have.
->         lacunarity: number that determines how much detail is added or removed at each octave (adjusts frequency).
->         Gain: number that determines how much each octave contributes to the overall shape (adjusts amplitude).
 
->         "Noise": "NoiseW(x,y,z,(1),(2),(0))"
 * **"Texture"**: The texture generating function is evaluated over R^3 at each visible surface point of the model.
 
 Example:
@@ -248,7 +234,7 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
 >         "Vmax": ["1"]
 >       }
 >     }
->        ]
+>     ]
 >     }
 
 
@@ -256,16 +242,34 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
 <p><table border=2>
  <tr>
   <td><code>NoiseP</code></td>
-  <td>Perlin Noise function</td>
+  <td>
+<p>
+  <code>NoiseP(x,y,z,Octaves,Lacunarity,Gain)</code> Perlin noise is a type of gradient noise developed by Ken Perlin in 1983 as a result of his frustration with the "machine-like" look of computer-generated imagery (CGI) at the time. He formally described his findings in a SIGGRAPH paper in 1985 called An image Synthesizer.
+<ul>
+ <li>
+   <code>Octaves</code> : the number of levels of detail you want you Perlin noise to have.
+ <li>
+   <code>Lacunarity</code> : number that determines how much detail is added or removed at each octave (adjusts frequency).
+ <li>
+   <code>Gain</code> : number that determines how much each octave contributes to the overall shape (adjusts amplitude).
+</ul>
+ <br> Function used in the "Perlin_Schwarz" script
+</td>
  </tr>
- <tr>
+
+<tr>
   <td><code>NoiseW</code></td>
-  <td>Worley Noise function</td>
+  <td>
+<p>
+  <code>NoiseW(x,y,z,(A),(B),(C))</code> Worley noise is a noise function introduced by Steven Worley in 1996. In computer graphics it is used to create procedural textures, that is textures that are created automatically in arbitrary precision and do not have to be drawn by hand. Worley noise comes close to simulating textures of stone, water, or cell noise.
+<ul>
+ <li>
+   <code>A, B, C</code> : Numbers between 0..2
+</ul>
+ <br> Function used in the "CellNoiseSchwarz" script
+</td>
  </tr>
- <tr>
-  <td><code>p_skeletal_int</code></td>
-  <td>p_skeletal_int</td>
- </tr>
+
  <tr>
   <td><code>f_hex_y</code></td>
   <td>
@@ -282,6 +286,8 @@ Ref: https://www.povray.org/documentation/view/3.6.1/335/
    Function used in "Wall_Pattern_..." scripts (5 scripts in total)
 </td>
  </tr>
+
+
  <tr>
   <td><code>fmesh</code></td>
   <td>
@@ -359,6 +365,10 @@ Function use in "fhelix" and "Tori of helices" scripts
 </td>
  </tr>
 
+ <tr>
+  <td><code>p_skeletal_int</code></td>
+  <td>p_skeletal_int</td>
+ </tr>
 
 </table>
 
