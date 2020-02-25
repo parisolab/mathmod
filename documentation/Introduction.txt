@@ -1,13 +1,45 @@
-# MathMod Overview
 
-MathMod is a powerful yet easy to use mathematical software that allows you to perform complex 3D and 4D surface modeling and rendering.
-MathMod support implicit and parametric surfaces and offers a very large database of model samples that can be generated with it. Apart from visualizing the actual shape, you are also free to edit the scripts and equations in order to understand how each parameter influences and reshapes the model.
+<p align="center">MathMod
+An Interactive Plotting Program</p>
 
-MathMod allows you to play and learn, as well as generate objects which you can then export to OBJ format and use with a multitude of 3D mesh modeling program such as Blender, Meshlab...
+# MathMod
+## Copyright
 
-Moreover, MathMod can also be used to generate animations that showcase how the model morphs as it is given new parameters to work with.
+    Copyright (C) 2020 by Abderrahman Taha
 
-# Supported types of mathematical equations
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the
+    Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+## Introduction
+
+MathMod is a portable interactive plotting and graphing program for Windows, Linux, MacOSX and many other platforms.
+
+MathMod allows to plot complex 3D mathematical surfaces, described by implicit or parametric equations, and offers a very large database of model samples that can be generated with it.
+
+Apart from visualizing the actual shape, you are also free to edit the scripts and equations in order to understand how each parameter influences and reshapes the model.
+
+Moreover, it allows to export it's mathematical models to OBJ format and generate animations that showcase how the model morphs as it is given new parameters to work with.
+
+## Seeking-assistance
+
+<head/><body><p align="center"><span style=" font-size:12pt;">Author: Abderrahman Taha (</span><a href="taha_ab@yahoo.fr"><span style=" font-size:12pt; text-decoration: underline; color:#60999e;">taha_ab@yahoo.fr</span></a><span style=" font-size:12pt;">)</span></p><p align="center"><span style=" font-size:12pt;">GitHub: </span><a href="https://github.com/parisolab/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://github.com/parisolab/mathmod</span></a></p><p align="center"><span style=" font-size:10pt;">Home:</span><a href="https://sourceforge.net/projects/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://sourceforge.net/projects/mathmod</span></a></p><p align="center"><span style=" font-size:10pt;">FaceBook:</span><a href="https://www.facebook.com/parisolab/"><span style=" text-decoration: underline; color:#0000ff;">https://www.facebook.com/parisolab/</span></a></p><p align="center"><span style=" font-size:10pt;">Twitter :</span><a href="https://twitter.com/parisolab"><span style=" text-decoration: underline; color:#0000ff;">https://twitter.com/parisolab</span></a></p></body>
+
+
+
+# Introduction to Parametric/Implicit Equations and Procedural textures
 ## 1. Parametric equation
 ### Introduction
 In mathematics, a parametric equation defines a group of quantities as functions of one or more independent variables called parameters. Parametric equations are commonly used to express the coordinates of the points that make up a geometric object such as a curve or surface, in which case the equations are collectively called a parametric representation or parameterization (alternatively spelled as parametrisation) of the object.
@@ -343,7 +375,7 @@ C/C++ languages.
 Arithmetic float expressions can be created from float literals, variables
 or functions using the following operators in this order of precedence:
 
-<p>MathMod supports these operators:
+<p>List of mathematic operators
 
 <p><table border=2>
  <tr>
@@ -390,7 +422,7 @@ or functions using the following operators in this order of precedence:
 </table>
 
 
-<p>MathMod supports these functions:
+<p>List of mathematical functions:
 
 <p><table border=2>
 <tr>
