@@ -74,7 +74,7 @@ Initially these functions were based on simple combination of procedural noise f
 ### Cellular texturing
 Cellular texturing differs from the majority of other procedural texture generating techniques as it does not depend on noise functions as its basis, although it is often used to complement the technique. Cellular textures are based on feature points which are scattered over a three-dimensional space. These points are then used to split up the space into small, randomly tiled regions called cells. These cells often look like "lizard scales", "pebbles", or "flagstones". Even though these regions are discrete, the cellular basis function itself is continuous and can be evaluated anywhere in space. Worley noise is a common type of cellular texture
 
-ref: https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing
+
 
 # MathMod scripts
 
@@ -196,7 +196,6 @@ and V={0/10, 3/10, 5/10}
 >         ]
 >     }
 
-Ref: https://www.povray.org/documentation/view/3.6.1/335/
 
 # Script example:
  * A Pariso Object made out of two Isosurfaces and one parametric surface:
@@ -372,10 +371,7 @@ Function use in "fhelix" and "Tori of helices" scripts
 
 </table>
 
-Ref:
-1. https://www.povray.org/documentation/view/3.6.1/448/
-2. http://www.econym.demon.co.uk/isotut/substitute.htm
-3. http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm
+
 
 <center><h1>Supported operators and mathematical functions: </h1></center>
 
@@ -584,7 +580,15 @@ or functions using the following operators in this order of precedence:
 </tr>
 </table>
 
-ref: http://warp.povusers.org/FunctionParser/fparser.html
+
+Ref:
+1. https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing
+2. https://www.povray.org/documentation/view/3.6.1/335/
+3. https://www.povray.org/documentation/view/3.6.1/448/
+4. http://www.econym.demon.co.uk/isotut/substitute.htm
+5. http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm
+6. http://warp.povusers.org/FunctionParser/fparser.html
+
 
 
 <body>
