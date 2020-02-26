@@ -2,8 +2,8 @@
 An Interactive Plotting Program</p>
 
 ![](https://a.fsdn.com/con/app/proj/mathmod/screenshots/Screen%20Shot%202019-04-24%20at%205.20.26%20AM.png/max/max/1)
-# MathMod
-## Copyright
+<h1>MathMod</h1>
+<h2>Copyright</h2>
 
     Copyright (C) 2020 by Abderrahman Taha
 
@@ -23,55 +23,53 @@ An Interactive Plotting Program</p>
     Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-## Introduction
+<h2>Introduction</h2>
 
-MathMod is a portable interactive plotting and graphing program for Windows, Linux, MacOSX and many other platforms.
+MathMod is a portable interactive plotting and graphing program for Windows, Linux, MacOSX and many other platforms.<br>
 
-MathMod allows to plot complex 3D mathematical surfaces, described by implicit or parametric equations, and offers a very large database of model samples that can be generated with it.
+MathMod allows to plot complex 3D mathematical surfaces, described by implicit or parametric equations, and offers a very large database of model samples that can be generated with it. <br>
 
-Apart from visualizing the actual shape, you are also free to edit the scripts and equations in order to understand how each parameter influences and reshapes the model.
+Apart from visualizing the actual shape, you are also free to edit the scripts and equations in order to understand how each parameter influences and reshapes the model.<br>
 
-Moreover, it allows to export it's mathematical models to OBJ format and generate animations that showcase how the model morphs as it is given new parameters to work with.
+Moreover, it allows to export it's mathematical models to OBJ format and generate animations that showcase how the model morphs as it is given new parameters to work with.<br>
 
-## Seeking-assistance
+<h2>Seeking-assistance</h2>
 
 <head/><body><p align="center"><span style=" font-size:12pt;">Author: Abderrahman Taha (</span><a href="taha_ab@yahoo.fr"><span style=" font-size:12pt; text-decoration: underline; color:#60999e;">taha_ab@yahoo.fr</span></a><span style=" font-size:12pt;">)</span></p><p align="center"><span style=" font-size:12pt;">GitHub: </span><a href="https://github.com/parisolab/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://github.com/parisolab/mathmod</span></a></p><p align="center"><span style=" font-size:10pt;">Home:</span><a href="https://sourceforge.net/projects/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://sourceforge.net/projects/mathmod</span></a></p><p align="center"><span style=" font-size:10pt;">FaceBook:</span><a href="https://www.facebook.com/parisolab/"><span style=" text-decoration: underline; color:#0000ff;">https://www.facebook.com/parisolab/</span></a></p><p align="center"><span style=" font-size:10pt;">Twitter :</span><a href="https://twitter.com/parisolab"><span style=" text-decoration: underline; color:#0000ff;">https://twitter.com/parisolab</span></a></p></body>
 
 
 
-# Introduction to Parametric/Implicit Equations and Procedural textures
-## 1. Parametric equation
-### Introduction
-In mathematics, a parametric equation defines a group of quantities as functions of one or more independent variables called parameters. Parametric equations are commonly used to express the coordinates of the points that make up a geometric object such as a curve or surface, in which case the equations are collectively called a parametric representation or parameterization (alternatively spelled as parametrisation) of the object.
+<h1>Introduction to Parametric/Implicit Equations and Procedural textures</h1>
+<h2>1. Parametric equation</h2>
+<h3>Introduction</h3>
+In mathematics, a parametric equation defines a group of quantities as functions of one or more independent variables called parameters.<br>
+Parametric equations are commonly used to express the coordinates of the points that make up a geometric object such as a curve or surface, in which case the equations are collectively called a parametric representation or parameterization (alternatively spelled as parametrisation) of the object.<br>
+For example, the equations : x = cos(t) y = sin(t)<br>
+form a parametric representation of the unit circle, where t is the parameter: A point (x, y) is on the unit circle if and only if there is a value of t such that these two equations generate that point.<br>
+In addition to curves and surfaces, parametric equations can describe manifolds and algebraic varieties of higher dimension, with the number of parameters being equal to the dimension of the manifold or variety, and the number of equations being equal to the dimension of the space in which the manifold or variety is considered.<br>
 
-For example, the equations : x = cos(t) y = sin(t)
-
-form a parametric representation of the unit circle, where t is the parameter: A point (x, y) is on the unit circle if and only if there is a value of t such that these two equations generate that point.
-
-In addition to curves and surfaces, parametric equations can describe manifolds and algebraic varieties of higher dimension, with the number of parameters being equal to the dimension of the manifold or variety, and the number of equations being equal to the dimension of the space in which the manifold or variety is considered.
-
-### Parametric surface
+<H3>Parametric surface</H3>
 
 A parametric surface is the image of an open subset of the Euclidean plane (typically R^2) by a continuous function, in a topological space, generally a Euclidean space of dimension at least three. Usually the function is supposed to be continuously differentiable.
 
-## 2. Implicit function
-### introduction
-In mathematics, an implicit equation is a relation of the form R ( x 1 , … , x n ) = 0 , where R is a function of several variables (often a polynomial).
+<H2> 2. Implicit function</H2>
+<H3> introduction</H3>
+In mathematics, an implicit equation is a relation of the form R ( x 1 , … , x n ) = 0 , where R is a function of several variables (often a polynomial).<br>
 
-For example, the implicit equation of the unit circle is x 2 + y 2 − 1 = 0 .
-### Implicit surface
-An implicit surface in a Euclidean space (or, more generally, in an affine space) of dimension 3 is the set of the common zeros of a differentiable function of three variables
+For example, the implicit equation of the unit circle is x 2 + y 2 − 1 = 0 .<br>
+<H3> Implicit surface</H3>
+An implicit surface in a Euclidean space (or, more generally, in an affine space) of dimension 3 is the set of the common zeros of a differentiable function of three variables<br>
 
-    f ( x , y , z ) = 0.
+<code>f ( x , y , z ) = 0 </code>
 
-## 3. Procedural texture
-In computer graphics, a procedural texture is a texture created using a mathematical description (i.e. an algorithm) rather than directly stored data. The advantage of this approach is low storage cost, unlimited texture resolution and easy texture mapping. These kinds of textures are often used to model surface or volumetric representations of natural elements such as wood, marble, granite, metal, stone, and others.
+<H2> 3. Procedural texture</H2>
+In computer graphics, a procedural texture is a texture created using a mathematical description (i.e. an algorithm) rather than directly stored data.<br> The advantage of this approach is low storage cost, unlimited texture resolution and easy texture mapping.<br> These kinds of textures are often used to model surface or volumetric representations of natural elements such as wood, marble, granite, metal, stone, and others.<br>
 
-### Solid texturing
-Solid texturing is a process where the texture generating function is evaluated over R^3 at each visible surface point of the model so the resulting material properties (like color, shininess or normal) depends only on their 3D position, not their parametrized 2D surface position like in traditional 2D texture mapping. Consequently, solid textures are unaffected by distortions of the surface parameter space, such as you might see near the poles of a sphere.
-Initially these functions were based on simple combination of procedural noise functions like Simplex noise or Perlin noise.
+<H3> Solid texturing</H3>
+Solid texturing is a process where the texture generating function is evaluated over R^3 at each visible surface point of the model so the resulting material properties (like color, shininess or normal) depends only on their 3D position, not their parametrized 2D surface position like in traditional 2D texture mapping.<br> Consequently, solid textures are unaffected by distortions of the surface parameter space, such as you might see near the poles of a sphere.<br>
+Initially these functions were based on simple combination of procedural noise functions like Simplex noise or Perlin noise.<br>
 
-### Cellular texturing
+<H3> Cellular texturing</H3>
 Cellular texturing differs from the majority of other procedural texture generating techniques as it does not depend on noise functions as its basis, although it is often used to complement the technique. Cellular textures are based on feature points which are scattered over a three-dimensional space. These points are then used to split up the space into small, randomly tiled regions called cells. These cells often look like "lizard scales", "pebbles", or "flagstones". Even though these regions are discrete, the cellular basis function itself is continuous and can be evaluated anywhere in space. Worley noise is a common type of cellular texture
 
 
@@ -447,7 +445,10 @@ Function use in "fhelix" and "Tori of helices" scripts
   <td><code>p_skeletal_int</code></td>
   <td>p_skeletal_int</td>
  </tr>
+
 </table>
+
+
 
 <center><h1>Supported operators and mathematical functions: </h1></center>
 
