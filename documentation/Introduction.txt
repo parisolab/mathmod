@@ -50,7 +50,7 @@ In addition to curves and surfaces, parametric equations can describe manifolds 
 
 <H3>Parametric surface</H3>
 
-A parametric surface is the image of an open subset of the Euclidean plane (typically R^2) by a continuous function, in a topological space, generally a Euclidean space of dimension at least three. Usually the function is supposed to be continuously differentiable.
+A parametric surface is the image of an open subset of the Euclidean plane (typically R^2) by a continuous function, in a topological space, generally a Euclidean space of dimension at least three. Usually the function is supposed to be continuously differentiable.<br>
 
 <H2> 2. Implicit function</H2>
 <H3> introduction</H3>
@@ -70,24 +70,24 @@ Solid texturing is a process where the texture generating function is evaluated 
 Initially these functions were based on simple combination of procedural noise functions like Simplex noise or Perlin noise.<br>
 
 <H3> Cellular texturing</H3>
-Cellular texturing differs from the majority of other procedural texture generating techniques as it does not depend on noise functions as its basis, although it is often used to complement the technique. Cellular textures are based on feature points which are scattered over a three-dimensional space. These points are then used to split up the space into small, randomly tiled regions called cells. These cells often look like "lizard scales", "pebbles", or "flagstones". Even though these regions are discrete, the cellular basis function itself is continuous and can be evaluated anywhere in space. Worley noise is a common type of cellular texture
+Cellular texturing differs from the majority of other procedural texture generating techniques as it does not depend on noise functions as its basis, although it is often used to complement the technique.<br>
+Cellular textures are based on feature points which are scattered over a three-dimensional space.<br> These points are then used to split up the space into small, randomly tiled regions called cells.<br> These cells often look like "lizard scales", "pebbles", or "flagstones". Even though these regions are discrete, the cellular basis function itself is continuous and can be evaluated anywhere in space. Worley noise is a common type of cellular texture<br>
 
+<h1> MathMod scripts</h1>
 
-
-# MathMod scripts
-
-## 1. Scripts file format
+<h2> 1. Scripts file format</h2>
 MathMod scripts are in JSON file format.
-A JSON file is a file that stores simple data structures and objects in JavaScript Object Notation (JSON) format, which is a standard data interchange format. It is primarily used for transmitting data between a web application and a server.
+A JSON file is a file that stores simple data structures and objects in JavaScript Object Notation (JSON) format, which is a standard data interchange format. It is primarily used for transmitting data between a web application and a server.<br>
 
-JSON objects are written in key/value pairs. Keys must be strings, and values must be a valid JSON data type (string, number, object, array, boolean or null). Keys and values are separated by a colon. Each key/value pair is separated by a comma.
+JSON objects are written in key/value pairs. Keys must be strings, and values must be a valid JSON data type (string, number, object, array, boolean or null). Keys and values are separated by a colon. Each key/value pair is separated by a comma.<br>
 
-## 2. Supported mathematical objects:
-There are four major type of mathematical objects supported by MathMod:
-1.  **"Iso3D"**    : Isosurfaces
-2.  **"Param3D"**  : 3D parametric surfaces
-3.  **"Param4D"**  : 4D parametric surfaces
-4.  **"ParIso"**   : Isosurfaces + 3D parametric surfaces ("Iso3D" + "Param3D")
+<h2> 2. Supported mathematical objects:</h2>
+There are four major type of mathematical objects supported by MathMod:<br>
+
+1.  <b>"Iso3D"</b>   : Isosurfaces<br>
+2.  <b>"Param3D"</b>  : 3D parametric surfaces<br>
+3.  <b>"Param4D"</b>   : 4D parametric surfaces<br>
+4.  <b>"ParIso"</b>    : Isosurfaces + 3D parametric surfaces ("Iso3D" + "Param3D")<br>
 
 ## 3. Mandatory and optional Keys:
 1. #### Mandatory Keys for "Iso3D", "Param3D" and "Param4D":
