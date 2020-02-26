@@ -108,26 +108,75 @@ There are four major type of mathematical objects supported by MathMod:
 
 ## 4. Optional Keys:
 
-* **"Funct"**: User defined functions.
-Example:
->     "Funct": ["Si=sinx", "Co=cos(y), "SC=Si(x,y,z,t)*Co(x,y,z,t)"]
+<p><table border=2>
+<tr>
+<td><code>"Funct"</code></td>
+<td>
+User defined functions. Example:
+<br> <code>"Funct": ["Si=sinx", "Co=cos(y), "SC=Si(x,y,z,t)*Co(x,y,z,t)"]</code>
+</td>
+</tr>
 
-* **"Const"**: User defined Constantes.
-Example:
->     "Const": ["N=5", "P=pi/2", "E=N*P"]
+<tr>
+<td><code>"Const"</code></td>
+<td>
+User defined Constantes. Example:
+<br><code>"Const": ["N=5", "P=pi/2", "E=N*P"]</code>
+</td>
+</tr>
 
-* **"Cnd"**: An implicit equation (according to x,y and z) to characterize a region in 3D space. The number of equations must be the same as the number of components.
+<tr>
+<td><code>"Cnd"</code></td>
+<td>
+An implicit equation (according to x,y and z) to characterize a region in 3D space. The number of equations must be the same as the number of components.
 Example for an object including three components:
->     "Cnd":["x>0", "", "y<0"]
+<br><code>"Cnd":["x>0", "", "y<0"]</code>
+<br> See the "Models_Intersection" script
+</td>
+</tr>
 
-* **"Grid"**: User defined grid values. The number of grid values is related to the number of components:
-Isosurfaces require one grid value for each component (ie: the same grid value for parameters "x", "y" and "z") but parametric surfaces require two (ie one for "u" and one for "v")
+<tr>
+<td><code>"Grid"</code></td>
+<td>
+User defined grid values. The number of grid values is related to the number of components.
+Isosurfaces require one grid value for each component (ie: the same grid value for "x", "y" and "z") but parametric surfaces require two (ie one for "u" and one for "v")
 Example for a parametric surface with one component:
->     "Grid":["100", "150"]
+<br><code>"Grid":["100", "150"]</code>
+<br> See the "Models_Intersection" script
+</td>
+</tr>
 
-* **"Description"**: Gives some information about the script author, date of release...
-Example:
->     "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]
+<tr>
+<td><code>"Sliders"</code></td>
+<td>
+Sliders are usefull for interactive modification of one or more parameter used in the script. Example:
+<br><code>"Sliders": {
+        "Name": ["N","R"],
+        "Min": ["0","0"],
+        "Max": ["50","50"],
+        "Step": ["1","1"],
+        "Position": ["10","16"]
+    }</code>
+<ul>
+<li><code>"Name"</code> : The parameters names (ie. N, R).
+<li><code>"Min", "Max"</code> : Minimum and maximum values for N and R.
+<li><code>"Step"</code> : Value used to adjust each parameter.
+<li><code>"Position"</code> : Saved values for each parameter (N, R)=(10, 16).
+</ul>
+<br> Function used in the "The_Dome_v1" script
+</td>
+</tr>
+
+<tr>
+<td><code>"Description"</code></td>
+<td>
+User defined functions. Example:
+<br><code>"Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]</code>
+</td>
+</tr>
+
+</table>
+
 * ** _Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
 
 ## 5. Texture and Pigment:
