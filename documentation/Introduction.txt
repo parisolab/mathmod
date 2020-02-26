@@ -91,24 +91,54 @@ There are four major type of mathematical objects supported by MathMod:
 3.  **"Param4D"**  : 4D parametric surfaces
 4.  **"ParIso"**   : Isosurfaces + 3D parametric surfaces ("Iso3D" + "Param3D")
 
-## 3. Mandatory Keys according to the mathematical object type:
-1. ### Mandatory Keys for "Iso3D", "Param3D" and "Param4D":
-
- * **"Name"** : The script name is required and must be unique for each script. It's used to identify a script when stored in a collection file.
- * **"Component"**: A mathematical object can a composition of more than one mathematical equation.
- To help identify each component in a set of mathematically defined surfaces,  you must give each component a name (not necessarily unique though).
-
-2. ### Mandatory Keys for "Iso3D":
- * **"Fxyz"**: implicit equations
- * **"Xmax", "Xmin", "Ymax", "Ymin", "Zmax", "Zmin"** : Isosurface definition domain limits.
-
-3. ### Mandatory Keys for "Param3D" and "Param4D":
- * **"Fx", "Fy" , "Fz"**: Parametric equations in the 3D space. **"Fw"** is required as the fourth dimension ("Param4D")
- * **"Umax", "Umin", "Vmax", "Vmin"**: Domain limits for u and v parameters.
-
-## 4. Optional Keys:
+## 3. Mandatory and optional Keys:
+1. #### Mandatory Keys for "Iso3D", "Param3D" and "Param4D":
 
 <p><table border=2>
+<tr>
+<td><code>"Name"</code></td>
+<td>The script name is required and must be unique for each script. It's used to identify a script when stored in a collection file.</td>
+</tr>
+
+<tr>
+<td><code>"Component"</code></td>
+<td>A mathematical object can a composition of more than one mathematical equation.
+ To help identify each component in a set of mathematically defined surfaces,  you must give each component a name (not necessarily unique though).</td>
+</tr>
+</table>
+
+2. #### Mandatory Keys for "Iso3D":
+
+<p><table border=2>
+<tr>
+<td><code>"Fxyz"</code></td>
+<td>implicit equations</td>
+</tr>
+
+<tr>
+<td><code>"Xmax", "Xmin", "Ymax", "Ymin", "Zmax", "Zmin"</code></td>
+<td>Isosurface definition domain limits.</td>
+</tr>
+</table>
+
+3. #### Mandatory Keys for "Param3D" and "Param4D":
+
+<p><table border=2>
+<tr>
+<td><code>"Fx","Fy","Fz"</code></td>
+<td>Parametric equations in the 3D space. **"Fw"** is required as the fourth dimension ("Param4D")</td>
+</tr>
+
+<tr>
+<td><code>"Umax","Umin","Vmax","Vmin"</code></td>
+<td>Domain limits for u and v parameters.</td>
+</tr>
+</table>
+
+4. #### Optional Keys:
+
+<p><table border=2>
+
 <tr>
 <td><code>"Funct"</code></td>
 <td>
@@ -417,10 +447,7 @@ Function use in "fhelix" and "Tori of helices" scripts
   <td><code>p_skeletal_int</code></td>
   <td>p_skeletal_int</td>
  </tr>
-
 </table>
-
-
 
 <center><h1>Supported operators and mathematical functions: </h1></center>
 
