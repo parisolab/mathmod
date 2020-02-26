@@ -89,8 +89,8 @@ There are four major type of mathematical objects supported by MathMod:<br>
 3.  <b>"Param4D"</b>   : 4D parametric surfaces<br>
 4.  <b>"ParIso"</b>    : Isosurfaces + 3D parametric surfaces ("Iso3D" + "Param3D")<br>
 
-## 3. Mandatory and optional Keys:
-1. #### Mandatory Keys for "Iso3D", "Param3D" and "Param4D":
+<h2> 3. Mandatory and optional Keys:</h2>
+<h3>1. Mandatory Keys for "Iso3D", "Param3D" and "Param4D":</h3>
 
 <p><table border=2>
 <tr>
@@ -105,7 +105,7 @@ There are four major type of mathematical objects supported by MathMod:<br>
 </tr>
 </table>
 
-2. #### Mandatory Keys for "Iso3D":
+<h3>2. Mandatory Keys for "Iso3D":</h3>
 
 <p><table border=2>
 <tr>
@@ -119,7 +119,7 @@ There are four major type of mathematical objects supported by MathMod:<br>
 </tr>
 </table>
 
-3. #### Mandatory Keys for "Param3D" and "Param4D":
+<h3>3. Mandatory Keys for "Param3D" and "Param4D":</h3>
 
 <p><table border=2>
 <tr>
@@ -133,10 +133,9 @@ There are four major type of mathematical objects supported by MathMod:<br>
 </tr>
 </table>
 
-4. #### Optional Keys:
+<h3>4. Optional Keys:</h3>
 
 <p><table border=2>
-
 <tr>
 <td><code>"Funct"</code></td>
 <td>
@@ -177,14 +176,14 @@ Example for a parametric surface with one component:
 <tr>
 <td><code>"Sliders"</code></td>
 <td>
-Sliders are usefull for interactive modification of one or more parameter used in the script. Example:
-<br><code>"Sliders": {
+Sliders are useful for interactive modification of one or more parameter used in the script. Example:
+<br><pre>"Sliders": {
         "Name": ["N","R"],
         "Min": ["0","0"],
         "Max": ["50","50"],
         "Step": ["1","1"],
         "Position": ["10","16"]
-    }</code>
+    }</pre>
 <ul>
 <li><code>"Name"</code> : The parameters names (ie. N, R).
 <li><code>"Min", "Max"</code> : Minimum and maximum values for N and R.
@@ -205,23 +204,22 @@ User defined functions. Example:
 
 </table>
 
-* ** _Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON_**
+<em>Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON</em>
 
-## 5. Texture and Pigment:
+<h2>5. Texture and Pigment:</h2>
 
-* **"Texture"**: The texture generating function is evaluated over R^3 at each visible surface point of the model.
+<b>"Texture"</b>: The texture generating function is evaluated over R^3 at each visible surface point of the model.Example:<br>
 
-Example:
->     "Texture": {
->         "Name": "Lines",
->         "Noise": "NoiseW(x,y,z,(1),(2),(0))",
->         "Colors": [
->             "R=cos((x*x+y*y+z*z)*pi)",
->             "G=cos((x*x+y*y+z*z)*pi)*cos(x*pi)",
->             "B=sin(y*pi)*cos(x*pi)",
->             "T=1"
->         ]
->     }
+
+<pre>"Texture": {
+   "Name": "Lines",
+   "Noise": "NoiseW(x,y,z,(1),(2),(0))",
+   "Colors": [
+     "R=cos((x*x+y*y+z*z)*pi)",
+     "G=cos((x*x+y*y+z*z)*pi)*cos(x*pi)",
+     "B=sin(y*pi)*cos(x*pi)",
+     "T=1"
+}</pre>
 
 * **"Pigment"**: Pigment definition.
 Most of the color patterns do not use abrupt color changes of just two or three colors like those in the brick, checker or hexagon patterns. They instead use smooth transitions of many colors that gradually change from one point to the next. The colors are defined in a pigment modifier that describes how the pattern blends from one color to the next.
@@ -229,49 +227,31 @@ Each of the various pattern types available is in fact a mathematical function t
 In the example bellow, the gradient function is:  Gradient(x,y,z)=3*atan((x*x*y*z)*pi)*cos(y*y*z*pi);
 and V={0/10, 3/10, 5/10}
 
->     "Pigment": {
->         "Gradient": "3*atan((x*x*y*z)*pi)*cos(y*y*z*pi)",
->         "Name": "Pigment",
->         "Noise": "NoiseW(x,y,z,(1),(2),(0))",
->         "Colors": [
->             {
->                 "Color": {
->                     "Name": "Gold",
->                     "Vrgba": [
->                         "V=0/10",  //i=0
->                         "R=9/10",
->                         "G=7/10",
->                         "B=1/10",
->                         "A=1"
->                     ]
->                 }
->             },
->             {
->                 "Color": {
->                     "Name": "Red",
->                     "Vrgba": [
->                         "V=3/10",  //i=1
->                         "R=1",
->                         "G=1/10",
->                         "B=31/100",
->                         "A=1"
->                     ]
->                 }
->             },
->             {
->                 "Color": {
->                     "Name": "Green",
->                     "Vrgba": [
->                         "V=5/10",  //i=2
->                         "R=1/10",
->                         "G=7/10",
->                         "B=1/10",
->                         "A=1"
->                     ]
->                 }
->             }
->         ]
->     }
+<pre>"Pigment": {
+         "Gradient": "3*atan((x*x*y*z)*pi)*cos(y*y*z*pi)",
+         "Name": "Pigment",
+         "Noise": "NoiseW(x,y,z,(1),(2),(0))",
+         "Colors": [
+             {
+                 "Color": {
+                     "Name": "Gold",
+                     "Vrgba": ["V=0/10","R=9/10","G=7/10","B=1/10","A=1"]
+                 }
+             },
+             {
+                 "Color": {
+                     "Name": "Red",
+                     "Vrgba": ["V=3/10","R=1","G=1/10","B=31/100","A=1"]
+                 }
+             },
+             {
+                 "Color": {
+                     "Name": "Green",
+                     "Vrgba": ["V=5/10","R=1/10","G=7/10","B=1/10","A=1"]
+              }
+          }
+     ]
+}</pre>
 
 
 # Script example:
