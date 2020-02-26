@@ -1,7 +1,7 @@
-
 <p align="center">MathMod
 An Interactive Plotting Program</p>
 
+![](https://a.fsdn.com/con/app/proj/mathmod/screenshots/Screen%20Shot%202019-04-24%20at%205.20.26%20AM.png/max/max/1)
 # MathMod
 ## Copyright
 
