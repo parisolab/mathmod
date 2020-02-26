@@ -1152,6 +1152,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 
             QJsonObject Jobjtmp = Jobj;
             // Some keys cleaning..
+            Jobjtmp.remove("ParIso");
             Jobjtmp.remove("Param3D");
             Jobjtmp.remove("Param4D");
             document.setObject(Jobjtmp);
@@ -1195,6 +1196,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 
             QJsonObject Jobjtmp = Jobj;
             // Some keys cleaning..
+            Jobjtmp.remove("ParIso");
             Jobjtmp.remove("Iso3D");
             Jobjtmp.remove("Param4D");
 
