@@ -1,97 +1,119 @@
-<p align="center">MathMod
-An Interactive Plotting Program</p>
+<!DOCTYPE html>
+<html>
+<body>
+<center><font size="20">MathMod: An Interactive Plotting Program</font></center>
 
-![](https://a.fsdn.com/con/app/proj/mathmod/screenshots/Screen%20Shot%202019-04-24%20at%205.20.26%20AM.png/max/max/1)
-<h1>MathMod</h1>
+<img src="https://a.fsdn.com/con/app/proj/mathmod/screenshots/Screen%20Shot%202019-04-24%20at%205.20.26%20AM.png/max/max/1">
+
+<a name="Copyright"></a>
 <h2>Copyright</h2>
 
-    Copyright (C) 2020 by Abderrahman Taha
+<pre>Copyright (C) 2020 by Abderrahman Taha
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the
+Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA</pre>
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the
-    Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-
+<a name="Introduction"></a>
 <h2>Introduction</h2>
 
 MathMod is a portable interactive plotting and graphing program for Windows, Linux, MacOSX and many other platforms.<br>
-
 MathMod allows to plot complex 3D mathematical surfaces, described by implicit or parametric equations, and offers a very large database of model samples that can be generated with it. <br>
-
 Apart from visualizing the actual shape, you are also free to edit the scripts and equations in order to understand how each parameter influences and reshapes the model.<br>
-
 Moreover, it allows to export it's mathematical models to OBJ format and generate animations that showcase how the model morphs as it is given new parameters to work with.<br>
 
+<a name="Assistance"></a>
 <h2>Seeking-assistance</h2>
 
-<head/><body><p align="center"><span style=" font-size:12pt;">Author: Abderrahman Taha (</span><a href="taha_ab@yahoo.fr"><span style=" font-size:12pt; text-decoration: underline; color:#60999e;">taha_ab@yahoo.fr</span></a><span style=" font-size:12pt;">)</span></p><p align="center"><span style=" font-size:12pt;">GitHub: </span><a href="https://github.com/parisolab/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://github.com/parisolab/mathmod</span></a></p><p align="center"><span style=" font-size:10pt;">Home:</span><a href="https://sourceforge.net/projects/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://sourceforge.net/projects/mathmod</span></a></p><p align="center"><span style=" font-size:10pt;">FaceBook:</span><a href="https://www.facebook.com/parisolab/"><span style=" text-decoration: underline; color:#0000ff;">https://www.facebook.com/parisolab/</span></a></p><p align="center"><span style=" font-size:10pt;">Twitter :</span><a href="https://twitter.com/parisolab"><span style=" text-decoration: underline; color:#0000ff;">https://twitter.com/parisolab</span></a></p></body>
+<p align="center"><span style=" font-size:12pt;">Author: Abderrahman Taha (</span><a href="taha_ab@yahoo.fr"><span style=" font-size:12pt; text-decoration: underline; color:#60999e;">taha_ab@yahoo.fr</span></a><span style=" font-size:12pt;">)</span></p>
+<p align="center"><span style=" font-size:12pt;">GitHub: </span><a href="https://github.com/parisolab/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://github.com/parisolab/mathmod</span></a></p>
+<p align="center"><span style=" font-size:10pt;">Home:</span><a href="https://sourceforge.net/projects/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://sourceforge.net/projects/mathmod</span></a></p>
+<p align="center"><span style=" font-size:10pt;">FaceBook:</span><a href="https://www.facebook.com/parisolab/"><span style=" text-decoration: underline; color:#0000ff;">https://www.facebook.com/parisolab/</span></a></p>
+<p align="center"><span style=" font-size:10pt;">Twitter :</span><a href="https://twitter.com/parisolab"><span style=" text-decoration: underline; color:#0000ff;">https://twitter.com/parisolab</span></a></p>
 
 
-
-<h1>Introduction to Parametric/Implicit Equations and Procedural textures</h1>
-<h2>1. Parametric equation</h2>
-<h3>Introduction</h3>
+<a name="Introduction"></a>
+<h2>Introduction to Parametric/Implicit Equations</h2>
+<a name="Parametric_equation"></a>
+<ol>
+<li><h3>Parametric equation</h3>
 In mathematics, a parametric equation defines a group of quantities as functions of one or more independent variables called parameters.<br>
 Parametric equations are commonly used to express the coordinates of the points that make up a geometric object such as a curve or surface, in which case the equations are collectively called a parametric representation or parameterization (alternatively spelled as parametrisation) of the object.<br>
 For example, the equations : x = cos(t) y = sin(t)<br>
 form a parametric representation of the unit circle, where t is the parameter: A point (x, y) is on the unit circle if and only if there is a value of t such that these two equations generate that point.<br>
-In addition to curves and surfaces, parametric equations can describe manifolds and algebraic varieties of higher dimension, with the number of parameters being equal to the dimension of the manifold or variety, and the number of equations being equal to the dimension of the space in which the manifold or variety is considered.<br>
-
-<H3>Parametric surface</H3>
-
-A parametric surface is the image of an open subset of the Euclidean plane (typically R^2) by a continuous function, in a topological space, generally a Euclidean space of dimension at least three. Usually the function is supposed to be continuously differentiable.<br>
-
-<H2> 2. Implicit function</H2>
-<H3> introduction</H3>
+In addition to curves and surfaces, parametric equations can describe manifolds and algebraic varieties of higher dimension, with the number of parameters being equal to the dimension of the manifold or variety, and the number of equations being equal to the dimension of the space in which the manifold or variety is considered.
+</li>
+<a name="Parametric_surface"></a>
+<li>
+<h3>Parametric surface</h3>
+A parametric surface is the image of an open subset of the Euclidean plane (typically R^2) by a continuous function, in a topological space, generally a Euclidean space of dimension at least three. Usually the function is supposed to be continuously differentiable.
+</li>
+<a name="Implicit_function"></a>
+<li>
+<h3> Implicit function</h3>
 In mathematics, an implicit equation is a relation of the form R ( x 1 , … , x n ) = 0 , where R is a function of several variables (often a polynomial).<br>
-
-For example, the implicit equation of the unit circle is x 2 + y 2 − 1 = 0 .<br>
-<H3> Implicit surface</H3>
+For example, the implicit equation of the unit circle is x 2 + y 2 − 1 = 0 .
+</li>
+<a name="Implicit_surface"></a>
+<li><h3> Implicit surface</h3>
 An implicit surface in a Euclidean space (or, more generally, in an affine space) of dimension 3 is the set of the common zeros of a differentiable function of three variables<br>
 
 <code>f ( x , y , z ) = 0 </code>
-
-<H2> 3. Procedural texture</H2>
+</li>
+</ol>
+<a name="Procedural_texture"></a>
+<h2> Procedural texture</h2>
+<ol>
 In computer graphics, a procedural texture is a texture created using a mathematical description (i.e. an algorithm) rather than directly stored data.<br> The advantage of this approach is low storage cost, unlimited texture resolution and easy texture mapping.<br> These kinds of textures are often used to model surface or volumetric representations of natural elements such as wood, marble, granite, metal, stone, and others.<br>
-
-<H3> Solid texturing</H3>
+<a name="Solid_texturing"></a>
+<li>
+<h3> Solid texturing</h3>
 Solid texturing is a process where the texture generating function is evaluated over R^3 at each visible surface point of the model so the resulting material properties (like color, shininess or normal) depends only on their 3D position, not their parametrized 2D surface position like in traditional 2D texture mapping.<br> Consequently, solid textures are unaffected by distortions of the surface parameter space, such as you might see near the poles of a sphere.<br>
 Initially these functions were based on simple combination of procedural noise functions like Simplex noise or Perlin noise.<br>
-
-<H3> Cellular texturing</H3>
+</li>
+<a name="Cellular_texturing"></a>
+<li>
+<h3> Cellular texturing</h3>
 Cellular texturing differs from the majority of other procedural texture generating techniques as it does not depend on noise functions as its basis, although it is often used to complement the technique.<br>
 Cellular textures are based on feature points which are scattered over a three-dimensional space.<br> These points are then used to split up the space into small, randomly tiled regions called cells.<br> These cells often look like "lizard scales", "pebbles", or "flagstones". Even though these regions are discrete, the cellular basis function itself is continuous and can be evaluated anywhere in space. Worley noise is a common type of cellular texture<br>
-
-<h1> MathMod scripts</h1>
-
-<h2> 1. Scripts file format</h2>
+</li>
+</ol>
+<a name="MathMod_scripts"></a>
+<h2> MathMod scripts</h2>
+<a name="Scripts_format"></a>
+<ol>
+<li>
+<h3>Scripts file format</h3>
 MathMod scripts are in JSON file format.
 A JSON file is a file that stores simple data structures and objects in JavaScript Object Notation (JSON) format, which is a standard data interchange format. It is primarily used for transmitting data between a web application and a server.<br>
 
 JSON objects are written in key/value pairs. Keys must be strings, and values must be a valid JSON data type (string, number, object, array, boolean or null). Keys and values are separated by a colon. Each key/value pair is separated by a comma.<br>
-
-<h2> 2. Supported mathematical objects:</h2>
+</li>
+<a name="Supported_objects"></a>
+<li>
+<h3>Supported mathematical objects:</h3>
 There are four major type of mathematical objects supported by MathMod:<br>
 
 1.  <b>"Iso3D"</b>   : Isosurfaces<br>
 2.  <b>"Param3D"</b>  : 3D parametric surfaces<br>
 3.  <b>"Param4D"</b>   : 4D parametric surfaces<br>
 4.  <b>"ParIso"</b>    : Isosurfaces + 3D parametric surfaces ("Iso3D" + "Param3D")<br>
-
-<h2> 3. Mandatory and optional Keys:</h2>
-<h3>1. Mandatory Keys for "Iso3D", "Param3D" and "Param4D":</h3>
-
+</li>
+<a name="Mandatory_Keys"></a>
+<li>
+<h3>Mandatory Keys:</h3>
+For all objects types:
 <p><table border=2>
 <tr>
 <td><code>"Name"</code></td>
@@ -105,7 +127,7 @@ There are four major type of mathematical objects supported by MathMod:<br>
 </tr>
 </table>
 
-<h3>2. Mandatory Keys for "Iso3D":</h3>
+For <b>"Iso3D"</b>:
 
 <p><table border=2>
 <tr>
@@ -119,7 +141,7 @@ There are four major type of mathematical objects supported by MathMod:<br>
 </tr>
 </table>
 
-<h3>3. Mandatory Keys for "Param3D" and "Param4D":</h3>
+For <b>"Param3D"</b> and <b>"Param4D"</b>:
 
 <p><table border=2>
 <tr>
@@ -132,9 +154,11 @@ There are four major type of mathematical objects supported by MathMod:<br>
 <td>Domain limits for u and v parameters.</td>
 </tr>
 </table>
+</li>
 
-<h3>4. Optional Keys:</h3>
-
+<a name="Optional_Keys"></a>
+<li>
+<h3>Optional Keys:</h3>
 <p><table border=2>
 <tr>
 <td><code>"Funct"</code></td>
@@ -143,7 +167,6 @@ User defined functions. Example:
 <br> <code>"Funct": ["Si=sinx", "Co=cos(y), "SC=Si(x,y,z,t)*Co(x,y,z,t)"]</code>
 </td>
 </tr>
-
 <tr>
 <td><code>"Const"</code></td>
 <td>
@@ -151,7 +174,6 @@ User defined Constantes. Example:
 <br><code>"Const": ["N=5", "P=pi/2", "E=N*P"]</code>
 </td>
 </tr>
-
 <tr>
 <td><code>"Cnd"</code></td>
 <td>
@@ -172,7 +194,6 @@ Example for a parametric surface with one component:
 <br> See the "Models_Intersection" script
 </td>
 </tr>
-
 <tr>
 <td><code>"Sliders"</code></td>
 <td>
@@ -193,7 +214,6 @@ Sliders are useful for interactive modification of one or more parameter used in
 <br> Function used in the "The_Dome_v1" script
 </td>
 </tr>
-
 <tr>
 <td><code>"Description"</code></td>
 <td>
@@ -201,16 +221,17 @@ User defined functions. Example:
 <br><code>"Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]</code>
 </td>
 </tr>
-
 </table>
-
+</li>
 <em>Any added new key will be simply ignored by MathMod unless it violates some syntax format rules for Objects in JSON</em>
 
-<h2>5. Texture and Pigment:</h2>
-
+<a name="Texture_Pigment"></a>
+<li>
+<h3>Texture and Pigment:</h3>
+<ol>
+<a name="Texture"></a>
+<li>
 <b>"Texture"</b>: The texture generating function is evaluated over R^3 at each visible surface point of the model.Example:<br>
-
-
 <pre>"Texture": {
    "Name": "Lines",
    "Noise": "NoiseW(x,y,z,(1),(2),(0))",
@@ -220,13 +241,12 @@ User defined functions. Example:
      "B=sin(y*pi)*cos(x*pi)",
      "T=1"
 }</pre>
-
-* **"Pigment"**: Pigment definition.
-Most of the color patterns do not use abrupt color changes of just two or three colors like those in the brick, checker or hexagon patterns. They instead use smooth transitions of many colors that gradually change from one point to the next. The colors are defined in a pigment modifier that describes how the pattern blends from one color to the next.
-Each of the various pattern types available is in fact a mathematical function that takes any x, y, z location and turns it into a number. That number is used to specify what mix of colors to use from the color map: The pattern function gradient is evaluated and compared to the value of the first element in the "Vrgba" list (ie: "V=..."): if Gradient(x,y,z) is less than V[i] , color(x,y,z) = (R[i], G[i], B[i], A[i]) where "i" is the index of the "Color" object.
-In the example bellow, the gradient function is:  Gradient(x,y,z)=3*atan((x*x*y*z)*pi)*cos(y*y*z*pi);
-and V={0/10, 3/10, 5/10}
-
+</li>
+<a name="Pigment"></a>
+<li>
+<b>"Pigment"</b>: Pigment definition.<br>
+Most of the color patterns do not use abrupt color changes of just two or three colors like those in the brick, checker or hexagon patterns. They instead use smooth transitions of many colors that gradually change from one point to the next. The colors are defined in a pigment modifier that describes how the pattern blends from one color to the next.<br>
+Each of the various pattern types available is in fact a mathematical function that takes any x, y, z location and turns it into a number. That number is used to specify what mix of colors to use from the color map: The pattern function gradient is evaluated and compared to the value of the first element in the "Vrgba" list (ie: "V=..."): if Gradient(x,y,z) is less than V[i] , color(x,y,z) = (R[i], G[i], B[i], A[i]) where "i" is the index of the "Color" object. Example : <br>
 <pre>"Pigment": {
          "Gradient": "3*atan((x*x*y*z)*pi)*cos(y*y*z*pi)",
          "Name": "Pigment",
@@ -252,47 +272,51 @@ and V={0/10, 3/10, 5/10}
           }
      ]
 }</pre>
-
-
-# Script example:
- * A Pariso Object made out of two Isosurfaces and one parametric surface:
->     {
->         "Name": "Pariso_01",
->         "ParIso": [
->     {
->         "Iso3D": {
->             "Description": ["Schwarz-Plan Intersection by Abderrahman Taha 20/02/2020"],
->             "Cnd": ["(x-y-(3/2)*z<0)",""],
->             "Const": ["A=4","B=6"],
->             "Component": ["Schwarz","Plan"],
->             "Grid": ["30","20"],
->             "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
->             "Name": ["Models_Intersection"],
->             "Xmax": ["A+4*sin(t*pi)","B"],
->             "Xmin": ["-A+4*sin(t*pi)","-B"],
->             "Ymax": ["A","B"],
->             "Ymin": ["-A","-B"],
->             "Zmax": ["A","B"],
->             "Zmin": ["-A","-B"]
->         }
->     }
->     ,
->     {
->       "Param3D": {
->         "Name": ["Sinus"],
->         "Component": ["Sinus"],
->         "Fx": ["u"],
->         "Fy": ["v"],
->         "Fz": ["-sin(pi*((u)^2+(v)^2))/3"],
->         "Umin": ["-1"],
->         "Umax": ["1"],
->         "Vmin": ["-1"],
->         "Vmax": ["1"]
->       }
->     }
->     ]
->     }
-
+</li>
+</ol>
+<a name="Script_example"></a>
+<li>
+<h2> Script example:</h2>
+A Pariso Object made out of two Isosurfaces and one parametric surface:</br>
+<pre>
+{
+   "Name": "Pariso_01",
+   "ParIso": [
+      {
+        "Iso3D": {
+             "Description": ["Schwarz-Plan Intersection by Abderrahman Taha 20/02/2020"],
+             "Cnd": ["(x-y-(3/2)*z<0)",""],
+             "Const": ["A=4","B=6"],
+             "Component": ["Schwarz","Plan"],
+             "Grid": ["30","20"],
+             "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
+             "Name": ["Models_Intersection"],
+             "Xmax": ["A+4*sin(t*pi)","B"],
+             "Xmin": ["-A+4*sin(t*pi)","-B"],
+             "Ymax": ["A","B"],
+             "Ymin": ["-A","-B"],
+             "Zmax": ["A","B"],
+             "Zmin": ["-A","-B"]
+         }
+     },
+     {
+       "Param3D": {
+         "Name": ["Sinus"],
+         "Component": ["Sinus"],
+         "Fx": ["u"],
+         "Fy": ["v"],
+         "Fz": ["-sin(pi*((u)^2+(v)^2))/3"],
+         "Umin": ["-1"],
+         "Umax": ["1"],
+         "Vmin": ["-1"],
+         "Vmax": ["1"]
+       }
+     }
+  ]
+}
+</pre>
+</li>
+</ol>
 
 <center><h1>MathMod internal functions: </h1></center>
 <p><table border=2>
@@ -637,18 +661,15 @@ or functions using the following operators in this order of precedence:
 </tr>
 </table>
 
+Ref: <ol>
+<li><a href="https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing">Solid_texturing</a></li>
+<li><a href="https://www.povray.org/documentation/view/3.6.1/335/">Povray documentation</a></li>
+<li><a href="https://www.povray.org/documentation/view/3.6.1/448/">Povray Internal functions</a></li>
+<li><a href="http://www.econym.demon.co.uk/isotut/substitute.htm">Isosurfaces tutorial</a></li>
+<li><a href="http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm">Povray scripts</a></li>
+<li><a href="http://warp.povusers.org/FunctionParser/fparser.html">Warp's FunctionParser</a></li>
+</ol>
 
-Ref:
-1. https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing
-2. https://www.povray.org/documentation/view/3.6.1/335/
-3. https://www.povray.org/documentation/view/3.6.1/448/
-4. http://www.econym.demon.co.uk/isotut/substitute.htm
-5. http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm
-6. http://warp.povusers.org/FunctionParser/fparser.html
-
-
-
-<body>
 <center>
 <table>
 <td width="690">
@@ -665,4 +686,6 @@ Ref:
 </td>
 </table>
 </center>
+
 </body>
+</html>
