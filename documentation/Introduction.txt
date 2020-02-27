@@ -2,8 +2,39 @@
 <html>
 <body>
 <center><font size="20">MathMod: An Interactive Plotting Program</font></center>
-
 <img src="https://a.fsdn.com/con/app/proj/mathmod/screenshots/Screen%20Shot%202019-04-24%20at%205.20.26%20AM.png/max/max/1">
+
+<h2>Table of contents:</h2>
+<ul>
+ <li><a href="#Copyright">Copyright</a>
+ <li><a href="#Introduction">Introduction</a>
+ <li><a href="#Assistance">Seeking-assistance</a>
+ <li><a href="#IntroductionPariso">Introduction to Parametric/Implicit Equations</a>
+ <ol>
+ <li><a href="#Parametric_equation">Parametric equation</a>
+ <li><a href="#Parametric_surface">Parametric surface</a>
+ <li><a href="#Implicit_function">Implicit function</a>
+ <li><a href="#Implicit_surface">Implicit surface</a>
+ </ol>
+ <li><a href="#Procedural_texture">Procedural texture</a>
+ <ol>
+ <li><a href="#Solid_texturing">Solid texturing</a>
+ <li><a href="#Cellular_texturing">Cellular texturing</a>
+ </ol>
+ <li><a href="#MathMod_scripts">MathMod scripts</a>
+ <ol>
+ <li><a href="#Scripts_format">Scripts file format</a>
+ <li><a href="#Supported_object">Supported mathematical objects</a>
+ <li><a href="#Mandatory_Keys">Mandatory Keys</a>
+ <li><a href="#Optional_Keys">Optional Keys</a>
+ <li><a href="#Texture_Pigment">Texture and Pigment</a>
+ <ol>
+ <li><a href="#Texture">Texture object</a>
+ <li><a href="#Pigment">Pigment object</a>
+ </ol>
+ </ol>
+</ul>
+
 
 <a name="Copyright"></a>
 <h2>Copyright</h2>
@@ -43,7 +74,7 @@ Moreover, it allows to export it's mathematical models to OBJ format and generat
 <p align="center"><span style=" font-size:10pt;">Twitter :</span><a href="https://twitter.com/parisolab"><span style=" text-decoration: underline; color:#0000ff;">https://twitter.com/parisolab</span></a></p>
 
 
-<a name="Introduction"></a>
+<a name="IntroductionPariso"></a>
 <h2>Introduction to Parametric/Implicit Equations</h2>
 <a name="Parametric_equation"></a>
 <ol>
