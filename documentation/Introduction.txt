@@ -24,7 +24,7 @@
  <li><a href="#MathMod_scripts">MathMod scripts</a>
  <ol>
  <li><a href="#Scripts_format">Scripts file format</a>
- <li><a href="#Supported_object">Supported mathematical objects</a>
+ <li><a href="#Supported_objects">Supported mathematical objects</a>
  <li><a href="#Mandatory_Keys">Mandatory Keys</a>
  <li><a href="#Optional_Keys">Optional Keys</a>
  <li><a href="#Texture_Pigment">Texture and Pigment</a>
@@ -692,6 +692,44 @@ or functions using the following operators in this order of precedence:
 </tr>
 </table>
 
+<h1> MathMod's GUI Reference</h1>
+<h2> Configuring MathMod</h2>
+<ol>
+  <li><h3>General Configuration</h3></li>
+  <li><h3>Grid Configuration</h3></li>
+  <li><h3>Colors Configuration</h3></li>
+  <li><h3>Theme Configuration</h3></li>
+</ol>
+
+<h2>Menu Items</h2>
+<ol>
+  <li><h3>The Project Menu</h3></li>
+  <li><h3>The Options Menu</h3></li>
+  <li><h3>The Export Menu</h3></li>
+  <li><h3>The help Menu</h3></li>
+</ol>
+<h2>Tabbed pages</h2>
+<ol>
+ <li><h3>The "Model Details" page</h3></li>
+ <li><h3>The "Script Edit" page</h3></li>
+ <li><h3>The "View Controls" page</h3></li>
+ <li><h3>The "Appearance" page</h3></li>
+ <li><h3>The "Sliders" page</h3></li>
+</ol>
+<h2>Developer's Guide to MathMod</h2>
+<h2>Credits and License</h2>
+<h2>Installation</h2>
+<h2>Download</h2>
+Official websites:<br>
+<ol>
+ <li><a href=https://github.com/parisolab/mathmod/releases>GitHub</a></li>
+ <li><a href=https://sourceforge.net/projects/mathmod/>SourceForge</a></li>
+</ol>
+
+
+
+
+
 Ref: <ol>
 <li><a href="https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing">Solid_texturing</a></li>
 <li><a href="https://www.povray.org/documentation/view/3.6.1/335/">Povray documentation</a></li>
@@ -700,23 +738,6 @@ Ref: <ol>
 <li><a href="http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm">Povray scripts</a></li>
 <li><a href="http://warp.povusers.org/FunctionParser/fparser.html">Warp's FunctionParser</a></li>
 </ol>
-
-<center>
-<table>
-<td width="690">
-<center><h1>MathMod Features</h1></center>
-<ol>
-  <li> </li>
-  <li> </li>
-</ol>
-<center><h1>MathMod Usage </h1></center>
-<center><h1>MathMod Overview </h1></center>
-<center><h1>Animation and Morph : </h1></center>
-<center><h1>Forum : </h1></center>
-<center><h1>Download : </h1></center>
-</td>
-</table>
-</center>
 
 </body>
 </html>
