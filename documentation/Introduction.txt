@@ -32,7 +32,47 @@
  <li><a href="#Texture">Texture object</a>
  <li><a href="#Pigment">Pigment object</a>
  </ol>
- </ol>
+</ol>
+
+
+
+
+<li><a href="#GUI">MathMod's GUI Reference</a>
+<ol>
+
+<li><a href="#Configuration">Configuring MathMod</a>
+<ol>
+  <li><a href="#General">General Configuration</a>
+  <li><a href="#Grid">Grid Configuration</a>
+  <li><a href="#Colors">Colors Configuration</a>
+  <li><a href="#Theme">Theme Configuration</a>
+</ol>
+
+<li><a href="#Menu">Menu Items</a>
+<ol>
+  <li><a href="#ProjectMenu">The Project Menu</a>
+  <li><a href="#OptionsMenu">The Options Menu</a>
+  <li><a href="#ExportMenu">The Export Menu</a>
+  <li><a href="#HelpMenu">The Help Menu</a>
+</ol>
+
+<li><a href="#TabbedPages">Tabbed pages</a>
+<ol>
+  <li><a href="#ModelDetails">The "Model Details" page</a>
+  <li><a href="#ScriptEdit">The "Script Edit" page</a>
+  <li><a href="#ViewControls">The "View Controls" page</a>
+  <li><a href="#Appearance">The "Appearance" page</a>
+  <li><a href="#Sliders">The "Sliders" page</a>
+</ol>
+
+
+<li><a href="#Developer">Developer's Guide to MathMod</a>
+
+<li><a href="#Installation">Installation</a>
+
+<li><a href="#Download">Download</a>
+</ol>
+
 </ul>
 
 
@@ -692,33 +732,57 @@ or functions using the following operators in this order of precedence:
 </tr>
 </table>
 
+<a name="GUI"></a>
 <h1> MathMod's GUI Reference</h1>
+
+<a name="Configuration"></a>
 <h2> Configuring MathMod</h2>
 <ol>
+  <a name="General"></a>
   <li><h3>General Configuration</h3></li>
+  <a name="Grid"></a>
   <li><h3>Grid Configuration</h3></li>
+  <a name="Colors"></a>
   <li><h3>Colors Configuration</h3></li>
+  <a name="Theme"></a>
   <li><h3>Theme Configuration</h3></li>
 </ol>
 
+<a name="Menu"></a>
 <h2>Menu Items</h2>
 <ol>
+  <a name="ProjectMenu"></a>
   <li><h3>The Project Menu</h3></li>
+  <a name="OptionsMenu"></a>
   <li><h3>The Options Menu</h3></li>
+  <a name="ExportMenu"></a>
   <li><h3>The Export Menu</h3></li>
-  <li><h3>The help Menu</h3></li>
+  <a name="HelpMenu"></a>
+  <li><h3>The Help Menu</h3></li>
 </ol>
+
+  <a name="TabbedPages"></a>
 <h2>Tabbed pages</h2>
 <ol>
- <li><h3>The "Model Details" page</h3></li>
- <li><h3>The "Script Edit" page</h3></li>
- <li><h3>The "View Controls" page</h3></li>
- <li><h3>The "Appearance" page</h3></li>
- <li><h3>The "Sliders" page</h3></li>
+  <a name="ModelDetails"></a>
+  <li><h3>The "Model Details" page</h3></li>
+  <a name="ScriptEdit"></a>
+  <li><h3>The "Script Edit" page</h3></li>
+  <a name="ViewControls"></a>
+  <li><h3>The "View Controls" page</h3></li>
+  <a name="Appearance"></a>
+  <li><h3>The "Appearance" page</h3></li>
+  <a name="Sliders"></a>
+  <li><h3>The "Sliders" page</h3></li>
 </ol>
+
+<a name="Developer"></a>
 <h2>Developer's Guide to MathMod</h2>
-<h2>Credits and License</h2>
+
+<a name="Installation"></a>
 <h2>Installation</h2>
+
+<a name="Download"></a>
 <h2>Download</h2>
 Official websites:<br>
 <ol>
