@@ -771,15 +771,7 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
   <td><code>"StartOptions": {
         "Model": "CloseIso_1"
     }</code></td>
-  <td></td>
- </tr>
- <tr>
-  <td><code>"CalculFactorConfig": {
-        "FactX": 4,
-        "FactY": 4,
-        "FactZ": 4
-    }</code></td>
-  <td></td>
+  <td>This where you can set the first script to be rendered when MathMod starts</td>
  </tr>
  <tr>
   <td><code>"Localization": {
@@ -823,11 +815,19 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
   <td></td>
  </tr>
  <tr>
+  <td><code>"CalculFactorConfig": {
+        "FactX": 4,
+        "FactY": 4,
+        "FactZ": 4
+    }</code></td>
+  <td>Only for isosurfaces: sets a cube of (4*4*4) points to be calculated "at once".</td>
+ </tr>
+ <tr>
   <td><code>"Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
         "UsedStyle": "Fusion"
     }</code></td>
-  <td></td>
+  <td>By default, MathMod uses the dark mode "Fusion"</td>
  </tr>
  <tr>
   <td><code>"Themes": {
@@ -848,7 +848,7 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
             "HighlightedText":[0, 0, 0]
         }
     }</code></td>
-  <td></td>
+  <td>By default, MathMod uses the dark mode "Fusion". To test other themes, use the "look And feel" page in the "Configurations Options" window. <a href="images/ToolBar/Preferences.png">image</a> </td>
  </tr>
 </table>
 
@@ -893,6 +893,17 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
 
 <a name="Installation"></a>
 <h2>Installation</h2>
+
+
+
+Ref: <ol>
+<li><a href="https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing">Solid_texturing</a></li>
+<li><a href="https://www.povray.org/documentation/view/3.6.1/335/">Povray documentation</a></li>
+<li><a href="https://www.povray.org/documentation/view/3.6.1/448/">Povray Internal functions</a></li>
+<li><a href="http://www.econym.demon.co.uk/isotut/substitute.htm">Isosurfaces tutorial</a></li>
+<li><a href="http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm">Povray scripts</a></li>
+<li><a href="http://warp.povusers.org/FunctionParser/fparser.html">Warp's FunctionParser</a></li>
+</ol>
 
 </body>
 </html>
