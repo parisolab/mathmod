@@ -60,6 +60,7 @@
  <ol>
   <li><a href="#Models_Intersection">Models_Intersection</a>
   <li><a href="#The_Dome_v1">The_Dome_v1</a>
+  <li><a href="#Pariso_02">Pariso_02</a>
  </ol>
 </ol>
 </ul>
@@ -104,7 +105,7 @@ This release contains :
  <li>More efficient use of the system resources (memory & cpu).</li>
  <li>Added 10 new scripts: "NKlein_wire_02", "Triaxial weave", "Icosahedral_crystal", "CSG", "Moebius_Strip", "Wonder_Tree", "Happy_New_Year", "Trefoil_knot", "patriceJ",  "Clebsch_01".</li>
  <li>Added documentation (version 1.0)</li>
- <li>For a complete list of changes made during the course of development, please visit: https://github.com/parisolab/mathmod/milestone/1</li>
+ <li>For a complete list of changes made during the course of development, please visit: <a href="https://github.com/parisolab/mathmod/milestone/1">https://github.com/parisolab/mathmod/milestone/1</a></li>
 </ol>
 Release Notes date: 02-March-2019
 
@@ -211,8 +212,7 @@ For all objects types:
 </tr>
 </table>
 
-For <b>"Iso3D"</b>:
-
+Mandatory Keys For <b>"Iso3D"</b>:
 <p><table border=2>
 <tr>
 <td><code>"Fxyz"</code></td>
@@ -225,12 +225,11 @@ For <b>"Iso3D"</b>:
 </tr>
 </table>
 
-For <b>"Param3D"</b> and <b>"Param4D"</b>:
-
+Mandatory Keys For <b>"Param3D"</b> and <b>"Param4D"</b>:
 <p><table border=2>
 <tr>
 <td><code>"Fx","Fy","Fz"</code></td>
-<td>Parametric equations in the 3D space. **"Fw"** is required as the fourth dimension ("Param4D")</td>
+<td>Parametric equations in the 3D space. <code>"Fw"</code> is required as the fourth dimension ("Param4D")</td>
 </tr>
 
 <tr>
@@ -360,45 +359,13 @@ Each of the various pattern types available is in fact a mathematical function t
 </ol>
 <a name="Script_example"></a>
 <li>
-<h2> Script example:</h2>
-A Pariso Object made out of two Isosurfaces and one parametric surface:</br>
-<pre>
-{
-   "Name": "Pariso_01",
-   "ParIso": [
-      {
-        "Iso3D": {
-             "Description": ["Schwarz-Plan Intersection by Abderrahman Taha 20/02/2020"],
-             "Cnd": ["(x-y-(3/2)*z<0)",""],
-             "Const": ["A=4","B=6"],
-             "Component": ["Schwarz","Plan"],
-             "Grid": ["30","20"],
-             "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
-             "Name": ["Models_Intersection"],
-             "Xmax": ["A+4*sin(t*pi)","B"],
-             "Xmin": ["-A+4*sin(t*pi)","-B"],
-             "Ymax": ["A","B"],
-             "Ymin": ["-A","-B"],
-             "Zmax": ["A","B"],
-             "Zmin": ["-A","-B"]
-         }
-     },
-     {
-       "Param3D": {
-         "Name": ["Sinus"],
-         "Component": ["Sinus"],
-         "Fx": ["u"],
-         "Fy": ["v"],
-         "Fz": ["-sin(pi*((u)^2+(v)^2))/3"],
-         "Umin": ["-1"],
-         "Umax": ["1"],
-         "Vmin": ["-1"],
-         "Vmax": ["1"]
-       }
-     }
-  ]
-}
-</pre>
+<h2> Scripts examples:</h2>
+<ol>
+ <li><a href="#Models_Intersection">Models_Intersection</a>
+ <li><a href="#The_Dome_v1">The_Dome_v1</a>
+ <li><a href="#Pariso_02">Pariso_02</a>
+</ol>
+
 </li>
 </ol>
 
@@ -529,9 +496,36 @@ Function use in "fhelix" and "Tori of helices" scripts
 </td>
  </tr>
 
+
  <tr>
-  <td><code>p_skeletal_int</code></td>
-  <td>p_skeletal_int</td>
+  <td><code>cmpId</code></td>
+  <td>Return the compound ID. Available only inside the "Texture" object. Example:
+<pre>"Texture": {
+        "Colors": [
+            "R=if(cmpId = (130), (6/10), (7/10))",
+            "G=if((cmpId = 130), (1/10), (5/10))",
+            "B=if((cmpId = 130), (3/10), (0))",
+            "T=if((cmpId = 130), (7/10), (1))"
+        ],
+        "Name": "Gold",
+        "Noise": ""
+    }</pre>
+Used in the "BlackHole" script.
+</td>
+ </tr>
+
+ <tr>
+  <td><code>CmpId(0)</code></td>
+  <td>Return the compound ID. Available only inside the "Funct" objects array. Example:
+ <pre>
+ "Funct": [
+            "Yx=(k1+k0*cos(u))*cos(v)*CmpId(0)",
+            "Yy=(k1+k0*cos(u))*sin(v)",
+            "Yz=k0*sin(u)",
+            ...
+          ]
+ </pre>
+Used in the "Chained_Sinusoid" script. </td>
  </tr>
 
 </table>
@@ -958,10 +952,57 @@ MathMod uses an integrated configuration file but it can generate a copy for you
 }
 </pre>
 <a href="images/Examples/The_Dome_v1.png">See attached image</a>
+
+<a name="Pariso_02"></a>
+<li><pre>
+{
+    "Name": "Pariso_02",
+    "ParIso": [
+        {
+            "Param3D": {
+                "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"],
+                "Name": ["Blobby_Torus"],
+                "Component": ["BlobbyTorus"],
+                "Funct": ["G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)","G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)","G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))"],
+                "Fx": ["-G1(u,v,t)"],
+                "Fy": ["G2(u,v,t)"],
+                "Fz": ["G3(u,v,t)-10"],
+                "Grid": ["100","200"],
+                "Umax": ["2*pi"],
+                "Umin": ["0"],
+                "Vmax": ["2*pi"],
+                "Vmin": ["0"]
+            },
+            "Texture": {
+                "Colors": ["R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),1) ","G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)) ","B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)) ","T=1"],
+                "Name": "Candy",
+                "Noise": "1"
+            }
+        },
+        {
+            "Iso3D": {
+                "Description": ["Models Intersection by Abderrahman Taha 04/11/2019"],
+                "Name": ["Models_Intersection"],
+                "Component": ["Schwarz","Plan"],
+                "Cnd": ["(x-y-(3/2)*z<0)",""],
+                "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
+                "Xmax": ["4+4*sin(t*pi)","6"],
+                "Xmin": ["-4+4*sin(t*pi)","-6"],
+                "Ymax": ["4","6"],
+                "Ymin": ["-4","-6"],
+                "Zmax": ["4","6"],
+                "Zmin": ["-4","-6"]
+            }
+        }
+    ]
+}
+</pre>
+<a href="images/Examples/Pariso_02.png">See attached image</a>
 </ol>
 
 
-Ref: <ol>
+References:
+<ol>
 <li><a href="https://en.wikipedia.org/wiki/Procedural_texture#Solid_texturing">Solid_texturing</a></li>
 <li><a href="https://www.povray.org/documentation/view/3.6.1/335/">Povray documentation</a></li>
 <li><a href="https://www.povray.org/documentation/view/3.6.1/448/">Povray Internal functions</a></li>
