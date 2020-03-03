@@ -56,6 +56,11 @@
 
 <li><a href="#Developer">Developer's Guide to MathMod</a>
 <li><a href="#Installation">Installation</a>
+<li><a href="#Examples">Scripts examples</a>
+ <ol>
+  <li><a href="#Models_Intersection">Models_Intersection</a>
+  <li><a href="#The_Dome_v1">The_Dome_v1</a>
+ </ol>
 </ol>
 </ul>
 
@@ -296,7 +301,7 @@ Sliders are useful for interactive modification of one or more parameter used in
 <tr>
 <td><code>"Description"</code></td>
 <td>
-User defined functions. Example:
+You can give it another name (ie: "Infos" , ...) or delete it from the script (relevant for the user not the program). Example:
 <br><code>"Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"]</code>
 </td>
 </tr>
@@ -851,7 +856,6 @@ MathMod uses an integrated configuration file but it can generate a copy for you
  </tr>
 </table>
 
-
 <a name="Menu"></a>
 <h2>Menu Items</h2>
 <ol>
@@ -886,6 +890,75 @@ MathMod uses an integrated configuration file but it can generate a copy for you
 <a name="Installation"></a>
 <h2>Installation</h2>
 
+<a name="Examples"></a>
+<h2>Scripts Examples</h2>
+<ol>
+
+<a name="Models_Intersection"></a>
+<li><pre>
+{
+    "Iso3D": {
+        "Description": ["Models Intersection by Abderrahman Taha 20/02/2020"],
+        "Name": ["Models_Intersection"],
+        "Component": ["Schwarz","Plan"],
+        "Cnd": ["(x-y-(3/2)*z<0)",""],
+        "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
+        "Grid": ["30","20"],
+        "Xmax": ["4+4*sin(t*pi)","6"],
+        "Xmin": ["-4+4*sin(t*pi)","-6"],
+        "Ymax": ["4","6"],
+        "Ymin": ["-4","-6"],
+        "Zmax": ["4","6"],
+        "Zmin": ["-4","-6"]
+    }
+}
+</pre>
+<a href="images/examples/Models_Intersection.png">See attached image</a>
+
+<a name="The_Dome_v1"></a>
+<li><pre>
+{
+    "Iso3D": {
+        "Description": ["The Dome by Abderrahman Taha 10/08/2018"],
+        "Name": ["The_Dome_v1"],
+        "Component": ["The_Dome_01"],
+        "Const": ["c=1/1000","Th=6/10","N=10","R=16"],
+        "Funct": [
+        "Scherk=sinh(x)*sinh(y)-4*sin(z)",
+        "Scherk2=Scherk(N*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-R),N*atan2(z,y),t)",
+        "IsoExterior=Scherk2(x,y,z,t)",
+        "DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)",
+        "DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)",
+        "DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
+        "Rapp=x/sqrt(x*x+y*y+z*z)",
+        "Iso3=(IsoExterior(x- Th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-Th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z-Th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t), t))",
+        "Iso2=(IsoExterior(x+ Th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+Th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z+Th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t), t))",
+        "TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t))"
+        ],
+        "Fxyz": ["if((sqrt(x*x+y*y+z*z)-24)<(0),TickIsoExterior(z,y,x,t),(1))"],
+        "Xmax": ["27"],
+        "Xmin": ["-27"],
+        "Ymax": ["27"],
+        "Ymin": ["-27"],
+        "Zmax": ["18"],
+        "Zmin": ["-18"]
+    },
+    "Sliders": {
+        "Max": ["50","50"],
+        "Min": ["0","0"],
+        "Name": ["N","R"],
+        "Position": ["10","16"],
+        "Step": ["1","1"]
+    },
+    "Texture": {
+        "Colors": ["R=(7/10)*(cos(x)*cos(y)*cos(z))^(1/10)","G=(7/10)","B=(7/10)","T=1"],
+        "Name": "Lines",
+        "Noise": ""
+    }
+}
+</pre>
+<a href="images/Examples/The_Dome_v1.png">See attached image</a>
+</ol>
 
 
 Ref: <ol>
@@ -896,6 +969,5 @@ Ref: <ol>
 <li><a href="http://www.f-lohmueller.de/pov_tut/all_shapes/shapes940e.htm">Povray scripts</a></li>
 <li><a href="http://warp.povusers.org/FunctionParser/fparser.html">Warp's FunctionParser</a></li>
 </ol>
-
 </body>
 </html>
