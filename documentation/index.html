@@ -37,13 +37,7 @@
 </ol>
 <li><a href="#GUI">MathMod's GUI Reference</a>
 <ol>
-<li><a href="#Configuration">Configuring MathMod</a>
-<ol>
-  <li><a href="#General">General Configuration</a>
-  <li><a href="#Grid">Grid Configuration</a>
-  <li><a href="#Colors">Colors Configuration</a>
-  <li><a href="#Theme">Theme Configuration</a>
-</ol>
+<li><a href="#Configuration">Configuration file</a>
 <li><a href="#Menu">Menu Items</a>
 <ol>
   <li><a href="#ProjectMenu">The Project Menu</a>
@@ -750,13 +744,17 @@ or functions using the following operators in this order of precedence:
 <h1> MathMod's GUI Reference</h1>
 
 <a name="Configuration"></a>
-<h2> Configuring MathMod</h2>
-<ol>
-  <a name="General"></a>
-  <li><h3>General Configuration</h3></li>
-<p>"mathmodconfig.js" file is the main source for MathMod's parameters settings.<br>
-Note: Parameters values altered from the GUI won't be available on other MathMod sessions and aren't permannent unless saved in "mathmodconfig.js" file.
+<h2>Configuration file</h2>
 
+<p>"mathmodconfig.js" file is the main source for MathMod's parameters settings.<br>
+MathMod uses an integrated configuration file but it can generate a copy for you when needed. Here is how:
+<ol>
+<li>Create a new folder (exemple: "myfolder")</li>
+<li>Open a command line terminal and execute : <code>mathmod  MyfolderPath/myfolder</code> (replace "MyfolderPath" by the complete path to "myfolder")</li>
+<li>MathMod will generate three files in "myfolder": "mathmodconfig.js", "mathmodcollection.js" and "advancedmodels.js"</li>
+<li>Close MathMod and add your modifications to "mathmodconfig.js". The next time you execute
+<code>mathmod  MyfolderPath/myfolder</code> , MathMod will use "mathmodcollection.js" in myfolder as it's configuration file and "mathmodcollection.js" as it's integrated scripts collection.</li><br>
+</ol>
 <p><table border=2>
  <tr>
   <td><code>"Parameters": {
@@ -765,7 +763,8 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
         "ParMaxGrid": 5000,
         "InitParGrid": 50
     }</code></td>
-  <td><a href="images/Modeldetails/isosurface/iso3.png">image</a></td>
+  <td>Maximum and current grid value setting for iso/parametric surfaces.
+"IsoMaxGrid" and "ParMaxGrid" can be set from the GUI (See attached <a href="images/Modeldetails/isosurface/iso3.png">image</a>)</td>
  </tr>
  <tr>
   <td><code>"StartOptions": {
@@ -785,7 +784,7 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_SHININESS": 110
     }</code></td>
-  <td><a href="images/Appearance/opengl.png">image</a></td>
+  <td>OpenGL setting for MathMod's 3D viewer window. OpenGL settings can also be modified from the GUI (see attached <a href="images/Appearance/opengl.png">image</a>)</td>
  </tr>
  <tr>
   <td><code>"ThreadsConfig": {
@@ -852,13 +851,6 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
  </tr>
 </table>
 
-  <a name="Grid"></a>
-  <li><h3>Grid Configuration</h3></li>
-  <a name="Colors"></a>
-  <li><h3>Colors Configuration</h3></li>
-  <a name="Theme"></a>
-  <li><h3>Theme Configuration</h3></li>
-</ol>
 
 <a name="Menu"></a>
 <h2>Menu Items</h2>
@@ -874,7 +866,7 @@ Note: Parameters values altered from the GUI won't be available on other MathMod
 </ol>
 
   <a name="TabbedPages"></a>
-<h2>Tabbed pages</h2>
+  <h2>Tabbed pages</h2>
 <ol>
   <a name="ModelDetails"></a>
   <li><h3>The "Model Details" page</h3></li>
