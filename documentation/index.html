@@ -46,8 +46,9 @@
 <ol>
 <li><a href="#Morph">Morph effect</a>
 <li><a href="#Rotation">Rotation</a>
-<li><a href="#movie">Making animated GIF</a>
+<li><a href="#movie">Making animated GIF or videos</a>
 </ol>
+
 <li><a href="#GUI">MathMod's GUI Reference</a>
 <ol>
 <li><a href="#Configuration">Configuration file</a>
@@ -756,6 +757,38 @@ or functions using the following operators in this order of precedence:
     and 2.9, 2.5 and 2.1 are rounded to 2.0.</td>
 </tr>
 </table>
+
+<a name="AnimMorph"></a>
+<h1>Animations and Morph transitions</h1>
+<ol>
+<a name="Morph"></a>
+<li><h2>Morph effect</h2>
+<p>MathMod is home to many interesting animations and transitions.
+The morph effect take place with the use of the "t" parameter and the morph effect activation (and deactivation) with "CtRl+p".
+The Morph transition lets you create a seamless object animation from one "t" time parametr value to another.
+Example: <pre>
+{
+    "Param3D": {
+        "Description": ["Sinus Animation by Abderrahman Taha"],
+        "Name": ["SinusPar"],
+        "Component": ["Sinus"],
+        "Fx": ["u"],
+        "Fy": ["v"],
+        "Fz": ["-sin(-t+3*pi*((u)^2+(v)^2))/10"],
+        "Umax": ["1"],
+        "Umin": ["-1"],
+        "Vmax": ["1"],
+        "Vmin": ["-1"]
+    }
+}</pre>
+<a name="Rotation"></a>
+<li><h2>Rotation</h2>
+The rotation animation activation (and deactivation) take place with "CtRl+a". Also, you'de tu use the
+<a href="images/ViewControls/ViewControls.png">"Rotations Controls" </a> section to set the axe and speed of the rotation.
+<a name="movie"></a>
+<li><h2>Making animated GIF or videos</h2>
+<a href="https://gfycat.com/@parisolab">Some animated GIF made with MathMod</a>
+</ol>
 
 <a name="GUI"></a>
 <h1> MathMod's GUI Reference</h1>

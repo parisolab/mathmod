@@ -3824,7 +3824,7 @@
     {
       "Param3D": {
         "Name": [
-          "Sinus"
+          "SinusPar"
         ],
         "Component": [
           "Sinus"
