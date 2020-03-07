@@ -43,6 +43,8 @@
  <li><a href="#SupportedOperatorsFunctions">Supported operators and mathematical functions</a>
 </ol>
 
+<li><a href="#Configuration">Configuration file</a>
+
 <li><a href="#AnimMorph">Animation and Morph effect</a>
 <ol>
 <li><a href="#Morph">Morph effect</a>
@@ -52,7 +54,6 @@
 
 <li><a href="#GUI">MathMod's GUI Reference</a>
 <ol>
-<li><a href="#Configuration">Configuration file</a>
 <li><a href="#Menu">Menu Items</a>
 <ol>
   <li><a href="#ProjectMenu">The Project Menu</a>
@@ -777,45 +778,8 @@ or functions using the following operators in this order of precedence:
 </tr>
 </table>
 
-<a name="AnimMorph"></a>
-<h1>Animations and Morph transitions</h1>
-<ol>
-<a name="Morph"></a>
-<li><h2>Morph effect</h2>
-<p>MathMod is home to many interesting animations and transitions.
-The morph effect take place with the use of the "t" parameter and the morph effect activation (and deactivation) with "CtRl+p".
-The Morph transition lets you create a seamless object animation from one "t" time parametr value to another.
-Example: <pre>
-{
-    "Param3D": {
-        "Description": ["Sinus Animation by Abderrahman Taha"],
-        "Name": ["SinusPar"],
-        "Component": ["Sinus"],
-        "Fx": ["u"],
-        "Fy": ["v"],
-        "Fz": ["-sin(-t+3*pi*((u)^2+(v)^2))/10"],
-        "Umax": ["1"],
-        "Umin": ["-1"],
-        "Vmax": ["1"],
-        "Vmin": ["-1"]
-    }
-}</pre>
-<a name="Rotation"></a>
-<li><h2>Rotation</h2>
-The rotation animation activation (and deactivation) take place with "CtRl+a". Also, the
-<a href="images/ViewControls/ViewControls.png">"Rotations Controls"</a> section helps set the axe and speed of the rotation.
-<a name="movie"></a>
-<li><h2>Making animated GIF or videos</h2>
-This <a href="https://youtu.be/5u5PDk2qa6I">video explain how to create animated GIF</a> with MathMod and Gimp.<br>
-See also some animated GIF made with MathMod on <a href="https://www.reddit.com/user/parisolab/posts/">Reddit</a> and
-<a href="https://gfycat.com/@parisolab">gfycat</a>
-</ol>
-
-<a name="GUI"></a>
-<h1> MathMod's GUI Reference</h1>
-
 <a name="Configuration"></a>
-<h2>Configuration file</h2>
+<h1>Configuration file</h1>
 
 <p>"mathmodconfig.js" file is the main source for MathMod's parameters settings.<br>
 MathMod uses an integrated configuration file but it can generate a copy for you when needed. Here is how:
@@ -922,6 +886,42 @@ MathMod uses an integrated configuration file but it can generate a copy for you
  </tr>
 </table>
 
+<a name="AnimMorph"></a>
+<h1>Animations and Morph transitions</h1>
+<ol>
+<a name="Morph"></a>
+<li><h2>Morph effect</h2>
+<p>MathMod is home to many interesting animations and transitions.
+The morph effect take place with the use of the "t" parameter and the morph effect activation (and deactivation) with "CtRl+p".
+The Morph transition lets you create a seamless object animation from one "t" time parametr value to another.
+Example: <pre>
+{
+    "Param3D": {
+        "Description": ["Sinus Animation by Abderrahman Taha"],
+        "Name": ["SinusPar"],
+        "Component": ["Sinus"],
+        "Fx": ["u"],
+        "Fy": ["v"],
+        "Fz": ["-sin(-t+3*pi*((u)^2+(v)^2))/10"],
+        "Umax": ["1"],
+        "Umin": ["-1"],
+        "Vmax": ["1"],
+        "Vmin": ["-1"]
+    }
+}</pre>
+<a name="Rotation"></a>
+<li><h2>Rotation</h2>
+The rotation animation activation (and deactivation) take place with "CtRl+a". Also, the
+<a href="images/ViewControls/ViewControls.png">"Rotations Controls"</a> section helps set the axe and speed of the rotation.
+<a name="movie"></a>
+<li><h2>Making animated GIF or videos</h2>
+This <a href="https://youtu.be/5u5PDk2qa6I">video explain how to create animated GIF</a> with MathMod and Gimp.<br>
+See also some animated GIF made with MathMod on <a href="https://www.reddit.com/user/parisolab/posts/">Reddit</a> and
+<a href="https://gfycat.com/@parisolab">gfycat</a>
+</ol>
+
+<a name="GUI"></a>
+<h1> MathMod's GUI Reference</h1>
 <a name="Menu"></a>
 <h2>Menu Items</h2>
 <ol>
@@ -1083,7 +1083,6 @@ MathMod uses an integrated configuration file but it can generate a copy for you
 </pre>
 <a href="images/Examples/Pariso_02.png">See attached image</a>
 </ol>
-
 
 References:
 <ol>
