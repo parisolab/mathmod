@@ -73,6 +73,7 @@
 <li><a href="#Examples">Scripts examples</a>
  <ol>
   <li><a href="#Models_Intersection">Models_Intersection</a>
+  <li><a href="#CellNoiseSchwarz">CellNoiseSchwarz</a>
   <li><a href="#The_Dome_v1">The_Dome_v1</a>
   <li><a href="#Pariso_02">Pariso_02</a>
  </ol>
@@ -149,7 +150,7 @@ Release Notes date: 02-March-2019
 
  <a name="Tutorials"></a>
  <li>
- <h2>videos Tutorials</h2>
+ <h2>Videos tutorials</h2>
  There are <a href="https://www.youtube.com/playlist?list=PLpGUO13v3lbcm28gvuIEbwDPN6Te7MHmo">15 videos tutorials on Youtube</a>
 <ol>
 <li><a href="https://youtu.be/u3GIPxbEOzk">Tutorial 15: How to compile MathMod from source</a></li>
@@ -248,7 +249,7 @@ For all objects types:
 
 <tr>
 <td><code>"Component"</code></td>
-<td>A mathematical object can a composition of more than one mathematical equation.
+<td>A mathematical object can be a composition of more than one mathematical equation.
  To help identify each component in a set of mathematically defined surfaces,  you must give each component a name (not necessarily unique though).</td>
 </tr>
 </table>
@@ -304,7 +305,7 @@ User defined Constantes. Example:
 An implicit equation (according to x,y and z) to characterize a region in 3D space. The number of equations must be the same as the number of components.
 Example for an object including three components:
 <br><code>"Cnd":["x>0", "", "y<0"]</code>
-<br> See the "Models_Intersection" script
+<br> See the <a href="#Models_Intersection">"Models_Intersection"</a> script
 </td>
 </tr>
 
@@ -315,7 +316,7 @@ User defined grid values. The number of grid values is related to the number of 
 Isosurfaces require one grid value for each component (ie: the same grid value for "x", "y" and "z") but parametric surfaces require two (ie one for "u" and one for "v")
 Example for a parametric surface with one component:
 <br><code>"Grid":["100", "150"]</code>
-<br> See the "Models_Intersection" script
+<br> See the <a href="#Models_Intersection">"Models_Intersection"</a> script
 </td>
 </tr>
 <tr>
@@ -335,7 +336,7 @@ Sliders are useful for interactive modification of one or more parameter used in
 <li><code>"Step"</code> : Value used to adjust each parameter.
 <li><code>"Position"</code> : Saved values for each parameter (N, R)=(10, 16).
 </ul>
-<br> Function used in the "The_Dome_v1" script
+<br> Function used in the <a href="#The_Dome_v1">The_Dome_v1</a> script
 </td>
 </tr>
 <tr>
@@ -403,6 +404,7 @@ Each of the various pattern types available is in fact a mathematical function t
 <h2> Scripts examples:</h2>
 <ol>
  <li><a href="#Models_Intersection">Models_Intersection</a>
+ <li><a href="#CellNoiseSchwarz">CellNoiseSchwarz</a>
  <li><a href="#The_Dome_v1">The_Dome_v1</a>
  <li><a href="#Pariso_02">Pariso_02</a>
 </ol>
@@ -992,6 +994,32 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
 }
 </pre>
 <a href="images/examples/Models_Intersection.png">See attached image</a>
+
+
+<a name="CellNoiseSchwarz"></a>
+<li><pre>
+    {
+        "Iso3D": {
+            "Description": ["CellNoiseSchwarz by Abderrahman Taha 08/03/2020"],
+            "Name": ["CellNoiseSchwarz"],
+            "Component": ["Schwarz"],
+            "Fxyz": ["cos(x)+cos(y)+cos(z)-NoiseW(x,y,z,(1),(2),(0))"],
+            "Xmax": ["4"],
+            "Xmin": ["-4"],
+            "Ymax": ["4"],
+            "Ymin": ["-4"],
+            "Zmax": ["4"],
+            "Zmin": ["-4"
+            ]
+        },
+        "Texture": {
+            "Colors": ["R=cos(x)*sin(z)+3/10","G=sin(x)*cos(y)+3/10","B=sin(y)*cos(z)+3/10","T=1"],
+            "Name": "Lines3",
+            "Noise": "NoiseW(x,y,z,(1),(2),(0))"
+        }
+    }
+</pre>
+<a href="images/Examples/CellNoiseSchwarz.png">See attached image</a>
 
 <a name="The_Dome_v1"></a>
 <li><pre>
