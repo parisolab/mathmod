@@ -3552,50 +3552,24 @@
       }
     },
     {
-      "Iso3D": {
-        "Name": [
-          "CellNoiseSchwarz"
-        ],
-        "Component": [
-          "Schwarz"
-        ],
-        "Funct": [
-          "Ax=cos(x)",
-          "Ay=cos(y)",
-          "Az=cos(z)"
-        ],
-        "Fxyz": [
-          "Ax(x,y,z,t)+Ay(x,y,z,t)+Az(x,y,z,t)-NoiseW(x,y,z,(1),(2),(0))"
-        ],
-        "Xmax": [
-          "4"
-        ],
-        "Xmin": [
-          "-4"
-        ],
-        "Ymax": [
-          "4"
-        ],
-        "Ymin": [
-          "-4"
-        ],
-        "Zmax": [
-          "4"
-        ],
-        "Zmin": [
-          "-4"
-        ]
-      },
-      "Texture": {
-        "Colors": [
-          "R=4/5",
-          "G=(8/5)*abs(cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "B=(9/5)*abs(cos((x*x+y*y+z*z)/2)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/2))",
-          "T=1"
-        ],
-        "Name": "WorleyNoise",
-        "Noise": "NoiseW(x,y,z,(1),(2),(0))"
-      }
+        "Iso3D": {
+            "Description": ["CellNoiseSchwarz by Abderrahman Taha 08/03/2020"],
+            "Name": ["CellNoiseSchwarz"],
+            "Component": ["Schwarz"],
+            "Fxyz": ["cos(x)+cos(y)+cos(z)-NoiseW(x,y,z,(1),(2),(0))"],
+            "Xmax": ["4"],
+            "Xmin": ["-4"],
+            "Ymax": ["4"],
+            "Ymin": ["-4"],
+            "Zmax": ["4"],
+            "Zmin": ["-4"
+            ]
+        },
+        "Texture": {
+            "Colors": ["R=cos(x)*sin(z)+3/10","G=sin(x)*cos(y)+3/10","B=sin(y)*cos(z)+3/10","T=1"],
+            "Name": "Lines3",
+            "Noise": "NoiseW(x,y,z,(1),(2),(0))"
+        }
     },
     {
       "Param3D": {
