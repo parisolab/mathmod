@@ -307,7 +307,7 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
     if (!currentstruct.name.empty())
         paramlistItem->setText(0, currentstruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
-    paramlistItem->setBackgroundColor(0, greenColor);
+    paramlistItem->setBackground(0, greenColor);
 
     if (currentstruct.Component.size() > 0)
     {
@@ -353,7 +353,7 @@ void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem,
     if (!currentstruct.name.empty())
         IsolistItem->setText(0, currentstruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
-    IsolistItem->setBackgroundColor(0, greenColor);
+    IsolistItem->setBackground(0, greenColor);
 
     if (currentstruct.Component.size() > 0)
     {
@@ -2530,7 +2530,7 @@ void DrawingOptions::ParseItemTree(QTreeWidgetItem *item, QList<bool> &list,
     bool result;
     for (int j = 0; j < childcount; j++)
     {
-        item->child(j)->setTextColor(0, QColor(255, 255, 255, 255));
+        item->child(j)->setForeground(0, QColor(255, 255, 255, 255));
         if (!viewall)
         {
             result = false;
@@ -2546,7 +2546,7 @@ void DrawingOptions::ParseItemTree(QTreeWidgetItem *item, QList<bool> &list,
                 list[k - 1] = (list.at(k - 1) || sel);
             }
             if (result)
-                item->child(j)->setTextColor(0, QColor(255, 0, 0, 255));
+                item->child(j)->setForeground(0, QColor(255, 0, 0, 255));
         }
     }
 }
@@ -2720,7 +2720,7 @@ void DrawingOptions::AddListModels(bool update)
     QTreeWidgetItem *ParlistItem = new QTreeWidgetItem(ui.ObjectClasse);
     QString Text = "Parametric (" +
                    QString::number(MathmodRef->collection.JPar.count()) + ")";
-    ParlistItem->setBackgroundColor(0, greenColor);
+    ParlistItem->setBackground(0, greenColor);
     ParlistItem->setText(0, Text);
     for (int i = 0; i < MathmodRef->collection.JPar.count(); ++i)
     {
@@ -2808,7 +2808,7 @@ void DrawingOptions::AddListModels(bool update)
                                        new QTreeWidgetItem(ui.ObjectClasse);
     Text = "IsoSurfaces (" +
            QString::number(MathmodRef->collection.JIso.count()) + ")";
-    IsolistItem->setBackgroundColor(0, greenColor);
+    IsolistItem->setBackground(0, greenColor);
     IsolistItem->setText(0, Text);
     for (int i = 0; i < MathmodRef->collection.JIso.count(); ++i)
     {
@@ -2891,7 +2891,7 @@ void DrawingOptions::AddListModels(bool update)
     QTreeWidgetItem *ParisolistItem = new QTreeWidgetItem(ui.ObjectClasse);
     Text = "Pariso (" +
                    QString::number(MathmodRef->collection.JParIso.count()) + ")";
-    ParisolistItem->setBackgroundColor(0, greenColor);
+    ParisolistItem->setBackground(0, greenColor);
     ParisolistItem->setText(0, Text);
     for (int i = 0; i < MathmodRef->collection.JParIso.count(); ++i)
     {
@@ -2905,7 +2905,7 @@ void DrawingOptions::AddListModels(bool update)
     // Isosurfaces:
     QTreeWidgetItem *MyselectionItem = new QTreeWidgetItem(ui.ObjectClasse);
     MyselectionItemReference = MyselectionItem;
-    MyselectionItem->setBackgroundColor(0, greenColor);
+    MyselectionItem->setBackground(0, greenColor);
     MyselectionItem->setText(0, "My Selection");
     return;
 }
@@ -5477,4 +5477,11 @@ void DrawingOptions::on_ApplypushButton_3_clicked()
     if ((ui.ParMaxGridLineEdit_2->text()).replace(" ", "")!= "" &&
         (maxpargrid = (ui.ParMaxGridLineEdit_2->text()).toInt()) != Parameters->ParMaxGrid)
         updateParametricGridSliders(maxpargrid);
+}
+
+#include <QDesktopServices>
+void DrawingOptions::on_actionDocumentation_triggered()
+{
+    QString link = QApplication::applicationDirPath() + "/../Resources/documentation/index.html";
+    QDesktopServices::openUrl(QUrl(QUrl::fromLocalFile(link)));
 }
