@@ -1,4 +1,7 @@
 {
+    "Version": {
+        "Number": 10.1
+    },
     "Parameters": {
         "IsoMaxGrid": 500,
         "InitIsoGrid": 40,

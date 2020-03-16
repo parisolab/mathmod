@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MathMod-10 (MacOS)</string>
+   <string>MathMod-10.1</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
@@ -6417,8 +6417,8 @@ p, li { white-space: pre-wrap; }
               <widget class="QWidget" name="scrollAreaWidgetContents">
                <property name="geometry">
                 <rect>
-                 <x>-35</x>
-                 <y>-790</y>
+                 <x>0</x>
+                 <y>0</y>
                  <width>320</width>
                  <height>1145</height>
                 </rect>
