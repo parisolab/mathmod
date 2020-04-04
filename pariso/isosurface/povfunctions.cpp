@@ -18,8 +18,13 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
 ***************************************************************************/
 #define PI1 (double (314159265)/double (100000000))
-#include <cmath>
+#include <math.h>
 
+static std::vector<float> tmpVector;
+
+void vect(double dimension, double size)
+{
+}
 
 double maxim(double p1, double p2)
 {
