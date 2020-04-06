@@ -22,8 +22,11 @@
 
 static std::vector<float> tmpVector;
 
-void vect(double dimension, double size)
+void vect(double size)
 {
+    tmpVector.clear();
+    tmpVector.shrink_to_fit();
+    tmpVector.resize((unsigned int) (size));
 }
 
 double maxim(double p1, double p2)
