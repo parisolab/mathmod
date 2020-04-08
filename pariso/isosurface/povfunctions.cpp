@@ -19,14 +19,25 @@
 ***************************************************************************/
 #define PI1 (double (314159265)/double (100000000))
 #include <math.h>
+#include <vector>
 
-static std::vector<float> tmpVector;
+static std::vector<double> tmpVector;
 
 void vect(double size)
 {
     tmpVector.clear();
     tmpVector.shrink_to_fit();
     tmpVector.resize((unsigned int) (size));
+}
+
+void Push(const double* pp)
+{
+    tmpVector[int(pp[0])]=pp[1];
+}
+
+double Get(int pos)
+{
+    return(tmpVector[pos]);
 }
 
 double maxim(double p1, double p2)
