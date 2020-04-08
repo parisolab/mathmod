@@ -18,26 +18,27 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
 ***************************************************************************/
 #define PI1 (double (314159265)/double (100000000))
-#include <math.h>
 #include <vector>
 
 static std::vector<double> tmpVector;
 
-void vect(double size)
+double vect(const double* size)
 {
     tmpVector.clear();
     tmpVector.shrink_to_fit();
-    tmpVector.resize((unsigned int) (size));
+    tmpVector.resize((unsigned int) (size[0]));
+    return(1);
 }
 
-void Push(const double* pp)
+double Push(const double* pp)
 {
     tmpVector[int(pp[0])]=pp[1];
+    return(1);
 }
 
-double Get(int pos)
+double Get(const double* pos)
 {
-    return(tmpVector[pos]);
+    return(tmpVector[int(pos[0])]);
 }
 
 double maxim(double p1, double p2)
