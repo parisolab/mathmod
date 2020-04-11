@@ -57,10 +57,10 @@ public:
                    *GradientParser, *NoiseParser, *NoiseShapeParser, Cstparser;
     std::vector<std::string> Rgbts, RgbtNames, VRgbts, VRgbtNames, Functs,
         FunctNames, Consts, ConstNames, SliderNames;
-    std::string Grid, Const, Funct, Rgbt, VRgbt, Gradient, Noise;
+    std::string Vect, Grid, Const, Funct, Rgbt, VRgbt, Gradient, Noise;
     uint RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
-    std::vector<uint> grid;
-    bool *UsedFunct, *UsedFunct2, gridnotnull, constnotnull, functnotnull,
+    std::vector<uint> grid, vect;
+    bool *UsedFunct, *UsedFunct2, gridnotnull, vectnotnull, constnotnull, functnotnull,
          cndnotnull, rgbtnotnull, vrgbtnotnull;
     std::vector<double> ConstValues, SliderValues;
     double Octaves, Lacunarity, Gain;

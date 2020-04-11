@@ -37,6 +37,7 @@ struct TreeStruct
     QStringList Const;
     QStringList Funct;
     QStringList Grid;
+    QStringList Vect;
     QStringList Cnd;
     QStringList RGBT;
     QStringList VRGBT;

@@ -774,7 +774,7 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
     }
     if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
-        scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+        scriptErrorType = Vect_DIMENSION_ERROR;
         ErrorMsg();
         return false;
     }
@@ -881,6 +881,13 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
     if ((lst = QObj["Grid"].toArray()).size() > 0 && (lst.size() != 2 * NbFx))
     {
         scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+
+    if (((lst = QObj["Vect"].toArray()).size() > 1))
+    {
+        scriptErrorType = Vect_DIMENSION_ERROR;
         ErrorMsg();
         return false;
     }
@@ -1539,6 +1546,11 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     bool argnotnull = false;
     switch (idx)
     {
+    case ISO_VECT:
+        arg = "Vect";
+        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->gridnotnull =
+                         QObj[arg].isArray();
+        break;
     case ISO_GRID:
         arg = "Grid";
         argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->gridnotnull =
@@ -1567,6 +1579,23 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     }
     switch (idx)
     {
+    case ISO_VECT:
+        if (argnotnull)
+        {
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->vect.clear();
+            for (int j = 0; j < lst.size(); j++)
+                MathmodRef->ui.glWidget->IsoObjet->masterthread->vect.push_back(
+                    (lst[j].toString()).toUInt());
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->Vect =
+                result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Vect =
+                result.split(";", QString::SkipEmptyParts);
+        }
+        else
+        {
+            MathmodRef->ui.glWidget->IsoObjet->masterthread->Vect = "";
+        }
+        break;
     case ISO_GRID:
         if (argnotnull)
         {
@@ -1639,6 +1668,11 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     bool argnotnull = false;
     switch (idx)
     {
+    case PAR_VECT:
+        arg = "Vect";
+        argnotnull = MathmodRef->ui.glWidget->ParObjet->masterthread->vectnotnull =
+                         QObj[arg].isArray();
+        break;
     case PAR_GRID:
         arg = "Grid";
         argnotnull = MathmodRef->ui.glWidget->ParObjet->masterthread->gridnotnull =
@@ -1667,6 +1701,23 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     }
     switch (idx)
     {
+    case PAR_VECT:
+        if (argnotnull)
+        {
+            MathmodRef->ui.glWidget->ParObjet->masterthread->vect.clear();
+            for (int j = 0; j < lst.size(); j++)
+                MathmodRef->ui.glWidget->ParObjet->masterthread->vect.push_back(
+                    (lst[j].toString()).toUInt());
+            MathmodRef->ui.glWidget->ParObjet->masterthread->Vect =
+                result.toStdString();
+            MathmodRef->RootObjet.CurrentTreestruct.Vect =
+                result.split(";", QString::SkipEmptyParts);
+        }
+        else
+        {
+            MathmodRef->ui.glWidget->ParObjet->masterthread->Vect = "";
+        }
+        break;
     case PAR_GRID:
         if (argnotnull)
         {

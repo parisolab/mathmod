@@ -307,7 +307,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("f_hex_y",f_hex_y, 4);
             workerthreads[nbthreads].Fct[ii].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
-            workerthreads[nbthreads].Fct[ii].AddFunction("vect",vect, 1);
+            workerthreads[nbthreads].Fct[ii].AddFunction("vect",vectmem, 1);
             workerthreads[nbthreads].Fct[ii].AddFunction("Push",Push, 2);
             workerthreads[nbthreads].Fct[ii].AddFunction("Get",Get, 2);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
@@ -355,7 +355,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("vect",vect, 1);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("vect",vectmem, 1);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("Push",Push, 2);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("Get",Get, 2);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
@@ -1183,7 +1183,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
         implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
-        implicitFunctionParser[i].AddFunction("vect",vect, 1);
+        implicitFunctionParser[i].AddFunction("vect",vectmem, 1);
         implicitFunctionParser[i].AddFunction("Push",Push, 2);
         implicitFunctionParser[i].AddFunction("Get",Get, 2);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
@@ -1398,7 +1398,7 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("f_hex_y",f_hex_y, 4);
         Fct[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         Fct[i].AddFunction("fmesh",fmesh, 8);
-        Fct[i].AddFunction("vect",vect, 1);
+        Fct[i].AddFunction("vect",vectmem, 1);
         Fct[i].AddFunction("Push",Push, 2);
         Fct[i].AddFunction("Get",Get, 2);
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);

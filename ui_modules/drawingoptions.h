@@ -33,9 +33,9 @@
 #include "ui_drawingoptions.h"
 #include <QMainWindow>
 
-enum OptionnalParScriptFIELD { PAR_GRID, PAR_CND, PAR_CONST, PAR_FUNCT };
+enum OptionnalParScriptFIELD { PAR_VECT, PAR_GRID, PAR_CND, PAR_CONST, PAR_FUNCT };
 
-enum OptionnalIsoScriptFIELD { ISO_GRID, ISO_CND, ISO_CONST, ISO_FUNCT };
+enum OptionnalIsoScriptFIELD { ISO_VECT, ISO_GRID, ISO_CND, ISO_CONST, ISO_FUNCT };
 
 enum MandatoryIsoField
 {
@@ -85,7 +85,7 @@ public:
     std::vector<QString> MandatoryParmetric3DFields={"Fx", "Fy","Fz", "Umin", "Umax", "Vmin", "Vmax", "Component", "Name"};
     std::vector<QString> MandatoryParmetric4DFields={"Fx", "Fy","Fz", "Fw", "Umin", "Umax", "Vmin", "Vmax", "Component", "Name"};
     std::vector<QString> MandatoryIsosurfaceFields={"Fxyz", "Xmin", "Xmax", "Ymin", "Ymax", "Zmin", "Zmax", "Component", "Name"};
-    std::vector<QString> OptionalFields={"Grid", "Cnd","Const", "Funct"};
+    std::vector<QString> OptionalFields={"Grid", "Cnd","Const", "Funct", "Vect"};
     SlidersForm sliderconf;
     AddParamForm addnewparam;
     QTreeWidgetItem *IsolistItemRef;

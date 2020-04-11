@@ -22,7 +22,7 @@
 
 static std::vector<double> tmpVector;
 
-double vect(const double* size)
+double vectmem(const double* size)
 {
     tmpVector.clear();
     tmpVector.shrink_to_fit();
