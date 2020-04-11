@@ -65,6 +65,7 @@ static const char *ScriptErrorMessage[] =
     "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 35
     "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 36
     "GRID_SUPERIOR_TO_GRIDMAX",                 // 37
+    "Vect_DIMENSION_ERROR",                     // 38
     "Not enough memory available to complete this operation" // 38
 };
 
@@ -766,6 +767,12 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         return false;
     }
     if (((lst = QObj["Grid"].toArray()).size() > 0) && (lst.size() != NbFxyz))
+    {
+        scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+        ErrorMsg();
+        return false;
+    }
+    if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
         scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
         ErrorMsg();
