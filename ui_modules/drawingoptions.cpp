@@ -3548,13 +3548,11 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct_2);
                 appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst_2);
 
-                if (copyCurrentObject2["Grid"].isArray())
-                {
-                    array = copyCurrentObject2["Grid"].toArray();
-                    copyCurrentObject2["Grid"] = array;
-                }
-                else
+                if (!copyCurrentObject2["Grid"].isArray())
                     copyCurrentObject2.remove("Grid");
+
+                if (!copyCurrentObject2["Vect"].isArray())
+                    copyCurrentObject2.remove("Vect");
 
                 if (copyCurrentObject2["Cnd"].isArray() &&
                         copyCurrentObject2["Cnd"].toArray().count() > indexcurrentFormula)
@@ -3646,15 +3644,11 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     else
                         copyCurrentObject2.remove("Cnd");
 
-                    if (copyCurrentObject2["Grid"].isArray())
-                    {
-                        array = copyCurrentObject2["Grid"].toArray();
-                        // array.insert(indexcurrentFormula,
-                        // QString::number(ui.linecolumn_2->value()));
-                        copyCurrentObject2["Grid"] = array;
-                    }
-                    else
+                    if (!copyCurrentObject2["Grid"].isArray())
                         copyCurrentObject2.remove("Grid");
+
+                    if (!copyCurrentObject2["Vect"].isArray())
+                        copyCurrentObject2.remove("Vect");
                 }
                 appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct_2);
                 appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst_2);
