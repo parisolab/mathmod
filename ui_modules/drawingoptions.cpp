@@ -774,7 +774,7 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
     }
     if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
-        scriptErrorType = Vect_DIMENSION_ERROR;
+        scriptErrorType = VECT_DIMENSION_ERROR;
         ErrorMsg();
         return false;
     }
@@ -887,7 +887,7 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
 
     if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
-        scriptErrorType = Vect_DIMENSION_ERROR;
+        scriptErrorType = VECT_DIMENSION_ERROR;
         ErrorMsg();
         return false;
     }
@@ -3723,13 +3723,11 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     insertat(indexcurrentFormula, copyCurrentObject2, "Umax", ui.umax_2);
                     insertat(indexcurrentFormula, copyCurrentObject2, "Vmin", ui.vmin_2);
                     insertat(indexcurrentFormula, copyCurrentObject2, "Vmax", ui.vmax_2);
-                    if (copyCurrentObject2["Grid"].isArray())
-                    {
-                        array = copyCurrentObject2["Grid"].toArray();
-                        copyCurrentObject2["Grid"] = array;
-                    }
-                    else
+                    if (!copyCurrentObject2["Grid"].isArray())
                         copyCurrentObject2.remove("Grid");
+
+                    if (!copyCurrentObject2["Vetc"].isArray())
+                        copyCurrentObject2.remove("Vect");
 
                     copyCurrentObject["Param4D"] = copyCurrentObject2;
                 }
