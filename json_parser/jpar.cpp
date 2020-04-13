@@ -184,21 +184,15 @@ void jpar::read(const QJsonObject &jason)
         for (int i = 0; i < array.size(); i++)
             Text.append(array[i].toString());
     }
-    if (jason["Comment"].isArray())
-    {
-        array = jason["Comment"].toArray();
-        for (int i = 0; i < array.size(); i++)
-            Comment.append(array[i].toString());
-    }
     if (jason["Name"].isArray())
     {
         array = jason["Name"].toArray();
         for (int i = 0; i < array.size(); i++)
             Name.append(array[i].toString());
     }
-    if (jason["Csts"].isArray())
+    if (jason["Const"].isArray())
     {
-        array = jason["Csts"].toArray();
+        array = jason["Const"].toArray();
         for (int i = 0; i < array.size(); i++)
             Csts.append(array[i].toString());
     }
@@ -213,12 +207,6 @@ void jpar::read(const QJsonObject &jason)
         array = jason["Grid"].toArray();
         for (int i = 0; i < array.size(); i++)
             Grid.append(array[i].toString());
-    }
-    if (jason["RGBT"].isArray())
-    {
-        array = jason["RGBT"].toArray();
-        for (int i = 0; i < array.size(); i++)
-            RGBT.append(array[i].toString());
     }
     if (jason["Umin"].isArray())
     {

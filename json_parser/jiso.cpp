@@ -169,27 +169,21 @@ void jiso::read(const QJsonObject &jason)
     QJsonArray array;
     JisoObj = jason;
 
-    if (jason["Text"].isArray())
-    {
-        array = jason["Text"].toArray();
-        for (int i = 0; i < array.size(); i++)
-            Text.append(array[i].toString());
-    }
-    if (jason["Comment"].isArray())
-    {
-        array = jason["Comment"].toArray();
-        for (int i = 0; i < array.size(); i++)
-            Comment.append(array[i].toString());
-    }
     if (jason["Name"].isArray())
     {
         array = jason["Name"].toArray();
         for (int i = 0; i < array.size(); i++)
             Name.append(array[i].toString());
     }
-    if (jason["Csts"].isArray())
+    if (jason["Text"].isArray())
     {
-        array = jason["Csts"].toArray();
+        array = jason["Text"].toArray();
+        for (int i = 0; i < array.size(); i++)
+            Text.append(array[i].toString());
+    }
+    if (jason["Const"].isArray())
+    {
+        array = jason["Const"].toArray();
         for (int i = 0; i < array.size(); i++)
             Csts.append(array[i].toString());
     }
@@ -204,12 +198,6 @@ void jiso::read(const QJsonObject &jason)
         array = jason["Grid"].toArray();
         for (int i = 0; i < array.size(); i++)
             Grid.append(array[i].toString());
-    }
-    if (jason["RGBT"].isArray())
-    {
-        array = jason["RGBT"].toArray();
-        for (int i = 0; i < array.size(); i++)
-            RGBT.append(array[i].toString());
     }
     if (jason["Xmin"].isArray())
     {
