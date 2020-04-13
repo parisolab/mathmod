@@ -27,14 +27,6 @@ jpar::~jpar() {}
 void jpar::read(const QJsonObject &jason)
 {
     QJsonArray array;
-
-    JparObj = jason;
-    if (jason["Text"].isArray())
-    {
-        array = jason["Text"].toArray();
-        for (int i = 0; i < array.size(); i++)
-            Text.append(array[i].toString());
-    }
     if (jason["Name"].isArray())
     {
         array = jason["Name"].toArray();
@@ -108,67 +100,3 @@ void jpar::read(const QJsonObject &jason)
             Fz.append(array[i].toString());
     }
 }
-/*
-void jpar::write(QJsonObject &json) const
-{
-    QJsonArray nm;
-    for (int i = 0; i < Name.size(); i++)
-        nm.append(Name.at(i));
-    json["Name"] = nm;
-
-    QJsonArray txt;
-    for (int i = 0; i < Text.size(); i++)
-        txt.append(Text.at(i));
-    json["Text"] = txt;
-
-    QJsonArray cmp;
-    for (int i = 0; i < Component.size(); i++)
-        cmp.append(Component.at(i));
-    json["Component"] = cmp;
-
-    QJsonArray grd;
-    for (int i = 0; i < Grid.size(); i++)
-        grd.append(Grid.at(i));
-    json["Grid"] = grd;
-
-    QJsonArray rgb;
-    for (int i = 0; i < RGBT.size(); i++)
-        rgb.append(RGBT.at(i));
-    json["RGBT"] = rgb;
-
-    QJsonArray umi;
-    for (int i = 0; i < Umin.size(); i++)
-        umi.append(Umin.at(i));
-    json["Umin"] = umi;
-
-    QJsonArray uma;
-    for (int i = 0; i < Umax.size(); i++)
-        uma.append(Umax.at(i));
-    json["Umax"] = uma;
-
-    QJsonArray vmi;
-    for (int i = 0; i < Vmin.size(); i++)
-        vmi.append(Vmin.at(i));
-    json["Vmin"] = vmi;
-
-    QJsonArray vma;
-    for (int i = 0; i < Vmax.size(); i++)
-        vma.append(Vmax.at(i));
-    json["Vmax"] = vma;
-
-    QJsonArray fx;
-    for (int i = 0; i < Fx.size(); i++)
-        fx.append(Fx.at(i));
-    json["Fx"] = fx;
-
-    QJsonArray fy;
-    for (int i = 0; i < Fy.size(); i++)
-        fy.append(Fy.at(i));
-    json["Fy"] = fy;
-
-    QJsonArray fz;
-    for (int i = 0; i < Fz.size(); i++)
-        fz.append(Fz.at(i));
-    json["Fz"] = fz;
-}
-*/

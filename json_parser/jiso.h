@@ -36,13 +36,10 @@ public:
     void read(const QJsonObject &);
 
 public:
-    QStringList Text;
-    QStringList Comment;
     QStringList Name;
     QStringList Csts;
     QStringList Funct;
     QStringList Grid;
-    QStringList RGBT;
     QStringList Fxyz;
     QStringList Xmin;
     QStringList Xmax;
@@ -52,9 +49,6 @@ public:
     QStringList Zmax;
     QStringList Cnd;
     QStringList Component;
-    QJsonObject JisoObj;
-    int Nbcomponent;
-    int index;
 };
 
 #endif // JISO_H

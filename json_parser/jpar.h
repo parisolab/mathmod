@@ -37,13 +37,10 @@ public:
     void read(const QJsonObject &json);
 
 public:
-    QStringList Text;
-    QStringList Comment;
     QStringList Name;
     QStringList Csts;
     QStringList Funct;
     QStringList Grid;
-    QStringList RGBT;
     QStringList Fx;
     QStringList Fy;
     QStringList Fz;
@@ -53,9 +50,6 @@ public:
     QStringList Vmin;
     QStringList Vmax;
     QStringList Component;
-    QJsonObject JparObj;
-    int Nbcomponent;
-    int index;
 };
 
 #endif // JPAR_H

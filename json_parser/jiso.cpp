@@ -27,19 +27,12 @@ jiso::~jiso() {}
 void jiso::read(const QJsonObject &jason)
 {
     QJsonArray array;
-    JisoObj = jason;
 
     if (jason["Name"].isArray())
     {
         array = jason["Name"].toArray();
         for (int i = 0; i < array.size(); i++)
             Name.append(array[i].toString());
-    }
-    if (jason["Text"].isArray())
-    {
-        array = jason["Text"].toArray();
-        for (int i = 0; i < array.size(); i++)
-            Text.append(array[i].toString());
     }
     if (jason["Const"].isArray())
     {
