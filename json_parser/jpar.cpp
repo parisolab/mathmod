@@ -24,155 +24,6 @@ jpar::jpar() {}
 
 jpar::~jpar() {}
 
-QStringList jpar::text() const
-{
-    return Text;
-}
-
-void jpar::setText(const QStringList &txt)
-{
-    Text = txt;
-}
-
-QStringList jpar::comment() const
-{
-    return Comment;
-}
-
-void jpar::setComment(const QStringList &cmt)
-{
-    Comment = cmt;
-}
-
-QStringList jpar::csts() const
-{
-    return Csts;
-}
-
-void jpar::setConst(const QStringList &cst)
-{
-    Csts = cst;
-}
-
-QStringList jpar::funct() const
-{
-    return Funct;
-}
-
-void jpar::setFunct(const QStringList &fct)
-{
-    Funct = fct;
-}
-
-QStringList jpar::grid() const
-{
-    return Grid;
-}
-
-void jpar::setGrid(const QStringList &grd)
-{
-    Grid = grd;
-}
-
-QStringList jpar::rgbt() const
-{
-    return RGBT;
-}
-
-void jpar::setRgbt(const QStringList &rgb)
-{
-    RGBT = rgb;
-}
-
-QStringList jpar::fx() const
-{
-    return Fx;
-}
-
-void jpar::setFx(const QStringList &fct)
-{
-    Fx = fct;
-}
-
-QStringList jpar::fy() const
-{
-    return Fy;
-}
-
-void jpar::setFy(const QStringList &fct)
-{
-    Fy = fct;
-}
-
-QStringList jpar::fz() const
-{
-    return Fz;
-}
-
-void jpar::setFz(const QStringList &fct)
-{
-    Fz = fct;
-}
-
-QStringList jpar::fw() const
-{
-    return Fw;
-}
-
-void jpar::setFw(const QStringList &fct)
-{
-    Fw = fct;
-}
-QStringList jpar::umin() const
-{
-    return Umin;
-}
-
-void jpar::setUmin(const QStringList &umi)
-{
-    Umin = umi;
-}
-
-QStringList jpar::umax() const
-{
-    return Umax;
-}
-
-void jpar::setUmax(const QStringList &uma)
-{
-    Umax = uma;
-}
-
-QStringList jpar::vmin() const
-{
-    return Vmin;
-}
-
-void jpar::setVmin(const QStringList &vmi)
-{
-    Vmin = vmi;
-}
-
-QStringList jpar::vmax() const
-{
-    return Vmax;
-}
-
-void jpar::setVmax(const QStringList &vma)
-{
-    Vmax = vma;
-}
-
-QStringList jpar::component() const
-{
-    return Component;
-}
-
-void jpar::setComponent(const QStringList &cmp)
-{
-    Component = cmp;
-}
-
 void jpar::read(const QJsonObject &jason)
 {
     QJsonArray array;
@@ -257,7 +108,7 @@ void jpar::read(const QJsonObject &jason)
             Fz.append(array[i].toString());
     }
 }
-
+/*
 void jpar::write(QJsonObject &json) const
 {
     QJsonArray nm;
@@ -320,3 +171,4 @@ void jpar::write(QJsonObject &json) const
         fz.append(Fz.at(i));
     json["Fz"] = fz;
 }
+*/

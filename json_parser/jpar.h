@@ -34,57 +34,7 @@ class jpar
 public:
     jpar();
     ~jpar();
-
-    QStringList name() const;
-    void setName(const QStringList &);
-
-    QStringList component() const;
-    void setComponent(const QStringList &);
-
-    QStringList text() const;
-    void setText(const QStringList &);
-
-    QStringList comment() const;
-    void setComment(const QStringList &);
-
-    QStringList csts() const;
-    void setConst(const QStringList &);
-
-    QStringList funct() const;
-    void setFunct(const QStringList &);
-
-    QStringList grid() const;
-    void setGrid(const QStringList &);
-
-    QStringList rgbt() const;
-    void setRgbt(const QStringList &);
-
-    QStringList fx() const;
-    void setFx(const QStringList &);
-
-    QStringList fy() const;
-    void setFy(const QStringList &);
-
-    QStringList fz() const;
-    void setFz(const QStringList &);
-
-    QStringList fw() const;
-    void setFw(const QStringList &);
-
-    QStringList umin() const;
-    void setUmin(const QStringList &);
-
-    QStringList umax() const;
-    void setUmax(const QStringList &);
-
-    QStringList vmin() const;
-    void setVmin(const QStringList &);
-
-    QStringList vmax() const;
-    void setVmax(const QStringList &);
-
     void read(const QJsonObject &json);
-    void write(QJsonObject &json) const;
 
 public:
     QStringList Text;
