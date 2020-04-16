@@ -98,6 +98,48 @@
     },
     {
         "Param3D": {
+            "Description": ["Granny Knot by Abderrahman Taha 14/04/2020"],
+            "Name": ["Granny_Knot"],
+            "Component": ["knot"],
+            "Const": ["k1=2",
+                "k0=40",
+                "r0=7",
+                "dv=(1/1000)"],
+            "Funct": ["Fx =(-22*cos(v)-128*sin(v)-44*cos(3*v)-78*sin(3*v))/80",
+                "Fy =(-10*cos(2*v)-27*sin(2*v)+38 *cos(4*v)+46 *sin(4*v))/80",
+                "Fz =(70*cos(3*v)-40*sin(3*v))/100",
+                "DFxv = (Fx(u,v+dv,t) - Fx(u,v,t))/dv",
+                "DFyv = (Fy(u,v+dv,t) - Fy(u,v,t))/dv",
+                "DFzv = (Fz(u,v+dv,t) - Fz(u,v,t))/dv",
+                "DFxv2 = (DFxv(u,v+dv,t) - DFxv(u,v,t))/dv",
+                "DFyv2 = (DFyv(u,v+dv,t) - DFyv(u,v,t))/dv",
+                "DFzv2 = (DFzv(u,v+dv,t) - DFzv(u,v,t))/dv",
+                "Rapp = (u/sqrt(u*u+v*v+t*t))",
+                "Nx = Rapp(DFxv2(u,v,t),DFyv2(u,v,t),DFzv2(u,v,t))",
+                "Ny = Rapp(DFyv2(u,v,t),DFxv2(u,v,t),DFzv2(u,v,t))",
+                "Nz = Rapp(DFzv2(u,v,t),DFyv2(u,v,t),DFxv2(u,v,t))",
+                "Bx = 1/sqrt(u*u+v*v+t*t)",
+                "Binx = (DFyv(u,v,t) * Nz(u,v,t) - DFzv(u,v,t) * Ny(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))",
+                "Biny = (DFzv(u,v,t) * Nx(u,v,t) - DFxv(u,v,t) * Nz(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))",
+                "Binz = (DFxv(u,v,t) * Ny(u,v,t) - DFyv(u,v,t) * Nx(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))",
+                "S = (r0/100)*((k0-1)*cos(u+k1*t) + cos((k0-1)*u+k1*t))",
+                "C = (r0/100)*((k0-1)*sin(u+k1*t) - sin((k0-1)*u+k1*t))",
+                "Sx = Fx(pi,v,t) + (r0/100)*(Nx(pi,v,t)*C(u,v,t) + Binx(pi,v,t)*S(u,v,t))",
+                "Sy = Fy(pi,v,t) + (r0/100)*(Ny(pi,v,t)*C(u,v,t) + Biny(pi,v,t)*S(u,v,t))",
+                "Sz = Fz(pi,v,t) + (r0/100)*(Nz(pi,v,t)*C(u,v,t) + Binz(pi,v,t)*S(u,v,t))"],
+            "Fx": ["-Sx(u,v,t)"],
+            "Fy": ["Sy(u,v,t)"],
+            "Fz": ["Sz(u,v,t)"],
+            "Grid": ["50",
+                "450"],
+            "Umax": ["pi"],
+            "Umin": ["-pi"],
+            "Vmax": ["2*pi"],
+            "Vmin": ["0"]
+        }
+    },
+    {
+        "Param3D": {
             "Description": ["Twisted_Multisided_Torus by Abderrahman Taha 01/01/2020"
             ],
             "Name": ["Twisted_Multisided_Torus"
