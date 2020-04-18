@@ -85,13 +85,40 @@
         "Name": "Pariso_02",
         "ParIso": [
             {
-                "Param3D": {"Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"],"Component": ["BlobbyTorus"],"Funct": ["G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)","G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)","G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))"],"Fx": ["-G1(u,v,t)"],"Fy": ["G2(u,v,t)"],"Fz": ["G3(u,v,t)-10"],"Grid": ["100","200"],"Name": ["Blobby_Torus"],"Umax": ["2*pi"],"Umin": ["0"],"Vmax": ["2*pi"],"Vmin": ["0"]
+                "Param3D": {"Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"],
+                        "Component": ["BlobbyTorus"],
+                        "Funct": ["G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)","G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)","G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))"],
+                        "Fx": ["-G1(u,v,t)"],
+                        "Fy": ["G2(u,v,t)"],
+                        "Fz": ["G3(u,v,t)-10"],
+                        "Grid": ["100","200"],
+                        "Name": ["Blobby_Torus"],
+                        "Umax": ["2*pi"],
+                        "Umin": ["0"],
+                        "Vmax": ["2*pi"],
+                        "Vmin": ["0"]
                 },
-                "Texture": {"Colors": ["R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),1) ","G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)) ","B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)) ","T=1"],"Name": "Candy","Noise": "1"
+                "Texture": {
+                        "Colors": ["R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),1) ",
+                            "G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)) ",
+                            "B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)) ",
+                            "T=1"],
+                        "Name": "Candy",
+                        "Noise": "1"
                 }
             },
             {
-                "Iso3D": {"Description": ["Models Intersection by Abderrahman Taha 04/11/2019"],"Cnd": ["(x-y-(3/2)*z<0)",""],"Component": ["Schwarz","Plan"],"Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],"Name": ["Models_Intersection"],"Xmax": ["4+4*sin(t*pi)","6"],"Xmin": ["-4+4*sin(t*pi)","-6"],"Ymax": ["4","6"],"Ymin": ["-4","-6"],"Zmax": ["4","6"],"Zmin": ["-4","-6"]
+                "Iso3D": {"Description": ["Models Intersection by Abderrahman Taha 04/11/2019"],
+                        "Cnd": ["(x-y-(3/2)*z<0)",""],
+                        "Component": ["Schwarz","Plan"],
+                        "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
+                        "Name": ["Models_Intersection"],
+                        "Xmax": ["4+4*sin(t*pi)","6"],
+                        "Xmin": ["-4+4*sin(t*pi)","-6"],
+                        "Ymax": ["4","6"],
+                        "Ymin": ["-4","-6"],
+                        "Zmax": ["4","6"],
+                        "Zmin": ["-4","-6"]
                 }
             }
         ]
@@ -130,8 +157,7 @@
             "Fx": ["-Sx(u,v,t)"],
             "Fy": ["Sy(u,v,t)"],
             "Fz": ["Sz(u,v,t)"],
-            "Grid": ["50",
-                "450"],
+            "Grid": ["50","450"],
             "Umax": ["pi"],
             "Umin": ["-pi"],
             "Vmax": ["2*pi"],
