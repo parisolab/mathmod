@@ -19,21 +19,27 @@
 ***************************************************************************/
 #define PI1 (double (314159265)/double (100000000))
 #include <vector>
+#include <math.h>
 
 static std::vector<double> tmpVector;
 
-double vectmem(const double* size)
+
+void freevectmem()
 {
     tmpVector.clear();
     tmpVector.shrink_to_fit();
-    tmpVector.resize((unsigned int) (size[0]));
-    return(1);
+}
+
+void vectmem(int size)
+{
+    freevectmem();
+    tmpVector.resize(size);
 }
 
 double Push(const double* pp)
 {
     tmpVector[int(pp[0])]=pp[1];
-    return(1);
+    return(pp[1]);
 }
 
 double Get(const double* pos)

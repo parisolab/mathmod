@@ -1784,11 +1784,11 @@ void DrawingOptions::OptionalParScriptFieldprocess(
 
 void DrawingOptions::BuildAllVect()
 {
-    const OptionnalIsoScriptFIELD optiso[] = {ISO_GRID, ISO_CND, ISO_CONST, ISO_FUNCT};
+    const OptionnalIsoScriptFIELD optiso[] = {ISO_GRID, ISO_VECT, ISO_CND, ISO_CONST, ISO_FUNCT};
     OptIsoFields = std::vector<OptionnalIsoScriptFIELD>(
                        optiso, optiso + sizeof(optiso) / sizeof(OptionnalIsoScriptFIELD));
 
-    const OptionnalParScriptFIELD optpar[] = {PAR_GRID, PAR_CND, PAR_CONST,
+    const OptionnalParScriptFIELD optpar[] = {PAR_GRID, PAR_VECT,PAR_CND, PAR_CONST,
                                               PAR_FUNCT
                                              };
     OptParFields = std::vector<OptionnalParScriptFIELD>(
