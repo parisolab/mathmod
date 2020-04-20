@@ -1548,7 +1548,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     {
     case ISO_VECT:
         arg = "Vect";
-        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->gridnotnull =
+        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->vectnotnull =
                          QObj[arg].isArray();
         break;
     case ISO_GRID:
@@ -3712,12 +3712,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     insertat(indexcurrentFormula, copyCurrentObject2, "Umax", ui.umax_2);
                     insertat(indexcurrentFormula, copyCurrentObject2, "Vmin", ui.vmin_2);
                     insertat(indexcurrentFormula, copyCurrentObject2, "Vmax", ui.vmax_2);
-                    if (!copyCurrentObject2["Grid"].isArray())
-                        copyCurrentObject2.remove("Grid");
-
-                    if (!copyCurrentObject2["Vetc"].isArray())
-                        copyCurrentObject2.remove("Vect");
-
                     copyCurrentObject["Param4D"] = copyCurrentObject2;
                 }
             }
