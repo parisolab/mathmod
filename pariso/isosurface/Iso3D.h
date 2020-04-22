@@ -78,7 +78,7 @@ public :
     std::string ImplicitFunction, Condition,
         XlimitSup, XlimitInf,
         YlimitSup, YlimitInf,
-        ZlimitSup, ZlimitInf, varliste;
+        ZlimitSup, ZlimitInf;
     uint componentsNumber;
     std::vector<double> x_Step, y_Step, z_Step;
     std::vector<ImplicitStructure> ImplicitStructs;
@@ -86,7 +86,7 @@ public :
     void DeleteMasterParsers();
     void AllocateMasterParsers();
     void InitMasterParsers();
-    inline ErrorMessage ParseExpression(std::string);
+    inline ErrorMessage ParseExpression();
     uint HowManyIsosurface(std::string,uint);
     uint HowManyVariables(std::string, uint);
     ErrorMessage ParserIso();

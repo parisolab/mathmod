@@ -21,31 +21,7 @@
 #include <vector>
 #include <math.h>
 
-static std::vector<double> tmpVector;
 
-
-void freevectmem()
-{
-    tmpVector.clear();
-    tmpVector.shrink_to_fit();
-}
-
-void vectmem(int size)
-{
-    freevectmem();
-    tmpVector.resize(size);
-}
-
-double Push(const double* pp)
-{
-    tmpVector[int(pp[0])]=pp[1];
-    return(pp[1]);
-}
-
-double Get(const double* pos)
-{
-    return(tmpVector[int(pos[0])]);
-}
 
 double maxim(double p1, double p2)
 {

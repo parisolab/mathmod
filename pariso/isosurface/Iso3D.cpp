@@ -37,11 +37,13 @@ std::vector<uint>  IndexPolyTabVector;
 
 static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
+static QElapsedTimer times;
 
+static std::vector<double> tmpVector;
 static double IsoComponentId=0;
 static double IsoThreadId=0;
+static int VectSize=0;
 
-static QElapsedTimer times;
 
 double CurrentIsoCmpId(const double* p)
 {
@@ -50,6 +52,31 @@ double CurrentIsoCmpId(const double* p)
         return IsoComponentId;
     else
         return IsoThreadId;
+}
+
+void freevectmem()
+{
+    tmpVector.clear();
+    tmpVector.shrink_to_fit();
+    VectSize=0;
+}
+
+void vectmem(int size)
+{
+    freevectmem();
+    VectSize=size*256;
+    tmpVector.resize(size*256);
+}
+
+double GetVal(const double* pos)
+{
+    return(tmpVector[(pos[0])]);
+}
+
+double Push(const double* pp)
+{
+    tmpVector[(pp[0])]=pp[1];
+    return(pp[1]);
 }
 
 extern double TurbulenceWorley(const double* p)
@@ -283,6 +310,7 @@ ErrorMessage  Iso3D::parse_expression2()
         {
             workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentIsoCmpId, 1);
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
+            workerthreads[nbthreads].Fct[ij].AddConstant("ThId", workerthreads[nbthreads].MyIndex);
         }
 
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
@@ -308,7 +336,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].Fct[ii].AddFunction("Push",Push, 2);
-            workerthreads[nbthreads].Fct[ii].AddFunction("Get",Get, 2);
+            workerthreads[nbthreads].Fct[ii].AddFunction("Get",GetVal, 1);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].Fct[ii].AddFunction("MarbleP",MarblePerlin, 4);
             for(uint jj=0; jj<ii; jj++)
@@ -329,6 +357,7 @@ ErrorMessage  Iso3D::parse_expression2()
         for(uint i=0; i<masterthread->componentsNumber; i++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("ThId", workerthreads[nbthreads].MyIndex);
 
 
             for(uint j=0; j<masterthread->ConstSize; j++)
@@ -355,7 +384,7 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("Push",Push, 2);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("Get",Get, 2);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("Get",GetVal, 1);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
 
@@ -374,7 +403,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, masterthread->varliste)) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, "x,y,z,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
@@ -727,6 +756,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     vals = new double[34*nbstack];
     Res  = new double[nbstack];
     vals[3]    = stepMorph;
+    //vals[4]    = double(MyIndex);
     uint taille=0;
     iStart = 0;
     iFinish = 0;
@@ -748,7 +778,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
     uint Totalpoints=(iFinish-iStart)*limitY*limitZ;
-    //****
+
     implicitFunctionParser[IsoIndex].AllocateStackMemory(Stack_Factor);
     for(uint i=iStart; i<iFinish; i+=nbX )
     {
@@ -783,7 +813,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 }
                 nbstack = nbX*nbY*nbZ;
                 // X, Y and Z arrays construction:
-
                 for(uint l=0; l<nbstack; l++)
                 {
                     vals[l*34  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
@@ -816,7 +845,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                             Results[sect] = Res[p];
                             GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
                             GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
-                            //for(int l=0; l<12; l++) GridVoxelVarPt[sect].Edge_Points[l] = -20;
                             p++;
                         }
                 //Signal emission:
@@ -834,7 +862,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             }
         }
     }
-
     delete[] vals;
     delete[] Res;
 }
@@ -946,7 +973,6 @@ void Iso3D::SaveIsoGLMap(uint indx)
 ErrorMessage IsoMasterThread::ParserIso()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    varliste = "x,y,z,t";
 
     initparser();
 
@@ -989,7 +1015,6 @@ ErrorMessage IsoMasterThread::ParserIso()
 
         for(uint i=0; i<FunctSize; i++)
         {
-
             for(uint j=0; j<i; j++)
                 if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
@@ -1078,7 +1103,6 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             NoiseParser->AddConstant(SliderNames[k], SliderValues[k]);
         }
-
     }
 
     //ImplicitFunction is composed of more than one isosurface:
@@ -1182,7 +1206,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
         implicitFunctionParser[i].AddFunction("Push",Push, 2);
-        implicitFunctionParser[i].AddFunction("Get",Get, 2);
+        implicitFunctionParser[i].AddFunction("Get",GetVal, 1);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
 
@@ -1191,11 +1215,11 @@ ErrorMessage IsoMasterThread::ParserIso()
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
     NoiseParser->AddFunction("MarbleP",MarblePerlin, 4);
 
-    return ParseExpression(varliste);
+    return ParseExpression();
 }
 
 ///+++++++++++++++++++++++++++++++++++++++++
-ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
+ErrorMessage IsoMasterThread::ParseExpression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     uint limitX = XYZgrid, limitY = XYZgrid, limitZ = XYZgrid;
@@ -1242,7 +1266,7 @@ ErrorMessage IsoMasterThread::ParseExpression(std::string VariableListe)
 
     for(uint i=0; i<componentsNumber; i++)
     {
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,VariableListe)) >= 0)
+        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,"x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;
@@ -1372,6 +1396,7 @@ void IsoMasterThread::InitMasterParsers()
     for(uint i=0; i<componentsNumber; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
+        implicitFunctionParser[i].AddConstant("ThId", MyIndex);
         ParisoConditionParser[i].AddConstant("pi", PI);
         xSupParser[i].AddConstant("pi", PI);
         ySupParser[i].AddConstant("pi", PI);
@@ -1388,6 +1413,7 @@ void IsoMasterThread::InitMasterParsers()
     for(uint i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
+        Fct[i].AddConstant("ThId", MyIndex);
         Fct[i].AddFunction("CmpId",CurrentIsoCmpId, 1);
         Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         Fct[i].AddFunction("fhelix1",fhelix1, 10);
@@ -1396,7 +1422,7 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         Fct[i].AddFunction("fmesh",fmesh, 8);
         Fct[i].AddFunction("Push",Push, 2);
-        Fct[i].AddFunction("Get",Get, 2);
+        Fct[i].AddFunction("Get",GetVal, 1);
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         Fct[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
