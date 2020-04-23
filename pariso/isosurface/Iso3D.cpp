@@ -74,7 +74,6 @@ void vectmem(int size)
 
 double GetVal(const double* p)
 {
-    return(tmpVector[(pos[0])]);
     psh[int(p[0])]=0;
     double tmp=tmpVector[(int(p[0]))*Stack_Factor+(gts[int(p[0])])];
     gts[int(p[0])]+=1;
