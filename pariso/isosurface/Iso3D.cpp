@@ -27,7 +27,7 @@ static double *Results;
 static uint NbVertexTmp = 0;
 static std::vector<float> NormOriginaltmpVector;
 uint NbTriangleIsoSurface,NbPointIsoMap;
-
+uint ThreadsNumber =4;
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 
@@ -43,8 +43,8 @@ static std::vector<double> tmpVector;
 static double IsoComponentId=0;
 static double IsoThreadId=0;
 static int VectSize=0;
-static int psh[4]={0,0,0,0};
-static int gts[4]={0,0,0,0};
+static std::vector<int> psh;
+static std::vector<int> gts;
 
 
 double CurrentIsoCmpId(const double* p)
@@ -60,19 +60,25 @@ void freevectmem()
 {
     tmpVector.clear();
     tmpVector.shrink_to_fit();
+    psh.clear();
+    psh.shrink_to_fit();
+    gts.clear();
+    gts.shrink_to_fit();
     VectSize=0;
-    for(int i=0; i<4; i++)
-        psh[i]=gts[i]=0;
 }
 
 void vectmem(int size)
 {
     freevectmem();
-    VectSize=size*500;
+    VectSize=size*ThreadsNumber*Stack_Factor;
     tmpVector.resize(VectSize);
+    psh.resize(ThreadsNumber);
+    gts.resize(ThreadsNumber);
+    for(uint i=0; i<ThreadsNumber; i++)
+        psh[i]=gts[i]=0;
 }
 
-double GetVal(const double* p)
+double GetVal(const double *p)
 {
     psh[int(p[0])]=0;
     double tmp=tmpVector[(int(p[0]))*Stack_Factor+(gts[int(p[0])])];
@@ -81,7 +87,7 @@ double GetVal(const double* p)
     return(tmp);
 }
 
-double Push(const double* p)
+double Push(const double *p)
 {
     gts[int(p[0])]=0;
     tmpVector[(int(p[0])*Stack_Factor+(psh[int(p[0])]))]=p[1];
@@ -90,7 +96,7 @@ double Push(const double* p)
     return(p[1]);
 }
 
-extern double TurbulenceWorley(const double* p)
+extern double TurbulenceWorley(const double *p)
 {
     return double (
                NoiseFunction->CellNoiseFunc(
@@ -103,7 +109,7 @@ extern double TurbulenceWorley(const double* p)
            );
 }
 
-double TurbulencePerlin(const double* p)
+double TurbulencePerlin(const double *p)
 {
     return double (
                PNoise->FractalNoise3D(
@@ -115,7 +121,7 @@ double TurbulencePerlin(const double* p)
                    float (p[5])));
 }
 
-double MarblePerlin(const double* p)
+double MarblePerlin(const double *p)
 {
     return double (
                PNoise->Marble(
@@ -261,7 +267,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
     uint OldWorkerThreadsNumber = WorkerThreadsNumber;
-    WorkerThreadsNumber = NewThreadsNumber;
+    WorkerThreadsNumber = ThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
@@ -438,7 +444,7 @@ Iso3D::Iso3D( uint nbThreads,
     Stack_Factor = factX*factY*factZ;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
-    WorkerThreadsNumber = nbThreads;
+    WorkerThreadsNumber = ThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
