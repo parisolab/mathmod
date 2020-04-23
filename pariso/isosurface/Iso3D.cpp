@@ -43,6 +43,8 @@ static std::vector<double> tmpVector;
 static double IsoComponentId=0;
 static double IsoThreadId=0;
 static int VectSize=0;
+static int psh[4]={0,0,0,0};
+static int gts[4]={0,0,0,0};
 
 
 double CurrentIsoCmpId(const double* p)
@@ -59,24 +61,34 @@ void freevectmem()
     tmpVector.clear();
     tmpVector.shrink_to_fit();
     VectSize=0;
+    for(int i=0; i<4; i++)
+        psh[i]=gts[i]=0;
 }
 
 void vectmem(int size)
 {
     freevectmem();
-    VectSize=size*256;
-    tmpVector.resize(size*256);
+    VectSize=size*500;
+    tmpVector.resize(VectSize);
 }
 
-double GetVal(const double* pos)
+double GetVal(const double* p)
 {
     return(tmpVector[(pos[0])]);
+    psh[int(p[0])]=0;
+    double tmp=tmpVector[(int(p[0]))*Stack_Factor+(gts[int(p[0])])];
+    gts[int(p[0])]+=1;
+    gts[int(p[0])]=gts[int(p[0])]%Stack_Factor;
+    return(tmp);
 }
 
-double Push(const double* pp)
+double Push(const double* p)
 {
-    tmpVector[(pp[0])]=pp[1];
-    return(pp[1]);
+    gts[int(p[0])]=0;
+    tmpVector[(int(p[0])*Stack_Factor+(psh[int(p[0])]))]=p[1];
+    psh[int(p[0])]+=1;
+    psh[int(p[0])]=psh[int(p[0])]%Stack_Factor;
+    return(p[1]);
 }
 
 extern double TurbulenceWorley(const double* p)
