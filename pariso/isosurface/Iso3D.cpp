@@ -41,7 +41,6 @@ static QElapsedTimer times;
 
 static std::vector<double> tmpVector;
 static double IsoComponentId=0;
-static double IsoThreadId=0;
 static int VectSize=0;
 static std::vector<int> psh;
 static std::vector<int> gts;
@@ -49,11 +48,7 @@ static std::vector<int> gts;
 
 double CurrentIsoCmpId(const double* p)
 {
-    int pp = int (p[0]);
-    if(pp==0)
-        return IsoComponentId;
-    else
-        return IsoThreadId;
+    return((int (p[0]))== 0 ? IsoComponentId:0);
 }
 
 void freevectmem()
