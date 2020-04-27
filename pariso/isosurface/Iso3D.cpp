@@ -322,7 +322,7 @@ ErrorMessage  Iso3D::parse_expression2()
         {
             workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentIsoCmpId, 1);
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
-            workerthreads[nbthreads].Fct[ij].AddConstant("ThId", workerthreads[nbthreads].MyIndex);
+            workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId", workerthreads[nbthreads].MyIndex);
         }
 
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
@@ -369,7 +369,7 @@ ErrorMessage  Iso3D::parse_expression2()
         for(uint i=0; i<masterthread->componentsNumber; i++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("ThId", workerthreads[nbthreads].MyIndex);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("ThreadId", workerthreads[nbthreads].MyIndex);
 
 
             for(uint j=0; j<masterthread->ConstSize; j++)
@@ -1408,7 +1408,7 @@ void IsoMasterThread::InitMasterParsers()
     for(uint i=0; i<componentsNumber; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
-        implicitFunctionParser[i].AddConstant("ThId", MyIndex);
+        implicitFunctionParser[i].AddConstant("ThreadId", MyIndex);
         ParisoConditionParser[i].AddConstant("pi", PI);
         xSupParser[i].AddConstant("pi", PI);
         ySupParser[i].AddConstant("pi", PI);
@@ -1425,7 +1425,7 @@ void IsoMasterThread::InitMasterParsers()
     for(uint i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
-        Fct[i].AddConstant("ThId", MyIndex);
+        Fct[i].AddConstant("ThreadId", MyIndex);
         Fct[i].AddFunction("CmpId",CurrentIsoCmpId, 1);
         Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         Fct[i].AddFunction("fhelix1",fhelix1, 10);
