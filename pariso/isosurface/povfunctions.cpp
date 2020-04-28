@@ -21,8 +21,6 @@
 #include <vector>
 #include <math.h>
 
-
-
 double maxim(double p1, double p2)
 {
     return p1 > p2 ? p1 : p2;

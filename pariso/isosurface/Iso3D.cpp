@@ -45,7 +45,6 @@ static int VectSize=0;
 static std::vector<int> psh;
 static std::vector<int> gts;
 
-
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
