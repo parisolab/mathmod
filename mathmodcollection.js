@@ -14754,57 +14754,58 @@
         }
         },
         {
-        "Iso3D": {
-        "Description": [
-          "Script by Abderrahman Taha to generate lattices having function definition F , thickness (T) and density (dx,dy,dz)"
-        ],
-         "Name": [
-           "SchwarzP_Lattice"
-        ],
-        "Const": [
-        "T=2/10",
-        "dx=5",
-        "dy=3",
-        "dz=3",
-        "m=1/1000",
-        "cx=1/10000"
-        ],
-        "Funct": [
-        "F=cos(x)+cos(y)+cos(z)",
-        "DFx=((F(x,y,z,t)-F(x+cx,y,z,t))/cx)",
-        "DFy=((F(x,y,z,t)-F(x,y+cx,z,t))/cx)",
-        "DFz=((F(x,y,z,t)-F(x,y,z+cx,t))/cx)",
-        "R=(sqrt(DFx(x,y,z,t)*DFx(x,y,z,t)+DFy(x,y,z,t)*DFy(x,y,z,t)+DFz(x,y,z,t)*DFz(x,y,z,t)))",
-        "G=(F(x-DFx(x,y,z,t)*T/R(x,y,z,t),y-DFy(x,y,z,t)*T/R(x,y,z,t),z-DFz(x,y,z,t)*T/R(x,y,z,t),t))",
-        "L=(F(x+DFx(x,y,z,t)*T/R(x,y,z,t),y+DFy(x,y,z,t)*T/R(x,y,z,t),z+DFz(x,y,z,t)*T/R(x,y,z,t),t))",
-        "Iso=(L(x,y,z,t)*G(x,y,z,t))",
-        "ExternalShape=(abs(x)+m<dx*pi & abs(y)+m<dy*pi & abs(z)+m<dz*pi)"
-        ],
-        "Fxyz": [
-        "if(ExternalShape(x,y,z,t) ,Iso(x,y,z,t),1)"
-        ],
-        "Component": [
-        "SchwarzP"
-        ],
-        "Xmax": [
-        "pi*dx"
-        ],
-        "Xmin": [
-        "-pi*dx"
-        ],
-        "Ymax": [
-        "pi*dy"
-        ],
-        "Ymin": [
-        "-pi*dy"
-        ],
-        "Zmax": [
-        "pi*dz"
-        ],
-        "Zmin": [
-        "-pi*dz"
-        ]
-        }
+            "Iso3D": {
+                "Description": [
+                    "Script by Abderrahman Taha (27/04/2020) to generate TPMS lattices with function definition F , thickness (T) and density (dx,dy,dz)"
+                ],
+                "Name": [
+                    "SchwarzP_Lattice"
+                ],
+                "Component": [
+                    "SchwarzP"
+                ],
+                "Const": [
+                    "T=3/10",
+                    "dx=5*pi",
+                    "dy=3*pi",
+                    "dz=3*pi",
+                    "m=1/1000",
+                    "c=1/10000"
+                ],
+                "Funct": [
+                    "F=cos(x)+cos(y)+cos(z)",
+                    "F1=cos(x)*sin(y)+sin(x)*cos(z)+cos(y)*sin(z)",
+                    "DFx=((F(x,y,z,t)-F(x+c,y,z,t))/c)",
+                    "DFy=((F(x,y,z,t)-F(x,y+c,z,t))/c)",
+                    "DFz=((F(x,y,z,t)-F(x,y,z+c,t))/c)",
+                    "Rapp=x/sqrt(x*x+y*y+z*z)",
+                    "G=((F(x-T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)))",
+                    "L=(F(x+T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
+                    "Iso=(L(x,y,z,t)*G(x,y,z,t))",
+                    "ExternalShape=(abs(x)+m<dx & abs(y)+m<dy & abs(z)+m<dz)"
+                ],
+                "Fxyz": [
+                    "if(ExternalShape(x,y,z,t) ,Iso(x,y,z,t),1)"
+                ],
+                "Xmax": [
+                    "dx"
+                ],
+                "Xmin": [
+                    "-dx"
+                ],
+                "Ymax": [
+                    "dy"
+                ],
+                "Ymin": [
+                    "-dy"
+                ],
+                "Zmax": [
+                    "dz"
+                ],
+                "Zmin": [
+                    "-dz"
+                ]
+            }
         },
         {
         "Iso3D": {
