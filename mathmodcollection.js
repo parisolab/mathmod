@@ -9140,11 +9140,11 @@
                 ],
                 "Component": ["SCosta"
                 ],
-                "Const": ["N=10","c=1/10000","th=1/10","Xval=15","Yval=20","Zval=20"
+                "Const": ["N=6","c=1/10000","th=1/10","Xval=15","Yval=20","Zval=20"
                 ],
                 "Funct": ["Scherk=sinh(x)*sinh(y)-(35/10)*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(2+N+(3/100)*exp((abs((9/10)*x)))),N*atan2(z,y),t)","DFx=((IsoExterior(x,y,z,t)-IsoExterior(x+c,y,z,t))/c)","DFy=((IsoExterior(x,y,z,t)-IsoExterior(x,y+c,z,t))/c)","DFz=((IsoExterior(x,y,z,t)-IsoExterior(x,y,z+c,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))","SCosta=if((sqrt(4*x*x+y*y+z*z) - 19)<0 & abs(x)<(295/10) ,ThickIsoExterior(x,y,z,t), 1)"
                 ],
-                "Fxyz": ["SCosta((55/100)*x,y,z,t)"
+                "Fxyz": ["-SCosta((55/100)*x,y,z,t)"
                 ],
                 "Xmax": ["Xval"
                 ],
@@ -16311,9 +16311,9 @@
          ],
         "Funct": [
           "Costa=(z*((x^2+y^2)-18-8*sin((-11+abs(z*13/10))/4)-18*exp((-12+abs(z*13/10))/2))-(x^2-y^2)) ",
-          "DFx=((Costa(x,y,z,t)-Costa(x+cx,y,z,t))/cx)",
-          "DFy=((Costa(x,y,z,t)-Costa(x,y+cx,z,t))/cx)",
-          "DFz=((Costa(x,y,z,t)-Costa(x,y,z+cx,t))/cx)",
+          "DFx=((Costa(x,y,z,t)-Costa(x+c,y,z,t))/c)",
+          "DFy=((Costa(x,y,z,t)-Costa(x,y+c,z,t))/c)",
+          "DFz=((Costa(x,y,z,t)-Costa(x,y,z+c,t))/c)",
           "Rapport=(x/sqrt(x*x+y*y+z*z))",
           "Iso3=Costa(x-T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
           "Iso2=Costa(x+T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y+T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z+T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)",
@@ -16326,8 +16326,7 @@
           "X=16",
           "Y=16",
           "Z=18",
-          "N=4",
-          "cx=1/100",
+          "c=1/100",
           "T=21/100",
           "k1=1",
           "k2=14/10"
