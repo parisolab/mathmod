@@ -59,16 +59,15 @@ double TurbulencePerlin2(const double* p)
                       float(p[5])));
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 Par3D::~Par3D()
 {
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void Par3D::emitUpdateMessageSignal()
 {
     emit UpdateMessageSignal(message);
 }
-//+++++++++++++++++++++++++++++++++++++++++
+
 ParWorkerThread::ParWorkerThread()
 {
     stepMorph = 0;
@@ -76,12 +75,10 @@ ParWorkerThread::ParWorkerThread()
     ParsersAllocated = false;
 }
 
-//++++++++++++++++++++++++++++++++++++
 ParWorkerThread::~ParWorkerThread()
 {
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 ParMasterThread::~ParMasterThread()
 {
     delete[] UsedFunct;
@@ -101,7 +98,6 @@ ParMasterThread::~ParMasterThread()
     ConstValues.clear();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 ParMasterThread::ParMasterThread()
 {
     activeMorph = -1;
@@ -113,25 +109,22 @@ ParMasterThread::ParMasterThread()
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
-//+++++++++++++++++++++++++++++++++++++++++
+
 Par3D::Par3D(uint nbThreads, uint nbGrid)
 {
     initialiser_parametres(nbThreads, nbGrid);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::run()
 {
     ParCompute(CurrentComponent, CurrentIndex);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::ParCompute(uint fctnb, uint idx)
 {
     calcul_objet(fctnb, idx);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
 {
     Ugrid = nbGrid;
@@ -181,7 +174,6 @@ void Par3D::initialiser_LineColumn(uint li, uint cl)
     }
 }
 
-//++++++++++++++++++++++++++++++++++++++++
 void  Par3D::rotation4()
 {
     mat_rotation4D.unit();
@@ -199,7 +191,6 @@ void  Par3D::rotation4()
     mat4D.mult(mat_rotation4D);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void  Par3D::boite_englobante4D(uint idx)
 {
     MINX =10^12;
@@ -265,7 +256,6 @@ void  Par3D::boite_englobante4D(uint idx)
         }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void  Par3D::Invert_boite_englobante4D(uint idx)
 {
     float decalage_xo  = -(MINX +MAXX)/2;
@@ -282,7 +272,6 @@ void  Par3D::Invert_boite_englobante4D(uint idx)
         }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Par3D::Anim_Rot4D (uint idx)
 {
     rotation4();
@@ -295,7 +284,6 @@ void Par3D::Anim_Rot4D (uint idx)
     Invert_boite_englobante4D(idx);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void  Par3D::calcul_points4(uint idx)
 {
     double tp1, tp2, tp3, tp4;
@@ -326,7 +314,6 @@ void  Par3D::calcul_points4(uint idx)
         }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++
 void  Par3D::project_4D_to_3D(uint idx)
 {
     double c4;
@@ -342,7 +329,6 @@ void  Par3D::project_4D_to_3D(uint idx)
         }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParMasterThread::AllocateParsersForMasterThread()
 {
     if(!ParsersAllocated)
@@ -389,7 +375,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::AllocateParsersForWorkerThread(uint nbcomposants, uint nbfunct)
 {
     if(!ParsersAllocated)
@@ -403,7 +388,6 @@ void ParWorkerThread::AllocateParsersForWorkerThread(uint nbcomposants, uint nbf
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParMasterThread::DeleteMasterParsers()
 {
     if(ParsersAllocated)
@@ -448,7 +432,6 @@ void ParMasterThread::DeleteMasterParsers()
     ConstValues.clear();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::DeleteWorkerParsers()
 {
     if(ParsersAllocated)
@@ -462,8 +445,6 @@ void ParWorkerThread::DeleteWorkerParsers()
     }
 }
 
-
-//+++++++++++++++++++++++++++++++++++++++++
 void ParMasterThread::InitMasterParsers()
 {
     DeleteMasterParsers();
@@ -926,7 +907,6 @@ ErrorMessage  Par3D::parse_expression2()
     return NodError;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -938,7 +918,7 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
-//+++++++++++++++++++++++++++++++++++++++++
+
 ErrorMessage Par3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -963,7 +943,6 @@ ErrorMessage Par3D::ThreadParsersCopy()
     return(parse_expression2());
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
 {
     std::string tmp, tmp2,tmp3;
