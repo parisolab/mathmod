@@ -124,32 +124,32 @@ double MarblePerlin(const double *p)
                    float (p[2]),
                    int (p[3])));
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void IsoWorkerThread::run()
 {
     IsoCompute(CurrentComponent);
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void Iso3D::run()
 {
     BuildIso();
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void IsoWorkerThread::emitMySignal()
 {
     emit mySignal(signalVal);
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void Iso3D::emitErrorSignal()
 {
     emit ErrorSignal(int(messageerror));
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void Iso3D::emitUpdateMessageSignal()
 {
     emit UpdateMessageSignal(message);
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void Iso3D::BuildIso()
 {
     IsoBuild(
@@ -162,7 +162,6 @@ void Iso3D::BuildIso()
         &(localScene->componentsinfos));
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 IsoMasterThread::IsoMasterThread()
 {
     ParisoCondition = -1;
@@ -180,7 +179,6 @@ IsoMasterThread::IsoMasterThread()
     componentsNumber = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::IsoMasterTable()
 {
     UsedFunct    = new bool[0];
@@ -246,7 +244,6 @@ IsoWorkerThread::IsoWorkerThread()
     StopCalculations = false;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -257,7 +254,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].GridVal = masterthread->GridVal;
     }
 }
-//+++++++++++++++++++++++++++++++++++++++
+
 void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
     uint OldWorkerThreadsNumber = WorkerThreadsNumber;
@@ -276,7 +273,6 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 }
 
-//+++++++++++++++++++++++++++++++++++++++
 ErrorMessage  Iso3D::IsoMorph()
 {
     ErrorMessage err = masterthread->ParserIso();
@@ -285,7 +281,6 @@ ErrorMessage  Iso3D::IsoMorph()
     return err;
 }
 
-//+++++++++++++++++++++++++++++++++++++++
 ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -425,7 +420,6 @@ ErrorMessage  Iso3D::parse_expression2()
     return NodError;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 Iso3D::Iso3D( uint nbThreads,
               uint nbGrid,
               uint factX,
@@ -457,7 +451,6 @@ Iso3D::Iso3D( uint nbThreads,
     }
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
 {
     std::string tmp, tmp2,tmp3;
@@ -526,7 +519,6 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
     return Nb_variables;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
 {
     std::string tmp, tmp2;
@@ -554,7 +546,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
         }
         return Nb_implicitfunction;
     }
-    //++++++++++++++++++
     else if(type == 1)  //xmin
     {
         ImplicitStructs[0].xmin = ImplicitFct;
@@ -712,7 +703,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     return 0;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -751,7 +741,6 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     double* vals;
@@ -877,7 +866,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     delete[] Res;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::ConstructIsoNormale(uint idx)
 {
     float val1, val2, val3, val4, val5, val6,
@@ -927,8 +915,6 @@ void Iso3D::ConstructIsoNormale(uint idx)
 
     }
 }
-
-///++++++++++++++++++++ OutPut The IsoSurface +++++++++++++++++++++++
 
 void Iso3D::SaveIsoGLMap(uint indx)
 {
@@ -980,7 +966,6 @@ void Iso3D::SaveIsoGLMap(uint indx)
     }
 }
 
-//++++++++++++++++++++++++++++++++++++++++++//
 ErrorMessage IsoMasterThread::ParserIso()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -1229,7 +1214,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     return ParseExpression();
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 ErrorMessage IsoMasterThread::ParseExpression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -1344,7 +1328,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
     return stdError;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::DeleteMasterParsers()
 {
     if(ParsersAllocated)
@@ -1390,7 +1373,6 @@ void IsoMasterThread::DeleteMasterParsers()
     FunctNames.clear();
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::DeleteWorkerParsers()
 {
     if(ParsersAllocated)
@@ -1401,7 +1383,6 @@ void IsoWorkerThread::DeleteWorkerParsers()
     }
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::InitMasterParsers()
 {
     for(uint i=0; i<componentsNumber; i++)
@@ -1469,7 +1450,6 @@ void IsoMasterThread::InitMasterParsers()
     GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::AllocateMasterParsers()
 {
     if(!ParsersAllocated)
@@ -1516,7 +1496,6 @@ void IsoMasterThread::AllocateMasterParsers()
     }
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::AllocateParsersForWorkerThread(uint nbcomp, uint nbfunct)
 {
     if(!ParsersAllocated)
@@ -1526,7 +1505,7 @@ void IsoWorkerThread::AllocateParsersForWorkerThread(uint nbcomp, uint nbfunct)
         ParsersAllocated = true;
     }
 }
-///+++++++++++++++++++++++++++++++++++++++++
+
 void IsoMasterThread::initgrid()
 {
     GridVal = XYZgrid;
@@ -1535,7 +1514,6 @@ void IsoMasterThread::initgrid()
             GridVal = std::max(GridVal, grid[fctnb]);
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void IsoMasterThread::initparser()
 {
     DeleteMasterParsers();
@@ -1544,14 +1522,12 @@ void IsoMasterThread::initparser()
     InitMasterParsers();
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void IsoWorkerThread::IsoCompute(uint fctnb)
 {
     (fctnb == 0) ? AllComponentTraited = true : AllComponentTraited = false;
     VoxelEvaluation(fctnb);
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
@@ -1560,7 +1536,6 @@ void Iso3D::stopcalculations(bool calculation)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
     copy->ParisoTriangle = origin->ParisoTriangle;
@@ -1587,7 +1562,6 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,
     uint **IndexPolyTabPt,
@@ -1851,7 +1825,6 @@ void Iso3D::IsoBuild (
     componentsPt->updateviewer = true;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::Setgrid(uint NewGridVal)
 {
     if(masterthread->gridnotnull)
@@ -1960,8 +1933,6 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     }
     delete[] ValCol;
 }
-
-///+++++++++++++++++++++++++++++++++++++++++
 
 uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
@@ -2314,13 +2285,10 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     return 1;
 }
 
-
-///+++++++++++++++++++++++++++++++++++++++++
 Iso3D::~Iso3D()
 {
 }
 
-///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 uint Iso3D::SetMiniMmeshStruct()
 {
     uint I, J, IJK, i, j, k, Index, lnew, iter, nbpl, iterpl;
@@ -2387,7 +2355,6 @@ uint Iso3D::SetMiniMmeshStruct()
     return 1;
 }
 
-///++++++++++++++++++++ ConstructIsoSurface +++++++++++++++++++++++++++
 uint Iso3D::ConstructIsoSurface()
 {
     uint Index, IndexFirstPoint, IndexSeconPoint, IndexThirdPoint;
@@ -2421,7 +2388,6 @@ uint Iso3D::ConstructIsoSurface()
     return 1;
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 uint Iso3D::PointEdgeComputation(uint isoindex)
 {
     uint index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
