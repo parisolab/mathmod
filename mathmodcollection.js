@@ -14378,7 +14378,8 @@
           "n=6",
           "P=3",
           "R=17/10",
-          "M=1"
+          "M=1",
+          "c=1/1000"
         ],
         "Funct": [
           "Scherk_2=(sinh(x)*sinh(y) - sin(z))",
@@ -14386,9 +14387,9 @@
           "Scherk_4=((sinh(x)*sinh(cos(pi/4)*x-sin(pi/4)*y)*sinh(cos(2*pi/4)*x-sin(2*pi/4)*y) *sinh(cos(3*pi/4)*x-sin(3*pi/4)*y) -cos(z) ) )",
           "Scherk_5=((sinh(x)*sinh(cos(pi/5)*x-sin(pi/5)*y)*sinh(cos(2*pi/5)*x-sin(2*pi/5)*y) *sinh(cos(3*pi/5)*x-sin(3*pi/5)*y) *sinh(cos(4*pi/5)*x-sin(4*pi/5)*y) -cos(z) ) )",
           "Iso=if((N=2),Scherk_2(x,y,z,t), if((N=3),Scherk_3(x,y,z,t),if((N=4),Scherk_4(x,y,z,t),Scherk_5(x,y,z,t))))",
-          "DFx=(Iso(x+(1/100),y,z,t)-Iso(x,y,z,t))*100",
-          "DFy=(Iso(x,y+(1/100),z,t)-Iso(x,y,z,t))*100",
-          "DFz=(Iso(x,y,z+(1/100),t)-Iso(x,y,z,t))*100",
+          "DFx=(Iso(x+c,y,z,t)-Iso(x,y,z,t))/c",
+          "DFy=(Iso(x,y+c,z,t)-Iso(x,y,z,t))/c",
+          "DFz=(Iso(x,y,z+c,t)-Iso(x,y,z,t))/c",
           "Rapport=(x/sqrt(x*x+y*y+z*z))",
           "Iso3=(Iso(x-th*Rapport(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapport(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapport(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t), t), t))",
           "Iso2=(Iso(x+th*Rapport(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapport(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapport(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t), t), t))",
