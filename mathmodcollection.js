@@ -124,6 +124,71 @@
         ]
     },
     {
+        "Iso3D": {
+            "Component": [
+                "InvertSchwarz"
+            ],
+            "Const": [
+                "c=1/1000",
+                "T=1/100",
+                "k=3/2",
+                "L=3/10"
+            ],
+            "Description": [
+                "InvertSchwarz  by Abderrahman Taha 05/05/2020"
+            ],
+            "Funct": [
+                "R=k*(x/(x*x+y*y+z*z))",
+                "Schwarz=cos(x)+cos(y)+cos(z)",
+                "InvertSchwarz = Schwarz(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) ",
+                "InvertSchwarz =(x*x+y*y+z*z-1/90)*min(InvertSchwarz(x,y,z,t), x*x+y*y+z*z-1/90)+1/5000 ",
+                "DFx=((InvertSchwarz(x+c,y,z,t)-InvertSchwarz(x,y,z,t))/c)",
+                "DFy=((InvertSchwarz(x,y+c,z,t)-InvertSchwarz(x,y,z,t))/c)",
+                "DFz=((InvertSchwarz(x,y,z+c,t)-InvertSchwarz(x,y,z,t))/c)",
+                "Rapp=(x/sqrt(x*x+y*y+z*z))",
+                "Iso=InvertSchwarz(x-t*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-t*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-t*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
+                "Iso=if( x*x*x*x+y*y*y*y+z*z*z*z-L*L*L*L<(0), Iso(x,y,z,T)*Iso(x,y,z,-T) , 1) "
+            ],
+            "Fxyz": [
+                "Iso(x,y,z,t)"
+            ],
+            "Grid": [
+                "450"
+            ],
+            "Name": [
+                "InvertSchwarz"
+            ],
+            "Xmax": [
+                " L"
+            ],
+            "Xmin": [
+                "0"
+            ],
+            "Ymax": [
+                " L"
+            ],
+            "Ymin": [
+                "-L"
+            ],
+            "Zmax": [
+                " L"
+            ],
+            "Zmin": [
+                "-L"
+            ]
+        },
+        "Texture": {
+            "Colors": [
+                "R=(7/10)",
+                "G=(7/10)",
+                "B=(7/10)",
+                "T=1"
+            ],
+            "Name": "Gray",
+            "Noise": ""
+        }
+    },
+    {
         "Param3D": {
         "Description": ["Tree Of Life by Abderrahman Taha 11/04/2020"
         ],
@@ -17637,7 +17702,6 @@
               ]
             }
           },
-
           {
             "Color": {
               "Name": "Red",
