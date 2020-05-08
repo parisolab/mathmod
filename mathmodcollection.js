@@ -125,6 +125,41 @@
     },
     {
         "Iso3D": {
+            "Description": ["Infinity Fabric by Abderrahman Taha 07/05/2020"],
+            "Name": ["Infinity_Fabric"],
+            "Component": ["Infinity"],
+            "Const": [
+                "c=1/1000",
+                "k=1/2",
+                "L=1/10"
+            ],
+            "Funct": [
+                "R=k*(x/(x*x+y*y+z*z))",
+                "PSkeletalGraph=cos(x)+cos(y)+cos(z)+0.51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1.47",
+                "InvertPSkeletalGraph= PSkeletalGraph(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) "
+            ],
+            "Fxyz": ["InvertPSkeletalGraph(x,y,z,t)"],
+            "Grid": ["350"],
+            "Xmax": ["L"],
+            "Xmin": ["-L"],
+            "Ymax": ["L"],
+            "Ymin": ["-L"],
+            "Zmax": ["L"],
+            "Zmin": ["-L"]
+        },
+        "Texture": {
+            "Colors": [
+                "R=(7/10)",
+                "G=(7/10)",
+                "B=(7/10)",
+                "T=1"
+            ],
+            "Name": "Gray",
+            "Noise": ""
+        }
+    },
+    {
+        "Iso3D": {
             "Description": ["InvertSchwarz  by Abderrahman Taha 05/05/2020"],
             "Name": ["InvertSchwarz"],
             "Component": ["InvertSchwarz"],
