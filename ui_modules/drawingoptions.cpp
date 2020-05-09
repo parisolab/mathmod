@@ -54,19 +54,20 @@ static const char *ScriptErrorMessage[] =
     "GRID_NBCOMPONENT_MISMATCH",                // 20
     "COMPONENT_NBCOMPONENT_MISMATCH",           // 21
     "CND_NBCOMPONENT_MISMATCH",                 // 22
-    "NBSLIDERS_OUT_OF_RANGE",                   // 27
-    "NBSLIDERSVALUES_OUT_OF_RANGE",             // 28
-    "VERTEX_TAB_MEM_OVERFLOW",                  // 29
-    "TRIANGLES_TAB_MEM_OVERFLOW",               // 30
-    "MINPOLY_TAB_MEM_OVERFLOW",                 // 31
-    "POLY_TAB_MEM_OVERFLOW",                    // 32
-    "CND_TAB_MEM_OVERFLOW",                     // 33
-    "CND_POL_MEM_OVERFLOW",                     // 34
-    "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 35
-    "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 36
-    "GRID_SUPERIOR_TO_GRIDMAX",                 // 37
-    "Vect_DIMENSION_ERROR",                     // 38
-    "Not enough memory available to complete this operation" // 38
+    "NBSLIDERS_OUT_OF_RANGE",                   // 23
+    "NBSLIDERSVALUES_OUT_OF_RANGE",             // 24
+    "VERTEX_TAB_MEM_OVERFLOW",                  // 25
+    "TRIANGLES_TAB_MEM_OVERFLOW",               // 26
+    "MINPOLY_TAB_MEM_OVERFLOW",                 // 27
+    "POLY_TAB_MEM_OVERFLOW",                    // 28
+    "CND_TAB_MEM_OVERFLOW",                     // 29
+    "CND_POL_MEM_OVERFLOW",                     // 30
+    "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 31
+    "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 32
+    "GRID_SUPERIOR_TO_GRIDMAX",                 // 33
+    "Vect_DIMENSION_ERROR",                     // 34
+    "Not enough memory available to complete this operation", // 35
+    "EMPTY_MANDATORY_FIELD"                     // 36
 };
 
 // --------------------------
