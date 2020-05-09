@@ -723,6 +723,15 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
 
     // Fxyz
     NbFxyz = (QObj["Fxyz"].toArray()).size();
+    for(int i=0; i<(QObj["Fxyz"].toArray()).size(); i++)
+    {
+        if((QObj["Fxyz"].toArray())[i].toString().replace(" ","") == "")
+        {
+            scriptErrorType = EMPTY_MANDATORY_FIELD;
+            ErrorMsg();
+            return false;
+        }
+    }
     if ((QObj["Xmax"].toArray()).size() != NbFxyz)
     {
         scriptErrorType = XMAX_NBCOMPONENT_MISMATCH;
