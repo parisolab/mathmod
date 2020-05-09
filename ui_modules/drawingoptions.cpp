@@ -716,6 +716,7 @@ void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
     }
 }
 
+// --------------------------
 QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
 {
     QString arg = "";
@@ -755,6 +756,7 @@ QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
     return(arg);
 }
 
+// --------------------------
 QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
 {
     QString arg = "";
@@ -791,6 +793,7 @@ QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
     return(arg);
 }
 
+// --------------------------
 bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const MandatoryIsoField &idx)
 {
     QString arg = MandatoryIsoFieldToQString(idx);
@@ -804,6 +807,7 @@ bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const Man
     return true;
 }
 
+// --------------------------
 bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const MandatoryParField &idx)
 {
     QString arg = MandatoryParFieldToQString(idx);
@@ -815,6 +819,7 @@ bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const Man
     return true;
 }
 
+// --------------------------
 bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
 {
     for (std::vector<MandatoryParField>::const_iterator it =
@@ -828,6 +833,7 @@ bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
     return true;
 }
 
+// --------------------------
 bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
 {
     for (std::vector<MandatoryIsoField>::const_iterator it =
@@ -841,6 +847,7 @@ bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
     return true;
 }
 
+// --------------------------
 bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
 {
     QJsonArray lst;
@@ -1100,6 +1107,7 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
     return true;
 }
 
+// --------------------------
 void DrawingOptions::LoadTexture(const QJsonObject &QObj,
                                  const ModelType &opt)
 {
@@ -1126,6 +1134,7 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
     MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 }
 
+// --------------------------
 void DrawingOptions::LoadPigment(const QJsonObject &QObj,
                                  const ModelType &opt)
 {
@@ -1424,6 +1433,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
     }
 }
 
+// --------------------------
 void DrawingOptions::updateCurrentTreestruct()
 {
     // Initialize the current Object struct
@@ -1469,6 +1479,7 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentParisoTreestruct.clear();
 }
 
+// --------------------------
 void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         const MandatoryParField &idx,
         const ModelType &mod)
@@ -1548,6 +1559,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
     }
 }
 
+// --------------------------
 void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
         const MandatoryIsoField &idx)
 {
@@ -1613,6 +1625,7 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
     }
 }
 
+// --------------------------
 void DrawingOptions::OptionalIsoScriptFieldprocess(
     const QJsonObject &QObj, OptionnalIsoScriptFIELD idx)
 {
@@ -1735,6 +1748,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     }
 }
 
+// --------------------------
 void DrawingOptions::OptionalParScriptFieldprocess(
     const QJsonObject &QObj, OptionnalParScriptFIELD idx)
 {
@@ -1857,6 +1871,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     }
 }
 
+// --------------------------
 void DrawingOptions::BuildAllVect()
 {
     const OptionnalIsoScriptFIELD optiso[] = {ISO_GRID, ISO_VECT, ISO_CND, ISO_CONST, ISO_FUNCT};
@@ -2087,6 +2102,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     }
     return (0);
 }
+
+// --------------------------
 void DrawingOptions::LoadMandatoryAndOptionnalFields(
     const QJsonObject &qobj, const ModelType &mod, bool loadtext,
     const QJsonObject &QTextureObj, bool loadpigm,
