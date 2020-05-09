@@ -755,21 +755,6 @@ QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
     return(arg);
 }
 
-bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const MandatoryIsoField &idx)
-{
-    QString arg = MandatoryIsoFieldToQString(idx);
-    for(int i=0; i<(QObj[arg].toArray()).size(); i++)
-    {
-        if((QObj[arg].toArray())[i].toString().replace(" ","") == "")
-        {
-            scriptErrorType = EMPTY_MANDATORY_FIELD;
-            ErrorMsg();
-            return false;
-        }
-    }
-    return true;
-}
-
 QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
 {
     QString arg = "";
@@ -806,17 +791,26 @@ QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
     return(arg);
 }
 
+bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const MandatoryIsoField &idx)
+{
+    QString arg = MandatoryIsoFieldToQString(idx);
+    for(int i=0; i<(QObj[arg].toArray()).size(); i++)
+    {
+        if((QObj[arg].toArray())[i].toString().replace(" ","") == "")
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const MandatoryParField &idx)
 {
     QString arg = MandatoryParFieldToQString(idx);
     for(int i=0; i<(QObj[arg].toArray()).size(); i++)
     {
         if((QObj[arg].toArray())[i].toString().replace(" ","") == "")
-        {
-            scriptErrorType = EMPTY_MANDATORY_FIELD;
-            ErrorMsg();
             return false;
-        }
     }
     return true;
 }
@@ -846,6 +840,7 @@ bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
     }
     return true;
 }
+
 bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
 {
     QJsonArray lst;
@@ -926,7 +921,6 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
                 return false;
             }
     }
-
     if (((QObj["Cnd"].toArray()).size() > 0) &&
             ((QObj["Cnd"].toArray()).size() != NbFxyz))
     {
@@ -934,7 +928,6 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     return true;
 }
 
@@ -1480,42 +1473,8 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         const MandatoryParField &idx,
         const ModelType &mod)
 {
-    QString result, arg = "";
+    QString result, arg = MandatoryParFieldToQString(idx);
     QJsonArray lst;
-    switch (idx)
-    {
-    case PAR_FX:
-        arg = "Fx";
-        break;
-    case PAR_FY:
-        arg = "Fy";
-        break;
-    case PAR_FZ:
-        arg = "Fz";
-        break;
-    case PAR_FW:
-        if (mod == PAR_4D_TYPE)
-            arg = "Fw";
-        break;
-    case PAR_UMAX:
-        arg = "Umax";
-        break;
-    case PAR_UMIN:
-        arg = "Umin";
-        break;
-    case PAR_VMAX:
-        arg = "Vmax";
-        break;
-    case PAR_VMIN:
-        arg = "Vmin";
-        break;
-    case PAR_NAME:
-        arg = "Name";
-        break;
-    case PAR_COMP:
-        arg = "Component";
-        break;
-    }
 
     lst = QObj[arg].toArray();
     ObjArrayToString(lst, result);
@@ -1592,38 +1551,8 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
 void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
         const MandatoryIsoField &idx)
 {
-    QString result, arg = "";
+    QString result, arg = MandatoryIsoFieldToQString(idx);
     QJsonArray lst;
-    switch (idx)
-    {
-    case ISO_FXYZ:
-        arg = "Fxyz";
-        break;
-    case ISO_XMAX:
-        arg = "Xmax";
-        break;
-    case ISO_YMAX:
-        arg = "Ymax";
-        break;
-    case ISO_ZMAX:
-        arg = "Zmax";
-        break;
-    case ISO_XMIN:
-        arg = "Xmin";
-        break;
-    case ISO_YMIN:
-        arg = "Ymin";
-        break;
-    case ISO_ZMIN:
-        arg = "Zmin";
-        break;
-    case ISO_NAME:
-        arg = "Name";
-        break;
-    case ISO_COMP:
-        arg = "Component";
-        break;
-    }
 
     lst = QObj[arg].toArray();
     ObjArrayToString(lst, result);
