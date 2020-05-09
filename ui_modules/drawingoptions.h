@@ -174,6 +174,12 @@ public slots:
                        bool Inspect = true);
     bool VerifiedJsonModel(const QJsonObject &, bool Inspect = true);
     bool VerifiedIsoJsonModel(const QJsonObject &);
+    bool VerifyParEmptySpace(const QJsonObject &);
+    bool VerifyIsoEmptySpace(const QJsonObject &);
+    bool VerifyParFieldEmptySpace(const QJsonObject &, const MandatoryParField &);
+    QString MandatoryParFieldToQString(const MandatoryParField &);
+    bool VerifyIsoFieldEmptySpace(const QJsonObject &, const MandatoryIsoField &);
+    QString MandatoryIsoFieldToQString(const MandatoryIsoField &);
     bool VerifiedParJsonModel(const QJsonObject &);
     void AddObjectToMySelectionTree();
     void AddIsoObjectToTree(QTreeWidgetItem *, TreeStruct &);

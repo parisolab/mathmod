@@ -716,22 +716,150 @@ void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
     }
 }
 
-bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
+QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
 {
-    QJsonArray lst;
-    int NbFxyz;
-
-    // Fxyz
-    NbFxyz = (QObj["Fxyz"].toArray()).size();
-    for(int i=0; i<(QObj["Fxyz"].toArray()).size(); i++)
+    QString arg = "";
+    switch (idx)
     {
-        if((QObj["Fxyz"].toArray())[i].toString().replace(" ","") == "")
+    case PAR_FX:
+        arg = "Fx";
+        break;
+    case PAR_FY:
+        arg = "Fy";
+        break;
+    case PAR_FZ:
+        arg = "Fz";
+        break;
+    case PAR_FW:
+        arg = "Fw";
+        break;
+    case PAR_UMAX:
+        arg = "Umax";
+        break;
+    case PAR_UMIN:
+        arg = "Umin";
+        break;
+    case PAR_VMAX:
+        arg = "Vmax";
+        break;
+    case PAR_VMIN:
+        arg = "Vmin";
+        break;
+    case PAR_NAME:
+        arg = "Name";
+        break;
+    case PAR_COMP:
+        arg = "Component";
+        break;
+    }
+    return(arg);
+}
+
+bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const MandatoryIsoField &idx)
+{
+    QString arg = MandatoryIsoFieldToQString(idx);
+    for(int i=0; i<(QObj[arg].toArray()).size(); i++)
+    {
+        if((QObj[arg].toArray())[i].toString().replace(" ","") == "")
         {
             scriptErrorType = EMPTY_MANDATORY_FIELD;
             ErrorMsg();
             return false;
         }
     }
+    return true;
+}
+
+QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
+{
+    QString arg = "";
+    switch (idx)
+    {
+    case ISO_FXYZ:
+        arg = "Fxyz";
+        break;
+    case ISO_XMAX:
+        arg = "Xmax";
+        break;
+    case ISO_YMAX:
+        arg = "Ymax";
+        break;
+    case ISO_ZMAX:
+        arg = "Zmax";
+        break;
+    case ISO_XMIN:
+        arg = "Xmin";
+        break;
+    case ISO_YMIN:
+        arg = "Ymin";
+        break;
+    case ISO_ZMIN:
+        arg = "Zmin";
+        break;
+    case ISO_NAME:
+        arg = "Name";
+        break;
+    case ISO_COMP:
+        arg = "Component";
+        break;
+    }
+    return(arg);
+}
+
+bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const MandatoryParField &idx)
+{
+    QString arg = MandatoryParFieldToQString(idx);
+    for(int i=0; i<(QObj[arg].toArray()).size(); i++)
+    {
+        if((QObj[arg].toArray())[i].toString().replace(" ","") == "")
+        {
+            scriptErrorType = EMPTY_MANDATORY_FIELD;
+            ErrorMsg();
+            return false;
+        }
+    }
+    return true;
+}
+
+bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
+{
+    for (std::vector<MandatoryParField>::const_iterator it =
+                MandParFields.begin();
+            it != MandParFields.end(); ++it)
+    {
+        MandatoryParField Opt = *it;
+        if(!VerifyParFieldEmptySpace(QObj, Opt))
+            return false;
+    }
+    return true;
+}
+
+bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
+{
+    for (std::vector<MandatoryIsoField>::const_iterator it =
+                MandIsoFields.begin();
+            it != MandIsoFields.end(); ++it)
+    {
+        MandatoryIsoField Opt = *it;
+        if(!VerifyIsoFieldEmptySpace(QObj, Opt))
+            return false;
+    }
+    return true;
+}
+bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
+{
+    QJsonArray lst;
+    int NbFxyz;
+
+    if (!VerifyIsoEmptySpace(QObj))
+    {
+        scriptErrorType = EMPTY_MANDATORY_FIELD;
+        ErrorMsg();
+        return false;
+    }
+
+    // Fxyz
+    NbFxyz = (QObj["Fxyz"].toArray()).size();
     if ((QObj["Xmax"].toArray()).size() != NbFxyz)
     {
         scriptErrorType = XMAX_NBCOMPONENT_MISMATCH;
@@ -815,6 +943,14 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
 {
     QJsonArray lst;
     int NbFx;
+
+    if (!VerifyParEmptySpace(QObj))
+    {
+        scriptErrorType = EMPTY_MANDATORY_FIELD;
+        ErrorMsg();
+        return false;
+    }
+
     // Fx
     NbFx = (QObj["Fx"].toArray()).size();
     // Fy
