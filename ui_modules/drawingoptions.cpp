@@ -471,6 +471,7 @@ void DrawingOptions::UpdateTreeObject()
         }
     }
 }
+
 // --------------------------
 void DrawingOptions::UpdatePar4DModelDetailsPage(TreeStruct &currentstruct)
 {
