@@ -125,7 +125,7 @@
     },
     {
         "Iso3D": {
-            "Description": ["Pseudo Lawson_CMC Surfaces by Abderrahman Taha 09/05/2020"],
+            "Description": ["Pseudo Lawson_CMC Surfaces by Abderrahman Taha 10/05/2020"],
             "Name": ["Lawson_CMC"],
             "Component": ["Lawson_CMC"],
             "Const": [
