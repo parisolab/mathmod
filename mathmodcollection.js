@@ -181,7 +181,7 @@
             "Funct": [
                 "R=k*(x/(x*x+y*y+z*z))",
                 "PSkeletalGraph=cos(x)+cos(y)+cos(z)+(51/100)*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+(147/100)",
-                "InvertPSkeletalGraph= PSkeletalGraph(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) "
+                "InvertPSkeletalGraph = PSkeletalGraph(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t)"
             ],
             "Fxyz": ["InvertPSkeletalGraph(x,y,z,t)"],
             "Grid": ["350"],
@@ -273,7 +273,7 @@
         ]
         },
         "Texture": {
-        "Colors": ["R=if(cmpId=0, 10/10, 7/10)","G=7/10","B=if(cmpId=0, 1/10, 7/10)","T=if(cmpId=0, 10/10, 1)"
+        "Colors": ["R=if(cmpId=(0), (1), (7/10))","G=7/10","B=if(cmpId=(0), (1/10), (7/10))","T=if(cmpId=(0), (1), (1))"
         ],
         "Name": "Gray",
         "Noise": ""
