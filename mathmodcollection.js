@@ -289,7 +289,7 @@
                 "r0=7",
                 "dv=(1/1000)"],
             "Funct": ["Fx =(-22*cos(v)-128*sin(v)-44*cos(3*v)-78*sin(3*v))/80",
-                "Fy =(-10*cos(2*v)-27*sin(2*v)+38 *cos(4*v)+46 *sin(4*v))/80",
+                "Fy =(-10*cos(2*v)-27*sin(2*v)+38 *cos(4*v)+46*sin(4*v))/80",
                 "Fz =(70*cos(3*v)-40*sin(3*v))/100",
                 "DFxv = (Fx(u,v+dv,t) - Fx(u,v,t))/dv",
                 "DFyv = (Fy(u,v+dv,t) - Fy(u,v,t))/dv",
@@ -322,56 +322,38 @@
     },
     {
         "Param3D": {
-            "Description": ["Twisted_Multisided_Torus by Abderrahman Taha 01/01/2020"
-            ],
-            "Name": ["Twisted_Multisided_Torus"
-            ],
-            "Component": ["knot"
-            ],
+            "Description": ["Twisted_Multisided_Torus by Abderrahman Taha 01/01/2020"],
+            "Name": ["Twisted_Multisided_Torus"],
+            "Component": ["knot"],
             "Const": ["N=5","M=16","P=13","k=5","k0=5","k1=2","L=(3/2)","r0=6","dv=(1/100)","P=5","MM=10","p=7","q=2","R=3","r=1","r0=20","r00=30","dv=1/1000"
             ],
             "Funct": ["Rapp = (u/sqrt(u*u+v*v+t*t))","Bx = 1/sqrt(u*u+v*v+t*t)","Fx = (cos(q*v)*(R+(r/10)*cos(p*v))) + (r0/100)*Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v)))*cos(u) + (r0/100)*((R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))) * Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v)))) - (p*r/10)*cos(p*v) * Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","Fy = (sin(q*v)*(R+(r/10)*cos(p*v))) + (r0/100)*Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v)))*cos(u) + (r0/100)*((p*r/10)*cos(p*v) * Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))) - (-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))) * Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v)))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","Fz = (r/10)*(sin(p*v)) + (r0/100)*Rapp((-(p*p*r/10)*sin(p*v)),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))))*cos(u) + (r0/100)*((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))) * Rapp((-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))) - (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))) * Rapp((-R*q*q*cos(q*v)+(r/10)*(-q*q*cos(q*v)*cos(p*v)+p*q*sin(q*v)*sin(p*v)+p*q*sin(q*v)*sin(p*v)-p*p*cos(q*v)*cos(p*v))),(-R*q*q*sin(q*v)+(r/10)*(-q*q*sin(q*v)*cos(p*v)-p*q*cos(q*v)*sin(p*v)-q*p*cos(q*v)*sin(p*v)-p*p*sin(q*v)*cos(p*v))),(-(p*p*r/10)*sin(p*v))))*Bx((-R*q*sin(q*v)+(r/10)*(-q*sin(q*v)*cos(p*v)-p*cos(q*v)*sin(p*v))), (R*q*cos(q*v) +(r/10)*( q*cos(q*v)*cos(p*v)-p*sin(q*v)*sin(p*v))), (p*r/10)*cos(p*v))*sin(u)","DFxv = (Fx(u,v+dv,t) - Fx(u,v,t))/dv","DFyv = (Fy(u,v+dv,t) - Fy(u,v,t))/dv","DFzv = (Fz(u,v+dv,t) - Fz(u,v,t))/dv","DFxv2 = (DFxv(u,v+dv,t) - DFxv(u,v,t))/dv","DFyv2 = (DFyv(u,v+dv,t) - DFyv(u,v,t))/dv","DFzv2 = (DFzv(u,v+dv,t) - DFzv(u,v,t))/dv","Rapp = (u/sqrt(u*u+v*v+t*t))","Nx = Rapp(DFxv2(u,v,t),DFyv2(u,v,t),DFzv2(u,v,t))","Ny = Rapp(DFyv2(u,v,t),DFxv2(u,v,t),DFzv2(u,v,t))","Nz = Rapp(DFzv2(u,v,t),DFyv2(u,v,t),DFxv2(u,v,t))","Bx = 1/sqrt(u*u+v*v+t*t)","Binx = (DFyv(u,v,t) * Nz(u,v,t) - DFzv(u,v,t) * Ny(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","Biny = (DFzv(u,v,t) * Nx(u,v,t) - DFxv(u,v,t) * Nz(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","Binz = (DFxv(u,v,t) * Ny(u,v,t) - DFyv(u,v,t) * Nx(u,v,t))*Bx(DFxv(u,v,t), DFyv(u,v,t), DFzv(u,v,t))","S = (r0/100)*((k0-1)*cos(u+k1*t) + cos((k0-1)*u+k1*t))","C = (r0/100)*((k0-1)*sin(u+k1*t) - sin((k0-1)*u+k1*t))","Sx = Fx(pi,v,t) + Nx(pi,v,t)*C(u,v,t) + Binx(pi,v,t)*S(u,v,t)","Sy = Fy(pi,v,t) + Ny(pi,v,t)*C(u,v,t) + Biny(pi,v,t)*S(u,v,t)","Sz = Fz(pi,v,t) + Nz(pi,v,t)*C(u,v,t) + Binz(pi,v,t)*S(u,v,t)"
             ],
-            "Fx": ["Sx(u,v,t)"
-            ],
-            "Fy": ["Sy(u,v,t)"
-            ],
-            "Fz": ["Sz(u,v,t)"
-            ],
-            "Grid": ["80","200"
-            ],
-            "Umax": ["pi"
-            ],
-            "Umin": ["-pi"
-            ],
-            "Vmax": ["2*pi"
-            ],
-            "Vmin": ["0"
-            ]
+            "Fx": ["Sx(u,v,t)"],
+            "Fy": ["Sy(u,v,t)"],
+            "Fz": ["Sz(u,v,t)"],
+            "Grid": ["80","200"],
+            "Umax": ["pi"],
+            "Umin": ["-pi"],
+            "Vmax": ["2*pi"],
+            "Vmin": ["0"]
         },
         "Sliders": {
-            "Max": ["20","20","10","50","100"
-            ],
-            "Min": ["0","0","0","0","0"
-            ],
-            "Name": ["p","q","R","r","r0"
-            ],
-            "Position": ["5","1","2","7","11"
-            ],
-            "Step": ["1","1","1","1","1"
-            ]
+            "Max": ["20","20","10","50","100"],
+            "Min": ["0","0","0","0","0"],
+            "Name": ["p","q","R","r","r0"],
+            "Position": ["5","1","2","7","11"],
+            "Step": ["1","1","1","1","1"]
         },
         "Texture": {
-            "Colors": ["R=abs(cos(u))","G=abs(cos(v))","B=abs(sin(v)+sin(u))","T=1"
-            ],
+            "Colors": ["R=abs(cos(u))","G=abs(cos(v))","B=abs(sin(v)+sin(u))","T=1"],
             "Name": "Rainbow",
             "Noise": ""
         }
     },
     {
         "Param3D": {
-            "Description": ["Apples on Moebius by Abderrahman Taha 24/03/2019"
-            ],
+            "Description": ["Apples on Moebius by Abderrahman Taha 24/03/2019"],
             "Name": ["Apples_on_Moebius"
             ],
             "Funct": ["Yx=r0*cos(u)*(4+(36/10)*cos(v))","Yy=r0*sin(u)*(4+(36/10)*cos(v))","Yz=r0*((cos(v)+sin(v)-1)*(1+sin(v))*log(1-pi*v/10)+(75/10)*sin(v))","Fx=cos(v)+u*cos(v/2+t/P)*cos(v)","Fy=sin(v)+u*cos(v/2+t/P)*sin(v)","Fz=u*sin(v/2+t/P)","Fx=Fx(u,v+if((CmpId(0)%N)=0|((CmpId(0)%N)=3),(t/k0),(0)),t)","Fy=Fy(u,v+if((CmpId(0)%N)=0|((CmpId(0)%N)=3),(t/k0),(0)),t)","Fz=Fz(u,v+if((CmpId(0)%N)=0|((CmpId(0)%N)=3),(t/k0),(0)),t)","Rapp=u/sqrt(u*u+v*v+t*t)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","n1=n1(u1min+(CmpId(0)%N)*Gu, v1min +(floor(CmpId(0)/N))*Gv,t)","n2=n2(u1min + (CmpId(0)%N)*Gu, v1min+(floor(CmpId(0)/N ))*Gv,t)","n3=n3(u1min+(CmpId(0)%N)*Gu,v1min+(floor(CmpId(0)/N ))*Gv,t)","Nx=Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Ny=Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Nz=Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))","n01=0","n02=0","n03=1","n1=Rapp(n01(u,v,t),n02(u,v,t),n03(u,v,t))","n2=Rapp(n02(u,v,t),n03(u,v,t),n01(u,v,t))","n3=Rapp(n03(u,v,t),n01(u,v,t),n02(u,v,t))","u1=(n2(u,v,t)*Nz(u,v,t)-n3(u,v,t)*Ny(u,v,t))","u2=(n3(u,v,t)*Nx(u,v,t)-n1(u,v,t)*Nz(u,v,t))","u3=(n1(u,v,t)*Ny(u,v,t)-n2(u,v,t)*Nx(u,v,t))","U1=Rapp(u1(u,v,t),u2(u,v,t),u3(u,v,t))","U2=Rapp(u2(u,v,t),u3(u,v,t),u1(u,v,t))","U3=Rapp(u3(u,v,t),u1(u,v,t),u2(u,v,t))","Angle=-atan2(Nz(u,v,t), sqrt(Nx(u,v,t)^2+ Ny(u,v,t)^2))+pi/2","c=cos(Angle(u,v,t))","s=sin(Angle(u,v,t))","S0x=Yx(u,v,t)","S0y=Yy(u,v,t)","S0z=Yz(u,v,t) ","Sx=(U1(u,v,t)^2*(1-c(u,v,t))+c(u,v,t)) * S0x(u,v,t)+(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))-U3(u,v,t)*s(u,v,t))* S0y(u,v,t)+(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U2(u,v,t)*s(u,v,t))* S0z(u,v,t)+Fx(u1min+(CmpId(0)%N)*Gu,v1min +(floor(CmpId(0)/N) )*Gv,t)","Sy=(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))+U3(u,v,t)*s(u,v,t))*S0x(u,v,t)   + (U2(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0y(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U1(u,v,t)*s(u,v,t))* S0z(u,v,t) + Fy(u1min+(CmpId(0)%N)*Gu,v1min +(floor(CmpId(0)/N) )*Gv,t)","Sz=(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U2(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U1(u,v,t)*s(u,v,t))* S0y(u,v,t)+(U3(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+c(u,v,t))* S0z(u,v,t)+Fz(u1min+(CmpId(0)%N)*Gu,v1min +(floor(CmpId(0)/N))*Gv,t)"
