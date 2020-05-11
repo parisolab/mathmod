@@ -180,7 +180,7 @@
             ],
             "Funct": [
                 "R=k*(x/(x*x+y*y+z*z))",
-                "PSkeletalGraph=cos(x)+cos(y)+cos(z)+0.51*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+1.47",
+                "PSkeletalGraph=cos(x)+cos(y)+cos(z)+(51/100)*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+(147/100)",
                 "InvertPSkeletalGraph= PSkeletalGraph(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) "
             ],
             "Fxyz": ["InvertPSkeletalGraph(x,y,z,t)"],
@@ -223,7 +223,7 @@
                 "DFz=((InvertSchwarz(x,y,z+c,t)-InvertSchwarz(x,y,z,t))/c)",
                 "Rapp=(x/sqrt(x*x+y*y+z*z))",
                 "Iso=InvertSchwarz(x-t*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-t*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-t*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
-                "Iso=if( x*x*x*x+y*y*y*y+z*z*z*z-L*L*L*L<(0), Iso(x,y,z,T)*Iso(x,y,z,-T) , 1) "],
+                "Iso=if( x*x*x*x+y*y*y*y+z*z*z*z-L*L*L*L<(0), Iso(x,y,z,T)*Iso(x,y,z,-T) , (1)) "],
             "Fxyz": ["Iso(x,y,z,t)"],
             "Grid": ["250"],
             "Xmax": [" L"],
