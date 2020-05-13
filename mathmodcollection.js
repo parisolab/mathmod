@@ -357,35 +357,22 @@
     },
     {
         "Param3D": {
-        "Description": ["Basket by Abderrahman Taha 11/10/2018"
-        ],
-        "Name": ["Basket"
-        ],
-        "Component": ["Basket"
-        ],
-        "Const": ["d=(33/1000)","k=33","umin=0","umax=2*pi","vmin=0","vmax=2*pi","du=1/10000","dv=1/10000"
-        ],
-        "Funct": ["Fx=(u/4)*sin(k*u)+v","Fy=(u/4)*cos(k*u)+v","Fz=exp((u^(185/100))/55)+v","Rapp=u/sqrt(u*u+v*v+t*t)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","F2x=Fx(u,(0),t)","F2y=Fy(u,(0),t)","F2z=Fz(u,(0),t)","DF2xu=DFxu(u,(0),t)","DF2yu=DFyu(u,(0),t)","DF2zu=DFzu(u,(0),t)","DF2xu2=n1(u,(0),t)","DF2yu2=n2(u,(0),t)","DF2zu2=n3(u,(0),t)","Nxu=Rapp(DF2xu2(u,v,t),DF2yu2(u,v,t),DF2zu2(u,v,t))","Nyu=Rapp(DF2yu2(u,v,t),DF2xu2(u,v,t),DF2zu2(u,v,t))","Nzu=Rapp(DF2zu2(u,v,t),DF2yu2(u,v,t),DF2xu2(u,v,t))","Binxu=(DF2yu(u,v,t)*Nzu(u,v,t)-DF2zu(u,v,t)*Nyu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binyu=(DF2zu(u,v,t)*Nxu(u,v,t)-DF2xu(u,v,t)*Nzu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binzu=(DF2xu(u,v,t)*Nyu(u,v,t)-DF2yu(u,v,t)*Nxu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Tx=F2x(u,v,t)+d*(Nxu(u,v,t)*cos(v)+Binxu(u,v,t)*sin(v))","Ty=F2y(u,v,t)+d*(Nyu(u,v,t)*cos(v)+Binyu(u,v,t)*sin(v))","Tz=F2z(u,v,t)+d*(Nzu(u,v,t)*cos(v)+Binzu(u,v,t)*sin(v))"
-        ],
-        "Fx": ["Tx(u,v,t)"
-        ],
-        "Fy": ["Ty(u,v,t)"
-        ],
-        "Fz": ["Tz(u,v,t)"
-        ],
-        "Grid": ["40000","20"
-        ],
-        "Umax": ["umax"
-        ],
-        "Umin": ["umin"
-        ],
-        "Vmax": ["vmax"
-        ],
+        "Description": ["Basket by Abderrahman Taha 11/10/2018"],
+        "Name": ["Basket"],
+        "Component": ["Basket"],
+        "Const": ["d=(33/1000)","k=33","umin=0","umax=2*pi","vmin=0","vmax=2*pi","du=1/10000","dv=1/10000"],
+        "Funct": ["Fx=(u/4)*sin(k*u)+v","Fy=(u/4)*cos(k*u)+v","Fz=exp((u^(185/100))/55)+v","Rapp=u/sqrt(u*u+v*v+t*t)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","F2x=Fx(u,(0),t)","F2y=Fy(u,(0),t)","F2z=Fz(u,(0),t)","DF2xu=DFxu(u,(0),t)","DF2yu=DFyu(u,(0),t)","DF2zu=DFzu(u,(0),t)","DF2xu2=n1(u,(0),t)","DF2yu2=n2(u,(0),t)","DF2zu2=n3(u,(0),t)","Nxu=Rapp(DF2xu2(u,v,t),DF2yu2(u,v,t),DF2zu2(u,v,t))","Nyu=Rapp(DF2yu2(u,v,t),DF2xu2(u,v,t),DF2zu2(u,v,t))","Nzu=Rapp(DF2zu2(u,v,t),DF2yu2(u,v,t),DF2xu2(u,v,t))","Binxu=(DF2yu(u,v,t)*Nzu(u,v,t)-DF2zu(u,v,t)*Nyu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binyu=(DF2zu(u,v,t)*Nxu(u,v,t)-DF2xu(u,v,t)*Nzu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binzu=(DF2xu(u,v,t)*Nyu(u,v,t)-DF2yu(u,v,t)*Nxu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Tx=F2x(u,v,t)+d*(Nxu(u,v,t)*cos(v)+Binxu(u,v,t)*sin(v))","Ty=F2y(u,v,t)+d*(Nyu(u,v,t)*cos(v)+Binyu(u,v,t)*sin(v))","Tz=F2z(u,v,t)+d*(Nzu(u,v,t)*cos(v)+Binzu(u,v,t)*sin(v))"],
+        "Fx": ["Tx(u,v,t)"],
+        "Fy": ["Ty(u,v,t)"],
+        "Fz": ["Tz(u,v,t)"],
+        "Grid": ["40000","20"],
+        "Umax": ["umax"],
+        "Umin": ["umin"],
+        "Vmax": ["vmax"],
         "Vmin": ["vmin"]
         },
         "Texture": {
-        "Colors": ["R=(20000*(3*(x^2+y^2)^4-6*x*x*y*y))%(4/10) +(46/100)","G=(100000*((x^2+y^2)-7*x*x*y*y))%(65/100)","B= (20000*((x^2+y^2)^3-10*x*x*y*y))%(2/10)+(1/10)","T=1"
-        ],
+        "Colors": ["R=(20000*(3*(x^2+y^2)^4-6*x*x*y*y))%(4/10) +(46/100)","G=(100000*((x^2+y^2)-7*x*x*y*y))%(65/100)","B= (20000*((x^2+y^2)^3-10*x*x*y*y))%(2/10)+(1/10)","T=1"],
         "Name": "Trefoil",
         "Noise": ""
         }
@@ -429,68 +416,41 @@
     },
     {
         "Iso3D": {
-            "Description ": ["Geode by Abderrahman Taha 20/08/2018"
-            ],
-            "Component": ["Geode1","Geode2"
-            ],
-            "Const": ["A=4","B=3"
-            ],
-            "Fxyz": ["-((((x/(101/100))^2+y^2+(z/(105/100))^2-1)+((4/10)*NoiseW(A*x,A*y,A*z,(4),(1),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)","-(((x^2+y^2+z^2-(21/100))*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"
-            ],
-            "Name": ["Geode_02"
-            ],
-            "Xmax": ["(15/10)","(15/10)"
-            ],
-            "Xmin": ["-1","-1"
-            ],
-            "Ymax": ["1","1"
-            ],
-            "Ymin": ["-1","-1"
-            ],
-            "Zmax": ["(15/10)","(15/10)"
-            ],
-            "Zmin": ["-(12/10)","-1"
-            ]
+            "Description ": ["Geode by Abderrahman Taha 20/08/2018"],
+            "Component": ["Geode1","Geode2"],
+            "Const": ["A=4","B=3"],
+            "Fxyz": ["-((((x/(101/100))^2+y^2+(z/(105/100))^2-1)+((4/10)*NoiseW(A*x,A*y,A*z,(4),(1),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)","-(((x^2+y^2+z^2-(21/100))*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"],
+            "Name": ["Geode_02"],
+            "Xmax": ["(15/10)","(15/10)"],
+            "Xmin": ["-1","-1"],
+            "Ymax": ["1","1"],
+            "Ymin": ["-1","-1"],
+            "Zmax": ["(15/10)","(15/10)"],
+            "Zmin": ["-(12/10)","-1"]
         },
         "Texture": {
-            "Colors": ["R=if((x*x+y*y+z*z)>(81/100),(95/100)*cos((x*x+y*y+z*z)/(17/10)), (2/10))+(2/10)","G=if((x*x+y*y+z*z)>(8/10), (8/10)*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/(3/10)), (5/10)*sin((x*x+y*y+z*z)*9))+(2/10)","B=if((x*x+y*y+z*z)<(8/10),(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+(4/10), (1/10))+(5/10)","T=1"
-            ],
+            "Colors": ["R=if((x*x+y*y+z*z)>(81/100),(95/100)*cos((x*x+y*y+z*z)/(17/10)), (2/10))+(2/10)","G=if((x*x+y*y+z*z)>(8/10), (8/10)*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/(3/10)), (5/10)*sin((x*x+y*y+z*z)*9))+(2/10)","B=if((x*x+y*y+z*z)<(8/10),(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+(4/10), (1/10))+(5/10)","T=1"],
             "Name": "WorleyNoise",
             "Noise": "-((35/100)*NoiseW(2*x,2*y,2*z,(4),(1),(0))+(178/100)*NoiseW(2*x,2*y,2*z,(4),(0),(0)))"
         }
     },
     {
         "Param3D": {
-            "Description": ["Helix Zome by Abderrahman Taha 01/09/2018"
-            ],
-            "Name": ["Helix Zome"
-            ],
-     "Funct": ["Fx=(d/4)*(sin((u)+v)+sin(v))","Fy=(d/4)*(cos((u)+v)+cos(v))","Fz=K*if(u<pi , (d/(2*pi))*(u),    (d/(2*pi))*(2*pi-u))","Rapp=u/sqrt(u*u+v*v+t*t)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","F2x=Fx(u,v1min + CmpId(0)*Gv,t)","F2y=Fy(u,v1min + CmpId(0)*Gv,t)","F2z=Fz(u,v1min + CmpId(0)*Gv,t)","DF2xu=DFxu(u,v1min + CmpId(0)*Gv,t)","DF2yu=DFyu(u,v1min + CmpId(0)*Gv,t)","DF2zu=DFzu(u,v1min + CmpId(0)*Gv,t)","DF2xu2=n1(u,v1min  + CmpId(0)*Gv,t)","DF2yu2=n2(u,v1min + CmpId(0)*Gv,t)","DF2zu2=n3(u,v1min + CmpId(0)*Gv,t)","Nxu=Rapp(DF2xu2(u,v,t),DF2yu2(u,v,t),DF2zu2(u,v,t))","Nyu=Rapp(DF2yu2(u,v,t),DF2xu2(u,v,t),DF2zu2(u,v,t))","Nzu=Rapp(DF2zu2(u,v,t),DF2yu2(u,v,t),DF2xu2(u,v,t))","Binxu=(DF2yu(u,v,t)*Nzu(u,v,t)-DF2zu(u,v,t)*Nyu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binyu=(DF2zu(u,v,t)*Nxu(u,v,t)-DF2xu(u,v,t)*Nzu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binzu=(DF2xu(u,v,t)*Nyu(u,v,t)-DF2yu(u,v,t)*Nxu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Tx=F2x(u,v,t)+(Nxu(u,v,t)*cos(v)+Binxu(u,v,t)*sin(v))","Ty=F2y(u,v,t)+(Nyu(u,v,t)*cos(v)+Binyu(u,v,t)*sin(v))","Tz=F2z(u,v,t)+(Nzu(u,v,t)*cos(v)+Binzu(u,v,t)*sin(v))"
-            ],
-            "Component": ["Helix_Zome_00","Helix_Zome_01","Helix_Zome_02","Helix_Zome_03","Helix_Zome_04","Helix_Zome_05","Helix_Zome_06","Helix_Zome_07","Helix_Zome_08","Helix_Zome_09","Helix_Zome_10","Helix_Zome_11","Helix_Zome_12","Helix_Zome_13","Helix_Zome_14","Helix_Zome_15","Helix_Zome_16","Helix_Zome_17","Helix_Zome_18","Helix_Zome_19"
-            ],
-            "Const": ["v1min=0","v1max=2*pi","M=20","du=1/10000","dv=1/10000","umin=0","umax=2*pi","vmin=0","vmax=2*pi","Gv=(v1max-v1min)/M","d=100","K=3/2"
-            ],
-
-            "Grid": ["100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60"
-            ],
-            "Fx": ["Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)"
-            ],
-            "Fy": ["Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)"
-            ],
-            "Fz": ["Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)"
-            ],
-            "Umax": ["umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax"
-            ],
-            "Umin": ["umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin"
-            ],
-            "Vmax": ["vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax"
-            ],
-            "Vmin": ["vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin"
-            ]
+            "Description": ["Helix Zome by Abderrahman Taha 01/09/2018"],
+            "Name": ["Helix Zome"],
+            "Funct": ["Fx=(d/4)*(sin((u)+v)+sin(v))","Fy=(d/4)*(cos((u)+v)+cos(v))","Fz=K*if(u<pi , (d/(2*pi))*(u),    (d/(2*pi))*(2*pi-u))","Rapp=u/sqrt(u*u+v*v+t*t)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","F2x=Fx(u,v1min + CmpId(0)*Gv,t)","F2y=Fy(u,v1min + CmpId(0)*Gv,t)","F2z=Fz(u,v1min + CmpId(0)*Gv,t)","DF2xu=DFxu(u,v1min + CmpId(0)*Gv,t)","DF2yu=DFyu(u,v1min + CmpId(0)*Gv,t)","DF2zu=DFzu(u,v1min + CmpId(0)*Gv,t)","DF2xu2=n1(u,v1min  + CmpId(0)*Gv,t)","DF2yu2=n2(u,v1min + CmpId(0)*Gv,t)","DF2zu2=n3(u,v1min + CmpId(0)*Gv,t)","Nxu=Rapp(DF2xu2(u,v,t),DF2yu2(u,v,t),DF2zu2(u,v,t))","Nyu=Rapp(DF2yu2(u,v,t),DF2xu2(u,v,t),DF2zu2(u,v,t))","Nzu=Rapp(DF2zu2(u,v,t),DF2yu2(u,v,t),DF2xu2(u,v,t))","Binxu=(DF2yu(u,v,t)*Nzu(u,v,t)-DF2zu(u,v,t)*Nyu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binyu=(DF2zu(u,v,t)*Nxu(u,v,t)-DF2xu(u,v,t)*Nzu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binzu=(DF2xu(u,v,t)*Nyu(u,v,t)-DF2yu(u,v,t)*Nxu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Tx=F2x(u,v,t)+(Nxu(u,v,t)*cos(v)+Binxu(u,v,t)*sin(v))","Ty=F2y(u,v,t)+(Nyu(u,v,t)*cos(v)+Binyu(u,v,t)*sin(v))","Tz=F2z(u,v,t)+(Nzu(u,v,t)*cos(v)+Binzu(u,v,t)*sin(v))"],
+            "Component": ["Helix_Zome_00","Helix_Zome_01","Helix_Zome_02","Helix_Zome_03","Helix_Zome_04","Helix_Zome_05","Helix_Zome_06","Helix_Zome_07","Helix_Zome_08","Helix_Zome_09","Helix_Zome_10","Helix_Zome_11","Helix_Zome_12","Helix_Zome_13","Helix_Zome_14","Helix_Zome_15","Helix_Zome_16","Helix_Zome_17","Helix_Zome_18","Helix_Zome_19"],
+            "Const": ["v1min=0","v1max=2*pi","M=20","du=1/10000","dv=1/10000","umin=0","umax=2*pi","vmin=0","vmax=2*pi","Gv=(v1max-v1min)/M","d=100","K=3/2"],
+            "Grid": ["100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60","100","60"],
+            "Fx": ["Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)","Tx(u,v,t)"],
+            "Fy": ["Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)","Ty(u,v,t)"],
+            "Fz": ["Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)","Tz(u,v,t)"],
+            "Umax": ["umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax"],
+            "Umin": ["umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin"],
+            "Vmax": ["vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax"],
+            "Vmin": ["vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin"]
         },    "Texture": {
-            "Colors": ["R=7/10","G=7/10","B=7/10","T=1"
-            ],
+            "Colors": ["R=7/10","G=7/10","B=7/10","T=1"],
             "Name": "Lines",
             "Noise": ""
         }
@@ -573,168 +533,105 @@
             "N((x-4),(y+13/2),z,t)*W((x-14),(y+13/2),z,t)",
             "E((x-8),(y+13/2),z,t)",
             "Y((x-15/10),(y+13),z,t)*A((x-10),(y+13),z,t)*R((x-14),(y+13),z,t)",
-            "E((x-5),(y+13),z,t)"
-        ],
+            "E((x-5),(y+13),z,t)"],
         "Xmax": [
             "30",
             "20",
             "20",
             "20",
-            "20"
-        ],
+            "20"],
         "Xmin": [
             "-2",
             "-2",
             "-2",
             "-2",
-            "-2"
-        ],
+            "-2"],
         "Ymax": [
             "10",
             "5",
             "5",
             "8",
-            "8"
-        ],
+            "8"],
         "Ymin": [
             "-5",
             "-15",
             "-15",
             "-20",
-            "-20"
-        ],
+            "-20"],
         "Zmax": [
             "1",
             "1",
             "1",
             "1",
-            "1"
-        ],
+            "1"],
         "Zmin": [
             "-1",
             "-1",
             "-1",
             "-1",
-            "-1"
-        ]
+            "-1"]
     },
     "Texture": {
         "Colors": [
             "R=4/5",
             "G=3/5",
             "B=1/10",
-            "T=1"
-        ]
+            "T=1"]
     }
 },
 {
     "Iso3D": {
         "Name": [
-            "Wonder_Tree"
-        ],
+            "Wonder_Tree"],
         "Component": [
-            "WonderTree"
-        ],
+            "WonderTree"],
         "Const": [
             "k=4",
-            "e=1/10000"
-        ],
+            "e=1/10000"],
         "Funct": [
             "R=k*(x/(x*x+y*y+z*z))",
             "Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
-            "Fct = Gyroid(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) + exp((1/10)*(x*x+y*y+z*z-(2/10))) - exp(-10*(x*x+y*y+z*z-(5/100)))"
-        ],
+            "Fct = Gyroid(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) + exp((1/10)*(x*x+y*y+z*z-(2/10))) - exp(-10*(x*x+y*y+z*z-(5/100)))"],
         "Fxyz": [
-            "-(Fct(x,y,z,t))"
-        ],
-        "Xmax": [
-            "2"
-        ],
-        "Xmin": [
-            "-2"
-        ],
-        "Ymax": [
-            "2"
-        ],
-        "Ymin": [
-            "-2"
-        ],
-        "Zmax": [
-            "2"
-        ],
-        "Zmin": [
-            "-2"
-        ]
+            "-(Fct(x,y,z,t))"],
+        "Xmax": ["2"],
+        "Xmin": ["-2"],
+        "Ymax": ["2"],
+        "Ymin": ["-2"],
+        "Zmax": ["2"],
+        "Zmin": ["-2"]
     }
 },
 {
     "Iso3D": {
         "Description": [
-            "Moebius band by Stephan Klaus 23/09/2019"
-        ],
-        "Name": [
-            "Moebius_Strip"
-        ],
-        "Component": [
-            "Moebius"
-        ],
+            "Moebius band by Stephan Klaus 23/09/2019"],
+        "Name": ["Moebius_Strip"],
+        "Component": ["Moebius"],
         "Const": [
             "a=1/2",
             "b=1/10",
-            "N=4"
-        ],
-        "Fxyz": [
-            "((b^2*x^2+a^2*y^2)*(x^2+y^2)+b^2*(-x+y*z)^2+a^2*(y+x*z)^2-a^2*b^2*(x^2+y^2))^2-4*(x^2+y^2)*(b^2*x*(-x+y*z)-a^2*y*(y+x*z))^2"
-        ],
-        "Xmax": [
-            "3/2"
-        ],
-        "Xmin": [
-            "-3/2"
-        ],
-        "Ymax": [
-            "3/2"
-        ],
-        "Ymin": [
-            "-3/2"
-        ],
-        "Zmax": [
-            "1/2"
-        ],
-        "Zmin": [
-            "-1/2"
-        ]
+            "N=4"],
+        "Fxyz": ["((b^2*x^2+a^2*y^2)*(x^2+y^2)+b^2*(-x+y*z)^2+a^2*(y+x*z)^2-a^2*b^2*(x^2+y^2))^2-4*(x^2+y^2)*(b^2*x*(-x+y*z)-a^2*y*(y+x*z))^2"],
+        "Xmax": ["3/2"],
+        "Xmin": ["-3/2"],
+        "Ymax": ["3/2"],
+        "Ymin": ["-3/2"],
+        "Zmax": ["1/2"],
+        "Zmin": ["-1/2"]
     }
     },
     {
       "Iso3D": {
-        "Name": [
-          "Schwarz"
-        ],
-        "Component": [
-          "Schwarz"
-        ],
-        "Fxyz": [
-          " cos(x) + cos(y) + cos(z)"
-        ],
-        "Xmin": [
-          "-4"
-        ],
-        "Xmax": [
-          " 4"
-        ],
-        "Ymin": [
-          "-4"
-        ],
-        "Ymax": [
-          " 4"
-        ],
-        "Zmin": [
-          "-4"
-        ],
-        "Zmax": [
-          " 4"
-        ]
+        "Name": ["Schwarz"],
+        "Component": ["Schwarz"],
+        "Fxyz": ["cos(x) + cos(y) + cos(z)"],
+        "Xmin": ["-4"],
+        "Xmax": [" 4"],
+        "Ymin": ["-4"],
+        "Ymax": [" 4"],
+        "Zmin": ["-4"],
+        "Zmax": [" 4"]
       }
     },
     {
