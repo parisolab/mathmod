@@ -636,14 +636,11 @@
     },
     {
       "Iso3D": {
-        "Name": [
-          "Moon"
-        ],
+        "Name": ["Moon"],
         "Component": [
           "GravityPlan",
           "EarthPlanet",
-          "MoonPlanet"
-        ],
+          "MoonPlanet"],
         "Fxyz": [
           "((x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3)) + z*z - 3/5)*min( (x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + z*z - (3/5), z) +1/5",
           "(x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + (z-1/5)*(z-1/5) - 3/5 ",
@@ -652,52 +649,39 @@
         "Xmin": [
           "-5",
           "-1+4*sin(t*pi/3)",
-          "-1+2*sin(t*pi)+4*sin(t*pi/3)"
-        ],
+          "-1+2*sin(t*pi)+4*sin(t*pi/3)"],
         "Xmax": [
           " 5",
           "1+4*sin(t*pi/3)",
-          "1+2*sin(t*pi)+4*sin(t*pi/3)"
-        ],
+          "1+2*sin(t*pi)+4*sin(t*pi/3)"],
         "Ymin": [
           "-4",
           "-1+2*cos(t*pi/3)",
-          "-1+2*cos(t*pi)+2*cos(t*pi/3)"
-        ],
+          "-1+2*cos(t*pi)+2*cos(t*pi/3)"],
         "Ymax": [
           " 4",
           "1+2*cos(t*pi/3)",
-          "1+2*cos(t*pi)+2*cos(t*pi/3)"
-        ],
+          "1+2*cos(t*pi)+2*cos(t*pi/3)"],
         "Zmin": [
           "-1",
           "-1",
-          "-1"
-        ],
+          "-1"],
         "Zmax": [
           " 1",
           "3/2",
-          "1"
-        ]
+          "1"]
       }
     },
     {
       "Iso3D": {
-        "Description": [
-          "BlackHole by Abderrahman Taha 10/12/2019"
-        ],
-        "Name": [
-          "BlackHole"
-        ],
+        "Description": ["BlackHole by Abderrahman Taha 10/12/2019"],
+        "Name": ["BlackHole"],
         "Component": [
           " GravityPlan",
           " EarthPlanet",
           " MoonPlanet",
-          " WhiteStar "
-        ],
-        "Const": [
-          "M=pi/10"
-        ],
+          " WhiteStar "],
+        "Const": ["M=pi/10"],
         "Funct": [
           "A=(x-4*sin(t*M))^2",
           "B=(x-2*cos(t*M))^2",
@@ -706,32 +690,27 @@
           "E=(x-1/5)*(x-1/5) - 3/5",
           "F=x*x - 3/5",
           "H=x*cos(2*t*pi)",
-          "G=x*sin(2*t*pi)"
-        ],
+          "G=x*sin(2*t*pi)"],
         "Grid": [
           "20",
           "20",
           "20",
-          "20"
-        ],
+          "20"],
         "Fxyz": [
           "((3/2)*(H(x,y,z,t)-G(y,x,z,t))^2 + (G(x,y,z,t)+ H(y,x,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(A(x,y,z,t) + B(y,x,z,t)+ F(z,y,x,t))*min( ((3/2)*(H(x,y,z,t)-G(y,x,z,t))^2 + (G(x,y,z,t)+ H(y,x,z,t))^2 +(z+4/5)^2 -(abs((11/5)*sin(t*M))))*(A(x,y,z,t) + B(y,x,z,t) + F(z,y,x,t)), z) +1",
           "A(x,y,z,t)+ B(y,x,z,t) + E(z,y,x,t)",
           "C(x,y,z,t) + D(y,x,z,t)  + E(z,y,x,t) + 1/2",
-          "(3/2)*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+1/5)^2 -(abs((1/5)*sin(t*M)+1/20))"
-        ],
+          "(3/2)*(x*cos(2*t*pi) -y*sin(2*t*pi))^2 + (x*sin(2*t*pi) + y*cos(2*t*pi))^2 +(z+1/5)^2 -(abs((1/5)*sin(t*M)+1/20))"],
         "Xmin": [
           "-5",
           "-1+4*sin(t*M)",
           "-1+2*sin(t*pi)+4*sin(t*M)",
-          " -1/2"
-        ],
+          " -1/2"],
         "Xmax": [
           "5",
           "1+4*sin(t*M)",
           "1+2*sin(t*pi)+4*sin(t*M)",
-          " 1/2"
-        ],
+          " 1/2"],
         "Ymin": [
           "-4",
           "-1+2*cos(t*M)",
@@ -748,14 +727,12 @@
           "-2",
           "-1",
           "-1",
-          " -7/10"
-        ],
+          " -7/10"],
         "Zmax": [
           "1",
           "11/10",
           "1",
-          "1/2"
-        ]
+          "1/2"]
       },
     "Texture": {
       "Name": "Gray",
@@ -763,52 +740,27 @@
         "R=7/10",
         "G=7/10",
         "B=7/10",
-        "T=1"
-      ]
+        "T=1"]
     }
     },
     {
       "Iso3D": {
-        "Name": [
-          "FallingDrop"
-        ],
-        "Component": [
-          "fallingdrop"
-        ],
-        "Fxyz": [
-          "-((z-6*(1-cos(sqrt(x^2+y^2)-t*2*pi))/sqrt(x^2+y^2+4))*(2*(x^2+y^2)+(z-40*sin((t+19/100)*pi)+1)^2-10)-1000)"
-        ],
-        "Xmax": [
-          "20"
-        ],
-        "Xmin": [
-          "-20"
-        ],
-        "Ymax": [
-          "20"
-        ],
-        "Ymin": [
-          "-20"
-        ],
-        "Zmax": [
-          "50"
-        ],
-        "Zmin": [
-          "-1"
-        ]
+        "Name": ["FallingDrop"],
+        "Component": ["fallingdrop"],
+        "Fxyz": ["-((z-6*(1-cos(sqrt(x^2+y^2)-t*2*pi))/sqrt(x^2+y^2+4))*(2*(x^2+y^2)+(z-40*sin((t+19/100)*pi)+1)^2-10)-1000)"],
+        "Xmax": ["20"],
+        "Xmin": ["-20"],
+        "Ymax": ["20"],
+        "Ymin": ["-20"],
+        "Zmax": ["50"],
+        "Zmin": ["-1"]
       }
     },
     {
       "Iso3D": {
-        "Description": [
-            "Menger Sponge by Abderrahman Taha 10/12/2019"
-        ],
-        "Name": [
-          "MengerSponge"
-        ],
-        "Component": [
-          "MengerSponge"
-        ],
+        "Description": ["Menger Sponge by Abderrahman Taha 10/12/2019"],
+        "Name": ["MengerSponge"],
+        "Component": ["MengerSponge"],
         "Funct": [
             "Ax = ((abs(x-2/3) <1/81)+ (abs(x-20/27) <1/81)+ (abs(x-16/27) <1/81)+(abs(x-8/9) <1/81) + (abs(x-26/27) <1/81) + (abs(x-22/27) <1/81) +(abs(x-4/9) <1/81) +(abs(x-14/27) <1/81) +(abs(x-10/27) <1/81) +(abs(x+2/3) <1/81) +(abs(x+16/27) <1/81) +(abs(x+20/27) <1/81) +(abs(x+4/9) <1/81) +(abs(x+10/27) <1/81) +(abs(x+14/27) <1/81) +(abs(x+8/9) <1/81) +(abs(x+22/27) <1/81) +(abs(x+26/27) <1/81) +(abs(x) <1/81) + (abs(x-2/27) <1/81) +(abs(x+2/27) <1/81) +(abs(x-2/9) <1/81) + (abs(x-8/27) <1/81) + (abs(x-4/27) <1/81) +(abs(x+2/9) <1/81)+(abs(x+4/27) <1/81)+(abs(x+8/27) <1/81))",
             "Ay = ((abs(y-2/3) <1/81)+ (abs(y-20/27) <1/81)+ (abs(y-16/27) <1/81)+(abs(y-8/9) <1/81) + (abs(y-26/27) <1/81) + (abs(y-22/27) <1/81) +(abs(y-4/9) <1/81) +(abs(y-14/27) <1/81) +(abs(y-10/27) <1/81) +(abs(y+2/3) <1/81) +(abs(y+16/27) <1/81) +(abs(y+20/27) <1/81) +(abs(y+4/9) <1/81) +(abs(y+10/27) <1/81) +(abs(y+14/27) <1/81) +(abs(y+8/9) <1/81) +(abs(y+22/27) <1/81) +(abs(y+26/27) <1/81) +(abs(y) <1/81) + (abs(y-2/27) <1/81) +(abs(y+2/27) <1/81) +(abs(y-2/9) <1/81) + (abs(y-8/27) <1/81) + (abs(y-4/27) <1/81) +(abs(y+2/9) <1/81)+(abs(y+4/27) <1/81)+(abs(y+8/27) <1/81))",
