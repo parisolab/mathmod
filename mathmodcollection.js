@@ -6691,24 +6691,16 @@
       "Iso3D": {
         "Description ": ["Geode by Abderrahman Taha 15/10/2019"],
         "Name": ["Geode_01"],
-        "Component": ["Geode1",
-          "Geode2"],
-        "Const": ["A=4",
-          "B=3"],
+        "Component": ["Geode1","Geode2"],
+        "Const": ["A=4","B=3"],
         "Fxyz": ["-(((x^2+y^2+z^2-1)+(NoiseW(A*x,A*y,A*z,(4),(2),(1))+NoiseW(A*x,A*y,A*z,(4),(0),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
           "-(((x^2+y^2+z^2-(21/100))*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"],
-        "Xmax": ["(15/10)",
-          "(15/10)"],
-        "Xmin": ["-1",
-          "-1"],
-        "Ymax": ["1",
-          "1"],
-        "Ymin": ["-1",
-          "-1"],
-        "Zmax": ["15/10",
-          "15/10"],
-        "Zmin": ["-1",
-          "-1"]
+        "Xmax": ["(15/10)","(15/10)"],
+        "Xmin": ["-1","-1"],
+        "Ymax": ["1","1"],
+        "Ymin": ["-1","-1"],
+        "Zmax": ["15/10","15/10"],
+        "Zmin": ["-1","-1"]
       },
       "Texture": {
         "Colors": ["R=if((x*x+y*y+z*z)>(8/10),(95/100)*cos(10*(x*x+y*y+z*z)/17), (2/10))",
@@ -9215,9 +9207,7 @@
     {
       "Iso3D": {
         "Description": ["Implicit Costa minimal surface by Abderrahman Taha 07/10/2019"],
-         "Name": [
-           "Implicit Costa"
-         ],
+         "Name": ["Implicit Costa"],
         "Funct": ["Costa=(z*((x^2+y^2)-18-8*sin((-11+abs(z*13/10))/4)-18*exp((-12+abs(z*13/10))/2))-(x^2-y^2)) ",
           "DFx=((Costa(x,y,z,t)-Costa(x+c,y,z,t))/c)",
           "DFy=((Costa(x,y,z,t)-Costa(x,y+c,z,t))/c)",
