@@ -592,12 +592,21 @@ Used in the "Chained_Sinusoid" script. </td>
 </tr>
 
 <tr>
- <td><code>Get(N)</code></td>
+ <td><code>Get(N,ThreadId)</code></td>
  <td>(Experimental) Return the value of the variable at the index N. Example:
 <pre>
-"Schwarz=if( Push(ThreadId,cos(x)+cos(y)+cos(z)) , Get(ThreadId), 0)"
+"Schwarz=if( Push(0, ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"
 </pre>
 </tr>
+Push
+<tr>
+ <td><code>Push(N,ThreadId, val)</code></td>
+ <td>(Experimental) Save the value of the variable at index N to val. Example:
+<pre>
+"Schwarz=if( Push(0, ThreadId, cos(x)+cos(y)+cos(z)) , Get(0, ThreadId), 0)"
+</pre>
+</tr>
+
 
 </table>
 
