@@ -585,17 +585,27 @@ Used in the "Chained_Sinusoid" script. </td>
  <td><code>ThreadId</code></td>
  <td>Return the Thread ID. Example:
 <pre>
-"Fxyz": [
-           " if(ThreadId=0, cos(x) + cos(y) + cos(z), 0)"
-       ],
+"Fxyz": [" if(ThreadId=0, cos(x) + cos(y) + cos(z), 0)"],
 </pre>
+</tr>
+
+<tr>
+<td><code>"Vect"</code></td>
+<td>
+(Experimental) Define a set of variables (type double).Example:
+<br><pre>
+"Vect": ["1"],
+"Fxyz": ["Schwarz=if( Push(0, ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
+</pre>
+</td>
 </tr>
 
 <tr>
  <td><code>Get(N,ThreadId)</code></td>
  <td>(Experimental) Return the value of the variable at the index N. Example:
 <pre>
-"Schwarz=if( Push(0, ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"
+"Vect": ["1"],
+"Fxyz": ["Schwarz=if( Push(0, ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
 </pre>
 </tr>
 Push
