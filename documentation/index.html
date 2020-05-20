@@ -590,6 +590,15 @@ Used in the "Chained_Sinusoid" script. </td>
        ],
 </pre>
 </tr>
+
+<tr>
+ <td><code>Get(N)</code></td>
+ <td>(Experimental) Return the value of the variable at the index N. Example:
+<pre>
+"Schwarz=if( Push(ThreadId,cos(x)+cos(y)+cos(z)) , Get(ThreadId), 0)"
+</pre>
+</tr>
+
 </table>
 
 <a name="SupportedOperatorsFunctions"></a>
