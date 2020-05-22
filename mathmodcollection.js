@@ -52,11 +52,12 @@
             }
         ]
     },
+
     {
         "Name": "Pariso_02",
         "ParIso": [
             {
-                "Param3D": {"Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"],
+                "Param3D": {"Description": ["Blobby Torus by Abderrahman Taha 19/05/2020"],
                         "Component": ["BlobbyTorus"],
                         "Funct": ["G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)","G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)","G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))"],
                         "Fx": ["-G1(u,v,t)"],
