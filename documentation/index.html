@@ -595,7 +595,7 @@ Used in the "Chained_Sinusoid" script. </td>
 (Experimental) Define a set of variables (type double).Example:
 <br><pre>
 "Vect": ["1"],
-"Fxyz": ["Schwarz=if( Push(0, ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
+"Fxyz": ["Schwarz=if( Push(ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
 </pre>
 </td>
 </tr>
@@ -605,7 +605,7 @@ Used in the "Chained_Sinusoid" script. </td>
  <td>(Experimental) Return the value of the variable at the index N. Example:
 <pre>
 "Vect": ["1"],
-"Fxyz": ["Schwarz=if( Push(0, ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
+"Fxyz": ["Schwarz=if( Push(ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
 </pre>
 </tr>
 Push
