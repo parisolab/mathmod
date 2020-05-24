@@ -52,7 +52,6 @@
             }
         ]
     },
-
     {
         "Name": "Pariso_02",
         "ParIso": [
