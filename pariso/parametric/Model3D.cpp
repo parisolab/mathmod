@@ -47,7 +47,6 @@ double TurbulenceWorley2(const double* p)
                       int(p[5])));
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 double TurbulencePerlin2(const double* p)
 {
     return double(PNoise2->FractalNoise3D(
@@ -485,17 +484,14 @@ void ParMasterThread::InitMasterParsers()
         ParisoConditionParser[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         ParisoConditionParser[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
-
     for(uint i=0; i<RgbtSize; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
     }
-
     for(uint i=0; i<VRgbtSize; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
     }
-
     for(uint i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
@@ -536,7 +532,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         ConstSize =0;
     }
-
     if(functnotnull)
     {
         FunctSize = HowManyVariables(Funct, 2);
@@ -553,7 +548,6 @@ ErrorMessage  ParMasterThread::parse_expression()
                 Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
         }
-
         for(uint i=0; i<FunctSize; i++)
         {
             for(uint j=0; j<i; j++)
@@ -571,41 +565,28 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         FunctSize =0;
     }
-
     //Colors
     if(rgbtnotnull)
     {
         RgbtSize = HowManyVariables(Rgbt, 3);
-
         for(uint i=0; i<RgbtSize; i++)
-        {
             for(uint j=0; j<ConstSize; j++)
-            {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
-            }
-        }
     }
     else
     {
         RgbtSize =0;
     }
-
     //Texture:
     if(vrgbtnotnull)
     {
         VRgbtSize = HowManyVariables(VRgbt, 4);
         for(uint j=0; j<ConstSize; j++)
-        {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
-        }
 
         for(uint i=0; i<VRgbtSize; i++)
-        {
             for(uint j=0; j<ConstSize; j++)
-            {
                 VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
-            }
-        }
     }
     else
     {
@@ -827,19 +808,14 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserY[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserZ[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserW[i].AddConstant("pi", PI);
-
             workerthreads[nbthreads].myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
             workerthreads[nbthreads].myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
             workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-
             for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
@@ -1010,7 +986,6 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
     return Nb_variables;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 {
     std::string tmp, tmp2;
@@ -1083,7 +1058,6 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
                 ParamStructs[Nb_paramfunction].vmax = (tmp.substr(0,position));
                 break;
             }
-
             Nb_paramfunction++;
             tmp2 = ParamFct.substr(position+1, ParamFct.length()-1);
             ParamFct = tmp2;
@@ -1125,7 +1099,6 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
     }
 }
 
-///+++++++++++++++++++++++++++++++++++++++++
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Jprime,cmpId=0, K=0;
@@ -1237,7 +1210,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
     uint idmx=0;
@@ -1587,11 +1559,9 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             NormVertexTabVector[i*10+3] = 1.0;
         }
     }
-
     return 1;
 }
 
-//++++++++++++++++++++++++++++++++++++
 void Par3D::BuildPar()
 {
     ParamBuild(
@@ -1605,13 +1575,11 @@ void Par3D::BuildPar()
     );
 }
 
-//++++++++++++++++++++++++++++++++++++
 void Par3D::run()
 {
     BuildPar();
 }
 
-//++++++++++++++++++++++++++++++++++++
 void Par3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
     uint tmp= WorkerThreadsNumber;
@@ -1627,7 +1595,6 @@ void Par3D::UpdateThredsNumber(uint NewThreadsNumber)
     masterthread->WorkerThreadsNumber  = WorkerThreadsNumber;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
@@ -1636,13 +1603,11 @@ void Par3D::stopcalculations(bool calculation)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++
 void ParWorkerThread::emitMySignal()
 {
     emit mySignal(signalVal);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++
 void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
 {
     uint NewPosition =  10*idx, id=0;
@@ -1785,12 +1750,11 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     delete[] ResW;
 }
 
-//++++++++++++++++++++++++++++++++++++
 void Par3D::emitErrorSignal()
 {
     emit ErrorSignal(int(messageerror));
 }
-//+++++++++++++++++++++++++++++++++++++++++
+
 void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
     copy->ParisoTriangle = origin->ParisoTriangle;
@@ -1856,16 +1820,12 @@ void  Par3D::ParamBuild(
     }
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
-    //*******/
     components->NbComponents.push_back(masterthread->componentsNumber);
-
     stopcalculations(false);
-
     if(masterthread->activeMorph != 1)
     {
         ptime.restart();
     }
-
     for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
     {
         if(masterthread->activeMorph != 1)
@@ -1873,17 +1833,13 @@ void  Par3D::ParamBuild(
             message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->componentsNumber)+"==> Math calculation");
             emitUpdateMessageSignal();
         }
-
         ParamComponentId = fctnb;
         if(masterthread->gridnotnull)
         {
             initialiser_LineColumn(masterthread->grid[2*fctnb], masterthread->grid[2*fctnb+1]);
-
         }
-
         masterthread->CurrentComponent   = fctnb;
         masterthread->CurrentIndex = NbVertexTmp;
-
         // Save Number of Polys and vertex :
         components->ParisoVertex.push_back(NbVertexTmp);
         components->ParisoVertex.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
@@ -1894,27 +1850,21 @@ void  Par3D::ParamBuild(
             workerthreads[nbthreads].CurrentComponent = fctnb;
             workerthreads[nbthreads].CurrentIndex = NbVertexTmp;
         }
-
         ExtraDimensionVector.resize(ExtraDimensionVector.size()+Ugrid*Vgrid);
         NormVertexTabVector.resize(NormVertexTabVector.size()+10*Ugrid*Vgrid);
-
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
-
         masterthread->start();
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].start();
-
         masterthread->wait();
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].wait();
-
         if(StopCalculations)
         {
             initialiser_LineColumn(nbline_save, nbcolone_save);
             return;
         }
-
         if(masterthread->activeMorph != 1)
         {
             message += QString(" ==> Mesh generation");
@@ -1935,16 +1885,13 @@ void  Par3D::ParamBuild(
         NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NbVertexTmp    += (Ugrid)*(Vgrid);
     }
-
     if(masterthread->activeMorph != 1)
     {
         message = QString("2) Mesh Processing");
         emitUpdateMessageSignal();
     }
-
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
-
     // Pigment, Texture and Noise :
     if(masterthread->vrgbtnotnull)
     {
@@ -1965,31 +1912,24 @@ void  Par3D::ParamBuild(
         components->ThereisRGBA.push_back(false);
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = -1; //No Pigments or texture
     }
-
     if(masterthread->Noise == "")
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 0;
     else
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 1;
-
     CalculateColorsPoints(components, components->ThereisRGBA.size()-1);
-
     //revert to their initial values:
     if(masterthread->gridnotnull)
         initialiser_LineColumn(nbline_save, nbcolone_save);
-
     if(masterthread->activeMorph != 1)
     {
         message = QString("Threads:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();
     }
-
     // 3) Nb Poly & Vertex :
     {
         *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
         *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
         *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
-
-
         *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
         *NormVertexTabPt   = NormVertexTabVector.data();
         *IndexPolyTabPt    = IndexPolyTabVector.data();
@@ -2003,7 +1943,6 @@ void  Par3D::ParamBuild(
     componentsPt->updateviewer = true;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++
 void  Par3D::make_PolyIndexMin(uint index)
 {
     uint k=0;
@@ -2019,7 +1958,6 @@ void  Par3D::make_PolyIndexMin(uint index)
         }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++
 void  Par3D::make_PolyIndexTri(uint index)
 {
     uint k=0;
@@ -2037,7 +1975,6 @@ void  Par3D::make_PolyIndexTri(uint index)
         }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++
 void  Par3D::calcul_Norm(uint idx)
 {
 //calculate Normals
@@ -2053,23 +1990,19 @@ void  Par3D::calcul_Norm(uint idx)
             baa = NormVertexTabVector[i*deplacement+(j+1)*10+idx+8] - NormVertexTabVector[i*deplacement+j*10+idx+8];
             ba  = NormVertexTabVector[i*deplacement+(j+1)*10+idx+7] - NormVertexTabVector[i*deplacement+j*10+idx+7];
             ca  = NormVertexTabVector[(i+1)*deplacement+j*10+idx+7] - NormVertexTabVector[i*deplacement+j*10+idx+7];
-
             NormVertexTabVector[i*deplacement+j*10+idx+4] = caa*bab - cab*baa;
             NormVertexTabVector[i*deplacement+j*10+idx+5] = cab*ba  - ca*bab;
             NormVertexTabVector[i*deplacement+j*10+idx+6] = ca*baa  - caa*ba;
-
             b4  = sqrt((NormVertexTabVector[i*deplacement+j*10+idx+4]*NormVertexTabVector[i*deplacement+j*10+idx+4]) +
                        (NormVertexTabVector[i*deplacement+j*10+idx+5]*NormVertexTabVector[i*deplacement+j*10+idx+5]) +
                        (NormVertexTabVector[i*deplacement+j*10+idx+6]*NormVertexTabVector[i*deplacement+j*10+idx+6]));
 
             if( b4 < float(0.000001))  b4 = float(0.000001);
-
 //Normalise:
             NormVertexTabVector[i*deplacement +j*10+idx+4]/=b4;
             NormVertexTabVector[i*deplacement +j*10+idx+5]/=b4;
             NormVertexTabVector[i*deplacement +j*10+idx+6]/=b4;
         }
-
     if(Ugrid>1)
     {
         i = Ugrid -1;
@@ -2080,7 +2013,6 @@ void  Par3D::calcul_Norm(uint idx)
             NormVertexTabVector[i*deplacement+j*10+idx+6] = NormVertexTabVector[(i-1)*deplacement+j*10+idx+6];
         }
     }
-
     if(Vgrid>1)
     {
         j =Vgrid -1;
