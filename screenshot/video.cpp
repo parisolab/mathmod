@@ -19,11 +19,11 @@
  ***************************************************************************/
 #include "video.h"
 
-screenimage::screenimage(QImage buffer) : QMainWindow(nullptr, nullptr)
+screenimage::screenimage(QImage buffer) : QMainWindow(nullptr)
 {
     buf = buffer;
     image_quality = 1;
-    l = new QLabel(this, nullptr);
+    l = new QLabel(this);
     l->resize(320, 320);
     resize(320, 343);
     this->setWindowTitle("ScreenShot");
