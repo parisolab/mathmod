@@ -4441,6 +4441,11 @@
         "Fxyz": ["isoTransform_2(x,y,-z,t) * isoTransform_6(x,y,-z,t)",
           "Torus(A*x,A*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y))) -(54/5),t)",
           "Bottom(x*B,y*B,2*(z+(51/10)),t)"],
+        "Grid": [
+            "250",
+            "250",
+            "250"
+        ],
         "Xmax": ["7/2",
           "5",
           "3"],
