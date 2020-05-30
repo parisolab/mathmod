@@ -4444,18 +4444,10 @@
         "Grid": ["250","250","250"],
         "Xmax": ["7/2","5","3"],
         "Xmin": ["-7/2","-5","-3"],
-        "Ymax": ["7/2",
-          "5",
-          "3"],
-        "Ymin": ["-7/2",
-          "-5",
-          "-3"],
-        "Zmax": ["9/2",
-          "10",
-          "-2"],
-        "Zmin": ["-5",
-          "0",
-          "-7"]
+        "Ymax": ["7/2","5","3"],
+        "Ymin": ["-7/2","-5","-3"],
+        "Zmax": ["9/2","10","-2"],
+        "Zmin": ["-5","0","-7"]
       },
       "Texture": {
         "Colors": ["R=(95/100)*abs(cos(z*y*x*y))",
@@ -4481,18 +4473,12 @@
           "isoTransform_2=if(isoCondition_0(x,y,z,t)<(0),-Iso(x,y,z,t),1)+exp(isoCondition_1(x,y,z,t))"],
         "Fxyz": ["isoTransform_1((sqrt(x*x+y*y)-6),12*atan2(y,x),z,t)",
           "isoTransform_2((sqrt(x*x+y*y)-6),12*atan2(y,x),z,t)"],
-        "Xmax": ["A",
-          "A"],
-        "Xmin": ["-A",
-          "-A"],
-        "Ymax": ["A",
-          "A"],
-        "Ymin": ["-A",
-          "-A"],
-        "Zmax": ["B",
-          "B"],
-        "Zmin": ["-B",
-          "-B"]
+        "Xmax": ["A","A"],
+        "Xmin": ["-A","-A"],
+        "Ymax": ["A","A"],
+        "Ymin": ["-A","-A"],
+        "Zmax": ["B","B"],
+        "Zmin": ["-B","-B"]
       }
     },
     {
