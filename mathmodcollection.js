@@ -6606,16 +6606,10 @@
         "Description": ["Flower by Abderrahman Taha 15/10/2019"],
         "Name": ["Flower"],
         "Component": ["BreatherNoise"],
-        "Const": [
-           "A=sqrt(84/100)",
-           "B=4/10",
-           "C=84/100"],
-        "Fx": [
-            "((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1-NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
-        "Fy": [
-            "((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1 -NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
-        "Fz": [
-             "(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1 - NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
+        "Const": ["A=sqrt(84/100)","B=4/10","C=84/100"],
+        "Fx": ["((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1-NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
+        "Fy": ["((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1 -NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
+        "Fz": ["(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1 - NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
         "Umax": ["132/10"],
         "Umin": ["-132/10"],
         "Vmax": ["372/10"],
