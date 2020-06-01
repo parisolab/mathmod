@@ -8303,8 +8303,7 @@
       "Texture": {
         "Colors": ["R=(73/100)",
           "G=(18/10)*abs(cos(10*(x*x+y*y+z*z)/23) *sin(10*(x*x+y*y+z*z)/23))",
-          "B=2*abs(cos(10*(x*x+y*y+z*z)/23) *cos(10*(x*x+y*y+z*z)/23) *sin(10*(x*x+y*y+z*z)/23))",
-          "T=1"],
+          "B=2*abs(cos(10*(x*x+y*y+z*z)/23) *cos(10*(x*x+y*y+z*z)/23) *sin(10*(x*x+y*y+z*z)/23))","T=1"],
         "Name": "WorleyNoise",
         "Noise": "NoiseW(x,y,z,(4),(2),(0))/2"
       }
@@ -8623,26 +8622,11 @@
                 "Vmin": ["-pi"]
             },
             "Sliders": {
-                "Max": ["30",
-                    "30",
-                    "50",
-                    "20"],
-                "Min": ["1",
-                    "1",
-                    "1",
-                    "0"],
-                "Name": ["N",
-                    "R3",
-                    "R",
-                    "N2"],
-                "Position": ["4",
-                    "3",
-                    "15",
-                    "4"],
-                "Step": ["1",
-                    "1",
-                    "1",
-                    "1"]
+                "Max": ["30","30","50","20"],
+                "Min": ["1","1","1","0"],
+                "Name": ["N","R3","R","N2"],
+                "Position": ["4","3","15","4"],
+                "Step": ["1","1","1","1"]
             },
             "Texture": {
                 "Colors": ["R= if((i)%(M)>P | (j)%(M)>P,(1/2),(7/10)) ",
@@ -8672,8 +8656,7 @@
       "Texture": {
         "Colors": ["R=(61/100)",
           "G=(162/100)*abs(cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
-          "B=(172/100)*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))",
-          "T=1"],
+          "B=(172/100)*abs(cos((x*x+y*y+z*z)/2) *cos((x*x+y*y+z*z)/2) *sin((x*x+y*y+z*z)/2))","T=1"],
         "Name": "WorleyNoise",
         "Noise": "NoiseW(4*x,4*y,4*z,(4),(2),(0)) +NoiseW(4*x,4*y,4*z,(4),(12),(0))"
       },
@@ -9034,10 +9017,7 @@
         "Zmin": ["-Z"]
       },
       "Texture": {
-        "Colors": ["R=(8/10)*abs(cos(x)*cos(y)*cos(z))^(1/10)",
-          "G=2/10",
-          "B=1/100",
-          "T=1"],
+        "Colors": ["R=(8/10)*abs(cos(x)*cos(y)*cos(z))^(1/10)","G=2/10","B=1/100","T=1"],
         "Name": "Lines1",
         "Noise": ""
       }
