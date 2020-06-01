@@ -5424,30 +5424,18 @@
     },
         {
               "Iso3D": {
-                "Description": [
-                  "Contour lines by Abderrahman Taha 28/10/2019"],
-                "Name": [
-                  "Contour_lines"],
-                "Const": [
-                  "C=1/4"],
-                "Cnd": [
-                  "(z-C)*(z+C)*(z-2*C)*(z+2*C)*(z-3*C)*(z+3*C)*(z-1)*(z+1)*(z-6*C)*(z+(3/2))*(z-5*C)*(z+5*C)>0"],
-                "Component": [
-                  "Drope"],
-                "Fxyz": [
-                  "z-4*x*exp(-x^2-y^2)"],
-                "Xmax": [
-                  "2"],
-                "Xmin": [
-                  "-2"],
-                "Ymax": [
-                  "2"],
-                "Ymin": [
-                  "-2"],
-                "Zmax": [
-                  "18/10"],
-                "Zmin": [
-                  "-18/10"]
+                "Description": ["Contour lines by Abderrahman Taha 28/10/2019"],
+                "Name": ["Contour_lines"],
+                "Const": ["C=1/4"],
+                "Cnd": ["(z-C)*(z+C)*(z-2*C)*(z+2*C)*(z-3*C)*(z+3*C)*(z-1)*(z+1)*(z-6*C)*(z+(3/2))*(z-5*C)*(z+5*C)>0"],
+                "Component": ["Drope"],
+                "Fxyz": ["z-4*x*exp(-x^2-y^2)"],
+                "Xmax": ["2"],
+                "Xmin": ["-2"],
+                "Ymax": ["2"],
+                "Ymin": ["-2"],
+                "Zmax": ["18/10"],
+                "Zmin": ["-18/10"]
               }
             },
     {
@@ -5458,20 +5446,13 @@
           "1"],
         "Component": ["Cosinus",
           "Cylinder"],
-        "Fx": ["u",
-          "v"],
-        "Fy": ["v",
-          "sin(pi*u)/5"],
-        "Fz": ["-sin(5*pi*u)/5",
-          "cos(pi*u)/5"],
-        "Umax": ["1",
-          "1"],
-        "Umin": ["-1",
-          "-1"],
-        "Vmax": ["1/2",
-          "1"],
-        "Vmin": ["-1/2",
-          "-1"]
+        "Fx": ["u","v"],
+        "Fy": ["v","sin(pi*u)/5"],
+        "Fz": ["-sin(5*pi*u)/5","cos(pi*u)/5"],
+        "Umax": ["1","1"],
+        "Umin": ["-1","-1"],
+        "Vmax": ["1/2","1"],
+        "Vmin": ["-1/2","-1"]
       }
     },
     {
@@ -5754,18 +5735,12 @@
           "tail3=tail2((x*30),(y*30-30),(z*30),1)"],
         "Fxyz": ["-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,(4),(2),(0))+NoiseW(6*x,6*y,6*z,(4),(0),(0)))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *tail(x,y,z,1)",
           "tail3(x*cos(-pi/4)-y*sin(-pi/4),x*sin(-pi/4)+y*cos(-pi/4),z,t)"],
-        "Xmax": ["1",
-          "-(1/2)"],
-        "Xmin": ["-1",
-          "-1"],
-        "Ymax": ["1",
-          "(7/5)"],
-        "Ymin": ["-1",
-          "(1/2)"],
-        "Zmax": ["1",
-          "(1/10)"],
-        "Zmin": ["-1",
-          "-(1/10)"]
+        "Xmax": ["1","-(1/2)"],
+        "Xmin": ["-1","-1"],
+        "Ymax": ["1","(7/5)"],
+        "Ymin": ["-1","(1/2)"],
+        "Zmax": ["1","(1/10)"],
+        "Zmin": ["-1","-(1/10)"]
       },
       "Texture": {
         "Colors": ["R=(3/5)",
@@ -5942,20 +5917,13 @@
           "Gx=Fx(u,v,t)+Thickness1(u,v,t)*n1(u,v,t)/R(u,v,t)",
           "Gy=Fy(u,v,t)+Thickness1(u,v,t)*n2(u,v,t)/R(u,v,t)",
           "Gz=Fz(u,v,t)+Thickness1(u,v,t)*n3(u,v,t)/R(u,v,t)"],
-        "Fx": ["Gx(u,v,1)",
-          "Gx(u,v,0)"],
-        "Fy": ["Gy(u,v,1)",
-          "Gy(u,v,0)"],
-        "Fz": ["Gz(u,v,1)",
-          "Gz(u,v,0)"],
-        "Umax": ["pi/2",
-          "pi/2"],
-        "Umin": ["-pi/2",
-          "-pi/2"],
-        "Vmax": ["2*pi",
-          "2*pi"],
-        "Vmin": ["0",
-          "0"]
+        "Fx": ["Gx(u,v,1)","Gx(u,v,0)"],
+        "Fy": ["Gy(u,v,1)","Gy(u,v,0)"],
+        "Fz": ["Gz(u,v,1)","Gz(u,v,0)"],
+        "Umax": ["pi/2","pi/2"],
+        "Umin": ["-pi/2","-pi/2"],
+        "Vmax": ["2*pi","2*pi"],
+        "Vmin": ["0","0"]
       }
     },
     {
@@ -6491,20 +6459,13 @@
           "Gx=Fx(u,v,t)+Th(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
           "Gy=Fy(u,v,t)+Th(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
           "Gz=Fz(u,v,t)+Th(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
-        "Fx": ["Fx(u,v,t)",
-          "Gx(u,v,t)"],
-        "Fy": ["Fy(u,v,t)",
-          "Gy(u,v,t)"],
-        "Fz": ["Fz(u,v,t)",
-          "Gz(u,v,t)"],
-        "Umax": ["13/10",
-          "13/10"],
-        "Umin": ["3/10",
-          "3/10"],
-        "Vmax": ["2*pi",
-          "2*pi"],
-        "Vmin": ["0",
-          "0"]
+        "Fx": ["Fx(u,v,t)","Gx(u,v,t)"],
+        "Fy": ["Fy(u,v,t)","Gy(u,v,t)"],
+        "Fz": ["Fz(u,v,t)","Gz(u,v,t)"],
+        "Umax": ["13/10","13/10"],
+        "Umin": ["3/10","3/10"],
+        "Vmax": ["2*pi","2*pi"],
+        "Vmin": ["0","0"]
       }
     },
     {
