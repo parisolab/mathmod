@@ -64,7 +64,7 @@ void freevectmem()
 void vectmem(int size)
 {
     freevectmem();
-    VectSize=size*ThreadsNumber*Stack_Factor;
+    VectSize=size*ThreadsNumber;
     tmpVector.resize(VectSize);
     psh.resize(ThreadsNumber);
     gts.resize(ThreadsNumber);
@@ -75,18 +75,14 @@ void vectmem(int size)
 double GetVal(const double *p)
 {
     psh[int(p[0])]=0;
-    double tmp=tmpVector[(int(p[0]))*Stack_Factor+(gts[int(p[0])])];
-    gts[int(p[0])]+=1;
-    gts[int(p[0])]=gts[int(p[0])]%Stack_Factor;
+    double tmp=tmpVector[(int(p[0]))+(gts[int(p[0])])];
     return(tmp);
 }
 
 double Push(const double *p)
 {
     gts[int(p[0])]=0;
-    tmpVector[(int(p[0])*Stack_Factor+(psh[int(p[0])]))]=p[1];
-    psh[int(p[0])]+=1;
-    psh[int(p[0])]=psh[int(p[0])]%Stack_Factor;
+    tmpVector[(int(p[0])+(psh[int(p[0])]))]=p[1];
     return(p[1]);
 }
 
