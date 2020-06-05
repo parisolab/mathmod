@@ -1102,7 +1102,8 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Jprime,cmpId=0, K=0;
-    double tmp, ValCol[masterthread->VRgbtSize], val[10];
+    double tmp, val[10];
+	double *ValCol = (double*)malloc(masterthread->VRgbtSize * sizeof(double));
     val[3] = masterthread->stepMorph;
     val[0] = val[1] = val[2] = 0.0;
 
@@ -1208,6 +1209,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             NormVertexTabVector[i*10+3] = float(masterthread->RgbtParser[3].Eval(val));
         }
     }
+	free(ValCol);
 }
 
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)

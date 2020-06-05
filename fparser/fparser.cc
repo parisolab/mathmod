@@ -3525,12 +3525,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             {
                 unsigned index = byteCode[++IP];
                 unsigned params = mData->mFuncParsers[index].mParams;
-                double res[NbStack];
+				double *res = (double*)malloc(NbStack * sizeof(double));
                 double rest=mData->mFuncParsers[index].mParserPtr->Eval2
                 (&(Stacki[SP-params+1]), Size, res, NbStack);
                 if (int(rest) == IF_FUNCT_ERROR)
                 {
                     mData->mEvalErrorType = IF_FUNCT_ERROR;
+					free(res);
                     return IF_FUNCT_ERROR;
                 }
 
@@ -3539,6 +3540,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   Stacki[Nbval*Size+SP - (int(params)-1)] = res[Nbval];
                 }
                 SP -= int(params)-1;
+				free(res);
                 break;
             }
 

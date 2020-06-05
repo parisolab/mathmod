@@ -597,17 +597,17 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         // Min
         lst = QObj["Min"].toArray();
         ObjArrayToString(lst, result);
-        qlstmin = result.split(";", Qt::SkipEmptyParts);
+        qlstmin = result.split(";", QString::SkipEmptyParts);
 
         // Max
         lst = QObj["Max"].toArray();
         ObjArrayToString(lst, result);
-        qlstmax = result.split(";", Qt::SkipEmptyParts);
+        qlstmax = result.split(";", QString::SkipEmptyParts);
 
         // Position
         lst = QObj["Position"].toArray();
         ObjArrayToString(lst, result);
-        qlstPos = result.split(";", Qt::SkipEmptyParts);
+        qlstPos = result.split(";", QString::SkipEmptyParts);
 
         for (int i = 0; i < qlstPos.size(); ++i)
         {
@@ -620,7 +620,7 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         // Name
         lst = QObj["Name"].toArray();
         ObjArrayToString(lst, result);
-        qlstnames = result.split(";", Qt::SkipEmptyParts);
+        qlstnames = result.split(";", QString::SkipEmptyParts);
 
         for (int i = 0; i < qlstnames.size(); ++i)
         {
@@ -647,7 +647,7 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         // Step
         lst = QObj["Step"].toArray();
         ObjArrayToString(lst, result);
-        qlstStep = result.split(";", Qt::SkipEmptyParts);
+        qlstStep = result.split(";", QString::SkipEmptyParts);
         QStringList qlist;
         if (qlstPos.size() >= qlstnames.size())
         {
@@ -660,7 +660,7 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
                     (lst = QObj["SetNames"].toArray()).size())
             {
                 ObjArrayToString(lst, result);
-                qlist += result.split(";", Qt::SkipEmptyParts);
+                qlist += result.split(";", QString::SkipEmptyParts);
             }
             else
             {
@@ -1132,7 +1132,7 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
         MathmodRef->ui.glWidget->ParObjet->masterthread->RgbtSize = uint(lst.size());
     }
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
-    MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", Qt::SkipEmptyParts);
+    MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
 }
 
 // --------------------------
@@ -1185,7 +1185,7 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
 
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT =
-        result.split(";", Qt::SkipEmptyParts);
+        result.split(";", QString::SkipEmptyParts);
 }
 
 // --------------------------
@@ -1498,7 +1498,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         MathmodRef->ui.glWidget->ParObjet->masterthread->componentsNumber =
             uint(lst.size());
         MathmodRef->RootObjet.CurrentTreestruct.fx =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_FY:
         MathmodRef->ui.glWidget->ParObjet->masterthread->expression_Y =
@@ -1506,7 +1506,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         MathmodRef->ui.glWidget->ParObjet->masterthread->expression_YSize =
             lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fy =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_FZ:
         MathmodRef->ui.glWidget->ParObjet->masterthread->expression_Z =
@@ -1514,7 +1514,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         MathmodRef->ui.glWidget->ParObjet->masterthread->expression_ZSize =
             lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fz =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_FW:
         if (mod == PAR_4D_TYPE)
@@ -1522,40 +1522,40 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
             MathmodRef->ui.glWidget->ParObjet->masterthread->expression_W =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fw =
-                result.split(";", Qt::SkipEmptyParts);
+                result.split(";", QString::SkipEmptyParts);
         }
         break;
     case PAR_UMIN:
         MathmodRef->ui.glWidget->ParObjet->masterthread->inf_u =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umin =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_UMAX:
         MathmodRef->ui.glWidget->ParObjet->masterthread->sup_u =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umax =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_VMAX:
         MathmodRef->ui.glWidget->ParObjet->masterthread->sup_v =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmax =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_VMIN:
         MathmodRef->ui.glWidget->ParObjet->masterthread->inf_v =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmin =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_COMP:
         MathmodRef->RootObjet.CurrentTreestruct.Component =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_NAME:
         MathmodRef->RootObjet.CurrentTreestruct.name =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     }
 }
@@ -1577,51 +1577,51 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
         MathmodRef->ui.glWidget->IsoObjet->masterthread->componentsNumber =
             uint(lst.size());
         MathmodRef->RootObjet.CurrentTreestruct.fxyz =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_XMAX:
         MathmodRef->ui.glWidget->IsoObjet->masterthread->XlimitSup =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.xmax =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_YMAX:
         MathmodRef->ui.glWidget->IsoObjet->masterthread->YlimitSup =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.ymax =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_ZMAX:
         MathmodRef->ui.glWidget->IsoObjet->masterthread->ZlimitSup =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.zmax =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_XMIN:
         MathmodRef->ui.glWidget->IsoObjet->masterthread->XlimitInf =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.xmin =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_YMIN:
         MathmodRef->ui.glWidget->IsoObjet->masterthread->YlimitInf =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.ymin =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_ZMIN:
         MathmodRef->ui.glWidget->IsoObjet->masterthread->ZlimitInf =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.zmin =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_COMP:
         MathmodRef->RootObjet.CurrentTreestruct.Component =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_NAME:
         MathmodRef->RootObjet.CurrentTreestruct.name =
-            result.split(";", Qt::SkipEmptyParts);
+            result.split(";", QString::SkipEmptyParts);
         break;
     }
 }
@@ -1678,7 +1678,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Vect =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Vect =
-                result.split(";", Qt::SkipEmptyParts);
+                result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1695,7 +1695,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Grid =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid =
-                result.split(";", Qt::SkipEmptyParts);
+                result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1722,7 +1722,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         {
             MathmodRef->ui.glWidget->IsoObjet->masterthread->Funct = result.toStdString();
             MathmodRef->ui.glWidget->IsoObjet->masterthread->FunctSize = uint(lst.size());
-            MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", Qt::SkipEmptyParts);
+            MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1738,7 +1738,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
             MathmodRef->ui.glWidget->IsoObjet->masterthread->ConstSize =
                 uint(lst.size());
             MathmodRef->RootObjet.CurrentTreestruct.Const =
-                result.split(";", Qt::SkipEmptyParts);
+                result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1801,7 +1801,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(
             MathmodRef->ui.glWidget->ParObjet->masterthread->Vect =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Vect =
-                result.split(";", Qt::SkipEmptyParts);
+                result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1818,7 +1818,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(
             MathmodRef->ui.glWidget->ParObjet->masterthread->Grid =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid =
-                result.split(";", Qt::SkipEmptyParts);
+                result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1845,7 +1845,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(
         {
             MathmodRef->ui.glWidget->ParObjet->masterthread->Const = result.toStdString();
             MathmodRef->ui.glWidget->ParObjet->masterthread->ConstSize = uint(lst.size());
-            MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", Qt::SkipEmptyParts);
+            MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
@@ -1861,7 +1861,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(
             MathmodRef->ui.glWidget->ParObjet->masterthread->FunctSize =
                 uint(lst.size());
             MathmodRef->RootObjet.CurrentTreestruct.Funct =
-                result.split(";", Qt::SkipEmptyParts);
+                result.split(";", QString::SkipEmptyParts);
         }
         else
         {
