@@ -4592,6 +4592,7 @@
           "Th2=4/10"],
         "Funct": ["Iso=cos(x)+cos(y)+cos(z)",
           "Rapp=1/sqrt(x*x+y*y+z*z)",
+          "rapp=x/sqrt(x*x+y*y+z*z)",
           "iso7=Iso(x+sin(x)*Th2*t,y+Th2*sin(y)*t,z+Th2*sin(z)*t,0)*Iso(x-sin(x)*Th2*t,y-Th2*sin(y)*t,z-Th2*sin(z)*t,0)",
           "iso0=Iso(x+sin(x)*Th1*t,y+Th1*sin(y)*t,z+Th1*sin(z)*t,0)",
           "iso1=Iso(x-sin(x)*Th1*t,y-Th1*sin(y)*t,z-Th1*sin(z)*t,0)",
