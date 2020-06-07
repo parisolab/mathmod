@@ -3510,7 +3510,7 @@
         "Vmin": ["0"]
       }
     },
-        {
+    {
         "Iso3D": {
         "Description": ["The Dome by Abderrahman Taha 10/08/2018"],
         "Name": ["The_Dome_v1"],
@@ -3537,7 +3537,7 @@
         "Name": "Lines",
         "Noise": ""
         }
-        },
+    },
     {
       "Iso3D": {
         "Description": ["Wall Pattern Torus by Abderrahman Taha 18/10/2019"],
