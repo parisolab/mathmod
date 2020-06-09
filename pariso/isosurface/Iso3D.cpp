@@ -27,7 +27,6 @@ static double *Results;
 static uint NbVertexTmp = 0;
 static std::vector<float> NormOriginaltmpVector;
 uint NbTriangleIsoSurface,NbPointIsoMap;
-uint ThreadsNumber =4;
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 
@@ -38,53 +37,13 @@ std::vector<uint>  IndexPolyTabVector;
 static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 static QElapsedTimer times;
-
-static std::vector<double> tmpVector;
 static double IsoComponentId=0;
-static int VectSize=0;
-static std::vector<int> psh;
-static std::vector<int> gts;
 
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
 }
 
-void freevectmem()
-{
-    tmpVector.clear();
-    tmpVector.shrink_to_fit();
-    psh.clear();
-    psh.shrink_to_fit();
-    gts.clear();
-    gts.shrink_to_fit();
-    VectSize=0;
-}
-
-void vectmem(int size)
-{
-    freevectmem();
-    VectSize=size*ThreadsNumber;
-    tmpVector.resize(VectSize);
-    psh.resize(ThreadsNumber);
-    gts.resize(ThreadsNumber);
-    for(uint i=0; i<ThreadsNumber; i++)
-        psh[i]=gts[i]=0;
-}
-
-double GetVal(const double *p)
-{
-    psh[int(p[0])]=0;
-    double tmp=tmpVector[(int(p[0]))+(gts[int(p[0])])];
-    return(tmp);
-}
-
-double Push(const double *p)
-{
-    gts[int(p[0])]=0;
-    tmpVector[(int(p[0])+(psh[int(p[0])]))]=p[1];
-    return(p[1]);
-}
 
 extern double TurbulenceWorley(const double *p)
 {

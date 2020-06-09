@@ -21,6 +21,50 @@
 #include <vector>
 #include <math.h>
 
+
+unsigned int ThreadsNumber =4;
+static int VectSize=0;
+static std::vector<double> tmpVector;
+static std::vector<int> psh;
+static std::vector<int> gts;
+
+void freevectmem()
+{
+    tmpVector.clear();
+    tmpVector.shrink_to_fit();
+    psh.clear();
+    psh.shrink_to_fit();
+    gts.clear();
+    gts.shrink_to_fit();
+    VectSize=0;
+}
+
+void vectmem(int size)
+{
+    freevectmem();
+    VectSize=size*ThreadsNumber;
+    tmpVector.resize(VectSize);
+    psh.resize(ThreadsNumber);
+    gts.resize(ThreadsNumber);
+    for(unsigned int i=0; i<ThreadsNumber; i++)
+        psh[i]=gts[i]=0;
+}
+
+double GetVal(const double *p)
+{
+    psh[int(p[0])]=0;
+    double tmp=tmpVector[(int(p[0]))+(gts[int(p[0])])];
+    return(tmp);
+}
+
+double Push(const double *p)
+{
+    gts[int(p[0])]=0;
+    tmpVector[(int(p[0])+(psh[int(p[0])]))]=p[1];
+    return(p[1]);
+}
+
+
 double maxim(double p1, double p2)
 {
     return p1 > p2 ? p1 : p2;
