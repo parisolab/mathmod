@@ -19,7 +19,7 @@
 ***************************************************************************/
 #include "TableMap.h"
 #include "Iso3D.h"
-#include "povfunctions.cpp"
+#include "internalfunctions.cpp"
 
 static uint NbPolyMin;
 static Voxel *GridVoxelVarPt;

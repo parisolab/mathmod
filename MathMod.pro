@@ -49,7 +49,7 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             pariso/commun.cpp \
             pariso/isosurface/isotransformation.cpp \
             pariso/parametric/paratransformation.cpp \
-            pariso/isosurface/povfunctions.cpp \
+            pariso/isosurface/internalfunctions.cpp \
             ui_modules/sliderparam.cpp \
             ui_modules/addparam.cpp
 
