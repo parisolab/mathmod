@@ -708,7 +708,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint nbstack=nbX*nbY*nbZ;
     uint Iindice=0, Jindice=0, Kindice=0;
     int PreviousSignal=0;
-    vals = new double[34*nbstack];
+    vals = new double[4*nbstack];
     Res  = new double[nbstack];
     vals[3]    = stepMorph;
     //vals[4]    = double(MyIndex);
@@ -727,7 +727,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     iStart = iFinish - taille;
 
     for(uint l=0; l<nbstack; l++)
-        vals[l*34+3]= stepMorph;
+        vals[l*4+3]= stepMorph;
 
     uint remX= (iFinish-iStart)%nbX;
     uint remY= limitY%nbY;
@@ -770,17 +770,17 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 // X, Y and Z arrays construction:
                 for(uint l=0; l<nbstack; l++)
                 {
-                    vals[l*34  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
-                    vals[l*34+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
-                    vals[l*34+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
+                    vals[l*4  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
+                    vals[l*4+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
+                    vals[l*4+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
                 }
 
                 IJK = J+Kindice;
-                double res = implicitFunctionParser[IsoIndex].Eval2(vals, 34, Res, nbstack);
+                double res = implicitFunctionParser[IsoIndex].Eval2(vals, 4, Res, nbstack);
                 if( abs(res - IF_FUNCT_ERROR) == 0.0)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*34]));
+                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*4]));
                 }
                 else if( abs(res - DIVISION_BY_ZERO) == 0.0)
                 {
@@ -1700,8 +1700,6 @@ void Iso3D::IsoBuild (
         NbVertexTmp               += NbPointIsoMap;
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
     }
-
-
 
     delete[] GridVoxelVarPt;
     GridVoxelVarPt = nullptr;
