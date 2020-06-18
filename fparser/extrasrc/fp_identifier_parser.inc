@@ -185,8 +185,8 @@ lJ
 lH't':l0(cCot
 l6
 lJ
-lE's':if('c' l5
-2])l0(cCsc
+lE's':if('d' l5
+2])l0(cCsd
 l6
 l4
 lE'e':if('x' l5
@@ -208,9 +208,9 @@ lM'i':if(lK
 2])l0(cMin
 l6
 l4
-lE'p':if('o' l5
-1]&&'w' l5
-2])l0(cPow
+lE'p':if('s' l5
+1]&&'h' l5
+2])l0(cPsh
 l6
 lM's' lB'e':if('c' l5
 2])l0(cSec

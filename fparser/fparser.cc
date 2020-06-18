@@ -2614,6 +2614,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
     unsigned IP, DP=0;
     int SP=-1;
 
+    std::vector<Value_t>& StackSave = mData->mStackSave;
 #ifdef FP_USE_THREAD_SAFE_EVAL
     /* If Eval() may be called by multiple threads simultaneously,
      * then Eval() must allocate its own stack.
@@ -2769,6 +2770,11 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
               { mData->mEvalErrorType=3; return Value_t(0); }
               Stack[SP-1] = fp_pow(Stack[SP-1], Stack[SP]);
               --SP; break;
+
+          case cPsh: StackSave[0] = Stack[SP];
+                     --SP; break;
+          case cCsd:
+                Stack[SP] = StackSave[0]; break;
 
           case  cTrunc: Stack[SP] = fp_trunc(Stack[SP]); break;
 
@@ -3006,6 +3012,7 @@ template<typename Value_t>
 void FunctionParserBase<Value_t>::AllocateStackMemory(unsigned int nbStack)
 {
     mData->mStacki.resize(nbStack*(mData->mStack).size());
+    mData->mStackSave.resize(nbStack); // Should be done earlier
 }
 
 template<typename Value_t>
@@ -3021,6 +3028,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     /* No thread safety, so use a global stack. */
     std::vector<Value_t>& Stack  = mData->mStack;
     std::vector<Value_t>& Stacki = mData->mStacki;
+    std::vector<Value_t>& StackSave = mData->mStackSave;
     int Size = Stack.size();
 
     for(IP=0; IP<byteCodeSize; ++IP)
@@ -3223,6 +3231,15 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   Stacki[Nbval*Size+SP-1] = fp_pow(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             }
               --SP; break;
+
+        case cPsh:
+          for(Nbval=0; Nbval<NbStack; Nbval++)
+              StackSave[Nbval] = Stacki[Nbval*Size+SP];
+                     --SP; break;
+
+        case cCsd:
+          for(Nbval=0; Nbval<NbStack; Nbval++)
+              Stacki[Nbval*Size+SP] = StackSave[Nbval]; break;
 
           case  cTrunc:
             for(Nbval=0; Nbval<NbStack; Nbval++)

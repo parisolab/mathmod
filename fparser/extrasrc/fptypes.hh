@@ -36,14 +36,14 @@ namespace FUNCTIONPARSERTYPES
         cAtan, cAtan2, cAtanh,
         cCbrt, cCeil,
         cConj,  /* get the complex conjugate of a complex value */
-        cCos, cCosh, cCot, cCsc,
+        cCos, cCosh, cCot, cCsc, cCsd,
         cExp, cExp2, cFloor, cHypot,
         cIf,
         cImag,  /* get imaginary part of a complex value */
         cInt, cLog, cLog10, cLog2, cMax, cMin,
         cPolar, /* create a complex number from polar coordinates */
-        cPow,
-        cReal,  /* get real part of a complex value */
+        cPow, cPsh,
+        cReal, /* get real part of a complex value */
         cSec, cSin, cSinh, cSqrt, cTan, cTanh,
         cTrunc,
 
@@ -138,6 +138,7 @@ namespace FUNCTIONPARSERTYPES
         /*cExp  */ { FP_FNAME("exp")   1, 0 },
         /*cExp2 */ { FP_FNAME("exp2")  1, 0 },
         /*cFloor*/ { FP_FNAME("floor") 1, 0 },
+        /*cGet  */ { FP_FNAME("get")   1, 0 },
         /*cHypot*/ { FP_FNAME("hypot") 2, 0 },
         /*cIf   */ { FP_FNAME("if")    0, FuncDefinition::OkForInt },
         /*cImag */ { FP_FNAME("imag")  1, FuncDefinition::ComplexOnly },
@@ -149,6 +150,7 @@ namespace FUNCTIONPARSERTYPES
         /*cMin  */ { FP_FNAME("min")   2, FuncDefinition::OkForInt },
         /*cPolar */{ FP_FNAME("polar") 2, FuncDefinition::ComplexOnly | FuncDefinition::AngleIn },
         /*cPow  */ { FP_FNAME("pow")   2, 0 },
+        /*cPsh  */ { FP_FNAME("psh")   2, 0 },
         /*cReal */ { FP_FNAME("real")  1, FuncDefinition::ComplexOnly },
         /*cSec  */ { FP_FNAME("sec")   1, FuncDefinition::AngleIn },
         /*cSin  */ { FP_FNAME("sin")   1, FuncDefinition::AngleIn },
@@ -269,6 +271,7 @@ struct FunctionParserBase<Value_t>::Data
     !defined(FP_USE_THREAD_SAFE_EVAL_WITH_ALLOCA)
     std::vector<Value_t> mStack;
     std::vector<Value_t> mStacki;
+    std::vector<Value_t> mStackSave;
     // Note: When mStack exists,
     //       mStack.size() and mStackSize are mutually redundant.
 #endif
