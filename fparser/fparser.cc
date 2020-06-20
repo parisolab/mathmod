@@ -3234,7 +3234,10 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
         case cPsh:
           for(Nbval=0; Nbval<NbStack; Nbval++)
+          {
               StackSave[Nbval] = Stacki[Nbval*Size+SP];
+              Stacki[Nbval*Size+SP-1] = 1.0;
+          }
                      --SP; break;
 
         case cCsd:
