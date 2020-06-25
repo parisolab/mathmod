@@ -2772,11 +2772,11 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
               --SP; break;
 
           case cPsh:
-                StackSave[0] = Stack[SP];
+                StackSave[Stack[SP-1]] = Stack[SP];
                 Stack[SP-1]  = 1.0;
                      --SP; break;
           case cCsd:
-                Stack[SP] = StackSave[0]; break;
+                Stack[SP] = StackSave[Stack[SP]]; break;
 
           case  cTrunc: Stack[SP] = fp_trunc(Stack[SP]); break;
 
@@ -3014,7 +3014,7 @@ template<typename Value_t>
 void FunctionParserBase<Value_t>::AllocateStackMemory(unsigned int nbStack)
 {
     mData->mStacki.resize(nbStack*(mData->mStack).size());
-    mData->mStackSave.resize(nbStack); // Should be done earlier
+    mData->mStackSave.resize(10*nbStack); // Should be done earlier
 }
 
 template<typename Value_t>
@@ -3237,14 +3237,14 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
         case cPsh:
           for(Nbval=0; Nbval<NbStack; Nbval++)
           {
-              StackSave[Nbval] = Stacki[Nbval*Size+SP];
+              StackSave[NbStack*(Stacki[Nbval*Size+SP-1])+Nbval] = Stacki[Nbval*Size+SP];
               Stacki[Nbval*Size+SP-1] = 1.0;
           }
                      --SP; break;
 
         case cCsd:
           for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = StackSave[Nbval]; break;
+              Stacki[Nbval*Size+SP] = StackSave[NbStack*(Stacki[Nbval*Size+SP])+Nbval]; break;
 
           case  cTrunc:
             for(Nbval=0; Nbval<NbStack; Nbval++)
