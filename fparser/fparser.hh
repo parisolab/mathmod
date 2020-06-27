@@ -68,7 +68,7 @@ class FunctionParserBase
     ParseErrorType GetParseErrorType() const;
 
     Value_t Eval(const Value_t* Vars);
-    void AllocateStackMemory( unsigned int );
+    void AllocateStackMemory( unsigned int, int nbvar=0);
     Value_t Eval2(const Value_t* Vars, unsigned Nbvar, double* results, unsigned, int position=-1);
     int EvalError() const;
 

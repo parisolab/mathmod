@@ -38,7 +38,7 @@ static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 static QElapsedTimer times;
 static double IsoComponentId=0;
-
+static int nbvariables=0;
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
@@ -296,8 +296,6 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("f_hex_y",f_hex_y, 4);
             workerthreads[nbthreads].Fct[ii].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
-            workerthreads[nbthreads].Fct[ii].AddFunction("Push",Push, 2);
-            workerthreads[nbthreads].Fct[ii].AddFunction("Get",GetVal, 1);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].Fct[ii].AddFunction("MarbleP",MarblePerlin, 4);
             for(uint jj=0; jj<ii; jj++)
@@ -308,7 +306,7 @@ ErrorMessage  Iso3D::parse_expression2()
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor);
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor, nbvariables);
         }
     }
 
@@ -344,8 +342,6 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("Push",Push, 2);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("Get",GetVal, 1);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
 
@@ -1156,8 +1152,6 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("f_hex_y",f_hex_y, 4);
         implicitFunctionParser[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
-        implicitFunctionParser[i].AddFunction("Push",Push, 2);
-        implicitFunctionParser[i].AddFunction("Get",GetVal, 1);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
 
@@ -1368,8 +1362,6 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("f_hex_y",f_hex_y, 4);
         Fct[i].AddFunction("p_skeletal_int",p_skeletal_int, 3);
         Fct[i].AddFunction("fmesh",fmesh, 8);
-        Fct[i].AddFunction("Push",Push, 2);
-        Fct[i].AddFunction("Get",GetVal, 1);
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         Fct[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
@@ -1431,7 +1423,7 @@ void IsoMasterThread::AllocateMasterParsers()
         UsedFunct    = new bool[4*componentsNumber*FunctSize];
         UsedFunct2   = new bool[FunctSize*FunctSize];
 
-        vectnotnull? vectmem( vect[0]) : freevectmem();
+        vectnotnull? nbvariables=vect[0] : nbvariables=0;
 
         rgbtnotnull ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
