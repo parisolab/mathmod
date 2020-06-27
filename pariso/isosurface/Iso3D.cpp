@@ -730,7 +730,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint remZ= limitZ%nbZ;
     uint Totalpoints=(iFinish-iStart)*limitY*limitZ;
 
-    implicitFunctionParser[IsoIndex].AllocateStackMemory(Stack_Factor);
+    implicitFunctionParser[IsoIndex].AllocateStackMemory(Stack_Factor, nbvariables);
     for(uint i=iStart; i<iFinish; i+=nbX )
     {
         Iindice = i;
@@ -970,7 +970,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                 stdError.strError = Functs[i];
                 return stdError;
             }
-            Fct[i].AllocateStackMemory(Stack_Factor);
+            Fct[i].AllocateStackMemory(Stack_Factor, nbvariables);
         }
     }
     else
