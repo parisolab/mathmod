@@ -4675,22 +4675,22 @@
             "Zmin": ["-Zval"]
         }
     },
-        {
-            "Iso3D": {
-                "Description": ["Arena by Abderrahman Taha 30/03/2019"],
-                "Component": ["Arena"],
-                "Const": ["c=1/10000","th=6/10","N=10"],
-                "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))"],
-                "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10) ,ThickIsoExterior(x,y,z,t), 1)"],
-                "Name": ["Arena"],
-                "Xmax": ["10"],
-                "Xmin": ["-10"],
-                "Ymax": ["28"],
-                "Ymin": ["-28"],
-                "Zmax": ["28"],
-                "Zmin": ["-28"]
-            }
-        },
+    {
+        "Iso3D": {
+            "Description": ["Arena by Abderrahman Taha 30/03/2019"],
+            "Component": ["Arena"],
+            "Const": ["c=1/10000","th=6/10","N=10"],
+            "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))"],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10) ,ThickIsoExterior(x,y,z,t), 1)"],
+            "Name": ["Arena"],
+            "Xmax": ["10"],
+            "Xmin": ["-10"],
+            "Ymax": ["28"],
+            "Ymin": ["-28"],
+            "Zmax": ["28"],
+            "Zmin": ["-28"]
+        }
+    },
     {
       "Iso3D": {
         "Description": ["Schwarz Cube Torus by Abderrahman Taha 30/10/2019"],
@@ -4759,29 +4759,29 @@
       }
     },
     {
-    "Iso3D": {
-        "Description": ["Surface with rotational symmetry of order 5, by Patrice Jeener 24/11/2019"],
-        "Name": ["PatriceJ"],
-        "Component": ["patrice"],
-        "Const": [
-            "X=2","Y=2","Z=13/10","c=1/1000","T=2/100"],
-        "Funct": [
-            "Patrice=16*z^5 -20*z^3 + 5*z+ x^5 -10*x^3*y^2 +5*x*y^4",
-            "DFx=((Patrice(x+c,y,z,t)-Patrice(x,y,z,t))/c)",
-            "DFy=((Patrice(x,y+c,z,t)-Patrice(x,y,z,t))/c)",
-            "DFz=((Patrice(x,y,z+c,t)-Patrice(x,y,z,t))/c)",
-            "Rapport=(x/sqrt(x*x+y*y+z*z))",
-            "Iso=Patrice(x-t*T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-t*T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-t*T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
-            "TickIsoExterior=(Iso(x,y,z,1)*Iso(x,y,z,-1))"],
-        "Fxyz": ["if((sqrt(x*x+y*y+z*z)-X)<(0),TickIsoExterior(x,y,z,t),(1))"],
-        "Xmax": [" X"],
-        "Xmin": ["-X"],
-        "Ymax": [" Y"],
-        "Ymin": ["-Y"],
-        "Zmax": [" Z"],
-        "Zmin": ["-Z"],
-        "Grid": ["150"]
-    }
+        "Iso3D": {
+            "Description": ["Surface with rotational symmetry of order 5, by Patrice Jeener 24/11/2019"],
+            "Name": ["PatriceJ"],
+            "Component": ["patrice"],
+            "Const": [
+                "X=2","Y=2","Z=13/10","c=1/1000","T=2/100"],
+            "Funct": [
+                "Patrice=16*z^5 -20*z^3 + 5*z+ x^5 -10*x^3*y^2 +5*x*y^4",
+                "DFx=((Patrice(x+c,y,z,t)-Patrice(x,y,z,t))/c)",
+                "DFy=((Patrice(x,y+c,z,t)-Patrice(x,y,z,t))/c)",
+                "DFz=((Patrice(x,y,z+c,t)-Patrice(x,y,z,t))/c)",
+                "Rapport=(x/sqrt(x*x+y*y+z*z))",
+                "Iso=Patrice(x-t*T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-t*T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-t*T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
+                "TickIsoExterior=(Iso(x,y,z,1)*Iso(x,y,z,-1))"],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z)-X)<(0),TickIsoExterior(x,y,z,t),(1))"],
+            "Xmax": [" X"],
+            "Xmin": ["-X"],
+            "Ymax": [" Y"],
+            "Ymin": ["-Y"],
+            "Zmax": [" Z"],
+            "Zmin": ["-Z"],
+            "Grid": ["150"]
+        }
     },
     {
         "Iso3D": {
