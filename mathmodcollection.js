@@ -7923,25 +7923,25 @@
             }
         },
         {
-        "Param3D": {
-        "Description ": ["Gears by Abderrahman Taha (Update) 27/06/2018"],
-        "Name": ["Gears"],
-        "Funct": ["F1=(R3+(R/(10*N))*cos(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*cos(N2*u/N+v))","F2=((R/(10*N))*sin(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*sin(N2*u/N+v))","F3=(R3+(R/(10*N1))*cos(N2*u/N1+((R/(10*N1))-R/10)/(R/(10*N1))*v)+(R/10-(R/(10*N1)))*cos(N2*u/N1+v))","F4=((R/(10*N1))*sin(N2*u/N1+((R/(10*N1))-R/10)/(R/(10*N1))*v)+(R/10-(R/(10*N1)))*sin(N2*u/N1+v))"],
-        "Fx": ["-sin(u)*F1(u-t,v,t)","-sin(u)*F3(u-t,v,t)","-sin(u)*F3(u-t,v,t)"],
-        "Fy": ["cos(u)*F1(u-t,v,t)","cos(u)*F3(u-t,v,t)","cos(u)*F3(u-t,v,t)"],
-        "Fz": ["F2(u-t,v,t) +3","F4(u-t,v,t) ","F4(u-t,v,t)+61/10"],
-        "Component": ["MultiSidedTorus_0 ","MultiSidedTorus_1","MultiSidedTorus_2"],
-        "Const": ["N=4","N1=-4","R3=3","R=15","N2=4","P=8","M=10"],
-        "Umax": ["pi","pi","pi"],
-        "Umin": ["-pi","-pi","-pi"],
-        "Vmax": ["pi","pi","pi"],
-        "Vmin": ["-pi","-pi","-pi"]
-        },
-        "Texture": {
-        "Colors": ["R=if((cmpId =1), if((i)%(M)>P | (j)%(M)>P,(8/10),(9/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(2/10)) )","G= if((cmpId =2), if((i)%(M)>P | (j)%(M)>P,(8/10),(7/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(1/10)) )","B= if((cmpId >2), if((i)%(M)>P | (j)%(M)>P,(8/10),(9/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(2/10)) )","T= 1"],
-        "Name": "square",
-        "Noise": "1"
-        }
+            "Param3D": {
+            "Description ": ["Gears by Abderrahman Taha (Update) 27/06/2018"],
+            "Name": ["Gears"],
+            "Funct": ["F1=(R3+(R/(10*N))*cos(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*cos(N2*u/N+v))","F2=((R/(10*N))*sin(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*sin(N2*u/N+v))","F3=(R3+(R/(10*N1))*cos(N2*u/N1+((R/(10*N1))-R/10)/(R/(10*N1))*v)+(R/10-(R/(10*N1)))*cos(N2*u/N1+v))","F4=((R/(10*N1))*sin(N2*u/N1+((R/(10*N1))-R/10)/(R/(10*N1))*v)+(R/10-(R/(10*N1)))*sin(N2*u/N1+v))"],
+            "Fx": ["-sin(u)*F1(u-t,v,t)","-sin(u)*F3(u-t,v,t)","-sin(u)*F3(u-t,v,t)"],
+            "Fy": ["cos(u)*F1(u-t,v,t)","cos(u)*F3(u-t,v,t)","cos(u)*F3(u-t,v,t)"],
+            "Fz": ["F2(u-t,v,t) +3","F4(u-t,v,t) ","F4(u-t,v,t)+61/10"],
+            "Component": ["MultiSidedTorus_0 ","MultiSidedTorus_1","MultiSidedTorus_2"],
+            "Const": ["N=4","N1=-4","R3=3","R=15","N2=4","P=8","M=10"],
+            "Umax": ["pi","pi","pi"],
+            "Umin": ["-pi","-pi","-pi"],
+            "Vmax": ["pi","pi","pi"],
+            "Vmin": ["-pi","-pi","-pi"]
+            },
+            "Texture": {
+            "Colors": ["R=if((cmpId =1), if((i)%(M)>P | (j)%(M)>P,(8/10),(9/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(2/10)) )","G= if((cmpId =2), if((i)%(M)>P | (j)%(M)>P,(8/10),(7/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(1/10)) )","B= if((cmpId >2), if((i)%(M)>P | (j)%(M)>P,(8/10),(9/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(2/10)) )","T= 1"],
+            "Name": "square",
+            "Noise": "1"
+            }
         },
         {
             "Iso3D": {
