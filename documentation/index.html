@@ -601,22 +601,21 @@ Used in the "Chained_Sinusoid" script. </td>
 </tr>
 
 <tr>
- <td><code>Get(N,ThreadId)</code></td>
+ <td><code>csd(N)</code></td>
  <td>(Experimental) Return the value of the variable at the index N. Example:
 <pre>
 "Vect": ["1"],
-"Fxyz": ["Schwarz=if( Push(ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
+"Fxyz": ["Schwarz=if( psh(N,cos(x)+cos(y)+cos(z)), csd(0), 0)"],
 </pre>
 </tr>
-Push
+psh
 <tr>
- <td><code>Push(N,ThreadId, val)</code></td>
+ <td><code>psh(N, val)</code></td>
  <td>(Experimental) Save the value of the variable at index N to val. Example:
 <pre>
-"Schwarz=if( Push(0, ThreadId, cos(x)+cos(y)+cos(z)) , Get(0, ThreadId), 0)"
+"Schwarz=if( psh(0, cos(x)+cos(y)+cos(z)) , csd(0), 0)"
 </pre>
 </tr>
-
 
 </table>
 
