@@ -7943,50 +7943,50 @@
             "Noise": "1"
             }
         },
-        {
-            "Iso3D": {
-                "Description": ["Script by Abderrahman Taha (27/04/2020) to generate TPMS lattices with function definition F , thickness (T) and density (dx,dy,dz)"],
-                "Name": ["SchwarzP_Lattice"],
-                "Component": ["SchwarzP"],
-                "Const": ["T=3/10",
-                    "dx=5*pi",
-                    "dy=3*pi",
-                    "dz=3*pi",
-                    "m=1/1000",
-                    "c=1/10000"],
-                "Funct": ["F=cos(x)+cos(y)+cos(z)",
-                    "F1=cos(x)*sin(y)+sin(x)*cos(z)+cos(y)*sin(z)",
-                    "DFx=((F(x+c,y,z,t)-F(x,y,z,t))/c)",
-                    "DFy=((F(x,y+c,z,t)-F(x,y,z,t))/c)",
-                    "DFz=((F(x,y,z+c,t)-F(x,y,z,t))/c)",
-                    "Rapp=x/sqrt(x*x+y*y+z*z)",
-                    "G=((F(x-T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)))",
-                    "L=(F(x+T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
-                    "Iso=(L(x,y,z,t)*G(x,y,z,t))",
-                    "ExternalShape=(abs(x)+m<dx & abs(y)+m<dy & abs(z)+m<dz)"],
-                "Fxyz": ["if(ExternalShape(x,y,z,t) ,Iso(x,y,z,t),1)"],
-                "Xmax": ["dx"],
-                "Xmin": ["-dx"],
-                "Ymax": ["dy"],
-                "Ymin": ["-dy"],
-                "Zmax": ["dz"],
-                "Zmin": ["-dz"]
-            }
-        },
-        {
-            "Iso3D": {
-            "Description": ["Oloid by Abderrahman Taha 02/08/2018"],
-            "Name": ["Oloid"],
-            "Component": ["oloid"],
-            "Fxyz": [" (4*x^2 + 4*x^3 -7*x^4 -8*x^5 +2*x^6 + 4*x^7 + x^8 + 4*y^2 + 4*x*y^2 -18*x^2 * y^2 - 16*x^3 *(y^2) + 14* x^4 * y^2 + 12*x^5*y^2 - 11*y^4 - 8*x*y^4 + 22*x^2 * y^4+ 12*x^3*y^4 -6*x^4*y^4 + 10*y^6 + 4*x*y^6 -8*x^2*y^6 - 3*y^8 +4*x*z^2 -6*x^2*z^2 -48*x^3*z^2 - 46*x^4*z^2 - 12*x^5*z^2 - 10*y^2*z^2 - 52*x*y^2*z^2 - 46*x^2*y^2*z^2 + 12* x^3 *y^2*z^2 + 6* x^4 *y^2 *z^2 + 24*x*y^4 *z^2 + 12*x^2*y^4*z^2 + 6*y^6*z^2 + z^4 -8*x*z^4 -50*x^2 * z^4 -36*x^3*z^4 - 6*x^4* z^4 - 12*y^2*z^4 + 12*x^2*y^2*z^4 - 9*y^4*z^4 - 2*z^6 -20*x*z^6 -8*x^2 *z^6 +6*y^2 * z^6 -3*z^8) "],
-            "Xmax": ["1"],
-            "Xmin": ["-2"],
-            "Ymax": ["1"],
-            "Ymin": ["-1"],
-            "Zmax": ["1"],
-            "Zmin": ["-1"]
-            }
-        },
+    {
+        "Iso3D": {
+            "Description": ["Script by Abderrahman Taha (27/04/2020) to generate TPMS lattices with function definition F , thickness (T) and density (dx,dy,dz)"],
+            "Name": ["SchwarzP_Lattice"],
+            "Component": ["SchwarzP"],
+            "Const": ["T=3/10",
+                "dx=5*pi",
+                "dy=3*pi",
+                "dz=3*pi",
+                "m=1/1000",
+                "c=1/10000"],
+            "Funct": ["F=cos(x)+cos(y)+cos(z)",
+                "F1=cos(x)*sin(y)+sin(x)*cos(z)+cos(y)*sin(z)",
+                "DFx=((F(x+c,y,z,t)-F(x,y,z,t))/c)",
+                "DFy=((F(x,y+c,z,t)-F(x,y,z,t))/c)",
+                "DFz=((F(x,y,z+c,t)-F(x,y,z,t))/c)",
+                "Rapp=x/sqrt(x*x+y*y+z*z)",
+                "G=((F(x-T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)))",
+                "L=(F(x+T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
+                "Iso=(L(x,y,z,t)*G(x,y,z,t))",
+                "ExternalShape=(abs(x)+m<dx & abs(y)+m<dy & abs(z)+m<dz)"],
+            "Fxyz": ["if(ExternalShape(x,y,z,t) ,Iso(x,y,z,t),1)"],
+            "Xmax": ["dx"],
+            "Xmin": ["-dx"],
+            "Ymax": ["dy"],
+            "Ymin": ["-dy"],
+            "Zmax": ["dz"],
+            "Zmin": ["-dz"]
+        }
+    },
+    {
+        "Iso3D": {
+        "Description": ["Oloid by Abderrahman Taha 02/08/2018"],
+        "Name": ["Oloid"],
+        "Component": ["oloid"],
+        "Fxyz": [" (4*x^2 + 4*x^3 -7*x^4 -8*x^5 +2*x^6 + 4*x^7 + x^8 + 4*y^2 + 4*x*y^2 -18*x^2 * y^2 - 16*x^3 *(y^2) + 14* x^4 * y^2 + 12*x^5*y^2 - 11*y^4 - 8*x*y^4 + 22*x^2 * y^4+ 12*x^3*y^4 -6*x^4*y^4 + 10*y^6 + 4*x*y^6 -8*x^2*y^6 - 3*y^8 +4*x*z^2 -6*x^2*z^2 -48*x^3*z^2 - 46*x^4*z^2 - 12*x^5*z^2 - 10*y^2*z^2 - 52*x*y^2*z^2 - 46*x^2*y^2*z^2 + 12* x^3 *y^2*z^2 + 6* x^4 *y^2 *z^2 + 24*x*y^4 *z^2 + 12*x^2*y^4*z^2 + 6*y^6*z^2 + z^4 -8*x*z^4 -50*x^2 * z^4 -36*x^3*z^4 - 6*x^4* z^4 - 12*y^2*z^4 + 12*x^2*y^2*z^4 - 9*y^4*z^4 - 2*z^6 -20*x*z^6 -8*x^2 *z^6 +6*y^2 * z^6 -3*z^8) "],
+        "Xmax": ["1"],
+        "Xmin": ["-2"],
+        "Ymax": ["1"],
+        "Ymin": ["-1"],
+        "Zmax": ["1"],
+        "Zmin": ["-1"]
+        }
+    },
     {
       "Iso3D": {
         "Description": ["Tori of Helices by Abderrahman Taha 07/05/2016"],
