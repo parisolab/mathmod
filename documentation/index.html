@@ -583,9 +583,9 @@ Used in the "Chained_Sinusoid" script. </td>
 
 <tr>
  <td><code>ThreadId</code></td>
- <td>Return the Thread ID. Example:
+ <td>Return the Thread ID. Example: To draw the isosurface portion calculated by the thread number 1
 <pre>
-"Fxyz": [" if(ThreadId=0, cos(x) + cos(y) + cos(z), 0)"],
+"Fxyz": [" if(ThreadId=1, cos(x) + cos(y) + cos(z), 0)"],
 </pre>
 </tr>
 
@@ -595,7 +595,7 @@ Used in the "Chained_Sinusoid" script. </td>
 (Experimental) Define a set of variables (type double).Example:
 <br><pre>
 "Vect": ["1"],
-"Fxyz": ["Schwarz=if( Push(ThreadId,cos(x)+cos(y)+cos(z)), Get(0, ThreadId), 0)"],
+"Fxyz": ["Schwarz=if(ThreadId=1, cos(x)+cos(y)+cos(z), -1)"],
 </pre>
 </td>
 </tr>
