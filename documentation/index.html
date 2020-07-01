@@ -40,6 +40,7 @@
  <li><a href="#ScriptsExamples">Scripts Examples</a>
  </ol>
  <li><a href="#InternalFunctions">Internal Functions</a>
+ <li><a href="#UserDefinedVariables">User defined variables</a>
  <li><a href="#SupportedOperatorsFunctions">Supported operators and mathematical functions</a>
 </ol>
 
@@ -423,7 +424,7 @@ Each of the various pattern types available is in fact a mathematical function t
 </ol>
 
 <a name="InternalFunctions"></a>
-<h1>Internal functions </h1>
+<h2>Internal functions </h2>
 <p><table border=2>
  <tr>
   <td><code>NoiseP</code></td>
@@ -609,7 +610,7 @@ Used in the "Chained_Sinusoid" script. </td>
 "Fxyz": ["Schwarz=if( psh(N,cos(x)+cos(y)+cos(z)), csd(N), 0)"],
 </pre>
 </tr>
-psh
+
 <tr>
  <td><code>psh(N, val)</code></td>
  <td>(Experimental) Save the value of val to the variable at index N. Example (<a href="#Arena_02">See full script</a>) :
@@ -617,7 +618,39 @@ psh
 "Schwarz=if( psh(N, cos(x)+cos(y)+cos(z)) , csd(N), 0)"
 </pre>
 </tr>
+</table>
 
+
+<a name="UserDefinedVariables"></a>
+<h2>User Defined Variables </h2>
+<p><table border=2>
+<tr>
+<td><code>"Vect"</code></td>
+<td>
+(Experimental) Define a set of variables (type double).Example:
+<br><pre>
+"Vect": ["1"],
+"Fxyz": ["Schwarz=if(ThreadId=1, cos(x)+cos(y)+cos(z), -1)"],
+</pre>
+</td>
+</tr>
+
+<tr>
+ <td><code>csd(N)</code></td>
+ <td>(Experimental) Return the value of the variable at the index N. Example (<a href="#Arena_02">See full script</a>) :
+<pre>
+"Vect": ["1"],
+"Fxyz": ["Schwarz=if( psh(N,cos(x)+cos(y)+cos(z)), csd(N), 0)"],
+</pre>
+</tr>
+
+<tr>
+ <td><code>psh(N, val)</code></td>
+ <td>(Experimental) Save the value of val to the variable at index N. Example (<a href="#Arena_02">See full script</a>) :
+<pre>
+"Schwarz=if( psh(N, cos(x)+cos(y)+cos(z)) , csd(N), 0)"
+</pre>
+</tr>
 </table>
 
 <a name="SupportedOperatorsFunctions"></a>
