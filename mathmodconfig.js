@@ -12,7 +12,7 @@
         "Model": "CloseIso_1"
     },
     "CalculFactorConfig": {
-        "FactX": 4,
+        "FactX": 2,
         "FactY": 4,
         "FactZ": 4
     },
