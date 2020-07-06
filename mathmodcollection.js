@@ -20,9 +20,7 @@
                     "Vmax": ["2*pi","2*pi"],
                     "Vmin": ["0","0"]
                 },
-                "Texture": {
-                    "Colors": ["R= if(cmpId = (0),if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),(1)) , abs(cos(u)))","G=if(cmpId = (0), if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)), abs(cos(v)))","B=if(cmpId = (0), if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)),abs(sin(v)+sin(u))) ","T=1"
-                    ],
+                "Texture": {"Colors": ["R= if(cmpId = (0),if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),(1)) , abs(cos(u)))","G=if(cmpId = (0), if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)), abs(cos(v)))","B=if(cmpId = (0), if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)),abs(sin(v)+sin(u))) ","T=1"],
                     "Name": "Candy",
                     "Noise": "1"
                 }
