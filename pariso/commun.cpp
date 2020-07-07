@@ -50,8 +50,7 @@ float tinyrnd()
     return (float(trand) / 4294967296.0f);
 }
 
-float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type,
-                               int CombineDist)
+float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, int CombineDist)
 {
     uint lastRandom, numberFeaturePoints;
     float randomDiff[4];
@@ -116,21 +115,18 @@ float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type,
     return color;
 }
 
-float CellNoise::EuclidianDistanceFunc(float x1, float y1, float z1, float x2,
-                                       float y2, float z2)
+float CellNoise::EuclidianDistanceFunc(float x1, float y1, float z1, float x2, float y2, float z2)
 {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
 }
 
-float CellNoise::ManhattanDistanceFunc(float x1, float y1, float z1, float x2,
-                                       float y2, float z2)
+float CellNoise::ManhattanDistanceFunc(float x1, float y1, float z1, float x2, float y2, float z2)
 {
     float tmp = std::abs(x1 - x2) + std::abs(y1 - y2) + std::abs(z1 - z2);
     return tmp;
 }
 
-float CellNoise::ChebyshevDistanceFunc(float x1, float y1, float z1, float x2,
-                                       float y2, float z2)
+float CellNoise::ChebyshevDistanceFunc(float x1, float y1, float z1, float x2, float y2, float z2)
 {
     float diff[3];
     diff[0] = x1 - x2;

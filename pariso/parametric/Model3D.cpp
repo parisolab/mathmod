@@ -35,7 +35,6 @@ double CurrentParamCmpId(const double* p)
     else
         return ParamThreadId;
 }
-
 double TurbulenceWorley2(const double* p)
 {
     return double(NoiseFunction2->CellNoiseFunc(
