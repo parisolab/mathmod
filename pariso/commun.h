@@ -22,9 +22,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-#include <math.h>
 #include <qthread.h>
-#include <string>
 
 #define PI (double(314159265) / double(100000000))
 #define MAGIC_SCALE 1.5707963f
