@@ -9654,16 +9654,6 @@
                 "Gz3(U3(u,v,t),V3(u,v,t),t)",
                 "Gz3(U3(u,v,t),V3(u,v,t),t)",
                 "Gz3(U3(u,v,t),V3(u,v,t),t)"],
-            "Texture": {
-                "Colors": [
-                    "R=1/2",
-                    "G=1/2",
-                    "B=1/2",
-                    "T=1"
-                ],
-                "Name": "Granit",
-                "Noise": ""
-            },
             "Umax": ["umin+(umax-umin)/N -k",
                 "umin+2*(umax-umin)/N -k",
                 "umin+3*(umax-umin)/N -k",
