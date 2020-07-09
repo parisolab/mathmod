@@ -18,10 +18,6 @@
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
 #include "../fparser/fparser.hh"
-#include <QElapsedTimer>
-#include <algorithm>
-#include <cmath>
-#include <iostream>
 #include <qthread.h>
 
 #define PI (double(314159265) / double(100000000))
