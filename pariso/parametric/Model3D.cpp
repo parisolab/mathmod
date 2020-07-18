@@ -1619,16 +1619,13 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     double* vals, res;
     double *ResX, *ResY, *ResZ, *ResW;
     uint taille=0;
-
     vals  = new double[3*nbstack];
     ResX  = new double[nbstack];
     ResY  = new double[nbstack];
     ResZ  = new double[nbstack];
     ResW  = new double[nbstack];
-
     if(activeMorph == 1)
         stepMorph += pace;
-
     iStart = 0;
     iFinish = 0;
     for(uint i=0; i<Ugrid; i++)
@@ -1641,13 +1638,11 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             iFinish  += 1;
     }
     iStart = iFinish - taille;
-
     uint remU= (iFinish-iStart)%nbU;
     uint remV= Vgrid%nbV;
     uint Totalpoints=(iFinish-iStart)*Vgrid;
     for(uint l=0; l<nbstack; l++)
         vals[l*3+2]= stepMorph;
-
     myParserX[cmp].AllocateStackMemory(Stack_Factor);
     myParserY[cmp].AllocateStackMemory(Stack_Factor);
     myParserZ[cmp].AllocateStackMemory(Stack_Factor);
@@ -1664,7 +1659,6 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             i= iFinish;
             nbstack = nbU*nbV;
         }
-
         for (uint j=0; j < Vgrid   ; j+=nbV)
         {
             Jindice = j;
@@ -1675,37 +1669,31 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                 j= Vgrid;
                 nbstack = nbU*nbV;
             }
-
             for(uint l=0; l<nbstack; l++)
             {
                 vals[l*3  ]= double(Iindice+ uint(l/nbV))*dif_u[cmp]/double(Ugrid-1) + u_inf[cmp];
                 vals[l*3+1]= double(Jindice+(l%nbV))*dif_v[cmp]/double(Vgrid-1) + v_inf[cmp];
             }
-
             if(StopCalculations)
                 return;
-
             res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
                     ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
             }
-
             res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
                     ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
             }
-
             res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
                     ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
             }
-
             if(param4D == 1)
             {
                 res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
@@ -1715,7 +1703,6 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                         ResW[l] = myParserW[cmp].Eval(&(vals[l*3]));
                 }
             }
-
             //Signal emission:
             id+=nbstack;
             if(MyIndex == 0 && activeMorph != 1)
@@ -1727,7 +1714,6 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                     emitMySignal();
                 }
             }
-
             int p=0;
             for(uint ii=0; ii<nbU; ii++)
                 for(uint jj=0; jj<nbV; jj++)
@@ -1741,7 +1727,6 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                 }
         }
     }
-
     delete[] vals;
     delete[] ResX;
     delete[] ResY;
