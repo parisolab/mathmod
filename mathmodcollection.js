@@ -4252,7 +4252,7 @@
     {
       "Iso3D": {
         "Description": ["Gyroidal Tori by Abderrahman Taha 31/10/2019"],
-        "Name": ["Gyroidal_Tori_v1"],
+        "Name": ["Gyroidal_Tori_v0"],
         "Component": ["GyroidalTori"],
         "Const": ["N=10"],
         "Funct": ["Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
@@ -4733,7 +4733,7 @@
     {
       "Iso3D": {
         "Description": ["Gyroidal Torus by Abderrahman Taha 30/10/2019"],
-        "Name": ["Gyroidal_Tori_2"],
+        "Name": ["Gyroidal_Tori_v1"],
         "Component": ["GyroidalTorus"],
         "Const": ["c=1/100000",
           "Th=4/10"],
