@@ -4758,6 +4758,33 @@
     },
     {
         "Iso3D": {
+            "Description": ["Gyroidal Torus by Abderrahman Taha 18/07/2020"],
+            "Name": ["Gyroidal_Tori_v2"],
+            "Component": ["GyroidalTorus"],
+            "Const": [
+                "c=1/100000",
+                "Th=4/10"],
+            "Funct": [
+                "Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
+                "DFx= ((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)",
+                "DFy= ((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)",
+                "DFz= ((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)",
+                "Rapp= Th/sqrt(x*x+y*y+z*z)",
+                "ThickIso=  psh(0, DFx(x,y,z,t)) * psh(1, DFy(x,y,z,t)) * psh(2, DFz(x,y,z,t)) * (psh(3, Rapp(csd(0) , csd(1) , csd(2),t)))  * (Iso(x-csd(0)*csd(3) ,y-csd(1)*csd(3),z-csd(2)*csd(3),t))*(Iso(x+csd(0)*csd(3) ,y+csd(1)*csd(3),z+csd(2)*csd(3),t))",
+                "isoCondition=(x^2+z^2-16)",
+                "isoTransform_1=if(isoCondition(x,y,z,t)<(0),ThickIso(x,y,z,t),1)+exp(isoCondition(x,y,z,t)/3)"],
+            "Fxyz": ["isoTransform_1((sqrt(x*x+y*y)-10),12*atan2(y,x),z,t)"],
+            "Vect": ["4"],
+            "Xmax": ["14"],
+            "Xmin": ["-14"],
+            "Ymax": ["14"],
+            "Ymin": ["-14"],
+            "Zmax": ["4"],
+            "Zmin": ["-4"]
+        }
+    },
+    {
+        "Iso3D": {
             "Description": ["Surface with rotational symmetry of order 5, by Patrice Jeener 24/11/2019"],
             "Name": ["PatriceJ"],
             "Component": ["patrice"],
