@@ -4758,7 +4758,7 @@
     },
     {
         "Iso3D": {
-            "Description": ["Gyroidal Torus by Abderrahman Taha 18/07/2020"],
+            "Description": ["Gyroidal Torus using variable (3.2x faster to compute) by Abderrahman Taha 18/07/2020"],
             "Name": ["Gyroidal_Tori_v2"],
             "Component": ["GyroidalTorus"],
             "Const": [
