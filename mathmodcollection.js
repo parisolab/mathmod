@@ -5097,15 +5097,15 @@
         "Vmax": ["2*pi"],
         "Vmin": ["0"]
       },
-            "Texture": {
-               "Colors": [
-                   "R=9/10",
-                   "G=8*abs(cos((pi*(x*x+y*y+z*z))))/10",
-                   "B=6*abs(cos(cos(pi*(x*x+y*y+z*z))))/10",
-                   "T=1"],
-               "Name": "Dream",
-                   "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),(2))"
-            }
+    "Texture": {
+       "Colors": [
+           "R=9/10",
+           "G=8*abs(cos((pi*(x*x+y*y+z*z))))/10",
+           "B=6*abs(cos(cos(pi*(x*x+y*y+z*z))))/10",
+           "T=1"],
+       "Name": "Dream",
+           "Noise": "NoiseW(2*x,2*y,2*z,(8),(1),(2))"
+    }
     },
     {
       "Param3D": {
