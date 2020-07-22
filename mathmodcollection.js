@@ -4785,7 +4785,7 @@
     },
     {
         "Iso3D": {
-            "Description": ["Surface with rotational symmetry of order 5, by Patrice Jeener 24/11/2019"],
+            "Description": ["Surface with rotational symmetry of order 5, by Patrice Jeener 21/07/2020"],
             "Name": ["PatriceJ"],
             "Component": ["patrice"],
             "Const": [
