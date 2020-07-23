@@ -45,7 +45,6 @@ double TurbulenceWorley2(const double* p)
                       int(p[4]),
                       int(p[5])));
 }
-
 double TurbulencePerlin2(const double* p)
 {
     return double(PNoise2->FractalNoise3D(
@@ -56,27 +55,22 @@ double TurbulencePerlin2(const double* p)
                       float(p[4]),
                       float(p[5])));
 }
-
 Par3D::~Par3D()
 {
 }
-
 void Par3D::emitUpdateMessageSignal()
 {
     emit UpdateMessageSignal(message);
 }
-
 ParWorkerThread::ParWorkerThread()
 {
     stepMorph = 0;
     pace = 1.0/30.0;
     ParsersAllocated = false;
 }
-
 ParWorkerThread::~ParWorkerThread()
 {
 }
-
 ParMasterThread::~ParMasterThread()
 {
     delete[] UsedFunct;
