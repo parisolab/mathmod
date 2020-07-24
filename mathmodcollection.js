@@ -1365,7 +1365,7 @@
     },
     {
       "Iso3D": {
-        "Name": ["Clebsch"],
+        "Name": ["Clebsch_1"],
         "Component": ["Clebsch"],
         "Fxyz": ["81*(x^3+y^3+z^3)-189*(x^2*y+x^2*z+y^2*x+y^2*z+z^2*x+z^2*y) +54*x*y*z+126*(x*y+x*z+y*z)-9*(x^2+y^2+z^2)-9*(x+y+z)+1"],
         "Xmin": ["-1"],
@@ -1379,7 +1379,7 @@
     {
         "Iso3D": {
             "Description": ["Clebsch surface by Abderrahman Taha 18/05/2019"],
-            "Name": ["Clebsch_01"],
+            "Name": ["Clebsch_2"],
             "Component": ["Clebsch"],
             "Grid": ["150"],
             "Const": ["X=1",
