@@ -334,7 +334,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         myParserUmax = new FunctionParser[componentsNumber];
         myParserVmax = new FunctionParser[componentsNumber];
         ParisoConditionParser  = new FunctionParser[componentsNumber];
-
         ParamStructs.resize(componentsNumber);
         v_inf.resize(componentsNumber);
         v_sup.resize(componentsNumber);
@@ -342,7 +341,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         u_sup.resize(componentsNumber);
         dif_v.resize(componentsNumber);
         dif_u.resize(componentsNumber);
-
         if(!functnotnull)
             FunctSize = 0;
         Fct          = new FunctionParser[FunctSize];

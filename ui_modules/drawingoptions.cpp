@@ -3066,14 +3066,7 @@ void DrawingOptions::on_pushButton_clicked()
 {
     static int checked = 1;
     checked *= -1;
-    if (checked == -1)
-    {
-        ui.ObjectClasse->hide();
-    }
-    else
-    {
-        ui.ObjectClasse->show();
-    }
+    (checked == -1) ? ui.ObjectClasse->hide() : ui.ObjectClasse->show();
 }
 
 // --------------------------
