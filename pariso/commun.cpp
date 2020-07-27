@@ -42,14 +42,12 @@ static int permutation[256] =
     222, 114, 67,  29,  24,  72,  243, 141, 128, 195, 78,  66,  215, 61,  156,
     180
 };
-
 float tinyrnd()
 {
     static unsigned trand = 0;
     trand = 1664525u * trand + 1013904223u;
     return (float(trand) / 4294967296.0f);
 }
-
 float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, int CombineDist)
 {
     uint lastRandom, numberFeaturePoints;
@@ -114,18 +112,15 @@ float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, in
         color = 1;
     return color;
 }
-
 float CellNoise::EuclidianDistanceFunc(float x1, float y1, float z1, float x2, float y2, float z2)
 {
     return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
 }
-
 float CellNoise::ManhattanDistanceFunc(float x1, float y1, float z1, float x2, float y2, float z2)
 {
     float tmp = std::abs(x1 - x2) + std::abs(y1 - y2) + std::abs(z1 - z2);
     return tmp;
 }
-
 float CellNoise::ChebyshevDistanceFunc(float x1, float y1, float z1, float x2, float y2, float z2)
 {
     float diff[3];
@@ -135,7 +130,6 @@ float CellNoise::ChebyshevDistanceFunc(float x1, float y1, float z1, float x2, f
     return std::max(std::max(std::abs(diff[0]), std::abs(diff[1])),
                     std::abs(diff[2]));
 }
-
 int CellNoise::probLookup(uint value)
 {
     if (value < 393325350U)
@@ -156,7 +150,6 @@ int CellNoise::probLookup(uint value)
         return 8;
     return 9;
 }
-
 void CellNoise::insert(float *arr, float value)
 {
     float temp;
@@ -176,18 +169,15 @@ void CellNoise::insert(float *arr, float value)
             arr[i + 1] = temp;
     }
 }
-
 int CellNoise::lcgRandom(int lastValue)
 {
     return int(((1103515245u * uint(lastValue) + 12345u) % 0x100000000u));
 }
-
 int CellNoise::hash(int i, int j, int k)
 {
     return ((((((OFFSET_BASIS ^ i) * FNV_PRIME) ^ j) * FNV_PRIME) ^ k) *
             FNV_PRIME);
 }
-
 ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 {
     correction = 1.0f / 100000000.0f;
@@ -215,7 +205,6 @@ ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
         p[i + 256] = p[i];
     }
 }
-
 float ImprovedNoise::noise(float x, float y, float z)
 {
     int X = int(std::floor(x)) & 255, Y = int(std::floor(y)) & 255,
@@ -237,17 +226,14 @@ float ImprovedNoise::noise(float x, float y, float z)
                     lerp(u, grad(p[AB + 1], x, y - 1, z - 1),
                          grad(p[BB + 1], x - 1, y - 1, z - 1))));
 }
-
 float ImprovedNoise::fade(float f)
 {
     return f * f * f * (f * (f * 6 - 15) + 10); // t * t * (3.0 - 2.0 * t);
 }
-
 float ImprovedNoise::lerp(float t, float a, float b)
 {
     return a + t * (b - a);
 }
-
 float ImprovedNoise::grad(int hash, float x, float y, float z)
 {
     int h = hash & 15;       // CONVERT LO 4 BITS OF HASH CODE
@@ -255,7 +241,6 @@ float ImprovedNoise::grad(int hash, float x, float y, float z)
           v = h < 4 ? y : h == 12 || h == 14 ? x : z;
     return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
 }
-
 float ImprovedNoise::FractalNoise3D(float x, float y, float z, int octNum,
                                     float lacunarity, float gain)
 {
