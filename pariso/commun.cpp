@@ -254,7 +254,6 @@ float ImprovedNoise::FractalNoise3D(float x, float y, float z, int octNum,
     }
     return sum;
 }
-
 float ImprovedNoise::Marble(float x, float y, float z, int octNum)
 {
     float t = 0;
@@ -267,7 +266,6 @@ float ImprovedNoise::Marble(float x, float y, float z, int octNum)
 
     return t * correction;
 }
-
 float ImprovedNoise::lookup(float x, float y, float z)
 {
     float t = 0;
@@ -277,6 +275,5 @@ float ImprovedNoise::lookup(float x, float y, float z)
         float r = 1 / factor;
         t += noise(x * r, y * r, z * r) * factor;
     }
-
     return t * correction;
 }
