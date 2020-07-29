@@ -1892,20 +1892,15 @@
               "Constructive Solid Geometry (CSG) by Abderrahman Taha 18/11/2019"],
             "Name": ["CSG"],
             "Component": ["CSG"],
-            "Const": ["sr=1","cyr=1/5","cur=1/5"],
+            "Const": ["sr=1","tr=1/5","ur=1/5"],
             "Grid": ["150"],
-            "Fxyz": [" -max( (x*x + y*y + z*z - sr),(x^10+ y^10+ z^10- cur)) *max(  max( (x*x + y*y + z*z - 1),(x^10+ y^10+ z^10- cur))  , min(min((x*x + y*y - cyr), (x*x + z*z - cyr)), (y*y + z*z - cyr)))"],
+            "Fxyz": [" -max( (x*x + y*y + z*z - sr),(x^10+ y^10+ z^10- ur)) *max(  max( (x*x + y*y + z*z - 1),(x^10+ y^10+ z^10- ur))  , min(min((x*x + y*y - tr), (x*x + z*z - tr)), (y*y + z*z - tr)))"],
             "Xmax": [" 1"],
             "Xmin": ["-1"],
             "Ymax": [" 1"],
             "Ymin": ["-1"],
             "Zmax": [" 1"],
             "Zmin": ["-1"]
-        },
-        "Texture": {
-            "Colors": ["R=9/10","G=3/5","B=1/10","T=1"],
-            "Name": "Gold",
-            "Noise": ""
         }
     },
     {
