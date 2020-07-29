@@ -1889,7 +1889,7 @@
     {
         "Iso3D": {
             "Description": [
-              "Constructive Solid Geometry (CSG) by Abderrahman Taha 18/11/2019"],
+              "Constructive Solid Geometry (CSG) by Abderrahman Taha 28/07/2020"],
             "Name": ["CSG"],
             "Component": ["CSG"],
             "Const": ["sr=1","tr=1/5","ur=1/5"],
@@ -1905,11 +1905,9 @@
     },
     {
       "Iso3D": {
-        "Description": ["Constructive Solid Geometry (CSG) by Abderrahman Taha 18/11/2019"],
+        "Description": ["Constructive Solid Geometry (CSG) by Abderrahman Taha 28/07/2020"],
         "Name": ["CSG_Spheres"],
-        "Component": ["DifferenceSpheres",
-          "UnionSpheres",
-          "IntersectSpheres"],
+        "Component": ["DifferenceSpheres", "UnionSpheres", "IntersectSpheres"],
         "Fxyz": ["((x-7/10)*(x-7/10)+y*y+z*z-1)*min(((x-7/10)*(x-7/10)+y*y+z*z-1),((x+3/10)*(x+3/10)+y*y+z*z-1))+1/50",
           "min(((x-47/10)*(x-47/10)+y*y+z*z-1),((x-7/2)*(x-7/2)+y*y+z*z-1))",
           "max(((x-7/10)*(x-7/10)+y*y+z*z-1),((x-2)*(x-2)+y*y+z*z-1))"],
