@@ -25,7 +25,6 @@
                     "Noise": "1"
                 }
             },
-
             {
                 "Iso3D": {
                     "Description": ["BlackHole by Abderrahman Taha 10/12/2019"],
