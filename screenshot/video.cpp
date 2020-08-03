@@ -27,7 +27,6 @@ screenimage::screenimage(QImage buffer) : QMainWindow(nullptr)
     l->resize(320, 320);
     resize(320, 343);
     this->setWindowTitle("ScreenShot");
-    // setCaption( "ScreenShot" );
     QPixmap ScreenshotIcon = QPixmap::fromImage(buf.scaled(320, 320));
     l->setPixmap(ScreenshotIcon); //  (ScreenshotIcon);
     groupBox = new QGroupBox(this);
@@ -36,8 +35,6 @@ screenimage::screenimage(QImage buffer) : QMainWindow(nullptr)
     scrollBar55->setGeometry(QRect(160, 2, 80, 16));
     scrollBar55->setPageStep(1);
     scrollBar55->setValue(1);
-    // QLabel * text = new QLabel( "Image quality:", groupBox,0);
-    // text->setGeometry( QRect( 3, 5, 150, 16 ) );
     pushScreenshot = new QPushButton("pushScreenshot", groupBox);
     pushScreenshot->setGeometry(QRect(250, 2, 75, 18));
     pushScreenshot->setText(tr("Save Screen"));
@@ -54,13 +51,12 @@ void screenimage::connectcontrols()
     connect(pushScreenshot, SIGNAL(clicked()), this, SLOT(saveas()));
     connect(scrollBar55, SIGNAL(valueChanged(int)), this, SLOT(f_1(int)));
 }
-//+++++++++++++++++++++++++++++++++++++++
+
 void screenimage::f_1(int quality)
 {
     image_quality = quality;
 }
 
-//+++++++++++++++++++++++++++++++++++++++
 void screenimage::saveas()
 {
     QString fn = QFileDialog::getSaveFileName(
