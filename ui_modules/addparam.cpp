@@ -19,7 +19,6 @@
  ***************************************************************************/
 
 #include <QtGui>
-
 #include "addparam.h"
 
 AddParamForm::AddParamForm(QWidget *parent) : QWidget(parent)

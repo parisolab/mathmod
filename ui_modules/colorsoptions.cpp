@@ -19,7 +19,6 @@
  ***************************************************************************/
 
 #include <QtGui>
-
 #include "colorsoptions.h"
 
 ColorsOptions::ColorsOptions(QWidget *parent) : QWidget(parent)

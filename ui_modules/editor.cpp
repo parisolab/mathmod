@@ -55,8 +55,6 @@ void editor::setupEditor()
 
     ui->textEdit = new QTextEdit;
     ui->textEdit->setFont(font);
-
-    // highlighter = new Highlighter(ui->textEdit->document());
     QFile file("mainwindow.h");
     if (file.open(QFile::ReadOnly | QFile::Text))
         ui->textEdit->setPlainText(file.readAll());
@@ -85,9 +83,6 @@ void editor::save()
     QTextStream t(&f);
     t << text;
     f.close();
-
-    // e->setModified( FALSE );
-    // setCaption( filename );
     statusBar()->showMessage(tr("File %1 saved").arg(filename), 2000);
 }
 
