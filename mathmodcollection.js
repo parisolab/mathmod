@@ -52,7 +52,7 @@
     },
     {
         "Iso3D": {
-            "Description": ["PrettyCube by Abderrahman Taha 04/08/2020"],
+            "Description": ["PrettyCube by Abderrahman Taha 05/08/2020"],
             "Name": ["Pretty_Cube_01"],
             "Component": ["PrettyBall_1","PrettyBall_2","PrettyBall_3"],
             "Const": ["L=8","c=1/10000","Th2=1","Th1=3/10","N=200"],
@@ -63,8 +63,7 @@
             "Ymax": ["L","L","L"],
             "Ymin": ["-L","-L","-L"],
             "Zmax": ["L","L","L"],
-            "Zmin": ["-L","-L","-L"
-            ]
+            "Zmin": ["-L","-L","-L"]
         }
     },
     {
