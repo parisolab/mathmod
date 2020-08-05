@@ -51,6 +51,23 @@
         ]
     },
     {
+        "Iso3D": {
+            "Description": ["PrettyCube by Abderrahman Taha 04/08/2020"],
+            "Name": ["Pretty_Cube_01"],
+            "Component": ["PrettyBall_1","PrettyBall_2","PrettyBall_3"],
+            "Const": ["L=8","c=1/10000","Th2=1","Th1=3/10","N=200"],
+            "Funct": ["Iso=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)","DFx=((Iso(x+c,y,z,t)-Iso(x,y,z,t))/c)","DFy=((Iso(x,y+c,z,t)-Iso(x,y,z,t))/c)","DFz=((Iso(x,y,z+c,t)-Iso(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso=(Iso(x+t*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+t*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+t*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","isoCondition=(x^N+y^N+z^N-(L-1/10)^N)","ThickIso2=(Iso(x,y,z,-t)*Iso(x,y,z,t))","GyroidLatice_1=if(isoCondition(x,y,z,t)<(0),Iso(x,y,z,Th2),1)","GyroidLatice_2=if(isoCondition(x,y,z,t)<(0),Iso(x,y,z,-Th2),-1)","GyroidLatice_3=if(isoCondition(x,y,z,t)<(0),ThickIso2(x,y,z,Th1),1)"],
+            "Fxyz": ["GyroidLatice_1(x,y,z,t)","GyroidLatice_2(x,y,z,t)","GyroidLatice_3(x,y,z,t)"],
+            "Xmax": ["L","L","L"],
+            "Xmin": ["-L","-L","-L"],
+            "Ymax": ["L","L","L"],
+            "Ymin": ["-L","-L","-L"],
+            "Zmax": ["L","L","L"],
+            "Zmin": ["-L","-L","-L"
+            ]
+        }
+    },
+    {
         "Name": "Pariso_02",
         "ParIso": [
             {
