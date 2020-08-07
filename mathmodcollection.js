@@ -502,14 +502,8 @@
     "Iso3D": {
         "Description": [
             "Happy_New_Year based on the great work from Abdelhamid Belaid: http://abdelhamid394.blogspot.ca/"],
-        "Name": [
-            "Happy_New_Year"],
-        "Component": [
-            "Happy",
-            "NW",
-            "E",
-            "YAR",
-            "E"],
+        "Name": ["Happy_New_Year"],
+        "Component": ["Happy","NW","E","YAR","E"],
         "Funct": [
             "A=4*min(abs(y+8/10),(-abs(x)*cos(pi/10)-y*sin(pi/10)+1))^2+(2*z)^200+(y/3)^200-1",
             "B=4*min(abs(((abs(x)-1)^4+(y+125/100)^4)^(1/4)-125/100),min(x,abs(((abs(x)-5/10)^4+(y-125/100)^4)^(1/4)-125/100)))^2+(2*z)^100+(10*y/29)^200-1",
@@ -591,9 +585,7 @@
     "Iso3D": {
         "Name": ["Wonder_Tree"],
         "Component": ["WonderTree"],
-        "Const": [
-            "k=4",
-            "e=1/10000"],
+        "Const": ["k=4","e=1/10000"],
         "Funct": [
             "R=k*(x/(x*x+y*y+z*z))",
             "Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
@@ -609,8 +601,7 @@
 },
 {
     "Iso3D": {
-        "Description": [
-            "Moebius band by Stephan Klaus 23/09/2019"],
+        "Description": ["Moebius band by Stephan Klaus 23/09/2019"],
         "Name": ["Moebius_Strip"],
         "Component": ["Moebius"],
         "Const": [
@@ -642,9 +633,7 @@
     {
       "Iso3D": {
         "Name": ["Moon"],
-        "Component": ["GravityPlan",
-          "EarthPlanet",
-          "MoonPlanet"],
+        "Component": ["GravityPlan","EarthPlanet","MoonPlanet"],
         "Fxyz": ["((x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3)) + z*z - 3/5)*min( (x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + z*z - (3/5), z) +1/5",
           "(x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + (z-1/5)*(z-1/5) - 3/5 ",
           "(x-2*sin(t*pi)-4*sin(t*pi/3))*(x-2*sin(t*pi)-4*sin(t*pi/3)) + (y-2*cos(t*pi)-2*cos(t*pi/3))*(y-2*cos(t*pi)-2*cos(t*pi/3)) + (z-1/5)*(z-1/5) - 1/10"],
@@ -672,10 +661,7 @@
       "Iso3D": {
         "Description": ["BlackHole by Abderrahman Taha 10/12/2019"],
         "Name": ["BlackHole"],
-        "Component": [" GravityPlan",
-          " EarthPlanet",
-          " MoonPlanet",
-          " WhiteStar "],
+        "Component": ["GravityPlan","EarthPlanet","MoonPlanet","WhiteStar "],
         "Const": ["M=pi/10"],
         "Funct": ["A=(x-4*sin(t*M))^2",
           "B=(x-2*cos(t*M))^2",
