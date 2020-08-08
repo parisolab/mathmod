@@ -3,19 +3,16 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
-#include <QWidget>
 
 editor::editor(QWidget *parent) : QMainWindow(parent), ui(new Ui::editor)
 {
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
     ui->setupUi(this);
 }
-
 editor::~editor()
 {
     delete ui;
 }
-
 void editor::about()
 {
     QMessageBox::about(this, tr("About Syntax Highlighter"),
@@ -24,12 +21,10 @@ void editor::about()
                           "the QSyntaxHighlighter class and describing "
                           "highlighting rules using regular expressions.</p>"));
 }
-
 void editor::newFile()
 {
     ui->textEdit->clear();
 }
-
 void editor::openFile(const QString &path)
 {
     QString fileName = path;
@@ -45,7 +40,6 @@ void editor::openFile(const QString &path)
             ui->textEdit->setPlainText(file.readAll());
     }
 }
-
 void editor::setupEditor()
 {
     QFont font;
@@ -59,12 +53,10 @@ void editor::setupEditor()
     if (file.open(QFile::ReadOnly | QFile::Text))
         ui->textEdit->setPlainText(file.readAll());
 }
-
 void editor::on_actionOpen_triggered()
 {
     openFile("");
 }
-
 void editor::save()
 {
     if (filename.isEmpty())
@@ -85,7 +77,6 @@ void editor::save()
     f.close();
     statusBar()->showMessage(tr("File %1 saved").arg(filename), 2000);
 }
-
 void editor::saveAs()
 {
     QString fn = QFileDialog::getSaveFileName(this, tr("Save file"), "",
@@ -102,47 +93,38 @@ void editor::saveAs()
     }
     workfile = fn;
 }
-
 void editor::on_actionNew_triggered()
 {
     newFile();
 }
-
 void editor::on_actionAbout_triggered()
 {
     about();
 }
-
 void editor::on_actionSave_triggered()
 {
     save();
 }
-
 void editor::on_actionSave_As_triggered()
 {
     saveAs();
 }
-
 void editor::on_actionExit_triggered()
 {
     this->close();
 }
-
 void editor::on_actionUndo_triggered()
 {
     ui->textEdit->undo();
 }
-
 void editor::on_actionRedo_triggered()
 {
     ui->textEdit->redo();
 }
-
 void editor::on_actionCut_triggered()
 {
     ui->textEdit->cut();
 }
-
 void editor::on_actionCopy_triggered()
 {
     ui->textEdit->copy();
@@ -152,7 +134,6 @@ void editor::on_actionAbout_MathMod_triggered()
 {
     ab.show();
 }
-
 void editor::on_actionPaste_triggered()
 {
     ui->textEdit->paste();
