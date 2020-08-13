@@ -52,7 +52,7 @@
     },
     {
         "Iso3D": {
-            "Description": ["The fundamental patch for the Gyroid by Abderrahman Taha 10/08/2020"],
+            "Description": ["The fundamental patch for the Gyroid by Abderrahman Taha 12/08/2020"],
             "Name": ["Gyroid_Fundamental_Patch"],
             "Cnd": ["(((x+y)>0)*((x-y)<0)*(y+z)*(y-z))>0"],
             "Component": ["Gyroid"],
