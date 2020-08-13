@@ -57,7 +57,7 @@
             "Cnd": ["(((x+y)>0)*((x-y)<0)*(y+z)*(y-z))>0"],
             "Component": ["Gyroid"],
             "Const": ["L=pi/2"],
-            "Fxyz": ["(cos(x)*sin(y) + cos(y)*sin(z) + cos(z)*sin(x))"],
+            "Fxyz": ["(cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x))"],
             "Grid": ["100"],
             "Xmax": [" L"],
             "Xmin": ["-L"],
