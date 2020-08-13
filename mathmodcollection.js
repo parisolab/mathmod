@@ -52,6 +52,23 @@
     },
     {
         "Iso3D": {
+            "Description": ["The fundamental patch for the Gyroid by Abderrahman Taha 10/08/2020" ],
+            "Name": ["Gyroid_Fundamental_Patch" ],
+            "Cnd": ["(((x+y)>0)*((x-y)<0)*(y+z)*(y-z))>0" ],
+            "Component": ["Gyroid" ],
+            "Const": ["L=pi/2" ],
+            "Fxyz": ["(cos(x) * sin(y) + cos(y) * sin(z) + cos(z) * sin(x))" ],
+            "Grid": ["100" ],
+            "Xmax": [" L" ],
+            "Xmin": ["-L" ],
+            "Ymax": [" L" ],
+            "Ymin": ["-L" ],
+            "Zmax": [" L" ],
+            "Zmin": ["-L" ]
+        }
+    },
+    {
+        "Iso3D": {
             "Description": ["PrettyCube by Abderrahman Taha 05/08/2020"],
             "Name": ["PrettyCube_01"],
             "Component": ["PrettyCube_1","PrettyCube_2","PrettyCube_3"],
