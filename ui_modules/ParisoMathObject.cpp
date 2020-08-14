@@ -20,16 +20,14 @@
 #include "ParisoMathObject.h"
 #include <qmessagebox.h>
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
 ParisoMathObject::ParisoMathObject()
 {
     NbIsoStruct = NbParamStruct = 0;
     dotsymbol = ".";
 }
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 ParisoMathObject::~ParisoMathObject() {}
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject &js)
 {
@@ -43,7 +41,6 @@ void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject &js)
                        nullptr, QObject::tr("Open mathmodcollection.js File"), "",
                        QObject::tr("Json (*.js)"));
     }
-
     QFile file(JsonFile);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
