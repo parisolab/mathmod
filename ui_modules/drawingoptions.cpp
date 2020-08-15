@@ -5607,4 +5607,20 @@ void DrawingOptions::on_actionDocumentation_triggered()
 
 void DrawingOptions::on_ScaleButton_clicked()
 {
+    bool valx, valy, valz;
+    double fx = ui.lineEditSx->text().toDouble(&valx);
+    double fy = ui.lineEditSy->text().toDouble(&valy);
+    double fz = ui.lineEditSz->text().toDouble(&valz);
+    if (valx && valy && valz)
+    {
+        MathmodRef->ui.glWidget->factx=fx;
+        MathmodRef->ui.glWidget->facty=fy;
+        MathmodRef->ui.glWidget->factz=fz;
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Invalid number");
+        msgBox.exec();
+    }
 }
