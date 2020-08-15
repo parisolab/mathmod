@@ -5604,3 +5604,7 @@ void DrawingOptions::on_actionDocumentation_triggered()
     QString link = QApplication::applicationDirPath() + "/../Resources/documentation/index.html";
     QDesktopServices::openUrl(QUrl(QUrl::fromLocalFile(link)));
 }
+
+void DrawingOptions::on_ScaleButton_clicked()
+{
+}
