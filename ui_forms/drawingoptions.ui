@@ -5043,7 +5043,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="QGroupBox" name="groupBox_6">
+             <widget class="QGroupBox" name="ScaleGroupBox">
               <property name="title">
                <string>Scale factor (for exported mesh)</string>
               </property>
@@ -5051,14 +5051,14 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_6">
                  <item>
-                  <widget class="QLabel" name="label">
+                  <widget class="QLabel" name="labelx">
                    <property name="text">
                     <string>Sx</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit">
+                  <widget class="QLineEdit" name="lineEditSx">
                    <property name="text">
                     <string>1.0</string>
                    </property>
@@ -5069,14 +5069,14 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_38">
                  <item>
-                  <widget class="QLabel" name="label_2">
+                  <widget class="QLabel" name="labely">
                    <property name="text">
                     <string>Sy</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_2">
+                  <widget class="QLineEdit" name="lineEditSy">
                    <property name="text">
                     <string>1.0</string>
                    </property>
@@ -5087,20 +5087,33 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_39">
                  <item>
-                  <widget class="QLabel" name="label_3">
+                  <widget class="QLabel" name="labelz">
                    <property name="text">
                     <string>Sz</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_3">
+                  <widget class="QLineEdit" name="lineEditSz">
                    <property name="text">
                     <string>1.0</string>
                    </property>
                   </widget>
                  </item>
                 </layout>
+               </item>
+               <item>
+                <widget class="QPushButton" name="ScaleButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Init</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </widget>
