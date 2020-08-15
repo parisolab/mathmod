@@ -25,7 +25,7 @@ static int Wresult, Hresult;
 static double anglefinal = 0;
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
-       decalage_zo;
+       decalage_zo, factx=1.0, facty=1.0, factz=1.0;
 
 static GLfloat minx = 999999999, miny = 999999999, minz = 999999999,
                maxx = -999999999, maxy = -999999999, maxz = -999999999;
@@ -243,15 +243,15 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factx/ hauteur_fenetre) -
                                   decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*facty / hauteur_fenetre) -
                                   decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factz / hauteur_fenetre) -
                                   decalage_zo)
                          << "  " << LocalScene.ArrayNorVer_localPt[10 * i] << "  "
                          << LocalScene.ArrayNorVer_localPt[10 * i + 1] << "  "
@@ -264,15 +264,15 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factx / hauteur_fenetre) -
                                   decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*facty / hauteur_fenetre) -
                                   decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factz / hauteur_fenetre) -
                                   decalage_zo)
                          << "\n";
             }
@@ -314,15 +314,15 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factx / hauteur_fenetre) -
                                   decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*facty / hauteur_fenetre) -
                                   decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factz / hauteur_fenetre) -
                                   decalage_zo)
                          << "  " << LocalScene.ArrayNorVer_localPt[10 * i] << "  "
                          << LocalScene.ArrayNorVer_localPt[10 * i + 1] << "  "
@@ -335,15 +335,15 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factx / hauteur_fenetre) -
                                   decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*facty / hauteur_fenetre) -
                                   decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum / hauteur_fenetre) -
+                                  (difMaximum*factz / hauteur_fenetre) -
                                   decalage_zo)
                          << "\n";
             }
