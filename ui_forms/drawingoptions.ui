@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>558</width>
-    <height>768</height>
+    <height>792</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -5058,7 +5058,11 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit"/>
+                  <widget class="QLineEdit" name="lineEdit">
+                   <property name="text">
+                    <string>1.0</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -5072,7 +5076,11 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_2"/>
+                  <widget class="QLineEdit" name="lineEdit_2">
+                   <property name="text">
+                    <string>1.0</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -5086,7 +5094,11 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="lineEdit_3"/>
+                  <widget class="QLineEdit" name="lineEdit_3">
+                   <property name="text">
+                    <string>1.0</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
