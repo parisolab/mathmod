@@ -5047,6 +5047,9 @@ p, li { white-space: pre-wrap; }
               <property name="title">
                <string>Scale factor (for exported mesh)</string>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_40">
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_6">
