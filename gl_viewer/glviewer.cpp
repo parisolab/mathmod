@@ -376,7 +376,6 @@ void OpenGlWidget::initbox()
 
 void OpenGlWidget::PutObjectInsideCube()
 {
-
     minx = 999999999;
     miny = 999999999;
     minz = 999999999;
@@ -417,14 +416,12 @@ void OpenGlWidget::PutObjectInsideCube()
         {
             difMaximum = double(difZ);
         }
-
         /// On va inclure cet objet dans un cube de langueur maximum
         /// egale a "hauteur_fenetre"
         decalage_xo = -double(minx + maxx) / 2;
         decalage_yo = -double(miny + maxy) / 2;
         decalage_zo = -double(minz + maxz) / 2;
     }
-
     for (uint i = 0; i < LocalScene.VertxNumber; i++)
     {
         LocalScene.ArrayNorVer_localPt[10 * i + 7] = float(
@@ -524,7 +521,6 @@ static void drawCube(float x)
     glColor4f(0.8f, 0.8f, 0.8f, 1.0f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glLineWidth(1);
-
     glBegin(GL_QUADS);
     glVertex3f(-longX, -longY, -longZ);
     glVertex3f(longX, -longY, -longZ);
@@ -546,7 +542,6 @@ static void drawCube(float x)
     glPolygonMode(
         GL_FRONT_AND_BACK,
         GL_FILL); // this line should be put elsewhere where it's missing
-
     // X
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3f(longX, -longY, longZ + 60);
@@ -557,7 +552,6 @@ static void drawCube(float x)
     glRasterPos3f(-longX, -longY, longZ + 60);
     glCallLists(QString::number(mix, 'g', 3).size(), GL_UNSIGNED_BYTE,
                 QString::number(mix, 'g', 3).toLatin1());
-
     // Y
     glColor3f(0.0, 1.0, 0.0);
     glRasterPos3f(longX + 100, longY, -longZ);
@@ -568,7 +562,6 @@ static void drawCube(float x)
     glRasterPos3f(longX + 100, -longY, -longZ);
     glCallLists(QString::number(miy, 'g', 3).size(), GL_UNSIGNED_BYTE,
                 QString::number(miy, 'g', 3).toLatin1());
-
     // Z
     glColor3f(0.4f, 0.4f, 1.0);
     glRasterPos3f(longX + 60, -longY - 60, longZ);
