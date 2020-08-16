@@ -277,7 +277,6 @@ void OpenGlWidget::SaveSceneAsObjPoly(int type)
                          << "\n";
             }
         }
-
         // save faces:
         for (i = 0; i < LocalScene.NbPolygnNbVertexPtMin; i++)
         {
@@ -299,7 +298,6 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save OBJ file"), "",
                        tr("OBJ Files (*.obj)"));
-
     QFile data(fileName);
     if (data.open(QFile::ReadWrite | QFile::Truncate))
     {
@@ -350,7 +348,6 @@ void OpenGlWidget::SaveSceneAsObjTrian(int type)
         }
         for (i = 0; i < LocalScene.PolyNumber; i += 3)
         {
-
             (stream) << "f "
                      << "  " << LocalScene.PolyIndices_localPt[i] + 1 << "  "
                      << LocalScene.PolyIndices_localPt[i + 1] + 1 << "  "
