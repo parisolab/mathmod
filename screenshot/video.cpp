@@ -39,24 +39,20 @@ screenimage::screenimage(QImage buffer) : QMainWindow(nullptr)
     pushScreenshot->setGeometry(QRect(250, 2, 75, 18));
     pushScreenshot->setText(tr("Save Screen"));
 }
-
 screenimage::~screenimage()
 {
     // delete m;
     delete l;
 }
-
 void screenimage::connectcontrols()
 {
     connect(pushScreenshot, SIGNAL(clicked()), this, SLOT(saveas()));
     connect(scrollBar55, SIGNAL(valueChanged(int)), this, SLOT(f_1(int)));
 }
-
 void screenimage::f_1(int quality)
 {
     image_quality = quality;
 }
-
 void screenimage::saveas()
 {
     QString fn = QFileDialog::getSaveFileName(

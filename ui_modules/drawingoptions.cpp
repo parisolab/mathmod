@@ -913,6 +913,7 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
+    // variables
     if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
         scriptErrorType = VECT_DIMENSION_ERROR;
