@@ -5446,28 +5446,25 @@
       }
     },
     {
-      "Param3D": {
-        "Description ": ["Double Enneper by Abderrahman Taha 28/10/2019"],
-        "Name": ["Double_Enneper_4x4"],
-        "Component": ["Enneper_1",
-          "Enneper_2"],
-        "Const": ["k=4"],
-        "Fx": ["k*u*cos(v+t)-u^(2*k-1)/6*cos((2*k-1)*v+t)","-(k*u*cos(v+t)-u^(2*k-1)/6*cos((2*k-1)*v+t))"],
-        "Fy": ["-k*u*sin(v+t)-u^(2*k-1)/6*sin((2*k-1)*v+t)","(-k*u*sin(v+t)-u^(2*k-1)/6*sin((2*k-1)*v+t))"],
-        "Fz": ["(u^k*cos(k*v+t))","(-u^(k)*cos(k*v+t))"],
-        "Umax": ["12/10","12/10"],
-        "Umin": ["0","0"],
-        "Vmax": ["pi","pi"],
-        "Vmin": ["-pi","-pi"]
-      },
-      "Texture": {
-        "Colors": ["R=(9/10)",
-          "G=(8/10)*abs(cos(5*pi*atan2(x,y)))",
-          "B=(8/10)*abs(cos(5*pi*atan2(x,y)))",
-          "T=1"],
-        "Name": "Granit_2",
-        "Noise": "1"
-      }
+        "Param3D": {
+            "Description ": ["Double Enneper by Abderrahman Taha 17/08/2020"],
+            "Name": ["Double_Enneper"],
+            "Component": ["Enneper_1","Enneper_2"],
+            "Const": ["k=10"],
+            "Funct": ["X=k*u*cos(v+t)-u^(2*k-1)/6*cos((2*k-1)*v+t)","Y=-k*u*sin(v+t)-u^(2*k-1)/6*sin((2*k-1)*v+t)","Z=-(u^k*cos(k*v+t))"],
+            "Fx": ["X(u,v,t)","X(u,v,t)"],
+            "Fy": ["Y(u,v,t)","Y(u,v,t)"],
+            "Fz": ["Z(u,v,t)-2*exp(2*cos(4*u))+24/5","-Z(u,v,t)+2*exp(2*cos(4*u))-24/5"],
+            "Umax": ["108/100","11/10"],
+            "Umin": ["28/100","28/100"],
+            "Vmax": ["pi","pi"],
+            "Vmin": ["-pi","-pi"]
+        },
+        "Texture": {
+            "Colors": ["R=(8/10)","G=(3/10)*exp((8/10)*abs(cos(4*pi*atan2(x,y))))","B=(2/10)*exp((8/10)*abs(cos(4*pi*atan2(x,y))))","T=1"],
+            "Name": "Granit_2",
+            "Noise": "1"
+        }
     },
         {
               "Iso3D": {
