@@ -5466,22 +5466,22 @@
             "Noise": "1"
         }
     },
-        {
-              "Iso3D": {
-                "Description": ["Contour lines by Abderrahman Taha 28/10/2019"],
-                "Name": ["Contour_lines"],
-                "Const": ["C=1/4"],
-                "Cnd": ["(z-C)*(z+C)*(z-2*C)*(z+2*C)*(z-3*C)*(z+3*C)*(z-1)*(z+1)*(z-6*C)*(z+(3/2))*(z-5*C)*(z+5*C)>0"],
-                "Component": ["Drope"],
-                "Fxyz": ["z-4*x*exp(-x^2-y^2)"],
-                "Xmax": ["2"],
-                "Xmin": ["-2"],
-                "Ymax": ["2"],
-                "Ymin": ["-2"],
-                "Zmax": ["18/10"],
-                "Zmin": ["-18/10"]
-              }
-            },
+    {
+      "Iso3D": {
+        "Description": ["Contour lines by Abderrahman Taha 28/10/2019"],
+        "Name": ["Contour_lines"],
+        "Const": ["C=1/4"],
+        "Cnd": ["(z-C)*(z+C)*(z-2*C)*(z+2*C)*(z-3*C)*(z+3*C)*(z-1)*(z+1)*(z-6*C)*(z+(3/2))*(z-5*C)*(z+5*C)>0"],
+        "Component": ["Drope"],
+        "Fxyz": ["z-4*x*exp(-x^2-y^2)"],
+        "Xmax": ["2"],
+        "Xmin": ["-2"],
+        "Ymax": ["2"],
+        "Ymin": ["-2"],
+        "Zmax": ["18/10"],
+        "Zmin": ["-18/10"]
+      }
+    },
     {
       "Param3D": {
         "Description": ["Double Helical curve by Abderrahman Taha 28/10/2019"],
