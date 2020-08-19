@@ -5667,39 +5667,39 @@
         }
     },
     {
-          "Param3D": {
-            "Description ": ["Virus by Abderrahman Taha 15/05/2020"],
-            "Name": ["Virus_2"],
-            "Component": ["Virus"],
-            "Funct": ["Thickness= -(3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(9/5))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2))",
-              "n1= (-(cos(u))*(cos(u)*cos(v)))",
-              "n2= ((cos(u))*(-sin(v)*cos(u)))",
-              "n3= ((-sin(u)*cos(v))*(cos(u)*cos(v))-(-sin(u)*sin(v))*(-sin(v)*cos(u)))",
-              "Sq= (u/sqrt(u*u+v*v+t*t))",
-              "R=1/sqrt(u*u+v*v+t*t)",
-              "Gx=cos(u)*cos(v)+Thickness(u,v,t)*Sq(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-              "Gy=cos(u)*sin(v)+Thickness(u,v,t)*Sq(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
-              "Gz=sin(u)+Thickness(u,v,t)*Sq(n3(u,v,t),n1(u,v,t),n2(u,v,t))",
-              "Hx=n1(u,v,t)* (n1(u,v,t)*Gx(u,v,t)+n2(u,v,t)*Gy(u,v,t)+n3(u,v,t)*Gz(u,v,t))*(1 - cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))) +Gx(u,v,t)*cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) +(-n3(u,v,t)*Gy(u,v,t) + n2(u,v,t)*Gz(u,v,t) ) * sin(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))",
-              "Hy = n2(u,v,t)* (n1(u,v,t)*Gx(u,v,t)+n2(u,v,t)*Gy(u,v,t)+n3(u,v,t)*Gz(u,v,t))*(1 - cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))) +Gy(u,v,t)*cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) +(n3(u,v,t)*Gx(u,v,t) - n1(u,v,t)*Gz(u,v,t) ) * sin(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))",
-              "Hz=n3(u,v,t)* (n1(u,v,t)*Gx(u,v,t)+n2(u,v,t)*Gy(u,v,t)+n3(u,v,t)*Gz(u,v,t))*(1 - cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))) +Gz(u,v,t)*cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) +(-n2(u,v,t)*Gx(u,v,t) + n1(u,v,t)*Gy(u,v,t) ) * sin(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) "],
-            "Fx": ["Hx(u,v,t)"],
-            "Fy": ["Hy(u,v,t)"],
-            "Fz": ["Hz(u,v,t)"],
-            "Umax": ["pi/2"],
-            "Umin": ["-pi/2"],
-            "Vmax": ["pi"],
-            "Vmin": ["-pi"]
-          },
-          "Texture": {
-            "Colors": ["R=(9/10)",
-              "G=(3/2)*abs(cos((x*x+y*y+z*z)/3)*sin((x*x+y*y+z*z)/3))",
-              "B=(1/5)*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
-              "T=1"],
-            "Name": "WorleyNoise",
-            "Noise": "NoiseW(8*x,8*y,8*z,(4),(2),0)+NoiseW(8*x,8*y,8*z,(4),(12),1/10)"
-          }
-        },
+      "Param3D": {
+        "Description ": ["Virus by Abderrahman Taha 15/05/2020"],
+        "Name": ["Virus_2"],
+        "Component": ["Virus"],
+        "Funct": ["Thickness= -(3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(9/5))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2))",
+          "n1= (-(cos(u))*(cos(u)*cos(v)))",
+          "n2= ((cos(u))*(-sin(v)*cos(u)))",
+          "n3= ((-sin(u)*cos(v))*(cos(u)*cos(v))-(-sin(u)*sin(v))*(-sin(v)*cos(u)))",
+          "Sq= (u/sqrt(u*u+v*v+t*t))",
+          "R=1/sqrt(u*u+v*v+t*t)",
+          "Gx=cos(u)*cos(v)+Thickness(u,v,t)*Sq(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+          "Gy=cos(u)*sin(v)+Thickness(u,v,t)*Sq(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+          "Gz=sin(u)+Thickness(u,v,t)*Sq(n3(u,v,t),n1(u,v,t),n2(u,v,t))",
+          "Hx=n1(u,v,t)* (n1(u,v,t)*Gx(u,v,t)+n2(u,v,t)*Gy(u,v,t)+n3(u,v,t)*Gz(u,v,t))*(1 - cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))) +Gx(u,v,t)*cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) +(-n3(u,v,t)*Gy(u,v,t) + n2(u,v,t)*Gz(u,v,t) ) * sin(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))",
+          "Hy = n2(u,v,t)* (n1(u,v,t)*Gx(u,v,t)+n2(u,v,t)*Gy(u,v,t)+n3(u,v,t)*Gz(u,v,t))*(1 - cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))) +Gy(u,v,t)*cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) +(n3(u,v,t)*Gx(u,v,t) - n1(u,v,t)*Gz(u,v,t) ) * sin(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))",
+          "Hz=n3(u,v,t)* (n1(u,v,t)*Gx(u,v,t)+n2(u,v,t)*Gy(u,v,t)+n3(u,v,t)*Gz(u,v,t))*(1 - cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))) +Gz(u,v,t)*cos(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) +(-n2(u,v,t)*Gx(u,v,t) + n1(u,v,t)*Gy(u,v,t) ) * sin(2*pi*Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))) "],
+        "Fx": ["Hx(u,v,t)"],
+        "Fy": ["Hy(u,v,t)"],
+        "Fz": ["Hz(u,v,t)"],
+        "Umax": ["pi/2"],
+        "Umin": ["-pi/2"],
+        "Vmax": ["pi"],
+        "Vmin": ["-pi"]
+      },
+      "Texture": {
+        "Colors": ["R=(9/10)",
+          "G=(3/2)*abs(cos((x*x+y*y+z*z)/3)*sin((x*x+y*y+z*z)/3))",
+          "B=(1/5)*abs(cos((x*x+y*y+z*z)/3)*cos((x*x+y*y+z*z)/2)*sin((x*x+y*y+z*z)/3))",
+          "T=1"],
+        "Name": "WorleyNoise",
+        "Noise": "NoiseW(8*x,8*y,8*z,(4),(2),0)+NoiseW(8*x,8*y,8*z,(4),(12),1/10)"
+      }
+    },
         {
             "Param3D": {
                 "Component": ["Star"],
