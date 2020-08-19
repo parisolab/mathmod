@@ -5451,7 +5451,7 @@
             "Name": ["Symmetrized_Double_Enneper"],
             "Component": ["Enneper_1","Enneper_2"],
             "Const": ["k=10"],
-            "Funct": ["X=k*u*cos(v+t)-u^(2*k-1)/6*cos((2*k-1)*v+t)","Y=-k*u*sin(v+t)-u^(2*k-1)/6*sin((2*k-1)*v+t)","Z=-(u^k*cos(k*v+t))"],
+            "Funct": ["X=k*u*cos(v)-u^(2*k-1)/6*cos((2*k-1)*v)","Y=-k*u*sin(v)-u^(2*k-1)/6*sin((2*k-1)*v)","Z=-(u^k*cos(k*v))"],
             "Fx": ["X(u,v,t)","X(u,v,t)"],
             "Fy": ["Y(u,v,t)","Y(u,v,t)"],
             "Fz": ["Z(u,v,t)-2*exp(2*cos(4*u))+24/5","-Z(u,v,t)+2*exp(2*cos(4*u))-24/5"],
