@@ -5338,8 +5338,8 @@
     },
     {
       "Param3D": {
-        "Description ": ["simple Enneper by Abderrahman Taha 28/10/2019"],
-        "Name": ["simple Enneper_4"],
+        "Description ": ["Enneper_k_Curls by Abderrahman Taha 24/08/2020"],
+        "Name": ["Enneper_k_Curls"],
         "Component": ["Enneper"],
         "Const": ["k=4"],
         "Fx": ["k*u*cos(v+t)-u^(2*k-1)/6*cos((2*k-1)*v+t)"],
