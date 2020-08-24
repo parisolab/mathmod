@@ -2939,19 +2939,6 @@
     },
     {
       "Param3D": {
-        "Name": ["Sphere_1"],
-        "Component": ["Sphere_1"],
-        "Fx": ["cos(u)*cos(v)"],
-        "Fy": ["cos(u)*sin(v)"],
-        "Fz": ["sin(u)"],
-        "Umin": ["-pi/2"],
-        "Umax": ["pi/2"],
-        "Vmin": ["0"],
-        "Vmax": ["2*pi"]
-      }
-    },
-    {
-      "Param3D": {
         "Name": ["Sphere_2"],
         "Component": ["Sphere_2"],
         "Fx": ["cos(u)*cos(v)"],
