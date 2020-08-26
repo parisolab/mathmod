@@ -5317,7 +5317,6 @@
         "Vmin": ["0","0"]
       }
     },
-
     {
       "Iso3D": {
         "Description": ["Bouncing Ball_1 by Abderrahman Taha 29/10/2019"],
