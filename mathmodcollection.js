@@ -2971,10 +2971,8 @@
       "Param3D": {
         "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')WhereT=Thicknessvalue;'n1=(a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))','n2=(a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))','n3=(a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))','R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)''a1=dFx/du','a2=dFy/du','a3=dFz/du','b1=dFx/dv','b2=dFy/dv','b3=dFz/dv'"],
         "Name": ["Thick_Parametric_Torus"],
-        "Component": ["Torus_1",
-          "Torus_2"],
-        "Const": ["T=13/10",
-          "c=1/10000"],
+        "Component": ["Torus_1","Torus_2"],
+        "Const": ["T=13/10","c=1/10000"],
         "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
           "Fy=(1+cos(u)/2)*sin(v)",
           "Fz=sin(u)/2",
@@ -2991,20 +2989,13 @@
           "Gx=Fx(u,v,t)+T*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
           "Gy=Fy(u,v,t)+T*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
           "Gz=Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
-        "Fx": ["Fx(u,v,t)",
-          "Gx(u,v,t)"],
-        "Fy": ["Fy(u,v,t)",
-          "Gy(u,v,t)"],
-        "Fz": ["Fz(u,v,t)",
-          "Gz(u,v,t)"],
-        "Umax": ["2*pi",
-          "2*pi"],
-        "Umin": ["0",
-          "0"],
-        "Vmax": ["2*pi",
-          "2*pi"],
-        "Vmin": ["pi/3",
-          "pi/3"]
+        "Fx": ["Fx(u,v,t)","Gx(u,v,t)"],
+        "Fy": ["Fy(u,v,t)","Gy(u,v,t)"],
+        "Fz": ["Fz(u,v,t)","Gz(u,v,t)"],
+        "Umax": ["2*pi","2*pi"],
+        "Umin": ["0","0"],
+        "Vmax": ["2*pi","2*pi"],
+        "Vmin": ["pi/3","pi/3"]
       }
     },
     {
@@ -3025,42 +3016,15 @@
       "Param3D": {
         "Description": ["Shells by Abderrahman Taha 04/11/2019"],
         "Name": ["Shells"],
-        "Component": ["Shell1",
-          "Shell2",
-          "Shell3",
-          "Shell4"],
-        "Const": ["a=1/5",
-          "b=1",
-          "c=1/10",
-          "n=2"],
-        "Fx": ["2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2",
-          "((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4",
-          "2^v*(sin(u)*cos(u))/35",
-          "(6/5)^v*(sin(u)^2*sin(v))+2"],
-        "Fy": ["2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2",
-          "((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4",
-          "2^v*(sin(u)^2*sin(v))/35-4",
-          "(6/5)^v*(sin(u)*cos(u))+5"],
-        "Fz": ["1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)",
-          "(b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6",
-          "2^v*(sin(u)^2*cos(v))/35-12",
-          "(6/5)^v*(sin(u)^2*cos(v))-12"],
-        "Umax": ["6*pi",
-          "2*pi",
-          "pi",
-          "pi"],
-        "Umin": ["0",
-          "0",
-          "0",
-          "0"],
-        "Vmax": ["2*pi",
-          "2*pi",
-          "5*pi/2",
-          "5*pi/2"],
-        "Vmin": ["0",
-          "0",
-          "0",
-          "0"]
+        "Component": ["Shell1","Shell2","Shell3","Shell4"],
+        "Const": ["a=1/5","b=1","c=1/10","n=2"],
+        "Fx": ["2*(1-exp(u/(6*pi)))*cos(u)*cos(v/2)^2","((a*(1-v/(2*pi))*(1+cos(u))+c)*cos(n*v))*6+4","2^v*(sin(u)*cos(u))/35","(6/5)^v*(sin(u)^2*sin(v))+2"],
+        "Fy": ["2*(-1+exp(u/(6*pi)))*sin(u)*cos(v/2)^2","((a*(1-v/(2*pi))*(1+cos(u))+c)*sin(n*v))*6+4","2^v*(sin(u)^2*sin(v))/35-4","(6/5)^v*(sin(u)*cos(u))+5"],
+        "Fz": ["1-exp(u/(3*pi))-sin(v)+exp(u/(6*pi))*sin(v)","(b*v/(2*pi)+a*(1-v/(2*pi))*sin(u))*6-6","2^v*(sin(u)^2*cos(v))/35-12","(6/5)^v*(sin(u)^2*cos(v))-12"],
+        "Umax": ["6*pi","2*pi","pi","pi"],
+        "Umin": ["0","0","0","0"],
+        "Vmax": ["2*pi","2*pi","5*pi/2","5*pi/2"],
+        "Vmin": ["0","0","0","0"]
       }
     },
     {
@@ -3091,7 +3055,6 @@
           "E=1309/6000",
           "F=374/1000",
           "G=1221/1000"],
-
         "Fx": ["(cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D))*(1-NoiseW((cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(1),(2),0))"],
         "Fy": ["(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D))*(1-NoiseW((cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(1),(2),0))"],
         "Fz": ["(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D))*(1-NoiseW((cos(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(u)*cos(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(sin(v)/(-2*sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))*cos((acos(-(-A+F*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4)-E*((cos(u)^6+sin(u)^6)*cos(v)^6+sin(v)^6)-G*cos(u)^2*cos(v)^4*sin(u)^2*sin(v)^2)/sqrt(B-C*((cos(u)^4+sin(u)^4)*cos(v)^4+sin(v)^4))^3)-pi)/3)+D)),(1),(2),0))"],
@@ -3164,26 +3127,26 @@
       }
     },
     {
-          "Iso3D": {
-            "Name": ["fhelix"],
-            "Description ": ["Fhelix internal function with sliders by Abderrahman Taha 04/11/2019"],
-            "Component": ["fhelix1"],
-            "Fxyz": ["-fhelix1(sqrt(x*x+y*y)-(3),Param1*atan2(y,x),z,Param2,Param3,Param4/(15),Param5/(15),Param6/(15),Param7/(10),Param8*pi/(15))"],
-            "Xmax": ["5"],
-            "Xmin": ["-5"],
-            "Ymax": ["5"],
-            "Ymin": ["-5"],
-            "Zmax": ["11/5"],
-            "Zmin": ["-11/5"]
-          },
-          "Sliders": {
-            "Max": ["10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30"],
-            "Min": ["0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0"],
-            "Name": ["Param1"," Param2"," Param3"," Param4"," Param5"," Param6"," Param7"," Param8"],
-            "Position": ["2","2","2","10","22","15","20","0","2","2","2","8","24","17","10","19","2","3","2","5","9","13","7","0","2","2","2","23","9","3","20","3","2","2","2","8","22","16","0","21"],
-            "Step": ["1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1"]
-          }
-        },
+      "Iso3D": {
+        "Name": ["fhelix"],
+        "Description ": ["Fhelix internal function with sliders by Abderrahman Taha 04/11/2019"],
+        "Component": ["fhelix1"],
+        "Fxyz": ["-fhelix1(sqrt(x*x+y*y)-(3),Param1*atan2(y,x),z,Param2,Param3,Param4/(15),Param5/(15),Param6/(15),Param7/(10),Param8*pi/(15))"],
+        "Xmax": ["5"],
+        "Xmin": ["-5"],
+        "Ymax": ["5"],
+        "Ymin": ["-5"],
+        "Zmax": ["11/5"],
+        "Zmin": ["-11/5"]
+      },
+      "Sliders": {
+        "Max": ["10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30"],
+        "Min": ["0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0","0"," 0"," 0"," 0"," 0"," 0"," 0"," 0"],
+        "Name": ["Param1"," Param2"," Param3"," Param4"," Param5"," Param6"," Param7"," Param8"],
+        "Position": ["2","2","2","10","22","15","20","0","2","2","2","8","24","17","10","19","2","3","2","5","9","13","7","0","2","2","2","23","9","3","20","3","2","2","2","8","22","16","0","21"],
+        "Step": ["1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1","1"," 1"," 1"," 1"," 1"," 1"," 1"," 1"]
+      }
+    },
     {
       "Param3D": {
         "Description ": ["Inka Star by Abderrahman Taha 04/11/2019"],
@@ -3364,24 +3327,24 @@
         "Zmin": ["-8/5"]
       }
     },
-        {
-            "Iso3D": {
-                "Description": ["Wall Pattern Sphere v3 by Abderrahman Taha 02/11/2019"],
-                "Name": ["Wall_Pattern_Sphere_v3"],
-                "Component": ["f_hex_y"],
-                "Funct": ["f_hex_y_1=if(abs(z)<(3/50),f_hex_y(x,y,z,0)-(2/25),1)",
-                    "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
-                    "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
-                    "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"],
-                "Fxyz": ["Sphere(x,y,z,t)"],
-                "Xmax": ["24/5"],
-                "Xmin": ["-24/5"],
-                "Ymax": ["24/5"],
-                "Ymin": ["-24/5"],
-                "Zmax": ["24/5"],
-                "Zmin": ["-24/5"]
-            }
-        },
+    {
+        "Iso3D": {
+            "Description": ["Wall Pattern Sphere v3 by Abderrahman Taha 02/11/2019"],
+            "Name": ["Wall_Pattern_Sphere_v3"],
+            "Component": ["f_hex_y"],
+            "Funct": ["f_hex_y_1=if(abs(z)<(3/50),f_hex_y(x,y,z,0)-(2/25),1)",
+                "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
+                "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
+                "Torus=Cylinder(8*atan2(y,x),sqrt(x*x+y*y)-(4),z,t)"],
+            "Fxyz": ["Sphere(x,y,z,t)"],
+            "Xmax": ["24/5"],
+            "Xmin": ["-24/5"],
+            "Ymax": ["24/5"],
+            "Ymin": ["-24/5"],
+            "Zmax": ["24/5"],
+            "Zmin": ["-24/5"]
+        }
+    },
     {
       "Iso3D": {
         "Description": ["Wall Pattern Sphere v2 by Abderrahman Taha 02/11/2019"],
