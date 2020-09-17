@@ -19,14 +19,12 @@
  ***************************************************************************/
 
 #include "glviewer.h"
-
 #define BUFFER_OFFSET(i) ((float *)(i))
 static int Wresult, Hresult;
 static double anglefinal = 0;
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
-
 static GLfloat minx = 999999999, miny = 999999999, minz = 999999999,
                maxx = -999999999, maxy = -999999999, maxz = -999999999;
 
