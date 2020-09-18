@@ -3886,7 +3886,8 @@
       "Iso3D": {
         "Description": ["Neovius Sphere by Abderrahman Taha 01/11/2019"],
         "Name": ["Neovius_Sphere"],
-        "Component": ["Neoviu","M=4"],
+        "Const": ["N=10","M=4"],
+        "Component": ["NeoviusSphere"],
         "Funct": ["Neovius =3*(cos(x)+cos(y)+cos(z))+7*cos(x)*cos(y)*cos(z)",
           "isoCondition_0=(x^2-(11/5)^2)",
           "isoCondition_1=(x^2-(8/5)^2)",

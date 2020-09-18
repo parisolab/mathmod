@@ -55,10 +55,8 @@ float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, in
     int cubeX, cubeY, cubeZ;
     float distanceArray[9];
     float color = 0;
-
     for (int i = 0; i < 9; i++)
         distanceArray[i] = 6666;
-
     int evalCubeX = int(floor(x));
     int evalCubeY = int(floor(y));
     int evalCubeZ = int(floor(z));

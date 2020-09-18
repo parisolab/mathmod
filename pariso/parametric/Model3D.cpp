@@ -185,7 +185,7 @@ void  Par3D::rotation4()
 
 void  Par3D::boite_englobante4D(uint idx)
 {
-    MINX =10^12;
+    MINX =1000000000000.0;
     MINY =MINX;
     MINZ =MINX;
     MINW =MINX;
