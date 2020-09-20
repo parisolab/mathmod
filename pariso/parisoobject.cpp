@@ -20,12 +20,17 @@
 #include "parisoobject.h"
 
 MasterThread::MasterThread() {}
+
 MasterThread::~MasterThread() {}
+
 WorkerThread::WorkerThread() {}
+
 WorkerThread::~WorkerThread() {}
+
 ParisoObject::ParisoObject() {}
+
 ParisoObject::~ParisoObject() {}
-//+++++++++++++++++++++++++++++++++++++++++
+
 uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)
 {
     uint idx = 0;
@@ -40,7 +45,6 @@ uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)
     return 30;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++
 void ParisoObject::clear(struct ComponentInfos *cp)
 {
     cp->ParisoTriangle.clear();

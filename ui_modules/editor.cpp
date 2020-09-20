@@ -28,11 +28,9 @@ void editor::newFile()
 void editor::openFile(const QString &path)
 {
     QString fileName = path;
-
     // if (fileName.isNull())
     fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
                                             "Files (*.js *.*)");
-
     if (!fileName.isEmpty())
     {
         QFile file(fileName);
