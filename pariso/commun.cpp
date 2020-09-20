@@ -173,8 +173,7 @@ int CellNoise::lcgRandom(int lastValue)
 }
 int CellNoise::hash(int i, int j, int k)
 {
-    return ((((((OFFSET_BASIS ^ i) * FNV_PRIME) ^ j) * FNV_PRIME) ^ k) *
-            FNV_PRIME);
+    return ((((((OFFSET_BASIS^i)*FNV_PRIME)^j) * FNV_PRIME)^k)*FNV_PRIME);
 }
 ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
 {
@@ -226,11 +225,11 @@ float ImprovedNoise::noise(float x, float y, float z)
 }
 float ImprovedNoise::fade(float f)
 {
-    return f * f * f * (f * (f * 6 - 15) + 10); // t * t * (3.0 - 2.0 * t);
+    return f*f*f*(f*(f*6-15)+10); // t * t * (3.0 - 2.0 * t);
 }
 float ImprovedNoise::lerp(float t, float a, float b)
 {
-    return a + t * (b - a);
+    return a + t*(b - a);
 }
 float ImprovedNoise::grad(int hash, float x, float y, float z)
 {
@@ -261,7 +260,6 @@ float ImprovedNoise::Marble(float x, float y, float z, int octNum)
         float r = 1.0f / factor;
         t += noise(x * r, y * r, z * r) * factor;
     }
-
     return t * correction;
 }
 float ImprovedNoise::lookup(float x, float y, float z)
@@ -271,7 +269,7 @@ float ImprovedNoise::lookup(float x, float y, float z)
     for (int pass = 0; pass < passes; pass++, factor *= MAGIC_SCALE)
     {
         float r = 1 / factor;
-        t += noise(x * r, y * r, z * r) * factor;
+        t += noise(x*r, y*r, z*r)*factor;
     }
     return t * correction;
 }
