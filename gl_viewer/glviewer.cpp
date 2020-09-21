@@ -25,8 +25,8 @@ static double anglefinal = 0;
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
-static GLfloat minx = 999999999, miny = 999999999, minz = 999999999,
-               maxx = -999999999, maxy = -999999999, maxz = -999999999;
+static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
+               maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 
 static GLfloat difX, difY, difZ;
 
@@ -364,22 +364,22 @@ OpenGlWidget::~OpenGlWidget()
 void OpenGlWidget::deleteVBO() {}
 void OpenGlWidget::initbox()
 {
-    oldminx = 999999999;
-    oldminy = 999999999;
-    oldminz = 999999999;
-    oldmaxx = -999999999;
-    oldmaxy = -999999999;
-    oldmaxz = -999999999;
+    oldminx = 999999999.0;
+    oldminy = 999999999.0;
+    oldminz = 999999999.0;
+    oldmaxx = -999999999.0;
+    oldmaxy = -999999999.0;
+    oldmaxz = -999999999.0;
 }
 
 void OpenGlWidget::PutObjectInsideCube()
 {
-    minx = 999999999;
-    miny = 999999999;
-    minz = 999999999;
-    maxx = -999999999;
-    maxy = -999999999;
-    maxz = -999999999;
+    minx = 999999999.0;
+    miny = 999999999.0;
+    minz = 999999999.0;
+    maxx = -999999999.0;
+    maxy = -999999999.0;
+    maxz = -999999999.0;
     if ((LocalScene.morph != 1 ||
             (LocalScene.morph == 1 && FistTimecalibrate == 1)) &&
             LocalScene.slider != 1)
