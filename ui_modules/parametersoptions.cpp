@@ -150,12 +150,10 @@ void Parametersoptions::ReadConfigFile(QString JsonFile, QJsonObject &js)
     return;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject &js)
 {
     QJsonParseError err;
     QString sortie;
-
     QFile file1(JsonFile);
     if (!file1.exists())
     {
@@ -163,7 +161,6 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject &js)
                        nullptr, QObject::tr("Open mathmodconfig.js File"), "",
                        QObject::tr("Json (*.js)"));
     }
-
     QFile file(JsonFile);
     // QFileDevice::Permissions p = file.permissions();
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -209,13 +206,11 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject &js)
     return;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 void Parametersoptions::ReadCollectionFile(QString JsonFileName,
         QJsonObject &js)
 {
     QJsonParseError err;
     QString sortie;
-
     QFile JsonFile(JsonFileName);
     if (!JsonFile.exists())
     {
@@ -224,7 +219,6 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName,
         QFile::setPermissions(JsonFileName,
                               QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
-
     QFile file(JsonFileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -275,11 +269,9 @@ void Parametersoptions::GuiUpdate()
     // Iso Grid
     int mg = (isoparam)["IsoMaxGrid"].toInt();
     ui.IsoMaxGridLineEdit->setText(QString::number(mg));
-
     // Par Grid
     mg = (isoparam)["ParMaxGrid"].toInt();
     ui.ParMaxGridLineEdit->setText(QString::number(mg));
-
     // Styles:
     QString Style = ((JConfig["Styles"].toObject())["UsedStyle"].toString());
     ui.comboBox_2->setCurrentText(Style);
