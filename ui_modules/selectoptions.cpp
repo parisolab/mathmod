@@ -19,7 +19,6 @@
  ***************************************************************************/
 
 #include <QtGui>
-
 #include "selectoptions.h"
 
 SelectOptions::SelectOptions(QWidget *parent) : QWidget(parent)

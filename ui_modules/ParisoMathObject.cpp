@@ -26,9 +26,9 @@ ParisoMathObject::ParisoMathObject()
     NbIsoStruct = NbParamStruct = 0;
     dotsymbol = ".";
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
 ParisoMathObject::~ParisoMathObject() {}
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
 void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject &js)
 {
     QJsonParseError err;

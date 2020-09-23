@@ -90,7 +90,6 @@ void Parametersoptions::SetStyleAndTheme(QApplication &appli, QString style,
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 void Parametersoptions::ReadConfigFile(QString JsonFile, QJsonObject &js)
 {
     QJsonParseError err;

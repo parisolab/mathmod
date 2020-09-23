@@ -294,14 +294,12 @@ void DrawingOptions::on_xyzg_valueChanged(int value)
         MathmodRef->xyzactivated = -1;
     }
 }
-
 // --------------------------
 void DrawingOptions::on_ChangeGrid_clicked()
 {
     (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
     MathmodRef->slot_checkBox73_clicked(PARISO_TYPE) : MathmodRef->slot_checkBox73_clicked(ISO_TYPE);
 }
-
 // --------------------------
 void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
                                         TreeStruct &currentstruct)
@@ -347,7 +345,6 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
         AddParametersToTree(paramlistItem, currentstruct);
     }
 }
-
 // --------------------------
 void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem,
                                         TreeStruct &currentstruct)
@@ -387,7 +384,6 @@ void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem,
         AddParametersToTree(IsolistItem, currentstruct);
     }
 }
-
 // --------------------------
 void DrawingOptions::AddParametersToTree(QTreeWidgetItem *parameterslistItem,
         TreeStruct &currentstruct)
@@ -417,7 +413,6 @@ void DrawingOptions::AddParametersToTree(QTreeWidgetItem *parameterslistItem,
         }
     }
 }
-
 // --------------------------
 void DrawingOptions::AddObjectToMySelectionTree()
 {
@@ -435,7 +430,6 @@ void DrawingOptions::AddObjectToMySelectionTree()
         AddParObjectToTree(paramlistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
 }
-
 // -------------------------
 void DrawingOptions::UpdateTreeObject()
 {
@@ -471,7 +465,6 @@ void DrawingOptions::UpdateTreeObject()
         }
     }
 }
-
 // --------------------------
 void DrawingOptions::UpdatePar4DModelDetailsPage(TreeStruct &currentstruct)
 {
@@ -536,7 +529,6 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     else
         ui.stackedProperties->setCurrentIndex(0);
 }
-
 // --------------------------
 void DrawingOptions::HideSliders()
 {
@@ -567,7 +559,6 @@ void DrawingOptions::HideSliders()
     sliderconf.ui.ParametersComboBox->clear();
     sliderconf.ui.ParametersComboBox->addItem("Parameters List");
 }
-
 // --------------------------
 void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
 {
@@ -580,7 +571,6 @@ void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
     str.replace("\t", "");
     str.replace(" ", "");
 }
-
 // --------------------------
 void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
 {
@@ -603,12 +593,10 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         lst = QObj["Max"].toArray();
         ObjArrayToString(lst, result);
         qlstmax = result.split(";", Qt::SkipEmptyParts);
-
         // Position
         lst = QObj["Position"].toArray();
         ObjArrayToString(lst, result);
         qlstPos = result.split(";", Qt::SkipEmptyParts);
-
         for (int i = 0; i < qlstPos.size(); ++i)
         {
             MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues.push_back(
@@ -616,7 +604,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
             MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues.push_back(
                 qlstPos.at(i).toDouble());
         }
-
         // Name
         lst = QObj["Name"].toArray();
         ObjArrayToString(lst, result);
@@ -702,7 +689,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         HideSliders();
     }
 }
-
 // --------------------------
 void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
                                    bool Inspect)
@@ -716,7 +702,6 @@ void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
         UpdateScriptEditorAndTreeObject();
     }
 }
-
 // --------------------------
 QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
 {
@@ -756,7 +741,6 @@ QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
     }
     return(arg);
 }
-
 // --------------------------
 QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
 {
@@ -793,7 +777,6 @@ QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
     }
     return(arg);
 }
-
 // --------------------------
 bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const MandatoryIsoField &idx)
 {
@@ -807,7 +790,6 @@ bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const Man
     }
     return true;
 }
-
 // --------------------------
 bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const MandatoryParField &idx)
 {
@@ -819,7 +801,6 @@ bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const Man
     }
     return true;
 }
-
 // --------------------------
 bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
 {
@@ -833,7 +814,6 @@ bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
     }
     return true;
 }
-
 // --------------------------
 bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
 {
@@ -847,7 +827,6 @@ bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
     }
     return true;
 }
-
 // --------------------------
 bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
 {
@@ -881,7 +860,6 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     if ((QObj["Xmin"].toArray()).size() != NbFxyz)
     {
         scriptErrorType = XMIN_NBCOMPONENT_MISMATCH;

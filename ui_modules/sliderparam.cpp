@@ -19,7 +19,6 @@
  ***************************************************************************/
 
 #include <QtGui>
-
 #include "sliderparam.h"
 
 SlidersForm::SlidersForm(QWidget *parent) : QWidget(parent)
