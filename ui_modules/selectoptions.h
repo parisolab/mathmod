@@ -18,10 +18,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
 
-#ifndef COLORSOPTIONS_H
-#define COLORSOPTIONS_H
-
-#endif
+#ifndef SELECTOPTIONS_H
+#define SELECTOPTIONS_H
 
 #include "ui_selectoptions.h"
 
@@ -72,3 +70,6 @@ signals:
 public slots:
     void emitUpdateSignal();
 };
+
+
+#endif

@@ -21,8 +21,6 @@
 #ifndef ADDPARAM
 #define ADDPARAM
 
-#endif // ADDPARAM
-
 #include "ui_addparam.h"
 
 class AddParamForm : public QWidget
@@ -35,3 +33,5 @@ public:
 public:
     Ui::AddParamForm ui;
 };
+
+#endif // ADDPARAM
