@@ -17,7 +17,6 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
-
 #include "glviewer.h"
 #define BUFFER_OFFSET(i) ((float *)(i))
 static int Wresult, Hresult;
@@ -839,8 +838,7 @@ void OpenGlWidget::resizeGL(int newwidth, int newheight)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, newwidth, newheight);
-    glFrustum(-newwidth / 6.0, newwidth / 6.0, -newheight / 6.0, newheight / 6.0,
-              250.0, 3000.0);
+    glFrustum(-newwidth / 6.0, newwidth / 6.0, -newheight / 6.0, newheight / 6.0, 250.0, 3000.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef(0.0, 0, -1000.0);
