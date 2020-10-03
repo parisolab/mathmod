@@ -603,26 +603,23 @@ Used in the "Chained_Sinusoid" script. </td>
 <tr>
 <td><code>"Vect"</code></td>
 <td>
-(Experimental) Define a set of variables (type double).Example:
-<br><pre>
-"Vect": ["1"],
-"Fxyz": ["Schwarz=if(ThreadId=1, cos(x)+cos(y)+cos(z), -1)"],
-</pre>
+(Experimental) Define a set of variables (type double).
+(<a href="#Arena_02">Script example</a>)
 </td>
 </tr>
 
 <tr>
  <td><code>csd(N)</code></td>
- <td>(Experimental) Return the value of the variable at the index N. Example (<a href="#Arena_02">Script example</a>) :
+ <td>(Experimental) Return the value of the variable at the index N.
+ (<a href="#Arena_02">Script example</a>)
 </tr>
 
 <tr>
  <td><code>psh(N, val)</code></td>
  <td>(Experimental) Save the value "val" into the variable at index N.
-  <a href="#Arena_02">Script example</a>
+  (<a href="#Arena_02">Script example</a>)
 </tr>
 </table>
-
 
 <a name="UserDefinedVariables"></a>
 <h2>User Defined Variables </h2>
@@ -630,29 +627,21 @@ Used in the "Chained_Sinusoid" script. </td>
 <tr>
 <td><code>"Vect"</code></td>
 <td>
-(Experimental) Define a set of variables (type double).Example:
-<br><pre>
-"Vect": ["1"],
-"Fxyz": ["Schwarz=if(ThreadId=1, cos(x)+cos(y)+cos(z), -1)"],
-</pre>
+(Experimental) Define a set of variables (type double).
+(<a href="#Arena_02">Script example</a>)
 </td>
 </tr>
 
 <tr>
  <td><code>csd(N)</code></td>
- <td>(Experimental) Return the value of the variable at the index N. Example (<a href="#Arena_02">See full script</a>) :
-<pre>
-"Vect": ["1"],
-"Fxyz": ["Schwarz=if( psh(N,cos(x)+cos(y)+cos(z)), csd(N), 0)"],
-</pre>
+ <td>(Experimental) Return the value of the variable at the index N.
+ (<a href="#Arena_02">Script example</a>)
 </tr>
 
 <tr>
  <td><code>psh(N, val)</code></td>
- <td>(Experimental) Save the value of val to the variable at index N. Example (<a href="#Arena_02">See full script</a>) :
-<pre>
-"Schwarz=if( psh(N, cos(x)+cos(y)+cos(z)) , csd(N), 0)"
-</pre>
+ <td>(Experimental) Save the value "val" into the variable at index N.
+ (<a href="#Arena_02">Script example</a>)
 </tr>
 </table>
 
