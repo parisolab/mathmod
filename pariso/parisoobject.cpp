@@ -20,17 +20,11 @@
 #include "parisoobject.h"
 
 MasterThread::MasterThread() {}
-
 MasterThread::~MasterThread() {}
-
 WorkerThread::WorkerThread() {}
-
 WorkerThread::~WorkerThread() {}
-
 ParisoObject::ParisoObject() {}
-
 ParisoObject::~ParisoObject() {}
-
 uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)
 {
     uint idx = 0;
