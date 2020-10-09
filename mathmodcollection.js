@@ -52,6 +52,21 @@
     },
     {
         "Iso3D": {
+            "Description": ["Filament_Cube by Abderrahman Taha 09/10/2020"],
+            "Name": ["Filament_Cube"],
+            "Component": ["Cube"],
+            "Const": ["C=11/10"],
+            "Fxyz": ["-((2.92*(x-1)*(x^2)*(x+1)+1.7*y^2)^2*(y^2-0.88)^2+(2.92*(y-1)*y^2*(y+1)+1.7*z^2)^2*(z^2-0.88)^2+(2.92*(z-1)*z^2*(z+1)+1.7*x^2)^2*(x^2-0.88)^2-0.05)"],
+            "Xmax": ["C"],
+            "Xmin": ["-C"],
+            "Ymax": ["C"],
+            "Ymin": ["-C"],
+            "Zmax": ["C"],
+            "Zmin": ["-C"]
+        }
+    },
+    {
+        "Iso3D": {
             "Description": ["The fundamental patch for the Gyroid by Abderrahman Taha 12/08/2020"],
             "Name": ["Gyroid_Fundamental_Patch"],
             "Cnd": ["(((x+y)>0)*((x-y)<0)*(y+z)*(y-z))>0"],
