@@ -38,7 +38,6 @@ uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)
             return fctnb;
     return 30;
 }
-
 void ParisoObject::clear(struct ComponentInfos *cp)
 {
     cp->ParisoTriangle.clear();
