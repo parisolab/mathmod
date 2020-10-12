@@ -20,10 +20,7 @@
 #define PI1 (double (314159265)/double (100000000))
 #include <vector>
 #include <math.h>
-
-
 unsigned int ThreadsNumber =4;
-
 
 double maxim(double p1, double p2)
 {
