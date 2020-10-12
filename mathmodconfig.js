@@ -11,10 +11,17 @@
     "StartOptions": {
         "Model": "CloseIso_1"
     },
-    "CalculFactorConfig": {
-        "FactX": 4,
-        "FactY": 4,
-        "FactZ": 4
+    "ThreadsConfig": {
+        "AutoDetect": true,
+        "ThreadsNumber": 8,
+        "MinThreadsNumber": 1,
+        "MaxThreadsNumber": 64
+    },
+    "WindowSize": {
+        "ControlH": 750,
+        "ControlW": 538,
+        "GlwinH": 750,
+        "GlwinW": 750
     },
     "WindowPosition": {
         "ControlX": 20,
@@ -26,21 +33,14 @@
         "AutomaticDetection": true,
         "DotSymbol": "."
     },
-    "WindowSize": {
-        "ControlH": 750,
-        "ControlW": 538,
-        "GlwinH": 750,
-        "GlwinW": 750
+    "CalculFactorConfig": {
+        "FactX": 4,
+        "FactY": 4,
+        "FactZ": 4
     },
     "OpenGlConfig": {
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_SHININESS": 110
-    },
-    "ThreadsConfig": {
-        "AutoDetect": true,
-        "ThreadsNumber": 8,
-        "MinThreadsNumber": 1,
-        "MaxThreadsNumber": 64
     },
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
