@@ -39,11 +39,11 @@ static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 static QElapsedTimer times;
 static double IsoComponentId=0;
 static int nbvariables=0;
+
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
 }
-
 
 extern double TurbulenceWorley(const double *p)
 {
@@ -273,7 +273,6 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId", workerthreads[nbthreads].MyIndex);
         }
-
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             for(uint jj=0; jj<masterthread->ConstSize; jj++)
@@ -287,7 +286,6 @@ ErrorMessage  Iso3D::parse_expression2()
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
             }
         }
-
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseW",TurbulenceWorley, 6);
@@ -309,7 +307,6 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor, nbvariables);
         }
     }
-
     //Add defined constantes:
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
@@ -354,7 +351,6 @@ ErrorMessage  Iso3D::parse_expression2()
             }
         }
     }
-
     // Final step: parsing
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
@@ -367,7 +363,6 @@ ErrorMessage  Iso3D::parse_expression2()
             }
         }
     }
-
     return NodError;
 }
 
@@ -462,7 +457,6 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
                 VRgbtNames.push_back(tmp2.substr(0, jpos));
                 VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
-
             NewVariables = "";
             Nb_variables++;
         }
@@ -650,7 +644,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
         }
         return Nb_implicitfunction;
     }
-
     return 0;
 }
 
