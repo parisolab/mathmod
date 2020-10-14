@@ -2765,28 +2765,33 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                  !isInteger(1.0 / Stack[SP]))
               { mEvalErrorType=3; return Value_t(0); }*/
               // x:0 ^ y:negative is failure
-              if(Stack[SP-1] == Value_t(0) &&
-                 Stack[SP] < Value_t(0))
-              { mData->mEvalErrorType=3; return Value_t(0); }
+              if(Stack[SP-1] == Value_t(0) && Stack[SP] < Value_t(0))
+              {
+                  mData->mEvalErrorType=3;
+                  return Value_t(0);
+              }
               Stack[SP-1] = fp_pow(Stack[SP-1], Stack[SP]);
-              --SP; break;
+              --SP;
+            break;
 
           case cPsh:
-                StackSave[Stack[SP-1]] = Stack[SP];
-                Stack[SP-1]  = 1.0;
-                     --SP; break;
+            StackSave[Stack[SP-1]] = Stack[SP];
+            Stack[SP-1]  = 1.0;
+            --SP;
+            break;
           case cCsd:
-                Stack[SP] = StackSave[Stack[SP]]; break;
+            Stack[SP] = StackSave[Stack[SP]]; break;
 
-          case  cTrunc: Stack[SP] = fp_trunc(Stack[SP]); break;
+          case  cTrunc:
+            Stack[SP] = fp_trunc(Stack[SP]); break;
 
           case   cSec:
-              {
-                  const Value_t c = fp_cos(Stack[SP]);
-                  if(c == Value_t(0))
-                  { mData->mEvalErrorType=1; return Value_t(0); }
-                  Stack[SP] = Value_t(1)/c; break;
-              }
+          {
+            const Value_t c = fp_cos(Stack[SP]);
+            if(c == Value_t(0))
+            { mData->mEvalErrorType=1; return Value_t(0); }
+            Stack[SP] = Value_t(1)/c; break;
+          }
 
           case   cSin: Stack[SP] = fp_sin(Stack[SP]); break;
 
