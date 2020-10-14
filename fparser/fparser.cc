@@ -3040,11 +3040,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 // Functions:
           case   cCos:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = fp_cos(Stacki[Nbval*Size+SP]); break;
+              Stacki[Nbval*Size+SP] = fp_cos(Stacki[Nbval*Size+SP]);
+            break;
 
           case   cAbs:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = fp_abs(Stacki[Nbval*Size+SP]); break;
+              Stacki[Nbval*Size+SP] = fp_abs(Stacki[Nbval*Size+SP]);
+            break;
 
           case  cAcos:
             for(Nbval=0; Nbval<NbStack; Nbval++)
@@ -3078,11 +3080,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
           case cAsinh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_asinh(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_asinh(Stacki[Nbval*Size+SP]);
+            break;
 
           case  cAtan:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_atan(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_atan(Stacki[Nbval*Size+SP]);
+            break;
 
           case cAtan2:
             for(Nbval=0; Nbval<NbStack; Nbval++)
@@ -3102,15 +3106,18 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
           case  cCbrt:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_cbrt(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_cbrt(Stacki[Nbval*Size+SP]);
+            break;
 
           case  cCeil:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_ceil(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_ceil(Stacki[Nbval*Size+SP]);
+            break;
 
           case  cCosh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_cosh(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_cosh(Stacki[Nbval*Size+SP]);
+            break;
 
           case   cCot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
@@ -3134,20 +3141,24 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
           case   cExp:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_exp(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_exp(Stacki[Nbval*Size+SP]);
+            break;
 
           case   cExp2:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_exp2(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_exp2(Stacki[Nbval*Size+SP]);
+            break;
 
           case cFloor:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_floor(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_floor(Stacki[Nbval*Size+SP]);
+            break;
 
           case cHypot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
                 Stacki[Nbval*Size+SP-1] = fp_hypot(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-                --SP; break;
+            --SP;
+            break;
 
         case    cIf:
         {
@@ -3155,33 +3166,35 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
             for(Nbval=1; Nbval<NbStack; Nbval++)
                 if(valid != fp_truth(Stacki[Nbval*Size+SP]))
-                    { mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(IF_FUNCT_ERROR); }
-
-                if(valid)
-                    IP += 2;
-                else
                 {
-                    const unsigned* buf = &byteCode[IP+1];
-                    IP = buf[0];
-                    DP = buf[1];
+                    mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(IF_FUNCT_ERROR);
                 }
-            }
-            SP--;    break;
-
-          case   cInt:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_int(Stacki[Nbval*Size+SP]); break;
-
-          case   cLog:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            if(valid)
+                IP += 2;
+            else
             {
-              if(IsComplexType<Value_t>::result
-               ?   Stacki[Nbval*Size+SP] == Value_t(0)
-               :   !(Stacki[Nbval*Size+SP] > Value_t(0)))
-              { mData->mEvalErrorType=3; return Value_t(0); }
-                  Stacki[Nbval*Size+SP] = fp_log(Stacki[Nbval*Size+SP]);
+                const unsigned* buf = &byteCode[IP+1];
+                IP = buf[0];
+                DP = buf[1];
             }
+        }
+            SP--;
             break;
+      case   cInt:
+        for(Nbval=0; Nbval<NbStack; Nbval++)
+            Stacki[Nbval*Size+SP] = fp_int(Stacki[Nbval*Size+SP]);
+        break;
+
+      case   cLog:
+        for(Nbval=0; Nbval<NbStack; Nbval++)
+        {
+          if(IsComplexType<Value_t>::result
+           ?   Stacki[Nbval*Size+SP] == Value_t(0)
+           :   !(Stacki[Nbval*Size+SP] > Value_t(0)))
+          { mData->mEvalErrorType=3; return Value_t(0); }
+              Stacki[Nbval*Size+SP] = fp_log(Stacki[Nbval*Size+SP]);
+        }
+        break;
 
           case cLog10:
             for(Nbval=0; Nbval<NbStack; Nbval++)
@@ -3244,11 +3257,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
         case cCsd:
           for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = StackSave[NbStack*(Stacki[Nbval*Size+SP])+Nbval]; break;
+              Stacki[Nbval*Size+SP] = StackSave[NbStack*(Stacki[Nbval*Size+SP])+Nbval];
+          break;
 
           case  cTrunc:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_trunc(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_trunc(Stacki[Nbval*Size+SP]);
+            break;
 
           case   cSec:
             for(Nbval=0; Nbval<NbStack; Nbval++)
@@ -3261,11 +3276,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               break;
           case   cSin:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_sin(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_sin(Stacki[Nbval*Size+SP]);
+            break;
 
           case  cSinh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_sinh(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_sinh(Stacki[Nbval*Size+SP]);
+            break;
 
           case  cSqrt:
             for(Nbval=0; Nbval<NbStack; Nbval++)
@@ -3279,11 +3296,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
           case   cTan:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_tan(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_tan(Stacki[Nbval*Size+SP]);
+            break;
 
           case  cTanh:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_tanh(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_tanh(Stacki[Nbval*Size+SP]);
+            break;
 
 
 // Misc:
@@ -3305,17 +3324,23 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 // Operators:
           case   cNeg:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = -Stacki[Nbval*Size+SP]; break;
+                Stacki[Nbval*Size+SP] = -Stacki[Nbval*Size+SP];
+            break;
           case   cAdd:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] += Stacki[Nbval*Size+SP]; --SP; break;
+                Stacki[Nbval*Size+SP-1] += Stacki[Nbval*Size+SP];
+            --SP;
+            break;
           case   cSub:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] -= Stacki[Nbval*Size+SP]; --SP; break;
+                Stacki[Nbval*Size+SP-1] -= Stacki[Nbval*Size+SP];
+            --SP;
+            break;
           case   cMul:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] *= Stacki[Nbval*Size+SP]; --SP; break;
-
+                Stacki[Nbval*Size+SP-1] *= Stacki[Nbval*Size+SP];
+            --SP;
+            break;
           case   cDiv:
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
@@ -3332,63 +3357,76 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
               Stacki[Nbval*Size+SP-1] = fp_mod(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             }
-              --SP; break;
+            --SP;
+            break;
 
           case cEqual:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_equal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-              --SP; break;
+            --SP;
+            break;
 
           case cNEqual:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_nequal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-              --SP; break;
+            --SP;
+            break;
 
           case  cLess:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_less(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-              --SP; break;
+            --SP;
+            break;
 
           case  cLessOrEq:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_lessOrEq(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-              --SP; break;
+            --SP;
+            break;
 
           case cGreater:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_less(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP-1]);
-              --SP; break;
+            --SP;
+            break;
 
           case cGreaterOrEq:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_lessOrEq(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP-1]);
-              --SP; break;
+            --SP;
+            break;
 
           case   cNot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_not(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_not(Stacki[Nbval*Size+SP]);
+            break;
 
           case cNotNot:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_notNot(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = fp_notNot(Stacki[Nbval*Size+SP]);
+            break;
 
           case   cAnd:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_and(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-              --SP; break;
+            --SP;
+            break;
 
           case    cOr:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_or(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-              --SP; break;
+            --SP;
+            break;
 
 // Degrees-radians conversion:
           case   cDeg:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = RadiansToDegrees(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = RadiansToDegrees(Stacki[Nbval*Size+SP]);
+            break;
           case   cRad:
             for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = DegreesToRadians(Stacki[Nbval*Size+SP]); break;
+                Stacki[Nbval*Size+SP] = DegreesToRadians(Stacki[Nbval*Size+SP]);
+            break;
 
 // User-defined function calls:
           case cFCall:
@@ -3456,10 +3494,12 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 
           case cAbsNot:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP] = fp_absNot(Stacki[Nbval*Size+SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_absNot(Stacki[Nbval*Size+SP]);
+            break;
           case cAbsNotNot:
               for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP] = fp_absNotNot(Stacki[Nbval*Size+SP]); break;
+                  Stacki[Nbval*Size+SP] = fp_absNotNot(Stacki[Nbval*Size+SP]);
+            break;
           case cAbsAnd:
               for(Nbval=0; Nbval<NbStack; Nbval++)
                   Stacki[Nbval*Size+SP-1] = fp_absAnd(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
@@ -3469,12 +3509,12 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   Stacki[Nbval*Size+SP-1] = fp_absOr(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
               --SP; break;
           case cAbsIf:
-        {
-            bool valid = fp_absTruth(Stacki[SP]);
+            {
+                bool valid = fp_absTruth(Stacki[SP]);
 
-            for(Nbval=1; Nbval<NbStack; Nbval++)
-                if(valid != fp_absTruth(Stacki[Nbval*Size+SP]))
-                    { mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(IF_FUNCT_ERROR); }
+                for(Nbval=1; Nbval<NbStack; Nbval++)
+                    if(valid != fp_absTruth(Stacki[Nbval*Size+SP]))
+                        { mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(IF_FUNCT_ERROR); }
 
                 if(valid)
                     IP += 2;
@@ -3485,8 +3525,8 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                     DP = buf[1];
                 }
             }
-            SP--;    break;
-
+            SP--;
+            break;
           case   cDup:
             for(Nbval=0; Nbval<NbStack; Nbval++)
                 Stacki[Nbval*Size+SP+1] = Stacki[Nbval*Size+SP];
