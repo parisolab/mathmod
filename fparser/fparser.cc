@@ -3631,6 +3631,12 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                     return IF_FUNCT_ERROR;
                 }
 
+                if (int(rest) == VAR_OVERFLOW)
+                {
+                    mData->mEvalErrorType = VAR_OVERFLOW;
+                    return VAR_OVERFLOW;
+                }
+
                 for(Nbval=0; Nbval<NbStack; Nbval++)
                 {
                   Stacki[Nbval*Size+SP - (int(params)-1)] = res[Nbval];
