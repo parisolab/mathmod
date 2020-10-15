@@ -3288,7 +3288,10 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               {
                   const Value_t c = fp_cos(Stacki[Nbval*Size+SP]);
                   if(c == Value_t(0))
-                  { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
+                  {
+                      mData->mEvalErrorType=DIVISION_BY_ZERO;
+                      return Value_t(DIVISION_BY_ZERO);
+                  }
                   Stacki[Nbval*Size+SP] = Value_t(1)/c;
               }
               break;
@@ -3307,8 +3310,11 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             {
               if(IsComplexType<Value_t>::result == false &&
                  Stacki[Nbval*Size+SP] < Value_t(0))
-              { mData->mEvalErrorType=2; return Value_t(0); }
-                  Stacki[Nbval*Size+SP] = fp_sqrt(Stacki[Nbval*Size+SP]);
+              {
+                  mData->mEvalErrorType=2;
+                  return Value_t(0);
+              }
+              Stacki[Nbval*Size+SP] = fp_sqrt(Stacki[Nbval*Size+SP]);
             }
             break;
 
@@ -3330,7 +3336,6 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                 Stacki[Nbval*Size+SP] = immed[DP];
             DP++;
             break;
-
           case  cJump:
               {
                   const unsigned* buf = &byteCode[IP+1];
@@ -3338,7 +3343,6 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   DP = buf[1];
                   break;
               }
-
 // Operators:
           case   cNeg:
             for(Nbval=0; Nbval<NbStack; Nbval++)
@@ -3363,33 +3367,35 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
               if(Stacki[Nbval*Size+SP] == Value_t(0))
-              { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
+              {
+                  mData->mEvalErrorType=DIVISION_BY_ZERO;
+                  return Value_t(DIVISION_BY_ZERO);
+              }
               Stacki[Nbval*Size+SP-1] /= Stacki[Nbval*Size+SP];
             }
             --SP; break;
-
           case   cMod:
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
               if(Stacki[Nbval*Size+SP] == Value_t(0))
-              { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(DIVISION_BY_ZERO); }
+              {
+                  mData->mEvalErrorType=DIVISION_BY_ZERO;
+                  return Value_t(DIVISION_BY_ZERO);
+              }
               Stacki[Nbval*Size+SP-1] = fp_mod(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             }
             --SP;
             break;
-
           case cEqual:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_equal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             --SP;
             break;
-
           case cNEqual:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_nequal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             --SP;
             break;
-
           case  cLess:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP-1] = fp_less(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
