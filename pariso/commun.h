@@ -87,7 +87,7 @@ enum EvalErrorType
     ARC_TRIGONOMETRIC_FUNCT_ERROR,
     IF_FUNCT_ERROR,
     EVAL_NO_ERROR,
-    Var_OVERFLOW
+    VAR_OVERFLOW
 };
 
 enum ScriptErrorType

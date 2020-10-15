@@ -771,7 +771,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     for(uint l=0; l<nbstack; l++)
                         Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*4]));
                 }
-                else if( abs(res - DIVISION_BY_ZERO) == 0.0 || abs(res - Var_OVERFLOW) == 0.0)
+                else if( abs(res - DIVISION_BY_ZERO) == 0.0 || abs(res - VAR_OVERFLOW) == 0.0)
                 {
                     StopCalculations = true;
                 }
