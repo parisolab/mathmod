@@ -2786,6 +2786,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             Stack[SP-1]  = 1.0;
             --SP;
             break;
+
           case cCsd:
             if((stt= Stack[SP]) >=VarSize || stt <0)
             {
@@ -2794,34 +2795,53 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             }
             Stack[SP] = StackSave[stt];
             break;
+
           case  cTrunc:
-            Stack[SP] = fp_trunc(Stack[SP]); break;
+            Stack[SP] = fp_trunc(Stack[SP]);
+            break;
 
           case   cSec:
           {
             const Value_t c = fp_cos(Stack[SP]);
             if(c == Value_t(0))
-            { mData->mEvalErrorType=1; return Value_t(0); }
-            Stack[SP] = Value_t(1)/c; break;
+            {
+                mData->mEvalErrorType=1;
+                return Value_t(0);
+            }
+            Stack[SP] = Value_t(1)/c;
+            break;
           }
 
-          case   cSin: Stack[SP] = fp_sin(Stack[SP]); break;
+          case   cSin:
+            Stack[SP] = fp_sin(Stack[SP]);
+            break;
 
-          case  cSinh: Stack[SP] = fp_sinh(Stack[SP]); break;
+          case  cSinh:
+            Stack[SP] = fp_sinh(Stack[SP]);
+            break;
 
           case  cSqrt:
-              if(IsComplexType<Value_t>::result == false &&
-                 Stack[SP] < Value_t(0))
-              { mData->mEvalErrorType=2; return Value_t(0); }
-              Stack[SP] = fp_sqrt(Stack[SP]); break;
+            if(IsComplexType<Value_t>::result == false &&
+             Stack[SP] < Value_t(0))
+            {
+              mData->mEvalErrorType=2;
+              return Value_t(0);
+            }
+            Stack[SP] = fp_sqrt(Stack[SP]);
+            break;
 
-          case   cTan: Stack[SP] = fp_tan(Stack[SP]); break;
+          case   cTan:
+            Stack[SP] = fp_tan(Stack[SP]);
+            break;
 
-          case  cTanh: Stack[SP] = fp_tanh(Stack[SP]); break;
-
+          case  cTanh:
+            Stack[SP] = fp_tanh(Stack[SP]);
+            break;
 
 // Misc:
-          case cImmed: Stack[++SP] = immed[DP++]; break;
+          case cImmed:
+            Stack[++SP] = immed[DP++];
+            break;
 
           case  cJump:
               {
@@ -2832,8 +2852,13 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
               }
 
 // Operators:
-          case   cNeg: Stack[SP] = -Stack[SP]; break;
-          case   cAdd: Stack[SP-1] += Stack[SP]; --SP; break;
+          case   cNeg:
+            Stack[SP] = -Stack[SP];
+            break;
+          case   cAdd:
+            Stack[SP-1] += Stack[SP];
+            --SP;
+            break;
           case   cSub: Stack[SP-1] -= Stack[SP]; --SP; break;
           case   cMul: Stack[SP-1] *= Stack[SP]; --SP; break;
 
@@ -2921,7 +2946,6 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                   }
                   break;
               }
-
 
           case   cFetch:
               {
