@@ -3258,7 +3258,8 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
           {
               if((stt= NbStack*(Stacki[Nbval*Size+SP-1])+Nbval) >= VarSize)
               {
-                  mData->mEvalErrorType=VAR_OVERFLOW; return Value_t(VAR_OVERFLOW);
+                  mData->mEvalErrorType=VAR_OVERFLOW;
+                  return Value_t(VAR_OVERFLOW);
               }
               StackSave[stt] = Stacki[Nbval*Size+SP];
               Stacki[Nbval*Size+SP-1] = 1.0;
@@ -3270,7 +3271,8 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
           {
               if((stt= NbStack*(Stacki[Nbval*Size+SP])+Nbval) >= VarSize)
               {
-                  mData->mEvalErrorType=VAR_OVERFLOW; return Value_t(VAR_OVERFLOW);
+                  mData->mEvalErrorType=VAR_OVERFLOW;
+                  return Value_t(VAR_OVERFLOW);
               }
               Stacki[Nbval*Size+SP] = StackSave[stt];
           }
