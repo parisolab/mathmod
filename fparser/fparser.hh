@@ -48,7 +48,8 @@ class FunctionParserBase
         EXP_FUNCT_ERROR,
         ARC_TRIGONOMETRIC_FUNCT_ERROR,
         IF_FUNCT_ERROR,
-        EVAL_NO_ERROR
+        EVAL_NO_ERROR,
+        VAR_OVERFLOW
     };
 
     typedef Value_t value_type;

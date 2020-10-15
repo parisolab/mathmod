@@ -3037,7 +3037,8 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     std::vector<Value_t>& Stacki = mData->mStacki;
     std::vector<Value_t>& StackSave = mData->mStackSave;
     int Size = Stack.size();
-    int varSize = StackSave.size();
+    int VarSize = StackSave.size();
+    int stt;
 
     for(IP=0; IP<byteCodeSize; ++IP)
     {
@@ -3255,14 +3256,24 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
         case cPsh:
           for(Nbval=0; Nbval<NbStack; Nbval++)
           {
-              StackSave[NbStack*(Stacki[Nbval*Size+SP-1])+Nbval] = Stacki[Nbval*Size+SP];
+              if((stt= NbStack*(Stacki[Nbval*Size+SP-1])+Nbval) >= VarSize)
+              {
+                  mData->mEvalErrorType=VAR_OVERFLOW; return Value_t(VAR_OVERFLOW);
+              }
+              StackSave[stt] = Stacki[Nbval*Size+SP];
               Stacki[Nbval*Size+SP-1] = 1.0;
           }
           --SP;
           break;
         case cCsd:
           for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = StackSave[NbStack*(Stacki[Nbval*Size+SP])+Nbval];
+          {
+              if((stt= NbStack*(Stacki[Nbval*Size+SP])+Nbval) >= VarSize)
+              {
+                  mData->mEvalErrorType=VAR_OVERFLOW; return Value_t(VAR_OVERFLOW);
+              }
+              Stacki[Nbval*Size+SP] = StackSave[stt];
+          }
           break;
 
           case  cTrunc:
