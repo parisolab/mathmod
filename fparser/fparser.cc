@@ -2614,8 +2614,9 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
     unsigned IP, DP=0;
     int SP=-1;
     int stt =0;
-
     std::vector<Value_t>& StackSave = mData->mStackSave;
+    int VarSize = StackSave.size();
+
 #ifdef FP_USE_THREAD_SAFE_EVAL
     /* If Eval() may be called by multiple threads simultaneously,
      * then Eval() must allocate its own stack.
@@ -2776,7 +2777,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             break;
 
           case cPsh:
-            if((stt= Stack[SP-1] || stt <0))
+            if((stt= Stack[SP-1]) >=VarSize || stt <0)
             {
                 mData->mEvalErrorType=VAR_OVERFLOW;
                 return Value_t(VAR_OVERFLOW);
@@ -2786,7 +2787,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             --SP;
             break;
           case cCsd:
-            if((stt= Stack[SP] || stt <0))
+            if((stt= Stack[SP]) >=VarSize || stt <0)
             {
                 mData->mEvalErrorType=VAR_OVERFLOW;
                 return Value_t(VAR_OVERFLOW);
