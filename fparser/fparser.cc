@@ -3037,6 +3037,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     std::vector<Value_t>& Stacki = mData->mStacki;
     std::vector<Value_t>& StackSave = mData->mStackSave;
     int Size = Stack.size();
+    int varSize = StackSave.size();
 
     for(IP=0; IP<byteCodeSize; ++IP)
     {
@@ -3251,15 +3252,14 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                   Stacki[Nbval*Size+SP-1] = fp_pow(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
             }
               --SP; break;
-
         case cPsh:
           for(Nbval=0; Nbval<NbStack; Nbval++)
           {
               StackSave[NbStack*(Stacki[Nbval*Size+SP-1])+Nbval] = Stacki[Nbval*Size+SP];
               Stacki[Nbval*Size+SP-1] = 1.0;
           }
-                     --SP; break;
-
+          --SP;
+          break;
         case cCsd:
           for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP] = StackSave[NbStack*(Stacki[Nbval*Size+SP])+Nbval];
