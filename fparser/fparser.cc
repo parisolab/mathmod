@@ -931,7 +931,6 @@ void FunctionParserBase<Value_t>::ForceDeepCopy()
     CopyOnWrite2();
 }
 
-
 //=========================================================================
 // Epsilon
 //=========================================================================
@@ -947,13 +946,11 @@ void FunctionParserBase<Value_t>::setEpsilon(Value_t value)
     Epsilon<Value_t>::value = value;
 }
 
-
 //=========================================================================
 // User-defined identifier addition functions
 //=========================================================================
 template<typename Value_t>
-bool FunctionParserBase<Value_t>::AddConstant(const std::string& name,
-                                              Value_t value)
+bool FunctionParserBase<Value_t>::AddConstant(const std::string& name, Value_t value)
 {
     if(!containsOnlyValidIdentifierChars<Value_t>(name)) return false;
 
@@ -1085,7 +1082,6 @@ bool FunctionParserBase<Value_t>::RemoveIdentifier(const std::string& name)
     }
     return false;
 }
-
 
 //=========================================================================
 // Function parsing
@@ -1294,7 +1290,6 @@ int FunctionParserBase<Value_t>::EvalError() const
     return mData->mEvalErrorType;
 }
 
-
 // ---------------------------------------------------------------------------
 // Parse variables
 // ---------------------------------------------------------------------------
@@ -1318,12 +1313,9 @@ bool FunctionParserBase<Value_t>::ParseVariables
         else ++i;
     }
     mData->mVariablesString = inputVarString;
-
     const std::string& vars = mData->mVariablesString;
     const unsigned len = unsigned(vars.size());
-
     unsigned varNumber = VarBegin;
-
     const char* beginPtr = vars.c_str();
     const char* finalPtr = beginPtr + len;
     while(beginPtr < finalPtr)
@@ -1334,19 +1326,15 @@ bool FunctionParserBase<Value_t>::ParseVariables
         const char* endPtr = beginPtr + nameLength;
         SkipSpace(endPtr);
         if(endPtr != finalPtr && *endPtr != ',') return false;
-
         std::pair<NamePtr, NameData<Value_t> > newName
             (NamePtr(beginPtr, nameLength),
              NameData<Value_t>(NameData<Value_t>::VARIABLE, varNumber++));
-
         if(!addNewNameData(mData->mNamePtrs, newName, true))
         {
             return false;
         }
-
         beginPtr = endPtr + 1;
     }
-
     mData->mVariablesAmount = varNumber - VarBegin;
     return true;
 }
