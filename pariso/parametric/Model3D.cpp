@@ -1669,26 +1669,49 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             if(StopCalculations)
                 return;
             res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
+            if(int(res) == VAR_OVERFLOW)
+            {
+                StopCalculations=true;
+                return;
+            }
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
                     ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
             }
+
             res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
+            if(int(res) == VAR_OVERFLOW)
+            {
+                StopCalculations=true;
+                return;
+            }
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
                     ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
             }
+
             res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
+            if(int(res) == VAR_OVERFLOW)
+            {
+                StopCalculations=true;
+                return;
+            }
             if(int(res) == IF_FUNCT_ERROR)
             {
                 for(uint l=0; l<nbstack; l++)
                     ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
             }
+
             if(param4D == 1)
             {
                 res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
+                if(int(res) == VAR_OVERFLOW)
+                {
+                    StopCalculations=true;
+                    return;
+                }
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
