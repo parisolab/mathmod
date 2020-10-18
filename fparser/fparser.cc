@@ -2638,24 +2638,38 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
           case   cAbs: Stack[SP] = fp_abs(Stack[SP]); break;
 
           case  cAcos:
-              if(IsComplexType<Value_t>::result == false
-              && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
-              { mData->mEvalErrorType=4; return Value_t(0); }
-              Stack[SP] = fp_acos(Stack[SP]); break;
+                if(IsComplexType<Value_t>::result == false
+                && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
+                {
+                  mData->mEvalErrorType=4;
+                  return Value_t(0);
+                }
+                Stack[SP] = fp_acos(Stack[SP]);
+                break;
 
           case cAcosh:
-              if(IsComplexType<Value_t>::result == false
-              && Stack[SP] < Value_t(1))
-              { mData->mEvalErrorType=4; return Value_t(0); }
-              Stack[SP] = fp_acosh(Stack[SP]); break;
+            if(IsComplexType<Value_t>::result == false
+            && Stack[SP] < Value_t(1))
+            {
+              mData->mEvalErrorType=4;
+              return Value_t(0);
+            }
+            Stack[SP] = fp_acosh(Stack[SP]);
+            break;
 
           case  cAsin:
-              if(IsComplexType<Value_t>::result == false
-              && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
-              { mData->mEvalErrorType=4; return Value_t(0); }
-              Stack[SP] = fp_asin(Stack[SP]); break;
+            if(IsComplexType<Value_t>::result == false
+            && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
+            {
+              mData->mEvalErrorType=4;
+              return Value_t(0);
+            }
+            Stack[SP] = fp_asin(Stack[SP]);
+            break;
 
-          case cAsinh: Stack[SP] = fp_asinh(Stack[SP]); break;
+          case cAsinh:
+            Stack[SP] = fp_asinh(Stack[SP]);
+            break;
 
           case  cAtan: Stack[SP] = fp_atan(Stack[SP]); break;
 
