@@ -2863,30 +2863,24 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             break;
           case   cSub: Stack[SP-1] -= Stack[SP]; --SP; break;
           case   cMul: Stack[SP-1] *= Stack[SP]; --SP; break;
-
           case   cDiv:
               if(Stack[SP] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
               Stack[SP-1] /= Stack[SP]; --SP; break;
-
           case   cMod:
               if(Stack[SP] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
               Stack[SP-1] = fp_mod(Stack[SP-1], Stack[SP]);
               --SP; break;
-
           case cEqual:
               Stack[SP-1] = fp_equal(Stack[SP-1], Stack[SP]);
               --SP; break;
-
           case cNEqual:
               Stack[SP-1] = fp_nequal(Stack[SP-1], Stack[SP]);
               --SP; break;
-
           case  cLess:
               Stack[SP-1] = fp_less(Stack[SP-1], Stack[SP]);
               --SP; break;
-
           case  cLessOrEq:
               Stack[SP-1] = fp_lessOrEq(Stack[SP-1], Stack[SP]);
               --SP; break;
@@ -2898,19 +2892,14 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
           case cGreaterOrEq:
               Stack[SP-1] = fp_lessOrEq(Stack[SP], Stack[SP-1]);
               --SP; break;
-
           case   cNot: Stack[SP] = fp_not(Stack[SP]); break;
-
           case cNotNot: Stack[SP] = fp_notNot(Stack[SP]); break;
-
           case   cAnd:
               Stack[SP-1] = fp_and(Stack[SP-1], Stack[SP]);
               --SP; break;
-
           case    cOr:
               Stack[SP-1] = fp_or(Stack[SP-1], Stack[SP]);
               --SP; break;
-
 // Degrees-radians conversion:
           case   cDeg: Stack[SP] = RadiansToDegrees(Stack[SP]); break;
           case   cRad: Stack[SP] = DegreesToRadians(Stack[SP]); break;
@@ -2929,7 +2918,6 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                   Stack[SP] = retVal;
                   break;
               }
-
           case cPCall:
               {
                   unsigned index = byteCode[++IP];
@@ -2948,14 +2936,12 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                   }
                   break;
               }
-
           case   cFetch:
               {
                   unsigned stackOffs = byteCode[++IP];
                   Stack[SP+1] = Stack[stackOffs]; ++SP;
                   break;
               }
-
 #ifdef FP_SUPPORT_OPTIMIZER
           case   cPopNMov:
               {
