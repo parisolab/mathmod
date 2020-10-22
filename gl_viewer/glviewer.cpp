@@ -26,14 +26,12 @@ static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
-
 static GLfloat difX, difY, difZ;
 
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
     double tmp, val[6];
     uint Jprime;
-
     if (type == 1)
     {
         LocalScene.componentsinfos.ThereisRGBA[0] = true;
