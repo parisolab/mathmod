@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "parisoobject.h"
 
-
 MasterThread::MasterThread() {}
 MasterThread::~MasterThread() {}
 WorkerThread::WorkerThread() {}
