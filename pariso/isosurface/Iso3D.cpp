@@ -29,11 +29,9 @@ static std::vector<float> NormOriginaltmpVector;
 uint NbTriangleIsoSurface,NbPointIsoMap;
 uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
-
 std::vector<float> NormVertexTabVector;
 std::vector<uint>  IndexPolyTabMinVector;
 std::vector<uint>  IndexPolyTabVector;
-
 static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
 static QElapsedTimer times;
