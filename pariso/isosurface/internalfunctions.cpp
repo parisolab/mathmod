@@ -70,7 +70,6 @@ double fmesh(const double* pp) // 40
 
     for(int i=0; i<10; i++)
         p[i] = pp[i];
-
     th = PI1 / p[3];
     ph = PI1/ p[4];
     r = fmod(p[0], p[3] * 2);
@@ -79,22 +78,18 @@ double fmesh(const double* pp) // 40
     r = fabs(r - p[3]) * p[5];
     r2 = (p[1] - cos(p[2] * ph) * p[6]) * p[7];
     temp = -sqrt(r2 * r2 + r * r);
-
     r = fmod(p[0] - p[3], p[3] * 2);
     if (r < 0)
         r += p[3] * 2;
     r = fabs(r - p[3]) * p[5];
     r2 = (p[1] + cos(p[2] * ph) * p[6]) * p[7];
-
     temp =   maxim(-sqrt(r2 * r2 + r * r), temp);
-
     r = fmod(p[2], p[4] * 2);
     if (r < 0)
         r += p[4] * 2;
     r = fabs(r - p[4]) * p[5];
     r2 = (p[1] + cos(p[0] * th) * p[6]) * p[7];
     temp = maxim(-sqrt(r2 * r2 + r * r), temp);
-
     r = fmod(p[2] - p[4], p[4] * 2);
     if (r < 0)
         r += p[4] * 2;
