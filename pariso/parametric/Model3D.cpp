@@ -1759,13 +1759,11 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->ParisoTriangle = origin->ParisoTriangle;
     copy->ParisoVertex          = origin->ParisoVertex;
     copy->NbComponents    = origin->NbComponents;
-
     copy->ParisoCurrentComponentIndex = origin->ParisoCurrentComponentIndex;
     copy->ParisoNbComponents          = origin->ParisoNbComponents;
     copy->Interleave                  = origin->Interleave;
     copy->pariso                      = origin->pariso;
     copy->updateviewer                = origin->updateviewer;
-
     copy->ThereisCND                  = origin->ThereisCND;
     copy->ParisoCondition             = origin->ParisoCondition;
     copy->ThereisRGBA                 = origin->ThereisRGBA;
@@ -1773,7 +1771,6 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->NbTrianglesNoCND            = origin->NbTrianglesNoCND;
     copy->NbTrianglesNotVerifyCND     = origin->NbTrianglesNotVerifyCND;
     copy->NbTrianglesBorderCND        = origin->NbTrianglesBorderCND;
-
     for(int i=0; i<2; i++)
     {
         copy->NoiseParam[i]  = origin->NoiseParam[i];
@@ -1995,7 +1992,6 @@ void  Par3D::calcul_Norm(uint idx)
             b4  = sqrt((NormVertexTabVector[i*deplacement+j*10+idx+4]*NormVertexTabVector[i*deplacement+j*10+idx+4]) +
                        (NormVertexTabVector[i*deplacement+j*10+idx+5]*NormVertexTabVector[i*deplacement+j*10+idx+5]) +
                        (NormVertexTabVector[i*deplacement+j*10+idx+6]*NormVertexTabVector[i*deplacement+j*10+idx+6]));
-
             if( b4 < float(0.000001))  b4 = float(0.000001);
 //Normalise:
             NormVertexTabVector[i*deplacement +j*10+idx+4]/=b4;
