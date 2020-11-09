@@ -3004,31 +3004,24 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                   DP = buf[1];
               }
               break;
-
           case   cDup: Stack[SP+1] = Stack[SP]; ++SP; break;
-
           case   cInv:
               if(Stack[SP] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
               Stack[SP] = Value_t(1)/Stack[SP];
               break;
-
           case   cSqr:
               Stack[SP] = Stack[SP]*Stack[SP];
               break;
-
           case   cRDiv:
               if(Stack[SP-1] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
               Stack[SP-1] = Stack[SP] / Stack[SP-1]; --SP; break;
-
           case   cRSub: Stack[SP-1] = Stack[SP] - Stack[SP-1]; --SP; break;
-
           case   cRSqrt:
               if(Stack[SP] == Value_t(0))
               { mData->mEvalErrorType=1; return Value_t(0); }
               Stack[SP] = Value_t(1) / fp_sqrt(Stack[SP]); break;
-
 #ifdef FP_SUPPORT_COMPLEX_NUMBERS
           case   cReal: Stack[SP] = fp_real(Stack[SP]); break;
           case   cImag: Stack[SP] = fp_imag(Stack[SP]); break;
@@ -3039,13 +3032,11 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
               --SP; break;
 #endif
 
-
 // Variables:
           default:
               Stack[++SP] = Vars[byteCode[IP]-VarBegin];
         }
     }
-
     mData->mEvalErrorType=0;
     return Stack[SP];
 }
@@ -3066,7 +3057,6 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     const Value_t* const immed = mData->mImmed.empty() ? 0 : &(mData->mImmed[0]);
     const unsigned byteCodeSize = unsigned(mData->mByteCode.size());
     unsigned IP, DP=0, Nbval;
-
     /* No thread safety, so use a global stack. */
     std::vector<Value_t>& Stack  = mData->mStack;
     std::vector<Value_t>& Stacki = mData->mStacki;
@@ -3084,12 +3074,10 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP] = fp_cos(Stacki[Nbval*Size+SP]);
             break;
-
           case   cAbs:
             for(Nbval=0; Nbval<NbStack; Nbval++)
               Stacki[Nbval*Size+SP] = fp_abs(Stacki[Nbval*Size+SP]);
             break;
-
           case  cAcos:
             for(Nbval=0; Nbval<NbStack; Nbval++)
             {
