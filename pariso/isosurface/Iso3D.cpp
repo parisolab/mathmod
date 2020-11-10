@@ -42,7 +42,6 @@ double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
 }
-
 extern double TurbulenceWorley(const double *p)
 {
     return double (
@@ -55,7 +54,6 @@ extern double TurbulenceWorley(const double *p)
                    int (p[5]))
            );
 }
-
 double TurbulencePerlin(const double *p)
 {
     return double (
@@ -67,7 +65,6 @@ double TurbulencePerlin(const double *p)
                    float (p[4]),
                    float (p[5])));
 }
-
 double MarblePerlin(const double *p)
 {
     return double (
@@ -77,32 +74,26 @@ double MarblePerlin(const double *p)
                    float (p[2]),
                    int (p[3])));
 }
-
 void IsoWorkerThread::run()
 {
     IsoCompute(CurrentComponent);
 }
-
 void Iso3D::run()
 {
     BuildIso();
 }
-
 void IsoWorkerThread::emitMySignal()
 {
     emit mySignal(signalVal);
 }
-
 void Iso3D::emitErrorSignal()
 {
     emit ErrorSignal(int(messageerror));
 }
-
 void Iso3D::emitUpdateMessageSignal()
 {
     emit UpdateMessageSignal(message);
 }
-
 void Iso3D::BuildIso()
 {
     IsoBuild(
@@ -114,7 +105,6 @@ void Iso3D::BuildIso()
         &(localScene->NbPolygnNbVertexPtMin),
         &(localScene->componentsinfos));
 }
-
 IsoMasterThread::IsoMasterThread()
 {
     ParisoCondition = -1;
@@ -131,13 +121,11 @@ IsoMasterThread::IsoMasterThread()
     Cstparser.AddConstant("pi", PI);
     componentsNumber = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
 }
-
 void IsoMasterThread::IsoMasterTable()
 {
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
-
 IsoMasterThread::~IsoMasterThread()
 {
     if(ParsersAllocated)
@@ -175,7 +163,6 @@ IsoMasterThread::~IsoMasterThread()
     Functs.clear();
     FunctNames.clear();
 }
-
 IsoWorkerThread::~IsoWorkerThread()
 {
     if(ParsersAllocated)
@@ -185,7 +172,6 @@ IsoWorkerThread::~IsoWorkerThread()
         ParsersAllocated = false;
     }
 }
-
 IsoWorkerThread::IsoWorkerThread()
 {
     XYZgrid = 40;
@@ -196,7 +182,6 @@ IsoWorkerThread::IsoWorkerThread()
     ParsersAllocated = false;
     StopCalculations = false;
 }
-
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -207,7 +192,6 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].GridVal = masterthread->GridVal;
     }
 }
-
 void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
     uint OldWorkerThreadsNumber = WorkerThreadsNumber;
@@ -225,7 +209,6 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     workerthreads = workerthreadstmp;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
 }
-
 ErrorMessage  Iso3D::IsoMorph()
 {
     ErrorMessage err = masterthread->ParserIso();
@@ -233,7 +216,6 @@ ErrorMessage  Iso3D::IsoMorph()
         ThreadParsersCopy();
     return err;
 }
-
 ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -258,7 +240,6 @@ ErrorMessage Iso3D::ThreadParsersCopy()
 
     return(parse_expression2());
 }
-
 ErrorMessage  Iso3D::parse_expression2()
 {
     ErrorMessage NodError;
@@ -363,7 +344,6 @@ ErrorMessage  Iso3D::parse_expression2()
     }
     return NodError;
 }
-
 Iso3D::Iso3D( uint nbThreads,
               uint nbGrid,
               uint factX,
@@ -394,7 +374,6 @@ Iso3D::Iso3D( uint nbThreads,
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
-
 uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
 {
     std::string tmp, tmp2,tmp3;
@@ -461,7 +440,6 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
     }
     return Nb_variables;
 }
-
 uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
 {
     std::string tmp, tmp2;
@@ -644,7 +622,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     }
     return 0;
 }
-
 void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -682,7 +659,6 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
         }
     }
 }
-
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     double* vals;
@@ -807,7 +783,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     delete[] vals;
     delete[] Res;
 }
-
 void Iso3D::ConstructIsoNormale(uint idx)
 {
     float val1, val2, val3, val4, val5, val6,
@@ -857,7 +832,6 @@ void Iso3D::ConstructIsoNormale(uint idx)
 
     }
 }
-
 void Iso3D::SaveIsoGLMap(uint indx)
 {
     uint IndexFirstPoint, IndexSecondPoint, IndexThirdPoint, ThreeTimesI;
@@ -892,7 +866,6 @@ void Iso3D::SaveIsoGLMap(uint indx)
         NormVertexTabVector[IndexThirdPoint+1]  += NormOriginaltmpVector[ThreeTimesI+1];
         NormVertexTabVector[IndexThirdPoint+2]  += NormOriginaltmpVector[ThreeTimesI+2];
     }
-
 /// Normalisation
     uint idx;
     for (uint i=0; i < NbPointIsoMap  ; i++)
@@ -907,7 +880,6 @@ void Iso3D::SaveIsoGLMap(uint indx)
         NormVertexTabVector[idx+2] /= float(scalar);
     }
 }
-
 ErrorMessage IsoMasterThread::ParserIso()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -968,8 +940,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         FunctSize =0;
     }
-
-
     if(rgbtnotnull)
     {
         RgbtSize = HowManyVariables(Rgbt, 3);
@@ -992,7 +962,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         RgbtSize =0;
     }
-
     //For Solid Texture :
     if(vrgbtnotnull)
     {
@@ -1001,14 +970,12 @@ ErrorMessage IsoMasterThread::ParserIso()
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
         }
-
         GradientParser->AddConstant("Lacunarity", Lacunarity);
         GradientParser->AddConstant("Gain", Gain);
         GradientParser->AddConstant("Octaves", Octaves);
         GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
         GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
         GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
-
         for(uint i=0; i<VRgbtSize; i++)
         {
             for(uint j=0; j<ConstSize; j++)
@@ -1027,7 +994,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         VRgbtSize =0;
     }
-
     if(Noise != "")
     {
         for(uint j=0; j<ConstSize; j++)
@@ -1042,7 +1008,6 @@ ErrorMessage IsoMasterThread::ParserIso()
             NoiseParser->AddConstant(SliderNames[k], SliderValues[k]);
         }
     }
-
     //ImplicitFunction is composed of more than one isosurface:
     HowManyIsosurface(ImplicitFunction, 0);
     HowManyIsosurface(XlimitInf, 1);
@@ -1090,7 +1055,6 @@ ErrorMessage IsoMasterThread::ParserIso()
             zInfParser[i].AddConstant(SliderNames[k], SliderValues[k]);
         }
     }
-
     // Add defined functions :
     if(rgbtnotnull)
         for(int i=0; i<4; i++)
@@ -1101,7 +1065,6 @@ ErrorMessage IsoMasterThread::ParserIso()
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
             }
-
     // Add defined functions :
     if(vrgbtnotnull)
     {
@@ -1122,11 +1085,8 @@ ErrorMessage IsoMasterThread::ParserIso()
                 VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
             }
     }
-
-
     //delete NoiseFunction;
     //NoiseFunction = new CellNoise();
-
     for(uint i=0; i<componentsNumber; i++)
     {
         for(uint j=0; j<FunctSize; j++)
@@ -1145,15 +1105,12 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
-
     }
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
     NoiseParser->AddFunction("MarbleP",MarblePerlin, 4);
-
     return ParseExpression();
 }
-
 ErrorMessage IsoMasterThread::ParseExpression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -1163,9 +1120,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
     {
         stepMorph += pace;
     }
-
     vals[3]          = stepMorph;
-
     // Parse
     if(rgbtnotnull && RgbtSize == 4)
         for(uint i=0; i<RgbtSize; i++)
@@ -1174,7 +1129,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
                 stdError.strError = Rgbts[i];
                 return stdError;
             }
-
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
