@@ -1137,7 +1137,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
             stdError.strError = Gradient;
             return stdError;
         }
-
         for(uint i=0; i<VRgbtSize; i++)
             if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
             {
@@ -1145,14 +1144,12 @@ ErrorMessage IsoMasterThread::ParseExpression()
                 return stdError;
             }
     }
-
     if(Noise != "")
         if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t")) >= 0)
         {
             stdError.strError = Noise;
             return stdError;
         }
-
     for(uint i=0; i<componentsNumber; i++)
     {
         if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,"x,y,z,t")) >= 0)
@@ -1168,7 +1165,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
                 return stdError;
             }
         }
-
         if ((stdError.iErrorIndex = xSupParser[i].Parse(ImplicitStructs[i].xmax, "x,y,z,t")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].xmax;
@@ -1200,7 +1196,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
             return stdError;
         }
     }
-
     for(uint IsoIndex=0; IsoIndex<componentsNumber; IsoIndex++)
     {
         if(gridnotnull)
@@ -1221,7 +1216,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
     }
     return stdError;
 }
-
 void IsoMasterThread::DeleteMasterParsers()
 {
     if(ParsersAllocated)
@@ -1243,7 +1237,6 @@ void IsoMasterThread::DeleteMasterParsers()
         delete NoiseParser;
         ParsersAllocated = false;
     }
-
     ImplicitStructs.clear();
     xLocal2.clear();
     yLocal2.clear();
@@ -1256,17 +1249,13 @@ void IsoMasterThread::DeleteMasterParsers()
     Consts.clear();
     ConstNames.clear();
     ConstValues.clear();
-
     Rgbts.clear();
     RgbtNames.clear();
-
     VRgbts.clear();
     VRgbtNames.clear();
-
     Functs.clear();
     FunctNames.clear();
 }
-
 void IsoWorkerThread::DeleteWorkerParsers()
 {
     if(ParsersAllocated)
@@ -1276,7 +1265,6 @@ void IsoWorkerThread::DeleteWorkerParsers()
         ParsersAllocated = false;
     }
 }
-
 void IsoMasterThread::InitMasterParsers()
 {
     for(uint i=0; i<componentsNumber; i++)
@@ -1310,7 +1298,6 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         Fct[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
-
     for(uint i=0; i< RgbtSize; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
@@ -1321,7 +1308,6 @@ void IsoMasterThread::InitMasterParsers()
         RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
-
     for(uint i=0; i<VRgbtSize; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
@@ -1332,7 +1318,6 @@ void IsoMasterThread::InitMasterParsers()
         VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
     }
-
     GradientParser->AddConstant("pi", PI);
     GradientParser->AddConstant("Lacunarity", Lacunarity);
     GradientParser->AddConstant("Gain", Gain);
@@ -1341,7 +1326,6 @@ void IsoMasterThread::InitMasterParsers()
     GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
     GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
 }
-
 void IsoMasterThread::AllocateMasterParsers()
 {
     if(!ParsersAllocated)
