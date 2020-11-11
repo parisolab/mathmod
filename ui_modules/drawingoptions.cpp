@@ -4965,96 +4965,81 @@ void DrawingOptions::on_C16toolButton_clicked()
     CIndextoolButton_clicked(16);
 }
 
-// --------------------------
 void DrawingOptions::on_C15toolButton_clicked()
 {
     CIndextoolButton_clicked(15);
 }
 
-// --------------------------
 void DrawingOptions::on_C14toolButton_clicked()
 {
     CIndextoolButton_clicked(14);
 }
 
-// --------------------------
 void DrawingOptions::on_C13toolButton_clicked()
 {
     CIndextoolButton_clicked(13);
 }
 
-// --------------------------
 void DrawingOptions::on_C12toolButton_clicked()
 {
     CIndextoolButton_clicked(12);
 }
 
-// --------------------------
 void DrawingOptions::on_C11toolButton_clicked()
 {
     CIndextoolButton_clicked(11);
 }
 
-// --------------------------
 void DrawingOptions::on_C10toolButton_clicked()
 {
     CIndextoolButton_clicked(10);
 }
 
-// --------------------------
 void DrawingOptions::on_C9toolButton_clicked()
 {
     CIndextoolButton_clicked(9);
 }
 
-// --------------------------
 void DrawingOptions::on_C8toolButton_clicked()
 {
     CIndextoolButton_clicked(8);
 }
 
-// --------------------------
 void DrawingOptions::on_C7toolButton_clicked()
 {
     CIndextoolButton_clicked(7);
 }
 
-// --------------------------
 void DrawingOptions::on_C6toolButton_clicked()
 {
     CIndextoolButton_clicked(6);
 }
 
-// --------------------------
 void DrawingOptions::on_C5toolButton_clicked()
 {
     CIndextoolButton_clicked(5);
 }
 
-// --------------------------
 void DrawingOptions::on_C4toolButton_clicked()
 {
     CIndextoolButton_clicked(4);
 }
 
-// --------------------------
 void DrawingOptions::on_C3toolButton_clicked()
 {
     CIndextoolButton_clicked(3);
 }
 
-// --------------------------
 void DrawingOptions::on_C2toolButton_clicked()
 {
     CIndextoolButton_clicked(2);
 }
 
-// --------------------------
 void DrawingOptions::on_C1toolButton_clicked()
 {
     CIndextoolButton_clicked(1);
 }
-// --------------------------
+
 void DrawingOptions::update_slider_param()
 {
     int SliderIndex = sliderconf.currentSlider;
@@ -5094,7 +5079,6 @@ void DrawingOptions::update_slider_param()
     MathmodRef->ui.glWidget->LocalScene.slider = -1;
 }
 
-//-----------------------
 void DrawingOptions::on_AddSetButton_clicked()
 {
     QJsonArray array1, array2, array3, array4, array5;
@@ -5138,7 +5122,6 @@ void DrawingOptions::on_AddSetButton_clicked()
     DrawJsonModel(tmp);
 }
 
-//--------------------
 void DrawingOptions::on_CutSetButton_clicked()
 {
     int size2 = qlstPos.size();
@@ -5182,7 +5165,6 @@ void DrawingOptions::on_CutSetButton_clicked()
     }
 }
 
-//---------------------
 void DrawingOptions::on_AddParam_clicked()
 {
     addnewparam.ui.NameEdit->setText("ParamName");
@@ -5193,7 +5175,6 @@ void DrawingOptions::on_AddParam_clicked()
     addnewparam.show();
 }
 
-//---------------------
 void DrawingOptions::on_CutParam_clicked()
 {
     int index = ui.ParametersList->currentIndex();
@@ -5234,7 +5215,6 @@ void DrawingOptions::on_CutParam_clicked()
     }
 }
 
-//---------------------
 void DrawingOptions::add_new_param()
 {
     QJsonArray array2;
@@ -5283,20 +5263,17 @@ void DrawingOptions::add_new_param()
     DrawJsonModel(tmp);
 }
 
-//---------------------
 void DrawingOptions::update_infos_param(int index)
 {
     CIndextoolButton_clicked(index);
     sliderconf.currentSlider = index - 1;
 }
 
-//---------------------
 void DrawingOptions::on_actionFrames_triggered()
 {
     MathmodRef->frames_clicked();
 }
 
-//---------------------
 void DrawingOptions::SetSpecularValues(float *spec)
 {
     ui.red_Specular->blockSignals(true);
@@ -5316,7 +5293,6 @@ void DrawingOptions::SetSpecularValues(float *spec)
     ui.transparent_Specular->blockSignals(false);
 }
 
-//---------------------
 void DrawingOptions::SetThreadValues(int *thread)
 {
     ui.ThreadNumberScrollBar->blockSignals(true);
@@ -5330,14 +5306,13 @@ void DrawingOptions::SetThreadValues(int *thread)
     ui.ThreadNumberScrollBar->blockSignals(false);
 }
 
-//---------------------
 void DrawingOptions::SetShininessValue(int shin)
 {
     ui.ShininessScrollBar->blockSignals(true);
     ui.ShininessScrollBar->setSliderPosition(shin);
     ui.ShininessScrollBar->blockSignals(false);
 }
-//---------------------
+
 void DrawingOptions::on_red_Specular_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->redSpec(value);
@@ -5358,7 +5333,6 @@ void DrawingOptions::on_red_Specular_valueChanged(int value)
     MathmodRef->ui.glWidget->InitSpecularParameters();
 }
 
-//---------------------
 void DrawingOptions::on_green_Specular_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->greenSpec(value);
@@ -5379,7 +5353,6 @@ void DrawingOptions::on_green_Specular_valueChanged(int value)
     MathmodRef->ui.glWidget->InitSpecularParameters();
 }
 
-//---------------------
 void DrawingOptions::on_blue_Specular_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->blueSpec(value);
