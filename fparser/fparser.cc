@@ -2925,6 +2925,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                   Value_t retVal =
                       mData->mFuncParsers[index].mParserPtr->Eval
                       (&Stack[SP-params+1]);
+/*
                   if (int(retVal) == IF_FUNCT_ERROR)
                   {
                       mData->mEvalErrorType = IF_FUNCT_ERROR;
@@ -2936,6 +2937,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                       mData->mEvalErrorType = VAR_OVERFLOW;
                       return VAR_OVERFLOW;
                   }
+                  */
                   SP -= int(params)-1;
                   Stack[SP] = retVal;
                   const int error =
@@ -3636,6 +3638,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                 double res[NbStack];
                 double rest=mData->mFuncParsers[index].mParserPtr->Eval2
                 (&(Stacki[SP-params+1]), Size, res, NbStack);
+
                 if (int(rest) == IF_FUNCT_ERROR)
                 {
                     mData->mEvalErrorType = IF_FUNCT_ERROR;
