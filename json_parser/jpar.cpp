@@ -21,9 +21,7 @@
 #include "jpar.h"
 
 jpar::jpar() {}
-
 jpar::~jpar() {}
-
 void jpar::read(const QJsonObject &jason)
 {
     QJsonArray array;

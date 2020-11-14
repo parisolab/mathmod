@@ -4649,13 +4649,11 @@ void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
     MathmodRef->ui.glWidget->SaveSceneAsObjTrian();
 }
 
-// --------------------------
 void DrawingOptions::on_actionColorTrianglesWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjTrian(1);
 }
 
-// --------------------------
 void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
 {
     int Octaves =
@@ -4667,7 +4665,6 @@ void DrawingOptions::on_OctavesScrollBar_valueChanged(int value)
     on_pushButton_5_clicked();
 }
 
-// --------------------------
 void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
 {
     double Lacunarity = double(value) / 10.0;
@@ -4679,7 +4676,6 @@ void DrawingOptions::on_LacunarityScrollBar_valueChanged(int value)
     on_pushButton_5_clicked();
 }
 
-// --------------------------
 void DrawingOptions::on_GainScrollBar_valueChanged(int value)
 {
     double Gain = double(value) / 10.0;
@@ -4691,7 +4687,6 @@ void DrawingOptions::on_GainScrollBar_valueChanged(int value)
     on_pushButton_5_clicked();
 }
 
-// --------------------------
 void DrawingOptions::on_ShowtextureScript_clicked()
 {
     static int show = -1;
@@ -4708,7 +4703,6 @@ void DrawingOptions::on_ShowtextureScript_clicked()
     }
 }
 
-// --------------------------
 void DrawingOptions::on_TurbulenceCheckBox_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.componentsinfos.NoiseParam[0].NoiseActive *= -1;
@@ -4716,7 +4710,6 @@ void DrawingOptions::on_TurbulenceCheckBox_clicked()
     on_pushButton_5_clicked();
 }
 
-// --------------------------
 void DrawingOptions::on_pushButton_5_clicked()
 {
     QJsonParseError err;
@@ -4742,127 +4735,106 @@ void DrawingOptions::on_pushButton_5_clicked()
     }
 }
 
-// --------------------------
 void DrawingOptions::on_C1ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 0);
 }
 
-// --------------------------
 void DrawingOptions::on_C2ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 1);
 }
 
-// --------------------------
 void DrawingOptions::on_C3ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 2);
 }
 
-// --------------------------
 void DrawingOptions::on_C4ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 3);
 }
 
-// --------------------------
 void DrawingOptions::on_C5ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 4);
 }
 
-// --------------------------
 void DrawingOptions::on_C6ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 5);
 }
 
-// --------------------------
 void DrawingOptions::on_C7ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 6);
 }
 
-// --------------------------
 void DrawingOptions::on_C8ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 7);
 }
 
-// --------------------------
 void DrawingOptions::on_C9ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 8);
 }
 
-// --------------------------
 void DrawingOptions::on_C10ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 9);
 }
 
-// --------------------------
 void DrawingOptions::on_C11ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 10);
 }
 
-// --------------------------
 void DrawingOptions::on_C12ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 11);
 }
 
-// --------------------------
 void DrawingOptions::on_C13ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 12);
 }
 
-// --------------------------
 void DrawingOptions::on_C14ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 13);
 }
 
-// --------------------------
 void DrawingOptions::on_C15ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 14);
 }
 
-// --------------------------
 void DrawingOptions::on_C16ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 15);
 }
 
-// --------------------------
 void DrawingOptions::on_C17ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 16);
 }
 
-// --------------------------
 void DrawingOptions::on_C18ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 17);
 }
 
-// --------------------------
 void DrawingOptions::on_C19ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 18);
 }
 
-// --------------------------
 void DrawingOptions::on_C20ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 19);
 }
 
-// --------------------------
 void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
 {
     MathmodRef->ui.glWidget->LocalScene.slider = 1;
@@ -4876,7 +4848,6 @@ void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
     MathmodRef->ui.glWidget->LocalScene.slider = -1;
 }
 
-// --------------------------
 void DrawingOptions::on_PredefinedSets_activated(int index)
 {
     indexcurrentSet = index;
@@ -4891,7 +4862,6 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues[uint(i)] =
                 qlstPos.at(i + (index - 1) * size).toDouble();
         }
-
         for (int sl = 0; sl < 20; sl++)
         {
             if (size >= (sl + 1))
@@ -4912,7 +4882,6 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
                 (SliderArray[sl].SliderScrollBar)->blockSignals(false);
             }
         }
-
         // Draw
         if (CurrentFormulaType == 2)
             MathmodRef->ProcessNewIsoSurface();
@@ -5052,7 +5021,6 @@ void DrawingOptions::update_slider_param()
             qlstmin[sl] = sliderconf.ui.MinEdit->text();
             qlstStep[sl] = sliderconf.ui.StepEdit->text();
             qlstPos[sl] = sliderconf.ui.PosEdit->text();
-
             (SliderArray[sl].SliderScrollBar)->blockSignals(true);
             (SliderArray[sl].SliderScrollBar)->setMaximum(qlstmax.at(sl).toInt());
             (SliderArray[sl].SliderScrollBar)->setMinimum(qlstmin.at(sl).toInt());
@@ -5063,7 +5031,6 @@ void DrawingOptions::update_slider_param()
             (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl));
             (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
             (SliderArray[sl].SliderScrollBar)->blockSignals(false);
-
             MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
             MathmodRef->ui.glWidget->ParObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
             MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
@@ -5279,15 +5246,12 @@ void DrawingOptions::SetSpecularValues(float *spec)
     ui.red_Specular->blockSignals(true);
     ui.red_Specular->setSliderPosition(int(spec[0] * 100));
     ui.red_Specular->blockSignals(false);
-
     ui.green_Specular->blockSignals(true);
     ui.green_Specular->setSliderPosition(int(spec[1] * 100));
     ui.green_Specular->blockSignals(false);
-
     ui.blue_Specular->blockSignals(true);
     ui.blue_Specular->setSliderPosition(int(spec[2] * 100));
     ui.blue_Specular->blockSignals(false);
-
     ui.transparent_Specular->blockSignals(true);
     ui.transparent_Specular->setSliderPosition(int(spec[3] * 100));
     ui.transparent_Specular->blockSignals(false);
@@ -5467,7 +5431,6 @@ void DrawingOptions::ApplypushButton_clicked()
         ui.linecolumn_2->blockSignals(true);
         ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
         ui.linecolumn_2->blockSignals(false);
-
         ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = ( " + QString::number(ui.linecolumn_3->value()) +
                                      ", " + QString::number(ui.linecolumn_3->value()) + " ) / "+QString::number(maxpargrid));
         ui.linecolumn_3->blockSignals(true);
@@ -5526,7 +5489,6 @@ void DrawingOptions::updateParametricGridSliders(int maxpargrid)
     ui.linecolumn_2->blockSignals(true);
     ui.linecolumn_2->setMaximum(int(maxpargrid));
     ui.linecolumn_2->blockSignals(false);
-
     ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = ("+ QString::number(ui.linecolumn_3->value()) +
                                  ", " + QString::number(ui.linecolumn_3->value()) +")/"+QString::number(maxpargrid));
     ui.linecolumn_3->blockSignals(true);

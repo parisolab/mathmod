@@ -21,9 +21,6 @@
 #include "parisodef.h"
 
 jpariso::jpariso() {}
-
 jpariso::~jpariso() {}
-
 jcollection::jcollection() {}
-
 jcollection::~jcollection() {}

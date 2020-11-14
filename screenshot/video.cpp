@@ -58,7 +58,6 @@ void screenimage::saveas()
     QString fn = QFileDialog::getSaveFileName(
                      this, tr("Choose a filename to save under"), "",
                      tr("Images (*.png *.bmp);; All files (*.*)"));
-
     if (!fn.isEmpty())
     {
         if (fn.contains(".bmp"))

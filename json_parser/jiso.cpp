@@ -21,9 +21,7 @@
 #include "jiso.h"
 
 jiso::jiso() {}
-
 jiso::~jiso() {}
-
 void jiso::read(const QJsonObject &jason)
 {
     QJsonArray array;
