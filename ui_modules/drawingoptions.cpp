@@ -69,7 +69,6 @@ static const char *ScriptErrorMessage[] =
     "EMPTY_MANDATORY_FIELD"                     // 36
 };
 
-// --------------------------
 void DrawingOptions::ErrorMsg() const
 {
     QMessageBox msgBox;
@@ -80,7 +79,7 @@ void DrawingOptions::ErrorMsg() const
         msgBox.exec();
     }
 }
-// --------------------------
+
 void DrawingOptions::MemoryErrorMsg(int err) const
 {
     QMessageBox msgBox;
@@ -90,14 +89,14 @@ void DrawingOptions::MemoryErrorMsg(int err) const
         msgBox.exec();
     }
 }
-// --------------------------
+
 void DrawingOptions::editorwin()
 {
     editor *editorwindow = new editor();
     editorwindow->show();
 }
 
-// --------------------------
+
 void DrawingOptions::colorsoptions()
 {
     ColorsOptions *colorwindow = new ColorsOptions();
@@ -110,7 +109,7 @@ void DrawingOptions::colorsoptions()
     colorwindow->show();
 }
 
-// --------------------------
+
 void DrawingOptions::videoplay()
 {
     QImage buf = MathmodRef->ui.glWidget->Copyscreenshot();
@@ -119,13 +118,13 @@ void DrawingOptions::videoplay()
     player->show();
 }
 
-// --------------------------
+
 DrawingOptions::~DrawingOptions()
 {
     delete[] SliderArray;
 }
 
-// --------------------------
+
 DrawingOptions::DrawingOptions(QWidget *parent) : QMainWindow(parent)
 {
     ui.setupUi(this);
@@ -148,7 +147,7 @@ DrawingOptions::DrawingOptions(QWidget *parent) : QMainWindow(parent)
     ui.ObjectClasseCurrent->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-// --------------------------
+
 void DrawingOptions::SaveSlidersRef(int nb)
 {
     SliderArray = new SliderStruct[nb];
@@ -274,7 +273,7 @@ void DrawingOptions::SaveSlidersRef(int nb)
     SliderArray[19].SliderGroupeBox = ui.groupBox_28;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xyzg_valueChanged(int value)
 {
     ui.Isogroupbox->setTitle("Grid/MaxGrid = (" +
@@ -293,13 +292,13 @@ void DrawingOptions::on_xyzg_valueChanged(int value)
         MathmodRef->xyzactivated = -1;
     }
 }
-// --------------------------
+
 void DrawingOptions::on_ChangeGrid_clicked()
 {
     (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
     MathmodRef->slot_checkBox73_clicked(PARISO_TYPE) : MathmodRef->slot_checkBox73_clicked(ISO_TYPE);
 }
-// --------------------------
+
 void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
                                         TreeStruct &currentstruct)
 {
@@ -344,7 +343,7 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
         AddParametersToTree(paramlistItem, currentstruct);
     }
 }
-// --------------------------
+
 void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem,
                                         TreeStruct &currentstruct)
 {
@@ -383,7 +382,7 @@ void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem,
         AddParametersToTree(IsolistItem, currentstruct);
     }
 }
-// --------------------------
+
 void DrawingOptions::AddParametersToTree(QTreeWidgetItem *parameterslistItem,
         TreeStruct &currentstruct)
 {
@@ -412,7 +411,7 @@ void DrawingOptions::AddParametersToTree(QTreeWidgetItem *parameterslistItem,
         }
     }
 }
-// --------------------------
+
 void DrawingOptions::AddObjectToMySelectionTree()
 {
     if (MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
@@ -464,7 +463,7 @@ void DrawingOptions::UpdateTreeObject()
         }
     }
 }
-// --------------------------
+
 void DrawingOptions::UpdatePar4DModelDetailsPage(TreeStruct &currentstruct)
 {
     ui.ParamComponent_2->clear();
@@ -474,7 +473,7 @@ void DrawingOptions::UpdatePar4DModelDetailsPage(TreeStruct &currentstruct)
     ui.stackedProperties->setCurrentIndex(3);
     UpdateDescription(0, PAR_4D_TYPE, currentstruct);
 }
-// --------------------------
+
 void DrawingOptions::UpdatePar3DModelDetailsPage(TreeStruct &currentstruct)
 {
     ui.ParamComponent->clear();
@@ -484,7 +483,7 @@ void DrawingOptions::UpdatePar3DModelDetailsPage(TreeStruct &currentstruct)
     ui.stackedProperties->setCurrentIndex(2);
     UpdateDescription(0, PAR_TYPE, currentstruct);
 }
-// --------------------------
+
 void DrawingOptions::UpdateIsoModelDetailsPage(TreeStruct &currentstruct)
 {
     ui.stackedProperties->setCurrentIndex(1);
@@ -494,7 +493,7 @@ void DrawingOptions::UpdateIsoModelDetailsPage(TreeStruct &currentstruct)
     ui.IsoComponent->insertItems(0, currentstruct.Component);
     UpdateDescription(0, ISO_TYPE, currentstruct);
 }
-// --------------------------
+
 void DrawingOptions::UpdateScriptEditorAndTreeObject()
 {
     // Update the current Tree Object:
@@ -528,7 +527,7 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     else
         ui.stackedProperties->setCurrentIndex(0);
 }
-// --------------------------
+
 void DrawingOptions::HideSliders()
 {
     ui.groupBox_9->hide();
@@ -558,7 +557,7 @@ void DrawingOptions::HideSliders()
     sliderconf.ui.ParametersComboBox->clear();
     sliderconf.ui.ParametersComboBox->addItem("Parameters List");
 }
-// --------------------------
+
 void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
 {
     str = "";
@@ -570,7 +569,7 @@ void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
     str.replace("\t", "");
     str.replace(" ", "");
 }
-// --------------------------
+
 void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
 {
     QString result;
@@ -688,7 +687,7 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         HideSliders();
     }
 }
-// --------------------------
+
 void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
                                    bool Inspect)
 {
@@ -701,7 +700,7 @@ void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
         UpdateScriptEditorAndTreeObject();
     }
 }
-// --------------------------
+
 QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
 {
     QString arg = "";
@@ -740,7 +739,7 @@ QString DrawingOptions::MandatoryParFieldToQString(const MandatoryParField &idx)
     }
     return(arg);
 }
-// --------------------------
+
 QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
 {
     QString arg = "";
@@ -776,7 +775,7 @@ QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
     }
     return(arg);
 }
-// --------------------------
+
 bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const MandatoryIsoField &idx)
 {
     QString arg = MandatoryIsoFieldToQString(idx);
@@ -789,7 +788,7 @@ bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const Man
     }
     return true;
 }
-// --------------------------
+
 bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const MandatoryParField &idx)
 {
     QString arg = MandatoryParFieldToQString(idx);
@@ -800,7 +799,7 @@ bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const Man
     }
     return true;
 }
-// --------------------------
+
 bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
 {
     for (std::vector<MandatoryParField>::const_iterator it =
@@ -813,7 +812,7 @@ bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
     }
     return true;
 }
-// --------------------------
+
 bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
 {
     for (std::vector<MandatoryIsoField>::const_iterator it =
@@ -826,7 +825,7 @@ bool DrawingOptions::VerifyIsoEmptySpace(const QJsonObject& QObj)
     }
     return true;
 }
-// --------------------------
+
 bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
 {
     QJsonArray lst;
@@ -917,7 +916,7 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
     return true;
 }
 
-// --------------------------
+
 bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
 {
     QJsonArray lst;
@@ -1027,7 +1026,7 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
     return true;
 }
 
-// --------------------------
+
 bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
 {
     QJsonArray lst;
@@ -1086,7 +1085,7 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
     return true;
 }
 
-// --------------------------
+
 void DrawingOptions::LoadTexture(const QJsonObject &QObj,
                                  const ModelType &opt)
 {
@@ -1113,7 +1112,7 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
     MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", Qt::SkipEmptyParts);
 }
 
-// --------------------------
+
 void DrawingOptions::LoadPigment(const QJsonObject &QObj,
                                  const ModelType &opt)
 {
@@ -1166,7 +1165,7 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
         result.split(";", Qt::SkipEmptyParts);
 }
 
-// --------------------------
+
 void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 {
     QString result;
@@ -1412,7 +1411,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::updateCurrentTreestruct()
 {
     // Initialize the current Object struct
@@ -1458,7 +1457,7 @@ void DrawingOptions::updateCurrentTreestruct()
     MathmodRef->RootObjet.CurrentParisoTreestruct.clear();
 }
 
-// --------------------------
+
 void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         const MandatoryParField &idx,
         const ModelType &mod)
@@ -1538,7 +1537,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
     }
 }
 
-// --------------------------
+
 void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
         const MandatoryIsoField &idx)
 {
@@ -1604,7 +1603,7 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
     }
 }
 
-// --------------------------
+
 void DrawingOptions::OptionalIsoScriptFieldprocess(
     const QJsonObject &QObj, OptionnalIsoScriptFIELD idx)
 {
@@ -1727,7 +1726,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     }
 }
 
-// --------------------------
+
 void DrawingOptions::OptionalParScriptFieldprocess(
     const QJsonObject &QObj, OptionnalParScriptFIELD idx)
 {
@@ -1850,7 +1849,7 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     }
 }
 
-// --------------------------
+
 void DrawingOptions::BuildAllVect()
 {
     const OptionnalIsoScriptFIELD optiso[] = {ISO_GRID, ISO_VECT, ISO_CND, ISO_CONST, ISO_FUNCT};
@@ -1878,7 +1877,7 @@ void DrawingOptions::BuildAllVect()
                         manpar, manpar + sizeof(manpar) / sizeof(MandatoryParField));
 }
 
-// --------------------------
+
 int DrawingOptions::JSON_choice_activated(const QString &arg1)
 {
     QString result;
@@ -2082,7 +2081,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     return (0);
 }
 
-// --------------------------
+
 void DrawingOptions::LoadMandatoryAndOptionnalFields(
     const QJsonObject &qobj, const ModelType &mod, bool loadtext,
     const QJsonObject &QTextureObj, bool loadpigm,
@@ -2163,7 +2162,7 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
     }
 }
 
-// --------------------------
+
 int DrawingOptions::on_choice_activated(const QString &arg)
 {
     // Draw here
@@ -2176,7 +2175,7 @@ int DrawingOptions::on_choice_activated(const QString &arg)
     return Result;
 }
 
-// --------------------------
+
 void DrawingOptions::Run_JsonObject_activeted()
 {
     QJsonParseError err;
@@ -2198,7 +2197,7 @@ void DrawingOptions::Run_JsonObject_activeted()
     DrawJsonModel(doc.object());
 }
 
-// --------------------------
+
 void DrawingOptions::slot_comboBox18_3_activated(const QString &arg1)
 {
     if (arg1 == "Triangles")
@@ -2233,13 +2232,13 @@ void DrawingOptions::slot_comboBox18_3_activated(const QString &arg1)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::slot_checkBox_clicked()
 {
     MathmodRef->slot_uv_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::LoadNewFileModels(bool upd)
 {
     QString mathmodcollection;
@@ -2303,7 +2302,7 @@ void DrawingOptions::LoadNewFileModels(bool upd)
     AddListModels(upd);
 }
 
-// --------------------------
+
 void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
 {
     int current = 0, currentfunction = 0, separator = 0;
@@ -2637,7 +2636,7 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
     }
 }
 
-// --------------------------
+
 QTreeWidgetItem *DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem *item,
         QString proprty)
 {
@@ -2650,7 +2649,7 @@ QTreeWidgetItem *DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem *item,
     return nullptr;
 }
 
-// --------------------------
+
 void DrawingOptions::ParseItemTree(QTreeWidgetItem *item, QList<bool> &list,
                                    bool viewall)
 {
@@ -2680,7 +2679,7 @@ void DrawingOptions::ParseItemTree(QTreeWidgetItem *item, QList<bool> &list,
     }
 }
 
-// --------------------------
+
 void DrawingOptions::SearchListModels()
 {
     QTreeWidgetItem *Toplevel;
@@ -2822,7 +2821,7 @@ void DrawingOptions::SearchListModels()
     select.selectedoptions.complist.clear();
 }
 
-// --------------------------
+
 void DrawingOptions::AddListModels(bool update)
 {
     if (!update)
@@ -3039,7 +3038,7 @@ void DrawingOptions::AddListModels(bool update)
     return;
 }
 
-// --------------------------
+
 void DrawingOptions::on_pushButton_clicked()
 {
     static int checked = 1;
@@ -3047,44 +3046,44 @@ void DrawingOptions::on_pushButton_clicked()
     (checked == -1) ? ui.ObjectClasse->hide() : ui.ObjectClasse->show();
 }
 
-// --------------------------
+
 void DrawingOptions::on_action_Exit_triggered()
 {
     MathmodRef->close();
     this->close();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionTriangles_triggered()
 {
     MathmodRef->slot_triangles_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionNormales_triggered()
 {
     MathmodRef->draw_norm_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionInfos_triggered()
 {
     MathmodRef->iso_infos();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionFill_triggered()
 {
     MathmodRef->fill();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionSmooth_triggered()
 {
     MathmodRef->smoothline();
 }
 
-// --------------------------
+
 void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
 {
     if (!MathmodRef->ui.glWidget->IsoObjet->isRunning() &&
@@ -3145,14 +3144,14 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::slot_pushButton_2_clicked()
 {
     MathmodRef->RootObjet.MyJsonObjectSelection.append(MathmodRef->RootObjet.CurrentJsonObject);
     AddObjectToMySelectionTree();
 }
 
-// --------------------------
+
 void DrawingOptions::slot_unselect_clicked()
 {
     int index =
@@ -3161,13 +3160,13 @@ void DrawingOptions::slot_unselect_clicked()
     MyselectionItemReference->removeChild(ui.ObjectClasse->currentItem());
 }
 
-// --------------------------
+
 void DrawingOptions::slot_XYZscrollBar_valueChanged(int value)
 {
     MathmodRef->xyzg_valueChanged(value, ISO_TYPE);
 }
 
-// --------------------------
+
 void DrawingOptions::UpdateDescription(int position, ModelType type,
                                        TreeStruct &currentstruct)
 {
@@ -3338,60 +3337,60 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
     }
 }
 
-// --------------------------
+
 void DrawingOptions::oncolor_2activated(int index)
 {
     MathmodRef->ui.glWidget->colorstype(index);
 }
 
-// --------------------------
+
 void DrawingOptions::onred_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->red(value, indexcurrentFormula);
 }
 
-// --------------------------
+
 void DrawingOptions::ongreen_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->green(value, indexcurrentFormula);
 }
 
-// --------------------------
+
 void DrawingOptions::onblue_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->blue(value, indexcurrentFormula);
 }
 
-// --------------------------
+
 void DrawingOptions::ontransparent_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->transparency(value, indexcurrentFormula);
 }
 
-// --------------------------
+
 void DrawingOptions::ontransparence_2clicked(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
 
-// --------------------------
+
 void DrawingOptions::on_red_ParIso_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->red(value, indexcurrentFormula);
 }
 
-// --------------------------
+
 void DrawingOptions::on_green_ParIso_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->green(value, indexcurrentFormula);
 }
 
-// --------------------------
+
 void DrawingOptions::on_blue_ParIso_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->blue(value, indexcurrentFormula);
 }
-// --------------------------
+
 void DrawingOptions::removeat(int idx, QJsonObject& QObj, QString str)
 {
     QJsonArray array;
@@ -3399,7 +3398,7 @@ void DrawingOptions::removeat(int idx, QJsonObject& QObj, QString str)
     array.removeAt(idx);
     QObj[str] = array;
 }
-// --------------------------
+
 void DrawingOptions::removeat2(int idx, QJsonObject& QObj, QString str)
 {
     if (QObj[str].isArray())
@@ -3412,7 +3411,7 @@ void DrawingOptions::removeat2(int idx, QJsonObject& QObj, QString str)
     else
         QObj.remove(str);
 }
-// --------------------------
+
 void DrawingOptions::appendall(QJsonObject& QObj, QString str, QTableWidget* table)
 {
     if (QObj[str].isArray() && table->rowCount() > 0)
@@ -3428,7 +3427,7 @@ void DrawingOptions::appendall(QJsonObject& QObj, QString str, QTableWidget* tab
     else
         QObj.remove(str);
 }
-// --------------------------
+
 void DrawingOptions::replaceat(int idx, QJsonObject& QObj, QString str, QTextEdit* text)
 {
     QJsonArray array;
@@ -3436,7 +3435,7 @@ void DrawingOptions::replaceat(int idx, QJsonObject& QObj, QString str, QTextEdi
     array.replace(idx, text->toPlainText());
     QObj[str] = array;
 }
-// --------------------------
+
 void DrawingOptions::insertat(int idx, QJsonObject& QObj, QString str, QTextEdit* text)
 {
     QJsonArray array;
@@ -3445,7 +3444,7 @@ void DrawingOptions::insertat(int idx, QJsonObject& QObj, QString str, QTextEdit
     QObj[str] = array;
 }
 
-// --------------------------
+
 void DrawingOptions::appednew(QJsonObject& QObj, QString str, QTextEdit* text)
 {
     QJsonArray array;
@@ -3453,7 +3452,7 @@ void DrawingOptions::appednew(QJsonObject& QObj, QString str, QTextEdit* text)
     array.append(text->toPlainText());
     QObj[str] = array;
 }
-// --------------------------
+
 void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
 {
     QJsonArray array;
@@ -3782,7 +3781,7 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
         }
     }
 }
-// --------------------------
+
 void DrawingOptions::RunUpdatedJObject(QJsonObject &CurrentObject)
 {
     if (indexcurrentFormula != -1)
@@ -3818,7 +3817,7 @@ void DrawingOptions::RunUpdatedJObject(QJsonObject &CurrentObject)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::on_updateButton_clicked()
 {
     QJsonObject CurrentObject = MathmodRef->RootObjet.CurrentJsonObject;
@@ -3866,25 +3865,25 @@ void DrawingOptions::on_updateButton_clicked()
     }
 }
 
-// --------------------------
+
 void DrawingOptions::on_updateParam_clicked()
 {
     on_updateButton_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionPolygonWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjPoly();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionColorPolygonWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjPoly(1);
 }
 
-// --------------------------
+
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
@@ -3903,7 +3902,7 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
@@ -3922,7 +3921,7 @@ void DrawingOptions::on_lineScrollBar_valueChanged(int value)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
@@ -3942,61 +3941,61 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::on_IsoComponent_activated(int index)
 {
     UpdateDescription(index, ISO_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
 }
 
-// --------------------------
+
 void DrawingOptions::on_ParamComponent_activated(int index)
 {
     UpdateDescription(index, PAR_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
 }
 
-// --------------------------
+
 void DrawingOptions::on_xyzcheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animxyz *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xycheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animx *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xyhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->LocalScene.animxValueStep = float(value) / 4;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xzcheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animy *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xzhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->LocalScene.animyValueStep = float(value) / 4;
 }
 
-// --------------------------
+
 void DrawingOptions::on_yzcheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animz *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_yzhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->LocalScene.animzValueStep = float(value) / 4;
 }
 
-// --------------------------
+
 void DrawingOptions::on_InitMatrix_2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.RotStrength =
@@ -4005,79 +4004,79 @@ void DrawingOptions::on_InitMatrix_2_clicked()
                 MathmodRef->ui.glWidget->LocalScene.animzValueStep = 0.0;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xycheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxy_ok *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xyhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxy = value / 4.0;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xzcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxz_ok *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxz = value / 4.0;
 }
 
-// --------------------------
+
 void DrawingOptions::on_yzcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetayz_ok *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_yzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetayz = value / 4.0;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xwcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxw_ok *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_xwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxw = value / 4.0;
 }
 
-// --------------------------
+
 void DrawingOptions::on_ywcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetayw_ok *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_ywhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetayw = value / 4.0;
 }
 
-// --------------------------
+
 void DrawingOptions::on_zwcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetazw_ok *= -1;
 }
 
-// --------------------------
+
 void DrawingOptions::on_zwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetazw = value / 4.0;
 }
 
-// --------------------------
+
 void DrawingOptions::on_linecolumn_3_valueChanged(int value)
 {
     ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
@@ -4095,39 +4094,39 @@ void DrawingOptions::on_linecolumn_3_valueChanged(int value)
     }
 }
 
-// --------------------------
+
 void DrawingOptions::oncolor_4activated(int index)
 {
     MathmodRef->ui.glWidget->colorstypeParam(index);
 }
 
-// --------------------------
+
 void DrawingOptions::ontransparence_4toggled(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
 
-// --------------------------
+
 void DrawingOptions::on_uv4D_clicked()
 {
     MathmodRef->slot_uv4D_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_uv_clicked()
 {
     (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
     MathmodRef->slot_uv_clicked(PARISO_TYPE) : MathmodRef->slot_uv_clicked(PAR_TYPE);
 }
 
-// --------------------------
+
 void DrawingOptions::on_InitMatrix_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->mat4D.unit();
     on_calculate_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_ActivateCND_clicked(bool checked)
 {
     ui.CNDgroupBox->setEnabled(checked);
@@ -4135,128 +4134,128 @@ void DrawingOptions::on_ActivateCND_clicked(bool checked)
     MathmodRef->ui.glWidget->update();
 }
 
-// --------------------------
+
 void DrawingOptions::on_TCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[3] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
-// --------------------------
+
 void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[0] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
-// --------------------------
+
 void DrawingOptions::on_TNCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[4] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
-// --------------------------
+
 void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[1] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
-// --------------------------
+
 void DrawingOptions::on_TBordercheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[2] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionMesh_triggered()
 {
     MathmodRef->Mesh();
 }
 
-// --------------------------
+
 void DrawingOptions::on_calculate_clicked()
 {
     on_InitTButton_clicked();
     Run_JsonObject_activeted();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionAbout_2_triggered()
 {
     ab.show();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionLoad_json_script_triggered()
 {
     LoadNewFileModels(true);
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionScreenshot_triggered()
 {
     videoplay();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionEditor_triggered()
 {
     editorwin();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionColors_triggered()
 {
     colorsoptions();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionSmooth_2_clicked()
 {
     MathmodRef->smoothline();
 }
 
-// --------------------------
+
 void DrawingOptions::on_Infos_clicked()
 {
     MathmodRef->iso_infos();
 }
 
-// --------------------------
+
 void DrawingOptions::on_Mesh_clicked()
 {
     MathmodRef->Mesh();
 }
 
-// --------------------------
+
 void DrawingOptions::on_Norm_clicked()
 {
     MathmodRef->draw_norm_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_Fill_clicked()
 {
     MathmodRef->fill();
 }
 
-// --------------------------
+
 void DrawingOptions::on_Trian_clicked()
 {
     MathmodRef->slot_triangles_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionOpenGL_triggered()
 {
     Parameters->on_loadconfig_clicked();
     Parameters->show();
 }
 
-// --------------------------
+
 void DrawingOptions::on_cut_clicked()
 {
     if (ui.IsoComponent->count() > 1)
@@ -4272,44 +4271,44 @@ void DrawingOptions::on_cut_clicked()
     }
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionConvert_K3DS_script_triggered()
 {
     LoadK3DSurfScript("", 1);
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionConfiguration_triggered()
 {
     on_actionOpenGL_triggered();
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionColors_2_triggered()
 {
     on_actionColors_triggered();
 }
 
-// --------------------------
+
 void DrawingOptions::on_Load_clicked()
 {
     LoadNewFileModels(true);
 }
 
-// --------------------------
+
 void DrawingOptions::on_ParamComponent_2_activated(int index)
 {
     UpdateDescription(index, PAR_4D_TYPE,
                       MathmodRef->RootObjet.CurrentTreestruct);
 }
 
-// --------------------------
+
 void DrawingOptions::on_updateParam_2_clicked()
 {
     on_updateButton_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
                                 int index)
 {
@@ -4413,7 +4412,7 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
     iso["Iso3D"] = tmp;
 }
 
-// --------------------------
+
 void DrawingOptions::on_Multiplier_clicked()
 {
     int i = ui.xcomboBox->currentIndex(), j = ui.ycomboBox->currentIndex(),
@@ -4453,7 +4452,7 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_3->blockSignals(false);
 }
-// --------------------------
+
 void DrawingOptions::UpdateGui(int argc)
 {
     UpdateGuiMaxgrid();
@@ -4489,7 +4488,7 @@ void DrawingOptions::UpdateGui(int argc)
     ui.Messagetext->setFontPointSize(10);
 }
 
-// --------------------------
+
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
     double P = 1.0 / double(value);
@@ -4505,7 +4504,7 @@ void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
         MathmodRef->ui.glWidget->ParObjet->workerthreads[nbthreds].pace = P;
 }
 
-// --------------------------
+
 void DrawingOptions::on_InitTButton_clicked()
 {
     uint maxnbthreads = MathmodRef->ui.glWidget->IsoObjet->WorkerThreadsNumber;
@@ -4519,7 +4518,7 @@ void DrawingOptions::on_InitTButton_clicked()
         MathmodRef->ui.glWidget->ParObjet->workerthreads[nbthreds].stepMorph = 0;
 }
 
-// --------------------------
+
 void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
 {
     QString sortie;
@@ -4548,7 +4547,7 @@ void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
     message.exec();
     return;
 }
-// --------------------------
+
 void DrawingOptions::on_pushButton_2_clicked()
 {
     QJsonParseError err;
@@ -4564,14 +4563,14 @@ void DrawingOptions::on_pushButton_2_clicked()
     Parameters->SaveToFile_CurentMathModel(doc.object());
 }
 
-// --------------------------
+
 void DrawingOptions::on_pushButton_3_clicked()
 {
     ui.isoNameEdit->setText(ui.isoNameEdit->toPlainText() + "_01");
     on_updateButton_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_cut_2_clicked()
 {
     if (ui.ParamComponent->count() > 1)
@@ -4587,32 +4586,32 @@ void DrawingOptions::on_cut_2_clicked()
     }
 }
 
-// --------------------------
+
 void DrawingOptions::on_pushButton_4_clicked()
 {
     ui.paramNameEdit->setText(ui.paramNameEdit->toPlainText() + "_01");
     on_updateButton_clicked();
 }
 
-// --------------------------
+
 void DrawingOptions::on_color_5_activated(int index)
 {
     MathmodRef->ui.glWidget->colorstypeParIso(index);
 }
 
-// --------------------------
+
 void DrawingOptions::on_transparence_ParIso_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
 
-// --------------------------
+
 void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->transparency(value, indexcurrentFormula);
 }
 
-// --------------------------
+
 void DrawingOptions::on_comboBoxTexture_activated(int index)
 {
     QJsonObject tmp;
@@ -4628,7 +4627,7 @@ void DrawingOptions::on_comboBoxTexture_activated(int index)
     return;
 }
 
-// --------------------------
+
 void DrawingOptions::on_comboBoxPigment_activated(int index)
 {
     QJsonObject tmp;
@@ -4643,7 +4642,7 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
     return;
 }
 
-// --------------------------
+
 void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjTrian();
@@ -4904,31 +4903,31 @@ void DrawingOptions::CIndextoolButton_clicked(int idx)
     sliderconf.show();
 }
 
-// --------------------------
+
 void DrawingOptions::on_C20toolButton_clicked()
 {
     CIndextoolButton_clicked(20);
 }
 
-// --------------------------
+
 void DrawingOptions::on_C19toolButton_clicked()
 {
     CIndextoolButton_clicked(19);
 }
 
-// --------------------------
+
 void DrawingOptions::on_C18toolButton_clicked()
 {
     CIndextoolButton_clicked(18);
 }
 
-// --------------------------
+
 void DrawingOptions::on_C17toolButton_clicked()
 {
     CIndextoolButton_clicked(17);
 }
 
-// --------------------------
+
 void DrawingOptions::on_C16toolButton_clicked()
 {
     CIndextoolButton_clicked(16);
