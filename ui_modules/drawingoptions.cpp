@@ -4445,12 +4445,6 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
     ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_3->blockSignals(false);
-
-    MathmodRef->ui.glWidget->LocalScene.specReflection[0]= Parameters->Specular[0];
-    MathmodRef->ui.glWidget->LocalScene.specReflection[1]= Parameters->Specular[1];
-    MathmodRef->ui.glWidget->LocalScene.specReflection[2]= Parameters->Specular[2];
-    MathmodRef->ui.glWidget->LocalScene.specReflection[3]= Parameters->Specular[3];
-    MathmodRef->ui.glWidget->LocalScene.shininess = Parameters->Shininess;
 }
 
 void DrawingOptions::UpdateGui(int argc)
@@ -5254,6 +5248,10 @@ void DrawingOptions::SetSpecularValues(float *spec)
     ui.transparent_Specular->blockSignals(true);
     ui.transparent_Specular->setSliderPosition(int(spec[3] * 100));
     ui.transparent_Specular->blockSignals(false);
+    MathmodRef->ui.glWidget->LocalScene.specReflection[0]= Parameters->Specular[0];
+    MathmodRef->ui.glWidget->LocalScene.specReflection[1]= Parameters->Specular[1];
+    MathmodRef->ui.glWidget->LocalScene.specReflection[2]= Parameters->Specular[2];
+    MathmodRef->ui.glWidget->LocalScene.specReflection[3]= Parameters->Specular[3];
 }
 
 void DrawingOptions::SetThreadValues(int *thread)
@@ -5274,6 +5272,7 @@ void DrawingOptions::SetShininessValue(int shin)
     ui.ShininessScrollBar->blockSignals(true);
     ui.ShininessScrollBar->setSliderPosition(shin);
     ui.ShininessScrollBar->blockSignals(false);
+    MathmodRef->ui.glWidget->LocalScene.shininess = Parameters->Shininess;
 }
 
 void DrawingOptions::on_red_Specular_valueChanged(int value)
