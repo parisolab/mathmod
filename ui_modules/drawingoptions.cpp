@@ -96,7 +96,6 @@ void DrawingOptions::editorwin()
     editorwindow->show();
 }
 
-
 void DrawingOptions::colorsoptions()
 {
     ColorsOptions *colorwindow = new ColorsOptions();
@@ -109,7 +108,6 @@ void DrawingOptions::colorsoptions()
     colorwindow->show();
 }
 
-
 void DrawingOptions::videoplay()
 {
     QImage buf = MathmodRef->ui.glWidget->Copyscreenshot();
@@ -118,12 +116,10 @@ void DrawingOptions::videoplay()
     player->show();
 }
 
-
 DrawingOptions::~DrawingOptions()
 {
     delete[] SliderArray;
 }
-
 
 DrawingOptions::DrawingOptions(QWidget *parent) : QMainWindow(parent)
 {
@@ -146,7 +142,6 @@ DrawingOptions::DrawingOptions(QWidget *parent) : QMainWindow(parent)
     ui.ObjectClasseCurrent->hide();
     ui.ObjectClasseCurrent->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
-
 
 void DrawingOptions::SaveSlidersRef(int nb)
 {
@@ -272,7 +267,6 @@ void DrawingOptions::SaveSlidersRef(int nb)
     SliderArray[19].SliderLabelMin = ui.C20labelMin;
     SliderArray[19].SliderGroupeBox = ui.groupBox_28;
 }
-
 
 void DrawingOptions::on_xyzg_valueChanged(int value)
 {
@@ -428,7 +422,7 @@ void DrawingOptions::AddObjectToMySelectionTree()
         AddParObjectToTree(paramlistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
 }
-// -------------------------
+
 void DrawingOptions::UpdateTreeObject()
 {
     // Update Object Tree
@@ -4451,6 +4445,12 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
     ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_3->blockSignals(false);
+
+    MathmodRef->ui.glWidget->LocalScene.specReflection[0]= Parameters->Specular[0];
+    MathmodRef->ui.glWidget->LocalScene.specReflection[1]= Parameters->Specular[1];
+    MathmodRef->ui.glWidget->LocalScene.specReflection[2]= Parameters->Specular[2];
+    MathmodRef->ui.glWidget->LocalScene.specReflection[3]= Parameters->Specular[3];
+    MathmodRef->ui.glWidget->LocalScene.shininess = Parameters->Shininess;
 }
 
 void DrawingOptions::UpdateGui(int argc)

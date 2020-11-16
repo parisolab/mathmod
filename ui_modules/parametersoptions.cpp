@@ -553,25 +553,21 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
 
         if (JConfig["OpenGlConfig"].isObject())
         {
-            QJsonObject tmp;
-            tmp = JConfig["OpenGlConfig"].toObject();
-            Shininess = tmp["GL_SHININESS"].toInt();
-        }
+            QJsonObject tmp1, tmp2;
+            tmp1 = JConfig["OpenGlConfig"].toObject();
+            Shininess = tmp1["GL_SHININESS"].toInt();
 
-        if (JConfig["OpenGlConfig"].isObject())
-        {
-            QJsonObject tmp;
-            tmp = JConfig["OpenGlConfig"].toObject();
-            if (tmp["GL_SPECULAR"].isArray())
+            tmp2 = JConfig["OpenGlConfig"].toObject();
+            if (tmp2["GL_SPECULAR"].isArray())
             {
                 Specular[0] =
-                    float((tmp["GL_SPECULAR"].toArray())[0].toDouble() / 100.0);
+                    float((tmp2["GL_SPECULAR"].toArray())[0].toDouble() / 100.0);
                 Specular[1] =
-                    float((tmp["GL_SPECULAR"].toArray())[1].toDouble() / 100.0);
+                    float((tmp2["GL_SPECULAR"].toArray())[1].toDouble() / 100.0);
                 Specular[2] =
-                    float((tmp["GL_SPECULAR"].toArray())[2].toDouble() / 100.0);
+                    float((tmp2["GL_SPECULAR"].toArray())[2].toDouble() / 100.0);
                 Specular[3] =
-                    float((tmp["GL_SPECULAR"].toArray())[3].toDouble() / 100.0);
+                    float((tmp2["GL_SPECULAR"].toArray())[3].toDouble() / 100.0);
             }
         }
 

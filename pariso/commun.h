@@ -203,7 +203,7 @@ struct ObjectProperties
     int colortype = 0;
     int colortypeParam = 0;
     uint gridplanliste = 1;
-    float specReflection[4]={0.2f, 0.2f, 0.2f, 1.0f};
+    float specReflection[4]={0.3f, 0.3f, 0.3f, 1.0f};
     int threads[3];
     int shininess = 110;
     float frontcol[4]={0.9f, 0.6f, 0.1f, 1.0f};
@@ -212,7 +212,7 @@ struct ObjectProperties
                           0.4f, 0.4f, 0.9f, 1.0f, 0.99f, 0.1f, 0.843f, 1.0f, 0.16f, 0.91f, 0.73f, 1.0f, 0.8f, 0.9f, 0.0f, 1.0f, 0.9f, 0.91f, 0.3f, 1.0f};
     float backcols[40]={0.2f, 0.8f, 0.1f, 1.0f, 0.6f, 0.6f, 0.9f, 1.0f, 0.8f, 0.6f, 0.3f, 1.0f, 0.9f, 0.8f, 0.6f, 1.0f, 0.93f, 0.2f, 0.1f, 1.0f,
                         0.3f, 0.72f, 0.63f, 1.0f, 0.1f, 0.5f, 0.73f, 1.0f, 0.9f, 0.5f, 0.3f, 1.0f, 0.8f, 0.8f, 0.6f, 1.0f, 0.7f, 0.9f, 0.93f, 1.0f};
-    float gridcol[4]  ={0.1f, 0.3f, 0.1f, 0.5f};
+    float gridcol[4]  ={0.1f, 0.3f, 0.1f, 0.2f};
     float groundcol[4]={0.0f, 0.0f, 0.0f, 1.0f};
     float polyfactor= 1.0;
     float polyunits= 1.0;
