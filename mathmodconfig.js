@@ -24,10 +24,10 @@
         "GlwinW": 750
     },
     "WindowPosition": {
-        "ControlX": 20,
-        "ControlY": 20,
-        "GlwinX": 580,
-        "GlwinY": 20
+        "ControlX": 80,
+        "ControlY": 30,
+        "GlwinX": 620,
+        "GlwinY": 30
     },
     "Localization": {
         "AutomaticDetection": true,
@@ -39,8 +39,8 @@
         "FactZ": 4
     },
     "OpenGlConfig": {
-        "GL_SPECULAR": [50, 50, 50, 100],
-        "GL_SHININESS": 110
+        "GL_SPECULAR": [20, 20, 20, 100],
+        "GL_SHININESS": 20
     },
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
