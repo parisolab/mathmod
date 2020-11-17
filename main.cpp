@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
                      &drawingopt, SLOT(ApplypushButton_clicked()));
     drawingopt.show();
     mm.show();
+    drawingopt.raise();
     drawingopt.on_choice_activated(Parameters.model);
     return app.exec();
 }
