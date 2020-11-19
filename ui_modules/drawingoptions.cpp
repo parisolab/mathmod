@@ -338,21 +338,18 @@ void DrawingOptions::AddParObjectToTree(QTreeWidgetItem *paramlistItem,
     }
 }
 
-void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem,
-                                        TreeStruct &currentstruct)
+void DrawingOptions::AddIsoObjectToTree(QTreeWidgetItem *IsolistItem, TreeStruct &currentstruct)
 {
     if (!currentstruct.name.empty())
         IsolistItem->setText(0, currentstruct.name[0]);
     QColor greenColor = QColor(0, 255, 0, 50);
     IsolistItem->setBackground(0, greenColor);
-
     if (currentstruct.Component.size() > 0)
     {
         QTreeWidgetItem *cmpitem = new QTreeWidgetItem(IsolistItem);
         cmpitem->setText(0, "Components (" +
                          QString::number(currentstruct.Component.size()) +
                          "):");
-
         for (int j = 0; j < currentstruct.Component.size(); j++)
         {
             QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
@@ -503,7 +500,6 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
         {
             for (uint i = 0; i < MathmodRef->RootObjet.CurrentParisoTreestruct.size();i++)
                 ui.parisocomboBox->insertItem(i, MathmodRef->RootObjet.CurrentParisoTreestruct[i].name[0]);
-
             if (MathmodRef->RootObjet.CurrentParisoTreestruct[0].fxyz.size() != 0)
                 UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[0]);
             else if (MathmodRef->RootObjet.CurrentParisoTreestruct[0].fw.size() != 0)
@@ -580,7 +576,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         lst = QObj["Min"].toArray();
         ObjArrayToString(lst, result);
         qlstmin = result.split(";", Qt::SkipEmptyParts);
-
         // Max
         lst = QObj["Max"].toArray();
         ObjArrayToString(lst, result);
@@ -600,7 +595,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         lst = QObj["Name"].toArray();
         ObjArrayToString(lst, result);
         qlstnames = result.split(";", Qt::SkipEmptyParts);
-
         for (int i = 0; i < qlstnames.size(); ++i)
         {
             MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderNames.push_back(
@@ -612,17 +606,14 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
             uint(qlstnames.size());
         MathmodRef->ui.glWidget->ParObjet->masterthread->Nb_Sliders =
             uint(qlstnames.size());
-
         ui.ParametersList->clear();
         ui.ParametersList->addItem("Parameters List  (" +
                                    QString::number(qlstnames.size()) + ")");
         ui.ParametersList->addItems(qlstnames);
-
         sliderconf.ui.ParametersComboBox->clear();
         sliderconf.ui.ParametersComboBox->addItem(
             "Parameters List  (" + QString::number(qlstnames.size()) + ")");
         sliderconf.ui.ParametersComboBox->addItems(qlstnames);
-
         // Step
         lst = QObj["Step"].toArray();
         ObjArrayToString(lst, result);
