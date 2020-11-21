@@ -5044,7 +5044,7 @@ void DrawingOptions::on_AddSetButton_clicked()
     if (tmp2["SetNames"].isArray())
     {
         array1 = tmp2["SetNames"].toArray();
-        array1.append("NewSetName");
+        array1.append("NewSetName_"+QString::number(tmp2["SetNames"].toArray().size()));
     }
     else
         tmp2.remove("SetNames");
