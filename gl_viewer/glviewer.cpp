@@ -1152,17 +1152,14 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
 static void DrawMeshIso(ObjectProperties *scene)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glDrawElements(GL_TRIANGLES, int(scene->PolyNumber), GL_UNSIGNED_INT,
-                   scene->PolyIndices_localPt);
+    glDrawElements(GL_TRIANGLES, int(scene->PolyNumber), GL_UNSIGNED_INT, scene->PolyIndices_localPt);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 static void DrawMinimalTopology(ObjectProperties *scene)
 {
-    glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2],
-              scene->gridcol[3]);
+    glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
     uint startpl = 0;
     for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
     {
