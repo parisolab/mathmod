@@ -153,13 +153,10 @@ IsoMasterThread::~IsoMasterThread()
     Consts.clear();
     ConstNames.clear();
     ConstValues.clear();
-
     Rgbts.clear();
     RgbtNames.clear();
-
     VRgbts.clear();
     VRgbtNames.clear();
-
     Functs.clear();
     FunctNames.clear();
 }
@@ -201,10 +198,8 @@ void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
     //Free old memory:
     for(uint i=0; i+1<OldWorkerThreadsNumber; i++)
         workerthreads[i].DeleteWorkerParsers();
-
     if(OldWorkerThreadsNumber >1)
         delete[] workerthreads;
-
     //Assigne newly allocated memory
     workerthreads = workerthreadstmp;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
@@ -231,13 +226,10 @@ ErrorMessage Iso3D::ThreadParsersCopy()
         workerthreads[nbthreads].XYZgrid = masterthread->XYZgrid;
         workerthreads[nbthreads].GridVal = masterthread->GridVal;
     }
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].DeleteWorkerParsers();
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->componentsNumber, masterthread->FunctSize);
-
     return(parse_expression2());
 }
 ErrorMessage  Iso3D::parse_expression2()
@@ -258,7 +250,6 @@ ErrorMessage  Iso3D::parse_expression2()
             {
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
             }
-
             //Add predefined constatnts:
             for(uint kk=0; kk<masterthread->Nb_Sliders; kk++)
             {
@@ -293,8 +284,6 @@ ErrorMessage  Iso3D::parse_expression2()
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("ThreadId", workerthreads[nbthreads].MyIndex);
-
-
             for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
@@ -360,12 +349,10 @@ Iso3D::Iso3D( uint nbThreads,
     masterthread  = new IsoMasterThread();
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
-
     masterthread->XYZgrid = nbGrid;
     masterthread->GridVal = nbGrid;
     masterthread->MyIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].XYZgrid = nbGrid;
@@ -448,7 +435,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     if(type ==0)
     {
         ImplicitStructs[0].fxyz = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) !=std::string::npos   )
@@ -491,7 +477,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     else if(type == 2)  //xmax
     {
         ImplicitStructs[0].xmax = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) != std::string::npos)
@@ -513,7 +498,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     else if(type == 3) //ymin
     {
         ImplicitStructs[0].ymin = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) != std::string::npos)
@@ -535,7 +519,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     else if(type == 4) //ymax
     {
         ImplicitStructs[0].ymax = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) != std::string::npos)
@@ -557,7 +540,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     else if(type == 5) //zmin
     {
         ImplicitStructs[0].zmin = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) != std::string::npos)
@@ -579,7 +561,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     else if(type == 6) //zmax
     {
         ImplicitStructs[0].zmax = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) != std::string::npos)
@@ -601,7 +582,6 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
     else if(type == 8) //Cnd
     {
         ImplicitStructs[0].cnd = ImplicitFct;
-
         while( ImplicitFct!= "")
         {
             if((position = ImplicitFct.find(";")) != std::string::npos)
@@ -627,22 +607,19 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     const uint limitX = masterthread->XYZgrid, limitY = masterthread->XYZgrid, limitZ = masterthread->XYZgrid;
     uint maxgridval = masterthread->GridVal;
-    vals[3]          = masterthread->stepMorph;
+    vals[3]         = masterthread->stepMorph;
     masterthread->xLocal2[IsoIndex*maxgridval]=masterthread->xSupParser[IsoIndex].Eval(vals);
     masterthread->yLocal2[IsoIndex*maxgridval]=masterthread->ySupParser[IsoIndex].Eval(vals);
     masterthread->zLocal2[IsoIndex*maxgridval]=masterthread->zSupParser[IsoIndex].Eval(vals);
-
     masterthread->x_Step[IsoIndex] =  (masterthread->xLocal2[IsoIndex*maxgridval] - masterthread->xInfParser[IsoIndex].Eval(vals))/(limitX-1);
     masterthread->y_Step[IsoIndex] =  (masterthread->yLocal2[IsoIndex*maxgridval] - masterthread->yInfParser[IsoIndex].Eval(vals))/(limitY-1);
     masterthread->z_Step[IsoIndex] =  (masterthread->zLocal2[IsoIndex*maxgridval] - masterthread->zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
-
     for (uint i= 1; i < limitX; i++)
         masterthread->xLocal2[IsoIndex*maxgridval+i] = masterthread->xLocal2[IsoIndex*maxgridval+i-1] - masterthread->x_Step[IsoIndex];
     for (uint j= 1; j < limitY; j++)
         masterthread->yLocal2[IsoIndex*maxgridval+j] = masterthread->yLocal2[IsoIndex*maxgridval+j-1] - masterthread->y_Step[IsoIndex];
     for (uint k= 1; k < limitZ; k++)
         masterthread->zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k-1] - masterthread->z_Step[IsoIndex];
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for (uint k= 0; k < limitX; k++)
@@ -688,15 +665,12 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             iFinish  += 1;
     }
     iStart = iFinish - taille;
-
     for(uint l=0; l<nbstack; l++)
         vals[l*4+3]= stepMorph;
-
     uint remX= (iFinish-iStart)%nbX;
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
     uint Totalpoints=(iFinish-iStart)*limitY*limitZ;
-
     implicitFunctionParser[IsoIndex].AllocateStackMemory(Stack_Factor, nbvariables);
     for(uint i=iStart; i<iFinish; i+=nbX )
     {
@@ -708,13 +682,11 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             nbX = remX;
             i= iFinish;
         }
-
         I = Iindice*maxgrscalemaxgr;
         for(uint j=0; j<limitY; j+=nbY)
         {
             Jindice = j;
             nbZ=OrignbZ;
-
             if((remY>0) && ((Jindice+remY)==(limitY)))
             {
                 nbY = remY;
@@ -737,7 +709,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     vals[l*4+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
                     vals[l*4+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
                 }
-
                 IJK = J+Kindice;
                 double res = implicitFunctionParser[IsoIndex].Eval2(vals, 4, Res, nbstack);
                 if( abs(res - IF_FUNCT_ERROR) == 0.0)
@@ -749,10 +720,8 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 {
                     StopCalculations = true;
                 }
-
                 if(StopCalculations)
                     return;
-
                 uint p=0;
                 uint sect=0;
                 for(uint ii=0; ii<nbX; ii++)
@@ -767,7 +736,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                         }
                 //Signal emission:
                 id+=nbstack;
-
                 if(MyIndex == 0 && activeMorph != 1)
                 {
                     signalVal = int((id*100)/Totalpoints);
@@ -791,52 +759,42 @@ void Iso3D::ConstructIsoNormale(uint idx)
           pt3_x, pt3_y, pt3_z,
           scalar, n1, n2, n3;
     uint ThreeTimesI, IndexFirstPoint, IndexSecondPoint, IndexThirdPoint;
-
     NormOriginaltmpVector.resize(NormOriginaltmpVector.size()+ 3*NbTriangleIsoSurface);
-
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI      = i*3;
         IndexFirstPoint  = 10*IndexPolyTabVector[ThreeTimesI  +3*idx] + 7;
         IndexSecondPoint = 10*IndexPolyTabVector[ThreeTimesI+1+3*idx] + 7;
         IndexThirdPoint  = 10*IndexPolyTabVector[ThreeTimesI+2+3*idx] + 7;
-
         pt1_x= NormVertexTabVector[IndexFirstPoint  ];
         pt1_y= NormVertexTabVector[IndexFirstPoint+1];
         pt1_z= NormVertexTabVector[IndexFirstPoint+2];
-
         pt2_x= NormVertexTabVector[IndexSecondPoint  ];
         pt2_y= NormVertexTabVector[IndexSecondPoint+1];
         pt2_z= NormVertexTabVector[IndexSecondPoint+2];
-
         pt3_x= NormVertexTabVector[IndexThirdPoint   ];
         pt3_y= NormVertexTabVector[IndexThirdPoint+1 ];
         pt3_z= NormVertexTabVector[IndexThirdPoint+2 ];
-
         val1 = pt2_y - pt1_y;
         val2 = pt3_z - pt1_z;
         val3 = pt2_z - pt1_z;
         val4 = pt3_y - pt1_y;
         val5 = pt3_x - pt1_x;
         val6 = pt2_x - pt1_x;
-
         n1 = (val1*val2 - val3*val4);
         n2 = (val3*val5 - val6*val2);
         n3 = (val6*val4 - val1*val5);
-
         scalar = float(sqrt(n1*n1+n2*n2+n3*n3));
         if(scalar < float(0.0000001))  scalar  = float(0.0000001);
         (NormOriginaltmpVector[ThreeTimesI  ] = n1/scalar);
         (NormOriginaltmpVector[ThreeTimesI+1] = n2/scalar);
         (NormOriginaltmpVector[ThreeTimesI+2] = n3/scalar);
-
     }
 }
 void Iso3D::SaveIsoGLMap(uint indx)
 {
     uint IndexFirstPoint, IndexSecondPoint, IndexThirdPoint, ThreeTimesI;
     double scalar;
-
 /// Recalculate the normals so we have one for each Point (like Pov Mesh) :
     for (uint i=0; i < NbPointIsoMap ; i++)
     {
@@ -845,23 +803,18 @@ void Iso3D::SaveIsoGLMap(uint indx)
         NormVertexTabVector[ 10*NbVertexTmp +ThreeTimesI+1] = 0;
         NormVertexTabVector[ 10*NbVertexTmp +ThreeTimesI+2] = 0;
     }
-
     for(uint i = 0; i<NbTriangleIsoSurface; ++i)
     {
         ThreeTimesI   = i*3;
         IndexFirstPoint  = 10*IndexPolyTabVector[ThreeTimesI  +3*indx] + 4;
         IndexSecondPoint = 10*IndexPolyTabVector[ThreeTimesI+1+3*indx] + 4;
         IndexThirdPoint  = 10*IndexPolyTabVector[ThreeTimesI+2+3*indx] + 4;
-
-
         NormVertexTabVector[IndexFirstPoint  ] += NormOriginaltmpVector[ThreeTimesI  ];
         NormVertexTabVector[IndexFirstPoint+1] += NormOriginaltmpVector[ThreeTimesI+1];
         NormVertexTabVector[IndexFirstPoint+2] += NormOriginaltmpVector[ThreeTimesI+2];
-
         NormVertexTabVector[IndexSecondPoint  ] += NormOriginaltmpVector[ThreeTimesI  ];
         NormVertexTabVector[IndexSecondPoint+1] += NormOriginaltmpVector[ThreeTimesI+1];
         NormVertexTabVector[IndexSecondPoint+2] += NormOriginaltmpVector[ThreeTimesI+2];
-
         NormVertexTabVector[IndexThirdPoint  ]  += NormOriginaltmpVector[ThreeTimesI  ];
         NormVertexTabVector[IndexThirdPoint+1]  += NormOriginaltmpVector[ThreeTimesI+1];
         NormVertexTabVector[IndexThirdPoint+2]  += NormOriginaltmpVector[ThreeTimesI+2];
@@ -883,9 +836,7 @@ void Iso3D::SaveIsoGLMap(uint indx)
 ErrorMessage IsoMasterThread::ParserIso()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
     initparser();
-
     //Evaluates defined constantes:
     if(constnotnull)
     {
@@ -905,7 +856,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         ConstSize = 0;
     }
-
     if(functnotnull)
     {
         FunctSize = HowManyVariables(Funct, 2);
@@ -915,14 +865,12 @@ ErrorMessage IsoMasterThread::ParserIso()
             {
                 Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
-
             //Add predefined constatnts:
             for(uint k=0; k<Nb_Sliders; k++)
             {
                 Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
         }
-
         for(uint i=0; i<FunctSize; i++)
         {
             for(uint j=0; j<i; j++)
@@ -943,7 +891,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     if(rgbtnotnull)
     {
         RgbtSize = HowManyVariables(Rgbt, 3);
-
         for(uint i=0; i<RgbtSize; i++)
         {
             for(uint j=0; j<ConstSize; j++)
@@ -1001,7 +948,6 @@ ErrorMessage IsoMasterThread::ParserIso()
         NoiseParser->AddConstant("Lacunarity", Lacunarity);
         NoiseParser->AddConstant("Gain", Gain);
         NoiseParser->AddConstant("Octaves", Octaves);
-
         //Add predefined constatnts:
         for(uint k=0; k<Nb_Sliders; k++)
         {
@@ -1024,7 +970,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
     else
         ParisoCondition = -1;
-
     //Add defined constantes:
     for(uint i=0; i<componentsNumber; i++)
     {
@@ -1040,7 +985,6 @@ ErrorMessage IsoMasterThread::ParserIso()
             yInfParser[i].AddConstant(ConstNames[j], ConstValues[j]);
             zInfParser[i].AddConstant(ConstNames[j], ConstValues[j]);
         }
-
         //Add predefined constatnts:
         for(uint k=0; k<Nb_Sliders; k++)
         {
@@ -1120,7 +1064,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
     {
         stepMorph += pace;
     }
-    vals[3]          = stepMorph;
+    vals[3] = stepMorph;
     // Parse
     if(rgbtnotnull && RgbtSize == 4)
         for(uint i=0; i<RgbtSize; i++)
@@ -1205,11 +1149,9 @@ ErrorMessage IsoMasterThread::ParseExpression()
         xLocal2[IsoIndex*GridVal]=xSupParser[IsoIndex].Eval(vals);
         yLocal2[IsoIndex*GridVal]=ySupParser[IsoIndex].Eval(vals);
         zLocal2[IsoIndex*GridVal]=zSupParser[IsoIndex].Eval(vals);
-
         x_Step[IsoIndex] = (xLocal2[IsoIndex*GridVal] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
         y_Step[IsoIndex] = (yLocal2[IsoIndex*GridVal] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
         z_Step[IsoIndex] = (zLocal2[IsoIndex*GridVal] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
-
         for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*GridVal+i] = xLocal2[IsoIndex*GridVal+i-1] - x_Step[IsoIndex];
         for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*GridVal+j] = yLocal2[IsoIndex*GridVal+j-1] - y_Step[IsoIndex];
         for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*GridVal+k] = zLocal2[IsoIndex*GridVal+k-1] - z_Step[IsoIndex];
@@ -1283,7 +1225,6 @@ void IsoMasterThread::InitMasterParsers()
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
-
     for(uint i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
@@ -1345,33 +1286,25 @@ void IsoMasterThread::AllocateMasterParsers()
         x_Step.resize(componentsNumber);
         y_Step.resize(componentsNumber);
         z_Step.resize(componentsNumber);
-
         if(!functnotnull)
             FunctSize = 0;
         Fct          = new FunctionParser[FunctSize];
         UsedFunct    = new bool[4*componentsNumber*FunctSize];
         UsedFunct2   = new bool[FunctSize*FunctSize];
-
         vectnotnull? nbvariables=vect[0] : nbvariables=0;
-
         rgbtnotnull ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
-
-
         vrgbtnotnull ?
         VRgbtParser = new FunctionParser[VRgbtSize] :
         VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
-
         if(constnotnull)
             ConstSize=0;
-
         GradientParser = new FunctionParser;
         NoiseParser = new FunctionParser;
         ParsersAllocated = true;
     }
 }
-
 void IsoWorkerThread::AllocateParsersForWorkerThread(uint nbcomp, uint nbfunct)
 {
     if(!ParsersAllocated)
@@ -1381,7 +1314,6 @@ void IsoWorkerThread::AllocateParsersForWorkerThread(uint nbcomp, uint nbfunct)
         ParsersAllocated = true;
     }
 }
-
 void IsoMasterThread::initgrid()
 {
     GridVal = XYZgrid;
@@ -1389,7 +1321,6 @@ void IsoMasterThread::initgrid()
         for(uint fctnb= 0; fctnb< componentsNumber; fctnb++)
             GridVal = std::max(GridVal, grid[fctnb]);
 }
-
 void IsoMasterThread::initparser()
 {
     DeleteMasterParsers();
@@ -1397,13 +1328,11 @@ void IsoMasterThread::initparser()
     AllocateMasterParsers();
     InitMasterParsers();
 }
-
 void IsoWorkerThread::IsoCompute(uint fctnb)
 {
     (fctnb == 0) ? AllComponentTraited = true : AllComponentTraited = false;
     VoxelEvaluation(fctnb);
 }
-
 void Iso3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
@@ -1411,19 +1340,16 @@ void Iso3D::stopcalculations(bool calculation)
     for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
-
 void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
     copy->ParisoTriangle = origin->ParisoTriangle;
     copy->ParisoVertex          = origin->ParisoVertex;
     copy->NbComponents    = origin->NbComponents;
-
     copy->ParisoCurrentComponentIndex = origin->ParisoCurrentComponentIndex;
     copy->ParisoNbComponents          = origin->ParisoNbComponents;
     copy->Interleave                  = origin->Interleave;
     copy->pariso                      = origin->pariso;
     copy->updateviewer                = origin->updateviewer;
-
     copy->ThereisCND                  = origin->ThereisCND;
     copy->ParisoCondition             = origin->ParisoCondition;
     copy->ThereisRGBA                 = origin->ThereisRGBA;
@@ -1431,13 +1357,11 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
     copy->NbTrianglesNoCND            = origin->NbTrianglesNoCND;
     copy->NbTrianglesNotVerifyCND     = origin->NbTrianglesNotVerifyCND;
     copy->NbTrianglesBorderCND        = origin->NbTrianglesBorderCND;
-
     for(int i=0; i<2; i++)
     {
         copy->NoiseParam[i]  = origin->NoiseParam[i];
     }
 }
-
 void Iso3D::IsoBuild (
     float **NormVertexTabVectorPt,
     uint **IndexPolyTabPt,
@@ -1477,7 +1401,6 @@ void Iso3D::IsoBuild (
     }
     NormOriginaltmpVector.clear();
     NormOriginaltmpVector.shrink_to_fit();
-
     //*****//
     uint maxx = std::max(masterthread->XYZgrid, masterthread->GridVal);
     if(masterthread->gridnotnull)
@@ -1488,12 +1411,10 @@ void Iso3D::IsoBuild (
     {
         workerthreads[nbthreads].GridVal = masterthread->GridVal;
     }
-
     if(GridVoxelVarPt != nullptr)
         delete[] GridVoxelVarPt;
     if(Results != nullptr)
         delete[] Results;
-
     try
       {
         GridVoxelVarPt = new Voxel[masterthread->GridVal*masterthread->GridVal*masterthread->GridVal];
@@ -1504,7 +1425,6 @@ void Iso3D::IsoBuild (
         emitErrorSignal();
         return;
       }
-
     Results = new (std::nothrow) double[masterthread->GridVal*masterthread->GridVal*masterthread->GridVal];
     if (!Results)
     {
@@ -1512,15 +1432,12 @@ void Iso3D::IsoBuild (
         emitErrorSignal();
         return;
     }
-
     components->NbComponents.push_back(masterthread->componentsNumber);
     stopcalculations(false);
-
     if(masterthread->activeMorph != 1)
     {
         times.restart();
     }
-
     // generate Isosurface for all the implicit formulas
     for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
     {
@@ -1529,18 +1446,14 @@ void Iso3D::IsoBuild (
             message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->componentsNumber)+"==> Math calculation");
             emitUpdateMessageSignal();
         }
-
         if(masterthread->gridnotnull)
             Setgrid(masterthread->grid[fctnb]);
-
         IsoComponentId = fctnb;
         masterthread->CurrentComponent = fctnb;
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].CurrentComponent = fctnb;
-
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].stepMorph = masterthread->stepMorph;
-
         if(masterthread->activeMorph == 1)
         {
             if(fctnb == 0)
@@ -1553,19 +1466,15 @@ void Iso3D::IsoBuild (
             // Recalculate some tables values:
             ReinitVarTablesWhenMorphActiv(fctnb);
         }
-
         masterthread->start();
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].start();
-
         masterthread->wait();
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].wait();
-
         bool Stop = masterthread->StopCalculations;
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             Stop = Stop || workerthreads[nbthreads].StopCalculations;
-
         if(StopCalculations || Stop)
         {
             Setgrid(PreviousGridVal);
@@ -1575,13 +1484,11 @@ void Iso3D::IsoBuild (
             Results = nullptr;
             return;
         }
-
         if(masterthread->activeMorph != 1)
         {
             message += QString(" ==> Mesh generation");
             emitUpdateMessageSignal();
         }
-
         uint result = PointEdgeComputation(fctnb);
         if(result == 0)
         {
@@ -1589,9 +1496,7 @@ void Iso3D::IsoBuild (
             emitErrorSignal();
             return;
         }
-
         SignatureComputation();
-
         result = ConstructIsoSurface();
         if(result == 0)
         {
@@ -1599,7 +1504,6 @@ void Iso3D::IsoBuild (
             emitErrorSignal();
             return;
         }
-
         ConstructIsoNormale(NbTriangleIsoSurfaceTmp);
         SaveIsoGLMap(NbTriangleIsoSurfaceTmp);
         NormOriginaltmpVector.clear();
@@ -1610,18 +1514,15 @@ void Iso3D::IsoBuild (
             emitErrorSignal();
             return;
         }
-
         // Save the Index:
         components->ParisoTriangle.push_back(3*NbTriangleIsoSurfaceTmp); //save the starting position of this component
         components->ParisoTriangle.push_back(NbTriangleIsoSurface);      //save the number of triangles of this component
         components->ParisoVertex.push_back(NbVertexTmp);
         components->ParisoVertex.push_back(NbVertexTmp + NbPointIsoMap -1);
-
         // Save Number of Polys and vertex :
         NbVertexTmp               += NbPointIsoMap;
         NbTriangleIsoSurfaceTmp   += NbTriangleIsoSurface;
     }
-
     delete[] GridVoxelVarPt;
     GridVoxelVarPt = nullptr;
     delete[] Results;
@@ -1631,7 +1532,6 @@ void Iso3D::IsoBuild (
         message = QString("2) Mesh Processing");
         emitUpdateMessageSignal();
     }
-
     //CND calculation for the triangles results:
     uint result = CNDCalculation(NbTriangleIsoSurfaceTmp, components);
     if(result == 0)
@@ -1646,7 +1546,6 @@ void Iso3D::IsoBuild (
         emitErrorSignal();
         return;
     }
-
     // Pigment, Texture and Noise :
     if(masterthread->vrgbtnotnull)
     {
@@ -1669,23 +1568,19 @@ void Iso3D::IsoBuild (
         components->ThereisRGBA.push_back(false);
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = -1; //No Pigments or texture
     }
-
     if(masterthread->Noise == "")
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 0;
     else
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 1;
-
     CalculateColorsPoints(components, components->ThereisRGBA.size()-1);
     *PolyNumber      = uint(IndexPolyTabVector.size());
     *VertexNumberpt  = uint(NormVertexTabVector.size()/10);
     *VertxNumber     = uint(IndexPolyTabMinVector.size());
-
     if(masterthread->activeMorph != 1)
     {
         message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();
     }
-
     *NormVertexTabVectorPt = NormVertexTabVector.data();
     *IndexPolyTabPt = IndexPolyTabVector.data();
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
@@ -1698,7 +1593,6 @@ void Iso3D::IsoBuild (
     Setgrid(PreviousGridVal);
     componentsPt->updateviewer = true;
 }
-
 void Iso3D::Setgrid(uint NewGridVal)
 {
     if(masterthread->gridnotnull)
@@ -1708,8 +1602,6 @@ void Iso3D::Setgrid(uint NewGridVal)
             workerthreads[th].XYZgrid = NewGridVal;
     }
 }
-
-///+++++++++++++++++++++++++++++++++++++++++
 void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
 {
     uint cmpId=0, K=0;
@@ -1725,7 +1617,6 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
         {
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
-
         uint idx=0;
         for(uint i=0; i < comp->NbComponents.size()-1; i++)
             idx+=comp->NbComponents[i];
@@ -1734,16 +1625,13 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             val[0]= double(NormVertexTabVector[i*10  + 7 ]);
             val[1]= double(NormVertexTabVector[i*10  + 8 ]);
             val[2]= double(NormVertexTabVector[i*10  + 9 ]);
-
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
-
             val[0]= tmp*double(NormVertexTabVector[i*10  + 7 ]);
             val[1]= tmp*double(NormVertexTabVector[i*10  + 8 ]);
             val[2]= tmp*double(NormVertexTabVector[i*10  + 9 ]);
-
             tmp  = masterthread->GradientParser->Eval(val);
             for (uint j=0; j < masterthread->VRgbtSize; j+=5)
                 if(tmp < ValCol[j])
@@ -1758,7 +1646,6 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
                         NormVertexTabVector[i*10+3] = float(ValCol[(j)+4]);
                         j = masterthread->VRgbtSize;
                     }
-
                 }
                 else if(tmp == ValCol[j])
                 {
@@ -1785,7 +1672,6 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
                     cmpId++;
                 }
             }
-
             val[0]= double(NormVertexTabVector[i*10 + 7]);
             val[1]= double(NormVertexTabVector[i*10 + 8]);
             val[2]= double(NormVertexTabVector[i*10 + 9]);
@@ -1794,11 +1680,9 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
-
             val[0]= tmp*double(NormVertexTabVector[i*10+7]);
             val[1]= tmp*double(NormVertexTabVector[i*10+8]);
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
-
             NormVertexTabVector[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
             NormVertexTabVector[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));
             NormVertexTabVector[i*10+2] = float(masterthread->RgbtParser[2].Eval(val));
@@ -1807,7 +1691,6 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     }
     delete[] ValCol;
 }
-
 uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
     uint idpx=0;
@@ -1822,19 +1705,16 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         double vals[4];
         std::vector<int> PointVerifyCond;
         vals[3] = masterthread->stepMorph;
-
         for(uint i= startpoint; i < NbVertexTmp; i++)
         {
             vals[0] = double(NormVertexTabVector[i*10+7]);
             vals[1] = double(NormVertexTabVector[i*10+8]);
             vals[2] = double(NormVertexTabVector[i*10+9]);
-
             uint compid= CNDtoUse(i, comp);
             if(comp->ParisoCondition[compid+sz])
                 PointVerifyCond.push_back(8);
             else
                 PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[compid].Eval(vals)));
-
             if(PointVerifyCond[i-startpoint])
             {
                 NormVertexTabVector[i*10  ] = 0.1f;
@@ -1856,15 +1736,12 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         for(uint id=0; id < comp->NbComponents.size()-1; id++)
             mdx+=comp->NbComponents[id];
         uint starttri = uint(comp->ParisoTriangle[2*mdx]/3);
-
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
-
         for(uint i= starttri; i < nbtriangle; i++)
         {
             Aindex = IndexPolyTabVector[3*i    ];
             Bindex = IndexPolyTabVector[3*i + 1];
             Cindex = IndexPolyTabVector[3*i + 2];
-
             int TypeTriangle = -1;
             if((PointVerifyCond[Aindex-startpoint] == 8) ||
                     (PointVerifyCond[Bindex-startpoint] == 8) ||
