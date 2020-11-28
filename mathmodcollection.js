@@ -2217,7 +2217,7 @@
     },
     {
       "Param3D": {
-        "Name": ["Catalan"],
+        "Name": ["Catalan_Minimal_Surface"],
         "Component": ["Catalan"],
         "Fx": ["u-sin(u)*cosh(v)"],
         "Fy": ["1-cos(u)*cosh(v)"],
