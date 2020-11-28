@@ -52,6 +52,21 @@
     },
     {
         "Param3D": {
+            "Description": ["Catalan Surface by Abderrahman Taha 28/11/2020"],
+            "Name": ["Catalan_Surface"],
+            "Component": ["Apple"],
+            "Fx": ["cos(u)+2*cos(2*u) +v*((8*cos(u)^2-cos(u)-4)/(-32*cos(u)^3+24*cos(u)+17)^(1/2))"],
+            "Fy": ["sin(u)-2*sin(2*u) + v* (-sin(u)*(8*cos(u)+1)/(-32*cos(u)^3+24*cos(u)+17)^(1/2))"],
+            "Fz": ["2*sin(3*u)"],
+            "Grid": ["200", "40"],
+            "Umax": ["2*pi"],
+            "Umin": ["0"],
+            "Vmax": ["pi/4"],
+            "Vmin": ["-pi/4"]
+        }
+    },
+    {
+        "Param3D": {
             "Description ": ["Planar Enneper Parametric surface by Abderrahman Taha 23/11/2020"],
             "Name": ["Planar_Enneper"],
             "Component": ["Planar Enneper"],
