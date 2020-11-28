@@ -54,7 +54,7 @@
         "Param3D": {
             "Description": ["Catalan Surface by Abderrahman Taha 28/11/2020"],
             "Name": ["Catalan_Surface"],
-            "Component": ["Apple"],
+            "Component": ["Catalan"],
             "Fx": ["cos(u)+2*cos(2*u) +v*((8*cos(u)^2-cos(u)-4)/(-32*cos(u)^3+24*cos(u)+17)^(1/2))"],
             "Fy": ["sin(u)-2*sin(2*u) + v* (-sin(u)*(8*cos(u)+1)/(-32*cos(u)^3+24*cos(u)+17)^(1/2))"],
             "Fz": ["2*sin(3*u)"],
