@@ -1170,17 +1170,17 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[2]= double(NormVertexTabVector[i*10+9]);
 
             val[7] = double(i);
-            val[8] = double(Vgrid);
+            val[8] = double(Vgrid);      // doesn't work with multiple component (ie: Vgrid is a fixed value)
             val[9] = double(K);
-            Jprime = (i)/(Ugrid);
+            Jprime = floor((i)/(Vgrid)); // doesn't work with multiple component
             val[6] = double(Jprime);
-            val[4] = val[6]/double(Ugrid) ;
-            val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
+            val[4] = val[6]/double(Vgrid) ;
+            val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0]; // doesn't work with multiple component (ie: v_inf[0] and dif_v[0] are fixed values)
 
-            Jprime = (i) %  (Vgrid);
+            Jprime = (i) %  (Vgrid); // doesn't work with multiple component
             val[5] =  double(Jprime);
-            val[3] = val[5]/double(Vgrid) ;
-            val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
+            val[3] = val[5]/double(Ugrid) ; // doesn't work with multiple component
+            val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0]; // doesn't work with multiple component (ie: u_inf[0] and dif_u[0] are fixed values)
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
@@ -1192,7 +1192,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
             val[3]*= tmp;
             val[4]*= tmp;
-
             NormVertexTabVector[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
             NormVertexTabVector[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));
             NormVertexTabVector[i*10+2] = float(masterthread->RgbtParser[2].Eval(val));
