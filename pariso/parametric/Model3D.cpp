@@ -1169,18 +1169,34 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[1]= double(NormVertexTabVector[i*10+8]);
             val[2]= double(NormVertexTabVector[i*10+9]);
 
-            val[7] = double(i);
-            val[8] = double(Vgrid);      // doesn't work with multiple component (ie: Vgrid is a fixed value)
-            val[9] = double(K);
-            Jprime = floor((i)/(Vgrid)); // doesn't work with multiple component
-            val[6] = double(Jprime);
-            val[4] = val[6]/double(Vgrid) ;
-            val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0]; // doesn't work with multiple component (ie: v_inf[0] and dif_v[0] are fixed values)
-
-            Jprime = (i) %  (Vgrid); // doesn't work with multiple component
-            val[5] =  double(Jprime);
-            val[3] = val[5]/double(Ugrid) ; // doesn't work with multiple component
-            val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0]; // doesn't work with multiple component (ie: u_inf[0] and dif_u[0] are fixed values)
+            if(masterthread->gridnotnull)
+            {
+                val[7] = double(i);
+                val[8] = double(masterthread->grid[2*K+1]);
+                val[9] = double(K);
+                Jprime = floor((i)/(masterthread->grid[2*K+1]));
+                val[6] = double(Jprime);
+                val[4] = val[6]/double(masterthread->grid[2*K+1]) ;
+                val[4] = val[4] * masterthread->dif_v[K]  + masterthread->v_inf[K];
+                Jprime = (i) %  (masterthread->grid[2*K+1]);
+                val[5] =  double(Jprime);
+                val[3] = val[5]/double(masterthread->grid[2*K]) ;
+                val[3] = val[3] * masterthread->dif_u[K]  + masterthread->u_inf[K];
+            }
+            else
+            {
+                val[7] = double(i);
+                val[8] = double(Vgrid);
+                val[9] = double(K);
+                Jprime = floor((i)/(Vgrid));
+                val[6] = double(Jprime);
+                val[4] = val[6]/double(Vgrid);
+                val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
+                Jprime = (i) %  (Vgrid);
+                val[5] =  double(Jprime);
+                val[3] = val[5]/double(Ugrid);
+                val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
+            }
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
