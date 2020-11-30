@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2020 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -651,7 +651,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     // Parse
     if(rgbtnotnull)
         for(uint i=0; i<RgbtSize; i++)
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,grid,cmpId")) >= 0)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,max_i,max_j,cmpId")) >= 0)
             {
                 stdError.strError = Rgbts[i];
                 return stdError;
@@ -1093,7 +1093,7 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Jprime,cmpId=0, K=0;
-    double tmp, ValCol[masterthread->VRgbtSize], val[10];
+    double tmp, ValCol[masterthread->VRgbtSize], val[11];
     val[3] = masterthread->stepMorph;
     val[0] = val[1] = val[2] = 0.0;
 
@@ -1118,11 +1118,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
-
             val[0]= tmp*double(NormVertexTabVector[i*10+7]);
             val[1]= tmp*double(NormVertexTabVector[i*10+8]);
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
-
             tmp  = masterthread->GradientParser->Eval(val);
             tmp  = masterthread->GradientParser->Eval(val);
             for (uint j=0; j < masterthread->VRgbtSize; j+=5)
@@ -1168,12 +1166,12 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[0]= double(NormVertexTabVector[i*10+7]);
             val[1]= double(NormVertexTabVector[i*10+8]);
             val[2]= double(NormVertexTabVector[i*10+9]);
-
             if(masterthread->gridnotnull)
             {
                 val[7] = double(i);
-                val[8] = double(masterthread->grid[2*K+1]);
-                val[9] = double(K);
+                val[8] = double(masterthread->grid[2*K]);
+                val[9] = double(masterthread->grid[2*K+1]);
+                val[10] = double(K);
                 Jprime = floor((i)/(masterthread->grid[2*K+1]));
                 val[6] = double(Jprime);
                 val[4] = val[6]/double(masterthread->grid[2*K+1]) ;
@@ -1186,8 +1184,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             else
             {
                 val[7] = double(i);
-                val[8] = double(Vgrid);
-                val[9] = double(K);
+                val[8] = double(Ugrid);
+                val[9] = double(Vgrid);
+                val[10] = double(K);
                 Jprime = floor((i)/(Vgrid));
                 val[6] = double(Jprime);
                 val[4] = val[6]/double(Vgrid);
@@ -1197,12 +1196,10 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 val[3] = val[5]/double(Ugrid);
                 val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
             }
-
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
-
             val[0]= tmp*double(NormVertexTabVector[i*10+7]);
             val[1]= tmp*double(NormVertexTabVector[i*10+8]);
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
