@@ -1092,7 +1092,7 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
-    uint Jprime,cmpId=0, K=0;
+    uint Iprime, Jprime,cmpId=0, K=0;
     double tmp, ValCol[masterthread->VRgbtSize], val[11];
     val[3] = masterthread->stepMorph;
     val[0] = val[1] = val[2] = 0.0;
@@ -1172,14 +1172,14 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 val[8] = double(masterthread->grid[2*K]);
                 val[9] = double(masterthread->grid[2*K+1]);
                 val[10] = double(K);
-                Jprime = floor((i)/(masterthread->grid[2*K+1]));
-                val[6] = double(Jprime);
-                val[4] = val[6]/double(masterthread->grid[2*K+1]) ;
-                val[4] = val[4] * masterthread->dif_v[K]  + masterthread->v_inf[K];
                 Jprime = (i) %  (masterthread->grid[2*K+1]);
-                val[5] =  double(Jprime);
-                val[3] = val[5]/double(masterthread->grid[2*K]) ;
+                Iprime = floor((i-Jprime)/(masterthread->grid[2*K+1]));
+                val[5] = double(Iprime);
+                val[6] = double(Jprime);
+                val[3] = val[5]/double(masterthread->grid[2*K]);
                 val[3] = val[3] * masterthread->dif_u[K]  + masterthread->u_inf[K];
+                val[4] = val[6]/double(masterthread->grid[2*K+1]);
+                val[4] = val[4] * masterthread->dif_v[K]  + masterthread->v_inf[K];
             }
             else
             {
@@ -1187,14 +1187,14 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 val[8] = double(Ugrid);
                 val[9] = double(Vgrid);
                 val[10] = double(K);
-                Jprime = floor((i)/(Vgrid));
-                val[6] = double(Jprime);
-                val[4] = val[6]/double(Vgrid);
-                val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
                 Jprime = (i) %  (Vgrid);
-                val[5] =  double(Jprime);
+                Iprime = floor((i-Jprime)/(Vgrid));
+                val[5] = double(Iprime);
+                val[6] = double(Jprime);
                 val[3] = val[5]/double(Ugrid);
                 val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
+                val[4] = val[6]/double(Vgrid);
+                val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
             }
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
