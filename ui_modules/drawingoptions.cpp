@@ -1711,7 +1711,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     }
 }
 
-
 void DrawingOptions::OptionalParScriptFieldprocess(
     const QJsonObject &QObj, OptionnalParScriptFIELD idx)
 {
@@ -2066,7 +2065,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     return (0);
 }
 
-
 void DrawingOptions::LoadMandatoryAndOptionnalFields(
     const QJsonObject &qobj, const ModelType &mod, bool loadtext,
     const QJsonObject &QTextureObj, bool loadpigm,
@@ -2133,20 +2131,17 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
     case UNDEFINED_TYPE:
         break;
     }
-
     // Colors
     if (loadtext)
     {
         LoadTexture(QTextureObj, mod);
     }
-
     // Pigment
     if (loadpigm)
     {
         LoadPigment(QPigmentObj, mod);
     }
 }
-
 
 int DrawingOptions::on_choice_activated(const QString &arg)
 {
@@ -2159,7 +2154,6 @@ int DrawingOptions::on_choice_activated(const QString &arg)
 
     return Result;
 }
-
 
 void DrawingOptions::Run_JsonObject_activeted()
 {
@@ -2181,7 +2175,6 @@ void DrawingOptions::Run_JsonObject_activeted()
     // Draw here
     DrawJsonModel(doc.object());
 }
-
 
 void DrawingOptions::slot_comboBox18_3_activated(const QString &arg1)
 {
@@ -2217,12 +2210,10 @@ void DrawingOptions::slot_comboBox18_3_activated(const QString &arg1)
     }
 }
 
-
 void DrawingOptions::slot_checkBox_clicked()
 {
     MathmodRef->slot_uv_clicked();
 }
-
 
 void DrawingOptions::LoadNewFileModels(bool upd)
 {
@@ -2230,7 +2221,6 @@ void DrawingOptions::LoadNewFileModels(bool upd)
 
     mathmodcollection = QFileDialog::getOpenFileName(
                             nullptr, tr("Load Json Script"), "", tr("Json (*.js)"));
-
     if (upd)
     {
         ui.ObjectClasse->clear();
@@ -2241,9 +2231,7 @@ void DrawingOptions::LoadNewFileModels(bool upd)
         MathmodRef->collection.JPar.clear();
         MathmodRef->collection.JIso.clear();
     }
-
     MathmodRef->RootObjet.ReadJsonFile(mathmodcollection, JSONMathModels);
-
     QJsonArray array = JSONMathModels["MathModels"].toArray();
     QStringList lst;
     QString a;
@@ -2279,14 +2267,12 @@ void DrawingOptions::LoadNewFileModels(bool upd)
             lst.append(a);
         }
     }
-
     lst.insert(0, "Examples (" + QString::number(lst.count()) + ")");
     // Load the script containing isosurface and parametric formulas:
     ui.choice->clear();
     ui.choice->insertItems(0, lst);
     AddListModels(upd);
 }
-
 
 void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
 {
@@ -2297,11 +2283,9 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
     int EquationsNumber = 0;
     QString JsonString = "";
     int FctType = -1;
-
     filename = QFileDialog::getOpenFileName(
                    nullptr, QObject::tr("Open K3DSurf script File"), "",
                    QObject::tr("K3DS (*.k3ds)"));
-
     QFile file(filename);
     if (type == 1)
     {
