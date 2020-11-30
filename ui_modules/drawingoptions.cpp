@@ -1588,7 +1588,6 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
     }
 }
 
-
 void DrawingOptions::OptionalIsoScriptFieldprocess(
     const QJsonObject &QObj, OptionnalIsoScriptFIELD idx)
 {
@@ -1833,7 +1832,6 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     }
 }
 
-
 void DrawingOptions::BuildAllVect()
 {
     const OptionnalIsoScriptFIELD optiso[] = {ISO_GRID, ISO_VECT, ISO_CND, ISO_CONST, ISO_FUNCT};
@@ -1845,14 +1843,12 @@ void DrawingOptions::BuildAllVect()
                                              };
     OptParFields = std::vector<OptionnalParScriptFIELD>(
                        optpar, optpar + sizeof(optpar) / sizeof(OptionnalParScriptFIELD));
-
     const MandatoryIsoField maniso[] = {ISO_FXYZ, ISO_XMIN, ISO_XMAX,
                                         ISO_YMIN, ISO_YMAX, ISO_ZMIN,
                                         ISO_ZMAX, ISO_COMP, ISO_NAME
                                        };
     MandIsoFields = std::vector<MandatoryIsoField>(
                         maniso, maniso + sizeof(maniso) / sizeof(MandatoryIsoField));
-
     const MandatoryParField manpar[] = {PAR_FX,   PAR_FY,   PAR_FZ,   PAR_FW,
                                         PAR_UMIN, PAR_UMAX, PAR_VMIN, PAR_VMAX,
                                         PAR_COMP, PAR_NAME
@@ -1860,7 +1856,6 @@ void DrawingOptions::BuildAllVect()
     MandParFields = std::vector<MandatoryParField>(
                         manpar, manpar + sizeof(manpar) / sizeof(MandatoryParField));
 }
-
 
 int DrawingOptions::JSON_choice_activated(const QString &arg1)
 {
@@ -1870,7 +1865,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     QJsonObject QObj, QObj1;
     QJsonObject QTextureObj, QPigmentObj;
     bool loadtext, loadpigm;
-
     QMessageBox msgBox;
     updateCurrentTreestruct();
     MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
@@ -1881,7 +1875,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
         {
             if (!VerifiedJsonModel((array[i].toObject())))
                 return (0);
-
             ShowSliders(array[i].toObject());
             QJsonArray listeObj = QObj1["ParIso"].toArray();
             QJsonArray listeIsoObj;
@@ -1897,7 +1890,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 QPar = listeParObj[0].toObject();
             if (listeIsoObj.size() > 0)
                 QIso = listeIsoObj[0].toObject();
-
             loadtext = loadpigm = false;
             if (QPar["Texture"].isObject())
                 QTextureObj = QPar["Texture"].toObject();
@@ -1915,7 +1907,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             // Save this Current Parametric Tree struct
             MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(
                 MathmodRef->RootObjet.CurrentTreestruct);
-
             loadtext = loadpigm = false;
             if (QIso["Texture"].isObject())
                 QTextureObj = QIso["Texture"].toObject();
@@ -1936,7 +1927,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             QJsonDocument document;
             document.setObject(QObj1);
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
-
             // Update the current pariso struct
             MathmodRef->RootObjet.CurrentJsonObject = QObj1;
             CurrentFormulaType = 2;
@@ -1961,25 +1951,19 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             {
                 if (!VerifiedJsonModel((array[i].toObject())))
                     return (0);
-
                 ShowSliders(array[i].toObject());
-
                 // Colors
                 if ((loadtext = MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull = QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
-
                 // Pigment
                 if ((loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull = QObj1["Pigment"].isObject()))
                     QPigmentObj = QObj1["Pigment"].toObject();
-
                 LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj,
                                                 loadpigm, QPigmentObj);
-
                 QJsonDocument document;
                 document.setObject(array[i].toObject());
                 MathmodRef->RootObjet.CurrentTreestruct.text =
                     QString(document.toJson());
-
                 // Update the current parametric struct
                 // MathmodRef->RootObjet.CurrentIsoStruct =
                 // MathmodRef->RootObjet.IsoTable[indextable];
@@ -1997,22 +1981,18 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 if (!VerifiedJsonModel((array[i].toObject())))
                     return (0);
                 ShowSliders(array[i].toObject());
-
                 // Colors
                 if ((loadtext =
                             MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
                                 QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
-
                 // Pigment
                 if ((loadpigm =
                             MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
                                 QObj1["Pigment"].isObject()))
                     QPigmentObj = QObj1["Pigment"].toObject();
-
                 LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE, loadtext, QTextureObj,
                                                 loadpigm, QPigmentObj);
-
                 QJsonDocument document;
                 document.setObject(array[i].toObject());
                 MathmodRef->RootObjet.CurrentTreestruct.text =
@@ -2032,30 +2012,24 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 if (!VerifiedJsonModel((array[i].toObject())))
                     return (0);
                 ShowSliders(array[i].toObject());
-
                 // Colors
                 if ((loadtext =
                             MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
                                 QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
-
                 // Pigment
                 if ((loadpigm =
                             MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
                                 QObj1["Pigment"].isObject()))
                     QPigmentObj = QObj1["Pigment"].toObject();
-
                 LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext,
                                                 QTextureObj, loadpigm, QPigmentObj);
-
                 QJsonDocument document;
                 document.setObject(array[i].toObject());
                 MathmodRef->RootObjet.CurrentTreestruct.text =
                     QString(document.toJson());
-
                 MathmodRef->RootObjet.CurrentJsonObject = array[i].toObject();
                 CurrentFormulaType = 3;
-
                 /// process the new surface
                 MathmodRef->ParametricSurfaceProcess(3);
                 return (3);
