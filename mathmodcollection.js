@@ -55,14 +55,24 @@
             "Description": ["Catalan Surface by Abderrahman Taha 28/11/2020"],
             "Name": ["Catalan_Surface"],
             "Component": ["Catalan"],
+            "Const": ["ki=80","kj=5"],
             "Fx": ["cos(u)+2*cos(2*u) +v*((8*cos(u)^2-cos(u)-4)/(-32*cos(u)^3+24*cos(u)+17)^(1/2))"],
             "Fy": ["sin(u)-2*sin(2*u) + v* (-sin(u)*(8*cos(u)+1)/(-32*cos(u)^3+24*cos(u)+17)^(1/2))"],
             "Fz": ["2*sin(3*u)"],
-            "Grid": ["200", "40"],
+            "Grid": ["800", "100"],
             "Umax": ["2*pi"],
             "Umin": ["0"],
             "Vmax": ["pi/4"],
             "Vmin": ["-pi/4"]
+        },
+        "Texture": {
+            "Colors": [
+                "R= if((j%floor(max_j/kj))<1  | (i%floor(max_i/ki))<(1),   (1/3),  (4/10))",
+                "G= if((j%floor(max_j/kj))<1  | (i%floor(max_i/ki))<(1),   (1/3), (4/10))",
+                "B= if((j%floor(max_j/kj))<1  | (i%floor(max_i/ki))<(1),   (1/8), (0))",
+                "T=1"],
+            "Name": "Rainbow",
+            "Noise": ""
         }
     },
     {
@@ -91,8 +101,8 @@
         "Texture": {
             "Colors": [
                 "R=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(sin(u*u*u))/(16/10))",
-                "G=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u))/(19/10))",
-                "B=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u)+sin(4*u*u*u))/(31/10))",
+                "G=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u))/(16/10))",
+                "B=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u)+sin(4*u*u*u))/(27/10))",
                 "T=1"
             ],
             "Name": "Rainbow",
