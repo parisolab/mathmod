@@ -70,7 +70,7 @@
             "Description ": ["Planar Enneper Parametric surface by Abderrahman Taha 23/11/2020"],
             "Name": ["Planar_Enneper"],
             "Component": ["Planar Enneper"],
-            "Const": ["c=1/10000","k=3","Lxy=70","Lz=10","umax=0","umin=0"],
+            "Const": ["c=1/10000","ki=5","k=3","Lxy=70","Lz=10","umax=0","umin=0"],
             "Funct": ["Fx=cos(v)/(k*u)+u^(2*k-1)*cos((2*k-1)*v)/Lxy","Fy=-sin(v)/(k*u)+u^(2*k-1)*sin(-(2*k-1)*v)/Lxy","Fz=u^(k-1)*cos((k-1)*v)/Lz"],
             "Fx": ["Fx(u,v,t)"],
             "Fy": ["Fy(u,v,t)"],
@@ -87,6 +87,16 @@
             "Name": ["k","Lxy","Lz","umax","umin"],
             "Position": ["5","70","10","10","10","3","13","3","8","0","8","17","10","34","13","10","1","3","47","15","6","33","10","23","17"],
             "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+        },
+        "Texture": {
+            "Colors": [
+                "R=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(sin(u*u*u))/(16/10))",
+                "G=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u))/(19/10))",
+                "B=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u)+sin(4*u*u*u))/(31/10))",
+                "T=1"
+            ],
+            "Name": "Rainbow",
+            "Noise": ""
         }
     },
     {
