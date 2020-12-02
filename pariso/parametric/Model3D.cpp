@@ -562,7 +562,11 @@ ErrorMessage  ParMasterThread::parse_expression()
         RgbtSize = HowManyVariables(Rgbt, 3);
         for(uint i=0; i<RgbtSize; i++)
             for(uint j=0; j<ConstSize; j++)
+            {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+                for(uint k=0; k<Nb_Sliders; k++)
+                    RgbtParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            }
     }
     else
     {
@@ -573,11 +577,22 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         VRgbtSize = HowManyVariables(VRgbt, 4);
         for(uint j=0; j<ConstSize; j++)
+        {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
+            //Add predefined constatnts:
+            for(uint k=0; k<Nb_Sliders; k++)
+                GradientParser->AddConstant(SliderNames[k], SliderValues[k]);
+        }
 
         for(uint i=0; i<VRgbtSize; i++)
             for(uint j=0; j<ConstSize; j++)
+            {
                 VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+                //Add predefined constatnts:
+                for(uint k=0; k<Nb_Sliders; k++)
+                    VRgbtParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            }
+
     }
     else
     {
