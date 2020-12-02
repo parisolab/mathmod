@@ -99,7 +99,11 @@
             "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
         },
         "Texture": {
-            "Colors": ["R=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(sin(u*u*u))/(20/10))","G=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u))/(17/10))","B=if(j%(max_j/(k+1))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u)+sin(4*u*u*u))/(27/10))","T=1"],
+            "Colors": [
+                "R=if(j%(max_j/(2*(k-1)))<1 | i%(max_i/(ki+1))<1, 3/4, abs(sin(u*u*u))/(20/10))",
+                "G=if(j%(max_j/(2*(k-1)))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u))/(17/10))",
+                "B=if(j%(max_j/(2*(k-1)))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u)+sin(4*u*u*u))/(27/10))",
+                "T=1"],
             "Name": "Rainbow",
             "Noise": ""
         }
