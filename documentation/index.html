@@ -588,8 +588,6 @@ Used in the "BlackHole" script.
 Used in the "Chained_Sinusoid" script. </td>
  </tr>
 
-
-
 <tr>
  <td><code>ThreadId</code></td>
  <td>Return the Thread ID. Example: To draw the isosurface portion calculated by the thread number 1
@@ -599,14 +597,19 @@ Used in the "Chained_Sinusoid" script. </td>
 </tr>
 
 <tr>
- <td><code>max_i , max_j</code></td>
- <td>To use inside the texture defition for  paramatric surfaces: Return the grid values for . Example:
-<pre>
-"Grid": ["150","200"] --> In this case: max_i=150 and max_j=200
-</pre>
+ <td><code>i , j</code></td>
+ <td>To use inside the texture defition for paramatric surfaces: Return the current i and j indexes.
 </tr>
 
+<tr>
+ <td><code>max_i , max_j</code></td>
+ <td>To use inside the texture defition for  paramatric surfaces: Return the grid values. Example:
+</tr>
 
+<tr>
+ <td><code>index</code></td>
+ <td>To use inside the texture defition for  paramatric surfaces: Return the current index (ie: index=i*max_j+j)
+</tr>
 
 <tr>
 <td><code>"Vect"</code></td>
