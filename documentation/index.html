@@ -588,6 +588,8 @@ Used in the "BlackHole" script.
 Used in the "Chained_Sinusoid" script. </td>
  </tr>
 
+
+
 <tr>
  <td><code>ThreadId</code></td>
  <td>Return the Thread ID. Example: To draw the isosurface portion calculated by the thread number 1
@@ -595,6 +597,16 @@ Used in the "Chained_Sinusoid" script. </td>
 "Fxyz": [" if(ThreadId=1, cos(x) + cos(y) + cos(z), 0)"],
 </pre>
 </tr>
+
+<tr>
+ <td><code>max_i , max_j</code></td>
+ <td>To use inside the texture defition for  paramatric surfaces: Return the grid values for . Example:
+<pre>
+"Grid": ["150","200"] --> In this case: max_i=150 and max_j=200
+</pre>
+</tr>
+
+
 
 <tr>
 <td><code>"Vect"</code></td>
