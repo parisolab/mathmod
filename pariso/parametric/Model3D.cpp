@@ -441,6 +441,8 @@ void ParMasterThread::InitMasterParsers()
     AllocateParsersForMasterThread();
 
     GradientParser->AddConstant("pi", PI);
+    GradientParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
+    GradientParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
     Cstparser.AddConstant("pi", PI);
     NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
@@ -576,6 +578,9 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(vrgbtnotnull)
     {
         VRgbtSize = HowManyVariables(VRgbt, 4);
+
+        GradientParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
+        GradientParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
         for(uint j=0; j<ConstSize; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
@@ -682,7 +687,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
 
         for(uint i=0; i<VRgbtSize; i++)
-            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,u,v,i,j,index,max_i,max_j,cmpId")) >= 0)
             {
                 stdError.strError = VRgbts[i];
                 return stdError;
@@ -1114,20 +1119,71 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
+        /*
         for(uint i=0; i<masterthread->VRgbtSize; i++)
         {
             ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
         }
-
+*/
         uint idx=0;
         for(uint i=0; i < comp->NbComponents.size()-1; i++)
             idx+=comp->NbComponents[i];
 
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
+
+            if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
+            {
+                K = cmpId;
+                if((masterthread->componentsNumber -1)>cmpId)
+                {
+                    cmpId++;
+                }
+            }
+
+
             val[0]= double(NormVertexTabVector[i*10+7]);
             val[1]= double(NormVertexTabVector[i*10+8]);
             val[2]= double(NormVertexTabVector[i*10+9]);
+
+
+            if(masterthread->gridnotnull)
+            {
+                val[7] = double(i);
+                val[8] = double(masterthread->grid[2*K]);
+                val[9] = double(masterthread->grid[2*K+1]);
+                val[10] = double(K);
+                Jprime = (i) %  (masterthread->grid[2*K+1]);
+                Iprime = floor((i-Jprime)/(masterthread->grid[2*K+1]));
+                val[5] = double(Iprime);
+                val[6] = double(Jprime);
+                val[3] = val[5]/double(masterthread->grid[2*K]);
+                val[3] = val[3] * masterthread->dif_u[K]  + masterthread->u_inf[K];
+                val[4] = val[6]/double(masterthread->grid[2*K+1]);
+                val[4] = val[4] * masterthread->dif_v[K]  + masterthread->v_inf[K];
+            }
+            else
+            {
+                val[7] = double(i);
+                val[8] = double(Ugrid);
+                val[9] = double(Vgrid);
+                val[10] = double(K);
+                Jprime = (i) %  (Vgrid);
+                Iprime = floor((i-Jprime)/(Vgrid));
+                val[5] = double(Iprime);
+                val[6] = double(Jprime);
+                val[3] = val[5]/double(Ugrid);
+                val[3] = val[3] * masterthread->dif_u[0]  + masterthread->u_inf[0];
+                val[4] = val[6]/double(Vgrid);
+                val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
+            }
+
+
+            for(uint li=0; li<masterthread->VRgbtSize; li++)
+            {
+                ValCol[li] = masterthread->VRgbtParser[li].Eval(val);
+            }
+
 
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
