@@ -1119,12 +1119,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
-        /*
-        for(uint i=0; i<masterthread->VRgbtSize; i++)
-        {
-            ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
-        }
-*/
         uint idx=0;
         for(uint i=0; i < comp->NbComponents.size()-1; i++)
             idx+=comp->NbComponents[i];
