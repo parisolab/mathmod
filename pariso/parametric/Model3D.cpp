@@ -1122,10 +1122,8 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
         uint idx=0;
         for(uint i=0; i < comp->NbComponents.size()-1; i++)
             idx+=comp->NbComponents[i];
-
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
-
             if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
             {
                 K = cmpId;
@@ -1134,13 +1132,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                     cmpId++;
                 }
             }
-
-
             val[0]= double(NormVertexTabVector[i*10+7]);
             val[1]= double(NormVertexTabVector[i*10+8]);
             val[2]= double(NormVertexTabVector[i*10+9]);
-
-
             if(masterthread->gridnotnull)
             {
                 val[7] = double(i);
@@ -1171,14 +1165,10 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 val[4] = val[6]/double(Vgrid);
                 val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
             }
-
-
             for(uint li=0; li<masterthread->VRgbtSize; li++)
             {
                 ValCol[li] = masterthread->VRgbtParser[li].Eval(val);
             }
-
-
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
@@ -1201,7 +1191,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                         NormVertexTabVector[i*10+3] = float(ValCol[(j)+4]);
                         j = masterthread->VRgbtSize;
                     }
-
                 }
                 else if(tmp == ValCol[j])
                 {
