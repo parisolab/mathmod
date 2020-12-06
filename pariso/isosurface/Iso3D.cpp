@@ -324,7 +324,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, "x,y,z,t")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, "x,y,z,t,i,j,k,max_ijk")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
@@ -646,9 +646,9 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint id=0;
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     uint nbstack=nbX*nbY*nbZ;
-    uint Iindice=0, Jindice=0, Kindice=0;
+    uint Iindice=0, Jindice=0, Kindice=0, nbvar=8;
     int PreviousSignal=0;
-    vals = new double[4*nbstack];
+    vals = new double[nbvar*nbstack];
     Res  = new double[nbstack];
     vals[3]    = stepMorph;
     //vals[4]    = double(MyIndex);
@@ -666,7 +666,10 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     }
     iStart = iFinish - taille;
     for(uint l=0; l<nbstack; l++)
-        vals[l*4+3]= stepMorph;
+        vals[l*nbvar+3]= stepMorph;
+    for(uint l=0; l<nbstack; l++)
+        vals[l*nbvar+7]=GridVal;
+
     uint remX= (iFinish-iStart)%nbX;
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
@@ -705,16 +708,20 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 // X, Y and Z arrays construction:
                 for(uint l=0; l<nbstack; l++)
                 {
-                    vals[l*4  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
-                    vals[l*4+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
-                    vals[l*4+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
+                    vals[l*nbvar  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
+                    vals[l*nbvar+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
+                    vals[l*nbvar+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
+
+                    vals[l*nbvar+4]=Iindice+uint(l*nbX/nbstack);
+                    vals[l*nbvar+5]=Jindice+((uint(l/nbZ))%nbY);
+                    vals[l*nbvar+6]=Kindice+(l%nbZ);
                 }
                 IJK = J+Kindice;
-                double res = implicitFunctionParser[IsoIndex].Eval2(vals, 4, Res, nbstack);
+                double res = implicitFunctionParser[IsoIndex].Eval2(vals, nbvar, Res, nbstack);
                 if( abs(res - IF_FUNCT_ERROR) == 0.0)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*4]));
+                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*nbvar]));
                 }
                 else if( abs(res - DIVISION_BY_ZERO) == 0.0 || abs(res - VAR_OVERFLOW) == 0.0)
                 {
@@ -1096,7 +1103,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
         }
     for(uint i=0; i<componentsNumber; i++)
     {
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,"x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,"x,y,z,t,i,j,k,max_ijk")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;
