@@ -80,7 +80,7 @@ public :
         YlimitSup, YlimitInf,
         ZlimitSup, ZlimitInf;
     uint componentsNumber;
-    std::vector<double> x_Step, y_Step, z_Step;
+    std::vector<double> x_Step, y_Step, z_Step, x_Sup, y_Sup, z_Sup,x_Inf, y_Inf, z_Inf;
     std::vector<ImplicitStructure> ImplicitStructs;
 public :
     void DeleteMasterParsers();

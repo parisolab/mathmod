@@ -608,12 +608,12 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
     const uint limitX = masterthread->XYZgrid, limitY = masterthread->XYZgrid, limitZ = masterthread->XYZgrid;
     uint maxgridval = masterthread->GridVal;
     vals[3]         = masterthread->stepMorph;
-    masterthread->xLocal2[IsoIndex*maxgridval]=masterthread->xSupParser[IsoIndex].Eval(vals);
-    masterthread->yLocal2[IsoIndex*maxgridval]=masterthread->ySupParser[IsoIndex].Eval(vals);
-    masterthread->zLocal2[IsoIndex*maxgridval]=masterthread->zSupParser[IsoIndex].Eval(vals);
-    masterthread->x_Step[IsoIndex] =  (masterthread->xLocal2[IsoIndex*maxgridval] - masterthread->xInfParser[IsoIndex].Eval(vals))/(limitX-1);
-    masterthread->y_Step[IsoIndex] =  (masterthread->yLocal2[IsoIndex*maxgridval] - masterthread->yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-    masterthread->z_Step[IsoIndex] =  (masterthread->zLocal2[IsoIndex*maxgridval] - masterthread->zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+    masterthread->xLocal2[IsoIndex*maxgridval]=(masterthread->x_Sup[IsoIndex]=masterthread->xSupParser[IsoIndex].Eval(vals));
+    masterthread->yLocal2[IsoIndex*maxgridval]=(masterthread->y_Sup[IsoIndex]=masterthread->ySupParser[IsoIndex].Eval(vals));
+    masterthread->zLocal2[IsoIndex*maxgridval]=(masterthread->z_Sup[IsoIndex]=masterthread->zSupParser[IsoIndex].Eval(vals));
+    masterthread->x_Step[IsoIndex] = (masterthread->xLocal2[IsoIndex*maxgridval]-(masterthread->x_Inf[IsoIndex]=masterthread->xInfParser[IsoIndex].Eval(vals)))/(limitX-1);
+    masterthread->y_Step[IsoIndex] = (masterthread->yLocal2[IsoIndex*maxgridval]-(masterthread->y_Inf[IsoIndex]=masterthread->yInfParser[IsoIndex].Eval(vals)))/(limitY-1);
+    masterthread->z_Step[IsoIndex] = (masterthread->zLocal2[IsoIndex*maxgridval]-(masterthread->z_Inf[IsoIndex]=masterthread->zInfParser[IsoIndex].Eval(vals)))/(limitZ-1);
     for (uint i= 1; i < limitX; i++)
         masterthread->xLocal2[IsoIndex*maxgridval+i] = masterthread->xLocal2[IsoIndex*maxgridval+i-1] - masterthread->x_Step[IsoIndex];
     for (uint j= 1; j < limitY; j++)
@@ -1068,7 +1068,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
     // Parse
     if(rgbtnotnull && RgbtSize == 4)
         for(uint i=0; i<RgbtSize; i++)
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId")) >= 0)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
             {
                 stdError.strError = Rgbts[i];
                 return stdError;
@@ -1089,7 +1089,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
             }
     }
     if(Noise != "")
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
         {
             stdError.strError = Noise;
             return stdError;
@@ -1146,12 +1146,12 @@ ErrorMessage IsoMasterThread::ParseExpression()
         {
             limitX = limitY = limitZ = grid[IsoIndex];
         }
-        xLocal2[IsoIndex*GridVal]=xSupParser[IsoIndex].Eval(vals);
-        yLocal2[IsoIndex*GridVal]=ySupParser[IsoIndex].Eval(vals);
-        zLocal2[IsoIndex*GridVal]=zSupParser[IsoIndex].Eval(vals);
-        x_Step[IsoIndex] = (xLocal2[IsoIndex*GridVal] - xInfParser[IsoIndex].Eval(vals))/(limitX-1);
-        y_Step[IsoIndex] = (yLocal2[IsoIndex*GridVal] - yInfParser[IsoIndex].Eval(vals))/(limitY-1);
-        z_Step[IsoIndex] = (zLocal2[IsoIndex*GridVal] - zInfParser[IsoIndex].Eval(vals))/(limitZ-1);
+        xLocal2[IsoIndex*GridVal]=(x_Sup[IsoIndex]=xSupParser[IsoIndex].Eval(vals));
+        yLocal2[IsoIndex*GridVal]=(y_Sup[IsoIndex]=ySupParser[IsoIndex].Eval(vals));
+        zLocal2[IsoIndex*GridVal]=(z_Sup[IsoIndex]=zSupParser[IsoIndex].Eval(vals));
+        x_Step[IsoIndex] = (xLocal2[IsoIndex*GridVal] - (x_Inf[IsoIndex]=xInfParser[IsoIndex].Eval(vals)))/(limitX-1);
+        y_Step[IsoIndex] = (yLocal2[IsoIndex*GridVal] - (y_Inf[IsoIndex]=yInfParser[IsoIndex].Eval(vals)))/(limitY-1);
+        z_Step[IsoIndex] = (zLocal2[IsoIndex*GridVal] - (z_Inf[IsoIndex]=zInfParser[IsoIndex].Eval(vals)))/(limitZ-1);
         for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*GridVal+i] = xLocal2[IsoIndex*GridVal+i-1] - x_Step[IsoIndex];
         for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*GridVal+j] = yLocal2[IsoIndex*GridVal+j-1] - y_Step[IsoIndex];
         for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*GridVal+k] = zLocal2[IsoIndex*GridVal+k-1] - z_Step[IsoIndex];
@@ -1186,6 +1186,12 @@ void IsoMasterThread::DeleteMasterParsers()
     x_Step.clear();
     y_Step.clear();
     z_Step.clear();
+    x_Sup.clear();
+    y_Sup.clear();
+    z_Sup.clear();
+    x_Inf.clear();
+    y_Inf.clear();
+    z_Inf.clear();
     SliderValues.clear();
     SliderNames.clear();
     Consts.clear();
@@ -1286,6 +1292,12 @@ void IsoMasterThread::AllocateMasterParsers()
         x_Step.resize(componentsNumber);
         y_Step.resize(componentsNumber);
         z_Step.resize(componentsNumber);
+        x_Sup.resize(componentsNumber);
+        y_Sup.resize(componentsNumber);
+        z_Sup.resize(componentsNumber);
+        x_Inf.resize(componentsNumber);
+        y_Inf.resize(componentsNumber);
+        z_Inf.resize(componentsNumber);
         if(!functnotnull)
             FunctSize = 0;
         Fct          = new FunctionParser[FunctSize];
@@ -1607,7 +1619,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     uint cmpId=0, K=0;
     double tmp,
            *ValCol,
-           val[10];
+           val[16];
     ValCol = new double[masterthread->VRgbtSize];
     val[3] = masterthread->stepMorph;
     val[0] = val[1] = val[2] = 0.0;
@@ -1641,8 +1653,8 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
                     {
                         fraction = (tmp-ValCol[j-5])/(ValCol[j]-ValCol[j-5]);
                         NormVertexTabVector[i*10  ] = float(ValCol[j+1])*(fraction) + (1-fraction)*float(ValCol[(j-5)+1]);
-                        NormVertexTabVector[i*10+1] = float(ValCol[j+2])*(fraction) + (1-fraction)*float(ValCol[(j-5)+2]);//float(ValCol[j+2]-ValCol[(j-5)+2])*fraction + float(ValCol[(j-5)+2]);
-                        NormVertexTabVector[i*10+2] = float(ValCol[j+3])*(fraction) + (1-fraction)*float(ValCol[(j-5)+3]);//float(ValCol[j+3]-ValCol[(j-5)+3])*fraction + float(ValCol[(j-5)+3]);
+                        NormVertexTabVector[i*10+1] = float(ValCol[j+2])*(fraction) + (1-fraction)*float(ValCol[(j-5)+2]);;
+                        NormVertexTabVector[i*10+2] = float(ValCol[j+3])*(fraction) + (1-fraction)*float(ValCol[(j-5)+3]);
                         NormVertexTabVector[i*10+3] = float(ValCol[(j)+4]);
                         j = masterthread->VRgbtSize;
                     }
@@ -1676,6 +1688,34 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             val[1]= double(NormVertexTabVector[i*10 + 8]);
             val[2]= double(NormVertexTabVector[i*10 + 9]);
             val[4]= double(K);
+            if(masterthread->gridnotnull)
+            {
+                val[5] = double(i);
+                val[6] = masterthread->x_Step[K];
+                val[7] = masterthread->y_Step[K];
+                val[8] = masterthread->z_Step[K];
+                val[9] = double(masterthread->grid[K]);
+                val[10] = masterthread->x_Sup[K];
+                val[11] = masterthread->y_Sup[K];
+                val[12] = masterthread->z_Sup[K];
+                val[13] = masterthread->x_Inf[K];
+                val[14] = masterthread->y_Inf[K];
+                val[15] = masterthread->z_Inf[K];
+            }
+            else
+            {
+                val[5] = double(i);
+                val[6] = masterthread->x_Step[0];
+                val[7] = masterthread->y_Step[0];
+                val[8] = masterthread->z_Step[0];
+                val[9] = double(masterthread->GridVal);
+                val[10] = masterthread->x_Sup[0];
+                val[11] = masterthread->y_Sup[0];
+                val[12] = masterthread->z_Sup[0];
+                val[13] = masterthread->x_Inf[0];
+                val[14] = masterthread->y_Inf[0];
+                val[15] = masterthread->z_Inf[0];
+            }
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
