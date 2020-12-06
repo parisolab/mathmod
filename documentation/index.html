@@ -595,45 +595,49 @@ Used in the "Chained_Sinusoid" script. </td>
 "Fxyz": [" if(ThreadId=1, cos(x) + cos(y) + cos(z), 0)"],
 </pre>
 </tr>
+</table>
 
+<a name="InternalFParameters"></a>
+<h2>Internal parameters</h2>
+<ul>
+<li>
+<h3>Parametric textures</h3>
+<p><table border=2>
 <tr>
  <td><code>i , j</code></td>
- <td>To use inside the texture defition for paramatric surfaces: Return the current i and j indexes.
+ <td>Return the current i and j indexes.
 </tr>
-
 <tr>
  <td><code>max_i , max_j</code></td>
- <td>To use inside the texture defition for paramatric surfaces: Return the grid values. Example:
+ <td>Return the grid values. Example:
  <pre>
  "Grid": ["150","200"] --> In this case: max_i=150 and max_j=200
  </pre>
 </tr>
-
 <tr>
  <td><code>index</code></td>
- <td>To use inside the texture defition for paramatric surfaces: Return the current index (ie: index=i*max_j+j)
-</tr>
-
-<tr>
-<td><code>"Vect"</code></td>
-<td>
-(Experimental) Define a set of variables (type double).
-(<a href="#Arena_02">Script example</a>)
-</td>
-</tr>
-
-<tr>
- <td><code>csd(N)</code></td>
- <td>(Experimental) Return the value of the variable at the index N.
- (<a href="#Arena_02">Script example</a>)
-</tr>
-
-<tr>
- <td><code>psh(N, val)</code></td>
- <td>(Experimental) Save the value "val" into the variable at index N.
-  (<a href="#Arena_02">Script example</a>)
+ <td>Return the current index (ie: index=i*max_j+j)
 </tr>
 </table>
+
+<li>
+<h3>Isosurfaces textures</h3>
+<p><table border=2>
+<tr>
+ <td><code>index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf</code></td>
+ <td>To be used in the texture defition for isosurfaces.
+ <pre>
+ xstep=(xsup-xinf)/max_ijk
+ </pre>
+</tr>
+</table>
+
+
+
+
+</ul>
+
+
 
 <a name="UserDefinedVariables"></a>
 <h2>User Defined Variables </h2>
@@ -667,7 +671,7 @@ C/C++ languages.
 Arithmetic float expressions can be created from float literals, variables
 or functions using the following operators in this order of precedence:
 
-<p>List of mathematic operators
+<p>List of mathematic operators:
 
 <p><table border=2>
  <tr>
