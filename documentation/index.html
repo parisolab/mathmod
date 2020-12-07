@@ -604,7 +604,7 @@ Used in the "Chained_Sinusoid" script. </td>
 <h3>Parametric textures</h3>
 <p><table border=2>
 <tr>
- <td><code>i , j</code></td>
+ <td><code>i_indx , j_indx</code></td>
  <td>Return the current i and j indexes.
 </tr>
 <tr>
@@ -615,8 +615,8 @@ Used in the "Chained_Sinusoid" script. </td>
  </pre>
 </tr>
 <tr>
- <td><code>index</code></td>
- <td>Return the current index (ie: index=i*max_j+j)
+ <td><code>indx</code></td>
+ <td>Return the current index (ie: indx=i*max_j+j)
 </tr>
 </table>
 
@@ -624,7 +624,7 @@ Used in the "Chained_Sinusoid" script. </td>
 <h3>Isosurfaces textures</h3>
 <p><table border=2>
 <tr>
- <td><code>index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf</code></td>
+ <td><code>indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf</code></td>
  <td>To be used in the texture defition for isosurfaces.
  <pre>
  xstep=(xsup-xinf)/max_ijk
