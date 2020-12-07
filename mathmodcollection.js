@@ -67,10 +67,11 @@
         },
         "Texture": {
             "Colors": [
-                "R= if((j%floor(max_j/kj))<1  | (i%floor(max_i/ki))<(1),   (1/3),  (4/10))",
-                "G= if((j%floor(max_j/kj))<1  | (i%floor(max_i/ki))<(1),   (1/3), (4/10))",
-                "B= if((j%floor(max_j/kj))<1  | (i%floor(max_i/ki))<(1),   (1/8), (0))",
-                "T=1"],
+                "R= if((j_indx%floor(max_j/kj))<1  | (i_indx%floor(max_i/ki))<(1),   (1/3),  (4/10))",
+                "G= if((j_indx%floor(max_j/kj))<1  | (i_indx%floor(max_i/ki))<(1),   (1/3), (4/10))",
+                "B= if((j_indx%floor(max_j/kj))<1  | (i_indx%floor(max_i/ki))<(1),   (1/8), (0))",
+                "T=1"
+            ],
             "Name": "Rainbow",
             "Noise": ""
         }
@@ -100,9 +101,9 @@
         },
         "Texture": {
             "Colors": [
-                "R=if(j%(max_j/(2*(k-1)))<1 | i%(max_i/(ki+1))<1, 3/4, abs(sin(u*u*u))/(20/10))",
-                "G=if(j%(max_j/(2*(k-1)))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u))/(17/10))",
-                "B=if(j%(max_j/(2*(k-1)))<1 | i%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u)+sin(4*u*u*u))/(27/10))",
+                "R=if(j_indx%(max_j/(2*(k-1)))<1 | i_indx%(max_i/(ki+1))<1, 3/4, abs(sin(u*u*u))/(20/10))",
+                "G=if(j_indx%(max_j/(2*(k-1)))<1 | i_indx%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u))/(17/10))",
+                "B=if(j_indx%(max_j/(2*(k-1)))<1 | i_indx%(max_i/(ki+1))<1, 3/4, abs(cos(u*u*u)+sin(4*u*u*u))/(27/10))",
                 "T=1"],
             "Name": "Rainbow",
             "Noise": ""
@@ -6556,9 +6557,9 @@
         "Vmin": ["0"]
       },
       "Texture": {
-        "Colors": ["R= if(int(i)%(M/6)>P | int(j)%(M)>P,(4/5),(4/5)) ",
-          "G= if(int(i)%(M/6)>P | int(j)%(M)>P,(1/10),(4/5)) ",
-          "B= if(int(i)%(M/6)>P | int(j)%(M)>P,(1/10),(4/5)) ",
+        "Colors": ["R= if(int(i_indx)%(M/6)>P | int(j_indx)%(M)>P,(4/5),(4/5)) ",
+          "G= if(int(i_indx)%(M/6)>P | int(j_indx)%(M)>P,(1/10),(4/5)) ",
+          "B= if(int(i_indx)%(M/6)>P | int(j_indx)%(M)>P,(1/10),(4/5)) ",
           "T= 1 "],
         "Name": "Candy",
         "Noise": "1"
@@ -6778,9 +6779,9 @@
       "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
     },
       "Texture": {
-        "Colors": ["R= if((int(i)%MM>P & int(i)%MM<P+2),(8/10),(8/10)) ",
-          "G= if((int(i)%MM>P & int(i)%MM<P+2),(8/10),(1/10)) ",
-          "B= if((int(i)%MM>P & int(i)%MM<P+2),(8/10),(1/10)) ",
+        "Colors": ["R= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(8/10)) ",
+          "G= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(1/10)) ",
+          "B= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(1/10)) ",
           "T= 1 "],
         "Name": "Rings",
         "Noise": "1"
@@ -7123,7 +7124,7 @@
             "Vmin": ["0"]
         },
         "Texture": {
-            "Colors": ["R=if((i)%(M)>P | (j)%(M)>P,(8/10),(8/10))","G= if((i)%(M)>P | (j)%(M)>P,(2/10),(6/10))","B= if((i)%(M)>P | (j)%(M)>P,(2/10),(2/10))","T= 1"],
+            "Colors": ["R=if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(8/10))","G= if((i_indx)%(M)>P | (j_indx)%(M)>P,(2/10),(6/10))","B= if((i_indx)%(M)>P | (j_indx)%(M)>P,(2/10),(2/10))","T= 1"],
             "Name": "square",
             "Noise": ""
         }
@@ -7167,7 +7168,7 @@
         "Vmin": ["-pi","-pi","-pi"]
         },
         "Texture": {
-        "Colors": ["R=if((cmpId =1), if((i)%(M)>P | (j)%(M)>P,(8/10),(9/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(2/10)) )","G= if((cmpId =2), if((i)%(M)>P | (j)%(M)>P,(8/10),(7/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(1/10)) )","B= if((cmpId >2), if((i)%(M)>P | (j)%(M)>P,(8/10),(9/10)) , if((i)%(M)>P | (j)%(M)>P,(8/10),(2/10)) )","T= 1"],
+        "Colors": ["R=if((cmpId =1), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(9/10)) , if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(2/10)) )","G= if((cmpId =2), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(7/10)) , if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(1/10)) )","B= if((cmpId >2), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(9/10)) , if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(2/10)) )","T= 1"],
         "Name": "square",
         "Noise": "1"
         }
@@ -7540,9 +7541,9 @@
             "Step": ["1","1","1","1"]
         },
         "Texture": {
-            "Colors": ["R= if((i)%(M)>P | (j)%(M)>P,(1/2),(7/10)) ",
-                "G= if((i)%(M)>P | (j)%(M)>P,(1/2),(14/100)) ",
-                "B= if((i)%(M)>P | (j)%(M)>P,(3/10),(2/10))",
+            "Colors": ["R= if((i_indx)%(M)>P | (j_indx)%(M)>P,(1/2),(7/10)) ",
+                "G= if((i_indx)%(M)>P | (j_indx)%(M)>P,(1/2),(14/100)) ",
+                "B= if((i_indx)%(M)>P | (j_indx)%(M)>P,(3/10),(2/10))",
                 "T= 1 "],
             "Name": "square",
             "Noise": "1"
