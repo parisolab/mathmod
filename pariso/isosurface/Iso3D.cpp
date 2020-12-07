@@ -1083,13 +1083,13 @@ ErrorMessage IsoMasterThread::ParseExpression()
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
-        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
         {
             stdError.strError = Gradient;
             return stdError;
         }
         for(uint i=0; i<VRgbtSize; i++)
-            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t")) >= 0)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
             {
                 stdError.strError = VRgbts[i];
                 return stdError;
@@ -1632,18 +1632,55 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     val[0] = val[1] = val[2] = 0.0;
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
-        for(uint i=0; i<masterthread->VRgbtSize; i++)
-        {
-            ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
-        }
         uint idx=0;
         for(uint i=0; i < comp->NbComponents.size()-1; i++)
             idx+=comp->NbComponents[i];
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
+            if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
+            {
+                K = cmpId;
+                if((masterthread->componentsNumber-1)>cmpId)
+                {
+                    cmpId++;
+                }
+            }
             val[0]= double(NormVertexTabVector[i*10  + 7 ]);
             val[1]= double(NormVertexTabVector[i*10  + 8 ]);
             val[2]= double(NormVertexTabVector[i*10  + 9 ]);
+            val[4]= double(K);
+            if(masterthread->gridnotnull)
+            {
+                val[5] = double(i);
+                val[6] = masterthread->x_Step[K];
+                val[7] = masterthread->y_Step[K];
+                val[8] = masterthread->z_Step[K];
+                val[9] = double(masterthread->grid[K]);
+                val[10] = masterthread->x_Sup[K];
+                val[11] = masterthread->y_Sup[K];
+                val[12] = masterthread->z_Sup[K];
+                val[13] = masterthread->x_Inf[K];
+                val[14] = masterthread->y_Inf[K];
+                val[15] = masterthread->z_Inf[K];
+            }
+            else
+            {
+                val[5] = double(i);
+                val[6] = masterthread->x_Step[0];
+                val[7] = masterthread->y_Step[0];
+                val[8] = masterthread->z_Step[0];
+                val[9] = double(masterthread->GridVal);
+                val[10] = masterthread->x_Sup[0];
+                val[11] = masterthread->y_Sup[0];
+                val[12] = masterthread->z_Sup[0];
+                val[13] = masterthread->x_Inf[0];
+                val[14] = masterthread->y_Inf[0];
+                val[15] = masterthread->z_Inf[0];
+            }
+            for(uint i=0; i<masterthread->VRgbtSize; i++)
+            {
+                ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
+            }
             if(masterthread->Noise != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
