@@ -671,7 +671,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     // Parse
     if(rgbtnotnull)
         for(uint i=0; i<RgbtSize; i++)
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i,j,index,max_i,max_j,cmpId,t")) >= 0)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
             {
                 stdError.strError = Rgbts[i];
                 return stdError;
@@ -680,14 +680,14 @@ ErrorMessage  ParMasterThread::parse_expression()
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
-        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,u,v,i,j,index,max_i,max_j,cmpId,t")) >= 0)
+        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
         {
             stdError.strError = Gradient;
             return stdError;
         }
 
         for(uint i=0; i<VRgbtSize; i++)
-            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,u,v,i,j,index,max_i,max_j,cmpId,t")) >= 0)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
             {
                 stdError.strError = VRgbts[i];
                 return stdError;
@@ -695,7 +695,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
 
     if(Noise != "")
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,u,v,i,j,index,max_i,max_j,cmpId,t")) >= 0)
+        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
         {
             stdError.strError = Noise;
             return stdError;

@@ -324,7 +324,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, "x,y,z,t,i,j,k,max_ijk")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, "x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
@@ -1075,7 +1075,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
     // Parse
     if(rgbtnotnull && RgbtSize == 4)
         for(uint i=0; i<RgbtSize; i++)
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
             {
                 stdError.strError = Rgbts[i];
                 return stdError;
@@ -1083,27 +1083,27 @@ ErrorMessage IsoMasterThread::ParseExpression()
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
-        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
+        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
         {
             stdError.strError = Gradient;
             return stdError;
         }
         for(uint i=0; i<VRgbtSize; i++)
-            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
             {
                 stdError.strError = VRgbts[i];
                 return stdError;
             }
     }
     if(Noise != "")
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t,cmpId,index,xstep,ystep,zstep,max_ijk,xsup,ysup,zsup,xinf,yinf,zinf")) >= 0)
+        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
         {
             stdError.strError = Noise;
             return stdError;
         }
     for(uint i=0; i<componentsNumber; i++)
     {
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,"x,y,z,t,i,j,k,max_ijk")) >= 0)
+        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;
