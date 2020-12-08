@@ -621,18 +621,45 @@ Used in the "BlackHole" script.
 <li>
 <h3>Isosurfaces textures</h3>
 <p><table border=2>
+
 <tr>
- <td><code>indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf</code></td>
- <td>To be used in the texture defition for isosurfaces.
- <pre>
- xstep=(xsup-xinf)/max_ijk
- </pre>
+ <td><code>indx</code></td>
+ <td>Return the current vertex index.</td>
 </tr>
+
+<tr>
+ <td><code>max_ijk</code></td>
+ <td>Refers to the Grid maximum value. Example:
+ <pre>
+ "Grid": ["150"] --> max_ijk=150
+ </pre>
+ </td>
+</tr>
+
+<tr>
+ <td><code>x_sup,y_sup,z_sup,x_inf,y_inf,z_inf</code></td>
+ <td> The isosurface definition domaine limits.
+ <pre>
+ "Xmin": ["10"] , "Xmax": ["pi"] --> x_inf=0 and x_sup=pi
+ </pre>
+ </td>
+</tr>
+
+<tr>
+ <td><code>x_step,y_step,z_step</code></td>
+ <td>
+ <pre>
+ x_step=(x_sup-x_inf)/max_ijk
+ </pre>
+ </td>
+</tr>
+
 <tr>
  <td><code>cmpId</code></td>
- <td>Return the compound ID.
+ <td>The compound ID.
 </td>
 </tr>
+
 </table>
 </ul>
 
