@@ -767,11 +767,9 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     return stdError;
 }
-
 ErrorMessage  Par3D::parse_expression2()
 {
     ErrorMessage NodError;
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         //Functions:
@@ -780,7 +778,6 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
         }
-
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             for(uint jj=0; jj<masterthread->ConstSize; jj++)
@@ -794,7 +791,6 @@ ErrorMessage  Par3D::parse_expression2()
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
             }
         }
-
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
             for(uint jj=0; jj<ii; jj++)
@@ -808,7 +804,6 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor);
         }
     }
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         //Add defined constantes:
@@ -843,7 +838,6 @@ ErrorMessage  Par3D::parse_expression2()
                 workerthreads[nbthreads].myParserW[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
             }
         }
-
         // Add defined functions :
         for(uint i=0; i<masterthread->componentsNumber; i++)
         {
@@ -870,19 +864,16 @@ ErrorMessage  Par3D::parse_expression2()
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fx;
                 return masterthread->stdError;
             }
-
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fy;
                 return masterthread->stdError;
             }
-
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fz;
                 return masterthread->stdError;
             }
-
             if(param4D == 1)
                 if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t")) >= 0)
                 {
@@ -893,7 +884,6 @@ ErrorMessage  Par3D::parse_expression2()
     }
     return NodError;
 }
-
 void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -905,7 +895,6 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
-
 ErrorMessage Par3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -920,13 +909,10 @@ ErrorMessage Par3D::ThreadParsersCopy()
         workerthreads[nbthreads].v_inf = masterthread->v_inf;
         workerthreads[nbthreads].param4D  = masterthread->param4D;
     }
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].DeleteWorkerParsers();
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->componentsNumber, masterthread->FunctSize);
-
     return(parse_expression2());
 }
 
@@ -1002,7 +988,6 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
     std::string tmp, tmp2;
     size_t position =0;
     uint Nb_paramfunction =0;
-
     switch(type)
     {
     case 0:
@@ -1109,7 +1094,6 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
         }
     }
 }
-
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Iprime, Jprime,cmpId=0, K=0;
@@ -1266,7 +1250,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
         }
     }
 }
-
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
     uint idmx=0;
@@ -1583,7 +1566,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     }
     return 1;
 }
-
 void Par3D::BuildPar()
 {
     ParamBuild(
@@ -1596,12 +1578,10 @@ void Par3D::BuildPar()
         &(localScene->NbPolygnNbVertexPtMin)
     );
 }
-
 void Par3D::run()
 {
     BuildPar();
 }
-
 void Par3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
     uint tmp= WorkerThreadsNumber;
@@ -1616,7 +1596,6 @@ void Par3D::UpdateThredsNumber(uint NewThreadsNumber)
     workerthreads = workerthreadstmp;
     masterthread->WorkerThreadsNumber  = WorkerThreadsNumber;
 }
-
 void Par3D::stopcalculations(bool calculation)
 {
     StopCalculations = calculation;
@@ -1624,12 +1603,10 @@ void Par3D::stopcalculations(bool calculation)
     for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].StopCalculations = StopCalculations;
 }
-
 void ParWorkerThread::emitMySignal()
 {
     emit mySignal(signalVal);
 }
-
 void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
 {
     uint NewPosition =  10*idx, id=0;
