@@ -570,13 +570,6 @@ Function use in "fhelix" and "Tori of helices" scripts
 Used in the "Chained_Sinusoid" script. </td>
  </tr>
 
-<tr>
- <td><code>ThreadId</code></td>
- <td>Return the Thread ID. Example: To draw the isosurface portion calculated by the thread number 1
-<pre>
-"Fxyz": [" if(ThreadId=1, cos(x) + cos(y) + cos(z), 0)"],
-</pre>
-</tr>
 </table>
 
 <a name="InternalFParameters"></a>
@@ -586,6 +579,12 @@ Used in the "Chained_Sinusoid" script. </td>
 <li>
 <h3>Isosurfaces</h3>
 <p><table border=2>
+
+<tr>
+ <td><code>ThreadId</code></td>
+ <td>Return the Thread ID. Example: To draw the isosurface portion calculated by the thread number 1
+<pre>"Fxyz": [" if(ThreadId=1, cos(x) + cos(y) + cos(z), 0)"]</pre></td>
+</tr>
 
 <tr>
  <td><code>max_ijk</code></td>
