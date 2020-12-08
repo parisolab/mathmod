@@ -556,24 +556,6 @@ Function use in "fhelix" and "Tori of helices" scripts
 </td>
  </tr>
 
-
- <tr>
-  <td><code>cmpId</code></td>
-  <td>Return the compound ID. Available only inside the "Texture" object. Example:
-<pre>"Texture": {
-        "Colors": [
-            "R=if(cmpId = (130), (6/10), (7/10))",
-            "G=if((cmpId = 130), (1/10), (5/10))",
-            "B=if((cmpId = 130), (3/10), (0))",
-            "T=if((cmpId = 130), (7/10), (1))"
-        ],
-        "Name": "Gold",
-        "Noise": ""
-    }</pre>
-Used in the "BlackHole" script.
-</td>
- </tr>
-
  <tr>
   <td><code>CmpId(0)</code></td>
   <td>Return the compound ID. Available only inside the "Funct" objects array. Example:
@@ -618,6 +600,22 @@ Used in the "Chained_Sinusoid" script. </td>
  <td><code>indx</code></td>
  <td>Return the current index (ie: indx=i*max_j+j)
 </tr>
+<tr>
+ <td><code>cmpId</code></td>
+ <td>Return the compound ID. Available only inside the "Texture" object. Example:
+<pre>"Texture": {
+       "Colors": [
+           "R=if(cmpId = (130), (6/10), (7/10))",
+           "G=if((cmpId = 130), (1/10), (5/10))",
+           "B=if((cmpId = 130), (3/10), (0))",
+           "T=if((cmpId = 130), (7/10), (1))"
+       ],
+       "Name": "Gold",
+       "Noise": ""
+   }</pre>
+Used in the "BlackHole" script.
+</td>
+</tr>
 </table>
 
 <li>
@@ -630,14 +628,13 @@ Used in the "Chained_Sinusoid" script. </td>
  xstep=(xsup-xinf)/max_ijk
  </pre>
 </tr>
+<tr>
+ <td><code>cmpId</code></td>
+ <td>Return the compound ID.
+</td>
+</tr>
 </table>
-
-
-
-
 </ul>
-
-
 
 <a name="UserDefinedVariables"></a>
 <h2>User Defined Variables </h2>
