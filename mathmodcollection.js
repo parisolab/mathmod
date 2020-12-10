@@ -51,6 +51,22 @@
         ]
     },
     {
+        "Iso3D": {
+            "Description": ["Twisty interlocked Toris (from Keizo Ushio) by Abderrahman Taha 09/12/2020"],
+            "Name": ["Twisty_Interlocked_Toris"],
+            "Component": ["TwistyTorus","TwistyTorus_01"],
+            "Const": ["k=2","R=6","r=3","th=1/8"],
+            "Funct": ["Cylinder=x*x+y*y-r*r","Cube=-if(t>0, (abs(x)>(th))*(x>0),  (abs(x)>(th))*(x<0))","TwistyTorus=Cylinder(x,y,z,t)*Cube(x,y,z,t)","TwistyTorus=TwistyTorus(x*cos(k*pi*(z+pi)/(2*pi))-y*sin(k*pi*(z+pi)/(2*pi)),x*sin(k*pi*(z+pi)/(2*pi))+y*cos(k*pi*(z+pi)/(2*pi)),z,t)","TwistyTorus=TwistyTorus(sqrt(x*x+z*z)-R,y,atan2(x,z),t)-3/100"],
+            "Fxyz": ["TwistyTorus(x,y,z,1)","TwistyTorus(y,-x,z-R,-1)"],
+            "Xmax": ["(R+r+1/10)","(R+r+1/10)"],
+            "Xmin": ["-(R+r+1/10)","-(R+r+1/10)"],
+            "Ymax": [" r+1/10","R+r+1/10"],
+            "Ymin": ["-r-1/10","-(R+r+1/10)"],
+            "Zmax": ["R+r+1/10","R+r+1/10+R"],
+            "Zmin": ["-(R+r+1/10)","-(R+r+1/10)+R"]
+        }
+    },
+    {
         "Param3D": {
             "Description": ["Catalan Surface by Abderrahman Taha 28/11/2020"],
             "Name": ["Catalan_Surface"],
