@@ -52,8 +52,32 @@
     },
     {
         "Iso3D": {
-            "Description": ["Twisty interlocked Toris (from Keizo Ushio) by Abderrahman Taha 09/12/2020"],
-            "Name": ["Twisty_Interlocked_Toris"],
+            "Description": ["Interlocked Tori by Abderrahman Taha 09/12/2020"],
+            "Name": ["Interlocked_Tori"],
+            "Component": ["InterlockedTorus"],
+            "Const": ["k=3","R=6","r=4","th=10"],
+            "Funct": ["Cylinder=x*x+y*y-r*r","Cube=-(abs(x)>(th/8))","TwistyTorus=Cylinder(x,y,z,t)*Cube(x,y,z,t)","TwistyTorus=TwistyTorus(x*cos(k*pi*(z+pi)/(2*pi))-y*sin(k*pi*(z+pi)/(2*pi)),x*sin(k*pi*(z+pi)/(2*pi))+y*cos(k*pi*(z+pi)/(2*pi)),z,t)","TwistyTorus=TwistyTorus(sqrt(x*x+z*z)-R,y,atan2(x,z),t)-3/100"],
+            "Fxyz": ["TwistyTorus(x,y,z,1)"],
+            "Xmax": ["(R+r+1/10)"],
+            "Xmin": ["-(R+r+1/10)"],
+            "Ymax": [" r+1/10"],
+            "Ymin": ["-r-1/10"],
+            "Zmax": ["R+r+1/10"],
+            "Zmin": ["-(R+r+1/10)"]
+        },
+        "Sliders": {
+            "Max": ["10","20","20","20","10","20","20","20","10","20","20","20"],
+            "Min": ["1","1","1","0","1","1","1","0","1","1","1","0"],
+            "Name": ["k","R","r","th"],
+            "Position": ["3","6","5","16","2","6","5","16","1","6","4","12"],
+            "SetNames": ["Twist_3","Twist_2","Twist_1"],
+            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1"]
+        }
+    },
+    {
+        "Iso3D": {
+            "Description": ["Twisty interlocked Tori (from Keizo Ushio) by Abderrahman Taha 09/12/2020"],
+            "Name": ["Twisty_Interlocked_Tori"],
             "Component": ["TwistyTorus","TwistyTorus_01"],
             "Const": ["k=2","R=6","r=3","th=1/8"],
             "Funct": ["Cylinder=x*x+y*y-r*r","Cube=-if(t>0, (abs(x)>(th))*(x>0),  (abs(x)>(th))*(x<0))","TwistyTorus=Cylinder(x,y,z,t)*Cube(x,y,z,t)","TwistyTorus=TwistyTorus(x*cos(k*pi*(z+pi)/(2*pi))-y*sin(k*pi*(z+pi)/(2*pi)),x*sin(k*pi*(z+pi)/(2*pi))+y*cos(k*pi*(z+pi)/(2*pi)),z,t)","TwistyTorus=TwistyTorus(sqrt(x*x+z*z)-R,y,atan2(x,z),t)-3/100"],
