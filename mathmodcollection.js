@@ -51,6 +51,35 @@
         ]
     },
     {
+        "Param3D": {
+            "Description": ["Interlocked Tori (parametric version) by Abderrahman Taha 11/12/2020"],
+            "Name": ["Interlocked_Tori_(parametric_version)"],
+            "Component": ["TorisTwist_00","TorisTwist_01"],
+            "Const": ["k=0","r=1","N=3","R=2","c=pi/100","du=1/1000000"],
+            "Funct": ["Cx=R*cos(u)","Cy=R*sin(u)","Cz=0","C1x=r*if(v<pi-k*c,cos(v+N*u/(2)),cos(k*c+N*u/(2)))","C1y=r*if(v<pi-k*c,sin(v+N*u/(2)),sin(k*c+N*u/(2)))","Rapp=u/sqrt(u*u+v*v+t*t)","C2x=r*if(v<2*pi-k*c,cos(v+N*u/(2)),cos(pi+k*c+N*u/(2)))","C2y=r*if(v<2*pi-k*c,sin(v+N*u/(2)),sin(pi+k*c+N*u/(2)))","dCxu=(Cx(u+du,v,t)-Cx(u,v,t))/du","dCyu=(Cy(u+du,v,t)-Cy(u,v,t))/du","dCzu=(Cz(u+du,v,t)-Cz(u,v,t))/du","axu=Rapp(dCxu(u,v,t),dCyu(u,v,t),dCzu(u,v,t))","ayu=Rapp(dCyu(u,v,t),dCzu(u,v,t),dCxu(u,v,t))","azu=Rapp(dCzu(u,v,t),dCxu(u,v,t),dCyu(u,v,t))","d2Cxu=(axu(u+du,v,t)-axu(u,v,t))/du","d2Cyu=(ayu(u+du,v,t)-ayu(u,v,t))/du","d2Czu=(azu(u+du,v,t)-azu(u,v,t))/du","Ax=Rapp(d2Cxu(u,v,t),d2Cyu(u,v,t),d2Czu(u,v,t))","Ay=Rapp(d2Cyu(u,v,t),d2Czu(u,v,t),d2Cxu(u,v,t))","Az=Rapp(d2Czu(u,v,t),d2Cxu(u,v,t),d2Cyu(u,v,t))","nx=(ayu(u,v,t)*Az(u,v,t)-azu(u,v,t)*Ay(u,v,t))","ny=(azu(u,v,t)*Ax(u,v,t)-axu(u,v,t)*Az(u,v,t))","nz=(axu(u,v,t)*Ay(u,v,t)-ayu(u,v,t)*Ax(u,v,t))","Bx=Rapp(nx(u,v,t),ny(u,v,t),nz(u,v,t))","By=Rapp(ny(u,v,t),nz(u,v,t),nx(u,v,t))","Bz=Rapp(nz(u,v,t),nx(u,v,t),ny(u,v,t))","S1x=Cx(u,v,t)+(C1x(u,v,t)*Bx(u,v,t)+C1y(u,v,t)*Ax(u,v,t))","S1y=Cy(u,v,t)+(C1x(u,v,t)*By(u,v,t)+C1y(u,v,t)*Ay(u,v,t))","S1z=Cz(u,v,t)+(C1x(u,v,t)*Bz(u,v,t)+C1y(u,v,t)*Az(u,v,t))","S2x=Cx(u,v,t)+(C2x(u,v,t)*Bx(u,v,t)+C2y(u,v,t)*Ax(u,v,t))","S2y=Cy(u,v,t)+(C2x(u,v,t)*By(u,v,t)+C2y(u,v,t)*Ay(u,v,t))","S2z=Cz(u,v,t)+(C2x(u,v,t)*Bz(u,v,t)+C2y(u,v,t)*Az(u,v,t))"],
+            "Fx": ["S1x(u,v,t)","S2x(u,v,t)"],
+            "Fy": ["S1y(u,v,t)","S2y(u,v,t)"],
+            "Fz": ["S1z(u,v,t)","S2z(u,v,t)"],
+            "Grid": ["200","400","200","400"],
+            "Umax": ["2*pi","2*pi"],
+            "Umin": ["0","0"],
+            "Vmax": ["pi-k*c","2*pi-k*c"],
+            "Vmin": ["k*c","pi+k*c"]
+        },
+        "Sliders": {
+            "Max": ["50","30","30","30","50","30","30","30","50","30","30","30"],
+            "Min": ["0","0","0","0","0","0","0","0","0","0","0","0"],
+            "Name": ["k","R","r","N"],
+            "Position": ["10","2","1","3","10","2","1","4","10","2","1","2"],
+            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1"]
+        },
+        "Texture": {
+            "Colors": ["R=if(j_indx%(max_j/4)>max_j/4-(6), (6/10),(1/10))","G=if(j_indx%(max_j/4)>max_j/4-(6), (1/10),(3/10))","B=if(j_indx%(max_j/4)>max_j/4-(6), (0),(4/10))","T=1"],
+            "Name": "Lines",
+            "Noise": ""
+        }
+    },
+    {
         "Iso3D": {
             "Description": ["Interlocked Tori by Abderrahman Taha 09/12/2020"],
             "Name": ["Interlocked_Tori"],
