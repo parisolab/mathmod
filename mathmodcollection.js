@@ -7467,7 +7467,7 @@
           "R=15"],
         "Funct": ["P_Skeletal0=-y-z+(51/100)*(-x*y+y*z+z*x)+12/10",
           "P_Skeletal=sin(x)+P_Skeletal0(cos(x), cos(y), cos(z), t)",
-          "isoTransform=if((x-pi)*(x-pi)<13,P_Skeletal(x,y-4*t,z-20*t,t),1)+exp((x-pi)*(x-pi)-9)",
+          "isoTransform=if((x-pi)*(x-pi)<(13),P_Skeletal(x,y-4*t,z-20*t,t),(1))+exp((x-pi)*(x-pi)-9)",
           "isoTransform2=isoTransform((sqrt(x*x+z*z)-P),y,N1*atan2(z,x),t)",
           "isoTransform3=isoTransform2(x*cos(y/N1)-z*sin(y/N1),y,x*sin(y/N1)+z*cos(y/N1),t)"],
         "Fxyz": ["-isoTransform3((sqrt(x*x+y*y)-R),N2*atan2(y,x),z,t)"],
