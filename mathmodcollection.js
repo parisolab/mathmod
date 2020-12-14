@@ -147,6 +147,31 @@
     },
     {
         "Param3D": {
+            "Description": ["Lissajous Knots by Abderrahman Taha 14/12/2020"],
+            "Name": ["Lissajous_Knots"],
+            "Component": ["LissajousKnots"],
+            "Const": ["du=1/1000000","r=8/10","ax=3","ay=4","az=7","tx=1/10","ty=7/10","tz=0"],
+            "Funct": ["Cx= cos(ax*u+tx/10)","Cy= -cos(ay*u+ty/10)","Cz= (3/10)*cos(az*u+tz/10)","Rapp=u/sqrt(u*u+v*v+t*t)","dCxu= (Cx(u+du,v,t)-Cx(u,v,t))/du","dCyu= (Cy(u+du,v,t)-Cy(u,v,t))/du","dCzu= (Cz(u+du,v,t)-Cz(u,v,t))/du","axu=Rapp(dCxu(u,v,t),dCyu(u,v,t),dCzu(u,v,t))","ayu=Rapp(dCyu(u,v,t),dCzu(u,v,t),dCxu(u,v,t))","azu=Rapp(dCzu(u,v,t),dCxu(u,v,t),dCyu(u,v,t))","d2Cxu= (axu(u+du,v,t)-axu(u,v,t))/du","d2Cyu= (ayu(u+du,v,t)-ayu(u,v,t))/du","d2Czu= (azu(u+du,v,t)-azu(u,v,t))/du","Ax=Rapp(d2Cxu(u,v,t),d2Cyu(u,v,t),d2Czu(u,v,t))","Ay=Rapp(d2Cyu(u,v,t),d2Czu(u,v,t),d2Cxu(u,v,t))","Az=Rapp(d2Czu(u,v,t),d2Cxu(u,v,t),d2Cyu(u,v,t))","nx=(ayu(u,v,t)*Az(u,v,t)-azu(u,v,t)*Ay(u,v,t))","ny=(azu(u,v,t)*Ax(u,v,t)-axu(u,v,t)*Az(u,v,t))","nz=(axu(u,v,t)*Ay(u,v,t)-ayu(u,v,t)*Ax(u,v,t))","Bx=Rapp(nx(u,v,t), ny(u,v,t), nz(u,v,t))","By=Rapp(ny(u,v,t), nz(u,v,t), nx(u,v,t))","Bz=Rapp(nz(u,v,t), nx(u,v,t), ny(u,v,t))","Sx= Cx(u,v,t) +  (r/100)*(cos(v)*Bx(u,v,t) + sin(v)*Ax(u,v,t))","Sy= Cy(u,v,t) +  (r/100)*(cos(v)*By(u,v,t) + sin(v)*Ay(u,v,t))","Sz= Cz(u,v,t) +  (r/100)*(cos(v)*Bz(u,v,t) + sin(v)*Az(u,v,t))"],
+            "Fx": ["Sx(u,v,t)"],
+            "Fy": ["Sy(u,v,t)"],
+            "Fz": ["Sz(u,v,t)"],
+            "Grid": ["300","30"],
+            "Umax": ["2*pi"],
+            "Umin": ["0"],
+            "Vmax": ["2*pi"],
+            "Vmin": ["0"]
+        },
+        "Sliders": {
+            "SetNames": ["8_21_knot","Square_knot","Stevedore_knot","Three-twist_knot"],
+            "Max": ["15","15","15","20","20","20","100","15","15","15","20","20","20","100","15","15","15","20","20","20","100","15","15","15","20","20","20","100"],
+            "Min": ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],
+            "Name": ["ax","ay","az","tx","ty","tz","r"],
+            "Position": ["3","4","7","1","7","0","8","3","5","7","7","10","0","5","3","2","5","14","2","0","11","3","2","7","6","2","0","8"],
+            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+        }
+    },
+    {
+        "Param3D": {
             "Description ": ["Planar Enneper Parametric surface by Abderrahman Taha 01/12/2020"],
             "Name": ["Planar_Enneper"],
             "Component": ["Planar Enneper"],
@@ -232,31 +257,6 @@
             "Name": ["R"],
             "Position": ["3"],
             "Step": ["1"]
-        }
-    },
-    {
-        "Param3D": {
-            "Description": ["Lissajous Knots by Abderrahman Taha 20/11/2020"],
-            "Name": ["Lissajous_Knots"],
-            "Component": ["LissajousKnots"],
-            "Const": ["du=1/1000000","r=8/10","ax=3","ay=4","az=7","tx=1/10","ty=7/10","tz=0"],
-            "Funct": ["Cx= cos(ax*u+tx/10)","Cy= -cos(ay*u+ty/10)","Cz= (3/10)*cos(az*u+tz/10)","Rapp=u/sqrt(u*u+v*v+t*t)","dCxu= (Cx(u+du,v,t)-Cx(u,v,t))/du","dCyu= (Cy(u+du,v,t)-Cy(u,v,t))/du","dCzu= (Cz(u+du,v,t)-Cz(u,v,t))/du","axu=Rapp(dCxu(u,v,t),dCyu(u,v,t),dCzu(u,v,t))","ayu=Rapp(dCyu(u,v,t),dCzu(u,v,t),dCxu(u,v,t))","azu=Rapp(dCzu(u,v,t),dCxu(u,v,t),dCyu(u,v,t))","d2Cxu= (axu(u+du,v,t)-axu(u,v,t))/du","d2Cyu= (ayu(u+du,v,t)-ayu(u,v,t))/du","d2Czu= (azu(u+du,v,t)-azu(u,v,t))/du","Ax=Rapp(d2Cxu(u,v,t),d2Cyu(u,v,t),d2Czu(u,v,t))","Ay=Rapp(d2Cyu(u,v,t),d2Czu(u,v,t),d2Cxu(u,v,t))","Az=Rapp(d2Czu(u,v,t),d2Cxu(u,v,t),d2Cyu(u,v,t))","nx=(ayu(u,v,t)*Az(u,v,t)-azu(u,v,t)*Ay(u,v,t))","ny=(azu(u,v,t)*Ax(u,v,t)-axu(u,v,t)*Az(u,v,t))","nz=(axu(u,v,t)*Ay(u,v,t)-ayu(u,v,t)*Ax(u,v,t))","Bx=Rapp(nx(u,v,t), ny(u,v,t), nz(u,v,t))","By=Rapp(ny(u,v,t), nz(u,v,t), nx(u,v,t))","Bz=Rapp(nz(u,v,t), nx(u,v,t), ny(u,v,t))","Sx= Cx(u,v,t) +  (r/100)*(cos(v)*Bx(u,v,t) + sin(v)*Ax(u,v,t))","Sy= Cy(u,v,t) +  (r/100)*(cos(v)*By(u,v,t) + sin(v)*Ay(u,v,t))","Sz= Cz(u,v,t) +  (r/100)*(cos(v)*Bz(u,v,t) + sin(v)*Az(u,v,t))"],
-            "Fx": ["Sx(u,v,t)"],
-            "Fy": ["Sy(u,v,t)"],
-            "Fz": ["Sz(u,v,t)"],
-            "Grid": ["300","30"],
-            "Umax": ["2*pi"],
-            "Umin": ["0"],
-            "Vmax": ["2*pi"],
-            "Vmin": ["0"]
-        },
-        "Sliders": {
-            "SetNames": ["8_21_knot","Square_knot","Stevedore_knot","Three-twist_knot"],
-            "Max": ["15","15","15","20","20","20","100","15","15","15","20","20","20","100","15","15","15","20","20","20","100","15","15","15","20","20","20","100"],
-            "Min": ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"],
-            "Name": ["ax","ay","az","tx","ty","tz","r"],
-            "Position": ["3","4","7","1","7","0","8","3","5","7","7","10","0","5","3","2","5","14","2","0","11","3","2","7","6","2","0","8"],
-            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
         }
     },
     {
