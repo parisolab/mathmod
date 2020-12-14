@@ -4737,7 +4737,7 @@
                 "DFz=((Patrice(x,y,z+c,t)-Patrice(x,y,z,t))/c)",
                 "Rapport=(x/sqrt(x*x+y*y+z*z))",
                 "Rapp=(T/sqrt(x*x+y*y+z*z))",
-                "ThickIso=  psh(0, DFx(x,y,z,t)) * psh(1, DFy(x,y,z,t)) * psh(2, DFz(x,y,z,t)) * (psh(3, Rapp(csd(0) , csd(1) , csd(2),t)))  * (Patrice(x-csd(0)*csd(3) ,y-csd(1)*csd(3),z-csd(2)*csd(3),t))*(Patrice(x+csd(0)*csd(3) ,y+csd(1)*csd(3),z+csd(2)*csd(3),t))",
+                "ThickIso=  psh((0), DFx(x,y,z,t)) * psh((1), DFy(x,y,z,t)) * psh((2), DFz(x,y,z,t)) * (psh((3), Rapp(csd(0) , csd(1) , csd(2),t)))  * (Patrice(x-csd(0)*csd(3) ,y-csd(1)*csd(3),z-csd(2)*csd(3),t))*(Patrice(x+csd(0)*csd(3) ,y+csd(1)*csd(3),z+csd(2)*csd(3),t))",
                 "Iso=Patrice(x-t*T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t) ,y-t*T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t) ,z-t*T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t) ,t)",
                 "ThickIsoExterior=(Iso(x,y,z,1)*Iso(x,y,z,-1))"],
             "Fxyz": ["if((sqrt(x*x+y*y+z*z)-X)<(0),ThickIsoExterior(x,y,z,t),(1))"],
