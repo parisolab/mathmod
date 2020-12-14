@@ -440,7 +440,7 @@
                 "Scherk_3=((sinh(x)*sinh(cos(pi/4)*x-sin(pi/4)*y)*sinh(cos(2*pi/4)*x-sin(2*pi/4)*y) *sinh(cos(3*pi/4)*x-sin(3*pi/4)*y) -cos(z) ) )",
                 "Scherk_4=((sinh(x)*sinh(cos(pi/5)*x-sin(pi/5)*y)*sinh(cos(2*pi/5)*x-sin(2*pi/5)*y) *sinh(cos(3*pi/5)*x-sin(3*pi/5)*y) *sinh(cos(4*pi/5)*x-sin(4*pi/5)*y) -cos(z) ) )",
                 "Scherk_5=Scherk_0(N1*atan2(x,sqrt(y*y+z*z)),(sqrt(x*x+y*y+z*z)-r),N2*atan2(z,y),t)",
-                "Lawson_CMC=if(N=1, Scherk_1(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) ,if(N=2,Scherk_2((2/5)*R(x,y,z,t),(2/5)*R(y,x,z,t),R(z,y,x,t),t) ,if(N=3,Scherk_3((1/3)*R(x,y,z,t),(1/3)*R(y,x,z,t),R(z,y,x,t),t) ,if(N=4,Scherk_4((1/3)*R(x,y,z,t),(1/3)*R(y,x,z,t),R(z,y,x,t),t) ,if(N=5,Scherk_5(x,y,z,t) ,Scherk_1(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t))))))"],
+                "Lawson_CMC=if(N=(1), Scherk_1(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) ,if(N=(2),Scherk_2((2/5)*R(x,y,z,t),(2/5)*R(y,x,z,t),R(z,y,x,t),t) ,if(N=(3),Scherk_3((1/3)*R(x,y,z,t),(1/3)*R(y,x,z,t),R(z,y,x,t),t) ,if(N=(4),Scherk_4((1/3)*R(x,y,z,t),(1/3)*R(y,x,z,t),R(z,y,x,t),t) ,if(N=(5),Scherk_5(x,y,z,t) ,Scherk_1(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t))))))"],
             "Fxyz": [" Lawson_CMC(x,y,z,t)"],
             "Grid": ["150"],
             "Xmax": ["L"],
