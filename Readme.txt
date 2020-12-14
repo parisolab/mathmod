@@ -7,9 +7,8 @@ Twitter : https://twitter.com/parisolab
 
 Change-log for MathMod-10.1 (14/12/2020)
 
-1) Add user defined variables to increase some scripts processing time (4X in some cases)
-2) Add possibility to resize up/down the exported meshes.
-3) Added 12 new scripts: ("Lissajous knots", "Tree of life", "Granny knot", "Filament Cube", "Gyroid fundamental patch", "Viviani curve", "Lissajous", "Interlocked knots(p,q)"...)
-4) Textures support for new parameters, OpenGL specular and shininess setting in the configuration file.
-6) Bug-fixes, code optimization and documentation update.
+1) Add user defined variables to reduce processing time. For instance, "Arena_02" script is more than 3 times faster to render than the original "Arena" script.
+2) Add 15 new scripts: ("Lissajous knots", "Granny knot", "Gyroid fundamental patch", "Viviani curve", "Lissajous", "Interlocked knots(p,q)", "Interlocked Toris", "Tree of life", "Filament Cube"...)
+3) Add Texture support for new parameters, possibility to resize up/down the exported meshes, OpenGL specular and shininess setting in the configuration file.
+4) Bug-fixes, code optimization and documentation update.
 For a complete list of changes : https://github.com/parisolab/mathmod/projects/5
