@@ -603,6 +603,21 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         VRgbtSize =0;
     }
+
+    if(Noise != "")
+    {
+        for(uint j=0; j<ConstSize; j++)
+            NoiseParser->AddConstant(ConstNames[j], ConstValues[j]);
+        NoiseParser->AddConstant("Lacunarity", Lacunarity);
+        NoiseParser->AddConstant("Gain", Gain);
+        NoiseParser->AddConstant("Octaves", Octaves);
+        //Add predefined constatnts:
+        for(uint k=0; k<Nb_Sliders; k++)
+        {
+            NoiseParser->AddConstant(SliderNames[k], SliderValues[k]);
+        }
+    }
+
     HowManyParamSurface(expression_X, 0);
     HowManyParamSurface(expression_Y, 1);
     HowManyParamSurface(expression_Z, 2);

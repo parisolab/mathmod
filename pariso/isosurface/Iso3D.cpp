@@ -910,6 +910,11 @@ ErrorMessage IsoMasterThread::ParserIso()
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
             }
+            //Add predefined constatnts:
+            for(uint k=0; k<Nb_Sliders; k++)
+            {
+                RgbtParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+            }
         }
     }
     else
@@ -923,6 +928,9 @@ ErrorMessage IsoMasterThread::ParserIso()
         for(uint j=0; j<ConstSize; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
+            //Add predefined constatnts:
+            for(uint k=0; k<Nb_Sliders; k++)
+                GradientParser->AddConstant(SliderNames[k], SliderValues[k]);
         }
         GradientParser->AddConstant("Lacunarity", Lacunarity);
         GradientParser->AddConstant("Gain", Gain);
@@ -935,6 +943,9 @@ ErrorMessage IsoMasterThread::ParserIso()
             for(uint j=0; j<ConstSize; j++)
             {
                 VRgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+                //Add predefined constatnts:
+                for(uint k=0; k<Nb_Sliders; k++)
+                    VRgbtParser[i].AddConstant(SliderNames[k], SliderValues[k]);
                 VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
                 VRgbtParser[i].AddConstant("Gain", Gain);
                 VRgbtParser[i].AddConstant("Octaves", Octaves);
