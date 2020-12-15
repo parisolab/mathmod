@@ -680,7 +680,7 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
             return;
         }
         QTextStream out(&file);
-        out << str << Qt::endl;
+        out << str << endl;
         file.close();
         file.copy(advancedmodels);
         QFile::setPermissions(advancedmodels,
@@ -704,7 +704,7 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
             return;
         }
         QTextStream out(&file);
-        out << str << Qt::endl;
+        out << str << endl;
         file.close();
         file.copy(filecollection);
         QFile::setPermissions(filecollection,
