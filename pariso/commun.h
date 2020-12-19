@@ -140,6 +140,7 @@ struct ComponentInfos
     std::vector<bool> ThereisCND;
     std::vector<bool> ThereisRGBA;
     std::vector<bool> ParisoCondition;
+    std::vector<bool> Show;
     uint ParisoNbComponents = 1;
     uint ParisoCurrentComponentIndex = 0;
 
