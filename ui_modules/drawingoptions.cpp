@@ -3536,7 +3536,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 copyCurrentObject2.remove("Iso3D");
                 copyCurrentObject2.remove("Param4D");
                 copyCurrentObject["Param3D"] = copyCurrentObject2;
-
             }
             else if (((copyCurrentObject["Param3D"].toObject())["Component"].toArray()).count() > 0 &&
                      indexcurrentFormula > -1 && indexcurrentFormula <
@@ -3553,7 +3552,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 replaceat(indexcurrentFormula, copyCurrentObject2, "Vmax", ui.vmax);
                 appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct_2);
                 appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst_2);
-
                 if (copyCurrentObject2["Cnd"].isArray() &&
                         copyCurrentObject2["Cnd"].toArray().count() > indexcurrentFormula)
                 {
@@ -3570,9 +3568,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 }
                 else
                     copyCurrentObject2.remove("Cnd");
-
-                /****************/
-
                 copyCurrentObject["Param3D"] = copyCurrentObject2;
             }
             else
@@ -3588,7 +3583,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     appednew(copyCurrentObject2, "Umax", ui.umax);
                     appednew(copyCurrentObject2, "Vmin", ui.vmin);
                     appednew(copyCurrentObject2, "Vmax", ui.vmax);
-
                     if (copyCurrentObject2["Grid"].isArray())
                     {
                         array = copyCurrentObject2["Grid"].toArray();
@@ -3625,11 +3619,9 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     insertat(indexcurrentFormula, copyCurrentObject2, "Umax", ui.umax);
                     insertat(indexcurrentFormula, copyCurrentObject2, "Vmin", ui.vmin);
                     insertat(indexcurrentFormula, copyCurrentObject2, "Vmax", ui.vmax);
-
                     array = copyCurrentObject2["Component"].toArray();
                     array.insert(indexcurrentFormula, ui.paramNameEdit->toPlainText());
                     copyCurrentObject2["Component"] = array;
-
                     if (copyCurrentObject2["Cnd"].isArray())
                     {
                         array = copyCurrentObject2["Cnd"].toArray();
@@ -3645,7 +3637,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     }
                     else
                         copyCurrentObject2.remove("Cnd");
-
                 }
                 appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct_2);
                 appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst_2);
@@ -3666,7 +3657,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     removeat(indexcurrentFormula, copyCurrentObject2, MandatoryParmetric4DFields[ui]);
 
                 removeat2(indexcurrentFormula, copyCurrentObject2, "Grid");
-
                 copyCurrentObject["Param4D"] = copyCurrentObject2;
             }
             else if (((copyCurrentObject["Param4D"].toObject())["Component"].toArray()).count() > 0 &&
@@ -3681,7 +3671,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 replaceat(indexcurrentFormula, copyCurrentObject2, "Umax", ui.umax_2);
                 replaceat(indexcurrentFormula, copyCurrentObject2, "Vmin", ui.vmin_2);
                 replaceat(indexcurrentFormula, copyCurrentObject2, "Vmax", ui.vmax_2);
-
                 copyCurrentObject["Param4D"] = copyCurrentObject2;
             }
             else
@@ -3706,7 +3695,6 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     }
                     else
                         copyCurrentObject2.remove("Grid");
-
                     copyCurrentObject["Param4D"] = copyCurrentObject2;
                 }
                 else
