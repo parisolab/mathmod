@@ -2562,7 +2562,6 @@ void DrawingOptions::SearchListModels()
     int childcount;
     bool sel1 = false;
     int searchresult = 0;
-
     // init boolean lists:
     for (int i = 0; i < select.selectedoptions.selectedwords.count() - 1; i++)
     {
@@ -2571,7 +2570,6 @@ void DrawingOptions::SearchListModels()
         select.selectedoptions.cmpnamelist.append(false);
         select.selectedoptions.complist.append(false);
     }
-
     for (int i = 0; i < topcount; ++i)
     {
         Toplevel = ui.ObjectClasse->topLevelItem(i);
@@ -2624,7 +2622,6 @@ void DrawingOptions::SearchListModels()
                         ParseItemTree(Childlevel->child(m),
                                       select.selectedoptions.complist);
                 }
-
                 // now look in the search results
                 if (select.selectedoptions.AND)
                 {
@@ -2665,15 +2662,12 @@ void DrawingOptions::SearchListModels()
                     ParseItemTree(Childlevel, select.selectedoptions.cmpnamelist, true);
                     int ct = Childlevel->childCount();
                     for (int m = 0; m < ct; m++)
-                        ParseItemTree(Childlevel->child(m), select.selectedoptions.complist,
-                                      true);
+                        ParseItemTree(Childlevel->child(m), select.selectedoptions.complist, true);
                 }
             }
-
             // Now count and show only scripts with appropiate search results:
             if (sel1)
                 searchresult++;
-
             (Toplevel->child(j))->setHidden(!sel1);
             if (Toplevel->text(0).contains("IsoSurfaces"))
                 Toplevel->setText(0, "IsoSurfaces (" + QString::number(searchresult) +
@@ -2686,14 +2680,12 @@ void DrawingOptions::SearchListModels()
                                   ")");
         }
     }
-
     // Clear boolean lists:
     select.selectedoptions.namelist.clear();
     select.selectedoptions.functlist.clear();
     select.selectedoptions.cmpnamelist.clear();
     select.selectedoptions.complist.clear();
 }
-
 
 void DrawingOptions::AddListModels(bool update)
 {
@@ -2707,7 +2699,6 @@ void DrawingOptions::AddListModels(bool update)
             new QAction("Erase selected row from MySelection", contextMenu);
         QAction *separator = new QAction(ui.ObjectClasse);
         separator->setSeparator(true);
-
         ui.ObjectClasse->addAction(addElement);
         ui.ObjectClasse->addAction(separator);
         ui.ObjectClasse->addAction(deleteElement);
@@ -2736,29 +2727,23 @@ void DrawingOptions::AddListModels(bool update)
             {
                 QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
                 cmpitem2->setText(0, MathmodRef->collection.JPar[i].Component.at(j));
-
                 QTreeWidgetItem *cmpitem3 = new QTreeWidgetItem(cmpitem2);
                 cmpitem3->setText(0, "X(u,v) = " +
                                   MathmodRef->collection.JPar[i].Fx.at(j));
-
                 QTreeWidgetItem *cmpitem4 = new QTreeWidgetItem(cmpitem2);
                 cmpitem4->setText(0, "Y(u,v) = " +
                                   MathmodRef->collection.JPar[i].Fy.at(j));
-
                 QTreeWidgetItem *cmpitem5 = new QTreeWidgetItem(cmpitem2);
                 cmpitem5->setText(0, "Z(u,v) = " +
                                   MathmodRef->collection.JPar[i].Fz.at(j));
-
                 QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
                 cmpitem6->setText(
                     0, "U = [" + MathmodRef->collection.JPar[i].Umin.at(j) + ", " +
                     MathmodRef->collection.JPar[i].Umax.at(j) + "]");
-
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
                 cmpitem7->setText(
                     0, "V = [" + MathmodRef->collection.JPar[i].Vmin.at(j) + ", " +
                     MathmodRef->collection.JPar[i].Vmax.at(j) + "]");
-
                 // Grid resolution:
                 if (MathmodRef->collection.JPar[i].Grid.size() > 0 &&
                         2 * j + 1 < MathmodRef->collection.JPar[i].Grid.size())
@@ -2771,14 +2756,12 @@ void DrawingOptions::AddListModels(bool update)
                 }
             }
         }
-
         // Add Global parameters:
         if (MathmodRef->collection.JPar[i].Csts.count() ||
                 MathmodRef->collection.JPar[i].Funct.count())
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
             parameteritem->setText(0, "Parameters:");
-
             if (MathmodRef->collection.JPar[i].Csts.count() > 0)
             {
                 QTreeWidgetItem *cstitem = new QTreeWidgetItem(parameteritem);
@@ -2789,7 +2772,6 @@ void DrawingOptions::AddListModels(bool update)
                     cstitem2->setText(0, MathmodRef->collection.JPar[i].Csts.at(j));
                 }
             }
-
             if (MathmodRef->collection.JPar[i].Funct.count() > 0)
             {
                 QTreeWidgetItem *fctitem = new QTreeWidgetItem(parameteritem);
@@ -2803,7 +2785,6 @@ void DrawingOptions::AddListModels(bool update)
         }
     }
     ParlistItem->sortChildren(0, Qt::AscendingOrder);
-
     // Iso:
     QTreeWidgetItem *IsolistItem = IsolistItemRef =
                                        new QTreeWidgetItem(ui.ObjectClasse);
@@ -2819,32 +2800,26 @@ void DrawingOptions::AddListModels(bool update)
         {
             QTreeWidgetItem *cmpitem = new QTreeWidgetItem(nameitem);
             cmpitem->setText(0, "Components");
-
             for (int j = 0; j < MathmodRef->collection.JIso[i].Component.count();
                     j++)
             {
                 QTreeWidgetItem *cmpitem2 = new QTreeWidgetItem(cmpitem);
                 cmpitem2->setText(0, MathmodRef->collection.JIso[i].Component.at(j));
-
                 QTreeWidgetItem *cmpitem3 = new QTreeWidgetItem(cmpitem2);
                 cmpitem3->setText(0, "F(x,y,z) = " +
                                   MathmodRef->collection.JIso[i].Fxyz.at(j));
-
                 QTreeWidgetItem *cmpitem6 = new QTreeWidgetItem(cmpitem2);
                 cmpitem6->setText(
                     0, "X = [" + MathmodRef->collection.JIso[i].Xmin.at(j) + ", " +
                     MathmodRef->collection.JIso[i].Xmax.at(j) + "]");
-
                 QTreeWidgetItem *cmpitem7 = new QTreeWidgetItem(cmpitem2);
                 cmpitem7->setText(
                     0, "Y = [" + MathmodRef->collection.JIso[i].Ymin.at(j) + ", " +
                     MathmodRef->collection.JIso[i].Ymax.at(j) + "]");
-
                 QTreeWidgetItem *cmpitem8 = new QTreeWidgetItem(cmpitem2);
                 cmpitem8->setText(
                     0, "Z = [" + MathmodRef->collection.JIso[i].Zmin.at(j) + ", " +
                     MathmodRef->collection.JIso[i].Zmax.at(j) + "]");
-
                 // Grid resolution:
                 if (MathmodRef->collection.JIso[i].Grid.size() > 0 &&
                         j < MathmodRef->collection.JIso[i].Grid.size())
@@ -2855,14 +2830,12 @@ void DrawingOptions::AddListModels(bool update)
                 }
             }
         }
-
         // Add Global parameters:
         if (MathmodRef->collection.JIso[i].Csts.count() ||
                 MathmodRef->collection.JIso[i].Funct.count())
         {
             QTreeWidgetItem *parameteritem = new QTreeWidgetItem(nameitem);
             parameteritem->setText(0, "Parameters:");
-
             if (MathmodRef->collection.JIso[i].Csts.count() > 0)
             {
                 QTreeWidgetItem *cstitem = new QTreeWidgetItem(parameteritem);
@@ -2873,7 +2846,6 @@ void DrawingOptions::AddListModels(bool update)
                     cstitem2->setText(0, MathmodRef->collection.JIso[i].Csts.at(j));
                 }
             }
-
             if (MathmodRef->collection.JIso[i].Funct.count() > 0)
             {
                 QTreeWidgetItem *fctitem = new QTreeWidgetItem(parameteritem);
@@ -2887,7 +2859,6 @@ void DrawingOptions::AddListModels(bool update)
         }
     }
     IsolistItemRef->sortChildren(0, Qt::AscendingOrder);
-
     // Parametric:
     QTreeWidgetItem *ParisolistItem = new QTreeWidgetItem(ui.ObjectClasse);
     Text = "Pariso (" +
@@ -2901,7 +2872,6 @@ void DrawingOptions::AddListModels(bool update)
 
     }
     ParisolistItem->sortChildren(0, Qt::AscendingOrder);
-
     // My Selection:
     // Isosurfaces:
     QTreeWidgetItem *MyselectionItem = new QTreeWidgetItem(ui.ObjectClasse);
@@ -2911,7 +2881,6 @@ void DrawingOptions::AddListModels(bool update)
     return;
 }
 
-
 void DrawingOptions::on_pushButton_clicked()
 {
     static int checked = 1;
@@ -2919,43 +2888,36 @@ void DrawingOptions::on_pushButton_clicked()
     (checked == -1) ? ui.ObjectClasse->hide() : ui.ObjectClasse->show();
 }
 
-
 void DrawingOptions::on_action_Exit_triggered()
 {
     MathmodRef->close();
     this->close();
 }
 
-
 void DrawingOptions::on_actionTriangles_triggered()
 {
     MathmodRef->slot_triangles_clicked();
 }
-
 
 void DrawingOptions::on_actionNormales_triggered()
 {
     MathmodRef->draw_norm_clicked();
 }
 
-
 void DrawingOptions::on_actionInfos_triggered()
 {
     MathmodRef->iso_infos();
 }
-
 
 void DrawingOptions::on_actionFill_triggered()
 {
     MathmodRef->fill();
 }
 
-
 void DrawingOptions::on_actionSmooth_triggered()
 {
     MathmodRef->smoothline();
 }
-
 
 void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
 {
@@ -3017,13 +2979,11 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
     }
 }
 
-
 void DrawingOptions::slot_pushButton_2_clicked()
 {
     MathmodRef->RootObjet.MyJsonObjectSelection.append(MathmodRef->RootObjet.CurrentJsonObject);
     AddObjectToMySelectionTree();
 }
-
 
 void DrawingOptions::slot_unselect_clicked()
 {
@@ -3033,15 +2993,12 @@ void DrawingOptions::slot_unselect_clicked()
     MyselectionItemReference->removeChild(ui.ObjectClasse->currentItem());
 }
 
-
 void DrawingOptions::slot_XYZscrollBar_valueChanged(int value)
 {
     MathmodRef->xyzg_valueChanged(value, ISO_TYPE);
 }
 
-
-void DrawingOptions::UpdateDescription(int position, ModelType type,
-                                       TreeStruct &currentstruct)
+void DrawingOptions::UpdateDescription(int position, ModelType type, TreeStruct &currentstruct)
 {
     if (type == PAR_TYPE)
     {
@@ -3060,12 +3017,10 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
             ui.vmin->setText(currentstruct.vmin.at(position));
             ui.umax->setText(currentstruct.umax.at(position));
             ui.vmax->setText(currentstruct.vmax.at(position));
-
             if (!currentstruct.Component.empty())
                 ui.paramNameEdit->setText(currentstruct.Component.at(position));
             else
                 ui.paramNameEdit->setText("");
-
             if (!currentstruct.Cnd.empty())
             {
                 ui.CndUpdateEdit_2->setText(currentstruct.Cnd.at(position));
@@ -3074,7 +3029,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
             {
                 ui.CndUpdateEdit_2->setText("");
             }
-
             // Function:
             if (!currentstruct.Funct.empty())
             {
@@ -3091,7 +3045,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
                 ui.tableWidget_Fct_2->clearContents();
                 ui.tableWidget_Fct_2->setRowCount(0);
             }
-
             // Constantes:
             if (!currentstruct.Const.empty())
             {
@@ -3111,7 +3064,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
         }
         ui.stackedProperties->setCurrentIndex(2);
     }
-
     if (type == PAR_4D_TYPE)
     {
         if (position > -1)
@@ -3137,7 +3089,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
         }
         ui.stackedProperties->setCurrentIndex(3);
     }
-
     if (type == ISO_TYPE)
     {
         if (position > -1)
@@ -3146,7 +3097,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
             MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula == position
             ? MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1
                     : MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = position;
-
             ui.UpdateEdit->setText(currentstruct.fxyz.at(position));
             ui.xmin->setText(currentstruct.xmin.at(position));
             ui.ymin->setText(currentstruct.ymin.at(position));
@@ -3154,7 +3104,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
             ui.xmax->setText(currentstruct.xmax.at(position));
             ui.ymax->setText(currentstruct.ymax.at(position));
             ui.zmax->setText(currentstruct.zmax.at(position));
-
             if (!currentstruct.Component.empty())
                 ui.isoNameEdit->setText(currentstruct.Component.at(position));
             else
@@ -3170,7 +3119,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
             {
                 ui.CndUpdateEdit->setText("");
             }
-
             // Function:
             if (!currentstruct.Funct.empty())
             {
@@ -3187,7 +3135,6 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
                 ui.tableWidget_Fct->clearContents();
                 ui.tableWidget_Fct->setRowCount(0);
             }
-
             // Constantes:
             if (!currentstruct.Const.empty())
             {
@@ -3205,59 +3152,49 @@ void DrawingOptions::UpdateDescription(int position, ModelType type,
                 ui.tableWidget_Cst->setRowCount(0);
             }
         }
-
         ui.stackedProperties->setCurrentIndex(1);
     }
 }
-
 
 void DrawingOptions::oncolor_2activated(int index)
 {
     MathmodRef->ui.glWidget->colorstype(index);
 }
 
-
 void DrawingOptions::onred_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->red(value, IndexcurrentComponent);
 }
-
 
 void DrawingOptions::ongreen_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->green(value, IndexcurrentComponent);
 }
 
-
 void DrawingOptions::onblue_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->blue(value, IndexcurrentComponent);
 }
-
 
 void DrawingOptions::ontransparent_2valueChanged(int value)
 {
     MathmodRef->ui.glWidget->transparency(value, IndexcurrentComponent);
 }
 
-
 void DrawingOptions::ontransparence_2clicked(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
-
 
 void DrawingOptions::on_red_ParIso_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->red(value, IndexcurrentComponent);
 }
 
-
 void DrawingOptions::on_green_ParIso_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->green(value, IndexcurrentComponent);
 }
-
 
 void DrawingOptions::on_blue_ParIso_valueChanged(int value)
 {
@@ -3317,7 +3254,6 @@ void DrawingOptions::insertat(int idx, QJsonObject& QObj, QString str, QTextEdit
     QObj[str] = array;
 }
 
-
 void DrawingOptions::appednew(QJsonObject& QObj, QString str, QTextEdit* text)
 {
     QJsonArray array;
@@ -3329,7 +3265,6 @@ void DrawingOptions::appednew(QJsonObject& QObj, QString str, QTextEdit* text)
 void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
 {
     QJsonArray array;
-
     if (copyCurrentObject["Iso3D"].isObject())
     {
         if (IndexcurrentComponent != -1)
@@ -3682,7 +3617,6 @@ void DrawingOptions::RunUpdatedJObject(QJsonObject &CurrentObject)
     }
 }
 
-
 void DrawingOptions::on_updateButton_clicked()
 {
     QJsonObject CurrentObject = MathmodRef->RootObjet.CurrentJsonObject;
@@ -3720,7 +3654,6 @@ void DrawingOptions::on_updateButton_clicked()
             CurrentObject["ParIso"] = newlisteObj;
             RunUpdatedJObject(CurrentObject);
         }
-
     }
     else
     {
@@ -3730,18 +3663,15 @@ void DrawingOptions::on_updateButton_clicked()
     }
 }
 
-
 void DrawingOptions::on_updateParam_clicked()
 {
     on_updateButton_clicked();
 }
 
-
 void DrawingOptions::on_actionPolygonWavefront_obj_triggered()
 {
     MathmodRef->ui.glWidget->SaveSceneAsObjPoly();
 }
-
 
 void DrawingOptions::on_actionColorPolygonWavefront_obj_triggered()
 {
