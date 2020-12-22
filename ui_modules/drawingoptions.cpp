@@ -2384,49 +2384,33 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                         EquationsNumber++;
                         if (name == "")
                             name = "_" + QString::number(EquationsNumber);
-
                         xlimit = xlimit.trimmed();
                         separator = xlimit.indexOf(",");
                         xmin = xlimit.left(separator);
                         xmax = xlimit.remove(xmin + ",");
-
                         ylimit = ylimit.trimmed();
                         separator = ylimit.indexOf(",");
                         ymin = ylimit.left(separator);
                         ymax = ylimit.remove(ymin + ",");
-
                         zlimit = zlimit.trimmed();
                         separator = zlimit.indexOf(",");
                         zmin = zlimit.left(separator);
                         zmax = zlimit.remove(zmin + ",");
-
                         if (JsonString != "")
                             JsonString += ",";
-
                         JsonString += "{\"Iso3D\": {  \
                          \"Description \": [ \"" +
                                       comments + "\"], ";
-
                         JsonString += "\"Name\": [\"" + name + "\"], ";
-
                         JsonString += "\"Component\": [\"" + name + "\"], ";
-
                         JsonString += "\"Fxyz\": [\"" + IsoFct.trimmed() + "\"], ";
-
                         JsonString += "\"Cnd\": [\"" + condition + "\"], ";
-
                         JsonString += "\"Xmin\": [\"" + xmin + "\"], ";
-
                         JsonString += "\"Xmax\": [\"" + xmax + "\"], ";
-
                         JsonString += "\"Ymin\": [\"" + ymin + "\"], ";
-
                         JsonString += "\"Ymax\": [\"" + ymax + "\"], ";
-
                         JsonString += "\"Zmin\": [\"" + zmin + "\"], ";
-
                         JsonString += "\"Zmax\": [\"" + zmax + "\"] ";
-
                         JsonString += "}}";
                     }
 
@@ -2440,46 +2424,31 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                         separator = ulimit.indexOf(",");
                         umin = ulimit.left(separator);
                         umax = ulimit.remove(umin + ",");
-
                         vlimit = vlimit.trimmed();
                         separator = vlimit.indexOf(",");
                         vmin = vlimit.left(separator);
                         vmax = vlimit.remove(vmin + ",");
-
                         if (JsonString != "")
                             JsonString += ",";
-
                         JsonString += "{\"Param3D\": {  \
                          \"Description \": [ \"" +
                                       comments + "\"],";
-
                         JsonString += "\"Name\": [\"" + name + "\"],";
-
                         JsonString += "\"Component\": [\"" + name + "\"],";
-
                         JsonString += "\"Fx\": [\"" + Xfct.trimmed() + "\"],";
-
                         JsonString += "\"Fy\": [\"" + Yfct.trimmed() + "\"],";
-
                         JsonString += "\"Fz\": [\"" + Zfct.trimmed() + "\"],";
-
                         JsonString += "\"Cnd\": [\"" + condition + "\"],";
-
                         JsonString += "\"Umin\": [\"" + umin + "\"],";
-
                         JsonString += "\"Umax\": [\"" + umax + "\"],";
-
                         JsonString += "\"Vmin\": [\"" + vmin + "\"],";
-
                         JsonString += "\"Vmax\": [\"" + vmax + "\"]";
-
                         JsonString += "}}";
                     }
                     current = 16;
                     // Init all Parameters fo new formula:
                     IsoFct = Xfct = Yfct = Zfct = name = comments = condition = "";
-                    umin = umax = vmin = vmax = xmin = xmax = ymin = ymax = zmin = zmax =
-                                                           "";
+                    umin = umax = vmin = vmax = xmin = xmax = ymin = ymax = zmin = zmax = "";
                     ulimit = vlimit = xlimit = ylimit = zlimit = "";
                     FctType = -1;
                     break;
@@ -2492,7 +2461,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                         ylimit += line;
                     else if (current == 4)
                         zlimit += line;
-
                     else if (current == 21)
                         Xfct += line;
                     else if (current == 22)
@@ -2503,7 +2471,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                         ulimit += line;
                     else if (current == 25)
                         vlimit += line;
-
                     else if (current == 5)
                         condition += line;
                     else if (current == 6)
@@ -2529,18 +2496,14 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                     break;
                 }
             }
-
             file.close();
-
             JsonString = " { \"MathModels\": [ " + JsonString + "]}";
-
             QFile f(filename.replace(".k3ds", ".js"));
             if (f.exists())
                 f.remove();
             if (!f.open(QIODevice::ReadWrite | QIODevice::Text))
             {
-                statusBar()->showMessage(tr("Could not write to %1").arg(filename),
-                                         2000);
+                statusBar()->showMessage(tr("Could not write to %1").arg(filename),2000);
                 return;
             }
             QTextStream t(&f);
@@ -2549,7 +2512,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
         }
     }
 }
-
 
 QTreeWidgetItem *DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem *item,
         QString proprty)
@@ -2563,9 +2525,7 @@ QTreeWidgetItem *DrawingOptions::ChildItemTreeProperty(QTreeWidgetItem *item,
     return nullptr;
 }
 
-
-void DrawingOptions::ParseItemTree(QTreeWidgetItem *item, QList<bool> &list,
-                                   bool viewall)
+void DrawingOptions::ParseItemTree(QTreeWidgetItem *item, QList<bool> &list, bool viewall)
 {
     int childcount = item->childCount();
     bool sel = false;
@@ -2592,7 +2552,6 @@ void DrawingOptions::ParseItemTree(QTreeWidgetItem *item, QList<bool> &list,
         }
     }
 }
-
 
 void DrawingOptions::SearchListModels()
 {
