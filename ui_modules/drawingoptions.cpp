@@ -3678,7 +3678,6 @@ void DrawingOptions::on_actionColorPolygonWavefront_obj_triggered()
     MathmodRef->ui.glWidget->SaveSceneAsObjPoly(1);
 }
 
-
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
@@ -3697,7 +3696,6 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
     }
 }
 
-
 void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
@@ -3715,7 +3713,6 @@ void DrawingOptions::on_lineScrollBar_valueChanged(int value)
         MathmodRef->uvactivated = -1;
     }
 }
-
 
 void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 {
@@ -3736,60 +3733,50 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
     }
 }
 
-
 void DrawingOptions::on_IsoComponent_activated(int index)
 {
     UpdateDescription(index, ISO_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
 }
-
 
 void DrawingOptions::on_ParamComponent_activated(int index)
 {
     UpdateDescription(index, PAR_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
 }
 
-
 void DrawingOptions::on_xyzcheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animxyz *= -1;
 }
-
 
 void DrawingOptions::on_xycheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animx *= -1;
 }
 
-
 void DrawingOptions::on_xyhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->LocalScene.animxValueStep = float(value) / 4;
 }
-
 
 void DrawingOptions::on_xzcheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animy *= -1;
 }
 
-
 void DrawingOptions::on_xzhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->LocalScene.animyValueStep = float(value) / 4;
 }
-
 
 void DrawingOptions::on_yzcheckBox2_clicked()
 {
     MathmodRef->ui.glWidget->LocalScene.animz *= -1;
 }
 
-
 void DrawingOptions::on_yzhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->LocalScene.animzValueStep = float(value) / 4;
 }
-
 
 void DrawingOptions::on_InitMatrix_2_clicked()
 {
@@ -3799,78 +3786,65 @@ void DrawingOptions::on_InitMatrix_2_clicked()
                 MathmodRef->ui.glWidget->LocalScene.animzValueStep = 0.0;
 }
 
-
 void DrawingOptions::on_xycheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxy_ok *= -1;
 }
-
 
 void DrawingOptions::on_xyhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxy = value / 4.0;
 }
 
-
 void DrawingOptions::on_xzcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxz_ok *= -1;
 }
-
 
 void DrawingOptions::on_xzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxz = value / 4.0;
 }
 
-
 void DrawingOptions::on_yzcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetayz_ok *= -1;
 }
-
 
 void DrawingOptions::on_yzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetayz = value / 4.0;
 }
 
-
 void DrawingOptions::on_xwcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxw_ok *= -1;
 }
-
 
 void DrawingOptions::on_xwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetaxw = value / 4.0;
 }
 
-
 void DrawingOptions::on_ywcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetayw_ok *= -1;
 }
-
 
 void DrawingOptions::on_ywhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetayw = value / 4.0;
 }
 
-
 void DrawingOptions::on_zwcheckBox_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->tetazw_ok *= -1;
 }
 
-
 void DrawingOptions::on_zwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->ParObjet->tetazw = value / 4.0;
 }
-
 
 void DrawingOptions::on_linecolumn_3_valueChanged(int value)
 {
@@ -3889,24 +3863,20 @@ void DrawingOptions::on_linecolumn_3_valueChanged(int value)
     }
 }
 
-
 void DrawingOptions::oncolor_4activated(int index)
 {
     MathmodRef->ui.glWidget->colorstypeParam(index);
 }
-
 
 void DrawingOptions::ontransparence_4toggled(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
 
-
 void DrawingOptions::on_uv4D_clicked()
 {
     MathmodRef->slot_uv4D_clicked();
 }
-
 
 void DrawingOptions::on_uv_clicked()
 {
@@ -3914,13 +3884,11 @@ void DrawingOptions::on_uv_clicked()
     MathmodRef->slot_uv_clicked(PARISO_TYPE) : MathmodRef->slot_uv_clicked(PAR_TYPE);
 }
 
-
 void DrawingOptions::on_InitMatrix_clicked()
 {
     MathmodRef->ui.glWidget->ParObjet->mat4D.unit();
     on_calculate_clicked();
 }
-
 
 void DrawingOptions::on_ActivateCND_clicked(bool checked)
 {
@@ -3929,13 +3897,11 @@ void DrawingOptions::on_ActivateCND_clicked(bool checked)
     MathmodRef->ui.glWidget->update();
 }
 
-
 void DrawingOptions::on_TCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[3] = checked;
     MathmodRef->ui.glWidget->update();
 }
-
 
 void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
 {
@@ -3943,13 +3909,11 @@ void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
     MathmodRef->ui.glWidget->update();
 }
 
-
 void DrawingOptions::on_TNCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[4] = checked;
     MathmodRef->ui.glWidget->update();
 }
-
 
 void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
 {
@@ -3957,19 +3921,16 @@ void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
     MathmodRef->ui.glWidget->update();
 }
 
-
 void DrawingOptions::on_TBordercheckBox_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->LocalScene.cndoptions[2] = checked;
     MathmodRef->ui.glWidget->update();
 }
 
-
 void DrawingOptions::on_actionMesh_triggered()
 {
     MathmodRef->Mesh();
 }
-
 
 void DrawingOptions::on_calculate_clicked()
 {
@@ -3977,79 +3938,66 @@ void DrawingOptions::on_calculate_clicked()
     Run_JsonObject_activeted();
 }
 
-
 void DrawingOptions::on_actionAbout_2_triggered()
 {
     ab.show();
 }
-
 
 void DrawingOptions::on_actionLoad_json_script_triggered()
 {
     LoadNewFileModels(true);
 }
 
-
 void DrawingOptions::on_actionScreenshot_triggered()
 {
     videoplay();
 }
-
 
 void DrawingOptions::on_actionEditor_triggered()
 {
     editorwin();
 }
 
-
 void DrawingOptions::on_actionColors_triggered()
 {
     colorsoptions();
 }
-
 
 void DrawingOptions::on_actionSmooth_2_clicked()
 {
     MathmodRef->smoothline();
 }
 
-
 void DrawingOptions::on_Infos_clicked()
 {
     MathmodRef->iso_infos();
 }
-
 
 void DrawingOptions::on_Mesh_clicked()
 {
     MathmodRef->Mesh();
 }
 
-
 void DrawingOptions::on_Norm_clicked()
 {
     MathmodRef->draw_norm_clicked();
 }
-
 
 void DrawingOptions::on_Fill_clicked()
 {
     MathmodRef->fill();
 }
 
-
 void DrawingOptions::on_Trian_clicked()
 {
     MathmodRef->slot_triangles_clicked();
 }
-
 
 void DrawingOptions::on_actionOpenGL_triggered()
 {
     Parameters->on_loadconfig_clicked();
     Parameters->show();
 }
-
 
 void DrawingOptions::on_cut_clicked()
 {
@@ -4066,30 +4014,25 @@ void DrawingOptions::on_cut_clicked()
     }
 }
 
-
 void DrawingOptions::on_actionConvert_K3DS_script_triggered()
 {
     LoadK3DSurfScript("", 1);
 }
-
 
 void DrawingOptions::on_actionConfiguration_triggered()
 {
     on_actionOpenGL_triggered();
 }
 
-
 void DrawingOptions::on_actionColors_2_triggered()
 {
     on_actionColors_triggered();
 }
 
-
 void DrawingOptions::on_Load_clicked()
 {
     LoadNewFileModels(true);
 }
-
 
 void DrawingOptions::on_ParamComponent_2_activated(int index)
 {
@@ -4097,12 +4040,10 @@ void DrawingOptions::on_ParamComponent_2_activated(int index)
                       MathmodRef->RootObjet.CurrentTreestruct);
 }
 
-
 void DrawingOptions::on_updateParam_2_clicked()
 {
     on_updateButton_clicked();
 }
-
 
 void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
                                 int index)
@@ -4114,36 +4055,27 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
                oldfxyz, oldcnd, oldgrid;
     bool cndb = false;
     bool gridb = false;
-
     oldminx = iso["Iso3D"].toObject()["Xmin"].toArray();
     oldminy = iso["Iso3D"].toObject()["Ymin"].toArray();
     oldminz = iso["Iso3D"].toObject()["Zmin"].toArray();
-
     oldmaxx = iso["Iso3D"].toObject()["Xmax"].toArray();
     oldmaxy = iso["Iso3D"].toObject()["Ymax"].toArray();
     oldmaxz = iso["Iso3D"].toObject()["Zmax"].toArray();
-
     oldcmpname = iso["Iso3D"].toObject()["Component"].toArray();
     oldfxyz = iso["Iso3D"].toObject()["Fxyz"].toArray();
-
     if ((gridb = (iso["Iso3D"].toObject()["Grid"].isArray())))
         grid =
             (oldgrid = iso["Iso3D"].toObject()["Grid"].toArray())[index].toString();
-
     if ((cndb = (iso["Iso3D"].toObject()["Cnd"].isArray())))
         cnd = (oldcnd = iso["Iso3D"].toObject()["Cnd"].toArray())[index].toString();
-
     componentName = oldcmpname[index].toString();
     fct = oldfxyz[index].toString();
-
     Minx = "(" + oldminx[index].toString() + ")";
     Miny = "(" + oldminy[index].toString() + ")";
     Minz = "(" + oldminz[index].toString() + ")";
-
     Maxx = "(" + oldmaxx[index].toString() + ")";
     Maxy = "(" + oldmaxy[index].toString() + ")";
     Maxz = "(" + oldmaxz[index].toString() + ")";
-
     Difx = "((" + Maxx + "-" + Minx + ")/" + QString::number(x) + ")";
     Dify = "((" + Maxy + "-" + Miny + ")/" + QString::number(y) + ")";
     Difz = "((" + Maxz + "-" + Minz + ")/" + QString::number(z) + ")";
@@ -4154,43 +4086,30 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
             {
                 oldminx.append(Minx + "+" + QString::number(i) + "*" + Difx);
                 oldmaxx.append(Minx + "+" + QString::number(i + 1) + "*" + Difx);
-
                 oldminy.append(Miny + "+" + QString::number(j) + "*" + Dify);
                 oldmaxy.append(Miny + "+" + QString::number(j + 1) + "*" + Dify);
-
                 oldminz.append(Minz + "+" + QString::number(k) + "*" + Difz);
                 oldmaxz.append(Minz + "+" + QString::number(k + 1) + "*" + Difz);
-
                 oldcmpname.append(componentName + QString::number(l));
-
                 oldfxyz.append(fct);
-
                 if (cndb)
                     oldcnd.append(cnd);
-
                 if (gridb)
                     oldgrid.append(grid);
-
                 l++;
             }
-
     oldminx.removeAt(index);
     oldminy.removeAt(index);
     oldminz.removeAt(index);
-
     oldmaxx.removeAt(index);
     oldmaxy.removeAt(index);
     oldmaxz.removeAt(index);
-
     oldcmpname.removeAt(index);
     oldfxyz.removeAt(index);
-
     if (cndb)
         oldcnd.removeAt(index);
-
     if (gridb)
         oldgrid.removeAt(index);
-
     QJsonObject tmp = iso["Iso3D"].toObject();
     tmp["Xmin"] = oldminx;
     tmp["Ymin"] = oldminy;
@@ -4207,7 +4126,6 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
     iso["Iso3D"] = tmp;
 }
 
-
 void DrawingOptions::on_Multiplier_clicked()
 {
     int i = ui.xcomboBox->currentIndex(), j = ui.ycomboBox->currentIndex(),
@@ -4218,7 +4136,6 @@ void DrawingOptions::on_Multiplier_clicked()
         // Erase unused Keys:
         copyCurrentObject.remove("Param3D");
         copyCurrentObject.remove("Param4D");
-
         Multiplier(i, j, k, copyCurrentObject, IndexcurrentComponent);
         // Draw here
         DrawJsonModel(copyCurrentObject);
@@ -4236,12 +4153,10 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.xyzg->setMaximum(maxgrd);
     ui.xyzg->setValue(int(Parameters->InitIsoGrid));
     ui.xyzg->blockSignals(false);
-
     ui.linecolumn_2->blockSignals(true);
     ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
     ui.linecolumn_2->setValue(int(Parameters->InitParGrid));
     ui.linecolumn_2->blockSignals(false);
-
     ui.linecolumn_3->blockSignals(true);
     ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
     ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
@@ -4253,7 +4168,6 @@ void DrawingOptions::UpdateGui(int argc)
     UpdateGuiMaxgrid();
     ListeModelTexture LstModelTexture = (Parameters->LoadCollectionModels(
             JSONMathModels, MathmodRef->collection, argc));
-
     // Load the script containing isosurface and parametric formulas:
     ui.choice->insertItems(0, LstModelTexture.listeModels);
     ui.comboBoxTexture->insertItems(0, LstModelTexture.listeTextures);
@@ -4283,42 +4197,34 @@ void DrawingOptions::UpdateGui(int argc)
     ui.Messagetext->setFontPointSize(10);
 }
 
-
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
     double P = 1.0 / double(value);
     uint maxnbthreads = MathmodRef->ui.glWidget->IsoObjet->WorkerThreadsNumber;
     ui.label_5->setText("1/" + QString::number(value));
-
     MathmodRef->ui.glWidget->IsoObjet->masterthread->pace = P;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
         MathmodRef->ui.glWidget->IsoObjet->workerthreads[nbthreds].pace = P;
-
     MathmodRef->ui.glWidget->ParObjet->masterthread->pace = P;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
         MathmodRef->ui.glWidget->ParObjet->workerthreads[nbthreds].pace = P;
 }
 
-
 void DrawingOptions::on_InitTButton_clicked()
 {
     uint maxnbthreads = MathmodRef->ui.glWidget->IsoObjet->WorkerThreadsNumber;
-
     MathmodRef->ui.glWidget->IsoObjet->masterthread->stepMorph = 0;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
         MathmodRef->ui.glWidget->IsoObjet->workerthreads[nbthreds].stepMorph = 0;
-
     MathmodRef->ui.glWidget->ParObjet->masterthread->stepMorph = 0;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
         MathmodRef->ui.glWidget->ParObjet->workerthreads[nbthreds].stepMorph = 0;
 }
 
-
 void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
 {
     QString sortie;
     QMessageBox message;
-
     message.setWindowTitle("Error at : ");
     sortie = (script);
     int before, after;
@@ -4358,13 +4264,11 @@ void DrawingOptions::on_pushButton_2_clicked()
     Parameters->SaveToFile_CurentMathModel(doc.object());
 }
 
-
 void DrawingOptions::on_pushButton_3_clicked()
 {
     ui.isoNameEdit->setText(ui.isoNameEdit->toPlainText() + "_01");
     on_updateButton_clicked();
 }
-
 
 void DrawingOptions::on_cut_2_clicked()
 {
@@ -4381,13 +4285,11 @@ void DrawingOptions::on_cut_2_clicked()
     }
 }
 
-
 void DrawingOptions::on_pushButton_4_clicked()
 {
     ui.paramNameEdit->setText(ui.paramNameEdit->toPlainText() + "_01");
     on_updateButton_clicked();
 }
-
 
 void DrawingOptions::on_color_5_activated(int index)
 {
