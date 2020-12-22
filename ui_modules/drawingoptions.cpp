@@ -4296,18 +4296,15 @@ void DrawingOptions::on_color_5_activated(int index)
     MathmodRef->ui.glWidget->colorstypeParIso(index);
 }
 
-
 void DrawingOptions::on_transparence_ParIso_clicked(bool checked)
 {
     MathmodRef->ui.glWidget->transparence(checked);
 }
 
-
 void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
 {
     MathmodRef->ui.glWidget->transparency(value, IndexcurrentComponent);
 }
-
 
 void DrawingOptions::on_comboBoxTexture_activated(int index)
 {
@@ -4324,7 +4321,6 @@ void DrawingOptions::on_comboBoxTexture_activated(int index)
     return;
 }
 
-
 void DrawingOptions::on_comboBoxPigment_activated(int index)
 {
     QJsonObject tmp;
@@ -4338,7 +4334,6 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
     }
     return;
 }
-
 
 void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 {
@@ -4417,7 +4412,6 @@ void DrawingOptions::on_pushButton_5_clicked()
         ShowErrorMessage(err, script);
         return;
     }
-
     QJsonObject tmp = doc.object();
     if (tmp["Texture"].isObject())
     {
