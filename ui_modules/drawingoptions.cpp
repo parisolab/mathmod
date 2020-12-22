@@ -3655,8 +3655,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             {
                 for(uint ui=0; ui<MandatoryParmetric4DFields.size(); ui++)
                     removeat(indexcurrentFormula, copyCurrentObject2, MandatoryParmetric4DFields[ui]);
-
-                removeat2(indexcurrentFormula, copyCurrentObject2, "Grid");
+                removeat2(2*indexcurrentFormula, copyCurrentObject2, "Grid");
+                removeat2(2*indexcurrentFormula, copyCurrentObject2, "Grid");
                 copyCurrentObject["Param4D"] = copyCurrentObject2;
             }
             else if (((copyCurrentObject["Param4D"].toObject())["Component"].toArray()).count() > 0 &&
