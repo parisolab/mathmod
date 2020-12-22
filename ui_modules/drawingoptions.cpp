@@ -4594,30 +4594,25 @@ void DrawingOptions::CIndextoolButton_clicked(int idx)
     sliderconf.show();
 }
 
-
 void DrawingOptions::on_C20toolButton_clicked()
 {
     CIndextoolButton_clicked(20);
 }
-
 
 void DrawingOptions::on_C19toolButton_clicked()
 {
     CIndextoolButton_clicked(19);
 }
 
-
 void DrawingOptions::on_C18toolButton_clicked()
 {
     CIndextoolButton_clicked(18);
 }
 
-
 void DrawingOptions::on_C17toolButton_clicked()
 {
     CIndextoolButton_clicked(17);
 }
-
 
 void DrawingOptions::on_C16toolButton_clicked()
 {
