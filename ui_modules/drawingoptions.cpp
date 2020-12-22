@@ -569,9 +569,7 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
     {
         // Hide all sliders
         HideSliders();
-
         QObj = Jobj["Sliders"].toObject();
-
         // Min
         lst = QObj["Min"].toArray();
         ObjArrayToString(lst, result);
@@ -641,7 +639,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
             }
             ui.PredefinedSets->addItems(qlist);
         }
-
         for (int sl = 0; sl < 20; sl++)
         {
             if (qlstnames.size() >= (sl + 1))
@@ -668,7 +665,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
     {
         MathmodRef->ui.glWidget->IsoObjet->masterthread->Nb_Sliders = 0;
         MathmodRef->ui.glWidget->ParObjet->masterthread->Nb_Sliders = 0;
-
         HideSliders();
     }
 }
