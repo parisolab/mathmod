@@ -3527,8 +3527,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             {
                 for(uint ui=0; ui<MandatoryParmetric3DFields.size(); ui++)
                     removeat(indexcurrentFormula, copyCurrentObject2, MandatoryParmetric3DFields[ui]);
-
-                removeat2(indexcurrentFormula, copyCurrentObject2, "Grid");
+                removeat2(2*indexcurrentFormula, copyCurrentObject2, "Grid");
+                removeat2(2*indexcurrentFormula, copyCurrentObject2, "Grid");
                 removeat2(indexcurrentFormula, copyCurrentObject2, "Cnd");
                 appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct_2);
                 appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst_2);
