@@ -811,14 +811,12 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
 {
     QJsonArray lst;
     int NbFxyz;
-
     if (!VerifyIsoEmptySpace(QObj))
     {
         scriptErrorType = EMPTY_MANDATORY_FIELD;
         ErrorMsg();
         return false;
     }
-
     // Fxyz
     NbFxyz = (QObj["Fxyz"].toArray()).size();
     if ((QObj["Xmax"].toArray()).size() != NbFxyz)
@@ -857,7 +855,6 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     if ((QObj["Component"].toArray()).size() != NbFxyz)
     {
         scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
@@ -897,19 +894,16 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
     return true;
 }
 
-
 bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
 {
     QJsonArray lst;
     int NbFx;
-
     if (!VerifyParEmptySpace(QObj))
     {
         scriptErrorType = EMPTY_MANDATORY_FIELD;
         ErrorMsg();
         return false;
     }
-
     // Fx
     NbFx = (QObj["Fx"].toArray()).size();
     // Fy
@@ -933,7 +927,6 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     if ((QObj["Umax"].toArray()).size() != NbFx)
     {
         scriptErrorType = UMAX_NBCOMPONENT_MISMATCH;
@@ -953,7 +946,6 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     if ((QObj["Umin"].toArray()).size() != NbFx)
     {
         scriptErrorType = UMIN_NBCOMPONENT_MISMATCH;
@@ -973,14 +965,12 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     if ((QObj["Component"].toArray()).size() != NbFx)
     {
         scriptErrorType = COMPONENT_NBCOMPONENT_MISMATCH;
         ErrorMsg();
         return false;
     }
-
     // Start Grid field processing
     QString result = "";
     if ((lst = QObj["Grid"].toArray()).size() > 0 && (lst.size() != 2 * NbFx))
@@ -989,14 +979,12 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
         scriptErrorType = VECT_DIMENSION_ERROR;
         ErrorMsg();
         return false;
     }
-
     if (((QObj["Cnd"].toArray()).size() > 0) &&
             ((QObj["Cnd"].toArray()).size() != NbFx))
     {
@@ -1007,13 +995,11 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
     return true;
 }
 
-
 bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
 {
     QJsonArray lst;
     QJsonObject QObj;
     bool verif = false;
-
     if (!Inspect)
         return true;
     if (Jobj["Iso3D"].isObject())
@@ -1041,7 +1027,6 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
         }
         return (verif);
     }
-
     if (Jobj["ParIso"].isArray())
     {
         QJsonArray listeObj = Jobj["ParIso"].toArray();
@@ -1058,14 +1043,12 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
         for (int i = 0; i < listeIsoObj.size(); i++)
             if (!VerifiedIsoJsonModel(listeIsoObj[i].toObject()))
                 return (false);
-
         for (int i = 0; i < listeParObj.size(); i++)
             if (!VerifiedParJsonModel(listeParObj[i].toObject()))
                 return (false);
     }
     return true;
 }
-
 
 void DrawingOptions::LoadTexture(const QJsonObject &QObj,
                                  const ModelType &opt)
@@ -1093,7 +1076,6 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
     MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", Qt::SkipEmptyParts);
 }
 
-
 void DrawingOptions::LoadPigment(const QJsonObject &QObj,
                                  const ModelType &opt)
 {
@@ -1113,19 +1095,15 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
             VRgbtSize++;
         }
     }
-
     strtmp.replace("\n", "");
     strtmp.replace("\t", "");
     strtmp.replace(" ", "");
-
     noise.replace("\n", "");
     noise.replace("\t", "");
     noise.replace(" ", "");
-
     result.replace("\n", "");
     result.replace("\t", "");
     result.replace(" ", "");
-
     if (opt == ISO_TYPE)
     {
         MathmodRef->ui.glWidget->IsoObjet->masterthread->Gradient = strtmp.toStdString();
@@ -1140,12 +1118,10 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
         MathmodRef->ui.glWidget->ParObjet->masterthread->Noise = noise.toStdString();
         MathmodRef->ui.glWidget->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
-
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT =
         result.split(";", Qt::SkipEmptyParts);
 }
-
 
 void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 {
@@ -1155,7 +1131,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
     QJsonObject QTextureObj, QPigmentObj;
     bool loadtext, loadpigm;
     QJsonDocument document;
-
     if (textureIndex != -1)
     {
         if (textureIndex < 1000)
