@@ -3593,6 +3593,7 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     {
                         array = copyCurrentObject2["Grid"].toArray();
                         array.append(QString::number(ui.linecolumn_2->value()));
+                        array.append(QString::number(ui.linecolumn_2->value()));
                         copyCurrentObject2["Grid"] = array;
                     }
                     else
