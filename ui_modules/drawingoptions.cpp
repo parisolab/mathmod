@@ -3592,8 +3592,9 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                     if (copyCurrentObject2["Grid"].isArray())
                     {
                         array = copyCurrentObject2["Grid"].toArray();
-                        array.append(QString::number(ui.linecolumn_2->value()));
-                        array.append(QString::number(ui.linecolumn_2->value()));
+                        int pos=2*indexcurrentFormula;
+                        array.append((array.at(pos).toString()));
+                        array.append((array.at(pos+1).toString()));
                         copyCurrentObject2["Grid"] = array;
                     }
                     else
