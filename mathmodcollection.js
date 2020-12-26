@@ -52,6 +52,31 @@
     },
     {
         "Param3D": {
+            "Description": ["Groupings of Knots  (from Lindsay D Taylor: http://www.mi.sanu.ac.rs/vismath/taylor2009/) by Abderrahman Taha 24/12/2020"],
+            "Name": ["Groupings_of_Knots"],
+            "Component": ["Knots"],
+            "Const": ["N=1","R=12","du=1/1000000"],
+            "Funct": ["C1x=cos(v)","C1y=sin(v)","Cx=if (N=1, R*(0.59*cos(u)+0.3*cos(-2*u)-0.45*cos(-5*u)),if (N=2,  R*(0.6*cos(u)+0.25*cos(-3*u)-0.26*cos(9*u)),if(N=3,  R*( 0.45*cos(u) + 0.25*cos(-u) -0.45*cos(-3*u) ),R*(sin(u) + 2*sin(2*u)))))","Cy=if (N=1, R*(0.59*sin(u)+0.3*sin(-2*u)-0.45*sin(-5*u)),if (N=2, -R*(0.6*sin(u)+0.25*sin(-3*u)-0.26*sin(9*u)),if(N=3,  R*( 0.45*sin(u) + 0.25*sin(-u) -0.45*sin(-3*u) ),R*(cos(u) - 2*cos(2*u)))))","Cz=if (N=1, 1.2*R*(0.1*sin(9*u)+0.25*sin(6*u)),if (N=2, R*(0.12*sin(16*u)-0.06*sin(4*u)),if(N=3,  R*( 0.25*sin(4*u) + 0.185*sin(2*u) ),R*sin(3*u))))","Rapp=u/sqrt(u*u+v*v+t*t)","dCxu=(Cx(u+du,v,t)-Cx(u,v,t))/du","dCyu=(Cy(u+du,v,t)-Cy(u,v,t))/du","dCzu=(Cz(u+du,v,t)-Cz(u,v,t))/du","axu=Rapp(dCxu(u,v,t),dCyu(u,v,t),dCzu(u,v,t))","ayu=Rapp(dCyu(u,v,t),dCzu(u,v,t),dCxu(u,v,t))","azu=Rapp(dCzu(u,v,t),dCxu(u,v,t),dCyu(u,v,t))","d2Cxu=(axu(u+du,v,t)-axu(u,v,t))/du","d2Cyu=(ayu(u+du,v,t)-ayu(u,v,t))/du","d2Czu=(azu(u+du,v,t)-azu(u,v,t))/du","Ax=Rapp(d2Cxu(u,v,t),d2Cyu(u,v,t),d2Czu(u,v,t))","Ay=Rapp(d2Cyu(u,v,t),d2Czu(u,v,t),d2Cxu(u,v,t))","Az=Rapp(d2Czu(u,v,t),d2Cxu(u,v,t),d2Cyu(u,v,t))","nx=(ayu(u,v,t)*Az(u,v,t)-azu(u,v,t)*Ay(u,v,t))","ny=(azu(u,v,t)*Ax(u,v,t)-axu(u,v,t)*Az(u,v,t))","nz=(axu(u,v,t)*Ay(u,v,t)-ayu(u,v,t)*Ax(u,v,t))","Bx=Rapp(nx(u,v,t),ny(u,v,t),nz(u,v,t))","By=Rapp(ny(u,v,t),nz(u,v,t),nx(u,v,t))","Bz=Rapp(nz(u,v,t),nx(u,v,t),ny(u,v,t))","S1x=Cx(u,v,t)+(C1x(u,v,t)*Bx(u,v,t)+C1y(u,v,t)*Ax(u,v,t))","S1y=Cy(u,v,t)+(C1x(u,v,t)*By(u,v,t)+C1y(u,v,t)*Ay(u,v,t))","S1z=Cz(u,v,t)+(C1x(u,v,t)*Bz(u,v,t)+C1y(u,v,t)*Az(u,v,t))"],
+            "Fx": ["S1x(u,v,t)"],
+            "Fy": ["S1y(u,v,t)"],
+            "Fz": ["S1z(u,v,t)"],
+            "Grid": ["650","80"],
+            "Umax": ["2*pi"],
+            "Umin": ["0"],
+            "Vmax": ["2*pi"],
+            "Vmin": ["0"]
+        },
+        "Sliders": {
+            "Max": ["40","4","40","4","40","4","40","4"],
+            "Min": ["0","1","0","1","0","1","0","1"],
+            "Name": ["R","N"],
+            "Position": ["22","1","30","2","26","3","2","4"],
+            "SetNames": ["Triple_Knot","Quadruple_Knot","Granny_Knot","Trefoil_Knot"],
+            "Step": ["1","1","1","1","1","1","1","1"]
+        }
+    },
+    {
+        "Param3D": {
             "Description": ["Knotted Moebius strips by Abderrahman Taha 23/12/2020"],
             "Name": ["Knotted_Moebius"],
             "Component": ["Knots_00"],
