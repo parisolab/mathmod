@@ -47,12 +47,10 @@ void ParisoObject::clear(struct ComponentInfos *cp)
     cp->ParisoCondition.clear();
     cp->Show.clear();
     cp->ThereisRGBA.clear();
-
     cp->NbTrianglesVerifyCND.clear();
     cp->NbTrianglesNoCND.clear();
     cp->NbTrianglesNotVerifyCND.clear();
     cp->NbTrianglesBorderCND.clear();
-
     cp->ParisoCurrentComponentIndex = 0;
     cp->ParisoNbComponents = 0;
     cp->Interleave = true;

@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
     drawingopt.UpdateGui(argc);
     if (drawingopt.IsolistItemRef != nullptr)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
-
     QObject::connect(drawingopt.MathmodRef->ui.glWidget->IsoObjet->masterthread,
                      SIGNAL(mySignal(int)), drawingopt.ui.progressBar,
                      SLOT(setValue(int)));
