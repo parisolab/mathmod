@@ -26,7 +26,6 @@ double maxim(double p1, double p2)
 {
     return p1 > p2 ? p1 : p2;
 }
-
 double p_skeletal_int(const double* pp)
 {
     double  cx, cy,cz;
@@ -35,7 +34,6 @@ double p_skeletal_int(const double* pp)
     cz=cos(pp[2]);
     return(cx+cy+cz+0.51*(cx*cy+cy*cz+cz*cx)+1.2);
 }
-
 double f_hex_y(const double* pp)
 {
     double x1,y1,x2,y2, th;
@@ -62,7 +60,6 @@ double f_hex_y(const double* pp)
         return(fabs(y1));
     }
 }
-
 double fmesh(const double* pp) // 40
 {
     double th, ph, r, r2, temp;
@@ -97,10 +94,8 @@ double fmesh(const double* pp) // 40
     r2 = (p[1] - cos(p[0] * th) * p[6]) * p[7];
     return (-maxim(-sqrt(r2 * r2 + r * r), temp));
 }
-
 double  fhelix1(const double* pp)
 {
-
     double r, r2, r3, temp, th, ph, x2;
     double p[10];
     for(int i=0; i<10; i++)
@@ -113,7 +108,6 @@ double  fhelix1(const double* pp)
     if (th < 0)
         th += 2*PI1;
     p[2] = (th - PI1) / p[7] / (p[4] * p[3]);
-
     p[0] = r - p[6];
     if (p[8] == 1.0)
         r2 = sqrt(p[0] * p[0] + p[2] * p[2]);
@@ -138,7 +132,6 @@ double  fhelix1(const double* pp)
     (p[6] + r) < r2 ? r3 = (p[6] + r) : r3 = r2;
     return (-p[5] + r3);
 }
-
 double fhelix2(const double* pp) // 26
 {
     double th, ph, x2, z2, r2, temp;
@@ -147,7 +140,6 @@ double fhelix2(const double* pp) // 26
         p[i] = pp[i];
     /* helical shape  for (minor radius>major radius  *
      *    cross section   p[5] same as NFUNCTION = 6      */
-
     th = p[1] * p[4];
     ph = cos(th);
     th = sin(th);
@@ -155,7 +147,6 @@ double fhelix2(const double* pp) // 26
     z2 = p[2] - p[6] * th;
     p[0] = x2 * ph + z2 * th;
     p[2] = (-x2 * th + z2 * ph);
-
     if (p[8] == 1.0)
         return (sqrt(p[0] * p[0] + p[2] * p[2]) - p[5]);
     if (p[8] != 0.0)
