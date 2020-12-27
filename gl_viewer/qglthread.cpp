@@ -25,13 +25,10 @@ GLThread::GLThread(OpenGlWidget *gl) : QThread(), glw(gl)
     doRendering = true;
     doResize = false;
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void GLThread::stop()
 {
     doRendering = false;
 }
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void GLThread::resizeViewport(const QSize &size)
 {
     w = size.width();
@@ -39,23 +36,16 @@ void GLThread::resizeViewport(const QSize &size)
     glw->resizeGL(w, h);
     glw->update();
 }
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void GLThread::anim()
 {
     glw->anim();
 }
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void GLThread::morph()
 {
     glw->morph();
 }
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void GLThread::update()
 {
     glw->update();
 }
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void GLThread::run() {}
