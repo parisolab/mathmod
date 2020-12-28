@@ -10,7 +10,6 @@
 
 #include "fpconfig.hh"
 #include "fparser.hh"
-
 #include <set>
 #include <cstdlib>
 #include <cstring>
@@ -18,7 +17,6 @@
 #include <cmath>
 #include <cassert>
 #include <limits>
-
 #include "extrasrc/fptypes.hh"
 #include "extrasrc/fpaux.hh"
 using namespace FUNCTIONPARSERTYPES;
