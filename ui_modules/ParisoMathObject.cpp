@@ -20,7 +20,6 @@
 #include "ParisoMathObject.h"
 #include <qmessagebox.h>
 
-
 ParisoMathObject::ParisoMathObject()
 {
     NbIsoStruct = NbParamStruct = 0;
@@ -29,11 +28,11 @@ ParisoMathObject::ParisoMathObject()
 
 ParisoMathObject::~ParisoMathObject() {}
 
+
 void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject &js)
 {
     QJsonParseError err;
     QString sortie;
-
     QFile file1(JsonFile);
     if (!file1.exists())
     {
