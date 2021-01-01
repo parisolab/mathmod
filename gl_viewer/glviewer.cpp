@@ -1183,8 +1183,8 @@ static void plan(ObjectProperties *scene)
 {
     scene->gridplanliste = glGenLists(1);
     glNewList(scene->gridplanliste, GL_COMPILE);
-    glLineWidth(0.1);
-    glColor3f(0.7f, 0.7, 0.7f);
+    glLineWidth(0.4);
+    glColor3f(0.8f, 0.8f, 0.8f);
     glBegin(GL_LINES);
     glVertex3f(-150.0, 600.0, -500);
     glVertex3f(-150.0, -600.0, -500);
