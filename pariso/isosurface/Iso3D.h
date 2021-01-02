@@ -117,6 +117,7 @@ public :
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
     void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *);
+    void InitShowComponent(struct ComponentInfos *);
     void SaveIsoGLMap(uint);
     uint SetMiniMmeshStruct();
     void CalculateColorsPoints(struct ComponentInfos*, uint index);

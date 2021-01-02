@@ -1621,16 +1621,21 @@ void Iso3D::IsoBuild (
     else
         componentsPt->ParisoCurrentComponentIndex = 0;
 
-    uint idx = 0;
-    componentsPt->Show.clear();
-    for(uint i=0; i<componentsPt->NbComponents.size(); i++)
-        idx += componentsPt->NbComponents[i];
-    for(uint i=0; i<idx; i++)
-        componentsPt->Show.push_back(true);
-
+    InitShowComponent(componentsPt);
     Setgrid(PreviousGridVal);
     componentsPt->updateviewer = true;
 }
+
+void Iso3D::InitShowComponent(struct ComponentInfos *cpInfos)
+{
+    uint idx = 0;
+    cpInfos->Show.clear();
+    for(uint i=0; i<cpInfos->NbComponents.size(); i++)
+        idx += cpInfos->NbComponents[i];
+    for(uint i=0; i<idx; i++)
+        cpInfos->Show.push_back(true);
+}
+
 void Iso3D::Setgrid(uint NewGridVal)
 {
     if(masterthread->gridnotnull)
