@@ -126,6 +126,8 @@ public:
                     uint *, ComponentInfos *,
                     uint **,
                     uint *);
+
+    void InitShowComponent(struct ComponentInfos *);
     void BuildPar();
     void UpdateThredsNumber(uint);
     void stopcalculations(bool);

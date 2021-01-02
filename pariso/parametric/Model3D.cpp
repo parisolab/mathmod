@@ -1119,8 +1119,8 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
         uint idx=0;
-        for(uint i=0; i < comp->NbComponents.size()-1; i++)
-            idx+=comp->NbComponents[i];
+        for(uint i=0; i < comp->NbComponentsType.size()-1; i++)
+            idx+=comp->NbComponentsType[i];
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
             if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
@@ -1204,8 +1204,8 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
     else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 1)
     {
         uint idx=0;
-        for(uint i=0; i < comp->NbComponents.size()-1; i++)
-            idx+=comp->NbComponents[i];
+        for(uint i=0; i < comp->NbComponentsType.size()-1; i++)
+            idx+=comp->NbComponentsType[i];
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
             if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
@@ -1268,12 +1268,12 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
     uint idmx=0;
-    for(uint i=0; i < comp->NbComponents.size()-1; i++)
-        idmx+=comp->NbComponents[i];
+    for(uint i=0; i < comp->NbComponentsType.size()-1; i++)
+        idmx+=comp->NbComponentsType[i];
     uint startpoint=comp->ParisoVertex[2*idmx];
     //In the case the isosurface part of a Pariso object doesn't have a CND condition
     int sz = (comp->ParisoCondition.size() ==
-              comp->NbComponents[comp->NbComponents.size()-1]) ? 0 : idmx;
+              comp->NbComponentsType[comp->NbComponentsType.size()-1]) ? 0 : idmx;
     if (masterthread->ParisoCondition == 1)
     {
         double vals[4];
@@ -1308,8 +1308,8 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
         uint idpx=0;
-        for(uint id=0; id < comp->NbComponents.size()-1; id++)
-            idpx+=comp->NbComponents[id];
+        for(uint id=0; id < comp->NbComponentsType.size()-1; id++)
+            idpx+=comp->NbComponentsType[id];
         uint starttri = uint(comp->ParisoTriangle[2*idpx]/3);
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
         for(uint i= starttri; i < nbtriangle; i++)
@@ -1780,7 +1780,7 @@ void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 {
     copy->ParisoTriangle = origin->ParisoTriangle;
     copy->ParisoVertex          = origin->ParisoVertex;
-    copy->NbComponents    = origin->NbComponents;
+    copy->NbComponentsType    = origin->NbComponentsType;
     copy->ParisoCurrentComponentIndex = origin->ParisoCurrentComponentIndex;
     copy->ParisoNbComponents          = origin->ParisoNbComponents;
     copy->Interleave                  = origin->Interleave;
@@ -1838,7 +1838,7 @@ void  Par3D::ParamBuild(
     }
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
-    components->NbComponents.push_back(masterthread->componentsNumber);
+    components->NbComponentsType.push_back(masterthread->componentsNumber);
     stopcalculations(false);
     if(masterthread->activeMorph != 1)
     {
@@ -1958,7 +1958,15 @@ void  Par3D::ParamBuild(
         componentsPt->ParisoCurrentComponentIndex += 1;
     else
         componentsPt->ParisoCurrentComponentIndex = 0;
+    InitShowComponent(componentsPt);
     componentsPt->updateviewer = true;
+}
+
+void Par3D::InitShowComponent(struct ComponentInfos *cpInfos)
+{
+    cpInfos->ShowParIsoCmp.clear();
+    for(uint i=0; i<cpInfos->NbComponentsType[cpInfos->NbComponentsType.size()-1]; i++)
+        cpInfos->ShowParIsoCmp.push_back(true);
 }
 
 void  Par3D::make_PolyIndexMin(uint index)

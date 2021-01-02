@@ -352,5 +352,7 @@ private slots:
     void updateParametricGridSliders(int);
     void on_actionDocumentation_triggered();
     void on_ScaleButton_clicked();
+    void on_ShowIsoComp_clicked();
+    void updateShowCmp(int);
 };
 #endif

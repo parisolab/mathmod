@@ -1374,7 +1374,7 @@ void Iso3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* or
 {
     copy->ParisoTriangle = origin->ParisoTriangle;
     copy->ParisoVertex          = origin->ParisoVertex;
-    copy->NbComponents    = origin->NbComponents;
+    copy->NbComponentsType    = origin->NbComponentsType;
     copy->ParisoCurrentComponentIndex = origin->ParisoCurrentComponentIndex;
     copy->ParisoNbComponents          = origin->ParisoNbComponents;
     copy->Interleave                  = origin->Interleave;
@@ -1462,7 +1462,7 @@ void Iso3D::IsoBuild (
         emitErrorSignal();
         return;
     }
-    components->NbComponents.push_back(masterthread->componentsNumber);
+    components->NbComponentsType.push_back(masterthread->componentsNumber);
     stopcalculations(false);
     if(masterthread->activeMorph != 1)
     {
@@ -1628,12 +1628,12 @@ void Iso3D::IsoBuild (
 
 void Iso3D::InitShowComponent(struct ComponentInfos *cpInfos)
 {
-    uint idx = 0;
-    cpInfos->Show.clear();
-    for(uint i=0; i<cpInfos->NbComponents.size(); i++)
-        idx += cpInfos->NbComponents[i];
+    cpInfos->ShowParIsoCmp.clear();
+    uint idx =0;
+    for(uint i=0; i<cpInfos->NbComponentsType.size(); i++)
+        idx+=cpInfos->NbComponentsType[i];
     for(uint i=0; i<idx; i++)
-        cpInfos->Show.push_back(true);
+        cpInfos->ShowParIsoCmp.push_back(true);
 }
 
 void Iso3D::Setgrid(uint NewGridVal)
@@ -1657,8 +1657,8 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
         uint idx=0;
-        for(uint i=0; i < comp->NbComponents.size()-1; i++)
-            idx+=comp->NbComponents[i];
+        for(uint i=0; i < comp->NbComponentsType.size()-1; i++)
+            idx+=comp->NbComponentsType[i];
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
             if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
@@ -1740,8 +1740,8 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
     else if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 1)
     {
         uint idx=0;
-        for(uint i=0; i < comp->NbComponents.size()-1; i++)
-            idx+=comp->NbComponents[i];
+        for(uint i=0; i < comp->NbComponentsType.size()-1; i++)
+            idx+=comp->NbComponentsType[i];
         for(uint i= comp->ParisoVertex[2*idx]; i < NbVertexTmp; i++)
         {
             if((i >= uint(comp->ParisoVertex[2*(cmpId+idx)])))
@@ -1802,12 +1802,12 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
 uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
     uint idpx=0;
-    for(uint i=0; i < comp->NbComponents.size()-1; i++)
-        idpx+=comp->NbComponents[i];
+    for(uint i=0; i < comp->NbComponentsType.size()-1; i++)
+        idpx+=comp->NbComponentsType[i];
     uint startpoint=comp->ParisoVertex[2*idpx];
     //In the case the parametric part of a Pariso object doesn't have a CND condition
     int sz = (comp->ParisoCondition.size() ==
-              comp->NbComponents[comp->NbComponents.size()-1]) ? 0 : idpx;
+              comp->NbComponentsType[comp->NbComponentsType.size()-1]) ? 0 : idpx;
     if (masterthread->ParisoCondition == 1)
     {
         double vals[4];
@@ -1841,8 +1841,8 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         uint Aindex, Bindex, Cindex;
         uint nbtriangle = NbTriangleIsoSurfaceTmp;
         uint mdx=0;
-        for(uint id=0; id < comp->NbComponents.size()-1; id++)
-            mdx+=comp->NbComponents[id];
+        for(uint id=0; id < comp->NbComponentsType.size()-1; id++)
+            mdx+=comp->NbComponentsType[id];
         uint starttri = uint(comp->ParisoTriangle[2*mdx]/3);
         std::vector<int> TypeIsoSurfaceTriangleListeCNDVector (NbTriangleIsoSurfaceTmp-starttri, 1);
         for(uint i= starttri; i < nbtriangle; i++)

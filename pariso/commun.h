@@ -135,12 +135,12 @@ struct ComponentInfos
 {
     std::vector<uint> ParisoTriangle;
     std::vector<uint> ParisoVertex;
-    std::vector<uint> NbComponents;
+    std::vector<uint> NbComponentsType;
 
     std::vector<bool> ThereisCND;
     std::vector<bool> ThereisRGBA;
     std::vector<bool> ParisoCondition;
-    std::vector<bool> Show;
+    std::vector<bool> ShowParIsoCmp;
     uint ParisoNbComponents = 1;
     uint ParisoCurrentComponentIndex = 0;
 

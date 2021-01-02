@@ -28,10 +28,10 @@ ParisoObject::~ParisoObject() {}
 uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)
 {
     uint idx = 0;
-    for (uint i = 0; i < components->NbComponents.size() - 1; i++)
-        idx += components->NbComponents[i];
+    for (uint i = 0; i < components->NbComponentsType.size() - 1; i++)
+        idx += components->NbComponentsType[i];
     for (uint fctnb = 0;
-            fctnb < (components->NbComponents[components->NbComponents.size() - 1]);
+            fctnb < (components->NbComponentsType[components->NbComponentsType.size() - 1]);
             fctnb++)
         if (index <= components->ParisoVertex[2 * (fctnb + idx) + 1] &&
                 index >= components->ParisoVertex[2 * (fctnb + idx)])
@@ -42,10 +42,10 @@ void ParisoObject::clear(struct ComponentInfos *cp)
 {
     cp->ParisoTriangle.clear();
     cp->ParisoVertex.clear();
-    cp->NbComponents.clear();
+    cp->NbComponentsType.clear();
     cp->ThereisCND.clear();
     cp->ParisoCondition.clear();
-    cp->Show.clear();
+    cp->ShowParIsoCmp.clear();
     cp->ThereisRGBA.clear();
     cp->NbTrianglesVerifyCND.clear();
     cp->NbTrianglesNoCND.clear();

@@ -560,7 +560,7 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
 {
     uint idx = 0;
     for (uint i = 0; i < ParisoTypeIndex; i++)
-        idx += scene->componentsinfos.NbComponents[i];
+        idx += scene->componentsinfos.NbComponentsType[i];
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     float frontcl[4], backcl[4];
     glEnable(GL_LIGHTING);
@@ -606,10 +606,10 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     }
     else
     {
-        for (uint i = 0; i < scene->componentsinfos.NbComponents[ParisoTypeIndex]; i++)
+        for (uint i = 0; i < scene->componentsinfos.NbComponentsType[ParisoTypeIndex]; i++)
         {
-            uint cmpIndex = (ParisoTypeIndex==1) ? (scene->componentsinfos.NbComponents[0]+i):i;
-            if (scene->componentsinfos.Show[cmpIndex])
+            uint cmpIndex = (ParisoTypeIndex==1) ? (scene->componentsinfos.NbComponentsType[0]+i):i;
+            if (scene->componentsinfos.ShowParIsoCmp[cmpIndex])
             {
                 if (!scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
                 {
@@ -1105,7 +1105,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
 {
     uint idx = 0;
     for (uint i = 0; i < compindex; i++)
-        idx += scene->componentsinfos.NbComponents[i];
+        idx += scene->componentsinfos.NbComponentsType[i];
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     if (scene->cndoptions[3])
     {
@@ -1329,7 +1329,7 @@ static void draw(ObjectProperties *scene)
     }
 
     if (scene->fill == 1 && scene->componentsinfos.updateviewer)
-        for (uint i = 0; i < scene->componentsinfos.NbComponents.size(); i++)
+        for (uint i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
             DrawPariso(scene, i);
 
     // Draw Mesh Object:
@@ -1345,7 +1345,7 @@ static void draw(ObjectProperties *scene)
         DrawMinimalTopology(scene);
 
     if (scene->activarecnd && scene->componentsinfos.updateviewer)
-        for (uint i = 0; i < scene->componentsinfos.NbComponents.size(); i++)
+        for (uint i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
             if (scene->componentsinfos.ThereisCND[i])
                 DrawParisoCND(scene, i);
 

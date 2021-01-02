@@ -482,6 +482,8 @@ void DrawingOptions::UpdateIsoModelDetailsPage(TreeStruct &currentstruct)
         ui.groupBox->setTitle(currentstruct.name.at(0));
     ui.IsoComponent->clear();
     ui.IsoComponent->insertItems(0, currentstruct.Component);
+    ui.ShowIsoComp->setChecked(true);
+    ui.ShowIsoComp->setText("Show");
     UpdateDescription(0, ISO_TYPE, currentstruct);
 }
 
@@ -3736,8 +3738,27 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 void DrawingOptions::on_IsoComponent_activated(int index)
 {
     UpdateDescription(index, ISO_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
+    updateShowCmp(index);
 }
 
+void DrawingOptions::updateShowCmp(int index)
+{
+    uint idx=0;
+    if(!MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso)
+        idx = index;
+    else
+        idx = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+index;
+    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[idx])
+    {
+        ui.ShowIsoComp->setChecked(true);
+        ui.ShowIsoComp->setText("Hide");
+    }
+    else
+    {
+        ui.ShowIsoComp->setChecked(false);
+        ui.ShowIsoComp->setText("Show");
+    }
+}
 void DrawingOptions::on_ParamComponent_activated(int index)
 {
     UpdateDescription(index, PAR_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
@@ -5226,4 +5247,26 @@ void DrawingOptions::on_ScaleButton_clicked()
         msgBox.setText("Invalid number");
         msgBox.exec();
     }
+}
+
+void DrawingOptions::on_ShowIsoComp_clicked()
+{
+    if(!ui.ShowIsoComp->isChecked())
+    {
+        ui.ShowIsoComp->setText("Show");
+        if(!MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso)
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=false;
+        else
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=false;
+
+    }
+    else
+    {
+        ui.ShowIsoComp->setText("Hide");
+        if(!MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso)
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
+        else
+            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=true;
+    }
+    MathmodRef->ui.glWidget->update();
 }
