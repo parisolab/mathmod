@@ -556,10 +556,10 @@ static void drawCube(float x)
                 QString::number(miz, 'g', 3).toLatin1());
 }
 
-static void DrawPariso(ObjectProperties *scene, uint compindex)
+static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
 {
     uint idx = 0;
-    for (uint i = 0; i < compindex; i++)
+    for (uint i = 0; i < ParisoTypeIndex; i++)
         idx += scene->componentsinfos.NbComponents[i];
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     float frontcl[4], backcl[4];
@@ -567,12 +567,12 @@ static void DrawPariso(ObjectProperties *scene, uint compindex)
     glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
 
-    if (scene->componentsinfos.ThereisRGBA[compindex])
+    if (scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
         glEnable(GL_COLOR_MATERIAL);
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
 
-    if (!scene->componentsinfos.ThereisRGBA[compindex])
+    if (!scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
     {
         for (uint j = 0; j < 4; j++)
         {
@@ -582,53 +582,58 @@ static void DrawPariso(ObjectProperties *scene, uint compindex)
         glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
         glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
     }
-    if (scene->componentsinfos.ThereisCND[compindex])
+    if (scene->componentsinfos.ThereisCND[ParisoTypeIndex])
     {
         glDrawElements(
             GL_TRIANGLES,
-            int(3 * (scene->componentsinfos.NbTrianglesNoCND[compindex])),
+            int(3 * (scene->componentsinfos.NbTrianglesNoCND[ParisoTypeIndex])),
             GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[start_triangle]));
 
         if (scene->cndoptions[0])
             glDrawElements(
                 GL_TRIANGLES,
-                int(3 * (scene->componentsinfos.NbTrianglesVerifyCND[compindex])),
-                GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[3 * scene->componentsinfos.NbTrianglesNoCND[compindex] +start_triangle]));
+                int(3 * (scene->componentsinfos.NbTrianglesVerifyCND[ParisoTypeIndex])),
+                GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[3 * scene->componentsinfos.NbTrianglesNoCND[ParisoTypeIndex] +start_triangle]));
 
         if (scene->cndoptions[1])
             glDrawElements(
                 GL_TRIANGLES,
-                int(3 * (scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])),
+                int(3 * (scene->componentsinfos.NbTrianglesNotVerifyCND[ParisoTypeIndex])),
                 GL_UNSIGNED_INT,
                 &(scene->PolyIndices_localPt
-                  [3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
+                  [3 * scene->componentsinfos.NbTrianglesNoCND[ParisoTypeIndex] + 3 * scene->componentsinfos.NbTrianglesVerifyCND[ParisoTypeIndex] +
                      start_triangle]));
     }
-
-    for (uint i = 0; i < scene->componentsinfos.NbComponents[compindex]; i++)
+    else
     {
-        if (!scene->componentsinfos.ThereisRGBA[compindex])
+        for (uint i = 0; i < scene->componentsinfos.NbComponents[ParisoTypeIndex]; i++)
         {
-            for (uint j = 0; j < 4; j++)
+            uint cmpIndex = (ParisoTypeIndex==1) ? (scene->componentsinfos.NbComponents[0]+i):i;
+            if (scene->componentsinfos.Show[cmpIndex])
             {
-                frontcl[j] = scene->frontcols[4 * (i % 10) + j];
-                backcl[j] = scene->backcols[4 * (i % 10) + j];
-            }
-            glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
-            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
-        }
+                if (!scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
+                {
+                    for (uint j = 0; j < 4; j++)
+                    {
+                        frontcl[j] = scene->frontcols[4 * (i % 10) + j];
+                        backcl[j] = scene->backcols[4 * (i % 10) + j];
+                    }
+                    glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
+                    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+                }
 
-        if (!scene->componentsinfos.ThereisCND[compindex])
-        {
-            glDrawElements(
-                GL_TRIANGLES,
-                int(3 * scene->componentsinfos.ParisoTriangle[2 * (i + idx) + 1]),
-                GL_UNSIGNED_INT,
-                &(scene->PolyIndices_localPt[scene->componentsinfos
-                                             .ParisoTriangle[2 * (i + idx)]]));
+                {
+                    glDrawElements(
+                        GL_TRIANGLES,
+                        int(3 * scene->componentsinfos.ParisoTriangle[2 * (i + idx) + 1]),
+                        GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[scene->componentsinfos
+                                                     .ParisoTriangle[2 * (i + idx)]]));
+                }
+            }
         }
     }
-    if (scene->componentsinfos.ThereisRGBA[compindex])
+    if (scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
         glDisable(GL_COLOR_MATERIAL);
     glDisable(GL_POLYGON_OFFSET_FILL);
     glDisable(GL_LIGHTING);
