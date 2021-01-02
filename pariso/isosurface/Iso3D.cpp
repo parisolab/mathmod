@@ -1620,6 +1620,14 @@ void Iso3D::IsoBuild (
         componentsPt->ParisoCurrentComponentIndex += 1;
     else
         componentsPt->ParisoCurrentComponentIndex = 0;
+
+    uint idx = 0;
+    componentsPt->Show.clear();
+    for(uint i=0; i<componentsPt->NbComponents.size(); i++)
+        idx += componentsPt->NbComponents[i];
+    for(uint i=0; i<idx; i++)
+        componentsPt->Show.push_back(true);
+
     Setgrid(PreviousGridVal);
     componentsPt->updateviewer = true;
 }
