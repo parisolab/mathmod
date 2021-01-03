@@ -2470,33 +2470,44 @@ p, li { white-space: pre-wrap; }
                     </attribute>
                     <layout class="QGridLayout" name="gridLayout_37">
                      <item row="0" column="0">
-                      <layout class="QHBoxLayout" name="horizontalLayout_28">
+                      <layout class="QHBoxLayout" name="horizontalLayout_42">
                        <item>
                         <layout class="QVBoxLayout" name="verticalLayout_5">
-                         <property name="spacing">
-                          <number>2</number>
-                         </property>
                          <item>
-                          <widget class="QComboBox" name="ParamComponent">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimumSize">
-                            <size>
-                             <width>130</width>
-                             <height>0</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>25</height>
-                            </size>
-                           </property>
-                          </widget>
+                          <layout class="QHBoxLayout" name="horizontalLayout_28">
+                           <item>
+                            <widget class="QComboBox" name="ParamComponent">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>130</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>16777215</width>
+                               <height>25</height>
+                              </size>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QCheckBox" name="ShowParBox">
+                             <property name="text">
+                              <string>Hide</string>
+                             </property>
+                             <property name="checked">
+                              <bool>true</bool>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
                          </item>
                          <item>
                           <layout class="QHBoxLayout" name="horizontalLayout_26">
