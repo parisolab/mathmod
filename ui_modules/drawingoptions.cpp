@@ -472,6 +472,8 @@ void DrawingOptions::UpdatePar3DModelDetailsPage(TreeStruct &currentstruct)
         ui.groupBox->setTitle(currentstruct.name.at(0));
     ui.ParamComponent->insertItems(0, currentstruct.Component);
     ui.stackedProperties->setCurrentIndex(2);
+    ui.ShowParComp->setChecked(true);
+    ui.ShowParComp->setText("Show");
     UpdateDescription(0, PAR_TYPE, currentstruct);
 }
 
@@ -3738,10 +3740,22 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 void DrawingOptions::on_IsoComponent_activated(int index)
 {
     UpdateDescription(index, ISO_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
-    updateShowCmp(index);
+    updateShowIsoCmp(index);
 }
-
-void DrawingOptions::updateShowCmp(int index)
+void DrawingOptions::updateShowParComp(int index)
+{
+    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[index])
+    {
+        ui.ShowParComp->setChecked(true);
+        ui.ShowParComp->setText("Hide");
+    }
+    else
+    {
+        ui.ShowParComp->setChecked(false);
+        ui.ShowParComp->setText("Show");
+    }
+}
+void DrawingOptions::updateShowIsoCmp(int index)
 {
     uint idx=0;
     if(!MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso)
@@ -3762,6 +3776,7 @@ void DrawingOptions::updateShowCmp(int index)
 void DrawingOptions::on_ParamComponent_activated(int index)
 {
     UpdateDescription(index, PAR_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
+    updateShowParComp(index);
 }
 
 void DrawingOptions::on_xyzcheckBox2_clicked()
@@ -5258,7 +5273,6 @@ void DrawingOptions::on_ShowIsoComp_clicked()
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=false;
         else
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=false;
-
     }
     else
     {
@@ -5267,6 +5281,21 @@ void DrawingOptions::on_ShowIsoComp_clicked()
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
         else
             MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=true;
+    }
+    MathmodRef->ui.glWidget->update();
+}
+
+void DrawingOptions::on_ShowParComp_clicked()
+{
+    if(!ui.ShowParComp->isChecked())
+    {
+        ui.ShowParComp->setText("Show");
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=false;
+    }
+    else
+    {
+        ui.ShowParComp->setText("Hide");
+        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
     }
     MathmodRef->ui.glWidget->update();
 }

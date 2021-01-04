@@ -2498,7 +2498,7 @@ p, li { white-space: pre-wrap; }
                             </widget>
                            </item>
                            <item>
-                            <widget class="QCheckBox" name="ShowParBox">
+                            <widget class="QCheckBox" name="ShowParComp">
                              <property name="text">
                               <string>Hide</string>
                              </property>

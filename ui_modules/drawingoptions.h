@@ -353,6 +353,8 @@ private slots:
     void on_actionDocumentation_triggered();
     void on_ScaleButton_clicked();
     void on_ShowIsoComp_clicked();
-    void updateShowCmp(int);
+    void updateShowIsoCmp(int);
+    void updateShowParComp(int);
+    void on_ShowParComp_clicked();
 };
 #endif
