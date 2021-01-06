@@ -30,7 +30,7 @@ static GLfloat difX, difY, difZ;
 
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
-    double tmp, val[6];
+    double tmp, val[6]={0,0,0,0,0,0};
     uint Jprime;
     if (type == 1)
     {
@@ -92,6 +92,7 @@ void OpenGlWidget::CalculateTexturePoints(int type)
         val[0] *= tmp;
         val[1] *= tmp;
         val[2] *= tmp;
+        // val[3] and val[4] uninitialized!
         val[3] *= tmp;
         val[4] *= tmp;
         LocalScene.ArrayNorVer_localPt[i * 10] =

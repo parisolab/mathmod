@@ -430,7 +430,7 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
 uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
 {
     std::string tmp, tmp2;
-    size_t position =0, jpos;
+    size_t position =0;
     uint Nb_implicitfunction =0;
     if(type ==0)
     {
@@ -442,7 +442,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].fxyz = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
@@ -463,7 +463,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].xmin = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
@@ -484,7 +484,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].xmax = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
@@ -505,7 +505,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].ymin = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
@@ -526,7 +526,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].ymax = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
@@ -547,7 +547,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].zmin = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
@@ -568,7 +568,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].zmax = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
@@ -589,7 +589,7 @@ uint IsoMasterThread::HowManyIsosurface(std::string ImplicitFct, uint type)
                 tmp = ImplicitFct;
                 ImplicitStructs[Nb_implicitfunction].cnd = (tmp.substr(0,position));
                 Nb_implicitfunction++;
-                tmp2 = ImplicitFct.substr(position+1, jpos=ImplicitFct.length()-1);
+                tmp2 = ImplicitFct.substr(position+1, ImplicitFct.length()-1);
                 ImplicitFct = tmp2;
             }
             else
