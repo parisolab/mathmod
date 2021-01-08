@@ -2239,7 +2239,7 @@ uint Iso3D::ConstructIsoSurface()
 
 uint Iso3D::PointEdgeComputation(uint isoindex)
 {
-    uint index, i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
+    uint i_Start, i_End, j_Start, j_End, k_Start, k_End, i, j, k;
     double vals[7], IsoValue_1, IsoValue_2, rapport;
     double factor;
     uint maxgridval=masterthread->GridVal;
@@ -2280,7 +2280,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2316,7 +2315,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local ;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
@@ -2351,7 +2349,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2397,7 +2394,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             {
                 // Edge Point computation and  save in IsoPointMap
                 factor = (IsoValue - IsoValue_1)/rapport;
-                index  = 10*NbPointIsoMap_local;
 
                 vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
                 vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2440,7 +2436,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor *masterthread->y_Step[isoindex];
@@ -2473,7 +2468,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2526,7 +2520,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor *masterthread->y_Step[isoindex];
@@ -2571,7 +2564,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2628,7 +2620,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2661,7 +2652,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
-                index  = 10*NbPointIsoMap_local;
 
                 vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                 vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
@@ -2704,7 +2694,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2747,7 +2736,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
 
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2788,7 +2776,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2838,7 +2825,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2869,7 +2855,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
 
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
@@ -2897,7 +2882,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
             {
                 factor = (IsoValue - IsoValue_1)/rapport;
-                index  = 10*NbPointIsoMap_local;
 
                 vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                 vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
@@ -2946,7 +2930,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 {
                     // Edge Point computation and  save in IsoPointMap
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i] - factor * masterthread->x_Step[isoindex];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j];
                     vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
@@ -2986,8 +2969,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
                 if(IsoValue_1 * IsoValue_2 <= 0 && (rapport=IsoValue_2 - IsoValue_1) != 0.0)
                 {
                     factor = (IsoValue - IsoValue_1)/rapport;
-                    index  = 10*NbPointIsoMap_local;
-
                     vals[0] = masterthread->xLocal2[isoindex*masterthread->GridVal+i];
                     vals[1] = masterthread->yLocal2[isoindex*masterthread->GridVal+j] - factor * masterthread->y_Step[isoindex];
                     vals[2] = masterthread->zLocal2[isoindex*masterthread->GridVal+k];
