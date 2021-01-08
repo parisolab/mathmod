@@ -623,17 +623,11 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for (uint k= 0; k < limitX; k++)
-        {
             workerthreads[nbthreads].xLocal2[IsoIndex*maxgridval+k] = masterthread->xLocal2[IsoIndex*maxgridval+k];
-        }
         for (uint k= 0; k < limitY; k++)
-        {
             workerthreads[nbthreads].yLocal2[IsoIndex*maxgridval+k] = masterthread->yLocal2[IsoIndex*maxgridval+k];
-        }
         for (uint k= 0; k < limitZ; k++)
-        {
             workerthreads[nbthreads].zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k];
-        }
     }
 }
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
@@ -658,9 +652,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     for(uint i=0; i<XYZgrid; i++)
     {
         if((i% (WorkerThreadsNumber))  == MyIndex )
-        {
             taille += 1;
-        }
         if(MyIndex <= (i% (WorkerThreadsNumber)))
             iFinish  += 1;
     }
@@ -669,7 +661,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
         vals[l*nbvar+3]= stepMorph;
     for(uint l=0; l<nbstack; l++)
         vals[l*nbvar+7]=GridVal;
-
     uint remX= (iFinish-iStart)%nbX;
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
@@ -679,7 +670,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     {
         Iindice = i;
         nbY=OrignbY;
-        nbZ=OrignbZ;
         if((remX>0) && ((Iindice+remX)==(iFinish)))
         {
             nbX = remX;
