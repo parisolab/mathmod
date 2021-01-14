@@ -622,14 +622,11 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
                     glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
                     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
                 }
-
                 {
                     glDrawElements(
                         GL_TRIANGLES,
-                        int(3 * scene->componentsinfos.ParisoTriangle[2 * (i + idx) + 1]),
-                        GL_UNSIGNED_INT,
-                        &(scene->PolyIndices_localPt[scene->componentsinfos
-                                                     .ParisoTriangle[2 * (i + idx)]]));
+                        int(3 * scene->componentsinfos.ParisoTriangle[2 * (i + idx) + 1]),GL_UNSIGNED_INT,
+                        &(scene->PolyIndices_localPt[scene->componentsinfos.ParisoTriangle[2 * (i + idx)]]));
                 }
             }
         }
@@ -640,19 +637,16 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 }
-
 void OpenGlWidget::normOk()
 {
     LocalScene.norm *= -1;
     update();
 }
-
 void OpenGlWidget::infosOk()
 {
     LocalScene.infos *= -1;
     update();
 }
-
 void OpenGlWidget::smoothline()
 {
     LocalScene.smoothline *= -1;
@@ -672,12 +666,10 @@ void OpenGlWidget::smoothline()
 
     update();
 }
-
 void OpenGlWidget::boundingboxOk()
 {
     LocalScene.boundingbox *= -1;
 }
-
 static GLuint fontOffset = 0;
 static void makeRasterFont()
 {
