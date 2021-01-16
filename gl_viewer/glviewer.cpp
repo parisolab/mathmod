@@ -1073,10 +1073,6 @@ void OpenGlWidget::Winitialize_GL()
 
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],
                      LocalScene.groundcol[2], LocalScene.groundcol[3]);
-
-        // plan();
-        // InitFont();
-        glInterleavedArrays(GL_C4F_N3F_V3F, 0, LocalScene.ArrayNorVer_localPt);
         count += 1;
     }
     if (LocalScene.componentsinfos.updateviewer)
