@@ -1948,8 +1948,10 @@ void  Par3D::ParamBuild(
         *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
         *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
         *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
-        *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
+
+        NormVertexTabVector.resize(NormVertexTabVector.size()+ 12*10); // To make more memory space to store the 12 cube 12 vertices (three quads)
         *NormVertexTabPt   = NormVertexTabVector.data();
+        *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
         *IndexPolyTabPt    = IndexPolyTabVector.data();
     }
     copycomponent(componentsPt, components);
