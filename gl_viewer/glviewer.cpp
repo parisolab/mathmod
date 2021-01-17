@@ -753,7 +753,6 @@ void OpenGlWidget::smoothline()
         glDisable(GL_LINE_SMOOTH);
         glDisable(GL_BLEND);
     }
-
     update();
 }
 void OpenGlWidget::boundingboxOk()
@@ -913,7 +912,6 @@ void OpenGlWidget::resizeGL(int newwidth, int newheight)
     glTranslatef(0.0, 0, -1000.0);
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 OpenGlWidget::OpenGlWidget(QWidget *parent) : QGLWidget(parent), glt(this)
 {
     setAutoBufferSwap(true);
