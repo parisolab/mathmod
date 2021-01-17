@@ -778,12 +778,7 @@ static void makeRasterFont()
         }
     }
 }
-/*
-void InitFont()
-{
-    makeRasterFont();
-}
-*/
+
 void OpenGlWidget::run() {}
 
 bool OpenGlWidget::timeractif()
