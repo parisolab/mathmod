@@ -1282,7 +1282,7 @@ static void InitialOperations(ObjectProperties *scene)
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
 
         // Gl listes generation (Plan & Fonts):
-        scene->gridplanliste = glGenLists(1); //Not used
+        scene->gridplanliste = glGenLists(1); //Not used but if removed, bitmap fonts are affected! makeRasterFont() need some improvements
         makeRasterFont();
     }
 }
