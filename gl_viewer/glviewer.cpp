@@ -768,7 +768,6 @@ static void makeRasterFont()
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         fontOffset = glGenLists(128);
-
         for (i = 30; i < 127; i++)
         {
             glNewList(i + fontOffset, GL_COMPILE);
@@ -1157,10 +1156,11 @@ void OpenGlWidget::Winitialize_GL()
 
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],
                      LocalScene.groundcol[2], LocalScene.groundcol[3]);
-
+        /*
         // Gl listes generation (Plan & Fonts):
-        LocalScene.gridplanliste = glGenLists(1);
+        LocalScene.gridplanliste = glGenLists(1); //Not used
         makeRasterFont();
+        */
         count += 1;
     }
     if (LocalScene.componentsinfos.updateviewer)
@@ -1267,14 +1267,8 @@ static void plan()
     glDrawElements(GL_LINES,60,GL_UNSIGNED_INT,PlanIndex);
 }
 
-static void draw(ObjectProperties *scene)
+static void InitialOperations(ObjectProperties *scene)
 {
-    if (scene->componentsinfos.Interleave)
-    {
-        glInterleavedArrays(GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
-        scene->componentsinfos.Interleave = false;
-    }
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (staticaction < 1)
     {
         glRotatef(270, 1.0, 0.0, 0.0);
@@ -1286,12 +1280,23 @@ static void draw(ObjectProperties *scene)
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        /*
+
         // Gl listes generation (Plan & Fonts):
-        scene->gridplanliste = glGenLists(1);
+        scene->gridplanliste = glGenLists(1); //Not used
         makeRasterFont();
-        */
     }
+}
+
+static void draw(ObjectProperties *scene)
+{
+    if (scene->componentsinfos.Interleave)
+    {
+        glInterleavedArrays(GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
+        scene->componentsinfos.Interleave = false;
+    }
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    InitialOperations(scene);
 
     // Blend Effect activation:
     if (scene->transparency == 1)
