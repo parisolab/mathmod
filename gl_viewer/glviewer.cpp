@@ -27,8 +27,23 @@ static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 static GLfloat difX, difY, difZ;
-static uint CubeIndex[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+static uint CubeIndex[12];
 static uint PlanIndex[60];
+static uint AxesIndex[24];
+static GLfloat AxeArray[3*24]={400.0, 0.0, 0.0,0.0, 0.0, 0.0,
+                              0.0, 400.0, 0.0,0.0, 0.0, 0.0,
+                              0.0, 0.0, 400.0,0.0, 0.0, 0.0,
+                              400.0, 0.0, 0.0,380.0, 10.0, 0.0,
+                              380.0, 0.0, 10.0,380.0, -10.0, 0.0,
+                               380.0, 0.0, -10.0,380.0, 10.0, 0.0,
+                               0.0, 400.0, 0.0,10.0, 380.0, 0.0,
+                               0.0, 380.0, 10.0,-10.0, 380.0, 0.0,
+                               0.0, 380.0, -10.0,10.0, 380.0, 0.0,
+                               0.0, 0.0, 400.0,10.0, 0.0, 380.0,
+                               0.0, 10.0, 380.0,-10.0, 0.0, 380.0,
+                               0.0, -10.0, 380.0,10.0, 0.0, 380.0
+                              };
+
 static GLfloat PlanArray[3*60]=
 {
     -150.0, 600.0, -500.0,-150.0, -600.0, -500.0,
@@ -530,6 +545,58 @@ void OpenGlWidget::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+8] = PlanArray[3*id+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+9] = PlanArray[3*id+2];
     }
+
+    // Axes vertices and indexes
+    for(uint id=0; id<6; id++)
+    {
+        AxesIndex[id]= NbVert+12+60+id;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+0] = (id<2)?1.0f:0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+1] = (id>1)&&(id<4)?1.0f:0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+2] = (id>3)?1.0f:0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+7] = AxeArray[3*id  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+8] = AxeArray[3*id+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+9] = AxeArray[3*id+2];
+    }
+
+    // Head of the X Axe
+    for(uint id=0; id<6; id++)
+    {
+        AxesIndex[id+6]= NbVert+12+60+6+id;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+0] = (id<2)?1.0f:0.3;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+1] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+2] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+7] = AxeArray[3*(id+6)  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+8] = AxeArray[3*(id+6)+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+9] = AxeArray[3*(id+6)+2];
+    }
+
+    // Head of the Y Axe
+    for(uint id=0; id<6; id++)
+    {
+        AxesIndex[id+12]= NbVert+12+60+12+id;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+0] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+1] = (id<2)?1.0f:0.3;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+2] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+7] = AxeArray[3*(id+12)  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+8] = AxeArray[3*(id+12)+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+9] = AxeArray[3*(id+12)+2];
+    }
+
+    // Head of the Z Axe
+    for(uint id=0; id<6; id++)
+    {
+        AxesIndex[id+18]= NbVert+12+60+18+id;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+0] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+1] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+2] = (id<2)?1.0f:0.3;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+7] = AxeArray[3*(id+18)  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+8] = AxeArray[3*(id+18)+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+9] = AxeArray[3*(id+18)+2];
+    }
 }
 
 void OpenGlWidget::mouseReleaseEvent(QMouseEvent *) {}
@@ -1023,68 +1090,19 @@ void OpenGlWidget::PrintInfos()
 
 static void DrawAxe()
 {
+    // Draw the three axes (lines without head)
     glLineWidth(1);
-    glBegin(GL_LINES);
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex3f(400.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, 0.0);
-    glColor3f(0.0, 1.0, 0.0);
-    glVertex3f(0.0, 400.0, 0.0);
-    glVertex3f(0.0, 0.0, 0.0);
-    glColor3f(0.0, 0.0, 1.0);
-    glVertex3f(0.0, 0.0, 400.0);
-    glVertex3f(0.0, 0.0, 0.0);
-    glEnd();
+    glDrawElements(GL_LINES,6,GL_UNSIGNED_INT,AxesIndex);
 
-    glBegin(GL_TRIANGLE_FAN);
-    glColor3f(0.0, 0.0, 1.0);
-    glVertex3f(0.0, 0.0, 400.0);
-    glVertex3f(10.0, 0.0, 380.0);
-    glVertex3f(0.0, 10.0, 380.0);
-    glColor3f(0.0, 0.0, 0.3f);
-    glVertex3f(-10.0, 0.0, 380.0);
-    glColor3f(0.0, 0.0, 1.0);
-    glVertex3f(0.0, -10.0, 380.0);
-    glColor3f(0.0, 0.0, 0.3f);
-    glVertex3f(10.0, 0.0, 380.0);
-    glEnd();
+    // Head of the X Axe:
+    glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[6]));
 
-    glBegin(GL_TRIANGLE_FAN);
-    glColor3f(0.0, 1.0, 0.0);
-    glVertex3f(0.0, 400.0, 0.0);
-    glVertex3f(10.0, 380.0, 0.0);
-    glVertex3f(0.0, 380.0, 10.0);
-    glColor3f(0.0, 0.3f, 0.0);
-    glVertex3f(-10.0, 380.0, 0.0);
-    glColor3f(0.0, 1.0, 0.0);
-    glVertex3f(.0, 380.0, -10.0);
-    glColor3f(0.0, 0.3f, 0.0);
-    glVertex3f(10.0, 380.0, 0.0);
-    glEnd();
+    // Head of the Y Axe:
+    glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[12]));
 
-    /// Axe X :
-    glBegin(GL_TRIANGLE_FAN);
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex3f(400.0, 0.0, 0.0);
-    glVertex3f(380.0, 10.0, 0.0);
-    glVertex3f(380.0, 0.0, 10.0);
-    glColor3f(0.3f, 0.0, 0.0);
-    glVertex3f(380.0, -10.0, 0.0);
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex3f(380.0, 0.0, -10.0);
-    glColor3f(0.3f, 0.0, 0.0);
-    glVertex3f(380.0, 10.0, 0.0);
-    glEnd();
+    // Head of the Z Axe:
+    glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[18]));
 
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(400.0, 0.0, 0.0);
-    glVertex3f(380.0, 10.0, 0.0);
-    glVertex3f(380.0, 0.0, 10.0);
-    glVertex3f(380.0, -10.0, 0.0);
-    glVertex3f(380.0, 0.0, -10.0);
-    glVertex3f(380.0, 10.0, 0.0);
-    glEnd();
 
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3i(410, 10, 10);
@@ -1120,20 +1138,20 @@ static void DrawNormals(ObjectProperties *scene)
     {
         j = 10 * scene->PolyIndices_localPt[i];
         glBegin(GL_LINES);
-        glVertex3f(scene->ArrayNorVer_localPt[j + 3 + 4],
-                   scene->ArrayNorVer_localPt[j + 4 + 4],
-                   scene->ArrayNorVer_localPt[j + 5 + 4]);
-        glVertex3f(scene->ArrayNorVer_localPt[j + 3 + 4] +
+        glVertex3f(scene->ArrayNorVer_localPt[j + 7],
+                   scene->ArrayNorVer_localPt[j + 8],
+                   scene->ArrayNorVer_localPt[j + 9]);
+        glVertex3f(scene->ArrayNorVer_localPt[j + 7] +
                    40 * scene->ArrayNorVer_localPt[j + 4],
-                   scene->ArrayNorVer_localPt[j + 4 + 4] +
-                   40 * scene->ArrayNorVer_localPt[j + 1 + 4],
-                   scene->ArrayNorVer_localPt[j + 5 + 4] +
-                   40 * scene->ArrayNorVer_localPt[j + 2 + 4]);
+                   scene->ArrayNorVer_localPt[j + 8] +
+                   40 * scene->ArrayNorVer_localPt[j + 5],
+                   scene->ArrayNorVer_localPt[j + 9] +
+                   40 * scene->ArrayNorVer_localPt[j + 6]);
         glEnd();
     }
 }
 
-static int staticaction = 0;
+
 
 void OpenGlWidget::Winitialize_GL()
 {
@@ -1269,6 +1287,7 @@ static void plan()
 
 static void InitialOperations(ObjectProperties *scene)
 {
+    static int staticaction = 0;
     if (staticaction < 1)
     {
         glRotatef(270, 1.0, 0.0, 0.0);

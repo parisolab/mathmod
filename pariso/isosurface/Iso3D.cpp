@@ -1603,7 +1603,7 @@ void Iso3D::IsoBuild (
     }
 
 
-    NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60)*10); // To add memory space to store the cube 12 vertices (three quads)
+    NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+24)*10); // To add memory space to store the cube 12 vertices (three quads)
     *NormVertexTabVectorPt = NormVertexTabVector.data();
     *IndexPolyTabPt = IndexPolyTabVector.data();
     *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
