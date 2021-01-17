@@ -27,6 +27,41 @@ static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 static GLfloat difX, difY, difZ;
+static uint CubeIndex[12]={0,0,0,0,0,0,0,0,0,0,0,0};
+static uint PlanIndex[60];
+static GLfloat PlanArray[3*60]=
+{
+    -150.0, 600.0, -500.0,-150.0, -600.0, -500.0,
+    0.0, 600.0, -500.0,0.0, -600.0, -500.0,
+    150.0, 600.0, -500.0,150.0, -600.0, -500.0,
+    600.0, -150.0, -500.0,-600.0, -150.0, -500.0,
+    600.0, 0.0, -500,-600.0, 0.0, -500.0,
+    600.0, 150.0, -500, -600.0, 150.0, -500.0,
+    -75.0, 600.0, -500,-75.0, -600.0, -500.0,
+    -225.0, 600.0, -500,-225.0, -600.0, -500,
+    -300.0, 600.0, -500,-300.0, -600.0, -500,
+    -375.0, 600.0, -500,-375.0, -600.0, -500,
+    -450.0, 600.0, -500,-450.0, -600.0, -500,
+    -525.0, 600.0, -500,-525.0, -600.0, -500,
+    75.0, 600.0, -500,75.0, -600.0, -500,
+    225.0, 600.0, -500,225.0, -600.0, -500,
+    300.0, 600.0, -500,300.0, -600.0, -500,
+    375.0, 600.0, -500,375.0, -600.0, -500,
+    450.0, 600.0, -500,450.0, -600.0, -500,
+    525.0, 600.0, -500,525.0, -600.0, -500,
+    600.0, -75.0, -500,-600.0, -75.0, -500,
+    600.0, -225.0, -500,-600.0, -225.0, -500,
+    600.0, -300.0, -500,-600.0, -300.0, -500,
+    600.0, -375.0, -500,-600.0, -375.0, -500,
+    600.0, -450.0, -500,-600.0, -450.0, -500,
+    600.0, -525.0, -500,-600.0, -525.0, -500,
+    600.0, 75.0, -500,-600.0, 75.0, -500,
+    600.0, 225.0, -500,-600.0, 225.0, -500,
+    600.0, 300.0, -500,-600.0, 300.0, -500,
+    600.0, 375.0, -500,-600.0, 375.0, -500,
+    600.0, 450.0, -500,-600.0, 450.0, -500,
+    600.0, 525.0, -500,-600.0, 525.0, -500
+};
 
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
@@ -176,10 +211,10 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
                 j += 5)
             if (tmp <= ValCol[j])
             {
-                LocalScene.ArrayNorVer_localPt[i * 10] = float(ValCol[j + 1]);
-                LocalScene.ArrayNorVer_localPt[i * 10 + 1] = float(ValCol[j + 2]);
-                LocalScene.ArrayNorVer_localPt[i * 10 + 2] = float(ValCol[j + 3]);
-                LocalScene.ArrayNorVer_localPt[i * 10 + 3] = float(ValCol[j + 4]);
+                LocalScene.ArrayNorVer_localPt[i*10  ] = float(ValCol[j+1]);
+                LocalScene.ArrayNorVer_localPt[i*10+1] = float(ValCol[j+2]);
+                LocalScene.ArrayNorVer_localPt[i*10+2] = float(ValCol[j+3]);
+                LocalScene.ArrayNorVer_localPt[i*10+3] = float(ValCol[j+4]);
                 j = 100;
             }
     }
@@ -420,6 +455,81 @@ void OpenGlWidget::PutObjectInsideCube()
                     (double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) + decalage_zo) /
                     difMaximum);
     }
+
+    // Cube vertices and indexes
+    float longX = 350 * float(difX / float(difMaximum)),
+          longY = 350 * (difY / float(difMaximum)),
+          longZ = 350 * (difZ / float(difMaximum));
+    uint NbVert = LocalScene.VertxNumber;
+    for(uint id=0; id<12; id++)
+    {
+        CubeIndex[id]=NbVert+id;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 0] = 0.8f;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 1] = 0.8f;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 2] = 0.8f;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 3] = 1.0f;
+    }
+
+    LocalScene.ArrayNorVer_localPt[10 * NbVert + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * NbVert + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * NbVert + 9] = -longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+1) + 7] =  longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+1) + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+1) + 9] = -longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+2) + 7] =  longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+2) + 8] =  longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+2) + 9] = -longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+3) + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+3) + 8] =  longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+3) + 9] = -longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+4) + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+4) + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+4) + 9] = -longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+5) + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+5) + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+5) + 9] =  longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+6) + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+6) + 8] =  longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+6) + 9] =  longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+7) + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+7) + 8] =  longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+7) + 9] = -longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+8) + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+8) + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+8) + 9] = -longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+9) + 7] = -longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+9) + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+9) + 9] =  longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+10) + 7] =  longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+10) + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+10) + 9] =  longZ;
+
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+11) + 7] =  longX;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+11) + 8] = -longY;
+    LocalScene.ArrayNorVer_localPt[10 * (NbVert+11) + 9] = -longZ;
+
+    // Plan vertices and indexes
+    for(uint id=0; id<60; id++)
+    {
+        PlanIndex[id]= NbVert+12+id;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+0] = 0.6f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+1] = 0.6f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+2] = 0.6f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+7] = PlanArray[3*id  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+8] = PlanArray[3*id+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+9] = PlanArray[3*id+2];
+    }
 }
 
 void OpenGlWidget::mouseReleaseEvent(QMouseEvent *) {}
@@ -501,30 +611,10 @@ static void drawCube(float x)
           longZ = x * (difZ / float(difMaximum));
     double mix = double(minx), max = double(maxx), miy = double(miny),
            may = double(maxy), miz = double(minz), maz = double(maxz);
-    glColor4f(0.8f, 0.8f, 0.8f, 1.0f);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     glLineWidth(1);
-    glBegin(GL_QUADS);
-    glVertex3f(-longX, -longY, -longZ);
-    glVertex3f(longX, -longY, -longZ);
-    glVertex3f(longX, longY, -longZ);
-    glVertex3f(-longX, longY, -longZ);
+    glDrawElements(GL_LINE_STRIP,12,GL_UNSIGNED_INT,CubeIndex);
 
-    glVertex3f(-longX, -longY, -longZ);
-    glVertex3f(-longX, -longY, longZ);
-    glVertex3f(-longX, longY, longZ);
-    glVertex3f(-longX, longY, -longZ);
-
-    glVertex3f(-longX, -longY, -longZ);
-    glVertex3f(-longX, -longY, longZ);
-    glVertex3f(longX, -longY, longZ);
-    glVertex3f(longX, -longY, -longZ);
-
-    glEnd();
-    glLineWidth(1);
-    glPolygonMode(
-        GL_FRONT_AND_BACK,
-        GL_FILL); // this line should be put elsewhere where it's missing
     // X
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3f(longX, -longY, longZ + 60);
@@ -670,6 +760,7 @@ void OpenGlWidget::boundingboxOk()
 {
     LocalScene.boundingbox *= -1;
 }
+
 static GLuint fontOffset = 0;
 static void makeRasterFont()
 {
@@ -687,12 +778,12 @@ static void makeRasterFont()
         }
     }
 }
-
+/*
 void InitFont()
 {
     makeRasterFont();
 }
-
+*/
 void OpenGlWidget::run() {}
 
 bool OpenGlWidget::timeractif()
@@ -867,9 +958,10 @@ void OpenGlWidget::PrintInfos()
     ? nbl = QString::number(Xgrid - CutX) + "x" +
             QString::number(Ygrid - CutY) + "x" +
             QString::number(Zgrid - CutZ)
-            : nbl = QString::number(Ugrid - CutU) + "x" +
-                    QString::number(Vgrid - CutV) + " = " +
-                    QString::number((Ugrid - CutU) * (Vgrid - CutV));
+
+    : nbl = QString::number(Ugrid - CutU) + "x" +
+            QString::number(Vgrid - CutV) + " = " +
+            QString::number((Ugrid - CutU) * (Vgrid - CutV));
     glDisable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
@@ -1020,7 +1112,6 @@ static void DrawAxe()
 
     glColor3f(0.0, 0.0, 1.0);
     glRasterPos3i(10, 10, 410);
-    // printString("Z");
     glCallLists(strlen("Z"), GL_UNSIGNED_BYTE, "Z");
 
     glColor3f(0.0, 0.7f, 0.7f);
@@ -1073,6 +1164,10 @@ void OpenGlWidget::Winitialize_GL()
 
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],
                      LocalScene.groundcol[2], LocalScene.groundcol[3]);
+
+        // Gl listes generation (Plan & Fonts):
+        LocalScene.gridplanliste = glGenLists(1);
+        makeRasterFont();
         count += 1;
     }
     if (LocalScene.componentsinfos.updateviewer)
@@ -1173,87 +1268,14 @@ static void DrawMinimalTopology(ObjectProperties *scene)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-static void plan(ObjectProperties *scene)
+static void plan()
 {
-    scene->gridplanliste = glGenLists(1);
-    glNewList(scene->gridplanliste, GL_COMPILE);
-    glLineWidth(0.4);
-    glColor3f(0.8f, 0.8f, 0.8f);
-    glBegin(GL_LINES);
-    glVertex3f(-150.0, 600.0, -500);
-    glVertex3f(-150.0, -600.0, -500);
-    glVertex3f(0.0, 600.0, -500);
-    glVertex3f(0.0, -600.0, -500);
-
-    glVertex3f(150.0, 600.0, -500);
-    glVertex3f(150.0, -600.0, -500);
-    glVertex3f(600.0, -150.0, -500);
-    glVertex3f(-600.0, -150.0, -500);
-
-    glVertex3f(600.0, 0.0, -500);
-    glVertex3f(-600.0, 0.0, -500);
-    glVertex3f(600.0, 150.0, -500);
-    glVertex3f(-600.0, 150.0, -500);
-
-    glVertex3f(-75.0, 600.0, -500);
-    glVertex3f(-75.0, -600.0, -500);
-    glVertex3f(-225.0, 600.0, -500);
-    glVertex3f(-225.0, -600.0, -500);
-    glVertex3f(-300.0, 600.0, -500);
-    glVertex3f(-300.0, -600.0, -500);
-    glVertex3f(-375.0, 600.0, -500);
-    glVertex3f(-375.0, -600.0, -500);
-    glVertex3f(-450.0, 600.0, -500);
-    glVertex3f(-450.0, -600.0, -500);
-    glVertex3f(-525.0, 600.0, -500);
-    glVertex3f(-525.0, -600.0, -500);
-
-    glVertex3f(75.0, 600.0, -500);
-    glVertex3f(75.0, -600.0, -500);
-    glVertex3f(225.0, 600.0, -500);
-    glVertex3f(225.0, -600.0, -500);
-    glVertex3f(300.0, 600.0, -500);
-    glVertex3f(300.0, -600.0, -500);
-    glVertex3f(375.0, 600.0, -500);
-    glVertex3f(375.0, -600.0, -500);
-    glVertex3f(450.0, 600.0, -500);
-    glVertex3f(450.0, -600.0, -500);
-    glVertex3f(525.0, 600.0, -500);
-    glVertex3f(525.0, -600.0, -500);
-
-    glVertex3f(600.0, -75.0, -500);
-    glVertex3f(-600.0, -75.0, -500);
-    glVertex3f(600.0, -225.0, -500);
-    glVertex3f(-600.0, -225.0, -500);
-    glVertex3f(600.0, -300.0, -500);
-    glVertex3f(-600.0, -300.0, -500);
-    glVertex3f(600.0, -375.0, -500);
-    glVertex3f(-600.0, -375.0, -500);
-    glVertex3f(600.0, -450.0, -500);
-    glVertex3f(-600.0, -450.0, -500);
-    glVertex3f(600.0, -525.0, -500);
-    glVertex3f(-600.0, -525.0, -500);
-
-    glVertex3f(600.0, 75.0, -500);
-    glVertex3f(-600.0, 75.0, -500);
-    glVertex3f(600.0, 225.0, -500);
-    glVertex3f(-600.0, 225.0, -500);
-    glVertex3f(600.0, 300.0, -500);
-    glVertex3f(-600.0, 300.0, -500);
-    glVertex3f(600.0, 375.0, -500);
-    glVertex3f(-600.0, 375.0, -500);
-    glVertex3f(600.0, 450.0, -500);
-    glVertex3f(-600.0, 450.0, -500);
-    glVertex3f(600.0, 525.0, -500);
-    glVertex3f(-600.0, 525.0, -500);
-    glEnd();
-    glLineWidth(4.18f);
-    glEndList();
+    glLineWidth(1/5);
+    glDrawElements(GL_LINES,60,GL_UNSIGNED_INT,PlanIndex);
 }
 
 static void draw(ObjectProperties *scene)
 {
-
     if (scene->componentsinfos.Interleave)
     {
         glInterleavedArrays(GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
@@ -1271,9 +1293,11 @@ static void draw(ObjectProperties *scene)
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+        /*
         // Gl listes generation (Plan & Fonts):
-        plan(scene);
+        scene->gridplanliste = glGenLists(1);
         makeRasterFont();
+        */
     }
 
     // Blend Effect activation:
@@ -1290,7 +1314,7 @@ static void draw(ObjectProperties *scene)
     // Plan:
     if (scene->infos == 1)
     {
-        glCallList(scene->gridplanliste);
+        plan();
     }
 
     // Axe :
