@@ -27,10 +27,9 @@ static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 static GLfloat difX, difY, difZ;
-static uint CubeIndex[12];
-static uint PlanIndex[60];
 static uint AxesIndex[24];
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
+static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
 static GLfloat AxeArray[3*24]={400.0, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 400.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 400.0,0.0, 0.0, 0.0,
@@ -480,7 +479,6 @@ void OpenGlWidget::PutObjectInsideCube()
     CubeStartIndex=NbVert;
     for(uint id=0; id<12; id++)
     {
-        CubeIndex[id]=NbVert+id;
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 0] = 0.8f;
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 1] = 0.8f;
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 2] = 0.8f;
@@ -539,7 +537,6 @@ void OpenGlWidget::PutObjectInsideCube()
     PlanStartIndex=NbVert+12;
     for(uint id=0; id<60; id++)
     {
-        PlanIndex[id]= NbVert+12+id;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+0] = 0.6f;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+1] = 0.6f;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+2] = 0.6f;
@@ -550,6 +547,7 @@ void OpenGlWidget::PutObjectInsideCube()
     }
 
     // Axes vertices and indexes
+    AxesStartIndex = NbVert+12+60;
     for(uint id=0; id<6; id++)
     {
         AxesIndex[id]= NbVert+12+60+id;
@@ -563,6 +561,7 @@ void OpenGlWidget::PutObjectInsideCube()
     }
 
     // Head of the X Axe
+    XStartIndex = NbVert+12+60+6;
     for(uint id=0; id<6; id++)
     {
         AxesIndex[id+6]= NbVert+12+60+6+id;
@@ -576,6 +575,7 @@ void OpenGlWidget::PutObjectInsideCube()
     }
 
     // Head of the Y Axe
+    YStartIndex = NbVert+12+60+12;
     for(uint id=0; id<6; id++)
     {
         AxesIndex[id+12]= NbVert+12+60+12+id;
@@ -589,6 +589,7 @@ void OpenGlWidget::PutObjectInsideCube()
     }
 
     // Head of the Z Axe
+    ZStartIndex = NbVert+12+60+18;
     for(uint id=0; id<6; id++)
     {
         AxesIndex[id+18]= NbVert+12+60+18+id;
@@ -683,7 +684,6 @@ static void drawCube(float x)
            may = double(maxy), miz = double(minz), maz = double(maxz);
 
     glLineWidth(1);
-    //glDrawElements(GL_LINE_STRIP,12,GL_UNSIGNED_INT,CubeIndex);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
 
     // X
@@ -1094,18 +1094,23 @@ void OpenGlWidget::PrintInfos()
 
 static void DrawAxe()
 {
-    // Draw the three axes (lines without head)
+
     glLineWidth(1);
-    glDrawElements(GL_LINES,6,GL_UNSIGNED_INT,AxesIndex);
+
+    // Draw the three axes (lines without head)
+    glDrawArrays(GL_LINES,AxesStartIndex,6);
 
     // Head of the X Axe:
-    glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[6]));
+    glDrawArrays(GL_TRIANGLE_FAN,XStartIndex,6);
+    //glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[6]));
 
     // Head of the Y Axe:
-    glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[12]));
+    glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
+    //glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[12]));
 
     // Head of the Z Axe:
-    glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[18]));
+    glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
+    //glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[18]));
 
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3i(410, 10, 10);
