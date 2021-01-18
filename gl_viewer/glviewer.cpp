@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -678,7 +678,7 @@ static void drawCube(float x)
     double mix = double(minx), max = double(maxx), miy = double(miny),
            may = double(maxy), miz = double(minz), maz = double(maxz);
 
-    glLineWidth(1);
+    glLineWidth(1.0);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
 
     // X
@@ -1090,7 +1090,7 @@ void OpenGlWidget::PrintInfos()
 static void DrawAxe()
 {
 
-    glLineWidth(1);
+    glLineWidth(1.0);
 
     // Draw the three axes (lines without head)
     glDrawArrays(GL_LINES,AxesStartIndex,6);
@@ -1186,7 +1186,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     if (scene->cndoptions[3])
     {
-        glLineWidth(1);
+        glLineWidth(0.3);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
@@ -1194,12 +1194,11 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
             GL_UNSIGNED_INT, &(scene->PolyIndices_localPt[3 * scene->componentsinfos
                     .NbTrianglesNoCND[compindex] + start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glLineWidth(1);
     }
 
     if (scene->cndoptions[4])
     {
-        glLineWidth(1);
+        glLineWidth(0.3);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
@@ -1210,12 +1209,11 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
                                            .NbTrianglesVerifyCND[compindex] +
                                            start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glLineWidth(1);
     }
 
     if (scene->cndoptions[2])
     {
-        glLineWidth(4);
+        glLineWidth(4.0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
             GL_TRIANGLES,
@@ -1227,7 +1225,6 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
                     scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]) +
                  start_triangle]));
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glLineWidth(1);
     }
 }
 
@@ -1263,7 +1260,7 @@ static void DrawMinimalTopology(ObjectProperties *scene)
 
 static void plan()
 {
-    glLineWidth(1/5);
+    glLineWidth(0.3);
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
