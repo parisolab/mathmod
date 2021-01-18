@@ -834,10 +834,10 @@ static void makeRasterFont()
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         fontOffset = glGenLists(128);
-        for (i = 30; i < 127; i++)
+        for (i = 31;i  < 128; i++)
         {
             glNewList(i + fontOffset, GL_COMPILE);
-            glBitmap(8, 13, 0.0, 2.0, 10.0, 0.0, rasters[i - 30]);
+            glBitmap(8, 13, 0.0, 2.0, 10.0, 0.0, rasters[i-31]);
             glEndList();
         }
     }
@@ -1269,11 +1269,10 @@ static void DrawMinimalTopology(ObjectProperties *scene)
 static void plan()
 {
     glLineWidth(1/5);
-    //glDrawElements(GL_LINES,60,GL_UNSIGNED_INT,PlanIndex);
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
-static void InitialOperations(ObjectProperties *scene)
+static void InitialOperations()
 {
     static int staticaction = 0;
     if (staticaction < 1)
@@ -1289,7 +1288,7 @@ static void InitialOperations(ObjectProperties *scene)
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
 
         // Gl listes generation (Plan & Fonts):
-        scene->gridplanliste = glGenLists(1); //Not used but if removed, bitmap fonts are affected! makeRasterFont() need some improvements
+        //scene->gridplanliste = glGenLists(1); //Not used but if removed, bitmap fonts are affected! makeRasterFont() need some improvements
         makeRasterFont();
     }
 }
@@ -1303,7 +1302,7 @@ static void draw(ObjectProperties *scene)
     }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    InitialOperations(scene);
+    InitialOperations();
 
     // Blend Effect activation:
     if (scene->transparency == 1)

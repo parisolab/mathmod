@@ -203,7 +203,7 @@ struct ObjectProperties
     int quality_image = 50;
     int colortype = 0;
     int colortypeParam = 0;
-    uint gridplanliste = 1;
+    //uint gridplanliste = 1;
     float specReflection[4]={0.3f, 0.3f, 0.3f, 1.0f};
     int threads[3];
     int shininess = 110;
