@@ -108,15 +108,15 @@ void OpenGlWidget::CalculateTexturePoints(int type)
     for (uint i = 0; i < LocalScene.VertxNumber; i++)
     {
         val[0] = difMaximum *
-                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 3 + 4]) /
+                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 7]) /
                  hauteur_fenetre -
                  decalage_xo;
         val[1] = difMaximum *
-                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 4 + 4]) /
+                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 8]) /
                  hauteur_fenetre -
                  decalage_yo;
         val[2] = difMaximum *
-                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 5 + 4]) /
+                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 9]) /
                  hauteur_fenetre -
                  decalage_zo;
         if (type != 1)
@@ -199,15 +199,15 @@ void OpenGlWidget::CalculatePigmentPoints(int type)
     for (uint i = 0; i < LocalScene.VertxNumber; i++)
     {
         val[0] = difMaximum *
-                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 3 + 4]) /
+                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 7]) /
                  hauteur_fenetre -
                  decalage_xo;
         val[1] = difMaximum *
-                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 4 + 4]) /
+                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 8]) /
                  hauteur_fenetre -
                  decalage_yo;
         val[2] = difMaximum *
-                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 5 + 4]) /
+                 double(LocalScene.ArrayNorVer_localPt[i * 10 + 9]) /
                  hauteur_fenetre -
                  decalage_zo;
         if (LocalScene.componentsinfos.NoiseParam[0].NoiseShape != 0)
