@@ -1102,15 +1102,12 @@ static void DrawAxe()
 
     // Head of the X Axe:
     glDrawArrays(GL_TRIANGLE_FAN,XStartIndex,6);
-    //glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[6]));
 
     // Head of the Y Axe:
     glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
-    //glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[12]));
 
     // Head of the Z Axe:
     glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
-    //glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[18]));
 
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3i(410, 10, 10);
