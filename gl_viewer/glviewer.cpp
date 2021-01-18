@@ -1103,31 +1103,17 @@ static void DrawAxe()
     // Head of the Z Axe:
     glDrawElements(GL_TRIANGLE_FAN,6,GL_UNSIGNED_INT,&(AxesIndex[18]));
 
-
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3i(410, 10, 10);
     glCallLists(strlen("X"), GL_UNSIGNED_BYTE, "X");
-
-    glColor3f(0.7f, 0.7f, 0.7f);
-    glTranslatef(410.0, 4.0, 4.0);
-    glTranslatef(-410.0, -4.0, -4.0);
 
     glColor3f(0.0, 1.0, 0.0);
     glRasterPos3i(10, 410, 10);
     glCallLists(strlen("Y"), GL_UNSIGNED_BYTE, "Y");
 
-    glColor3f(1.0, 1.0, 0.0);
-    glTranslatef(4.0, 410.0, 4.0);
-    glTranslatef(-4.0, -410.0, -4.0);
-
     glColor3f(0.0, 0.0, 1.0);
     glRasterPos3i(10, 10, 410);
     glCallLists(strlen("Z"), GL_UNSIGNED_BYTE, "Z");
-
-    glColor3f(0.0, 0.7f, 0.7f);
-    glTranslatef(4.0, 4.0, 410.0);
-    glTranslatef(-4.0, -4.0, -410.0);
-    glLineWidth(0.9f);
 }
 
 static void DrawNormals(ObjectProperties *scene)
