@@ -30,6 +30,7 @@ static GLfloat difX, difY, difZ;
 static uint CubeIndex[12];
 static uint PlanIndex[60];
 static uint AxesIndex[24];
+static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static GLfloat AxeArray[3*24]={400.0, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 400.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 400.0,0.0, 0.0, 0.0,
@@ -476,6 +477,7 @@ void OpenGlWidget::PutObjectInsideCube()
           longY = 350 * (difY / float(difMaximum)),
           longZ = 350 * (difZ / float(difMaximum));
     uint NbVert = LocalScene.VertxNumber;
+    CubeStartIndex=NbVert;
     for(uint id=0; id<12; id++)
     {
         CubeIndex[id]=NbVert+id;
@@ -534,6 +536,7 @@ void OpenGlWidget::PutObjectInsideCube()
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+11) + 9] = -longZ;
 
     // Plan vertices and indexes
+    PlanStartIndex=NbVert+12;
     for(uint id=0; id<60; id++)
     {
         PlanIndex[id]= NbVert+12+id;
@@ -680,7 +683,8 @@ static void drawCube(float x)
            may = double(maxy), miz = double(minz), maz = double(maxz);
 
     glLineWidth(1);
-    glDrawElements(GL_LINE_STRIP,12,GL_UNSIGNED_INT,CubeIndex);
+    //glDrawElements(GL_LINE_STRIP,12,GL_UNSIGNED_INT,CubeIndex);
+    glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
 
     // X
     glColor3f(1.0, 0.0, 0.0);
@@ -1268,7 +1272,8 @@ static void DrawMinimalTopology(ObjectProperties *scene)
 static void plan()
 {
     glLineWidth(1/5);
-    glDrawElements(GL_LINES,60,GL_UNSIGNED_INT,PlanIndex);
+    //glDrawElements(GL_LINES,60,GL_UNSIGNED_INT,PlanIndex);
+    glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
 static void InitialOperations(ObjectProperties *scene)
