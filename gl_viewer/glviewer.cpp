@@ -27,7 +27,6 @@ static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 static GLfloat difX, difY, difZ;
-static uint AxesIndex[24];
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
 static GLfloat AxeArray[3*24]={400.0, 0.0, 0.0,0.0, 0.0, 0.0,
@@ -550,7 +549,6 @@ void OpenGlWidget::PutObjectInsideCube()
     AxesStartIndex = NbVert+12+60;
     for(uint id=0; id<6; id++)
     {
-        AxesIndex[id]= NbVert+12+60+id;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+0] = (id<2)?1.0f:0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+1] = (id>1)&&(id<4)?1.0f:0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+2] = (id>3)?1.0f:0.0;
@@ -564,7 +562,6 @@ void OpenGlWidget::PutObjectInsideCube()
     XStartIndex = NbVert+12+60+6;
     for(uint id=0; id<6; id++)
     {
-        AxesIndex[id+6]= NbVert+12+60+6+id;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+0] = (id<2)?1.0f:0.3;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+1] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+2] = 0.0;
@@ -578,7 +575,6 @@ void OpenGlWidget::PutObjectInsideCube()
     YStartIndex = NbVert+12+60+12;
     for(uint id=0; id<6; id++)
     {
-        AxesIndex[id+12]= NbVert+12+60+12+id;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+0] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+1] = (id<2)?1.0f:0.3;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+2] = 0.0;
@@ -592,7 +588,6 @@ void OpenGlWidget::PutObjectInsideCube()
     ZStartIndex = NbVert+12+60+18;
     for(uint id=0; id<6; id++)
     {
-        AxesIndex[id+18]= NbVert+12+60+18+id;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+0] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+1] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+2] = (id<2)?1.0f:0.3;
