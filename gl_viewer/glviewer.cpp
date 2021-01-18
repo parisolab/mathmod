@@ -1161,11 +1161,6 @@ void OpenGlWidget::Winitialize_GL()
 
         glClearColor(LocalScene.groundcol[0], LocalScene.groundcol[1],
                      LocalScene.groundcol[2], LocalScene.groundcol[3]);
-        /*
-        // Gl listes generation (Plan & Fonts):
-        LocalScene.gridplanliste = glGenLists(1); //Not used
-        makeRasterFont();
-        */
         count += 1;
     }
     if (LocalScene.componentsinfos.updateviewer)
@@ -1287,8 +1282,7 @@ static void InitialOperations()
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
 
-        // Gl listes generation (Plan & Fonts):
-        //scene->gridplanliste = glGenLists(1); //Not used but if removed, bitmap fonts are affected! makeRasterFont() need some improvements
+        // Gl listes generation (Fonts):
         makeRasterFont();
     }
 }
