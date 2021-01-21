@@ -1142,6 +1142,7 @@ static void DrawNormals(ObjectProperties *scene)
 
 void OpenGlWidget::Winitialize_GL()
 {
+    /*
     static int count = 0;
     if (count < 2)
     {
@@ -1163,6 +1164,7 @@ void OpenGlWidget::Winitialize_GL()
                      LocalScene.groundcol[2], LocalScene.groundcol[3]);
         count += 1;
     }
+    */
     if (LocalScene.componentsinfos.updateviewer)
         PutObjectInsideCube();
 }
@@ -1264,11 +1266,32 @@ static void plan()
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
-static void InitialOperations()
+static void InitialOperations(ObjectProperties *scene)
 {
     static int staticaction = 0;
     if (staticaction < 1)
     {
+        /// For drawing Filled Polygones :
+        glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+        glEnable(GL_NORMALIZE);
+        glFrontFace(GL_CCW);
+        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcol);
+        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcol);
+
+        glMaterialfv(GL_FRONT, GL_SPECULAR, scene->specReflection);
+        glMaterialfv(GL_BACK, GL_SPECULAR, scene->specReflection);
+
+        glMateriali(GL_FRONT, GL_SHININESS, scene->shininess);
+        glMateriali(GL_BACK, GL_SHININESS, scene->shininess);
+        glEnable(GL_DEPTH_TEST);
+
+        glClearColor(scene->groundcol[0], scene->groundcol[1],
+                     scene->groundcol[2], scene->groundcol[3]);
+
+
+
+
+
         glRotatef(270, 1.0, 0.0, 0.0);
         glRotatef(225, 0.0, 0.0, 1.0);
         glRotatef(-29, 1.0, -1.0, 0.0);
@@ -1293,7 +1316,7 @@ static void draw(ObjectProperties *scene)
     }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    InitialOperations();
+    InitialOperations(scene);
 
     // Blend Effect activation:
     if (scene->transparency == 1)
