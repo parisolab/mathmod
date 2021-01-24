@@ -227,6 +227,8 @@ struct ObjectProperties
     double axe_x, axe_y, axe_z;
     double view_rotx = 90.0, view_roty = 90.0, view_rotz = 1.0;
     bool cndoptions[5] = {true, true, true, false, false};
+    uint vboId_ArrayNorVer_localPt;
+    uint vboId_PolyIndices_localPt;
 };
 
 class CellNoise
