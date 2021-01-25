@@ -1349,63 +1349,80 @@ static void InitialOperations(ObjectProperties *scene)
 
 static void CopyData(ObjectProperties *scene)
 {
-    /*
-    // enable vertex arrays
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
+    static int firstaction=0;
+    static uint previousVertxNumber=0;
+    static uint previousPolyNumberNbPolygnNbVertexPtMin=0;
+    if(firstaction==0)
+    {
+        //glDeleteBuffers(2, vbo);
+        vbo[0]=vbo[1]=0;
+        glGenBuffers(2, vbo);
+        /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+24)),scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 
-    size_t cOffset = 0;
-    size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
-    size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+        /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMin), scene->PolyIndices_localPt, GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
 
-    // specify vertex arrays with their offsets
-    glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), scene->ArrayNorVer_localPt);
-    glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), &(scene->ArrayNorVer_localPt[4]));
-    glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), &(scene->ArrayNorVer_localPt[7]));
-    */
-    /*
-    // deactivate vertex attribs
-    glDisableVertexAttribArray(GL_NORMAL_ARRAY);
-    glDisableVertexAttribArray(GL_COLOR_ARRAY);
-    glDisableVertexAttribArray(GL_VERTEX_ARRAY);
+        // enable vertex arrays
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glEnableClientState(GL_VERTEX_ARRAY);
 
-    // unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        size_t cOffset = 0;
+        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
+        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+        // specify vertex arrays with their offsets
+        glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
+        glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
+        glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
+        previousVertxNumber = scene->VertxNumber;
+        previousPolyNumberNbPolygnNbVertexPtMin = (scene->PolyNumber + scene->NbPolygnNbVertexPtMin);
+        firstaction++;
+    }
+    else{
 
-    */
-    glDeleteBuffers(2, vbo);
-    //glDeleteVertexArrays(1, &vao);
+        if(scene->VertxNumber>previousVertxNumber)
+        {
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+24)), scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
+            previousVertxNumber = scene->VertxNumber;
+        }
+        else
+        {
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float)*10*(scene->VertxNumber+(12+60+24)), scene->ArrayNorVer_localPt);
+            previousVertxNumber = scene->VertxNumber;
+        }
 
-    /* Allocate and assign a Vertex Array Object to our handle */
-    //glGenVertexArrays(1, &vao);
-    /* Bind our Vertex Array Object as the current used object */
-    //glBindVertexArray(vao);
-    /* Allocate and assign two Vertex Buffer Objects to our handle */
-    glGenBuffers(2, vbo);
-    /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+24)),scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+        if((scene->PolyNumber + scene->NbPolygnNbVertexPtMin)>previousPolyNumberNbPolygnNbVertexPtMin)
+        {
+           glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMin), scene->PolyIndices_localPt, GL_STATIC_DRAW);
+           previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMin);
 
-    /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMin), scene->PolyIndices_localPt, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+        }
+        else
+        {
+            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0, sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMin), scene->PolyIndices_localPt);
+            previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMin);
+        }
 
-    // enable vertex arrays
-    glEnableClientState(GL_COLOR_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
+        // enable vertex arrays
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glEnableClientState(GL_VERTEX_ARRAY);
 
-    size_t cOffset = 0;
-    size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
-    size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-    // specify vertex arrays with their offsets
-    glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
-    glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
-    glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
+        size_t cOffset = 0;
+        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
+        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+        // specify vertex arrays with their offsets
+        glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
+        glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
+        glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
+
+
+    }
 }
 
 static void draw(ObjectProperties *scene)
