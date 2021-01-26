@@ -125,6 +125,7 @@ public:
     void ParamBuild(float **, uint **, uint *,
                     uint *, ComponentInfos *,
                     uint **,
+                    uint *,
                     uint *);
 
     void InitShowComponent(struct ComponentInfos *);

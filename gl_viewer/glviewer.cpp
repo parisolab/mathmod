@@ -1350,7 +1350,6 @@ static void CopyData(ObjectProperties *scene)
     static int firstaction=0;
     static uint previousVertxNumber=0;
     static uint previousPolyNumberNbPolygnNbVertexPtMin=0;
-    uint MiniPolySize=0;
     if(firstaction==0)
     {
         //glDeleteBuffers(2, vbo);
@@ -1520,7 +1519,8 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.ArrayNorVer_localPt), &(LocalScene.PolyIndices_localPt),
                 &LocalScene.PolyNumber, &LocalScene.VertxNumber,
                 &(LocalScene.componentsinfos), &(LocalScene.PolyIndices_localPtMin),
-                &(LocalScene.NbPolygnNbVertexPtMin));
+                &(LocalScene.NbPolygnNbVertexPtMin),
+                &(LocalScene.NbPolygnNbVertexPtMinSize));
         }
         else if (LocalScene.typedrawing == 1)
         {
@@ -1539,7 +1539,8 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.ArrayNorVer_localPt), &(LocalScene.PolyIndices_localPt),
                 &LocalScene.PolyNumber, &LocalScene.VertxNumber,
                 &(LocalScene.componentsinfos), &(LocalScene.PolyIndices_localPtMin),
-                &(LocalScene.NbPolygnNbVertexPtMin));
+                &(LocalScene.NbPolygnNbVertexPtMin),
+                &(LocalScene.NbPolygnNbVertexPtMinSize));
             IsoObjet->IsoBuild(
                 &(LocalScene.ArrayNorVer_localPt), &(LocalScene.PolyIndices_localPt),
                 &(LocalScene.PolyNumber), &(LocalScene.VertxNumber),
