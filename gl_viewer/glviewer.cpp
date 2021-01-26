@@ -723,6 +723,7 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     if (scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
         glEnable(GL_COLOR_MATERIAL);
@@ -797,6 +798,7 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     if (scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
         glDisable(GL_COLOR_MATERIAL);
     glDisable(GL_POLYGON_OFFSET_FILL);
+
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 }
@@ -1202,7 +1204,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
             GL_TRIANGLES,
             int(3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]),
             GL_UNSIGNED_INT, (void *)Offset0);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
     if (scene->cndoptions[4])
@@ -1217,7 +1219,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
             GL_TRIANGLES,
             int(3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]),
             GL_UNSIGNED_INT,(void *)Offset1);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
     if (scene->cndoptions[2])
@@ -1230,7 +1232,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
             GL_TRIANGLES,
             int(3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]),
             GL_UNSIGNED_INT,(void *)Offset2);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 }
 
@@ -1238,7 +1240,7 @@ static void DrawMeshIso(ObjectProperties *scene)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glDrawElements(GL_TRIANGLES, int(scene->PolyNumber), GL_UNSIGNED_INT, (void *)0);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 static void DrawMinimalTopology(ObjectProperties *scene)
@@ -1258,7 +1260,7 @@ static void DrawMinimalTopology(ObjectProperties *scene)
             (void *)(Offset));
         st+=(polysize);
     }
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 static void plan()
