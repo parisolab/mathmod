@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -1238,6 +1238,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
 
 static void DrawMeshIso(ObjectProperties *scene)
 {
+    glLineWidth(0.3);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glDrawElements(GL_TRIANGLES, int(scene->PolyNumber), GL_UNSIGNED_INT, (void *)0);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -1245,8 +1246,10 @@ static void DrawMeshIso(ObjectProperties *scene)
 
 static void DrawMinimalTopology(ObjectProperties *scene)
 {
-    //glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glLineWidth(0.4);
+    glDisableClientState(GL_COLOR_ARRAY);
+    glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     uint st = scene->PolyNumber;
     uint polysize=0;
     for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
@@ -1260,6 +1263,7 @@ static void DrawMinimalTopology(ObjectProperties *scene)
             (void *)(Offset));
         st+=(polysize);
     }
+    glEnableClientState(GL_COLOR_ARRAY);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
