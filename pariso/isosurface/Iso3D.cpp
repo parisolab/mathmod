@@ -31,6 +31,7 @@ uint OrignbX, OrignbY, OrignbZ;
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 std::vector<float> NormVertexTabVector;
 std::vector<uint>  IndexPolyTabMinVector;
+std::vector<uint>  IndexPolyTabMinVector2;
 std::vector<uint>  IndexPolyTabVector;
 static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
@@ -103,6 +104,7 @@ void Iso3D::BuildIso()
         &(localScene->VertxNumber),
         &(localScene->PolyIndices_localPtMin),
         &(localScene->NbPolygnNbVertexPtMin),
+        &(localScene->NbPolygnNbVertexPtMinSize),
         &(localScene->componentsinfos));
 }
 IsoMasterThread::IsoMasterThread()
@@ -1389,6 +1391,7 @@ void Iso3D::IsoBuild (
     uint *VertexNumberpt,
     uint **IndexPolyTabMinPt,
     unsigned  int *VertxNumber,
+    unsigned  int *MinimPolySize,
     struct ComponentInfos * componentsPt
 )
 {
@@ -1622,11 +1625,20 @@ void Iso3D::IsoBuild (
 
 
 
+    IndexPolyTabMinVector2.clear();
+    for (uint i = 0; i < IndexPolyTabMinVector.size(); i++)
+    {
+        uint polysize = IndexPolyTabMinVector[i];
+        IndexPolyTabMinVector2.push_back(polysize);
+        i += polysize;
+    }
 
+    *MinimPolySize = IndexPolyTabVector.size() - *PolyNumber;
+    *VertxNumber     = uint(IndexPolyTabMinVector2.size());
+    *IndexPolyTabMinPt = IndexPolyTabMinVector2.data();
 
     *NormVertexTabVectorPt = NormVertexTabVector.data();
     *IndexPolyTabPt = IndexPolyTabVector.data();
-    *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
     copycomponent(componentsPt, components);
     componentsPt->Interleave = true;
     if(componentsPt->ParisoCurrentComponentIndex != (componentsPt->ParisoNbComponents-1))

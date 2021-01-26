@@ -1246,19 +1246,17 @@ static void DrawMinimalTopology(ObjectProperties *scene)
     //glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     uint st = scene->PolyNumber;
-    uint startpl = 0;
     uint polysize=0;
     for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
     {
-        polysize = scene->PolyIndices_localPtMin[startpl++];
+        polysize = scene->PolyIndices_localPtMin[i];
         size_t Offset = st*sizeof( GL_FLOAT);
         glDrawElements(
             GL_LINE_LOOP,
             polysize,
-                GL_UNSIGNED_INT,(void *)(Offset));
-        st+=polysize;
-        startpl +=(polysize);
-        i += (polysize);
+            GL_UNSIGNED_INT,
+            (void *)(Offset));
+        st+=(polysize);
     }
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
@@ -1352,6 +1350,7 @@ static void CopyData(ObjectProperties *scene)
     static int firstaction=0;
     static uint previousVertxNumber=0;
     static uint previousPolyNumberNbPolygnNbVertexPtMin=0;
+    uint MiniPolySize=0;
     if(firstaction==0)
     {
         //glDeleteBuffers(2, vbo);
@@ -1364,7 +1363,7 @@ static void CopyData(ObjectProperties *scene)
 
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMin), scene->PolyIndices_localPt, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
 
         // enable vertex arrays
@@ -1380,7 +1379,7 @@ static void CopyData(ObjectProperties *scene)
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
         previousVertxNumber = scene->VertxNumber;
-        previousPolyNumberNbPolygnNbVertexPtMin = (scene->PolyNumber + scene->NbPolygnNbVertexPtMin);
+        previousPolyNumberNbPolygnNbVertexPtMin = (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         firstaction++;
     }
     else{
@@ -1396,16 +1395,16 @@ static void CopyData(ObjectProperties *scene)
             previousVertxNumber = scene->VertxNumber;
         }
 
-        if((scene->PolyNumber + scene->NbPolygnNbVertexPtMin)>previousPolyNumberNbPolygnNbVertexPtMin)
+        if((scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize)>previousPolyNumberNbPolygnNbVertexPtMin)
         {
-           glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMin), scene->PolyIndices_localPt, GL_STATIC_DRAW);
-           previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMin);
+           glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
+           previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
 
         }
         else
         {
-            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0, sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMin), scene->PolyIndices_localPt);
-            previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMin);
+            glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0, sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt);
+            previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         }
 
         // enable vertex arrays
@@ -1529,7 +1528,9 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.ArrayNorVer_localPt), &(LocalScene.PolyIndices_localPt),
                 &(LocalScene.PolyNumber), &(LocalScene.VertxNumber),
                 &(LocalScene.PolyIndices_localPtMin),
-                &(LocalScene.NbPolygnNbVertexPtMin), &(LocalScene.componentsinfos));
+                &(LocalScene.NbPolygnNbVertexPtMin),
+                &(LocalScene.NbPolygnNbVertexPtMinSize),
+                &(LocalScene.componentsinfos));
         }
         else
         {
@@ -1543,7 +1544,9 @@ void OpenGlWidget::paintGL()
                 &(LocalScene.ArrayNorVer_localPt), &(LocalScene.PolyIndices_localPt),
                 &(LocalScene.PolyNumber), &(LocalScene.VertxNumber),
                 &(LocalScene.PolyIndices_localPtMin),
-                &(LocalScene.NbPolygnNbVertexPtMin), &(LocalScene.componentsinfos));
+                &(LocalScene.NbPolygnNbVertexPtMin),
+                &(LocalScene.NbPolygnNbVertexPtMinSize),
+                &(LocalScene.componentsinfos));
         }
         Winitialize_GL();
     }

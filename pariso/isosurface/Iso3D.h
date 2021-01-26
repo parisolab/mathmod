@@ -116,7 +116,7 @@ public :
     inline uint PointEdgeComputation(uint);
     inline uint CNDCalculation(uint &, struct ComponentInfos *);
     void Setgrid(uint);
-    void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, struct ComponentInfos *);
+    void IsoBuild(float **, uint **, uint *,unsigned  int *, uint **,unsigned  int *, unsigned  int *, struct ComponentInfos *);
     void InitShowComponent(struct ComponentInfos *);
     void SaveIsoGLMap(uint);
     uint SetMiniMmeshStruct();
