@@ -1947,18 +1947,10 @@ void  Par3D::ParamBuild(
     }
     // 3) Nb Poly & Vertex :
     {
-        /*
-        *PolyNumber      = uint(IndexPolyTabVector.size());
-        *VertexNumberpt  = uint(NormVertexTabVector.size()/10);
-        *VertxNumber     = uint(IndexPolyTabMinVector.size());
-        */
-
         *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
         *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
         *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
-
         NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+24)*10); // To add memory space to store the cube 12 vertices (three quads)
-
         uint startpl = 0;
         uint actualpointindice=0;
         for (uint i = 0; i < *NbPolyMinPt; i++)
@@ -1973,7 +1965,6 @@ void  Par3D::ParamBuild(
             i += polysize;
         }
 
-
         IndexPolyTabMinVector2.clear();
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
@@ -1982,14 +1973,10 @@ void  Par3D::ParamBuild(
             i += polysize;
         }
 
-
         *MinimPolySize = IndexPolyTabVector.size() - *PolyNumber;
         *NbPolyMinPt     = uint(IndexPolyTabMinVector2.size());
         *IndexPolyTabMinPt = IndexPolyTabMinVector2.data();
-
-
         *NormVertexTabPt   = NormVertexTabVector.data();
-        //*IndexPolyTabMinPt = IndexPolyTabMinVector.data();
         *IndexPolyTabPt    = IndexPolyTabVector.data();
     }
     copycomponent(componentsPt, components);
