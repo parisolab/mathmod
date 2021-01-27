@@ -1275,6 +1275,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 textureIndex < 1000
                 ? MathmodRef->ui.glWidget->CalculateTexturePoints(1)
                 : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
+                MathmodRef->ui.glWidget->copydata();
                 MathmodRef->ui.glWidget->update();
             }
         }
@@ -1319,6 +1320,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 textureIndex < 1000
                 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0)
                 : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+                MathmodRef->ui.glWidget->copydata();
                 MathmodRef->ui.glWidget->update();
             }
         }
@@ -1365,49 +1367,42 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 textureIndex < 1000
                 ? MathmodRef->ui.glWidget->CalculateTexturePoints(0)
                 : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
+                MathmodRef->ui.glWidget->copydata();
                 MathmodRef->ui.glWidget->update();
             }
         }
     }
 }
 
-
 void DrawingOptions::updateCurrentTreestruct()
 {
     // Initialize the current Object struct
     MathmodRef->RootObjet.CurrentTreestruct
     .fw = MathmodRef->RootObjet.CurrentTreestruct
-          .fx = MathmodRef->RootObjet.CurrentTreestruct
-                .fy = MathmodRef->RootObjet.CurrentTreestruct.fz =
-                          MathmodRef->RootObjet.CurrentTreestruct
-                          .Cnd = MathmodRef->RootObjet.CurrentTreestruct
-                                 .RGBT = MathmodRef->RootObjet.CurrentTreestruct.Const =
-                                         MathmodRef->RootObjet.CurrentTreestruct
-                                         .Funct = MathmodRef->RootObjet.CurrentTreestruct.VRGBT =
-                                                 MathmodRef->RootObjet.CurrentTreestruct
-                                                 .Gradient = MathmodRef->RootObjet.CurrentTreestruct.fxyz =
-                                                         MathmodRef->RootObjet.CurrentTreestruct
-                                                         .umin = MathmodRef->RootObjet.CurrentTreestruct.umax =
-                                                                 MathmodRef->RootObjet.CurrentTreestruct
-                                                                 .vmin = MathmodRef->RootObjet.CurrentTreestruct.vmax =
-                                                                         MathmodRef->RootObjet.CurrentTreestruct
-                                                                         .xmin = MathmodRef->RootObjet.CurrentTreestruct
-                                                                                 .xmax = MathmodRef->RootObjet
-                                                                                         .CurrentTreestruct.ymin =
-                                                                                                 MathmodRef->RootObjet.CurrentTreestruct.ymax =
-                                                                                                         MathmodRef->RootObjet.CurrentTreestruct
-                                                                                                         .zmin = MathmodRef->RootObjet
-                                                                                                                 .CurrentTreestruct.zmax =
-                                                                                                                         MathmodRef->RootObjet.CurrentTreestruct
-                                                                                                                         .tmin = MathmodRef->RootObjet
-                                                                                                                                 .CurrentTreestruct.tmax =
-                                                                                                                                         MathmodRef->RootObjet
-                                                                                                                                         .CurrentTreestruct.name =
-                                                                                                                                                 MathmodRef->RootObjet
-                                                                                                                                                 .CurrentTreestruct.Component =
-                                                                                                                                                         MathmodRef->RootObjet
-                                                                                                                                                         .CurrentTreestruct.Grid =
-                                                                                                                                                                 QStringList();
+    .fx = MathmodRef->RootObjet.CurrentTreestruct
+    .fy = MathmodRef->RootObjet.CurrentTreestruct.fz =
+    MathmodRef->RootObjet.CurrentTreestruct
+    .Cnd = MathmodRef->RootObjet.CurrentTreestruct
+    .RGBT = MathmodRef->RootObjet.CurrentTreestruct.Const =
+    MathmodRef->RootObjet.CurrentTreestruct
+    .Funct = MathmodRef->RootObjet.CurrentTreestruct.VRGBT =
+    MathmodRef->RootObjet.CurrentTreestruct
+    .Gradient = MathmodRef->RootObjet.CurrentTreestruct.fxyz =
+    MathmodRef->RootObjet.CurrentTreestruct
+    .umin = MathmodRef->RootObjet.CurrentTreestruct.umax =
+    MathmodRef->RootObjet.CurrentTreestruct
+    .vmin = MathmodRef->RootObjet.CurrentTreestruct.vmax =
+    MathmodRef->RootObjet.CurrentTreestruct
+    .xmin = MathmodRef->RootObjet.CurrentTreestruct
+    .xmax = MathmodRef->RootObjet
+    .CurrentTreestruct.ymin =
+    MathmodRef->RootObjet.CurrentTreestruct.ymax =
+    MathmodRef->RootObjet.CurrentTreestruct.zmin = MathmodRef->RootObjet
+    .CurrentTreestruct.zmax = MathmodRef->RootObjet.CurrentTreestruct.tmin = MathmodRef->RootObjet
+    .CurrentTreestruct.tmax = MathmodRef->RootObjet
+    .CurrentTreestruct.name = MathmodRef->RootObjet
+    .CurrentTreestruct.Component = MathmodRef->RootObjet
+    .CurrentTreestruct.Grid = QStringList();
     MathmodRef->RootObjet.CurrentTreestruct.Noise =
         MathmodRef->RootObjet.CurrentTreestruct.text = "";
     MathmodRef->RootObjet.CurrentTreestruct.type = UNDEFINED_TYPE;

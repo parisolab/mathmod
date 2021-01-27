@@ -64,6 +64,7 @@ public:
     void Winitialize_GL();
     void resizeGL(int, int);
     void paintGL();
+    void copydata();
     void timerEvent(QTimerEvent *);
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);

@@ -1429,6 +1429,11 @@ static void CopyData(ObjectProperties *scene)
     }
 }
 
+void OpenGlWidget::copydata()
+{
+    CopyData(&LocalScene);
+}
+
 static void draw(ObjectProperties *scene)
 {
     InitialOperations(scene);
