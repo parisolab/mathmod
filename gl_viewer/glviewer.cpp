@@ -1147,7 +1147,7 @@ static void DrawNormals(ObjectProperties *scene)
     }
 }
 
-
+static bool PutObjectInsideCubeOk=false;
 
 void OpenGlWidget::Winitialize_GL()
 {
@@ -1175,7 +1175,10 @@ void OpenGlWidget::Winitialize_GL()
     }
     */
     if (LocalScene.componentsinfos.updateviewer)
+    {
         PutObjectInsideCube();
+        PutObjectInsideCubeOk=true;
+    }
 }
 
 void OpenGlWidget::UpdateGL()
@@ -1440,6 +1443,8 @@ static void draw(ObjectProperties *scene)
     if (scene->componentsinfos.Interleave)
     {
         //glInterleavedArrays(GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
+        if(!PutObjectInsideCubeOk)
+            return; //Should not happen but sometimes when MathMod starts, the GUI can send automatic update()
         CopyData(scene);
         scene->componentsinfos.Interleave = false;
     }
