@@ -1285,42 +1285,7 @@ static void InitialOperations(ObjectProperties *scene)
 {
     static int staticaction = 0;
     if (staticaction < 1)
-    {/*
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-        glGenBuffers(2, vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-
-        // enable vertex arrays
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_COLOR_ARRAY);
-
-        size_t cOffset = 0;
-        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
-        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-
-        // specify vertex arrays with their offsets
-        glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
-        glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
-        glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-*/
-
-        /*
-        // activate vertex attribs
-        glEnableVertexAttribArray(GL_COLOR_ARRAY);
-        glEnableVertexAttribArray(GL_NORMAL_ARRAY);
-        glEnableVertexAttribArray(GL_VERTEX_ARRAY);
-        // set attrib offsets using glVertexAttribPointer()
-
-        glVertexAttribPointer(GL_COLOR_ARRAY,  4, GL_FLOAT, GL_FALSE, 10*sizeof( GL_FLOAT), scene->ArrayNorVer_localPt);
-        glVertexAttribPointer(GL_NORMAL_ARRAY, 3, GL_FLOAT, GL_FALSE, 10*sizeof( GL_FLOAT), &(scene->ArrayNorVer_localPt[4]));
-        glVertexAttribPointer(GL_VERTEX_ARRAY, 3, GL_FLOAT, GL_FALSE, 10*sizeof( GL_FLOAT), &(scene->ArrayNorVer_localPt[7]));
-        */
-
-
-
+    {
         /// For drawing Filled Polygones :
         glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
         glEnable(GL_NORMALIZE);
@@ -1352,7 +1317,6 @@ static void InitialOperations(ObjectProperties *scene)
         makeRasterFont();
     }
 }
-
 
 static void CopyData(ObjectProperties *scene)
 {
@@ -1427,8 +1391,6 @@ static void CopyData(ObjectProperties *scene)
         glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-
-
     }
 }
 
