@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -35,6 +35,63 @@ GLuint shaderprogram;
 QString vertexsource, fragmentsource;
 /* These are handles used to reference the shaders */
 GLuint vertexshader, fragmentshader;
+float wh=0.9;
+static bool PutObjectInsideCubeOk=false;
+#include<string>
+#include<iostream>
+#include <fstream>
+
+
+int IsCompiled_VS, IsCompiled_FS;
+    int IsLinked;
+    int maxLength;
+char *vertexInfoLog;
+char *fragmentInfoLog;
+char *shaderProgramInfoLog;
+//const char *c_str_fragment;
+//const char *c_str_vertex;
+
+// constants
+const int   SCREEN_WIDTH    = 800;
+const int   SCREEN_HEIGHT   = 600;
+const float CAMERA_DISTANCE = 1.7f;
+int screenWidth;
+int screenHeight;
+bool mouseLeftDown;
+bool mouseRightDown;
+float mouseX, mouseY;
+float cameraAngleX;
+float cameraAngleY;
+float cameraDistance;
+bool vboSupported, vboUsed;
+int drawMode = 0;
+Matrix4 matrixModelView;
+Matrix4 matrixProjection;
+// GLSL
+GLuint progId = 0;                  // ID of GLSL program
+bool glslSupported;
+GLint uniformMatrixModelView;
+GLint uniformMatrixModelViewProjection;
+GLint uniformMatrixNormal;
+GLint uniformLightPosition;
+GLint uniformLightAmbient;
+GLint uniformLightDiffuse;
+GLint uniformLightSpecular;
+GLint uniformMap0;
+GLint attribVertexPosition;
+GLint attribVertexNormal;
+GLint attribVertexColor;
+GLint attribVertexTexCoord;
+
+
+
+
+
+
+
+
+
+
 static GLfloat AxeArray[3*24]={400.0, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 400.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 400.0,0.0, 0.0, 0.0,
@@ -478,16 +535,16 @@ void OpenGlWidget::PutObjectInsideCube()
     }
 
     // Cube vertices and indexes
-    float longX = 350 * float(difX / float(difMaximum)),
-          longY = 350 * (difY / float(difMaximum)),
-          longZ = 350 * (difZ / float(difMaximum));
+    float longX = wh * float(difX / float(difMaximum)),
+          longY = wh * (difY / float(difMaximum)),
+          longZ = wh * (difZ / float(difMaximum));
     uint NbVert = LocalScene.VertxNumber;
     CubeStartIndex=NbVert;
     for(uint id=0; id<12; id++)
     {
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 0] = 0.8f;
-        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 1] = 0.8f;
-        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 2] = 0.8f;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 1] = 0.0f;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 2] = 0.0f;
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 3] = 1.0f;
     }
 
@@ -610,17 +667,33 @@ void OpenGlWidget::mouseReleaseEvent(QMouseEvent *) {}
 void OpenGlWidget::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton)
+    {
         btgauche = 1;
+        mouseLeftDown =true;
+    }
     else
+    {
         btgauche = 0;
+        mouseLeftDown =false;
+    }
     if (e->button() == Qt::RightButton)
+    {
         btdroit = 1;
+        mouseRightDown =true;
+    }
     else
+    {
         btdroit = 0;
+        mouseRightDown =false;
+    }
     if (e->button() == Qt::MidButton)
         btmilieu = 1;
     else
         btmilieu = 0;
+
+    mouseX = e->x();
+    mouseY = e->y();
+
     old_y = e->y();
     LocalScene.oldRoty = e->y();
     old_x = e->x();
@@ -900,15 +973,26 @@ void OpenGlWidget::stopRendering()
 
 void OpenGlWidget::resizeEvent(QResizeEvent *evt)
 {
-    glPushMatrix();
-    glt.resizeViewport(evt->size());
-    glPopMatrix();
+    /*
+    if(PutObjectInsideCubeOk)
+    {
+        glPushMatrix();
+        glt.resizeViewport(evt->size());
+        glPopMatrix();
+    }
+    //else
+        //glLoadIdentity();
+        */
 }
 
+void OpenGlWidget::initializeGL()
+{
+    //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+}
 void OpenGlWidget::closeEvent(QCloseEvent *evt)
 {
     stopRendering();
-    QGLWidget::closeEvent(evt);
+    QOpenGLWidget::closeEvent(evt);
 }
 
 void OpenGlWidget::anim()
@@ -980,8 +1064,54 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
     glt.update();
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+// set the projection matrix as perspective
+///////////////////////////////////////////////////////////////////////////////
+void toPerspective()
+{
+    const float N = 0.1f;
+    const float F = 100.0f;
+    const float DEG2RAD = 3.141592f / 180;
+    const float FOV_Y = 60.0f * DEG2RAD;
+
+    // set viewport to be the entire window
+    glViewport(0, 0, (GLsizei)screenWidth, (GLsizei)screenHeight);
+
+    // construct perspective projection matrix
+    float aspectRatio = (float)(screenWidth) / screenHeight;
+    float tangent = tanf(FOV_Y / 2.0f);     // tangent of half fovY
+    float h = N * tangent;                  // half height of near plane
+    float w = h * aspectRatio;              // half width of near plane
+    matrixProjection.identity();
+    matrixProjection[0]  =  N / w;
+    matrixProjection[5]  =  N / h;
+    matrixProjection[10] = -(F + N) / (F - N);
+    matrixProjection[11] = -1;
+    matrixProjection[14] = -(2 * F * N) / (F - N);
+    matrixProjection[15] =  0;
+
+    // set perspective viewing frustum
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixf(matrixProjection.get());
+    //@@ equivalent fixed pipeline
+    //glLoadIdentity();
+    //gluPerspective(60.0f, (float)(screenWidth)/screenHeight, 0.1f, 100.0f); // FOV, AspectRatio, NearClip, FarClip
+
+    // switch to modelview matrix in order to set scene
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+
+
+
 void OpenGlWidget::resizeGL(int newwidth, int newheight)
 {
+
+    screenWidth = newwidth;
+    screenHeight = newheight;
+    toPerspective();
+    /*
     Wresult = newwidth;
     Hresult = newheight;
     glMatrixMode(GL_PROJECTION);
@@ -991,11 +1121,14 @@ void OpenGlWidget::resizeGL(int newwidth, int newheight)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef(0.0, 0, -1000.0);
+    */
 }
 
-OpenGlWidget::OpenGlWidget(QWidget *parent) : QGLWidget(parent), glt(this)
+OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
 {
-    setAutoBufferSwap(true);
+    //setAutoBufferSwap(true);
+    OpenGlWidget::context();
+    makeCurrent();
     static int NBGlWindow = 0;
     PerlinNoise = new ImprovedNoise(4., 4., 4.);
 
@@ -1008,7 +1141,7 @@ OpenGlWidget::OpenGlWidget(QWidget *parent) : QGLWidget(parent), glt(this)
     IDGlWindow = NBGlWindow;
     LocalScene.VertxNumber = 0;
     FramesDir = "/home";
-    hauteur_fenetre = 700;
+    hauteur_fenetre = 2*wh;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     NBGlWindow++;
@@ -1150,7 +1283,7 @@ static void DrawNormals(ObjectProperties *scene)
 }
 
 
-static bool PutObjectInsideCubeOk=false;
+
 
 void OpenGlWidget::Winitialize_GL()
 {
@@ -1279,22 +1412,13 @@ static void plan()
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
-#include<string>
-#include<iostream>
-#include <fstream>
-
-
-int IsCompiled_VS, IsCompiled_FS;
-    int IsLinked;
-    int maxLength;
-char *vertexInfoLog;
-char *fragmentInfoLog;
-char *shaderProgramInfoLog;
-//const char *c_str_fragment;
-//const char *c_str_vertex;
 
 static void CreateShaderProgram()
 {
+    const int MAX_LENGTH = 2048;
+    char log[MAX_LENGTH];
+    int logLength = 0;
+
     /* Assign our handles a "name" to new shader objects */
     //glDeleteShader(vertexshader);
     //glDeleteShader(fragmentshader);
@@ -1315,7 +1439,7 @@ static void CreateShaderProgram()
     static const char *c_str_vertex =
             R"(
             // GLSL version
-            #version 110 es
+            #version 120
             // uniforms
             uniform mat4 matrixModelView;
             uniform mat4 matrixNormal;
@@ -1323,18 +1447,18 @@ static void CreateShaderProgram()
             // vertex attribs (input)
             attribute vec3 vertexPosition;
             attribute vec3 vertexNormal;
-            attribute vec3 vertexColor;
-            attribute vec2 vertexTexCoord;
+            attribute vec4 vertexColor;
+            //attribute vec2 vertexTexCoord;
             // varyings (output)
             varying vec3 esVertex, esNormal;
-            varying vec3 color;
-            varying vec2 texCoord0;
+            varying vec4 color;
+            //varying vec2 texCoord0;
             void main()
             {
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
                 esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
                 color = vertexColor;
-                texCoord0 = vertexTexCoord;
+                //texCoord0 = vertexTexCoord;
                 gl_Position = matrixModelViewProjection * vec4(vertexPosition, 1.0);
             }
             )";
@@ -1342,7 +1466,7 @@ static void CreateShaderProgram()
     static const char *c_str_fragment =
             R"(
             // GLSL version
-            #version 110
+            #version 120
             // uniforms
             uniform vec4 lightPosition;             // should be in the eye space
             uniform vec4 lightAmbient;              // light ambient color
@@ -1351,8 +1475,8 @@ static void CreateShaderProgram()
             uniform sampler2D map0;                 // texture map #1
             // varyings
             varying vec3 esVertex, esNormal;
-            varying vec3 color;
-            varying vec2 texCoord0;
+            varying vec4 color;
+            //varying vec2 texCoord0;
             void main()
             {
                 vec3 normal = normalize(esNormal);
@@ -1368,21 +1492,20 @@ static void CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
-                vec3 fragColor = lightAmbient.rgb * color;                  // begin with ambient
+                vec4 fragColor = lightAmbient.rgb * color;                  // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += lightDiffuse.rgb * color * dotNL;              // add diffuse
-                fragColor *= texture2D(map0, texCoord0).rgb;                // modulate texture map
+                //fragColor *= texture2D(map0, texCoord0).rgb;                // modulate texture map
                 float dotNH = max(dot(normal, halfv), 0.0);
                 fragColor += pow(dotNH, 128.0) * lightSpecular.rgb * color; // add specular
 
                 // set frag color
-                gl_FragColor = vec4(fragColor, 1.0);  // keep opaque=1
+                gl_FragColor = v4(1.0,0.3,0.5,1.0)fragColor;  // keep opaque=1
             }
             )";
 
     /* Associate the source code buffers with each handle */
-    const char *data = "some code";
-    glShaderSource(vertexshader, 1, &data, NULL);
+    glShaderSource(vertexshader, 1, &c_str_vertex, NULL);
 
     /* Free the temporary allocated memory */
     //delete(c_str_fragment);
@@ -1391,15 +1514,6 @@ static void CreateShaderProgram()
     /* Compile our shader objects */
     glCompileShader(vertexshader);
     glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
-    const int MAX_LENGTH = 2048;
-    char log[MAX_LENGTH];
-    if(IsCompiled_VS == GL_FALSE)
-    {
-        glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
-        glGetShaderInfoLog(vertexshader, MAX_LENGTH, &maxLength, log);
-        std::cout << "===== Vertex Shader Log =====\n" << log << std::endl;
-    }
-
 
         if(IsCompiled_VS==GL_FALSE)
         {
@@ -1484,6 +1598,53 @@ static void CreateShaderProgram()
     /* Load the shader into the rendering pipeline */
     glUseProgram(shaderprogram);
 
+
+
+
+    uniformMatrixModelView           = glGetUniformLocation(progId, "matrixModelView");
+    uniformMatrixModelViewProjection = glGetUniformLocation(progId, "matrixModelViewProjection");
+    uniformMatrixNormal              = glGetUniformLocation(progId, "matrixNormal");
+    uniformLightPosition             = glGetUniformLocation(progId, "lightPosition");
+    uniformLightAmbient              = glGetUniformLocation(progId, "lightAmbient");
+    uniformLightDiffuse              = glGetUniformLocation(progId, "lightDiffuse");
+    uniformLightSpecular             = glGetUniformLocation(progId, "lightSpecular");
+    uniformMap0                      = glGetUniformLocation(progId, "map0");
+    attribVertexPosition = glGetAttribLocation(progId, "vertexPosition");
+    attribVertexNormal   = glGetAttribLocation(progId, "vertexNormal");
+    attribVertexColor    = glGetAttribLocation(progId, "vertexColor");
+    //attribVertexTexCoord = glGetAttribLocation(progId, "vertexTexCoord");
+
+    // set uniform values
+    float lightPosition[] = {0, 0, 1, 0};
+    float lightAmbient[]  = {0.3f, 0.3f, 0.3f, 1};
+    float lightDiffuse[]  = {0.7f, 0.7f, 0.7f, 1};
+    float lightSpecular[] = {1.0f, 1.0f, 1.0f, 1};
+    glUniform4fv(uniformLightPosition, 1, lightPosition);
+    glUniform4fv(uniformLightAmbient, 1, lightAmbient);
+    glUniform4fv(uniformLightDiffuse, 1, lightDiffuse);
+    glUniform4fv(uniformLightSpecular, 1, lightSpecular);
+    glUniform1i(uniformMap0, 0);
+
+    // unbind GLSL
+    glUseProgram(0);
+
+    // check GLSL status
+    int linkStatus;
+    glGetProgramiv(progId, GL_LINK_STATUS, &linkStatus);
+    if(linkStatus == GL_FALSE)
+    {
+        glGetProgramiv(progId, GL_INFO_LOG_LENGTH, &logLength);
+        glGetProgramInfoLog(progId, MAX_LENGTH, &logLength, log);
+        std::cout << "===== GLSL Program Log =====\n" << log << std::endl;
+        return;
+    }
+    else
+    {
+        return;
+    }
+
+
+
 }
 
 void OpenGlWidget::LoadShadersFiles()
@@ -1517,6 +1678,66 @@ static void LoadShaderFiles()
     CreateShaderProgram();
 }
 */
+void initLights()
+{
+    // set up light colors (ambient, diffuse, specular)
+    GLfloat lightKa[] = {.3f, .3f, .3f, 1.0f};  // ambient light
+    GLfloat lightKd[] = {.7f, .7f, .7f, 1.0f};  // diffuse light
+    GLfloat lightKs[] = {1, 1, 1, 1};           // specular light
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightKa);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightKd);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, lightKs);
+
+    // position the light
+    float lightPos[4] = {0, 0, 10, 0}; // directional light
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+    glEnable(GL_LIGHT0);                        // MUST enable each light source after configuration
+}
+
+void initGL()
+{
+    glShadeModel(GL_SMOOTH);                    // shading mathod: GL_SMOOTH or GL_FLAT
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);      // 4-byte pixel alignment
+
+    // enable /disable features
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    //glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    //glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_CULL_FACE);
+
+     // track material ambient and diffuse from surface color, call it before glEnable(GL_COLOR_MATERIAL)
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glEnable(GL_COLOR_MATERIAL);
+
+    glClearColor(0, 0, 0, 0);                   // background color
+    glClearStencil(0);                          // clear stencil buffer
+    glClearDepth(1.0f);                         // 0 is near, 1 is far
+    glDepthFunc(GL_LEQUAL);
+
+    initLights();
+}
+///////////////////////////////////////////////////////////////////////////////
+// initialize global variables
+///////////////////////////////////////////////////////////////////////////////
+bool initSharedMem()
+{
+    screenWidth = SCREEN_WIDTH;
+    screenHeight = SCREEN_HEIGHT;
+
+    mouseLeftDown = mouseRightDown = false;
+    mouseX = mouseY = 0;
+
+    cameraAngleX = cameraAngleY = 0.0f;
+    cameraDistance = CAMERA_DISTANCE;
+
+    drawMode = 0; // 0:fill, 1: wireframe, 2:points
+
+    return true;
+}
 
 static void InitialOperations(ObjectProperties *scene)
 {
@@ -1552,7 +1773,8 @@ static void InitialOperations(ObjectProperties *scene)
 
         // Gl listes generation (Fonts):
         makeRasterFont();
-
+        initSharedMem();
+        initGL();
     }
 }
 
@@ -1578,8 +1800,7 @@ static void CopyData(ObjectProperties *scene)
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-
+/*
         // enable vertex arrays
         glEnableClientState(GL_COLOR_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
@@ -1592,6 +1813,7 @@ static void CopyData(ObjectProperties *scene)
         glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
+*/
         previousVertxNumber = scene->VertxNumber;
         previousPolyNumberNbPolygnNbVertexPtMin = (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         firstaction++;
@@ -1652,19 +1874,85 @@ static void draw(ObjectProperties *scene)
         CopyData(scene);
         scene->componentsinfos.Interleave = false;
     }
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // clear buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT /*| GL_STENCIL_BUFFER_BIT*/);
+
+    // transform camera
+    Matrix4 matrixView;
+    matrixView.rotateY(cameraAngleY);   // heading
+    matrixView.rotateX(cameraAngleX);   // pitch
+    matrixView.translate(0, 0, -cameraDistance);
+
+    // transform model
+    Matrix4 matrixModel;
+
+    // set modelview matrix
+    matrixModelView = matrixView * matrixModel;
+
+
+    {
+        // bind GLSL
+        glUseProgram(progId);
+
+        // set matric uniforms every frame
+        Matrix4 matrixModelViewProjection = matrixProjection * matrixModelView;
+        Matrix4 matrixNormal = matrixModelView;
+        matrixNormal.setColumn(3, Vector4(0,0,0,1));
+        glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixModelView.get());
+        glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjection.get());
+        glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormal.get());
+
+        // bind VBOs
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+
+        // activate attribs
+
+        glEnableVertexAttribArray(attribVertexColor);
+        glEnableVertexAttribArray(attribVertexNormal);
+        glEnableVertexAttribArray(attribVertexPosition);
+
+        // set attrib arrays using glVertexAttribPointer()
+
+        size_t cOffset = 0;
+        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
+        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+        // specify vertex arrays with their offsets
+        // glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
+        // glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
+        // glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
+
+        // glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 0, 0);
+        // glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 0, (void*)sizeof(vertices));
+        // glVertexAttribPointer(attribVertexColor, 3, GL_FLOAT, false, 0, (void*)(sizeof(vertices)+sizeof(normals)));
+
+
+
+        // set attrib arrays using glVertexAttribPointer()
+        glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
+        glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
+        glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
+
+}
+
+
+
+
+
 
     // Blend Effect activation:
     if (scene->transparency == 1)
         glDepthMask(GL_FALSE);
-
+/*
     // Ratation (Animation):
     if (scene->anim == 1 && scene->animxyz == 1)
     {
         glRotatef(scene->RotStrength, float(scene->axe_x), float(scene->axe_y),
                   float(scene->axe_z));
     }
-
+*/
     // Plan:
     if (scene->infos == 1)
     {
@@ -1705,7 +1993,7 @@ static void draw(ObjectProperties *scene)
 
     // Bounding Box:
     if (scene->boundingbox == 1)
-        drawCube(350);
+        drawCube(wh);
 
     // Draw Minimal topology for isosurfaces:
     if (scene->mesh == 1 && scene->componentsinfos.updateviewer)
@@ -1725,8 +2013,26 @@ static void draw(ObjectProperties *scene)
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
 
+
+
+
+
+    {
+        glDisableVertexAttribArray(attribVertexPosition);
+        glDisableVertexAttribArray(attribVertexNormal);
+        glDisableVertexAttribArray(attribVertexColor);
+        //glDisableVertexAttribArray(attribVertexTexCoord);
+
+        // unbind
+        //(GL_ARRAY_BUFFER, 0);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glUseProgram(0);
+
+    }
+
     // Draw the scene:
     glFlush();
+
 }
 
 void OpenGlWidget::paintGL()
@@ -1795,6 +2101,23 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
     LocalScene.oldRoty = e->y();
     LocalScene.oldRotx = e->x();
 
+
+
+    if(mouseLeftDown)
+    {
+        cameraAngleY += (e->x() - mouseX);
+        cameraAngleX += (e->y() - mouseY);
+        mouseX = e->x();
+        mouseY = e->y();
+    }
+    if(mouseRightDown)
+    {
+        cameraDistance -= (e->y() - mouseY) * 0.2f;
+        mouseY = e->y();
+    }
+
+    //toPerspective();
+
     // Scale function :
     if (btdroit == 1)
     {
@@ -1838,7 +2161,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         tmp[3] = -(m21 * d23 - m22 * d13 + m23 * d12);
 
         /* Compute determinant as early as possible using these cofactors. */
-        det = m11 * tmp[0] + m12 * tmp[1] + m13 * tmp[2] + m14 * tmp[3];
+        det = M11 * tmp[0] + M12 * tmp[1] + M13 * tmp[2] + M14 * tmp[3];
 
         /* Run singularity test. */
         if (det != 0.0)
@@ -1850,17 +2173,17 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
             tmp[2] *= invDet;
             tmp[3] *= invDet;
 
-            tmp[4] = -(m12 * d34 - m13 * d24 + m14 * d23) * invDet;
-            tmp[5] = (m11 * d34 + m13 * d41 + m14 * d13) * invDet;
-            tmp[6] = -(m11 * d24 + m12 * d41 + m14 * d12) * invDet;
-            tmp[7] = (m11 * d23 - m12 * d13 + m13 * d12) * invDet;
+            tmp[4] = -(M12 * d34 - M13 * d24 + M14 * d23) * invDet;
+            tmp[5] = (M11 * d34 + M13 * d41 + M14 * d13) * invDet;
+            tmp[6] = -(M11 * d24 + M12 * d41 + M14 * d12) * invDet;
+            tmp[7] = (M11 * d23 - M12 * d13 + M13 * d12) * invDet;
 
-            d12 = m11 * m22 - m21 * m12;
-            d13 = m11 * m23 - m21 * m13;
-            d23 = m12 * m23 - m22 * m13;
-            d24 = m12 * m24 - m22 * m14;
-            d34 = m13 * m24 - m23 * m14;
-            d41 = m14 * m21 - m24 * m11;
+            d12 = M11 * m22 - m21 * M12;
+            d13 = M11 * m23 - m21 * M13;
+            d23 = M12 * m23 - m22 * M13;
+            d24 = M12 * m24 - m22 * M14;
+            d34 = M13 * m24 - m23 * M14;
+            d41 = M14 * m21 - m24 * M11;
 
             tmp[8] = (m42 * d34 - m43 * d24 + m44 * d23) * invDet;
             tmp[9] = -(m41 * d34 + m43 * d41 + m44 * d13) * invDet;
@@ -1892,7 +2215,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 
 void OpenGlWidget::screenshot()
 {
-    QImage image = grabFrameBuffer();
+    QImage image = QOpenGLWidget::grabFramebuffer();
     if (LocalScene.png_ok == 1)
         image.save("GLscreenshot.png", "PNG", LocalScene.quality_image);
     if (LocalScene.bmp_ok == 1)
@@ -1917,7 +2240,7 @@ void OpenGlWidget::FramesSave()
     static int Index = 0;
     if (LocalScene.frame == 1)
     {
-        QImage image = grabFrameBuffer();
+        QImage image = QOpenGLWidget::grabFramebuffer();   //:grabFrameBuffer();
         QString FileName =
             FramesDir + QString("%1").arg(Index, 5, 10, QChar('0')) + ".png";
         Index += 1;
@@ -1927,7 +2250,7 @@ void OpenGlWidget::FramesSave()
 
 QImage OpenGlWidget::Copyscreenshot()
 {
-    return (grabFrameBuffer());
+    return (QOpenGLWidget::grabFramebuffer());
 }
 
 void OpenGlWidget::transparency(int cl, int currentposition)

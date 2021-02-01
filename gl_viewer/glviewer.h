@@ -38,8 +38,9 @@
 #include <qthread.h>
 #include <stdlib.h>
 #include <string>
-
-class OpenGlWidget : public QGLWidget
+#include "Matrices.h"
+#include "Vectors.h"
+class OpenGlWidget : public QOpenGLWidget
 {
     Q_OBJECT
 public:
@@ -91,6 +92,7 @@ public:
     void stopRendering();
     void resizeEvent(QResizeEvent *evt);
     void closeEvent(QCloseEvent *evt);
+    void initializeGL();
 
 public slots:
     void anim();

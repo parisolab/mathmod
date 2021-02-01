@@ -405,10 +405,10 @@ static unsigned char rasters[][13] = {{
 /* NB. OpenGL Matrices are COLUMN major. */
 #define MAT(m, r, c) (m)[(c)*4 + (r)]
 /* Here's some shorthand converting standard (row,column) to index. */
-#define m11 MAT(m, 0, 0)
-#define m12 MAT(m, 0, 1)
-#define m13 MAT(m, 0, 2)
-#define m14 MAT(m, 0, 3)
+#define M11 MAT(m, 0, 0)
+#define M12 MAT(m, 0, 1)
+#define M13 MAT(m, 0, 2)
+#define M14 MAT(m, 0, 3)
 #define m21 MAT(m, 1, 0)
 #define m22 MAT(m, 1, 1)
 #define m23 MAT(m, 1, 2)

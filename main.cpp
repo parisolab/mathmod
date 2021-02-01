@@ -24,6 +24,9 @@
 #include "ui_modules/parametersoptions.h"
 #include <QApplication>
 #include <QTextStream>
+#include <QGuiApplication>
+#include <QSurfaceFormat>
+#include <QOpenGLContext>
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
 #endif
@@ -32,6 +35,20 @@ int main(int argc, char *argv[])
 {
     // QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
     QApplication app(argc, argv);
+
+    QSurfaceFormat fmt;
+    fmt.setDepthBufferSize(24);
+    QSurfaceFormat::setDefaultFormat(fmt);
+    // Request OpenGL 3.3 core or OpenGL ES 3.0.
+    if (QOpenGLContext::openGLModuleType() == QOpenGLContext::LibGL) {
+        qDebug("Requesting 3.3 core context");
+        //app.setVersion(3, 3);
+        //fmt.setProfile(QSurfaceFormat::CoreProfile);
+    } else {
+        qDebug("Requesting 3.0 context");
+        //fmt.setVersion(3, 0);
+    }
+
     Parametersoptions Parameters;
     Parameters.MainApp = &app;
     Parameters.LoadConfig(app, argc, argv);

@@ -1,4 +1,6 @@
 HEADERS   = ui_modules/drawingoptions.h \
+            gl_viewer/Matrices.h \
+            gl_viewer/Vectors.h \
             ui_modules/colorsoptions.h \
             ui_modules/about.h \
             ui_modules/mathmod.h \
@@ -27,6 +29,7 @@ HEADERS   = ui_modules/drawingoptions.h \
             fparser/fpconfig.hh
 
 SOURCES   = ui_modules/drawingoptions.cpp \
+            gl_viewer/Matrices.cpp \
             ui_modules/colorsoptions.cpp \
             ui_modules/mathmod.cpp \
             ui_modules/about.cpp \
