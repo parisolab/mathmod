@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
     drawingopt.show();
     mm.show();
     drawingopt.raise();
+    mm.ui.glWidget->LoadShadersFiles();
     drawingopt.on_choice_activated(Parameters.model);
     return app.exec();
 }

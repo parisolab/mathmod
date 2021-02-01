@@ -29,6 +29,12 @@ static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
 static GLfloat difX, difY, difZ;
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
+/* This is a handle to the shader program */
+GLuint shaderprogram;
+/* These pointers will receive the contents of our shader source code files */
+QString vertexsource, fragmentsource;
+/* These are handles used to reference the shaders */
+GLuint vertexshader, fragmentshader;
 static GLfloat AxeArray[3*24]={400.0, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 400.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 400.0,0.0, 0.0, 0.0,
@@ -76,6 +82,7 @@ static GLfloat PlanArray[3*60]=
     600.0, 450.0, -500,-600.0, 450.0, -500,
     600.0, 525.0, -500,-600.0, 525.0, -500
 };
+
 
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
@@ -1005,6 +1012,7 @@ OpenGlWidget::OpenGlWidget(QWidget *parent) : QGLWidget(parent), glt(this)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     NBGlWindow++;
+    //LoadShadersFiles();
 }
 
 void OpenGlWidget::infosok()
@@ -1098,21 +1106,15 @@ void OpenGlWidget::PrintInfos()
 
 static void DrawAxe()
 {
-
     glLineWidth(1.0);
-
     // Draw the three axes (lines without head)
     glDrawArrays(GL_LINES,AxesStartIndex,6);
-
     // Head of the X Axe:
     glDrawArrays(GL_TRIANGLE_FAN,XStartIndex,6);
-
     // Head of the Y Axe:
     glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
-
     // Head of the Z Axe:
     glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
-
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3i(410, 10, 10);
     glCallLists(strlen("X"), GL_UNSIGNED_BYTE, "X");
@@ -1146,6 +1148,7 @@ static void DrawNormals(ObjectProperties *scene)
         glEnd();
     }
 }
+
 
 static bool PutObjectInsideCubeOk=false;
 
@@ -1276,11 +1279,245 @@ static void plan()
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
+#include<string>
+#include<iostream>
+#include <fstream>
 
 
-GLuint vao, vbo[2]; /* Create handles for our Vertex Array Object and two Vertex Buffer Objects */
-/* These pointers will receive the contents of our shader source code files */
-    GLchar *vertexsource, *fragmentsource;
+int IsCompiled_VS, IsCompiled_FS;
+    int IsLinked;
+    int maxLength;
+char *vertexInfoLog;
+char *fragmentInfoLog;
+char *shaderProgramInfoLog;
+//const char *c_str_fragment;
+//const char *c_str_vertex;
+
+static void CreateShaderProgram()
+{
+    /* Assign our handles a "name" to new shader objects */
+    //glDeleteShader(vertexshader);
+    //glDeleteShader(fragmentshader);
+    vertexshader = glCreateShader(GL_VERTEX_SHADER);
+    bool shaderValid = glIsShader(vertexshader);
+    if (!shaderValid)
+    {
+        std::cout << "Could not create Vertex Shader!";
+
+    }
+    fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
+
+    std::string stvert=vertexsource.toStdString();
+    std::string stfrag=fragmentsource.toStdString();
+    //c_str_vertex = stvert.c_str();
+    //c_str_fragment = stfrag.c_str();
+
+    static const char *c_str_vertex =
+            R"(
+            // GLSL version
+            #version 110 es
+            // uniforms
+            uniform mat4 matrixModelView;
+            uniform mat4 matrixNormal;
+            uniform mat4 matrixModelViewProjection;
+            // vertex attribs (input)
+            attribute vec3 vertexPosition;
+            attribute vec3 vertexNormal;
+            attribute vec3 vertexColor;
+            attribute vec2 vertexTexCoord;
+            // varyings (output)
+            varying vec3 esVertex, esNormal;
+            varying vec3 color;
+            varying vec2 texCoord0;
+            void main()
+            {
+                esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
+                esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
+                color = vertexColor;
+                texCoord0 = vertexTexCoord;
+                gl_Position = matrixModelViewProjection * vec4(vertexPosition, 1.0);
+            }
+            )";
+
+    static const char *c_str_fragment =
+            R"(
+            // GLSL version
+            #version 110
+            // uniforms
+            uniform vec4 lightPosition;             // should be in the eye space
+            uniform vec4 lightAmbient;              // light ambient color
+            uniform vec4 lightDiffuse;              // light diffuse color
+            uniform vec4 lightSpecular;             // light specular color
+            uniform sampler2D map0;                 // texture map #1
+            // varyings
+            varying vec3 esVertex, esNormal;
+            varying vec3 color;
+            varying vec2 texCoord0;
+            void main()
+            {
+                vec3 normal = normalize(esNormal);
+                vec3 light;
+                if(lightPosition.w == 0.0)
+                {
+                    light = normalize(lightPosition.xyz);
+                }
+                else
+                {
+                    light = normalize(lightPosition.xyz - esVertex);
+                }
+                vec3 view = normalize(-esVertex);
+                vec3 halfv = normalize(light + view);
+
+                vec3 fragColor = lightAmbient.rgb * color;                  // begin with ambient
+                float dotNL = max(dot(normal, light), 0.0);
+                fragColor += lightDiffuse.rgb * color * dotNL;              // add diffuse
+                fragColor *= texture2D(map0, texCoord0).rgb;                // modulate texture map
+                float dotNH = max(dot(normal, halfv), 0.0);
+                fragColor += pow(dotNH, 128.0) * lightSpecular.rgb * color; // add specular
+
+                // set frag color
+                gl_FragColor = vec4(fragColor, 1.0);  // keep opaque=1
+            }
+            )";
+
+    /* Associate the source code buffers with each handle */
+    const char *data = "some code";
+    glShaderSource(vertexshader, 1, &data, NULL);
+
+    /* Free the temporary allocated memory */
+    //delete(c_str_fragment);
+    //free(fragmentSource);
+
+    /* Compile our shader objects */
+    glCompileShader(vertexshader);
+    glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
+    const int MAX_LENGTH = 2048;
+    char log[MAX_LENGTH];
+    if(IsCompiled_VS == GL_FALSE)
+    {
+        glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
+        glGetShaderInfoLog(vertexshader, MAX_LENGTH, &maxLength, log);
+        std::cout << "===== Vertex Shader Log =====\n" << log << std::endl;
+    }
+
+
+        if(IsCompiled_VS==GL_FALSE)
+        {
+           QMessageBox msgBox;
+           glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
+
+           // The maxLength includes the NULL character
+           vertexInfoLog = (char *)malloc(maxLength);
+
+           glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
+
+           std::string vertexInfoLogString = std::string(vertexInfoLog);
+           msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
+           msgBox.adjustSize();
+           msgBox.exec();
+           // Handle the error in an appropriate way such as displaying a message or writing to a log file.
+           // In this simple program, we'll just leave
+           //free(vertexInfoLog);
+           //return;
+        }
+
+
+    glShaderSource(fragmentshader, 1, &c_str_fragment, NULL);
+    glCompileShader(fragmentshader);
+    glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &IsCompiled_FS);
+    if(!IsCompiled_FS)
+    {
+       glGetShaderiv(fragmentshader, GL_INFO_LOG_LENGTH, &maxLength);
+
+       /* The maxLength includes the NULL character */
+       fragmentInfoLog = (char *)malloc(maxLength);
+
+       glGetShaderInfoLog(fragmentshader, maxLength, &maxLength, fragmentInfoLog);
+
+       /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
+       /* In this simple program, we'll just leave */
+       //free(fragmentInfoLog);
+       //return;
+    }
+
+
+    /* If we reached this point it means the vertex and fragment shaders compiled and are syntax error free. */
+    /* We must link them together to make a GL shader program */
+    /* GL shader programs are monolithic. It is a single piece made of 1 vertex shader and 1 fragment shader. */
+    /* Assign our program handle a "name" */
+    shaderprogram = glCreateProgram();
+
+    /* Attach our shaders to our program */
+    glAttachShader(shaderprogram, vertexshader);
+    glAttachShader(shaderprogram, fragmentshader);
+
+    /* Bind attribute index 0 (coordinates) to in_Position and attribute index 1 (color) to in_Color */
+    /* Attribute locations must be setup before calling glLinkProgram. */
+    glBindAttribLocation(shaderprogram, 0, "in_Position");
+    glBindAttribLocation(shaderprogram, 1, "in_Color");
+
+    /* Link our program */
+    /* At this stage, the vertex and fragment programs are inspected, optimized and a binary code is generated for the shader. */
+    /* The binary code is uploaded to the GPU, if there is no error. */
+    glLinkProgram(shaderprogram);
+
+
+
+
+    glGetProgramiv(shaderprogram, GL_LINK_STATUS, (int *)&IsLinked);
+    if(!IsLinked)
+    {
+       /* Noticed that glGetProgramiv is used to get the length for a shader program, not glGetShaderiv. */
+       glGetProgramiv(shaderprogram, GL_INFO_LOG_LENGTH, &maxLength);
+
+       /* The maxLength includes the NULL character */
+       shaderProgramInfoLog = (char *)malloc(maxLength);
+
+       /* Notice that glGetProgramInfoLog, not glGetShaderInfoLog. */
+       glGetProgramInfoLog(shaderprogram, maxLength, &maxLength, shaderProgramInfoLog);
+
+       /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
+       /* In this simple program, we'll just leave */
+       //free(shaderProgramInfoLog);
+       //return;
+    }
+    /* Load the shader into the rendering pipeline */
+    glUseProgram(shaderprogram);
+
+}
+
+void OpenGlWidget::LoadShadersFiles()
+{
+    QFile vertexshadfile(":/gl_viewer/shaders/vertexshader.txt");
+    QFile fragmentshadfile(":/gl_viewer/shaders/fragmentshader.txt");
+    if (vertexshadfile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        vertexsource = vertexshadfile.readAll();
+        vertexshadfile.close();
+    }
+    if (fragmentshadfile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        fragmentsource = fragmentshadfile.readAll();
+        fragmentshadfile.close();
+    }
+    CreateShaderProgram();
+}
+/*
+static void LoadShaderFiles()
+{
+    std::ifstream vertexshaderfile("gl_viewer/shaders/vertexshader.txt");
+    std::string vertexshaderfilecontents((std::istreambuf_iterator<char>(vertexshaderfile)),
+        std::istreambuf_iterator<char>());
+    c_str_vertex=vertexshaderfilecontents.c_str();
+
+    std::ifstream fragmentshaderfile(":/gl_viewer/shaders/fragmentshader.txt");
+    std::string fragmentshaderfilecontents((std::istreambuf_iterator<char>(fragmentshaderfile)),
+        std::istreambuf_iterator<char>());
+    c_str_fragment=fragmentshaderfilecontents.c_str();
+    CreateShaderProgram();
+}
+*/
+
 static void InitialOperations(ObjectProperties *scene)
 {
     static int staticaction = 0;
@@ -1315,8 +1552,12 @@ static void InitialOperations(ObjectProperties *scene)
 
         // Gl listes generation (Fonts):
         makeRasterFont();
+
     }
 }
+
+/* Create handles for our Vertex Array Object and two Vertex Buffer Objects */
+GLuint vao, vbo[2];
 
 static void CopyData(ObjectProperties *scene)
 {
@@ -1325,6 +1566,7 @@ static void CopyData(ObjectProperties *scene)
     static uint previousPolyNumberNbPolygnNbVertexPtMin=0;
     if(firstaction==0)
     {
+        glGenVertexArrays(1, &vao);
         //glDeleteBuffers(2, vbo);
         vbo[0]=vbo[1]=0;
         glGenBuffers(2, vbo);

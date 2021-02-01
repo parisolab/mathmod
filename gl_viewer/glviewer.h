@@ -25,7 +25,8 @@
 #include "qglthread.h"
 #include "raster.h"
 #include <QFileDialog>
-#include <QGLWidget>
+#include <QOpenGLWidget>
+//#include <QGLWidget>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QResizeEvent>
@@ -125,6 +126,7 @@ public slots:
     void SaveSceneAsObjTrian(int n = 0);
     void CalculateTexturePoints(int type);
     void CalculatePigmentPoints(int type);
+    void LoadShadersFiles();
     void UpdateGL();
 };
 
