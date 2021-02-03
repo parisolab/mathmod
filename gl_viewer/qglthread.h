@@ -41,8 +41,6 @@ public:
 private:
     bool doRendering;
     bool doResize;
-    int w;
-    int h;
     OpenGlWidget *glw;
 };
 #endif // GLWidget_h

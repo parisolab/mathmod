@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -35,7 +35,7 @@ GLuint shaderprogram;
 QString vertexsource, fragmentsource;
 /* These are handles used to reference the shaders */
 GLuint vertexshader, fragmentshader;
-float wh=0.9;
+float wh=0.6;
 static bool PutObjectInsideCubeOk=false;
 #include<string>
 #include<iostream>
@@ -973,16 +973,14 @@ void OpenGlWidget::stopRendering()
 
 void OpenGlWidget::resizeEvent(QResizeEvent *evt)
 {
-    /*
     if(PutObjectInsideCubeOk)
     {
         glPushMatrix();
-        glt.resizeViewport(evt->size());
+        resizeGL(evt->size().width(), evt->size().height());
         glPopMatrix();
     }
     //else
         //glLoadIdentity();
-        */
 }
 
 void OpenGlWidget::initializeGL()
@@ -1064,7 +1062,6 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
     glt.update();
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // set the projection matrix as perspective
 ///////////////////////////////////////////////////////////////////////////////
@@ -1103,24 +1100,12 @@ void toPerspective()
     glLoadIdentity();
 }
 
-
-
 void OpenGlWidget::resizeGL(int newwidth, int newheight)
 {
-
+    /*
     screenWidth = newwidth;
     screenHeight = newheight;
     toPerspective();
-    /*
-    Wresult = newwidth;
-    Hresult = newheight;
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glViewport(0, 0, newwidth, newheight);
-    glFrustum(-newwidth / 6.0, newwidth / 6.0, -newheight / 6.0, newheight / 6.0, 250.0, 3000.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glTranslatef(0.0, 0, -1000.0);
     */
 }
 
@@ -1642,9 +1627,6 @@ static void CreateShaderProgram()
     {
         return;
     }
-
-
-
 }
 
 void OpenGlWidget::LoadShadersFiles()
@@ -1702,12 +1684,17 @@ void initGL()
 
     // enable /disable features
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    //glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-    //glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_CULL_FACE);
+
+    /////****************
+    /// For drawing Filled Polygones :
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glEnable(GL_NORMALIZE);
+    glFrontFace(GL_CCW);
+
+    glEnable(GL_DEPTH_TEST);
+    //////*************
 
      // track material ambient and diffuse from surface color, call it before glEnable(GL_COLOR_MATERIAL)
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
@@ -1716,7 +1703,7 @@ void initGL()
     glClearColor(0, 0, 0, 0);                   // background color
     glClearStencil(0);                          // clear stencil buffer
     glClearDepth(1.0f);                         // 0 is near, 1 is far
-    glDepthFunc(GL_LEQUAL);
+    //glDepthFunc(GL_LEQUAL);
 
     initLights();
 }
@@ -1748,6 +1735,7 @@ static void InitialOperations(ObjectProperties *scene)
         glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
         glEnable(GL_NORMALIZE);
         glFrontFace(GL_CCW);
+        /*
         glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcol);
         glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcol);
 
@@ -1756,6 +1744,7 @@ static void InitialOperations(ObjectProperties *scene)
 
         glMateriali(GL_FRONT, GL_SHININESS, scene->shininess);
         glMateriali(GL_BACK, GL_SHININESS, scene->shininess);
+        */
         glEnable(GL_DEPTH_TEST);
 
         glClearColor(scene->groundcol[0], scene->groundcol[1],
@@ -1800,7 +1789,8 @@ static void CopyData(ObjectProperties *scene)
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
-/*
+
+
         // enable vertex arrays
         glEnableClientState(GL_COLOR_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
@@ -1813,7 +1803,7 @@ static void CopyData(ObjectProperties *scene)
         glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-*/
+
         previousVertxNumber = scene->VertxNumber;
         previousPolyNumberNbPolygnNbVertexPtMin = (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         firstaction++;
@@ -1843,18 +1833,28 @@ static void CopyData(ObjectProperties *scene)
             previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         }
 
-        // enable vertex arrays
-        glEnableClientState(GL_COLOR_ARRAY);
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_VERTEX_ARRAY);
-
+        glEnable(GL_COLOR_ARRAY);
+        glEnable(GL_VERTEX_ARRAY);
+        glEnable(GL_NORMAL_ARRAY);
+        // set attrib arrays using glVertexAttribPointer()
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+
         // specify vertex arrays with their offsets
         glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
+        // activate attribs
+        glEnableVertexAttribArray(attribVertexColor);
+        glEnableVertexAttribArray(attribVertexNormal);
+        glEnableVertexAttribArray(attribVertexPosition);
+
+        // set attrib arrays using glVertexAttribPointer()
+        glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
+        glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
+        glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
+
     }
 }
 
@@ -1868,16 +1868,14 @@ static void draw(ObjectProperties *scene)
     InitialOperations(scene);
     if (scene->componentsinfos.Interleave)
     {
-        //glInterleavedArrays(GL_C4F_N3F_V3F, 0, scene->ArrayNorVer_localPt);
         if(!PutObjectInsideCubeOk)
-            return; //Should not happen but sometimes when MathMod starts, the GUI can send automatic update()
+            return;
         CopyData(scene);
         scene->componentsinfos.Interleave = false;
     }
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // clear buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT /*| GL_STENCIL_BUFFER_BIT*/);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // transform camera
     Matrix4 matrixView;
@@ -1890,12 +1888,9 @@ static void draw(ObjectProperties *scene)
 
     // set modelview matrix
     matrixModelView = matrixView * matrixModel;
-
-
     {
         // bind GLSL
         glUseProgram(progId);
-
         // set matric uniforms every frame
         Matrix4 matrixModelViewProjection = matrixProjection * matrixModelView;
         Matrix4 matrixNormal = matrixModelView;
@@ -1909,79 +1904,33 @@ static void draw(ObjectProperties *scene)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
 
         // activate attribs
-
         glEnableVertexAttribArray(attribVertexColor);
         glEnableVertexAttribArray(attribVertexNormal);
         glEnableVertexAttribArray(attribVertexPosition);
 
         // set attrib arrays using glVertexAttribPointer()
-
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-        // specify vertex arrays with their offsets
-        // glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
-        // glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
-        // glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-
-        // glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 0, 0);
-        // glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 0, (void*)sizeof(vertices));
-        // glVertexAttribPointer(attribVertexColor, 3, GL_FLOAT, false, 0, (void*)(sizeof(vertices)+sizeof(normals)));
-
-
 
         // set attrib arrays using glVertexAttribPointer()
         glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
         glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
-
 }
-
-
-
-
-
-
     // Blend Effect activation:
     if (scene->transparency == 1)
         glDepthMask(GL_FALSE);
-/*
-    // Ratation (Animation):
-    if (scene->anim == 1 && scene->animxyz == 1)
-    {
-        glRotatef(scene->RotStrength, float(scene->axe_x), float(scene->axe_y),
-                  float(scene->axe_z));
-    }
-*/
+
     // Plan:
     if (scene->infos == 1)
-    {
         plan();
-    }
 
     // Axe :
     if (scene->infos == 1)
         DrawAxe();
 
     glPushMatrix();
-
-    if (scene->anim == 1 && scene->animx == 1)
-    {
-        scene->animxValue += scene->animxValueStep;
-        glRotatef(scene->animxValue, 1.0, 0, 0);
-    }
-
-    if (scene->anim == 1 && scene->animy == 1)
-    {
-        scene->animyValue += scene->animyValueStep;
-        glRotatef(scene->animyValue, 0, 1.0, 0);
-    }
-
-    if (scene->anim == 1 && scene->animz == 1)
-    {
-        scene->animzValue += scene->animzValueStep;
-        glRotatef(scene->animzValue, 0, 0, 1.0);
-    }
 
     if (scene->fill == 1 && scene->componentsinfos.updateviewer)
         for (uint i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
@@ -2012,27 +1961,18 @@ static void draw(ObjectProperties *scene)
 
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
-
-
-
-
-
     {
         glDisableVertexAttribArray(attribVertexPosition);
         glDisableVertexAttribArray(attribVertexNormal);
         glDisableVertexAttribArray(attribVertexColor);
-        //glDisableVertexAttribArray(attribVertexTexCoord);
 
         // unbind
-        //(GL_ARRAY_BUFFER, 0);
+        //glBindBuffer(GL_ARRAY_BUFFER, 0);
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glUseProgram(0);
-
     }
-
     // Draw the scene:
     glFlush();
-
 }
 
 void OpenGlWidget::paintGL()
@@ -2093,16 +2033,6 @@ void OpenGlWidget::timerEvent(QTimerEvent *)
 
 void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    static double m[16];
-    LocalScene.RotStrength =
-        sqrt((LocalScene.oldRotx - e->x()) * (LocalScene.oldRotx - e->x()) +
-             (LocalScene.oldRoty - e->y()) * (LocalScene.oldRoty - e->y())) /
-        2;
-    LocalScene.oldRoty = e->y();
-    LocalScene.oldRotx = e->x();
-
-
-
     if(mouseLeftDown)
     {
         cameraAngleY += (e->x() - mouseX);
@@ -2115,101 +2045,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         cameraDistance -= (e->y() - mouseY) * 0.2f;
         mouseY = e->y();
     }
-
-    //toPerspective();
-
-    // Scale function :
-    if (btdroit == 1)
-    {
-        if (old_y - e->y() > 0)
-            LocalScene.ScalCoeff = 1.02;
-        else if (LocalScene.ScalCoeff > 0.1)
-            LocalScene.ScalCoeff = 0.98;
-        glScalef(GLfloat(LocalScene.ScalCoeff), GLfloat(LocalScene.ScalCoeff),
-                 GLfloat(LocalScene.ScalCoeff));
-        LocalScene.view_rotx = LocalScene.view_roty = 0.0;
-    }
-    // Rotational function :
-    if (btgauche == 1)
-    {
-        LocalScene.view_roty = -(old_y - e->y());
-        LocalScene.view_rotx = -(old_x - e->x());
-        LocalScene.ScalCoeff = 1.0;
-
-        glGetIntegerv(GL_VIEWPORT, LocalScene.viewport);
-        glGetDoublev(GL_MODELVIEW_MATRIX, LocalScene.matrix);
-        memcpy(m, LocalScene.matrix, 16 * sizeof(GLdouble));
-
-        ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++///
-        GLdouble det;
-        GLdouble d12, d13, d23, d24, d34, d41;
-        GLdouble tmp[16]; /* Allow out == in. */
-
-        /* Inverse = adjoint / det. (See linear algebra texts.)*/
-        /* pre-compute 2x2 dets for last two rows when computing */
-        /* cofactors of first two rows. */
-        d12 = (m31 * m42 - m41 * m32);
-        d13 = (m31 * m43 - m41 * m33);
-        d23 = (m32 * m43 - m42 * m33);
-        d24 = (m32 * m44 - m42 * m34);
-        d34 = (m33 * m44 - m43 * m34);
-        d41 = (m34 * m41 - m44 * m31);
-
-        tmp[0] = (m22 * d34 - m23 * d24 + m24 * d23);
-        tmp[1] = -(m21 * d34 + m23 * d41 + m24 * d13);
-        tmp[2] = (m21 * d24 + m22 * d41 + m24 * d12);
-        tmp[3] = -(m21 * d23 - m22 * d13 + m23 * d12);
-
-        /* Compute determinant as early as possible using these cofactors. */
-        det = M11 * tmp[0] + M12 * tmp[1] + M13 * tmp[2] + M14 * tmp[3];
-
-        /* Run singularity test. */
-        if (det != 0.0)
-        {
-            GLdouble invDet = 1.0 / det;
-            /* Compute rest of inverse. */
-            tmp[0] *= invDet;
-            tmp[1] *= invDet;
-            tmp[2] *= invDet;
-            tmp[3] *= invDet;
-
-            tmp[4] = -(M12 * d34 - M13 * d24 + M14 * d23) * invDet;
-            tmp[5] = (M11 * d34 + M13 * d41 + M14 * d13) * invDet;
-            tmp[6] = -(M11 * d24 + M12 * d41 + M14 * d12) * invDet;
-            tmp[7] = (M11 * d23 - M12 * d13 + M13 * d12) * invDet;
-
-            d12 = M11 * m22 - m21 * M12;
-            d13 = M11 * m23 - m21 * M13;
-            d23 = M12 * m23 - m22 * M13;
-            d24 = M12 * m24 - m22 * M14;
-            d34 = M13 * m24 - m23 * M14;
-            d41 = M14 * m21 - m24 * M11;
-
-            tmp[8] = (m42 * d34 - m43 * d24 + m44 * d23) * invDet;
-            tmp[9] = -(m41 * d34 + m43 * d41 + m44 * d13) * invDet;
-            tmp[10] = (m41 * d24 + m42 * d41 + m44 * d12) * invDet;
-            tmp[11] = -(m41 * d23 - m42 * d13 + m43 * d12) * invDet;
-            tmp[12] = -(m32 * d34 - m33 * d24 + m34 * d23) * invDet;
-            tmp[13] = (m31 * d34 + m33 * d41 + m34 * d13) * invDet;
-            tmp[14] = -(m31 * d24 + m32 * d41 + m34 * d12) * invDet;
-            tmp[15] = (m31 * d23 - m32 * d13 + m33 * d12) * invDet;
-            memcpy(LocalScene.matrixInverse, tmp, 16 * sizeof(GLdouble));
-        }
-        double ax, ay;
-        ax = LocalScene.view_roty;
-        ay = LocalScene.view_rotx;
-        anglefinal += (angle = sqrt(ax * ax + ay * ay) /
-                               double(LocalScene.viewport[2] + 1) * 360.0);
-        LocalScene.axe_x = Axe_x =
-                               LocalScene.matrixInverse[0] * ax + LocalScene.matrixInverse[4] * ay;
-        LocalScene.axe_y = Axe_y =
-                               LocalScene.matrixInverse[1] * ax + LocalScene.matrixInverse[5] * ay;
-        LocalScene.axe_z = Axe_z =
-                               LocalScene.matrixInverse[2] * ax + LocalScene.matrixInverse[6] * ay;
-        glRotatef(GLfloat(angle), GLfloat(Axe_x), GLfloat(Axe_y), GLfloat(Axe_z));
-    }
-    old_y = e->y();
-    old_x = e->x();
+    toPerspective();
     update();
 }
 
