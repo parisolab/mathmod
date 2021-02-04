@@ -30,7 +30,7 @@ static GLfloat difX, difY, difZ;
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
 /* This is a handle to the shader program */
-GLuint shaderprogram;
+//GLuint shaderprogramId;
 /* These pointers will receive the contents of our shader source code files */
 QString vertexsource, fragmentsource;
 /* These are handles used to reference the shaders */
@@ -68,7 +68,7 @@ int drawMode = 0;
 Matrix4 matrixModelView;
 Matrix4 matrixProjection;
 // GLSL
-GLuint progId = 0;                  // ID of GLSL program
+GLuint shaderprogramId = 0;                  // ID of GLSL program
 bool glslSupported;
 GLint uniformMatrixModelView;
 GLint uniformMatrixModelViewProjection;
@@ -1106,11 +1106,9 @@ void toPerspective()
 
 void OpenGlWidget::resizeGL(int newwidth, int newheight)
 {
-    /*
     screenWidth = newwidth;
     screenHeight = newheight;
     toPerspective();
-    */
 }
 
 OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
@@ -1465,7 +1463,6 @@ static void CreateShaderProgram()
             // varyings
             varying vec3 esVertex, esNormal;
             varying vec4 color;
-            //varying vec2 texCoord0;
             void main()
             {
                 vec3 normal = normalize(esNormal);
@@ -1481,14 +1478,13 @@ static void CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
-                //vec4 fragColor = lightAmbient.rgb * color;                  // begin with ambient
+                vec4 fragColor = vec4(lightAmbient.rgb,1.0) * color;                  // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
-                //fragColor += lightDiffuse.rgb * color * dotNL;              // add diffuse
-                //fragColor *= texture2D(map0, texCoord0).rgb;                // modulate texture map
-                //float dotNH = max(dot(normal, halfv), 0.0);
-                //fragColor += pow(dotNH, 128.0) * lightSpecular.rgb * color; // add specular
+                fragColor += (lightDiffuse.rgb,1.0) * color * dotNL;              // add diffuse
+                float dotNH = max(dot(normal, halfv), 0.0);
+                fragColor += vec4(pow(dotNH, 128.0) * lightSpecular.rgb,1.0) * color; // add specular
                 // set frag color
-                gl_FragColor = vec4(0.6,0.6,0.6,1.0);  // keep opaque=1
+                gl_FragColor = fragColor;  // keep opaque=1
             }
             )";
 
@@ -1552,36 +1548,36 @@ static void CreateShaderProgram()
     /* We must link them together to make a GL shader program */
     /* GL shader programs are monolithic. It is a single piece made of 1 vertex shader and 1 fragment shader. */
     /* Assign our program handle a "name" */
-    shaderprogram = glCreateProgram();
+    shaderprogramId = glCreateProgram();
 
     /* Attach our shaders to our program */
-    glAttachShader(shaderprogram, vertexshader);
-    glAttachShader(shaderprogram, fragmentshader);
+    glAttachShader(shaderprogramId, vertexshader);
+    glAttachShader(shaderprogramId, fragmentshader);
 
     /* Bind attribute index 0 (coordinates) to in_Position and attribute index 1 (color) to in_Color */
     /* Attribute locations must be setup before calling glLinkProgram. */
-    glBindAttribLocation(shaderprogram, 0, "in_Position");
-    glBindAttribLocation(shaderprogram, 1, "in_Color");
+    glBindAttribLocation(shaderprogramId, 0, "in_Position");
+    glBindAttribLocation(shaderprogramId, 1, "in_Color");
 
     /* Link our program */
     /* At this stage, the vertex and fragment programs are inspected, optimized and a binary code is generated for the shader. */
     /* The binary code is uploaded to the GPU, if there is no error. */
-    glLinkProgram(shaderprogram);
+    glLinkProgram(shaderprogramId);
 
 
 
 
-    glGetProgramiv(shaderprogram, GL_LINK_STATUS, (int *)&IsLinked);
+    glGetProgramiv(shaderprogramId, GL_LINK_STATUS, (int *)&IsLinked);
     if(!IsLinked)
     {
        /* Noticed that glGetProgramiv is used to get the length for a shader program, not glGetShaderiv. */
-       glGetProgramiv(shaderprogram, GL_INFO_LOG_LENGTH, &maxLength);
+       glGetProgramiv(shaderprogramId, GL_INFO_LOG_LENGTH, &maxLength);
 
        /* The maxLength includes the NULL character */
        shaderProgramInfoLog = (char *)malloc(maxLength);
 
        /* Notice that glGetProgramInfoLog, not glGetShaderInfoLog. */
-       glGetProgramInfoLog(shaderprogram, maxLength, &maxLength, shaderProgramInfoLog);
+       glGetProgramInfoLog(shaderprogramId, maxLength, &maxLength, shaderProgramInfoLog);
 
        /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
        /* In this simple program, we'll just leave */
@@ -1589,22 +1585,22 @@ static void CreateShaderProgram()
        //return;
     }
     /* Load the shader into the rendering pipeline */
-    glUseProgram(shaderprogram);
+    glUseProgram(shaderprogramId);
 
 
 
 
-    uniformMatrixModelView           = glGetUniformLocation(progId, "matrixModelView");
-    uniformMatrixModelViewProjection = glGetUniformLocation(progId, "matrixModelViewProjection");
-    uniformMatrixNormal              = glGetUniformLocation(progId, "matrixNormal");
-    uniformLightPosition             = glGetUniformLocation(progId, "lightPosition");
-    uniformLightAmbient              = glGetUniformLocation(progId, "lightAmbient");
-    uniformLightDiffuse              = glGetUniformLocation(progId, "lightDiffuse");
-    uniformLightSpecular             = glGetUniformLocation(progId, "lightSpecular");
-    uniformMap0                      = glGetUniformLocation(progId, "map0");
-    attribVertexPosition = glGetAttribLocation(progId, "vertexPosition");
-    attribVertexNormal   = glGetAttribLocation(progId, "vertexNormal");
-    attribVertexColor    = glGetAttribLocation(progId, "vertexColor");
+    uniformMatrixModelView           = glGetUniformLocation(shaderprogramId, "matrixModelView");
+    uniformMatrixModelViewProjection = glGetUniformLocation(shaderprogramId, "matrixModelViewProjection");
+    uniformMatrixNormal              = glGetUniformLocation(shaderprogramId, "matrixNormal");
+    uniformLightPosition             = glGetUniformLocation(shaderprogramId, "lightPosition");
+    uniformLightAmbient              = glGetUniformLocation(shaderprogramId, "lightAmbient");
+    uniformLightDiffuse              = glGetUniformLocation(shaderprogramId, "lightDiffuse");
+    uniformLightSpecular             = glGetUniformLocation(shaderprogramId, "lightSpecular");
+    uniformMap0                      = glGetUniformLocation(shaderprogramId, "map0");
+    attribVertexPosition = glGetAttribLocation(shaderprogramId, "vertexPosition");
+    attribVertexNormal   = glGetAttribLocation(shaderprogramId, "vertexNormal");
+    attribVertexColor    = glGetAttribLocation(shaderprogramId, "vertexColor");
     //attribVertexTexCoord = glGetAttribLocation(progId, "vertexTexCoord");
 
     // set uniform values
@@ -1623,11 +1619,11 @@ static void CreateShaderProgram()
 
     // check GLSL status
     int linkStatus;
-    glGetProgramiv(progId, GL_LINK_STATUS, &linkStatus);
+    glGetProgramiv(shaderprogramId, GL_LINK_STATUS, &linkStatus);
     if(linkStatus == GL_FALSE)
     {
-        glGetProgramiv(progId, GL_INFO_LOG_LENGTH, &logLength);
-        glGetProgramInfoLog(progId, MAX_LENGTH, &logLength, log);
+        glGetProgramiv(shaderprogramId, GL_INFO_LOG_LENGTH, &logLength);
+        glGetProgramInfoLog(shaderprogramId, MAX_LENGTH, &logLength, log);
         std::cout << "===== GLSL Program Log =====\n" << log << std::endl;
         return;
     }
@@ -1907,7 +1903,7 @@ static void draw(ObjectProperties *scene)
     matrixModelView = matrixView * matrixModel;
     {
         // bind GLSL
-        glUseProgram(progId);
+        glUseProgram(shaderprogramId);
         // set matric uniforms every frame
         Matrix4 matrixModelViewProjection = matrixProjection * matrixModelView;
         Matrix4 matrixNormal = matrixModelView;
@@ -2063,7 +2059,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         mouseY = e->y();
     }
     toPerspective();
-    //update();
+    update();
 }
 
 void OpenGlWidget::screenshot()
@@ -2223,7 +2219,7 @@ void OpenGlWidget::Shininess(int cl)
 void OpenGlWidget::InitSpecularParameters()
 {
     /// For drawing Filled Polygones :
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+   (GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
     /*
