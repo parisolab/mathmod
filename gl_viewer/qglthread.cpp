@@ -30,9 +30,9 @@ void GLThread::stop()
     doRendering = false;
 }
 void GLThread::resizeViewport(const QSize &size)
-{/*
+{
     glw->resizeGL(size.width(), size.height());
-    glw->update();*/
+    glw->update();
 }
 void GLThread::anim()
 {

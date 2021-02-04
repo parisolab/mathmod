@@ -802,6 +802,7 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     float frontcl[4], backcl[4];
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
     glEnable(GL_POLYGON_OFFSET_FILL);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -817,10 +818,10 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
             frontcl[j] = scene->frontcols[j];
             backcl[j] = scene->backcols[j];
         }
-        /*
+/*
         glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
         glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
-        */
+*/
     }
     if (scene->componentsinfos.ThereisCND[ParisoTypeIndex])
     {
@@ -865,10 +866,10 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
                         frontcl[j] = scene->frontcols[4 * (i % 10) + j];
                         backcl[j] = scene->backcols[4 * (i % 10) + j];
                     }
-                    /*
+/*
                     glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
                     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
-                    */
+*/
                 }
                 {
                     size_t Offset = scene->componentsinfos.ParisoTriangle[2*(i+idx)]*sizeof( GL_FLOAT);
@@ -885,6 +886,7 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
 
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    glDisable(GL_LIGHT1);
 }
 void OpenGlWidget::normOk()
 {
@@ -1274,7 +1276,7 @@ static void DrawNormals(ObjectProperties *scene)
 
 void OpenGlWidget::Winitialize_GL()
 {
-    /*
+/*
     static int count = 0;
     if (count < 2)
     {
@@ -1296,7 +1298,7 @@ void OpenGlWidget::Winitialize_GL()
                      LocalScene.groundcol[2], LocalScene.groundcol[3]);
         count += 1;
     }
-    */
+*/
     if (LocalScene.componentsinfos.updateviewer)
     {
         PutObjectInsideCube();
@@ -1677,14 +1679,22 @@ void initLights()
     // position the light
     float lightPos[4] = {0, 0, 10, 0}; // directional light
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-
     glEnable(GL_LIGHT0);                        // MUST enable each light source after configuration
+
+
+    glLightfv(GL_LIGHT1, GL_AMBIENT, lightKa);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightKd);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, lightKs);
+
+    // position the light
+    float lightPos1[4] = {0, 0, -10, 0}; // directional light
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
+    glEnable(GL_LIGHT1);                        // MUST enable each light source after configuration
 }
 
 void initGL()
 {
     glShadeModel(GL_SMOOTH);                    // shading mathod: GL_SMOOTH or GL_FLAT
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);      // 4-byte pixel alignment
 
     // enable /disable features
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -1694,6 +1704,7 @@ void initGL()
     /////****************
     /// For drawing Filled Polygones :
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    //glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
     glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
 
@@ -1735,11 +1746,11 @@ static void InitialOperations(ObjectProperties *scene)
     static int staticaction = 0;
     if (staticaction < 1)
     {
+        /*
         /// For drawing Filled Polygones :
         glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
         glEnable(GL_NORMALIZE);
         glFrontFace(GL_CCW);
-        /*
         glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcol);
         glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcol);
 
@@ -1747,16 +1758,11 @@ static void InitialOperations(ObjectProperties *scene)
         glMaterialfv(GL_BACK, GL_SPECULAR, scene->specReflection);
 
         glMateriali(GL_FRONT, GL_SHININESS, scene->shininess);
-        glMateriali(GL_BACK, GL_SHININESS, scene->shininess);
-        */
+        glMateriali(GL_BACK, GL_SHININESS, scene->shininess);*/
         glEnable(GL_DEPTH_TEST);
 
-        glClearColor(scene->groundcol[0], scene->groundcol[1],
-                     scene->groundcol[2], scene->groundcol[3]);
+        //glClearColor(scene->groundcol[0], scene->groundcol[1],scene->groundcol[2], scene->groundcol[3]);
 
-        glRotatef(270, 1.0, 0.0, 0.0);
-        glRotatef(225, 0.0, 0.0, 1.0);
-        glRotatef(-29, 1.0, -1.0, 0.0);
         staticaction += 1;
 
         glEnable(GL_LINE_SMOOTH);
@@ -1943,7 +1949,6 @@ static void draw(ObjectProperties *scene)
     if (scene->infos == 1)
         DrawAxe();
 
-    glPushMatrix();
 
     if (scene->fill == 1 && scene->componentsinfos.updateviewer)
         for (uint i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
@@ -1970,7 +1975,6 @@ static void draw(ObjectProperties *scene)
     if (scene->norm == 1 && scene->componentsinfos.updateviewer)
         DrawNormals(scene);
 
-    glPopMatrix();
 
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
@@ -1984,8 +1988,6 @@ static void draw(ObjectProperties *scene)
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glUseProgram(0);
     }
-    // Draw the scene:
-    glFlush();
 }
 
 void OpenGlWidget::paintGL()
@@ -2219,7 +2221,7 @@ void OpenGlWidget::Shininess(int cl)
 void OpenGlWidget::InitSpecularParameters()
 {
     /// For drawing Filled Polygones :
-   (GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
     /*
@@ -2231,7 +2233,7 @@ void OpenGlWidget::InitSpecularParameters()
 
     glMateriali(GL_FRONT, GL_SHININESS, LocalScene.shininess);
     glMateriali(GL_BACK, GL_SHININESS, LocalScene.shininess);
-    */
+*/
     glEnable(GL_DEPTH_TEST);
     update();
 }
