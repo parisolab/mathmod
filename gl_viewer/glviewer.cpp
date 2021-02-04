@@ -817,8 +817,10 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
             frontcl[j] = scene->frontcols[j];
             backcl[j] = scene->backcols[j];
         }
+        /*
         glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
         glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+        */
     }
     if (scene->componentsinfos.ThereisCND[ParisoTypeIndex])
     {
@@ -863,8 +865,10 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
                         frontcl[j] = scene->frontcols[4 * (i % 10) + j];
                         backcl[j] = scene->backcols[4 * (i % 10) + j];
                     }
+                    /*
                     glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
                     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
+                    */
                 }
                 {
                     size_t Offset = scene->componentsinfos.ParisoTriangle[2*(i+idx)]*sizeof( GL_FLOAT);
@@ -1477,15 +1481,14 @@ static void CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
-                vec4 fragColor = lightAmbient.rgb * color;                  // begin with ambient
+                //vec4 fragColor = lightAmbient.rgb * color;                  // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
-                fragColor += lightDiffuse.rgb * color * dotNL;              // add diffuse
+                //fragColor += lightDiffuse.rgb * color * dotNL;              // add diffuse
                 //fragColor *= texture2D(map0, texCoord0).rgb;                // modulate texture map
-                float dotNH = max(dot(normal, halfv), 0.0);
-                fragColor += pow(dotNH, 128.0) * lightSpecular.rgb * color; // add specular
-
+                //float dotNH = max(dot(normal, halfv), 0.0);
+                //fragColor += pow(dotNH, 128.0) * lightSpecular.rgb * color; // add specular
                 // set frag color
-                gl_FragColor = v4(1.0,0.3,0.5,1.0)fragColor;  // keep opaque=1
+                gl_FragColor = vec4(0.6,0.6,0.6,1.0);  // keep opaque=1
             }
             )";
 
@@ -1495,7 +1498,9 @@ static void CreateShaderProgram()
     /* Free the temporary allocated memory */
     //delete(c_str_fragment);
     //free(fragmentSource);
+    /*
 
+*/
     /* Compile our shader objects */
     glCompileShader(vertexshader);
     glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
@@ -1524,8 +1529,9 @@ static void CreateShaderProgram()
     glShaderSource(fragmentshader, 1, &c_str_fragment, NULL);
     glCompileShader(fragmentshader);
     glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &IsCompiled_FS);
-    if(!IsCompiled_FS)
+    if(IsCompiled_FS==GL_FALSE)
     {
+        QMessageBox msgBox;
        glGetShaderiv(fragmentshader, GL_INFO_LOG_LENGTH, &maxLength);
 
        /* The maxLength includes the NULL character */
@@ -1533,9 +1539,11 @@ static void CreateShaderProgram()
 
        glGetShaderInfoLog(fragmentshader, maxLength, &maxLength, fragmentInfoLog);
 
-       /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
-       /* In this simple program, we'll just leave */
-       //free(fragmentInfoLog);
+       std::string vertexInfoLogString = std::string(fragmentInfoLog);
+       msgBox.setText("Error : " +QString::fromStdString(std::string(fragmentInfoLog)));
+       msgBox.adjustSize();
+       msgBox.exec();
+
        //return;
     }
 
@@ -1804,6 +1812,16 @@ static void CopyData(ObjectProperties *scene)
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
 
+        // activate attribs
+        glEnableVertexAttribArray(attribVertexColor);
+        glEnableVertexAttribArray(attribVertexNormal);
+        glEnableVertexAttribArray(attribVertexPosition);
+
+        // set attrib arrays using glVertexAttribPointer()
+        glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
+        glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
+        glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
+
         previousVertxNumber = scene->VertxNumber;
         previousPolyNumberNbPolygnNbVertexPtMin = (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         firstaction++;
@@ -1854,7 +1872,6 @@ static void CopyData(ObjectProperties *scene)
         glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
         glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
-
     }
 }
 
@@ -1917,7 +1934,7 @@ static void draw(ObjectProperties *scene)
         glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
         glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
-}
+    }
     // Blend Effect activation:
     if (scene->transparency == 1)
         glDepthMask(GL_FALSE);
@@ -2046,7 +2063,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         mouseY = e->y();
     }
     toPerspective();
-    update();
+    //update();
 }
 
 void OpenGlWidget::screenshot()
@@ -2209,6 +2226,7 @@ void OpenGlWidget::InitSpecularParameters()
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
+    /*
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, LocalScene.frontcol);
     glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, LocalScene.backcol);
 
@@ -2217,6 +2235,7 @@ void OpenGlWidget::InitSpecularParameters()
 
     glMateriali(GL_FRONT, GL_SHININESS, LocalScene.shininess);
     glMateriali(GL_BACK, GL_SHININESS, LocalScene.shininess);
+    */
     glEnable(GL_DEPTH_TEST);
     update();
 }
