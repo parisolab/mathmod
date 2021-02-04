@@ -1447,7 +1447,6 @@ static void CreateShaderProgram()
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
                 esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
                 color = vertexColor;
-                //texCoord0 = vertexTexCoord;
                 gl_Position = matrixModelViewProjection * vec4(vertexPosition, 1.0);
             }
             )";
@@ -1468,6 +1467,8 @@ static void CreateShaderProgram()
             void main()
             {
                 vec3 normal = normalize(esNormal);
+                if(!gl_FrontFacing)
+                    normal *= -1.0;
                 vec3 light;
                 if(lightPosition.w == 0.0)
                 {
@@ -1704,6 +1705,7 @@ void initGL()
     /////****************
     /// For drawing Filled Polygones :
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glEnable(GL_VERTEX_PROGRAM_TWO_SIDE);
     //glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
     glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
@@ -2222,6 +2224,7 @@ void OpenGlWidget::InitSpecularParameters()
 {
     /// For drawing Filled Polygones :
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glEnable(GL_VERTEX_PROGRAM_TWO_SIDE);
     glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
     /*
