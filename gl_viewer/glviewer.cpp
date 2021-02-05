@@ -21,12 +21,14 @@
 #define BUFFER_OFFSET(i) ((float *)(i))
 static int Wresult, Hresult;
 static double anglefinal = 0;
+
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 static GLfloat difX, difY, difZ;
+static GLfloat a_ngle=0, A_xe_x=0, A_xe_y=0, A_xe_z=0;
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
 /* This is a handle to the shader program */
@@ -92,52 +94,85 @@ GLint attribVertexTexCoord;
 
 
 
-static GLfloat AxeArray[3*24]={400.0, 0.0, 0.0,0.0, 0.0, 0.0,
-                              0.0, 400.0, 0.0,0.0, 0.0, 0.0,
-                              0.0, 0.0, 400.0,0.0, 0.0, 0.0,
-                              400.0, 0.0, 0.0,380.0, 10.0, 0.0,
-                              380.0, 0.0, 10.0,380.0, -10.0, 0.0,
-                               380.0, 0.0, -10.0,380.0, 10.0, 0.0,
-                               0.0, 400.0, 0.0,10.0, 380.0, 0.0,
-                               0.0, 380.0, 10.0,-10.0, 380.0, 0.0,
-                               0.0, 380.0, -10.0,10.0, 380.0, 0.0,
-                               0.0, 0.0, 400.0,10.0, 0.0, 380.0,
-                               0.0, 10.0, 380.0,-10.0, 0.0, 380.0,
-                               0.0, -10.0, 380.0,10.0, 0.0, 380.0
+static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
+                              0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
+                              0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
+
+                              5.0f*wh/4.0f, 0.0, 0.0, 95.0f*wh/80.0f, 95.0f*wh/4000.0f, 0.0,
+                              95.0f*wh/80.0f, 0.0,  95.0f*wh/4000.0f,95.0f*wh/80.0f, -95.0f*wh/4000.0f, 0.0,
+                              95.0f*wh/80.0f, 0.0,  -95.0f*wh/4000.0f,95.0f*wh/80.0f, 95.0f*wh/4000.0f, 0.0,
+
+                               0.0, 5.0f*wh/4.0f, 0.0,95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
+                               0.0, 95.0f*wh/80.0f, 95.0f*wh/4000.0f,-95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
+                               0.0, 95.0f*wh/80.0f, -95.0f*wh/4000.0f,95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
+
+                               0.0, 0.0, 5.0f*wh/4.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
+                               0.0, 95.0f*wh/4000.0f, 95.0f*wh/80.0f,-95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
+                               0.0, -95.0f*wh/4000.0f, 95.0f*wh/80.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f
                               };
 
 static GLfloat PlanArray[3*60]=
 {
-    -150.0, 600.0, -500.0,-150.0, -600.0, -500.0,
-    0.0, 600.0, -500.0,0.0, -600.0, -500.0,
-    150.0, 600.0, -500.0,150.0, -600.0, -500.0,
-    600.0, -150.0, -500.0,-600.0, -150.0, -500.0,
-    600.0, 0.0, -500,-600.0, 0.0, -500.0,
-    600.0, 150.0, -500, -600.0, 150.0, -500.0,
-    -75.0, 600.0, -500,-75.0, -600.0, -500.0,
-    -225.0, 600.0, -500,-225.0, -600.0, -500,
-    -300.0, 600.0, -500,-300.0, -600.0, -500,
-    -375.0, 600.0, -500,-375.0, -600.0, -500,
-    -450.0, 600.0, -500,-450.0, -600.0, -500,
-    -525.0, 600.0, -500,-525.0, -600.0, -500,
-    75.0, 600.0, -500,75.0, -600.0, -500,
-    225.0, 600.0, -500,225.0, -600.0, -500,
-    300.0, 600.0, -500,300.0, -600.0, -500,
-    375.0, 600.0, -500,375.0, -600.0, -500,
-    450.0, 600.0, -500,450.0, -600.0, -500,
-    525.0, 600.0, -500,525.0, -600.0, -500,
-    600.0, -75.0, -500,-600.0, -75.0, -500,
-    600.0, -225.0, -500,-600.0, -225.0, -500,
-    600.0, -300.0, -500,-600.0, -300.0, -500,
-    600.0, -375.0, -500,-600.0, -375.0, -500,
-    600.0, -450.0, -500,-600.0, -450.0, -500,
-    600.0, -525.0, -500,-600.0, -525.0, -500,
-    600.0, 75.0, -500,-600.0, 75.0, -500,
-    600.0, 225.0, -500,-600.0, 225.0, -500,
-    600.0, 300.0, -500,-600.0, 300.0, -500,
-    600.0, 375.0, -500,-600.0, 375.0, -500,
-    600.0, 450.0, -500,-600.0, 450.0, -500,
-    600.0, 525.0, -500,-600.0, 525.0, -500
+    -(wh+1)/4, (wh+1), -1,
+    -(wh+1)/4, -(wh+1), -1,
+    0.0, (wh+1), -1,
+    0.0, -(wh+1), -1,
+    (wh+1)/4, (wh+1), -1,
+    (wh+1)/4, -(wh+1), -1,
+    (wh+1), -(wh+1)/4, -1,
+    -(wh+1), -(wh+1)/4, -1,
+    (wh+1), 0.0, -1,
+    -(wh+1), 0.0, -1,
+    (wh+1), (wh+1)/4, -1,
+    -(wh+1), (wh+1)/4, -1,
+    -(wh+1)/8, (wh+1), -1,
+    -(wh+1)/8, -(wh+1), -1,
+    -3*(wh+1)/8, (wh+1), -1,
+    -3*(wh+1)/8, -(wh+1), -1,
+    -(wh+1)/2, (wh+1), -1
+    -(wh+1)/2, -(wh+1), -1,
+    -5*(wh+1)/8, (wh+1), -1,
+    -5*(wh+1)/8, -(wh+1), -1,
+    -3*(wh+1)/4, (wh+1), -1,
+    -3*(wh+1)/4, -(wh+1), -1,
+    -7*(wh+1)/8, (wh+1), -1,
+    -7*(wh+1)/8, -(wh+1), -1,
+    (wh+1)/8, (wh+1), -1,
+    (wh+1)/8, -(wh+1), -1,
+    3*(wh+1)/8, (wh+1), -1,
+    3*(wh+1)/8, -(wh+1), -1,
+    (wh+1)/2, (wh+1), -1,
+    (wh+1)/2, -(wh+1), -1,
+    5*(wh+1)/8, (wh+1), -1,
+    5*(wh+1)/8, -(wh+1), -1,
+    3*(wh+1)/4, (wh+1), -1,
+    3*(wh+1)/4, -(wh+1), -1,
+    7*(wh+1)/8, (wh+1), -1,
+    7*(wh+1)/8, -(wh+1), -1,
+    (wh+1), -(wh+1)/8, -1,
+    -(wh+1), -(wh+1)/8, -1,
+    (wh+1), -3*(wh+1)/8, -1,
+    -(wh+1), -3*(wh+1)/8, -1,
+    (wh+1), -(wh+1)/2, -1,
+    -(wh+1), -(wh+1)/2, -1,
+    (wh+1), -5*(wh+1)/8, -1,
+    -(wh+1), -5*(wh+1)/8, -1,
+    (wh+1), -3*(wh+1)/4, -1,
+    -(wh+1), -3*(wh+1)/4, -1,
+    (wh+1), -7*(wh+1)/8, -1,
+    -(wh+1), -7*(wh+1)/8, -1,
+    (wh+1), (wh+1)/8, -1,
+    -(wh+1), (wh+1)/8, -1,
+    (wh+1), 3*(wh+1)/8, -1,
+    -(wh+1), 3*(wh+1)/8, -1,
+    (wh+1), (wh+1)/2, -1,
+    -(wh+1), (wh+1)/2, -1,
+    (wh+1), 5*(wh+1)/8, -1,
+    -(wh+1), 5*(wh+1)/8, -1,
+    (wh+1), 3*(wh+1)/4, -1,
+    -(wh+1), 3*(wh+1)/4, -1,
+    (wh+1), 7*(wh+1)/8, -1,
+    -(wh+1), 7*(wh+1)/8, -1
 };
 
 
@@ -666,6 +701,10 @@ void OpenGlWidget::mouseReleaseEvent(QMouseEvent *) {}
 
 void OpenGlWidget::mousePressEvent(QMouseEvent *e)
 {
+    old_y = e->y();
+    LocalScene.oldRoty = e->y();
+    old_x = e->x();
+    LocalScene.oldRotx = e->x();
     if (e->button() == Qt::LeftButton)
     {
         btgauche = 1;
@@ -691,13 +730,8 @@ void OpenGlWidget::mousePressEvent(QMouseEvent *e)
     else
         btmilieu = 0;
 
-    mouseX = e->x();
-    mouseY = e->y();
-
-    old_y = e->y();
-    LocalScene.oldRoty = e->y();
-    old_x = e->x();
-    LocalScene.oldRotx = e->x();
+    mouseX = e->x()/2;
+    mouseY = e->y()/2;
 }
 
 void OpenGlWidget::png()
@@ -1073,8 +1107,8 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
 ///////////////////////////////////////////////////////////////////////////////
 void toPerspective()
 {
-    const float N = 0.1f;
-    const float F = 100.0f;
+    const float N = 0.01f;
+    const float F = 20.0f;
     const float DEG2RAD = 3.141592f / 180;
     const float FOV_Y = 60.0f * DEG2RAD;
 
@@ -1886,23 +1920,27 @@ void OpenGlWidget::copydata()
 
 static void draw(ObjectProperties *scene)
 {
+    if(!PutObjectInsideCubeOk)
+        return;
     InitialOperations(scene);
     if (scene->componentsinfos.Interleave)
     {
-        if(!PutObjectInsideCubeOk)
-            return;
         CopyData(scene);
         scene->componentsinfos.Interleave = false;
     }
 
     // clear buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     // transform camera
     Matrix4 matrixView;
+
+    //glRotatef(GLfloat(angle), GLfloat(Axe_x), GLfloat(Axe_y), GLfloat(Axe_z));
     matrixView.rotateY(cameraAngleY);   // heading
     matrixView.rotateX(cameraAngleX);   // pitch
+    //matrixView.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
+
     matrixView.translate(0, 0, -cameraDistance);
+
 
     // transform model
     Matrix4 matrixModel;
@@ -2050,17 +2088,121 @@ void OpenGlWidget::timerEvent(QTimerEvent *)
 
 void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 {
+
+    static double m[16];
+    LocalScene.RotStrength =
+        sqrt((LocalScene.oldRotx - e->x()) * (LocalScene.oldRotx - e->x()) +
+             (LocalScene.oldRoty - e->y()) * (LocalScene.oldRoty - e->y())) /
+        2;
+    LocalScene.oldRoty = e->y();
+    LocalScene.oldRotx = e->x();
+
+    // Scale function :
+    if (btdroit == 1)
+    {
+        if (old_y - e->y() > 0)
+            LocalScene.ScalCoeff = 1.02;
+        else if (LocalScene.ScalCoeff > 0.1)
+            LocalScene.ScalCoeff = 0.98;
+        glScalef(GLfloat(LocalScene.ScalCoeff), GLfloat(LocalScene.ScalCoeff),
+                 GLfloat(LocalScene.ScalCoeff));
+        LocalScene.view_rotx = LocalScene.view_roty = 0.0;
+    }
+    // Rotational function :
+    if (btgauche == 1)
+    {
+        LocalScene.view_roty = -(old_y - e->y());
+        LocalScene.view_rotx = -(old_x - e->x());
+        LocalScene.ScalCoeff = 1.0;
+
+        glGetIntegerv(GL_VIEWPORT, LocalScene.viewport);
+        glGetDoublev(GL_MODELVIEW_MATRIX, LocalScene.matrix);
+        memcpy(m, LocalScene.matrix, 16 * sizeof(GLdouble));
+
+        ///+++++++++++++++++++++++++++++++++++++++++++++++++++++++++///
+        GLdouble det;
+        GLdouble d12, d13, d23, d24, d34, d41;
+        GLdouble tmp[16]; /* Allow out == in. */
+
+        /* Inverse = adjoint / det. (See linear algebra texts.)*/
+        /* pre-compute 2x2 dets for last two rows when computing */
+        /* cofactors of first two rows. */
+        d12 = (m31 * m42 - m41 * m32);
+        d13 = (m31 * m43 - m41 * m33);
+        d23 = (m32 * m43 - m42 * m33);
+        d24 = (m32 * m44 - m42 * m34);
+        d34 = (m33 * m44 - m43 * m34);
+        d41 = (m34 * m41 - m44 * m31);
+
+        tmp[0] = (m22 * d34 - m23 * d24 + m24 * d23);
+        tmp[1] = -(m21 * d34 + m23 * d41 + m24 * d13);
+        tmp[2] = (m21 * d24 + m22 * d41 + m24 * d12);
+        tmp[3] = -(m21 * d23 - m22 * d13 + m23 * d12);
+
+        /* Compute determinant as early as possible using these cofactors. */
+        det = M11 * tmp[0] + M12 * tmp[1] + M13 * tmp[2] + M14 * tmp[3];
+
+        /* Run singularity test. */
+        if (det != 0.0)
+        {
+            GLdouble invDet = 1.0 / det;
+            /* Compute rest of inverse. */
+            tmp[0] *= invDet;
+            tmp[1] *= invDet;
+            tmp[2] *= invDet;
+            tmp[3] *= invDet;
+
+            tmp[4] = -(M12 * d34 - M13 * d24 + M14 * d23) * invDet;
+            tmp[5] = (M11 * d34 + M13 * d41 + M14 * d13) * invDet;
+            tmp[6] = -(M11 * d24 + M12 * d41 + M14 * d12) * invDet;
+            tmp[7] = (M11 * d23 - M12 * d13 + M13 * d12) * invDet;
+
+            d12 = M11 * m22 - m21 * M12;
+            d13 = M11 * m23 - m21 * M13;
+            d23 = M12 * m23 - m22 * M13;
+            d24 = M12 * m24 - m22 * M14;
+            d34 = M13 * m24 - m23 * M14;
+            d41 = M14 * m21 - m24 * M11;
+
+            tmp[8] = (m42 * d34 - m43 * d24 + m44 * d23) * invDet;
+            tmp[9] = -(m41 * d34 + m43 * d41 + m44 * d13) * invDet;
+            tmp[10] = (m41 * d24 + m42 * d41 + m44 * d12) * invDet;
+            tmp[11] = -(m41 * d23 - m42 * d13 + m43 * d12) * invDet;
+            tmp[12] = -(m32 * d34 - m33 * d24 + m34 * d23) * invDet;
+            tmp[13] = (m31 * d34 + m33 * d41 + m34 * d13) * invDet;
+            tmp[14] = -(m31 * d24 + m32 * d41 + m34 * d12) * invDet;
+            tmp[15] = (m31 * d23 - m32 * d13 + m33 * d12) * invDet;
+            memcpy(LocalScene.matrixInverse, tmp, 16 * sizeof(GLdouble));
+        }
+        double ax, ay;
+        ax = LocalScene.view_roty;
+        ay = LocalScene.view_rotx;
+        anglefinal += (angle = sqrt(ax*ax+ay*ay)/double(LocalScene.viewport[2] + 1)*360.0);
+        LocalScene.axe_x = Axe_x =
+                               LocalScene.matrixInverse[0] * ax + LocalScene.matrixInverse[4] * ay;
+        LocalScene.axe_y = Axe_y =
+                               LocalScene.matrixInverse[1] * ax + LocalScene.matrixInverse[5] * ay;
+        LocalScene.axe_z = Axe_z =
+                               LocalScene.matrixInverse[2] * ax + LocalScene.matrixInverse[6] * ay;
+        a_ngle=angle; A_xe_x=Axe_x; A_xe_y=Axe_y; A_xe_z=Axe_z;
+        //matrixRot.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
+        //matrixRot.translate(0, 0, -cameraDistance);
+        //glRotatef(GLfloat(angle), GLfloat(Axe_x), GLfloat(Axe_y), GLfloat(Axe_z));
+    }
+    old_y = e->y();
+    old_x = e->x();
+
     if(mouseLeftDown)
     {
-        cameraAngleY += (e->x() - mouseX);
-        cameraAngleX += (e->y() - mouseY);
-        mouseX = e->x();
-        mouseY = e->y();
+        cameraAngleY += (e->x()/2 - mouseX);
+        cameraAngleX += (e->y()/2 - mouseY);
+        mouseX = e->x()/2;
+        mouseY = e->y()/2;
     }
     if(mouseRightDown)
     {
-        cameraDistance -= (e->y() - mouseY) * 0.2f;
-        mouseY = e->y();
+        cameraDistance -= (e->y()/2 - mouseY) * 0.02f;
+        mouseY = e->y()/2;
     }
     toPerspective();
     update();
