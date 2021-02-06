@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -72,6 +72,13 @@ Matrix4 matrixProjection;
 // GLSL
 GLuint shaderprogramId = 0;                  // ID of GLSL program
 bool glslSupported;
+
+GLint uniformFrontColor;
+GLint uniformBackColor;
+GLint uniformGridColor;
+GLint uniformThereisRGBA;
+GLint uniformdrawgridColor;
+
 GLint uniformMatrixModelView;
 GLint uniformMatrixModelViewProjection;
 GLint uniformMatrixNormal;
@@ -84,16 +91,7 @@ GLint attribVertexPosition;
 GLint attribVertexNormal;
 GLint attribVertexColor;
 GLint attribVertexTexCoord;
-
-
-
-
-
-
-
-
-
-
+float gridcol[4]  ={0.4f, 0.4f, 0.4f, 0.9f};
 static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
@@ -110,47 +108,7 @@ static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                                0.0, 95.0f*wh/4000.0f, 95.0f*wh/80.0f,-95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
                                0.0, -95.0f*wh/4000.0f, 95.0f*wh/80.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f
                               };
-/*
--150.0, 600.0, -500.0,
--150.0, -600.0, -500.0,
-0.0, 600.0, -500.0,
-0.0, -600.0, -500.0,
-150.0, 600.0, -500.0,
-150.0, -600.0, -500.0,
-600.0, -150.0, -500.0,
--600.0, -150.0, -500.0,
-600.0, 0.0, -500,
--600.0, 0.0, -500.0,
-600.0, 150.0, -500,
--600.0, 150.0, -500.0,
--75.0, 600.0, -500,
--75.0, -600.0, -500.0,
--225.0, 600.0, -500,
--225.0, -600.0, -500,
--300.0, 600.0, -500,
--300.0, -600.0, -500,
--375.0, 600.0, -500,-375.0, -600.0, -500,
--450.0, 600.0, -500,-450.0, -600.0, -500,
--525.0, 600.0, -500,-525.0, -600.0, -500,
-75.0, 600.0, -500,75.0, -600.0, -500,
-225.0, 600.0, -500,225.0, -600.0, -500,
-300.0, 600.0, -500,300.0, -600.0, -500,
-375.0, 600.0, -500,375.0, -600.0, -500,
-450.0, 600.0, -500,450.0, -600.0, -500,
-525.0, 600.0, -500,525.0, -600.0, -500,
-600.0, -75.0, -500,-600.0, -75.0, -500,
-600.0, -225.0, -500,-600.0, -225.0, -500,
-600.0, -300.0, -500,-600.0, -300.0, -500,
-600.0, -375.0, -500,-600.0, -375.0, -500,
-600.0, -450.0, -500,-600.0, -450.0, -500,
-600.0, -525.0, -500,-600.0, -525.0, -500,
-600.0, 75.0, -500,-600.0, 75.0, -500,
-600.0, 225.0, -500,-600.0, 225.0, -500,
-600.0, 300.0, -500,-600.0, 300.0, -500,
-600.0, 375.0, -500,-600.0, 375.0, -500,
-600.0, 450.0, -500,-600.0, 450.0, -500,
-600.0, 525.0, -500,-600.0, 525.0, -500
-*/
+
 static GLfloat PlanArray[3*60]=
 {
     -(4*wh/3)/4, (4*wh/3), -(5*wh/4),
@@ -214,7 +172,6 @@ static GLfloat PlanArray[3*60]=
     (4*wh/3), 7*(4*wh/3)/8, -(5*wh/4),
     -(4*wh/3), 7*(4*wh/3)/8, -(5*wh/4)
 };
-
 
 void OpenGlWidget::CalculateTexturePoints(int type)
 {
@@ -880,8 +837,8 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     glEnable(GL_POLYGON_OFFSET_FILL);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    if (scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
-        glEnable(GL_COLOR_MATERIAL);
+    //if (scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
+        //glEnable(GL_COLOR_MATERIAL);
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
 
@@ -892,11 +849,17 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
             frontcl[j] = scene->frontcols[j];
             backcl[j] = scene->backcols[j];
         }
+        glUniform4fv(uniformFrontColor, 1, frontcl);
+        glUniform4fv(uniformBackColor, 1, backcl);
+        glUniform1i(uniformThereisRGBA, 1);
 /*
         glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
         glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
-*/
+        */
     }
+
+
+
     if (scene->componentsinfos.ThereisCND[ParisoTypeIndex])
     {
         size_t Offset0 = start_triangle*sizeof( GL_FLOAT);
@@ -940,11 +903,16 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
                         frontcl[j] = scene->frontcols[4 * (i % 10) + j];
                         backcl[j] = scene->backcols[4 * (i % 10) + j];
                     }
+                    glUniform4fv(uniformFrontColor, 1, frontcl);
+                    glUniform4fv(uniformBackColor, 1, backcl);
+                    glUniform1i(uniformThereisRGBA, 1);
 /*
                     glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, backcl);
                     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, frontcl);
 */
                 }
+                else
+                    glUniform1i(uniformThereisRGBA, 0);
                 {
                     size_t Offset = scene->componentsinfos.ParisoTriangle[2*(i+idx)]*sizeof( GL_FLOAT);
                     glDrawElements(
@@ -955,9 +923,9 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
         }
     }
     if (scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
-        glDisable(GL_COLOR_MATERIAL);
+        //glDisable(GL_COLOR_MATERIAL);
     glDisable(GL_POLYGON_OFFSET_FILL);
-
+    glUniform1i(uniformThereisRGBA, 0);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     glDisable(GL_LIGHT1);
@@ -1440,18 +1408,28 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
 
 static void DrawMeshIso(ObjectProperties *scene)
 {
+    //glDisableVertexAttribArray(attribVertexColor);
+    glUniform4fv(uniformGridColor, 1, scene->gridcol);
+    glUniform1i(uniformdrawgridColor, 1);
+    //glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     glLineWidth(0.3);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glDrawElements(GL_TRIANGLES, int(scene->PolyNumber), GL_UNSIGNED_INT, (void *)0);
+
+    glUniform1i(uniformdrawgridColor, 0);
+
+    //glEnableVertexAttribArray(attribVertexColor);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 static void DrawMinimalTopology(ObjectProperties *scene)
 {
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glUniform4fv(uniformGridColor, 1,scene->gridcol);
+    glUniform1i(uniformdrawgridColor, 1);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glLineWidth(0.4);
-    glDisableClientState(GL_COLOR_ARRAY);
-    glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
+    //glDisableClientState(GL_COLOR_ARRAY);
+    //glColor4f(scene->gridcol[0], scene->gridcol[1], scene->gridcol[2], scene->gridcol[3]);
     uint st = scene->PolyNumber;
     uint polysize=0;
     for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
@@ -1465,7 +1443,8 @@ static void DrawMinimalTopology(ObjectProperties *scene)
             (void *)(Offset));
         st+=(polysize);
     }
-    glEnableClientState(GL_COLOR_ARRAY);
+    //glEnableClientState(GL_COLOR_ARRAY);
+    glUniform1i(uniformdrawgridColor, 0);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
@@ -1530,6 +1509,12 @@ static void CreateShaderProgram()
             // GLSL version
             #version 120
             // uniforms
+            uniform vec4 frontColor;
+            uniform vec4 backColor;
+            uniform vec4 gridColor;
+            uniform int thereisRGBA;
+            uniform int drawgridColor;
+
             uniform vec4 lightPosition;             // should be in the eye space
             uniform vec4 lightAmbient;              // light ambient color
             uniform vec4 lightDiffuse;              // light diffuse color
@@ -1540,9 +1525,27 @@ static void CreateShaderProgram()
             varying vec4 color;
             void main()
             {
+                vec4 color1=color;
                 vec3 normal = normalize(esNormal);
                 if(!gl_FrontFacing)
+                {
                     normal *= -1.0;
+                }
+
+                if(drawgridColor == 1)
+                {
+                    color1=gridColor;
+                }
+                if(thereisRGBA ==1)
+                {
+                    if(!gl_FrontFacing)
+                    {
+                        color1=backColor;
+                    }
+                    else
+                        color1=frontColor;
+                }
+
                 vec3 light;
                 if(lightPosition.w == 0.0)
                 {
@@ -1555,11 +1558,11 @@ static void CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
-                vec4 fragColor = vec4(lightAmbient.rgb,1.0) * color;                  // begin with ambient
+                vec4 fragColor = vec4(lightAmbient.rgb,1.0) * color1;                  // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
-                fragColor += (lightDiffuse.rgb,1.0) * color * dotNL;              // add diffuse
+                fragColor += (lightDiffuse.rgb,1.0) * color1 * dotNL;              // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
-                fragColor += vec4(pow(dotNH, 128.0) * lightSpecular.rgb,1.0) * color; // add specular
+                fragColor += vec4(pow(dotNH, 128.0) * lightSpecular.rgb,1.0) * color1; // add specular
                 // set frag color
                 gl_FragColor = fragColor;  // keep opaque=1
             }
@@ -1674,21 +1677,33 @@ static void CreateShaderProgram()
     uniformLightAmbient              = glGetUniformLocation(shaderprogramId, "lightAmbient");
     uniformLightDiffuse              = glGetUniformLocation(shaderprogramId, "lightDiffuse");
     uniformLightSpecular             = glGetUniformLocation(shaderprogramId, "lightSpecular");
+    uniformFrontColor                = glGetUniformLocation(shaderprogramId, "frontColor");
+    uniformBackColor                 = glGetUniformLocation(shaderprogramId, "backColor");
+    uniformGridColor                 = glGetUniformLocation(shaderprogramId, "gridColor");
+    uniformThereisRGBA               = glGetUniformLocation(shaderprogramId, "thereisRGBA");
+    uniformdrawgridColor             = glGetUniformLocation(shaderprogramId, "drawgridColor");
     uniformMap0                      = glGetUniformLocation(shaderprogramId, "map0");
-    attribVertexPosition = glGetAttribLocation(shaderprogramId, "vertexPosition");
-    attribVertexNormal   = glGetAttribLocation(shaderprogramId, "vertexNormal");
-    attribVertexColor    = glGetAttribLocation(shaderprogramId, "vertexColor");
-    //attribVertexTexCoord = glGetAttribLocation(progId, "vertexTexCoord");
+    attribVertexPosition             = glGetAttribLocation(shaderprogramId, "vertexPosition");
+    attribVertexNormal               = glGetAttribLocation(shaderprogramId, "vertexNormal");
+    attribVertexColor                = glGetAttribLocation(shaderprogramId, "vertexColor");
 
     // set uniform values
     float lightPosition[] = {0, 0, 1, 0};
     float lightAmbient[]  = {0.3f, 0.3f, 0.3f, 1};
     float lightDiffuse[]  = {0.7f, 0.7f, 0.7f, 1};
     float lightSpecular[] = {1.0f, 1.0f, 1.0f, 1};
+    float frontColor[] = {0.8f, 0.6f, 0.1, 1};
+    float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
     glUniform4fv(uniformLightPosition, 1, lightPosition);
     glUniform4fv(uniformLightAmbient, 1, lightAmbient);
     glUniform4fv(uniformLightDiffuse, 1, lightDiffuse);
     glUniform4fv(uniformLightSpecular, 1, lightSpecular);
+
+    glUniform4fv(uniformFrontColor, 1, frontColor);
+    glUniform4fv(uniformBackColor, 1, backColor);
+    glUniform4fv(uniformGridColor, 1, gridcol);
+    glUniform1i(uniformThereisRGBA, 1);
+    glUniform1i(uniformdrawgridColor, 0);
     glUniform1i(uniformMap0, 0);
 
     // unbind GLSL
