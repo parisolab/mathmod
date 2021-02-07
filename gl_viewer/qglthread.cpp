@@ -46,4 +46,6 @@ void GLThread::update()
 {
     glw->update();
 }
-void GLThread::run() {}
+void GLThread::run() {
+    //glw->update();
+}

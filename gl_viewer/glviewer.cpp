@@ -28,6 +28,9 @@ QVector3D rotationAxis;
 qreal angularSpeed = 0;
 QQuaternion rotation;
 
+Matrix4 matrixView2;
+
+Matrix4 matrixRotView;
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
@@ -67,9 +70,9 @@ int screenWidth;
 int screenHeight;
 bool mouseLeftDown;
 bool mouseRightDown;
-float mouseX, mouseY;
-float cameraAngleX;
-float cameraAngleY;
+float mouseY;
+//float cameraAngleX;
+//float cameraAngleY;
 float cameraDistance;
 bool vboSupported, vboUsed;
 int drawMode = 0;
@@ -700,45 +703,7 @@ void OpenGlWidget::PutObjectInsideCube()
     }
 }
 
-void OpenGlWidget::mouseReleaseEvent(QMouseEvent *) {}
 
-void OpenGlWidget::mousePressEvent(QMouseEvent *e)
-{
-    // Save mouse press position
-    mousePressPosition = QVector2D(e->localPos());
-
-    old_y = e->y();
-    LocalScene.oldRoty = e->y();
-    old_x = e->x();
-    LocalScene.oldRotx = e->x();
-    if (e->button() == Qt::LeftButton)
-    {
-        btgauche = 1;
-        mouseLeftDown =true;
-    }
-    else
-    {
-        btgauche = 0;
-        mouseLeftDown =false;
-    }
-    if (e->button() == Qt::RightButton)
-    {
-        btdroit = 1;
-        mouseRightDown =true;
-    }
-    else
-    {
-        btdroit = 0;
-        mouseRightDown =false;
-    }
-    if (e->button() == Qt::MidButton)
-        btmilieu = 1;
-    else
-        btmilieu = 0;
-
-    mouseX = e->x()/2;
-    mouseY = e->y()/2;
-}
 
 void OpenGlWidget::png()
 {
@@ -972,7 +937,9 @@ static void makeRasterFont()
     }
 }
 
-void OpenGlWidget::run() {}
+void OpenGlWidget::run() {
+    update();
+}
 
 bool OpenGlWidget::timeractif()
 {
@@ -1768,9 +1735,9 @@ bool initSharedMem()
     screenHeight = SCREEN_HEIGHT;
 
     mouseLeftDown = mouseRightDown = false;
-    mouseX = mouseY = 0;
+    mouseY = 0;
 
-    cameraAngleX = cameraAngleY = 0.0f;
+    //cameraAngleX = cameraAngleY = 0.0f;
     cameraDistance = CAMERA_DISTANCE;
 
     drawMode = 0; // 0:fill, 1: wireframe, 2:points
@@ -1932,19 +1899,17 @@ static void draw(ObjectProperties *scene)
 
     // clear buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPopMatrix();
     // transform camera
     //static Matrix4 matrixViewrot;
     Matrix4 matrixView;
 
-    //glRotatef(GLfloat(angle), GLfloat(Axe_x), GLfloat(Axe_y), GLfloat(Axe_z));
-    //matrixView.rotateY(cameraAngleY);   // heading
-    //matrixView.rotateX(cameraAngleX);   // pitch
+    //matrixView = matrixView2 * matrixView;
     matrixView.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
-    //matrixView.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
-//matrixView.rotate(GLfloat(rotation.scalar()), GLfloat(rotation.x()), GLfloat(rotation.y()),GLfloat(rotation.z()));
+    //matrixRotView.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
     matrixView.translate(0, 0, -cameraDistance);
 
-
+    //glPushMatrix();
     // transform model
     //Matrix4 matrixModel;
 
@@ -1956,7 +1921,6 @@ static void draw(ObjectProperties *scene)
         // set matric uniforms every frame
         Matrix4 matrixModelViewProjection = matrixProjection * matrixView;
         Matrix4 matrixNormal=matrixView;
-        //matrixNormal = matrixModelView*matrixNormal;
         matrixNormal.setColumn(3, Vector4(0,0,0,1));
         glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixView.get());
         glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjection.get());
@@ -2019,7 +1983,7 @@ static void draw(ObjectProperties *scene)
     if (scene->norm == 1 && scene->componentsinfos.updateviewer)
         DrawNormals(scene);
 
-
+     glPushMatrix();
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
     {
@@ -2085,36 +2049,92 @@ void OpenGlWidget::paintGL()
         FramesSave();
 }
 
-void OpenGlWidget::timerEvent(QTimerEvent *)
+void OpenGlWidget::timerEvent(QTimerEvent *e)
 {
     update();
+}
+
+void OpenGlWidget::mouseReleaseEvent(QMouseEvent *e) {
+    /*
+    // Mouse release position - mouse press position
+    QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
+
+    // Rotation axis is perpendicular to the mouse position difference
+    // vector
+    QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
+
+    // Accelerate angular speed relative to the length of the mouse sweep
+    qreal acc = diff.length() / 100.0;
+
+    // Calculate new rotation axis as weighted sum
+    rotationAxis = (rotationAxis * angularSpeed + n * acc).normalized();
+
+    // Increase angular speed
+    angularSpeed += acc;
+    */
+}
+
+void OpenGlWidget::mousePressEvent(QMouseEvent *e)
+{
+    // Save mouse press position
+    mousePressPosition = QVector2D(e->localPos());
+
+
+
+    if (e->button() == Qt::LeftButton)
+    {
+        btgauche = 1;
+        mouseLeftDown =true;
+        matrixView2 *= /*matrixView2*/matrixRotView*matrixView2;
+        matrixRotView.identity();
+    }
+    else
+    {
+        btgauche = 0;
+        mouseLeftDown =false;
+    }
+    if (e->button() == Qt::RightButton)
+    {
+        btdroit = 1;
+        mouseRightDown =true;
+    }
+    else
+    {
+        btdroit = 0;
+        mouseRightDown =false;
+    }
+    if (e->button() == Qt::MidButton)
+        btmilieu = 1;
+    else
+        btmilieu = 0;
+
+    //mouseX = e->x()/2;
+    mouseY = e->y()/2;
 }
 
 void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 {
     if(mouseLeftDown)
     {
-        cameraAngleY += (e->x()/2 - mouseX);
-        cameraAngleX += (e->y()/2 - mouseY);
-        mouseX = e->x()/2;
+        //cameraAngleY += (e->x()/2 - mouseX);
+        //cameraAngleX += (e->y()/2 - mouseY);
+        //mouseX = e->x()/2;
         mouseY = e->y()/2;
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
         // Rotation axis is perpendicular to the mouse position difference
         QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
-        qreal acc = diff.length() / 10.0;
+        qreal acc = diff.length()/10;
         // Calculate new rotation axis as weighted sum
-        rotationAxis = (rotationAxis * angularSpeed + n * acc).normalized();
-        // Increase angular speed
-        angularSpeed += acc;
+        rotationAxis = (rotationAxis +n).normalized();
         //rotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * rotation;
+        //qreal acc = rotationAxis.length();
+        rotation = QQuaternion::fromAxisAndAngle(n, acc) * rotation;
 
-        rotation = QQuaternion::fromAxisAndAngle(n, angularSpeed) * rotation;
-
-
-        a_ngle=diff.length(); A_xe_x=n.x(); A_xe_y=n.y(); A_xe_z=n.z();
-        //a_ngle=rotation.scalar(); A_xe_x=rotation.x(); A_xe_y=rotation.y(); A_xe_z=rotation.z();
+        a_ngle=acc; A_xe_x=rotation.x(); A_xe_y=rotation.y(); A_xe_z=rotation.z();
+        //a_ngle=diff.length(); A_xe_x=n.x(); A_xe_y=n.y(); A_xe_z=n.z();
+        //a_ngle=rotation.length(); A_xe_x=rotation.x(); A_xe_y=rotation.y(); A_xe_z=rotation.z();
         //a_ngle=angle; A_xe_x=Axe_x; A_xe_y=Axe_y; A_xe_z=Axe_z;
         //matrixRot.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
         //matrixRot.translate(0, 0, -cameraDistance);
