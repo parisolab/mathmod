@@ -61,20 +61,16 @@ int IsCompiled_VS, IsCompiled_FS;
 char *vertexInfoLog;
 char *fragmentInfoLog;
 char *shaderProgramInfoLog;
-//const char *c_str_fragment;
-//const char *c_str_vertex;
 
 // constants
 const int   SCREEN_WIDTH    = 800;
 const int   SCREEN_HEIGHT   = 600;
-const float CAMERA_DISTANCE = 1.0f;
+const float CAMERA_DISTANCE = 10.0f;
 int screenWidth;
 int screenHeight;
 bool mouseLeftDown;
 bool mouseRightDown;
 float mouseY;
-//float cameraAngleX;
-//float cameraAngleY;
 float cameraDistance;
 bool vboSupported, vboUsed;
 int drawMode = 0;
@@ -921,23 +917,6 @@ void OpenGlWidget::boundingboxOk()
     LocalScene.boundingbox *= -1;
 }
 
-static GLuint fontOffset = 0;
-static void makeRasterFont()
-{
-    GLuint i;
-    if (fontOffset < 128)
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        fontOffset = glGenLists(128);
-        for (i = 31;i  < 128; i++)
-        {
-            glNewList(i + fontOffset, GL_COMPILE);
-            glBitmap(8, 13, 0.0, 2.0, 10.0, 0.0, rasters[i-31]);
-            glEndList();
-        }
-    }
-}
-
 void OpenGlWidget::run() {
     update();
 }
@@ -979,7 +958,7 @@ void OpenGlWidget::stopRendering()
     glt.wait();
 }
 
-void OpenGlWidget::resizeEvent(QResizeEvent *evt)
+void OpenGlWidget::resizeEvent(QResizeEvent *)
 {
 }
 
@@ -1069,7 +1048,7 @@ void proj()
     qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
 
     // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
-    const qreal zNear = 3, zFar = 50.0, fov = 60.0;
+    const qreal zNear = 0.01, zFar = 50.0, fov = 45.0;
 
     // Reset projection
     matrixProjectionx.setToIdentity();
@@ -1122,82 +1101,6 @@ void OpenGlWidget::FillOk()
 
 void OpenGlWidget::PrintInfos()
 {
-    /*
-    QString nbl = "";
-    (LocalScene.typedrawing == 1)
-    ? nbl = QString::number(Xgrid - CutX) + "x" +
-            QString::number(Ygrid - CutY) + "x" +
-            QString::number(Zgrid - CutZ)
-
-    : nbl = QString::number(Ugrid - CutU) + "x" +
-            QString::number(Vgrid - CutV) + " = " +
-            QString::number((Ugrid - CutU) * (Vgrid - CutV));
-    glDisable(GL_DEPTH_TEST);
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    glOrtho(0, Wresult, Hresult, 0, -1, 1);
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    glLoadIdentity();
-    if (LocalScene.infosdetails[0] == 1)
-    {
-        glColor3f(0.0, 1.0, 0.0);
-        glRasterPos2i(10, 20);
-        glCallLists(strlen("Grid = "), GL_UNSIGNED_BYTE, (GLubyte *)"Grid = ");
-        glColor3f(1., 0.0, 0.);
-        glRasterPos2i(80, 20);
-        glCallLists(nbl.size(), GL_UNSIGNED_BYTE, nbl.toLatin1());
-    }
-    if (LocalScene.infosdetails[1] == 1)
-    {
-        glColor3f(0.0, 1.0, 0.0);
-        glRasterPos2i(10, 40);
-        glCallLists(strlen("Poly = "), GL_UNSIGNED_BYTE, (GLubyte *)"Poly = ");
-        glColor3f(1.0, 0.0, 0.0);
-        glRasterPos2i(80, 40);
-        glCallLists(QString::number(LocalScene.PolyNumber / 3).size(),
-                    GL_UNSIGNED_BYTE,
-                    QString::number(LocalScene.PolyNumber / 3).toLatin1());
-    }
-    if (LocalScene.infosdetails[2] == 1)
-    {
-        if (LocalScene.typedrawing == 1)
-        {
-            glColor3f(0.0, 1.0, 0.0);
-            glRasterPos2i(10, 60);
-            glCallLists(strlen("Vertx= "), GL_UNSIGNED_BYTE, (GLubyte *)"Vertx= ");
-            glColor3f(1.0, 0.0, 0.0);
-            glRasterPos2i(80, 60);
-            glCallLists(QString::number(LocalScene.VertxNumber).size(),
-                        GL_UNSIGNED_BYTE,
-                        QString::number(LocalScene.VertxNumber).toLatin1());
-        }
-    }
-    if (LocalScene.anim == 1)
-    {
-        glColor3f(0.0, 1.0, 0.0);
-        glRasterPos2i(10, 80);
-        glCallLists(strlen("Anim ="), GL_UNSIGNED_BYTE, (GLubyte *)"Anim =");
-        glColor3f(1.0, 0.0, 0.0);
-        glRasterPos2i(80, 80);
-        glCallLists(strlen("On"), GL_UNSIGNED_BYTE, (GLubyte *)"On");
-    }
-    if (LocalScene.morph == 1)
-    {
-        glColor3f(0.0, 1.0, 0.0);
-        glRasterPos2i(10, 100);
-        glCallLists(strlen("Morph="), GL_UNSIGNED_BYTE, (GLubyte *)"Morph=");
-        glColor3f(1.0, 0.0, 0.0);
-        glRasterPos2i(80, 100);
-        glCallLists(strlen("On"), GL_UNSIGNED_BYTE, (GLubyte *)("On"));
-    }
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-    glPopMatrix();
-    glEnable(GL_DEPTH_TEST);
-    */
 }
 
 static void DrawAxe()
@@ -1719,37 +1622,18 @@ bool initSharedMem()
     return true;
 }
 
-static void InitialOperations(ObjectProperties *scene)
+static void InitialOperations(ObjectProperties *)
 {
     static int staticaction = 0;
     if (staticaction < 1)
     {
-        /*
-        /// For drawing Filled Polygones :
-        glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-        glEnable(GL_NORMALIZE);
-        glFrontFace(GL_CCW);
-        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, scene->frontcol);
-        glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, scene->backcol);
-
-        glMaterialfv(GL_FRONT, GL_SPECULAR, scene->specReflection);
-        glMaterialfv(GL_BACK, GL_SPECULAR, scene->specReflection);
-
-        glMateriali(GL_FRONT, GL_SHININESS, scene->shininess);
-        glMateriali(GL_BACK, GL_SHININESS, scene->shininess);*/
         glEnable(GL_DEPTH_TEST);
-
-        //glClearColor(scene->groundcol[0], scene->groundcol[1],scene->groundcol[2], scene->groundcol[3]);
-
         staticaction += 1;
 
         glEnable(GL_LINE_SMOOTH);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-
-        // Gl listes generation (Fonts):
-        makeRasterFont();
         initSharedMem();
         initGL();
     }
@@ -2004,29 +1888,13 @@ void OpenGlWidget::paintGL()
         FramesSave();
 }
 
-void OpenGlWidget::timerEvent(QTimerEvent *e)
+void OpenGlWidget::timerEvent(QTimerEvent *)
 {
     update();
 }
 
-void OpenGlWidget::mouseReleaseEvent(QMouseEvent *e) {
-    /*
-    // Mouse release position - mouse press position
-    QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
-
-    // Rotation axis is perpendicular to the mouse position difference
-    // vector
-    QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
-
-    // Accelerate angular speed relative to the length of the mouse sweep
-    qreal acc = diff.length() / 100.0;
-
-    // Calculate new rotation axis as weighted sum
-    rotationAxis = (rotationAxis * angularSpeed + n * acc).normalized();
-
-    // Increase angular speed
-    angularSpeed += acc;
-    */
+void OpenGlWidget::mouseReleaseEvent(QMouseEvent *)
+{
 }
 
 void OpenGlWidget::mousePressEvent(QMouseEvent *e)
@@ -2066,7 +1934,6 @@ void OpenGlWidget::mousePressEvent(QMouseEvent *e)
 
 void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    static qreal oldacc=0;
     if(mouseLeftDown)
     {
         //mousePressPosition = QVector2D(e->localPos());
@@ -2074,7 +1941,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
         // Rotation axis is perpendicular to the mouse position difference
-        QVector3D n = QVector3D(-diff.y(), -diff.x(), 0.0).normalized();
+        QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
         qreal acc = diff.length()/30;
         // Calculate new rotation axis as weighted sum
@@ -2083,8 +1950,9 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
     }
     if(mouseRightDown)
     {
-        cameraDistance += (e->y()/2 - mouseY) * 0.02f;
+        cameraDistance -= (e->y()/2 - mouseY) * 0.02f;
         mouseY = e->y()/2;
+        proj();
     }
     update();
 }

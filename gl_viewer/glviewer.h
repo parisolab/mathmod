@@ -23,7 +23,6 @@
 #include "../pariso/isosurface/Iso3D.h"
 #include "../pariso/parametric/Model3D.h"
 #include "qglthread.h"
-#include "raster.h"
 #include <QFileDialog>
 #include <QOpenGLWidget>
 //#include <QGLWidget>
