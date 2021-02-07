@@ -20,6 +20,8 @@
 #include "glviewer.h"
 #include <QVector3D>
 #include <QQuaternion>
+#include <QMatrix4x4>
+
 #define BUFFER_OFFSET(i) ((float *)(i))
 static int Wresult, Hresult;
 static double anglefinal = 0;
@@ -28,9 +30,9 @@ QVector3D rotationAxis;
 qreal angularSpeed = 0;
 QQuaternion rotation;
 
-Matrix4 matrixView2;
+//Matrix4 matrixView2;
 
-Matrix4 matrixRotView;
+//Matrix4 matrixRotView;
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
@@ -65,7 +67,7 @@ char *shaderProgramInfoLog;
 // constants
 const int   SCREEN_WIDTH    = 800;
 const int   SCREEN_HEIGHT   = 600;
-const float CAMERA_DISTANCE = 1.7f;
+const float CAMERA_DISTANCE = 1.0f;
 int screenWidth;
 int screenHeight;
 bool mouseLeftDown;
@@ -76,8 +78,7 @@ float mouseY;
 float cameraDistance;
 bool vboSupported, vboUsed;
 int drawMode = 0;
-Matrix4 matrixModelView;
-Matrix4 matrixProjection;
+QMatrix4x4 matrixProjectionx;
 // GLSL
 GLuint shaderprogramId = 0;                  // ID of GLSL program
 bool glslSupported;
@@ -980,12 +981,6 @@ void OpenGlWidget::stopRendering()
 
 void OpenGlWidget::resizeEvent(QResizeEvent *evt)
 {
-    if(PutObjectInsideCubeOk)
-    {
-        glPushMatrix();
-        resizeGL(evt->size().width(), evt->size().height());
-        glPopMatrix();
-    }
 }
 
 void OpenGlWidget::initializeGL()
@@ -1067,49 +1062,28 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
     glt.update();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// set the projection matrix as perspective
-///////////////////////////////////////////////////////////////////////////////
-void toPerspective()
+void proj()
 {
-    const float N = 0.01f;
-    const float F = 20.0f;
-    const float DEG2RAD = 3.141592f / 180;
-    const float FOV_Y = 60.0f * DEG2RAD;
 
-    // set viewport to be the entire window
-    glViewport(0, 0, (GLsizei)screenWidth, (GLsizei)screenHeight);
+    // Calculate aspect ratio
+    qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
 
-    // construct perspective projection matrix
-    float aspectRatio = (float)(screenWidth) / screenHeight;
-    float tangent = tanf(FOV_Y / 2.0f);     // tangent of half fovY
-    float h = N * tangent;                  // half height of near plane
-    float w = h * aspectRatio;              // half width of near plane
-    matrixProjection.identity();
-    matrixProjection[0]  =  N / w;
-    matrixProjection[5]  =  N / h;
-    matrixProjection[10] = -(F + N) / (F - N);
-    matrixProjection[11] = -1;
-    matrixProjection[14] = -(2 * F * N) / (F - N);
-    matrixProjection[15] =  0;
+    // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
+    const qreal zNear = 3, zFar = 50.0, fov = 60.0;
 
-    // set perspective viewing frustum
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(matrixProjection.get());
-    //@@ equivalent fixed pipeline
-    //glLoadIdentity();
-    //gluPerspective(60.0f, (float)(screenWidth)/screenHeight, 0.1f, 100.0f); // FOV, AspectRatio, NearClip, FarClip
+    // Reset projection
+    matrixProjectionx.setToIdentity();
 
-    // switch to modelview matrix in order to set scene
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    // Set perspective projection
+    matrixProjectionx.perspective(fov, aspect, zNear, zFar);
+
 }
 
 void OpenGlWidget::resizeGL(int newwidth, int newheight)
 {
     screenWidth = newwidth;
     screenHeight = newheight;
-    toPerspective();
+    proj();
 }
 
 OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
@@ -1611,7 +1585,7 @@ static void CreateShaderProgram()
     attribVertexColor                = glGetAttribLocation(shaderprogramId, "vertexColor");
 
     // set uniform values
-    float lightPosition[] = {0, 0, 1, 0};
+    float lightPosition[] = {0, 0, 10, 0};
     float lightAmbient[]  = {0.3f, 0.3f, 0.3f, 1};
     float lightDiffuse[]  = {0.7f, 0.7f, 0.7f, 1};
     float lightSpecular[] = {1.0f, 1.0f, 1.0f, 1};
@@ -1899,52 +1873,40 @@ static void draw(ObjectProperties *scene)
 
     // clear buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glPopMatrix();
-    // transform camera
-    //static Matrix4 matrixViewrot;
-    Matrix4 matrixView;
-
-    //matrixView = matrixView2 * matrixView;
-    matrixView.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
-    //matrixRotView.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
-    matrixView.translate(0, 0, -cameraDistance);
-
-    //glPushMatrix();
-    // transform model
-    //Matrix4 matrixModel;
 
     // set modelview matrix
-    matrixModelView = matrixView;
-    {
-        // bind GLSL
-        glUseProgram(shaderprogramId);
-        // set matric uniforms every frame
-        Matrix4 matrixModelViewProjection = matrixProjection * matrixView;
-        Matrix4 matrixNormal=matrixView;
-        matrixNormal.setColumn(3, Vector4(0,0,0,1));
-        glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixView.get());
-        glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjection.get());
-        glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormal.get());
+    QMatrix4x4 matrixViewx;
+    matrixViewx.translate(0.0, 0.0, -cameraDistance);
+    matrixViewx.rotate(rotation);
 
-        // bind VBOs
-        glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+    // bind GLSL
+    glUseProgram(shaderprogramId);
+    QMatrix4x4 matrixModelViewProjectionx = matrixProjectionx * matrixViewx;
+    QMatrix4x4 matrixNormalx=matrixViewx;
+    matrixNormalx.setColumn(3, QVector4D(0,0,0,1));
+    glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixViewx.data());
+    glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjectionx.data());
+    glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormalx.data());
 
-        // activate attribs
-        glEnableVertexAttribArray(attribVertexColor);
-        glEnableVertexAttribArray(attribVertexNormal);
-        glEnableVertexAttribArray(attribVertexPosition);
+    // bind VBOs
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
 
-        // set attrib arrays using glVertexAttribPointer()
-        size_t cOffset = 0;
-        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
-        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+    // activate attribs
+    glEnableVertexAttribArray(attribVertexColor);
+    glEnableVertexAttribArray(attribVertexNormal);
+    glEnableVertexAttribArray(attribVertexPosition);
 
-        // set attrib arrays using glVertexAttribPointer()
-        glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
-        glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
-        glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
-    }
+    // set attrib arrays using glVertexAttribPointer()
+    size_t cOffset = 0;
+    size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
+    size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+
+    // set attrib arrays using glVertexAttribPointer()
+    glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
+    glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
+    glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
+
     // Blend Effect activation:
     if (scene->transparency == 1)
         glDepthMask(GL_FALSE);
@@ -1956,7 +1918,6 @@ static void draw(ObjectProperties *scene)
     // Axe :
     if (scene->infos == 1)
         DrawAxe();
-
 
     if (scene->fill == 1 && scene->componentsinfos.updateviewer)
         for (uint i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
@@ -1983,19 +1944,13 @@ static void draw(ObjectProperties *scene)
     if (scene->norm == 1 && scene->componentsinfos.updateviewer)
         DrawNormals(scene);
 
-     glPushMatrix();
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
-    {
-        glDisableVertexAttribArray(attribVertexPosition);
-        glDisableVertexAttribArray(attribVertexNormal);
-        glDisableVertexAttribArray(attribVertexColor);
 
-        // unbind
-        //glBindBuffer(GL_ARRAY_BUFFER, 0);
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glUseProgram(0);
-    }
+    glDisableVertexAttribArray(attribVertexPosition);
+    glDisableVertexAttribArray(attribVertexNormal);
+    glDisableVertexAttribArray(attribVertexColor);
+    glUseProgram(0);
 }
 
 void OpenGlWidget::paintGL()
@@ -2085,8 +2040,6 @@ void OpenGlWidget::mousePressEvent(QMouseEvent *e)
     {
         btgauche = 1;
         mouseLeftDown =true;
-        matrixView2 *= /*matrixView2*/matrixRotView*matrixView2;
-        matrixRotView.identity();
     }
     else
     {
@@ -2108,44 +2061,31 @@ void OpenGlWidget::mousePressEvent(QMouseEvent *e)
     else
         btmilieu = 0;
 
-    //mouseX = e->x()/2;
     mouseY = e->y()/2;
 }
 
 void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 {
+    static qreal oldacc=0;
     if(mouseLeftDown)
     {
-        //cameraAngleY += (e->x()/2 - mouseX);
-        //cameraAngleX += (e->y()/2 - mouseY);
-        //mouseX = e->x()/2;
-        mouseY = e->y()/2;
+        //mousePressPosition = QVector2D(e->localPos());
+        //mouseY = e->y()/2;
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
         // Rotation axis is perpendicular to the mouse position difference
-        QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
+        QVector3D n = QVector3D(-diff.y(), -diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
-        qreal acc = diff.length()/10;
+        qreal acc = diff.length()/30;
         // Calculate new rotation axis as weighted sum
         rotationAxis = (rotationAxis +n).normalized();
-        //rotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * rotation;
-        //qreal acc = rotationAxis.length();
-        rotation = QQuaternion::fromAxisAndAngle(n, acc) * rotation;
-
-        a_ngle=acc; A_xe_x=rotation.x(); A_xe_y=rotation.y(); A_xe_z=rotation.z();
-        //a_ngle=diff.length(); A_xe_x=n.x(); A_xe_y=n.y(); A_xe_z=n.z();
-        //a_ngle=rotation.length(); A_xe_x=rotation.x(); A_xe_y=rotation.y(); A_xe_z=rotation.z();
-        //a_ngle=angle; A_xe_x=Axe_x; A_xe_y=Axe_y; A_xe_z=Axe_z;
-        //matrixRot.rotate(GLfloat(a_ngle), GLfloat(A_xe_x), GLfloat(A_xe_y), GLfloat(A_xe_z));
-        //matrixRot.translate(0, 0, -cameraDistance);
-        //glRotatef(GLfloat(angle), GLfloat(Axe_x), GLfloat(Axe_y), GLfloat(Axe_z));
+        rotation = QQuaternion::fromAxisAndAngle(n, 3.0) * rotation;
     }
     if(mouseRightDown)
     {
-        cameraDistance -= (e->y()/2 - mouseY) * 0.02f;
+        cameraDistance += (e->y()/2 - mouseY) * 0.02f;
         mouseY = e->y()/2;
     }
-    toPerspective();
     update();
 }
 

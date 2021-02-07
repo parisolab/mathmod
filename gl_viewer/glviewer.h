@@ -38,8 +38,8 @@
 #include <qthread.h>
 #include <stdlib.h>
 #include <string>
-#include "Matrices.h"
-#include "Vectors.h"
+//#include "Matrices.h"
+//#include "Vectors.h"
 class OpenGlWidget : public QOpenGLWidget
 {
     Q_OBJECT
