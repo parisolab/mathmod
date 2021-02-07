@@ -68,7 +68,5 @@
         <file>images/mac/copying.txt</file>
         <file>images/win/copying.txt</file>
         <file>copying.txt</file>
-        <file>gl_viewer/shaders/fragmentshader.txt</file>
-        <file>gl_viewer/shaders/vertexshader.txt</file>
     </qresource>
 </RCC>
