@@ -63,7 +63,7 @@ char *shaderProgramInfoLog;
 // constants
 const int   SCREEN_WIDTH    = 600;
 const int   SCREEN_HEIGHT   = 600;
-const float CAMERA_DISTANCE = 2.0f;
+const float CAMERA_DISTANCE = 1.4f;
 int screenWidth;
 int screenHeight;
 bool mouseLeftDown;
@@ -1060,7 +1060,7 @@ void OpenGlWidget::resizeGL(int newwidth, int newheight)
 {
     screenWidth = newwidth;
     screenHeight = newheight;
-    proj();
+    //proj();
 }
 
 OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
@@ -1953,7 +1953,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
     {
         cameraDistance -= (e->y()/2 - mouseY) * 0.02f;
         mouseY = e->y()/2;
-        proj();
+        //proj();
     }
     update();
 }
