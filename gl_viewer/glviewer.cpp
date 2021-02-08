@@ -30,7 +30,7 @@ qreal angularSpeed = 0;
 QQuaternion rotation;
 
 //Matrix4 matrixView2;
-
+QVector3D n;
 //Matrix4 matrixRotView;
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
@@ -1894,6 +1894,7 @@ void OpenGlWidget::paintGL()
 
 void OpenGlWidget::timerEvent(QTimerEvent *)
 {
+    rotation = QQuaternion::fromAxisAndAngle(n, 3.0) * rotation;
     UpdateGL();
 }
 
@@ -1946,7 +1947,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
         // Rotation axis is perpendicular to the mouse position difference
-        QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
+        n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
         qreal acc = std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/10.0f;
         //oldx= diff.x(); oldy=diff.y();
