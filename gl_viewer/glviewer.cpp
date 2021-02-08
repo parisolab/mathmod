@@ -1894,7 +1894,8 @@ void OpenGlWidget::paintGL()
 
 void OpenGlWidget::timerEvent(QTimerEvent *)
 {
-    rotation = QQuaternion::fromAxisAndAngle(n, 3.0) * rotation;
+    if(LocalScene.anim == 1)
+        rotation = QQuaternion::fromAxisAndAngle(n, 3.0) * rotation;
     UpdateGL();
 }
 
