@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -932,7 +932,7 @@ void OpenGlWidget::stoptimer()
 
 void OpenGlWidget::starttimer()
 {
-    timer->start(latence);
+    timer->start(latence,this);
 }
 
 void OpenGlWidget::restarttimer(int newlatence)
@@ -941,7 +941,7 @@ void OpenGlWidget::restarttimer(int newlatence)
     if (LocalScene.anim == 1)
     {
         timer->stop();
-        timer->start(latence);
+        timer->start(latence, this);
     }
 }
 
@@ -974,7 +974,7 @@ void OpenGlWidget::anim()
 {
     LocalScene.anim *= -1;
     if (LocalScene.anim == 1)
-        timer->start(latence);
+        timer->start(latence, this);
     else if (LocalScene.morph == -1)
         stoptimer();
 }
@@ -1018,7 +1018,7 @@ void OpenGlWidget::morph()
         IsoObjet->IsoMorph();
     }
     if (LocalScene.morph == 1)
-        timer->start(latence);
+        timer->start(latence, this);
     else if (LocalScene.anim == -1)
         stoptimer();
 }
@@ -1080,8 +1080,8 @@ OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
     LocalScene.VertxNumber = 0;
     FramesDir = "/home";
     hauteur_fenetre = 2*wh;
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    timer = new QBasicTimer();
+    //connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     NBGlWindow++;
     //LoadShadersFiles();
 }
@@ -1894,7 +1894,7 @@ void OpenGlWidget::paintGL()
 
 void OpenGlWidget::timerEvent(QTimerEvent *)
 {
-    update();
+    UpdateGL();
 }
 
 void OpenGlWidget::mouseReleaseEvent(QMouseEvent *)

@@ -46,7 +46,7 @@ public:
     uint Ugrid, Vgrid, CutV, CutU;
     int btgauche, btdroit, btmilieu, latence, IDGlWindow;
     int Xgrid, Ygrid, Zgrid, CutX, CutY, CutZ, TypeTriangle;
-    QTimer *timer;
+    QBasicTimer *timer;
     double Axe_x, Axe_y, Axe_z, angle, val1, val2, val3, old_x, old_y, old_z,
     factx=1.0, facty=1.0, factz=1.0;
     ObjectProperties LocalScene;

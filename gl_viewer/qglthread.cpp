@@ -47,5 +47,5 @@ void GLThread::update()
     glw->update();
 }
 void GLThread::run() {
-    //glw->update();
+    glw->update();
 }
