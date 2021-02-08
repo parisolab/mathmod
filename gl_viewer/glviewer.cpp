@@ -1759,9 +1759,14 @@ static void draw(ObjectProperties *scene)
 
     // set modelview matrix
     QMatrix4x4 matrixViewx;
+
+
     matrixViewx.translate(0.0, 0.0, -cameraDistance);
     matrixViewx.rotate(rotation);
 
+    matrixViewx.rotate(270,1.0,0.0,0.0);
+    matrixViewx.rotate(225,0.0,0.0,1.0);
+    matrixViewx.rotate(-29,1.0,-1.0,0.0);
     // bind GLSL
     glUseProgram(shaderprogramId);
     QMatrix4x4 matrixModelViewProjectionx = matrixProjectionx * matrixViewx;
