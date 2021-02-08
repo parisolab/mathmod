@@ -23,8 +23,7 @@
 #include <QMatrix4x4>
 
 #define BUFFER_OFFSET(i) ((float *)(i))
-static int Wresult, Hresult;
-static double anglefinal = 0;
+
 QVector2D mousePressPosition;
 QVector3D rotationAxis;
 qreal angularSpeed = 0;
@@ -39,7 +38,6 @@ static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 static GLfloat difX, difY, difZ;
-static GLfloat a_ngle=0, A_xe_x=0, A_xe_y=0, A_xe_z=0;
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
 /* This is a handle to the shader program */
@@ -65,7 +63,7 @@ char *shaderProgramInfoLog;
 // constants
 const int   SCREEN_WIDTH    = 800;
 const int   SCREEN_HEIGHT   = 600;
-const float CAMERA_DISTANCE = 10.0f;
+const float CAMERA_DISTANCE = 2.0f;
 int screenWidth;
 int screenHeight;
 bool mouseLeftDown;
@@ -1636,6 +1634,7 @@ static void InitialOperations(ObjectProperties *)
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
         initSharedMem();
         initGL();
+        proj();
     }
 }
 
@@ -1934,6 +1933,7 @@ void OpenGlWidget::mousePressEvent(QMouseEvent *e)
 
 void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 {
+    static int oldx=0, oldy=0;
     if(mouseLeftDown)
     {
         //mousePressPosition = QVector2D(e->localPos());
@@ -1943,7 +1943,8 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         // Rotation axis is perpendicular to the mouse position difference
         QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
-        qreal acc = diff.length()/30;
+        qreal acc = std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/10.0f;
+        //oldx= diff.x(); oldy=diff.y();
         // Calculate new rotation axis as weighted sum
         rotationAxis = (rotationAxis +n).normalized();
         rotation = QQuaternion::fromAxisAndAngle(n, 3.0) * rotation;
