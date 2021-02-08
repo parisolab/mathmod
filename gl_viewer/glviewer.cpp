@@ -61,7 +61,7 @@ char *fragmentInfoLog;
 char *shaderProgramInfoLog;
 
 // constants
-const int   SCREEN_WIDTH    = 800;
+const int   SCREEN_WIDTH    = 600;
 const int   SCREEN_HEIGHT   = 600;
 const float CAMERA_DISTANCE = 2.0f;
 int screenWidth;
@@ -1041,12 +1041,12 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
 
 void proj()
 {
-
+    int maxwindow= std::min(screenWidth, screenHeight);
     // Calculate aspect ratio
-    qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
+    qreal aspect = 1;//qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
 
     // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
-    const qreal zNear = 0.01, zFar = 50.0, fov = 45.0;
+    const qreal zNear = 0.01, zFar = 50.0, fov = 60.0;
 
     // Reset projection
     matrixProjectionx.setToIdentity();
