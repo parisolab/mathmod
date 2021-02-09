@@ -28,7 +28,8 @@ QVector2D mousePressPosition;
 QVector3D rotationAxis;
 qreal angularSpeed = 0;
 QQuaternion rotation;
-
+QQuaternion oldRotation;
+qreal acc;
 //Matrix4 matrixView2;
 QVector3D n;
 //Matrix4 matrixRotView;
@@ -1895,19 +1896,21 @@ void OpenGlWidget::paintGL()
 void OpenGlWidget::timerEvent(QTimerEvent *)
 {
     if(LocalScene.anim == 1)
-        rotation = QQuaternion::fromAxisAndAngle(n, 3.0) * rotation;
+        rotation = QQuaternion::fromAxisAndAngle(n, acc/10) * rotation;
     UpdateGL();
 }
 
+
 void OpenGlWidget::mouseReleaseEvent(QMouseEvent *)
 {
+    oldRotation = rotation;
 }
 
 void OpenGlWidget::mousePressEvent(QMouseEvent *e)
 {
     // Save mouse press position
     mousePressPosition = QVector2D(e->localPos());
-
+    rotation = oldRotation;
 
 
     if (e->button() == Qt::LeftButton)
@@ -1941,6 +1944,8 @@ void OpenGlWidget::mousePressEvent(QMouseEvent *e)
 void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
 {
     static int oldx=0, oldy=0;
+    static QVector3D oldn=QVector3D(0,0,1);
+    static qreal oldacc;
     if(mouseLeftDown)
     {
         //mousePressPosition = QVector2D(e->localPos());
@@ -1950,11 +1955,17 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         // Rotation axis is perpendicular to the mouse position difference
         n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
-        qreal acc = std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/10.0f;
+        glGetIntegerv(GL_VIEWPORT,LocalScene.viewport);
+        //glMatrixMode(GL_VIEWPORT);
+        //glLoadIdentity();
+        acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/(double)(LocalScene.viewport[2]+1)*360.0;
+         //qreal acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/10.0f;
         //oldx= diff.x(); oldy=diff.y();
         // Calculate new rotation axis as weighted sum
         rotationAxis = (rotationAxis +n).normalized();
-        rotation = QQuaternion::fromAxisAndAngle(n, 3.0) * rotation;
+        rotation = QQuaternion::fromAxisAndAngle(n, acc)*oldRotation;
+        oldacc= acc;
+        oldn = n;
     }
     if(mouseRightDown)
     {
