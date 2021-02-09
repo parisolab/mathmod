@@ -1045,7 +1045,7 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
 
 void proj()
 {
-    int maxwindow= std::min(screenWidth, screenHeight);
+    //int maxwindow= std::min(screenWidth, screenHeight);
     // Calculate aspect ratio
     qreal aspect = 1;//qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
 
@@ -1085,9 +1085,7 @@ OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
     FramesDir = "/home";
     hauteur_fenetre = 2*wh;
     timer = new QBasicTimer();
-    //connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     NBGlWindow++;
-    //LoadShadersFiles();
 }
 
 void OpenGlWidget::infosok()
