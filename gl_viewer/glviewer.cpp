@@ -1616,10 +1616,10 @@ void initGL()
 
     /////****************
     /// For drawing Filled Polygones :
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    glEnable(GL_VERTEX_PROGRAM_TWO_SIDE);
+    //glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    //glEnable(GL_VERTEX_PROGRAM_TWO_SIDE);
     //glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
-    glEnable(GL_NORMALIZE);
+    //glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
 
     glEnable(GL_DEPTH_TEST);
