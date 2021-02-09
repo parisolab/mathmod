@@ -1630,8 +1630,8 @@ void initGL()
     //glEnable(GL_COLOR_MATERIAL);
 
     glClearColor(0, 0, 0, 0);                   // background color
-    glClearStencil(0);                          // clear stencil buffer
-    glClearDepth(1.0f);                         // 0 is near, 1 is far
+    //glClearStencil(0);                          // clear stencil buffer
+    //glClearDepth(1.0f);                         // 0 is near, 1 is far
     //glDepthFunc(GL_LEQUAL);
 
     initLights();
