@@ -801,8 +801,8 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
         idx += scene->componentsinfos.NbComponentsType[i];
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     float frontcl[4], backcl[4];
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    //glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -880,8 +880,8 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     }
     glDisable(GL_POLYGON_OFFSET_FILL);
     glUniform1i(uniformThereisRGBA, 0);
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
+    //glDisable(GL_LIGHTING);
+    //glDisable(GL_LIGHT0);
 }
 void OpenGlWidget::normOk()
 {
@@ -1129,6 +1129,7 @@ static void DrawAxe()
 
 static void DrawNormals(ObjectProperties *scene)
 {
+    /*
     uint j = 0;
     glColor4f(0.8f, 0., 0.7f, 1.0);
     for (uint i = 0; i < scene->PolyNumber; i += 4)
@@ -1146,6 +1147,7 @@ static void DrawNormals(ObjectProperties *scene)
                    40 * scene->ArrayNorVer_localPt[j + 6]);
         glEnd();
     }
+    */
 }
 
 void OpenGlWidget::Winitialize_GL()
@@ -1664,19 +1666,20 @@ static void CopyData(ObjectProperties *scene)
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
 
 
+        size_t cOffset = 0;
+        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
+        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
+/*
         // enable vertex arrays
         glEnableClientState(GL_COLOR_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
         glEnableClientState(GL_VERTEX_ARRAY);
 
-        size_t cOffset = 0;
-        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
-        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
         // specify vertex arrays with their offsets
         glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-
+*/
         // activate attribs
         glEnableVertexAttribArray(attribVertexColor);
         glEnableVertexAttribArray(attribVertexNormal);
@@ -1716,19 +1719,19 @@ static void CopyData(ObjectProperties *scene)
             previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         }
 
-        glEnable(GL_COLOR_ARRAY);
-        glEnable(GL_VERTEX_ARRAY);
-        glEnable(GL_NORMAL_ARRAY);
-        // set attrib arrays using glVertexAttribPointer()
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-
+       /*
+        glEnable(GL_COLOR_ARRAY);
+        glEnable(GL_VERTEX_ARRAY);
+        glEnable(GL_NORMAL_ARRAY);
         // specify vertex arrays with their offsets
         glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
         glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-        // activate attribs
+        */
+        // set attrib arrays using glVertexAttribPointer()
         glEnableVertexAttribArray(attribVertexColor);
         glEnableVertexAttribArray(attribVertexNormal);
         glEnableVertexAttribArray(attribVertexPosition);
@@ -2126,10 +2129,12 @@ void OpenGlWidget::Shininess(int cl)
 
 void OpenGlWidget::InitSpecularParameters()
 {
+    /*
     /// For drawing Filled Polygones :
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glEnable(GL_VERTEX_PROGRAM_TWO_SIDE);
     glEnable(GL_NORMALIZE);
+    */
     glFrontFace(GL_CCW);
     glEnable(GL_DEPTH_TEST);
     update();
