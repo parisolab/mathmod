@@ -1948,16 +1948,11 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
     static qreal oldacc;
     if(mouseLeftDown)
     {
-        //mousePressPosition = QVector2D(e->localPos());
-        //mouseY = e->y()/2;
-        // Mouse release position - mouse press position
         QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
         // Rotation axis is perpendicular to the mouse position difference
         n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
         glGetIntegerv(GL_VIEWPORT,LocalScene.viewport);
-        //glMatrixMode(GL_VIEWPORT);
-        //glLoadIdentity();
         acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/(double)(LocalScene.viewport[2]+1)*360.0;
          //qreal acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/10.0f;
         //oldx= diff.x(); oldy=diff.y();
