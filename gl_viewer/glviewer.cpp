@@ -761,7 +761,7 @@ static void drawCube(float x)
 
     glLineWidth(1.0);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
-
+/*
     // X
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3f(longX, -longY, longZ + 60);
@@ -792,6 +792,7 @@ static void drawCube(float x)
     glRasterPos3f(longX + 60, -longY - 60, -longZ);
     glCallLists(QString::number(miz, 'g', 3).size(), GL_UNSIGNED_BYTE,
                 QString::number(miz, 'g', 3).toLatin1());
+                */
 }
 
 static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
@@ -804,7 +805,7 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     //glEnable(GL_LIGHTING);
     //glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     glPolygonOffset(scene->polyfactor, scene->polyunits);
 
@@ -1114,6 +1115,7 @@ static void DrawAxe()
     glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
     // Head of the Z Axe:
     glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
+    /*
     glColor3f(1.0, 0.0, 0.0);
     glRasterPos3i(410, 10, 10);
     glCallLists(strlen("X"), GL_UNSIGNED_BYTE, "X");
@@ -1125,6 +1127,7 @@ static void DrawAxe()
     glColor3f(0.0, 0.0, 1.0);
     glRasterPos3i(10, 10, 410);
     glCallLists(strlen("Z"), GL_UNSIGNED_BYTE, "Z");
+    */
 }
 
 static void DrawNormals(ObjectProperties *scene)
@@ -1663,10 +1666,10 @@ static void InitialOperations(ObjectProperties *)
         glEnable(GL_DEPTH_TEST);
         staticaction += 1;
 
-        glEnable(GL_LINE_SMOOTH);
+        //glEnable(GL_LINE_SMOOTH);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+        //glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
         initSharedMem();
         initGL();
         proj();
