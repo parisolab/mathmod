@@ -976,8 +976,12 @@ void OpenGlWidget::anim()
     LocalScene.anim *= -1;
     if (LocalScene.anim == 1)
         timer->start(latence, this);
-    else if (LocalScene.morph == -1)
+    else
+    {
+        oldRotation = rotation;
+        if (LocalScene.morph == -1)
         stoptimer();
+    }
 }
 
 void OpenGlWidget::morph()
