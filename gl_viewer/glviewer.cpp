@@ -1954,9 +1954,7 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
         // Accelerate angular speed relative to the length of the mouse sweep
         glGetIntegerv(GL_VIEWPORT,LocalScene.viewport);
         acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/(double)(LocalScene.viewport[2]+1)*360.0;
-         //qreal acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/10.0f;
-        //oldx= diff.x(); oldy=diff.y();
-        // Calculate new rotation axis as weighted sum
+        // Calculate new rotation axis
         rotationAxis = (rotationAxis +n).normalized();
         rotation = QQuaternion::fromAxisAndAngle(n, acc)*oldRotation;
         oldacc= acc;
