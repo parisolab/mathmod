@@ -963,7 +963,6 @@ void OpenGlWidget::resizeEvent(QResizeEvent *)
 
 void OpenGlWidget::initializeGL()
 {
-    //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 }
 void OpenGlWidget::closeEvent(QCloseEvent *evt)
 {
