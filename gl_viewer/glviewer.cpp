@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -1180,11 +1180,17 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
     {
         size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
         glLineWidth(0.3);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        /*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
-            GL_TRIANGLES,
+            GL_LINE,
             int(3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]),
             GL_UNSIGNED_INT, (void *)Offset0);
+            */
+        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]); i += 3)
+        {
+            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset0));
+            Offset0+=(3*sizeof( GL_FLOAT));
+        }
     }
 
     if (scene->cndoptions[4])
@@ -1194,11 +1200,17 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
                                                  .NbTrianglesVerifyCND[compindex] +
                                                  start_triangle)*sizeof(GL_FLOAT);
         glLineWidth(0.3);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        /*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
-            GL_TRIANGLES,
+            GL_LINE,
             int(3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]),
             GL_UNSIGNED_INT,(void *)Offset1);
+            */
+        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]); i += 3)
+        {
+            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset1));
+            Offset1+=(3*sizeof( GL_FLOAT));
+        }
     }
 
     if (scene->cndoptions[2])
@@ -1206,21 +1218,35 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
         size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
                           scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])+start_triangle)*sizeof( GL_FLOAT);
         glLineWidth(4.0);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        /*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glDrawElements(
-            GL_TRIANGLES,
+            GL_LINE,
             int(3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]),
             GL_UNSIGNED_INT,(void *)Offset2);
+            */
+        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]); i += 3)
+        {
+            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset2));
+            Offset2+=(3*sizeof( GL_FLOAT));
+        }
     }
 }
 
 static void DrawMeshIso(ObjectProperties *scene)
 {
+    size_t Offset = 0;
+    uint st = 0;
     glUniform4fv(uniformGridColor, 1, scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glLineWidth(0.3);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glDrawElements(GL_TRIANGLES, int(scene->PolyNumber), GL_UNSIGNED_INT, (void *)0);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glDrawElements(GL_LINE_LOOP, int(scene->PolyNumber), GL_UNSIGNED_INT, (void *)0);
+    for (uint i = 0; i < scene->PolyNumber; i += 3)
+    {
+        Offset = st*sizeof( GL_FLOAT);
+        glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset));
+        st+=3;
+    }
     glUniform1i(uniformdrawgridColor, 0);
 }
 
@@ -1229,13 +1255,14 @@ static void DrawMinimalTopology(ObjectProperties *scene)
     glUniform4fv(uniformGridColor, 1,scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glLineWidth(0.4);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     uint st = scene->PolyNumber;
     uint polysize=0;
+    size_t Offset;
     for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
     {
         polysize = scene->PolyIndices_localPtMin[i];
-        size_t Offset = st*sizeof( GL_FLOAT);
+        Offset = st*sizeof( GL_FLOAT);
         glDrawElements(
             GL_LINE_LOOP,
             polysize,
@@ -1560,10 +1587,12 @@ static void LoadShaderFiles()
 */
 void initLights()
 {
+    /*
     // set up light colors (ambient, diffuse, specular)
     GLfloat lightKa[] = {.3f, .3f, .3f, 1.0f};  // ambient light
     GLfloat lightKd[] = {.7f, .7f, .7f, 1.0f};  // diffuse light
-    GLfloat lightKs[] = {1, 1, 1, 1};           // specular light
+    GLfloat lightKs[] = {1, 1, 1, 1};
+    // specular light
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightKa);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightKd);
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightKs);
@@ -1571,7 +1600,9 @@ void initLights()
     // position the light
     float lightPos[4] = {0, 0, 10, 0}; // directional light
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    glEnable(GL_LIGHT0);                        // MUST enable each light source after configuration                      // MUST enable each light source after configuration
+    glEnable(GL_LIGHT0);
+                       */
+                       // MUST enable each light source after configuration                      // MUST enable each light source after configuration
 }
 
 void initGL()
