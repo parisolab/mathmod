@@ -1309,7 +1309,7 @@ static void CreateShaderProgram()
     static const char *c_str_vertex =
             R"(
             // GLSL version
-            #version 120
+            //#version 120
             // uniforms
             uniform mat4 matrixModelView;
             uniform mat4 matrixNormal;
@@ -1335,7 +1335,7 @@ static void CreateShaderProgram()
     static const char *c_str_fragment =
             R"(
             // GLSL version
-            #version 120
+            //#version 120
             // uniforms
             uniform vec4 frontColor;
             uniform vec4 backColor;
