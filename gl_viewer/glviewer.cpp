@@ -749,48 +749,10 @@ void OpenGlWidget::blueSpec(int cl)
     LocalScene.specReflection[2] = float(cl / 100.0);
 }
 
-static void drawCube(float x)
+static void drawCube()
 {
-    float longX = x * float(difX / float(difMaximum)),
-          longY = x * (difY / float(difMaximum)),
-          longZ = x * (difZ / float(difMaximum));
-    double mix = double(minx), max = double(maxx), miy = double(miny),
-           may = double(maxy), miz = double(minz), maz = double(maxz);
-
     glLineWidth(1.0);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
-/*
-    // X
-    glColor3f(1.0, 0.0, 0.0);
-    glRasterPos3f(longX, -longY, longZ + 60);
-    glCallLists(QString::number(max, 'g', 3).size(), GL_UNSIGNED_BYTE,
-                QString::number(max, 'g', 3).toLatin1());
-
-    glColor3f(1.0, 0.0, 0.0);
-    glRasterPos3f(-longX, -longY, longZ + 60);
-    glCallLists(QString::number(mix, 'g', 3).size(), GL_UNSIGNED_BYTE,
-                QString::number(mix, 'g', 3).toLatin1());
-    // Y
-    glColor3f(0.0, 1.0, 0.0);
-    glRasterPos3f(longX + 100, longY, -longZ);
-    glCallLists(QString::number(may, 'g', 3).size(), GL_UNSIGNED_BYTE,
-                QString::number(may, 'g', 3).toLatin1());
-
-    glColor3f(0.0, 1.0, 0.0);
-    glRasterPos3f(longX + 100, -longY, -longZ);
-    glCallLists(QString::number(miy, 'g', 3).size(), GL_UNSIGNED_BYTE,
-                QString::number(miy, 'g', 3).toLatin1());
-    // Z
-    glColor3f(0.4f, 0.4f, 1.0);
-    glRasterPos3f(longX + 60, -longY - 60, longZ);
-    glCallLists(QString::number(maz, 'g', 3).size(), GL_UNSIGNED_BYTE,
-                QString::number(maz, 'g', 3).toLatin1());
-
-    glColor3f(0.4f, 0.4f, 1.0);
-    glRasterPos3f(longX + 60, -longY - 60, -longZ);
-    glCallLists(QString::number(miz, 'g', 3).size(), GL_UNSIGNED_BYTE,
-                QString::number(miz, 'g', 3).toLatin1());
-                */
 }
 
 static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
@@ -800,13 +762,8 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
         idx += scene->componentsinfos.NbComponentsType[i];
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     float frontcl[4], backcl[4];
-    //glEnable(GL_LIGHTING);
-    //glEnable(GL_LIGHT0);
     glEnable(GL_POLYGON_OFFSET_FILL);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
     glPolygonOffset(scene->polyfactor, scene->polyunits);
-
     if (!scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
     {
         for (uint j = 0; j < 4; j++)
@@ -879,8 +836,6 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     }
     glDisable(GL_POLYGON_OFFSET_FILL);
     glUniform1i(uniformThereisRGBA, 0);
-    //glDisable(GL_LIGHTING);
-    //glDisable(GL_LIGHT0);
 }
 void OpenGlWidget::normOk()
 {
@@ -1128,7 +1083,7 @@ static void DrawAxe()
     */
 }
 
-static void DrawNormals(ObjectProperties *scene)
+static void DrawNormals(ObjectProperties *)
 {
     /*
     uint j = 0;
@@ -1797,7 +1752,7 @@ static void draw(ObjectProperties *scene)
 
     // Bounding Box:
     if (scene->boundingbox == 1)
-        drawCube(wh);
+        drawCube();
 
     // Draw Minimal topology for isosurfaces:
     if (scene->mesh == 1 && scene->componentsinfos.updateviewer)
