@@ -1310,6 +1310,9 @@ static void CreateShaderProgram()
             R"(
             // GLSL version
             //#version 120
+            #ifdef GL_ES
+            precision mediump float;
+            #endif
             // uniforms
             uniform mat4 matrixModelView;
             uniform mat4 matrixNormal;
@@ -1336,6 +1339,9 @@ static void CreateShaderProgram()
             R"(
             // GLSL version
             //#version 120
+            #ifdef GL_ES
+            precision mediump float;
+            #endif
             // uniforms
             uniform vec4 frontColor;
             uniform vec4 backColor;
