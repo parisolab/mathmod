@@ -1595,21 +1595,9 @@ static void CopyData(ObjectProperties *scene)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
 
-
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-/*
-        // enable vertex arrays
-        glEnableClientState(GL_COLOR_ARRAY);
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_VERTEX_ARRAY);
-
-        // specify vertex arrays with their offsets
-        glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
-        glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
-        glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-*/
         // activate attribs
         glEnableVertexAttribArray(attribVertexColor);
         glEnableVertexAttribArray(attribVertexNormal);
@@ -1652,15 +1640,6 @@ static void CopyData(ObjectProperties *scene)
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-       /*
-        glEnable(GL_COLOR_ARRAY);
-        glEnable(GL_VERTEX_ARRAY);
-        glEnable(GL_NORMAL_ARRAY);
-        // specify vertex arrays with their offsets
-        glColorPointer(4, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)cOffset);
-        glNormalPointer(GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)nOffset);
-        glVertexPointer(3, GL_FLOAT, 10*sizeof( GL_FLOAT), (void*)vOffset);
-        */
         // set attrib arrays using glVertexAttribPointer()
         glEnableVertexAttribArray(attribVertexColor);
         glEnableVertexAttribArray(attribVertexNormal);
@@ -1694,7 +1673,6 @@ static void draw(ObjectProperties *scene)
 
     // set modelview matrix
     QMatrix4x4 matrixViewx;
-
 
     matrixViewx.translate(0.0, 0.0, -cameraDistance);
     matrixViewx.rotate(rotation);
@@ -1898,7 +1876,6 @@ void OpenGlWidget::mouseMoveEvent(QMouseEvent *e)
     {
         cameraDistance -= (e->y()/2 - mouseY) * 0.02f;
         mouseY = e->y()/2;
-        //proj();
     }
     update();
 }
@@ -2059,12 +2036,6 @@ void OpenGlWidget::Shininess(int cl)
 
 void OpenGlWidget::InitSpecularParameters()
 {
-    /*
-    /// For drawing Filled Polygones :
-    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    glEnable(GL_VERTEX_PROGRAM_TWO_SIDE);
-    glEnable(GL_NORMALIZE);
-    */
     glFrontFace(GL_CCW);
     glEnable(GL_DEPTH_TEST);
     update();
