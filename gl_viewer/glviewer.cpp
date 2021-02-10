@@ -72,7 +72,6 @@ bool mouseRightDown;
 float mouseY;
 float cameraDistance;
 bool vboSupported, vboUsed;
-int drawMode = 0;
 QMatrix4x4 matrixProjectionx;
 // GLSL
 GLuint shaderprogramId = 0;                  // ID of GLSL program
@@ -1281,7 +1280,6 @@ static void plan()
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
-
 static void CreateShaderProgram()
 {
     const int MAX_LENGTH = 2048;
@@ -1299,11 +1297,6 @@ static void CreateShaderProgram()
 
     }
     fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
-
-    std::string stvert=vertexsource.toStdString();
-    std::string stfrag=fragmentsource.toStdString();
-    //c_str_vertex = stvert.c_str();
-    //c_str_fragment = stfrag.c_str();
 
     static const char *c_str_vertex =
             R"(
@@ -1457,7 +1450,6 @@ static void CreateShaderProgram()
        //return;
     }
 
-
     /* If we reached this point it means the vertex and fragment shaders compiled and are syntax error free. */
     /* We must link them together to make a GL shader program */
     /* GL shader programs are monolithic. It is a single piece made of 1 vertex shader and 1 fragment shader. */
@@ -1477,10 +1469,6 @@ static void CreateShaderProgram()
     /* At this stage, the vertex and fragment programs are inspected, optimized and a binary code is generated for the shader. */
     /* The binary code is uploaded to the GPU, if there is no error. */
     glLinkProgram(shaderprogramId);
-
-
-
-
     glGetProgramiv(shaderprogramId, GL_LINK_STATUS, (int *)&IsLinked);
     if(!IsLinked)
     {
@@ -1500,9 +1488,6 @@ static void CreateShaderProgram()
     }
     /* Load the shader into the rendering pipeline */
     glUseProgram(shaderprogramId);
-
-
-
 
     uniformMatrixModelView           = glGetUniformLocation(shaderprogramId, "matrixModelView");
     uniformMatrixModelViewProjection = glGetUniformLocation(shaderprogramId, "matrixModelViewProjection");
@@ -1572,21 +1557,7 @@ void OpenGlWidget::LoadShadersFiles()
     }
     CreateShaderProgram();
 }
-/*
-static void LoadShaderFiles()
-{
-    std::ifstream vertexshaderfile("gl_viewer/shaders/vertexshader.txt");
-    std::string vertexshaderfilecontents((std::istreambuf_iterator<char>(vertexshaderfile)),
-        std::istreambuf_iterator<char>());
-    c_str_vertex=vertexshaderfilecontents.c_str();
 
-    std::ifstream fragmentshaderfile(":/gl_viewer/shaders/fragmentshader.txt");
-    std::string fragmentshaderfilecontents((std::istreambuf_iterator<char>(fragmentshaderfile)),
-        std::istreambuf_iterator<char>());
-    c_str_fragment=fragmentshaderfilecontents.c_str();
-    CreateShaderProgram();
-}
-*/
 void initLights()
 {
     /*
@@ -1609,34 +1580,10 @@ void initLights()
 
 void initGL()
 {
-    //glShadeModel(GL_SMOOTH);                    // shading mathod: GL_SMOOTH or GL_FLAT
-
-    // enable /disable features
-    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_LIGHTING);
-
-    /////****************
-    /// For drawing Filled Polygones :
-    //glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-    //glEnable(GL_VERTEX_PROGRAM_TWO_SIDE);
-    //glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
-    //glEnable(GL_NORMALIZE);
     glFrontFace(GL_CCW);
-
     glEnable(GL_DEPTH_TEST);
-    //////*************
-
-     // track material ambient and diffuse from surface color, call it before glEnable(GL_COLOR_MATERIAL)
-    //glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-    //glEnable(GL_COLOR_MATERIAL);
-
     glClearColor(0, 0, 0, 0);                   // background color
-    //glClearStencil(0);                          // clear stencil buffer
-    //glClearDepth(1.0f);                         // 0 is near, 1 is far
-    //glDepthFunc(GL_LEQUAL);
-
-    initLights();
 }
 ///////////////////////////////////////////////////////////////////////////////
 // initialize global variables
@@ -1645,14 +1592,9 @@ bool initSharedMem()
 {
     screenWidth = SCREEN_WIDTH;
     screenHeight = SCREEN_HEIGHT;
-
     mouseLeftDown = mouseRightDown = false;
     mouseY = 0;
-
-    //cameraAngleX = cameraAngleY = 0.0f;
     cameraDistance = CAMERA_DISTANCE;
-
-    drawMode = 0; // 0:fill, 1: wireframe, 2:points
 
     return true;
 }
