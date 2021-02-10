@@ -1537,7 +1537,6 @@ void initGL()
 {
     glEnable(GL_DEPTH_TEST);
     glFrontFace(GL_CCW);
-    glEnable(GL_DEPTH_TEST);
     glClearColor(0, 0, 0, 0);                   // background color
 }
 ///////////////////////////////////////////////////////////////////////////////
