@@ -91,7 +91,6 @@ GLint uniformLightPosition;
 GLint uniformLightAmbient;
 GLint uniformLightDiffuse;
 GLint uniformLightSpecular;
-GLint uniformMap0;
 GLint attribVertexPosition;
 GLint attribVertexNormal;
 GLint attribVertexColor;
@@ -1325,7 +1324,6 @@ static void CreateShaderProgram()
             // varyings (output)
             varying vec3 esVertex, esNormal;
             varying vec4 color;
-            //varying vec2 texCoord0;
             void main()
             {
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
@@ -1348,12 +1346,10 @@ static void CreateShaderProgram()
             uniform vec4 gridColor;
             uniform int thereisRGBA;
             uniform int drawgridColor;
-
             uniform vec4 lightPosition;             // should be in the eye space
             uniform vec4 lightAmbient;              // light ambient color
             uniform vec4 lightDiffuse;              // light diffuse color
             uniform vec4 lightSpecular;             // light specular color
-            uniform sampler2D map0;                 // texture map #1
             // varyings
             varying vec3 esVertex, esNormal;
             varying vec4 color;
@@ -1520,7 +1516,6 @@ static void CreateShaderProgram()
     uniformGridColor                 = glGetUniformLocation(shaderprogramId, "gridColor");
     uniformThereisRGBA               = glGetUniformLocation(shaderprogramId, "thereisRGBA");
     uniformdrawgridColor             = glGetUniformLocation(shaderprogramId, "drawgridColor");
-    uniformMap0                      = glGetUniformLocation(shaderprogramId, "map0");
     attribVertexPosition             = glGetAttribLocation(shaderprogramId, "vertexPosition");
     attribVertexNormal               = glGetAttribLocation(shaderprogramId, "vertexNormal");
     attribVertexColor                = glGetAttribLocation(shaderprogramId, "vertexColor");
@@ -1542,8 +1537,6 @@ static void CreateShaderProgram()
     glUniform4fv(uniformGridColor, 1, gridcol);
     glUniform1i(uniformThereisRGBA, 1);
     glUniform1i(uniformdrawgridColor, 0);
-    glUniform1i(uniformMap0, 0);
-
     // unbind GLSL
     glUseProgram(0);
 
