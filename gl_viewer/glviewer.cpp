@@ -992,23 +992,18 @@ void proj()
 {
     // Calculate aspect ratio
     qreal aspect = 1;//qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
-
     // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
     const qreal zNear = 0.01, zFar = 50.0, fov = 60.0;
-
     // Reset projection
     matrixProjectionx.setToIdentity();
-
     // Set perspective projection
     matrixProjectionx.perspective(fov, aspect, zNear, zFar);
-
 }
 
 void OpenGlWidget::resizeGL(int newwidth, int newheight)
 {
     screenWidth = newwidth;
     screenHeight = newheight;
-    //proj();
 }
 
 OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
@@ -1308,16 +1303,9 @@ static void CreateShaderProgram()
     /* Associate the source code buffers with each handle */
     glShaderSource(vertexshader, 1, &c_str_vertex, NULL);
 
-    /* Free the temporary allocated memory */
-    //delete(c_str_fragment);
-    //free(fragmentSource);
-    /*
-
-*/
     /* Compile our shader objects */
     glCompileShader(vertexshader);
     glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
-
         if(IsCompiled_VS==GL_FALSE)
         {
            QMessageBox msgBox;
@@ -1471,18 +1459,15 @@ static void CopyData(ObjectProperties *scene)
     if(firstaction==0)
     {
         glGenVertexArrays(1, &vao);
-        //glDeleteBuffers(2, vbo);
         vbo[0]=vbo[1]=0;
         glGenBuffers(2, vbo);
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
         glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+24)),scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
-
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
@@ -1490,18 +1475,15 @@ static void CopyData(ObjectProperties *scene)
         glEnableVertexAttribArray(attribVertexColor);
         glEnableVertexAttribArray(attribVertexNormal);
         glEnableVertexAttribArray(attribVertexPosition);
-
         // set attrib arrays using glVertexAttribPointer()
         glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
         glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
         glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
-
         previousVertxNumber = scene->VertxNumber;
         previousPolyNumberNbPolygnNbVertexPtMin = (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         firstaction++;
     }
     else{
-
         if(scene->VertxNumber>previousVertxNumber)
         {
             glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+24)), scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
@@ -1512,7 +1494,6 @@ static void CopyData(ObjectProperties *scene)
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float)*10*(scene->VertxNumber+(12+60+24)), scene->ArrayNorVer_localPt);
             previousVertxNumber = scene->VertxNumber;
         }
-
         if((scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize)>previousPolyNumberNbPolygnNbVertexPtMin)
         {
            glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
@@ -1524,7 +1505,6 @@ static void CopyData(ObjectProperties *scene)
             glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0, sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt);
             previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         }
-
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
@@ -1532,7 +1512,6 @@ static void CopyData(ObjectProperties *scene)
         glEnableVertexAttribArray(attribVertexColor);
         glEnableVertexAttribArray(attribVertexNormal);
         glEnableVertexAttribArray(attribVertexPosition);
-
         // set attrib arrays using glVertexAttribPointer()
         glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
         glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
@@ -1555,16 +1534,12 @@ static void draw(ObjectProperties *scene)
         CopyData(scene);
         scene->componentsinfos.Interleave = false;
     }
-
     // clear buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     // set modelview matrix
     QMatrix4x4 matrixViewx;
-
     matrixViewx.translate(0.0, 0.0, -cameraDistance);
     matrixViewx.rotate(rotation);
-
     matrixViewx.rotate(270,1.0,0.0,0.0);
     matrixViewx.rotate(225,0.0,0.0,1.0);
     matrixViewx.rotate(-29,1.0,-1.0,0.0);
@@ -1581,22 +1556,18 @@ static void draw(ObjectProperties *scene)
     // bind VBOs
     glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-
     // activate attribs
     glEnableVertexAttribArray(attribVertexColor);
     glEnableVertexAttribArray(attribVertexNormal);
     glEnableVertexAttribArray(attribVertexPosition);
-
     // set attrib arrays using glVertexAttribPointer()
     size_t cOffset = 0;
     size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
     size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-
     // set attrib arrays using glVertexAttribPointer()
     glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
     glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
     glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
-
     // Blend Effect activation:
     if (scene->transparency == 1)
         glDepthMask(GL_FALSE);
