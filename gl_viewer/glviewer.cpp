@@ -1031,7 +1031,6 @@ void OpenGlWidget::resizeGL(int newwidth, int newheight)
 
 OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
 {
-    //setAutoBufferSwap(true);
     OpenGlWidget::context();
     makeCurrent();
     static int NBGlWindow = 0;
@@ -1076,19 +1075,6 @@ static void DrawAxe()
     glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
     // Head of the Z Axe:
     glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
-    /*
-    glColor3f(1.0, 0.0, 0.0);
-    glRasterPos3i(410, 10, 10);
-    glCallLists(strlen("X"), GL_UNSIGNED_BYTE, "X");
-
-    glColor3f(0.0, 1.0, 0.0);
-    glRasterPos3i(10, 410, 10);
-    glCallLists(strlen("Y"), GL_UNSIGNED_BYTE, "Y");
-
-    glColor3f(0.0, 0.0, 1.0);
-    glRasterPos3i(10, 10, 410);
-    glCallLists(strlen("Z"), GL_UNSIGNED_BYTE, "Z");
-    */
 }
 
 static void DrawNormals(ObjectProperties *)
@@ -1144,12 +1130,6 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
     {
         size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
         glLineWidth(0.3);
-        /*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(
-            GL_LINE,
-            int(3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]),
-            GL_UNSIGNED_INT, (void *)Offset0);
-            */
         for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]); i += 3)
         {
             glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset0));
@@ -1164,12 +1144,6 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
                                                  .NbTrianglesVerifyCND[compindex] +
                                                  start_triangle)*sizeof(GL_FLOAT);
         glLineWidth(0.3);
-        /*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(
-            GL_LINE,
-            int(3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]),
-            GL_UNSIGNED_INT,(void *)Offset1);
-            */
         for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]); i += 3)
         {
             glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset1));
@@ -1182,12 +1156,6 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
         size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
                           scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])+start_triangle)*sizeof( GL_FLOAT);
         glLineWidth(4.0);
-        /*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(
-            GL_LINE,
-            int(3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]),
-            GL_UNSIGNED_INT,(void *)Offset2);
-            */
         for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]); i += 3)
         {
             glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset2));
@@ -1203,8 +1171,6 @@ static void DrawMeshIso(ObjectProperties *scene)
     glUniform4fv(uniformGridColor, 1, scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glLineWidth(0.3);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    //glDrawElements(GL_LINE_LOOP, int(scene->PolyNumber), GL_UNSIGNED_INT, (void *)0);
     for (uint i = 0; i < scene->PolyNumber; i += 3)
     {
         Offset = st*sizeof( GL_FLOAT);
@@ -1219,7 +1185,6 @@ static void DrawMinimalTopology(ObjectProperties *scene)
     glUniform4fv(uniformGridColor, 1,scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glLineWidth(0.4);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     uint st = scene->PolyNumber;
     uint polysize=0;
     size_t Offset;
@@ -1257,7 +1222,6 @@ static void CreateShaderProgram()
     if (!shaderValid)
     {
         std::cout << "Could not create Vertex Shader!";
-
     }
     fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -1376,12 +1340,9 @@ static void CreateShaderProgram()
         {
            QMessageBox msgBox;
            glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
-
            // The maxLength includes the NULL character
            vertexInfoLog = (char *)malloc(maxLength);
-
            glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
-
            std::string vertexInfoLogString = std::string(vertexInfoLog);
            msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
            msgBox.adjustSize();
@@ -1391,8 +1352,6 @@ static void CreateShaderProgram()
            //free(vertexInfoLog);
            //return;
         }
-
-
     glShaderSource(fragmentshader, 1, &c_str_fragment, NULL);
     glCompileShader(fragmentshader);
     glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &IsCompiled_FS);
@@ -1400,35 +1359,27 @@ static void CreateShaderProgram()
     {
         QMessageBox msgBox;
        glGetShaderiv(fragmentshader, GL_INFO_LOG_LENGTH, &maxLength);
-
        /* The maxLength includes the NULL character */
        fragmentInfoLog = (char *)malloc(maxLength);
-
        glGetShaderInfoLog(fragmentshader, maxLength, &maxLength, fragmentInfoLog);
-
        std::string vertexInfoLogString = std::string(fragmentInfoLog);
        msgBox.setText("Error : " +QString::fromStdString(std::string(fragmentInfoLog)));
        msgBox.adjustSize();
        msgBox.exec();
-
        //return;
     }
-
     /* If we reached this point it means the vertex and fragment shaders compiled and are syntax error free. */
     /* We must link them together to make a GL shader program */
     /* GL shader programs are monolithic. It is a single piece made of 1 vertex shader and 1 fragment shader. */
     /* Assign our program handle a "name" */
     shaderprogramId = glCreateProgram();
-
     /* Attach our shaders to our program */
     glAttachShader(shaderprogramId, vertexshader);
     glAttachShader(shaderprogramId, fragmentshader);
-
     /* Bind attribute index 0 (coordinates) to in_Position and attribute index 1 (color) to in_Color */
     /* Attribute locations must be setup before calling glLinkProgram. */
     glBindAttribLocation(shaderprogramId, 0, "in_Position");
     glBindAttribLocation(shaderprogramId, 1, "in_Color");
-
     /* Link our program */
     /* At this stage, the vertex and fragment programs are inspected, optimized and a binary code is generated for the shader. */
     /* The binary code is uploaded to the GPU, if there is no error. */
@@ -1438,13 +1389,10 @@ static void CreateShaderProgram()
     {
        /* Noticed that glGetProgramiv is used to get the length for a shader program, not glGetShaderiv. */
        glGetProgramiv(shaderprogramId, GL_INFO_LOG_LENGTH, &maxLength);
-
        /* The maxLength includes the NULL character */
        shaderProgramInfoLog = (char *)malloc(maxLength);
-
        /* Notice that glGetProgramInfoLog, not glGetShaderInfoLog. */
        glGetProgramInfoLog(shaderprogramId, maxLength, &maxLength, shaderProgramInfoLog);
-
        /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
        /* In this simple program, we'll just leave */
        //free(shaderProgramInfoLog);
@@ -1452,7 +1400,6 @@ static void CreateShaderProgram()
     }
     /* Load the shader into the rendering pipeline */
     glUseProgram(shaderprogramId);
-
     uniformMatrixModelView           = glGetUniformLocation(shaderprogramId, "matrixModelView");
     uniformMatrixModelViewProjection = glGetUniformLocation(shaderprogramId, "matrixModelViewProjection");
     uniformMatrixNormal              = glGetUniformLocation(shaderprogramId, "matrixNormal");
@@ -1469,13 +1416,10 @@ static void CreateShaderProgram()
     attribVertexPosition             = glGetAttribLocation(shaderprogramId, "vertexPosition");
     attribVertexNormal               = glGetAttribLocation(shaderprogramId, "vertexNormal");
     attribVertexColor                = glGetAttribLocation(shaderprogramId, "vertexColor");
-
-
     glUniform4fv(uniformLightPosition, 1, lightPosition);
     glUniform4fv(uniformLightAmbient, 1, lightAmbient);
     glUniform4fv(uniformLightDiffuse, 1, lightDiffuse);
     glUniform4fv(uniformLightSpecular, 1, lightSpecular);
-
     glUniform4fv(uniformFrontColor, 1, frontColor);
     glUniform4fv(uniformBackColor, 1, backColor);
     glUniform4fv(uniformGridColor, 1, gridcol);
@@ -1484,7 +1428,6 @@ static void CreateShaderProgram()
     glUniform1i(uniformdrawgridColor, 0);
     // unbind GLSL
     glUseProgram(0);
-
     // check GLSL status
     int linkStatus;
     glGetProgramiv(shaderprogramId, GL_LINK_STATUS, &linkStatus);
@@ -1503,20 +1446,6 @@ static void CreateShaderProgram()
 
 void OpenGlWidget::LoadShadersFiles()
 {
-    /*
-    QFile vertexshadfile(":/gl_viewer/shaders/vertexshader.txt");
-    QFile fragmentshadfile(":/gl_viewer/shaders/fragmentshader.txt");
-    if (vertexshadfile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        vertexsource = vertexshadfile.readAll();
-        vertexshadfile.close();
-    }
-    if (fragmentshadfile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        fragmentsource = fragmentshadfile.readAll();
-        fragmentshadfile.close();
-    }
-    */
     CreateShaderProgram();
 }
 
