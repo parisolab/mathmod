@@ -30,9 +30,7 @@ qreal angularSpeed = 0;
 QQuaternion rotation;
 QQuaternion oldRotation;
 qreal acc;
-//Matrix4 matrixView2;
 QVector3D n;
-//Matrix4 matrixRotView;
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
@@ -41,29 +39,19 @@ static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
 static GLfloat difX, difY, difZ;
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
-/* This is a handle to the shader program */
-//GLuint shaderprogramId;
-/* These pointers will receive the contents of our shader source code files */
 QString vertexsource, fragmentsource;
-/* These are handles used to reference the shaders */
 GLuint vertexshader, fragmentshader;
 float wh=0.6;
 static bool PutObjectInsideCubeOk=false;
-#include<string>
-#include<iostream>
-#include <fstream>
-
-
 int IsCompiled_VS, IsCompiled_FS;
-    int IsLinked;
-    int maxLength;
+int IsLinked;
+int maxLength;
 char *vertexInfoLog;
 char *fragmentInfoLog;
 char *shaderProgramInfoLog;
-
-// constants
-const int   SCREEN_WIDTH    = 600;
-const int   SCREEN_HEIGHT   = 600;
+GLuint vao, vbo[2];
+const int SCREEN_WIDTH    = 600;
+const int SCREEN_HEIGHT   = 600;
 const float CAMERA_DISTANCE = 1.4f;
 int screenWidth;
 int screenHeight;
@@ -73,17 +61,14 @@ float mouseY;
 float cameraDistance;
 bool vboSupported, vboUsed;
 QMatrix4x4 matrixProjectionx;
-// GLSL
-GLuint shaderprogramId = 0;                  // ID of GLSL program
+GLuint shaderprogramId = 0;
 bool glslSupported;
-
 GLint uniformFrontColor;
 GLint uniformBackColor;
 GLint uniformGridColor;
 GLint uniformThereisRGBA;
 GLfloat uniformShininess;
 GLint uniformdrawgridColor;
-
 GLint uniformMatrixModelView;
 GLint uniformMatrixModelViewProjection;
 GLint uniformMatrixNormal;
@@ -107,15 +92,12 @@ int shininessVal=120;
 static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
-
                               5.0f*wh/4.0f, 0.0, 0.0, 95.0f*wh/80.0f, 95.0f*wh/4000.0f, 0.0,
                               95.0f*wh/80.0f, 0.0,  95.0f*wh/4000.0f,95.0f*wh/80.0f, -95.0f*wh/4000.0f, 0.0,
                               95.0f*wh/80.0f, 0.0,  -95.0f*wh/4000.0f,95.0f*wh/80.0f, 95.0f*wh/4000.0f, 0.0,
-
                                0.0, 5.0f*wh/4.0f, 0.0,95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
                                0.0, 95.0f*wh/80.0f, 95.0f*wh/4000.0f,-95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
                                0.0, 95.0f*wh/80.0f, -95.0f*wh/4000.0f,95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
-
                                0.0, 0.0, 5.0f*wh/4.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
                                0.0, 95.0f*wh/4000.0f, 95.0f*wh/80.0f,-95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
                                0.0, -95.0f*wh/4000.0f, 95.0f*wh/80.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f
@@ -1480,9 +1462,6 @@ static void InitialOperations(ObjectProperties *)
         proj();
     }
 }
-
-/* Create handles for our Vertex Array Object and two Vertex Buffer Objects */
-GLuint vao, vbo[2];
 
 static void CopyData(ObjectProperties *scene)
 {
