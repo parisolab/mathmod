@@ -747,21 +747,18 @@ void OpenGlWidget::redSpec(int cl)
 {
     lightSpecular[0] = (cl/ 100.0f);
     update();
-    //LocalScene.specReflection[0] = float(cl / 100.0);
 }
 
 void OpenGlWidget::greenSpec(int cl)
 {
     lightSpecular[1] = (cl/ 100.0f);
     update();
-    //LocalScene.specReflection[1] = float(cl / 100.0);
 }
 
 void OpenGlWidget::blueSpec(int cl)
 {
     lightSpecular[2] = (cl/ 100.0f);
     update();
-    //LocalScene.specReflection[2] = float(cl / 100.0);
 }
 
 static void drawCube()
@@ -868,14 +865,11 @@ void OpenGlWidget::smoothline()
     /// For drawing Lines :
     if (LocalScene.smoothline == 1)
     {
-        //glEnable(GL_LINE_SMOOTH);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        //glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
     }
     else
     {
-        //glDisable(GL_LINE_SMOOTH);
         glDisable(GL_BLEND);
     }
     update();
@@ -1014,7 +1008,6 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
 
 void proj()
 {
-    //int maxwindow= std::min(screenWidth, screenHeight);
     // Calculate aspect ratio
     qreal aspect = 1;//qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
 
