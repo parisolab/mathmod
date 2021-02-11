@@ -40,7 +40,6 @@ public:
     void updateGL();
     void updateGLspectrale(float *);
     void updateThreads(int *);
-    void updateGLshininess(int);
 public slots:
     void fill();
     void iso_infos();

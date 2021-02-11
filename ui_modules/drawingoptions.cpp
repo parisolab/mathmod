@@ -5015,7 +5015,7 @@ void DrawingOptions::on_red_Specular_valueChanged(int value)
         ui.blue_Specular->blockSignals(false);
         MathmodRef->ui.glWidget->blueSpec(value);
     }
-    MathmodRef->ui.glWidget->InitSpecularParameters();
+    //MathmodRef->ui.glWidget->InitSpecularParameters();
 }
 
 void DrawingOptions::on_green_Specular_valueChanged(int value)
@@ -5035,7 +5035,7 @@ void DrawingOptions::on_green_Specular_valueChanged(int value)
         ui.blue_Specular->blockSignals(false);
         MathmodRef->ui.glWidget->blueSpec(value);
     }
-    MathmodRef->ui.glWidget->InitSpecularParameters();
+    //MathmodRef->ui.glWidget->InitSpecularParameters();
 }
 
 void DrawingOptions::on_blue_Specular_valueChanged(int value)
@@ -5055,7 +5055,7 @@ void DrawingOptions::on_blue_Specular_valueChanged(int value)
         ui.red_Specular->blockSignals(false);
         MathmodRef->ui.glWidget->redSpec(value);
     }
-    MathmodRef->ui.glWidget->InitSpecularParameters();
+    //MathmodRef->ui.glWidget->InitSpecularParameters();
 }
 
 void DrawingOptions::on_transparent_Specular_valueChanged(int value)

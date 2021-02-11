@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -81,6 +81,7 @@ GLint uniformFrontColor;
 GLint uniformBackColor;
 GLint uniformGridColor;
 GLint uniformThereisRGBA;
+GLfloat uniformShininess;
 GLint uniformdrawgridColor;
 
 GLint uniformMatrixModelView;
@@ -95,6 +96,14 @@ GLint attribVertexNormal;
 GLint attribVertexColor;
 GLint attribVertexTexCoord;
 float gridcol[4]  ={0.4f, 0.4f, 0.4f, 0.9f};
+// set uniform values
+float lightPosition[] = {0, 0, 10, 0};
+float lightAmbient[]  = {0.4f, 0.4f, 0.4f, 0.1};
+float lightDiffuse[]  = {1.0f, 1.0f, 1.0f, 1};
+float lightSpecular[] = {0.5f, 0.5f, 0.5f, 0.1};
+float frontColor[] = {0.8f, 0.6f, 0.1, 1};
+float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
+int shininessVal=120;
 static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
@@ -736,17 +745,23 @@ void OpenGlWidget::colorstypeParam(int c)
 
 void OpenGlWidget::redSpec(int cl)
 {
-    LocalScene.specReflection[0] = float(cl / 100.0);
+    lightSpecular[0] = (cl/ 100.0f);
+    update();
+    //LocalScene.specReflection[0] = float(cl / 100.0);
 }
 
 void OpenGlWidget::greenSpec(int cl)
 {
-    LocalScene.specReflection[1] = float(cl / 100.0);
+    lightSpecular[1] = (cl/ 100.0f);
+    update();
+    //LocalScene.specReflection[1] = float(cl / 100.0);
 }
 
 void OpenGlWidget::blueSpec(int cl)
 {
-    LocalScene.specReflection[2] = float(cl / 100.0);
+    lightSpecular[2] = (cl/ 100.0f);
+    update();
+    //LocalScene.specReflection[2] = float(cl / 100.0);
 }
 
 static void drawCube()
@@ -1292,12 +1307,13 @@ static void CreateShaderProgram()
             uniform vec4 frontColor;
             uniform vec4 backColor;
             uniform vec4 gridColor;
-            uniform int thereisRGBA;
-            uniform int drawgridColor;
             uniform vec4 lightPosition;             // should be in the eye space
             uniform vec4 lightAmbient;              // light ambient color
             uniform vec4 lightDiffuse;              // light diffuse color
-            uniform vec4 lightSpecular;             // light specular color
+            uniform vec4 lightSpecular;
+            uniform int thereisRGBA;
+            uniform int drawgridColor;
+            uniform float shininess;         // light specular color
             // varyings
             varying vec3 esVertex, esNormal;
             varying vec4 color;
@@ -1344,7 +1360,7 @@ static void CreateShaderProgram()
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += (lightDiffuse.rgb,1.0) * color1 * dotNL;              // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
-                fragColor += vec4(pow(dotNH, 128.0) * lightSpecular.rgb,1.0) * color1; // add specular
+                fragColor += vec4(pow(dotNH, shininess) * lightSpecular) * color1; // add specular
                 // set frag color
                 gl_FragColor = fragColor;  // keep opaque=1
             }
@@ -1455,18 +1471,13 @@ static void CreateShaderProgram()
     uniformBackColor                 = glGetUniformLocation(shaderprogramId, "backColor");
     uniformGridColor                 = glGetUniformLocation(shaderprogramId, "gridColor");
     uniformThereisRGBA               = glGetUniformLocation(shaderprogramId, "thereisRGBA");
+    uniformShininess                 = glGetUniformLocation(shaderprogramId, "shininess");
     uniformdrawgridColor             = glGetUniformLocation(shaderprogramId, "drawgridColor");
     attribVertexPosition             = glGetAttribLocation(shaderprogramId, "vertexPosition");
     attribVertexNormal               = glGetAttribLocation(shaderprogramId, "vertexNormal");
     attribVertexColor                = glGetAttribLocation(shaderprogramId, "vertexColor");
 
-    // set uniform values
-    float lightPosition[] = {0, 0, 10, 0};
-    float lightAmbient[]  = {0.3f, 0.3f, 0.3f, 1};
-    float lightDiffuse[]  = {0.7f, 0.7f, 0.7f, 1};
-    float lightSpecular[] = {1.0f, 1.0f, 1.0f, 1};
-    float frontColor[] = {0.8f, 0.6f, 0.1, 1};
-    float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
+
     glUniform4fv(uniformLightPosition, 1, lightPosition);
     glUniform4fv(uniformLightAmbient, 1, lightAmbient);
     glUniform4fv(uniformLightDiffuse, 1, lightDiffuse);
@@ -1475,6 +1486,7 @@ static void CreateShaderProgram()
     glUniform4fv(uniformFrontColor, 1, frontColor);
     glUniform4fv(uniformBackColor, 1, backColor);
     glUniform4fv(uniformGridColor, 1, gridcol);
+    glUniform1f(uniformShininess, 10.0f);
     glUniform1i(uniformThereisRGBA, 1);
     glUniform1i(uniformdrawgridColor, 0);
     // unbind GLSL
@@ -1498,6 +1510,7 @@ static void CreateShaderProgram()
 
 void OpenGlWidget::LoadShadersFiles()
 {
+    /*
     QFile vertexshadfile(":/gl_viewer/shaders/vertexshader.txt");
     QFile fragmentshadfile(":/gl_viewer/shaders/fragmentshader.txt");
     if (vertexshadfile.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -1510,27 +1523,8 @@ void OpenGlWidget::LoadShadersFiles()
         fragmentsource = fragmentshadfile.readAll();
         fragmentshadfile.close();
     }
+    */
     CreateShaderProgram();
-}
-
-void initLights()
-{
-    /*
-    // set up light colors (ambient, diffuse, specular)
-    GLfloat lightKa[] = {.3f, .3f, .3f, 1.0f};  // ambient light
-    GLfloat lightKd[] = {.7f, .7f, .7f, 1.0f};  // diffuse light
-    GLfloat lightKs[] = {1, 1, 1, 1};
-    // specular light
-    glLightfv(GL_LIGHT0, GL_AMBIENT, lightKa);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightKd);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, lightKs);
-
-    // position the light
-    float lightPos[4] = {0, 0, 10, 0}; // directional light
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    glEnable(GL_LIGHT0);
-                       */
-                       // MUST enable each light source after configuration                      // MUST enable each light source after configuration
 }
 
 void initGL()
@@ -1687,7 +1681,8 @@ static void draw(ObjectProperties *scene)
     glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixViewx.data());
     glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjectionx.data());
     glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormalx.data());
-
+    glUniform1f(uniformShininess, shininessVal);
+    glUniform4fv(uniformLightSpecular, 1, lightSpecular);
     // bind VBOs
     glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
@@ -2017,25 +2012,24 @@ void OpenGlWidget::transparence(bool trs)
     }
     else
         glDisable(GL_BLEND);
-
     update();
 }
 
 void OpenGlWidget::transSpec(int cl)
 {
-    LocalScene.specReflection[3] = (cl / 100.0f);
-    InitSpecularParameters();
+    lightSpecular[3] = (cl/ 100.0f);
+    update();
 }
 
 void OpenGlWidget::Shininess(int cl)
 {
-    LocalScene.shininess = cl;
-    InitSpecularParameters();
+    shininessVal= GLfloat(cl);
+    update();
 }
 
 void OpenGlWidget::InitSpecularParameters()
 {
-    glFrontFace(GL_CCW);
     glEnable(GL_DEPTH_TEST);
+    glFrontFace(GL_CCW);
     update();
 }

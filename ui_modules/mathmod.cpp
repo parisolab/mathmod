@@ -379,10 +379,3 @@ void MathMod::updateThreads(int *thr)
         (ui.glWidget)->ParObjet->UpdateThredsNumber(uint(thr[0]));
     }
 }
-
-//++++++++++++++++++++++++++++++++++++++++
-void MathMod::updateGLshininess(int shin)
-{
-    (ui.glWidget)->LocalScene.shininess = shin;
-    (ui.glWidget)->update();
-}
