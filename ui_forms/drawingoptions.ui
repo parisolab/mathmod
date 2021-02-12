@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>499</width>
-    <height>537</height>
+    <width>420</width>
+    <height>692</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -2178,152 +2178,6 @@ p, li { white-space: pre-wrap; }
                              <property name="spacing">
                               <number>2</number>
                              </property>
-                             <item row="0" column="1">
-                              <widget class="QComboBox" name="ycomboBox">
-                               <property name="palette">
-                                <palette>
-                                 <active>
-                                  <colorrole role="Text">
-                                   <brush brushstyle="SolidPattern">
-                                    <color alpha="255">
-                                     <red>0</red>
-                                     <green>170</green>
-                                     <blue>0</blue>
-                                    </color>
-                                   </brush>
-                                  </colorrole>
-                                  <colorrole role="PlaceholderText">
-                                   <brush brushstyle="NoBrush">
-                                    <color alpha="128">
-                                     <red>0</red>
-                                     <green>170</green>
-                                     <blue>0</blue>
-                                    </color>
-                                   </brush>
-                                  </colorrole>
-                                 </active>
-                                 <inactive>
-                                  <colorrole role="Text">
-                                   <brush brushstyle="SolidPattern">
-                                    <color alpha="255">
-                                     <red>0</red>
-                                     <green>170</green>
-                                     <blue>0</blue>
-                                    </color>
-                                   </brush>
-                                  </colorrole>
-                                  <colorrole role="PlaceholderText">
-                                   <brush brushstyle="NoBrush">
-                                    <color alpha="128">
-                                     <red>0</red>
-                                     <green>170</green>
-                                     <blue>0</blue>
-                                    </color>
-                                   </brush>
-                                  </colorrole>
-                                 </inactive>
-                                 <disabled>
-                                  <colorrole role="Text">
-                                   <brush brushstyle="SolidPattern">
-                                    <color alpha="255">
-                                     <red>120</red>
-                                     <green>120</green>
-                                     <blue>120</blue>
-                                    </color>
-                                   </brush>
-                                  </colorrole>
-                                  <colorrole role="PlaceholderText">
-                                   <brush brushstyle="NoBrush">
-                                    <color alpha="128">
-                                     <red>0</red>
-                                     <green>170</green>
-                                     <blue>0</blue>
-                                    </color>
-                                   </brush>
-                                  </colorrole>
-                                 </disabled>
-                                </palette>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <pointsize>12</pointsize>
-                                 <weight>75</weight>
-                                 <bold>true</bold>
-                                </font>
-                               </property>
-                               <property name="layoutDirection">
-                                <enum>Qt::LeftToRight</enum>
-                               </property>
-                               <item>
-                                <property name="text">
-                                 <string>Y</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>1</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>2</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>3</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>4</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>5</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>6</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>7</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>8</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>9</string>
-                                </property>
-                               </item>
-                               <item>
-                                <property name="text">
-                                 <string>10</string>
-                                </property>
-                               </item>
-                              </widget>
-                             </item>
-                             <item row="1" column="0">
-                              <spacer name="horizontalSpacer_7">
-                               <property name="orientation">
-                                <enum>Qt::Horizontal</enum>
-                               </property>
-                               <property name="sizeHint" stdset="0">
-                                <size>
-                                 <width>108</width>
-                                 <height>20</height>
-                                </size>
-                               </property>
-                              </spacer>
-                             </item>
                              <item row="0" column="0">
                               <widget class="QComboBox" name="xcomboBox">
                                <property name="palette">
@@ -2457,25 +2311,138 @@ p, li { white-space: pre-wrap; }
                                </item>
                               </widget>
                              </item>
-                             <item row="1" column="1">
-                              <widget class="QPushButton" name="Multiplier">
-                               <property name="text">
-                                <string>Generate</string>
+                             <item row="0" column="1">
+                              <widget class="QComboBox" name="ycomboBox">
+                               <property name="palette">
+                                <palette>
+                                 <active>
+                                  <colorrole role="Text">
+                                   <brush brushstyle="SolidPattern">
+                                    <color alpha="255">
+                                     <red>0</red>
+                                     <green>170</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
+                                  <colorrole role="PlaceholderText">
+                                   <brush brushstyle="NoBrush">
+                                    <color alpha="128">
+                                     <red>0</red>
+                                     <green>170</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
+                                 </active>
+                                 <inactive>
+                                  <colorrole role="Text">
+                                   <brush brushstyle="SolidPattern">
+                                    <color alpha="255">
+                                     <red>0</red>
+                                     <green>170</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
+                                  <colorrole role="PlaceholderText">
+                                   <brush brushstyle="NoBrush">
+                                    <color alpha="128">
+                                     <red>0</red>
+                                     <green>170</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
+                                 </inactive>
+                                 <disabled>
+                                  <colorrole role="Text">
+                                   <brush brushstyle="SolidPattern">
+                                    <color alpha="255">
+                                     <red>120</red>
+                                     <green>120</green>
+                                     <blue>120</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
+                                  <colorrole role="PlaceholderText">
+                                   <brush brushstyle="NoBrush">
+                                    <color alpha="128">
+                                     <red>0</red>
+                                     <green>170</green>
+                                     <blue>0</blue>
+                                    </color>
+                                   </brush>
+                                  </colorrole>
+                                 </disabled>
+                                </palette>
                                </property>
+                               <property name="font">
+                                <font>
+                                 <pointsize>12</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="layoutDirection">
+                                <enum>Qt::LeftToRight</enum>
+                               </property>
+                               <item>
+                                <property name="text">
+                                 <string>Y</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>1</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>2</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>3</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>4</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>5</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>6</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>7</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>8</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>9</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>10</string>
+                                </property>
+                               </item>
                               </widget>
-                             </item>
-                             <item row="1" column="2">
-                              <spacer name="horizontalSpacer_6">
-                               <property name="orientation">
-                                <enum>Qt::Horizontal</enum>
-                               </property>
-                               <property name="sizeHint" stdset="0">
-                                <size>
-                                 <width>108</width>
-                                 <height>20</height>
-                                </size>
-                               </property>
-                              </spacer>
                              </item>
                              <item row="0" column="2">
                               <widget class="QComboBox" name="zcomboBox">
@@ -2609,6 +2576,39 @@ p, li { white-space: pre-wrap; }
                                 </property>
                                </item>
                               </widget>
+                             </item>
+                             <item row="1" column="1">
+                              <widget class="QPushButton" name="Multiplier">
+                               <property name="text">
+                                <string>Generate</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item row="1" column="0">
+                              <spacer name="horizontalSpacer_7">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>108</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item row="1" column="2">
+                              <spacer name="horizontalSpacer_6">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>108</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
                              </item>
                             </layout>
                            </widget>
@@ -6825,8 +6825,27 @@ p, li { white-space: pre-wrap; }
               </property>
              </spacer>
             </item>
+            <item row="1" column="2">
+             <spacer name="horizontalSpacer_16">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>25</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item row="0" column="1">
              <widget class="QGroupBox" name="PredefinedSet">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
@@ -6854,6 +6873,12 @@ p, li { white-space: pre-wrap; }
                </property>
                <item row="0" column="0">
                 <widget class="QComboBox" name="PredefinedSets">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>150</width>
@@ -6941,161 +6966,6 @@ p, li { white-space: pre-wrap; }
               </layout>
              </widget>
             </item>
-            <item row="0" column="2">
-             <spacer name="horizontalSpacer_14">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>99</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="0">
-             <spacer name="horizontalSpacer_15">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>26</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="1">
-             <widget class="QGroupBox" name="PredefinedSet_2">
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="title">
-               <string/>
-              </property>
-              <layout class="QGridLayout" name="gridLayout_71">
-               <property name="leftMargin">
-                <number>2</number>
-               </property>
-               <property name="topMargin">
-                <number>2</number>
-               </property>
-               <property name="rightMargin">
-                <number>2</number>
-               </property>
-               <property name="bottomMargin">
-                <number>2</number>
-               </property>
-               <property name="spacing">
-                <number>2</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QComboBox" name="ParametersList">
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>350</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>12</pointsize>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="layoutDirection">
-                  <enum>Qt::LeftToRight</enum>
-                 </property>
-                 <property name="currentText">
-                  <string>Parameters List</string>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>Parameters List</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QPushButton" name="AddParam">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Add</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
-                <widget class="QPushButton" name="CutParam">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>9</pointsize>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Cut</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <spacer name="horizontalSpacer_16">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>25</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
             <item row="2" column="0" colspan="3">
              <widget class="QScrollArea" name="scrollArea">
               <property name="widgetResizable">
@@ -7106,7 +6976,7 @@ p, li { white-space: pre-wrap; }
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>285</width>
+                 <width>290</width>
                  <height>994</height>
                 </rect>
                </property>
@@ -7139,7 +7009,7 @@ p, li { white-space: pre-wrap; }
                     <bool>true</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -7168,17 +7038,11 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C1label_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
                       <property name="palette">
                        <palette>
@@ -7234,17 +7098,11 @@ p, li { white-space: pre-wrap; }
                     </item>
                     <item row="0" column="1">
                      <widget class="QLabel" name="C1labelMin_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
                       <property name="palette">
                        <palette>
@@ -7300,11 +7158,11 @@ p, li { white-space: pre-wrap; }
                     </item>
                     <item row="0" column="2">
                      <widget class="QLabel" name="label_6">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>20</height>
-                       </size>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
                       <property name="palette">
                        <palette>
@@ -7363,17 +7221,11 @@ p, li { white-space: pre-wrap; }
                     </item>
                     <item row="0" column="3">
                      <widget class="QLabel" name="C1labelMax_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
                       <property name="palette">
                        <palette>
@@ -7484,22 +7336,10 @@ p, li { white-space: pre-wrap; }
                     <item row="0" column="4">
                      <widget class="QLabel" name="C1labelMax_3">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>24</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>22</width>
-                        <height>16777215</height>
-                       </size>
                       </property>
                       <property name="font">
                        <font>
@@ -7558,18 +7398,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C1label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -7718,18 +7546,6 @@ p, li { white-space: pre-wrap; }
                     </item>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C2label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -7828,18 +7644,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C3label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -7963,18 +7767,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C4label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -8098,18 +7890,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C5label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -8233,18 +8013,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C6label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -8368,18 +8136,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C7label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -8503,18 +8259,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C8label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -8638,18 +8382,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C9label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -8773,18 +8505,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C10label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -8908,18 +8628,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C11label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9043,18 +8751,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C12label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9178,18 +8874,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C13label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9313,18 +8997,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C14label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9357,6 +9029,12 @@ p, li { white-space: pre-wrap; }
                     </item>
                     <item row="0" column="2">
                      <widget class="QScrollBar" name="C14ScrollBar">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -9448,18 +9126,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C15label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9583,18 +9249,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C16label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9718,18 +9372,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C17label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9853,18 +9495,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C18label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -9988,18 +9618,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C19label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -10123,18 +9741,6 @@ p, li { white-space: pre-wrap; }
                     </property>
                     <item row="0" column="0">
                      <widget class="QLabel" name="C20label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>90</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
                       <property name="frameShape">
                        <enum>QFrame::Box</enum>
                       </property>
@@ -10246,6 +9852,160 @@ p, li { white-space: pre-wrap; }
               </widget>
              </widget>
             </item>
+            <item row="0" column="2">
+             <spacer name="horizontalSpacer_14">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>99</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer_15">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>26</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <widget class="QGroupBox" name="PredefinedSet_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="title">
+               <string/>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_71">
+               <property name="leftMargin">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>2</number>
+               </property>
+               <property name="rightMargin">
+                <number>2</number>
+               </property>
+               <property name="bottomMargin">
+                <number>2</number>
+               </property>
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QComboBox" name="ParametersList">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>350</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="currentText">
+                  <string>Parameters List</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Parameters List</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QPushButton" name="AddParam">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Add</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QPushButton" name="CutParam">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                   <weight>50</weight>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Cut</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -10261,7 +10021,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>499</width>
+     <width>420</width>
      <height>24</height>
     </rect>
    </property>
