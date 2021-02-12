@@ -271,11 +271,7 @@ private slots:
     void on_comboBoxPigment_activated(int);
     void on_actionTrianglesWavefront_obj_triggered();
     void on_actionColorTrianglesWavefront_obj_triggered();
-    void on_OctavesScrollBar_valueChanged(int);
-    void on_LacunarityScrollBar_valueChanged(int);
-    void on_GainScrollBar_valueChanged(int);
     void on_ShowtextureScript_clicked();
-    void on_TurbulenceCheckBox_clicked();
     void on_pushButton_5_clicked();
     void on_C1ScrollBar_valueChanged(int);
     void on_C2ScrollBar_valueChanged(int);
