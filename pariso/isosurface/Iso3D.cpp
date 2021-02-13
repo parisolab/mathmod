@@ -20,6 +20,7 @@
 #include "TableMap.h"
 #include "Iso3D.h"
 #include "internalfunctions.cpp"
+#include <QElapsedTimer>
 
 static uint NbPolyMin;
 static Voxel *GridVoxelVarPt;

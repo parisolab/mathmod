@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
 #include "Model3D.h"
+#include <QElapsedTimer>
 
 static uint NbVertexTmp = 0;
 static std::vector<float>  ExtraDimensionVector;
