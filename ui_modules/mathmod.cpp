@@ -47,8 +47,10 @@ void MathMod::keyPressEvent(QKeyEvent *key)
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::resizeEvent(QResizeEvent *e)
 {
-    (ui.glWidget)->resizeEvent(e);
-    (ui.glWidget)->setFixedSize(e->size());
+    //(ui.glWidget)->makeCurrent();
+    //(ui.glWidget)->resizeEvent(e);
+    //(ui.glWidget)->InitialOperations(&LocalScene);
+    //(ui.glWidget)->resizeGL(e->size().width(), e->size().height());
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -356,7 +358,7 @@ void MathMod::Mesh()
     (ui.glWidget)->LocalScene.mesh *= -1;
     (ui.glWidget)->update();
 }
-
+/*
 //++++++++++++++++++++++++++++++++++++++++
 void MathMod::updateGLspectrale(float *spec)
 {
@@ -379,3 +381,4 @@ void MathMod::updateThreads(int *thr)
         (ui.glWidget)->ParObjet->UpdateThredsNumber(uint(thr[0]));
     }
 }
+*/

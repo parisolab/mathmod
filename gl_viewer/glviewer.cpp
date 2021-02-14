@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -50,8 +50,8 @@ char *vertexInfoLog;
 char *fragmentInfoLog;
 char *shaderProgramInfoLog;
 GLuint vao, vbo[2];
-const int SCREEN_WIDTH    = 600;
-const int SCREEN_HEIGHT   = 600;
+const int SCREEN_WIDTH    = 100;
+const int SCREEN_HEIGHT   = 100;
 const float CAMERA_DISTANCE = 1.4f;
 int screenWidth;
 int screenHeight;
@@ -901,93 +901,6 @@ void OpenGlWidget::stopRendering()
     glt.stop();
     glt.wait();
 }
-
-void OpenGlWidget::resizeEvent(QResizeEvent *)
-{
-}
-
-void OpenGlWidget::initializeGL()
-{
-}
-void OpenGlWidget::closeEvent(QCloseEvent *evt)
-{
-    stopRendering();
-    QOpenGLWidget::closeEvent(evt);
-}
-
-void OpenGlWidget::anim()
-{
-    LocalScene.anim *= -1;
-    if (LocalScene.anim == 1)
-        timer->start(latence, this);
-    else
-    {
-        oldRotation = rotation;
-        if (LocalScene.morph == -1)
-        stoptimer();
-    }
-}
-
-void OpenGlWidget::morph()
-{
-    LocalScene.morph *= -1;
-    FistTimecalibrate *= -1;
-
-    if (LocalScene.typedrawing == 1)
-    {
-        // Isosurfaces:
-        IsoObjet->masterthread->activeMorph = LocalScene.morph;
-        for (uint nbthreads = 0; nbthreads < IsoObjet->WorkerThreadsNumber - 1;
-                nbthreads++)
-            IsoObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
-        IsoObjet->IsoMorph();
-    }
-    else if (LocalScene.typedrawing == -1)
-    {
-        // Parametric surfaces:
-        ParObjet->masterthread->activeMorph = LocalScene.morph;
-        for (uint nbthreads = 0; nbthreads < ParObjet->WorkerThreadsNumber - 1;
-                nbthreads++)
-            ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
-        ParObjet->ParMorph();
-    }
-    else   // Pariso objects
-    {
-        // Parametric surfaces:
-        ParObjet->masterthread->activeMorph = LocalScene.morph;
-        for (uint nbthreads = 0; nbthreads < ParObjet->WorkerThreadsNumber - 1;
-                nbthreads++)
-            ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
-        ParObjet->ParMorph();
-        // Isosurfaces:
-        IsoObjet->masterthread->activeMorph = LocalScene.morph;
-        for (uint nbthreads = 0; nbthreads < IsoObjet->WorkerThreadsNumber - 1;
-                nbthreads++)
-            IsoObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
-        IsoObjet->IsoMorph();
-    }
-    if (LocalScene.morph == 1)
-        timer->start(latence, this);
-    else if (LocalScene.anim == -1)
-        stoptimer();
-}
-
-void OpenGlWidget::keyPressEvent(QKeyEvent *e)
-{
-    int key = e->key();
-    switch (key)
-    {
-    case Qt::Key_A:
-        glt.anim();
-        break;
-    case Qt::Key_P:
-        glt.morph();
-        initbox();
-        break;
-    }
-    glt.update();
-}
-
 void proj()
 {
     // Calculate aspect ratio
@@ -999,192 +912,15 @@ void proj()
     // Set perspective projection
     matrixProjectionx.perspective(fov, aspect, zNear, zFar);
 }
-
-void OpenGlWidget::resizeGL(int newwidth, int newheight)
+bool initSharedMem()
 {
-    screenWidth = newwidth;
-    screenHeight = newheight;
+    screenWidth = SCREEN_WIDTH;
+    screenHeight = SCREEN_HEIGHT;
+    mouseLeftDown = mouseRightDown = false;
+    mouseY = 0;
+    cameraDistance = CAMERA_DISTANCE;
+    return true;
 }
-
-OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
-{
-    OpenGlWidget::context();
-    makeCurrent();
-    static int NBGlWindow = 0;
-    PerlinNoise = new ImprovedNoise(4., 4., 4.);
-    latence = 10;
-    val1 = val2 = val3 = 0.0;
-    Vgrid = Ugrid = 50;
-    CutV = CutU = 0;
-    Xgrid = Ygrid = Zgrid = 40;
-    CutX = CutY = CutZ = 0;
-    IDGlWindow = NBGlWindow;
-    LocalScene.VertxNumber = 0;
-    FramesDir = "/home";
-    hauteur_fenetre = 2*wh;
-    timer = new QBasicTimer();
-    NBGlWindow++;
-}
-
-void OpenGlWidget::infosok()
-{
-    LocalScene.infos *= -1;
-}
-
-void OpenGlWidget::FillOk()
-{
-    LocalScene.fill *= -1;
-    update();
-}
-
-void OpenGlWidget::PrintInfos()
-{
-}
-
-static void DrawAxe()
-{
-    glLineWidth(1.0);
-    // Draw the three axes (lines without head)
-    glDrawArrays(GL_LINES,AxesStartIndex,6);
-    // Head of the X Axe:
-    glDrawArrays(GL_TRIANGLE_FAN,XStartIndex,6);
-    // Head of the Y Axe:
-    glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
-    // Head of the Z Axe:
-    glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
-}
-
-static void DrawNormals(ObjectProperties *)
-{
-    /*
-    uint j = 0;
-    glColor4f(0.8f, 0., 0.7f, 1.0);
-    for (uint i = 0; i < scene->PolyNumber; i += 4)
-    {
-        j = 10 * scene->PolyIndices_localPt[i];
-        glBegin(GL_LINES);
-        glVertex3f(scene->ArrayNorVer_localPt[j + 7],
-                   scene->ArrayNorVer_localPt[j + 8],
-                   scene->ArrayNorVer_localPt[j + 9]);
-        glVertex3f(scene->ArrayNorVer_localPt[j + 7] +
-                   40 * scene->ArrayNorVer_localPt[j + 4],
-                   scene->ArrayNorVer_localPt[j + 8] +
-                   40 * scene->ArrayNorVer_localPt[j + 5],
-                   scene->ArrayNorVer_localPt[j + 9] +
-                   40 * scene->ArrayNorVer_localPt[j + 6]);
-        glEnd();
-    }
-    */
-}
-
-void OpenGlWidget::Winitialize_GL()
-{
-    if (LocalScene.componentsinfos.updateviewer)
-    {
-        PutObjectInsideCube();
-        PutObjectInsideCubeOk=true;
-    }
-}
-
-void OpenGlWidget::UpdateGL()
-{
-    if (LocalScene.updategl)
-    {
-        Winitialize_GL();
-        update();
-    }
-    else
-        LocalScene.updategl = true;
-}
-
-static void DrawParisoCND(ObjectProperties *scene, uint compindex)
-{
-    uint idx = 0;
-    for (uint i = 0; i < compindex; i++)
-        idx += scene->componentsinfos.NbComponentsType[i];
-    int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
-    if (scene->cndoptions[3])
-    {
-        size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
-        glLineWidth(0.3);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]); i += 3)
-        {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset0));
-            Offset0+=(3*sizeof( GL_FLOAT));
-        }
-    }
-
-    if (scene->cndoptions[4])
-    {
-        size_t Offset1 = (3 * scene->componentsinfos
-                          .NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos
-                                                 .NbTrianglesVerifyCND[compindex] +
-                                                 start_triangle)*sizeof(GL_FLOAT);
-        glLineWidth(0.3);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]); i += 3)
-        {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset1));
-            Offset1+=(3*sizeof( GL_FLOAT));
-        }
-    }
-
-    if (scene->cndoptions[2])
-    {
-        size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
-                          scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])+start_triangle)*sizeof( GL_FLOAT);
-        glLineWidth(4.0);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]); i += 3)
-        {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset2));
-            Offset2+=(3*sizeof( GL_FLOAT));
-        }
-    }
-}
-
-static void DrawMeshIso(ObjectProperties *scene)
-{
-    size_t Offset = 0;
-    uint st = 0;
-    glUniform4fv(uniformGridColor, 1, scene->gridcol);
-    glUniform1i(uniformdrawgridColor, 1);
-    glLineWidth(0.3);
-    for (uint i = 0; i < scene->PolyNumber; i += 3)
-    {
-        Offset = st*sizeof( GL_FLOAT);
-        glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset));
-        st+=3;
-    }
-    glUniform1i(uniformdrawgridColor, 0);
-}
-
-static void DrawMinimalTopology(ObjectProperties *scene)
-{
-    glUniform4fv(uniformGridColor, 1,scene->gridcol);
-    glUniform1i(uniformdrawgridColor, 1);
-    glLineWidth(0.4);
-    uint st = scene->PolyNumber;
-    uint polysize=0;
-    size_t Offset;
-    for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
-    {
-        polysize = scene->PolyIndices_localPtMin[i];
-        Offset = st*sizeof( GL_FLOAT);
-        glDrawElements(
-            GL_LINE_LOOP,
-            polysize,
-            GL_UNSIGNED_INT,
-            (void *)(Offset));
-        st+=(polysize);
-    }
-    glUniform1i(uniformdrawgridColor, 0);
-}
-
-static void plan()
-{
-    glLineWidth(0.3);
-    glDrawArrays(GL_LINES,PlanStartIndex,60);
-}
-
 static void CreateShaderProgram()
 {
     const int MAX_LENGTH = 2048;
@@ -1426,16 +1162,6 @@ void initGL()
     glClearColor(0, 0, 0, 0);
 }
 
-bool initSharedMem()
-{
-    screenWidth = SCREEN_WIDTH;
-    screenHeight = SCREEN_HEIGHT;
-    mouseLeftDown = mouseRightDown = false;
-    mouseY = 0;
-    cameraDistance = CAMERA_DISTANCE;
-    return true;
-}
-
 static void InitialOperations(ObjectProperties *)
 {
     static int staticaction = 0;
@@ -1450,6 +1176,303 @@ static void InitialOperations(ObjectProperties *)
         proj();
     }
 }
+
+void OpenGlWidget::resizeGL(int newwidth, int newheight)
+{
+    //makeCurrent();
+    int max=std::max(newwidth, newheight);
+    screenWidth = max;
+    screenHeight = max;
+    proj();
+}
+
+void OpenGlWidget::resizeEvent(QResizeEvent *evt)
+{
+    /*
+    int max=std::max((evt->size()).width(), (evt->size()).width());
+    screenWidth = max;
+    screenHeight = max;
+    */
+    //glt.resizeViewport(evt->size());
+    //makeCurrent();
+    //screenWidth = (evt->size()).width();
+    //screenHeight = (evt->size()).height();
+    proj();
+
+    //update();
+    /*
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    initSharedMem();
+    initGL();
+    proj();*/
+    //InitialOperations(&LocalScene);
+}
+
+void OpenGlWidget::initializeGL()
+{
+}
+void OpenGlWidget::closeEvent(QCloseEvent *evt)
+{
+    stopRendering();
+    QOpenGLWidget::closeEvent(evt);
+}
+
+void OpenGlWidget::anim()
+{
+    LocalScene.anim *= -1;
+    if (LocalScene.anim == 1)
+        timer->start(latence, this);
+    else
+    {
+        oldRotation = rotation;
+        if (LocalScene.morph == -1)
+        stoptimer();
+    }
+}
+
+void OpenGlWidget::morph()
+{
+    LocalScene.morph *= -1;
+    FistTimecalibrate *= -1;
+
+    if (LocalScene.typedrawing == 1)
+    {
+        // Isosurfaces:
+        IsoObjet->masterthread->activeMorph = LocalScene.morph;
+        for (uint nbthreads = 0; nbthreads < IsoObjet->WorkerThreadsNumber - 1;
+                nbthreads++)
+            IsoObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+        IsoObjet->IsoMorph();
+    }
+    else if (LocalScene.typedrawing == -1)
+    {
+        // Parametric surfaces:
+        ParObjet->masterthread->activeMorph = LocalScene.morph;
+        for (uint nbthreads = 0; nbthreads < ParObjet->WorkerThreadsNumber - 1;
+                nbthreads++)
+            ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+        ParObjet->ParMorph();
+    }
+    else   // Pariso objects
+    {
+        // Parametric surfaces:
+        ParObjet->masterthread->activeMorph = LocalScene.morph;
+        for (uint nbthreads = 0; nbthreads < ParObjet->WorkerThreadsNumber - 1;
+                nbthreads++)
+            ParObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+        ParObjet->ParMorph();
+        // Isosurfaces:
+        IsoObjet->masterthread->activeMorph = LocalScene.morph;
+        for (uint nbthreads = 0; nbthreads < IsoObjet->WorkerThreadsNumber - 1;
+                nbthreads++)
+            IsoObjet->workerthreads[nbthreads].activeMorph = LocalScene.morph;
+        IsoObjet->IsoMorph();
+    }
+    if (LocalScene.morph == 1)
+        timer->start(latence, this);
+    else if (LocalScene.anim == -1)
+        stoptimer();
+}
+
+void OpenGlWidget::keyPressEvent(QKeyEvent *e)
+{
+    int key = e->key();
+    switch (key)
+    {
+    case Qt::Key_A:
+        glt.anim();
+        break;
+    case Qt::Key_P:
+        glt.morph();
+        initbox();
+        break;
+    }
+    glt.update();
+}
+
+
+
+OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
+{
+    OpenGlWidget::context();
+    makeCurrent();
+    static int NBGlWindow = 0;
+    PerlinNoise = new ImprovedNoise(4., 4., 4.);
+    latence = 10;
+    val1 = val2 = val3 = 0.0;
+    Vgrid = Ugrid = 50;
+    CutV = CutU = 0;
+    Xgrid = Ygrid = Zgrid = 40;
+    CutX = CutY = CutZ = 0;
+    IDGlWindow = NBGlWindow;
+    LocalScene.VertxNumber = 0;
+    FramesDir = "/home";
+    hauteur_fenetre = 2*wh;
+    timer = new QBasicTimer();
+    NBGlWindow++;
+}
+
+void OpenGlWidget::infosok()
+{
+    LocalScene.infos *= -1;
+}
+
+void OpenGlWidget::FillOk()
+{
+    LocalScene.fill *= -1;
+    update();
+}
+
+void OpenGlWidget::PrintInfos()
+{
+}
+
+static void DrawAxe()
+{
+    glLineWidth(1.0);
+    // Draw the three axes (lines without head)
+    glDrawArrays(GL_LINES,AxesStartIndex,6);
+    // Head of the X Axe:
+    glDrawArrays(GL_TRIANGLE_FAN,XStartIndex,6);
+    // Head of the Y Axe:
+    glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
+    // Head of the Z Axe:
+    glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
+}
+
+static void DrawNormals(ObjectProperties *)
+{
+    /*
+    uint j = 0;
+    glColor4f(0.8f, 0., 0.7f, 1.0);
+    for (uint i = 0; i < scene->PolyNumber; i += 4)
+    {
+        j = 10 * scene->PolyIndices_localPt[i];
+        glBegin(GL_LINES);
+        glVertex3f(scene->ArrayNorVer_localPt[j + 7],
+                   scene->ArrayNorVer_localPt[j + 8],
+                   scene->ArrayNorVer_localPt[j + 9]);
+        glVertex3f(scene->ArrayNorVer_localPt[j + 7] +
+                   40 * scene->ArrayNorVer_localPt[j + 4],
+                   scene->ArrayNorVer_localPt[j + 8] +
+                   40 * scene->ArrayNorVer_localPt[j + 5],
+                   scene->ArrayNorVer_localPt[j + 9] +
+                   40 * scene->ArrayNorVer_localPt[j + 6]);
+        glEnd();
+    }
+    */
+}
+
+void OpenGlWidget::Winitialize_GL()
+{
+    if (LocalScene.componentsinfos.updateviewer)
+    {
+        PutObjectInsideCube();
+        PutObjectInsideCubeOk=true;
+    }
+}
+
+void OpenGlWidget::UpdateGL()
+{
+    if (LocalScene.updategl)
+    {
+        Winitialize_GL();
+        update();
+    }
+    else
+        LocalScene.updategl = true;
+}
+
+static void DrawParisoCND(ObjectProperties *scene, uint compindex)
+{
+    uint idx = 0;
+    for (uint i = 0; i < compindex; i++)
+        idx += scene->componentsinfos.NbComponentsType[i];
+    int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
+    if (scene->cndoptions[3])
+    {
+        size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
+        glLineWidth(0.3);
+        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]); i += 3)
+        {
+            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset0));
+            Offset0+=(3*sizeof( GL_FLOAT));
+        }
+    }
+
+    if (scene->cndoptions[4])
+    {
+        size_t Offset1 = (3 * scene->componentsinfos
+                          .NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos
+                                                 .NbTrianglesVerifyCND[compindex] +
+                                                 start_triangle)*sizeof(GL_FLOAT);
+        glLineWidth(0.3);
+        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]); i += 3)
+        {
+            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset1));
+            Offset1+=(3*sizeof( GL_FLOAT));
+        }
+    }
+
+    if (scene->cndoptions[2])
+    {
+        size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
+                          scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])+start_triangle)*sizeof( GL_FLOAT);
+        glLineWidth(4.0);
+        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]); i += 3)
+        {
+            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset2));
+            Offset2+=(3*sizeof( GL_FLOAT));
+        }
+    }
+}
+
+static void DrawMeshIso(ObjectProperties *scene)
+{
+    size_t Offset = 0;
+    uint st = 0;
+    glUniform4fv(uniformGridColor, 1, scene->gridcol);
+    glUniform1i(uniformdrawgridColor, 1);
+    glLineWidth(0.3);
+    for (uint i = 0; i < scene->PolyNumber; i += 3)
+    {
+        Offset = st*sizeof( GL_FLOAT);
+        glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset));
+        st+=3;
+    }
+    glUniform1i(uniformdrawgridColor, 0);
+}
+
+static void DrawMinimalTopology(ObjectProperties *scene)
+{
+    glUniform4fv(uniformGridColor, 1,scene->gridcol);
+    glUniform1i(uniformdrawgridColor, 1);
+    glLineWidth(0.4);
+    uint st = scene->PolyNumber;
+    uint polysize=0;
+    size_t Offset;
+    for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+    {
+        polysize = scene->PolyIndices_localPtMin[i];
+        Offset = st*sizeof( GL_FLOAT);
+        glDrawElements(
+            GL_LINE_LOOP,
+            polysize,
+            GL_UNSIGNED_INT,
+            (void *)(Offset));
+        st+=(polysize);
+    }
+    glUniform1i(uniformdrawgridColor, 0);
+}
+
+static void plan()
+{
+    glLineWidth(0.3);
+    glDrawArrays(GL_LINES,PlanStartIndex,60);
+}
+
 
 static void CopyData(ObjectProperties *scene)
 {
@@ -1672,7 +1695,6 @@ void OpenGlWidget::timerEvent(QTimerEvent *)
     UpdateGL();
 }
 
-
 void OpenGlWidget::mouseReleaseEvent(QMouseEvent *)
 {
     oldRotation = rotation;
@@ -1683,8 +1705,6 @@ void OpenGlWidget::mousePressEvent(QMouseEvent *e)
     // Save mouse press position
     mousePressPosition = QVector2D(e->localPos());
     rotation = oldRotation;
-
-
     if (e->button() == Qt::LeftButton)
     {
         btgauche = 1;
