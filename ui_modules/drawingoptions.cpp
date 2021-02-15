@@ -4217,7 +4217,7 @@ void DrawingOptions::UpdateGui(int argc)
     // ui.NameLabel->hide();
     MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
     MathmodRef->resize(Parameters->GlwinW, Parameters->GlwinH);
-    MathmodRef->setFixedSize(Parameters->GlwinW, Parameters->GlwinH);
+    //MathmodRef->setFixedSize(Parameters->GlwinW, Parameters->GlwinH);
     // Pigment/texture
     ui.textureEdit->hide();
     // Hide all sliders

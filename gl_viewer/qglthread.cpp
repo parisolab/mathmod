@@ -29,11 +29,13 @@ void GLThread::stop()
 {
     doRendering = false;
 }
+/*
 void GLThread::resizeViewport(const QSize &size)
 {
     glw->resizeGL(size.width(), size.height());
     glw->update();
 }
+*/
 void GLThread::anim()
 {
     glw->anim();
@@ -46,6 +48,8 @@ void GLThread::update()
 {
     glw->update();
 }
+/*
 void GLThread::run() {
     glw->update();
 }
+*/

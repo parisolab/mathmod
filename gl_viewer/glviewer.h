@@ -63,7 +63,7 @@ public:
     OpenGlWidget(QWidget *parent = nullptr);
     ~OpenGlWidget();
     void Winitialize_GL();
-    void resizeGL(int, int)  override;
+    void resizeGL(int, int) override;
     void paintGL()  override;
     void copydata();
     void cp();
@@ -90,7 +90,6 @@ public:
     GLThread glt;
     void startRendering();
     void stopRendering();
-    void resizeEvent(QResizeEvent *evt)  override;
     void closeEvent(QCloseEvent *evt)  override;
     void initializeGL()  override;
 

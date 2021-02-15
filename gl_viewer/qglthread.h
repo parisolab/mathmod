@@ -31,11 +31,11 @@ class GLThread : public QThread
 {
 public:
     GLThread(OpenGlWidget *);
-    void resizeViewport(const QSize &size);
+    //void resizeViewport(const QSize &size);
     void anim();
     void morph();
     void update();
-    void run();
+    //void run();
     void stop();
 
 private:

@@ -49,7 +49,7 @@ int maxLength;
 char *vertexInfoLog;
 char *fragmentInfoLog;
 char *shaderProgramInfoLog;
-GLuint vao, vbo[2];
+GLuint vbo[2];
 const int SCREEN_WIDTH    = 100;
 const int SCREEN_HEIGHT   = 100;
 const float CAMERA_DISTANCE = 1.4f;
@@ -901,26 +901,7 @@ void OpenGlWidget::stopRendering()
     glt.stop();
     glt.wait();
 }
-void proj()
-{
-    // Calculate aspect ratio
-    qreal aspect = 1;//qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
-    // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
-    const qreal zNear = 0.01, zFar = 50.0, fov = 60.0;
-    // Reset projection
-    matrixProjectionx.setToIdentity();
-    // Set perspective projection
-    matrixProjectionx.perspective(fov, aspect, zNear, zFar);
-}
-bool initSharedMem()
-{
-    screenWidth = SCREEN_WIDTH;
-    screenHeight = SCREEN_HEIGHT;
-    mouseLeftDown = mouseRightDown = false;
-    mouseY = 0;
-    cameraDistance = CAMERA_DISTANCE;
-    return true;
-}
+
 static void CreateShaderProgram()
 {
     const int MAX_LENGTH = 2048;
@@ -1149,7 +1130,25 @@ static void CreateShaderProgram()
         return;
     }
 }
-
+void proj()
+{
+    qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
+    // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
+    const qreal zNear = 0.01, zFar = 15, fov = 60.0;
+    // Reset projection
+    matrixProjectionx.setToIdentity();
+    // Set perspective projection
+    matrixProjectionx.perspective(fov, aspect, zNear, zFar);
+}
+bool initSharedMem()
+{
+    screenWidth = SCREEN_WIDTH;
+    screenHeight = SCREEN_HEIGHT;
+    mouseLeftDown = mouseRightDown = false;
+    mouseY = 0;
+    cameraDistance = CAMERA_DISTANCE;
+    return true;
+}
 void OpenGlWidget::LoadShadersFiles()
 {
     CreateShaderProgram();
@@ -1179,35 +1178,9 @@ static void InitialOperations(ObjectProperties *)
 
 void OpenGlWidget::resizeGL(int newwidth, int newheight)
 {
-    //makeCurrent();
-    int max=std::max(newwidth, newheight);
-    screenWidth = max;
-    screenHeight = max;
+    screenWidth = newwidth;
+    screenHeight = newheight;
     proj();
-}
-
-void OpenGlWidget::resizeEvent(QResizeEvent *evt)
-{
-    /*
-    int max=std::max((evt->size()).width(), (evt->size()).width());
-    screenWidth = max;
-    screenHeight = max;
-    */
-    //glt.resizeViewport(evt->size());
-    //makeCurrent();
-    //screenWidth = (evt->size()).width();
-    //screenHeight = (evt->size()).height();
-    proj();
-
-    //update();
-    /*
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    initSharedMem();
-    initGL();
-    proj();*/
-    //InitialOperations(&LocalScene);
 }
 
 void OpenGlWidget::initializeGL()
@@ -1291,8 +1264,6 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
     }
     glt.update();
 }
-
-
 
 OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
 {
@@ -1481,7 +1452,6 @@ static void CopyData(ObjectProperties *scene)
     static uint previousPolyNumberNbPolygnNbVertexPtMin=0;
     if(firstaction==0)
     {
-        glGenVertexArrays(1, &vao);
         vbo[0]=vbo[1]=0;
         glGenBuffers(2, vbo);
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
