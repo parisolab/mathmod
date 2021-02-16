@@ -820,16 +820,13 @@ static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     glDisable(GL_POLYGON_OFFSET_FILL);
     glUniform1i(uniformThereisRGBA, 0);
 }
+
 void MathMod::normOk()
 {
     LocalScene.norm *= -1;
     update();
 }
-void MathMod::infosOk()
-{
-    LocalScene.infos *= -1;
-    update();
-}
+
 void MathMod::smoothline()
 {
     LocalScene.smoothline *= -1;
@@ -1892,7 +1889,7 @@ void MathMod::fill()
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::iso_infos()
 {
-    infosOk();
+    LocalScene.infos *= -1;
     update();
 }
 

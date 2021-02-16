@@ -129,7 +129,6 @@ public slots:
     void infosok();
     void FillOk();
     void normOk();
-    void infosOk();
     void boundingboxOk();
     void transparency(int, int currentposition = 0);
     void red(int, int currentposition = 0);
