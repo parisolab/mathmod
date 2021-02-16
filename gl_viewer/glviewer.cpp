@@ -1661,20 +1661,25 @@ void OpenGlWidget::paintGL()
 void OpenGlWidget::timerEvent(QTimerEvent *)
 {
     if(LocalScene.anim == 1)
+    {
         rotation = QQuaternion::fromAxisAndAngle(n, acc/10) * rotation;
+        oldRotation = rotation;
+    }
     UpdateGL();
 }
 
 void OpenGlWidget::mouseReleaseEvent(QMouseEvent *)
 {
-    oldRotation = rotation;
+    if(LocalScene.anim != 1)
+        oldRotation = rotation;
 }
 
 void OpenGlWidget::mousePressEvent(QMouseEvent *e)
 {
     // Save mouse press position
     mousePressPosition = QVector2D(e->localPos());
-    rotation = oldRotation;
+    if(LocalScene.anim != 1)
+        rotation = oldRotation;
     if (e->button() == Qt::LeftButton)
     {
         btgauche = 1;
