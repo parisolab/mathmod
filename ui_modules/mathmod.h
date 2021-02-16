@@ -38,8 +38,6 @@ public:
     void ParisoObjectProcess();
     void Initparametricpage();
     void updateGL();
-    //void updateGLspectrale(float *);
-    //void updateThreads(int *);
 public slots:
     void fill();
     void iso_infos();
