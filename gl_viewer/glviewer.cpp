@@ -890,18 +890,7 @@ void OpenGlWidget::restarttimer(int newlatence)
         timer->start(latence, this);
     }
 }
-/*
-void OpenGlWidget::startRendering()
-{
-    glt.start();
-}
 
-void OpenGlWidget::stopRendering()
-{
-    glt.stop();
-    glt.wait();
-}
-*/
 static void CreateShaderProgram()
 {
     const int MAX_LENGTH = 2048;
@@ -1183,12 +1172,6 @@ void OpenGlWidget::resizeGL(int newwidth, int newheight)
     proj();
 }
 
-/*
-void OpenGlWidget::closeEvent(QCloseEvent *evt)
-{
-    QOpenGLWidget::closeEvent(evt);
-}
-*/
 void OpenGlWidget::anim()
 {
     LocalScene.anim *= -1;
