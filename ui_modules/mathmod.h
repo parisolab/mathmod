@@ -20,20 +20,56 @@
 
 #ifndef mathmod_H
 #define mathmod_H
+#include "../pariso/isosurface/Iso3D.h"
+#include "../pariso/parametric/Model3D.h"
+#include <QFileDialog>
+#include <QOpenGLWidget>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QResizeEvent>
+#include <QTextStream>
+#include <QTimer>
+#include <iostream>
+#include <math.h>
+#include <qpixmap.h>
+#include <qthread.h>
+#include <stdlib.h>
+#include <string>
 #include "../json_parser/parisodef.h"
 #include "../ui_modules/ParisoMathObject.h"
-#include "ui_mathmod.h"
-#include <qmessagebox.h>
-class MathMod : public QWidget
+#include <QMessageBox>
+#include <QOpenGLWidget>
+
+class MathMod : public QOpenGLWidget
 {
     Q_OBJECT
+public:
+    uint Ugrid, Vgrid, CutV, CutU;
+    int btgauche, btdroit, btmilieu, latence;
+    int Xgrid, Ygrid, Zgrid, CutX, CutY, CutZ, TypeTriangle;
+    QBasicTimer *timer;
+    double factx=1.0, facty=1.0, factz=1.0;
+    ObjectProperties LocalScene;
+    QString FramesDir;
+    Iso3D *IsoObjet;
+    Par3D *ParObjet;
+    int TypeFormule;
+    QMessageBox message;
+    ErrorMessage stError;
+    ImprovedNoise *PerlinNoise;
+
+
+    int xyzactivated, isomesh, uvactivated, uvactivated4D;
+    ParisoMathObject RootObjet;
+    jcollection collection;
+    QWidget *Parent;
+
+
 
 public:
     MathMod(QWidget *, uint, uint initpargrid = 50, uint initisogrid = 40,
             uint factx = 4, uint facty = 4, uint factz = 4);
     ~MathMod();
-    void keyPressEvent(QKeyEvent *);
-    void resizeEvent(QResizeEvent *);
     void ParametricSurfaceProcess(int type = 1);
     void ParisoObjectProcess();
     void Initparametricpage();
@@ -63,14 +99,60 @@ public slots:
     void ShowErrormessage();
     void frames_clicked();
 
-public:
-    Ui::MathMod ui;
-    int xyzactivated, isomesh, uvactivated, uvactivated4D;
-    ParisoMathObject RootObjet;
-    jcollection collection;
-    QWidget *Parent;
-    QMessageBox message;
-    ErrorMessage stError;
+    void Winitialize_GL();
+    void resizeGL(int, int) override;
+    void paintGL()  override;
+    void copydata();
+    void timerEvent(QTimerEvent *)  override;
+    void mousePressEvent(QMouseEvent *)  override;
+    void mouseMoveEvent(QMouseEvent *)  override;
+    void mouseReleaseEvent(QMouseEvent *)  override;
+    void keyPressEvent(QKeyEvent *)  override;
+    virtual void run();
+    void InitSpecularParameters();
+    void Shininess(int);
+    int memoryallocation(uint, uint initpargrid = 50, uint initgrid = 40,
+                         uint factx = 4, uint facty = 4, uint factz = 4);
+    void PutObjectInsideCube();
+    void screenshot();
+    void FramesShot();
+    void FramesSave();
+    QImage Copyscreenshot();
+public slots:
+    void anim();
+    void morph();
+    void starttimer();
+    void stoptimer();
+    bool timeractif();
+    void restarttimer(int);
+    void PrintInfos();
+    void infosok();
+    void FillOk();
+    void normOk();
+    void infosOk();
+    void boundingboxOk();
+    void transparency(int, int currentposition = 0);
+    void red(int, int currentposition = 0);
+    void green(int, int currentposition = 0);
+    void blue(int, int currentposition = 0);
+    void transparence(bool);
+    void redSpec(int);
+    void greenSpec(int);
+    void blueSpec(int);
+    void transSpec(int);
+    void quality(int);
+    void bmp();
+    void jpg();
+    void png();
+    void colorstype(int);
+    void colorstypeParIso(int);
+    void colorstypeParam(int);
+    void SaveSceneAsObjPoly(int n = 0);
+    void SaveSceneAsObjTrian(int n = 0);
+    void CalculateTexturePoints(int type);
+    void CalculatePigmentPoints(int type);
+    void LoadShadersFiles();
+    void UpdateGL();
 };
 
 #endif

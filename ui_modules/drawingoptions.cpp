@@ -110,7 +110,7 @@ void DrawingOptions::colorsoptions()
 
 void DrawingOptions::videoplay()
 {
-    QImage buf = MathmodRef->ui.glWidget->Copyscreenshot();
+    QImage buf = MathmodRef->Copyscreenshot();
     screenimage *player = new screenimage(buf);
     player->connectcontrols();
     player->show();
@@ -273,7 +273,7 @@ void DrawingOptions::on_xyzg_valueChanged(int value)
     ui.Isogroupbox->setTitle("Grid/MaxGrid = (" +
                              QString::number(ui.xyzg->value()) + " / " +
                              QString::number(Parameters->IsoMaxGrid) + ")");
-    if (!MathmodRef->ui.glWidget->IsoObjet->isRunning())
+    if (!MathmodRef->IsoObjet->isRunning())
     {
         (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
         MathmodRef->xyzg_valueChanged(value, PARISO_TYPE) : MathmodRef->xyzg_valueChanged(value, ISO_TYPE);
@@ -588,9 +588,9 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         qlstPos = result.split(";", QString::SkipEmptyParts);
         for (int i = 0; i < qlstPos.size(); ++i)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues.push_back(
+            MathmodRef->IsoObjet->masterthread->SliderValues.push_back(
                 qlstPos.at(i).toDouble());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues.push_back(
+            MathmodRef->ParObjet->masterthread->SliderValues.push_back(
                 qlstPos.at(i).toDouble());
         }
         // Name
@@ -599,14 +599,14 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         qlstnames = result.split(";", QString::SkipEmptyParts);
         for (int i = 0; i < qlstnames.size(); ++i)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderNames.push_back(
+            MathmodRef->IsoObjet->masterthread->SliderNames.push_back(
                 qlstnames.at(i).toStdString());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderNames.push_back(
+            MathmodRef->ParObjet->masterthread->SliderNames.push_back(
                 qlstnames.at(i).toStdString());
         }
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Nb_Sliders =
+        MathmodRef->IsoObjet->masterthread->Nb_Sliders =
             uint(qlstnames.size());
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Nb_Sliders =
+        MathmodRef->ParObjet->masterthread->Nb_Sliders =
             uint(qlstnames.size());
         ui.ParametersList->clear();
         ui.ParametersList->addItem("Parameters List  (" +
@@ -667,8 +667,8 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
     }
     else
     {
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Nb_Sliders = 0;
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Nb_Sliders = 0;
+        MathmodRef->IsoObjet->masterthread->Nb_Sliders = 0;
+        MathmodRef->ParObjet->masterthread->Nb_Sliders = 0;
         HideSliders();
     }
 }
@@ -676,8 +676,8 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
 void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
                                    bool Inspect)
 {
-    if (!(MathmodRef->ui.glWidget)->ParObjet->isRunning() &&
-            !(MathmodRef->ui.glWidget)->IsoObjet->isRunning())
+    if (!MathmodRef->ParObjet->isRunning() &&
+            !MathmodRef->IsoObjet->isRunning())
     {
         if (Inspect & !VerifiedJsonModel(Jobj, Inspect))
             return;
@@ -1012,22 +1012,22 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
         verif = VerifiedIsoJsonModel(QObj);
         if (verif)
         {
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =1;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+            MathmodRef->LocalScene.componentsinfos.pariso = false;
+            MathmodRef->LocalScene.componentsinfos.ParisoNbComponents =1;
+            MathmodRef->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
         }
         return (verif);
     }
     if (Jobj["Param3D"].isObject())
     {
         QObj = Jobj["Param3D"].toObject();
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
+        MathmodRef->LocalScene.componentsinfos.ParisoNbComponents = 1;
         verif = VerifiedParJsonModel(QObj);
         if (verif)
         {
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+            MathmodRef->LocalScene.componentsinfos.pariso = false;
+            MathmodRef->LocalScene.componentsinfos.ParisoNbComponents = 1;
+            MathmodRef->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
         }
         return (verif);
     }
@@ -1041,9 +1041,9 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
                 listeIsoObj.append(listeObj[i].toObject()["Iso3D"].toObject());
             else
                 listeParObj.append(listeObj[i].toObject()["Param3D"].toObject());
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = listeIsoObj.size() + listeParObj.size();
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+        MathmodRef->LocalScene.componentsinfos.pariso = true;
+        MathmodRef->LocalScene.componentsinfos.ParisoNbComponents = listeIsoObj.size() + listeParObj.size();
+        MathmodRef->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
         for (int i = 0; i < listeIsoObj.size(); i++)
             if (!VerifiedIsoJsonModel(listeIsoObj[i].toObject()))
                 return (false);
@@ -1066,15 +1066,15 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
     ObjArrayToString(lst, result);
     if (opt == ISO_TYPE)
     {
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Rgbt = result.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Noise = noise1.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->RgbtSize = uint(lst.size());
+        MathmodRef->IsoObjet->masterthread->Rgbt = result.toStdString();
+        MathmodRef->IsoObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->IsoObjet->masterthread->RgbtSize = uint(lst.size());
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Rgbt = result.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Noise = noise1.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->RgbtSize = uint(lst.size());
+        MathmodRef->ParObjet->masterthread->Rgbt = result.toStdString();
+        MathmodRef->ParObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->ParObjet->masterthread->RgbtSize = uint(lst.size());
     }
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
     MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";", QString::SkipEmptyParts);
@@ -1110,17 +1110,17 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
     result.replace(" ", "");
     if (opt == ISO_TYPE)
     {
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Gradient = strtmp.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->VRgbt = result.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->Noise = noise.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->VRgbtSize = uint(VRgbtSize);
+        MathmodRef->IsoObjet->masterthread->Gradient = strtmp.toStdString();
+        MathmodRef->IsoObjet->masterthread->VRgbt = result.toStdString();
+        MathmodRef->IsoObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->IsoObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Gradient = strtmp.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->VRgbt = result.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->Noise = noise.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
+        MathmodRef->ParObjet->masterthread->Gradient = strtmp.toStdString();
+        MathmodRef->ParObjet->masterthread->VRgbt = result.toStdString();
+        MathmodRef->ParObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT =
@@ -1157,7 +1157,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 
     ShowSliders(Jobj);
     updateCurrentTreestruct();
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
+    MathmodRef->LocalScene.componentsinfos.ParisoCondition.clear();
     if (Jobj["ParIso"].isArray())
     {
         QJsonArray listeObj = Jobj["ParIso"].toArray();
@@ -1180,11 +1180,11 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         if (QPar["Pigment"].isObject())
             QPigmentObj = QPar["Pigment"].toObject();
         // Colors
-        loadtext = MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+        loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                        (QPar["Texture"].isObject() ||
                         ((textureIndex < 1000) && (textureIndex != -1)));
         // Pigment
-        loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+        loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                        (QPar["Pigment"].isObject() ||
                         ((textureIndex != -1) && (textureIndex > 999)));
         LoadMandatoryAndOptionnalFields(QPar["Param3D"].toObject(), PAR_TYPE,
@@ -1200,11 +1200,11 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         if (QIso["Pigment"].isObject())
             QPigmentObj = QIso["Pigment"].toObject();
         // Colors
-        loadtext = MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
+        loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull =
                        (QIso["Texture"].isObject() ||
                         ((textureIndex < 1000) && (textureIndex != -1)));
         // Pigment
-        loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
+        loadpigm = MathmodRef->IsoObjet->masterthread->vrgbtnotnull =
                        (QIso["Pigment"].isObject() ||
                         ((textureIndex != -1) && (textureIndex > 999)));
         LoadMandatoryAndOptionnalFields(QIso["Iso3D"].toObject(), ISO_TYPE,
@@ -1223,7 +1223,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         /// process the new surface
         if (textureIndex == -1)
         {
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
+            MathmodRef->LocalScene.componentsinfos.pariso = true;
             MathmodRef->ParisoObjectProcess();
         }
 
@@ -1232,18 +1232,18 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
     else
     {
         ui.parisogroupbox->hide();
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
+        MathmodRef->LocalScene.componentsinfos.pariso = false;
         if (Jobj["Iso3D"].isObject())
         {
             QObj = Jobj["Iso3D"].toObject();
 
             // Colors
-            loadtext = MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
+            loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
 
             // Pigment
-            loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
+            loadpigm = MathmodRef->IsoObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
                             ((textureIndex != -1) && (textureIndex > 999)));
 
@@ -1273,22 +1273,22 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 if (result == -1)
                     return;
                 textureIndex < 1000
-                ? MathmodRef->ui.glWidget->CalculateTexturePoints(1)
-                : MathmodRef->ui.glWidget->CalculatePigmentPoints(1);
-                MathmodRef->ui.glWidget->copydata();
-                MathmodRef->ui.glWidget->update();
+                ? MathmodRef->CalculateTexturePoints(1)
+                : MathmodRef->CalculatePigmentPoints(1);
+                MathmodRef->copydata();
+                MathmodRef->update();
             }
         }
         else if (Jobj["Param3D"].isObject())
         {
             QObj = Jobj["Param3D"].toObject();
             // Colors
-            loadtext = MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+            loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
 
             // Pigment
-            loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+            loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
                             ((textureIndex != -1) && (textureIndex > 999)));
 
@@ -1318,10 +1318,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 if (result == -1)
                     return;
                 textureIndex < 1000
-                ? MathmodRef->ui.glWidget->CalculateTexturePoints(0)
-                : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
-                MathmodRef->ui.glWidget->copydata();
-                MathmodRef->ui.glWidget->update();
+                ? MathmodRef->CalculateTexturePoints(0)
+                : MathmodRef->CalculatePigmentPoints(0);
+                MathmodRef->copydata();
+                MathmodRef->update();
             }
         }
 
@@ -1330,12 +1330,12 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             QObj = Jobj["Param4D"].toObject();
 
             // Colors
-            loadtext = MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+            loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
 
             // Pigment
-            loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+            loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
                             ((textureIndex != -1) && (textureIndex > 1000)));
 
@@ -1365,10 +1365,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 if (result == -1)
                     return;
                 textureIndex < 1000
-                ? MathmodRef->ui.glWidget->CalculateTexturePoints(0)
-                : MathmodRef->ui.glWidget->CalculatePigmentPoints(0);
-                MathmodRef->ui.glWidget->copydata();
-                MathmodRef->ui.glWidget->update();
+                ? MathmodRef->CalculateTexturePoints(0)
+                : MathmodRef->CalculatePigmentPoints(0);
+                MathmodRef->copydata();
+                MathmodRef->update();
             }
         }
     }
@@ -1425,25 +1425,25 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
     switch (idx)
     {
     case PAR_FX:
-        MathmodRef->ui.glWidget->ParObjet->masterthread->expression_X =
+        MathmodRef->ParObjet->masterthread->expression_X =
             result.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->componentsNumber =
+        MathmodRef->ParObjet->masterthread->componentsNumber =
             uint(lst.size());
         MathmodRef->RootObjet.CurrentTreestruct.fx =
             result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_FY:
-        MathmodRef->ui.glWidget->ParObjet->masterthread->expression_Y =
+        MathmodRef->ParObjet->masterthread->expression_Y =
             result.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->expression_YSize =
+        MathmodRef->ParObjet->masterthread->expression_YSize =
             lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fy =
             result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_FZ:
-        MathmodRef->ui.glWidget->ParObjet->masterthread->expression_Z =
+        MathmodRef->ParObjet->masterthread->expression_Z =
             result.toStdString();
-        MathmodRef->ui.glWidget->ParObjet->masterthread->expression_ZSize =
+        MathmodRef->ParObjet->masterthread->expression_ZSize =
             lst.size();
         MathmodRef->RootObjet.CurrentTreestruct.fz =
             result.split(";", QString::SkipEmptyParts);
@@ -1451,32 +1451,32 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
     case PAR_FW:
         if (mod == PAR_4D_TYPE)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->expression_W =
+            MathmodRef->ParObjet->masterthread->expression_W =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.fw =
                 result.split(";", QString::SkipEmptyParts);
         }
         break;
     case PAR_UMIN:
-        MathmodRef->ui.glWidget->ParObjet->masterthread->inf_u =
+        MathmodRef->ParObjet->masterthread->inf_u =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umin =
             result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_UMAX:
-        MathmodRef->ui.glWidget->ParObjet->masterthread->sup_u =
+        MathmodRef->ParObjet->masterthread->sup_u =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.umax =
             result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_VMAX:
-        MathmodRef->ui.glWidget->ParObjet->masterthread->sup_v =
+        MathmodRef->ParObjet->masterthread->sup_v =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmax =
             result.split(";", QString::SkipEmptyParts);
         break;
     case PAR_VMIN:
-        MathmodRef->ui.glWidget->ParObjet->masterthread->inf_v =
+        MathmodRef->ParObjet->masterthread->inf_v =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.vmin =
             result.split(";", QString::SkipEmptyParts);
@@ -1504,45 +1504,45 @@ void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
     switch (idx)
     {
     case ISO_FXYZ:
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->ImplicitFunction =
+        MathmodRef->IsoObjet->masterthread->ImplicitFunction =
             result.toStdString();
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->componentsNumber =
+        MathmodRef->IsoObjet->masterthread->componentsNumber =
             uint(lst.size());
         MathmodRef->RootObjet.CurrentTreestruct.fxyz =
             result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_XMAX:
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->XlimitSup =
+        MathmodRef->IsoObjet->masterthread->XlimitSup =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.xmax =
             result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_YMAX:
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->YlimitSup =
+        MathmodRef->IsoObjet->masterthread->YlimitSup =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.ymax =
             result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_ZMAX:
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->ZlimitSup =
+        MathmodRef->IsoObjet->masterthread->ZlimitSup =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.zmax =
             result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_XMIN:
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->XlimitInf =
+        MathmodRef->IsoObjet->masterthread->XlimitInf =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.xmin =
             result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_YMIN:
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->YlimitInf =
+        MathmodRef->IsoObjet->masterthread->YlimitInf =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.ymin =
             result.split(";", QString::SkipEmptyParts);
         break;
     case ISO_ZMIN:
-        MathmodRef->ui.glWidget->IsoObjet->masterthread->ZlimitInf =
+        MathmodRef->IsoObjet->masterthread->ZlimitInf =
             result.toStdString();
         MathmodRef->RootObjet.CurrentTreestruct.zmin =
             result.split(";", QString::SkipEmptyParts);
@@ -1568,27 +1568,27 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     {
     case ISO_VECT:
         arg = "Vect";
-        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->vectnotnull =
+        argnotnull = MathmodRef->IsoObjet->masterthread->vectnotnull =
                          QObj[arg].isArray();
         break;
     case ISO_GRID:
         arg = "Grid";
-        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->gridnotnull =
+        argnotnull = MathmodRef->IsoObjet->masterthread->gridnotnull =
                          QObj[arg].isArray();
         break;
     case ISO_CND:
         arg = "Cnd";
-        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->cndnotnull =
+        argnotnull = MathmodRef->IsoObjet->masterthread->cndnotnull =
                          QObj[arg].isArray();
         break;
     case ISO_CONST:
         arg = "Const";
-        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->constnotnull =
+        argnotnull = MathmodRef->IsoObjet->masterthread->constnotnull =
                          QObj[arg].isArray();
         break;
     case ISO_FUNCT:
         arg = "Funct";
-        argnotnull = MathmodRef->ui.glWidget->IsoObjet->masterthread->functnotnull =
+        argnotnull = MathmodRef->IsoObjet->masterthread->functnotnull =
                          QObj[arg].isArray();
         break;
     }
@@ -1602,79 +1602,79 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     case ISO_VECT:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->vect.clear();
+            MathmodRef->IsoObjet->masterthread->vect.clear();
             for (int j = 0; j < lst.size(); j++)
-                MathmodRef->ui.glWidget->IsoObjet->masterthread->vect.push_back(
+                MathmodRef->IsoObjet->masterthread->vect.push_back(
                     (lst[j].toString()).toUInt());
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Vect =
+            MathmodRef->IsoObjet->masterthread->Vect =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Vect =
                 result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Vect = "";
+            MathmodRef->IsoObjet->masterthread->Vect = "";
         }
         break;
     case ISO_GRID:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->grid.clear();
+            MathmodRef->IsoObjet->masterthread->grid.clear();
             for (int j = 0; j < lst.size(); j++)
-                MathmodRef->ui.glWidget->IsoObjet->masterthread->grid.push_back(
+                MathmodRef->IsoObjet->masterthread->grid.push_back(
                     (lst[j].toString()).toUInt());
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Grid =
+            MathmodRef->IsoObjet->masterthread->Grid =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid =
                 result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Grid = "";
+            MathmodRef->IsoObjet->masterthread->Grid = "";
         }
         break;
     case ISO_CND:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition = result.toStdString();
+            MathmodRef->IsoObjet->masterthread->Condition = result.toStdString();
             for(int i=0; i<lst.size(); i++)
-                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "")=="");
+                MathmodRef->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "")=="");
             MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";");
         }
         else
         {
             for(int i=0; i<lst.size(); i++)
-                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back(false);
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Condition = "";
+                MathmodRef->LocalScene.componentsinfos.ParisoCondition.push_back(false);
+            MathmodRef->IsoObjet->masterthread->Condition = "";
         }
         break;
     case ISO_FUNCT:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Funct = result.toStdString();
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->FunctSize = uint(lst.size());
+            MathmodRef->IsoObjet->masterthread->Funct = result.toStdString();
+            MathmodRef->IsoObjet->masterthread->FunctSize = uint(lst.size());
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Funct = "";
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->FunctSize = 0;
+            MathmodRef->IsoObjet->masterthread->Funct = "";
+            MathmodRef->IsoObjet->masterthread->FunctSize = 0;
         }
         break;
     case ISO_CONST:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Const =
+            MathmodRef->IsoObjet->masterthread->Const =
                 result.toStdString();
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->ConstSize =
+            MathmodRef->IsoObjet->masterthread->ConstSize =
                 uint(lst.size());
             MathmodRef->RootObjet.CurrentTreestruct.Const =
                 result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->Const = "";
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->ConstSize = 0;
+            MathmodRef->IsoObjet->masterthread->Const = "";
+            MathmodRef->IsoObjet->masterthread->ConstSize = 0;
         }
         break;
     }
@@ -1690,27 +1690,27 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     {
     case PAR_VECT:
         arg = "Vect";
-        argnotnull = MathmodRef->ui.glWidget->ParObjet->masterthread->vectnotnull =
+        argnotnull = MathmodRef->ParObjet->masterthread->vectnotnull =
                          QObj[arg].isArray();
         break;
     case PAR_GRID:
         arg = "Grid";
-        argnotnull = MathmodRef->ui.glWidget->ParObjet->masterthread->gridnotnull =
+        argnotnull = MathmodRef->ParObjet->masterthread->gridnotnull =
                          QObj[arg].isArray();
         break;
     case PAR_CONST:
         arg = "Const";
-        argnotnull = MathmodRef->ui.glWidget->ParObjet->masterthread->constnotnull =
+        argnotnull = MathmodRef->ParObjet->masterthread->constnotnull =
                          QObj[arg].isArray();
         break;
     case PAR_FUNCT:
         arg = "Funct";
-        argnotnull = MathmodRef->ui.glWidget->ParObjet->masterthread->functnotnull =
+        argnotnull = MathmodRef->ParObjet->masterthread->functnotnull =
                          QObj[arg].isArray();
         break;
     case PAR_CND:
         arg = "Cnd";
-        argnotnull = MathmodRef->ui.glWidget->ParObjet->masterthread->cndnotnull =
+        argnotnull = MathmodRef->ParObjet->masterthread->cndnotnull =
                          QObj[arg].isArray();
         break;
     }
@@ -1724,79 +1724,79 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     case PAR_VECT:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->vect.clear();
+            MathmodRef->ParObjet->masterthread->vect.clear();
             for (int j = 0; j < lst.size(); j++)
-                MathmodRef->ui.glWidget->ParObjet->masterthread->vect.push_back(
+                MathmodRef->ParObjet->masterthread->vect.push_back(
                     (lst[j].toString()).toUInt());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Vect =
+            MathmodRef->ParObjet->masterthread->Vect =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Vect =
                 result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Vect = "";
+            MathmodRef->ParObjet->masterthread->Vect = "";
         }
         break;
     case PAR_GRID:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->grid.clear();
+            MathmodRef->ParObjet->masterthread->grid.clear();
             for (int j = 0; j < lst.size(); j++)
-                MathmodRef->ui.glWidget->ParObjet->masterthread->grid.push_back(
+                MathmodRef->ParObjet->masterthread->grid.push_back(
                     (lst[j].toString()).toUInt());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Grid =
+            MathmodRef->ParObjet->masterthread->Grid =
                 result.toStdString();
             MathmodRef->RootObjet.CurrentTreestruct.Grid =
                 result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Grid = "";
+            MathmodRef->ParObjet->masterthread->Grid = "";
         }
         break;
     case PAR_CND:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND = result.toStdString();
+            MathmodRef->ParObjet->masterthread->expression_CND = result.toStdString();
             for(int i=0; i<lst.size(); i++)
-                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "") == "");
+                MathmodRef->LocalScene.componentsinfos.ParisoCondition.push_back((lst[i].toString()).replace(" ", "") == "");
             MathmodRef->RootObjet.CurrentTreestruct.Cnd = result.split(";");
         }
         else
         {
             for(int i=0; i<lst.size(); i++)
-                MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.push_back(false);
-            MathmodRef->ui.glWidget->ParObjet->masterthread->expression_CND = "";
+                MathmodRef->LocalScene.componentsinfos.ParisoCondition.push_back(false);
+            MathmodRef->ParObjet->masterthread->expression_CND = "";
         }
         break;
     case PAR_CONST:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Const = result.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->masterthread->ConstSize = uint(lst.size());
+            MathmodRef->ParObjet->masterthread->Const = result.toStdString();
+            MathmodRef->ParObjet->masterthread->ConstSize = uint(lst.size());
             MathmodRef->RootObjet.CurrentTreestruct.Const = result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Const = "";
-            MathmodRef->ui.glWidget->ParObjet->masterthread->ConstSize = 0;
+            MathmodRef->ParObjet->masterthread->Const = "";
+            MathmodRef->ParObjet->masterthread->ConstSize = 0;
         }
         break;
     case PAR_FUNCT:
         if (argnotnull)
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Funct =
+            MathmodRef->ParObjet->masterthread->Funct =
                 result.toStdString();
-            MathmodRef->ui.glWidget->ParObjet->masterthread->FunctSize =
+            MathmodRef->ParObjet->masterthread->FunctSize =
                 uint(lst.size());
             MathmodRef->RootObjet.CurrentTreestruct.Funct =
                 result.split(";", QString::SkipEmptyParts);
         }
         else
         {
-            MathmodRef->ui.glWidget->ParObjet->masterthread->Funct = "";
-            MathmodRef->ui.glWidget->ParObjet->masterthread->FunctSize = 0;
+            MathmodRef->ParObjet->masterthread->Funct = "";
+            MathmodRef->ParObjet->masterthread->FunctSize = 0;
         }
         break;
     }
@@ -1837,7 +1837,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     bool loadtext, loadpigm;
     QMessageBox msgBox;
     updateCurrentTreestruct();
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCondition.clear();
+    MathmodRef->LocalScene.componentsinfos.ParisoCondition.clear();
     for (int i = 0; i < array.size(); i++)
     {
         if ((QObj1 = array[i].toObject())["ParIso"].isArray() &&
@@ -1866,10 +1866,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if (QPar["Pigment"].isObject())
                 QPigmentObj = QPar["Pigment"].toObject();
             // Colors
-            loadtext = MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+            loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (QPar["Texture"].isObject());
             // Pigment
-            loadpigm = MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+            loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                            (QPar["Pigment"].isObject());
             LoadMandatoryAndOptionnalFields(QPar["Param3D"].toObject(), PAR_TYPE,
                                             loadtext, QTextureObj, loadpigm,
@@ -1883,10 +1883,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if (QIso["Pigment"].isObject())
                 QPigmentObj = QIso["Pigment"].toObject();
             // Colors
-            loadtext = MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull =
+            loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull =
                            (QIso["Texture"].isObject());
             // Pigment
-            loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull =
+            loadpigm = MathmodRef->IsoObjet->masterthread->vrgbtnotnull =
                            (QIso["Pigment"].isObject());
             LoadMandatoryAndOptionnalFields(QIso["Iso3D"].toObject(), ISO_TYPE,
                                             loadtext, QTextureObj, loadpigm,
@@ -1901,18 +1901,18 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->RootObjet.CurrentJsonObject = QObj1;
             CurrentFormulaType = 2;
             /// process the new surface
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents =2;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = true;
+            MathmodRef->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+            MathmodRef->LocalScene.componentsinfos.ParisoNbComponents =2;
+            MathmodRef->LocalScene.componentsinfos.pariso = true;
             MathmodRef->ParisoObjectProcess();
             ui.parisogroupbox->show();
             return (1);
         }
         else
         {
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoNbComponents = 1;
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
+            MathmodRef->LocalScene.componentsinfos.pariso = false;
+            MathmodRef->LocalScene.componentsinfos.ParisoNbComponents = 1;
+            MathmodRef->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
             ui.parisogroupbox->hide();
             if ((QObj1 = array[i].toObject())["Iso3D"].isObject() &&
                     (QObj = (array[i].toObject())["Iso3D"].toObject())["Name"]
@@ -1923,10 +1923,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                     return (0);
                 ShowSliders(array[i].toObject());
                 // Colors
-                if ((loadtext = MathmodRef->ui.glWidget->IsoObjet->masterthread->rgbtnotnull = QObj1["Texture"].isObject()))
+                if ((loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull = QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
                 // Pigment
-                if ((loadpigm = MathmodRef->ui.glWidget->IsoObjet->masterthread->vrgbtnotnull = QObj1["Pigment"].isObject()))
+                if ((loadpigm = MathmodRef->IsoObjet->masterthread->vrgbtnotnull = QObj1["Pigment"].isObject()))
                     QPigmentObj = QObj1["Pigment"].toObject();
                 LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj,
                                                 loadpigm, QPigmentObj);
@@ -1953,12 +1953,12 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 ShowSliders(array[i].toObject());
                 // Colors
                 if ((loadtext =
-                            MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+                            MathmodRef->ParObjet->masterthread->rgbtnotnull =
                                 QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
                 // Pigment
                 if ((loadpigm =
-                            MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+                            MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                                 QObj1["Pigment"].isObject()))
                     QPigmentObj = QObj1["Pigment"].toObject();
                 LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE, loadtext, QTextureObj,
@@ -1984,12 +1984,12 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 ShowSliders(array[i].toObject());
                 // Colors
                 if ((loadtext =
-                            MathmodRef->ui.glWidget->ParObjet->masterthread->rgbtnotnull =
+                            MathmodRef->ParObjet->masterthread->rgbtnotnull =
                                 QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
                 // Pigment
                 if ((loadpigm =
-                            MathmodRef->ui.glWidget->ParObjet->masterthread->vrgbtnotnull =
+                            MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                                 QObj1["Pigment"].isObject()))
                     QPigmentObj = QObj1["Pigment"].toObject();
                 LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext,
@@ -2015,7 +2015,7 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
     const QJsonObject &QPigmentObj)
 {
     // We First deactivate the pariso flag
-    MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso = false;
+    MathmodRef->LocalScene.componentsinfos.pariso = false;
     MathmodRef->RootObjet.CurrentTreestruct.type = mod;
     switch (mod)
     {
@@ -2920,13 +2920,13 @@ void DrawingOptions::on_actionSmooth_triggered()
 
 void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
 {
-    if (!MathmodRef->ui.glWidget->IsoObjet->isRunning() &&
-            !MathmodRef->ui.glWidget->ParObjet->isRunning())
+    if (!MathmodRef->IsoObjet->isRunning() &&
+            !MathmodRef->ParObjet->isRunning())
     {
         on_InitTButton_clicked();
         // int result;
         QString tst;
-        MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1;
+        MathmodRef->LocalScene.IndexCurrentFormula = -1;
         if (index.data().isValid())
         {
             QVariant data = index.data();
@@ -3004,9 +3004,9 @@ void DrawingOptions::UpdateDescription(int position, ModelType type, TreeStruct 
         if (position > -1)
         {
             IndexcurrentComponent = position;
-            MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula == position
-            ? MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1
-                    : MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = position;
+            MathmodRef->LocalScene.IndexCurrentFormula == position
+            ? MathmodRef->LocalScene.IndexCurrentFormula = -1
+                    : MathmodRef->LocalScene.IndexCurrentFormula = position;
             // currentFormula = sparent;
             ui.paramNameEdit->setText(currentstruct.Component.at(position));
             ui.XEdit->setText(currentstruct.fx.at(position));
@@ -3068,9 +3068,9 @@ void DrawingOptions::UpdateDescription(int position, ModelType type, TreeStruct 
         if (position > -1)
         {
             IndexcurrentComponent = position;
-            MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula == position
-            ? MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1
-                    : MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = position;
+            MathmodRef->LocalScene.IndexCurrentFormula == position
+            ? MathmodRef->LocalScene.IndexCurrentFormula = -1
+                    : MathmodRef->LocalScene.IndexCurrentFormula = position;
             // currentFormula = sparent;
             ui.paramNameEdit_2->setText(currentstruct.Component.at(position));
             ui.XEdit_2->setText(currentstruct.fx.at(position));
@@ -3093,9 +3093,9 @@ void DrawingOptions::UpdateDescription(int position, ModelType type, TreeStruct 
         if (position > -1)
         {
             IndexcurrentComponent = position;
-            MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula == position
-            ? MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = -1
-                    : MathmodRef->ui.glWidget->LocalScene.IndexCurrentFormula = position;
+            MathmodRef->LocalScene.IndexCurrentFormula == position
+            ? MathmodRef->LocalScene.IndexCurrentFormula = -1
+                    : MathmodRef->LocalScene.IndexCurrentFormula = position;
             ui.UpdateEdit->setText(currentstruct.fxyz.at(position));
             ui.xmin->setText(currentstruct.xmin.at(position));
             ui.ymin->setText(currentstruct.ymin.at(position));
@@ -3157,47 +3157,47 @@ void DrawingOptions::UpdateDescription(int position, ModelType type, TreeStruct 
 
 void DrawingOptions::oncolor_2activated(int index)
 {
-    MathmodRef->ui.glWidget->colorstype(index);
+    MathmodRef->colorstype(index);
 }
 
 void DrawingOptions::onred_2valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->red(value, IndexcurrentComponent);
+    MathmodRef->red(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::ongreen_2valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->green(value, IndexcurrentComponent);
+    MathmodRef->green(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::onblue_2valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->blue(value, IndexcurrentComponent);
+    MathmodRef->blue(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::ontransparent_2valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->transparency(value, IndexcurrentComponent);
+    MathmodRef->transparency(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::ontransparence_2clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->transparence(checked);
+    MathmodRef->transparence(checked);
 }
 
 void DrawingOptions::on_red_ParIso_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->red(value, IndexcurrentComponent);
+    MathmodRef->red(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::on_green_ParIso_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->green(value, IndexcurrentComponent);
+    MathmodRef->green(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::on_blue_ParIso_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->blue(value, IndexcurrentComponent);
+    MathmodRef->blue(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::removeat(int idx, QJsonObject& QObj, QString str)
@@ -3669,19 +3669,19 @@ void DrawingOptions::on_updateParam_clicked()
 
 void DrawingOptions::on_actionPolygonWavefront_obj_triggered()
 {
-    MathmodRef->ui.glWidget->SaveSceneAsObjPoly();
+    MathmodRef->SaveSceneAsObjPoly();
 }
 
 void DrawingOptions::on_actionColorPolygonWavefront_obj_triggered()
 {
-    MathmodRef->ui.glWidget->SaveSceneAsObjPoly(1);
+    MathmodRef->SaveSceneAsObjPoly(1);
 }
 
 void DrawingOptions::on_linecolumn_2_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
                                  ", " + QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
-    if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
+    if (!MathmodRef->ParObjet->isRunning())
     {
         (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
         MathmodRef->linecolumn_valueChanged(value, PARISO_TYPE) : MathmodRef->linecolumn_valueChanged(value, PAR_TYPE);
@@ -3699,8 +3699,8 @@ void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
         "Grid(u,v)/MaxGrid = (" + QString::number(value) + ", " +
-        QString::number(MathmodRef->ui.glWidget->ParObjet->Ugrid) +") / "+QString::number(Parameters->ParMaxGrid));
-    if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
+        QString::number(MathmodRef->ParObjet->Ugrid) +") / "+QString::number(Parameters->ParMaxGrid));
+    if (!MathmodRef->ParObjet->isRunning())
     {
         MathmodRef->line_valueChanged(value);
     }
@@ -3717,9 +3717,9 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
         "Param Grid(u,v)/MaxGrid = (" +
-        QString::number(MathmodRef->ui.glWidget->ParObjet->Vgrid) + ", " +
+        QString::number(MathmodRef->ParObjet->Vgrid) + ", " +
         QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
-    if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
+    if (!MathmodRef->ParObjet->isRunning())
     {
         MathmodRef->column_valueChanged(value);
     }
@@ -3739,7 +3739,7 @@ void DrawingOptions::on_IsoComponent_activated(int index)
 }
 void DrawingOptions::updateShowParComp(int index)
 {
-    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[index])
+    if(MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[index])
     {
         ui.ShowParComp->setChecked(true);
         ui.ShowParComp->setText("Hide");
@@ -3753,11 +3753,11 @@ void DrawingOptions::updateShowParComp(int index)
 void DrawingOptions::updateShowIsoCmp(int index)
 {
     uint idx=0;
-    if(!MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso)
+    if(!MathmodRef->LocalScene.componentsinfos.pariso)
         idx = index;
     else
-        idx = MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+index;
-    if(MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[idx])
+        idx = MathmodRef->LocalScene.componentsinfos.NbComponentsType[0]+index;
+    if(MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[idx])
     {
         ui.ShowIsoComp->setChecked(true);
         ui.ShowIsoComp->setText("Hide");
@@ -3776,112 +3776,112 @@ void DrawingOptions::on_ParamComponent_activated(int index)
 
 void DrawingOptions::on_xyzcheckBox2_clicked()
 {
-    MathmodRef->ui.glWidget->LocalScene.animxyz *= -1;
+    MathmodRef->LocalScene.animxyz *= -1;
 }
 
 void DrawingOptions::on_xycheckBox2_clicked()
 {
-    MathmodRef->ui.glWidget->LocalScene.animx *= -1;
+    MathmodRef->LocalScene.animx *= -1;
 }
 
 void DrawingOptions::on_xyhorizontalScrollBar2_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.animxValueStep = float(value) / 4;
+    MathmodRef->LocalScene.animxValueStep = float(value) / 4;
 }
 
 void DrawingOptions::on_xzcheckBox2_clicked()
 {
-    MathmodRef->ui.glWidget->LocalScene.animy *= -1;
+    MathmodRef->LocalScene.animy *= -1;
 }
 
 void DrawingOptions::on_xzhorizontalScrollBar2_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.animyValueStep = float(value) / 4;
+    MathmodRef->LocalScene.animyValueStep = float(value) / 4;
 }
 
 void DrawingOptions::on_yzcheckBox2_clicked()
 {
-    MathmodRef->ui.glWidget->LocalScene.animz *= -1;
+    MathmodRef->LocalScene.animz *= -1;
 }
 
 void DrawingOptions::on_yzhorizontalScrollBar2_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->LocalScene.animzValueStep = float(value) / 4;
+    MathmodRef->LocalScene.animzValueStep = float(value) / 4;
 }
 
 void DrawingOptions::on_InitMatrix_2_clicked()
 {
-    MathmodRef->ui.glWidget->LocalScene.RotStrength =
-        MathmodRef->ui.glWidget->LocalScene.animxValueStep =
-            MathmodRef->ui.glWidget->LocalScene.animyValueStep =
-                MathmodRef->ui.glWidget->LocalScene.animzValueStep = 0.0;
+    MathmodRef->LocalScene.RotStrength =
+        MathmodRef->LocalScene.animxValueStep =
+            MathmodRef->LocalScene.animyValueStep =
+                MathmodRef->LocalScene.animzValueStep = 0.0;
 }
 
 void DrawingOptions::on_xycheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxy_ok *= -1;
+    MathmodRef->ParObjet->tetaxy_ok *= -1;
 }
 
 void DrawingOptions::on_xyhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxy = value / 4.0;
+    MathmodRef->ParObjet->tetaxy = value / 4.0;
 }
 
 void DrawingOptions::on_xzcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxz_ok *= -1;
+    MathmodRef->ParObjet->tetaxz_ok *= -1;
 }
 
 void DrawingOptions::on_xzhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxz = value / 4.0;
+    MathmodRef->ParObjet->tetaxz = value / 4.0;
 }
 
 void DrawingOptions::on_yzcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayz_ok *= -1;
+    MathmodRef->ParObjet->tetayz_ok *= -1;
 }
 
 void DrawingOptions::on_yzhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayz = value / 4.0;
+    MathmodRef->ParObjet->tetayz = value / 4.0;
 }
 
 void DrawingOptions::on_xwcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxw_ok *= -1;
+    MathmodRef->ParObjet->tetaxw_ok *= -1;
 }
 
 void DrawingOptions::on_xwhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetaxw = value / 4.0;
+    MathmodRef->ParObjet->tetaxw = value / 4.0;
 }
 
 void DrawingOptions::on_ywcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayw_ok *= -1;
+    MathmodRef->ParObjet->tetayw_ok *= -1;
 }
 
 void DrawingOptions::on_ywhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetayw = value / 4.0;
+    MathmodRef->ParObjet->tetayw = value / 4.0;
 }
 
 void DrawingOptions::on_zwcheckBox_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->tetazw_ok *= -1;
+    MathmodRef->ParObjet->tetazw_ok *= -1;
 }
 
 void DrawingOptions::on_zwhorizontalScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->tetazw = value / 4.0;
+    MathmodRef->ParObjet->tetazw = value / 4.0;
 }
 
 void DrawingOptions::on_linecolumn_3_valueChanged(int value)
 {
     ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
                                  ", " + QString::number(value) +") / "+QString::number(Parameters->ParMaxGrid));
-    if (!MathmodRef->ui.glWidget->ParObjet->isRunning())
+    if (!MathmodRef->ParObjet->isRunning())
     {
         MathmodRef->linecolumn_valueChanged_2(value);
     }
@@ -3896,12 +3896,12 @@ void DrawingOptions::on_linecolumn_3_valueChanged(int value)
 
 void DrawingOptions::oncolor_4activated(int index)
 {
-    MathmodRef->ui.glWidget->colorstypeParam(index);
+    MathmodRef->colorstypeParam(index);
 }
 
 void DrawingOptions::ontransparence_4toggled(bool checked)
 {
-    MathmodRef->ui.glWidget->transparence(checked);
+    MathmodRef->transparence(checked);
 }
 
 void DrawingOptions::on_uv4D_clicked()
@@ -3917,45 +3917,45 @@ void DrawingOptions::on_uv_clicked()
 
 void DrawingOptions::on_InitMatrix_clicked()
 {
-    MathmodRef->ui.glWidget->ParObjet->mat4D.unit();
+    MathmodRef->ParObjet->mat4D.unit();
     on_calculate_clicked();
 }
 
 void DrawingOptions::on_ActivateCND_clicked(bool checked)
 {
     ui.CNDgroupBox->setEnabled(checked);
-    MathmodRef->ui.glWidget->LocalScene.activarecnd = checked;
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->LocalScene.activarecnd = checked;
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_TCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.cndoptions[3] = checked;
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->LocalScene.cndoptions[3] = checked;
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.cndoptions[0] = checked;
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->LocalScene.cndoptions[0] = checked;
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_TNCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.cndoptions[4] = checked;
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->LocalScene.cndoptions[4] = checked;
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.cndoptions[1] = checked;
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->LocalScene.cndoptions[1] = checked;
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_TBordercheckBox_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->LocalScene.cndoptions[2] = checked;
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->LocalScene.cndoptions[2] = checked;
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_actionMesh_triggered()
@@ -4232,25 +4232,25 @@ void DrawingOptions::UpdateGui(int argc)
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
     double P = 1.0 / double(value);
-    uint maxnbthreads = MathmodRef->ui.glWidget->IsoObjet->WorkerThreadsNumber;
+    uint maxnbthreads = MathmodRef->IsoObjet->WorkerThreadsNumber;
     ui.label_5->setText("1/" + QString::number(value));
-    MathmodRef->ui.glWidget->IsoObjet->masterthread->pace = P;
+    MathmodRef->IsoObjet->masterthread->pace = P;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjet->workerthreads[nbthreds].pace = P;
-    MathmodRef->ui.glWidget->ParObjet->masterthread->pace = P;
+        MathmodRef->IsoObjet->workerthreads[nbthreds].pace = P;
+    MathmodRef->ParObjet->masterthread->pace = P;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
-        MathmodRef->ui.glWidget->ParObjet->workerthreads[nbthreds].pace = P;
+        MathmodRef->ParObjet->workerthreads[nbthreds].pace = P;
 }
 
 void DrawingOptions::on_InitTButton_clicked()
 {
-    uint maxnbthreads = MathmodRef->ui.glWidget->IsoObjet->WorkerThreadsNumber;
-    MathmodRef->ui.glWidget->IsoObjet->masterthread->stepMorph = 0;
+    uint maxnbthreads = MathmodRef->IsoObjet->WorkerThreadsNumber;
+    MathmodRef->IsoObjet->masterthread->stepMorph = 0;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
-        MathmodRef->ui.glWidget->IsoObjet->workerthreads[nbthreds].stepMorph = 0;
-    MathmodRef->ui.glWidget->ParObjet->masterthread->stepMorph = 0;
+        MathmodRef->IsoObjet->workerthreads[nbthreds].stepMorph = 0;
+    MathmodRef->ParObjet->masterthread->stepMorph = 0;
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
-        MathmodRef->ui.glWidget->ParObjet->workerthreads[nbthreds].stepMorph = 0;
+        MathmodRef->ParObjet->workerthreads[nbthreds].stepMorph = 0;
 }
 
 void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
@@ -4325,17 +4325,17 @@ void DrawingOptions::on_pushButton_4_clicked()
 
 void DrawingOptions::on_color_5_activated(int index)
 {
-    MathmodRef->ui.glWidget->colorstypeParIso(index);
+    MathmodRef->colorstypeParIso(index);
 }
 
 void DrawingOptions::on_transparence_ParIso_clicked(bool checked)
 {
-    MathmodRef->ui.glWidget->transparence(checked);
+    MathmodRef->transparence(checked);
 }
 
 void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->transparency(value, IndexcurrentComponent);
+    MathmodRef->transparency(value, IndexcurrentComponent);
 }
 
 void DrawingOptions::on_comboBoxTexture_activated(int index)
@@ -4369,12 +4369,12 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
 
 void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 {
-    MathmodRef->ui.glWidget->SaveSceneAsObjTrian();
+    MathmodRef->SaveSceneAsObjTrian();
 }
 
 void DrawingOptions::on_actionColorTrianglesWavefront_obj_triggered()
 {
-    MathmodRef->ui.glWidget->SaveSceneAsObjTrian(1);
+    MathmodRef->SaveSceneAsObjTrian(1);
 }
 
 void DrawingOptions::on_ShowtextureScript_clicked()
@@ -4519,15 +4519,15 @@ void DrawingOptions::on_C20ScrollBar_valueChanged(int val)
 
 void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
 {
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
-    MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues[uint(idx)] =val;
-    MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues[uint(idx)] =val;
+    MathmodRef->LocalScene.slider = 1;
+    MathmodRef->IsoObjet->masterthread->SliderValues[uint(idx)] =val;
+    MathmodRef->ParObjet->masterthread->SliderValues[uint(idx)] =val;
     SliderArray[idx].SliderLabel->setText(qlstnames.at(idx) + " = " +QString::number(val));
     if (CurrentFormulaType == 2)
         MathmodRef->ProcessNewIsoSurface();
     else
         MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
+    MathmodRef->LocalScene.slider = -1;
 }
 
 void DrawingOptions::on_PredefinedSets_activated(int index)
@@ -4536,12 +4536,12 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
     if (index > 0)
     {
         int size = (qlstnames.size());
-        MathmodRef->ui.glWidget->LocalScene.slider = 1;
+        MathmodRef->LocalScene.slider = 1;
         for (int i = 0; i < size; ++i)
         {
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues[uint(i)] =
+            MathmodRef->IsoObjet->masterthread->SliderValues[uint(i)] =
                 qlstPos.at(i + (index - 1) * size).toDouble();
-            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues[uint(i)] =
+            MathmodRef->ParObjet->masterthread->SliderValues[uint(i)] =
                 qlstPos.at(i + (index - 1) * size).toDouble();
         }
         for (int sl = 0; sl < 20; sl++)
@@ -4569,7 +4569,7 @@ void DrawingOptions::on_PredefinedSets_activated(int index)
             MathmodRef->ProcessNewIsoSurface();
         else
             MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-        MathmodRef->ui.glWidget->LocalScene.slider = -1;
+        MathmodRef->LocalScene.slider = -1;
     }
 }
 void DrawingOptions::CIndextoolButton_clicked(int idx)
@@ -4708,19 +4708,19 @@ void DrawingOptions::update_slider_param()
             (SliderArray[sl].SliderLabelMin)->setText(qlstmin.at(sl));
             (SliderArray[sl].SliderLabelMax)->setText(qlstmax.at(sl));
             (SliderArray[sl].SliderScrollBar)->blockSignals(false);
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
-            MathmodRef->ui.glWidget->IsoObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
-            MathmodRef->ui.glWidget->ParObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
+            MathmodRef->IsoObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
+            MathmodRef->ParObjet->masterthread->SliderNames.push_back(qlstnames.at(sl).toStdString());
+            MathmodRef->IsoObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
+            MathmodRef->ParObjet->masterthread->SliderValues.push_back(qlstPos.at(sl).toDouble());
         }
     }
     // Draw
-    MathmodRef->ui.glWidget->LocalScene.slider = 1;
+    MathmodRef->LocalScene.slider = 1;
     if (CurrentFormulaType == 2)
         MathmodRef->ProcessNewIsoSurface();
     else
         MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
-    MathmodRef->ui.glWidget->LocalScene.slider = -1;
+    MathmodRef->LocalScene.slider = -1;
 }
 
 void DrawingOptions::on_AddSetButton_clicked()
@@ -4932,10 +4932,10 @@ void DrawingOptions::SetSpecularValues(float *spec)
     ui.transparent_Specular->blockSignals(true);
     ui.transparent_Specular->setSliderPosition(int(spec[3] * 100));
     ui.transparent_Specular->blockSignals(false);
-    MathmodRef->ui.glWidget->LocalScene.specReflection[0]= Parameters->Specular[0];
-    MathmodRef->ui.glWidget->LocalScene.specReflection[1]= Parameters->Specular[1];
-    MathmodRef->ui.glWidget->LocalScene.specReflection[2]= Parameters->Specular[2];
-    MathmodRef->ui.glWidget->LocalScene.specReflection[3]= Parameters->Specular[3];
+    MathmodRef->LocalScene.specReflection[0]= Parameters->Specular[0];
+    MathmodRef->LocalScene.specReflection[1]= Parameters->Specular[1];
+    MathmodRef->LocalScene.specReflection[2]= Parameters->Specular[2];
+    MathmodRef->LocalScene.specReflection[3]= Parameters->Specular[3];
 }
 
 void DrawingOptions::SetThreadValues(int *thread)
@@ -4956,83 +4956,83 @@ void DrawingOptions::SetShininessValue(int shin)
     ui.ShininessScrollBar->blockSignals(true);
     ui.ShininessScrollBar->setSliderPosition(shin);
     ui.ShininessScrollBar->blockSignals(false);
-    MathmodRef->ui.glWidget->LocalScene.shininess = Parameters->Shininess;
+    MathmodRef->LocalScene.shininess = Parameters->Shininess;
 }
 
 void DrawingOptions::on_red_Specular_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->redSpec(value);
+    MathmodRef->redSpec(value);
     if (ui.GcheckBox->isChecked())
     {
         ui.green_Specular->blockSignals(true);
         ui.green_Specular->setSliderPosition(value);
         ui.green_Specular->blockSignals(false);
-        MathmodRef->ui.glWidget->greenSpec(value);
+        MathmodRef->greenSpec(value);
     }
     if (ui.BcheckBox->isChecked())
     {
         ui.blue_Specular->blockSignals(true);
         ui.blue_Specular->setSliderPosition(value);
         ui.blue_Specular->blockSignals(false);
-        MathmodRef->ui.glWidget->blueSpec(value);
+        MathmodRef->blueSpec(value);
     }
-    //MathmodRef->ui.glWidget->InitSpecularParameters();
+    //MathmodRef->InitSpecularParameters();
 }
 
 void DrawingOptions::on_green_Specular_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->greenSpec(value);
+    MathmodRef->greenSpec(value);
     if (ui.RcheckBox->isChecked())
     {
         ui.red_Specular->blockSignals(true);
         ui.red_Specular->setSliderPosition(value);
         ui.red_Specular->blockSignals(false);
-        MathmodRef->ui.glWidget->redSpec(value);
+        MathmodRef->redSpec(value);
     }
     if (ui.BcheckBox->isChecked())
     {
         ui.blue_Specular->blockSignals(true);
         ui.blue_Specular->setSliderPosition(value);
         ui.blue_Specular->blockSignals(false);
-        MathmodRef->ui.glWidget->blueSpec(value);
+        MathmodRef->blueSpec(value);
     }
-    //MathmodRef->ui.glWidget->InitSpecularParameters();
+    //MathmodRef->InitSpecularParameters();
 }
 
 void DrawingOptions::on_blue_Specular_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->blueSpec(value);
+    MathmodRef->blueSpec(value);
     if (ui.GcheckBox->isChecked())
     {
         ui.green_Specular->blockSignals(true);
         ui.green_Specular->setSliderPosition(value);
         ui.green_Specular->blockSignals(false);
-        MathmodRef->ui.glWidget->greenSpec(value);
+        MathmodRef->greenSpec(value);
     }
     if (ui.RcheckBox->isChecked())
     {
         ui.red_Specular->blockSignals(true);
         ui.red_Specular->setSliderPosition(value);
         ui.red_Specular->blockSignals(false);
-        MathmodRef->ui.glWidget->redSpec(value);
+        MathmodRef->redSpec(value);
     }
-    //MathmodRef->ui.glWidget->InitSpecularParameters();
+    //MathmodRef->InitSpecularParameters();
 }
 
 void DrawingOptions::on_transparent_Specular_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->transSpec(value);
+    MathmodRef->transSpec(value);
 }
 
 void DrawingOptions::on_ShininessScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->Shininess(value);
+    MathmodRef->Shininess(value);
 }
 
 void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
-    MathmodRef->ui.glWidget->ParObjet->UpdateThredsNumber(uint(value));
-    MathmodRef->ui.glWidget->IsoObjet->UpdateThredsNumber(uint(value));
+    MathmodRef->ParObjet->UpdateThredsNumber(uint(value));
+    MathmodRef->IsoObjet->UpdateThredsNumber(uint(value));
     ui.ThreadgroupBox->setTitle(
         "Threads: " + QString::number(ui.ThreadNumberScrollBar->minimum()) +
         "  <  " + QString::number(value) + "  <  " +
@@ -5041,8 +5041,8 @@ void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 
 void DrawingOptions::on_StopCalculationsButton_clicked()
 {
-    MathmodRef->ui.glWidget->IsoObjet->stopcalculations(true);
-    MathmodRef->ui.glWidget->ParObjet->stopcalculations(true);
+    MathmodRef->IsoObjet->stopcalculations(true);
+    MathmodRef->ParObjet->stopcalculations(true);
 }
 
 void DrawingOptions::on_stopButton_clicked()
@@ -5057,18 +5057,18 @@ void DrawingOptions::on_actionScripts_selection_triggered()
 
 void DrawingOptions::on_actionBoundingBox_clicked()
 {
-    MathmodRef->ui.glWidget->boundingboxOk();
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->boundingboxOk();
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_actionAnimation_Rotation_triggered()
 {
-    MathmodRef->ui.glWidget->anim();
+    MathmodRef->anim();
 }
 
 void DrawingOptions::on_actionMorph_use_t_parameter_triggered()
 {
-    MathmodRef->ui.glWidget->morph();
+    MathmodRef->morph();
 }
 
 void DrawingOptions::on_TreeViewButton_clicked()
@@ -5208,9 +5208,9 @@ void DrawingOptions::on_ScaleButton_clicked()
     double fz = ui.lineEditSz->text().toDouble(&valz);
     if (valx && valy && valz)
     {
-        MathmodRef->ui.glWidget->factx=fx;
-        MathmodRef->ui.glWidget->facty=fy;
-        MathmodRef->ui.glWidget->factz=fz;
+        MathmodRef->factx=fx;
+        MathmodRef->facty=fy;
+        MathmodRef->factz=fz;
     }
     else
     {
@@ -5226,20 +5226,20 @@ void DrawingOptions::on_ShowIsoComp_clicked()
     if(!ui.ShowIsoComp->isChecked())
     {
         ui.ShowIsoComp->setText("Show");
-        if(!MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso)
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=false;
+        if(!MathmodRef->LocalScene.componentsinfos.pariso)
+            MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=false;
         else
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=false;
+            MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=false;
     }
     else
     {
         ui.ShowIsoComp->setText("Hide");
-        if(!MathmodRef->ui.glWidget->LocalScene.componentsinfos.pariso)
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
+        if(!MathmodRef->LocalScene.componentsinfos.pariso)
+            MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
         else
-            MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->ui.glWidget->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=true;
+            MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[MathmodRef->LocalScene.componentsinfos.NbComponentsType[0]+IndexcurrentComponent]=true;
     }
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->update();
 }
 
 void DrawingOptions::on_ShowParComp_clicked()
@@ -5247,12 +5247,12 @@ void DrawingOptions::on_ShowParComp_clicked()
     if(!ui.ShowParComp->isChecked())
     {
         ui.ShowParComp->setText("Show");
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=false;
+        MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=false;
     }
     else
     {
         ui.ShowParComp->setText("Hide");
-        MathmodRef->ui.glWidget->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
+        MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
     }
-    MathmodRef->ui.glWidget->update();
+    MathmodRef->update();
 }

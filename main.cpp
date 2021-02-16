@@ -62,42 +62,42 @@ int main(int argc, char *argv[])
     drawingopt.Parameters = &Parameters;
     drawingopt.MathmodRef = &mm;
     mm.Parent = &drawingopt;
-    mm.ui.glWidget->Xgrid = mm.ui.glWidget->Ygrid = mm.ui.glWidget->Zgrid=uint(Parameters.InitIsoGrid);
-    mm.ui.glWidget->Ugrid = mm.ui.glWidget->Vgrid = uint(Parameters.InitParGrid);
+    mm.Xgrid = mm.Ygrid = mm.Zgrid=uint(Parameters.InitIsoGrid);
+    mm.Ugrid = mm.Vgrid = uint(Parameters.InitParGrid);
     // GUI update:
     drawingopt.UpdateGui(argc);
     if (drawingopt.IsolistItemRef != nullptr)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->IsoObjet->masterthread,
+    QObject::connect(drawingopt.MathmodRef->IsoObjet->masterthread,
                      SIGNAL(mySignal(int)), drawingopt.ui.progressBar,
                      SLOT(setValue(int)));
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->ParObjet->masterthread,
+    QObject::connect(drawingopt.MathmodRef->ParObjet->masterthread,
                      SIGNAL(mySignal(int)), drawingopt.ui.progressBar,
                      SLOT(setValue(int)));
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->IsoObjet,
+    QObject::connect(drawingopt.MathmodRef->IsoObjet,
                      SIGNAL(ErrorSignal(int)), &drawingopt,
                      SLOT(MemoryErrorMsg(int)));
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->ParObjet,
+    QObject::connect(drawingopt.MathmodRef->ParObjet,
                      SIGNAL(ErrorSignal(int)), &drawingopt,
                      SLOT(MemoryErrorMsg(int)));
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->IsoObjet,
+    QObject::connect(drawingopt.MathmodRef->IsoObjet,
                      SIGNAL(UpdateMessageSignal(QString)),
                      drawingopt.ui.Messagetext, SLOT(setText(QString)));
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->ParObjet,
+    QObject::connect(drawingopt.MathmodRef->ParObjet,
                      SIGNAL(UpdateMessageSignal(QString)),
                      drawingopt.ui.Messagetext, SLOT(setText(QString)));
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->ParObjet,
-                     SIGNAL(finished()), drawingopt.MathmodRef->ui.glWidget,
+    QObject::connect(drawingopt.MathmodRef->ParObjet,
+                     SIGNAL(finished()), drawingopt.MathmodRef,
                      SLOT(UpdateGL()), Qt::UniqueConnection);
-    QObject::connect(drawingopt.MathmodRef->ui.glWidget->IsoObjet,
-                     SIGNAL(finished()), drawingopt.MathmodRef->ui.glWidget,
+    QObject::connect(drawingopt.MathmodRef->IsoObjet,
+                     SIGNAL(finished()), drawingopt.MathmodRef,
                      SLOT(UpdateGL()), Qt::UniqueConnection);
     QObject::connect(drawingopt.Parameters->ui.ApplypushButton, SIGNAL(clicked()),
                      &drawingopt, SLOT(ApplypushButton_clicked()));
     drawingopt.show();
     mm.show();
     drawingopt.raise();
-    mm.ui.glWidget->LoadShadersFiles();
+    mm.LoadShadersFiles();
     drawingopt.on_choice_activated(Parameters.model);
     return app.exec();
 }

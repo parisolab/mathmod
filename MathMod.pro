@@ -1,14 +1,13 @@
 HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/colorsoptions.h \
             ui_modules/about.h \
-            ui_modules/mathmod.h \
             ui_modules/ParisoMathObject.h \
+            ui_modules/mathmod.h \
             ui_modules/selectoptions.h \
             pariso/parametric/Model3D.h \
             pariso/parametric/ND/Matrix4D.h \
             fparser/fparser.hh \
             pariso/isosurface/Iso3D.h \
-            gl_viewer/glviewer.h \
             pariso/parisoobject.h \
             pariso/isosurface/TableMap.h \
             json_parser/parisodef.h \
@@ -26,16 +25,15 @@ HEADERS   = ui_modules/drawingoptions.h \
 
 SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/colorsoptions.cpp \
-            ui_modules/mathmod.cpp \
             ui_modules/about.cpp \
             ui_modules/ParisoMathObject.cpp \
             ui_modules/editor.cpp \
+            ui_modules/mathmod.cpp \
             ui_modules/selectoptions.cpp \
             fparser/fparser.cc \
             pariso/parametric/Model3D.cpp \
             pariso/parametric/ND/Matrix4D.cpp \
             pariso/isosurface/Iso3D.cpp \
-            gl_viewer/glviewer.cpp \
             pariso/parisoobject.cpp \
             main.cpp \
             json_parser/parisodef.cpp \
@@ -53,7 +51,6 @@ SOURCES   = ui_modules/drawingoptions.cpp \
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/colorsoptions.ui \
             ui_forms/about.ui \
-            ui_forms/mathmod.ui \
             ui_forms/editor.ui \
             ui_forms/parametersoptions.ui \
             ui_forms/sliderparam.ui \
