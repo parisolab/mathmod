@@ -890,7 +890,7 @@ void OpenGlWidget::restarttimer(int newlatence)
         timer->start(latence, this);
     }
 }
-
+/*
 void OpenGlWidget::startRendering()
 {
     glt.start();
@@ -901,7 +901,7 @@ void OpenGlWidget::stopRendering()
     glt.stop();
     glt.wait();
 }
-
+*/
 static void CreateShaderProgram()
 {
     const int MAX_LENGTH = 2048;
@@ -1183,15 +1183,12 @@ void OpenGlWidget::resizeGL(int newwidth, int newheight)
     proj();
 }
 
-void OpenGlWidget::initializeGL()
-{
-}
+/*
 void OpenGlWidget::closeEvent(QCloseEvent *evt)
 {
-    stopRendering();
     QOpenGLWidget::closeEvent(evt);
 }
-
+*/
 void OpenGlWidget::anim()
 {
     LocalScene.anim *= -1;
@@ -1255,17 +1252,17 @@ void OpenGlWidget::keyPressEvent(QKeyEvent *e)
     switch (key)
     {
     case Qt::Key_A:
-        glt.anim();
+        anim();
         break;
     case Qt::Key_P:
-        glt.morph();
+        morph();
         initbox();
         break;
     }
-    glt.update();
+    update();
 }
 
-OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent), glt(this)
+OpenGlWidget::OpenGlWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
     OpenGlWidget::context();
     makeCurrent();

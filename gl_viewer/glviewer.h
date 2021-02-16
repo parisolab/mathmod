@@ -22,10 +22,8 @@
 
 #include "../pariso/isosurface/Iso3D.h"
 #include "../pariso/parametric/Model3D.h"
-#include "qglthread.h"
 #include <QFileDialog>
 #include <QOpenGLWidget>
-//#include <QGLWidget>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QResizeEvent>
@@ -85,14 +83,6 @@ public:
     void FramesShot();
     void FramesSave();
     QImage Copyscreenshot();
-
-public:
-    GLThread glt;
-    void startRendering();
-    void stopRendering();
-    void closeEvent(QCloseEvent *evt)  override;
-    void initializeGL()  override;
-
 public slots:
     void anim();
     void morph();
