@@ -102,7 +102,27 @@ public slots:
     int ParsePar();
     void ShowErrormessage();
     void frames_clicked();
+    void CreateShaderProgram();
+    void draw(ObjectProperties *);
+    void plan();
+    void CopyData(ObjectProperties *);
+    void DrawMinimalTopology(ObjectProperties *);
+    void DrawMeshIso(ObjectProperties *);
+    void DrawParisoCND(ObjectProperties *, uint);
+    void DrawNormals(ObjectProperties *);
+    void DrawAxe();
+    void InitialOperations();
+    void initGL();
+    bool initSharedMem();
+    void proj();
+    void DrawPariso(ObjectProperties *, uint);
+    void drawCube();
 
+
+
+
+
+    //void initializeGL() override;
     void Winitialize_GL();
     void resizeGL(int, int) override;
     void paintGL()  override;

@@ -730,13 +730,13 @@ void MathMod::blueSpec(int cl)
     update();
 }
 
-static void drawCube()
+void MathMod::drawCube()
 {
     glLineWidth(1.0);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
 }
 
-static void DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
+void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
 {
     uint idx = 0;
     for (uint i = 0; i < ParisoTypeIndex; i++)
@@ -875,15 +875,16 @@ void MathMod::restarttimer(int newlatence)
     }
 }
 
-static void CreateShaderProgram()
+void MathMod::CreateShaderProgram()
 {
     const int MAX_LENGTH = 2048;
     char log[MAX_LENGTH];
     int logLength = 0;
-
+    initializeOpenGLFunctions();
     /* Assign our handles a "name" to new shader objects */
     //glDeleteShader(vertexshader);
     //glDeleteShader(fragmentshader);
+
     vertexshader = glCreateShader(GL_VERTEX_SHADER);
     bool shaderValid = glIsShader(vertexshader);
     if (!shaderValid)
@@ -1103,7 +1104,7 @@ static void CreateShaderProgram()
         return;
     }
 }
-void proj()
+void MathMod::proj()
 {
     qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
     // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
@@ -1113,7 +1114,7 @@ void proj()
     // Set perspective projection
     matrixProjectionx.perspective(fov, aspect, zNear, zFar);
 }
-bool initSharedMem()
+bool MathMod::initSharedMem()
 {
     screenWidth = SCREEN_WIDTH;
     screenHeight = SCREEN_HEIGHT;
@@ -1127,14 +1128,14 @@ void MathMod::LoadShadersFiles()
     CreateShaderProgram();
 }
 
-void initGL()
+void MathMod::initGL()
 {
     glEnable(GL_DEPTH_TEST);
     glFrontFace(GL_CCW);
     glClearColor(0, 0, 0, 0);
 }
 
-static void InitialOperations(ObjectProperties *)
+void MathMod::InitialOperations()
 {
     static int staticaction = 0;
     if (staticaction < 1)
@@ -1246,7 +1247,7 @@ void MathMod::PrintInfos()
 {
 }
 
-static void DrawAxe()
+void MathMod::DrawAxe()
 {
     glLineWidth(1.0);
     // Draw the three axes (lines without head)
@@ -1259,7 +1260,7 @@ static void DrawAxe()
     glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
 }
 
-static void DrawNormals(ObjectProperties *)
+void MathMod::DrawNormals(ObjectProperties *)
 {
     /*
     uint j = 0;
@@ -1302,7 +1303,7 @@ void MathMod::UpdateGL()
         LocalScene.updategl = true;
 }
 
-static void DrawParisoCND(ObjectProperties *scene, uint compindex)
+void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
 {
     uint idx = 0;
     for (uint i = 0; i < compindex; i++)
@@ -1346,7 +1347,7 @@ static void DrawParisoCND(ObjectProperties *scene, uint compindex)
     }
 }
 
-static void DrawMeshIso(ObjectProperties *scene)
+void MathMod::DrawMeshIso(ObjectProperties *scene)
 {
     size_t Offset = 0;
     uint st = 0;
@@ -1362,7 +1363,7 @@ static void DrawMeshIso(ObjectProperties *scene)
     glUniform1i(uniformdrawgridColor, 0);
 }
 
-static void DrawMinimalTopology(ObjectProperties *scene)
+void MathMod::DrawMinimalTopology(ObjectProperties *scene)
 {
     glUniform4fv(uniformGridColor, 1,scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
@@ -1384,14 +1385,14 @@ static void DrawMinimalTopology(ObjectProperties *scene)
     glUniform1i(uniformdrawgridColor, 0);
 }
 
-static void plan()
+void MathMod::plan()
 {
     glLineWidth(0.3);
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
 
-static void CopyData(ObjectProperties *scene)
+void MathMod::CopyData(ObjectProperties *scene)
 {
     static int firstaction=0;
     static uint previousVertxNumber=0;
@@ -1463,11 +1464,11 @@ void MathMod::copydata()
     CopyData(&LocalScene);
 }
 
-static void draw(ObjectProperties *scene)
+void MathMod::draw(ObjectProperties *scene)
 {
     if(!PutObjectInsideCubeOk)
         return;
-    InitialOperations(scene);
+    InitialOperations();
     if (scene->componentsinfos.Interleave)
     {
         CopyData(scene);
