@@ -677,8 +677,6 @@ void MathMod::PutObjectInsideCube()
     }
 }
 
-
-
 void MathMod::png()
 {
     LocalScene.png_ok *= -1;
@@ -1667,6 +1665,7 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
         // Rotation axis is perpendicular to the mouse position difference
         n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
+        initializeOpenGLFunctions();
         glGetIntegerv(GL_VIEWPORT,LocalScene.viewport);
         acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/(double)(LocalScene.viewport[2]+1)*360.0;
         // Calculate new rotation axis
@@ -1845,19 +1844,9 @@ void MathMod::InitSpecularParameters()
 
 
 
-
-
-
-
-
-
-
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 MathMod::MathMod(QWidget *parent, uint nbthreads,
                  uint initparGrid, uint initisoGrid, uint FactX, uint FactY,
-                 uint FactZ)
-    : QOpenGLWidget(parent)
+                 uint FactZ) :QOpenGLWidget(parent)
 {
     MathMod::context();
     makeCurrent();

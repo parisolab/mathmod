@@ -39,8 +39,12 @@
 #include "../ui_modules/ParisoMathObject.h"
 #include <QMessageBox>
 #include <QOpenGLWidget>
+#include <QOpenGLFunctions>
+#ifndef Q_OS_MACOS
+#include <GLES2/gl2.h>
+#endif
 
-class MathMod : public QOpenGLWidget
+class MathMod : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
