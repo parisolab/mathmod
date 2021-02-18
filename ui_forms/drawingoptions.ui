@@ -5659,7 +5659,7 @@ p, li { white-space: pre-wrap; }
             <item row="0" column="0">
              <widget class="QTabWidget" name="tabWidget">
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="tab_18">
                <attribute name="title">
@@ -6107,10 +6107,16 @@ p, li { white-space: pre-wrap; }
                     <item row="0" column="1" rowspan="2">
                      <widget class="QPushButton" name="ShowtextureScript">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>83</height>
+                       </size>
                       </property>
                       <property name="text">
                        <string>Show Script</string>
@@ -6202,7 +6208,7 @@ p, li { white-space: pre-wrap; }
                       </sizepolicy>
                      </property>
                      <property name="maximum">
-                      <number>120</number>
+                      <number>200</number>
                      </property>
                      <property name="value">
                       <number>110</number>

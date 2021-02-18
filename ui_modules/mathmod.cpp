@@ -1668,7 +1668,7 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
         // Accelerate angular speed relative to the length of the mouse sweep
         initializeOpenGLFunctions();
         glGetIntegerv(GL_VIEWPORT,LocalScene.viewport);
-        acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/(double)(LocalScene.viewport[2]+1)*360.0;
+        acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/ /*(double)(LocalScene.viewport[2]+1)*/3.0;
         // Calculate new rotation axis
         rotationAxis = (rotationAxis +n).normalized();
         rotation = QQuaternion::fromAxisAndAngle(n, acc)*oldRotation;
