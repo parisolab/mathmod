@@ -25,7 +25,6 @@
 #define BUFFER_OFFSET(i) ((float *)(i))
 
 QVector2D mousePressPosition;
-QVector3D rotationAxis;
 qreal angularSpeed = 0;
 QQuaternion rotation;
 QQuaternion oldRotation;
@@ -1612,7 +1611,7 @@ void MathMod::timerEvent(QTimerEvent *)
         rotation = QQuaternion::fromAxisAndAngle(n, acc/10) * rotation;
         oldRotation = rotation;
     }
-    UpdateGL();
+    update();
 }
 
 void MathMod::mouseReleaseEvent(QMouseEvent *)
@@ -1666,11 +1665,8 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
         // Rotation axis is perpendicular to the mouse position difference
         n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
-        initializeOpenGLFunctions();
-        glGetIntegerv(GL_VIEWPORT,LocalScene.viewport);
         acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/ /*(double)(LocalScene.viewport[2]+1)*/3.0;
         // Calculate new rotation axis
-        rotationAxis = (rotationAxis +n).normalized();
         rotation = QQuaternion::fromAxisAndAngle(n, acc)*oldRotation;
         oldacc= acc;
         oldn = n;
