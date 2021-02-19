@@ -1626,20 +1626,20 @@ void MathMod::paintGL()
 
 void MathMod::timerEvent(QTimerEvent *)
 {
-    if(LocalScene.animx==1)
-    {
-        rotationx = rotationx*QQuaternion::fromAxisAndAngle(QVector3D(1.0,0.0,0.0), LocalScene.animxValueStep);
-    }
-    if(LocalScene.animy==1)
-    {
-        rotationy = rotationy*QQuaternion::fromAxisAndAngle(QVector3D(0.0,1.0,0.0), LocalScene.animyValueStep);
-    }
-    if(LocalScene.animz==1)
-    {
-        rotationz = rotationz*QQuaternion::fromAxisAndAngle(QVector3D(0.0,0.0,1.0), LocalScene.animzValueStep);
-    }
     if(LocalScene.anim == 1)
     {
+        if(LocalScene.animx==1)
+        {
+            rotationx = rotationx*QQuaternion::fromAxisAndAngle(QVector3D(1.0,0.0,0.0), LocalScene.animxValueStep);
+        }
+        if(LocalScene.animy==1)
+        {
+            rotationy = rotationy*QQuaternion::fromAxisAndAngle(QVector3D(0.0,1.0,0.0), LocalScene.animyValueStep);
+        }
+        if(LocalScene.animz==1)
+        {
+            rotationz = rotationz*QQuaternion::fromAxisAndAngle(QVector3D(0.0,0.0,1.0), LocalScene.animzValueStep);
+        }
         if(LocalScene.animxyz == 1)
             rotation = QQuaternion::fromAxisAndAngle(n, acc/10) * rotation;
         oldRotation = rotation;
