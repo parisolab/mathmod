@@ -62,8 +62,6 @@ public:
     QMessageBox message;
     ErrorMessage stError;
     ImprovedNoise *PerlinNoise;
-
-
     int xyzactivated, isomesh, uvactivated, uvactivated4D;
     ParisoMathObject RootObjet;
     jcollection collection;

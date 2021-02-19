@@ -27,6 +27,9 @@
 QVector2D mousePressPosition;
 qreal angularSpeed = 0;
 QQuaternion rotation;
+QQuaternion rotationx;
+QQuaternion rotationy;
+QQuaternion rotationz;
 QQuaternion oldRotation;
 qreal acc;
 QVector3D n;
@@ -1490,6 +1493,7 @@ void MathMod::draw(ObjectProperties *scene)
     glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixViewx.data());
     glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjectionx.data());
     glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormalx.data());
+
     glUniform1f(uniformShininess, shininessVal);
     glUniform4fv(uniformLightSpecular, 1, lightSpecular);
     // bind VBOs
@@ -1507,13 +1511,29 @@ void MathMod::draw(ObjectProperties *scene)
     glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
     glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
     glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
+
+    // We draw the Plan first because we don't want it to spin aroundX,Y and Z axes
+    if (scene->infos == 1)
+        plan();
+
+    if(LocalScene.animx==1)
+        matrixViewx.rotate(rotationx);
+    if(LocalScene.animy==1)
+        matrixViewx.rotate(rotationy);
+    if(LocalScene.animz==1)
+        matrixViewx.rotate(rotationz);
+    if(LocalScene.animx==1 || LocalScene.animy==1 || LocalScene.animz==1)
+    {
+        matrixModelViewProjectionx = matrixProjectionx * matrixViewx;
+        matrixNormalx=matrixViewx;
+        matrixNormalx.setColumn(3, QVector4D(0,0,0,1));
+        glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixViewx.data());
+        glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjectionx.data());
+        glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormalx.data());
+    }
     // Blend Effect activation:
     if (scene->transparency == 1)
         glDepthMask(GL_FALSE);
-
-    // Plan:
-    if (scene->infos == 1)
-        plan();
 
     // Axe :
     if (scene->infos == 1)
@@ -1606,9 +1626,22 @@ void MathMod::paintGL()
 
 void MathMod::timerEvent(QTimerEvent *)
 {
+    if(LocalScene.animx==1)
+    {
+        rotationx = rotationx*QQuaternion::fromAxisAndAngle(QVector3D(1.0,0.0,0.0), LocalScene.animxValueStep);
+    }
+    if(LocalScene.animy==1)
+    {
+        rotationy = rotationy*QQuaternion::fromAxisAndAngle(QVector3D(0.0,1.0,0.0), LocalScene.animyValueStep);
+    }
+    if(LocalScene.animz==1)
+    {
+        rotationz = rotationz*QQuaternion::fromAxisAndAngle(QVector3D(0.0,0.0,1.0), LocalScene.animzValueStep);
+    }
     if(LocalScene.anim == 1)
     {
-        rotation = QQuaternion::fromAxisAndAngle(n, acc/10) * rotation;
+        if(LocalScene.animxyz == 1)
+            rotation = QQuaternion::fromAxisAndAngle(n, acc/10) * rotation;
         oldRotation = rotation;
     }
     update();
