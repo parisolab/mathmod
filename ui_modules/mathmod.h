@@ -40,10 +40,11 @@
 #include <QMessageBox>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+/*
 #ifndef Q_OS_MACOS
 #include <GLES2/gl2.h>
 #endif
-
+*/
 class MathMod : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
