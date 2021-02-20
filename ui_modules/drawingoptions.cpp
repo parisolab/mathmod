@@ -1276,7 +1276,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 ? MathmodRef->CalculateTexturePoints(1)
                 : MathmodRef->CalculatePigmentPoints(1);
                 MathmodRef->LocalScene.componentsinfos.Interleave=true;
-                //MathmodRef->copydata();
                 MathmodRef->update();
             }
         }
@@ -1322,7 +1321,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 ? MathmodRef->CalculateTexturePoints(0)
                 : MathmodRef->CalculatePigmentPoints(0);
                 MathmodRef->LocalScene.componentsinfos.Interleave=true;
-                //MathmodRef->copydata();
                 MathmodRef->update();
             }
         }
@@ -1370,7 +1368,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 ? MathmodRef->CalculateTexturePoints(0)
                 : MathmodRef->CalculatePigmentPoints(0);
                 MathmodRef->LocalScene.componentsinfos.Interleave=true;
-                //MathmodRef->copydata();
                 MathmodRef->update();
             }
         }
