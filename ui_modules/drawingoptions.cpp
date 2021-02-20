@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -1275,7 +1275,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 textureIndex < 1000
                 ? MathmodRef->CalculateTexturePoints(1)
                 : MathmodRef->CalculatePigmentPoints(1);
-                MathmodRef->copydata();
+                MathmodRef->LocalScene.componentsinfos.Interleave=true;
+                //MathmodRef->copydata();
                 MathmodRef->update();
             }
         }
@@ -1320,7 +1321,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 textureIndex < 1000
                 ? MathmodRef->CalculateTexturePoints(0)
                 : MathmodRef->CalculatePigmentPoints(0);
-                MathmodRef->copydata();
+                MathmodRef->LocalScene.componentsinfos.Interleave=true;
+                //MathmodRef->copydata();
                 MathmodRef->update();
             }
         }
@@ -1367,7 +1369,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 textureIndex < 1000
                 ? MathmodRef->CalculateTexturePoints(0)
                 : MathmodRef->CalculatePigmentPoints(0);
-                MathmodRef->copydata();
+                MathmodRef->LocalScene.componentsinfos.Interleave=true;
+                //MathmodRef->copydata();
                 MathmodRef->update();
             }
         }
