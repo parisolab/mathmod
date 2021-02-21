@@ -86,11 +86,11 @@ float gridcol[4]  ={0.4f, 0.4f, 0.4f, 0.9f};
 // set uniform values
 float lightPosition[] = {0, 0, 10, 0};
 float lightAmbient[]  = {0.4f, 0.4f, 0.4f, 0.1};
-float lightDiffuse[]  = {0.7f, 0.7f, 0.7f, 1.0};
-float lightSpecular[] = {0.3f, 0.3f, 0.3f, 0.1};
-float frontColor[] = {0.9f, 0.5f, 0.1, 1};
+float lightDiffuse[]  = {0.5f, 0.5f, 0.5f, 1.0};
+float lightSpecular[] = {0.4f, 0.4f, 0.4f, 0.1};
+float frontColor[] = {0.3f, 0.4f, 0.1, 1};
 float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
-int shininessVal=120;
+int shininessVal=20;
 static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
