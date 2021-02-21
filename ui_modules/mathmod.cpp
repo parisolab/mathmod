@@ -349,10 +349,8 @@ void MathMod::SaveSceneAsObjPoly(int type)
 {
     int startpl = 0;
     uint actualpointindice;
-
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save OBJ file"), "",
                        tr("OBJ Files (*.obj)"));
-
     QFile data(fileName);
     if (data.open(QFile::ReadWrite | QFile::Truncate))
     {
@@ -367,16 +365,13 @@ void MathMod::SaveSceneAsObjPoly(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum*factx/ hauteur_fenetre) -
-                                  decalage_xo)
+                                  (difMaximum*factx/ hauteur_fenetre) - decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum*facty / hauteur_fenetre) -
-                                  decalage_yo)
+                                  (difMaximum*facty / hauteur_fenetre) - decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum*factz / hauteur_fenetre) -
-                                  decalage_zo)
+                                  (difMaximum*factz / hauteur_fenetre) - decalage_zo)
                          << "  " << LocalScene.ArrayNorVer_localPt[10 * i] << "  "
                          << LocalScene.ArrayNorVer_localPt[10 * i + 1] << "  "
                          << LocalScene.ArrayNorVer_localPt[10 * i + 2] << "\n";
@@ -388,32 +383,28 @@ void MathMod::SaveSceneAsObjPoly(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum*factx / hauteur_fenetre) -
-                                  decalage_xo)
+                                  (difMaximum*factx / hauteur_fenetre) - decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum*facty / hauteur_fenetre) -
-                                  decalage_yo)
+                                  (difMaximum*facty / hauteur_fenetre) - decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum*factz / hauteur_fenetre) -
-                                  decalage_zo)
+                                  (difMaximum*factz / hauteur_fenetre) - decalage_zo)
                          << "\n";
             }
         }
         // save faces:
+        startpl = LocalScene.PolyNumber;
         for (i = 0; i < LocalScene.NbPolygnNbVertexPtMin; i++)
         {
-            uint polysize = LocalScene.PolyIndices_localPtMin[startpl++];
+            uint polysize = LocalScene.PolyIndices_localPtMin[i];
             (stream) << "f";
             for (uint j = 0; j < polysize; j++)
             {
-                actualpointindice = LocalScene.PolyIndices_localPtMin[startpl] + 1;
+                actualpointindice = LocalScene.PolyIndices_localPt[startpl++]+1;
                 (stream) << "  " << actualpointindice;
-                startpl++;
             }
             (stream) << "\n";
-            i += polysize;
         }
     }
 }
@@ -436,16 +427,13 @@ void MathMod::SaveSceneAsObjTrian(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum*factx / hauteur_fenetre) -
-                                  decalage_xo)
+                                  (difMaximum*factx / hauteur_fenetre) - decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum*facty / hauteur_fenetre) -
-                                  decalage_yo)
+                                  (difMaximum*facty / hauteur_fenetre) - decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum*factz / hauteur_fenetre) -
-                                  decalage_zo)
+                                  (difMaximum*factz / hauteur_fenetre) - decalage_zo)
                          << "  " << LocalScene.ArrayNorVer_localPt[10 * i] << "  "
                          << LocalScene.ArrayNorVer_localPt[10 * i + 1] << "  "
                          << LocalScene.ArrayNorVer_localPt[10 * i + 2] << "\n";
@@ -457,16 +445,13 @@ void MathMod::SaveSceneAsObjTrian(int type)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
-                                  (difMaximum*factx / hauteur_fenetre) -
-                                  decalage_xo)
+                                  (difMaximum*factx / hauteur_fenetre) - decalage_xo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 8]) *
-                                  (difMaximum*facty / hauteur_fenetre) -
-                                  decalage_yo)
+                                  (difMaximum*facty / hauteur_fenetre) - decalage_yo)
                          << "  "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) *
-                                  (difMaximum*factz / hauteur_fenetre) -
-                                  decalage_zo)
+                                  (difMaximum*factz / hauteur_fenetre) - decalage_zo)
                          << "\n";
             }
         }

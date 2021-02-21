@@ -5201,7 +5201,7 @@ void DrawingOptions::on_actionDocumentation_triggered()
 }
 
 void DrawingOptions::on_ScaleButton_clicked()
-{/*
+{
     bool valx, valy, valz;
     double fx = ui.lineEditSx->text().toDouble(&valx);
     double fy = ui.lineEditSy->text().toDouble(&valy);
@@ -5218,7 +5218,6 @@ void DrawingOptions::on_ScaleButton_clicked()
         msgBox.setText("Invalid number");
         msgBox.exec();
     }
-    */
 }
 
 void DrawingOptions::on_ShowIsoComp_clicked()
