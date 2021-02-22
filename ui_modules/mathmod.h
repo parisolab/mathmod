@@ -110,9 +110,7 @@ public slots:
     void DrawParisoCND(ObjectProperties *, uint);
     void DrawNormals(ObjectProperties *);
     void DrawAxe();
-    void InitialOperations();
-    void initGL();
-    bool initSharedMem();
+    bool initCamera();
     void proj();
     void DrawPariso(ObjectProperties *, uint);
     void drawCube();
@@ -121,7 +119,7 @@ public slots:
 
 
 
-    //void initializeGL() override;
+    void initializeGL() override;
     void Winitialize_GL();
     void resizeGL(int, int) override;
     void paintGL()  override;

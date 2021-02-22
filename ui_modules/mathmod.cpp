@@ -26,6 +26,7 @@
 
 QVector2D mousePressPosition;
 qreal angularSpeed = 0;
+QMatrix4x4 matrixViewx;
 QQuaternion rotation= QQuaternion::fromAxisAndAngle(QVector3D(1.0,0.0,0.0), 270)*
         QQuaternion::fromAxisAndAngle(QVector3D(0.0,0.0,1.0), 225)*
         QQuaternion::fromAxisAndAngle(QVector3D(1.0,-1.0,0.0), -29);
@@ -33,6 +34,8 @@ QQuaternion rotationx;
 QQuaternion rotationy;
 QQuaternion rotationz;
 QQuaternion oldRotation= rotation;
+QMatrix4x4 matrixModelViewProjectionx;
+QMatrix4x4 matrixNormalx;
 qreal acc;
 QVector3D n;
 static int FistTimecalibrate = -1;
@@ -869,7 +872,6 @@ void MathMod::CreateShaderProgram()
     const int MAX_LENGTH = 2048;
     char log[MAX_LENGTH];
     int logLength = 0;
-    initializeOpenGLFunctions();
     /* Assign our handles a "name" to new shader objects */
     //glDeleteShader(vertexshader);
     //glDeleteShader(fragmentshader);
@@ -986,22 +988,22 @@ void MathMod::CreateShaderProgram()
     /* Compile our shader objects */
     glCompileShader(vertexshader);
     glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
-        if(IsCompiled_VS==GL_FALSE)
-        {
-           QMessageBox msgBox;
-           glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
-           // The maxLength includes the NULL character
-           vertexInfoLog = (char *)malloc(maxLength);
-           glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
-           std::string vertexInfoLogString = std::string(vertexInfoLog);
-           msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
-           msgBox.adjustSize();
-           msgBox.exec();
-           // Handle the error in an appropriate way such as displaying a message or writing to a log file.
-           // In this simple program, we'll just leave
-           //free(vertexInfoLog);
-           //return;
-        }
+    if(IsCompiled_VS==GL_FALSE)
+    {
+       QMessageBox msgBox;
+       glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
+       // The maxLength includes the NULL character
+       vertexInfoLog = (char *)malloc(maxLength);
+       glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
+       std::string vertexInfoLogString = std::string(vertexInfoLog);
+       msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
+       msgBox.adjustSize();
+       msgBox.exec();
+       // Handle the error in an appropriate way such as displaying a message or writing to a log file.
+       // In this simple program, we'll just leave
+       //free(vertexInfoLog);
+       //return;
+    }
     glShaderSource(fragmentshader, 1, &c_str_fragment, NULL);
     glCompileShader(fragmentshader);
     glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &IsCompiled_FS);
@@ -1096,14 +1098,13 @@ void MathMod::CreateShaderProgram()
 void MathMod::proj()
 {
     qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
-    // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
     const qreal zNear = 0.01, zFar = 15, fov = 60.0;
     // Reset projection
     matrixProjectionx.setToIdentity();
     // Set perspective projection
     matrixProjectionx.perspective(fov, aspect, zNear, zFar);
 }
-bool MathMod::initSharedMem()
+bool MathMod::initCamera()
 {
     screenWidth = SCREEN_WIDTH;
     screenHeight = SCREEN_HEIGHT;
@@ -1117,26 +1118,16 @@ void MathMod::LoadShadersFiles()
     CreateShaderProgram();
 }
 
-void MathMod::initGL()
+void MathMod::initializeGL()
 {
+    initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glFrontFace(GL_CCW);
     glClearColor(0, 0, 0, 0);
-}
-
-void MathMod::InitialOperations()
-{
-    static int staticaction = 0;
-    if (staticaction < 1)
-    {
-        glEnable(GL_DEPTH_TEST);
-        staticaction += 1;
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        initSharedMem();
-        initGL();
-        proj();
-    }
+    initCamera();
+    proj();
 }
 
 void MathMod::resizeGL(int newwidth, int newheight)
@@ -1457,7 +1448,6 @@ void MathMod::draw(ObjectProperties *scene)
 {
     if(!PutObjectInsideCubeOk)
         return;
-    InitialOperations();
     if (scene->componentsinfos.Interleave)
     {
         CopyData(scene);
@@ -1466,12 +1456,12 @@ void MathMod::draw(ObjectProperties *scene)
     // clear buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // set modelview matrix
-    QMatrix4x4 matrixViewx;
+    matrixViewx.setToIdentity();
     matrixViewx.translate(0.0, 0.0, -cameraDistance);
     matrixViewx.rotate(rotation);
     // bind GLSL
-    QMatrix4x4 matrixModelViewProjectionx = matrixProjectionx * matrixViewx;
-    QMatrix4x4 matrixNormalx=matrixViewx;
+    matrixModelViewProjectionx = matrixProjectionx * matrixViewx;
+    matrixNormalx=matrixViewx;
     matrixNormalx.setColumn(3, QVector4D(0,0,0,1));
     glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixViewx.data());
     glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjectionx.data());
