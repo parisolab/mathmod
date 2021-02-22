@@ -93,7 +93,7 @@ float lightPosition[] = {0, 0, 10, 0};
 float lightAmbient[]  = {0.4f, 0.4f, 0.4f, 0.1};
 float lightDiffuse[]  = {0.5f, 0.5f, 0.5f, 1.0};
 float lightSpecular[] = {0.4f, 0.4f, 0.4f, 0.1};
-float frontColor[] = {0.3f, 0.4f, 0.1, 1};
+float frontColor[] = {0.72f, 0.5f, 0.1, 1};
 float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
 int shininessVal=20;
 static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
@@ -550,8 +550,8 @@ void MathMod::PutObjectInsideCube()
     for(uint id=0; id<12; id++)
     {
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 0] = 0.8f;
-        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 1] = 0.0f;
-        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 2] = 0.0f;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 1] = 0.8f;
+        LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 2] = 0.8f;
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 3] = 1.0f;
     }
 
@@ -728,6 +728,7 @@ void MathMod::blueSpec(int cl)
 void MathMod::drawCube()
 {
     glLineWidth(1.0);
+    glUniform1i(uniformThereisRGBA, 0);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
 }
 
@@ -1233,6 +1234,7 @@ void MathMod::PrintInfos()
 void MathMod::DrawAxe()
 {
     glLineWidth(1.0);
+    glUniform1i(uniformThereisRGBA, 0);
     // Draw the three axes (lines without head)
     glDrawArrays(GL_LINES,AxesStartIndex,6);
     // Head of the X Axe:
@@ -1370,6 +1372,7 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
 
 void MathMod::plan()
 {
+    glUniform1i(uniformThereisRGBA, 0);
     glLineWidth(0.3);
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
