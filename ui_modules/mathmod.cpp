@@ -707,18 +707,21 @@ void MathMod::colorstypeParam(int c)
 void MathMod::redSpec(int cl)
 {
     lightSpecular[0] = (cl/ 100.0f);
+    LocalScene.ShininessValUpdated=true;
     update();
 }
 
 void MathMod::greenSpec(int cl)
 {
     lightSpecular[1] = (cl/ 100.0f);
+    LocalScene.ShininessValUpdated=true;
     update();
 }
 
 void MathMod::blueSpec(int cl)
 {
     lightSpecular[2] = (cl/ 100.0f);
+    LocalScene.ShininessValUpdated=true;
     update();
 }
 
@@ -1075,7 +1078,7 @@ void MathMod::CreateShaderProgram()
     glUniform4fv(uniformFrontColor, 1, frontColor);
     glUniform4fv(uniformBackColor, 1, backColor);
     glUniform4fv(uniformGridColor, 1, gridcol);
-    glUniform1f(uniformShininess, 10.0f);
+    glUniform1f(uniformShininess, 120.0f);
     glUniform1i(uniformThereisRGBA, 1);
     glUniform1i(uniformdrawgridColor, 0);
     // unbind GLSL
@@ -1459,16 +1462,18 @@ void MathMod::draw(ObjectProperties *scene)
     matrixViewx.setToIdentity();
     matrixViewx.translate(0.0, 0.0, -cameraDistance);
     matrixViewx.rotate(rotation);
-    // bind GLSL
     matrixModelViewProjectionx = matrixProjectionx * matrixViewx;
     matrixNormalx=matrixViewx;
     matrixNormalx.setColumn(3, QVector4D(0,0,0,1));
     glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixViewx.data());
     glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjectionx.data());
     glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormalx.data());
-    glUniform1f(uniformShininess, shininessVal);
-    glUniform4fv(uniformLightSpecular, 1, lightSpecular);
-
+    if(LocalScene.ShininessValUpdated)
+    {
+        glUniform1f(uniformShininess, shininessVal);
+        glUniform4fv(uniformLightSpecular, 1, lightSpecular);
+        LocalScene.ShininessValUpdated =false;
+    }
     // We draw the Plan first because we don't want it to spin around X,Y and Z axes
     if (scene->infos == 1)
         plan();
@@ -1807,12 +1812,14 @@ void MathMod::transparence(bool trs)
 void MathMod::transSpec(int cl)
 {
     lightSpecular[3] = (cl/ 100.0f);
+    LocalScene.ShininessValUpdated=true;
     update();
 }
 
 void MathMod::Shininess(int cl)
 {
     shininessVal= GLfloat(cl);
+    LocalScene.ShininessValUpdated=true;
     update();
 }
 

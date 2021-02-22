@@ -168,6 +168,7 @@ struct ObjectProperties
     uint NbBorderpoints;
     struct ComponentInfos componentsinfos;
     int IndexCurrentFormula = -1;
+    bool ShininessValUpdated=true;
     int border = 1;
     int anim = -1;
     int animxyz = 1;
