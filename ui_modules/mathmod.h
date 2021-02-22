@@ -123,7 +123,6 @@ public slots:
     void Winitialize_GL();
     void resizeGL(int, int) override;
     void paintGL()  override;
-    void copydata();
     void timerEvent(QTimerEvent *)  override;
     void mousePressEvent(QMouseEvent *)  override;
     void mouseMoveEvent(QMouseEvent *)  override;

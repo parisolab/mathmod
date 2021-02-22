@@ -1428,23 +1428,7 @@ void MathMod::CopyData(ObjectProperties *scene)
             glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,0, sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt);
             previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
         }
-        size_t cOffset = 0;
-        size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
-        size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-        // set attrib arrays using glVertexAttribPointer()
-        glEnableVertexAttribArray(attribVertexColor);
-        glEnableVertexAttribArray(attribVertexNormal);
-        glEnableVertexAttribArray(attribVertexPosition);
-        // set attrib arrays using glVertexAttribPointer()
-        glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
-        glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
-        glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
     }
-}
-
-void MathMod::copydata()
-{
-    CopyData(&LocalScene);
 }
 
 void MathMod::draw(ObjectProperties *scene)
