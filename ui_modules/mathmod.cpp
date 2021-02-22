@@ -1078,7 +1078,7 @@ void MathMod::CreateShaderProgram()
     glUniform4fv(uniformFrontColor, 1, frontColor);
     glUniform4fv(uniformBackColor, 1, backColor);
     glUniform4fv(uniformGridColor, 1, gridcol);
-    glUniform1f(uniformShininess, 120.0f);
+    glUniform1f(uniformShininess, shininessVal);
     glUniform1i(uniformThereisRGBA, 1);
     glUniform1i(uniformdrawgridColor, 0);
     // unbind GLSL
