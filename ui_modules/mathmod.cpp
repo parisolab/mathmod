@@ -26,11 +26,13 @@
 
 QVector2D mousePressPosition;
 qreal angularSpeed = 0;
-QQuaternion rotation;
+QQuaternion rotation= QQuaternion::fromAxisAndAngle(QVector3D(1.0,0.0,0.0), 270)*
+        QQuaternion::fromAxisAndAngle(QVector3D(0.0,0.0,1.0), 225)*
+        QQuaternion::fromAxisAndAngle(QVector3D(1.0,-1.0,0.0), -29);
 QQuaternion rotationx;
 QQuaternion rotationy;
 QQuaternion rotationz;
-QQuaternion oldRotation;
+QQuaternion oldRotation= rotation;
 qreal acc;
 QVector3D n;
 static int FistTimecalibrate = -1;
@@ -1075,7 +1077,7 @@ void MathMod::CreateShaderProgram()
     glUniform1i(uniformThereisRGBA, 1);
     glUniform1i(uniformdrawgridColor, 0);
     // unbind GLSL
-    glUseProgram(0);
+    //glUseProgram(0);
     // check GLSL status
     int linkStatus;
     glGetProgramiv(shaderprogramId, GL_LINK_STATUS, &linkStatus);
@@ -1467,40 +1469,19 @@ void MathMod::draw(ObjectProperties *scene)
     QMatrix4x4 matrixViewx;
     matrixViewx.translate(0.0, 0.0, -cameraDistance);
     matrixViewx.rotate(rotation);
-    matrixViewx.rotate(270,1.0,0.0,0.0);
-    matrixViewx.rotate(225,0.0,0.0,1.0);
-    matrixViewx.rotate(-29,1.0,-1.0,0.0);
     // bind GLSL
-    glUseProgram(shaderprogramId);
     QMatrix4x4 matrixModelViewProjectionx = matrixProjectionx * matrixViewx;
     QMatrix4x4 matrixNormalx=matrixViewx;
     matrixNormalx.setColumn(3, QVector4D(0,0,0,1));
     glUniformMatrix4fv(uniformMatrixModelView, 1, false, matrixViewx.data());
     glUniformMatrix4fv(uniformMatrixModelViewProjection, 1, false, matrixModelViewProjectionx.data());
     glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormalx.data());
-
     glUniform1f(uniformShininess, shininessVal);
     glUniform4fv(uniformLightSpecular, 1, lightSpecular);
-    // bind VBOs
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-    // activate attribs
-    glEnableVertexAttribArray(attribVertexColor);
-    glEnableVertexAttribArray(attribVertexNormal);
-    glEnableVertexAttribArray(attribVertexPosition);
-    // set attrib arrays using glVertexAttribPointer()
-    size_t cOffset = 0;
-    size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
-    size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
-    // set attrib arrays using glVertexAttribPointer()
-    glVertexAttribPointer(attribVertexPosition, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)vOffset);
-    glVertexAttribPointer(attribVertexNormal, 3, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)nOffset);
-    glVertexAttribPointer(attribVertexColor,4, GL_FLOAT, false, 10*sizeof( GL_FLOAT), (void*)cOffset);
 
-    // We draw the Plan first because we don't want it to spin aroundX,Y and Z axes
+    // We draw the Plan first because we don't want it to spin around X,Y and Z axes
     if (scene->infos == 1)
         plan();
-
     if(LocalScene.animx==1)
         matrixViewx.rotate(rotationx);
     if(LocalScene.animy==1)
@@ -1551,11 +1532,6 @@ void MathMod::draw(ObjectProperties *scene)
 
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
-
-    glDisableVertexAttribArray(attribVertexPosition);
-    glDisableVertexAttribArray(attribVertexNormal);
-    glDisableVertexAttribArray(attribVertexColor);
-    glUseProgram(0);
 }
 
 void MathMod::paintGL()
