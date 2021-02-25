@@ -21,7 +21,7 @@
 #include <QVector3D>
 #include <QQuaternion>
 #include <QMatrix4x4>
-
+#include <QPainter>
 #define BUFFER_OFFSET(i) ((float *)(i))
 
 QVector2D mousePressPosition;
@@ -45,7 +45,8 @@ static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
 static GLfloat difX, difY, difZ;
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
-static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0;
+static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0,
+XletterIndex=0, YletterIndex=0, ZletterIndex=0;
 QString vertexsource, fragmentsource;
 GLuint vertexshader, fragmentshader;
 float wh=0.57;
@@ -96,7 +97,7 @@ float lightSpecular[] = {0.4f, 0.4f, 0.4f, 0.1};
 float frontColor[] = {0.72f, 0.5f, 0.1, 1};
 float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
 int shininessVal=20;
-static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
+static GLfloat AxeArray[3*36]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
                               5.0f*wh/4.0f, 0.0, 0.0, 95.0f*wh/80.0f, 95.0f*wh/4000.0f, 0.0,
@@ -107,7 +108,13 @@ static GLfloat AxeArray[3*24]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                                0.0, 95.0f*wh/80.0f, -95.0f*wh/4000.0f,95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
                                0.0, 0.0, 5.0f*wh/4.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
                                0.0, 95.0f*wh/4000.0f, 95.0f*wh/80.0f,-95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
-                               0.0, -95.0f*wh/4000.0f, 95.0f*wh/80.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f
+                               0.0, -95.0f*wh/4000.0f, 95.0f*wh/80.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
+                               5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, 0.0f, -95.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, 0.0f, 95.0f*wh/4000.0f,
+                               5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, 0.0f, 95.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, 0.0f, -95.0f*wh/4000.0f,
+                               0.0f, 5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, 95.0f*wh/4000.0f, 0.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, -95.0f*wh/4000.0f,
+                               0.0f, 5.0f*wh/4.0f + (2.0f)*95.0f*wh/4000.0f, 0.0f, 0.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, 95.0f*wh/4000.0f,
+                               60.0f*wh/4000.0f, -60.0f*wh/4000.0f, 5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, -60.0f*wh/4000.0f, 60.0f*wh/4000.0f, 5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f,
+                               60.0f*wh/4000.0f, -60.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, -60.0f*wh/4000.0f, 60.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f
                               };
 
 static GLfloat PlanArray[3*60]=
@@ -620,9 +627,9 @@ void MathMod::PutObjectInsideCube()
     AxesStartIndex = NbVert+12+60;
     for(uint id=0; id<6; id++)
     {
-        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+0] = (id<2)?1.0f:0.0;
-        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+1] = (id>1)&&(id<4)?1.0f:0.0;
-        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+2] = (id>3)?1.0f:0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+0] = (id<2)?2.0f:0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+1] = (id>1)&&(id<4)?2.0f:0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+2] = (id>3)?2.0f:0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+3] = 1.0f;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+7] = AxeArray[3*id  ];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+8] = AxeArray[3*id+1];
@@ -633,7 +640,7 @@ void MathMod::PutObjectInsideCube()
     XStartIndex = NbVert+12+60+6;
     for(uint id=0; id<6; id++)
     {
-        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+0] = (id<2)?1.0f:0.3;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+0] = (id<2)?2.0f:0.3;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+1] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+2] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+3] = 1.0f;
@@ -647,7 +654,7 @@ void MathMod::PutObjectInsideCube()
     for(uint id=0; id<6; id++)
     {
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+0] = 0.0;
-        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+1] = (id<2)?1.0f:0.3;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+1] = (id<2)?2.0f:0.3;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+2] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+3] = 1.0f;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+7] = AxeArray[3*(id+12)  ];
@@ -661,11 +668,48 @@ void MathMod::PutObjectInsideCube()
     {
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+0] = 0.0;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+1] = 0.0;
-        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+2] = (id<2)?1.0f:0.3;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+2] = (id<2)?2.0f:0.3;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+3] = 1.0f;
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+7] = AxeArray[3*(id+18)  ];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+8] = AxeArray[3*(id+18)+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+9] = AxeArray[3*(id+18)+2];
+    }
+
+    // Letter X Axe
+    XletterIndex = NbVert+12+60+24;
+    for(uint id=0; id<4; id++)
+    {
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+24+id)+0] = 2.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+24+id)+1] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+24+id)+2] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+24+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+24+id)+7] = AxeArray[3*(id+24)  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+24+id)+8] = AxeArray[3*(id+24)+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+24+id)+9] = AxeArray[3*(id+24)+2];
+    }
+    // Letter Y Axe
+    YletterIndex = NbVert+12+60+28;
+    for(uint id=0; id<4; id++)
+    {
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+28+id)+0] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+28+id)+1] = 2.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+28+id)+2] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+28+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+28+id)+7] = AxeArray[3*(id+28)  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+28+id)+8] = AxeArray[3*(id+28)+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+28+id)+9] = AxeArray[3*(id+28)+2];
+    }
+    // Letter Y Axe
+    ZletterIndex = NbVert+12+60+32;
+    for(uint id=0; id<4; id++)
+    {
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+0] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+1] = 0.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+2] = 2.0;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+3] = 1.0f;
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+7] = AxeArray[3*(id+32)  ];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+8] = AxeArray[3*(id+32)+1];
+        LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+9] = AxeArray[3*(id+32)+2];
     }
 }
 
@@ -1229,6 +1273,19 @@ void MathMod::FillOk()
 
 void MathMod::PrintInfos()
 {
+/*
+    QPainter painter(this);
+
+    painter.beginNativePainting();
+    glClear(GL_COLOR_BUFFER_BIT);
+    painter.endNativePainting();
+
+    painter.begin(this);
+            painter.setPen(Qt::white);
+            painter.setFont(QFont("Arial", 56));
+            painter.drawText(0, 0, width()/5, height()/5, Qt::AlignCenter, "Hello World!");
+            //painter.end();
+*/
 }
 
 void MathMod::DrawAxe()
@@ -1243,6 +1300,13 @@ void MathMod::DrawAxe()
     glDrawArrays(GL_TRIANGLE_FAN,YStartIndex,6);
     // Head of the Z Axe:
     glDrawArrays(GL_TRIANGLE_FAN,ZStartIndex,6);
+    glLineWidth(3.0);
+    // Draw the X axe
+    glDrawArrays(GL_LINES,XletterIndex,4);
+    // Draw the Y axe
+    glDrawArrays(GL_LINES,YletterIndex,4);
+    // Draw the Z axe
+    glDrawArrays(GL_LINE_STRIP,ZletterIndex,4);
 }
 
 void MathMod::DrawNormals(ObjectProperties *)
@@ -1318,7 +1382,6 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
             Offset1+=(3*sizeof( GL_FLOAT));
         }
     }
-
     if (scene->cndoptions[2])
     {
         size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
@@ -1377,7 +1440,6 @@ void MathMod::plan()
     glDrawArrays(GL_LINES,PlanStartIndex,60);
 }
 
-
 void MathMod::CopyData(ObjectProperties *scene)
 {
     static int firstaction=0;
@@ -1389,7 +1451,7 @@ void MathMod::CopyData(ObjectProperties *scene)
         glGenBuffers(2, vbo);
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+24)),scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+36)),scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
@@ -1412,19 +1474,18 @@ void MathMod::CopyData(ObjectProperties *scene)
     else{
         if(scene->VertxNumber>previousVertxNumber)
         {
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+24)), scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float)*10*(scene->VertxNumber+(12+60+36)), scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
             previousVertxNumber = scene->VertxNumber;
         }
         else
         {
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float)*10*(scene->VertxNumber+(12+60+24)), scene->ArrayNorVer_localPt);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float)*10*(scene->VertxNumber+(12+60+36)), scene->ArrayNorVer_localPt);
             previousVertxNumber = scene->VertxNumber;
         }
         if((scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize)>previousPolyNumberNbPolygnNbVertexPtMin)
         {
            glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(uint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
            previousPolyNumberNbPolygnNbVertexPtMin =  (scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize);
-
         }
         else
         {
@@ -1515,6 +1576,7 @@ void MathMod::draw(ObjectProperties *scene)
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
 }
+
 
 void MathMod::paintGL()
 {
