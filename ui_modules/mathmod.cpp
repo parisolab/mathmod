@@ -711,6 +711,10 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+8] = AxeArray[3*(id+32)+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+9] = AxeArray[3*(id+32)+2];
     }
+
+    LabelInfos.setText("\n Vertices  : "+QString::number(LocalScene.VertxNumber)+" \n"+
+ " Triangle  : "+QString::number(LocalScene.PolyNumber/3)+" \n"
+ " Polygones : "+QString::number(LocalScene.NbPolygnNbVertexPtMin)+"\n\n");
 }
 
 void MathMod::png()
@@ -1259,33 +1263,10 @@ void MathMod::keyPressEvent(QKeyEvent *e)
     }
     update();
 }
-
-void MathMod::infosok()
-{
-    LocalScene.infos *= -1;
-}
-
 void MathMod::FillOk()
 {
     LocalScene.fill *= -1;
     update();
-}
-
-void MathMod::PrintInfos()
-{
-/*
-    QPainter painter(this);
-
-    painter.beginNativePainting();
-    glClear(GL_COLOR_BUFFER_BIT);
-    painter.endNativePainting();
-
-    painter.begin(this);
-            painter.setPen(Qt::white);
-            painter.setFont(QFont("Arial", 56));
-            painter.drawText(0, 0, width()/5, height()/5, Qt::AlignCenter, "Hello World!");
-            //painter.end();
-*/
 }
 
 void MathMod::DrawAxe()
@@ -1577,7 +1558,6 @@ void MathMod::draw(ObjectProperties *scene)
         glDepthMask(GL_TRUE);
 }
 
-
 void MathMod::paintGL()
 {
     if (LocalScene.morph == 1)
@@ -1603,7 +1583,6 @@ void MathMod::paintGL()
         }
         else
         {
-
             ParObjet->ParamBuild(
                 &(LocalScene.ArrayNorVer_localPt), &(LocalScene.PolyIndices_localPt),
                 &LocalScene.PolyNumber, &LocalScene.VertxNumber,
@@ -1620,11 +1599,7 @@ void MathMod::paintGL()
         }
         Winitialize_GL();
     }
-
     draw(&LocalScene);
-
-    if (LocalScene.infos == 1)
-        PrintInfos();
     if (LocalScene.morph == 1 && LocalScene.frame == 1)
         FramesSave();
 }
@@ -1885,8 +1860,8 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
                  uint initparGrid, uint initisoGrid, uint FactX, uint FactY,
                  uint FactZ) :QOpenGLWidget(parent)
 {
-    MathMod::context();
-    makeCurrent();
+    //MathMod::context();
+    //makeCurrent();
     PerlinNoise = new ImprovedNoise(4., 4., 4.);
     latence = 10;
     Vgrid = Ugrid = 50;
@@ -1897,7 +1872,9 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
     FramesDir = "/home";
     hauteur_fenetre = 2*wh;
     timer = new QBasicTimer();
-
+    LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint);
+    LabelInfos.setStyleSheet("background-color: rgba(0,0,0,1)");
+    LabelInfos.setWindowOpacity(0.5);
     xyzactivated = uvactivated = uvactivated4D = 1;
     if (memoryallocation(nbthreads, initparGrid, initisoGrid,
                                FactX, FactY, FactZ) != 1)
@@ -1916,6 +1893,13 @@ void MathMod::fill()
 void MathMod::iso_infos()
 {
     LocalScene.infos *= -1;
+    if(LocalScene.infos == 1)
+    {
+        LabelInfos.show();
+
+    }
+    else
+        LabelInfos.hide();
     update();
 }
 

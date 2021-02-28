@@ -40,11 +40,8 @@
 #include <QMessageBox>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
-/*
-#ifndef Q_OS_MACOS
-#include <GLES2/gl2.h>
-#endif
-*/
+#include <QLabel>
+
 class MathMod : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
@@ -66,9 +63,7 @@ public:
     ParisoMathObject RootObjet;
     jcollection collection;
     QWidget *Parent;
-
-
-
+    QLabel LabelInfos;
 public:
     MathMod(QWidget *, uint, uint initpargrid = 50, uint initisogrid = 40,
             uint factx = 4, uint facty = 4, uint factz = 4);
@@ -114,11 +109,6 @@ public slots:
     void proj();
     void DrawPariso(ObjectProperties *, uint);
     void drawCube();
-
-
-
-
-
     void initializeGL() override;
     void Winitialize_GL();
     void resizeGL(int, int) override;
@@ -145,8 +135,6 @@ public slots:
     void stoptimer();
     bool timeractif();
     void restarttimer(int);
-    void PrintInfos();
-    void infosok();
     void FillOk();
     void normOk();
     void boundingboxOk();
@@ -173,5 +161,4 @@ public slots:
     void LoadShadersFiles();
     void UpdateGL();
 };
-
 #endif
