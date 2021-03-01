@@ -103,8 +103,6 @@ void DrawingOptions::colorsoptions()
     connect(colorwindow->ui.red_2, SIGNAL(valueChanged(int)), this,SLOT(onred_2valueChanged(int)));
     connect(colorwindow->ui.green_2, SIGNAL(valueChanged(int)), this,SLOT(ongreen_2valueChanged(int)));
     connect(colorwindow->ui.blue_2, SIGNAL(valueChanged(int)), this,SLOT(onblue_2valueChanged(int)));
-    connect(colorwindow->ui.transparent_2, SIGNAL(valueChanged(int)), this,SLOT(ontransparent_2valueChanged(int)));
-    connect(colorwindow->ui.transparence_2, SIGNAL(clicked(bool)), this,SLOT(ontransparence_2clicked(bool)));
     colorwindow->show();
 }
 
@@ -2142,11 +2140,6 @@ void DrawingOptions::slot_comboBox18_3_activated(const QString &arg1)
         MathmodRef->fill();
         return;
     }
-    if (arg1 == "Smooth")
-    {
-        MathmodRef->smoothline();
-        return;
-    }
     if (arg1 == "Mesh")
     {
         MathmodRef->Mesh();
@@ -2914,10 +2907,7 @@ void DrawingOptions::on_actionFill_triggered()
     MathmodRef->fill();
 }
 
-void DrawingOptions::on_actionSmooth_triggered()
-{
-    MathmodRef->smoothline();
-}
+
 
 void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
 {
@@ -3174,16 +3164,6 @@ void DrawingOptions::ongreen_2valueChanged(int value)
 void DrawingOptions::onblue_2valueChanged(int value)
 {
     MathmodRef->blue(value, IndexcurrentComponent);
-}
-
-void DrawingOptions::ontransparent_2valueChanged(int value)
-{
-    MathmodRef->transparency(value, IndexcurrentComponent);
-}
-
-void DrawingOptions::ontransparence_2clicked(bool checked)
-{
-    MathmodRef->transparence(checked);
 }
 
 void DrawingOptions::on_red_ParIso_valueChanged(int value)
@@ -3900,11 +3880,6 @@ void DrawingOptions::oncolor_4activated(int index)
     MathmodRef->colorstypeParam(index);
 }
 
-void DrawingOptions::ontransparence_4toggled(bool checked)
-{
-    MathmodRef->transparence(checked);
-}
-
 void DrawingOptions::on_uv4D_clicked()
 {
     MathmodRef->slot_uv4D_clicked();
@@ -3993,11 +3968,6 @@ void DrawingOptions::on_actionEditor_triggered()
 void DrawingOptions::on_actionColors_triggered()
 {
     colorsoptions();
-}
-
-void DrawingOptions::on_actionSmooth_2_clicked()
-{
-    MathmodRef->smoothline();
 }
 
 void DrawingOptions::on_Infos_clicked()
@@ -4327,11 +4297,6 @@ void DrawingOptions::on_pushButton_4_clicked()
 void DrawingOptions::on_color_5_activated(int index)
 {
     MathmodRef->colorstypeParIso(index);
-}
-
-void DrawingOptions::on_transparence_ParIso_clicked(bool checked)
-{
-    MathmodRef->transparence(checked);
 }
 
 void DrawingOptions::on_transparent_ParIso_valueChanged(int value)

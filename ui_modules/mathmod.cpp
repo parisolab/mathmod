@@ -878,21 +878,6 @@ void MathMod::normOk()
     update();
 }
 
-void MathMod::smoothline()
-{
-    LocalScene.smoothline *= -1;
-    /// For drawing Lines :
-    if (LocalScene.smoothline == 1)
-    {
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
-    else
-    {
-        glDisable(GL_BLEND);
-    }
-    update();
-}
 void MathMod::boundingboxOk()
 {
     LocalScene.boundingbox *= -1;
@@ -1829,19 +1814,6 @@ void MathMod::blue(int cl, int currentposition)
     update();
 }
 
-void MathMod::transparence(bool trs)
-{
-    LocalScene.transparency *= -1;
-    if (trs)
-    {
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
-    else
-        glDisable(GL_BLEND);
-    update();
-}
-
 void MathMod::transSpec(int cl)
 {
     lightSpecular[3] = (cl/ 100.0f);
@@ -1884,6 +1856,7 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
     LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
     LabelInfos.setAttribute(Qt::WA_TranslucentBackground);
     LabelInfos.setAttribute(Qt::WA_NoSystemBackground);
+    LabelInfos.setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     LabelInfos.setWindowOpacity(0.8);
     xyzactivated = uvactivated = uvactivated4D = 1;
     if (memoryallocation(nbthreads, initparGrid, initisoGrid,
@@ -1898,7 +1871,7 @@ void MathMod::closeEvent(QCloseEvent *)
 
 void MathMod::moveEvent(QMoveEvent *)
 {
-     QRect r = geometry();
+    QRect r = geometry();
     LabelInfos.move(r.x(), r.y());
 }
 
@@ -1927,24 +1900,19 @@ void MathMod::updateGL()
     update();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::draw_norm_clicked()
 {
     normOk();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::frames_clicked()
 {
     FramesShot();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueupdate(int cl)
 {
-    ParObjet->Vgrid = Vgrid =
-                                         ParObjet->Ugrid = Ugrid = uint(cl);
-
+    ParObjet->Vgrid = Vgrid = ParObjet->Ugrid = Ugrid = uint(cl);
     ParObjet->masterthread->Ugrid =
         ParObjet->masterthread->Vgrid = uint(cl);
 
@@ -1957,7 +1925,6 @@ void MathMod::linecolumn_valueupdate(int cl)
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::line_valueupdate(int cl)
 {
     ParObjet->Ugrid = Ugrid = ParObjet->masterthread->Ugrid = uint(cl);
@@ -1969,7 +1936,6 @@ void MathMod::line_valueupdate(int cl)
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::column_valueupdate(int cl)
 {
     ParObjet->Vgrid = Vgrid = ParObjet->masterthread->Vgrid = uint(cl);
@@ -1982,7 +1948,6 @@ void MathMod::column_valueupdate(int cl)
     }
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::linecolumn_valueChanged(int cl, ModelType type)
 {
     linecolumn_valueupdate(cl);
@@ -1991,7 +1956,7 @@ void MathMod::linecolumn_valueChanged(int cl, ModelType type)
     else
         update();
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void MathMod::line_valueChanged(int cl)
 {
     line_valueupdate(cl);
@@ -2000,7 +1965,7 @@ void MathMod::line_valueChanged(int cl)
     else
         update();
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void MathMod::column_valueChanged(int cl)
 {
     column_valueupdate(cl);
@@ -2009,7 +1974,7 @@ void MathMod::column_valueChanged(int cl)
     else
         update();
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void MathMod::linecolumn_valueChanged_2(int cl)
 {
     linecolumn_valueupdate(cl);
@@ -2019,20 +1984,17 @@ void MathMod::linecolumn_valueChanged_2(int cl)
         update();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::Initparametricpage()
 {
     LocalScene.typedrawing = -1;
 }
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::xyzg_valueupdate(int cl)
 {
     IsoObjet->masterthread->XYZgrid = uint(cl);
     Xgrid = Ygrid = Zgrid = cl;
 }
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::xyzg_valueChanged(int cl, ModelType type)
 {
     xyzg_valueupdate(cl);
@@ -2041,7 +2003,6 @@ void MathMod::xyzg_valueChanged(int cl, ModelType type)
         (type == PARISO_TYPE) ? ParisoObjectProcess() : ProcessNewIsoSurface();
 }
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ShowErrormessage()
 {
     message.setTextFormat(Qt::RichText);
@@ -2066,7 +2027,7 @@ void MathMod::ShowErrormessage()
     message.exec();
     return;
 }
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 int MathMod::ParsePar()
 {
     stError = ParObjet->masterthread->parse_expression();
@@ -2080,7 +2041,6 @@ int MathMod::ParsePar()
     return 1;
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ParametricSurfaceProcess(int type)
 {
     if (!ParObjet->isRunning())
@@ -2104,7 +2064,7 @@ void MathMod::ParametricSurfaceProcess(int type)
         ParObjet->start(QThread::LowPriority);
     }
 }
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 void MathMod::ParisoObjectProcess()
 {
 
@@ -2134,7 +2094,6 @@ void MathMod::ParisoObjectProcess()
     }
 }
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int MathMod::ParseIso()
 {
     stError = IsoObjet->masterthread->ParserIso();
@@ -2148,7 +2107,6 @@ int MathMod::ParseIso()
     return 1;
 }
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::ProcessNewIsoSurface()
 {
     if (!IsoObjet->isRunning())
@@ -2162,7 +2120,6 @@ void MathMod::ProcessNewIsoSurface()
     }
 }
 
-//++++++++++++++++++++++++++++++++++++++++
 void MathMod::slot_checkBox73_clicked(ModelType type)
 {
     xyzactivated *= -1;
@@ -2171,7 +2128,6 @@ void MathMod::slot_checkBox73_clicked(ModelType type)
         (type == PARISO_TYPE) ? ParisoObjectProcess() : ProcessNewIsoSurface();
 }
 
-//++++++++++++++++++++++++++++++++++++++++
 void MathMod::slot_uv_clicked(ModelType type)
 {
     uvactivated *= -1;
@@ -2180,7 +2136,6 @@ void MathMod::slot_uv_clicked(ModelType type)
         (type == PARISO_TYPE) ? ParisoObjectProcess() : ParametricSurfaceProcess(1);
 }
 
-//++++++++++++++++++++++++++++++++++++++++
 void MathMod::slot_uv4D_clicked()
 {
     uvactivated4D *= -1;
@@ -2188,17 +2143,15 @@ void MathMod::slot_uv4D_clicked()
     if (uvactivated4D == 1)
         ParametricSurfaceProcess(3);
 }
-//++++++++++++++++++++++++++++++++++++++++
+
 void MathMod::slot_triangles_clicked()
 {
     LocalScene.triangles *= -1;
     update();
 }
 
-//++++++++++++++++++++++++++++++++++++++++
 void MathMod::Mesh()
 {
     LocalScene.mesh *= -1;
     update();
 }
-

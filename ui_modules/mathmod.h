@@ -89,7 +89,6 @@ public slots:
     void slot_checkBox73_clicked(ModelType type=ISO_TYPE);
     void slot_uv_clicked(ModelType type=PAR_TYPE);
     void slot_uv4D_clicked();
-    void smoothline();
     void Mesh();
     void slot_triangles_clicked();
     int ParseIso();
@@ -144,7 +143,6 @@ public slots:
     void red(int, int currentposition = 0);
     void green(int, int currentposition = 0);
     void blue(int, int currentposition = 0);
-    void transparence(bool);
     void redSpec(int);
     void greenSpec(int);
     void blueSpec(int);

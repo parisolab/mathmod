@@ -187,7 +187,6 @@ struct ObjectProperties
     int typedrawing = 1;
     int mesh = 1;
     int fill = 1;
-    int smoothline = -1;
     int transparency = -1;
     int boundingbox = -1;
     bool activarecnd = true;

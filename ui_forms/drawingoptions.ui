@@ -423,46 +423,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="actionSmooth_2">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Smooth</string>
-          </property>
-          <property name="text">
-           <string extracomment="Smooth">smt</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>
@@ -5748,83 +5708,6 @@ p, li { white-space: pre-wrap; }
                    <property name="spacing">
                     <number>2</number>
                    </property>
-                   <item row="0" column="0" colspan="2">
-                    <widget class="QComboBox" name="color_5">
-                     <item>
-                      <property name="text">
-                       <string>Front Surface</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Back Surface</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Grid</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>BackGround</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="redLabel_5">
-                     <property name="maximumSize">
-                      <size>
-                       <width>43</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="palette">
-                      <palette>
-                       <active>
-                        <colorrole role="WindowText">
-                         <brush brushstyle="SolidPattern">
-                          <color alpha="255">
-                           <red>255</red>
-                           <green>0</green>
-                           <blue>0</blue>
-                          </color>
-                         </brush>
-                        </colorrole>
-                       </active>
-                       <inactive>
-                        <colorrole role="WindowText">
-                         <brush brushstyle="SolidPattern">
-                          <color alpha="255">
-                           <red>255</red>
-                           <green>0</green>
-                           <blue>0</blue>
-                          </color>
-                         </brush>
-                        </colorrole>
-                       </inactive>
-                       <disabled>
-                        <colorrole role="WindowText">
-                         <brush brushstyle="SolidPattern">
-                          <color alpha="255">
-                           <red>120</red>
-                           <green>120</green>
-                           <blue>120</blue>
-                          </color>
-                         </brush>
-                        </colorrole>
-                       </disabled>
-                      </palette>
-                     </property>
-                     <property name="text">
-                      <string>Red</string>
-                     </property>
-                     <property name="wordWrap">
-                      <bool>false</bool>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="1" column="1">
                     <widget class="QScrollBar" name="red_ParIso">
                      <property name="sizePolicy">
@@ -5841,78 +5724,6 @@ p, li { white-space: pre-wrap; }
                      </property>
                      <property name="value">
                       <number>249</number>
-                     </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="0">
-                    <widget class="QLabel" name="greenLabel_5">
-                     <property name="maximumSize">
-                      <size>
-                       <width>43</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="palette">
-                      <palette>
-                       <active>
-                        <colorrole role="WindowText">
-                         <brush brushstyle="SolidPattern">
-                          <color alpha="255">
-                           <red>0</red>
-                           <green>170</green>
-                           <blue>0</blue>
-                          </color>
-                         </brush>
-                        </colorrole>
-                       </active>
-                       <inactive>
-                        <colorrole role="WindowText">
-                         <brush brushstyle="SolidPattern">
-                          <color alpha="255">
-                           <red>0</red>
-                           <green>170</green>
-                           <blue>0</blue>
-                          </color>
-                         </brush>
-                        </colorrole>
-                       </inactive>
-                       <disabled>
-                        <colorrole role="WindowText">
-                         <brush brushstyle="SolidPattern">
-                          <color alpha="255">
-                           <red>120</red>
-                           <green>120</green>
-                           <blue>120</blue>
-                          </color>
-                         </brush>
-                        </colorrole>
-                       </disabled>
-                      </palette>
-                     </property>
-                     <property name="text">
-                      <string>Green</string>
-                     </property>
-                     <property name="wordWrap">
-                      <bool>false</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="1">
-                    <widget class="QScrollBar" name="green_ParIso">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="value">
-                      <number>170</number>
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -5972,32 +5783,53 @@ p, li { white-space: pre-wrap; }
                      </property>
                     </widget>
                    </item>
-                   <item row="3" column="1">
-                    <widget class="QScrollBar" name="blue_ParIso">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="4" column="0">
-                    <widget class="QLabel" name="transLabel_5">
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="redLabel_5">
                      <property name="maximumSize">
                       <size>
                        <width>43</width>
                        <height>16777215</height>
                       </size>
                      </property>
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>255</red>
+                           <green>0</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>255</red>
+                           <green>0</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>120</red>
+                           <green>120</green>
+                           <blue>120</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
                      <property name="text">
-                      <string>Trans</string>
+                      <string>Red</string>
                      </property>
                      <property name="wordWrap">
                       <bool>false</bool>
@@ -6023,21 +5855,130 @@ p, li { white-space: pre-wrap; }
                      </property>
                     </widget>
                    </item>
-                   <item row="5" column="0" colspan="2">
-                    <widget class="QCheckBox" name="transparence_ParIso">
-                     <property name="enabled">
-                      <bool>true</bool>
-                     </property>
+                   <item row="0" column="0" colspan="2">
+                    <widget class="QComboBox" name="color_5">
+                     <item>
+                      <property name="text">
+                       <string>Front Surface</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Back Surface</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Grid</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>BackGround</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QScrollBar" name="green_ParIso">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="text">
-                      <string>Transparency</string>
+                     <property name="maximum">
+                      <number>255</number>
                      </property>
-                     <property name="checked">
+                     <property name="value">
+                      <number>170</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QScrollBar" name="blue_ParIso">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="greenLabel_5">
+                     <property name="maximumSize">
+                      <size>
+                       <width>43</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>170</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>170</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="WindowText">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>120</red>
+                           <green>120</green>
+                           <blue>120</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
+                     <property name="text">
+                      <string>Green</string>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="transLabel_5">
+                     <property name="maximumSize">
+                      <size>
+                       <width>43</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Trans</string>
+                     </property>
+                     <property name="wordWrap">
                       <bool>false</bool>
                      </property>
                     </widget>
@@ -10145,7 +10086,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionMesh"/>
     <addaction name="actionFill"/>
     <addaction name="actionInfos"/>
-    <addaction name="actionSmooth"/>
     <addaction name="separator"/>
     <addaction name="actionScreenshot"/>
     <addaction name="actionEditor"/>

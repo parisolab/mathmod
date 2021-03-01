@@ -144,7 +144,6 @@ public slots:
     void on_actionNormales_triggered();
     void on_actionInfos_triggered();
     void on_actionFill_triggered();
-    void on_actionSmooth_triggered();
     void on_ObjectClasse_clicked(const QModelIndex &);
     void UpdateScriptEditorAndTreeObject();
     void UpdatePar3DModelDetailsPage(TreeStruct &);
@@ -161,9 +160,7 @@ public slots:
     void oncolor_2activated(int index);
     void onred_2valueChanged(int);
     void ongreen_2valueChanged(int);
-    void ontransparent_2valueChanged(int);
     void onblue_2valueChanged(int);
-    void ontransparence_2clicked(bool checked);
     void on_updateParam_clicked();
     void on_actionPolygonWavefront_obj_triggered();
     void on_actionColorPolygonWavefront_obj_triggered();
@@ -202,7 +199,6 @@ public slots:
     void on_zwhorizontalScrollBar_valueChanged(int);
     void on_linecolumn_3_valueChanged(int);
     void oncolor_4activated(int);
-    void ontransparence_4toggled(bool);
     void on_uv4D_clicked();
     void on_uv_clicked();
     void on_InitMatrix_clicked();
@@ -235,7 +231,6 @@ public slots:
     QTreeWidgetItem *ChildItemTreeProperty(QTreeWidgetItem *item,
                                            QString proprty);
 private slots:
-    void on_actionSmooth_2_clicked();
     void on_Infos_clicked();
     void on_Mesh_clicked();
     void on_Norm_clicked();
@@ -265,7 +260,6 @@ private slots:
     void on_cut_2_clicked();
     void on_pushButton_4_clicked();
     void on_color_5_activated(int);
-    void on_transparence_ParIso_clicked(bool);
     void on_transparent_ParIso_valueChanged(int);
     void on_comboBoxTexture_activated(int);
     void on_comboBoxPigment_activated(int);
