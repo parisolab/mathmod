@@ -128,6 +128,8 @@ public slots:
     void FramesShot();
     void FramesSave();
     QImage Copyscreenshot();
+    void moveEvent(QMoveEvent *) override;
+    void closeEvent(QCloseEvent *) override;
 public slots:
     void anim();
     void morph();

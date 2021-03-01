@@ -193,12 +193,13 @@ struct ObjectProperties
     bool activarecnd = true;
     bool updategl = true;
     int triangles = -1;
-    int infos = 1;
+    int infos = -1;
     int frame = -1;
     int infosdetails[3]={1, 1, 1};
     int line = 1;
     int norm = -1;
     int plan = 1;
+    int axe = 1;
     int png_ok =  1;
     int jpg_ok = -1;
     int bmp_ok = -1;

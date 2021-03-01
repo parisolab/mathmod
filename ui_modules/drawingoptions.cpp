@@ -2889,6 +2889,7 @@ void DrawingOptions::on_pushButton_clicked()
 
 void DrawingOptions::on_action_Exit_triggered()
 {
+    MathmodRef->LabelInfos.close();
     MathmodRef->close();
     this->close();
 }
@@ -5253,5 +5254,17 @@ void DrawingOptions::on_ShowParComp_clicked()
         ui.ShowParComp->setText("Hide");
         MathmodRef->LocalScene.componentsinfos.ShowParIsoCmp[IndexcurrentComponent]=true;
     }
+    MathmodRef->update();
+}
+
+void DrawingOptions::on_actionAxe_triggered()
+{
+    MathmodRef->LocalScene.axe *=-1;
+    MathmodRef->update();
+}
+
+void DrawingOptions::on_actionPlan_triggered()
+{
+    MathmodRef->LocalScene.plan *=-1;
     MathmodRef->update();
 }

@@ -352,5 +352,7 @@ private slots:
     void updateShowIsoCmp(int);
     void updateShowParComp(int);
     void on_ShowParComp_clicked();
+    void on_actionAxe_triggered();
+    void on_actionPlan_triggered();
 };
 #endif

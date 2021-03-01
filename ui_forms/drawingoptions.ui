@@ -1971,7 +1971,7 @@ p, li { white-space: pre-wrap; }
                            </palette>
                           </property>
                           <property name="title">
-                           <string>Iso Grid/Max Grid ( 40/500 ) :</string>
+                           <string>Iso Grid/Max Grid ( 64/500 ) :</string>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_5">
                            <item row="0" column="0">
@@ -10156,6 +10156,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionAnimation_Rotation"/>
     <addaction name="actionMorph_use_t_parameter"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuExport">
     <property name="title">
@@ -10168,9 +10169,29 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionColorTrianglesWavefront_obj"/>
     <addaction name="separator"/>
    </widget>
+   <widget class="QMenu" name="menuInfos">
+    <property name="title">
+     <string>Infos</string>
+    </property>
+    <widget class="QMenu" name="menuInfos_Window">
+     <property name="title">
+      <string>Infos Window</string>
+     </property>
+     <addaction name="actionGrid"/>
+     <addaction name="actionTriangles_2"/>
+     <addaction name="actionPolygones"/>
+     <addaction name="actionVertices"/>
+     <addaction name="actionRotation_Morph"/>
+    </widget>
+    <addaction name="actionAxe"/>
+    <addaction name="actionPlan"/>
+    <addaction name="separator"/>
+    <addaction name="menuInfos_Window"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Options"/>
    <addaction name="menuExport"/>
+   <addaction name="menuInfos"/>
    <addaction name="menu_About"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -10446,6 +10467,83 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionAxe">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Axe</string>
+   </property>
+  </action>
+  <action name="actionPlan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Plan</string>
+   </property>
+  </action>
+  <action name="actionGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Grid</string>
+   </property>
+  </action>
+  <action name="actionTriangles_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Triangles</string>
+   </property>
+  </action>
+  <action name="actionPolygones">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Polygones</string>
+   </property>
+  </action>
+  <action name="actionVertices">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Vertices</string>
+   </property>
+  </action>
+  <action name="actionRotation_Morph">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Rotation/Morph</string>
    </property>
   </action>
  </widget>

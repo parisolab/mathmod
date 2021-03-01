@@ -712,9 +712,18 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+9] = AxeArray[3*(id+32)+2];
     }
 
-    LabelInfos.setText("\n Vertices  : "+QString::number(LocalScene.VertxNumber)+" \n"+
- " Triangle  : "+QString::number(LocalScene.PolyNumber/3)+" \n"
- " Polygones : "+QString::number(LocalScene.NbPolygnNbVertexPtMin)+"\n\n");
+    QString nbl = " Grid     : ";
+    (LocalScene.typedrawing == 1)
+    ? nbl += QString::number(Xgrid - CutX) + "x" +
+            QString::number(Ygrid - CutY) + "x" +
+            QString::number(Zgrid - CutZ) +" \n"
+            : nbl += QString::number(Ugrid - CutU) + "x" +
+                    QString::number(Vgrid - CutV) + " = " +
+                    QString::number((Ugrid - CutU) * (Vgrid - CutV)) +" \n";
+    LabelInfos.setText(nbl+" Vertices : "+QString::number(LocalScene.VertxNumber)+" \n"+
+                           " Triangles: "+QString::number(LocalScene.PolyNumber/3)+" \n"
+                           " Polygons : "+QString::number(LocalScene.NbPolygnNbVertexPtMin)+" \n");
+
 }
 
 void MathMod::png()
@@ -1504,7 +1513,7 @@ void MathMod::draw(ObjectProperties *scene)
         LocalScene.ShininessValUpdated =false;
     }
     // We draw the Plan first because we don't want it to spin around X,Y and Z axes
-    if (scene->infos == 1)
+    if (scene->plan == 1)
         plan();
     if(LocalScene.animx==1)
         matrixViewx.rotate(rotationx);
@@ -1526,7 +1535,7 @@ void MathMod::draw(ObjectProperties *scene)
         glDepthMask(GL_FALSE);
 
     // Axe :
-    if (scene->infos == 1)
+    if (scene->axe == 1)
         DrawAxe();
 
     if (scene->fill == 1 && scene->componentsinfos.updateviewer)
@@ -1864,46 +1873,55 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
     //makeCurrent();
     PerlinNoise = new ImprovedNoise(4., 4., 4.);
     latence = 10;
-    Vgrid = Ugrid = 50;
+    Vgrid = Ugrid = 64;
     CutV = CutU = 0;
-    Xgrid = Ygrid = Zgrid = 40;
+    Xgrid = Ygrid = Zgrid = 64;
     CutX = CutY = CutZ = 0;
     LocalScene.VertxNumber = 0;
     FramesDir = "/home";
     hauteur_fenetre = 2*wh;
     timer = new QBasicTimer();
-    LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint);
-    LabelInfos.setStyleSheet("background-color: rgba(0,0,0,1)");
-    LabelInfos.setWindowOpacity(0.5);
+    LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
+    LabelInfos.setAttribute(Qt::WA_TranslucentBackground);
+    LabelInfos.setAttribute(Qt::WA_NoSystemBackground);
+    LabelInfos.setWindowOpacity(0.8);
     xyzactivated = uvactivated = uvactivated4D = 1;
     if (memoryallocation(nbthreads, initparGrid, initisoGrid,
                                FactX, FactY, FactZ) != 1)
         exit(0);
 }
 
+void MathMod::closeEvent(QCloseEvent *)
+{
+    LabelInfos.close();
+}
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void MathMod::moveEvent(QMoveEvent *)
+{
+     QRect r = geometry();
+    LabelInfos.move(r.x(), r.y());
+}
+
 void MathMod::fill()
 {
     FillOk();
     update();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::iso_infos()
 {
     LocalScene.infos *= -1;
     if(LocalScene.infos == 1)
     {
-        LabelInfos.show();
-
+       QRect r = geometry();
+       LabelInfos.move(r.x(), r.y());
+       LabelInfos.show();
     }
     else
         LabelInfos.hide();
     update();
 }
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::updateGL()
 {
     update();
@@ -1942,10 +1960,7 @@ void MathMod::linecolumn_valueupdate(int cl)
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::line_valueupdate(int cl)
 {
-    ParObjet->Ugrid = Ugrid =
-
-                                         ParObjet->masterthread->Ugrid = uint(cl);
-
+    ParObjet->Ugrid = Ugrid = ParObjet->masterthread->Ugrid = uint(cl);
     for (uint nbthreads = 0;
             nbthreads < ParObjet->WorkerThreadsNumber - 1;
             nbthreads++)
@@ -1957,8 +1972,7 @@ void MathMod::line_valueupdate(int cl)
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void MathMod::column_valueupdate(int cl)
 {
-    ParObjet->Vgrid = Vgrid =
-                                         ParObjet->masterthread->Vgrid = uint(cl);
+    ParObjet->Vgrid = Vgrid = ParObjet->masterthread->Vgrid = uint(cl);
 
     for (uint nbthreads = 0;
             nbthreads < ParObjet->WorkerThreadsNumber - 1;
