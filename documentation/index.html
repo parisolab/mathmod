@@ -134,9 +134,10 @@ Video to show <a href="https://youtu.be/u1ZfI4DRQnc">MathMod ability to animate 
 <i><b>MathMod Version 11.0 Release Notes</b></i>
 This release contains :
 <ol>
-  <li> </li>
-  <li> </li>
-  <li> </li>
+  <li>Complete rewrite of MathMod's viewer in order to make it OpenGl ES compatible: MathMod can now run (or easily adaptable to run) on mobile systems and platforms with limited resources!
+ See MathMod running on a <a href="https://www.facebook.com/parisolab/posts/3634364993347597">Raspberry Pi4 with RaspberryPi-OS(32 Bit)</a>
+</li>
+  <li>Added possibility to hide a specific component and two scripts ("Groupings of Knots" , "Knotted Möbius strips") </li>
   <li>Bug-fixes, code optimization and documentation update.</li>
   <li>For a complete list of changes made during the course of development, please visit: <a href="https://github.com/parisolab/mathmod/milestone/3">MathMod-11.0</a></li>
 </ol>
@@ -933,7 +934,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "InitParGrid": 50
     }</code></td>
   <td>Maximum and current grid value setting for iso/parametric surfaces.
-"IsoMaxGrid" and "ParMaxGrid" can be set from the GUI (See attached <a href="images/Modeldetails/isosurface/iso3.png">image</a>)</td>
+"IsoMaxGrid" and "ParMaxGrid" can be set from the GUI (See attached <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Modeldetails/isosurface/iso3.png">image</a>)</td>
  </tr>
  <tr>
   <td><code>"StartOptions": {
@@ -953,7 +954,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_SHININESS": 110
     }</code></td>
-  <td>OpenGL setting for MathMod's 3D viewer window. OpenGL settings can also be modified from the GUI (see attached <a href="images/Appearance/opengl.png">image</a>)</td>
+  <td>OpenGL setting for MathMod's 3D viewer window. OpenGL settings can also be modified from the GUI (see attached <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/opengl.png">image</a>)</td>
  </tr>
  <tr>
   <td><code>"ThreadsConfig": {
@@ -962,7 +963,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
     }</code></td>
-  <td><a href="images/Appearance/threads.png">image</a></td>
+  <td><a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/threads.png">image</a></td>
  </tr>
  <tr>
   <td><code>"WindowPosition": {
@@ -995,7 +996,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
         "UsedStyle": "Fusion"
     }</code></td>
-  <td>By default, MathMod uses the dark mode "Fusion". <a href="images/ToolBar/themes.png">image</a></td>
+  <td>By default, MathMod uses the dark mode "Fusion". <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ToolBar/themes.png">image</a></td>
  </tr>
  <tr>
   <td><code>"Themes": {
@@ -1016,7 +1017,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
             "HighlightedText":[0, 0, 0]
         }
     }</code></td>
-  <td>By default, MathMod uses the dark mode "Fusion". To test other themes, use the "look And feel" page in the "Configurations Options" window. <a href="images/ToolBar/Preferences.png">image</a> </td>
+  <td>By default, MathMod uses the dark mode "Fusion". To test other themes, use the "look And feel" page in the "Configurations Options" window. <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ToolBar/Preferences.png">image</a> </td>
  </tr>
 </table>
 
@@ -1046,7 +1047,7 @@ Example: <pre>
 <a name="Rotation"></a>
 <li><h2>Rotation</h2>
 The rotation animation activation (and deactivation) take place with "CtRl+a". Also, the
-<a href="images/ViewControls/ViewControls.png">"Rotations Controls"</a> section helps set the axe and speed of the rotation.
+<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ViewControls/ViewControls.png">"Rotations Controls"</a> section helps set the axe and speed of the rotation.
 <a name="movie"></a>
 <li><h2>Making animated GIF or videos</h2>
 This <a href="https://youtu.be/hpdhbWJApCk">video explain how to create animated GIF</a> with MathMod and Gimp.<br>
@@ -1061,15 +1062,15 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
 <ol>
   <a name="ProjectMenu"></a>
   <li><h3>The Project Menu</h3>
-  <a href="images/Menu/ProjectMenu/ProjectMenu.png">Project Menu</a>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Menu/ProjectMenu/ProjectMenu.png">Project Menu</a>
   </li>
   <a name="OptionsMenu"></a>
   <li><h3>The Options Menu</h3>
-  <a href="images/Menu/OptionsMenu/OptionsMenu.png">Options Menu</a>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Menu/OptionsMenu/OptionsMenu.png">Options Menu</a>
   </li>
   <a name="ExportMenu"></a>
   <li><h3>The Export Menu</h3>
-  <a href="images/Menu/ExportMenu/ExportMenu.png">Export Menu</a>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Menu/ExportMenu/ExportMenu.png">Export Menu</a>
   </li>
   <a name="HelpMenu"></a>
   <li><h3>The Help Menu</h3></li>
@@ -1079,25 +1080,25 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
 <ol>
   <a name="ModelDetails"></a>
   <li><h3>The "Model Details" page</h3>
-  <a href="images/ModelDetails/Isosurface/iso1.png">Isosurface details page</a><br>
-  <a href="images/ModelDetails/parametric/par1.png">3D Parametric details page</a><br>
-  <a href="images/ModelDetails/parametric/par5.png">4D Parametric details page</a><br>
-  <a href="images/ModelDetails/pariso/pariso.png">Pariso object details page</a>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/Isosurface/iso1.png">Isosurface details page</a><br>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/parametric/par1.png">3D Parametric details page</a><br>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/parametric/par5.png">4D Parametric details page</a><br>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/pariso/pariso.png">Pariso object details page</a>
   </li>
   <a name="ScriptEdit"></a>
   <li><h3>The "Script Edit" page</h3>
-  <a href="images/ScriptEdit/ScriptEdit.png">Script Edit page</a>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ScriptEdit/ScriptEdit.png">Script Edit page</a>
   </li>
   <a name="ViewControls"></a>
   <li><h3>The "View Controls" page</h3>
-  <a href="images/ViewControls/ViewControls.png">View Controls page</a>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ViewControls/ViewControls.png">View Controls page</a>
   </li>
   <a name="Appearance"></a>
   <li><h3>The "Appearance" page</h3>
-  <a href="images/Appearance/colors.png">Colors page</a><br>
-  <a href="images/Appearance/opengl.png">OpenGL page</a><br>
-  <a href="images/Appearance/textures.png">Texture page</a><br>
-  <a href="images/Appearance/threads.png">Threads page</a><br>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/colors.png">Colors page</a><br>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/opengl.png">OpenGL page</a><br>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/textures.png">Texture page</a><br>
+  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/threads.png">Threads page</a><br>
   </li>
   <a name="Sliders"></a>
   <li><h3>The "Sliders" page</h3></li>
@@ -1125,7 +1126,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     }
 }
 </pre>
-<a href="images/examples/Models_Intersection.png">See attached image</a>
+<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/examples/Models_Intersection.png">See attached image</a>
 
 
 <a name="CellNoiseSchwarz"></a>
@@ -1151,7 +1152,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
         }
     }
 </pre>
-<a href="images/Examples/CellNoiseSchwarz.png">See attached image</a>
+<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/CellNoiseSchwarz.png">See attached image</a>
 
 <a name="The_Dome_v1"></a>
 <li><pre>
@@ -1195,7 +1196,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     }
 }
 </pre>
-<a href="images/Examples/The_Dome_v1.png">See attached image</a>
+<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/The_Dome_v1.png">See attached image</a>
 
 <a name="Pariso_02"></a>
 <li><pre>
@@ -1241,7 +1242,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     ]
 }
 </pre>
-<a href="images/Examples/Pariso_02.png">See attached image</a>
+<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/Pariso_02.png">See attached image</a>
 
 <a name="Arena_02"></a>
 <li><pre>
@@ -1271,7 +1272,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     }
 }
 </pre>
-<a href="images/Examples/Arena_02.png">See attached image</a>
+<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/Arena_02.png">See attached image</a>
 
 </ol>
 
