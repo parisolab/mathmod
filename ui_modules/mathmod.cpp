@@ -982,13 +982,13 @@ void MathMod::CreateShaderProgram()
             uniform vec4 frontColor;
             uniform vec4 backColor;
             uniform vec4 gridColor;
-            uniform vec4 lightPosition;             // should be in the eye space
-            uniform vec4 lightAmbient;              // light ambient color
-            uniform vec4 lightDiffuse;              // light diffuse color
+            uniform vec4 lightPosition;
+            uniform vec4 lightAmbient;
+            uniform vec4 lightDiffuse;
             uniform vec4 lightSpecular;
             uniform int thereisRGBA;
             uniform int drawgridColor;
-            uniform float shininess;         // light specular color
+            uniform float shininess;
             // varyings
             varying vec3 esVertex, esNormal;
             varying vec4 color;
@@ -1031,13 +1031,13 @@ void MathMod::CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
-                vec4 fragColor = vec4(lightAmbient.rgb,1.0) * color1;                  // begin with ambient
+                vec4 fragColor = vec4(lightAmbient.rgb,1.0) * color1;              // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += (lightDiffuse.rgb,1.0) * color1 * dotNL;              // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
                 fragColor += vec4(pow(dotNH, shininess) * lightSpecular) * color1; // add specular
                 // set frag color
-                gl_FragColor = fragColor;  // keep opaque=1
+                gl_FragColor = fragColor;
             }
             )";
 
@@ -1154,6 +1154,7 @@ void MathMod::CreateShaderProgram()
         return;
     }
 }
+
 void MathMod::proj()
 {
     qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
@@ -1163,6 +1164,7 @@ void MathMod::proj()
     // Set perspective projection
     matrixProjectionx.perspective(fov, aspect, zNear, zFar);
 }
+
 bool MathMod::initCamera()
 {
     screenWidth = SCREEN_WIDTH;
@@ -1172,6 +1174,7 @@ bool MathMod::initCamera()
     cameraDistance = CAMERA_DISTANCE;
     return true;
 }
+
 void MathMod::LoadShadersFiles()
 {
     CreateShaderProgram();
@@ -1220,7 +1223,6 @@ void MathMod::morph()
 {
     LocalScene.morph *= -1;
     FistTimecalibrate *= -1;
-
     if (LocalScene.typedrawing == 1)
     {
         // Isosurfaces:
@@ -1865,8 +1867,6 @@ void MathMod::InitSpecularParameters()
     update();
 }
 
-
-
 MathMod::MathMod(QWidget *parent, uint nbthreads,
                  uint initparGrid, uint initisoGrid, uint FactX, uint FactY,
                  uint FactZ) :QOpenGLWidget(parent)
@@ -2085,7 +2085,6 @@ void MathMod::ParametricSurfaceProcess(int type)
             ParObjet->masterthread->param4D = -1;
             ParObjet->param4D = -1;
         }
-
         int result = ParsePar();
         if (result == -1)
             return;
@@ -2097,7 +2096,6 @@ void MathMod::ParametricSurfaceProcess(int type)
 
 void MathMod::ParisoObjectProcess()
 {
-
     LocalScene.typedrawing = 0;
     LocalScene.updategl = false;
     LocalScene.componentsinfos.pariso = true;
