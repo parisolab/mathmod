@@ -50,6 +50,7 @@ XletterIndex=0, YletterIndex=0, ZletterIndex=0;
 QString vertexsource, fragmentsource;
 GLuint vertexshader, fragmentshader;
 float wh=0.57;
+QString labelinfos;
 static bool PutObjectInsideCubeOk=false;
 int IsCompiled_VS, IsCompiled_FS;
 int IsLinked;
@@ -712,18 +713,30 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+9] = AxeArray[3*(id+32)+2];
     }
 
-    QString nbl = " Grid     : ";
+    labelinfos = " Grid     : ";
     (LocalScene.typedrawing == 1)
-    ? nbl += QString::number(Xgrid - CutX) + "x" +
+    ? labelinfos += QString::number(Xgrid - CutX) + "x" +
             QString::number(Ygrid - CutY) + "x" +
             QString::number(Zgrid - CutZ) +" \n"
-            : nbl += QString::number(Ugrid - CutU) + "x" +
-                    QString::number(Vgrid - CutV) + " = " +
-                    QString::number((Ugrid - CutU) * (Vgrid - CutV)) +" \n";
-    LabelInfos.setText(nbl+" Vertices : "+QString::number(LocalScene.VertxNumber)+" \n"+
+            : labelinfos += QString::number(Ugrid - CutU) + "x" +
+                    QString::number(Vgrid - CutV) +" \n";
+    labelinfos+=" Vertices : "+QString::number(LocalScene.VertxNumber)+" \n"+
                            " Triangles: "+QString::number(LocalScene.PolyNumber/3)+" \n"
-                           " Polygons : "+QString::number(LocalScene.NbPolygnNbVertexPtMin)+" \n");
-
+                           " Polygons : "+QString::number(LocalScene.NbPolygnNbVertexPtMin)+" \n";
+    if(LocalScene.morph==1)
+    {
+        if(LocalScene.anim==-1)
+            LabelInfos.setText(labelinfos+" Morph: ON \n");
+        else
+            LabelInfos.setText(labelinfos+" Rotation/Morph: ON \n");
+    }
+    else
+    {
+        if(LocalScene.anim==-1)
+            LabelInfos.setText(labelinfos);
+        else
+            LabelInfos.setText(labelinfos+" Rotation: ON \n");
+    }
 }
 
 void MathMod::png()
@@ -1187,12 +1200,19 @@ void MathMod::anim()
 {
     LocalScene.anim *= -1;
     if (LocalScene.anim == 1)
+    {
         timer->start(latence, this);
+        if (LocalScene.morph == -1)
+            LabelInfos.setText(labelinfos+" Rotation: ON \n");
+    }
     else
     {
         oldRotation = rotation;
         if (LocalScene.morph == -1)
-        stoptimer();
+        {
+            LabelInfos.setText(labelinfos);
+            stoptimer();
+        }
     }
 }
 
@@ -1235,9 +1255,19 @@ void MathMod::morph()
         IsoObjet->IsoMorph();
     }
     if (LocalScene.morph == 1)
+    {
         timer->start(latence, this);
-    else if (LocalScene.anim == -1)
-        stoptimer();
+    }
+    else
+    {
+        if (LocalScene.anim == -1)
+        {
+            LabelInfos.setText(labelinfos);
+            stoptimer();
+        }
+        else
+            LabelInfos.setText(labelinfos+" Rotation: ON \n");
+    }
 }
 
 void MathMod::keyPressEvent(QKeyEvent *e)
