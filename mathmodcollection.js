@@ -7224,7 +7224,7 @@
             "Vmin": ["vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin"]
         },
         "Texture": {
-            "Colors": ["R=if(cmpId = (130), (6/10), (9/10))","G=if((cmpId = 130), (6/10), (6/10))","B=if((cmpId = 130), (6/10), (0))","T=if((cmpId = 130), (7/10), (1))"],
+            "Colors": ["R=if(cmpId = (130), (6/10), (9/10))","G=if((cmpId = 130), (6/10), (6/10))","B=if((cmpId = 130), (6/10), (0))","T=if((cmpId = 130), (4/10), (1))"],
             "Name": "Gold",
             "Noise": ""
         }
@@ -7247,10 +7247,10 @@
         },
         "Texture": {
                "Colors": [
-                   "R=if((cmpId = 130), (6/10), (7/10))",
-                   "G=if((cmpId = 130), (1/10), (5/10))",
+                   "R=if((cmpId = 130), (9/10), (6/10))",
+                   "G=if((cmpId = 130), (2/10), (4/10))",
                    "B=if((cmpId = 130), (3/10), (0))",
-                   "T=if((cmpId = 130), (5/10), (1))"
+                   "T=if((cmpId = 130), (3/10), (1))"
                ],
                "Name": "Gold",
                "Noise": ""
@@ -7969,7 +7969,7 @@
         "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
         },
         "Texture": {
-        "Colors": ["R=if(cmpId = (130), (6/10), (7/10))","G=if((cmpId = 130), (1/10), (5/10))","B=if((cmpId = 130), (3/10), (0))","T=if((cmpId = 130), (7/10), (1))"],
+        "Colors": ["R=if(cmpId = (130), (9/10), (6/10))","G=if((cmpId = 130), (2/10), (4/10))","B=if((cmpId = 130), (3/10), (0))","T=if((cmpId = 130), (4/10), (1))"],
         "Name": "Gold",
         "Noise": ""
         }
