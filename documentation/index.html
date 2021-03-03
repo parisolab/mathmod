@@ -10,6 +10,8 @@
  <li><a href="#Introduction">Introduction</a>
  <li><a href="#Copyright">Copyright</a>
  <li><a href="#Download">Download</a>
+ <li><a href="#Compile">Compile MathMod from source</a>
+ <li><a href="#Docum">Documentation</a>
  <li><a href="#Release">Release Notes</a>
  <li><a href="#Assistance">Seeking-assistance</a>
  <li><a href="#Tutorials">Videos tutorials</a>
@@ -39,6 +41,7 @@
  <li><a href="#ScriptsExamples">Scripts Examples</a>
  </ol>
  <li><a href="#InternalFunctions">Internal Functions</a>
+ <li><a href="#InternalFParameters">Internal parameters</a>
  <li><a href="#UserDefinedVariables">User defined variables</a>
  <li><a href="#SupportedOperatorsFunctions">Supported operators and mathematical functions</a>
 </ol>
@@ -78,12 +81,6 @@
   <li><a href="#Pariso_02">Pariso_02</a>
   <li><a href="#Arena_02">Arena_02</a>
  </ol>
-</ul>
-
-<h2>FAQ</h2>
-<ul>
-<li><a href="#Doc">MathMod documentation ?</a>
-<li><a href="#Compile">How to compile MathMod ?</a>
 </ul>
 
 <a name="About"></a>
@@ -128,6 +125,19 @@ Primary download sites on SourceForge and GitHub:<br>
 </ol>
 Video to show <a href="https://youtu.be/u1ZfI4DRQnc">MathMod ability to animate a combination of parametric and iso surfaces</a>
 </li>
+
+
+<a name="Compile"></a>
+<li>
+<h3>Compile MathMod from source</h3>
+<ol>
+ <li>Download <a href=https://download.qt.io/official_releases/qt/>Qt</a></li>
+ <li>Download <a href=https://github.com/parisolab/mathmod/releases>MathMod's source code</a></li>
+ <li> In a command line window, execute: "qmake; make"  OR use the qt-creator IDE to compile MathMod project</li>
+</ol>
+</li>
+
+
 <a name="Release"></a>
 <li>
 <h3>Release Notes</h3>
@@ -137,7 +147,7 @@ This release contains :
   <li>Complete rewrite of MathMod's viewer in order to make it OpenGl ES compatible: MathMod can now run (or easily adaptable to run) on mobile systems and platforms with limited resources!
  See MathMod running on a <a href="https://www.facebook.com/parisolab/posts/3634364993347597">Raspberry Pi4 with RaspberryPi-OS(32 Bit)</a>
 </li>
-  <li>Added possibility to hide a specific component and two scripts ("Groupings of Knots" , "Knotted Möbius strips") </li>
+  <li>Added: possibility to hide a specific component, two new scripts ("Groupings of Knots" , "Knotted Möbius strips") </li>
   <li>Bug-fixes, code optimization and documentation update.</li>
   <li>For a complete list of changes made during the course of development, please visit: <a href="https://github.com/parisolab/mathmod/milestone/3">MathMod-11.0</a></li>
 </ol>
@@ -145,7 +155,7 @@ Release Notes date:
 </li>
 <a name="Assistance"></a>
 <li>
-<h2>Seeking-assistance</h2>
+<h3>Seeking-assistance</h3>
 
 <p align="center"><span style=" font-size:12pt;">Author: Abderrahman Taha (</span><a href="taha_ab@yahoo.fr"><span style=" font-size:12pt; text-decoration: underline; color:#60999e;">taha_ab@yahoo.fr</span></a><span style=" font-size:12pt;">)</span></p>
 <p align="center"><span style=" font-size:12pt;">GitHub: </span><a href="https://github.com/parisolab/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://github.com/parisolab/mathmod</span></a></p>
@@ -156,7 +166,7 @@ Release Notes date:
 
  <a name="Tutorials"></a>
  <li>
- <h2>Videos tutorials</h2>
+ <h3>Videos tutorials</h3>
  There are <a href="https://www.youtube.com/playlist?list=PLpGUO13v3lbcm28gvuIEbwDPN6Te7MHmo">15 videos tutorials on Youtube</a>
 <ol>
 <li><a href="https://youtu.be/u3GIPxbEOzk">Tutorial 15: How to compile MathMod from source</a></li>
@@ -413,22 +423,29 @@ Each of the various pattern types available is in fact a mathematical function t
      ]
 }</pre>
 </li>
-</ol>
+
 <a name="ScriptsExamples"></a>
 <li>
-<h2> Scripts examples:</h2>
+<b> Scripts examples:</b>
 <ol>
- <li><a href="#Models_Intersection">Models_Intersection</a>
- <li><a href="#CellNoiseSchwarz">CellNoiseSchwarz</a>
- <li><a href="#The_Dome_v1">The_Dome_v1</a>
- <li><a href="#Pariso_02">Pariso_02</a>
+ <li><a href="#Models_Intersection">Models_Intersection</a></li>
+ <li><a href="#CellNoiseSchwarz">CellNoiseSchwarz</a></li>
+ <li><a href="#The_Dome_v1">The_Dome_v1</a></li>
+ <li><a href="#Pariso_02">Pariso_02</a></li>
 </ol>
-
 </li>
+
 </ol>
+</li>
+
 
 <a name="InternalFunctions"></a>
-<h2>Internal functions </h2>
+<li>
+<h3>Internal functions </h3>
+
+
+
+
 <p><table border=2>
  <tr>
   <td><code>NoiseP</code></td>
@@ -571,7 +588,8 @@ Function use in "fhelix" and "Tori of helices" scripts
 </table>
 
 <a name="InternalFParameters"></a>
-<h2>Internal parameters</h2>
+<li>
+<h3>Internal parameters</h3>
 <ul>
 
 <li>
@@ -689,8 +707,14 @@ Used in the "BlackHole" script.
 </table>
 </ul>
 
+</li>
+
+</li>
+
+
 <a name="UserDefinedVariables"></a>
-<h2>User Defined Variables </h2>
+<li>
+<h3>User Defined Variables </h3>
 <p><table border=2>
 <tr>
 <td><code>"Vect"</code></td>
@@ -712,9 +736,12 @@ Used in the "BlackHole" script.
  (<a href="#Arena_02">Script example</a>)
 </tr>
 </table>
+</li>
+
 
 <a name="SupportedOperatorsFunctions"></a>
-<h2>Supported operators and mathematical functions: </h2>
+<li>
+<h3>Supported operators and mathematical functions: </h3>
 <p>The function string understood by MathMod is very similar (but not
 completely identical in all aspects) to mathematical expressions in the
 C/C++ languages.
@@ -878,26 +905,34 @@ or functions using the following operators in this order of precedence:
 </tr><tr>
   <td><code>min(A,B)</code></td>
   <td>If A&lt;B, the result is A, else B.</td>
-</tr><tr>
+</tr>
+<tr>
+<td><code>real(A)</code></td>
+<td>Return the real part of complex number A. Equivalent to <code>abs(A)*cos(arg(A))</code>.</td>
+</tr>
+<tr>
   <td><code>polar(A,B)</code></td>
   <td>Returns a complex number from magnitude A, phase angle B (in radians).
       Equivalent to <code>real(A)*(cos(real(B))+1i*sin(real(B)))</code>.</td>
-  <td><code>real(A)</code></td>
-  <td>Return the real part of complex number A. Equivalent to <code>abs(A)*cos(arg(A))</code>.</td>
-</tr><tr>
+</tr>
+<tr>
   <td><code>sec(A)</code></td>
   <td>Secant of A. Equivalent to <code>1/cos(A)</code>.</td>
-</tr><tr>
+</tr>
+<tr>
   <td><code>sin(A)</code></td>
   <td>Sine of A. Returns the sine of the angle A, where A is
       measured in radians.</td>
-</tr><tr>
+</tr>
+<tr>
   <td><code>sinh(A)</code></td>
   <td>Same as sin() but for hyperbolic sine.</td>
-</tr><tr>
+</tr>
+<tr>
   <td><code>sqrt(A)</code></td>
   <td>Square root of A. Returns a solution to expression pow(x,2)=A.</td>
-</tr><tr>
+</tr>
+<tr>
   <td><code>tan(A)</code></td>
   <td>Tangent of A. Returns the tangent of the angle A, where A
       is measured in radians.</td>
@@ -912,9 +947,15 @@ or functions using the following operators in this order of precedence:
     and 2.9, 2.5 and 2.1 are rounded to 2.0.</td>
 </tr>
 </table>
+</li>
+
+
+</li>
+</ol>
+
 
 <a name="Configuration"></a>
-<h1>Configuration file</h1>
+<h2>Configuration file</h2>
 
 <p>"mathmodconfig.js" file is the main source for MathMod's parameters settings.<br>
 MathMod uses an integrated configuration file but it can generate a copy for you when needed. Here is how:
@@ -934,7 +975,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "InitParGrid": 50
     }</code></td>
   <td>Maximum and current grid value setting for iso/parametric surfaces.
-"IsoMaxGrid" and "ParMaxGrid" can be set from the GUI (See attached <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Modeldetails/isosurface/iso3.png">image</a>)</td>
+"IsoMaxGrid" and "ParMaxGrid" can be set from the GUI (See attached <a href="images/Modeldetails/isosurface/iso3.png">image</a>)</td>
  </tr>
  <tr>
   <td><code>"StartOptions": {
@@ -954,7 +995,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_SHININESS": 110
     }</code></td>
-  <td>OpenGL setting for MathMod's 3D viewer window. OpenGL settings can also be modified from the GUI (see attached <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/opengl.png">image</a>)</td>
+  <td>OpenGL setting for MathMod's 3D viewer window. OpenGL settings can also be modified from the GUI (see attached <a href="images/Appearance/opengl.png">image</a>)</td>
  </tr>
  <tr>
   <td><code>"ThreadsConfig": {
@@ -963,7 +1004,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 64
     }</code></td>
-  <td><a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/threads.png">image</a></td>
+  <td><a href="images/Appearance/threads.png">image</a></td>
  </tr>
  <tr>
   <td><code>"WindowPosition": {
@@ -996,7 +1037,7 @@ MathMod uses an integrated configuration file but it can generate a copy for you
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
         "UsedStyle": "Fusion"
     }</code></td>
-  <td>By default, MathMod uses the dark mode "Fusion". <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ToolBar/themes.png">image</a></td>
+  <td>By default, MathMod uses the dark mode "Fusion". <a href="images/ToolBar/themes.png">image</a></td>
  </tr>
  <tr>
   <td><code>"Themes": {
@@ -1017,12 +1058,12 @@ MathMod uses an integrated configuration file but it can generate a copy for you
             "HighlightedText":[0, 0, 0]
         }
     }</code></td>
-  <td>By default, MathMod uses the dark mode "Fusion". To test other themes, use the "look And feel" page in the "Configurations Options" window. <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ToolBar/Preferences.png">image</a> </td>
+  <td>By default, MathMod uses the dark mode "Fusion". To test other themes, use the "look And feel" page in the "Configurations Options" window. <a href="images/ToolBar/Preferences.png">image</a> </td>
  </tr>
 </table>
 
 <a name="AnimMorph"></a>
-<h1>Animations and Morph transitions</h1>
+<h2>Animations and Morph transitions</h2>
 <ol>
 <a name="Morph"></a>
 <li><h2>Morph effect</h2>
@@ -1047,7 +1088,7 @@ Example: <pre>
 <a name="Rotation"></a>
 <li><h2>Rotation</h2>
 The rotation animation activation (and deactivation) take place with "CtRl+a". Also, the
-<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ViewControls/ViewControls.png">"Rotations Controls"</a> section helps set the axe and speed of the rotation.
+<a href="images/ViewControls/ViewControls.png">"Rotations Controls"</a> section helps set the axe and speed of the rotation.
 <a name="movie"></a>
 <li><h2>Making animated GIF or videos</h2>
 This <a href="https://youtu.be/hpdhbWJApCk">video explain how to create animated GIF</a> with MathMod and Gimp.<br>
@@ -1056,21 +1097,21 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
 </ol>
 
 <a name="GUI"></a>
-<h1> MathMod's GUI Reference</h1>
+<h2> MathMod's GUI Reference</h2>
 <a name="Menu"></a>
 <h2>Menu Items</h2>
 <ol>
   <a name="ProjectMenu"></a>
   <li><h3>The Project Menu</h3>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Menu/ProjectMenu/ProjectMenu.png">Project Menu</a>
+  <a href="images/Menu/ProjectMenu/ProjectMenu.png">Project Menu</a>
   </li>
   <a name="OptionsMenu"></a>
   <li><h3>The Options Menu</h3>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Menu/OptionsMenu/OptionsMenu.png">Options Menu</a>
+  <a href="images/Menu/OptionsMenu/OptionsMenu.png">Options Menu</a>
   </li>
   <a name="ExportMenu"></a>
   <li><h3>The Export Menu</h3>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Menu/ExportMenu/ExportMenu.png">Export Menu</a>
+  <a href="images/Menu/ExportMenu/ExportMenu.png">Export Menu</a>
   </li>
   <a name="HelpMenu"></a>
   <li><h3>The Help Menu</h3></li>
@@ -1080,32 +1121,32 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
 <ol>
   <a name="ModelDetails"></a>
   <li><h3>The "Model Details" page</h3>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/Isosurface/iso1.png">Isosurface details page</a><br>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/parametric/par1.png">3D Parametric details page</a><br>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/parametric/par5.png">4D Parametric details page</a><br>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ModelDetails/pariso/pariso.png">Pariso object details page</a>
+  <a href="images/ModelDetails/Isosurface/iso1.png">Isosurface details page</a><br>
+  <a href="images/ModelDetails/parametric/par1.png">3D Parametric details page</a><br>
+  <a href="images/ModelDetails/parametric/par5.png">4D Parametric details page</a><br>
+  <a href="images/ModelDetails/pariso/pariso.png">Pariso object details page</a>
   </li>
   <a name="ScriptEdit"></a>
   <li><h3>The "Script Edit" page</h3>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ScriptEdit/ScriptEdit.png">Script Edit page</a>
+  <a href="images/ScriptEdit/ScriptEdit.png">Script Edit page</a>
   </li>
   <a name="ViewControls"></a>
   <li><h3>The "View Controls" page</h3>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/ViewControls/ViewControls.png">View Controls page</a>
+  <a href="images/ViewControls/ViewControls.png">View Controls page</a>
   </li>
   <a name="Appearance"></a>
   <li><h3>The "Appearance" page</h3>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/colors.png">Colors page</a><br>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/opengl.png">OpenGL page</a><br>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/textures.png">Texture page</a><br>
-  <a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Appearance/threads.png">Threads page</a><br>
+  <a href="images/Appearance/colors.png">Colors page</a><br>
+  <a href="images/Appearance/opengl.png">OpenGL page</a><br>
+  <a href="images/Appearance/textures.png">Texture page</a><br>
+  <a href="images/Appearance/threads.png">Threads page</a><br>
   </li>
   <a name="Sliders"></a>
   <li><h3>The "Sliders" page</h3></li>
 </ol>
 
 <a name="Examples"></a>
-<h1>Scripts Examples</h1>
+<h2>Scripts Examples</h2>
 <ol>
 <a name="Models_Intersection"></a>
 <li><pre>
@@ -1126,7 +1167,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     }
 }
 </pre>
-<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/examples/Models_Intersection.png">See attached image</a>
+<a href="images/examples/Models_Intersection.png">See attached image</a>
 
 
 <a name="CellNoiseSchwarz"></a>
@@ -1152,7 +1193,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
         }
     }
 </pre>
-<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/CellNoiseSchwarz.png">See attached image</a>
+<a href="images/Examples/CellNoiseSchwarz.png">See attached image</a>
 
 <a name="The_Dome_v1"></a>
 <li><pre>
@@ -1196,7 +1237,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     }
 }
 </pre>
-<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/The_Dome_v1.png">See attached image</a>
+<a href="images/Examples/The_Dome_v1.png">See attached image</a>
 
 <a name="Pariso_02"></a>
 <li><pre>
@@ -1242,7 +1283,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     ]
 }
 </pre>
-<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/Pariso_02.png">See attached image</a>
+<a href="images/Examples/Pariso_02.png">See attached image</a>
 
 <a name="Arena_02"></a>
 <li><pre>
@@ -1272,7 +1313,7 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
     }
 }
 </pre>
-<a href="https://github.com/parisolab/mathmod/blob/master/documentation/images/Examples/Arena_02.png">See attached image</a>
+<a href="images/Examples/Arena_02.png">See attached image</a>
 
 </ol>
 
