@@ -2892,11 +2892,6 @@ void DrawingOptions::on_actionTriangles_triggered()
     MathmodRef->slot_triangles_clicked();
 }
 
-void DrawingOptions::on_actionNormales_triggered()
-{
-    MathmodRef->draw_norm_clicked();
-}
-
 void DrawingOptions::on_actionInfos_triggered()
 {
     MathmodRef->iso_infos();
@@ -2906,8 +2901,6 @@ void DrawingOptions::on_actionFill_triggered()
 {
     MathmodRef->fill();
 }
-
-
 
 void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
 {

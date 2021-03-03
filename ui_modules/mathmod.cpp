@@ -43,6 +43,8 @@ static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
 static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
                maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
+static GLfloat oldminx = 999999999.0, oldminy = 999999999.0, oldminz = 999999999.0,
+               oldmaxx = -999999999.0, oldmaxy = -999999999.0, oldmaxz = -999999999.0;
 static GLfloat difX, difY, difZ;
 static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
 static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0,
@@ -50,7 +52,6 @@ XletterIndex=0, YletterIndex=0, ZletterIndex=0;
 QString vertexsource, fragmentsource;
 GLuint vertexshader, fragmentshader;
 float wh=0.57;
-QString labelinfos;
 static bool PutObjectInsideCubeOk=false;
 int IsCompiled_VS, IsCompiled_FS;
 int IsLinked;
@@ -514,6 +515,8 @@ void MathMod::PutObjectInsideCube()
                 maxz = LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4];
         }
         FistTimecalibrate = -1;
+        oldminx = minx; oldminy = miny; oldminz=minz;
+        oldmaxx = maxx; oldmaxy = maxy; oldmaxz=maxz;
         difX = maxx - minx;
         difY = maxy - miny;
         difZ = maxz - minz;
@@ -713,7 +716,7 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+9] = AxeArray[3*(id+32)+2];
     }
 
-    labelinfos = " Grid     : ";
+    labelinfos = "  \n Grid     : ";
     (LocalScene.typedrawing == 1)
     ? labelinfos += QString::number(Xgrid - CutX) + "x" +
             QString::number(Ygrid - CutY) + "x" +
@@ -723,6 +726,15 @@ void MathMod::PutObjectInsideCube()
     labelinfos+=" Vertices : "+QString::number(LocalScene.VertxNumber)+" \n"+
                            " Triangles: "+QString::number(LocalScene.PolyNumber/3)+" \n"
                            " Polygons : "+QString::number(LocalScene.NbPolygnNbVertexPtMin)+" \n";
+   if(LocalScene.morph==-1)
+       labelinfos+=" X["+QString::number(minx,'g',3)+","+QString::number(maxx,'g',3)+"]\n\
+ Y["+QString::number(miny,'g',3)+","+QString::number(maxy,'g',3)+"]\n\
+ Z["+QString::number(minz,'g',3)+","+QString::number(maxz,'g',3)+"]\n";
+else
+       labelinfos+=" X["+QString::number(oldminx,'g',3)+","+QString::number(oldmaxx,'g',3)+"]\n\
+ Y["+QString::number(oldminy,'g',3)+","+QString::number(oldmaxy,'g',3)+"]\n\
+ Z["+QString::number(oldminz,'g',3)+","+QString::number(oldmaxz,'g',3)+"]\n";
+
     if(LocalScene.morph==1)
     {
         if(LocalScene.anim==-1)
@@ -737,6 +749,7 @@ void MathMod::PutObjectInsideCube()
         else
             LabelInfos.setText(labelinfos+" Rotation: ON \n");
     }
+
 }
 
 void MathMod::png()
@@ -931,10 +944,6 @@ void MathMod::CreateShaderProgram()
     const int MAX_LENGTH = 2048;
     char log[MAX_LENGTH];
     int logLength = 0;
-    /* Assign our handles a "name" to new shader objects */
-    //glDeleteShader(vertexshader);
-    //glDeleteShader(fragmentshader);
-
     vertexshader = glCreateShader(GL_VERTEX_SHADER);
     bool shaderValid = glIsShader(vertexshader);
     if (!shaderValid)
@@ -1040,28 +1049,19 @@ void MathMod::CreateShaderProgram()
                 gl_FragColor = fragColor;
             }
             )";
-
-    /* Associate the source code buffers with each handle */
     glShaderSource(vertexshader, 1, &c_str_vertex, NULL);
-
-    /* Compile our shader objects */
     glCompileShader(vertexshader);
     glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
     if(IsCompiled_VS==GL_FALSE)
     {
        QMessageBox msgBox;
        glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
-       // The maxLength includes the NULL character
        vertexInfoLog = (char *)malloc(maxLength);
        glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
        std::string vertexInfoLogString = std::string(vertexInfoLog);
        msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
        msgBox.adjustSize();
        msgBox.exec();
-       // Handle the error in an appropriate way such as displaying a message or writing to a log file.
-       // In this simple program, we'll just leave
-       //free(vertexInfoLog);
-       //return;
     }
     glShaderSource(fragmentshader, 1, &c_str_fragment, NULL);
     glCompileShader(fragmentshader);
@@ -1070,7 +1070,6 @@ void MathMod::CreateShaderProgram()
     {
         QMessageBox msgBox;
        glGetShaderiv(fragmentshader, GL_INFO_LOG_LENGTH, &maxLength);
-       /* The maxLength includes the NULL character */
        fragmentInfoLog = (char *)malloc(maxLength);
        glGetShaderInfoLog(fragmentshader, maxLength, &maxLength, fragmentInfoLog);
        std::string vertexInfoLogString = std::string(fragmentInfoLog);
@@ -1079,37 +1078,19 @@ void MathMod::CreateShaderProgram()
        msgBox.exec();
        //return;
     }
-    /* If we reached this point it means the vertex and fragment shaders compiled and are syntax error free. */
-    /* We must link them together to make a GL shader program */
-    /* GL shader programs are monolithic. It is a single piece made of 1 vertex shader and 1 fragment shader. */
-    /* Assign our program handle a "name" */
     shaderprogramId = glCreateProgram();
-    /* Attach our shaders to our program */
     glAttachShader(shaderprogramId, vertexshader);
     glAttachShader(shaderprogramId, fragmentshader);
-    /* Bind attribute index 0 (coordinates) to in_Position and attribute index 1 (color) to in_Color */
-    /* Attribute locations must be setup before calling glLinkProgram. */
     glBindAttribLocation(shaderprogramId, 0, "in_Position");
     glBindAttribLocation(shaderprogramId, 1, "in_Color");
-    /* Link our program */
-    /* At this stage, the vertex and fragment programs are inspected, optimized and a binary code is generated for the shader. */
-    /* The binary code is uploaded to the GPU, if there is no error. */
     glLinkProgram(shaderprogramId);
     glGetProgramiv(shaderprogramId, GL_LINK_STATUS, (int *)&IsLinked);
     if(!IsLinked)
     {
-       /* Noticed that glGetProgramiv is used to get the length for a shader program, not glGetShaderiv. */
        glGetProgramiv(shaderprogramId, GL_INFO_LOG_LENGTH, &maxLength);
-       /* The maxLength includes the NULL character */
        shaderProgramInfoLog = (char *)malloc(maxLength);
-       /* Notice that glGetProgramInfoLog, not glGetShaderInfoLog. */
        glGetProgramInfoLog(shaderprogramId, maxLength, &maxLength, shaderProgramInfoLog);
-       /* Handle the error in an appropriate way such as displaying a message or writing to a log file. */
-       /* In this simple program, we'll just leave */
-       //free(shaderProgramInfoLog);
-       //return;
     }
-    /* Load the shader into the rendering pipeline */
     glUseProgram(shaderprogramId);
     uniformMatrixModelView           = glGetUniformLocation(shaderprogramId, "matrixModelView");
     uniformMatrixModelViewProjection = glGetUniformLocation(shaderprogramId, "matrixModelViewProjection");
@@ -1137,9 +1118,7 @@ void MathMod::CreateShaderProgram()
     glUniform1f(uniformShininess, shininessVal);
     glUniform1i(uniformThereisRGBA, 1);
     glUniform1i(uniformdrawgridColor, 0);
-    // unbind GLSL
-    //glUseProgram(0);
-    // check GLSL status
+
     int linkStatus;
     glGetProgramiv(shaderprogramId, GL_LINK_STATUS, &linkStatus);
     if(linkStatus == GL_FALSE)
@@ -1159,9 +1138,7 @@ void MathMod::proj()
 {
     qreal aspect = qreal(screenWidth) / qreal(screenHeight ? screenHeight : 1);
     const qreal zNear = 0.01, zFar = 15, fov = 60.0;
-    // Reset projection
     matrixProjectionx.setToIdentity();
-    // Set perspective projection
     matrixProjectionx.perspective(fov, aspect, zNear, zFar);
 }
 
@@ -1277,10 +1254,10 @@ void MathMod::keyPressEvent(QKeyEvent *e)
     int key = e->key();
     switch (key)
     {
-    case Qt::Key_A:
+    case Qt::CTRL+Qt::Key_A:
         anim();
         break;
-    case Qt::Key_P:
+    case Qt::CTRL+Qt::Key_P:
         morph();
         break;
      case Qt::Key_C:
@@ -1886,7 +1863,7 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
     LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
     LabelInfos.setAttribute(Qt::WA_TranslucentBackground);
     LabelInfos.setAttribute(Qt::WA_NoSystemBackground);
-    LabelInfos.setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    LabelInfos.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     LabelInfos.setWindowOpacity(0.8);
     xyzactivated = uvactivated = uvactivated4D = 1;
     if (memoryallocation(nbthreads, initparGrid, initisoGrid,

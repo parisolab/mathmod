@@ -64,6 +64,7 @@ public:
     jcollection collection;
     QWidget *Parent;
     QLabel LabelInfos;
+    QString labelinfos;
 public:
     MathMod(QWidget *, uint, uint initpargrid = 50, uint initisogrid = 40,
             uint factx = 4, uint facty = 4, uint factz = 4);

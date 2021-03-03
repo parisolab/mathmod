@@ -141,7 +141,6 @@ public slots:
     void on_pushButton_clicked();
     void on_action_Exit_triggered();
     void on_actionTriangles_triggered();
-    void on_actionNormales_triggered();
     void on_actionInfos_triggered();
     void on_actionFill_triggered();
     void on_ObjectClasse_clicked(const QModelIndex &);
