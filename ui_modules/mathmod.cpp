@@ -1917,8 +1917,7 @@ void MathMod::iso_infos()
     LocalScene.infos *= -1;
     if(LocalScene.infos == 1)
     {
-
-/*
+/*     //The background color setting doesn't work!
        Qt::WindowFlags flags1 = LabelInfos0.windowFlags();
        flags1 &= ~Qt::WA_TranslucentBackground;
        LabelInfos0.setWindowFlags(flags1);
@@ -1927,12 +1926,15 @@ void MathMod::iso_infos()
        flags2 &= ~Qt::WA_NoSystemBackground;
        LabelInfos0.setWindowFlags(flags2);
 
-
        Qt::WindowFlags flags0 = LabelInfos0.windowFlags();
        flags0 &= ~Qt::FramelessWindowHint;
        LabelInfos0.setWindowFlags(flags0);
 
-       LabelInfos0.setStyleSheet("QLabel { background-color : black; color : blue; }");
+       LabelInfos0.setAutoFillBackground(true);
+       QColor color=  QColor(Qt::black);
+       QVariant variant= color;
+       QString colcode = variant.toString();
+       LabelInfos0.setStyleSheet("QLabel { background-color :"+colcode+" ;  color : red;}");
 */
        QRect r = geometry();
        LabelInfos0.move(r.x(), r.y());
