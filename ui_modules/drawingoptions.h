@@ -347,5 +347,6 @@ private slots:
     void on_ShowParComp_clicked();
     void on_actionAxe_triggered();
     void on_actionPlan_triggered();
+    void on_actionOpac_WinInfos_triggered();
 };
 #endif

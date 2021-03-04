@@ -10088,6 +10088,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionAxe"/>
     <addaction name="actionPlan"/>
+    <addaction name="actionOpac_WinInfos"/>
    </widget>
    <widget class="QMenu" name="menuExport">
     <property name="title">
@@ -10444,6 +10445,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Plan</string>
+   </property>
+  </action>
+  <action name="actionOpac_WinInfos">
+   <property name="text">
+    <string>Opac WinInfos</string>
    </property>
   </action>
  </widget>

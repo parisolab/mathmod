@@ -63,7 +63,7 @@ public:
     ParisoMathObject RootObjet;
     jcollection collection;
     QWidget *Parent;
-    QLabel LabelInfos;
+    QLabel LabelInfos0,LabelInfos1;
     QString labelinfos;
 public:
     MathMod(QWidget *, uint, uint initpargrid = 50, uint initisogrid = 40,

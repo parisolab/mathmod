@@ -738,16 +738,28 @@ else
     if(LocalScene.morph==1)
     {
         if(LocalScene.anim==-1)
-            LabelInfos.setText(labelinfos+" Morph: ON \n");
+        {
+            LabelInfos0.setText(labelinfos+" Morph: ON \n");
+            LabelInfos1.setText(labelinfos+" Morph: ON \n");
+        }
         else
-            LabelInfos.setText(labelinfos+" Rotation/Morph: ON \n");
+        {
+            LabelInfos0.setText(labelinfos+" Rotation/Morph: ON \n");
+            LabelInfos1.setText(labelinfos+" Rotation/Morph: ON \n");
+        }
     }
     else
     {
         if(LocalScene.anim==-1)
-            LabelInfos.setText(labelinfos);
+        {
+            LabelInfos0.setText(labelinfos);
+            LabelInfos1.setText(labelinfos);
+        }
         else
-            LabelInfos.setText(labelinfos+" Rotation: ON \n");
+        {
+            LabelInfos0.setText(labelinfos+" Rotation: ON \n");
+            LabelInfos1.setText(labelinfos+" Rotation: ON \n");
+        }
     }
 
 }
@@ -1183,14 +1195,18 @@ void MathMod::anim()
     {
         timer->start(latence, this);
         if (LocalScene.morph == -1)
-            LabelInfos.setText(labelinfos+" Rotation: ON \n");
+        {
+            LabelInfos0.setText(labelinfos+" Rotation: ON \n");
+            LabelInfos1.setText(labelinfos+" Rotation: ON \n");
+        }
     }
     else
     {
         oldRotation = rotation;
         if (LocalScene.morph == -1)
         {
-            LabelInfos.setText(labelinfos);
+            LabelInfos0.setText(labelinfos);
+            LabelInfos1.setText(labelinfos);
             stoptimer();
         }
     }
@@ -1241,11 +1257,15 @@ void MathMod::morph()
     {
         if (LocalScene.anim == -1)
         {
-            LabelInfos.setText(labelinfos);
+            LabelInfos0.setText(labelinfos);
+            LabelInfos1.setText(labelinfos);
             stoptimer();
         }
         else
-            LabelInfos.setText(labelinfos+" Rotation: ON \n");
+        {
+            LabelInfos0.setText(labelinfos+" Rotation: ON \n");
+            LabelInfos1.setText(labelinfos+" Rotation: ON \n");
+        }
     }
 }
 
@@ -1860,11 +1880,15 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
     FramesDir = "/home";
     hauteur_fenetre = 2*wh;
     timer = new QBasicTimer();
-    LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
-    LabelInfos.setAttribute(Qt::WA_TranslucentBackground);
-    LabelInfos.setAttribute(Qt::WA_NoSystemBackground);
-    LabelInfos.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    LabelInfos.setWindowOpacity(0.8);
+    LabelInfos0.setWindowFlags(Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
+    LabelInfos0.setAttribute(Qt::WA_TranslucentBackground);
+    LabelInfos0.setAttribute(Qt::WA_NoSystemBackground);
+    LabelInfos0.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    LabelInfos0.setWindowOpacity(0.8);
+
+    //LabelInfos1.setWindowOpacity(0.8);
+    LabelInfos1.setWindowFlags(Qt::WindowStaysOnTopHint);
+
     xyzactivated = uvactivated = uvactivated4D = 1;
     if (memoryallocation(nbthreads, initparGrid, initisoGrid,
                                FactX, FactY, FactZ) != 1)
@@ -1873,13 +1897,13 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
 
 void MathMod::closeEvent(QCloseEvent *)
 {
-    LabelInfos.close();
+    LabelInfos0.close();
 }
 
 void MathMod::moveEvent(QMoveEvent *)
 {
     QRect r = geometry();
-    LabelInfos.move(r.x(), r.y());
+    LabelInfos0.move(r.x(), r.y());
 }
 
 void MathMod::fill()
@@ -1893,12 +1917,29 @@ void MathMod::iso_infos()
     LocalScene.infos *= -1;
     if(LocalScene.infos == 1)
     {
+
+/*
+       Qt::WindowFlags flags1 = LabelInfos0.windowFlags();
+       flags1 &= ~Qt::WA_TranslucentBackground;
+       LabelInfos0.setWindowFlags(flags1);
+
+       Qt::WindowFlags flags2 = LabelInfos0.windowFlags();
+       flags2 &= ~Qt::WA_NoSystemBackground;
+       LabelInfos0.setWindowFlags(flags2);
+
+
+       Qt::WindowFlags flags0 = LabelInfos0.windowFlags();
+       flags0 &= ~Qt::FramelessWindowHint;
+       LabelInfos0.setWindowFlags(flags0);
+
+       LabelInfos0.setStyleSheet("QLabel { background-color : black; color : blue; }");
+*/
        QRect r = geometry();
-       LabelInfos.move(r.x(), r.y());
-       LabelInfos.show();
+       LabelInfos0.move(r.x(), r.y());
+       LabelInfos0.show();
     }
     else
-        LabelInfos.hide();
+        LabelInfos0.hide();
     update();
 }
 
