@@ -10088,7 +10088,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionAxe"/>
     <addaction name="actionPlan"/>
-    <addaction name="actionOpac_WinInfos"/>
+    <addaction name="actionDetach_WinInfos"/>
    </widget>
    <widget class="QMenu" name="menuExport">
     <property name="title">
@@ -10450,6 +10450,17 @@ p, li { white-space: pre-wrap; }
   <action name="actionOpac_WinInfos">
    <property name="text">
     <string>Opac WinInfos</string>
+   </property>
+  </action>
+  <action name="actionDetach_WinInfos">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Detach WinInfos</string>
    </property>
   </action>
  </widget>

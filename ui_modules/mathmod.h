@@ -63,7 +63,7 @@ public:
     ParisoMathObject RootObjet;
     jcollection collection;
     QWidget *Parent;
-    QLabel LabelInfos0,LabelInfos1;
+    QLabel LabelInfos;
     QString labelinfos;
 public:
     MathMod(QWidget *, uint, uint initpargrid = 50, uint initisogrid = 40,
@@ -76,6 +76,7 @@ public:
 public slots:
     void fill();
     void iso_infos();
+    void attachinfos();
     void draw_norm_clicked();
     void linecolumn_valueChanged(int, ModelType type=PAR_TYPE);
     void line_valueChanged(int);

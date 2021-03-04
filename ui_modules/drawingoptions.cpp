@@ -2882,7 +2882,7 @@ void DrawingOptions::on_pushButton_clicked()
 
 void DrawingOptions::on_action_Exit_triggered()
 {
-    MathmodRef->LabelInfos0.close();
+    MathmodRef->LabelInfos.close();
     MathmodRef->close();
     this->close();
 }
@@ -5227,7 +5227,8 @@ void DrawingOptions::on_actionPlan_triggered()
     MathmodRef->update();
 }
 
-void DrawingOptions::on_actionOpac_WinInfos_triggered()
+void DrawingOptions::on_actionDetach_WinInfos_triggered()
 {
-    MathmodRef->LabelInfos1.show();
+    MathmodRef->LocalScene.attachwininfos*=-1;
+    MathmodRef->attachinfos();
 }
