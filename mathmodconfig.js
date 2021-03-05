@@ -39,7 +39,9 @@
         "FactZ": 4
     },
     "OpenGlConfig": {
-        "GL_SPECULAR": [20, 20, 20, 100],
+        "GL_SPECULAR": [50, 50, 50, 100],
+        "GL_AMBIANT" : [50, 50, 50, 100],
+        "GL_DIFFUSE" : [10, 10, 10, 100],
         "GL_SHININESS": 20
     },
     "Styles": {

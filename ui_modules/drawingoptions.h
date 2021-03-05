@@ -315,7 +315,9 @@ private slots:
     void on_CutParam_clicked();
     void on_actionFrames_triggered();
     void on_red_Specular_valueChanged(int);
-    void SetSpecularValues(float *);
+    void SetSpecularValues(int *);
+    void SetAmbientValues(int *);
+    void SetDiffuseValues(int *);
     void SetShininessValue(int);
     void SetThreadValues(int *);
     void on_green_Specular_valueChanged(int);

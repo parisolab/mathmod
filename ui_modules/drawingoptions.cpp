@@ -4174,6 +4174,10 @@ void DrawingOptions::UpdateGui(int argc)
     SetSpecularValues(Parameters->Specular);
     // OpenGl shininess:
     SetShininessValue(Parameters->Shininess);
+    // OpenGl diffuse:
+    SetDiffuseValues(Parameters->Diffuse);
+    // OpenGl Ambient:
+    SetAmbientValues(Parameters->Ambient);
     // Show the two windows of the application:
     move(Parameters->ControlX, Parameters->ControlY);
     resize(Parameters->ControlW, Parameters->ControlH);
@@ -4877,24 +4881,62 @@ void DrawingOptions::on_actionFrames_triggered()
     MathmodRef->frames_clicked();
 }
 
-void DrawingOptions::SetSpecularValues(float *spec)
+void DrawingOptions::SetSpecularValues(int *spec)
 {
     ui.red_Specular->blockSignals(true);
-    ui.red_Specular->setSliderPosition(int(spec[0] * 100));
+    ui.red_Specular->setSliderPosition(spec[0]);
     ui.red_Specular->blockSignals(false);
     ui.green_Specular->blockSignals(true);
-    ui.green_Specular->setSliderPosition(int(spec[1] * 100));
+    ui.green_Specular->setSliderPosition(spec[1]);
     ui.green_Specular->blockSignals(false);
     ui.blue_Specular->blockSignals(true);
-    ui.blue_Specular->setSliderPosition(int(spec[2] * 100));
+    ui.blue_Specular->setSliderPosition(spec[2]);
     ui.blue_Specular->blockSignals(false);
     ui.transparent_Specular->blockSignals(true);
-    ui.transparent_Specular->setSliderPosition(int(spec[3] * 100));
+    ui.transparent_Specular->setSliderPosition(spec[3]);
     ui.transparent_Specular->blockSignals(false);
-    MathmodRef->LocalScene.specReflection[0]= Parameters->Specular[0];
-    MathmodRef->LocalScene.specReflection[1]= Parameters->Specular[1];
-    MathmodRef->LocalScene.specReflection[2]= Parameters->Specular[2];
-    MathmodRef->LocalScene.specReflection[3]= Parameters->Specular[3];
+    MathmodRef->lightSpecular[0]= Parameters->Specular[0]/100.0f;
+    MathmodRef->lightSpecular[1]= Parameters->Specular[1]/100.0f;
+    MathmodRef->lightSpecular[2]= Parameters->Specular[2]/100.0f;
+    MathmodRef->lightSpecular[3]= Parameters->Specular[3]/100.0f;
+}
+void DrawingOptions::SetDiffuseValues(int *spec)
+{
+    ui.red_Diffuse->blockSignals(true);
+    ui.red_Diffuse->setSliderPosition(spec[0]);
+    ui.red_Diffuse->blockSignals(false);
+    ui.green_Diffuse->blockSignals(true);
+    ui.green_Diffuse->setSliderPosition(spec[1]);
+    ui.green_Diffuse->blockSignals(false);
+    ui.blue_Diffuse->blockSignals(true);
+    ui.blue_Diffuse->setSliderPosition(spec[2]);
+    ui.blue_Diffuse->blockSignals(false);
+    ui.transparent_Diffuse->blockSignals(true);
+    ui.transparent_Diffuse->setSliderPosition(spec[3]);
+    ui.transparent_Diffuse->blockSignals(false);
+    MathmodRef->lightDiffuse[0]= Parameters->Diffuse[0]/100.0f;
+    MathmodRef->lightDiffuse[1]= Parameters->Diffuse[1]/100.0f;
+    MathmodRef->lightDiffuse[2]= Parameters->Diffuse[2]/100.0f;
+    MathmodRef->lightDiffuse[3]= Parameters->Diffuse[3]/100.0f;
+}
+void DrawingOptions::SetAmbientValues(int *spec)
+{
+    ui.red_Ambient->blockSignals(true);
+    ui.red_Ambient->setSliderPosition(spec[0]);
+    ui.red_Ambient->blockSignals(false);
+    ui.green_Ambient->blockSignals(true);
+    ui.green_Ambient->setSliderPosition(spec[1]);
+    ui.green_Ambient->blockSignals(false);
+    ui.blue_Ambient->blockSignals(true);
+    ui.blue_Ambient->setSliderPosition(spec[2]);
+    ui.blue_Ambient->blockSignals(false);
+    ui.transparent_Ambient->blockSignals(true);
+    ui.transparent_Ambient->setSliderPosition(spec[3]);
+    ui.transparent_Ambient->blockSignals(false);
+    MathmodRef->lightAmbient[0]= Parameters->Ambient[0]/100.0f;
+    MathmodRef->lightAmbient[1]= Parameters->Ambient[1]/100.0f;
+    MathmodRef->lightAmbient[2]= Parameters->Ambient[2]/100.0f;
+    MathmodRef->lightAmbient[3]= Parameters->Ambient[3]/100.0f;
 }
 
 void DrawingOptions::SetThreadValues(int *thread)

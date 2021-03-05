@@ -28,32 +28,6 @@ static bool MACOS = false;
 
 Parametersoptions::Parametersoptions(QWidget *parent) : QWidget(parent)
 {
-    ControlX = 20;
-    ControlY = 20;
-    GlwinX = 575;
-    GlwinY = 20;
-    ControlW = 538;
-    ControlH = 700;
-    GlwinW = 780;
-    GlwinH = 700;
-    IsoMaxGrid = 305;
-    ParMaxGrid = 505;
-    InitParGrid = 50;
-    InitIsoGrid = 40;
-    dotsymbol = ".";
-    model = "CloseIso_2";
-    Shininess = 110;
-    Specular[0] = Specular[1] = Specular[2] = 0.5;
-    Specular[3] = 1.0;
-    Threads[0] = 8;
-    Threads[1] = 1;
-    Threads[2] = 64;
-    CalculFactor[0] = 4;
-    CalculFactor[1] = 4;
-    CalculFactor[2] = 4;
-    filecollection = "mathmodcollection.js";
-    fileconfig = "mathmodconfig.js";
-    advancedmodels = "advancedmodels.js";
     darkpalette.setColor(QPalette::Window, QColor(53, 53, 53));
     darkpalette.setColor(QPalette::WindowText, QColor(255, 255, 255));
     darkpalette.setColor(QPalette::Base, QColor(15, 15, 15));
@@ -561,13 +535,26 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
             if (tmp2["GL_SPECULAR"].isArray())
             {
                 Specular[0] =
-                    float((tmp2["GL_SPECULAR"].toArray())[0].toDouble() / 100.0);
-                Specular[1] =
-                    float((tmp2["GL_SPECULAR"].toArray())[1].toDouble() / 100.0);
-                Specular[2] =
-                    float((tmp2["GL_SPECULAR"].toArray())[2].toDouble() / 100.0);
-                Specular[3] =
-                    float((tmp2["GL_SPECULAR"].toArray())[3].toDouble() / 100.0);
+                    (tmp2["GL_SPECULAR"].toArray())[0].toInt();
+                Specular[1]=(tmp2["GL_SPECULAR"].toArray())[1].toInt();
+                Specular[2]=(tmp2["GL_SPECULAR"].toArray())[2].toInt();
+                Specular[3]=(tmp2["GL_SPECULAR"].toArray())[3].toInt();
+            }
+
+            if (tmp2["GL_AMBIENT"].isArray())
+            {
+                Ambient[0]=(tmp2["GL_AMBIENT"].toArray())[0].toInt();
+                Ambient[1]=(tmp2["GL_AMBIENT"].toArray())[1].toInt();
+                Ambient[2]=(tmp2["GL_AMBIENT"].toArray())[2].toInt();
+                Ambient[3]=(tmp2["GL_AMBIENT"].toArray())[3].toInt();
+            }
+
+            if (tmp2["GL_DIFFUSE"].isArray())
+            {
+                Diffuse[0]=(tmp2["GL_DIFFUSE"].toArray())[0].toInt();
+                Diffuse[1]=(tmp2["GL_DIFFUSE"].toArray())[1].toInt();
+                Diffuse[2]=(tmp2["GL_DIFFUSE"].toArray())[2].toInt();
+                Diffuse[3]=(tmp2["GL_DIFFUSE"].toArray())[3].toInt();
             }
         }
 

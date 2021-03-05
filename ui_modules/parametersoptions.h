@@ -42,32 +42,33 @@ class Parametersoptions : public QWidget
 
 public:
     Parametersoptions(QWidget *parent = nullptr);
-    QString dotsymbol;
-    QString model;
+    QString dotsymbol = ".";
+    QString model = "CloseIso_2";
+    QString filecollection = "mathmodcollection.js";
+    QString fileconfig = "mathmodconfig.js";
+    QString advancedmodels = "advancedmodels.js";
     QString fullpath;
-    QString filecollection;
-    QString fileconfig;
-    QString advancedmodels;
     QJsonObject JConfig, Collection, IsoParam;
     QPalette mypalette, mypalette2, darkpalette;
     QApplication *MainApp;
-    int ControlX;
-    int ControlY;
-    int GlwinX;
-    int GlwinY;
-    int ControlW;
-    int ControlH;
-    int GlwinW;
-    int GlwinH;
-    float Specular[4];
-    int Threads[3];
-    int CalculFactor[3];
-    int Shininess;
-    int IsoMaxGrid;
-    int ParMaxGrid;
-    int InitParGrid;
-    int InitIsoGrid;
-
+    int ControlX = 20;
+    int ControlY = 20;
+    int GlwinX = 575;
+    int GlwinY = 20;
+    int ControlW = 538;
+    int ControlH = 700;
+    int GlwinW = 780;
+    int GlwinH = 700;
+    int Specular[4]={50,50,50,100};
+    int Ambient[4]={50,50,50,100};
+    int Diffuse[4]={80,80,80,100};
+    int Shininess=110;
+    int Threads[3]={8,1,64};
+    int CalculFactor[3]={4,4,4};
+    int IsoMaxGrid = 305;
+    int ParMaxGrid = 505;
+    int InitParGrid = 50;
+    int InitIsoGrid = 40;
 public slots:
     void ReadConfigFile(QString, QJsonObject &);
     void ReadJsonFile(QString, QJsonObject &);
