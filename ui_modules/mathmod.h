@@ -149,6 +149,14 @@ public slots:
     void greenSpec(int);
     void blueSpec(int);
     void transSpec(int);
+    void redAmb(int);
+    void greenAmb(int);
+    void blueAmb(int);
+    void transAmb(int);
+    void redDiff(int);
+    void greenDiff(int);
+    void blueDiff(int);
+    void transDiff(int);
     void quality(int);
     void bmp();
     void jpg();

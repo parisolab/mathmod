@@ -5232,3 +5232,43 @@ void DrawingOptions::on_actionDetach_WinInfos_triggered()
     MathmodRef->LocalScene.attachwininfos*=-1;
     MathmodRef->attachinfos();
 }
+
+void DrawingOptions::on_red_Ambient_valueChanged(int value)
+{
+    MathmodRef->redAmb(value);
+}
+
+void DrawingOptions::on_green_Ambient_valueChanged(int value)
+{
+    MathmodRef->greenAmb(value);
+}
+
+void DrawingOptions::on_blue_Ambient_valueChanged(int value)
+{
+    MathmodRef->blueAmb(value);
+}
+
+void DrawingOptions::on_transparent_Ambient_valueChanged(int value)
+{
+    MathmodRef->transAmb(value);
+}
+
+void DrawingOptions::on_red_Diffuse_valueChanged(int value)
+{
+    MathmodRef->redDiff(value);
+}
+
+void DrawingOptions::on_green_Diffuse_valueChanged(int value)
+{
+    MathmodRef->greenDiff(value);
+}
+
+void DrawingOptions::on_blue_Diffuse_valueChanged(int value)
+{
+    MathmodRef->blueDiff(value);
+}
+
+void DrawingOptions::on_transparent_Diffuse_valueChanged(int value)
+{
+    MathmodRef->transDiff(value);
+}

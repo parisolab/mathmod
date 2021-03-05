@@ -348,5 +348,13 @@ private slots:
     void on_actionAxe_triggered();
     void on_actionPlan_triggered();
     void on_actionDetach_WinInfos_triggered();
+    void on_red_Ambient_valueChanged(int value);
+    void on_green_Ambient_valueChanged(int value);
+    void on_blue_Ambient_valueChanged(int value);
+    void on_transparent_Ambient_valueChanged(int value);
+    void on_red_Diffuse_valueChanged(int value);
+    void on_green_Diffuse_valueChanged(int value);
+    void on_blue_Diffuse_valueChanged(int value);
+    void on_transparent_Diffuse_valueChanged(int value);
 };
 #endif

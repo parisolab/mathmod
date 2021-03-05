@@ -169,6 +169,8 @@ struct ObjectProperties
     struct ComponentInfos componentsinfos;
     int IndexCurrentFormula = -1;
     bool ShininessValUpdated=true;
+    bool AmbientValUpdated=true;
+    bool DiffuseValUpdated=true;
     int border = 1;
     int anim = -1;
     int animxyz = 1;

@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2021 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -93,9 +93,9 @@ GLint attribVertexTexCoord;
 float gridcol[4]  ={0.4f, 0.4f, 0.4f, 0.9f};
 // set uniform values
 float lightPosition[] = {0, 0, 10, 0};
-float lightAmbient[]  = {0.4f, 0.4f, 0.4f, 0.1};
-float lightDiffuse[]  = {0.5f, 0.5f, 0.5f, 1.0};
-float lightSpecular[] = {0.4f, 0.4f, 0.4f, 0.1};
+float lightAmbient[]  = {0.5f, 0.5f, 0.5f, 1.0f};//{0.4f, 0.4f, 0.4f, 0.1};
+float lightDiffuse[]  = {0.8f, 0.8f, 0.8f, 1.0};
+float lightSpecular[] = {0.5f, 0.5f, 0.5f, 0.1f};//{0.4f, 0.4f, 0.4f, 0.1};
 float frontColor[] = {0.72f, 0.5f, 0.1, 1};
 float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
 int shininessVal=20;
@@ -816,6 +816,62 @@ void MathMod::blueSpec(int cl)
     update();
 }
 
+void MathMod::redAmb(int cl)
+{
+    lightAmbient[0] = (cl/ 100.0f);
+    LocalScene.AmbientValUpdated=true;
+    update();
+}
+
+void MathMod::greenAmb(int cl)
+{
+    lightAmbient[1] = (cl/ 100.0f);
+    LocalScene.AmbientValUpdated=true;
+    update();
+}
+
+void MathMod::blueAmb(int cl)
+{
+    lightAmbient[2] = (cl/100.0f);
+    LocalScene.AmbientValUpdated=true;
+    update();
+}
+
+void MathMod::transAmb(int cl)
+{
+    lightAmbient[3] = (cl/100.0f);
+    LocalScene.AmbientValUpdated=true;
+    update();
+}
+
+void MathMod::redDiff(int cl)
+{
+    lightDiffuse[0] = (cl/100.0f);
+    LocalScene.DiffuseValUpdated=true;
+    update();
+}
+
+void MathMod::greenDiff(int cl)
+{
+    lightDiffuse[1] = (cl/100.0f);
+    LocalScene.DiffuseValUpdated=true;
+    update();
+}
+
+void MathMod::blueDiff(int cl)
+{
+    lightDiffuse[2] = (cl/100.0f);
+    LocalScene.DiffuseValUpdated=true;
+    update();
+}
+
+void MathMod::transDiff(int cl)
+{
+    lightDiffuse[3] = (cl/ 100.0f);
+    LocalScene.DiffuseValUpdated=true;
+    update();
+}
+
 void MathMod::drawCube()
 {
     glLineWidth(1.0);
@@ -1050,7 +1106,7 @@ void MathMod::CreateShaderProgram()
 
                 vec4 fragColor = vec4(lightAmbient.rgb,1.0) * color1;              // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
-                fragColor += (lightDiffuse.rgb,1.0) * color1 * dotNL;              // add diffuse
+                fragColor += (lightDiffuse) * color1 * dotNL;              // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
                 fragColor += vec4(pow(dotNH, shininess) * lightSpecular) * color1; // add specular
                 // set frag color
@@ -1517,6 +1573,16 @@ void MathMod::draw(ObjectProperties *scene)
         glUniform1f(uniformShininess, shininessVal);
         glUniform4fv(uniformLightSpecular, 1, lightSpecular);
         LocalScene.ShininessValUpdated =false;
+    }
+    if(LocalScene.AmbientValUpdated)
+    {
+        glUniform4fv(uniformLightAmbient, 1, lightAmbient);
+        LocalScene.AmbientValUpdated =false;
+    }
+    if(LocalScene.DiffuseValUpdated)
+    {
+        glUniform4fv(uniformLightDiffuse, 1, lightDiffuse);
+        LocalScene.DiffuseValUpdated =false;
     }
     // We draw the Plan first because we don't want it to spin around X,Y and Z axes
     if (scene->plan == 1)
