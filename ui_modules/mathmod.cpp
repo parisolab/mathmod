@@ -18,114 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
 #include "mathmod.h"
-#define BUFFER_OFFSET(i) ((float *)(i))
 
-
-static int FistTimecalibrate = -1;
-static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
-       decalage_zo;
-static GLfloat minx = 999999999.0, miny = 999999999.0, minz = 999999999.0,
-               maxx = -999999999.0, maxy = -999999999.0, maxz = -999999999.0;
-static GLfloat oldminx = 999999999.0, oldminy = 999999999.0, oldminz = 999999999.0,
-               oldmaxx = -999999999.0, oldmaxy = -999999999.0, oldmaxz = -999999999.0;
-static GLfloat difX, difY, difZ;
-static uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
-static uint XStartIndex=0, YStartIndex=0, ZStartIndex=0,
-XletterIndex=0, YletterIndex=0, ZletterIndex=0;
-QString vertexsource, fragmentsource;
-GLuint vertexshader, fragmentshader;
-float wh=0.57;
-static bool PutObjectInsideCubeOk=false;
-int IsCompiled_VS, IsCompiled_FS;
-int IsLinked;
-int maxLength;
-char *vertexInfoLog;
-char *fragmentInfoLog;
-char *shaderProgramInfoLog;
-GLuint vbo[2];
-static GLfloat AxeArray[3*36]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
-                              0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
-                              0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
-                              5.0f*wh/4.0f, 0.0, 0.0, 95.0f*wh/80.0f, 95.0f*wh/4000.0f, 0.0,
-                              95.0f*wh/80.0f, 0.0,  95.0f*wh/4000.0f,95.0f*wh/80.0f, -95.0f*wh/4000.0f, 0.0,
-                              95.0f*wh/80.0f, 0.0,  -95.0f*wh/4000.0f,95.0f*wh/80.0f, 95.0f*wh/4000.0f, 0.0,
-                               0.0, 5.0f*wh/4.0f, 0.0,95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
-                               0.0, 95.0f*wh/80.0f, 95.0f*wh/4000.0f,-95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
-                               0.0, 95.0f*wh/80.0f, -95.0f*wh/4000.0f,95.0f*wh/4000.0f, 95.0f*wh/80.0f, 0.0,
-                               0.0, 0.0, 5.0f*wh/4.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
-                               0.0, 95.0f*wh/4000.0f, 95.0f*wh/80.0f,-95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
-                               0.0, -95.0f*wh/4000.0f, 95.0f*wh/80.0f,95.0f*wh/4000.0f, 0.0, 95.0f*wh/80.0f,
-                               5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, 0.0f, -95.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, 0.0f, 95.0f*wh/4000.0f,
-                               5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, 0.0f, 95.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, 0.0f, -95.0f*wh/4000.0f,
-                               0.0f, 5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, 95.0f*wh/4000.0f, 0.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, -95.0f*wh/4000.0f,
-                               0.0f, 5.0f*wh/4.0f + (2.0f)*95.0f*wh/4000.0f, 0.0f, 0.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, 95.0f*wh/4000.0f,
-                               60.0f*wh/4000.0f, -60.0f*wh/4000.0f, 5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f, -60.0f*wh/4000.0f, 60.0f*wh/4000.0f, 5.0f*wh/4.0f + (2.5f)*95.0f*wh/4000.0f,
-                               60.0f*wh/4000.0f, -60.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f, -60.0f*wh/4000.0f, 60.0f*wh/4000.0f, 5.0f*wh/4.0f + (1.5f)*95.0f*wh/4000.0f
-                              };
-
-static GLfloat PlanArray[3*60]=
-{
-    -(4*wh/3)/4, (4*wh/3), -(5*wh/4),
-    -(4*wh/3)/4, -(4*wh/3), -(5*wh/4),
-    0.0, (4*wh/3), -(5*wh/4),
-    0.0, -(4*wh/3), -(5*wh/4),
-    (4*wh/3)/4, (4*wh/3), -(5*wh/4),
-    (4*wh/3)/4, -(4*wh/3), -(5*wh/4),
-    (4*wh/3), -(4*wh/3)/4, -(5*wh/4),
-    -(4*wh/3), -(4*wh/3)/4, -(5*wh/4),
-    (4*wh/3), 0.0, -(5*wh/4),
-    -(4*wh/3), 0.0, -(5*wh/4),
-    (4*wh/3), (4*wh/3)/4, -(5*wh/4),
-    -(4*wh/3), (4*wh/3)/4, -(5*wh/4),
-    -(4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    -(4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    -3*(4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    -3*(4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    -(4*wh/3)/2, (4*wh/3), -(5*wh/4),
-    -(4*wh/3)/2, -(4*wh/3), -(5*wh/4),
-    -5*(4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    -5*(4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    -3*(4*wh/3)/4, (4*wh/3), -(5*wh/4),
-    -3*(4*wh/3)/4, -(4*wh/3), -(5*wh/4),
-    -7*(4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    -7*(4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    (4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    (4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    3*(4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    3*(4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    (4*wh/3)/2, (4*wh/3), -(5*wh/4),
-    (4*wh/3)/2, -(4*wh/3), -(5*wh/4),
-    5*(4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    5*(4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    3*(4*wh/3)/4, (4*wh/3), -(5*wh/4),
-    3*(4*wh/3)/4, -(4*wh/3), -(5*wh/4),
-    7*(4*wh/3)/8, (4*wh/3), -(5*wh/4),
-    7*(4*wh/3)/8, -(4*wh/3), -(5*wh/4),
-    (4*wh/3), -(4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), -(4*wh/3)/8, -(5*wh/4),
-    (4*wh/3), -3*(4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), -3*(4*wh/3)/8, -(5*wh/4),
-    (4*wh/3), -(4*wh/3)/2, -(5*wh/4),
-    -(4*wh/3), -(4*wh/3)/2, -(5*wh/4),
-    (4*wh/3), -5*(4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), -5*(4*wh/3)/8, -(5*wh/4),
-    (4*wh/3), -3*(4*wh/3)/4, -(5*wh/4),
-    -(4*wh/3), -3*(4*wh/3)/4, -(5*wh/4),
-    (4*wh/3), -7*(4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), -7*(4*wh/3)/8, -(5*wh/4),
-    (4*wh/3), (4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), (4*wh/3)/8, -(5*wh/4),
-    (4*wh/3), 3*(4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), 3*(4*wh/3)/8, -(5*wh/4),
-    (4*wh/3), (4*wh/3)/2, -(5*wh/4),
-    -(4*wh/3), (4*wh/3)/2, -(5*wh/4),
-    (4*wh/3), 5*(4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), 5*(4*wh/3)/8, -(5*wh/4),
-    (4*wh/3), 3*(4*wh/3)/4, -(5*wh/4),
-    -(4*wh/3), 3*(4*wh/3)/4, -(5*wh/4),
-    (4*wh/3), 7*(4*wh/3)/8, -(5*wh/4),
-    -(4*wh/3), 7*(4*wh/3)/8, -(5*wh/4)
-};
 
 void MathMod::CalculateTexturePoints(int type)
 {
@@ -682,26 +575,17 @@ else
     if(LocalScene.morph==1)
     {
         if(LocalScene.anim==-1)
-        {
             LabelInfos.setText(labelinfos+" Morph: ON \n");
-        }
         else
-        {
             LabelInfos.setText(labelinfos+" Rotation/Morph: ON \n");
-        }
     }
     else
     {
         if(LocalScene.anim==-1)
-        {
             LabelInfos.setText(labelinfos);
-        }
         else
-        {
             LabelInfos.setText(labelinfos+" Rotation: ON \n");
-        }
     }
-
 }
 
 void MathMod::png()
@@ -949,6 +833,13 @@ void MathMod::restarttimer(int newlatence)
 
 void MathMod::CreateShaderProgram()
 {
+    int IsCompiled_VS, IsCompiled_FS;
+    GLuint vertexshader, fragmentshader;
+    char *vertexInfoLog;
+    char *fragmentInfoLog;
+    char *shaderProgramInfoLog;
+    int IsLinked;
+    int maxLength;
     const int MAX_LENGTH = 2048;
     char log[MAX_LENGTH];
     int logLength = 0;
