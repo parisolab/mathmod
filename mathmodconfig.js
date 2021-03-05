@@ -41,7 +41,7 @@
     "OpenGlConfig": {
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_AMBIANT" : [50, 50, 50, 100],
-        "GL_DIFFUSE" : [10, 10, 10, 100],
+        "GL_DIFFUSE" : [80, 80, 80, 100],
         "GL_SHININESS": 20
     },
     "Styles": {
