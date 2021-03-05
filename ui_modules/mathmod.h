@@ -41,6 +41,10 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QLabel>
+#include <QVector3D>
+#include <QQuaternion>
+#include <QMatrix4x4>
+#include <QPainter>
 
 class MathMod : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -65,6 +69,56 @@ public:
     QWidget *Parent;
     QLabel LabelInfos;
     QString labelinfos;
+
+    float gridcol[4]  ={0.4f, 0.4f, 0.4f, 0.9f};
+    float lightPosition[4] = {0, 0, 10, 0};
+    float lightAmbient[4]  = {0.5f, 0.5f, 0.5f, 1.0f};//{0.4f, 0.4f, 0.4f, 0.1};
+    float lightDiffuse[4]  = {0.8f, 0.8f, 0.8f, 1.0};
+    float lightSpecular[4] = {0.5f, 0.5f, 0.5f, 0.1f};//{0.4f, 0.4f, 0.4f, 0.1};
+    float frontColor[4] = {0.72f, 0.5f, 0.1, 1};
+    float backColor[4]  = {0.1f, 0.7f, 0.2f, 1};
+    int shininessVal=20;
+    int screenWidth=100;
+    int screenHeight=100;
+    bool mouseLeftDown=false;
+    bool mouseRightDown=false;
+    float mouseY=0;
+    float cameraDistance=1.4f;
+    bool vboSupported, vboUsed;
+    QMatrix4x4 matrixProjectionx;
+    GLuint shaderprogramId = 0;
+    bool glslSupported;
+    GLint uniformFrontColor;
+    GLint uniformBackColor;
+    GLint uniformGridColor;
+    GLint uniformThereisRGBA;
+    GLfloat uniformShininess;
+    GLint uniformdrawgridColor;
+    GLint uniformMatrixModelView;
+    GLint uniformMatrixModelViewProjection;
+    GLint uniformMatrixNormal;
+    GLint uniformLightPosition;
+    GLint uniformLightAmbient;
+    GLint uniformLightDiffuse;
+    GLint uniformLightSpecular;
+    GLint attribVertexPosition;
+    GLint attribVertexNormal;
+    GLint attribVertexColor;
+    GLint attribVertexTexCoord;
+    QVector2D mousePressPosition;
+    qreal angularSpeed = 0;
+    QMatrix4x4 matrixViewx;
+    QQuaternion rotation= QQuaternion::fromAxisAndAngle(QVector3D(1.0,0.0,0.0), 270)*
+            QQuaternion::fromAxisAndAngle(QVector3D(0.0,0.0,1.0), 225)*
+            QQuaternion::fromAxisAndAngle(QVector3D(1.0,-1.0,0.0), -29);
+    QQuaternion rotationx;
+    QQuaternion rotationy;
+    QQuaternion rotationz;
+    QQuaternion oldRotation= rotation;
+    QMatrix4x4 matrixModelViewProjectionx;
+    QMatrix4x4 matrixNormalx;
+    qreal acc;
+    QVector3D n;
 public:
     MathMod(QWidget *, uint, uint initpargrid = 50, uint initisogrid = 40,
             uint factx = 4, uint facty = 4, uint factz = 4);
@@ -106,7 +160,6 @@ public slots:
     void DrawParisoCND(ObjectProperties *, uint);
     void DrawNormals(ObjectProperties *);
     void DrawAxe();
-    bool initCamera();
     void proj();
     void DrawPariso(ObjectProperties *, uint);
     void drawCube();

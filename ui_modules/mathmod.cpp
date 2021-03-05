@@ -18,26 +18,9 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
 #include "mathmod.h"
-#include <QVector3D>
-#include <QQuaternion>
-#include <QMatrix4x4>
-#include <QPainter>
 #define BUFFER_OFFSET(i) ((float *)(i))
 
-QVector2D mousePressPosition;
-qreal angularSpeed = 0;
-QMatrix4x4 matrixViewx;
-QQuaternion rotation= QQuaternion::fromAxisAndAngle(QVector3D(1.0,0.0,0.0), 270)*
-        QQuaternion::fromAxisAndAngle(QVector3D(0.0,0.0,1.0), 225)*
-        QQuaternion::fromAxisAndAngle(QVector3D(1.0,-1.0,0.0), -29);
-QQuaternion rotationx;
-QQuaternion rotationy;
-QQuaternion rotationz;
-QQuaternion oldRotation= rotation;
-QMatrix4x4 matrixModelViewProjectionx;
-QMatrix4x4 matrixNormalx;
-qreal acc;
-QVector3D n;
+
 static int FistTimecalibrate = -1;
 static double hauteur_fenetre, difMaximum, decalage_xo, decalage_yo,
        decalage_zo;
@@ -60,45 +43,6 @@ char *vertexInfoLog;
 char *fragmentInfoLog;
 char *shaderProgramInfoLog;
 GLuint vbo[2];
-const int SCREEN_WIDTH    = 100;
-const int SCREEN_HEIGHT   = 100;
-const float CAMERA_DISTANCE = 1.4f;
-int screenWidth;
-int screenHeight;
-bool mouseLeftDown;
-bool mouseRightDown;
-float mouseY;
-float cameraDistance;
-bool vboSupported, vboUsed;
-QMatrix4x4 matrixProjectionx;
-GLuint shaderprogramId = 0;
-bool glslSupported;
-GLint uniformFrontColor;
-GLint uniformBackColor;
-GLint uniformGridColor;
-GLint uniformThereisRGBA;
-GLfloat uniformShininess;
-GLint uniformdrawgridColor;
-GLint uniformMatrixModelView;
-GLint uniformMatrixModelViewProjection;
-GLint uniformMatrixNormal;
-GLint uniformLightPosition;
-GLint uniformLightAmbient;
-GLint uniformLightDiffuse;
-GLint uniformLightSpecular;
-GLint attribVertexPosition;
-GLint attribVertexNormal;
-GLint attribVertexColor;
-GLint attribVertexTexCoord;
-float gridcol[4]  ={0.4f, 0.4f, 0.4f, 0.9f};
-// set uniform values
-float lightPosition[] = {0, 0, 10, 0};
-float lightAmbient[]  = {0.5f, 0.5f, 0.5f, 1.0f};//{0.4f, 0.4f, 0.4f, 0.1};
-float lightDiffuse[]  = {0.8f, 0.8f, 0.8f, 1.0};
-float lightSpecular[] = {0.5f, 0.5f, 0.5f, 0.1f};//{0.4f, 0.4f, 0.4f, 0.1};
-float frontColor[] = {0.72f, 0.5f, 0.1, 1};
-float backColor[]  = {0.1f, 0.7f, 0.2f, 1};
-int shininessVal=20;
 static GLfloat AxeArray[3*36]={5.0f*wh/4.0f, 0.0, 0.0,0.0, 0.0, 0.0,
                               0.0, 5.0f*wh/4.0f, 0.0,0.0, 0.0, 0.0,
                               0.0, 0.0, 5.0f*wh/4.0f,0.0, 0.0, 0.0,
@@ -1206,16 +1150,6 @@ void MathMod::proj()
     matrixProjectionx.perspective(fov, aspect, zNear, zFar);
 }
 
-bool MathMod::initCamera()
-{
-    screenWidth = SCREEN_WIDTH;
-    screenHeight = SCREEN_HEIGHT;
-    mouseLeftDown = mouseRightDown = false;
-    mouseY = 0;
-    cameraDistance = CAMERA_DISTANCE;
-    return true;
-}
-
 void MathMod::LoadShadersFiles()
 {
     CreateShaderProgram();
@@ -1229,7 +1163,7 @@ void MathMod::initializeGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glFrontFace(GL_CCW);
     glClearColor(0, 0, 0, 0);
-    initCamera();
+    //initCamera();
     proj();
 }
 
