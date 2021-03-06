@@ -18,15 +18,15 @@
         "MaxThreadsNumber": 64
     },
     "WindowSize": {
-        "ControlH": 650,
-        "ControlW": 420,
-        "GlwinH": 650,
-        "GlwinW": 650
+        "ControlH": 750,
+        "ControlW": 450,
+        "GlwinH": 750,
+        "GlwinW": 750
     },
     "WindowPosition": {
         "ControlX": 80,
         "ControlY": 30,
-        "GlwinX": 505,
+        "GlwinX": 535,
         "GlwinY": 30
     },
     "Localization": {
