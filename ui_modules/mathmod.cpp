@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "mathmod.h"
 
-
 void MathMod::CalculateTexturePoints(int type)
 {
     double tmp, val[6]={0,0,0,0,0,0};
@@ -939,11 +938,11 @@ void MathMod::CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
-                vec4 fragColor = vec4(lightAmbient.rgb,1.0) * color1;              // begin with ambient
+                vec4 fragColor = lightAmbient * color1;              // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
-                fragColor += (lightDiffuse) * color1 * dotNL;              // add diffuse
+                fragColor += lightDiffuse* color1 * dotNL;              // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
-                fragColor += vec4(pow(dotNH, shininess) * lightSpecular) * color1; // add specular
+                fragColor += (pow(dotNH, shininess) * lightSpecular) * color1; // add specular
                 // set frag color
                 gl_FragColor = fragColor;
             }
