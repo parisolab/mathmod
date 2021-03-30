@@ -704,6 +704,7 @@ void MathMod::drawCube()
     glLineWidth(1.0);
     glUniform1i(uniformThereisRGBA, 0);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
+    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
@@ -722,9 +723,13 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
             frontcl[j] = scene->frontcols[j];
             backcl[j] = scene->backcols[j];
         }
+        glUniform1i(uniformThereisRGBA, 1);
         glUniform4fv(uniformFrontColor, 1, frontcl);
         glUniform4fv(uniformBackColor, 1, backcl);
-        glUniform1i(uniformThereisRGBA, 1);
+    }
+    else
+    {
+        glUniform1i(uniformThereisRGBA, 0);
     }
 
     if (scene->componentsinfos.ThereisCND[ParisoTypeIndex])
@@ -770,12 +775,14 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
                         frontcl[j] = scene->frontcols[4 * (i % 10) + j];
                         backcl[j] = scene->backcols[4 * (i % 10) + j];
                     }
+                    glUniform1i(uniformThereisRGBA, 1);
                     glUniform4fv(uniformFrontColor, 1, frontcl);
                     glUniform4fv(uniformBackColor, 1, backcl);
-                    glUniform1i(uniformThereisRGBA, 1);
                 }
                 else
+                {
                     glUniform1i(uniformThereisRGBA, 0);
+                }
                 {
                     size_t Offset = scene->componentsinfos.ParisoTriangle[2*(i+idx)]*sizeof( GL_FLOAT);
                     glDrawElements(
@@ -786,7 +793,7 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
         }
     }
     glDisable(GL_POLYGON_OFFSET_FILL);
-    glUniform1i(uniformThereisRGBA, 0);
+    //glUniform1i(uniformThereisRGBA, 0);
 }
 
 void MathMod::normOk()
@@ -833,7 +840,8 @@ void MathMod::restarttimer(int newlatence)
 void MathMod::CreateShaderProgram()
 {
     int IsCompiled_VS, IsCompiled_FS;
-    GLuint vertexshader, fragmentshader;
+    GLuint vertexshader, fragmentshader, geometryshader;
+    char *geometryInfoLog;
     char *vertexInfoLog;
     char *fragmentInfoLog;
     char *shaderProgramInfoLog;
@@ -842,14 +850,60 @@ void MathMod::CreateShaderProgram()
     const int MAX_LENGTH = 2048;
     char log[MAX_LENGTH];
     int logLength = 0;
+    bool shaderValid;
+
+    shaderprogramId = glCreateProgram();
+
+    /*
+    //////// Geometry Shader  /////////
+    static const char *c_str_geometry =
+            R"(
+            // GLSL version
+            //#version 120
+            #ifdef GL_ES
+            precision mediump float;
+            #endif
+            layout(points) in;
+            layout(line_strip, max_vertices = 2) out;
+            void main() {
+                gl_Position = gl_in[0].gl_Position;
+                EmitVertex();
+                EndPrimitive();
+            }
+            )";
+    geometryshader = glCreateShader(GL_GEOMETRY_SHADER);
+    shaderValid = glIsShader(geometryshader);
+    if (!shaderValid)
+    {
+        std::cout << "Could not create Geometry Shader!";
+    }
+    glShaderSource(geometryshader, 1, &c_str_geometry, NULL);
+    glCompileShader(geometryshader);
+    glGetShaderiv(geometryshader, GL_COMPILE_STATUS, &IsCompiled_VS);
+    if(IsCompiled_VS==GL_FALSE)
+    {
+       QMessageBox msgBox;
+       glGetShaderiv(geometryshader, GL_INFO_LOG_LENGTH, &maxLength);
+       geometryInfoLog = (char *)malloc(maxLength);
+       glGetShaderInfoLog(geometryshader, maxLength, &maxLength, geometryInfoLog);
+       std::string vertexInfoLogString = std::string(geometryInfoLog);
+       msgBox.setText("Error : " +QString::fromStdString(std::string(geometryInfoLog)));
+       msgBox.adjustSize();
+       msgBox.exec();
+    }
+    glAttachShader(shaderprogramId, geometryshader);
+    */
+
+
+    //+++++++++++++++++++++++++++++++//
+    //++++++++ Vertex shader ++++++++//
+    //+++++++++++++++++++++++++++++++//
     vertexshader = glCreateShader(GL_VERTEX_SHADER);
-    bool shaderValid = glIsShader(vertexshader);
+    shaderValid = glIsShader(vertexshader);
     if (!shaderValid)
     {
         std::cout << "Could not create Vertex Shader!";
     }
-    fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
-
     static const char *c_str_vertex =
             R"(
             // GLSL version
@@ -877,7 +931,30 @@ void MathMod::CreateShaderProgram()
                 gl_Position = matrixModelViewProjection * vec4(vertexPosition, 1.0);
             }
             )";
+    glShaderSource(vertexshader, 1, &c_str_vertex, NULL);
+    glCompileShader(vertexshader);
+    glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
+    if(IsCompiled_VS==GL_FALSE)
+    {
+       QMessageBox msgBox;
+       glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
+       vertexInfoLog = (char *)malloc(maxLength);
+       glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
+       std::string vertexInfoLogString = std::string(vertexInfoLog);
+       msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
+       msgBox.adjustSize();
+       msgBox.exec();
+    }
 
+    //++++++++++++++++++++++++++//
+    //++++++ Fragment shader +++//
+    //++++++++++++++++++++++++++//
+    fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
+    shaderValid = glIsShader(fragmentshader);
+    if (!shaderValid)
+    {
+        std::cout << "Could not create Fragment Shader!";
+    }
     static const char *c_str_fragment =
             R"(
             // GLSL version
@@ -911,10 +988,10 @@ void MathMod::CreateShaderProgram()
                 if(drawgridColor == 1)
                 {
                     color1=gridColor;
-                if(!gl_FrontFacing)
-                {
-                    normal *= -1.0;
-                }
+                    if(!gl_FrontFacing)
+                    {
+                        normal *= -1.0;
+                    }
                 }
                 if(thereisRGBA ==1)
                 {
@@ -940,27 +1017,13 @@ void MathMod::CreateShaderProgram()
 
                 vec4 fragColor = lightAmbient * color1;              // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
-                fragColor += lightDiffuse* color1 * dotNL;              // add diffuse
+                fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
                 fragColor += (pow(dotNH, shininess) * lightSpecular) * color1; // add specular
                 // set frag color
                 gl_FragColor = fragColor;
             }
             )";
-    glShaderSource(vertexshader, 1, &c_str_vertex, NULL);
-    glCompileShader(vertexshader);
-    glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
-    if(IsCompiled_VS==GL_FALSE)
-    {
-       QMessageBox msgBox;
-       glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
-       vertexInfoLog = (char *)malloc(maxLength);
-       glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
-       std::string vertexInfoLogString = std::string(vertexInfoLog);
-       msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
-       msgBox.adjustSize();
-       msgBox.exec();
-    }
     glShaderSource(fragmentshader, 1, &c_str_fragment, NULL);
     glCompileShader(fragmentshader);
     glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &IsCompiled_FS);
@@ -976,7 +1039,7 @@ void MathMod::CreateShaderProgram()
        msgBox.exec();
        //return;
     }
-    shaderprogramId = glCreateProgram();
+
     glAttachShader(shaderprogramId, vertexshader);
     glAttachShader(shaderprogramId, fragmentshader);
     glBindAttribLocation(shaderprogramId, 0, "in_Position");
@@ -1014,7 +1077,7 @@ void MathMod::CreateShaderProgram()
     glUniform4fv(uniformBackColor, 1, backColor);
     glUniform4fv(uniformGridColor, 1, gridcol);
     glUniform1f(uniformShininess, shininessVal);
-    glUniform1i(uniformThereisRGBA, 1);
+    glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformdrawgridColor, 0);
 
     int linkStatus;
@@ -1053,7 +1116,6 @@ void MathMod::initializeGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glFrontFace(GL_CCW);
     glClearColor(0, 0, 0, 0);
-    //initCamera();
     proj();
 }
 
@@ -1183,6 +1245,7 @@ void MathMod::DrawAxe()
     glDrawArrays(GL_LINES,YletterIndex,4);
     // Draw the Z axe
     glDrawArrays(GL_LINE_STRIP,ZletterIndex,4);
+    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawNormals(ObjectProperties *)
@@ -1277,6 +1340,7 @@ void MathMod::DrawMeshIso(ObjectProperties *scene)
     uint st = 0;
     glUniform4fv(uniformGridColor, 1, scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
+    glUniform1i(uniformThereisRGBA, 0);
     glLineWidth(0.3);
     for (uint i = 0; i < scene->PolyNumber; i += 3)
     {
@@ -1285,12 +1349,14 @@ void MathMod::DrawMeshIso(ObjectProperties *scene)
         st+=3;
     }
     glUniform1i(uniformdrawgridColor, 0);
+    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawMinimalTopology(ObjectProperties *scene)
 {
     glUniform4fv(uniformGridColor, 1,scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
+    glUniform1i(uniformThereisRGBA, 0);
     glLineWidth(0.4);
     uint st = scene->PolyNumber;
     uint polysize=0;
@@ -1307,6 +1373,7 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
         st+=(polysize);
     }
     glUniform1i(uniformdrawgridColor, 0);
+    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::plan()
@@ -1314,6 +1381,7 @@ void MathMod::plan()
     glUniform1i(uniformThereisRGBA, 0);
     glLineWidth(0.3);
     glDrawArrays(GL_LINES,PlanStartIndex,60);
+    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::CopyData(ObjectProperties *scene)
