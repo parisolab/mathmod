@@ -980,7 +980,8 @@ void MathMod::CreateShaderProgram()
             {
                 vec4 color1=color;
                 vec3 normal = normalize(esNormal);
-                if(!gl_FrontFacing)
+                float co = dot(normal, vec3(0.0,0.0,1.0));
+                if(co <= 0.0)
                 {
                     normal *= -1.0;
                 }
@@ -988,14 +989,14 @@ void MathMod::CreateShaderProgram()
                 if(drawgridColor == 1)
                 {
                     color1=gridColor;
-                    if(!gl_FrontFacing)
+                    if(co <= 0.0)
                     {
                         normal *= -1.0;
                     }
                 }
                 if(thereisRGBA ==1)
                 {
-                    if(!gl_FrontFacing)
+                    if(co <= 0.0)
                     {
                         color1=backColor;
                     }
