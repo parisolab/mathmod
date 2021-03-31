@@ -923,12 +923,14 @@ void MathMod::CreateShaderProgram()
             // varyings (output)
             varying vec3 esVertex, esNormal;
             varying vec4 color;
+            varying vec4 v_position;
             void main()
             {
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
                 esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
                 color = vertexColor;
-                gl_Position = matrixModelViewProjection * vec4(vertexPosition, 1.0);
+                v_position = -matrixModelView * vec4 (vertexPosition, 1.0);
+                gl_Position =  matrixModelViewProjection * vec4(vertexPosition, 1.0);
             }
             )";
     glShaderSource(vertexshader, 1, &c_str_vertex, NULL);
@@ -976,12 +978,14 @@ void MathMod::CreateShaderProgram()
             // varyings
             varying vec3 esVertex, esNormal;
             varying vec4 color;
+            varying vec4 v_position;
             void main()
             {
                 vec4 color1=color;
                 vec3 normal = normalize(esNormal);
-                float co = dot(normal, vec3(0.0,0.0,1.0));
-                if(co <= 0.0)
+                float co = dot(normal, v_position.xyz);
+                //float co = -normal.z;
+                if(co <= 0.0 /*gl_FrontFacing == false*/)
                 {
                     normal *= -1.0;
                 }
@@ -989,14 +993,16 @@ void MathMod::CreateShaderProgram()
                 if(drawgridColor == 1)
                 {
                     color1=gridColor;
+
                     if(co <= 0.0)
                     {
                         normal *= -1.0;
                     }
+
                 }
                 if(thereisRGBA ==1)
                 {
-                    if(co <= 0.0)
+                    if(co <= 0.0 /*co <= 0.0*/)
                     {
                         color1=backColor;
                     }
@@ -1298,6 +1304,7 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
     for (uint i = 0; i < compindex; i++)
         idx += scene->componentsinfos.NbComponentsType[i];
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
+    glUniform1i(uniformThereisRGBA, 0);
     if (scene->cndoptions[3])
     {
         size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
@@ -1333,6 +1340,7 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
             Offset2+=(3*sizeof( GL_FLOAT));
         }
     }
+    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawMeshIso(ObjectProperties *scene)
