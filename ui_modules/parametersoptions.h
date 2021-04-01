@@ -63,6 +63,7 @@ public:
     int Ambient[4]={50,50,50,100};
     int Diffuse[4]={80,80,80,100};
     int Shininess=110;
+    bool glFrontFacingSupport=true;
     int Threads[3]={8,1,64};
     int CalculFactor[3]={4,4,4};
     int IsoMaxGrid = 305;

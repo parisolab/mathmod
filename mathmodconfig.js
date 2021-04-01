@@ -1,6 +1,6 @@
 {
     "Version": {
-        "Number": 11.0
+        "Number": 11.1
     },
     "Parameters": {
         "IsoMaxGrid": 500,
@@ -42,7 +42,8 @@
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_AMBIANT" : [50, 50, 50, 100],
         "GL_DIFFUSE" : [80, 80, 80, 100],
-        "GL_SHININESS": 20
+        "GL_SHININESS": 20,
+        "GL_FrontFacingSupport": true
     },
     "Styles": {
         "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],

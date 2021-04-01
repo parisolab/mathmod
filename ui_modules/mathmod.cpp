@@ -699,6 +699,13 @@ void MathMod::transDiff(int cl)
     update();
 }
 
+void MathMod::glfrontfacesupp(int val)
+{
+    LocalScene.glFrontFacingSupport = val;
+    LocalScene.FrontSurfValUpdated=true;
+    update();
+}
+
 void MathMod::drawCube()
 {
     glLineWidth(1.0);
@@ -915,11 +922,11 @@ void MathMod::CreateShaderProgram()
             uniform mat4 matrixModelView;
             uniform mat4 matrixNormal;
             uniform mat4 matrixModelViewProjection;
+            uniform int glFrontFacing;
             // vertex attribs (input)
             attribute vec3 vertexPosition;
             attribute vec3 vertexNormal;
             attribute vec4 vertexColor;
-            //attribute vec2 vertexTexCoord;
             // varyings (output)
             varying vec3 esVertex, esNormal;
             varying vec4 color;
@@ -929,7 +936,10 @@ void MathMod::CreateShaderProgram()
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
                 esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
                 color = vertexColor;
-                v_position = -matrixModelView * vec4 (vertexPosition, 1.0);
+                if(glFrontFacing == 0)
+                {
+                    v_position = -matrixModelView * vec4 (vertexPosition, 1.0);
+                }
                 gl_Position =  matrixModelViewProjection * vec4(vertexPosition, 1.0);
             }
             )";
@@ -975,6 +985,7 @@ void MathMod::CreateShaderProgram()
             uniform int thereisRGBA;
             uniform int drawgridColor;
             uniform float shininess;
+            uniform int glFrontFacing;
             // varyings
             varying vec3 esVertex, esNormal;
             varying vec4 color;
@@ -983,31 +994,46 @@ void MathMod::CreateShaderProgram()
             {
                 vec4 color1=color;
                 vec3 normal = normalize(esNormal);
-                float co = dot(normal, v_position.xyz);
-                //float co = -normal.z;
-                if(co <= 0.0 /*gl_FrontFacing == false*/)
+                if(glFrontFacing == 1)
                 {
-                    normal *= -1.0;
+                    if(gl_FrontFacing == false)
+                    {
+                        normal *= -1.0;
+                        if(thereisRGBA ==1)
+                        {
+                            color1=backColor;
+                        }
+                    }
+                    else
+                    {
+                        if(thereisRGBA ==1)
+                        {
+                            color1=frontColor;
+                        }
+                    }
+                }
+                else
+                {
+                    if(dot(normal, v_position.xyz) <= 0.0)
+                    {
+                        normal *= -1.0;
+                        if(thereisRGBA ==1)
+                        {
+                            color1=backColor;
+                        }
+                    }
+                    else
+                    {
+                        if(thereisRGBA ==1)
+                        {
+                            color1=frontColor;
+                        }
+                    }
                 }
 
                 if(drawgridColor == 1)
                 {
                     color1=gridColor;
-
-                    if(co <= 0.0)
-                    {
-                        normal *= -1.0;
-                    }
-
-                }
-                if(thereisRGBA ==1)
-                {
-                    if(co <= 0.0 /*co <= 0.0*/)
-                    {
-                        color1=backColor;
-                    }
-                    else
-                        color1=frontColor;
                 }
 
                 vec3 light;
@@ -1022,7 +1048,7 @@ void MathMod::CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
-                vec4 fragColor = lightAmbient * color1;              // begin with ambient
+                vec4 fragColor = lightAmbient * color1;             // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
@@ -1072,6 +1098,7 @@ void MathMod::CreateShaderProgram()
     uniformGridColor                 = glGetUniformLocation(shaderprogramId, "gridColor");
     uniformThereisRGBA               = glGetUniformLocation(shaderprogramId, "thereisRGBA");
     uniformShininess                 = glGetUniformLocation(shaderprogramId, "shininess");
+    uniformglFrontFacing             = glGetUniformLocation(shaderprogramId, "glFrontFacing");
     uniformdrawgridColor             = glGetUniformLocation(shaderprogramId, "drawgridColor");
     attribVertexPosition             = glGetAttribLocation(shaderprogramId, "vertexPosition");
     attribVertexNormal               = glGetAttribLocation(shaderprogramId, "vertexNormal");
@@ -1084,6 +1111,7 @@ void MathMod::CreateShaderProgram()
     glUniform4fv(uniformBackColor, 1, backColor);
     glUniform4fv(uniformGridColor, 1, gridcol);
     glUniform1f(uniformShininess, shininessVal);
+    glUniform1i(uniformglFrontFacing, LocalScene.glFrontFacingSupport);
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformdrawgridColor, 0);
 
@@ -1484,6 +1512,11 @@ void MathMod::draw(ObjectProperties *scene)
     {
         glUniform4fv(uniformLightDiffuse, 1, lightDiffuse);
         LocalScene.DiffuseValUpdated =false;
+    }
+    if(LocalScene.FrontSurfValUpdated)
+    {
+        glUniform1i(uniformglFrontFacing , LocalScene.glFrontFacingSupport);
+        LocalScene.FrontSurfValUpdated = false;
     }
     // We draw the Plan first because we don't want it to spin around X,Y and Z axes
     if (scene->plan == 1)

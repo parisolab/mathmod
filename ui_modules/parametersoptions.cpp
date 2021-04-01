@@ -529,7 +529,11 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
         {
             QJsonObject tmp1, tmp2;
             tmp1 = JConfig["OpenGlConfig"].toObject();
+
             Shininess = tmp1["GL_SHININESS"].toInt();
+
+            if (tmp1["GL_FrontFacingSupport"].isBool())
+                glFrontFacingSupport = tmp1["GL_FrontFacingSupport"].toBool();
 
             tmp2 = JConfig["OpenGlConfig"].toObject();
             if (tmp2["GL_SPECULAR"].isArray())

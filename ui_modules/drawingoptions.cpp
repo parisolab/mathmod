@@ -4178,6 +4178,9 @@ void DrawingOptions::UpdateGui(int argc)
     SetDiffuseValues(Parameters->Diffuse);
     // OpenGl Ambient:
     SetAmbientValues(Parameters->Ambient);
+    // Gl Front Face Suupport
+    if(!Parameters->glFrontFacingSupport)
+        SetglFrontFacingSupport();
     // Show the two windows of the application:
     move(Parameters->ControlX, Parameters->ControlY);
     resize(Parameters->ControlW, Parameters->ControlH);
@@ -4960,6 +4963,14 @@ void DrawingOptions::SetShininessValue(int shin)
     MathmodRef->LocalScene.shininess = Parameters->Shininess;
 }
 
+void DrawingOptions::SetglFrontFacingSupport()
+{
+    ui.GLFrontSurfaceSupport->blockSignals(true);
+    ui.GLFrontSurfaceSupport->setChecked(false);
+    ui.GLFrontSurfaceSupport->blockSignals(false);
+    MathmodRef->LocalScene.glFrontFacingSupport = 0;
+}
+
 void DrawingOptions::on_red_Specular_valueChanged(int value)
 {
     MathmodRef->redSpec(value);
@@ -5313,4 +5324,12 @@ void DrawingOptions::on_blue_Diffuse_valueChanged(int value)
 void DrawingOptions::on_transparent_Diffuse_valueChanged(int value)
 {
     MathmodRef->transDiff(value);
+}
+
+void DrawingOptions::on_GLFrontSurfaceSupport_clicked()
+{
+    if(!(ui.GLFrontSurfaceSupport->isChecked()))
+        MathmodRef->glfrontfacesupp(0);
+    else
+        MathmodRef->glfrontfacesupp(1);
 }

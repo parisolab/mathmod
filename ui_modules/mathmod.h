@@ -185,6 +185,7 @@ public:
     GLint uniformGridColor;
     GLint uniformThereisRGBA;
     GLfloat uniformShininess;
+    GLint uniformglFrontFacing;
     GLint uniformdrawgridColor;
     GLint uniformMatrixModelView;
     GLint uniformMatrixModelViewProjection;
@@ -302,6 +303,7 @@ public slots:
     void greenDiff(int);
     void blueDiff(int);
     void transDiff(int);
+    void glfrontfacesupp(int);
     void quality(int);
     void bmp();
     void jpg();

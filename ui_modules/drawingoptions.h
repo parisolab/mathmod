@@ -318,6 +318,7 @@ private slots:
     void SetSpecularValues(int *);
     void SetAmbientValues(int *);
     void SetDiffuseValues(int *);
+    void SetglFrontFacingSupport();
     void SetShininessValue(int);
     void SetThreadValues(int *);
     void on_green_Specular_valueChanged(int);
@@ -358,5 +359,6 @@ private slots:
     void on_green_Diffuse_valueChanged(int value);
     void on_blue_Diffuse_valueChanged(int value);
     void on_transparent_Diffuse_valueChanged(int value);
+    void on_GLFrontSurfaceSupport_clicked();
 };
 #endif

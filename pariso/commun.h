@@ -171,6 +171,7 @@ struct ObjectProperties
     bool ShininessValUpdated=true;
     bool AmbientValUpdated=true;
     bool DiffuseValUpdated=true;
+    bool FrontSurfValUpdated=false;
     int border = 1;
     int anim = -1;
     int animxyz = 1;
@@ -183,6 +184,8 @@ struct ObjectProperties
     float animxValueStep = 0.0;
     float animyValueStep = 0.0;
     float animzValueStep = 0.0;
+
+    int glFrontFacingSupport = 1;
     int slider = -1;
     int morph = -1;
     int morphstep = -1;
