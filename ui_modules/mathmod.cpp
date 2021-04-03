@@ -847,8 +847,7 @@ void MathMod::restarttimer(int newlatence)
 void MathMod::CreateShaderProgram()
 {
     int IsCompiled_VS, IsCompiled_FS;
-    GLuint vertexshader, fragmentshader, geometryshader;
-    char *geometryInfoLog;
+    GLuint vertexshader, fragmentshader;
     char *vertexInfoLog;
     char *fragmentInfoLog;
     char *shaderProgramInfoLog;
@@ -860,47 +859,6 @@ void MathMod::CreateShaderProgram()
     bool shaderValid;
 
     shaderprogramId = glCreateProgram();
-
-    /*
-    //////// Geometry Shader  /////////
-    static const char *c_str_geometry =
-            R"(
-            // GLSL version
-            //#version 120
-            #ifdef GL_ES
-            precision mediump float;
-            #endif
-            layout(points) in;
-            layout(line_strip, max_vertices = 2) out;
-            void main() {
-                gl_Position = gl_in[0].gl_Position;
-                EmitVertex();
-                EndPrimitive();
-            }
-            )";
-    geometryshader = glCreateShader(GL_GEOMETRY_SHADER);
-    shaderValid = glIsShader(geometryshader);
-    if (!shaderValid)
-    {
-        std::cout << "Could not create Geometry Shader!";
-    }
-    glShaderSource(geometryshader, 1, &c_str_geometry, NULL);
-    glCompileShader(geometryshader);
-    glGetShaderiv(geometryshader, GL_COMPILE_STATUS, &IsCompiled_VS);
-    if(IsCompiled_VS==GL_FALSE)
-    {
-       QMessageBox msgBox;
-       glGetShaderiv(geometryshader, GL_INFO_LOG_LENGTH, &maxLength);
-       geometryInfoLog = (char *)malloc(maxLength);
-       glGetShaderInfoLog(geometryshader, maxLength, &maxLength, geometryInfoLog);
-       std::string vertexInfoLogString = std::string(geometryInfoLog);
-       msgBox.setText("Error : " +QString::fromStdString(std::string(geometryInfoLog)));
-       msgBox.adjustSize();
-       msgBox.exec();
-    }
-    glAttachShader(shaderprogramId, geometryshader);
-    */
-
 
     //+++++++++++++++++++++++++++++++//
     //++++++++ Vertex shader ++++++++//
