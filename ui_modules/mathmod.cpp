@@ -177,8 +177,8 @@ void MathMod::CalculatePigmentPoints(int type)
 }
 
 int MathMod::memoryallocation(uint nbthreads,
-                                   uint initparGrid, uint initisoGrid,
-                                   uint FactX, uint FactY, uint FactZ)
+                              uint initparGrid, uint initisoGrid,
+                              uint FactX, uint FactY, uint FactZ)
 {
     try
     {
@@ -1028,7 +1028,6 @@ void MathMod::CreateShaderProgram()
        msgBox.setText("Error : " +QString::fromStdString(std::string(fragmentInfoLog)));
        msgBox.adjustSize();
        msgBox.exec();
-       //return;
     }
 
     glAttachShader(shaderprogramId, vertexshader);
@@ -1818,8 +1817,6 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
                  uint initparGrid, uint initisoGrid, uint FactX, uint FactY,
                  uint FactZ) :QOpenGLWidget(parent)
 {
-    //MathMod::context();
-    //makeCurrent();
     PerlinNoise = new ImprovedNoise(4., 4., 4.);
     latence = 10;
     Vgrid = Ugrid = 64;
