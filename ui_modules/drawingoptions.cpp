@@ -3973,11 +3973,6 @@ void DrawingOptions::on_Mesh_clicked()
     MathmodRef->Mesh();
 }
 
-void DrawingOptions::on_Norm_clicked()
-{
-    MathmodRef->draw_norm_clicked();
-}
-
 void DrawingOptions::on_Fill_clicked()
 {
     MathmodRef->fill();

@@ -232,7 +232,6 @@ public slots:
 private slots:
     void on_Infos_clicked();
     void on_Mesh_clicked();
-    void on_Norm_clicked();
     void on_Fill_clicked();
     void on_Trian_clicked();
     void on_actionOpenGL_triggered();
