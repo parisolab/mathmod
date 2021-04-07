@@ -184,8 +184,9 @@ public:
     GLint uniformBackColor;
     GLint uniformGridColor;
     GLint uniformThereisRGBA;
-    GLfloat uniformShininess;
-    GLint uniformglFrontFacing;
+    GLint uniformShininess;
+    GLint uniformglFrontFacing_1;
+    GLint uniformglFrontFacing_2;
     GLint uniformdrawgridColor;
     GLint uniformMatrixModelView;
     GLint uniformMatrixModelViewProjection;

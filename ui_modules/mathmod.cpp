@@ -880,7 +880,7 @@ void MathMod::CreateShaderProgram()
             uniform mat4 matrixModelView;
             uniform mat4 matrixNormal;
             uniform mat4 matrixModelViewProjection;
-            uniform int glFrontFacing;
+            uniform int glFrontFacing_1;
             // vertex attribs (input)
             attribute vec3 vertexPosition;
             attribute vec3 vertexNormal;
@@ -894,7 +894,7 @@ void MathMod::CreateShaderProgram()
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
                 esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
                 color = vertexColor;
-                if(glFrontFacing == 0)
+                if(glFrontFacing_1 == 0)
                 {
                     v_position = -matrixModelView * vec4 (vertexPosition, 1.0);
                 }
@@ -943,7 +943,7 @@ void MathMod::CreateShaderProgram()
             uniform int thereisRGBA;
             uniform int drawgridColor;
             uniform float shininess;
-            uniform int glFrontFacing;
+            uniform int glFrontFacing_2;
             // varyings
             varying vec3 esVertex, esNormal;
             varying vec4 color;
@@ -952,7 +952,7 @@ void MathMod::CreateShaderProgram()
             {
                 vec4 color1=color;
                 vec3 normal = normalize(esNormal);
-                if(glFrontFacing == 1)
+                if(glFrontFacing_2 == 1)
                 {
                     if(gl_FrontFacing == false)
                     {
@@ -1055,7 +1055,8 @@ void MathMod::CreateShaderProgram()
     uniformGridColor                 = glGetUniformLocation(shaderprogramId, "gridColor");
     uniformThereisRGBA               = glGetUniformLocation(shaderprogramId, "thereisRGBA");
     uniformShininess                 = glGetUniformLocation(shaderprogramId, "shininess");
-    uniformglFrontFacing             = glGetUniformLocation(shaderprogramId, "glFrontFacing");
+    uniformglFrontFacing_1             = glGetUniformLocation(shaderprogramId, "glFrontFacing_1");
+    uniformglFrontFacing_2             = glGetUniformLocation(shaderprogramId, "glFrontFacing_2");
     uniformdrawgridColor             = glGetUniformLocation(shaderprogramId, "drawgridColor");
     attribVertexPosition             = glGetAttribLocation(shaderprogramId, "vertexPosition");
     attribVertexNormal               = glGetAttribLocation(shaderprogramId, "vertexNormal");
@@ -1068,7 +1069,8 @@ void MathMod::CreateShaderProgram()
     glUniform4fv(uniformBackColor, 1, backColor);
     glUniform4fv(uniformGridColor, 1, gridcol);
     glUniform1f(uniformShininess, shininessVal);
-    glUniform1i(uniformglFrontFacing, LocalScene.glFrontFacingSupport);
+    glUniform1i(uniformglFrontFacing_1, LocalScene.glFrontFacingSupport);
+    glUniform1i(uniformglFrontFacing_2, LocalScene.glFrontFacingSupport);
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformdrawgridColor, 0);
 
@@ -1472,7 +1474,8 @@ void MathMod::draw(ObjectProperties *scene)
     }
     if(LocalScene.FrontSurfValUpdated)
     {
-        glUniform1i(uniformglFrontFacing , LocalScene.glFrontFacingSupport);
+        glUniform1i(uniformglFrontFacing_1 , LocalScene.glFrontFacingSupport);
+        glUniform1i(uniformglFrontFacing_2 , LocalScene.glFrontFacingSupport);
         LocalScene.FrontSurfValUpdated = false;
     }
     // We draw the Plan first because we don't want it to spin around X,Y and Z axes
@@ -1643,7 +1646,6 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
 {
     static int oldx=0, oldy=0;
     static QVector3D oldn=QVector3D(0,0,1);
-    static qreal oldacc;
     if(mouseLeftDown)
     {
         QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
@@ -1653,7 +1655,6 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
         acc =std::sqrt((diff.y()-oldy)*(diff.y()-oldy)+ float(diff.x()-oldx)*(diff.x()-oldx))/ /*(double)(LocalScene.viewport[2]+1)*/3.0;
         // Calculate new rotation axis
         rotation = QQuaternion::fromAxisAndAngle(n, acc)*oldRotation;
-        oldacc= acc;
         oldn = n;
     }
     if(mouseRightDown)
