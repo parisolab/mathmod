@@ -8,19 +8,23 @@ grade: stable
 confinement: strict 
 
 apps:
-  MathMod:
-    command: desktop-launch $ Snap/opt/mathmod/MathMod
+  mathmod:
+    command: mathmod
     plugs: [home, network, x11, wayland, opengl]
 
 parts:
-  mathmod:
+  application:
     plugin: qmake
     source: .
     qt-version: qt5
-    project-files: [MathMod.pro]
+    project-files: ["MathMod.pro"]
     override-build: |
       install-d $SNAPCRAFT _part_install/opt/mathmod
       INSTALL MathMod $SNAPCRAFT _part_install/opt/mathmod/MathMod
+    after: [desktop-qt5]
+    
+  desktop-qt5:
+    plugin: nil
     build-packages:
         - pkg-config
         - qt5-default
@@ -30,4 +34,3 @@ parts:
         - libqt5core5a
         - libqt5gui5
         - libqt5widgets5
-    after: [desktop-qt5]
