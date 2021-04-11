@@ -1244,25 +1244,6 @@ void MathMod::DrawAxe()
 
 void MathMod::DrawNormals(ObjectProperties *)
 {
-    /*
-    uint j = 0;
-    glColor4f(0.8f, 0., 0.7f, 1.0);
-    for (uint i = 0; i < scene->PolyNumber; i += 4)
-    {
-        j = 10 * scene->PolyIndices_localPt[i];
-        glBegin(GL_LINES);
-        glVertex3f(scene->ArrayNorVer_localPt[j + 7],
-                   scene->ArrayNorVer_localPt[j + 8],
-                   scene->ArrayNorVer_localPt[j + 9]);
-        glVertex3f(scene->ArrayNorVer_localPt[j + 7] +
-                   40 * scene->ArrayNorVer_localPt[j + 4],
-                   scene->ArrayNorVer_localPt[j + 8] +
-                   40 * scene->ArrayNorVer_localPt[j + 5],
-                   scene->ArrayNorVer_localPt[j + 9] +
-                   40 * scene->ArrayNorVer_localPt[j + 6]);
-        glEnd();
-    }
-    */
 }
 
 void MathMod::Winitialize_GL()
