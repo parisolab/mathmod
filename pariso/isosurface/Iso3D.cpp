@@ -1606,8 +1606,6 @@ void Iso3D::IsoBuild (
         message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
         emitUpdateMessageSignal();
     }
-
-
     NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
 
     uint startpl = 0;
@@ -1623,9 +1621,6 @@ void Iso3D::IsoBuild (
         }
         i += polysize;
     }
-
-
-
 
     IndexPolyTabMinVector2.clear();
     for (uint i = 0; i < IndexPolyTabMinVector.size(); i++)
