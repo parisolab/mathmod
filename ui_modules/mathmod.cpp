@@ -988,12 +988,10 @@ void MathMod::CreateShaderProgram()
                         }
                     }
                 }
-
                 if(drawgridColor == 1)
                 {
                     color1=gridColor;
                 }
-
                 vec3 light;
                 if(lightPosition.w == 0.0)
                 {
@@ -1005,7 +1003,6 @@ void MathMod::CreateShaderProgram()
                 }
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
-
                 vec4 fragColor = lightAmbient * color1;             // begin with ambient
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
