@@ -1070,7 +1070,6 @@ void MathMod::CreateShaderProgram()
     glUniform1i(uniformglFrontFacing_2, LocalScene.glFrontFacingSupport);
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformdrawgridColor, 0);
-
     int linkStatus;
     glGetProgramiv(shaderprogramId, GL_LINK_STATUS, &linkStatus);
     if(linkStatus == GL_FALSE)

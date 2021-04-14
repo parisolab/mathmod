@@ -26,29 +26,6 @@ void IsoTransformation::Twist()
 }
 QString IsoTransformation::Twistx(QString ImplicitFunction)
 {
-    /*
-    double vals[2]={0,0};
-    QString after_1, after_2, angle, XlimitSup, XlimitInf;
-    double tmp;
-    for(int j=0; j<Nb_functs; j++)
-    {
-        implicitFunctionParser[i].AddFunction(FunctNames[j], Fct[j]);
-    }
-    if(twistx != 0  ||  scalex !=1)
-    {
-       angle = "1/("+XlimitSup+"-"+XlimitInf+")";
-       ExpressionEvaluator.Parse(angle, "t");
-       tmp = ExpressionEvaluator.Eval(vals);
-       tmp *= twistx*2*PI/scalex;
-       angle = QString::number(tmp)+"*x";
-       after_1 = "(y*cos("+angle+") - z*sin("+angle+"))";
-       after_2 = "(y*sin("+angle+") + z*cos("+angle+"))";
-       ImplicitFunction = ImplicitFunction_save;
-       ImplicitFunction.replace(QChar('y'), "u");
-       ImplicitFunction.replace(QChar('z'), "v");
-       ImplicitFunction.replace(QChar('u'), after_1);
-       ImplicitFunction.replace(QChar('v'), after_2);
-    }*/
     return ImplicitFunction;
 }
 QString IsoTransformation::Twisty(QString ImplicitFunction)
