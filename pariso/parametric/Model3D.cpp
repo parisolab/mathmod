@@ -1636,11 +1636,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     double res;
     double ResX[nbstack], ResY[nbstack], ResZ[nbstack], ResW[nbstack], vals[3*nbstack];
     uint taille=0;
-    //vals  = new double[3*nbstack];
-    //ResX  = new double[nbstack];
-    //ResY  = new double[nbstack];
-    //ResZ  = new double[nbstack];
-    //ResW  = new double[nbstack];
+
     if(activeMorph == 1)
         stepMorph += pace;
     iStart = 0;
@@ -1766,11 +1762,6 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                 }
         }
     }
-    /*delete[] vals;
-    delete[] ResX;
-    delete[] ResY;
-    delete[] ResZ;
-    delete[] ResW;*/
 }
 
 void Par3D::emitErrorSignal()
