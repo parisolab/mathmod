@@ -636,8 +636,6 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 }
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
-    double* vals;
-    double* Res;
     uint maxgrscalemaxgr = GridVal*GridVal;
     const uint limitY = XYZgrid, limitZ = XYZgrid;
     uint I, J, IJK;
@@ -646,10 +644,10 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint nbstack=nbX*nbY*nbZ;
     uint Iindice=0, Jindice=0, Kindice=0, nbvar=8;
     int PreviousSignal=0;
-    vals = new double[nbvar*nbstack];
-    Res  = new double[nbstack];
+    double vals[nbvar*nbstack];
+    double Res[nbstack];
+
     vals[3]    = stepMorph;
-    //vals[4]    = double(MyIndex);
     uint taille=0;
     iStart = 0;
     iFinish = 0;
@@ -749,8 +747,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             }
         }
     }
-    delete[] vals;
-    delete[] Res;
 }
 void Iso3D::ConstructIsoNormale(uint idx)
 {
