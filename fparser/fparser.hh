@@ -13,7 +13,7 @@
 
 #include <string>
 #include <vector>
-
+#include <complex>
 #ifdef FUNCTIONPARSER_SUPPORT_DEBUGGING
 #include <iostream>
 #endif
@@ -69,8 +69,9 @@ class FunctionParserBase
     ParseErrorType GetParseErrorType() const;
 
     Value_t Eval(const Value_t* Vars);
+    std::complex<double> EvalC(const std::complex<double>* );
     void AllocateStackMemory( unsigned int, int nbvar=0);
-    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, double* results, unsigned, int position=-1);
+    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, Value_t* results, unsigned, int position=-1);
     int EvalError() const;
 
     bool AddConstant(const std::string& name, Value_t value);

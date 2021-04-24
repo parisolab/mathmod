@@ -30,8 +30,8 @@
 //#define FP_SUPPORT_LONG_INT_TYPE
 //#define FP_SUPPORT_MPFR_FLOAT_TYPE
 //#define FP_SUPPORT_GMP_INT_TYPE
-//#define FP_SUPPORT_COMPLEX_DOUBLE_TYPE
-//#define FP_SUPPORT_COMPLEX_FLOAT_TYPE
+#define FP_SUPPORT_COMPLEX_DOUBLE_TYPE
+#define FP_SUPPORT_COMPLEX_FLOAT_TYPE
 //#define FP_SUPPORT_COMPLEX_LONG_DOUBLE_TYPE
 
 /* If you are using FunctionParser_ld or FunctionParser_cld and your compiler

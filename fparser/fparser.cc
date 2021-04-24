@@ -2777,23 +2777,23 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             break;
 
           case cPsh:
-            if((stt= Stack[SP-1]) >=VarSize || stt <0)
+            if((Stack[SP-1]) >= Value_t(VarSize) || Stack[SP-1] <Value_t(0))
             {
                 mData->mEvalErrorType=VAR_OVERFLOW;
                 return Value_t(VAR_OVERFLOW);
             }
-            StackSave[stt] = Stack[SP];
+            StackSave[abs(Stack[SP-1])] = Stack[SP];
             Stack[SP-1]  = 1.0;
             --SP;
             break;
 
           case cCsd:
-            if((stt= Stack[SP]) >=VarSize || stt <0)
+            if(Stack[SP] >= Value_t(VarSize) || Stack[SP] <Value_t(0))
             {
                 mData->mEvalErrorType=VAR_OVERFLOW;
                 return Value_t(VAR_OVERFLOW);
             }
-            Stack[SP] = StackSave[stt];
+            Stack[SP] = StackSave[abs(Stack[SP])];
             break;
 
           case  cTrunc:
@@ -3028,6 +3028,421 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
     return Stack[SP];
 }
 
+//===========================================================================
+// Function evaluation
+//===========================================================================
+template<typename Value_t>
+std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<double>* Vars)
+{
+    if(mData->mParseErrorType != FP_NO_ERROR) return Value_t(0);
+
+    const unsigned* const byteCode = &(mData->mByteCode[0]);
+    const Value_t* const immed = mData->mImmed.empty() ? 0 : &(mData->mImmed[0]);
+    const unsigned byteCodeSize = unsigned(mData->mByteCode.size());
+    unsigned IP, DP=0;
+    int SP=-1;
+
+#ifdef FP_USE_THREAD_SAFE_EVAL
+    /* If Eval() may be called by multiple threads simultaneously,
+     * then Eval() must allocate its own stack.
+     */
+#ifdef FP_USE_THREAD_SAFE_EVAL_WITH_ALLOCA
+    /* alloca() allocates room from the hardware stack.
+     * It is automatically freed when the function returns.
+     */
+    Value_t* const Stack = (Value_t*)alloca(mData->mStackSize*sizeof(Value_t));
+#else
+    /* Allocate from the heap. Ensure that it is freed
+     * automatically no matter which exit path is taken.
+     */
+    struct AutoDealloc
+    {
+        Value_t* ptr;
+        ~AutoDealloc() { delete[] ptr; }
+    } AutoDeallocStack = { new Value_t[mData->mStackSize] };
+    Value_t*& Stack = AutoDeallocStack.ptr;
+#endif
+#else
+    /* No thread safety, so use a global stack. */
+    //std::vector<Value_t>& Stack = mData->mStack;
+#endif
+
+    std::complex<double>* const Stack = (std::complex<double>*)alloca(mData->mStackSize*sizeof(std::complex<double>));
+
+    for(IP=0; IP<byteCodeSize; ++IP)
+    {
+        switch(byteCode[IP])
+        {
+// Functions:
+          case   cAbs: Stack[SP] = fp_abs(Stack[SP]); break;
+
+          case  cAcos:
+            /*
+              if(IsComplexType<Value_t>::result == false
+              && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
+              { mData->mEvalErrorType=4; return Value_t(0); }
+              */
+              Stack[SP] = fp_acos(Stack[SP]); break;
+
+          case cAcosh:/*
+              if(IsComplexType<Value_t>::result == false
+              && Stack[SP] < Value_t(1))
+              { mData->mEvalErrorType=4; return Value_t(0); }*/
+              Stack[SP] = fp_acosh(Stack[SP]); break;
+
+          case  cAsin:/*
+              if(IsComplexType<Value_t>::result == false
+              && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
+              { mData->mEvalErrorType=4; return Value_t(0); }*/
+              Stack[SP] = fp_asin(Stack[SP]); break;
+
+          case cAsinh: Stack[SP] = fp_asinh(Stack[SP]); break;
+
+          case  cAtan: Stack[SP] = fp_atan(Stack[SP]); break;
+
+          case cAtan2: Stack[SP-1] = fp_atan2(Stack[SP-1], Stack[SP]);
+                       --SP; break;
+
+          case cAtanh:/*
+              if(IsComplexType<Value_t>::result
+              ?  (Stack[SP] == Value_t(-1) || Stack[SP] == Value_t(1))
+              :  (Stack[SP] <= Value_t(-1) || Stack[SP] >= Value_t(1)))
+              { mData->mEvalErrorType=4; return Value_t(0); }*/
+              Stack[SP] = fp_atanh(Stack[SP]); break;
+
+          case  cCbrt: Stack[SP] = fp_cbrt(Stack[SP]); break;
+
+          case  cCeil: Stack[SP] = fp_ceil(Stack[SP]); break;
+
+          case   cCos: Stack[SP] = fp_cos(Stack[SP]); break;
+
+          case  cCosh: Stack[SP] = fp_cosh(Stack[SP]); break;
+
+          case   cCot:
+              {
+                  const std::complex<double> t = fp_tan(Stack[SP]);
+                  /*
+                  if(t == Value_t(0))
+                  { mData->mEvalErrorType=1; return Value_t(0); }*/
+                  Stack[SP] = (1.0)/t; break;
+              }
+
+          case   cCsc:
+              {
+                  const std::complex<double> s = fp_sin(Stack[SP]);
+                  /*
+                  if(s == Value_t(0))
+                  { mData->mEvalErrorType=1; return Value_t(0); }*/
+                  Stack[SP] = (1.0)/s; break;
+              }
+
+
+          case   cExp: Stack[SP] = fp_exp(Stack[SP]); break;
+
+          case   cExp2: Stack[SP] = fp_exp2(Stack[SP]); break;
+
+          case cFloor: Stack[SP] = fp_floor(Stack[SP]); break;
+
+          case cHypot:
+              Stack[SP-1] = fp_hypot(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case    cIf:
+                  if(fp_truth(Stack[SP--]))
+                      IP += 2;
+                  else
+                  {
+                      const unsigned* buf = &byteCode[IP+1];
+                      IP = buf[0];
+                      DP = buf[1];
+                  }
+                  break;
+
+          case   cInt: Stack[SP] = fp_int(Stack[SP]); break;
+
+          case   cLog:/*
+              if(IsComplexType<Value_t>::result
+               ?   Stack[SP] == Value_t(0)
+               :   !(Stack[SP] > Value_t(0)))
+              { mData->mEvalErrorType=3; return Value_t(0); }*/
+              Stack[SP] = fp_log(Stack[SP]); break;
+
+          case cLog10:/*
+              if(IsComplexType<Value_t>::result
+               ?   Stack[SP] == Value_t(0)
+               :   !(Stack[SP] > Value_t(0)))
+              { mData->mEvalErrorType=3; return Value_t(0); }*/
+              Stack[SP] = fp_log10(Stack[SP]);
+              break;
+
+          case  cLog2:/*
+              if(IsComplexType<Value_t>::result
+               ?   Stack[SP] == Value_t(0)
+               :   !(Stack[SP] > Value_t(0)))
+              { mData->mEvalErrorType=3; return Value_t(0); }*/
+              Stack[SP] = fp_log2(Stack[SP]);
+              break;
+
+          case   cMax: Stack[SP-1] = fp_max(Stack[SP-1], Stack[SP]);
+                       --SP; break;
+
+          case   cMin: Stack[SP-1] = fp_min(Stack[SP-1], Stack[SP]);
+                       --SP; break;
+
+          case   cPow:
+              // x:Negative ^ y:NonInteger is failure,
+              // except when the reciprocal of y forms an integer
+              /*if(IsComplexType<Value_t>::result == false
+              && Stack[SP-1] < Value_t(0) &&
+                 !isInteger(Stack[SP]) &&
+                 !isInteger(1.0 / Stack[SP]))
+              { mEvalErrorType=3; return Value_t(0); }*/
+              // x:0 ^ y:negative is failure
+            /*
+              if(Stack[SP-1] == Value_t(0) &&
+                 Stack[SP] < Value_t(0))
+              { mData->mEvalErrorType=3; return Value_t(0); }*/
+              Stack[SP-1] = fp_pow(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case  cTrunc: Stack[SP] = fp_trunc(Stack[SP]); break;
+
+          case   cSec:
+              {
+                  const std::complex<double> c = fp_cos(Stack[SP]);
+                  /*
+                  if(c == Value_t(0))
+                  { mData->mEvalErrorType=1; return Value_t(0); }*/
+                  Stack[SP] = (1.0)/c; break;
+              }
+
+          case   cSin: Stack[SP] = fp_sin(Stack[SP]); break;
+
+          case  cSinh: Stack[SP] = fp_sinh(Stack[SP]); break;
+
+          case  cSqrt:
+            /*
+              if(IsComplexType<Value_t>::result == false &&
+                 Stack[SP] < Value_t(0))
+              { mData->mEvalErrorType=2; return Value_t(0); }
+              */
+              Stack[SP] = fp_sqrt(Stack[SP]); break;
+
+          case   cTan: Stack[SP] = fp_tan(Stack[SP]); break;
+
+          case  cTanh: Stack[SP] = fp_tanh(Stack[SP]); break;
+
+
+// Misc:
+          case cImmed: Stack[++SP] = immed[DP++]; break;
+
+          case  cJump:
+              {
+                  const unsigned* buf = &byteCode[IP+1];
+                  IP = buf[0];
+                  DP = buf[1];
+                  break;
+              }
+
+// Operators:
+          case   cNeg: Stack[SP] = -Stack[SP]; break;
+          case   cAdd: Stack[SP-1] += Stack[SP]; --SP; break;
+          case   cSub: Stack[SP-1] -= Stack[SP]; --SP; break;
+          case   cMul: Stack[SP-1] *= Stack[SP]; --SP; break;
+
+          case   cDiv:/*
+              if(Stack[SP] == Value_t(0))
+              { mData->mEvalErrorType=1; return Value_t(0); }*/
+              Stack[SP-1] /= Stack[SP]; --SP; break;
+
+          case   cMod:/*
+              if(Stack[SP] == Value_t(0))
+              { mData->mEvalErrorType=1; return Value_t(0); }*/
+              Stack[SP-1] = fp_mod(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case cEqual:
+              Stack[SP-1] = fp_equal(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case cNEqual:
+              Stack[SP-1] = fp_nequal(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case  cLess:
+              Stack[SP-1] = fp_less(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case  cLessOrEq:
+              Stack[SP-1] = fp_lessOrEq(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case cGreater:
+              Stack[SP-1] = fp_less(Stack[SP], Stack[SP-1]);
+              --SP; break;
+
+          case cGreaterOrEq:
+              Stack[SP-1] = fp_lessOrEq(Stack[SP], Stack[SP-1]);
+              --SP; break;
+
+          case   cNot: Stack[SP] = fp_not(Stack[SP]); break;
+
+          case cNotNot: Stack[SP] = fp_notNot(Stack[SP]); break;
+
+          case   cAnd:
+              Stack[SP-1] = fp_and(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+          case    cOr:
+              Stack[SP-1] = fp_or(Stack[SP-1], Stack[SP]);
+              --SP; break;
+
+// Degrees-radians conversion:
+          case   cDeg: Stack[SP] = RadiansToDegrees(Stack[SP]); break;
+          case   cRad: Stack[SP] = DegreesToRadians(Stack[SP]); break;
+
+// User-defined function calls:
+            /*
+          case cFCall:
+              {
+                  const unsigned index = byteCode[++IP];
+                  const unsigned params = mData->mFuncPtrs[index].mParams;
+                  const Value_t retVal =
+                      mData->mFuncPtrs[index].mRawFuncPtr ?
+                      mData->mFuncPtrs[index].mRawFuncPtr(&Stack[SP-params+1]) :
+                      mData->mFuncPtrs[index].mFuncWrapperPtr->callFunction
+                      (&Stack[SP-params+1]);
+                  SP -= int(params)-1;
+                  Stack[SP] = retVal;
+                  break;
+              }
+*/
+          case cPCall:
+              {
+                  unsigned index = byteCode[++IP];
+                  unsigned params = mData->mFuncParsers[index].mParams;
+                  std::complex<double> retVal =
+                      mData->mFuncParsers[index].mParserPtr->EvalC
+                      (&Stack[SP-params+1]);
+                  SP -= int(params)-1;
+                  Stack[SP] = retVal;
+                  const int error =
+                      mData->mFuncParsers[index].mParserPtr->EvalError();
+                  if(error)
+                  {
+                      mData->mEvalErrorType = error;
+                      return 0;
+                  }
+                  break;
+              }
+
+
+          case   cFetch:
+              {
+                  unsigned stackOffs = byteCode[++IP];
+                  Stack[SP+1] = Stack[stackOffs]; ++SP;
+                  break;
+              }
+
+#ifdef FP_SUPPORT_OPTIMIZER
+          case   cPopNMov:
+              {
+                  unsigned stackOffs_target = byteCode[++IP];
+                  unsigned stackOffs_source = byteCode[++IP];
+                  Stack[stackOffs_target] = Stack[stackOffs_source];
+                  SP = stackOffs_target;
+                  break;
+              }
+
+          case  cLog2by:/*
+              if(IsComplexType<Value_t>::result
+               ?   Stack[SP-1] == Value_t(0)
+               :   !(Stack[SP-1] > Value_t(0)))
+              { mData->mEvalErrorType=3; return Value_t(0); }*/
+              Stack[SP-1] = fp_log2(Stack[SP-1]) * Stack[SP];
+              --SP;
+              break;
+
+          case cNop: break;
+#endif // FP_SUPPORT_OPTIMIZER
+
+          case cSinCos:
+              fp_sinCos(Stack[SP], Stack[SP+1], Stack[SP]);
+              ++SP;
+              break;
+          case cSinhCosh:
+              fp_sinhCosh(Stack[SP], Stack[SP+1], Stack[SP]);
+              ++SP;
+              break;
+
+          case cAbsNot:
+              Stack[SP] = fp_absNot(Stack[SP]); break;
+          case cAbsNotNot:
+              Stack[SP] = fp_absNotNot(Stack[SP]); break;
+          case cAbsAnd:
+              Stack[SP-1] = fp_absAnd(Stack[SP-1], Stack[SP]);
+              --SP; break;
+          case cAbsOr:
+              Stack[SP-1] = fp_absOr(Stack[SP-1], Stack[SP]);
+              --SP; break;
+          case cAbsIf:
+              if(fp_absTruth(Stack[SP--]))
+                  IP += 2;
+              else
+              {
+                  const unsigned* buf = &byteCode[IP+1];
+                  IP = buf[0];
+                  DP = buf[1];
+              }
+              break;
+
+          case   cDup: Stack[SP+1] = Stack[SP]; ++SP; break;
+
+          case   cInv:/*
+              if(Stack[SP] == Value_t(0))
+              { mData->mEvalErrorType=1; return Value_t(0); }*/
+              Stack[SP] = (1.0)/Stack[SP];
+              break;
+
+          case   cSqr:
+              Stack[SP] = Stack[SP]*Stack[SP];
+              break;
+
+          case   cRDiv:/*
+              if(Stack[SP-1] == Value_t(0))
+              { mData->mEvalErrorType=1; return Value_t(0); }*/
+              Stack[SP-1] = Stack[SP] / Stack[SP-1]; --SP; break;
+
+          case   cRSub: Stack[SP-1] = Stack[SP] - Stack[SP-1]; --SP; break;
+
+          case   cRSqrt:/*
+              if(Stack[SP] == Value_t(0))
+              { mData->mEvalErrorType=1; return Value_t(0); }*/
+              Stack[SP] = (1.0) / fp_sqrt(Stack[SP]); break;
+
+#ifdef FP_SUPPORT_COMPLEX_NUMBERS
+          case   cReal: Stack[SP] = fp_real(Stack[SP]); break;
+          case   cImag: Stack[SP] = fp_imag(Stack[SP]); break;
+          case   cArg:  Stack[SP] = fp_arg(Stack[SP]); break;
+          case   cConj: Stack[SP] = fp_conj(Stack[SP]); break;
+          case   cPolar:
+              Stack[SP-1] = fp_polar(Stack[SP-1], Stack[SP]);
+              --SP; break;
+#endif
+
+
+// Variables:
+          default:
+              Stack[++SP] = Vars[byteCode[IP]-VarBegin];
+        }
+    }
+
+    mData->mEvalErrorType=0;
+    return (Stack[SP]);
+}
+
+
+
 template<typename Value_t>
 void FunctionParserBase<Value_t>::AllocateStackMemory(unsigned int nbStack, int nbvar)
 {
@@ -3036,7 +3451,7 @@ void FunctionParserBase<Value_t>::AllocateStackMemory(unsigned int nbStack, int 
 }
 
 template<typename Value_t>
-Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, double* results, unsigned NbStack, int SP)
+Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, Value_t* results, unsigned NbStack, int SP)
 {
     if(mData->mParseErrorType != FP_NO_ERROR) return Value_t(0);
 
@@ -3050,7 +3465,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     std::vector<Value_t>& StackSave = mData->mStackSave;
     int Size = Stack.size();
     int VarSize = StackSave.size();
-    int stt;
+    Value_t stt;
 
     for(IP=0; IP<byteCodeSize; ++IP)
     {
@@ -3266,12 +3681,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
         case cPsh:
           for(Nbval=0; Nbval<NbStack; Nbval++)
           {
-              if((stt= NbStack*(Stacki[Nbval*Size+SP-1])+Nbval) >= VarSize || stt <0)
+              stt = (Value_t(NbStack)*(Stacki[Nbval*Size+SP-1])+Value_t(Nbval));
+              if(stt >= Value_t(VarSize) || stt < Value_t(0))
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
                   return Value_t(VAR_OVERFLOW);
               }
-              StackSave[stt] = Stacki[Nbval*Size+SP];
+              StackSave[abs(stt)] = Stacki[Nbval*Size+SP];
               Stacki[Nbval*Size+SP-1] = 1.0;
           }
           --SP;
@@ -3279,12 +3695,13 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
         case cCsd:
           for(Nbval=0; Nbval<NbStack; Nbval++)
           {
-              if((stt= NbStack*(Stacki[Nbval*Size+SP])+Nbval) >= VarSize || stt <0)
+              stt = (Value_t(NbStack)*(Stacki[Nbval*Size+SP])+Value_t(Nbval));
+              if(stt >= Value_t(VarSize) || stt < Value_t(0))
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
                   return Value_t(VAR_OVERFLOW);
               }
-              Stacki[Nbval*Size+SP] = StackSave[stt];
+              Stacki[Nbval*Size+SP] = StackSave[abs(stt)];
           }
           break;
           case  cTrunc:
@@ -3620,15 +4037,15 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             {
                 unsigned index = byteCode[++IP];
                 unsigned params = mData->mFuncParsers[index].mParams;
-                double res[NbStack];
-                double rest=mData->mFuncParsers[index].mParserPtr->Eval2
+                Value_t res[NbStack];
+                Value_t rest=mData->mFuncParsers[index].mParserPtr->Eval2
                 (&(Stacki[SP-params+1]), Size, res, NbStack);
-                if (int(rest) == IF_FUNCT_ERROR)
+                if (rest == Value_t(IF_FUNCT_ERROR))
                 {
                     mData->mEvalErrorType = IF_FUNCT_ERROR;
                     return IF_FUNCT_ERROR;
                 }
-                if (int(rest) == VAR_OVERFLOW)
+                if (rest == Value_t(VAR_OVERFLOW))
                 {
                     mData->mEvalErrorType = VAR_OVERFLOW;
                     return VAR_OVERFLOW;
