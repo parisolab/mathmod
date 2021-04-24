@@ -1965,10 +1965,15 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->ProcessNewIsoSurface();
                 return (2);
             }
-            else if ((array[i].toObject())["Param3D"].isObject() &&
+            else if (((array[i].toObject())["Param3D"].isObject() &&
                      (QObj = (array[i].toObject())["Param3D"].toObject())["Name"]
                      .toArray()[0]
-                     .toString() == arg1)
+                     .toString() == arg1)  ||
+
+                     ((array[i].toObject())["Param3D_C"].isObject() &&
+                                          (QObj = (array[i].toObject())["Param3D_C"].toObject())["Name"]
+                                          .toArray()[0]
+                                          .toString() == arg1))
             {
                 if (!VerifiedJsonModel((array[i].toObject())))
                     return (0);
@@ -1996,10 +2001,15 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->ParametricSurfaceProcess(1);
                 return (1);
             }
-            else if ((array[i].toObject())["Param4D"].isObject() &&
+            else if (((array[i].toObject())["Param4D"].isObject() &&
                      (QObj = (array[i].toObject())["Param4D"].toObject())["Name"]
                      .toArray()[0]
-                     .toString() == arg1)
+                     .toString() == arg1)  ||
+
+                     ((array[i].toObject())["Param4D_C"].isObject() &&
+                                          (QObj = (array[i].toObject())["Param4D_C"].toObject())["Name"]
+                                          .toArray()[0]
+                                          .toString() == arg1))
             {
                 if (!VerifiedJsonModel((array[i].toObject())))
                     return (0);
@@ -2222,6 +2232,24 @@ void DrawingOptions::LoadNewFileModels(bool upd)
         {
             jpar newjpar;
             jsobj = ((array[i].toObject())["Param4D"].toObject());
+            newjpar.read(jsobj);
+            MathmodRef->collection.JPar.append(newjpar);
+            a = (jsobj)["Name"].toArray()[0].toString();
+            lst.append(a);
+        }
+        else if ((array[i].toObject())["Param3D_C"].isObject())
+        {
+            jpar newjpar;
+            jsobj = ((array[i].toObject())["Param3D_C"].toObject());
+            newjpar.read(jsobj);
+            MathmodRef->collection.JPar.append(newjpar);
+            a = (jsobj)["Name"].toArray()[0].toString();
+            lst.append(a);
+        }
+        else if ((array[i].toObject())["Param4D_C"].isObject())
+        {
+            jpar newjpar;
+            jsobj = ((array[i].toObject())["Param4D_C"].toObject());
             newjpar.read(jsobj);
             MathmodRef->collection.JPar.append(newjpar);
             a = (jsobj)["Name"].toArray()[0].toString();
