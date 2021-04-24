@@ -517,7 +517,7 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     else if (MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
         UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
     else if (MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
-             MathmodRef->RootObjet.CurrentJsonObject["Param3D_C"].isObject() )
+             MathmodRef->RootObjet.CurrentJsonObject["Param3D_C"].isObject())
         UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
     else if (MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject() ||
              MathmodRef->RootObjet.CurrentJsonObject["Param4D_C"].isObject())
@@ -980,7 +980,6 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         return false;
     }
     // Start Grid field processing
-    QString result = "";
     if ((lst = QObj["Grid"].toArray()).size() > 0 && (lst.size() != 2 * NbFx))
     {
         scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
@@ -1005,7 +1004,6 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
 
 bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
 {
-    QJsonArray lst;
     QJsonObject QObj;
     bool verif = false;
     if (!Inspect)
@@ -1022,9 +1020,17 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
         }
         return (verif);
     }
-    if (Jobj["Param3D"].isObject())
+    if (Jobj["Param3D"].isObject() || Jobj["Param3D_C"].isObject() ||
+        Jobj["Param4D"].isObject() || Jobj["Param4D_C"].isObject())
     {
-        QObj = Jobj["Param3D"].toObject();
+        if(Jobj["Param3D"].isObject())
+            QObj = Jobj["Param3D"].toObject();
+        else if(Jobj["Param4D"].isObject())
+                QObj = Jobj["Param4D"].toObject();
+        else if(Jobj["Param3D_C"].isObject())
+                QObj = Jobj["Param3D_C"].toObject();
+        else if(Jobj["Param4D_C"].isObject())
+                QObj = Jobj["Param4D_C"].toObject();
         MathmodRef->LocalScene.componentsinfos.ParisoNbComponents = 1;
         verif = VerifiedParJsonModel(QObj);
         if (verif)
