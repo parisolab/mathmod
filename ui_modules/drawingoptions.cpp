@@ -1139,8 +1139,6 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
 
 void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 {
-    QString result;
-    QJsonArray lst;
     QJsonObject QObj, QIso, QPar;
     QJsonObject QTextureObj, QPigmentObj;
     bool loadtext, loadpigm;
@@ -1263,8 +1261,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             QJsonObject Jobjtmp = Jobj;
             // Some keys cleaning..
             Jobjtmp.remove("ParIso");
-            Jobjtmp.remove("Param3D");
-            Jobjtmp.remove("Param4D");
+            Jobjtmp.remove("Param3D");Jobjtmp.remove("Param3D_C");
+            Jobjtmp.remove("Param4D");Jobjtmp.remove("Param4D_C");
             document.setObject(Jobjtmp);
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
 
@@ -1289,9 +1287,12 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 MathmodRef->update();
             }
         }
-        else if (Jobj["Param3D"].isObject())
+        else if (Jobj["Param3D"].isObject() || Jobj["Param3D_C"].isObject())
         {
-            QObj = Jobj["Param3D"].toObject();
+            if(Jobj["Param3D"].isObject())
+                QObj = Jobj["Param3D"].toObject();
+            else
+                QObj = Jobj["Param3D_C"].toObject();
             // Colors
             loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
@@ -1307,6 +1308,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 
             QJsonObject Jobjtmp = Jobj;
             // Some keys cleaning..
+            if(Jobj["Param3D"].isObject())
+                Jobjtmp.remove("Param3D_C");
+            else
+                Jobjtmp.remove("Param3D");
             Jobjtmp.remove("ParIso");
             Jobjtmp.remove("Iso3D");
             Jobjtmp.remove("Param4D");
@@ -1335,9 +1340,12 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             }
         }
 
-        else if (Jobj["Param4D"].isObject())
+        else if (Jobj["Param4D"].isObject() || Jobj["Param4D_C"].isObject())
         {
-            QObj = Jobj["Param4D"].toObject();
+            if (Jobj["Param4D"].isObject())
+                QObj = Jobj["Param4D"].toObject();
+            else
+                QObj = Jobj["Param4D_C"].toObject();
 
             // Colors
             loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
@@ -1354,6 +1362,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 
             QJsonObject Jobjtmp = Jobj;
             // Some keys cleaning..
+            if (Jobj["Param4D"].isObject())
+                Jobjtmp.remove("Param4D_C");
+            else
+                Jobjtmp.remove("Param4D");
             Jobjtmp.remove("Iso3D");
             Jobjtmp.remove("Param3D");
 
