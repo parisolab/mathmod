@@ -1971,9 +1971,9 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                      .toString() == arg1)  ||
 
                      ((array[i].toObject())["Param3D_C"].isObject() &&
-                                          (QObj = (array[i].toObject())["Param3D_C"].toObject())["Name"]
-                                          .toArray()[0]
-                                          .toString() == arg1))
+                     (QObj = (array[i].toObject())["Param3D_C"].toObject())["Name"]
+                     .toArray()[0]
+                     .toString() == arg1))
             {
                 if (!VerifiedJsonModel((array[i].toObject())))
                     return (0);
@@ -3007,6 +3007,24 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                                 return;
                             }
                         }
+                        else if ((MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param3D_C"].isObject()))
+                        {
+                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param3D_C"]).toObject()["Name"].toArray()[0].toString()))
+                            {
+                                // Draw here
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
+                                return;
+                            }
+                        }
+                        else if ((MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param4D_C"].isObject()))
+                        {
+                            if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param4D_C"]).toObject()["Name"].toArray()[0].toString()))
+                            {
+                                // Draw here
+                                DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
+                                return;
+                            }
+                        }
                 }
             }
         }
@@ -3407,10 +3425,11 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             }
         }
     }
-    else if (copyCurrentObject["Param3D"].isObject())
+    else if (copyCurrentObject["Param3D"].isObject() || copyCurrentObject["Param3D_C"].isObject())
     {
         copyCurrentObject.remove("Iso3D");
-        QJsonObject copyCurrentObject2 = copyCurrentObject["Param3D"].toObject();
+        QJsonObject copyCurrentObject2 =
+                copyCurrentObject["Param3D"].isObject() ? copyCurrentObject["Param3D"].toObject() : copyCurrentObject["Param3D_C"].toObject();
         if (IndexcurrentComponent != -1)
         {
             if ((ui.paramNameEdit->toPlainText()).replace(" ", "") == "")
@@ -3425,13 +3444,23 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 // Some keys cleaning..
                 copyCurrentObject2.remove("Iso3D");
                 copyCurrentObject2.remove("Param4D");
-                copyCurrentObject["Param3D"] = copyCurrentObject2;
+                if(copyCurrentObject["Param3D"].isObject())
+                    copyCurrentObject["Param3D"] = copyCurrentObject2;
+                else
+                    copyCurrentObject["Param3D_C"] = copyCurrentObject2;
             }
-            else if (((copyCurrentObject["Param3D"].toObject())["Component"].toArray()).count() > 0 &&
+            else if ((((copyCurrentObject["Param3D"].toObject())["Component"].toArray()).count() > 0 &&
                      IndexcurrentComponent > -1 && IndexcurrentComponent <
                      ((copyCurrentObject["Param3D"].toObject())["Component"].toArray()).size() &&
                      ((copyCurrentObject["Param3D"].toObject())["Component"].toArray())[IndexcurrentComponent].toString().replace(" ", "") ==
+                     (ui.paramNameEdit->toPlainText()).replace(" ", ""))  ||
+
+                     (((copyCurrentObject["Param3D_C"].toObject())["Component"].toArray()).count() > 0 &&
+                     IndexcurrentComponent > -1 && IndexcurrentComponent <
+                     ((copyCurrentObject["Param3D_C"].toObject())["Component"].toArray()).size() &&
+                     ((copyCurrentObject["Param3D_C"].toObject())["Component"].toArray())[IndexcurrentComponent].toString().replace(" ", "") ==
                      (ui.paramNameEdit->toPlainText()).replace(" ", ""))
+                     )
             {
                 replaceat(IndexcurrentComponent, copyCurrentObject2, "Fx", ui.XEdit);
                 replaceat(IndexcurrentComponent, copyCurrentObject2, "Fy", ui.YEdit);
@@ -3458,12 +3487,18 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 }
                 else
                     copyCurrentObject2.remove("Cnd");
-                copyCurrentObject["Param3D"] = copyCurrentObject2;
+                if(copyCurrentObject["Param3D"].isObject())
+                    copyCurrentObject["Param3D"] = copyCurrentObject2;
+                else
+                    copyCurrentObject["Param3D_C"] = copyCurrentObject2;
             }
             else
             {
-                if (((copyCurrentObject["Param3D"].toObject())["Component"].toArray())[IndexcurrentComponent].toString().replace(" ", "") !=
-                        (ui.paramNameEdit->toPlainText()).replace(" ", ""))
+                if ((((copyCurrentObject["Param3D"].toObject())["Component"].toArray())[IndexcurrentComponent].toString().replace(" ", "") !=
+                        (ui.paramNameEdit->toPlainText()).replace(" ", "")) ||
+                    (((copyCurrentObject["Param3D_C"].toObject())["Component"].toArray())[IndexcurrentComponent].toString().replace(" ", "") !=
+                                                (ui.paramNameEdit->toPlainText()).replace(" ", ""))
+                    )
                 {
                     appednew(copyCurrentObject2, "Component", ui.paramNameEdit);
                     appednew(copyCurrentObject2, "Fx", ui.XEdit);
@@ -3530,7 +3565,10 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
                 }
                 appendall(copyCurrentObject2, "Funct", ui.tableWidget_Fct_2);
                 appendall(copyCurrentObject2, "Const", ui.tableWidget_Cst_2);
-                copyCurrentObject["Param3D"] = copyCurrentObject2;
+                if(copyCurrentObject["Param3D"].isObject())
+                    copyCurrentObject["Param3D"] = copyCurrentObject2;
+                else
+                    copyCurrentObject["Param3D_C"] = copyCurrentObject2;
             }
         }
     }
@@ -3538,6 +3576,7 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
     {
         copyCurrentObject.remove("Iso3D");
         copyCurrentObject.remove("Param3D");
+        copyCurrentObject.remove("Param3D_C");
         QJsonObject copyCurrentObject2 = copyCurrentObject["Param4D"].toObject();
         if (IndexcurrentComponent != -1)
         {
@@ -3613,22 +3652,22 @@ void DrawingOptions::RunUpdatedJObject(QJsonObject &CurrentObject)
     {
         if (CurrentObject["Iso3D"].isObject())
         {
-            CurrentObject.remove("Param3D");
-            CurrentObject.remove("Param4D");
+            CurrentObject.remove("Param3D");CurrentObject.remove("Param3D_C");
+            CurrentObject.remove("Param4D");CurrentObject.remove("Param4D_C");
             CurrentObject.remove("ParIso");
             DrawJsonModel(CurrentObject);
         }
-        else if (CurrentObject["Param3D"].isObject())
+        else if (CurrentObject["Param3D"].isObject() || CurrentObject["Param3D_C"].isObject())
         {
             CurrentObject.remove("Iso3D");
-            CurrentObject.remove("Param4D");
+            CurrentObject.remove("Param4D");CurrentObject.remove("Param4D_C");
             CurrentObject.remove("ParIso");
             DrawJsonModel(CurrentObject);
         }
-        else if (CurrentObject["Param4D"].isObject())
+        else if (CurrentObject["Param4D"].isObject() || CurrentObject["Param4D_C"].isObject())
         {
             CurrentObject.remove("Iso3D");
-            CurrentObject.remove("Param3D");
+            CurrentObject.remove("Param3D");CurrentObject.remove("Param3D_C");
             CurrentObject.remove("ParIso");
             DrawJsonModel(CurrentObject);
         }
@@ -3637,6 +3676,8 @@ void DrawingOptions::RunUpdatedJObject(QJsonObject &CurrentObject)
             CurrentObject.remove("Iso3D");
             CurrentObject.remove("Param3D");
             CurrentObject.remove("Param4D");
+            CurrentObject.remove("Param3D_C");
+            CurrentObject.remove("Param4D_C");
             DrawJsonModel(CurrentObject);
         }
     }
@@ -4178,6 +4219,8 @@ void DrawingOptions::on_Multiplier_clicked()
         // Erase unused Keys:
         copyCurrentObject.remove("Param3D");
         copyCurrentObject.remove("Param4D");
+        copyCurrentObject.remove("Param3D_C");
+        copyCurrentObject.remove("Param4D_C");
         Multiplier(i, j, k, copyCurrentObject, IndexcurrentComponent);
         // Draw here
         DrawJsonModel(copyCurrentObject);
