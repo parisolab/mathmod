@@ -410,7 +410,9 @@ void DrawingOptions::AddObjectToMySelectionTree()
         AddIsoObjectToTree(isolistItem, MathmodRef->RootObjet.CurrentTreestruct);
     }
     else if (MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
-             MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
+             MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject() ||
+             MathmodRef->RootObjet.CurrentJsonObject["Param3D_C"].isObject() ||
+             MathmodRef->RootObjet.CurrentJsonObject["Param4D_C"].isObject())
     {
         QTreeWidgetItem *paramlistItem =
             new QTreeWidgetItem(MyselectionItemReference);
@@ -444,7 +446,9 @@ void DrawingOptions::UpdateTreeObject()
             AddIsoObjectToTree(IsolistItem, MathmodRef->RootObjet.CurrentTreestruct);
         }
         else if (MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
-                 MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
+                 MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject() ||
+                 MathmodRef->RootObjet.CurrentJsonObject["Param3D_C"].isObject() ||
+                 MathmodRef->RootObjet.CurrentJsonObject["Param4D_C"].isObject() )
         {
             ui.ObjectClasseCurrent->model()->removeRows(0, ui.ObjectClasseCurrent->model()->rowCount());
             QTreeWidgetItem *paramlistItem =new QTreeWidgetItem(ui.ObjectClasseCurrent);
@@ -512,9 +516,11 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     }
     else if (MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
         UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
-    else if (MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject())
+    else if (MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
+             MathmodRef->RootObjet.CurrentJsonObject["Param3D_C"].isObject() )
         UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
-    else if (MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject())
+    else if (MathmodRef->RootObjet.CurrentJsonObject["Param4D"].isObject() ||
+             MathmodRef->RootObjet.CurrentJsonObject["Param4D_C"].isObject())
         UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
     else
         ui.stackedProperties->setCurrentIndex(0);

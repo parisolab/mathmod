@@ -354,6 +354,24 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
             a = (jsobj)["Name"].toArray()[0].toString();
             lst.append(a);
         }
+        else if ((array[i].toObject())["Param3D_C"].isObject())
+        {
+            jpar newjpar;
+            jsobj = ((array[i].toObject())["Param3D_C"].toObject());
+            newjpar.read(jsobj);
+            pariso.JPar.append(newjpar);
+            a = (jsobj)["Name"].toArray()[0].toString();
+            lst.append(a);
+        }
+        else if ((array[i].toObject())["Param4D_C"].isObject())
+        {
+            jpar newjpar;
+            jsobj = ((array[i].toObject())["Param4D_C"].toObject());
+            newjpar.read(jsobj);
+            pariso.JPar.append(newjpar);
+            a = (jsobj)["Name"].toArray()[0].toString();
+            lst.append(a);
+        }
         else if ((array[i].toObject())["ParIso"].isArray())
         {
             jpariso newjpariso;
@@ -367,7 +385,20 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
                    jsobj =  (jsarray[i].toObject())["Param3D"].toObject();
                    newjpar.read(jsobj);
                    newjpariso.JPar = newjpar;
-                } else if ((jsarray[i].toObject())["Iso3D"].isObject())
+                }
+                else if ((jsarray[i].toObject())["Param3D_C"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Param3D_C"].toObject();
+                   newjpar.read(jsobj);
+                   newjpariso.JPar = newjpar;
+                }
+                else if ((jsarray[i].toObject())["Param4D_C"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Param4D_C"].toObject();
+                   newjpar.read(jsobj);
+                   newjpariso.JPar = newjpar;
+                }
+                else if ((jsarray[i].toObject())["Iso3D"].isObject())
                 {
                    jsobj =  (jsarray[i].toObject())["Iso3D"].toObject();
                    newjiso.read(jsobj);
