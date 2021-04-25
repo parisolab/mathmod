@@ -45,7 +45,7 @@ public:
 
 public:
     uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish;
-    double stepMorph, pace;
+    double stepMorph=0.0, pace=0.0;
     bool StopCalculations, ParsersAllocated;
     int activeMorph, signalVal;
 };
