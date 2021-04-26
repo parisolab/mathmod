@@ -48,9 +48,11 @@ class ParWorkerThread : public WorkerThread
     Q_OBJECT
 public :
     uint Ugrid, Vgrid;
-    FunctionParser * myParserX, * myParserY,* myParserZ, *myParserW, *Fct;
+    FunctionParser * myParserZ, *myParserW, * myParserX, * myParserY, *Fct;
+    FunctionParser * myParserZ_C, *myParserW_C, * myParserX_C, * myParserY_C, *Fct_C;
     std::vector<double>  v_inf, v_sup,u_inf,u_sup,dif_v,dif_u;
     int param4D;
+    bool param3dC=false, param4d=false;
     uint CurrentIndex;
 
 public :
