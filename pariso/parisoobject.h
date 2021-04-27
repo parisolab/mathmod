@@ -46,7 +46,7 @@ public:
 public:
     uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish;
     double stepMorph=0.0, pace=0.0;
-    bool StopCalculations, ParsersAllocated;
+    bool StopCalculations, ParsersAllocated, ParsersAllocated_C;
     int activeMorph, signalVal;
 };
 
@@ -61,7 +61,7 @@ public:
     uint RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
     std::vector<uint> grid, vect;
     bool *UsedFunct, *UsedFunct2, gridnotnull, vectnotnull, constnotnull, functnotnull,
-         cndnotnull, rgbtnotnull, vrgbtnotnull;
+         cndnotnull, rgbtnotnull, vrgbtnotnull, param3dC, param4dC;
     std::vector<double> ConstValues, SliderValues;
     double Octaves, Lacunarity, Gain;
     int ParisoCondition;
