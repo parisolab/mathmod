@@ -1287,7 +1287,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 MathmodRef->update();
             }
         }
-        else if (Jobj["Param3D"].isObject() || Jobj["Param3D_C"].isObject())
+        else if (Jobj["Param3D"].isObject() || (MathmodRef->ParObjet->masterthread->param3d_C=Jobj["Param3D_C"].isObject()))
         {
             if(Jobj["Param3D"].isObject())
                 QObj = Jobj["Param3D"].toObject();
@@ -1340,7 +1340,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             }
         }
 
-        else if (Jobj["Param4D"].isObject() || Jobj["Param4D_C"].isObject())
+        else if (Jobj["Param4D"].isObject() || (MathmodRef->ParObjet->masterthread->param4d_C=Jobj["Param4D_C"].isObject()))
         {
             if (Jobj["Param4D"].isObject())
                 QObj = Jobj["Param4D"].toObject();
@@ -1970,7 +1970,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                      .toArray()[0]
                      .toString() == arg1)  ||
 
-                     ((array[i].toObject())["Param3D_C"].isObject() &&
+                     ( (MathmodRef->ParObjet->masterthread->param3d_C =  (array[i].toObject())["Param3D_C"].isObject() ) &&
                      (QObj = (array[i].toObject())["Param3D_C"].toObject())["Name"]
                      .toArray()[0]
                      .toString() == arg1))
@@ -2006,7 +2006,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                      .toArray()[0]
                      .toString() == arg1)  ||
 
-                     ((array[i].toObject())["Param4D_C"].isObject() &&
+                     ((MathmodRef->ParObjet->masterthread->param4d_C = (array[i].toObject())["Param4D_C"].isObject()) &&
                                           (QObj = (array[i].toObject())["Param4D_C"].toObject())["Name"]
                                           .toArray()[0]
                                           .toString() == arg1))
@@ -2134,7 +2134,6 @@ int DrawingOptions::on_choice_activated(const QString &arg)
 void DrawingOptions::Run_JsonObject_activeted()
 {
     QJsonParseError err;
-    QString sortie;
     QString script =
         ui.ParamEdit->toPlainText()
         .trimmed()

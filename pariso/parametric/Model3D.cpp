@@ -67,7 +67,7 @@ ParWorkerThread::ParWorkerThread()
 {
     stepMorph = 0;
     pace = 1.0/30.0;
-    ParsersAllocated = false;
+    ParsersAllocated = ParsersAllocated_C = false;
 }
 ParWorkerThread::~ParWorkerThread()
 {
@@ -324,12 +324,8 @@ void  Par3D::project_4D_to_3D(uint idx)
 
 void ParMasterThread::AllocateParsersForMasterThread()
 {
-    if(!ParsersAllocated)
+    if(!ParsersAllocated || !ParsersAllocated_C)
     {
-        myParserX = new FunctionParser[componentsNumber];
-        myParserY = new FunctionParser[componentsNumber];
-        myParserZ = new FunctionParser[componentsNumber];
-        myParserW = new FunctionParser[componentsNumber];
         myParserUmin = new FunctionParser[componentsNumber];
         myParserVmin = new FunctionParser[componentsNumber];
         myParserUmax = new FunctionParser[componentsNumber];
@@ -342,9 +338,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         u_sup.resize(componentsNumber);
         dif_v.resize(componentsNumber);
         dif_u.resize(componentsNumber);
-        if(!functnotnull)
-            FunctSize = 0;
-        Fct          = new FunctionParser[FunctSize];
         UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
         UsedFunct2   = new bool[FunctSize*FunctSize];
 
@@ -362,12 +355,44 @@ void ParMasterThread::AllocateParsersForMasterThread()
         GradientParser   = new FunctionParser;
         NoiseParser      = new FunctionParser;
         NoiseShapeParser = new FunctionParser;
+    }
+
+    if(!ParsersAllocated)
+    {
+        myParserX = new FunctionParser[componentsNumber];
+        myParserY = new FunctionParser[componentsNumber];
+        myParserZ = new FunctionParser[componentsNumber];
+        myParserW = new FunctionParser[componentsNumber];
+        if(!functnotnull)
+            FunctSize = 0;
+        Fct= new FunctionParser[FunctSize];
         ParsersAllocated = true;
+    }
+
+    if(!ParsersAllocated_C)
+    {
+        myParserX_C = new FunctionParser_cd[componentsNumber];
+        myParserY_C = new FunctionParser_cd[componentsNumber];
+        myParserZ_C = new FunctionParser_cd[componentsNumber];
+        myParserW_C = new FunctionParser_cd[componentsNumber];
+        if(!functnotnull)
+            FunctSize = 0;
+        Fct_C= new FunctionParser_cd[FunctSize];
+        ParsersAllocated_C = true;
     }
 }
 
 void ParWorkerThread::AllocateParsersForWorkerThread(uint nbcomposants, uint nbfunct)
 {
+    if(!ParsersAllocated_C)
+    {
+        myParserX_C = new FunctionParser_cd[nbcomposants];
+        myParserY_C = new FunctionParser_cd[nbcomposants];
+        myParserZ_C = new FunctionParser_cd[nbcomposants];
+        myParserW_C = new FunctionParser_cd[nbcomposants];
+        Fct_C       = new FunctionParser_cd[nbfunct];
+        ParsersAllocated_C = true;
+    }
     if(!ParsersAllocated)
     {
         myParserX = new FunctionParser[nbcomposants];
@@ -381,18 +406,13 @@ void ParWorkerThread::AllocateParsersForWorkerThread(uint nbcomposants, uint nbf
 
 void ParMasterThread::DeleteMasterParsers()
 {
-    if(ParsersAllocated)
+    if(ParsersAllocated || ParsersAllocated_C)
     {
-        delete[] myParserX;
-        delete[] myParserY;
-        delete[] myParserZ;
-        delete[] myParserW;
         delete[] myParserUmin;
         delete[] myParserVmin;
         delete[] myParserUmax;
         delete[] myParserVmax;
         delete[] ParisoConditionParser;
-        delete[] Fct;
         delete[] UsedFunct;
         delete[] UsedFunct2;
         delete[] RgbtParser;
@@ -400,7 +420,25 @@ void ParMasterThread::DeleteMasterParsers()
         delete GradientParser;
         delete NoiseParser;
         delete NoiseShapeParser;
+    }
+
+    if(ParsersAllocated)
+    {
+        delete[] myParserX;
+        delete[] myParserY;
+        delete[] myParserZ;
+        delete[] myParserW;
+        delete[] Fct;
         ParsersAllocated = false;
+    }
+    if(ParsersAllocated_C)
+    {
+        delete[] myParserX_C;
+        delete[] myParserY_C;
+        delete[] myParserZ_C;
+        delete[] myParserW_C;
+        delete[] Fct_C;
+        ParsersAllocated_C = false;
     }
 
     ParamStructs.clear();
@@ -434,6 +472,15 @@ void ParWorkerThread::DeleteWorkerParsers()
         delete[] Fct;
         ParsersAllocated = false;
     }
+    if(ParsersAllocated_C)
+    {
+        delete[] myParserX_C;
+        delete[] myParserY_C;
+        delete[] myParserZ_C;
+        delete[] myParserW_C;
+        delete[] Fct_C;
+        ParsersAllocated_C = false;
+    }
 }
 
 void ParMasterThread::InitMasterParsers()
@@ -457,24 +504,33 @@ void ParMasterThread::InitMasterParsers()
 
     for(uint i=0; i<componentsNumber; i++)
     {
-        myParserX[i].AddConstant("pi", PI);
-        myParserY[i].AddConstant("pi", PI);
-        myParserZ[i].AddConstant("pi", PI);
-        myParserW[i].AddConstant("pi", PI);
+        if(!param3d_C && !param4d_C)
+        {
+            myParserX[i].AddConstant("pi", PI);
+            myParserY[i].AddConstant("pi", PI);
+            myParserZ[i].AddConstant("pi", PI);
+            myParserW[i].AddConstant("pi", PI);
+            myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+            myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+        }
+        else
+        {
+            myParserX_C[i].AddConstant("pi", PI);
+            myParserY_C[i].AddConstant("pi", PI);
+            myParserZ_C[i].AddConstant("pi", PI);
+            myParserW_C[i].AddConstant("pi", PI);
+        }
         ParisoConditionParser[i].AddConstant("pi", PI);
         myParserUmin[i].AddConstant("pi", PI);
         myParserVmin[i].AddConstant("pi", PI);
         myParserUmax[i].AddConstant("pi", PI);
         myParserVmax[i].AddConstant("pi", PI);
-
-        myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-        myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-        myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-        myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-        myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-        myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
-        myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
-        myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
         ParisoConditionParser[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         ParisoConditionParser[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
     }
@@ -488,8 +544,15 @@ void ParMasterThread::InitMasterParsers()
     }
     for(uint i=0; i<FunctSize; i++)
     {
-        Fct[i].AddConstant("pi", PI);
-        Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
+        if(!param3d_C && !param4d_C)
+        {
+            Fct[i].AddConstant("pi", PI);
+            Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
+        }
+        else
+        {
+           Fct_C[i].AddConstant("pi", PI);
+        }
     }
 }
 
@@ -504,8 +567,8 @@ ErrorMessage  Par3D::ParMorph()
 ErrorMessage  ParMasterThread::parse_expression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    std::string varliste = "x,y,z,t";
-
+    std::string varliste   = "u,v,t";
+    std::string varliste_C = "u,v,t,z";
     InitMasterParsers();
 
     if(constnotnull)
@@ -529,30 +592,59 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(functnotnull)
     {
         FunctSize = HowManyVariables(Funct, 2);
-
-        for(uint i=0; i<FunctSize; i++)
+        if(!param3d_C && !param4d_C)
         {
-            for(uint j=0; j<ConstSize; j++)
+            for(uint i=0; i<FunctSize; i++)
             {
-                Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
+                for(uint j=0; j<ConstSize; j++)
+                {
+                    Fct[i].AddConstant(ConstNames[j], ConstValues[j]);
+                }
+                //Add predefined constatnts:
+                for(uint k=0; k<Nb_Sliders; k++)
+                {
+                    Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
+                }
             }
-            //Add predefined constatnts:
-            for(uint k=0; k<Nb_Sliders; k++)
+            for(uint i=0; i<FunctSize; i++)
             {
-                Fct[i].AddConstant(SliderNames[k], SliderValues[k]);
+                for(uint j=0; j<i; j++)
+                    if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
+                        Fct[i].AddFunction(FunctNames[j], Fct[j]);
+                if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],varliste)) >= 0)
+                {
+                    stdError.strError = Functs[i];
+                    return stdError;
+                }
+                Fct[i].AllocateStackMemory(Stack_Factor);
             }
         }
-        for(uint i=0; i<FunctSize; i++)
+        else
         {
-            for(uint j=0; j<i; j++)
-                if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
-                    Fct[i].AddFunction(FunctNames[j], Fct[j]);
-            if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"u,v,t")) >= 0)
+            for(uint i=0; i<FunctSize; i++)
             {
-                stdError.strError = Functs[i];
-                return stdError;
+                for(uint j=0; j<ConstSize; j++)
+                {
+                    Fct_C[i].AddConstant(ConstNames[j], ConstValues[j]);
+                }
+                //Add predefined constatnts:
+                for(uint k=0; k<Nb_Sliders; k++)
+                {
+                    Fct_C[i].AddConstant(SliderNames[k], SliderValues[k]);
+                }
             }
-            Fct[i].AllocateStackMemory(Stack_Factor);
+            for(uint i=0; i<FunctSize; i++)
+            {
+                for(uint j=0; j<i; j++)
+                    if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
+                        Fct_C[i].AddFunction(FunctNames[j], Fct_C[j]);
+                if ((stdError.iErrorIndex = Fct_C[i].Parse(Functs[i],varliste_C)) >= 0)
+                {
+                    stdError.strError = Functs[i];
+                    return stdError;
+                }
+                Fct_C[i].AllocateStackMemory(Stack_Factor);
+            }
         }
     }
     else
@@ -647,10 +739,20 @@ ErrorMessage  ParMasterThread::parse_expression()
             myParserUmin[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserVmin[i].AddConstant(ConstNames[j], ConstValues[j]);
             myParserVmax[i].AddConstant(ConstNames[j], ConstValues[j]);
-            myParserX[i].AddConstant(ConstNames[j], ConstValues[j]);
-            myParserY[i].AddConstant(ConstNames[j], ConstValues[j]);
-            myParserZ[i].AddConstant(ConstNames[j], ConstValues[j]);
-            myParserW[i].AddConstant(ConstNames[j], ConstValues[j]);
+            if(!param3d_C && !param4d_C)
+            {
+                myParserX[i].AddConstant(ConstNames[j], ConstValues[j]);
+                myParserY[i].AddConstant(ConstNames[j], ConstValues[j]);
+                myParserZ[i].AddConstant(ConstNames[j], ConstValues[j]);
+                myParserW[i].AddConstant(ConstNames[j], ConstValues[j]);
+            }
+            else
+            {
+                myParserX_C[i].AddConstant(ConstNames[j], ConstValues[j]);
+                myParserY_C[i].AddConstant(ConstNames[j], ConstValues[j]);
+                myParserZ_C[i].AddConstant(ConstNames[j], ConstValues[j]);
+                myParserW_C[i].AddConstant(ConstNames[j], ConstValues[j]);
+            }
         }
 
         //Add predefined constatnts:
@@ -662,25 +764,58 @@ ErrorMessage  ParMasterThread::parse_expression()
             myParserUmax[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserVmin[i].AddConstant(SliderNames[k], SliderValues[k]);
             myParserVmax[i].AddConstant(SliderNames[k], SliderValues[k]);
-            myParserX[i].AddConstant(SliderNames[k], SliderValues[k]);
-            myParserY[i].AddConstant(SliderNames[k], SliderValues[k]);
-            myParserZ[i].AddConstant(SliderNames[k], SliderValues[k]);
-            myParserW[i].AddConstant(SliderNames[k], SliderValues[k]);
+            if(!param3d_C && !param4d_C)
+            {
+                myParserX[i].AddConstant(SliderNames[k], SliderValues[k]);
+                myParserY[i].AddConstant(SliderNames[k], SliderValues[k]);
+                myParserZ[i].AddConstant(SliderNames[k], SliderValues[k]);
+                myParserW[i].AddConstant(SliderNames[k], SliderValues[k]);
+            }
+            else
+            {
+                myParserX_C[i].AddConstant(SliderNames[k], SliderValues[k]);
+                myParserY_C[i].AddConstant(SliderNames[k], SliderValues[k]);
+                myParserZ_C[i].AddConstant(SliderNames[k], SliderValues[k]);
+                myParserW_C[i].AddConstant(SliderNames[k], SliderValues[k]);
+            }
         }
     }
     // Add defined functions :
-    for(uint i=0; i<componentsNumber; i++)
+    if(!param3d_C && !param4d_C)
     {
-        for(uint j=0; j<FunctSize; j++)
+        for(uint i=0; i<componentsNumber; i++)
         {
-            if((UsedFunct[i*4*FunctSize+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
-                myParserX[i].AddFunction(FunctNames[j], Fct[j]);
-            if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
-                myParserY[i].AddFunction(FunctNames[j], Fct[j]);
-            if((UsedFunct[i*4*FunctSize+4*j+2]=(ParamStructs[i].fz.find(FunctNames[j]) != std::string::npos)))
-                myParserZ[i].AddFunction(FunctNames[j], Fct[j]);
-            if((UsedFunct[i*4*FunctSize+4*j+3]=(ParamStructs[i].fw.find(FunctNames[j]) != std::string::npos)))
-                myParserW[i].AddFunction(FunctNames[j], Fct[j]);
+            for(uint j=0; j<FunctSize; j++)
+            {
+                if((UsedFunct[i*4*FunctSize+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
+                    myParserX[i].AddFunction(FunctNames[j], Fct[j]);
+                if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
+                    myParserY[i].AddFunction(FunctNames[j], Fct[j]);
+
+                if((UsedFunct[i*4*FunctSize+4*j+2]=(ParamStructs[i].fz.find(FunctNames[j]) != std::string::npos)))
+                    myParserZ[i].AddFunction(FunctNames[j], Fct[j]);
+                if((UsedFunct[i*4*FunctSize+4*j+3]=(ParamStructs[i].fw.find(FunctNames[j]) != std::string::npos)))
+                    myParserW[i].AddFunction(FunctNames[j], Fct[j]);
+
+            }
+        }
+    }
+    else
+    {
+        for(uint i=0; i<componentsNumber; i++)
+        {
+            for(uint j=0; j<FunctSize; j++)
+            {
+                if((UsedFunct[i*4*FunctSize+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
+                    myParserX_C[i].AddFunction(FunctNames[j], Fct_C[j]);
+                if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
+                    myParserY_C[i].AddFunction(FunctNames[j], Fct_C[j]);
+
+                if((UsedFunct[i*4*FunctSize+4*j+2]=(ParamStructs[i].fz.find(FunctNames[j]) != std::string::npos)))
+                    myParserZ_C[i].AddFunction(FunctNames[j], Fct_C[j]);
+                if((UsedFunct[i*4*FunctSize+4*j+3]=(ParamStructs[i].fw.find(FunctNames[j]) != std::string::npos)))
+                    myParserW_C[i].AddFunction(FunctNames[j], Fct_C[j]);
+            }
         }
     }
 
@@ -719,14 +854,14 @@ ErrorMessage  ParMasterThread::parse_expression()
 
     for(uint index=0; index< componentsNumber; index++)
     {
-        if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, "u,v,t")) >= 0)
+        if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, varliste)) >= 0)
         {
             stdError.strError = ParamStructs[index].umin;
             return stdError;
         }
         u_inf[index] = myParserUmin[index].Eval(vals);
 
-        if ((stdError.iErrorIndex = myParserUmax[index].Parse(ParamStructs[index].umax, "u,v,t")) >= 0)
+        if ((stdError.iErrorIndex = myParserUmax[index].Parse(ParamStructs[index].umax, varliste)) >= 0)
         {
             stdError.strError = ParamStructs[index].umax;
             return stdError;
@@ -734,14 +869,14 @@ ErrorMessage  ParMasterThread::parse_expression()
         u_sup[index] = myParserUmax[index].Eval(vals);
         dif_u[index] = u_sup[index] - u_inf[index];
 
-        if ((stdError.iErrorIndex = myParserVmin[index].Parse(ParamStructs[index].vmin, "u,v,t")) >= 0)
+        if ((stdError.iErrorIndex = myParserVmin[index].Parse(ParamStructs[index].vmin, varliste)) >= 0)
         {
             stdError.strError = ParamStructs[index].vmin;
             return stdError;
         }
         v_inf[index] = myParserVmin[index].Eval(vals);
 
-        if ((stdError.iErrorIndex = myParserVmax[index].Parse(ParamStructs[index].vmax, "u,v,t")) >= 0)
+        if ((stdError.iErrorIndex = myParserVmax[index].Parse(ParamStructs[index].vmax, varliste)) >= 0)
         {
             stdError.strError = ParamStructs[index].vmax;
             return stdError;
@@ -749,30 +884,67 @@ ErrorMessage  ParMasterThread::parse_expression()
         v_sup[index] = myParserVmax[index].Eval(vals);
         dif_v[index] = v_sup[index] - v_inf[index];
 
-        if ((stdError.iErrorIndex = myParserX[index].Parse(ParamStructs[index].fx, "u,v,t")) >= 0)
-        {
-            stdError.strError = ParamStructs[index].fx;
-            return stdError;
-        }
 
-        if ((stdError.iErrorIndex = myParserY[index].Parse(ParamStructs[index].fy, "u,v,t")) >= 0)
-        {
-            stdError.strError = ParamStructs[index].fy;
-            return stdError;
-        }
 
-        if ((stdError.iErrorIndex = myParserZ[index].Parse(ParamStructs[index].fz, "u,v,t")) >= 0)
-        {
-            stdError.strError = ParamStructs[index].fz;
-            return stdError;
-        }
 
-        if(param4D == 1)
-            if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].fw, "u,v,t")) >= 0)
+        if(!param3d_C && !param4d_C)
+        {
+            if ((stdError.iErrorIndex = myParserX[index].Parse(ParamStructs[index].fx, varliste)) >= 0)
             {
-                stdError.strError = ParamStructs[index].fw;
+                stdError.strError = ParamStructs[index].fx;
                 return stdError;
             }
+
+            if ((stdError.iErrorIndex = myParserY[index].Parse(ParamStructs[index].fy, varliste)) >= 0)
+            {
+                stdError.strError = ParamStructs[index].fy;
+                return stdError;
+            }
+
+            if ((stdError.iErrorIndex = myParserZ[index].Parse(ParamStructs[index].fz, varliste)) >= 0)
+            {
+                stdError.strError = ParamStructs[index].fz;
+                return stdError;
+            }
+
+            if(param4D == 1)
+                if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].fw, varliste)) >= 0)
+                {
+                    stdError.strError = ParamStructs[index].fw;
+                    return stdError;
+                }
+        }
+        else
+        {
+            if ((stdError.iErrorIndex = myParserX_C[index].Parse(ParamStructs[index].fx, varliste_C)) >= 0)
+            {
+                stdError.strError = ParamStructs[index].fx;
+                return stdError;
+            }
+
+            if ((stdError.iErrorIndex = myParserY_C[index].Parse(ParamStructs[index].fy, varliste_C)) >= 0)
+            {
+                stdError.strError = ParamStructs[index].fy;
+                return stdError;
+            }
+
+            if ((stdError.iErrorIndex = myParserZ_C[index].Parse(ParamStructs[index].fz, varliste_C)) >= 0)
+            {
+                stdError.strError = ParamStructs[index].fz;
+                return stdError;
+            }
+
+            if(param4d_C == 1)
+                if ((stdError.iErrorIndex = myParserW_C[index].Parse(ParamStructs[index].fw, varliste_C)) >= 0)
+                {
+                    stdError.strError = ParamStructs[index].fw;
+                    return stdError;
+                }
+
+
+        }
+
+
 
         if(cndnotnull && (ParamStructs[index].cnd!=""))
             if ((stdError.iErrorIndex = ParisoConditionParser[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
@@ -826,6 +998,8 @@ ErrorMessage  Par3D::parse_expression2()
         for(uint i=0; i<masterthread->componentsNumber; i++)
         {
             workerthreads[nbthreads].param4D   = masterthread->param4D;
+            workerthreads[nbthreads].param3d_C   = masterthread->param3d_C;
+            workerthreads[nbthreads].param4d_C   = masterthread->param4d_C;
             workerthreads[nbthreads].myParserX[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserY[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserZ[i].AddConstant("pi", PI);
@@ -900,6 +1074,121 @@ ErrorMessage  Par3D::parse_expression2()
     }
     return NodError;
 }
+
+ErrorMessage  Par3D::parse_expression2_C()
+{
+    ErrorMessage NodError;
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        //Functions:
+        for(uint ij=0; ij<masterthread->FunctSize; ij++)
+        {
+            workerthreads[nbthreads].Fct_C[ij].AddConstant("pi", PI);
+        }
+        for(uint ii=0; ii<masterthread->FunctSize; ii++)
+        {
+            for(uint jj=0; jj<masterthread->ConstSize; jj++)
+            {
+                workerthreads[nbthreads].Fct_C[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
+            }
+
+            //Add predefined constatnts:
+            for(uint kk=0; kk<masterthread->Nb_Sliders; kk++)
+            {
+                workerthreads[nbthreads].Fct_C[ii].AddConstant(masterthread->SliderNames[kk], masterthread->SliderValues[kk]);
+            }
+        }
+        for(uint ii=0; ii<masterthread->FunctSize; ii++)
+        {
+            for(uint jj=0; jj<ii; jj++)
+                if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
+                    workerthreads[nbthreads].Fct_C[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct_C[jj]);
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct_C[ii].Parse(masterthread->Functs[ii],"u,v,t,z")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->Functs[ii];
+                return masterthread->stdError;
+            }
+            workerthreads[nbthreads].Fct_C[ii].AllocateStackMemory(Stack_Factor);
+        }
+    }
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        //Add defined constantes:
+        for(uint i=0; i<masterthread->componentsNumber; i++)
+        {
+            workerthreads[nbthreads].param4D   = masterthread->param4D;
+            workerthreads[nbthreads].param3d_C = masterthread->param3d_C;
+            workerthreads[nbthreads].param4d_C = masterthread->param4d_C;
+            workerthreads[nbthreads].myParserX_C[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].myParserY_C[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].myParserZ_C[i].AddConstant("pi", PI);
+            workerthreads[nbthreads].myParserW_C[i].AddConstant("pi", PI);
+            for(uint j=0; j<masterthread->ConstSize; j++)
+            {
+                workerthreads[nbthreads].myParserX_C[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+                workerthreads[nbthreads].myParserY_C[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+                workerthreads[nbthreads].myParserZ_C[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+                workerthreads[nbthreads].myParserW_C[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
+            }
+            //Add predefined sliders constatnts:
+            for(uint k=0; k<masterthread->Nb_Sliders; k++)
+            {
+                workerthreads[nbthreads].myParserX_C[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+                workerthreads[nbthreads].myParserY_C[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+                workerthreads[nbthreads].myParserZ_C[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+                workerthreads[nbthreads].myParserW_C[i].AddConstant(masterthread->SliderNames[k], masterthread->SliderValues[k]);
+            }
+        }
+        // Add defined functions :
+        for(uint i=0; i<masterthread->componentsNumber; i++)
+        {
+            for(uint j=0; j<masterthread->FunctSize; j++)
+            {
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j])
+                    workerthreads[nbthreads].myParserX_C[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct_C[j]);
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+1])
+                    workerthreads[nbthreads].myParserY_C[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct_C[j]);
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+2])
+                    workerthreads[nbthreads].myParserZ_C[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct_C[j]);
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+3])
+                    workerthreads[nbthreads].myParserW_C[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct_C[j]);
+            }
+
+        }
+    }
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        for(uint index=0; index< masterthread->componentsNumber; index++)
+        {
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX_C[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t,z")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ParamStructs[index].fx;
+                return masterthread->stdError;
+            }
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY_C[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t,z")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ParamStructs[index].fy;
+                return masterthread->stdError;
+            }
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ_C[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t,z")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ParamStructs[index].fz;
+                return masterthread->stdError;
+            }
+            if(masterthread->param4d_C)
+                if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW_C[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t,z")) >= 0)
+                {
+                    masterthread->stdError.strError = masterthread->ParamStructs[index].fw;
+                    return masterthread->stdError;
+                }
+        }
+    }
+    return NodError;
+}
+
+
+
+
 void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -908,6 +1197,8 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].Vgrid = masterthread->Vgrid;
         WorkerThreadsTmp[nbthreads].MyIndex = nbthreads+1;
         WorkerThreadsTmp[nbthreads].param4D   = param4D;
+        WorkerThreadsTmp[nbthreads].param3d_C   = masterthread->param3d_C;
+        WorkerThreadsTmp[nbthreads].param4d_C   = masterthread->param4d_C;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
@@ -924,12 +1215,14 @@ ErrorMessage Par3D::ThreadParsersCopy()
         workerthreads[nbthreads].v_inf.clear();
         workerthreads[nbthreads].v_inf = masterthread->v_inf;
         workerthreads[nbthreads].param4D  = masterthread->param4D;
+        workerthreads[nbthreads].param3d_C  = masterthread->param3d_C;
+        workerthreads[nbthreads].param4d_C  = masterthread->param4d_C;
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].DeleteWorkerParsers();
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
         workerthreads[nbthreads].AllocateParsersForWorkerThread(masterthread->componentsNumber, masterthread->FunctSize);
-    return(parse_expression2());
+    return((masterthread->param3d_C || masterthread->param4d_C) ? parse_expression2_C() : parse_expression2());
 }
 
 uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
@@ -1633,9 +1926,12 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     uint nbU=OrignbU, nbV=OrignbV;
     uint nbstack=nbU*nbV;
     uint Iindice=0, Jindice=0;
-    double res;
-    double ResX[nbstack], ResY[nbstack], ResZ[nbstack], ResW[nbstack], vals[3*nbstack];
+    std::complex<double> valcomplex[4*nbstack];
+    double ResX[nbstack], ResY[nbstack], ResZ[nbstack], ResW[nbstack], vals[4*nbstack];
     uint taille=0;
+    std::complex<double> pc;
+    double res;
+    double real, imag;
 
     if(activeMorph == 1)
         stepMorph += pace;
@@ -1661,15 +1957,15 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     myParserZ[cmp].AllocateStackMemory(Stack_Factor);
     if(param4D == 1)
         myParserW[cmp].AllocateStackMemory(Stack_Factor);
-    for(uint i=iStart; i < iFinish   ; i+=nbU)
+
+    for(uint il=iStart; il < iFinish   ; il+=nbU)
     {
-        Iindice = i;
+        Iindice = il;
         nbV=OrignbV;
         if((remU>0) && ((Iindice+remU)==(iFinish)))
         {
             nbU = remU;
-            i= iFinish;
-            //nbstack = nbU*nbV;
+            il= iFinish;
         }
         for (uint j=0; j < Vgrid   ; j+=nbV)
         {
@@ -1688,45 +1984,10 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
             }
             if(StopCalculations)
                 return;
-            res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
-            if(int(res) == VAR_OVERFLOW)
-            {
-                StopCalculations=true;
-                return;
-            }
-            if(int(res) == IF_FUNCT_ERROR)
-            {
-                for(uint l=0; l<nbstack; l++)
-                    ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
-            }
 
-            res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
-            if(int(res) == VAR_OVERFLOW)
+            if(!param3d_C && !param4d_C)
             {
-                StopCalculations=true;
-                return;
-            }
-            if(int(res) == IF_FUNCT_ERROR)
-            {
-                for(uint l=0; l<nbstack; l++)
-                    ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
-            }
-
-            res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
-            if(int(res) == VAR_OVERFLOW)
-            {
-                StopCalculations=true;
-                return;
-            }
-            if(int(res) == IF_FUNCT_ERROR)
-            {
-                for(uint l=0; l<nbstack; l++)
-                    ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
-            }
-
-            if(param4D == 1)
-            {
-                res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
+                res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
@@ -1735,9 +1996,127 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        ResW[l] = myParserW[cmp].Eval(&(vals[l*3]));
+                        ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
+                }
+
+                res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
+                if(int(res) == VAR_OVERFLOW)
+                {
+                    StopCalculations=true;
+                    return;
+                }
+
+                if(int(res) == IF_FUNCT_ERROR)
+                {
+                    for(uint l=0; l<nbstack; l++)
+                        ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
+                }
+
+                res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
+                if(int(res) == VAR_OVERFLOW)
+                {
+                    StopCalculations=true;
+                    return;
+                }
+
+                if(int(res) == IF_FUNCT_ERROR)
+                {
+                    for(uint l=0; l<nbstack; l++)
+                        ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
+                }
+
+                if(param4D == 1)
+                {
+                    res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
+                    if(int(res) == VAR_OVERFLOW)
+                    {
+                        StopCalculations=true;
+                        return;
+                    }
+                    if(int(res) == IF_FUNCT_ERROR)
+                    {
+                        for(uint l=0; l<nbstack; l++)
+                            ResW[l] = myParserW[cmp].Eval(&(vals[l*3]));
+                    }
                 }
             }
+            else
+            {
+                for(uint l=0; l<nbstack; l++)
+                {
+                    valcomplex[l*4  ] = std::complex<double>(vals[l*3  ] , 0);
+                    valcomplex[l*4+1] = std::complex<double>(vals[l*3+1] , 0);
+                    valcomplex[l*4+2] = std::complex<double>(vals[l*3+2] , 0);
+                    valcomplex[l*4+3] = std::complex<double>(vals[l*3] , vals[l*3+1]);
+                }
+                for(uint l=0; l<nbstack; l++)
+                {
+                    pc = (myParserX_C[cmp].EvalC(&valcomplex[l*4]));
+                    real= pc.real();
+                    imag= pc.imag();
+                    if(real !=0.0 && imag !=0.0)
+                        ResX[l] = abs(pc);
+                    else
+                    {
+                        if(real==0.0)
+                            ResX[l] = imag;
+                        else
+                            ResX[l] = real;
+                    }
+                }
+
+                for(uint l=0; l<nbstack; l++)
+                {
+                    pc = (myParserY_C[cmp].EvalC(&valcomplex[l*4]));
+                    real= pc.real();
+                    imag= pc.imag();
+                    if(real !=0.0 && imag !=0.0)
+                        ResY[l] = abs(pc);
+                    else
+                    {
+                        if(real==0.0)
+                            ResY[l] = imag;
+                        else
+                            ResY[l] = real;
+                    }
+                }
+
+                for(uint l=0; l<nbstack; l++)
+                {
+                    pc = (myParserZ_C[cmp].EvalC(&valcomplex[l*4]));
+                    real= pc.real();
+                    imag= pc.imag();
+                    if(real !=0.0 && imag !=0.0)
+                        ResZ[l] = abs(pc);
+                    else
+                    {
+                        if(real==0.0)
+                            ResZ[l] = imag;
+                        else
+                            ResZ[l] = real;
+                    }
+                }
+
+                if(param4d_C)
+                {
+                    for(uint l=0; l<nbstack; l++)
+                    {
+                        pc = (myParserW_C[cmp].EvalC(&valcomplex[l*4]));
+                        real= pc.real();
+                        imag= pc.imag();
+                        if(real !=0.0 && imag !=0.0)
+                            ResW[l] = abs(pc);
+                        else
+                        {
+                            if(real==0.0)
+                                ResW[l] = imag;
+                            else
+                                ResW[l] = real;
+                        }
+                    }
+                }
+            }
+
             //Signal emission:
             id+=nbstack;
             if(MyIndex == 0 && activeMorph != 1)

@@ -48,11 +48,11 @@ class ParWorkerThread : public WorkerThread
     Q_OBJECT
 public :
     uint Ugrid, Vgrid;
-    FunctionParser * myParserZ, *myParserW, * myParserX, * myParserY, *Fct;
-    FunctionParser * myParserZ_C, *myParserW_C, * myParserX_C, * myParserY_C, *Fct_C;
+    FunctionParser *myParserZ, *myParserW, *myParserX, *myParserY, *Fct;
+    FunctionParser_cd *myParserZ_C, *myParserW_C, *myParserX_C, *myParserY_C, *Fct_C;
     std::vector<double>  v_inf, v_sup,u_inf,u_sup,dif_v,dif_u;
     int param4D;
-    bool param3dC=false, param4d=false;
+    bool param3d_C, param4d_C;
     uint CurrentIndex;
 
 public :
@@ -138,6 +138,7 @@ public:
     void MasterThreadCopy(ParMasterThread *);
     ErrorMessage ThreadParsersCopy();
     ErrorMessage  parse_expression2();
+    ErrorMessage  parse_expression2_C();
     ErrorMessage  ParMorph();
     void copycomponent(struct ComponentInfos*, struct ComponentInfos*);
     void run() Q_DECL_OVERRIDE;
