@@ -718,7 +718,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     HowManyParamSurface(sup_u, 4);
     HowManyParamSurface(inf_v, 5);
     HowManyParamSurface(sup_v, 6);
-    if(param4D == 1)
+    if(param4D ==1)
         HowManyParamSurface(expression_W, 7);
     if(cndnotnull)
     {
@@ -1954,11 +1954,11 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
         vals[l*3+2]= stepMorph;
     if(!param3d_C && !param4d_C)
     {
-    myParserX[cmp].AllocateStackMemory(Stack_Factor);
-    myParserY[cmp].AllocateStackMemory(Stack_Factor);
-    myParserZ[cmp].AllocateStackMemory(Stack_Factor);
-    if(param4D == 1)
-        myParserW[cmp].AllocateStackMemory(Stack_Factor);
+        myParserX[cmp].AllocateStackMemory(Stack_Factor);
+        myParserY[cmp].AllocateStackMemory(Stack_Factor);
+        myParserZ[cmp].AllocateStackMemory(Stack_Factor);
+        if(param4D == 1)
+            myParserW[cmp].AllocateStackMemory(Stack_Factor);
     }
     else
     {
