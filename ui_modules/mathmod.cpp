@@ -2030,11 +2030,13 @@ void MathMod::ParametricSurfaceProcess(int type)
         {
             ParObjet->masterthread->param4D = 1;
             ParObjet->param4D = 1;
+            ParObjet->masterthread->param3d_C = false;
         }
         else
         {
             ParObjet->masterthread->param4D = -1;
             ParObjet->param4D = -1;
+            ParObjet->masterthread->param4d_C = false;
         }
         int result = ParsePar();
         if (result == -1)
@@ -2055,7 +2057,8 @@ void MathMod::ParisoObjectProcess()
     {
         ParObjet->masterthread->param4D =
             ParObjet->param4D = -1;
-
+        ParObjet->masterthread->param4d_C =
+        ParObjet->masterthread->param3d_C = false;
         int result = ParsePar();
         if (result == -1)
             return;

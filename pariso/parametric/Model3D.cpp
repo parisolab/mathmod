@@ -934,7 +934,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 return stdError;
             }
 
-            if(param4d_C == 1)
+            if(param4d_C)
                 if ((stdError.iErrorIndex = myParserW_C[index].Parse(ParamStructs[index].fw, varliste_C)) >= 0)
                 {
                     stdError.strError = ParamStructs[index].fw;
@@ -1952,11 +1952,22 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
     uint Totalpoints=(iFinish-iStart)*Vgrid;
     for(uint l=0; l<nbstack; l++)
         vals[l*3+2]= stepMorph;
+    if(!param3d_C && !param4d_C)
+    {
     myParserX[cmp].AllocateStackMemory(Stack_Factor);
     myParserY[cmp].AllocateStackMemory(Stack_Factor);
     myParserZ[cmp].AllocateStackMemory(Stack_Factor);
     if(param4D == 1)
         myParserW[cmp].AllocateStackMemory(Stack_Factor);
+    }
+    else
+    {
+        myParserX_C[cmp].AllocateStackMemory(Stack_Factor);
+        myParserY_C[cmp].AllocateStackMemory(Stack_Factor);
+        myParserZ_C[cmp].AllocateStackMemory(Stack_Factor);
+        if(param4d_C)
+            myParserW_C[cmp].AllocateStackMemory(Stack_Factor);
+    }
 
     for(uint il=iStart; il < iFinish   ; il+=nbU)
     {
@@ -2135,7 +2146,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                     NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +7 +NewPosition] = float(ResX[p]);
                     NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +8 +NewPosition] = float(ResY[p]);
                     NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
-                    if(param4D == 1)
+                    if((param4D == 1) || param4d_C)
                         ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
                     p++;
                 }
