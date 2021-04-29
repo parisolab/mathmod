@@ -2599,7 +2599,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
     const unsigned byteCodeSize = unsigned(mData->mByteCode.size());
     unsigned IP, DP=0;
     int SP=-1;
-    int stt =0;
+    //int stt =0;
     std::vector<Value_t>& StackSave = mData->mStackSave;
     int VarSize = StackSave.size();
 
@@ -3042,7 +3042,7 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
     unsigned IP, DP=0;
     int SP=-1;
     std::vector<Value_t>& StackSave = mData->mStackSave;
-    int VarSize = StackSave.size();
+    //int VarSize = StackSave.size();
 
 #ifdef FP_USE_THREAD_SAFE_EVAL
     /* If Eval() may be called by multiple threads simultaneously,
@@ -3322,21 +3322,22 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
           case   cRad: Stack[SP] = DegreesToRadians(Stack[SP]); break;
 
 // User-defined function calls:
-            /*
+
           case cFCall:
               {
                   const unsigned index = byteCode[++IP];
                   const unsigned params = mData->mFuncPtrs[index].mParams;
-                  const Value_t retVal =
+                  const Value_t hy = Stack[SP-params+1].real();
+                  /*std::complex<double>*/const Value_t retVal =
                       mData->mFuncPtrs[index].mRawFuncPtr ?
-                      mData->mFuncPtrs[index].mRawFuncPtr(&Stack[SP-params+1]) :
+                      mData->mFuncPtrs[index].mRawFuncPtr(&hy) :
                       mData->mFuncPtrs[index].mFuncWrapperPtr->callFunction
-                      (&Stack[SP-params+1]);
+                      (&hy);
                   SP -= int(params)-1;
                   Stack[SP] = retVal;
                   break;
               }
-*/
+
           case cPCall:
               {
                   unsigned index = byteCode[++IP];
@@ -4040,17 +4041,27 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                 break;
 
 #ifdef FP_SUPPORT_COMPLEX_NUMBERS
-          case   cReal:for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_real(Stacki[Nbval*Size+SP]); break;
-          case   cImag:for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_imag(Stacki[Nbval*Size+SP]); break;
-          case   cArg: for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_arg(Stacki[Nbval*Size+SP]); break;
-          case   cConj:for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_conj(Stacki[Nbval*Size+SP]); break;
-          case   cPolar:for(Nbval=0; Nbval<NbStack; Nbval++)
+          case   cReal:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+                Stacki[Nbval*Size+SP] = fp_real(Stacki[Nbval*Size+SP]);
+            break;
+          case   cImag:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+                Stacki[Nbval*Size+SP] = fp_imag(Stacki[Nbval*Size+SP]);
+            break;
+          case   cArg:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+                Stacki[Nbval*Size+SP] = fp_arg(Stacki[Nbval*Size+SP]);
+            break;
+          case   cConj:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
+                Stacki[Nbval*Size+SP] = fp_conj(Stacki[Nbval*Size+SP]);
+            break;
+          case   cPolar:
+            for(Nbval=0; Nbval<NbStack; Nbval++)
                 Stacki[Nbval*Size+SP-1] = fp_polar(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
-              --SP; break;
+              --SP;
+            break;
 #endif
 
         case cPCall:
