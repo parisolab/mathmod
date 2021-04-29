@@ -23,6 +23,7 @@
  <li><a href="#Implicit_function">Implicit function</a>
  <li><a href="#Implicit_surface">Implicit surface</a>
  <li><a href="#Complex_function">Functions of a Complex Variable</a>
+ <li><a href="#Complex_visualization">Visualizing Functions of a Complex Variable</a>
  </ol>
  <li><a href="#Procedural_texture">Procedural texture</a>
  <ol>
@@ -229,8 +230,27 @@ Hence, to specify a complex function it is enough to specify two real functions:
 f(u+iv) = u^2 - v^2 +i2*u*v</code>
 </li>
 
+<a name="Complex_visualization"></a>
+<li><h3> Visualizing Functions of a Complex Variable</h3>
+A function of a complex variable, w = f(z), can be thought in terms of its real components:
+ f(u+iv) = U(u,v) + iV(u,v).<br>
+MathMod supported ways to visualize the set of points (u, v, U, V) satisfying this equation:
+<ul>
+        <li>Explicitly dropping one of the coordinates allows us to render a 3D surface. We can also encode the remaining coordinate by coloring the surface(not yet supported)
+                <ul>
+                        <li>(u, v, U) can be seen by graphing Re(f(u+iv))</li>
+                        <li>(u, v, V) can be seen by graphing Im(f(u+iv))</li>
+                        <li>(u, U, V) can be seen by graphing the real part of the inverse of f.</li>
+                        <li>(v, U, V) can be seen by graphing the imaginary part of the inverse of f.</li>
+                        <li>We can also graph the magnitude or phase of f(u+iv).</li>
+                </ul></li>
+        <li>The points (u, v, U, V) represent a surface in four dimensions. This surface can be drawn using perspective
+        projection in much the same way 3D surfaces are rendered on screen.</li>
+</ul>
 
+</li>
 </ol>
+
 <a name="Procedural_texture"></a>
 <h2> Procedural texture</h2>
 <ol>
@@ -1256,6 +1276,50 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
 }
 </pre>
 <a href="images/Examples/The_Dome_v1.png">See attached image</a>
+
+<a name="Complex3D_01"></a>
+<li><pre>
+{
+    "Param3D_C": {
+        "Description": ["Complex3D_01 by Abderrahman Taha 28/04/2021"],
+        "Description": ["Complex function: f(z)=2*z^2+ 2*z +2"],
+        "Name": ["Complex3D_01"],
+        "Component": ["complex"],
+        "Fx": ["u"],
+        "Fy": ["v"],
+        "Fz": ["abs(2*z*z+2*z+2)/3"],
+        "Umax": ["1"],
+        "Umin": ["-2"],
+        "Vmax": ["2"],
+        "Vmin": ["-2"]
+    }
+}
+</pre>
+<a href="images/Examples/Complex3D_01.png">See attached image</a>
+
+
+<a name="Complex4D_Saddle"></a>
+<li><pre>
+{
+    "Param4D_C": {
+        "Description": ["Complex_Saddle by Abderrahman Taha 28/04/2021"],
+        "Component": ["Saddle"],
+        "Name": ["Complex4D_Saddle"],
+        "Fx": ["u"],
+        "Fy": ["v"],
+        "Fz": ["real(z*z)/2"],
+        "Fw": ["imag(z*z)/2"],
+        "Umax": ["2"],
+        "Umin": ["-2"],
+        "Vmax": ["2"],
+        "Vmin": ["-2"]
+    }
+}
+</pre>
+<a href="images/Examples/Complex4D_Saddle.png">See attached image</a>
+
+
+
 
 <a name="Pariso_02"></a>
 <li><pre>
