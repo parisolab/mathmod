@@ -27,6 +27,7 @@ static ImprovedNoise *PNoise2 = new ImprovedNoise(4., 4., 4.);
 static double ParamComponentId=0;
 static double ParamThreadId=0;
 static QElapsedTimer ptime;
+static int nbvariables=0;
 
 double CurrentParamCmpId(const double* p)
 {
@@ -340,7 +341,7 @@ void ParMasterThread::AllocateParsersForMasterThread()
         dif_u.resize(componentsNumber);
         UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
         UsedFunct2   = new bool[FunctSize*FunctSize];
-
+        vectnotnull? nbvariables=vect[0] : nbvariables=0;
         rgbtnotnull ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
@@ -616,7 +617,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                     stdError.strError = Functs[i];
                     return stdError;
                 }
-                Fct[i].AllocateStackMemory(Stack_Factor);
+                Fct[i].AllocateStackMemory(Stack_Factor, nbvariables);
             }
         }
         else
@@ -643,7 +644,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                     stdError.strError = Functs[i];
                     return stdError;
                 }
-                Fct_C[i].AllocateStackMemory(Stack_Factor);
+                Fct_C[i].AllocateStackMemory(Stack_Factor, nbvariables);
             }
         }
     }
@@ -989,7 +990,7 @@ ErrorMessage  Par3D::parse_expression2()
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor);
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor, nbvariables);
         }
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -1108,7 +1109,7 @@ ErrorMessage  Par3D::parse_expression2_C()
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct_C[ii].AllocateStackMemory(Stack_Factor);
+            workerthreads[nbthreads].Fct_C[ii].AllocateStackMemory(Stack_Factor, nbvariables);
         }
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -1954,19 +1955,19 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
         vals[l*3+2]= stepMorph;
     if(!param3d_C && !param4d_C)
     {
-        myParserX[cmp].AllocateStackMemory(Stack_Factor);
-        myParserY[cmp].AllocateStackMemory(Stack_Factor);
-        myParserZ[cmp].AllocateStackMemory(Stack_Factor);
+        myParserX[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+        myParserY[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+        myParserZ[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
         if(param4D == 1)
-            myParserW[cmp].AllocateStackMemory(Stack_Factor);
+            myParserW[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
     }
     else
     {
-        myParserX_C[cmp].AllocateStackMemory(Stack_Factor);
-        myParserY_C[cmp].AllocateStackMemory(Stack_Factor);
-        myParserZ_C[cmp].AllocateStackMemory(Stack_Factor);
+        myParserX_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+        myParserY_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+        myParserZ_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
         if(param4d_C)
-            myParserW_C[cmp].AllocateStackMemory(Stack_Factor);
+            myParserW_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
     }
 
     for(uint il=iStart; il < iFinish   ; il+=nbU)
