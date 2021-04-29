@@ -19,7 +19,7 @@
         "Param4D_C": {
             "Description": ["Complex_Saddle by Abderrahman Taha 28/04/2021"],
             "Component": ["Saddle"],
-            "Name": ["Complex_Saddle"],
+            "Name": ["Complex4D_Saddle"],
             "Fx": ["u"],
             "Fy": ["v"],
             "Fz": ["real(z*z)/2"],
