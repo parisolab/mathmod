@@ -3042,8 +3042,6 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
     unsigned IP, DP=0;
     int SP=-1;
 
-    std::vector<Value_t>& StackSave = mData->mStackSave;
-    int VarSize = StackSave.size();
 #ifdef FP_USE_THREAD_SAFE_EVAL
     /* If Eval() may be called by multiple threads simultaneously,
      * then Eval() must allocate its own stack.
@@ -3206,27 +3204,6 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
               { mData->mEvalErrorType=3; return Value_t(0); }*/
               Stack[SP-1] = fp_pow(Stack[SP-1], Stack[SP]);
               --SP; break;
-        case cPsh:
-            /*
-          if((Stack[SP-1]) >= Value_t(VarSize) || Stack[SP-1] <Value_t(0))
-          {
-              mData->mEvalErrorType=VAR_OVERFLOW;
-              return Value_t(VAR_OVERFLOW);
-          }*/
-          StackSave[abs(Stack[SP-1])] = (Stack[SP]).real();
-          Stack[SP-1]  = 1.0;
-          --SP;
-          break;
-
-        case cCsd:
-            /*
-          if(Stack[SP] >= Value_t(VarSize) || Stack[SP] <Value_t(0))
-          {
-              mData->mEvalErrorType=VAR_OVERFLOW;
-              return Value_t(VAR_OVERFLOW);
-          }*/
-          Stack[SP] = StackSave[abs(Stack[SP])];
-          break;
 
           case  cTrunc: Stack[SP] = fp_trunc(Stack[SP]); break;
 
