@@ -2,6 +2,22 @@
   "MathModels": [
     {
         "Param3D_C": {
+            "Description": ["Complex function: f(z)=1/(z*z+1)"],
+            "Name": ["Complex3D_02"],
+            "Component": ["complex"],
+            "Const": ["A=1.5"],
+            "Vect": ["1"],
+            "Fx": ["u"],
+            "Fy": ["v"],
+            "Fz": ["psh(0, real(1/(z*z+1))) * if(csd(0)>A, A, if(csd(0)<-A, -A, csd(0)))"],
+            "Umax": ["2.5"],
+            "Umin": ["-2.5"],
+            "Vmax": ["2.5"],
+            "Vmin": ["-2.5"]
+        }
+    },
+    {
+        "Param3D_C": {
             "Description": ["Complex3D_01 by Abderrahman Taha 28/04/2021"],
             "Description": ["Complex function: f(z)=2*z^2+ 2*z +2"],
             "Name": ["Complex3D_01"],
