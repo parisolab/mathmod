@@ -17,36 +17,6 @@
         }
     },
     {
-        "Param3D_C": {
-            "Description": ["Complex3D_01 by Abderrahman Taha 28/04/2021"],
-            "Description": ["Complex function: f(z)=2*z^2+ 2*z +2"],
-            "Name": ["Complex3D_01"],
-            "Component": ["complex"],
-            "Fx": ["u"],
-            "Fy": ["v"],
-            "Fz": ["abs(2*z*z+2*z+2)/3"],
-            "Umax": ["1"],
-            "Umin": ["-2"],
-            "Vmax": ["2"],
-            "Vmin": ["-2"]
-        }
-    },
-    {
-        "Param4D_C": {
-            "Description": ["Complex_Saddle by Abderrahman Taha 28/04/2021"],
-            "Component": ["Saddle"],
-            "Name": ["Complex4D_Saddle"],
-            "Fx": ["u"],
-            "Fy": ["v"],
-            "Fz": ["real(z*z)/2"],
-            "Fw": ["imag(z*z)/2"],
-            "Umax": ["2"],
-            "Umin": ["-2"],
-            "Vmax": ["2"],
-            "Vmin": ["-2"]
-        }
-    },
-    {
         "Name": "Pariso_01",
         "ParIso": [
 
