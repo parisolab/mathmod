@@ -1307,7 +1307,7 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
     glUniform1i(uniformThereisRGBA, 1);
 }
 
-void MathMod::DrawMeshIso(ObjectProperties *scene)
+void MathMod::DrawTrianglMesh(ObjectProperties *scene)
 {
     size_t Offset = 0;
     uint st = 0;
@@ -1334,16 +1334,20 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
     uint st = scene->PolyNumber;
     uint polysize=0;
     size_t Offset;
-    for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+    //uint gd=(scene->typedrawing == 1) ? Xgrid : ParObjet->Vgrid;
+
+    for (uint i = 0; i < (scene->NbPolygnNbVertexPtMin); i++)
     {
         polysize = scene->PolyIndices_localPtMin[i];
         Offset = st*sizeof( GL_FLOAT);
-        glDrawElements(
-            GL_LINE_LOOP,
-            polysize,
-            GL_UNSIGNED_INT,
-            (void *)(Offset));
+        //if((int((i)/(gd-1))) % 4 == 0 )
+            glDrawElements(
+                GL_LINE_LOOP,
+                polysize,
+                GL_UNSIGNED_INT,
+                (void *)(Offset));
         st+=(polysize);
+
     }
     glUniform1i(uniformdrawgridColor, 0);
     glUniform1i(uniformThereisRGBA, 1);
@@ -1487,7 +1491,7 @@ void MathMod::draw(ObjectProperties *scene)
 
     // Draw Mesh Object:
     if (scene->triangles == 1 && scene->componentsinfos.updateviewer)
-        DrawMeshIso(scene);
+        DrawTrianglMesh(scene);
 
     // Bounding Box:
     if (scene->boundingbox == 1)

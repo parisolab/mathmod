@@ -250,7 +250,7 @@ public slots:
     void plan();
     void CopyData(ObjectProperties *);
     void DrawMinimalTopology(ObjectProperties *);
-    void DrawMeshIso(ObjectProperties *);
+    void DrawTrianglMesh(ObjectProperties *);
     void DrawParisoCND(ObjectProperties *, uint);
     void DrawNormals(ObjectProperties *);
     void DrawAxe();
