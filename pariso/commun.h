@@ -275,6 +275,7 @@ public:
 
 extern std::vector<float> NormVertexTabVector;
 extern std::vector<uint> IndexPolyTabMinVector;
+extern std::vector<uint> IndexParamLines;
 extern std::vector<uint> IndexPolyTabMinVector2;
 extern std::vector<uint> IndexPolyTabVector;
 static struct ComponentInfos *components = new (struct ComponentInfos);
