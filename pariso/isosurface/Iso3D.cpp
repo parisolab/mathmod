@@ -1403,7 +1403,13 @@ void Iso3D::IsoBuild (
     if(componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)
     {
         NbVertexTmp = uint(NormVertexTabVector.size()/10);
-        NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
+
+        //*********************
+        // probleme with pariso objects comes from here since IndexPolyTabVector not only contains triangles but also lines
+        // inherited from it's parametric conterpart
+        NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3); // <==
+        //*********************
+
         copycomponent(components, componentsPt);
     }
     else

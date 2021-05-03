@@ -2196,11 +2196,12 @@ void  Par3D::ParamBuild(
 {
     uint NbTriangleIsoSurfaceTmp;
     uint nbline_save=Ugrid, nbcolone_save=Vgrid, NextPosition=0;
+    bool ParisoType=false;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     componentsPt->updateviewer= false;
     clear(components);
     components->ParisoCondition = componentsPt->ParisoCondition;
-    if(componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)
+    if(((componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)))
     {
         NbVertexTmp = uint(NormVertexTabVector.size()/10);
         NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3);
@@ -2208,7 +2209,7 @@ void  Par3D::ParamBuild(
     }
     else
     {
-        if(componentsPt->pariso)
+        if((ParisoType=componentsPt->pariso))
         {
             components->pariso = true;
             components->ParisoCurrentComponentIndex = componentsPt->ParisoCurrentComponentIndex;
@@ -2287,7 +2288,7 @@ void  Par3D::ParamBuild(
         components->ParisoTriangle.push_back(6*NextPosition); //save the starting position of this component
         components->ParisoTriangle.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
 
-        NextPosition += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
+        NextPosition   += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NbVertexTmp    += (Ugrid)*(Vgrid);
     }
     if(masterthread->activeMorph != 1)
@@ -2334,8 +2335,10 @@ void  Par3D::ParamBuild(
     {
         *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
         *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
-        //*NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
-        *NbPolyMinPt     = uint(IndexParamLines.size());
+        if(ParisoType)
+            *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
+        else
+            *NbPolyMinPt     = uint(IndexParamLines.size());
         NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
         uint startpl = 0;
         uint actualpointindice=0;
@@ -2360,6 +2363,8 @@ void  Par3D::ParamBuild(
             i += polysize;
         }
 */
+        if(!ParisoType)
+        {
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
             uint polysize = IndexParamLines[startpl++];
@@ -2379,10 +2384,18 @@ void  Par3D::ParamBuild(
             IndexPolyTabMinVector2.push_back(polysize);
             i += polysize;
         }
-
+        }
         *MinimPolySize = IndexPolyTabVector.size() - *PolyNumber;
+        if(!ParisoType)
+        {
         *NbPolyMinPt     = uint(IndexPolyTabMinVector2.size());
         *IndexPolyTabMinPt = IndexPolyTabMinVector2.data();
+        }
+        else
+        {
+            *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
+            *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
+        }
         *NormVertexTabPt   = NormVertexTabVector.data();
         *IndexPolyTabPt    = IndexPolyTabVector.data();
     }

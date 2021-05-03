@@ -1335,33 +1335,16 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
     uint polysize=0;
     size_t Offset;
 
-    if(scene->typedrawing == 1)
+    for (uint i = 0; i < (scene->NbPolygnNbVertexPtMin); i++)
     {
-        for (uint i = 0; i < (scene->NbPolygnNbVertexPtMin); i++)
-        {
-            polysize = scene->PolyIndices_localPtMin[i];
-            Offset = st*sizeof( GL_FLOAT);
-                glDrawElements(
-                    GL_LINE_LOOP,
-                    polysize,
-                    GL_UNSIGNED_INT,
-                    (void *)(Offset));
-            st+=(polysize);
-        }
-    }
-    else
-    {
-        for (uint i = 0; i < (scene->NbPolygnNbVertexPtMin); i++)
-        {
-            polysize = scene->PolyIndices_localPtMin[i];
-            Offset = st*sizeof( GL_FLOAT);
-                glDrawElements(
-                    GL_LINE_STRIP,
-                    polysize,
-                    GL_UNSIGNED_INT,
-                    (void *)(Offset));
-            st+=(polysize);
-        }
+        polysize = scene->PolyIndices_localPtMin[i];
+        Offset = st*sizeof( GL_FLOAT);
+            glDrawElements(
+                GL_LINE_LOOP,
+                polysize,
+                GL_UNSIGNED_INT,
+                (void *)(Offset));
+        st+=(polysize);
     }
     glUniform1i(uniformdrawgridColor, 0);
     glUniform1i(uniformThereisRGBA, 1);
