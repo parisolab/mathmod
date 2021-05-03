@@ -2220,8 +2220,6 @@ void  Par3D::ParamBuild(
         IndexPolyTabVector.shrink_to_fit();
         IndexPolyTabMinVector.clear();
         IndexPolyTabMinVector.shrink_to_fit();
-        IndexParamLines.clear();
-        IndexParamLines.shrink_to_fit();
     }
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
@@ -2334,12 +2332,10 @@ void  Par3D::ParamBuild(
     {
         *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
         *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
-        //*NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
-        *NbPolyMinPt     = uint(IndexParamLines.size());
+        *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());//NbPolyMinimalTopology;
         NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
         uint startpl = 0;
         uint actualpointindice=0;
-        /*
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
             uint polysize = IndexPolyTabMinVector[startpl++];
@@ -2356,26 +2352,6 @@ void  Par3D::ParamBuild(
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
             uint polysize = IndexPolyTabMinVector[i];
-            IndexPolyTabMinVector2.push_back(polysize);
-            i += polysize;
-        }
-*/
-        for (uint i = 0; i < *NbPolyMinPt; i++)
-        {
-            uint polysize = IndexParamLines[startpl++];
-            for (uint j = 0; j < polysize; j++)
-            {
-                actualpointindice = IndexParamLines[startpl];
-                IndexPolyTabVector.push_back(actualpointindice);
-                startpl++;
-            }
-            i += polysize;
-        }
-
-        IndexPolyTabMinVector2.clear();
-        for (uint i = 0; i < *NbPolyMinPt; i++)
-        {
-            uint polysize = IndexParamLines[i];
             IndexPolyTabMinVector2.push_back(polysize);
             i += polysize;
         }
@@ -2410,30 +2386,12 @@ void  Par3D::make_PolyIndexMin(uint index)
         for (uint j=0; j+CutV+1< Vgrid ; j++)
         {
             IndexPolyTabMinVector.push_back(4);
-            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+index);
             IndexPolyTabMinVector.push_back(i*Vgrid + j+index);
             IndexPolyTabMinVector.push_back((i+1)*Vgrid + j +index);
             IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+index);
+            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+index);
             k+=5;
         }
-
-    for (uint i=0; i+CutU < Ugrid ; i++)
-    {
-        IndexParamLines.push_back(Vgrid);
-        for (uint j=0; j+CutV< Vgrid ; j++)
-        {
-            IndexParamLines.push_back(i*Vgrid + j+index);
-        }
-    }
-
-    for (uint i=0; i+CutV < Vgrid ; i++)
-    {
-        IndexParamLines.push_back(Ugrid);
-        for (uint j=0; j+CutU< Ugrid ; j++)
-        {
-            IndexParamLines.push_back(i + j*Vgrid + index);
-        }
-    }
 }
 
 void  Par3D::make_PolyIndexTri(uint index)
