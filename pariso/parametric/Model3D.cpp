@@ -2226,8 +2226,6 @@ void  Par3D::ParamBuild(
         IndexPolyTabVector.shrink_to_fit();
         IndexPolyTabMinVector.clear();
         IndexPolyTabMinVector.shrink_to_fit();
-        IndexParamLines.clear();
-        IndexParamLines.shrink_to_fit();
     }
     ExtraDimensionVector.clear();
     ExtraDimensionVector.shrink_to_fit();
@@ -2399,24 +2397,8 @@ void Par3D::InitShowComponent(struct ComponentInfos *cpInfos)
 
 void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
 {
-    /*
-    uint k=0;
-    for (uint i=0; i+CutU+1 < Ugrid ; i++)
-        for (uint j=0; j+CutV+1< Vgrid ; j++)
-        {
-            IndexPolyTabMinVector.push_back(4);
-            IndexPolyTabMinVector.push_back(i*Vgrid + (j+1)+index);
-            IndexPolyTabMinVector.push_back(i*Vgrid + j+index);
-            IndexPolyTabMinVector.push_back((i+1)*Vgrid + j +index);
-            IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+index);
-            k+=5;
-        }
-*/
-    //***********
-    //Useful for drawing lines of parametric components
-    //in pariso objects with "DrawMinimalTopology(ObjectProperties *)"
     cp->NbParametricMeshLines += (Ugrid+Vgrid);
-    //***********
+
     for (uint i=0; i+CutU < Ugrid ; i++)
     {
         IndexPolyTabMinVector.push_back(Vgrid);
