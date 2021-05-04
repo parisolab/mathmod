@@ -2346,27 +2346,7 @@ void  Par3D::ParamBuild(
         NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
         uint startpl = 0;
         uint actualpointindice=0;
-        /*
-        for (uint i = 0; i < *NbPolyMinPt; i++)
-        {
-            uint polysize = IndexPolyTabMinVector[startpl++];
-            for (uint j = 0; j < polysize; j++)
-            {
-                actualpointindice = IndexPolyTabMinVector[startpl];
-                IndexPolyTabVector.push_back(actualpointindice);
-                startpl++;
-            }
-            i += polysize;
-        }
 
-        IndexPolyTabMinVector2.clear();
-        for (uint i = 0; i < *NbPolyMinPt; i++)
-        {
-            uint polysize = IndexPolyTabMinVector[i];
-            IndexPolyTabMinVector2.push_back(polysize);
-            i += polysize;
-        }
-*/
         if(!ParisoType)
         {
         for (uint i = 0; i < *NbPolyMinPt; i++)
