@@ -2337,19 +2337,15 @@ void  Par3D::ParamBuild(
         emitUpdateMessageSignal();
     }
     // 3) Nb Poly & Vertex :
-    {
-        *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
-        *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
-        //if(ParisoType)
-            *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
-        /*else
-            *NbPolyMinPt     = uint(IndexParamLines.size());*/
-        NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
-        uint startpl = 0;
-        uint actualpointindice=0;
+    *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
+    *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
+    *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
+    NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
+    uint startpl = 0;
+    uint actualpointindice=0;
 
-        if(!ParisoType)
-        {
+    if(!ParisoType)
+    {
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
             uint polysize = IndexPolyTabMinVector[startpl++];
@@ -2369,21 +2365,21 @@ void  Par3D::ParamBuild(
             IndexPolyTabMinVector2.push_back(polysize);
             i += polysize;
         }
-        }
-        *MinimPolySize = IndexPolyTabVector.size() - *PolyNumber;
-        if(!ParisoType)
-        {
+    }
+    *MinimPolySize = IndexPolyTabVector.size() - *PolyNumber;
+    if(!ParisoType)
+    {
         *NbPolyMinPt     = uint(IndexPolyTabMinVector2.size());
         *IndexPolyTabMinPt = IndexPolyTabMinVector2.data();
-        }
-        else
-        {
-            *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
-            *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
-        }
-        *NormVertexTabPt   = NormVertexTabVector.data();
-        *IndexPolyTabPt    = IndexPolyTabVector.data();
     }
+    else
+    {
+        *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
+        *IndexPolyTabMinPt = IndexPolyTabMinVector.data();
+    }
+    *NormVertexTabPt   = NormVertexTabVector.data();
+    *IndexPolyTabPt    = IndexPolyTabVector.data();
+
     copycomponent(componentsPt, components);
     componentsPt->Interleave = true;
     if(componentsPt->ParisoCurrentComponentIndex != (componentsPt->ParisoNbComponents-1))
