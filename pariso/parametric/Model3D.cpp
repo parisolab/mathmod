@@ -2203,6 +2203,7 @@ void  Par3D::ParamBuild(
     bool ParisoType=false;
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     componentsPt->updateviewer= false;
+    componentsPt->NbParametricMeshLines=0;
     clear(components);
     components->ParisoCondition = componentsPt->ParisoCondition;
     if(((componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)))
@@ -2286,7 +2287,7 @@ void  Par3D::ParamBuild(
             Anim_Rot4D (NbVertexTmp);
         }
         calcul_Norm(10*NbVertexTmp);
-        make_PolyIndexMin(NbVertexTmp);
+        make_PolyIndexMin(NbVertexTmp, componentsPt);
         make_PolyIndexTri(NbVertexTmp);
 
         components->ParisoTriangle.push_back(6*NextPosition); //save the starting position of this component
@@ -2339,10 +2340,10 @@ void  Par3D::ParamBuild(
     {
         *PolyNumber      = uint(IndexPolyTabVector.size());//3*NbTriangleIsoSurfaceTmp;
         *VertxNumber     = uint(NormVertexTabVector.size()/10);//NbVertexTmp;
-        if(ParisoType)
+        //if(ParisoType)
             *NbPolyMinPt     = uint(IndexPolyTabMinVector.size());
-        else
-            *NbPolyMinPt     = uint(IndexParamLines.size());
+        /*else
+            *NbPolyMinPt     = uint(IndexParamLines.size());*/
         NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
         uint startpl = 0;
         uint actualpointindice=0;
@@ -2351,10 +2352,10 @@ void  Par3D::ParamBuild(
         {
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
-            uint polysize = IndexParamLines[startpl++];
+            uint polysize = IndexPolyTabMinVector[startpl++];
             for (uint j = 0; j < polysize; j++)
             {
-                actualpointindice = IndexParamLines[startpl];
+                actualpointindice = IndexPolyTabMinVector[startpl];
                 IndexPolyTabVector.push_back(actualpointindice);
                 startpl++;
             }
@@ -2364,7 +2365,7 @@ void  Par3D::ParamBuild(
         IndexPolyTabMinVector2.clear();
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
-            uint polysize = IndexParamLines[i];
+            uint polysize = IndexPolyTabMinVector[i];
             IndexPolyTabMinVector2.push_back(polysize);
             i += polysize;
         }
@@ -2400,8 +2401,9 @@ void Par3D::InitShowComponent(struct ComponentInfos *cpInfos)
         cpInfos->ShowParIsoCmp.push_back(true);
 }
 
-void  Par3D::make_PolyIndexMin(uint index)
+void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
 {
+    /*
     uint k=0;
     for (uint i=0; i+CutU+1 < Ugrid ; i++)
         for (uint j=0; j+CutV+1< Vgrid ; j++)
@@ -2413,22 +2415,27 @@ void  Par3D::make_PolyIndexMin(uint index)
             IndexPolyTabMinVector.push_back((i+1)*Vgrid + (j+1)+index);
             k+=5;
         }
-
+*/
+    //***********
+    //Useful for drawing lines of parametric components
+    //in pariso objects with "DrawMinimalTopology(ObjectProperties *)"
+    cp->NbParametricMeshLines += (Ugrid+Vgrid);
+    //***********
     for (uint i=0; i+CutU < Ugrid ; i++)
     {
-        IndexParamLines.push_back(Vgrid);
+        IndexPolyTabMinVector.push_back(Vgrid);
         for (uint j=0; j+CutV< Vgrid ; j++)
         {
-            IndexParamLines.push_back(i*Vgrid + j+index);
+            IndexPolyTabMinVector.push_back(i*Vgrid + j+index);
         }
     }
 
     for (uint i=0; i+CutV < Vgrid ; i++)
     {
-        IndexParamLines.push_back(Ugrid);
+        IndexPolyTabMinVector.push_back(Ugrid);
         for (uint j=0; j+CutU< Ugrid ; j++)
         {
-            IndexParamLines.push_back(i + j*Vgrid + index);
+            IndexPolyTabMinVector.push_back(i + j*Vgrid + index);
         }
     }
 }

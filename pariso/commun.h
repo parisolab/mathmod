@@ -145,6 +145,7 @@ struct ComponentInfos
     std::vector<bool> ShowParIsoCmp;
     uint ParisoNbComponents = 1;
     uint ParisoCurrentComponentIndex = 0;
+    uint NbParametricMeshLines=0;
 
     std::vector<uint> NbTrianglesVerifyCND;
     std::vector<uint> NbTrianglesNoCND;

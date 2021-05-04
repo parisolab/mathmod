@@ -121,7 +121,7 @@ public:
     void initialiser_LineColumn(uint, uint);
     void calcul_Norm(uint i=0);
     void make_PolyIndexTri(uint p=0);
-    void make_PolyIndexMin(uint p=0);
+    void make_PolyIndexMin(uint p, ComponentInfos *);
     uint CNDCalculation(uint &, struct ComponentInfos *);
     void CalculateColorsPoints(struct ComponentInfos *, uint);
     void ParamBuild(float **, uint **, uint *,
