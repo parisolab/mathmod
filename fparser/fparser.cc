@@ -3042,7 +3042,7 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
     unsigned IP, DP=0;
     int SP=-1;
     std::vector<Value_t>& StackSave = mData->mStackSave;
-    //int VarSize = StackSave.size();
+    uint VarSize = StackSave.size();
 
 #ifdef FP_USE_THREAD_SAFE_EVAL
     /* If Eval() may be called by multiple threads simultaneously,
@@ -3079,23 +3079,12 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
           case   cAbs: Stack[SP] = fp_abs(Stack[SP]); break;
 
           case  cAcos:
-            /*
-              if(IsComplexType<Value_t>::result == false
-              && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
-              { mData->mEvalErrorType=4; return Value_t(0); }
-              */
               Stack[SP] = fp_acos(Stack[SP]); break;
 
-          case cAcosh:/*
-              if(IsComplexType<Value_t>::result == false
-              && Stack[SP] < Value_t(1))
-              { mData->mEvalErrorType=4; return Value_t(0); }*/
+          case cAcosh:
               Stack[SP] = fp_acosh(Stack[SP]); break;
 
-          case  cAsin:/*
-              if(IsComplexType<Value_t>::result == false
-              && (Stack[SP] < Value_t(-1) || Stack[SP] > Value_t(1)))
-              { mData->mEvalErrorType=4; return Value_t(0); }*/
+          case  cAsin:
               Stack[SP] = fp_asin(Stack[SP]); break;
 
           case cAsinh: Stack[SP] = fp_asinh(Stack[SP]); break;
@@ -3105,11 +3094,7 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
           case cAtan2: Stack[SP-1] = fp_atan2(Stack[SP-1], Stack[SP]);
                        --SP; break;
 
-          case cAtanh:/*
-              if(IsComplexType<Value_t>::result
-              ?  (Stack[SP] == Value_t(-1) || Stack[SP] == Value_t(1))
-              :  (Stack[SP] <= Value_t(-1) || Stack[SP] >= Value_t(1)))
-              { mData->mEvalErrorType=4; return Value_t(0); }*/
+          case cAtanh:
               Stack[SP] = fp_atanh(Stack[SP]); break;
 
           case  cCbrt: Stack[SP] = fp_cbrt(Stack[SP]); break;
@@ -3123,18 +3108,12 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
           case   cCot:
               {
                   const std::complex<double> t = fp_tan(Stack[SP]);
-                  /*
-                  if(t == Value_t(0))
-                  { mData->mEvalErrorType=1; return Value_t(0); }*/
                   Stack[SP] = (1.0)/t; break;
               }
 
           case   cCsc:
               {
                   const std::complex<double> s = fp_sin(Stack[SP]);
-                  /*
-                  if(s == Value_t(0))
-                  { mData->mEvalErrorType=1; return Value_t(0); }*/
                   Stack[SP] = (1.0)/s; break;
               }
 
@@ -3162,26 +3141,14 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
 
           case   cInt: Stack[SP] = fp_int(Stack[SP]); break;
 
-          case   cLog:/*
-              if(IsComplexType<Value_t>::result
-               ?   Stack[SP] == Value_t(0)
-               :   !(Stack[SP] > Value_t(0)))
-              { mData->mEvalErrorType=3; return Value_t(0); }*/
+          case   cLog:
               Stack[SP] = fp_log(Stack[SP]); break;
 
-          case cLog10:/*
-              if(IsComplexType<Value_t>::result
-               ?   Stack[SP] == Value_t(0)
-               :   !(Stack[SP] > Value_t(0)))
-              { mData->mEvalErrorType=3; return Value_t(0); }*/
+          case cLog10:
               Stack[SP] = fp_log10(Stack[SP]);
               break;
 
-          case  cLog2:/*
-              if(IsComplexType<Value_t>::result
-               ?   Stack[SP] == Value_t(0)
-               :   !(Stack[SP] > Value_t(0)))
-              { mData->mEvalErrorType=3; return Value_t(0); }*/
+          case  cLog2:
               Stack[SP] = fp_log2(Stack[SP]);
               break;
 
@@ -3207,23 +3174,23 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
               Stack[SP-1] = fp_pow(Stack[SP-1], Stack[SP]);
               --SP; break;
           case cPsh:
-                /*
-              if((Stack[SP-1]) >= Value_t(VarSize) || Stack[SP-1] <Value_t(0))
+
+              if((Stack[SP-1]).real() >= VarSize || Stack[SP-1].real() < 0)
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
                   return Value_t(VAR_OVERFLOW);
-              }*/
+              }
               StackSave[abs(Stack[SP-1])] = (Stack[SP]).real();
               Stack[SP-1]  = 1.0;
               --SP;
               break;
           case cCsd:
-                /*
-              if(Stack[SP] >= Value_t(VarSize) || Stack[SP] <Value_t(0))
+
+              if(Stack[SP].real()  >= VarSize || Stack[SP].real() < 0)
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
                   return Value_t(VAR_OVERFLOW);
-              }*/
+              }
               Stack[SP] = StackSave[abs(Stack[SP])];
               break;
           case  cTrunc: Stack[SP] = fp_trunc(Stack[SP]); break;
@@ -3231,9 +3198,8 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
           case   cSec:
               {
                   const std::complex<double> c = fp_cos(Stack[SP]);
-                  /*
-                  if(c == Value_t(0))
-                  { mData->mEvalErrorType=1; return Value_t(0); }*/
+                  if(abs(c) == 0)
+                  { mData->mEvalErrorType=1; return Value_t(0); }
                   Stack[SP] = (1.0)/c; break;
               }
 
@@ -3270,14 +3236,15 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
           case   cSub: Stack[SP-1] -= Stack[SP]; --SP; break;
           case   cMul: Stack[SP-1] *= Stack[SP]; --SP; break;
 
-          case   cDiv:/*
-              if(Stack[SP] == Value_t(0))
-              { mData->mEvalErrorType=1; return Value_t(0); }*/
-              Stack[SP-1] /= Stack[SP]; --SP; break;
+          case   cDiv:
+              if(abs(Stack[SP]) == 0)
+              { mData->mEvalErrorType=1; return Value_t(0); }
+              Stack[SP-1] /= Stack[SP];
+              --SP; break;
 
-          case   cMod:/*
-              if(Stack[SP] == Value_t(0))
-              { mData->mEvalErrorType=1; return Value_t(0); }*/
+          case   cMod:
+              if(abs(Stack[SP]) == 0)
+              { mData->mEvalErrorType=1; return Value_t(0); }
               Stack[SP-1] = fp_mod(Stack[SP-1], Stack[SP]);
               --SP; break;
 
@@ -3328,7 +3295,7 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
                   const unsigned index = byteCode[++IP];
                   const unsigned params = mData->mFuncPtrs[index].mParams;
                   const Value_t hy = Stack[SP-params+1].real();
-                  /*std::complex<double>*/const Value_t retVal =
+                  std::complex<double> retVal =
                       mData->mFuncPtrs[index].mRawFuncPtr ?
                       mData->mFuncPtrs[index].mRawFuncPtr(&hy) :
                       mData->mFuncPtrs[index].mFuncWrapperPtr->callFunction
