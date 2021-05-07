@@ -29,6 +29,12 @@ static double ParamThreadId=0;
 static QElapsedTimer ptime;
 static int nbvariables=0;
 
+double CurrentParamC(const std::complex<double>* p)
+{
+    std::complex<double> bg (1,2);
+    return real(bg);
+}
+
 double CurrentParamCmpId(const double* p)
 {
     int pp = int(p[0]);
@@ -523,6 +529,7 @@ void ParMasterThread::InitMasterParsers()
         else
         {
             myParserX_C[i].AddConstant("pi", PI);
+            //myParserX_C[i].AddFunction("CurrentParamC",CurrentParamC, 1);
             myParserY_C[i].AddConstant("pi", PI);
             myParserZ_C[i].AddConstant("pi", PI);
             myParserW_C[i].AddConstant("pi", PI);
