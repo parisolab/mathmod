@@ -2184,6 +2184,7 @@ void  Par3D::ParamBuild(
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     componentsPt->updateviewer= false;
     componentsPt->NbParametricMeshLines=0;
+    componentsPt->NbParametricMeshTriangles=0;
     clear(components);
     components->ParisoCondition = componentsPt->ParisoCondition;
     if(((componentsPt->pariso && componentsPt->ParisoCurrentComponentIndex>0)))
@@ -2266,7 +2267,7 @@ void  Par3D::ParamBuild(
         }
         calcul_Norm(10*NbVertexTmp);
         make_PolyIndexMin(NbVertexTmp, componentsPt);
-        make_PolyIndexTri(NbVertexTmp);
+        make_PolyIndexTri(NbVertexTmp, componentsPt);
 
         components->ParisoTriangle.push_back(6*NextPosition); //save the starting position of this component
         components->ParisoTriangle.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
@@ -2398,8 +2399,9 @@ void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
     }
 }
 
-void  Par3D::make_PolyIndexTri(uint index)
+void  Par3D::make_PolyIndexTri(uint index, ComponentInfos *cp)
 {
+    cp->NbParametricMeshLines += 2*(Ugrid-1)*(Vgrid-1);
     uint k=0;
     for (uint i=0; i+CutU+1< Ugrid; i++)
         for (uint j=0; j+CutV+1< Vgrid; j++)
