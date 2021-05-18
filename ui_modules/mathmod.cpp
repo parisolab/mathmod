@@ -204,14 +204,13 @@ void MathMod::SaveSceneAsObjPoly(int type)
     QFile data(fileName);
     if (data.open(QFile::ReadWrite | QFile::Truncate))
     {
-        uint i;
         QTextStream stream(&data);
         stream.setRealNumberNotation(QTextStream::FixedNotation);
         stream.setRealNumberPrecision(3);
         // save vertices:
         if (type == 1)
         {
-            for (i = 0; i < LocalScene.VertxNumber; i++)
+            for (uint i = 0; i < LocalScene.VertxNumber; i++)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
@@ -229,7 +228,7 @@ void MathMod::SaveSceneAsObjPoly(int type)
         }
         else
         {
-            for (i = 0; i < LocalScene.VertxNumber; i++)
+            for (uint i = 0; i < LocalScene.VertxNumber; i++)
             {
                 (stream) << "v "
                          << float(double(LocalScene.ArrayNorVer_localPt[10 * i + 7]) *
@@ -244,17 +243,80 @@ void MathMod::SaveSceneAsObjPoly(int type)
             }
         }
         // save faces:
-        startpl = LocalScene.PolyNumber;
-        for (i = 0; i < LocalScene.NbPolygnNbVertexPtMin; i++)
+        uint paramcomp= LocalScene.componentsinfos.ParametricGrid.size();
+        if(LocalScene.typedrawing == 1)
         {
-            uint polysize = LocalScene.PolyIndices_localPtMin[i];
-            (stream) << "f";
-            for (uint j = 0; j < polysize; j++)
+            startpl = LocalScene.PolyNumber;
+            for (uint i = 0; i < LocalScene.NbPolygnNbVertexPtMin; i++)
             {
-                actualpointindice = LocalScene.PolyIndices_localPt[startpl++]+1;
-                (stream) << "  " << actualpointindice;
+                uint polysize = LocalScene.PolyIndices_localPtMin[i];
+                (stream) << "f";
+                for (uint j = 0; j < polysize; j++)
+                {
+                    actualpointindice = LocalScene.PolyIndices_localPt[startpl++]+1;
+                    (stream) << "  " << actualpointindice;
+                }
+                (stream) << "\n";
             }
-            (stream) << "\n";
+        }
+        else if(LocalScene.typedrawing == -1)
+        {
+            //**** Parametrics components ***/
+            uint ugrid=0;
+            uint vgrid =0;
+            uint index=0;
+           for (uint p = 0; p < paramcomp; p += 2)
+           {
+                ugrid=LocalScene.componentsinfos.ParametricGrid[p];
+                vgrid=LocalScene.componentsinfos.ParametricGrid[p+1];
+                for (uint i = 0; i < ugrid; i ++)
+                    for (uint j = 0; j < vgrid; j ++)
+                {
+                    (stream) << "f "
+                             << "  " << (i*vgrid + j+index) << "  "
+                             << ((i+1)*vgrid + j +index) << "  "
+                             << ((i+1)*vgrid + (j+1)+index) << "  "
+                             << (i*vgrid + (j+1)+index) << "\n";
+                }
+                index += ugrid*vgrid-1;
+           }
+        }
+        else
+        {
+            //**** Parametrics components ***/
+            uint ugrid=0;
+            uint vgrid =0;
+            uint index=0;
+           for (uint p = 0; p < paramcomp; p += 2)
+           {
+                ugrid=LocalScene.componentsinfos.ParametricGrid[p];
+                vgrid=LocalScene.componentsinfos.ParametricGrid[p+1];
+                for (uint i = 0; i < ugrid; i ++)
+                    for (uint j = 0; j < vgrid; j ++)
+                {
+                    (stream) << "f "
+                             << "  " << (i*vgrid + j+index) << "  "
+                             << ((i+1)*vgrid + j +index) << "  "
+                             << ((i+1)*vgrid + (j+1)+index) << "  "
+                             << (i*vgrid + (j+1)+index) << "\n";
+                }
+                index += ugrid*vgrid-1;
+           }
+
+           // Isosurfaces components
+           startpl = LocalScene.PolyNumber;
+           uint kl=  LocalScene.componentsinfos.NbParametricMeshLines;
+           for (uint i = kl; i < LocalScene.NbPolygnNbVertexPtMin; i++)
+           {
+               uint polysize = LocalScene.PolyIndices_localPtMin[i];
+               (stream) << "f";
+               for (uint j = 0; j < polysize; j++)
+               {
+                   actualpointindice = LocalScene.PolyIndices_localPt[startpl++]+1;
+                   (stream) << "  " << actualpointindice;
+               }
+               (stream) << "\n";
+           }
         }
     }
 }
