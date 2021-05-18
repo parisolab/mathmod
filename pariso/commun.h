@@ -146,6 +146,7 @@ struct ComponentInfos
     uint ParisoNbComponents = 1;
     uint ParisoCurrentComponentIndex = 0;
     uint NbParametricMeshLines=0;
+    uint MinParametricMeshLines=0;
     std::vector<uint> ParametricGrid;
 
     std::vector<uint> NbTrianglesVerifyCND;

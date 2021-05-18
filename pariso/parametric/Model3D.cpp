@@ -2184,6 +2184,7 @@ void  Par3D::ParamBuild(
     NbVertexTmp = NbTriangleIsoSurfaceTmp =  0;
     componentsPt->updateviewer= false;
     componentsPt->NbParametricMeshLines=0;
+    componentsPt->MinParametricMeshLines=0;
     componentsPt->ParametricGrid.clear();
     clear(components);
     components->ParisoCondition = componentsPt->ParisoCondition;
@@ -2379,6 +2380,7 @@ void Par3D::InitShowComponent(struct ComponentInfos *cpInfos)
 void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
 {
     cp->NbParametricMeshLines += (Ugrid+Vgrid);
+    cp->MinParametricMeshLines += 2*Ugrid*Vgrid;
     cp->ParametricGrid.push_back(Ugrid);
     cp->ParametricGrid.push_back(Vgrid);
     for (uint i=0; i+CutU < Ugrid ; i++)

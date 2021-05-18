@@ -284,6 +284,7 @@ void MathMod::SaveSceneAsObjPoly(int type)
         else
         {
             //**** Parametrics components ***/
+            /*
             uint ugrid=0;
             uint vgrid =0;
             uint index=0;
@@ -302,9 +303,9 @@ void MathMod::SaveSceneAsObjPoly(int type)
                 }
                 index += ugrid*vgrid-1;
            }
-
+*/
            // Isosurfaces components
-           startpl = LocalScene.PolyNumber;
+           startpl = LocalScene.PolyNumber+LocalScene.componentsinfos.MinParametricMeshLines;
            uint kl=  LocalScene.componentsinfos.NbParametricMeshLines;
            for (uint i = kl; i < LocalScene.NbPolygnNbVertexPtMin; i++)
            {
@@ -317,6 +318,7 @@ void MathMod::SaveSceneAsObjPoly(int type)
                }
                (stream) << "\n";
            }
+
         }
     }
 }
