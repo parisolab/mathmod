@@ -269,41 +269,47 @@ void MathMod::SaveSceneAsObjPoly(int type)
            {
                 ugrid=LocalScene.componentsinfos.ParametricGrid[p];
                 vgrid=LocalScene.componentsinfos.ParametricGrid[p+1];
-                for (uint i = 0; i < ugrid; i ++)
-                    for (uint j = 0; j < vgrid; j ++)
+                for (uint i = 0; i < ugrid-1; i ++)
+                    for (uint j = 0; j < vgrid-1; j ++)
                 {
                     (stream) << "f "
-                             << "  " << (i*vgrid + j+index) << "  "
-                             << ((i+1)*vgrid + j +index) << "  "
-                             << ((i+1)*vgrid + (j+1)+index) << "  "
-                             << (i*vgrid + (j+1)+index) << "\n";
+                             << "  " << (i*vgrid + j+index) +1<< "  "
+                             << ((i+1)*vgrid + j +index) +1<< "  "
+                             << ((i+1)*vgrid + (j+1)+index) +1<< "  "
+                             << (i*vgrid + (j+1)+index) +1<< "\n";
                 }
-                index += ugrid*vgrid-1;
+                index += ugrid*vgrid;
            }
         }
         else
         {
             //**** Parametrics components ***/
-            /*
+
             uint ugrid=0;
             uint vgrid =0;
             uint index=0;
-           for (uint p = 0; p < paramcomp; p += 2)
-           {
-                ugrid=LocalScene.componentsinfos.ParametricGrid[p];
-                vgrid=LocalScene.componentsinfos.ParametricGrid[p+1];
-                for (uint i = 0; i < ugrid; i ++)
-                    for (uint j = 0; j < vgrid; j ++)
-                {
-                    (stream) << "f "
-                             << "  " << (i*vgrid + j+index) << "  "
-                             << ((i+1)*vgrid + j +index) << "  "
-                             << ((i+1)*vgrid + (j+1)+index) << "  "
-                             << (i*vgrid + (j+1)+index) << "\n";
-                }
-                index += ugrid*vgrid-1;
-           }
-*/
+            for (uint p = 0; p < paramcomp; p += 2)
+            {
+                 ugrid=LocalScene.componentsinfos.ParametricGrid[p];
+                 vgrid=LocalScene.componentsinfos.ParametricGrid[p+1];
+                 for (uint i = 0; i < ugrid-1; i ++)
+                     for (uint j = 0; j < vgrid-1; j ++)
+                 {
+                     (stream) << "f "
+                              << "  " << (i*vgrid + j+index) +1<< "  "
+                              << ((i+1)*vgrid + j +index) +1<< "  "
+                              << ((i+1)*vgrid + (j+1)+index) +1<< "  "
+                              << (i*vgrid + (j+1)+index) +1<< "\n";
+                 }
+                 index += ugrid*vgrid;
+            }
+
+
+
+
+
+
+
            // Isosurfaces components
            startpl = LocalScene.PolyNumber+LocalScene.componentsinfos.MinParametricMeshLines;
            uint kl=  LocalScene.componentsinfos.NbParametricMeshLines;
