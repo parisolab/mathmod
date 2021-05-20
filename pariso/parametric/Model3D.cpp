@@ -114,11 +114,6 @@ void ParWorkerThread::run()
     ParCompute(CurrentComponent, CurrentIndex);
 }
 
-void ParWorkerThread::ParCompute(uint fctnb, uint idx)
-{
-    calcul_objet(fctnb, idx);
-}
-
 void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
 {
     Ugrid = nbGrid;
@@ -1902,7 +1897,7 @@ void ParWorkerThread::emitMySignal()
 {
     emit mySignal(signalVal);
 }
-void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
+void  ParWorkerThread::ParCompute(uint cmp, uint idx)
 {
     uint NewPosition =  10*idx, id=0;
     int PreviousSignal=0;
@@ -2048,49 +2043,19 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                 for(uint l=0; l<nbstack; l++)
                 {
                     pc = (myParserX_C[cmp].EvalC(&valcomplex[l*4]));
-                    real= pc.real();
-                    imag= pc.imag();
-                    if(real !=0.0 && imag !=0.0)
-                        ResX[l] = abs(pc);
-                    else
-                    {
-                        if(real==0.0)
-                            ResX[l] = imag;
-                        else
-                            ResX[l] = real;
-                    }
+                    ResX[l] = pc.real();
                 }
 
                 for(uint l=0; l<nbstack; l++)
                 {
                     pc = (myParserY_C[cmp].EvalC(&valcomplex[l*4]));
-                    real= pc.real();
-                    imag= pc.imag();
-                    if(real !=0.0 && imag !=0.0)
-                        ResY[l] = abs(pc);
-                    else
-                    {
-                        if(real==0.0)
-                            ResY[l] = imag;
-                        else
-                            ResY[l] = real;
-                    }
+                    ResY[l] = pc.real();
                 }
 
                 for(uint l=0; l<nbstack; l++)
                 {
                     pc = (myParserZ_C[cmp].EvalC(&valcomplex[l*4]));
-                    real= pc.real();
-                    imag= pc.imag();
-                    if(real !=0.0 && imag !=0.0)
-                        ResZ[l] = abs(pc);
-                    else
-                    {
-                        if(real==0.0)
-                            ResZ[l] = imag;
-                        else
-                            ResZ[l] = real;
-                    }
+                    ResZ[l] = pc.real();
                 }
 
                 if(param4d_C)
@@ -2098,17 +2063,7 @@ void  ParWorkerThread::calcul_objet(uint cmp, uint idx)
                     for(uint l=0; l<nbstack; l++)
                     {
                         pc = (myParserW_C[cmp].EvalC(&valcomplex[l*4]));
-                        real= pc.real();
-                        imag= pc.imag();
-                        if(real !=0.0 && imag !=0.0)
-                            ResW[l] = abs(pc);
-                        else
-                        {
-                            if(real==0.0)
-                                ResW[l] = imag;
-                            else
-                                ResW[l] = real;
-                        }
+                        ResW[l] = pc.real();
                     }
                 }
             }

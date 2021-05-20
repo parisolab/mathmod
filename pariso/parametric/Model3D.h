@@ -56,8 +56,7 @@ public :
     uint CurrentIndex;
 
 public :
-    void ParCompute(uint, uint);
-    void calcul_objet(uint component =0, uint idx=0);
+    void ParCompute(uint component =0, uint idx=0);
     void AllocateParsersForWorkerThread(uint, uint);
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
