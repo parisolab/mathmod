@@ -340,6 +340,9 @@ void ParMasterThread::AllocateParsersForMasterThread()
         rgbtnotnull ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
+        rgbtnotnull ?
+        RgbtParser_C = new FunctionParser_cd[(RgbtSize = 4)] :
+        RgbtParser_C = new FunctionParser_cd[(RgbtSize = 0)];
 
         vrgbtnotnull ?
         VRgbtParser = new FunctionParser[VRgbtSize] :
@@ -412,6 +415,7 @@ void ParMasterThread::DeleteMasterParsers()
         delete[] UsedFunct;
         delete[] UsedFunct2;
         delete[] RgbtParser;
+        delete[] RgbtParser_C;
         delete[] VRgbtParser;
         delete GradientParser;
         delete NoiseParser;
@@ -533,6 +537,7 @@ void ParMasterThread::InitMasterParsers()
     for(uint i=0; i<RgbtSize; i++)
     {
         RgbtParser[i].AddConstant("pi", PI);
+        RgbtParser_C[i].AddConstant("pi", PI);
     }
     for(uint i=0; i<VRgbtSize; i++)
     {
@@ -655,8 +660,12 @@ ErrorMessage  ParMasterThread::parse_expression()
             for(uint j=0; j<ConstSize; j++)
             {
                 RgbtParser[i].AddConstant(ConstNames[j], ConstValues[j]);
+                RgbtParser_C[i].AddConstant(ConstNames[j], ConstValues[j]);
                 for(uint k=0; k<Nb_Sliders; k++)
+                {
                     RgbtParser[i].AddConstant(SliderNames[k], SliderValues[k]);
+                    RgbtParser_C[i].AddConstant(SliderNames[k], SliderValues[k]);
+                }
             }
     }
     else
@@ -816,13 +825,37 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
 
     // Parse
+    rgbtnotnull_C = false;
     if(rgbtnotnull)
+    {
         for(uint i=0; i<RgbtSize; i++)
+        {
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
             {
-                stdError.strError = Rgbts[i];
-                return stdError;
+                if((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z")) >= 0)
+                {
+                    stdError.strError = Rgbts[i];
+                    return stdError;
+                }
+                else
+                {
+                    rgbtnotnull_C = true;
+                    i=RgbtSize;
+                }
             }
+        }
+        if(rgbtnotnull_C)
+        {
+            for(uint i=0; i<RgbtSize; i++)
+            {
+                if ((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z")) >= 0)
+                {
+                        stdError.strError = Rgbts[i];
+                        return stdError;
+                }
+            }
+        }
+    }
 
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
