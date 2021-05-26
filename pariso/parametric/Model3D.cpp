@@ -832,7 +832,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         {
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
             {
-                if((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z")) >= 0)
+                if((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z")) >= 0)
                 {
                     stdError.strError = Rgbts[i];
                     return stdError;
@@ -840,7 +840,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 else
                 {
                     rgbtnotnull_C = true;
-                    i=RgbtSize;
+                    i=RgbtSize; //break;
                 }
             }
         }
@@ -1436,6 +1436,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Iprime, Jprime,cmpId=0, K=0;
     double tmp, ValCol[masterthread->VRgbtSize], val[12];
+    std::complex<double> val_C[12];
     val[11] = masterthread->stepMorph;
     val[0] = val[1] = val[2] = 0.0;
 
@@ -1581,10 +1582,24 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
             val[3]*= tmp;
             val[4]*= tmp;
-            NormVertexTabVector[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
-            NormVertexTabVector[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));
-            NormVertexTabVector[i*10+2] = float(masterthread->RgbtParser[2].Eval(val));
-            NormVertexTabVector[i*10+3] = float(masterthread->RgbtParser[3].Eval(val));
+            if(!masterthread->rgbtnotnull_C)
+            {
+                NormVertexTabVector[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
+                NormVertexTabVector[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));
+                NormVertexTabVector[i*10+2] = float(masterthread->RgbtParser[2].Eval(val));
+                NormVertexTabVector[i*10+3] = float(masterthread->RgbtParser[3].Eval(val));
+            }
+            else
+            {
+                for(uint l=0; l<11; l++)
+                    val_C[l]= std::complex<double> (val[l], 0);
+                val_C[11]= std::complex<double> (val[3], val[4]);
+
+                NormVertexTabVector[i*10  ] = (masterthread->RgbtParser_C[0].EvalC(val_C)).real();
+                NormVertexTabVector[i*10+1] = (masterthread->RgbtParser_C[1].EvalC(val_C)).real();
+                NormVertexTabVector[i*10+2] = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
+                NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
+            }
         }
     }
 }
