@@ -29,6 +29,109 @@ static double ParamThreadId=0;
 static QElapsedTimer ptime;
 static int nbvariables=0;
 
+
+hsv rgb2hsv(rgb in)
+{
+    hsv         out;
+    double      min, max, delta;
+
+    min = in.r < in.g ? in.r : in.g;
+    min = min  < in.b ? min  : in.b;
+
+    max = in.r > in.g ? in.r : in.g;
+    max = max  > in.b ? max  : in.b;
+
+    out.v = max;                                // v
+    delta = max - min;
+    if (delta < 0.00001)
+    {
+        out.s = 0;
+        out.h = 0; // undefined, maybe nan?
+        return out;
+    }
+    if( max > 0.0 ) { // NOTE: if Max is == 0, this divide would cause a crash
+        out.s = (delta / max);                  // s
+    } else {
+        // if max is 0, then r = g = b = 0
+        // s = 0, h is undefined
+        out.s = 0.0;
+        out.h = NAN;                            // its now undefined
+        return out;
+    }
+    if( in.r >= max )                           // > is bogus, just keeps compilor happy
+        out.h = ( in.g - in.b ) / delta;        // between yellow & magenta
+    else
+    if( in.g >= max )
+        out.h = 2.0 + ( in.b - in.r ) / delta;  // between cyan & yellow
+    else
+        out.h = 4.0 + ( in.r - in.g ) / delta;  // between magenta & cyan
+
+    out.h *= 60.0;                              // degrees
+
+    if( out.h < 0.0 )
+        out.h += 360.0;
+
+    return out;
+}
+
+
+rgb hsv2rgb(hsv in)
+{
+    double      hh, p, q, t, ff;
+    long        i;
+    rgb         out;
+
+    if(in.s <= 0.0) {       // < is bogus, just shuts up warnings
+        out.r = in.v;
+        out.g = in.v;
+        out.b = in.v;
+        return out;
+    }
+    hh = in.h;
+    if(hh >= 360.0) hh = 0.0;
+    hh /= 60.0;
+    i = (long)hh;
+    ff = hh - i;
+    p = in.v * (1.0 - in.s);
+    q = in.v * (1.0 - (in.s * ff));
+    t = in.v * (1.0 - (in.s * (1.0 - ff)));
+
+    switch(i) {
+    case 0:
+        out.r = in.v;
+        out.g = t;
+        out.b = p;
+        break;
+    case 1:
+        out.r = q;
+        out.g = in.v;
+        out.b = p;
+        break;
+    case 2:
+        out.r = p;
+        out.g = in.v;
+        out.b = t;
+        break;
+
+    case 3:
+        out.r = p;
+        out.g = q;
+        out.b = in.v;
+        break;
+    case 4:
+        out.r = t;
+        out.g = p;
+        out.b = in.v;
+        break;
+    case 5:
+    default:
+        out.r = in.v;
+        out.g = p;
+        out.b = q;
+        break;
+    }
+    return out;
+}
 double CurrentParamCmpId(const double* p)
 {
     int pp = int(p[0]);
@@ -1500,7 +1603,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[1]= tmp*double(NormVertexTabVector[i*10+8]);
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
             tmp  = masterthread->GradientParser->Eval(val);
-            tmp  = masterthread->GradientParser->Eval(val);
             for (uint j=0; j < masterthread->VRgbtSize; j+=5)
                 if(tmp < ValCol[j])
                 {
@@ -1591,14 +1693,38 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             }
             else
             {
-                for(uint l=0; l<11; l++)
-                    val_C[l]= std::complex<double> (val[l], 0);
-                val_C[11]= std::complex<double> (val[3], val[4]);
-
                 NormVertexTabVector[i*10  ] = (masterthread->RgbtParser_C[0].EvalC(val_C)).real();
                 NormVertexTabVector[i*10+1] = (masterthread->RgbtParser_C[1].EvalC(val_C)).real();
                 NormVertexTabVector[i*10+2] = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
                 NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
+
+                /*
+                for(uint l=0; l<11; l++)
+                    val_C[l]= std::complex<double> (val[l], 0);
+                val_C[11]= std::complex<double> (val[3], val[4]);
+                rgb Rgb;
+                hsv Hsv;
+
+                Hsv.h = (masterthread->RgbtParser_C[0].EvalC(val_C)).real();
+                Hsv.s = (masterthread->RgbtParser_C[1].EvalC(val_C)).real();
+                Hsv.v = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
+                Rgb= hsv2rgb(Hsv);
+                NormVertexTabVector[i*10  ] = Rgb.r;
+                NormVertexTabVector[i*10+1] = Rgb.g;
+                NormVertexTabVector[i*10+2] = Rgb.b;
+                NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
+                */
+
+                /*
+                Rgb.r = (masterthread->RgbtParser_C[0].EvalC(val_C)).real();
+                Rgb.g = (masterthread->RgbtParser_C[1].EvalC(val_C)).real();
+                Rgb.b = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
+                Hsv= rgb2hsv(Rgb);
+                NormVertexTabVector[i*10  ] = Hsv.h;
+                NormVertexTabVector[i*10+1] = Hsv.s;
+                NormVertexTabVector[i*10+2] = Hsv.v;
+                NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
+                */
             }
         }
     }
