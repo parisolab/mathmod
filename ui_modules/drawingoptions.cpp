@@ -1074,14 +1074,17 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
     noise1.replace(" ", "");
     QString result;
     ObjArrayToString(lst, result);
+
     if (opt == ISO_TYPE)
     {
+        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->IsoObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->IsoObjet->masterthread->Noise = noise1.toStdString();
         MathmodRef->IsoObjet->masterthread->RgbtSize = uint(lst.size());
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
+        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->ParObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->ParObjet->masterthread->Noise = noise1.toStdString();
         MathmodRef->ParObjet->masterthread->RgbtSize = uint(lst.size());
@@ -1166,6 +1169,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
     ShowSliders(Jobj);
     updateCurrentTreestruct();
     MathmodRef->LocalScene.componentsinfos.ParisoCondition.clear();
+    MathmodRef->LocalScene.componentsinfos.hsv.clear();
     if (Jobj["ParIso"].isArray())
     {
         QJsonArray listeObj = Jobj["ParIso"].toArray();
@@ -1860,6 +1864,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     QMessageBox msgBox;
     updateCurrentTreestruct();
     MathmodRef->LocalScene.componentsinfos.ParisoCondition.clear();
+    MathmodRef->LocalScene.componentsinfos.hsv.clear();
     for (int i = 0; i < array.size(); i++)
     {
         if ((QObj1 = array[i].toObject())["ParIso"].isArray() &&

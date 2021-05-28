@@ -795,11 +795,13 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
             backcl[j] = scene->backcols[j];
         }
         glUniform1i(uniformThereisRGBA, 1);
+        glUniform1i(uniformHSVactive, 0);
         glUniform4fv(uniformFrontColor, 1, frontcl);
         glUniform4fv(uniformBackColor, 1, backcl);
     }
     else
     {
+        glUniform1i(uniformHSVactive, scene->componentsinfos.hsv[ParisoTypeIndex]?1:0);
         glUniform1i(uniformThereisRGBA, 0);
     }
 
@@ -1004,6 +1006,7 @@ void MathMod::CreateShaderProgram()
             uniform vec4 lightAmbient;
             uniform vec4 lightDiffuse;
             uniform vec4 lightSpecular;
+            uniform int hsvactive;
             uniform int thereisRGBA;
             uniform int drawgridColor;
             uniform float shininess;
@@ -1012,6 +1015,33 @@ void MathMod::CreateShaderProgram()
             varying vec3 esVertex, esNormal;
             varying vec4 color;
             varying vec4 v_position;
+
+// All components are in the range [0…1], including hue
+vec3 rgb2hsv(vec3 c)
+{
+    vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+/*
+    vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+    vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+*/
+    vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
+    vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
+
+    float d = q.x - min(q.w, q.y);
+    float e = 1.0e-10;
+    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+
+// All components are in the range [0…1], including hue.
+vec3 hsv2rgb(vec3 c)
+{
+    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+
+
             void main()
             {
                 vec4 color1=color;
@@ -1065,14 +1095,17 @@ void MathMod::CreateShaderProgram()
                 {
                     light = normalize(lightPosition.xyz - esVertex);
                 }
+                if(hsvactive == 1)
+                    color1 = vec4(hsv2rgb(color1.xyz), color1.w);
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
-                vec4 fragColor = lightAmbient * color1;             // begin with ambient
+                vec4 fragColor = lightAmbient * color1;
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
                 float dotNH = max(dot(normal, halfv), 0.0);
                 fragColor += (pow(dotNH, shininess) * lightSpecular) * color1; // add specular
                 // set frag color
+                //gl_FragColor = vec4(hsv2rgb(fragColor.xyz), fragColor.w);
                 gl_FragColor = fragColor;
             }
             )";
@@ -1115,9 +1148,10 @@ void MathMod::CreateShaderProgram()
     uniformBackColor                 = glGetUniformLocation(shaderprogramId, "backColor");
     uniformGridColor                 = glGetUniformLocation(shaderprogramId, "gridColor");
     uniformThereisRGBA               = glGetUniformLocation(shaderprogramId, "thereisRGBA");
+    uniformHSVactive                 = glGetUniformLocation(shaderprogramId, "hsvactive");
     uniformShininess                 = glGetUniformLocation(shaderprogramId, "shininess");
-    uniformglFrontFacing_1             = glGetUniformLocation(shaderprogramId, "glFrontFacing_1");
-    uniformglFrontFacing_2             = glGetUniformLocation(shaderprogramId, "glFrontFacing_2");
+    uniformglFrontFacing_1           = glGetUniformLocation(shaderprogramId, "glFrontFacing_1");
+    uniformglFrontFacing_2           = glGetUniformLocation(shaderprogramId, "glFrontFacing_2");
     uniformdrawgridColor             = glGetUniformLocation(shaderprogramId, "drawgridColor");
     attribVertexPosition             = glGetAttribLocation(shaderprogramId, "vertexPosition");
     attribVertexNormal               = glGetAttribLocation(shaderprogramId, "vertexNormal");
@@ -1133,6 +1167,7 @@ void MathMod::CreateShaderProgram()
     glUniform1i(uniformglFrontFacing_1, LocalScene.glFrontFacingSupport);
     glUniform1i(uniformglFrontFacing_2, LocalScene.glFrontFacingSupport);
     glUniform1i(uniformThereisRGBA, 0);
+    glUniform1i(uniformHSVactive, 0);
     glUniform1i(uniformdrawgridColor, 0);
     int linkStatus;
     glGetProgramiv(shaderprogramId, GL_LINK_STATUS, &linkStatus);
@@ -1284,6 +1319,7 @@ void MathMod::DrawAxe()
 {
     glLineWidth(1.0);
     glUniform1i(uniformThereisRGBA, 0);
+    glUniform1i(uniformHSVactive, 0);
     // Draw the three axes (lines without head)
     glDrawArrays(GL_LINES,AxesStartIndex,6);
     // Head of the X Axe:
@@ -1333,6 +1369,7 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
         idx += scene->componentsinfos.NbComponentsType[i];
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     glUniform1i(uniformThereisRGBA, 0);
+    glUniform1i(uniformHSVactive, 0);
     if (scene->cndoptions[3])
     {
         size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
@@ -1378,6 +1415,7 @@ void MathMod::DrawTrianglMesh(ObjectProperties *scene)
     glUniform4fv(uniformGridColor, 1, scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glUniform1i(uniformThereisRGBA, 0);
+    glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.3);
     for (uint i = 0; i < scene->PolyNumber; i += 3)
     {
@@ -1394,6 +1432,7 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
     glUniform4fv(uniformGridColor, 1,scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glUniform1i(uniformThereisRGBA, 0);
+    glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.4);
     uint st = scene->PolyNumber;
     uint polysize=0;
@@ -1445,6 +1484,7 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
 void MathMod::plan()
 {
     glUniform1i(uniformThereisRGBA, 0);
+    glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.3);
     glDrawArrays(GL_LINES,PlanStartIndex,60);
     glUniform1i(uniformThereisRGBA, 1);

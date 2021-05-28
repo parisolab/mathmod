@@ -184,6 +184,7 @@ public:
     GLint uniformBackColor;
     GLint uniformGridColor;
     GLint uniformThereisRGBA;
+    GLint uniformHSVactive;
     GLint uniformShininess;
     GLint uniformglFrontFacing_1;
     GLint uniformglFrontFacing_2;

@@ -170,6 +170,7 @@ struct ComponentInfos
     bool Interleave = false;
     bool pariso = false;
     bool updateviewer = false;
+    std::vector<bool> hsv;
 };
 
 struct ObjectProperties
