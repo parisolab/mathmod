@@ -1596,34 +1596,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 NormVertexTabVector[i*10+2] = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
                 NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
 
-
-                /*
-                for(uint l=0; l<11; l++)
-                    val_C[l]= std::complex<double> (val[l], 0);
-                val_C[11]= std::complex<double> (val[3], val[4]);
-                rgb Rgb;
-                hsv Hsv;
-
-                Hsv.h = (masterthread->RgbtParser_C[0].EvalC(val_C)).real();
-                Hsv.s = (masterthread->RgbtParser_C[1].EvalC(val_C)).real();
-                Hsv.v = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
-                Rgb= hsv2rgb(Hsv);
-                NormVertexTabVector[i*10  ] = Rgb.r;
-                NormVertexTabVector[i*10+1] = Rgb.g;
-                NormVertexTabVector[i*10+2] = Rgb.b;
-                NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
-*/
-
-/*
-                Rgb.r = (masterthread->RgbtParser_C[0].EvalC(val_C)).real();
-                Rgb.g = (masterthread->RgbtParser_C[1].EvalC(val_C)).real();
-                Rgb.b = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
-                Hsv= rgb2hsv(Rgb);
-                NormVertexTabVector[i*10  ] = Hsv.h;
-                NormVertexTabVector[i*10+1] = Hsv.s;
-                NormVertexTabVector[i*10+2] = Hsv.v;
-                NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
-*/
             }
         }
     }
