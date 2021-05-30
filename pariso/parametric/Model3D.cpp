@@ -796,12 +796,10 @@ ErrorMessage  ParMasterThread::parse_expression()
                     myParserX[i].AddFunction(FunctNames[j], Fct[j]);
                 if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
                     myParserY[i].AddFunction(FunctNames[j], Fct[j]);
-
                 if((UsedFunct[i*4*FunctSize+4*j+2]=(ParamStructs[i].fz.find(FunctNames[j]) != std::string::npos)))
                     myParserZ[i].AddFunction(FunctNames[j], Fct[j]);
                 if((UsedFunct[i*4*FunctSize+4*j+3]=(ParamStructs[i].fw.find(FunctNames[j]) != std::string::npos)))
                     myParserW[i].AddFunction(FunctNames[j], Fct[j]);
-
             }
         }
     }
@@ -815,7 +813,6 @@ ErrorMessage  ParMasterThread::parse_expression()
                     myParserX_C[i].AddFunction(FunctNames[j], Fct_C[j]);
                 if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
                     myParserY_C[i].AddFunction(FunctNames[j], Fct_C[j]);
-
                 if((UsedFunct[i*4*FunctSize+4*j+2]=(ParamStructs[i].fz.find(FunctNames[j]) != std::string::npos)))
                     myParserZ_C[i].AddFunction(FunctNames[j], Fct_C[j]);
                 if((UsedFunct[i*4*FunctSize+4*j+3]=(ParamStructs[i].fw.find(FunctNames[j]) != std::string::npos)))
@@ -1182,7 +1179,6 @@ ErrorMessage  Par3D::parse_expression2_C()
                 if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+3])
                     workerthreads[nbthreads].myParserW_C[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct_C[j]);
             }
-
         }
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -1214,9 +1210,6 @@ ErrorMessage  Par3D::parse_expression2_C()
     }
     return NodError;
 }
-
-
-
 
 void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
 {
@@ -1595,7 +1588,6 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 NormVertexTabVector[i*10+1] = (masterthread->RgbtParser_C[1].EvalC(val_C)).real();
                 NormVertexTabVector[i*10+2] = (masterthread->RgbtParser_C[2].EvalC(val_C)).real();
                 NormVertexTabVector[i*10+3] = (masterthread->RgbtParser_C[3].EvalC(val_C)).real();
-
             }
         }
     }
