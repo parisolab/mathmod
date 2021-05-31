@@ -615,6 +615,18 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+8] = AxeArray[3*(id+32)+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+9] = AxeArray[3*(id+32)+2];
     }
+    uint polynb=0;
+    if(LocalScene.typedrawing == -1)
+    {
+        uint sz = LocalScene.componentsinfos.ParametricGrid.size();
+        for (uint p = 0; p < sz; p += 2)
+        {
+             polynb += (LocalScene.componentsinfos.ParametricGrid[p]-1) *
+                            (LocalScene.componentsinfos.ParametricGrid[p+1]-1);
+        }
+    }
+    else
+        polynb = LocalScene.NbPolygnNbVertexPtMin;
 
     labelinfos = "  \n Grid     : ";
     (LocalScene.typedrawing == 1)
@@ -625,7 +637,7 @@ void MathMod::PutObjectInsideCube()
                     QString::number(Vgrid - CutV) +" \n";
     labelinfos+=" Vertices : "+QString::number(LocalScene.VertxNumber)+" \n"+
                            " Triangles: "+QString::number(LocalScene.PolyNumber/3)+" \n"
-                           " Polygons : "+QString::number(LocalScene.NbPolygnNbVertexPtMin)+" \n";
+                           " Polygons : "+QString::number(polynb)+" \n";
    if(LocalScene.morph==-1)
        labelinfos+=" X["+QString::number(minx,'g',3)+","+QString::number(maxx,'g',3)+"]\n\
  Y["+QString::number(miny,'g',3)+","+QString::number(maxy,'g',3)+"]\n\
