@@ -2,14 +2,36 @@
   "MathModels": [
     {
         "Param3D_C": {
-            "Description": ["Complex function: f(z)=1/(z*z+1)"],
+            "Description": ["Domain coloring for the complex function: f(z)=((Z^2-1)*(Z-2-i)^2)/(Z^2+2+3i)  by Abderrahman Taha 28/05/2021"],
+            "Name": ["Complex_Domain_Coloring"],
+            "Component": ["complex"],
+            "Fx": ["u"],
+            "Fy": ["v"],
+            "Fz": ["0"],
+            "Umax": ["3"],
+            "Umin": ["-3"],
+            "Vmax": ["3"],
+            "Vmin": ["-3"]
+        },
+        "Texture": {
+            "Colors": ["H= arg(((Z^2-1)*(Z-2-1i)^2)/(Z*Z+2+3*1i))",
+                "S=(2/pi)*atan(abs(((Z^2-1)*(Z-2-1i)^2)/(Z*Z+2+3*1i)))",
+                "B= 0.51",
+                "T=1.0"],
+            "Name": "Dream",
+            "Noise": ""
+        }
+    },
+    {
+        "Param3D_C": {
+            "Description": ["Complex function: f(Z)=1/(Z*Z+1)"],
             "Name": ["Complex3D_02"],
             "Component": ["complex"],
             "Const": ["A=1.5"],
             "Vect": ["1"],
             "Fx": ["u"],
             "Fy": ["v"],
-            "Fz": ["psh(0, real(1/(z*z+1))) * if(csd(0)>A, A, if(csd(0)<-A, -A, csd(0)))"],
+            "Fz": ["psh(0, real(1/(Z*Z+1))) * if(csd(0)>A, A, if(csd(0)<-A, -A, csd(0)))"],
             "Umax": ["2.5"],
             "Umin": ["-2.5"],
             "Vmax": ["2.5"],
@@ -19,12 +41,12 @@
     {
         "Param3D_C": {
             "Description": ["Complex3D_01 by Abderrahman Taha 28/04/2021"],
-            "Description": ["Complex function: f(z)=2*z^2+ 2*z +2"],
+            "Description": ["Complex function: f(Z)=2*Z^2+ 2*Z +2"],
             "Name": ["Complex3D_01"],
             "Component": ["complex"],
             "Fx": ["u"],
             "Fy": ["v"],
-            "Fz": ["abs(2*z*z+2*z+2)/3"],
+            "Fz": ["abs(2*Z*Z+2*Z+2)/3"],
             "Umax": ["1"],
             "Umin": ["-2"],
             "Vmax": ["2"],
@@ -38,8 +60,8 @@
             "Name": ["Complex4D_Saddle"],
             "Fx": ["u"],
             "Fy": ["v"],
-            "Fz": ["real(z*z)/2"],
-            "Fw": ["imag(z*z)/2"],
+            "Fz": ["real(Z*Z)/2"],
+            "Fw": ["imag(Z*Z)/2"],
             "Umax": ["2"],
             "Umin": ["-2"],
             "Vmax": ["2"],
