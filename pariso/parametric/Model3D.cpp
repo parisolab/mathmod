@@ -305,16 +305,16 @@ void  Par3D::calcul_points4(uint idx)
 
 void  Par3D::project_4D_to_3D(uint idx)
 {
-    double c4;
-    uint I = 0;
+    double clp;
+    uint Il = 0;
     for (uint i=0; i < Ugrid; ++i)
         for (uint j=0; j < Vgrid  ; ++j)
         {
-            c4 = 1.0/double(ExtraDimensionVector[i*Vgrid + j + idx] - 2);
-            NormVertexTabVector[I+idx*10+7] *= float(c4);
-            NormVertexTabVector[I+idx*10+8] *= float(c4);
-            NormVertexTabVector[I+idx*10+9] *= float(c4);
-            I += 10;
+            clp = 1.0/double(ExtraDimensionVector[i*Vgrid + j + idx] - 2);
+            NormVertexTabVector[Il+idx*10+7] *= float(clp);
+            NormVertexTabVector[Il+idx*10+8] *= float(clp);
+            NormVertexTabVector[Il+idx*10+9] *= float(clp);
+            Il += 10;
         }
 }
 
