@@ -334,15 +334,17 @@ void ParMasterThread::AllocateParsersForMasterThread()
         u_sup.resize(componentsNumber);
         dif_v.resize(componentsNumber);
         dif_u.resize(componentsNumber);
-        UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
-        UsedFunct2   = new bool[FunctSize*FunctSize];
-        vectnotnull? nbvariables=vect[0] : nbvariables=0;
+
         rgbtnotnull ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
         rgbtnotnull ?
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 4)] :
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 0)];
+
+        UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
+        UsedFunct2   = new bool[FunctSize*FunctSize];
+        vectnotnull? nbvariables=vect[0] : nbvariables=0;
 
         vrgbtnotnull ?
         VRgbtParser = new FunctionParser[VRgbtSize] :
@@ -569,7 +571,7 @@ ErrorMessage  ParMasterThread::parse_expression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     std::string varliste   = "u,v,t";
-    std::string varliste_C = "u,v,t,z";
+    std::string varliste_C = "u,v,t,Z";
     InitMasterParsers();
 
     if(constnotnull)
@@ -910,9 +912,6 @@ ErrorMessage  ParMasterThread::parse_expression()
         v_sup[index] = myParserVmax[index].Eval(vals);
         dif_v[index] = v_sup[index] - v_inf[index];
 
-
-
-
         if(!param3d_C && !param4d_C)
         {
             if ((stdError.iErrorIndex = myParserX[index].Parse(ParamStructs[index].fx, varliste)) >= 0)
@@ -966,11 +965,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                     stdError.strError = ParamStructs[index].fw;
                     return stdError;
                 }
-
-
         }
-
-
 
         if(cndnotnull && (ParamStructs[index].cnd!=""))
             if ((stdError.iErrorIndex = ParisoConditionParser[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
@@ -981,6 +976,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     return stdError;
 }
+
 ErrorMessage  Par3D::parse_expression2()
 {
     ErrorMessage NodError;
@@ -998,7 +994,6 @@ ErrorMessage  Par3D::parse_expression2()
             {
                 workerthreads[nbthreads].Fct[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
             }
-
             //Add predefined constatnts:
             for(uint kk=0; kk<masterthread->Nb_Sliders; kk++)
             {
@@ -1068,7 +1063,6 @@ ErrorMessage  Par3D::parse_expression2()
                 if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+3])
                     workerthreads[nbthreads].myParserW[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
             }
-
         }
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -1117,7 +1111,6 @@ ErrorMessage  Par3D::parse_expression2_C()
             {
                 workerthreads[nbthreads].Fct_C[ii].AddConstant(masterthread->ConstNames[jj], masterthread->ConstValues[jj]);
             }
-
             //Add predefined constatnts:
             for(uint kk=0; kk<masterthread->Nb_Sliders; kk++)
             {
@@ -1129,7 +1122,7 @@ ErrorMessage  Par3D::parse_expression2_C()
             for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
                     workerthreads[nbthreads].Fct_C[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct_C[jj]);
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct_C[ii].Parse(masterthread->Functs[ii],"u,v,t,z")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct_C[ii].Parse(masterthread->Functs[ii],"u,v,t,Z")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
@@ -1185,23 +1178,23 @@ ErrorMessage  Par3D::parse_expression2_C()
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX_C[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t,z")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserX_C[index].Parse(masterthread->ParamStructs[index].fx, "u,v,t,Z")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fx;
                 return masterthread->stdError;
             }
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY_C[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t,z")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserY_C[index].Parse(masterthread->ParamStructs[index].fy, "u,v,t,Z")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fy;
                 return masterthread->stdError;
             }
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ_C[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t,z")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserZ_C[index].Parse(masterthread->ParamStructs[index].fz, "u,v,t,Z")) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ParamStructs[index].fz;
                 return masterthread->stdError;
             }
             if(masterthread->param4d_C)
-                if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW_C[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t,z")) >= 0)
+                if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].myParserW_C[index].Parse(masterthread->ParamStructs[index].fw, "u,v,t,Z")) >= 0)
                 {
                     masterthread->stdError.strError = masterthread->ParamStructs[index].fw;
                     return masterthread->stdError;
@@ -1224,6 +1217,7 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
+
 ErrorMessage Par3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -1426,6 +1420,7 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
         }
     }
 }
+
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Iprime, Jprime,cmpId=0, K=0;
@@ -1592,6 +1587,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
         }
     }
 }
+
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
 {
     uint idmx=0;
