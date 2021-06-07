@@ -3042,7 +3042,7 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
     unsigned IP, DP=0;
     int SP=-1;
     std::vector<Value_t>& StackSave = mData->mStackSave;
-    uint VarSize = StackSave.size();
+    unsigned int VarSize = StackSave.size();
 
 #ifdef FP_USE_THREAD_SAFE_EVAL
     /* If Eval() may be called by multiple threads simultaneously,
