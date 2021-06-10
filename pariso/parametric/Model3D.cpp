@@ -2258,7 +2258,7 @@ void  Par3D::ParamBuild(
         }
         calcul_Norm(10*NbVertexTmp);
         make_PolyIndexMin(NbVertexTmp, componentsPt);
-        make_PolyIndexTri(NbVertexTmp, componentsPt);
+        make_PolyIndexTri(NbVertexTmp);
 
         components->ParisoTriangle.push_back(6*NextPosition); //save the starting position of this component
         components->ParisoTriangle.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
@@ -2392,7 +2392,7 @@ void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
     }
 }
 
-void  Par3D::make_PolyIndexTri(uint index, ComponentInfos *cp)
+void  Par3D::make_PolyIndexTri(uint index)
 {
     uint k=0;
     for (uint i=0; i+CutU+1< Ugrid; i++)
