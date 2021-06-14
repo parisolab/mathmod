@@ -99,7 +99,7 @@ Moreover, it allows to export it's mathematical models to OBJ format and generat
 <a name="Copyright"></a>
 <li><h3>Copyright</h3>
 
-<pre>Copyright (C) 2020 by Abderrahman Taha
+<pre>Copyright (C) 2021 by Abderrahman Taha
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -135,11 +135,9 @@ Video to show <a href="https://youtu.be/u1ZfI4DRQnc">MathMod ability to animate 
 <ol>
  <li>Download <a href=https://download.qt.io/official_releases/qt/>Qt</a></li>
  <li>Download <a href=https://github.com/parisolab/mathmod/releases>MathMod's source code</a></li>
- <li> In a command line window, execute: "qmake; make"  OR use the qt-creator IDE to compile MathMod project</li>
+ <li> In a command line window, execute: "qmake; make"  OR use the qt-creator IDE to compile MathMod.pro project</li>
 </ol>
 </li>
-
-
 <a name="Release"></a>
 <li>
 <h3>Release Notes</h3>
@@ -148,8 +146,9 @@ This release contains :
 <ol>
   <li> Graphing Functions With Complex Numbers in 3D or 4D spaces (scripts samples "Complex3D_xx" and "Complex4D_Saddle")</li>
   <li> Added support for HSV (hue, saturation, lightness) coloring model (script sample "Complex_Domain_Coloring") </li>
+  <li> Texture definitions for parametric surfaces now support complex numbers Z=u+iv</li>
   <li> Added a fix for some GPU drivers issues with the OpenGL variable gl_FrontFacing (fixed the issue reported on MacBookPro+Catalina).
-  The fix can be activated from the:
+  The fix can be activated from either MathMod's:
   </li>
   <ol>
    <li>Configuration file mathmodconfig.js: "OpenGlConfig"-->"GL_FrontFacingSupport" </li>
@@ -159,12 +158,11 @@ This release contains :
   <li> Bug-fixes, code optimization and documentation update.</li>
   <li> For a complete list of changes made during the course of development, please visit: <a href="https://github.com/parisolab/mathmod/milestone/4">MathMod-11.1</a></li>
 </ol>
-Release Notes date: 12/06/2021
+Release Notes date: 13/06/2021
 </li>
 <a name="Assistance"></a>
 <li>
 <h3>Seeking-assistance</h3>
-
 <p align="center"><span style=" font-size:12pt;">Author: Abderrahman Taha (</span><a href="taha_ab@yahoo.fr"><span style=" font-size:12pt; text-decoration: underline; color:#60999e;">taha_ab@yahoo.fr</span></a><span style=" font-size:12pt;">)</span></p>
 <p align="center"><span style=" font-size:12pt;">GitHub: </span><a href="https://github.com/parisolab/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://github.com/parisolab/mathmod</span></a></p>
 <p align="center"><span style=" font-size:10pt;">Home:</span><a href="https://sourceforge.net/projects/mathmod"><span style=" text-decoration: underline; color:#0000ff;">https://sourceforge.net/projects/mathmod</span></a></p>
