@@ -429,7 +429,10 @@ You can give it another name (ie: "Infos" , ...) or delete it from the script (r
 <a name="Texture"></a>
 <li>
 <b>"Texture"</b>: The texture generating function is evaluated over R^3 at each visible surface point of the model.<br>
-MathMod support the RGB color model and it's alternative representation HSV (also known as HSB) .Example:<br>
+MathMod support the RGB color model and it's alternative representation HSV (also known as HSB) .<br>
+Accepted parameters for the texture of parametric surfaces : "x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z"<br>
+Accepted parameters for the texture of implicit surfaces : "x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf"<br>
+Script sample:<br>
 <pre>"Texture": {
    "Name": "Lines",
    "Noise": "NoiseW(x,y,z,(1),(2),(0))",
@@ -482,17 +485,12 @@ Each of the various pattern types available is in fact a mathematical function t
  <li><a href="#Pariso_02">Pariso_02</a></li>
 </ol>
 </li>
-
 </ol>
 </li>
-
 
 <a name="InternalFunctions"></a>
 <li>
 <h3>Internal functions </h3>
-
-
-
 
 <p><table border=2>
  <tr>
@@ -542,18 +540,15 @@ Each of the various pattern types available is in fact a mathematical function t
 </td>
  </tr>
 
-
  <tr>
   <td><code>fmesh</code></td>
   <td>
-
-<p>
+  <p>
   <code>f_mesh1(x,y,z, P0, P1, P2, P3, P4)</code> The overall thickness of the threads is controlled by the
  isosurface threshold, not by a parameter. If you render a mesh1 with zero threshold, the threads have zero thickness
  and are therefore invisible. Parameters P2 and P4 control the shape of the thread relative to this threshold
  parameter.
 <ul>
-
  <li>
    <code>P0</code> : Distance between neighboring threads in the x direction
  <li>
@@ -571,11 +566,9 @@ Each of the various pattern types available is in fact a mathematical function t
   <tr>
    <td><code>fhelix1</code></td>
    <td>
-
 <p>
   <code>f_helix1(x,y,z, P0, P1, P2, P3, P4, P5, P6)</code>
 <ul>
-
  <li>
    <code>P0</code> : Number of helixes - e.g. 2 for a double helix
  <li>
@@ -594,7 +587,6 @@ Each of the various pattern types available is in fact a mathematical function t
 Function use in "fhelix" and "Tori of helices" scripts
    </td>
   </tr>
-
   <tr>
    <td><code>fhelix2</code></td>
    <td>
@@ -616,10 +608,8 @@ Function use in "fhelix" and "Tori of helices" scripts
  <li>
    <code>P6</code> : Cross section rotation angle (degrees)
 </ul>
-
 </td>
  </tr>
-
  <tr>
   <td><code>CmpId(0)</code></td>
   <td>Return the compound ID. Available only inside the "Funct" objects array. Example:
@@ -632,37 +622,29 @@ Function use in "fhelix" and "Tori of helices" scripts
           ]
  </pre>Used in the "Chained_Sinusoid" script. </td>
  </tr>
-
 </table>
-
 <a name="InternalFParameters"></a>
 <li>
 <h3>Internal parameters</h3>
 <ul>
-
 <li>
 <h3>Isosurfaces</h3>
 <p><table border=2>
-
 <tr>
  <td><code>ThreadId</code></td>
  <td>Return the Thread ID. Example: To draw the isosurface portion calculated by the thread number 1
 <pre>"Fxyz": [" if(ThreadId=1, cos(x) + cos(y) + cos(z), 0)"]</pre></td>
 </tr>
-
 <tr>
  <td><code>max_ijk</code></td>
  <td>Refers to the Grid maximum value. Example:
  <pre>"Grid": ["150"] --> max_ijk=150</pre></td>
 </tr>
-
 <tr>
  <td><code>i_indx,j_indx,k_indx</code></td>
  <td>The index of the current voxel being evaluated</td>
 </tr>
 </table>
-
-
 <li>
 <h3>Isosurfaces textures</h3>
 <p><table border=2>
