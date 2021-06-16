@@ -144,14 +144,14 @@ Video to show <a href="https://youtu.be/u1ZfI4DRQnc">MathMod ability to animate 
 <i><b>MathMod Version 11.1 Release Notes</b></i>
 This release contains :
 <ol>
-  <li> Graphing Functions With Complex Numbers Z=u+iv in 3D and 4D spaces (scripts "Complex3D_xx" and "Complex4D_Saddle")</li>
-  <li> Added support for HSV (hue, saturation, lightness) coloring model (script sample "Complex_Domain_Coloring") </li>
-  <li> Texture definitions for parametric surfaces now support complex numbers Z=u+iv</li>
-  <li> Added a software support for the OpenGL variable gl_FrontFacing on some old GPU drivers(issue reported on MacOSX Catalina).
-  The fix can be activated from either MathMod's:
+  <li> Support of graphing functions with complex numbers Z=u+iv in 3D and 4D spaces (demo scripts: "Complex3D_xx" and "Complex4D_Saddle")</li>
+  <li> Added support for HSV (hue, saturation, lightness) coloring model (script: "Complex_Domain_Coloring") </li>
+  <li> Texture definitions (RGB and HSV) for parametric surfaces can now be expressed as functions of complex numbers</li>
+  <li> Added a software implementation for the OpenGL variable gl_FrontFacing (fixed an issue with GPU drivers on MacOSX Catalina).
+  The activation of this support is available from either:
   </li>
   <ol>
-   <li>Configuration file mathmodconfig.js: "OpenGlConfig"-->"GL_FrontFacingSupport" </li>
+   <li>The Configuration file mathmodconfig.js: "OpenGlConfig"-->"GL_FrontFacingSupport" </li>
    or
    <li>GUI: "Appearance"-->"OpenGL Front Surface Support"</li>
    </ol>
