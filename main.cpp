@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
     fmt.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(fmt);
     Parametersoptions Parameters;
+    Parameters.fileconfig2= app.applicationDirPath();
     Parameters.MainApp = &app;
     Parameters.LoadConfig(app, argc, argv);
     // Creation of the two most important objects:

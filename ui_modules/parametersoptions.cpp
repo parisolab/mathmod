@@ -459,7 +459,7 @@ bool Parametersoptions::isFloat(std::string myString)
 
 void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
 {
-    QString argv1;
+    QString argv1="";
     if (argc > 1)
     {
         argv1 = QString(argv[1]);
@@ -470,16 +470,16 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
         advancedmodels = argv1 + advancedmodels;
     }
     /*
-        #ifdef Q_OS_MACOS
-            else
-            {
-                MACOS = true;
-                argv1 ="../Resources/";
-                filecollection   = argv1 + filecollection;
-                fileconfig       = argv1 + fileconfig;
-                advancedmodels   = argv1 + advancedmodels;
-             }
-        #endif
+    #ifdef Q_OS_MACOS
+        else
+      {
+            MACOS = true;
+            fileconfig2 = fileconfig2.remove(fileconfig2.size()-5, 5);
+            filecollection   = fileconfig2 + "Resources/" + filecollection;
+            fileconfig       = fileconfig2 + "Resources/" + fileconfig;
+            advancedmodels   = fileconfig2 + "Resources/" + advancedmodels;
+         }
+    #endif
     */
     QFile mathmodfileconfig(fileconfig);
     if (!mathmodfileconfig.exists() && ((argc > 1) || MACOS))

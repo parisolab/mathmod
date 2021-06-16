@@ -46,6 +46,7 @@ public:
     QString model = "CloseIso_2";
     QString filecollection = "mathmodcollection.js";
     QString fileconfig = "mathmodconfig.js";
+    QString fileconfig2 = "";
     QString advancedmodels = "advancedmodels.js";
     QString fullpath;
     QJsonObject JConfig, Collection, IsoParam;
