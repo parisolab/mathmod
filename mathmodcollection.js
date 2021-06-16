@@ -46,11 +46,20 @@
             "Component": ["complex"],
             "Fx": ["u"],
             "Fy": ["v"],
-            "Fz": ["abs(2*Z*Z+2*Z+2)/3"],
+            "Fz": ["-abs(2*Z*Z+2*Z+2)/3"],
             "Umax": ["1"],
             "Umin": ["-2"],
             "Vmax": ["2"],
             "Vmin": ["-2"]
+        },
+        "Texture": {
+            "Colors": [
+                "H= abs(2*Z*Z+2*Z+2)%1",
+                "S=cos(arg(2*Z*Z+2*Z+2))",
+                "B= 0.5",
+                "T=1.0"],
+            "Name": "Dream",
+            "Noise": ""
         }
     },
     {
