@@ -5,8 +5,13 @@ Download: https://sourceforge.net/projects/mathmod/
 FaceBook: https://www.facebook.com/parisolab/
 Twitter : https://twitter.com/parisolab
 
-Change-log for MathMod-11.0 (07/03/2021)
-1) Complete rewrite of MathMod's OpenGL viewer in order to make it OpenGl ES compatible: MathMod can now run (or easily adaptable to run) on mobile systems and platforms with limited resources (See MathMod running on a RaspberryPi with RaspberryPi-OS(32 Bit) : https://www.facebook.com/parisolab/posts/3634364993347597)
-2) Add: possibility to show/hide a selected component , two new scripts ("Groupings of Knots" , "Knotted Möbius strips") and OpenGL diffuse/ambient lights setting.
-4) Bug-fixes, code optimization and documentation update.
-For a complete list of changes : https://github.com/parisolab/mathmod/milestone/3
+Change-log for MathMod-11.1 (16/06/2021)
+1) Support of graphing functions with complex numbers Z=u+iv in 3D and 4D spaces (demo scripts: "Complex3D_xx" and "Complex4D_Saddle")
+2) Added support for HSV (hue, saturation, lightness) coloring model (script: "Complex_Domain_Coloring")
+3) Texture definitions (RGB and HSV) for parametric surfaces can now be expressed as functions of complex numbers
+4) Added a software implementation for the OpenGL variable gl_FrontFacing (fixed an issue with GPU drivers on MacOSX Catalina).
+   The activation of this patch is available from mathmodconfig.js ("OpenGlConfig"-->"GL_FrontFacingSupport"=false)
+    or the GUI("Appearance"-->"OpenGL Front Surface Support")
+5) Bug-fixes, code optimization and documentation update.
+   For a complete list of changes made during the course of development: https://github.com/parisolab/mathmod/milestone/4
+
