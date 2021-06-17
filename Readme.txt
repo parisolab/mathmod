@@ -13,5 +13,5 @@ Change-log for MathMod-11.1 (16/06/2021)
    The activation of this patch is available from mathmodconfig.js ("OpenGlConfig"-->"GL_FrontFacingSupport"=false)
     or the GUI("Appearance"-->"OpenGL Front Surface Support")
 5) Bug-fixes, code optimization and documentation update.
-   For a complete list of changes made during the course of development: https://github.com/parisolab/mathmod/milestone/4
+   For a complete list of changes made during the course of development: https://github.com/parisolab/mathmod/milestone/4?closed=1
 
