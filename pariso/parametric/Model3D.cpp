@@ -1946,7 +1946,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint taille=0;
     std::complex<double> pc;
     double res;
-    double real, imag;
 
     if(activeMorph == 1)
         stepMorph += pace;
