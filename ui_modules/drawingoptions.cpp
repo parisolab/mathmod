@@ -5323,7 +5323,7 @@ void DrawingOptions::on_ApplypushButton_3_clicked()
 #include <QDesktopServices>
 void DrawingOptions::on_actionDocumentation_triggered()
 {
-    QString link = QApplication::applicationDirPath() + "/../Resources/documentation/index.html";
+    QString link = QApplication::applicationDirPath() + Parameters->docpath;
     QDesktopServices::openUrl(QUrl(QUrl::fromLocalFile(link)));
 }
 

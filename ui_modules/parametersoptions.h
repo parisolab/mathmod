@@ -48,6 +48,7 @@ public:
     QString fileconfig = "mathmodconfig.js";
     QString fileconfig2 = "";
     QString advancedmodels = "advancedmodels.js";
+    QString docpath = "/../Resources/documentation/index.html";
     QString fullpath;
     QJsonObject JConfig, Collection, IsoParam;
     QPalette mypalette, mypalette2, darkpalette;
