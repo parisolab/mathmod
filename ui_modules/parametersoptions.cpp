@@ -474,10 +474,11 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
         else
       {
             MACOS = true;
-            fileconfig2 = fileconfig2.remove(fileconfig2.size()-5, 5);
-            filecollection   = fileconfig2 + "Resources/" + filecollection;
-            fileconfig       = fileconfig2 + "Resources/" + fileconfig;
-            advancedmodels   = fileconfig2 + "Resources/" + advancedmodels;
+            QString appDirPath = QApplication::applicationDirPath();
+            appDirPath = appDirPath.remove(fileconfig2.size()-5, 5);
+            filecollection   = appDirPath + "Resources/" + filecollection;
+            fileconfig       = appDirPath + "Resources/" + fileconfig;
+            advancedmodels   = appDirPath + "Resources/" + advancedmodels;
          }
     #endif
     */
