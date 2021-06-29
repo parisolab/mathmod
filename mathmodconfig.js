@@ -1,12 +1,17 @@
 {
-    "Version": {
-        "Number": 12.0
+    "ReleaseInfos": {
+        "VersionNumber": "12.0",
+        "ReleaseDate": "21/07/30",
+        "DocumentationPath": "documentation/index.html"
     },
     "Parameters": {
         "IsoMaxGrid": 500,
         "InitIsoGrid": 64,
         "ParMaxGrid": 5000,
         "InitParGrid": 64
+    },
+    "StartOptions": {
+        "Model": "CloseIso_1"
     },
     "StartOptions": {
         "Model": "CloseIso_1"
