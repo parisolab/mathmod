@@ -441,7 +441,6 @@ void ParMasterThread::DeleteMasterParsers()
         delete[] Fct_C;
         ParsersAllocated_C = false;
     }
-
     ParamStructs.clear();
     v_inf.clear();
     v_sup.clear();
@@ -488,7 +487,6 @@ void ParMasterThread::InitMasterParsers()
 {
     DeleteMasterParsers();
     AllocateParsersForMasterThread();
-
     GradientParser->AddConstant("pi", PI);
     GradientParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     GradientParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
@@ -502,7 +500,6 @@ void ParMasterThread::InitMasterParsers()
     NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
-
     for(uint i=0; i<componentsNumber; i++)
     {
         if(!param3d_C && !param4d_C)
@@ -572,7 +569,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     std::string varliste   = "u,v,t";
     std::string varliste_C = "u,v,t,Z";
     InitMasterParsers();
-
     if(constnotnull)
     {
         ConstSize = HowManyVariables(Const, 1);
@@ -687,7 +683,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             for(uint k=0; k<Nb_Sliders; k++)
                 GradientParser->AddConstant(SliderNames[k], SliderValues[k]);
         }
-
         for(uint i=0; i<VRgbtSize; i++)
             for(uint j=0; j<ConstSize; j++)
             {
@@ -696,13 +691,11 @@ ErrorMessage  ParMasterThread::parse_expression()
                 for(uint k=0; k<Nb_Sliders; k++)
                     VRgbtParser[i].AddConstant(SliderNames[k], SliderValues[k]);
             }
-
     }
     else
     {
         VRgbtSize =0;
     }
-
     if(Noise != "")
     {
         for(uint j=0; j<ConstSize; j++)
@@ -716,7 +709,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             NoiseParser->AddConstant(SliderNames[k], SliderValues[k]);
         }
     }
-
     HowManyParamSurface(expression_X, 0);
     HowManyParamSurface(expression_Y, 1);
     HowManyParamSurface(expression_Z, 2);
@@ -733,7 +725,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     else
         ParisoCondition = -1;
-
     //Add defined constantes:
     for(uint i=0; i<componentsNumber; i++)
     {
@@ -760,7 +751,6 @@ ErrorMessage  ParMasterThread::parse_expression()
                 myParserW_C[i].AddConstant(ConstNames[j], ConstValues[j]);
             }
         }
-
         //Add predefined constatnts:
         for(uint k=0; k<Nb_Sliders; k++)
         {
@@ -821,7 +811,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             }
         }
     }
-
     // Parse
     rgbtnotnull_C = false;
     if(rgbtnotnull)
@@ -854,7 +843,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             }
         }
     }
-
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
@@ -863,7 +851,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             stdError.strError = Gradient;
             return stdError;
         }
-
         for(uint i=0; i<VRgbtSize; i++)
             if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
             {
@@ -871,7 +858,6 @@ ErrorMessage  ParMasterThread::parse_expression()
                 return stdError;
             }
     }
-
     if(Noise != "")
         if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
         {
@@ -945,19 +931,16 @@ ErrorMessage  ParMasterThread::parse_expression()
                 stdError.strError = ParamStructs[index].fx;
                 return stdError;
             }
-
             if ((stdError.iErrorIndex = myParserY_C[index].Parse(ParamStructs[index].fy, varliste_C)) >= 0)
             {
                 stdError.strError = ParamStructs[index].fy;
                 return stdError;
             }
-
             if ((stdError.iErrorIndex = myParserZ_C[index].Parse(ParamStructs[index].fz, varliste_C)) >= 0)
             {
                 stdError.strError = ParamStructs[index].fz;
                 return stdError;
             }
-
             if(param4d_C)
                 if ((stdError.iErrorIndex = myParserW_C[index].Parse(ParamStructs[index].fw, varliste_C)) >= 0)
                 {
@@ -965,7 +948,6 @@ ErrorMessage  ParMasterThread::parse_expression()
                     return stdError;
                 }
         }
-
         if(cndnotnull && (ParamStructs[index].cnd!=""))
             if ((stdError.iErrorIndex = ParisoConditionParser[index].Parse(ParamStructs[index].cnd, "x,y,z,t")) >= 0)
             {
@@ -1343,7 +1325,6 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
         ParamStructs[0].cnd = ParamFct;
         break;
     }
-
     while( ParamFct!= "")
     {
         if((position = ParamFct.find(";")) != string::npos   )
@@ -1614,7 +1595,6 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 PointVerifyCond.push_back(8);
             else
                 PointVerifyCond.push_back(int(masterthread->ParisoConditionParser[compid].Eval(vals)));
-
             if(PointVerifyCond[i-startpoint])
             {
                 NormVertexTabVector[i*10  ] = 0.1f;
@@ -1946,7 +1926,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint taille=0;
     std::complex<double> pc;
     double res;
-
     if(activeMorph == 1)
         stepMorph += pace;
     iStart = 0;
@@ -1982,7 +1961,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
         if(param4d_C)
             myParserW_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
     }
-
     for(uint il=iStart; il < iFinish   ; il+=nbU)
     {
         Iindice = il;
@@ -2009,7 +1987,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             }
             if(StopCalculations)
                 return;
-
             if(!param3d_C && !param4d_C)
             {
                 res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
@@ -2023,33 +2000,28 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     for(uint l=0; l<nbstack; l++)
                         ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
                 }
-
                 res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
                     return;
                 }
-
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
                         ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
                 }
-
                 res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
                     return;
                 }
-
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
                         ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
                 }
-
                 if(param4D == 1)
                 {
                     res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
@@ -2079,19 +2051,16 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     pc = (myParserX_C[cmp].EvalC(&valcomplex[l*4]));
                     ResX[l] = pc.real();
                 }
-
                 for(uint l=0; l<nbstack; l++)
                 {
                     pc = (myParserY_C[cmp].EvalC(&valcomplex[l*4]));
                     ResY[l] = pc.real();
                 }
-
                 for(uint l=0; l<nbstack; l++)
                 {
                     pc = (myParserZ_C[cmp].EvalC(&valcomplex[l*4]));
                     ResZ[l] = pc.real();
                 }
-
                 if(param4d_C)
                 {
                     for(uint l=0; l<nbstack; l++)
@@ -2101,7 +2070,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     }
                 }
             }
-
             //Signal emission:
             id+=nbstack;
             if(MyIndex == 0 && activeMorph != 1)
@@ -2250,7 +2218,6 @@ void  Par3D::ParamBuild(
             message += QString(" ==> Mesh generation");
             emitUpdateMessageSignal();
         }
-
         if(param4D == 1)
         {
             Anim_Rot4D (NbVertexTmp);
@@ -2258,7 +2225,6 @@ void  Par3D::ParamBuild(
         calcul_Norm(10*NbVertexTmp);
         make_PolyIndexMin(NbVertexTmp, componentsPt);
         make_PolyIndexTri(NbVertexTmp);
-
         components->ParisoTriangle.push_back(6*NextPosition); //save the starting position of this component
         components->ParisoTriangle.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
 
@@ -2312,7 +2278,6 @@ void  Par3D::ParamBuild(
     NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
     uint startpl = 0;
     uint actualpointindice=0;
-
     if(!ParisoType)
     {
         for (uint i = 0; i < *NbPolyMinPt; i++)
@@ -2326,7 +2291,6 @@ void  Par3D::ParamBuild(
             }
             i += polysize;
         }
-
         IndexPolyTabMinVector2.clear();
         for (uint i = 0; i < *NbPolyMinPt; i++)
         {
@@ -2380,7 +2344,6 @@ void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
             IndexPolyTabMinVector.push_back(i*Vgrid + j+index);
         }
     }
-
     for (uint i=0; i+CutV < Vgrid ; i++)
     {
         IndexPolyTabMinVector.push_back(Ugrid);
