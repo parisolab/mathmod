@@ -11,6 +11,7 @@
  <li><a href="#Copyright">Copyright</a>
  <li><a href="#Download">Download</a>
  <li><a href="#Compile">Compile MathMod from source</a>
+ <li><a href="#Run">Run MathMod packages</a>
  <li><a href="#Docum">Documentation</a>
  <li><a href="#Release">Release Notes</a>
  <li><a href="#Assistance">Seeking-assistance</a>
@@ -136,8 +137,40 @@ Video to show <a href="https://youtu.be/u1ZfI4DRQnc">MathMod ability to animate 
  <li>Download <a href=https://download.qt.io/official_releases/qt/>Qt</a></li>
  <li>Download <a href=https://github.com/parisolab/mathmod/releases>MathMod's source code</a></li>
  <li> In a command line window, execute: "qmake; make"  OR use the qt-creator IDE to compile MathMod.pro project</li>
+ <li> Troubleshooting:<br>
+      1) First thing to try to solve compilation issue is to open "drawingoptions.ui" with your current qt-creator and save it again.<br>
+      This simple procedure will generate an UI file that is compatible with your installed QT version.<br>
+</li>
 </ol>
 </li>
+
+<a name="Run"></a>
+<li>
+<h3>Run MathMod packages</h3>
+<ol>
+ <li>Linux:<br>
+ In a command line terminal:<br>
+ 1) cd mathmod-xx.x-Linu64-static<br>
+ 2) ./RunMathMod.sh &<br>
+ or<br>
+ 2) sh RunMathMod.sh &<br>
+ If step (2) didn't work, try :<br>
+ 1) sudo ./RunMathMod.sh<br>
+ 2) chmod +x RunMathMod.sh<br>
+ 3) ./RunMathMod.sh<br>
+</li>
+ <li>RaspberryPiOS (32):<br>
+ 1) Download and unzip mathmod-xx.x-RaspberrypiOS32.zip<br>
+ 2) Install qt: sudo apt-get install -y qt5-default<br>
+ 3) cd mathmod-xx.x-RaspberrypiOS32<br>
+ 4) ./mathmod<br>
+
+ </li>
+ <li> In a command line window, execute: "qmake; make"  OR use the qt-creator IDE to compile MathMod.pro project</li>
+</ol>
+</li>
+
+
 <a name="Release"></a>
 <li>
 <h3>Release Notes</h3>
