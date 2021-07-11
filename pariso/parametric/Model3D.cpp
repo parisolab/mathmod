@@ -91,7 +91,6 @@ ParMasterThread::~ParMasterThread()
     ConstNames.clear();
     ConstValues.clear();
 }
-
 ParMasterThread::ParMasterThread()
 {
     activeMorph = -1;
@@ -103,17 +102,14 @@ ParMasterThread::ParMasterThread()
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
-
 Par3D::Par3D(uint nbThreads, uint nbGrid)
 {
     initialiser_parametres(nbThreads, nbGrid);
 }
-
 void ParWorkerThread::run()
 {
     ParCompute(CurrentComponent, CurrentIndex);
 }
-
 void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
 {
     Ugrid = nbGrid;
@@ -129,17 +125,14 @@ void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
     mat_translation4D         = Matrix4D();
     mat_inversetranslation4D  = Matrix4D();
     mat4D.unit();
-
     WorkerThreadsNumber = nbThreads;
     workerthreads = new ParWorkerThread[WorkerThreadsNumber-1];
     masterthread  = new ParMasterThread();
-
     masterthread->Ugrid  = Ugrid;
     masterthread->Vgrid = Vgrid;
     masterthread->MyIndex   = 0;
     masterthread->param4D   = param4D;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
-
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].Ugrid  = Ugrid;
@@ -149,7 +142,6 @@ void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
     }
 }
-
 void Par3D::initialiser_LineColumn(uint li, uint cl)
 {
     Ugrid  = li;
@@ -162,7 +154,6 @@ void Par3D::initialiser_LineColumn(uint li, uint cl)
         workerthreads[nbthreads].Vgrid = Vgrid;
     }
 }
-
 void  Par3D::rotation4()
 {
     mat_rotation4D.unit();
@@ -179,19 +170,16 @@ void  Par3D::rotation4()
 // On applique cette transformation a la matrice principale "mat"
     mat4D.mult(mat_rotation4D);
 }
-
 void  Par3D::boite_englobante4D(uint idx)
 {
     MINX =1000000000000.0;
     MINY =MINX;
     MINZ =MINX;
     MINW =MINX;
-
     MAXX =-MINX;
     MAXY =-MINX;
     MAXZ =-MINX;
     MAXW =-MINX;
-
     uint IDX = 0;
     for (uint i=0; i < Ugrid; i++)
         for (uint j=0; j < Vgrid; j++)
@@ -200,14 +188,12 @@ void  Par3D::boite_englobante4D(uint idx)
             if(MINY > NormVertexTabVector[IDX+idx*10+8] ) MINY = NormVertexTabVector[IDX+idx*10+8];
             if(MINZ > NormVertexTabVector[IDX+idx*10+9] ) MINZ = NormVertexTabVector[IDX+idx*10+9];
             if(MINW > ExtraDimensionVector[i*Vgrid + j + idx] ) MINW = ExtraDimensionVector[i*Vgrid + j + idx];
-
             if(MAXX < NormVertexTabVector[IDX+idx*10+7] ) MAXX = NormVertexTabVector[IDX+idx*10+7];
             if(MAXY < NormVertexTabVector[IDX+idx*10+8] ) MAXY = NormVertexTabVector[IDX+idx*10+8];
             if(MAXZ < NormVertexTabVector[IDX+idx*10+9] ) MAXZ = NormVertexTabVector[IDX+idx*10+9];
             if(MAXW < ExtraDimensionVector[i*Vgrid + j + idx] ) MAXW = ExtraDimensionVector[i*Vgrid + j + idx];
             IDX+=10;
         }
-
     DIFX = MAXX - MINX ;
     DIFY = MAXY - MINY ;
     DIFZ = MAXZ - MINZ ;
@@ -228,7 +214,6 @@ void  Par3D::boite_englobante4D(uint idx)
     }
 // On va inclure cet objet dans un HperCube de langueur maximum
 // egale a "hauteur_fenetre"
-
     float decalage_xo  = -(MINX +MAXX)/2 ;
     float decalage_yo  = -(MINY +MAXY)/2 ;
     float decalage_zo  = -(MINZ +MAXZ)/2 ;
@@ -244,7 +229,6 @@ void  Par3D::boite_englobante4D(uint idx)
             IDX+=10;
         }
 }
-
 void  Par3D::Invert_boite_englobante4D(uint idx)
 {
     float decalage_xo  = -(MINX +MAXX)/2;
@@ -260,7 +244,6 @@ void  Par3D::Invert_boite_englobante4D(uint idx)
             IDX+=10;
         }
 }
-
 void Par3D::Anim_Rot4D (uint idx)
 {
     rotation4();
@@ -272,7 +255,6 @@ void Par3D::Anim_Rot4D (uint idx)
     }
     Invert_boite_englobante4D(idx);
 }
-
 void  Par3D::calcul_points4(uint idx)
 {
     double tp1, tp2, tp3, tp4;
@@ -302,7 +284,6 @@ void  Par3D::calcul_points4(uint idx)
             lndex += 10;
         }
 }
-
 void  Par3D::project_4D_to_3D(uint idx)
 {
     double clp;
@@ -317,7 +298,6 @@ void  Par3D::project_4D_to_3D(uint idx)
             Il += 10;
         }
 }
-
 void ParMasterThread::AllocateParsersForMasterThread()
 {
     if(!ParsersAllocated || !ParsersAllocated_C)
@@ -334,22 +314,18 @@ void ParMasterThread::AllocateParsersForMasterThread()
         u_sup.resize(componentsNumber);
         dif_v.resize(componentsNumber);
         dif_u.resize(componentsNumber);
-
         rgbtnotnull ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
         rgbtnotnull ?
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 4)] :
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 0)];
-
         UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
         UsedFunct2   = new bool[FunctSize*FunctSize];
         vectnotnull? nbvariables=vect[0] : nbvariables=0;
-
         vrgbtnotnull ?
         VRgbtParser = new FunctionParser[VRgbtSize] :
         VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
-
         if(constnotnull)
             ConstSize=0;
 
@@ -357,7 +333,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         NoiseParser      = new FunctionParser;
         NoiseShapeParser = new FunctionParser;
     }
-
     if(!ParsersAllocated)
     {
         myParserX = new FunctionParser[componentsNumber];
@@ -369,7 +344,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         Fct= new FunctionParser[FunctSize];
         ParsersAllocated = true;
     }
-
     if(!ParsersAllocated_C)
     {
         myParserX_C = new FunctionParser_cd[componentsNumber];
@@ -382,7 +356,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         ParsersAllocated_C = true;
     }
 }
-
 void ParWorkerThread::AllocateParsersForWorkerThread(uint nbcomposants, uint nbfunct)
 {
     if(!ParsersAllocated_C)
@@ -404,7 +377,6 @@ void ParWorkerThread::AllocateParsersForWorkerThread(uint nbcomposants, uint nbf
         ParsersAllocated = true;
     }
 }
-
 void ParMasterThread::DeleteMasterParsers()
 {
     if(ParsersAllocated || ParsersAllocated_C)
@@ -482,7 +454,6 @@ void ParWorkerThread::DeleteWorkerParsers()
         ParsersAllocated_C = false;
     }
 }
-
 void ParMasterThread::InitMasterParsers()
 {
     DeleteMasterParsers();
