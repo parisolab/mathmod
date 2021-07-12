@@ -2,7 +2,7 @@
     "ReleaseInfos": {
         "VersionNumber": "12.0 (Development version)",
         "ReleaseDate": "21/07/30",
-        "DocumentationPath": "documentation/index.html"
+        "DocumentationPath": "/documentation/index.html"
     },
     "Parameters": {
         "IsoMaxGrid": 500,
