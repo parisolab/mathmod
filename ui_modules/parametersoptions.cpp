@@ -613,6 +613,13 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
             Threads[2] = tmp["MaxThreadsNumber"].toInt();
         }
 
+        if (JConfig["ReleaseInfos"].isObject())
+        {
+            QJsonObject tmp = JConfig["ThreadsConfig"].toObject();
+            docpath = tmp["DocumentationPath"].toString();
+            version = tmp["VersionNumber"].toString();
+        }
+
         if (JConfig["Themes"].isObject() && JConfig["Styles"].isObject())
         {
             QJsonObject tmp1, tmp2, MyTheme;
