@@ -47,7 +47,8 @@ public:
     QString filecollection = "mathmodcollection.js";
     QString fileconfig = "mathmodconfig.js";
     QString advancedmodels = "advancedmodels.js";
-    QString docpartialpath = "/../Resources/documentation/index.html";
+    QString docpartialpath = "/documentation/index.html";
+    QString docabsolutepath = "";
     QString version = "12.1";
     QString fullpath;
     QJsonObject JConfig, Collection, IsoParam;

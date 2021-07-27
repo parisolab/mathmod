@@ -617,6 +617,7 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
         {
             QJsonObject tmp = JConfig["ReleaseInfos"].toObject();
             docpartialpath = tmp["DocPartialPath"].toString();
+            docabsolutepath = tmp["DocAbsolutePath"].toString();
             version = tmp["VersionNumber"].toString();
         }
 
