@@ -2123,7 +2123,6 @@ int DrawingOptions::on_choice_activated(const QString &arg)
     {
         UpdateScriptEditorAndTreeObject();
     }
-
     return Result;
 }
 
@@ -2142,7 +2141,6 @@ void DrawingOptions::Run_JsonObject_activeted()
         ShowErrorMessage(err, script);
         return;
     }
-
     // Draw here
     DrawJsonModel(doc.object());
 }
@@ -2184,7 +2182,6 @@ void DrawingOptions::slot_checkBox_clicked()
 void DrawingOptions::LoadNewFileModels(bool upd)
 {
     QString mathmodcollection;
-
     mathmodcollection = QFileDialog::getOpenFileName(
                             nullptr, tr("Load Json Script"), "", tr("Json (*.js)"));
     if (upd)
@@ -2202,7 +2199,6 @@ void DrawingOptions::LoadNewFileModels(bool upd)
     QStringList lst;
     QString a;
     QJsonObject jsobj;
-
     for (int i = 0; i < array.size(); i++)
     {
         if ((array[i].toObject())["Iso3D"].isObject())
