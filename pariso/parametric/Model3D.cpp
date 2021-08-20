@@ -201,17 +201,11 @@ void  Par3D::boite_englobante4D(uint idx)
 // Recherche du maximum :
     DIFMAXIMUM = DIFX;
     if (DIFY > DIFMAXIMUM)
-    {
         DIFMAXIMUM = DIFY;
-    }
     if (DIFZ > DIFMAXIMUM)
-    {
         DIFMAXIMUM = DIFZ;
-    }
     if (DIFW > DIFMAXIMUM)
-    {
         DIFMAXIMUM = DIFW;
-    }
 // On va inclure cet objet dans un HperCube de langueur maximum
 // egale a "hauteur_fenetre"
     float decalage_xo  = -(MINX +MAXX)/2 ;
@@ -328,7 +322,6 @@ void ParMasterThread::AllocateParsersForMasterThread()
         VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
         if(constnotnull)
             ConstSize=0;
-
         GradientParser   = new FunctionParser;
         NoiseParser      = new FunctionParser;
         NoiseShapeParser = new FunctionParser;
@@ -644,7 +637,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(vrgbtnotnull)
     {
         VRgbtSize = HowManyVariables(VRgbt, 4);
-
         GradientParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
         GradientParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
         for(uint j=0; j<ConstSize; j++)
