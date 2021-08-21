@@ -28,7 +28,6 @@ ParisoMathObject::ParisoMathObject()
 
 ParisoMathObject::~ParisoMathObject() {}
 
-
 void ParisoMathObject::ReadJsonFile(QString JsonFile, QJsonObject &js)
 {
     QJsonParseError err;
