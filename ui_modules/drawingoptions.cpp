@@ -1343,22 +1343,27 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 MathmodRef->update();
             }
         }
+
         else if (Jobj["Param4D"].isObject() || (MathmodRef->ParObjet->masterthread->param4d_C=Jobj["Param4D_C"].isObject()))
         {
             if (Jobj["Param4D"].isObject())
                 QObj = Jobj["Param4D"].toObject();
             else
                 QObj = Jobj["Param4D_C"].toObject();
+
             // Colors
             loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
+
             // Pigment
             loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
                             ((textureIndex != -1) && (textureIndex > 1000)));
+
             LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext, QTextureObj,
                                             loadpigm, QPigmentObj);
+
             QJsonObject Jobjtmp = Jobj;
             // Some keys cleaning..
             if (Jobj["Param4D"].isObject())
@@ -1371,8 +1376,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             QJsonDocument document;
             document.setObject(Jobjtmp);
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
+
             MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
             CurrentFormulaType = 3;
+
             /// process the new surface
             if (textureIndex == -1)
             {
@@ -1430,6 +1437,7 @@ void DrawingOptions::updateCurrentTreestruct()
     // Initialize the Current Pariso Trees truct
     MathmodRef->RootObjet.CurrentParisoTreestruct.clear();
 }
+
 
 void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         const MandatoryParField &idx,
@@ -1509,6 +1517,7 @@ void DrawingOptions::MandatoryParFieldprocess(const QJsonObject &QObj,
         break;
     }
 }
+
 
 void DrawingOptions::MandatoryIsoFieldprocess(const QJsonObject &QObj,
         const MandatoryIsoField &idx)
