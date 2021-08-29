@@ -165,6 +165,7 @@ void MathMod::CalculatePigmentPoints(int type)
         for (uint j = 0;
                 j < LocalScene.componentsinfos.NoiseParam[0].Nb_vrgbts && j < 100;
                 j += 5)
+            //ValCol array has undefined values
             if (tmp <= ValCol[j])
             {
                 LocalScene.ArrayNorVer_localPt[i*10  ] = float(ValCol[j+1]);
@@ -261,7 +262,7 @@ void MathMod::SaveSceneAsObjPoly(int type)
         }
         else if(LocalScene.typedrawing == -1)
         {
-            //**** Parametrics components ***/
+            //**** Parametric components ***/
             uint ugrid=0;
             uint vgrid =0;
             uint index=0;
@@ -283,7 +284,7 @@ void MathMod::SaveSceneAsObjPoly(int type)
         }
         else
         {
-            //**** Parametrics components ***/
+            //**** Parametric components ***/
 
             uint ugrid=0;
             uint vgrid =0;
@@ -304,7 +305,7 @@ void MathMod::SaveSceneAsObjPoly(int type)
                  index += ugrid*vgrid;
             }
 
-           // Isosurfaces components
+           // Isosurface components
            startpl = LocalScene.PolyNumber+LocalScene.componentsinfos.MinParametricMeshLines;
            uint kl=  LocalScene.componentsinfos.NbParametricMeshLines;
            for (uint i = kl; i < LocalScene.NbPolygnNbVertexPtMin; i++)
@@ -318,7 +319,6 @@ void MathMod::SaveSceneAsObjPoly(int type)
                }
                (stream) << "\n";
            }
-
         }
     }
 }
