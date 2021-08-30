@@ -77,7 +77,6 @@ ParMasterThread::~ParMasterThread()
 {
     delete[] UsedFunct;
     delete[] UsedFunct2;
-
     ParamStructs.clear();
     SliderValues.clear();
     SliderNames.clear();
@@ -425,7 +424,6 @@ void ParMasterThread::DeleteMasterParsers()
     ConstNames.clear();
     ConstValues.clear();
 }
-
 void ParWorkerThread::DeleteWorkerParsers()
 {
     if(ParsersAllocated)
@@ -518,7 +516,6 @@ void ParMasterThread::InitMasterParsers()
         }
     }
 }
-
 ErrorMessage  Par3D::ParMorph()
 {
     ErrorMessage err = masterthread->parse_expression();
@@ -526,7 +523,6 @@ ErrorMessage  Par3D::ParMorph()
         ThreadParsersCopy();
     return err;
 }
-
 ErrorMessage  ParMasterThread::parse_expression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
