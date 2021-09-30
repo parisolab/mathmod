@@ -3,7 +3,7 @@
         "VersionNumber": "12.0 (Development version)",
         "ReleaseDate": "21/07/30",
         "DocPartialPath": "/documentation/index.html",
-        "DocAbsolutePath": "",
+        "DocAbsolutePath": ""
     },
     "Parameters": {
         "IsoMaxGrid": 500,
