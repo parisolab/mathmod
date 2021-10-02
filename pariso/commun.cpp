@@ -43,8 +43,6 @@ static int permutation[256] =
     180
 };
 
-
-
 float tinyrnd()
 {
     static unsigned trand = 0;
@@ -63,7 +61,6 @@ float CellNoise::CellNoiseFunc(float x, float y, float z, int seed, int type, in
     int evalCubeX = int(floor(x));
     int evalCubeY = int(floor(y));
     int evalCubeZ = int(floor(z));
-
     for (int i = -1; i < 2; ++i)
         for (int j = -1; j < 2; ++j)
             for (int k = -1; k < 2; ++k)

@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "Model3D.h"
 #include <QElapsedTimer>
-
 static uint NbVertexTmp = 0;
 static std::vector<float>  ExtraDimensionVector;
 static CellNoise *NoiseFunction2 = new CellNoise();
