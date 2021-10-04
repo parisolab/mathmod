@@ -10869,44 +10869,30 @@
     },
     {
       "Iso3D": {
-        "Description ": [
-          "Geode by Abderrahman Taha 28/09/2015"
-        ],
-        "Name": [
-          "Geode"
-        ],
-        "Component": [
-          "Geode1",
-          "Geode2"
-        ],
+        "Description ": ["Geode by Abderrahman Taha 28/09/2015"],
+        "Name": ["Geode"],
+        "Component": ["Geode1","Geode2"],
         "Const": [
           "A=4",
-          "B=3"
-        ],
+          "B=3"],
         "Fxyz": [
           "-((((x/1DOTSYMBOL01)^2+y^2+(z/1DOTSYMBOL05)^2-1)+(NoiseW(A*x,A*y,A*z,4,2,1)+NoiseW(A*x,A*y,A*z,4,0,0))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
-          "-(((x^2+y^2+z^2-0DOTSYMBOL21)*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-0DOTSYMBOL2)+(NoiseW(B*x,B*y,B*z,4,2,1)+NoiseW(B*x,B*y,B*z,4,2,1))/5)))"
-        ],
+          "-(((x^2+y^2+z^2-0DOTSYMBOL21)*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-0DOTSYMBOL2)+(NoiseW(B*x,B*y,B*z,4,2,1)+NoiseW(B*x,B*y,B*z,4,2,1))/5)))"],
         "Xmax": [
           "1DOTSYMBOL5",
-          "1DOTSYMBOL5"
-        ],
+          "1DOTSYMBOL5"],
         "Xmin": [
           "-1",
-          "-1"
-        ],
+          "-1"],
         "Ymax": [
           "1",
-          "1"
-        ],
+          "1" ],
         "Ymin": [
           "-1",
-          "-1"
-        ],
+          "-1"],
         "Zmax": [
           "1DOTSYMBOL5",
-          "1DOTSYMBOL5"
-        ],
+          "1DOTSYMBOL5"],
         "Zmin": [
           "-1",
           "-1"
