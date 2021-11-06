@@ -1739,7 +1739,7 @@ void MathMod::mousePressEvent(QMouseEvent *e)
         btdroit = 0;
         mouseRightDown =false;
     }
-    if (e->button() == Qt::MidButton)
+    if (e->button() == Qt::MiddleButton)
         btmilieu = 1;
     else
         btmilieu = 0;
