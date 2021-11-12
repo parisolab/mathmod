@@ -948,9 +948,7 @@ void MathMod::CreateShaderProgram()
         std::cout << "Could not create Vertex Shader!";
     }
     static const char *c_str_vertex =
-            R"(
-            // GLSL version
-            //#version 120
+            R"(#version 100
             #ifdef GL_ES
             precision mediump float;
             #endif
@@ -1004,9 +1002,7 @@ void MathMod::CreateShaderProgram()
         std::cout << "Could not create Fragment Shader!";
     }
     static const char *c_str_fragment =
-            R"(
-            // GLSL version
-            //#version 120
+            R"(#version 100
             #ifdef GL_ES
             precision mediump float;
             #endif
@@ -1608,7 +1604,7 @@ void MathMod::draw(ObjectProperties *scene)
     // Axe :
     if (scene->axe == 1)
         DrawAxe();
-
+/*
     if (scene->fill == 1 && scene->componentsinfos.updateviewer)
         for (uint i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
             DrawPariso(scene, i);
@@ -1633,7 +1629,7 @@ void MathMod::draw(ObjectProperties *scene)
     // Draw Normales:
     if (scene->norm == 1 && scene->componentsinfos.updateviewer)
         DrawNormals(scene);
-
+*/
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
 }
@@ -1716,7 +1712,7 @@ void MathMod::mouseReleaseEvent(QMouseEvent *)
 void MathMod::mousePressEvent(QMouseEvent *e)
 {
     // Save mouse press position
-    mousePressPosition = QVector2D(e->localPos());
+    mousePressPosition = QVector2D(e->position());
     if(LocalScene.anim != 1)
         rotation = oldRotation;
     if (e->button() == Qt::LeftButton)
@@ -1744,7 +1740,7 @@ void MathMod::mousePressEvent(QMouseEvent *e)
     else
         btmilieu = 0;
 
-    mouseY = e->y()/2;
+    mouseY = e->position().y()/2;
 }
 
 void MathMod::mouseMoveEvent(QMouseEvent *e)
@@ -1753,7 +1749,7 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
     static QVector3D oldn=QVector3D(0,0,1);
     if(mouseLeftDown)
     {
-        QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
+        QVector2D diff = QVector2D(e->position()) - mousePressPosition;
         // Rotation axis is perpendicular to the mouse position difference
         n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
@@ -1764,8 +1760,8 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
     }
     if(mouseRightDown)
     {
-        cameraDistance -= (e->y()/2 - mouseY) * 0.02f;
-        mouseY = e->y()/2;
+        cameraDistance -= (e->position().y()/2 - mouseY) * 0.02f;
+        mouseY = e->position().y()/2;
     }
     update();
 }
