@@ -88,9 +88,9 @@ public slots:
     void LoadConfig(QApplication &, int argc, char *argv[]);
     ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
     bool isFloat(std::string);
-    void on_comboBox_2_activated(const QString &);
-    void on_comboBox_3_activated(const QString &);
-    void on_comboBox_activated(const QString &);
+    //void on_comboBox_2_activated(const QString &);
+    //void on_comboBox_3_activated(const QString &);
+    //void on_comboBox_activated(const QString &);
     void onred_2valueChanged(int);
     void ongreen_2valueChanged(int);
     void onblue_2valueChanged(int);

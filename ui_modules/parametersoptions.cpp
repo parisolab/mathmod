@@ -755,7 +755,7 @@ void Parametersoptions::on_save_clicked()
         f.close();
     }
 }
-
+/*
 void Parametersoptions::on_comboBox_2_activated(const QString &arg1)
 {
     QJsonObject style = JConfig["Styles"].toObject();
@@ -869,7 +869,7 @@ void Parametersoptions::on_comboBox_activated(const QString &arg1)
     }
     ui.ColorsButton->setPalette(tmp);
 }
-
+*/
 void Parametersoptions::onred_2valueChanged(int value)
 {
     QString choice = ui.comboBox->currentText();
@@ -881,7 +881,7 @@ void Parametersoptions::onred_2valueChanged(int value)
     t2[choice] = tmp;
     t1["MyTheme"] = t2;
     JConfig["Themes"] = t1;
-    on_comboBox_activated(choice);
+    //on_comboBox_activated(choice);
 }
 
 void Parametersoptions::ongreen_2valueChanged(int value)
@@ -895,7 +895,7 @@ void Parametersoptions::ongreen_2valueChanged(int value)
     t2[choice] = tmp;
     t1["MyTheme"] = t2;
     JConfig["Themes"] = t1;
-    on_comboBox_activated(choice);
+    //on_comboBox_activated(choice);
 }
 
 void Parametersoptions::onblue_2valueChanged(int value)
@@ -909,7 +909,7 @@ void Parametersoptions::onblue_2valueChanged(int value)
     t2[choice] = tmp;
     t1["MyTheme"] = t2;
     JConfig["Themes"] = t1;
-    on_comboBox_activated(choice);
+    //on_comboBox_activated(choice);
 }
 
 void Parametersoptions::on_TestConfig_clicked()

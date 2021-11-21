@@ -66,7 +66,6 @@ public:
     int xyzactivated, isomesh, uvactivated, uvactivated4D;
     ParisoMathObject RootObjet;
     jcollection collection;
-    QWidget *Parent;
     QLabel LabelInfos;
     QString labelinfos;
     int FistTimecalibrate = -1;
@@ -215,7 +214,7 @@ public:
     qreal acc;
     QVector3D n;
 public:
-    MathMod(QWidget *, uint, uint initpargrid = 50, uint initisogrid = 40,
+    MathMod(QWidget *, uint th  = 4, uint initpargrid = 50, uint initisogrid = 40,
             uint factx = 4, uint facty = 4, uint factz = 4);
     ~MathMod();
     void ParametricSurfaceProcess(int type = 1);

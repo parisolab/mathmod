@@ -948,9 +948,11 @@ void MathMod::CreateShaderProgram()
         std::cout << "Could not create Vertex Shader!";
     }
     static const char *c_str_vertex =
-            R"(#version 100
+
+            R"(
             #ifdef GL_ES
             precision mediump float;
+            precision mediump int;
             #endif
             // uniforms
             uniform mat4 matrixModelView;
@@ -977,6 +979,40 @@ void MathMod::CreateShaderProgram()
                 gl_Position =  matrixModelViewProjection * vec4(vertexPosition, 1.0);
             }
             )";
+
+/*
+            R"(#version 300 es
+            #ifdef GL_ES
+            // Set default precision to medium
+            precision mediump int;
+            precision mediump float;
+            #endif
+            // uniforms
+            uniform mat4 matrixModelView;
+            uniform mat4 matrixNormal;
+            uniform mat4 matrixModelViewProjection;
+            uniform int glFrontFacing_1;
+            // vertex attribs (input)
+            in vec3 vertexPosition;
+            in vec3 vertexNormal;
+            in vec4 vertexColor;
+            // varyings (output)
+            out vec3 esVertex, esNormal;
+            out vec4 color;
+            out vec4 v_position;
+            void main()
+            {
+                esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
+                esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
+                color = vertexColor;
+                if(glFrontFacing_1 == 0)
+                {
+                    v_position = -matrixModelView * vec4 (vertexPosition, 1.0);
+                }
+                gl_Position =  matrixModelViewProjection * vec4(vertexPosition, 1.0);
+            }
+            )";
+*/
     glShaderSource(vertexshader, 1, &c_str_vertex, NULL);
     glCompileShader(vertexshader);
     glGetShaderiv(vertexshader, GL_COMPILE_STATUS, &IsCompiled_VS);
@@ -1002,9 +1038,11 @@ void MathMod::CreateShaderProgram()
         std::cout << "Could not create Fragment Shader!";
     }
     static const char *c_str_fragment =
-            R"(#version 100
+
+            R"(
             #ifdef GL_ES
             precision mediump float;
+            precision mediump int;
             #endif
             // uniforms
             uniform vec4 frontColor;
@@ -1100,6 +1138,115 @@ void MathMod::CreateShaderProgram()
                 gl_FragColor = fragColor;
             }
             )";
+
+
+/*
+            R"(#version 300 es
+            #ifdef GL_ES
+            // Set default precision to medium
+            precision mediump int;
+            precision mediump float;
+            #endif
+            // uniforms
+            uniform vec4 frontColor;
+            uniform vec4 backColor;
+            uniform vec4 gridColor;
+            uniform vec4 lightPosition;
+            uniform vec4 lightAmbient;
+            uniform vec4 lightDiffuse;
+            uniform vec4 lightSpecular;
+            uniform int hsvactive;
+            uniform int thereisRGBA;
+            uniform int drawgridColor;
+            uniform float shininess;
+            uniform int glFrontFacing_2;
+            // varyings
+            //layout(location=0) out vec3 esVertex;
+            //layout(location=1) out vec3 esNormal;
+            //layout(location=2) out vec4 color;
+            //layout(location=3) out vec4 v_position;
+
+            in vec3 esVertex, esNormal;
+            in vec4 color, v_position;
+            layout(location = 0) out vec4 fragColor;
+
+            // All components are in the range [0…1], including hue.
+            vec3 hsv2rgb(vec3 c)
+            {
+                vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+                vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+                return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+            }
+
+            void main()
+            {
+                vec4 color1=color;
+                vec3 normal = normalize(esNormal);
+                if(glFrontFacing_2 == 1)
+                {
+                    if(gl_FrontFacing == false)
+                    {
+                        normal *= -1.0;
+                        if(thereisRGBA ==1)
+                        {
+                            color1=backColor;
+                        }
+
+                    }
+                    else
+                    {
+                        if(thereisRGBA ==1)
+                        {
+                            color1=frontColor;
+                        }
+                    }
+                }
+                else
+                {
+                    if(dot(normal, v_position.xyz) <= 0.0)
+                    {
+                        normal *= -1.0;
+                        if(thereisRGBA ==1)
+                        {
+                            color1=backColor;
+                        }
+                    }
+                    else
+                    {
+                        if(thereisRGBA ==1)
+                        {
+                            color1=frontColor;
+                        }
+                    }
+                }
+                if(drawgridColor == 1)
+                {
+                    color1=gridColor;
+                }
+                vec3 light;
+                if(lightPosition.w == 0.0)
+                {
+                    light = normalize(lightPosition.xyz);
+                }
+                else
+                {
+                    light = normalize(lightPosition.xyz - esVertex);
+                }
+                if(hsvactive == 1)
+                    color1 = vec4(hsv2rgb(color1.xyz), color1.w);
+                vec3 view = normalize(-esVertex);
+                vec3 halfv = normalize(light + view);
+                fragColor = lightAmbient * color1;
+                float dotNL = max(dot(normal, light), 0.0);
+                fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
+                float dotNH = max(dot(normal, halfv), 0.0);
+                fragColor += (pow(dotNH, shininess) * lightSpecular) * color1; // add specular
+                // set frag color
+                //gl_FragColor = (hsvactive == 1)? vec4(hsv2rgb(fragColor.xyz), fragColor.w) : fragColor;
+                //gl_FragColor = fragColor;
+            }
+            )";
+            */
     glShaderSource(fragmentshader, 1, &c_str_fragment, NULL);
     glCompileShader(fragmentshader);
     glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &IsCompiled_FS);
@@ -1288,14 +1435,11 @@ void MathMod::keyPressEvent(QKeyEvent *e)
     int key = e->key();
     switch (key)
     {
-    case Qt::CTRL+Qt::Key_A:
+    case Qt::CTRL|Qt::Key_A:
         anim();
         break;
-    case Qt::CTRL+Qt::Key_P:
+    case Qt::CTRL|Qt::Key_P:
         morph();
-        break;
-     case Qt::Key_C:
-        Parent->show();
         break;
     }
     update();
@@ -1604,7 +1748,7 @@ void MathMod::draw(ObjectProperties *scene)
     // Axe :
     if (scene->axe == 1)
         DrawAxe();
-/*
+
     if (scene->fill == 1 && scene->componentsinfos.updateviewer)
         for (uint i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
             DrawPariso(scene, i);
@@ -1629,7 +1773,7 @@ void MathMod::draw(ObjectProperties *scene)
     // Draw Normales:
     if (scene->norm == 1 && scene->componentsinfos.updateviewer)
         DrawNormals(scene);
-*/
+
     if (scene->transparency == 1)
         glDepthMask(GL_TRUE);
 }

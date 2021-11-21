@@ -34,24 +34,27 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QSurfaceFormat fmt;
-    fmt.setDepthBufferSize(24);
-    QSurfaceFormat::setDefaultFormat(fmt);
+    QSurfaceFormat format;
+    format.setDepthBufferSize(24);
+    QSurfaceFormat::setDefaultFormat(format);
+
     Parametersoptions Parameters;
     Parameters.MainApp = &app;
     Parameters.LoadConfig(app, argc, argv);
-    // Creation of the two most important objects:
-    MathMod mm(nullptr, uint(Parameters.Threads[0]),
-               uint(Parameters.InitParGrid), uint(Parameters.InitIsoGrid),
-               uint(Parameters.CalculFactor[0]), uint(Parameters.CalculFactor[1]),
-               uint(Parameters.CalculFactor[2]));
     DrawingOptions drawingopt;
+/*
+    drawingopt.ui.openGLWidget = new MathMod(nullptr, uint(Parameters.Threads[0]),
+            uint(Parameters.InitParGrid), uint(Parameters.InitIsoGrid),
+            uint(Parameters.CalculFactor[0]), uint(Parameters.CalculFactor[1]),
+            uint(Parameters.CalculFactor[2]));
+*/
     // save references:
     drawingopt.Parameters = &Parameters;
-    drawingopt.MathmodRef = &mm;
-    mm.Parent = &drawingopt;
-    mm.Xgrid = mm.Ygrid = mm.Zgrid=uint(Parameters.InitIsoGrid);
-    mm.Ugrid = mm.Vgrid = uint(Parameters.InitParGrid);
+
+    drawingopt.MathmodRef = drawingopt.ui.openGLWidget;
+
+    drawingopt.ui.openGLWidget->Xgrid = drawingopt.ui.openGLWidget->Ygrid = drawingopt.ui.openGLWidget->Zgrid=uint(Parameters.InitIsoGrid);
+    drawingopt.ui.openGLWidget->Ugrid = drawingopt.ui.openGLWidget->Vgrid = uint(Parameters.InitParGrid);
     // GUI update:
     drawingopt.UpdateGui(argc);
     if (drawingopt.IsolistItemRef != nullptr)
@@ -83,9 +86,7 @@ int main(int argc, char *argv[])
     QObject::connect(drawingopt.Parameters->ui.ApplypushButton, SIGNAL(clicked()),
                      &drawingopt, SLOT(ApplypushButton_clicked()));
     drawingopt.show();
-    mm.show();
-    drawingopt.raise();
-    mm.LoadShadersFiles();
+    drawingopt.ui.openGLWidget->LoadShadersFiles();
     drawingopt.on_choice_activated(Parameters.model);
     return app.exec();
 }
