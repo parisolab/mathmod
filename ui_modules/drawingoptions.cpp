@@ -2115,7 +2115,7 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
     }
 }
 
-int DrawingOptions::on_choice_activated(const QString &arg)
+void DrawingOptions::on_choice_activated(const QString &arg)
 {
     // Draw here
     int Result = JSON_choice_activated(arg);
@@ -2123,7 +2123,7 @@ int DrawingOptions::on_choice_activated(const QString &arg)
     {
         UpdateScriptEditorAndTreeObject();
     }
-    return Result;
+    //return Result;
 }
 
 void DrawingOptions::Run_JsonObject_activeted()
@@ -5438,3 +5438,10 @@ void DrawingOptions::on_GLFrontSurfaceSupport_clicked()
     else
         MathmodRef->glfrontfacesupp(1);
 }
+
+void DrawingOptions::on_choice_activated(int index)
+{
+    on_choice_activated(ui.choice->currentText());
+
+}
+

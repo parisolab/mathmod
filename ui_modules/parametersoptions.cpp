@@ -755,7 +755,7 @@ void Parametersoptions::on_save_clicked()
         f.close();
     }
 }
-/*
+
 void Parametersoptions::on_comboBox_2_activated(const QString &arg1)
 {
     QJsonObject style = JConfig["Styles"].toObject();
@@ -869,7 +869,7 @@ void Parametersoptions::on_comboBox_activated(const QString &arg1)
     }
     ui.ColorsButton->setPalette(tmp);
 }
-*/
+
 void Parametersoptions::onred_2valueChanged(int value)
 {
     QString choice = ui.comboBox->currentText();
