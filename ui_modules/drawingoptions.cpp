@@ -4262,6 +4262,7 @@ void DrawingOptions::UpdateGuiMaxgrid()
 
 void DrawingOptions::UpdateGui(int argc)
 {
+
     UpdateGuiMaxgrid();
     ListeModelTexture LstModelTexture = (Parameters->LoadCollectionModels(
             JSONMathModels, MathmodRef->collection, argc));
@@ -4269,7 +4270,9 @@ void DrawingOptions::UpdateGui(int argc)
     ui.choice->insertItems(0, LstModelTexture.listeModels);
     ui.comboBoxTexture->insertItems(0, LstModelTexture.listeTextures);
     ui.comboBoxPigment->insertItems(0, LstModelTexture.listePigments);
+
     AddListModels();
+
     // Threads setting:
     SetThreadValues(Parameters->Threads);
     // OpenGl specular:
@@ -4281,20 +4284,24 @@ void DrawingOptions::UpdateGui(int argc)
     // OpenGl Ambient:
     SetAmbientValues(Parameters->Ambient);
     // Gl Front Face Suupport
+
     if(!Parameters->glFrontFacingSupport)
         SetglFrontFacingSupport();
+
     // Show the two windows of the application:
-    move(Parameters->ControlX, Parameters->ControlY);
+    //move(Parameters->ControlX, Parameters->ControlY);
     resize(Parameters->ControlW, Parameters->ControlH);
     // ui.CndGroupBox->hide();
     // ui.NameLabel->hide();
     //MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
-    MathmodRef->resize(2*Parameters->GlwinW, 2*Parameters->GlwinH);
+    ui.Glframe->resize(2*Parameters->GlwinW, 2*Parameters->GlwinH);
     //MathmodRef->setFixedSize(Parameters->GlwinW, Parameters->GlwinH);
+
     // Pigment/texture
     ui.textureEdit->hide();
     // Hide all sliders
     HideSliders();
+
     // ProgressBar + text informations (set to minimum size 0)
     QList<int> Sizes;
     Sizes << 500 << 300;
@@ -5442,6 +5449,5 @@ void DrawingOptions::on_GLFrontSurfaceSupport_clicked()
 void DrawingOptions::on_choice_activated(int index)
 {
     on_choice_activated(ui.choice->currentText());
-
 }
 

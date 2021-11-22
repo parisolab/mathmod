@@ -56,7 +56,9 @@ int main(int argc, char *argv[])
     drawingopt.ui.openGLWidget->Xgrid = drawingopt.ui.openGLWidget->Ygrid = drawingopt.ui.openGLWidget->Zgrid=uint(Parameters.InitIsoGrid);
     drawingopt.ui.openGLWidget->Ugrid = drawingopt.ui.openGLWidget->Vgrid = uint(Parameters.InitParGrid);
     // GUI update:
+    drawingopt.show();
     drawingopt.UpdateGui(argc);
+
     if (drawingopt.IsolistItemRef != nullptr)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
     QObject::connect(drawingopt.MathmodRef->IsoObjet->masterthread,
@@ -85,7 +87,6 @@ int main(int argc, char *argv[])
                      SLOT(UpdateGL()), Qt::UniqueConnection);
     QObject::connect(drawingopt.Parameters->ui.ApplypushButton, SIGNAL(clicked()),
                      &drawingopt, SLOT(ApplypushButton_clicked()));
-    drawingopt.show();
     drawingopt.ui.openGLWidget->LoadShadersFiles();
     drawingopt.on_choice_activated(Parameters.model);
     return app.exec();

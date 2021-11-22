@@ -101,11 +101,8 @@ public:
     std::vector<MandatoryIsoField> MandIsoFields;
     std::vector<MandatoryParField> MandParFields;
     bool ShowCurrentObjectTree = false;
-// signals:
-
-
-public slots:
     void on_choice_activated(const QString &);
+public slots:
     void removeat(int, QJsonObject&, QString);
     void removeat2(int, QJsonObject&, QString);
     void appendall(QJsonObject&, QString, QTableWidget*);
@@ -232,7 +229,6 @@ public slots:
     void ParseItemTree(QTreeWidgetItem *, QList<bool> &, bool view = false);
     QTreeWidgetItem *ChildItemTreeProperty(QTreeWidgetItem *item,
                                            QString proprty);
-//private slots:
     void on_Infos_clicked();
     void on_Mesh_clicked();
     void on_Fill_clicked();
@@ -362,7 +358,6 @@ public slots:
     void on_blue_Diffuse_valueChanged(int value);
     void on_transparent_Diffuse_valueChanged(int value);
     void on_GLFrontSurfaceSupport_clicked();
-private slots:
     void on_choice_activated(int index);
 };
 #endif

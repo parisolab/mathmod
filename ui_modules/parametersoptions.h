@@ -73,6 +73,9 @@ public:
     int ParMaxGrid = 505;
     int InitParGrid = 50;
     int InitIsoGrid = 40;
+    void on_comboBox_2_activated(const QString &);
+    void on_comboBox_3_activated(const QString &);
+    void on_comboBox_activated(const QString &);
 public slots:
     void ReadConfigFile(QString, QJsonObject &);
     void ReadJsonFile(QString, QJsonObject &);
@@ -88,9 +91,6 @@ public slots:
     void LoadConfig(QApplication &, int argc, char *argv[]);
     ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
     bool isFloat(std::string);
-    void on_comboBox_2_activated(const QString &);
-    void on_comboBox_3_activated(const QString &);
-    void on_comboBox_activated(const QString &);
     void onred_2valueChanged(int);
     void ongreen_2valueChanged(int);
     void onblue_2valueChanged(int);
