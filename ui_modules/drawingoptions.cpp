@@ -4288,8 +4288,8 @@ void DrawingOptions::UpdateGui(int argc)
     resize(Parameters->ControlW, Parameters->ControlH);
     // ui.CndGroupBox->hide();
     // ui.NameLabel->hide();
-    MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
-    MathmodRef->resize(Parameters->GlwinW, Parameters->GlwinH);
+    //MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
+    MathmodRef->resize(2*Parameters->GlwinW, 2*Parameters->GlwinH);
     //MathmodRef->setFixedSize(Parameters->GlwinW, Parameters->GlwinH);
     // Pigment/texture
     ui.textureEdit->hide();

@@ -25,7 +25,7 @@
     },
     "WindowSize": {
         "ControlH": 750,
-        "ControlW": 450,
+        "ControlW": 1200,
         "GlwinH": 750,
         "GlwinW": 750
     },

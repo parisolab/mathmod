@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>582</width>
+    <width>1047</width>
     <height>661</height>
    </rect>
   </property>
@@ -7305,7 +7305,7 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>290</width>
+                  <width>387</width>
                   <height>994</height>
                  </rect>
                 </property>
@@ -10636,7 +10636,14 @@ p, li { white-space: pre-wrap; }
         </layout>
        </widget>
       </widget>
-      <widget class="MathMod" name="openGLWidget"/>
+      <widget class="MathMod" name="openGLWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </widget>
     </item>
     <item row="2" column="0">
@@ -10784,7 +10791,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>582</width>
+     <width>1047</width>
      <height>24</height>
     </rect>
    </property>
