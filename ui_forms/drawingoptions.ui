@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>952</width>
+    <width>1047</width>
     <height>661</height>
    </rect>
   </property>
@@ -25,7 +25,7 @@
    <string>MathMod-12.0 (Development version)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_31">
+   <layout class="QGridLayout" name="gridLayout_80">
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_19">
       <property name="spacing">
@@ -383,15 +383,9 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <property name="handleWidth">
-       <number>15</number>
-      </property>
       <widget class="QSplitter" name="splitter">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="handleWidth">
-        <number>15</number>
        </property>
        <widget class="QTreeWidget" name="ObjectClasse">
         <property name="minimumSize">
@@ -7311,7 +7305,7 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>508</width>
+                  <width>411</width>
                   <height>994</height>
                  </rect>
                 </property>
@@ -10642,13 +10636,25 @@ p, li { white-space: pre-wrap; }
         </layout>
        </widget>
       </widget>
-      <widget class="MathMod" name="openGLWidget">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <widget class="QFrame" name="Glframe">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
        </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_31">
+        <item row="0" column="0">
+         <widget class="MathMod" name="openGLWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -10797,7 +10803,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>952</width>
+     <width>1047</width>
      <height>24</height>
     </rect>
    </property>

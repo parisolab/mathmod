@@ -4290,13 +4290,12 @@ void DrawingOptions::UpdateGui(int argc)
 
     // Show the two windows of the application:
     //move(Parameters->ControlX, Parameters->ControlY);
-    //resize(Parameters->ControlW, Parameters->ControlH);
+    resize(Parameters->ControlW, Parameters->ControlH);
     // ui.CndGroupBox->hide();
     // ui.NameLabel->hide();
     //MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
-    QList<int> Sizes1;
-    Sizes1 << 350 << 450;
-    ui.splitter_9->setSizes(Sizes1);
+    ui.Glframe->resize(2*Parameters->GlwinW, 2*Parameters->GlwinH);
+    //MathmodRef->setFixedSize(Parameters->GlwinW, Parameters->GlwinH);
 
     // Pigment/texture
     ui.textureEdit->hide();
