@@ -56,7 +56,7 @@ FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/sliderparam.ui \
             ui_forms/addparam.ui \
             ui_forms/selectoptions.ui
-ANDROID_ABIS = armeabi-v7a arm64-v8a
+
 RC_FILE 	= mm.rc
 RESOURCES       += myressources.qrc
 QT              += opengl openglwidgets widgets
