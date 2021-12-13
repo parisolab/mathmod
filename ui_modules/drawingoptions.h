@@ -102,6 +102,7 @@ public:
     std::vector<MandatoryParField> MandParFields;
     bool ShowCurrentObjectTree = false;
     void on_choice_activated(const QString &);
+    void grabGestures(const QList<Qt::GestureType> &gestures);
 public slots:
     void removeat(int, QJsonObject&, QString);
     void removeat2(int, QJsonObject&, QString);

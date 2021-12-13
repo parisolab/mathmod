@@ -45,6 +45,7 @@
 #include <QQuaternion>
 #include <QMatrix4x4>
 #include <QPainter>
+#include <QGesture>
 
 class MathMod : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -266,6 +267,8 @@ public slots:
     void mouseMoveEvent(QMouseEvent *)  override;
     void mouseReleaseEvent(QMouseEvent *)  override;
     void keyPressEvent(QKeyEvent *)  override;
+    bool event(QEvent *event) override;
+    void pinchTriggered(QPinchGesture*);
     virtual void run();
     void InitSpecularParameters();
     void Shininess(int);
@@ -278,6 +281,8 @@ public slots:
     QImage Copyscreenshot();
     void moveEvent(QMoveEvent *) override;
     void closeEvent(QCloseEvent *) override;
+    void grabGestures(const QList<Qt::GestureType> &gestures);
+    bool gestureEvent(QGestureEvent *event);
 public slots:
     void anim();
     void morph();

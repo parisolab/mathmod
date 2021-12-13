@@ -1856,7 +1856,7 @@ void MathMod::mouseReleaseEvent(QMouseEvent *)
 void MathMod::mousePressEvent(QMouseEvent *e)
 {
     // Save mouse press position
-    mousePressPosition = QVector2D(e->position());
+    mousePressPosition = QVector2D(e->pos());
     if(LocalScene.anim != 1)
         rotation = oldRotation;
     if (e->button() == Qt::LeftButton)
@@ -1884,7 +1884,7 @@ void MathMod::mousePressEvent(QMouseEvent *e)
     else
         btmilieu = 0;
 
-    mouseY = e->position().y()/2;
+    mouseY = e->pos().y()/2;
 }
 
 void MathMod::mouseMoveEvent(QMouseEvent *e)
@@ -1893,7 +1893,7 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
     static QVector3D oldn=QVector3D(0,0,1);
     if(mouseLeftDown)
     {
-        QVector2D diff = QVector2D(e->position()) - mousePressPosition;
+        QVector2D diff = QVector2D(e->pos()) - mousePressPosition;
         // Rotation axis is perpendicular to the mouse position difference
         n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
         // Accelerate angular speed relative to the length of the mouse sweep
@@ -1904,12 +1904,72 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
     }
     if(mouseRightDown)
     {
-        cameraDistance -= (e->position().y()/2 - mouseY) * 0.02f;
-        mouseY = e->position().y()/2;
+        cameraDistance -= (e->pos().y()/2 - mouseY) * 0.02f;
+        mouseY = e->pos().y()/2;
     }
     update();
 }
 
+bool MathMod::gestureEvent(QGestureEvent *event)
+{
+    /*
+    qCDebug(lcExample) << "gestureEvent():" << event;
+    if (QGesture *swipe = event->gesture(Qt::SwipeGesture))
+        swipeTriggered(static_cast<QSwipeGesture *>(swipe));
+    else if (QGesture *pan = event->gesture(Qt::PanGesture))
+        panTriggered(static_cast<QPanGesture *>(pan));
+    */
+    if (QGesture *pinch = event->gesture(Qt::PinchGesture))
+        pinchTriggered(static_cast<QPinchGesture *>(pinch));
+    return true;
+}
+qreal rotationAngle=0;
+qreal scaleFactor = 1;
+qreal currentStepScaleFactor = 1;
+void MathMod::pinchTriggered(QPinchGesture *gesture)
+{
+    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
+    if (changeFlags & QPinchGesture::RotationAngleChanged) {
+        qreal rotationDelta = gesture->rotationAngle() - gesture->lastRotationAngle();
+        rotationAngle += rotationDelta;
+    }
+    if (changeFlags & QPinchGesture::ScaleFactorChanged) {
+            currentStepScaleFactor = gesture->totalScaleFactor();
+    }
+    if (gesture->state() == Qt::GestureFinished ) {
+        scaleFactor *= currentStepScaleFactor;
+        currentStepScaleFactor = 1;
+    }
+
+    //if(mouseRightDown)
+    {
+        /*
+        cameraDistance -= (e->pos().y()/2 - mouseY) * 0.02f;
+        mouseY = e->pos().y()/2;
+        */
+        if(scaleFactor != 0.0f)
+            cameraDistance = 0.01/scaleFactor;
+    }
+
+    update();
+}
+//void MathMod::grabGestures(const QVector<Qt::GestureType> &gestures);
+void MathMod::grabGestures(const QList<Qt::GestureType> &gestures)
+{
+    //! [enable gestures]
+    for (Qt::GestureType gesture : gestures)
+        grabGesture(gesture);
+    //! [enable gestures]
+}
+
+//! [event handler]
+bool MathMod::event(QEvent *event)
+{
+    if (event->type() == QEvent::Gesture)
+        return gestureEvent(static_cast<QGestureEvent*>(event));
+    return QWidget::event(event);
+}
+//! [event handler]
 void MathMod::screenshot()
 {
     QImage image = QOpenGLWidget::grabFramebuffer();

@@ -2126,6 +2126,10 @@ void DrawingOptions::on_choice_activated(const QString &arg)
     //return Result;
 }
 
+void DrawingOptions::grabGestures(const QList<Qt::GestureType> &gestures)
+{
+    ui.openGLWidget->grabGestures(gestures);
+}
 void DrawingOptions::Run_JsonObject_activeted()
 {
     QJsonParseError err;
