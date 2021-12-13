@@ -41,7 +41,10 @@ int main(int argc, char *argv[])
     Parametersoptions Parameters;
     Parameters.MainApp = &app;
     Parameters.LoadConfig(app, argc, argv);
+    QList<Qt::GestureType> gestures;
+    gestures << Qt::PinchGesture;
     DrawingOptions drawingopt;
+    drawingopt.grabGestures(gestures);
 /*
     drawingopt.ui.openGLWidget = new MathMod(nullptr, uint(Parameters.Threads[0]),
             uint(Parameters.InitParGrid), uint(Parameters.InitIsoGrid),
