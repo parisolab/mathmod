@@ -1925,7 +1925,6 @@ bool MathMod::gestureEvent(QGestureEvent *event)
 }
 qreal rotationAngle=0;
 qreal scaleFactor = 1;
-qreal currentStepScaleFactor = 1;
 void MathMod::pinchTriggered(QPinchGesture *gesture)
 {
     QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
@@ -1934,26 +1933,12 @@ void MathMod::pinchTriggered(QPinchGesture *gesture)
         rotationAngle += rotationDelta;
     }
     if (changeFlags & QPinchGesture::ScaleFactorChanged) {
-            currentStepScaleFactor = gesture->totalScaleFactor();
+            scaleFactor = gesture->scaleFactor();
+            if(scaleFactor != 0.0f)
+                cameraDistance /= scaleFactor;
     }
-    if (gesture->state() == Qt::GestureFinished ) {
-        scaleFactor *= currentStepScaleFactor;
-        currentStepScaleFactor = 1;
-    }
-
-    //if(mouseRightDown)
-    {
-        /*
-        cameraDistance -= (e->pos().y()/2 - mouseY) * 0.02f;
-        mouseY = e->pos().y()/2;
-        */
-        if(scaleFactor != 0.0f)
-            cameraDistance = 0.01/scaleFactor;
-    }
-
     update();
 }
-//void MathMod::grabGestures(const QVector<Qt::GestureType> &gestures);
 void MathMod::grabGestures(const QList<Qt::GestureType> &gestures)
 {
     //! [enable gestures]
