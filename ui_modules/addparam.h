@@ -32,6 +32,8 @@ public:
 
 public:
     Ui::AddParamForm ui;
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif // ADDPARAM
