@@ -21,6 +21,7 @@
 #ifndef PARAMETERSOPTIONS_H
 #define PARAMETERSOPTIONS_H
 
+//#include "comvar.h"
 #include "../json_parser/parisodef.h"
 #include "ui_parametersoptions.h"
 #include <QFileDialog>
@@ -67,12 +68,14 @@ public:
     int Diffuse[4]={80,80,80,100};
     int Shininess=110;
     bool glFrontFacingSupport=true;
-    int Threads[3]={8,1,64};
-    int CalculFactor[3]={4,4,4};
+
+
+
+
+
+
     int IsoMaxGrid = 305;
     int ParMaxGrid = 505;
-    int InitParGrid = 50;
-    int InitIsoGrid = 40;
     void on_comboBox_2_activated(const QString &);
     void on_comboBox_3_activated(const QString &);
     void on_comboBox_activated(const QString &);

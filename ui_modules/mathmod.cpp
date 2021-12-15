@@ -19,6 +19,9 @@
  ***************************************************************************/
 #include "mathmod.h"
 
+
+
+
 void MathMod::CalculateTexturePoints(int type)
 {
     double tmp, val[6]={0,0,0,0,0,0};
@@ -2096,6 +2099,7 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
                  uint initparGrid, uint initisoGrid, uint FactX, uint FactY,
                  uint FactZ) :QOpenGLWidget(parent)
 {
+    //nbthreads = Threads[0];
     PerlinNoise = new ImprovedNoise(4., 4., 4.);
     latence = 10;
     Vgrid = Ugrid = 64;

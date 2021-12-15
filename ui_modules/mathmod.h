@@ -20,6 +20,7 @@
 
 #ifndef mathmod_H
 #define mathmod_H
+#include "comvar.h"
 #include "../pariso/isosurface/Iso3D.h"
 #include "../pariso/parametric/Model3D.h"
 #include <QFileDialog>
@@ -37,8 +38,6 @@
 #include <string>
 #include "../json_parser/parisodef.h"
 #include "../ui_modules/ParisoMathObject.h"
-#include <QMessageBox>
-#include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QLabel>
 #include <QVector3D>
@@ -215,8 +214,8 @@ public:
     qreal acc;
     QVector3D n;
 public:
-    MathMod(QWidget *, uint th  = 4, uint initpargrid = 50, uint initisogrid = 40,
-            uint factx = 4, uint facty = 4, uint factz = 4);
+    MathMod(QWidget *, uint th  = Threads[0], uint initpargrid = InitParGrid, uint initisogrid = InitIsoGrid,
+            uint factx = CalculFactor[0], uint facty = CalculFactor[1], uint factz = CalculFactor[2]);
     ~MathMod();
     void ParametricSurfaceProcess(int type = 1);
     void ParisoObjectProcess();

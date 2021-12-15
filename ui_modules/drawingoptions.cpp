@@ -4252,15 +4252,15 @@ void DrawingOptions::UpdateGuiMaxgrid()
     int maxgrd = int(Parameters->IsoMaxGrid);
     ui.xyzg->blockSignals(true);
     ui.xyzg->setMaximum(maxgrd);
-    ui.xyzg->setValue(int(Parameters->InitIsoGrid));
+    ui.xyzg->setValue(int(InitIsoGrid));
     ui.xyzg->blockSignals(false);
     ui.linecolumn_2->blockSignals(true);
     ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
-    ui.linecolumn_2->setValue(int(Parameters->InitParGrid));
+    ui.linecolumn_2->setValue(int(InitParGrid));
     ui.linecolumn_2->blockSignals(false);
     ui.linecolumn_3->blockSignals(true);
     ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
-    ui.linecolumn_3->setValue(int(Parameters->InitParGrid));
+    ui.linecolumn_3->setValue(int(InitParGrid));
     ui.linecolumn_3->blockSignals(false);
 }
 
@@ -4278,7 +4278,7 @@ void DrawingOptions::UpdateGui(int argc)
     AddListModels();
 
     // Threads setting:
-    SetThreadValues(Parameters->Threads);
+    SetThreadValues(Threads);
     // OpenGl specular:
     SetSpecularValues(Parameters->Specular);
     // OpenGl shininess:

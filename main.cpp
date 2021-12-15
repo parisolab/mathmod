@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
 
     drawingopt.MathmodRef = drawingopt.ui.openGLWidget;
 
-    drawingopt.ui.openGLWidget->Xgrid = drawingopt.ui.openGLWidget->Ygrid = drawingopt.ui.openGLWidget->Zgrid=uint(Parameters.InitIsoGrid);
-    drawingopt.ui.openGLWidget->Ugrid = drawingopt.ui.openGLWidget->Vgrid = uint(Parameters.InitParGrid);
+    drawingopt.ui.openGLWidget->Xgrid = drawingopt.ui.openGLWidget->Ygrid = drawingopt.ui.openGLWidget->Zgrid=uint(InitIsoGrid);
+    drawingopt.ui.openGLWidget->Ugrid = drawingopt.ui.openGLWidget->Vgrid = uint(InitParGrid);
     // GUI update:
     drawingopt.show();
     drawingopt.UpdateGui(argc);
