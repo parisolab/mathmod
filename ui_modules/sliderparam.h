@@ -34,6 +34,7 @@ public:
     int currentSlider;
 private slots:
     void on_SaveButton_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // SLIDERPARAM

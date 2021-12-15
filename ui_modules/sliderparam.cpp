@@ -28,3 +28,9 @@ SlidersForm::SlidersForm(QWidget *parent) : QWidget(parent)
 }
 
 void SlidersForm::on_SaveButton_clicked() {}
+
+void SlidersForm::on_pushButton_clicked()
+{
+    this->close();
+}
+
