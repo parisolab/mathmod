@@ -25,3 +25,9 @@ ColorsOptions::ColorsOptions(QWidget *parent) : QWidget(parent)
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
     ui.setupUi(this);
 }
+
+void ColorsOptions::on_pushButton_clicked()
+{
+    this->close();
+}
+

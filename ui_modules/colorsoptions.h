@@ -32,6 +32,8 @@ public:
 
 public:
     Ui::ColorsOptions ui;
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif
