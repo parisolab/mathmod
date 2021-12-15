@@ -24,6 +24,7 @@
 #include <qmainwindow.h>
 #include <qpushbutton.h>
 #include <qscrollbar.h>
+#include <QtWidgets/QGridLayout>
 
 class screenimage : public QMainWindow
 {
@@ -32,6 +33,8 @@ class screenimage : public QMainWindow
 public:
     screenimage(QImage);
     ~screenimage();
+    QGridLayout *gridLayout;
+    QPushButton *about;
 public slots:
     void connectcontrols();
     void saveas();
