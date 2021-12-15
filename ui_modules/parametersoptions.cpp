@@ -981,3 +981,9 @@ void Parametersoptions::on_TestConfig_clicked()
         SetStyleAndTheme(*MainApp, style, theme);
     }
 }
+
+void Parametersoptions::on_pushButton_clicked()
+{
+    this->close();
+}
+
