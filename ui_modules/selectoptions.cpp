@@ -116,3 +116,9 @@ void SelectOptions::on_CompcheckBox_clicked(bool checked)
     selectedoptions.parsecmpnames = checked;
     emitUpdateSignal();
 }
+
+void SelectOptions::on_pushButton_clicked()
+{
+    this->close();
+}
+
