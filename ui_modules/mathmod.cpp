@@ -1919,6 +1919,7 @@ bool MathMod::gestureEvent(QGestureEvent *event)
 qreal scaleFactor = 1;
 void MathMod::pinchTriggered(QPinchGesture *gesture)
 {
+    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
     if (changeFlags & QPinchGesture::ScaleFactorChanged) {
             scaleFactor = gesture->scaleFactor();
             if(scaleFactor != 0.0f)
