@@ -1912,13 +1912,6 @@ void MathMod::mouseMoveEvent(QMouseEvent *e)
 
 bool MathMod::gestureEvent(QGestureEvent *event)
 {
-    /*
-    qCDebug(lcExample) << "gestureEvent():" << event;
-    if (QGesture *swipe = event->gesture(Qt::SwipeGesture))
-        swipeTriggered(static_cast<QSwipeGesture *>(swipe));
-    else if (QGesture *pan = event->gesture(Qt::PanGesture))
-        panTriggered(static_cast<QPanGesture *>(pan));
-    */
     if (QGesture *pinch = event->gesture(Qt::PinchGesture))
         pinchTriggered(static_cast<QPinchGesture *>(pinch));
     return true;
