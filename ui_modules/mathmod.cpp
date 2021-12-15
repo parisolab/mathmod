@@ -1916,15 +1916,9 @@ bool MathMod::gestureEvent(QGestureEvent *event)
         pinchTriggered(static_cast<QPinchGesture *>(pinch));
     return true;
 }
-qreal rotationAngle=0;
 qreal scaleFactor = 1;
 void MathMod::pinchTriggered(QPinchGesture *gesture)
 {
-    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
-    if (changeFlags & QPinchGesture::RotationAngleChanged) {
-        qreal rotationDelta = gesture->rotationAngle() - gesture->lastRotationAngle();
-        rotationAngle += rotationDelta;
-    }
     if (changeFlags & QPinchGesture::ScaleFactorChanged) {
             scaleFactor = gesture->scaleFactor();
             if(scaleFactor != 0.0f)
