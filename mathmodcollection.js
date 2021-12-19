@@ -605,7 +605,7 @@
                 "PSkeletalGraph=cos(x)+cos(y)+cos(z)+(51/100)*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+(147/100)",
                 "InvertPSkeletalGraph = PSkeletalGraph(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t)"],
             "Fxyz": ["InvertPSkeletalGraph(x,y,z,t)"],
-            "Grid": ["350"],
+            "Grid": ["300"],
             "Xmax": ["L"],
             "Xmin": ["-L"],
             "Ymax": ["L"],

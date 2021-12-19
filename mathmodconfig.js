@@ -7,9 +7,9 @@
     },
     "Parameters": {
         "IsoMaxGrid": 500,
-        "InitIsoGrid": 16,
+        "InitIsoGrid": 40,
         "ParMaxGrid": 5000,
-        "InitParGrid": 16
+        "InitParGrid": 64
     },
     "StartOptions": {
         "Model": "CloseIso_1"
