@@ -45,15 +45,8 @@ int main(int argc, char *argv[])
     gestures << Qt::PinchGesture;
     DrawingOptions drawingopt;
     drawingopt.grabGestures(gestures);
-/*
-    drawingopt.ui.openGLWidget = new MathMod(nullptr, uint(Parameters.Threads[0]),
-            uint(Parameters.InitParGrid), uint(Parameters.InitIsoGrid),
-            uint(Parameters.CalculFactor[0]), uint(Parameters.CalculFactor[1]),
-            uint(Parameters.CalculFactor[2]));
-*/
     // save references:
     drawingopt.Parameters = &Parameters;
-
     drawingopt.MathmodRef = drawingopt.ui.openGLWidget;
 
     drawingopt.ui.openGLWidget->Xgrid = drawingopt.ui.openGLWidget->Ygrid = drawingopt.ui.openGLWidget->Zgrid=uint(InitIsoGrid);
