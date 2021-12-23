@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MathMod-12.0 (Development version)</string>
+   <string>MathMod-12.0.0</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
@@ -205,7 +205,6 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -242,7 +241,6 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -282,7 +280,6 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -319,7 +316,6 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -359,7 +355,6 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
             <pointsize>10</pointsize>
            </font>
           </property>
@@ -483,7 +478,6 @@
         <property name="font">
          <font>
           <pointsize>10</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -514,7 +508,6 @@
            <property name="font">
             <font>
              <pointsize>10</pointsize>
-             <weight>50</weight>
              <bold>false</bold>
             </font>
            </property>
@@ -665,7 +658,6 @@
                     <property name="font">
                      <font>
                       <pointsize>14</pointsize>
-                      <weight>50</weight>
                       <bold>false</bold>
                      </font>
                     </property>
@@ -696,7 +688,6 @@
                        <property name="font">
                         <font>
                          <pointsize>11</pointsize>
-                         <weight>50</weight>
                          <bold>false</bold>
                         </font>
                        </property>
@@ -796,7 +787,6 @@
                                  <property name="font">
                                   <font>
                                    <pointsize>10</pointsize>
-                                   <weight>50</weight>
                                    <bold>false</bold>
                                   </font>
                                  </property>
@@ -805,7 +795,7 @@
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Schwarz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -905,7 +895,6 @@ p, li { white-space: pre-wrap; }
                            <property name="font">
                             <font>
                              <pointsize>12</pointsize>
-                             <weight>50</weight>
                              <bold>false</bold>
                             </font>
                            </property>
@@ -917,7 +906,7 @@ p, li { white-space: pre-wrap; }
                            </property>
                            <property name="html">
                             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;cos(x) + cos(y) + cos(z)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1086,7 +1075,6 @@ p, li { white-space: pre-wrap; }
                                  <property name="font">
                                   <font>
                                    <pointsize>12</pointsize>
-                                   <weight>75</weight>
                                    <bold>true</bold>
                                   </font>
                                  </property>
@@ -1120,7 +1108,7 @@ p, li { white-space: pre-wrap; }
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1149,7 +1137,7 @@ p, li { white-space: pre-wrap; }
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;-4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1178,7 +1166,7 @@ p, li { white-space: pre-wrap; }
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1347,7 +1335,6 @@ p, li { white-space: pre-wrap; }
                                  <property name="font">
                                   <font>
                                    <pointsize>12</pointsize>
-                                   <weight>75</weight>
                                    <bold>true</bold>
                                   </font>
                                  </property>
@@ -1384,7 +1371,7 @@ p, li { white-space: pre-wrap; }
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;-4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1413,7 +1400,7 @@ p, li { white-space: pre-wrap; }
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;-4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1528,7 +1515,6 @@ p, li { white-space: pre-wrap; }
                                  <property name="font">
                                   <font>
                                    <pointsize>12</pointsize>
-                                   <weight>75</weight>
                                    <bold>true</bold>
                                   </font>
                                  </property>
@@ -1565,7 +1551,7 @@ p, li { white-space: pre-wrap; }
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;4&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1610,13 +1596,12 @@ p, li { white-space: pre-wrap; }
                                <property name="font">
                                 <font>
                                  <pointsize>12</pointsize>
-                                 <weight>50</weight>
                                  <bold>false</bold>
                                 </font>
                                </property>
                                <property name="html">
                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -2025,7 +2010,6 @@ p, li { white-space: pre-wrap; }
                               <property name="font">
                                <font>
                                 <pointsize>12</pointsize>
-                                <weight>75</weight>
                                 <bold>true</bold>
                                </font>
                               </property>
@@ -2164,7 +2148,6 @@ p, li { white-space: pre-wrap; }
                               <property name="font">
                                <font>
                                 <pointsize>12</pointsize>
-                                <weight>75</weight>
                                 <bold>true</bold>
                                </font>
                               </property>
@@ -2303,7 +2286,6 @@ p, li { white-space: pre-wrap; }
                               <property name="font">
                                <font>
                                 <pointsize>12</pointsize>
-                                <weight>75</weight>
                                 <bold>true</bold>
                                </font>
                               </property>
@@ -2601,7 +2583,6 @@ p, li { white-space: pre-wrap; }
                          <property name="font">
                           <font>
                            <pointsize>12</pointsize>
-                           <weight>50</weight>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -2613,7 +2594,6 @@ p, li { white-space: pre-wrap; }
                          <property name="font">
                           <font>
                            <pointsize>12</pointsize>
-                           <weight>50</weight>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -2622,7 +2602,6 @@ p, li { white-space: pre-wrap; }
                          <property name="font">
                           <font>
                            <pointsize>12</pointsize>
-                           <weight>50</weight>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -2758,7 +2737,6 @@ p, li { white-space: pre-wrap; }
                               <property name="font">
                                <font>
                                 <pointsize>12</pointsize>
-                                <weight>75</weight>
                                 <bold>true</bold>
                                </font>
                               </property>
@@ -2898,7 +2876,6 @@ p, li { white-space: pre-wrap; }
                               <property name="font">
                                <font>
                                 <pointsize>12</pointsize>
-                                <weight>75</weight>
                                 <bold>true</bold>
                                </font>
                               </property>
@@ -2992,13 +2969,12 @@ p, li { white-space: pre-wrap; }
                             <property name="font">
                              <font>
                               <pointsize>12</pointsize>
-                              <weight>50</weight>
                               <bold>false</bold>
                              </font>
                             </property>
                             <property name="html">
                              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -3448,7 +3424,6 @@ p, li { white-space: pre-wrap; }
                          <property name="font">
                           <font>
                            <pointsize>12</pointsize>
-                           <weight>50</weight>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -3460,7 +3435,6 @@ p, li { white-space: pre-wrap; }
                          <property name="font">
                           <font>
                            <pointsize>12</pointsize>
-                           <weight>50</weight>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -3469,7 +3443,6 @@ p, li { white-space: pre-wrap; }
                          <property name="font">
                           <font>
                            <pointsize>12</pointsize>
-                           <weight>50</weight>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -3478,7 +3451,6 @@ p, li { white-space: pre-wrap; }
                          <property name="font">
                           <font>
                            <pointsize>12</pointsize>
-                           <weight>50</weight>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -3573,7 +3545,6 @@ p, li { white-space: pre-wrap; }
                             <property name="font">
                              <font>
                               <pointsize>12</pointsize>
-                              <weight>75</weight>
                               <bold>true</bold>
                              </font>
                             </property>
@@ -3710,7 +3681,6 @@ p, li { white-space: pre-wrap; }
                             <property name="font">
                              <font>
                               <pointsize>12</pointsize>
-                              <weight>75</weight>
                               <bold>true</bold>
                              </font>
                             </property>
@@ -4431,7 +4401,6 @@ p, li { white-space: pre-wrap; }
                 <property name="font">
                  <font>
                   <pointsize>12</pointsize>
-                  <weight>50</weight>
                   <bold>false</bold>
                  </font>
                 </property>
@@ -4440,7 +4409,7 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <property name="html">
                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:11pt;&quot;&gt;{&lt;/span&gt;&lt;/p&gt;
@@ -4514,7 +4483,6 @@ p, li { white-space: pre-wrap; }
                  <property name="font">
                   <font>
                    <pointsize>13</pointsize>
-                   <weight>50</weight>
                    <bold>false</bold>
                   </font>
                  </property>
@@ -7419,7 +7387,6 @@ p, li { white-space: pre-wrap; }
                        <property name="font">
                         <font>
                          <pointsize>7</pointsize>
-                         <weight>50</weight>
                          <bold>false</bold>
                         </font>
                        </property>
@@ -7479,7 +7446,6 @@ p, li { white-space: pre-wrap; }
                        <property name="font">
                         <font>
                          <pointsize>15</pointsize>
-                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -7539,7 +7505,6 @@ p, li { white-space: pre-wrap; }
                        <property name="font">
                         <font>
                          <pointsize>15</pointsize>
-                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -7656,7 +7621,6 @@ p, li { white-space: pre-wrap; }
                        <property name="font">
                         <font>
                          <pointsize>15</pointsize>
-                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -7679,7 +7643,6 @@ p, li { white-space: pre-wrap; }
                        <property name="font">
                         <font>
                          <pointsize>15</pointsize>
-                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -10460,7 +10423,6 @@ p, li { white-space: pre-wrap; }
                      <property name="font">
                       <font>
                        <pointsize>12</pointsize>
-                       <weight>50</weight>
                        <bold>false</bold>
                       </font>
                      </property>
@@ -10494,7 +10456,6 @@ p, li { white-space: pre-wrap; }
                      <property name="font">
                       <font>
                        <pointsize>9</pointsize>
-                       <weight>50</weight>
                        <bold>false</bold>
                       </font>
                      </property>
@@ -10520,7 +10481,6 @@ p, li { white-space: pre-wrap; }
                      <property name="font">
                       <font>
                        <pointsize>9</pointsize>
-                       <weight>50</weight>
                        <bold>false</bold>
                       </font>
                      </property>
@@ -10547,7 +10507,6 @@ p, li { white-space: pre-wrap; }
                      <property name="font">
                       <font>
                        <pointsize>12</pointsize>
-                       <weight>50</weight>
                        <bold>false</bold>
                       </font>
                      </property>
@@ -10581,7 +10540,6 @@ p, li { white-space: pre-wrap; }
                      <property name="font">
                       <font>
                        <pointsize>9</pointsize>
-                       <weight>50</weight>
                        <bold>false</bold>
                       </font>
                      </property>
@@ -10607,7 +10565,6 @@ p, li { white-space: pre-wrap; }
                      <property name="font">
                       <font>
                        <pointsize>9</pointsize>
-                       <weight>50</weight>
                        <bold>false</bold>
                       </font>
                      </property>
@@ -10751,7 +10708,7 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="html">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:15pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
