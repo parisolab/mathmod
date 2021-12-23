@@ -60,6 +60,9 @@ FORMS     = ui_forms/drawingoptions.ui \
 RC_FILE 	= mm.rc
 RESOURCES       += myressources.qrc
 QT              += opengl  widgets
+greaterThan(QT_MAJOR_VERSION, 5) {
+    QT += openglwidgets
+}
 OTHER_FILES     += \
                 mathmodcollection.js \
                 mathmodconfig.js
