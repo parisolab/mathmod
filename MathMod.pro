@@ -2,6 +2,7 @@ HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/colorsoptions.h \
             ui_modules/about.h \
             ui_modules/ParisoMathObject.h \
+            ui_modules/comvar.h \
             ui_modules/mathmod.h \
             ui_modules/selectoptions.h \
             pariso/parametric/Model3D.h \
@@ -22,7 +23,6 @@ HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/addparam.h \
             ui_modules/editor.h \
             fparser/fpconfig.hh
-
 SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/colorsoptions.cpp \
             ui_modules/about.cpp \
@@ -56,10 +56,10 @@ FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/sliderparam.ui \
             ui_forms/addparam.ui \
             ui_forms/selectoptions.ui
-
+# ANDROID_ABIS = armeabi-v7a arm64-v8a
 RC_FILE 	= mm.rc
 RESOURCES       += myressources.qrc
-QT              += opengl openglwidgets widgets
+QT              += opengl  widgets
 OTHER_FILES     += \
                 mathmodcollection.js \
                 mathmodconfig.js
@@ -68,6 +68,23 @@ target.path    = $TARGET
 sources.files  = $$SOURCES $$HEADERS $$RESOURCES $$FORMS mathmod.pro
 sources.path   = $TARGET
 INSTALLS      += target sources
-
 DISTFILES += \
-    advancedmodels.js
+    advancedmodels.js \
+    android/AndroidManifest.xml \
+    android/build.gradle \
+    android/gradle.properties \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat \
+    android/res/values/libs.xml
+
+#     ios {
+#         QMAKE_ASSET_CATALOGS += ios/Assets.xcassets
+#     }
+#     ios {
+#         ios_icon.files = $$files($$PWD/ios/Icon*.png)
+#         QMAKE_BUNDLE_DATA += ios_icon
+#     }
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
