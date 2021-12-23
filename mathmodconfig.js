@@ -1,7 +1,7 @@
 {
     "ReleaseInfos": {
-        "VersionNumber": "12.0 (Development version)",
-        "ReleaseDate": "21/07/30",
+        "VersionNumber": "12.0.0",
+        "ReleaseDate": "21/12/20",
         "DocPartialPath": "/documentation/index.html",
         "DocAbsolutePath": ""
     },
