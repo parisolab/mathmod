@@ -1,0 +1,36 @@
+name: mathmod
+version: '11.0'
+summary: mathmod app
+description: This is a MathMod app demo
+type: base
+build-base: core20
+grade: stable 
+confinement: strict 
+
+apps:
+  mathmod:
+    command: mathmod
+    plugs: [home, network, x11, wayland, opengl]
+
+parts:
+  application:
+    plugin: qmake
+    source: .
+    qt-version: qt5
+    project-files: ["MathMod.pro"]
+    override-build: |
+      install-d $SNAPCRAFT _part_install/opt/mathmod
+      INSTALL MathMod $SNAPCRAFT _part_install/opt/mathmod/MathMod
+    after: [desktop-qt5]
+    
+  desktop-qt5:
+    plugin: nil
+    build-packages:
+        - pkg-config
+        - qt5-default
+        - qt5-qmake
+        - qtbase5-dev
+    stage-packages:
+        - libqt5core5a
+        - libqt5gui5
+        - libqt5widgets5
