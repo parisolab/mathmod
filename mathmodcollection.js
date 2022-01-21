@@ -5602,11 +5602,7 @@
             "Zmin": ["-(1001/1000)"]
         }
     },
-
-
-
-
-{
+    {
     "Iso3D": {
         "Component": [
             "MengerSponge_H",
@@ -5628,13 +5624,11 @@
             "MengerSponge_M",
             "MengerSponge_M",
             "MengerSponge_M",
-            "MengerSponge_M"
-        ],
+            "MengerSponge_M"],
         "Const": [
             "th=5/1000",
             "L=1001/1000",
-            "2L=2*L"
-        ],
+            "2L=2*L"],
         "Description ": [
             "Hexagrams Menger L5 by Abderrahman Taha 18/01/2022"
         ],
@@ -5811,12 +5805,7 @@
         ]
     }
 },
-
-
-
-
-
-    {
+ {
       "Param3D": {
         "Description ": ["Virus by Abderrahman Taha 15/05/2020"],
         "Name": ["Virus_2"],
