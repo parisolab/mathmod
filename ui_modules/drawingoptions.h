@@ -24,7 +24,6 @@
 #include "../screenshot/video.h"
 #include "about.h"
 #include "addparam.h"
-#include "colorsoptions.h"
 #include "editor.h"
 #include "mathmod.h"
 #include "parametersoptions.h"
@@ -133,7 +132,7 @@ public slots:
     void SaveSlidersRef(int n = 20);
     void editorwin();
     void videoplay();
-    void colorsoptions();
+    //void colorsoptions();
     void on_xyzg_valueChanged(int);
     void on_ChangeGrid_clicked();
     void LoadK3DSurfScript(QString, int);
@@ -222,7 +221,6 @@ public slots:
     void ShowSliders(const QJsonObject &);
     void on_actionScreenshot_triggered();
     void on_actionEditor_triggered();
-    void on_actionColors_triggered();
     void update_slider_param();
     void add_new_param();
     void update_infos_param(int);
@@ -238,7 +236,6 @@ public slots:
     void on_cut_clicked();
     void on_actionConvert_K3DS_script_triggered();
     void on_actionConfiguration_triggered();
-    void on_actionColors_2_triggered();
     void on_Load_clicked();
     void on_ParamComponent_2_activated(int);
     void on_updateParam_2_clicked();

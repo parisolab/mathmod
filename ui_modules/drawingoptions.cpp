@@ -96,16 +96,6 @@ void DrawingOptions::editorwin()
     editorwindow->show();
 }
 
-void DrawingOptions::colorsoptions()
-{
-    ColorsOptions *colorwindow = new ColorsOptions();
-    connect(colorwindow->ui.color_2, SIGNAL(activated(int)), this,SLOT(oncolor_2activated(int)));
-    connect(colorwindow->ui.red_2, SIGNAL(valueChanged(int)), this,SLOT(onred_2valueChanged(int)));
-    connect(colorwindow->ui.green_2, SIGNAL(valueChanged(int)), this,SLOT(ongreen_2valueChanged(int)));
-    connect(colorwindow->ui.blue_2, SIGNAL(valueChanged(int)), this,SLOT(onblue_2valueChanged(int)));
-    colorwindow->show();
-}
-
 void DrawingOptions::videoplay()
 {
     QImage buf = MathmodRef->Copyscreenshot();
@@ -4067,11 +4057,6 @@ void DrawingOptions::on_actionEditor_triggered()
     editorwin();
 }
 
-void DrawingOptions::on_actionColors_triggered()
-{
-    colorsoptions();
-}
-
 void DrawingOptions::on_Infos_clicked()
 {
     MathmodRef->iso_infos();
@@ -4121,11 +4106,6 @@ void DrawingOptions::on_actionConvert_K3DS_script_triggered()
 void DrawingOptions::on_actionConfiguration_triggered()
 {
     on_actionOpenGL_triggered();
-}
-
-void DrawingOptions::on_actionColors_2_triggered()
-{
-    on_actionColors_triggered();
 }
 
 void DrawingOptions::on_Load_clicked()
