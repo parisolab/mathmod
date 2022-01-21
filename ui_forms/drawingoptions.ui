@@ -10837,8 +10837,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionEditor"/>
    <addaction name="separator"/>
-   <addaction name="actionColors"/>
-   <addaction name="separator"/>
    <addaction name="actionOpenGL"/>
    <addaction name="separator"/>
    <addaction name="actionFrames"/>
