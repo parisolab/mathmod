@@ -1,5 +1,4 @@
 HEADERS   = ui_modules/drawingoptions.h \
-            ui_modules/colorsoptions.h \
             ui_modules/about.h \
             ui_modules/ParisoMathObject.h \
             ui_modules/comvar.h \
@@ -24,7 +23,6 @@ HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/editor.h \
             fparser/fpconfig.hh
 SOURCES   = ui_modules/drawingoptions.cpp \
-            ui_modules/colorsoptions.cpp \
             ui_modules/about.cpp \
             ui_modules/ParisoMathObject.cpp \
             ui_modules/editor.cpp \
@@ -49,7 +47,6 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/addparam.cpp
 
 FORMS     = ui_forms/drawingoptions.ui \
-            ui_forms/colorsoptions.ui \
             ui_forms/about.ui \
             ui_forms/editor.ui \
             ui_forms/parametersoptions.ui \
