@@ -5191,42 +5191,7 @@ void DrawingOptions::on_TreeViewButton_clicked()
         ui.ObjectClasseCurrent->hide();
     }
 }
-/*
-void DrawingOptions::ApplypushButton_clicked()
-{
-    int maxisogrid = 0;
-    int maxpargrid = 0;
-    if ((Parameters->ui.IsoMaxGridLineEdit->text()).replace(" ", "")!= "" &&
-            (maxisogrid = (Parameters->ui.IsoMaxGridLineEdit->text()).toInt()) !=
-            Parameters->IsoMaxGrid)
-    {
-        Parameters->IsoMaxGrid = maxisogrid;
-        ui.Isogroupbox->setTitle("Iso Grid/MaxGrid ( " +
-                                 QString::number(ui.xyzg->value()) + " / " +
-                                 QString::number(maxisogrid) + " ) :");
-        ui.xyzg->blockSignals(true);
-        ui.xyzg->setMaximum(maxisogrid);
-        ui.xyzg->blockSignals(false);
-    }
 
-    if ((Parameters->ui.ParMaxGridLineEdit->text()).replace(" ", "")!= "" &&
-            (maxpargrid = (Parameters->ui.ParMaxGridLineEdit->text()).toInt()) !=
-            Parameters->ParMaxGrid)
-    {
-        Parameters->ParMaxGrid = maxpargrid;
-        ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = ( " + QString::number(ui.linecolumn_2->value()) +
-                                     ", " + QString::number(ui.linecolumn_2->value()) + " ) / "+QString::number(maxpargrid));
-        ui.linecolumn_2->blockSignals(true);
-        ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));
-        ui.linecolumn_2->blockSignals(false);
-        ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = ( " + QString::number(ui.linecolumn_3->value()) +
-                                     ", " + QString::number(ui.linecolumn_3->value()) + " ) / "+QString::number(maxpargrid));
-        ui.linecolumn_3->blockSignals(true);
-        ui.linecolumn_3->setMaximum(int(Parameters->ParMaxGrid));
-        ui.linecolumn_3->blockSignals(false);
-    }
-}
-*/
 void DrawingOptions::on_ObjectClasseCurrent_clicked(const QModelIndex &idx)
 {
     QModelIndex parentItem = idx.parent();
