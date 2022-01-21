@@ -5191,7 +5191,7 @@ void DrawingOptions::on_TreeViewButton_clicked()
         ui.ObjectClasseCurrent->hide();
     }
 }
-
+/*
 void DrawingOptions::ApplypushButton_clicked()
 {
     int maxisogrid = 0;
@@ -5226,7 +5226,7 @@ void DrawingOptions::ApplypushButton_clicked()
         ui.linecolumn_3->blockSignals(false);
     }
 }
-
+*/
 void DrawingOptions::on_ObjectClasseCurrent_clicked(const QModelIndex &idx)
 {
     QModelIndex parentItem = idx.parent();

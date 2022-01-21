@@ -242,12 +242,7 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName,
 void Parametersoptions::GuiUpdate()
 {
     QJsonObject isoparam = (JConfig)["Parameters"].toObject();
-    // Iso Grid
-    int mg = (isoparam)["IsoMaxGrid"].toInt();
-    ui.IsoMaxGridLineEdit->setText(QString::number(mg));
-    // Par Grid
-    mg = (isoparam)["ParMaxGrid"].toInt();
-    ui.ParMaxGridLineEdit->setText(QString::number(mg));
+
     // Styles:
     QString Style = ((JConfig["Styles"].toObject())["UsedStyle"].toString());
     ui.comboBox_2->setCurrentText(Style);
@@ -989,4 +984,7 @@ void Parametersoptions::on_pushButton_clicked()
 {
     this->close();
 }
+
+
+
 
