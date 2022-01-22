@@ -2910,13 +2910,6 @@ void DrawingOptions::AddListModels(bool update)
     return;
 }
 
-void DrawingOptions::on_pushButton_clicked()
-{
-    static int checked = 1;
-    checked *= -1;
-    (checked == -1) ? ui.ObjectClasse->hide() : ui.ObjectClasse->show();
-}
-
 void DrawingOptions::on_action_Exit_triggered()
 {
     MathmodRef->LabelInfos.close();

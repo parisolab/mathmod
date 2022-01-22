@@ -138,7 +138,6 @@ public slots:
     void LoadK3DSurfScript(QString, int);
     void slot_comboBox18_3_activated(const QString &);
     void slot_checkBox_clicked();
-    void on_pushButton_clicked();
     void on_action_Exit_triggered();
     void on_actionTriangles_triggered();
     void on_actionInfos_triggered();
