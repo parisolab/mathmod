@@ -236,7 +236,6 @@ public slots:
     void on_cut_clicked();
     void on_actionConvert_K3DS_script_triggered();
     void on_actionConfiguration_triggered();
-    void on_Load_clicked();
     void on_ParamComponent_2_activated(int);
     void on_updateParam_2_clicked();
     void on_Multiplier_clicked();

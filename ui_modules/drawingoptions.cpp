@@ -4108,11 +4108,6 @@ void DrawingOptions::on_actionConfiguration_triggered()
     on_actionOpenGL_triggered();
 }
 
-void DrawingOptions::on_Load_clicked()
-{
-    LoadNewFileModels(true);
-}
-
 void DrawingOptions::on_ParamComponent_2_activated(int index)
 {
     UpdateDescription(index, PAR_4D_TYPE,
