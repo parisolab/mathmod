@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>952</width>
+    <width>1107</width>
     <height>661</height>
    </rect>
   </property>
@@ -27,406 +27,199 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_19">
-      <property name="spacing">
-       <number>1</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_18">
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <item>
-         <widget class="QComboBox" name="choice">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="maxVisibleItems">
-           <number>20</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Show scripts liste</string>
-          </property>
-          <property name="toolTipDuration">
-           <number>5000</number>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../myressources.qrc">
-            <normaloff>:/images/win/zoomout.png</normaloff>
-            <activeon>:/images/win/zoomin.png</activeon>:/images/win/zoomout.png</iconset>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>18</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <item>
-         <widget class="QPushButton" name="Mesh">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Mesh</string>
-          </property>
-          <property name="text">
-           <string>Msh</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Fill">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Fill</string>
-          </property>
-          <property name="text">
-           <string>Fil</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="actionBoundingBox">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Smooth</string>
-          </property>
-          <property name="text">
-           <string extracomment="Smooth">Box</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Trian">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Triangle</string>
-          </property>
-          <property name="statusTip">
-           <string/>
-          </property>
-          <property name="text">
-           <string extracomment="Triangle">Tri</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Infos">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>Informations</string>
-          </property>
-          <property name="text">
-           <string notr="true" extracomment="Informations">Inf</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
      <widget class="QSplitter" name="splitter_9">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="handleWidth">
-       <number>15</number>
+       <number>20</number>
       </property>
       <widget class="QSplitter" name="splitter">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <property name="handleWidth">
-        <number>15</number>
+        <number>20</number>
        </property>
-       <widget class="QTreeWidget" name="ObjectClasse">
-        <property name="minimumSize">
-         <size>
-          <width>10</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="lineWidth">
-         <number>1</number>
-        </property>
-        <property name="tabKeyNavigation">
-         <bool>true</bool>
-        </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>true</bool>
-        </property>
-        <property name="dragEnabled">
-         <bool>true</bool>
-        </property>
-        <property name="dragDropOverwriteMode">
-         <bool>true</bool>
-        </property>
-        <property name="dragDropMode">
-         <enum>QAbstractItemView::NoDragDrop</enum>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>true</bool>
-        </property>
-        <property name="autoExpandDelay">
-         <number>-1</number>
-        </property>
-        <property name="rootIsDecorated">
-         <bool>true</bool>
-        </property>
-        <property name="uniformRowHeights">
-         <bool>false</bool>
-        </property>
-        <property name="itemsExpandable">
-         <bool>true</bool>
-        </property>
-        <property name="sortingEnabled">
-         <bool>false</bool>
-        </property>
-        <property name="animated">
-         <bool>false</bool>
-        </property>
-        <property name="wordWrap">
-         <bool>false</bool>
-        </property>
-        <property name="headerHidden">
-         <bool>true</bool>
-        </property>
-        <attribute name="headerVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="headerCascadingSectionResizes">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="headerHighlightSections">
-         <bool>true</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Mathematical models collection:</string>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>7</pointsize>
-          </font>
-         </property>
-        </column>
+       <widget class="QWidget" name="layoutWidget">
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_18">
+           <property name="spacing">
+            <number>1</number>
+           </property>
+           <item>
+            <widget class="QComboBox" name="choice">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="maxVisibleItems">
+              <number>20</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="toolTip">
+              <string>Show scripts liste</string>
+             </property>
+             <property name="toolTipDuration">
+              <number>5000</number>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../myressources.qrc">
+               <normaloff>:/images/win/zoomout.png</normaloff>
+               <activeon>:/images/win/zoomin.png</activeon>:/images/win/zoomout.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>18</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="ObjectClasse">
+           <property name="minimumSize">
+            <size>
+             <width>10</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="lineWidth">
+            <number>1</number>
+           </property>
+           <property name="tabKeyNavigation">
+            <bool>true</bool>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropOverwriteMode">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::NoDragDrop</enum>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="autoExpandDelay">
+            <number>-1</number>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>true</bool>
+           </property>
+           <property name="uniformRowHeights">
+            <bool>false</bool>
+           </property>
+           <property name="itemsExpandable">
+            <bool>true</bool>
+           </property>
+           <property name="sortingEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="animated">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="headerHidden">
+            <bool>true</bool>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="headerCascadingSectionResizes">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="headerHighlightSections">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Mathematical models collection:</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>7</pointsize>
+             </font>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
@@ -7239,7 +7032,7 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>508</width>
+                  <width>598</width>
                   <height>994</height>
                  </rect>
                 </property>
@@ -10569,7 +10362,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="1" column="0">
      <widget class="QWidget" name="Progressbarwidget" native="true">
       <property name="maximumSize">
        <size>
@@ -10714,7 +10507,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>952</width>
+     <width>1107</width>
      <height>24</height>
     </rect>
    </property>
@@ -10802,6 +10595,18 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionFrames"/>
    <addaction name="separator"/>
    <addaction name="actionScripts_selection"/>
+   <addaction name="separator"/>
+   <addaction name="actionInfos"/>
+   <addaction name="separator"/>
+   <addaction name="actionbox"/>
+   <addaction name="separator"/>
+   <addaction name="actionAxe"/>
+   <addaction name="separator"/>
+   <addaction name="actionTriangles"/>
+   <addaction name="separator"/>
+   <addaction name="actionMesh"/>
+   <addaction name="separator"/>
+   <addaction name="actionFill"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -10830,6 +10635,10 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/triangls.png</normaloff>:/images/mac/triangls.png</iconset>
+   </property>
    <property name="text">
     <string>Triangles</string>
    </property>
@@ -10846,6 +10655,10 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/polygons.png</normaloff>:/images/mac/polygons.png</iconset>
+   </property>
    <property name="text">
     <string>Mesh</string>
    </property>
@@ -10860,6 +10673,10 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/fil.png</normaloff>:/images/mac/fil.png</iconset>
+   </property>
    <property name="text">
     <string>Fill</string>
    </property>
@@ -10869,10 +10686,20 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/infos.png</normaloff>:/images/mac/infos.png</iconset>
    </property>
    <property name="text">
     <string>Infos</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionSmooth">
@@ -11097,6 +10924,10 @@ p, li { white-space: pre-wrap; }
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/axe.png</normaloff>:/images/mac/axe.png</iconset>
+   </property>
    <property name="text">
     <string>Axe</string>
    </property>
@@ -11126,6 +10957,18 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Detach WinInfos</string>
+   </property>
+  </action>
+  <action name="actionbox">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/box.png</normaloff>:/images/mac/box.png</iconset>
+   </property>
+   <property name="text">
+    <string>box</string>
    </property>
   </action>
  </widget>

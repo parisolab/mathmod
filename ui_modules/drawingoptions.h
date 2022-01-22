@@ -355,5 +355,7 @@ public slots:
     void on_transparent_Diffuse_valueChanged(int value);
     void on_GLFrontSurfaceSupport_clicked();
     void on_choice_activated(int index);
+private slots:
+    void on_actionbox_triggered();
 };
 #endif

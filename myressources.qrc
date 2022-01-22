@@ -68,5 +68,11 @@
         <file>images/mac/copying.txt</file>
         <file>images/win/copying.txt</file>
         <file>copying.txt</file>
+        <file>images/mac/fil.png</file>
+        <file>images/mac/polygons.png</file>
+        <file>images/mac/triangls.png</file>
+        <file>images/mac/axe.png</file>
+        <file>images/mac/box.png</file>
+        <file>images/mac/infos.png</file>
     </qresource>
 </RCC>

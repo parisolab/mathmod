@@ -5396,3 +5396,10 @@ void DrawingOptions::on_choice_activated(int index)
     on_choice_activated(ui.choice->currentText());
 }
 
+
+void DrawingOptions::on_actionbox_triggered()
+{
+    MathmodRef->boundingboxOk();
+    MathmodRef->update();
+}
+
