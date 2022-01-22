@@ -980,10 +980,6 @@ void Parametersoptions::on_TestConfig_clicked()
     }
 }
 
-void Parametersoptions::on_pushButton_clicked()
-{
-    this->close();
-}
 
 
 

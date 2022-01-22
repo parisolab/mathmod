@@ -101,8 +101,6 @@ public slots:
 
 public:
     Ui::Parametersoptions ui;
-private slots:
-    void on_pushButton_clicked();
 };
 
 #endif
