@@ -147,7 +147,7 @@
            <set>Qt::AlignCenter</set>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="1" column="0" colspan="2">
+           <item row="0" column="0" colspan="2">
             <widget class="QPushButton" name="ColorsButton">
              <property name="font">
               <font>
@@ -158,75 +158,6 @@
              <property name="text">
               <string>Current color </string>
              </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QComboBox" name="comboBox">
-             <item>
-              <property name="text">
-               <string>Select to config:</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>AlternateBase</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Base</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>BrightText</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Button</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Text</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>HighlightedText</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>ButtonText</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Highlight</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>ToolTipBase</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>ToolTipText</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Window</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>WindowText</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>

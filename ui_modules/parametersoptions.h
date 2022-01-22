@@ -78,7 +78,6 @@ public:
     int ParMaxGrid = 505;
     void on_comboBox_2_activated(const QString &);
     void on_comboBox_3_activated(const QString &);
-    void on_comboBox_activated(const QString &);
 public slots:
     void ReadConfigFile(QString, QJsonObject &);
     void ReadJsonFile(QString, QJsonObject &);
