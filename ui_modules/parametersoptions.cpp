@@ -238,23 +238,6 @@ void Parametersoptions::ReadCollectionFile(QString JsonFileName,
     }
     return;
 }
-
-void Parametersoptions::GuiUpdate()
-{
-    QJsonObject isoparam = (JConfig)["Parameters"].toObject();
-
-    // Styles:
-    QString Style = ((JConfig["Styles"].toObject())["UsedStyle"].toString());
-    ui.comboBox_2->setCurrentText(Style);
-    // Theme:
-    QString theme = ((JConfig["Themes"].toObject())["UsedTheme"].toString());
-    ui.comboBox_3->setCurrentText(theme);
-    if (theme == "MyTheme")
-        ui.groupBox->show();
-    else
-        ui.groupBox->hide();
-}
-
 void Parametersoptions::maxisogri_valueChanged(int value)
 {
     IsoMaxGrid = value;
@@ -738,24 +721,4 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
         QFile::setPermissions(filecollection,
                               QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
-}
-
-void Parametersoptions::on_comboBox_2_activated(const QString &arg1)
-{
-    QJsonObject style = JConfig["Styles"].toObject();
-    style["UsedStyle"] = arg1;
-    JConfig["Styles"] = style;
-}
-
-void Parametersoptions::on_comboBox_3_activated(const QString &arg1)
-{
-    QJsonObject style = JConfig["Themes"].toObject();
-    style["UsedTheme"] = arg1;
-    JConfig["Themes"] = style;
-    if (arg1 == "MyTheme")
-        // ui.groupBox->setEnabled(true);
-        ui.groupBox->show();
-    else
-        // ui.groupBox->setDisabled(true);
-        ui.groupBox->hide();
 }

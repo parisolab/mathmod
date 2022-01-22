@@ -68,23 +68,14 @@ public:
     int Diffuse[4]={80,80,80,100};
     int Shininess=110;
     bool glFrontFacingSupport=true;
-
-
-
-
-
-
     int IsoMaxGrid = 305;
     int ParMaxGrid = 505;
-    void on_comboBox_2_activated(const QString &);
-    void on_comboBox_3_activated(const QString &);
 public slots:
     void ReadConfigFile(QString, QJsonObject &);
     void ReadJsonFile(QString, QJsonObject &);
     void ReadCollectionFile(QString, QJsonObject &);
     void SetStyleAndTheme(QApplication &, QString, QString);
     void slot_about_clicked();
-    void GuiUpdate();
     void maxisogri_valueChanged(int);
     void maxpargri_valueChanged(int);
     void on_loadconfig_clicked();
