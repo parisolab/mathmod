@@ -274,7 +274,6 @@ void Parametersoptions::maxpargri_valueChanged(int value)
 void Parametersoptions::on_loadconfig_clicked()
 {
     ReadConfigFile(fullpath, JConfig);
-    //GuiUpdate();
 }
 
 ListeModelTexture
@@ -740,19 +739,6 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
                               QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
 }
-void Parametersoptions::on_save_clicked()
-{
-    QJsonDocument document;
-    document.setObject(JConfig);
-
-    QFile f(fullpath);
-    if (f.open(QIODevice::ReadWrite | QIODevice::Text))
-    {
-        QTextStream t(&f);
-        t << QString(document.toJson());
-        f.close();
-    }
-}
 
 void Parametersoptions::on_comboBox_2_activated(const QString &arg1)
 {
@@ -908,74 +894,4 @@ void Parametersoptions::onblue_2valueChanged(int value)
     t1["MyTheme"] = t2;
     JConfig["Themes"] = t1;
     //on_comboBox_activated(choice);
-}
-
-void Parametersoptions::on_TestConfig_clicked()
-{
-    if (JConfig["Themes"].isObject() && JConfig["Styles"].isObject())
-    {
-        QJsonObject tmp1, tmp2, MyTheme;
-        tmp2 = JConfig["Styles"].toObject();
-        QString style = tmp2["UsedStyle"].toString();
-
-        tmp1 = JConfig["Themes"].toObject();
-        QString theme = tmp1["UsedTheme"].toString();
-
-        if (theme == "MyTheme")
-        {
-            MyTheme = tmp1["MyTheme"].toObject();
-            mypalette.setColor(QPalette::Window,
-                               QColor((MyTheme["Window"].toArray())[0].toInt(),
-                                      (MyTheme["Window"].toArray())[1].toInt(),
-                                      (MyTheme["Window"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::WindowText,
-                               QColor((MyTheme["WindowText"].toArray())[0].toInt(),
-                                      (MyTheme["WindowText"].toArray())[1].toInt(),
-                                      (MyTheme["WindowText"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::Base,
-                               QColor((MyTheme["Base"].toArray())[0].toInt(),
-                                      (MyTheme["Base"].toArray())[1].toInt(),
-                                      (MyTheme["Base"].toArray())[2].toInt()));
-            mypalette.setColor(
-                QPalette::AlternateBase,
-                QColor((MyTheme["AlternateBase"].toArray())[0].toInt(),
-                       (MyTheme["AlternateBase"].toArray())[1].toInt(),
-                       (MyTheme["AlternateBase"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::ToolTipBase,
-                               QColor((MyTheme["ToolTipBase"].toArray())[0].toInt(),
-                                      (MyTheme["ToolTipBase"].toArray())[1].toInt(),
-                                      (MyTheme["ToolTipBase"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::ToolTipText,
-                               QColor((MyTheme["ToolTipText"].toArray())[0].toInt(),
-                                      (MyTheme["ToolTipText"].toArray())[1].toInt(),
-                                      (MyTheme["ToolTipText"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::Text,
-                               QColor((MyTheme["Text"].toArray())[0].toInt(),
-                                      (MyTheme["Text"].toArray())[1].toInt(),
-                                      (MyTheme["Text"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::Button,
-                               QColor((MyTheme["Button"].toArray())[0].toInt(),
-                                      (MyTheme["Button"].toArray())[1].toInt(),
-                                      (MyTheme["Button"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::BrightText,
-                               QColor((MyTheme["BrightText"].toArray())[0].toInt(),
-                                      (MyTheme["BrightText"].toArray())[1].toInt(),
-                                      (MyTheme["BrightText"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::ButtonText,
-                               QColor((MyTheme["ButtonText"].toArray())[0].toInt(),
-                                      (MyTheme["ButtonText"].toArray())[1].toInt(),
-                                      (MyTheme["ButtonText"].toArray())[2].toInt()));
-            mypalette.setColor(QPalette::Highlight,
-                               QColor((MyTheme["Highlight"].toArray())[0].toInt(),
-                                      (MyTheme["Highlight"].toArray())[1].toInt(),
-                                      (MyTheme["Highlight"].toArray())[2].toInt()));
-            mypalette.setColor(
-                QPalette::HighlightedText,
-                QColor((MyTheme["HighlightedText"].toArray())[0].toInt(),
-                       (MyTheme["HighlightedText"].toArray())[1].toInt(),
-                       (MyTheme["HighlightedText"].toArray())[2].toInt()));
-            mypalette2 = mypalette;
-        }
-        SetStyleAndTheme(*MainApp, style, theme);
-    }
 }

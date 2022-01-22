@@ -90,14 +90,12 @@ public slots:
     void maxpargri_valueChanged(int);
     void on_loadconfig_clicked();
     void SaveToFile_CurentMathModel(QJsonObject CurrentJsonObject);
-    void on_save_clicked();
     void LoadConfig(QApplication &, int argc, char *argv[]);
     ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
     bool isFloat(std::string);
     void onred_2valueChanged(int);
     void ongreen_2valueChanged(int);
     void onblue_2valueChanged(int);
-    void on_TestConfig_clicked();
 public:
     Ui::Parametersoptions ui;
 };

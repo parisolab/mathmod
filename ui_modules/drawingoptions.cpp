@@ -4073,7 +4073,7 @@ void DrawingOptions::on_Trian_clicked()
 void DrawingOptions::on_actionOpenGL_triggered()
 {
     Parameters->on_loadconfig_clicked();
-    Parameters->show();
+    //Parameters->show();
 }
 
 void DrawingOptions::on_cut_clicked()
