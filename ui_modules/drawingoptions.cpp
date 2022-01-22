@@ -5209,17 +5209,13 @@ void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
 void DrawingOptions::on_ApplypushButton_clicked()
 {
     int maxisogrid = 0;
-    if ((ui.IsoMaxGridLineEdit->text()).replace(" ", "")!= "" &&
-         (maxisogrid = (ui.IsoMaxGridLineEdit->text()).toInt()) != Parameters->IsoMaxGrid)
-    {
-        Parameters->IsoMaxGrid = maxisogrid;
-        ui.Isogroupbox->setTitle("Grid/MaxGrid = (" +
-                                 QString::number(ui.xyzg->value()) + "/" +
-                                 QString::number(maxisogrid) + ")");
-        ui.xyzg->blockSignals(true);
-        ui.xyzg->setMaximum(maxisogrid);
-        ui.xyzg->blockSignals(false);
-    }
+    Parameters->IsoMaxGrid = maxisogrid;
+    ui.Isogroupbox->setTitle("Grid/MaxGrid = (" +
+                             QString::number(ui.xyzg->value()) + "/" +
+                             QString::number(maxisogrid) + ")");
+    ui.xyzg->blockSignals(true);
+    ui.xyzg->setMaximum(maxisogrid);
+    ui.xyzg->blockSignals(false);
 }
 
 void DrawingOptions::updateParametricGridSliders(int maxpargrid)

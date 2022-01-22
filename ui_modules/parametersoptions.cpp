@@ -979,8 +979,3 @@ void Parametersoptions::on_TestConfig_clicked()
         SetStyleAndTheme(*MainApp, style, theme);
     }
 }
-
-
-
-
-
