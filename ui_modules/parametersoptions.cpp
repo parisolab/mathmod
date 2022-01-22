@@ -274,7 +274,7 @@ void Parametersoptions::maxpargri_valueChanged(int value)
 void Parametersoptions::on_loadconfig_clicked()
 {
     ReadConfigFile(fullpath, JConfig);
-    GuiUpdate();
+    //GuiUpdate();
 }
 
 ListeModelTexture
