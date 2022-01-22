@@ -81,8 +81,6 @@ int main(int argc, char *argv[])
     QObject::connect(drawingopt.MathmodRef->IsoObjet,
                      SIGNAL(finished()), drawingopt.MathmodRef,
                      SLOT(UpdateGL()), Qt::UniqueConnection);
-    QObject::connect(drawingopt.Parameters->ui.ApplypushButton, SIGNAL(clicked()),
-                     &drawingopt, SLOT(ApplypushButton_clicked()));
     drawingopt.ui.openGLWidget->LoadShadersFiles();
     drawingopt.on_choice_activated(Parameters.model);
     return app.exec();
