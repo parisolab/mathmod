@@ -4334,6 +4334,91 @@ void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
     return;
 }
 
+void DrawingOptions::ReadCollectionFile(QString JsonFileName,
+        QJsonObject &js)
+{
+    QJsonParseError err;
+    QString sortie;
+    QFile JsonFile(JsonFileName);
+    if (!JsonFile.exists())
+    {
+        QFile file2(":/mathmodcollection_empty.js");
+        file2.copy(JsonFileName);
+        QFile::setPermissions(JsonFileName,
+                              QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+    }
+    QFile file(JsonFileName);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(
+                                ((file.readAll()).trimmed())
+                                .replace("\n", "")
+                                .replace("\t", "")
+                                .replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str()),
+                                &err);
+        if (err.error)
+        {
+            QMessageBox message;
+            message.setWindowTitle("Error at : " + JsonFileName);
+            file.close();
+            file.open(QIODevice::ReadOnly | QIODevice::Text);
+            sortie = (file.readAll());
+            int before, after;
+            if (sortie.length() > (err.offset + 30))
+                after = 30;
+            else
+                after = sortie.length() - err.offset;
+            sortie.truncate(err.offset + after);
+            if (err.offset - 30 > 0)
+                before = 30;
+            else
+                before = 0;
+            sortie = sortie.remove(0, err.offset - before);
+            sortie.replace("\t", " ");
+            sortie.replace("\n", " ");
+            sortie.insert(before, " >>> Error <<< ");
+            message.setText("Error : " + err.errorString() +
+                            " at position: " + QString::number(err.offset) +
+                            "\n\n***********\n" + "..." + sortie + "...");
+            message.adjustSize();
+            message.exec();
+            file.close();
+            return;
+        }
+        js = doc.object();
+        file.close();
+    }
+    return;
+}
+
+void DrawingOptions::SaveToFile_CurentMathModel(
+    QJsonObject CurrentJsonObject)
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Save to file", "",
+                       "JSON Files (*.js)");
+    if (fileName != "")
+    {
+        QJsonObject collection;
+        ReadCollectionFile(fileName, collection);
+        QJsonDocument document;
+        if (collection["MathModels"].isArray())
+        {
+            QJsonArray array = collection["MathModels"].toArray();
+            array.append(CurrentJsonObject);
+            collection["MathModels"] = array;
+            document.setObject(collection);
+            QFile f(fileName);
+            if (f.open(QIODevice::ReadWrite | QIODevice::Text))
+            {
+                QTextStream t(&f);
+                QString tmp = QString(document.toJson()).toLatin1();
+                t << tmp.toUtf8();
+                f.close();
+            }
+        }
+    }
+}
+
 void DrawingOptions::on_pushButton_2_clicked()
 {
     QJsonParseError err;
@@ -4346,7 +4431,7 @@ void DrawingOptions::on_pushButton_2_clicked()
         ShowErrorMessage(err, script);
         return;
     }
-    Parameters->SaveToFile_CurentMathModel(doc.object());
+    SaveToFile_CurentMathModel(doc.object());
 }
 
 void DrawingOptions::on_pushButton_3_clicked()
@@ -5382,7 +5467,6 @@ void DrawingOptions::on_choice_activated(int index)
 {
     on_choice_activated(ui.choice->currentText());
 }
-
 
 void DrawingOptions::on_actionbox_triggered()
 {

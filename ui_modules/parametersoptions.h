@@ -23,7 +23,7 @@
 
 //#include "comvar.h"
 #include "../json_parser/parisodef.h"
-#include "ui_parametersoptions.h"
+//#include "ui_parametersoptions.h"
 #include <QFileDialog>
 #include <QJsonObject>
 #include <QMainWindow>
@@ -37,12 +37,10 @@ struct ListeModelTexture
     QStringList listePigments;
 };
 
-class Parametersoptions : public QWidget
+class Parametersoptions
 {
-    Q_OBJECT
-
 public:
-    Parametersoptions(QWidget *parent = nullptr);
+    Parametersoptions();
     QString dotsymbol = ".";
     QString model = "CloseIso_2";
     QString filecollection = "mathmodcollection.js";
@@ -54,7 +52,6 @@ public:
     QString fullpath;
     QJsonObject JConfig, Collection, IsoParam;
     QPalette mypalette, mypalette2, darkpalette;
-    QApplication *MainApp;
     int ControlX = 20;
     int ControlY = 20;
     int GlwinX = 575;
@@ -75,16 +72,12 @@ public slots:
     void ReadJsonFile(QString, QJsonObject &);
     void ReadCollectionFile(QString, QJsonObject &);
     void SetStyleAndTheme(QApplication &, QString, QString);
-    void slot_about_clicked();
     void maxisogri_valueChanged(int);
     void maxpargri_valueChanged(int);
     void on_loadconfig_clicked();
-    void SaveToFile_CurentMathModel(QJsonObject CurrentJsonObject);
     void LoadConfig(QApplication &, int argc, char *argv[]);
     ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
     bool isFloat(std::string);
-public:
-    Ui::Parametersoptions ui;
 };
 
 #endif

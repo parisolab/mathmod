@@ -50,27 +50,5 @@
         "GL_DIFFUSE" : [80, 80, 80, 100],
         "GL_SHININESS": 20,
         "GL_FrontFacingSupport": true
-    },
-    "Styles": {
-        "PredefinedStyle": [ "Default", "Fusion", "Windows","WindowsXp"],
-        "UsedStyle": "Fusion"
-    },
-    "Themes": {
-        "PredefinedThemes": [ "Default", "Dark", "MyTheme"],
-        "UsedTheme": "Dark",
-        "MyTheme": {
-            "Window":[53,53,53],
-            "WindowText":[255, 255, 255],
-            "Base":[15,15,15],
-            "AlternateBase":[53,53,53],
-            "ToolTipBase":[255, 255, 255],
-            "ToolTipText":[255, 255, 255],
-            "Text":[2, 2, 255],
-            "Button":[53,53,53],
-            "ButtonText":[255, 255, 255],
-            "BrightText":[255, 0, 0],
-            "Highlight":[142,45,197],
-            "HighlightedText":[0, 0, 0]
-        }
     }
 }

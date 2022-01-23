@@ -20,6 +20,7 @@
 #include "parametersoptions.h"
 #include "../fparser/fparser.hh"
 #include <QtGui>
+#include <QApplication>
 #include <math.h>
 #include <sstream>
 #include <string>
@@ -29,7 +30,7 @@ int InitParGrid=50;
 int InitIsoGrid=40;
 static bool MACOS = false;
 
-Parametersoptions::Parametersoptions(QWidget *parent) : QWidget(parent)
+Parametersoptions::Parametersoptions()
 {
     darkpalette.setColor(QPalette::Window, QColor(53, 53, 53));
     darkpalette.setColor(QPalette::WindowText, QColor(255, 255, 255));
@@ -43,13 +44,6 @@ Parametersoptions::Parametersoptions(QWidget *parent) : QWidget(parent)
     darkpalette.setColor(QPalette::BrightText, QColor(255, 0, 0));
     darkpalette.setColor(QPalette::Highlight, QColor(142, 45, 197).lighter());
     darkpalette.setColor(QPalette::HighlightedText, QColor(0, 0, 0));
-    this->setWindowFlags(Qt::WindowStaysOnTopHint);
-    ui.setupUi(this);
-}
-
-void Parametersoptions::slot_about_clicked()
-{
-    this->close();
 }
 
 void Parametersoptions::SetStyleAndTheme(QApplication &appli, QString style,
@@ -401,34 +395,6 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
     return str;
 }
 
-void Parametersoptions::SaveToFile_CurentMathModel(
-    QJsonObject CurrentJsonObject)
-{
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save to file"), "",
-                       tr("JSON Files (*.js)"));
-    if (fileName != "")
-    {
-        QJsonObject collection;
-        ReadCollectionFile(fileName, collection);
-        QJsonDocument document;
-        if (collection["MathModels"].isArray())
-        {
-            QJsonArray array = collection["MathModels"].toArray();
-            array.append(CurrentJsonObject);
-            collection["MathModels"] = array;
-            document.setObject(collection);
-            QFile f(fileName);
-            if (f.open(QIODevice::ReadWrite | QIODevice::Text))
-            {
-                QTextStream t(&f);
-                QString tmp = QString(document.toJson()).toLatin1();
-                t << tmp.toUtf8();
-                f.close();
-            }
-        }
-    }
-}
-
 bool Parametersoptions::isFloat(std::string myString)
 {
     std::istringstream iss(myString);
@@ -600,76 +566,8 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
             docabsolutepath = tmp["DocAbsolutePath"].toString();
             version = tmp["VersionNumber"].toString();
         }
-
-        if (JConfig["Themes"].isObject() && JConfig["Styles"].isObject())
-        {
-            QJsonObject tmp1, tmp2, MyTheme;
-            tmp2 = JConfig["Styles"].toObject();
-            QString style = tmp2["UsedStyle"].toString();
-            tmp1 = JConfig["Themes"].toObject();
-            QString theme = tmp1["UsedTheme"].toString();
-            if (theme == "MyTheme")
-            {
-                MyTheme = tmp1["MyTheme"].toObject();
-                mypalette.setColor(QPalette::Window,
-                                   QColor((MyTheme["Window"].toArray())[0].toInt(),
-                                          (MyTheme["Window"].toArray())[1].toInt(),
-                                          (MyTheme["Window"].toArray())[2].toInt()));
-                mypalette.setColor(
-                    QPalette::WindowText,
-                    QColor((MyTheme["WindowText"].toArray())[0].toInt(),
-                           (MyTheme["WindowText"].toArray())[1].toInt(),
-                           (MyTheme["WindowText"].toArray())[2].toInt()));
-                mypalette.setColor(QPalette::Base,
-                                   QColor((MyTheme["Base"].toArray())[0].toInt(),
-                                          (MyTheme["Base"].toArray())[1].toInt(),
-                                          (MyTheme["Base"].toArray())[2].toInt()));
-                mypalette.setColor(
-                    QPalette::AlternateBase,
-                    QColor((MyTheme["AlternateBase"].toArray())[0].toInt(),
-                           (MyTheme["AlternateBase"].toArray())[1].toInt(),
-                           (MyTheme["AlternateBase"].toArray())[2].toInt()));
-                mypalette.setColor(
-                    QPalette::ToolTipBase,
-                    QColor((MyTheme["ToolTipBase"].toArray())[0].toInt(),
-                           (MyTheme["ToolTipBase"].toArray())[1].toInt(),
-                           (MyTheme["ToolTipBase"].toArray())[2].toInt()));
-                mypalette.setColor(
-                    QPalette::ToolTipText,
-                    QColor((MyTheme["ToolTipText"].toArray())[0].toInt(),
-                           (MyTheme["ToolTipText"].toArray())[1].toInt(),
-                           (MyTheme["ToolTipText"].toArray())[2].toInt()));
-                mypalette.setColor(QPalette::Text,
-                                   QColor((MyTheme["Text"].toArray())[0].toInt(),
-                                          (MyTheme["Text"].toArray())[1].toInt(),
-                                          (MyTheme["Text"].toArray())[2].toInt()));
-                mypalette.setColor(QPalette::Button,
-                                   QColor((MyTheme["Button"].toArray())[0].toInt(),
-                                          (MyTheme["Button"].toArray())[1].toInt(),
-                                          (MyTheme["Button"].toArray())[2].toInt()));
-                mypalette.setColor(
-                    QPalette::BrightText,
-                    QColor((MyTheme["BrightText"].toArray())[0].toInt(),
-                           (MyTheme["BrightText"].toArray())[1].toInt(),
-                           (MyTheme["BrightText"].toArray())[2].toInt()));
-                mypalette.setColor(
-                    QPalette::ButtonText,
-                    QColor((MyTheme["ButtonText"].toArray())[0].toInt(),
-                           (MyTheme["ButtonText"].toArray())[1].toInt(),
-                           (MyTheme["ButtonText"].toArray())[2].toInt()));
-                mypalette.setColor(QPalette::Highlight,
-                                   QColor((MyTheme["Highlight"].toArray())[0].toInt(),
-                                          (MyTheme["Highlight"].toArray())[1].toInt(),
-                                          (MyTheme["Highlight"].toArray())[2].toInt()));
-                mypalette.setColor(
-                    QPalette::HighlightedText,
-                    QColor((MyTheme["HighlightedText"].toArray())[0].toInt(),
-                           (MyTheme["HighlightedText"].toArray())[1].toInt(),
-                           (MyTheme["HighlightedText"].toArray())[2].toInt()));
-                mypalette2 = mypalette;
-            }
-            SetStyleAndTheme(app, style, theme);
-        }
+        app.setStyle(QStyleFactory::create("Fusion"));
+        app.setPalette(darkpalette);
     }
     fullpath = fileconfig;
 

@@ -132,7 +132,8 @@ public slots:
     void SaveSlidersRef(int n = 20);
     void editorwin();
     void videoplay();
-    //void colorsoptions();
+    void SaveToFile_CurentMathModel(QJsonObject);
+    void ReadCollectionFile(QString, QJsonObject &);
     void on_xyzg_valueChanged(int);
     void on_ChangeGrid_clicked();
     void LoadK3DSurfScript(QString, int);

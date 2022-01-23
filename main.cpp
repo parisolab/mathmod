@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(format);
 
     Parametersoptions Parameters;
-    Parameters.MainApp = &app;
     Parameters.LoadConfig(app, argc, argv);
     QList<Qt::GestureType> gestures;
     gestures << Qt::PinchGesture;
