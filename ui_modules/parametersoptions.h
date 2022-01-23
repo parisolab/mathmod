@@ -21,9 +21,7 @@
 #ifndef PARAMETERSOPTIONS_H
 #define PARAMETERSOPTIONS_H
 
-//#include "comvar.h"
 #include "../json_parser/parisodef.h"
-//#include "ui_parametersoptions.h"
 #include <QFileDialog>
 #include <QJsonObject>
 #include <QMainWindow>
@@ -70,12 +68,10 @@ public:
 public slots:
     void ReadConfigFile(QString, QJsonObject &);
     void ReadJsonFile(QString, QJsonObject &);
-    void ReadCollectionFile(QString, QJsonObject &);
-    void SetStyleAndTheme(QApplication &, QString, QString);
     void maxisogri_valueChanged(int);
     void maxpargri_valueChanged(int);
     void on_loadconfig_clicked();
-    void LoadConfig(QApplication &, int argc, char *argv[]);
+    void LoadConfig(int argc, char *argv[]);
     ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
     bool isFloat(std::string);
 };

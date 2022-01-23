@@ -20,7 +20,6 @@
 #include "parametersoptions.h"
 #include "../fparser/fparser.hh"
 #include <QtGui>
-#include <QApplication>
 #include <math.h>
 #include <sstream>
 #include <string>
@@ -44,21 +43,6 @@ Parametersoptions::Parametersoptions()
     darkpalette.setColor(QPalette::BrightText, QColor(255, 0, 0));
     darkpalette.setColor(QPalette::Highlight, QColor(142, 45, 197).lighter());
     darkpalette.setColor(QPalette::HighlightedText, QColor(0, 0, 0));
-}
-
-void Parametersoptions::SetStyleAndTheme(QApplication &appli, QString style,
-        QString theme)
-{
-    if (style != "Default")
-        appli.setStyle(QStyleFactory::create(style));
-    if (theme == "Dark")
-    {
-        appli.setPalette(darkpalette);
-    }
-    else if (theme == "MyTheme")
-    {
-        appli.setPalette(mypalette);
-    }
 }
 
 void Parametersoptions::ReadConfigFile(QString JsonFile, QJsonObject &js)
@@ -176,62 +160,6 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject &js)
     return;
 }
 
-void Parametersoptions::ReadCollectionFile(QString JsonFileName,
-        QJsonObject &js)
-{
-    QJsonParseError err;
-    QString sortie;
-    QFile JsonFile(JsonFileName);
-    if (!JsonFile.exists())
-    {
-        QFile file2(":/mathmodcollection_empty.js");
-        file2.copy(JsonFileName);
-        QFile::setPermissions(JsonFileName,
-                              QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    }
-    QFile file(JsonFileName);
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        QJsonDocument doc = QJsonDocument::fromJson(
-                                ((file.readAll()).trimmed())
-                                .replace("\n", "")
-                                .replace("\t", "")
-                                .replace("DOTSYMBOL", dotsymbol.toStdString().c_str()),
-                                &err);
-        if (err.error)
-        {
-            QMessageBox message;
-            message.setWindowTitle("Error at : " + JsonFileName);
-            file.close();
-            file.open(QIODevice::ReadOnly | QIODevice::Text);
-            sortie = (file.readAll());
-            int before, after;
-            if (sortie.length() > (err.offset + 30))
-                after = 30;
-            else
-                after = sortie.length() - err.offset;
-            sortie.truncate(err.offset + after);
-            if (err.offset - 30 > 0)
-                before = 30;
-            else
-                before = 0;
-            sortie = sortie.remove(0, err.offset - before);
-            sortie.replace("\t", " ");
-            sortie.replace("\n", " ");
-            sortie.insert(before, " >>> Error <<< ");
-            message.setText("Error : " + err.errorString() +
-                            " at position: " + QString::number(err.offset) +
-                            "\n\n***********\n" + "..." + sortie + "...");
-            message.adjustSize();
-            message.exec();
-            file.close();
-            return;
-        }
-        js = doc.object();
-        file.close();
-    }
-    return;
-}
 void Parametersoptions::maxisogri_valueChanged(int value)
 {
     IsoMaxGrid = value;
@@ -403,7 +331,7 @@ bool Parametersoptions::isFloat(std::string myString)
     return iss.eof() && !iss.fail();
 }
 
-void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
+void Parametersoptions::LoadConfig(int argc, char *argv[])
 {
     QString argv1="";
     if (argc > 1)
@@ -566,11 +494,9 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
             docabsolutepath = tmp["DocAbsolutePath"].toString();
             version = tmp["VersionNumber"].toString();
         }
-        app.setStyle(QStyleFactory::create("Fusion"));
-        app.setPalette(darkpalette);
     }
     fullpath = fileconfig;
-
+/*
     QFile advancedmodelsfile(advancedmodels);
     if (!advancedmodelsfile.exists() && ((argc > 1) || MACOS))
     {
@@ -595,7 +521,7 @@ void Parametersoptions::LoadConfig(QApplication &app, int argc, char *argv[])
         QFile::setPermissions(advancedmodels,
                               QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     }
-
+*/
     QFile mathmodfile(filecollection);
     if (!mathmodfile.exists() && ((argc > 1) || MACOS))
     {
