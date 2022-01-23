@@ -74,5 +74,6 @@
         <file>images/mac/axe.png</file>
         <file>images/mac/box.png</file>
         <file>images/mac/infos.png</file>
+        <file>images/mac/rotation.png</file>
     </qresource>
 </RCC>

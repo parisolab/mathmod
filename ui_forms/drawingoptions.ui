@@ -10549,6 +10549,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionScripts_selection"/>
    <addaction name="separator"/>
+   <addaction name="actionAnimation_Rotation"/>
+   <addaction name="separator"/>
    <addaction name="actionInfos"/>
    <addaction name="separator"/>
    <addaction name="actionbox"/>
@@ -10560,6 +10562,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionMesh"/>
    <addaction name="separator"/>
    <addaction name="actionFill"/>
+   <addaction name="separator"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -10750,6 +10753,16 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionAnimation_Rotation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../myressources.qrc">
+     <normaloff>:/images/mac/rotation.png</normaloff>:/images/mac/rotation.png</iconset>
+   </property>
    <property name="text">
     <string>Animation(Rotation)</string>
    </property>
