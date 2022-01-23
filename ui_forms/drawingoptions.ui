@@ -26,6 +26,18 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
+    <property name="leftMargin">
+     <number>1</number>
+    </property>
+    <property name="topMargin">
+     <number>1</number>
+    </property>
+    <property name="rightMargin">
+     <number>1</number>
+    </property>
+    <property name="bottomMargin">
+     <number>1</number>
+    </property>
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter_9">
       <property name="orientation">
@@ -6975,7 +6987,7 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>598</width>
+                  <width>611</width>
                   <height>994</height>
                  </rect>
                 </property>
@@ -10314,6 +10326,9 @@ p, li { white-space: pre-wrap; }
        </size>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_34">
+       <property name="spacing">
+        <number>-1</number>
+       </property>
        <property name="leftMargin">
         <number>1</number>
        </property>
@@ -10481,9 +10496,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionScreenshot"/>
     <addaction name="actionEditor"/>
-    <addaction name="actionColors_2"/>
-    <addaction name="actionConfiguration"/>
-    <addaction name="separator"/>
     <addaction name="actionScripts_selection"/>
     <addaction name="separator"/>
     <addaction name="actionAnimation_Rotation"/>
@@ -10524,7 +10536,7 @@ p, li { white-space: pre-wrap; }
     </size>
    </property>
    <attribute name="toolBarArea">
-    <enum>BottomToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
@@ -10532,8 +10544,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionScreenshot"/>
    <addaction name="separator"/>
    <addaction name="actionEditor"/>
-   <addaction name="separator"/>
-   <addaction name="actionOpenGL"/>
    <addaction name="separator"/>
    <addaction name="actionFrames"/>
    <addaction name="separator"/>
@@ -10690,30 +10700,6 @@ p, li { white-space: pre-wrap; }
     <string>Editor</string>
    </property>
   </action>
-  <action name="actionColors">
-   <property name="icon">
-    <iconset resource="../myressources.qrc">
-     <normaloff>:/images/graphics.xpm</normaloff>:/images/graphics.xpm</iconset>
-   </property>
-   <property name="text">
-    <string>Colors</string>
-   </property>
-   <property name="toolTip">
-    <string>Colors Configurations</string>
-   </property>
-  </action>
-  <action name="actionOpenGL">
-   <property name="icon">
-    <iconset resource="../myressources.qrc">
-     <normaloff>:/images/tools.xpm</normaloff>:/images/tools.xpm</iconset>
-   </property>
-   <property name="text">
-    <string>OpenGL</string>
-   </property>
-   <property name="toolTip">
-    <string>MathMod configuration</string>
-   </property>
-  </action>
   <action name="actionConvert_K3DS_script">
    <property name="icon">
     <iconset resource="../myressources.qrc">
@@ -10721,24 +10707,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Convert K3DS script</string>
-   </property>
-  </action>
-  <action name="actionColors_2">
-   <property name="icon">
-    <iconset resource="../myressources.qrc">
-     <normaloff>:/images/graphics.xpm</normaloff>:/images/graphics.xpm</iconset>
-   </property>
-   <property name="text">
-    <string>Colors</string>
-   </property>
-  </action>
-  <action name="actionConfiguration">
-   <property name="icon">
-    <iconset resource="../myressources.qrc">
-     <normaloff>:/images/tools.xpm</normaloff>:/images/tools.xpm</iconset>
-   </property>
-   <property name="text">
-    <string>Configuration</string>
    </property>
   </action>
   <action name="actionTrianglesWavefront_obj">

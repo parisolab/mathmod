@@ -653,9 +653,19 @@ else
     if(LocalScene.morph==1)
     {
         if(LocalScene.anim==-1)
-            LabelInfos.setText(labelinfos+" Morph: ON \n");
+        {
+            LabelInfos.setText(labelinfos+" Morph: ON \n");/*
+            IsoObjet->message += "Grid: ";
+            IsoObjet->emitUpdateMessageSignal();*/
+        }
         else
+        {
             LabelInfos.setText(labelinfos+" Rotation/Morph: ON \n");
+            /*
+            IsoObjet->message += "Grid: ";
+            IsoObjet->emitUpdateMessageSignal();
+            */
+        }
     }
     else
     {

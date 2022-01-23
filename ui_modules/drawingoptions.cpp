@@ -4070,12 +4070,6 @@ void DrawingOptions::on_Trian_clicked()
     MathmodRef->slot_triangles_clicked();
 }
 
-void DrawingOptions::on_actionOpenGL_triggered()
-{
-    Parameters->on_loadconfig_clicked();
-    //Parameters->show();
-}
-
 void DrawingOptions::on_cut_clicked()
 {
     if (ui.IsoComponent->count() > 1)
@@ -4094,11 +4088,6 @@ void DrawingOptions::on_cut_clicked()
 void DrawingOptions::on_actionConvert_K3DS_script_triggered()
 {
     LoadK3DSurfScript("", 1);
-}
-
-void DrawingOptions::on_actionConfiguration_triggered()
-{
-    on_actionOpenGL_triggered();
 }
 
 void DrawingOptions::on_ParamComponent_2_activated(int index)

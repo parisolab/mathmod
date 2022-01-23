@@ -43,7 +43,6 @@ public:
     QString model = "CloseIso_2";
     QString filecollection = "mathmodcollection.js";
     QString fileconfig = "mathmodconfig.js";
-    QString advancedmodels = "advancedmodels.js";
     QString docpartialpath = "/documentation/index.html";
     QString docabsolutepath = "";
     QString version = "12.1";
@@ -66,11 +65,10 @@ public:
     int IsoMaxGrid = 305;
     int ParMaxGrid = 505;
 public slots:
-    void ReadConfigFile(QString, QJsonObject &);
+    //void ReadConfigFile(QString, QJsonObject &);
     void ReadJsonFile(QString, QJsonObject &);
     void maxisogri_valueChanged(int);
     void maxpargri_valueChanged(int);
-    void on_loadconfig_clicked();
     void LoadConfig(int argc, char *argv[]);
     ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
     bool isFloat(std::string);

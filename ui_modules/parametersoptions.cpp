@@ -44,7 +44,7 @@ Parametersoptions::Parametersoptions()
     darkpalette.setColor(QPalette::Highlight, QColor(142, 45, 197).lighter());
     darkpalette.setColor(QPalette::HighlightedText, QColor(0, 0, 0));
 }
-
+/*
 void Parametersoptions::ReadConfigFile(QString JsonFile, QJsonObject &js)
 {
     QJsonParseError err;
@@ -60,7 +60,6 @@ void Parametersoptions::ReadConfigFile(QString JsonFile, QJsonObject &js)
     if (JsonFile == "")
         JsonFile = ":/mathmodconfig.js";
     QFile file(JsonFile);
-    // QFileDevice::Permissions p = file.permissions();
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QJsonDocument doc = QJsonDocument::fromJson(
@@ -103,7 +102,7 @@ void Parametersoptions::ReadConfigFile(QString JsonFile, QJsonObject &js)
     }
     return;
 }
-
+*/
 void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject &js)
 {
     QJsonParseError err;
@@ -116,7 +115,6 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject &js)
                        QObject::tr("Json (*.js)"));
     }
     QFile file(JsonFile);
-    // QFileDevice::Permissions p = file.permissions();
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QJsonDocument doc = QJsonDocument::fromJson(
@@ -176,16 +174,10 @@ void Parametersoptions::maxpargri_valueChanged(int value)
     JConfig["Parameters"] = tmp;
 }
 
-void Parametersoptions::on_loadconfig_clicked()
-{
-    ReadConfigFile(fullpath, JConfig);
-}
-
 ListeModelTexture
 Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
                                         jcollection &pariso, int argc)
 {
-
     QFile fconllect(filecollection);
     if (fconllect.exists() && ((argc > 1) || MACOS))
         ReadJsonFile(filecollection, Collection);
@@ -196,9 +188,7 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
     QJsonArray array = Collection["MathModels"].toArray();
     QStringList lst;
     QJsonArray array2 = pariso.JTextures = Collection["TexturesList"].toArray();
-
     QJsonArray array3 = pariso.JPigments = Collection["PigmentsList"].toArray();
-
     QStringList lst_2, lst_3;
     QString a;
     QJsonObject jsobj;
@@ -312,10 +302,8 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
             lst.append(a);
         }
     }
-
     lst.sort();
     lst.insert(0, "Examples (" + QString::number(lst.count()) + ")");
-
     ListeModelTexture str;
     str.listeModels = lst;
     str.listeTextures = lst_2;
@@ -341,7 +329,6 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             argv1 += "/";
         filecollection = argv1 + filecollection;
         fileconfig = argv1 + fileconfig;
-        advancedmodels = argv1 + advancedmodels;
     }
     /*
     #ifdef Q_OS_MACOS
@@ -496,32 +483,6 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
         }
     }
     fullpath = fileconfig;
-/*
-    QFile advancedmodelsfile(advancedmodels);
-    if (!advancedmodelsfile.exists() && ((argc > 1) || MACOS))
-    {
-        QFile file2(":/advancedmodels.js");
-        QString str;
-        file2.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream stream(&file2);
-        str.append(stream.readAll());
-        str.replace("DOTSYMBOL", dotsymbol.toStdString().c_str());
-
-        QFile file(advancedmodels);
-        if (!file.open(QIODevice::WriteOnly))
-        {
-            std::cerr << "Cannot open file for writing: "
-                      << qPrintable(file.errorString()) << std::endl;
-            return;
-        }
-        QTextStream out(&file);
-        out << str <<Qt::endl;
-        file.close();
-        file.copy(advancedmodels);
-        QFile::setPermissions(advancedmodels,
-                              QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    }
-*/
     QFile mathmodfile(filecollection);
     if (!mathmodfile.exists() && ((argc > 1) || MACOS))
     {
