@@ -10481,7 +10481,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="actionAxe"/>
     <addaction name="actionPlan"/>
-    <addaction name="actionDetach_WinInfos"/>
    </widget>
    <widget class="QMenu" name="menuExport">
     <property name="title">
@@ -10543,11 +10542,6 @@ p, li { white-space: pre-wrap; }
   <action name="actionAbout">
    <property name="text">
     <string>&amp;Forum</string>
-   </property>
-  </action>
-  <action name="actionForum">
-   <property name="text">
-    <string>Forum</string>
    </property>
   </action>
   <action name="actionAbout_2">
@@ -10627,14 +10621,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="visible">
     <bool>true</bool>
-   </property>
-  </action>
-  <action name="actionSmooth">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Smooth</string>
    </property>
   </action>
   <action name="actionPolygonWavefront_obj">
@@ -10843,22 +10829,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Plan</string>
-   </property>
-  </action>
-  <action name="actionOpac_WinInfos">
-   <property name="text">
-    <string>Opac WinInfos</string>
-   </property>
-  </action>
-  <action name="actionDetach_WinInfos">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Detach WinInfos</string>
    </property>
   </action>
   <action name="actionbox">
