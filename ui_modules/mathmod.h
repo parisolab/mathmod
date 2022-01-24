@@ -66,7 +66,6 @@ public:
     int xyzactivated, isomesh, uvactivated, uvactivated4D;
     ParisoMathObject RootObjet;
     jcollection collection;
-    QLabel LabelInfos;
     QString labelinfos;
     int FistTimecalibrate = -1;
     double hauteur_fenetre,difMaximum,decalage_xo,decalage_yo,decalage_zo;
@@ -223,7 +222,6 @@ public:
     void updateGL();
 public slots:
     void fill();
-    void iso_infos();
     void draw_norm_clicked();
     void linecolumn_valueChanged(int, ModelType type=PAR_TYPE);
     void line_valueChanged(int);
@@ -277,7 +275,6 @@ public slots:
     void FramesShot();
     void FramesSave();
     QImage Copyscreenshot();
-    void closeEvent(QCloseEvent *) override;
     void grabGestures(const QList<Qt::GestureType> &gestures);
     bool gestureEvent(QGestureEvent *event);
 public slots:

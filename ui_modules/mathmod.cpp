@@ -1391,17 +1391,12 @@ void MathMod::anim()
     if (LocalScene.anim == 1)
     {
         timer->start(latence, this);
-        if (LocalScene.morph == -1)
-        {
-            LabelInfos.setText(labelinfos+" Rotation: ON \n");
-        }
     }
     else
     {
         oldRotation = rotation;
         if (LocalScene.morph == -1)
         {
-            LabelInfos.setText(labelinfos);
             stoptimer();
         }
     }
@@ -1452,12 +1447,7 @@ void MathMod::morph()
     {
         if (LocalScene.anim == -1)
         {
-            LabelInfos.setText(labelinfos);
             stoptimer();
-        }
-        else
-        {
-            LabelInfos.setText(labelinfos+" Rotation: ON \n");
         }
     }
 }
@@ -2136,11 +2126,6 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
     Xgrid = Ygrid = Zgrid = 64;
     CutX = CutY = CutZ = 0;
     LocalScene.VertxNumber = 0;
-    LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
-    LabelInfos.setAttribute(Qt::WA_TranslucentBackground);
-    LabelInfos.setAttribute(Qt::WA_NoSystemBackground);
-    LabelInfos.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    LabelInfos.setWindowOpacity(0.8);
     FramesDir = "/home";
     hauteur_fenetre = 2*wh;
     timer = new QBasicTimer();
@@ -2150,28 +2135,9 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
         exit(0);
 }
 
-void MathMod::closeEvent(QCloseEvent *)
-{
-    LabelInfos.close();
-}
-
 void MathMod::fill()
 {
     FillOk();
-    update();
-}
-
-void MathMod::iso_infos()
-{
-    LocalScene.infos *= -1;
-    if(LocalScene.infos == 1)
-    {
-        QRect r = geometry();
-        LabelInfos.move(r.x(), r.y());
-        LabelInfos.show();
-    }
-    else
-        LabelInfos.hide();
     update();
 }
 

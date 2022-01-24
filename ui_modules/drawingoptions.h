@@ -229,7 +229,6 @@ public slots:
     void ParseItemTree(QTreeWidgetItem *, QList<bool> &, bool view = false);
     QTreeWidgetItem *ChildItemTreeProperty(QTreeWidgetItem *item,
                                            QString proprty);
-    void on_Infos_clicked();
     void on_Mesh_clicked();
     void on_Fill_clicked();
     void on_Trian_clicked();

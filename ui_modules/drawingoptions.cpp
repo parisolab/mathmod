@@ -2151,11 +2151,6 @@ void DrawingOptions::slot_comboBox18_3_activated(const QString &arg1)
         MathmodRef->draw_norm_clicked();
         return;
     }
-    if (arg1 == "Infos")
-    {
-        MathmodRef->iso_infos();
-        return;
-    }
     if (arg1 == "Fill")
     {
         MathmodRef->fill();
@@ -2912,7 +2907,6 @@ void DrawingOptions::AddListModels(bool update)
 
 void DrawingOptions::on_action_Exit_triggered()
 {
-    MathmodRef->LabelInfos.close();
     MathmodRef->close();
     this->close();
 }
@@ -4053,11 +4047,6 @@ void DrawingOptions::on_actionScreenshot_triggered()
 void DrawingOptions::on_actionEditor_triggered()
 {
     editorwin();
-}
-
-void DrawingOptions::on_Infos_clicked()
-{
-    MathmodRef->iso_infos();
 }
 
 void DrawingOptions::on_Mesh_clicked()
