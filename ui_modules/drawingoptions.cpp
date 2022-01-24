@@ -5403,12 +5403,6 @@ void DrawingOptions::on_actionPlan_triggered()
     MathmodRef->update();
 }
 
-void DrawingOptions::on_actionDetach_WinInfos_triggered()
-{
-    MathmodRef->LocalScene.attachwininfos*=-1;
-    MathmodRef->attachinfos();
-}
-
 void DrawingOptions::on_red_Ambient_valueChanged(int value)
 {
     MathmodRef->redAmb(value);

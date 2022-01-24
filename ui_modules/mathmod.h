@@ -224,7 +224,6 @@ public:
 public slots:
     void fill();
     void iso_infos();
-    void attachinfos();
     void draw_norm_clicked();
     void linecolumn_valueChanged(int, ModelType type=PAR_TYPE);
     void line_valueChanged(int);
@@ -278,7 +277,6 @@ public slots:
     void FramesShot();
     void FramesSave();
     QImage Copyscreenshot();
-    void moveEvent(QMoveEvent *) override;
     void closeEvent(QCloseEvent *) override;
     void grabGestures(const QList<Qt::GestureType> &gestures);
     bool gestureEvent(QGestureEvent *event);

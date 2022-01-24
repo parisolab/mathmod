@@ -2150,44 +2150,9 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
         exit(0);
 }
 
-void MathMod::attachinfos()
-{
-    if(LocalScene.attachwininfos ==1)
-    {
-        QRect r = geometry();
-        LabelInfos.move(r.left(), r.top());
-        LabelInfos.setWindowFlags(Qt::WindowStaysOnTopHint| Qt::FramelessWindowHint);
-        LabelInfos.setAttribute(Qt::WA_TranslucentBackground);
-        LabelInfos.setAttribute(Qt::WA_NoSystemBackground);
-        if(LocalScene.infos == 1)
-            LabelInfos.show();
-    }
-    else
-    {
-        Qt::WindowFlags flags0 = LabelInfos.windowFlags();
-        flags0 &= ~Qt::FramelessWindowHint;
-        LabelInfos.setWindowFlags(flags0);
-        LabelInfos.setAttribute(Qt::WA_TranslucentBackground, false);
-        LabelInfos.setAttribute(Qt::WA_NoSystemBackground, false);
-        LabelInfos.setStyleSheet("QLabel { background-color : black; color : white; }");
-        LabelInfos.setAutoFillBackground(true);
-        if(LocalScene.infos == 1)
-            LabelInfos.show();
-    }
-}
-
 void MathMod::closeEvent(QCloseEvent *)
 {
     LabelInfos.close();
-}
-
-void MathMod::moveEvent(QMoveEvent *)
-{
-    if(LocalScene.attachwininfos ==1)
-    {
-        QRect r = geometry();
-        LabelInfos.move(r.x(), r.y());
-    }
 }
 
 void MathMod::fill()

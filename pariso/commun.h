@@ -209,7 +209,6 @@ struct ObjectProperties
     int norm = -1;
     int plan = 1;
     int axe = 1;
-    int attachwininfos = 1;
     int png_ok =  1;
     int jpg_ok = -1;
     int bmp_ok = -1;
