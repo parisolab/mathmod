@@ -90,6 +90,7 @@ public:
     QTreeWidgetItem *IsolistItemRef;
     Parametersoptions *Parameters;
     SelectOptions select;
+    int infos=-1;
     Ui::DrawingOptions ui;
     QJsonObject JSONMathModels;
     SliderStruct *SliderArray;

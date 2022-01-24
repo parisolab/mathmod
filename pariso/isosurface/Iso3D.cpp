@@ -1605,8 +1605,8 @@ void Iso3D::IsoBuild (
     *VertxNumber     = uint(IndexPolyTabMinVector.size());
     if(masterthread->activeMorph != 1)
     {
-        message = QString("Thr:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(times.elapsed()/1000.0)+"s");
-        emitUpdateMessageSignal();
+        message = QString("     [ Threads:"+QString::number(WorkerThreadsNumber)+"; Componens:"+QString::number(masterthread->componentsNumber)+"; Time="+QString::number(times.elapsed()/1000.0)+"s ]");
+        // emitUpdateMessageSignal();
     }
     NormVertexTabVector.resize(NormVertexTabVector.size()+ (12+60+36)*10); // To add memory space to store the cube 12 vertices (three quads)
 

@@ -651,19 +651,21 @@ else
  Z["+QString::number(oldminz,'g',3)+","+QString::number(oldmaxz,'g',3)+"]\n";
 */
 
-
-
-    labelinfos = "G[";
+  labelinfos = "";
+  if((LocalScene.typedrawing == 1) || (LocalScene.typedrawing == -1))
+  {
+    labelinfos = "Grid[";
     (LocalScene.typedrawing == 1)
     ? labelinfos += QString::number(Xgrid - CutX) + "x" +
             QString::number(Ygrid - CutY) + "x" +
             QString::number(Zgrid - CutZ)+"]"
             : labelinfos += QString::number(Ugrid - CutU) + "x" +
                     QString::number(Vgrid - CutV)+"]";
-    labelinfos+=" V["+QString::number(LocalScene.VertxNumber)+"]"+
-                           " T["+QString::number(LocalScene.PolyNumber/3)+"]"+
-                           " P["+QString::number(polynb)+"]";
-   if(LocalScene.morph==-1)
+  }
+  labelinfos+=" Vertices["+QString::number(LocalScene.VertxNumber)+"]"+
+                           " Triangls["+QString::number(LocalScene.PolyNumber/3)+"]"+
+                           " Polygons["+QString::number(polynb)+"]";
+  if(LocalScene.morph==-1)
        labelinfos+=" X["+QString::number(minx,'g',3)+","+QString::number(maxx,'g',3)+"]\
  Y["+QString::number(miny,'g',3)+","+QString::number(maxy,'g',3)+"]\
  Z["+QString::number(minz,'g',3)+","+QString::number(maxz,'g',3)+"]";
@@ -672,37 +674,25 @@ else
  Y["+QString::number(oldminy,'g',3)+","+QString::number(oldmaxy,'g',3)+"]\
  Z["+QString::number(oldminz,'g',3)+","+QString::number(oldmaxz,'g',3)+"]";
 
-    if(LocalScene.morph==1)
-    {
-        if(LocalScene.anim==-1)
+   if(LocalScene.typedrawing == 1)
+   {
+       IsoObjet->message = labelinfos + IsoObjet->message;
+       IsoObjet->emitUpdateMessageSignal();
+       IsoObjet->message = "";
+   }
+   else if(LocalScene.typedrawing == -1)
         {
-            LabelInfos.setText(labelinfos+" M:ON");
-            IsoObjet->message = labelinfos+" M:ON";
-            IsoObjet->emitUpdateMessageSignal();
+           ParObjet->message = labelinfos + ParObjet->message;
+           ParObjet->emitUpdateMessageSignal();
+           ParObjet->message = "";
         }
-        else
-        {
-            LabelInfos.setText(labelinfos+" R/M:ON");
-
-            IsoObjet->message = labelinfos+" R/M:ON";
-            IsoObjet->emitUpdateMessageSignal();
-        }
-    }
-    else
-    {
-        if(LocalScene.anim==-1)
-        {
-            LabelInfos.setText(labelinfos);
-            IsoObjet->message = labelinfos;
-            IsoObjet->emitUpdateMessageSignal();
-        }
-        else
-        {
-            LabelInfos.setText(labelinfos+" R:ON");
-            IsoObjet->message = labelinfos+" R:ON";
-            IsoObjet->emitUpdateMessageSignal();
-        }
-    }
+       else
+       {
+           IsoObjet->message = labelinfos + " ISO:" + IsoObjet->message + " PAR:" + ParObjet->message;
+           IsoObjet->emitUpdateMessageSignal();
+           IsoObjet->message = "";
+           ParObjet->message = "";
+       }
 }
 
 void MathMod::png()

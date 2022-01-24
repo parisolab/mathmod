@@ -2226,7 +2226,7 @@ void  Par3D::ParamBuild(
         initialiser_LineColumn(nbline_save, nbcolone_save);
     if(masterthread->activeMorph != 1)
     {
-        message = QString("Threads:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s");
+        message = QString("   [Threads:"+QString::number(WorkerThreadsNumber)+"; Cmp:"+QString::number(masterthread->componentsNumber)+"; T="+QString::number(ptime.elapsed()/1000.0)+"s ]");
         emitUpdateMessageSignal();
     }
     // 3) Nb Poly & Vertex :

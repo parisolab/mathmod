@@ -74,7 +74,7 @@ void DrawingOptions::ErrorMsg() const
     QMessageBox msgBox;
     if (scriptErrorType != SCRIPT_NO_ERROR)
     {
-        statusBar()->showMessage(ScriptErrorMessage[scriptErrorType]);
+        //statusBar()->showMessage(ScriptErrorMessage[scriptErrorType]);
         msgBox.setText(ScriptErrorMessage[scriptErrorType]);
         msgBox.exec();
     }
@@ -124,7 +124,7 @@ DrawingOptions::DrawingOptions(QWidget *parent) : QMainWindow(parent)
     connect(sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this,SLOT(update_infos_param(int)));
     connect(addnewparam.ui.SaveButton, SIGNAL(clicked()), this,SLOT(add_new_param()));
     connect(&select, SIGNAL(UpdateSignal()), this, SLOT(SearchListModels()));
-    statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
+    //statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
     BuildAllVect();
     ui.ObjectClasseCurrent->hide();
@@ -2532,7 +2532,7 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                 f.remove();
             if (!f.open(QIODevice::ReadWrite | QIODevice::Text))
             {
-                statusBar()->showMessage(tr("Could not write to %1").arg(filename),2000);
+                //statusBar()->showMessage(tr("Could not write to %1").arg(filename),2000);
                 return;
             }
             QTextStream t(&f);
@@ -2924,7 +2924,12 @@ void DrawingOptions::on_actionTriangles_triggered()
 
 void DrawingOptions::on_actionInfos_triggered()
 {
-    MathmodRef->iso_infos();
+    infos *= -1;
+    if(infos == 1)
+       ui.Messagetext->show();
+    else
+        ui.Messagetext->hide();
+    //MathmodRef->iso_infos();
 }
 
 void DrawingOptions::on_actionFill_triggered()
@@ -4231,7 +4236,7 @@ void DrawingOptions::UpdateGui(int argc)
     ui.choice->insertItems(0, LstModelTexture.listeModels);
     ui.comboBoxTexture->insertItems(0, LstModelTexture.listeTextures);
     ui.comboBoxPigment->insertItems(0, LstModelTexture.listePigments);
-
+    ui.Messagetext->hide();
     AddListModels();
 
     // Threads setting:
@@ -4265,10 +4270,10 @@ void DrawingOptions::UpdateGui(int argc)
     HideSliders();
 
     // ProgressBar + text informations (set to minimum size 0)
-    QList<int> Sizes;
+ /*   QList<int> Sizes;
     Sizes << 500 << 300;
-    ui.splitter_6->setSizes(Sizes);
-    ui.Messagetext->setFontPointSize(10);
+    ui.splitter_6->setSizes(Sizes);*/
+    ui.Messagetext->setFontPointSize(12);
 }
 
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
@@ -5462,4 +5467,5 @@ void DrawingOptions::on_actionbox_triggered()
     MathmodRef->boundingboxOk();
     MathmodRef->update();
 }
+
 
