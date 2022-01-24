@@ -49,7 +49,6 @@ SOURCES   = ui_modules/drawingoptions.cpp \
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/about.ui \
             ui_forms/editor.ui \
-            ui_forms/parametersoptions.ui \
             ui_forms/sliderparam.ui \
             ui_forms/addparam.ui \
             ui_forms/selectoptions.ui
