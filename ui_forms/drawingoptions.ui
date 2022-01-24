@@ -10518,14 +10518,6 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionScreenshot"/>
-   <addaction name="separator"/>
-   <addaction name="actionEditor"/>
-   <addaction name="separator"/>
-   <addaction name="actionFrames"/>
-   <addaction name="separator"/>
-   <addaction name="actionScripts_selection"/>
-   <addaction name="separator"/>
    <addaction name="actionMorph_use_t_parameter"/>
    <addaction name="separator"/>
    <addaction name="actionAnimation_Rotation"/>
