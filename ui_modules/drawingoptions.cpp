@@ -4250,7 +4250,7 @@ void DrawingOptions::UpdateGui(int argc)
     // ui.NameLabel->hide();
     //MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
     QList<int> Sizes1;
-    Sizes1 << 350 << 450;
+    Sizes1 << 600 << 750;
     ui.splitter_9->setSizes(Sizes1);
 
     // Pigment/texture
