@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1107</width>
+    <width>707</width>
     <height>661</height>
    </rect>
   </property>
@@ -25,8 +25,8 @@
    <string>MathMod-12.0.0</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_80">
-    <item row="0" column="0" rowspan="2" colspan="2">
+   <layout class="QGridLayout" name="gridLayout_31">
+    <item row="0" column="0">
      <widget class="QSplitter" name="splitter_9">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -60,7 +60,7 @@
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>120</width>
+                 <width>2</width>
                  <height>0</height>
                 </size>
                </property>
@@ -86,7 +86,7 @@
             <widget class="QTreeWidget" name="ObjectClasse">
              <property name="minimumSize">
               <size>
-               <width>10</width>
+               <width>2</width>
                <height>0</height>
               </size>
              </property>
@@ -168,6 +168,9 @@
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>-1</number>
+           </property>
            <item>
             <widget class="QProgressBar" name="progressBar">
              <property name="sizePolicy">
@@ -176,11 +179,22 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>2</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
                <height>20</height>
               </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>13</pointsize>
+              </font>
              </property>
              <property name="toolTip">
               <string extracomment="Math functions calculation phase"/>
@@ -196,6 +210,9 @@
      border-radius: 2px;
  }</string>
              </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
              <property name="value">
               <number>100</number>
              </property>
@@ -207,21 +224,21 @@
            <item>
             <widget class="QPushButton" name="stopButton">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
               <size>
-               <width>40</width>
+               <width>30</width>
                <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>40</width>
-               <height>16777215</height>
+               <width>16777215</width>
+               <height>30</height>
               </size>
              </property>
              <property name="font">
@@ -244,6 +261,12 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>2</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="font">
          <font>
@@ -343,6 +366,12 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>2</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
@@ -373,6 +402,12 @@
                  </property>
                  <item row="0" column="0">
                   <widget class="QComboBox" name="parisocomboBox">
+                   <property name="minimumSize">
+                    <size>
+                     <width>2</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="maximumSize">
                     <size>
                      <width>150</width>
@@ -503,7 +538,7 @@
                                  </property>
                                  <property name="minimumSize">
                                   <size>
-                                   <width>0</width>
+                                   <width>2</width>
                                    <height>28</height>
                                   </size>
                                  </property>
@@ -544,13 +579,13 @@
                                  </property>
                                  <property name="minimumSize">
                                   <size>
-                                   <width>0</width>
+                                   <width>2</width>
                                    <height>28</height>
                                   </size>
                                  </property>
                                  <property name="maximumSize">
                                   <size>
-                                   <width>250</width>
+                                   <width>251</width>
                                    <height>25</height>
                                   </size>
                                  </property>
@@ -647,6 +682,12 @@ p, li { white-space: pre-wrap; }
                                <verstretch>0</verstretch>
                               </sizepolicy>
                              </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>0</width>
+                               <height>0</height>
+                              </size>
+                             </property>
                              <property name="text">
                               <string>Run</string>
                              </property>
@@ -658,7 +699,7 @@ p, li { white-space: pre-wrap; }
                           <widget class="QTextEdit" name="UpdateEdit">
                            <property name="minimumSize">
                             <size>
-                             <width>10</width>
+                             <width>2</width>
                              <height>0</height>
                             </size>
                            </property>
@@ -864,6 +905,12 @@ p, li { white-space: pre-wrap; }
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
                                  </property>
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>2</width>
+                                   <height>0</height>
+                                  </size>
+                                 </property>
                                  <property name="maximumSize">
                                   <size>
                                    <width>16777215</width>
@@ -893,6 +940,12 @@ p, li { white-space: pre-wrap; }
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
                                  </property>
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>2</width>
+                                   <height>0</height>
+                                  </size>
+                                 </property>
                                  <property name="maximumSize">
                                   <size>
                                    <width>16777215</width>
@@ -921,6 +974,12 @@ p, li { white-space: pre-wrap; }
                                    <horstretch>0</horstretch>
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
+                                 </property>
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>2</width>
+                                   <height>0</height>
+                                  </size>
                                  </property>
                                  <property name="maximumSize">
                                   <size>
@@ -1127,6 +1186,12 @@ p, li { white-space: pre-wrap; }
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
                                  </property>
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>2</width>
+                                   <height>0</height>
+                                  </size>
+                                 </property>
                                  <property name="maximumSize">
                                   <size>
                                    <width>16777215</width>
@@ -1155,6 +1220,12 @@ p, li { white-space: pre-wrap; }
                                    <horstretch>0</horstretch>
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
+                                 </property>
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>2</width>
+                                   <height>0</height>
+                                  </size>
                                  </property>
                                  <property name="maximumSize">
                                   <size>
@@ -1307,6 +1378,12 @@ p, li { white-space: pre-wrap; }
                                    <verstretch>0</verstretch>
                                   </sizepolicy>
                                  </property>
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>2</width>
+                                   <height>0</height>
+                                  </size>
+                                 </property>
                                  <property name="maximumSize">
                                   <size>
                                    <width>16777215</width>
@@ -1353,7 +1430,7 @@ p, li { white-space: pre-wrap; }
                               <widget class="QTextEdit" name="CndUpdateEdit">
                                <property name="minimumSize">
                                 <size>
-                                 <width>10</width>
+                                 <width>2</width>
                                  <height>0</height>
                                 </size>
                                </property>
@@ -1399,6 +1476,12 @@ p, li { white-space: pre-wrap; }
                              </property>
                              <item row="0" column="0">
                               <widget class="QTableWidget" name="tableWidget_Fct">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>2</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
                                <attribute name="horizontalHeaderStretchLastSection">
                                 <bool>true</bool>
                                </attribute>
@@ -1430,6 +1513,12 @@ p, li { white-space: pre-wrap; }
                              </property>
                              <item row="0" column="0">
                               <widget class="QTableWidget" name="tableWidget_Cst">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>2</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
                                <attribute name="horizontalHeaderStretchLastSection">
                                 <bool>true</bool>
                                </attribute>
@@ -1470,6 +1559,12 @@ p, li { white-space: pre-wrap; }
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>1</width>
+                             <height>0</height>
+                            </size>
                            </property>
                            <property name="palette">
                             <palette>
@@ -1521,6 +1616,12 @@ p, li { white-space: pre-wrap; }
                                   <horstretch>0</horstretch>
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>10</width>
+                                  <height>0</height>
+                                 </size>
                                 </property>
                                 <property name="minimum">
                                  <number>0</number>
@@ -1621,7 +1722,7 @@ p, li { white-space: pre-wrap; }
                                   </property>
                                   <property name="minimumSize">
                                    <size>
-                                    <width>80</width>
+                                    <width>2</width>
                                     <height>0</height>
                                    </size>
                                   </property>
@@ -1653,6 +1754,12 @@ p, li { white-space: pre-wrap; }
                                     <verstretch>0</verstretch>
                                    </sizepolicy>
                                   </property>
+                                  <property name="minimumSize">
+                                   <size>
+                                    <width>2</width>
+                                    <height>0</height>
+                                   </size>
+                                  </property>
                                  </widget>
                                 </item>
                                </layout>
@@ -1667,7 +1774,7 @@ p, li { white-space: pre-wrap; }
                                 </property>
                                 <property name="minimumSize">
                                  <size>
-                                  <width>0</width>
+                                  <width>2</width>
                                   <height>30</height>
                                  </size>
                                 </property>
@@ -1689,6 +1796,12 @@ p, li { white-space: pre-wrap; }
                          </item>
                          <item row="3" column="0">
                           <widget class="QGroupBox" name="groupBox_4">
+                           <property name="minimumSize">
+                            <size>
+                             <width>2</width>
+                             <height>0</height>
+                            </size>
+                           </property>
                            <property name="title">
                             <string>Multiplier(script generator):</string>
                            </property>
@@ -1712,6 +1825,12 @@ p, li { white-space: pre-wrap; }
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>2</width>
+                                <height>0</height>
+                               </size>
                               </property>
                               <property name="palette">
                                <palette>
@@ -1851,6 +1970,12 @@ p, li { white-space: pre-wrap; }
                                 <verstretch>0</verstretch>
                                </sizepolicy>
                               </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>2</width>
+                                <height>0</height>
+                               </size>
+                              </property>
                               <property name="palette">
                                <palette>
                                 <active>
@@ -1988,6 +2113,12 @@ p, li { white-space: pre-wrap; }
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                                </sizepolicy>
+                              </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>2</width>
+                                <height>0</height>
+                               </size>
                               </property>
                               <property name="palette">
                                <palette>
@@ -2127,6 +2258,12 @@ p, li { white-space: pre-wrap; }
                                 <verstretch>0</verstretch>
                                </sizepolicy>
                               </property>
+                              <property name="minimumSize">
+                               <size>
+                                <width>2</width>
+                                <height>0</height>
+                               </size>
+                              </property>
                               <property name="text">
                                <string>Generate</string>
                               </property>
@@ -2208,7 +2345,7 @@ p, li { white-space: pre-wrap; }
                               </property>
                               <property name="minimumSize">
                                <size>
-                                <width>130</width>
+                                <width>0</width>
                                 <height>0</height>
                                </size>
                               </property>
@@ -3127,7 +3264,7 @@ p, li { white-space: pre-wrap; }
                           </property>
                           <property name="minimumSize">
                            <size>
-                            <width>130</width>
+                            <width>0</width>
                             <height>0</height>
                            </size>
                           </property>
@@ -3149,7 +3286,7 @@ p, li { white-space: pre-wrap; }
                           </property>
                           <property name="minimumSize">
                            <size>
-                            <width>80</width>
+                            <width>0</width>
                             <height>0</height>
                            </size>
                           </property>
@@ -7049,7 +7186,7 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>591</width>
+                  <width>341</width>
                   <height>994</height>
                  </rect>
                 </property>
@@ -10442,7 +10579,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1107</width>
+     <width>707</width>
      <height>24</height>
     </rect>
    </property>
