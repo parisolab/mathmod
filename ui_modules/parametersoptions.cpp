@@ -281,7 +281,6 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             appDirPath = appDirPath.remove(fileconfig2.size()-5, 5);
             filecollection   = appDirPath + "Resources/" + filecollection;
             fileconfig       = appDirPath + "Resources/" + fileconfig;
-            advancedmodels   = appDirPath + "Resources/" + advancedmodels;
          }
     #endif
     */

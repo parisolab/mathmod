@@ -67,5 +67,3 @@ target.path    = $TARGET
 sources.files  = $$SOURCES $$HEADERS $$RESOURCES $$FORMS mathmod.pro
 sources.path   = $TARGET
 INSTALLS      += target sources
-DISTFILES += \
-    advancedmodels.js
