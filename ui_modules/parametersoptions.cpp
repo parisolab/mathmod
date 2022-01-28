@@ -35,7 +35,7 @@ Parametersoptions::Parametersoptions()
     darkpalette.setColor(QPalette::WindowText, QColor(255, 255, 255));
     darkpalette.setColor(QPalette::Base, QColor(15, 15, 15));
     darkpalette.setColor(QPalette::AlternateBase, QColor(53, 53, 53));
-    darkpalette.setColor(QPalette::ToolTipBase, QColor(255, 255, 255));
+    darkpalette.setColor(QPalette::ToolTipBase, QColor(0, 0, 0));
     darkpalette.setColor(QPalette::ToolTipText, QColor(255, 255, 255));
     darkpalette.setColor(QPalette::Text, QColor(255, 255, 255));
     darkpalette.setColor(QPalette::Button, QColor(53, 53, 53));
