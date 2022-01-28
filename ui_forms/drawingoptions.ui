@@ -10541,7 +10541,7 @@ p, li { white-space: pre-wrap; }
          <enum>QFrame::Plain</enum>
         </property>
         <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAsNeeded</enum>
@@ -10582,6 +10582,9 @@ p, li { white-space: pre-wrap; }
      <width>1048</width>
      <height>24</height>
     </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
@@ -10639,6 +10642,9 @@ p, li { white-space: pre-wrap; }
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
    <property name="movable">
     <bool>true</bool>
    </property>
@@ -10654,7 +10660,6 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionMorph_use_t_parameter"/>
    <addaction name="separator"/>
    <addaction name="actionAnimation_Rotation"/>
    <addaction name="separator"/>
