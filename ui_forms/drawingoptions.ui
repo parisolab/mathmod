@@ -633,13 +633,20 @@ p, li { white-space: pre-wrap; }
                                     </size>
                                    </property>
                                    <property name="toolTip">
-                                    <string>Add new component</string>
+                                    <string extracomment="Add">Add new component</string>
                                    </property>
                                    <property name="statusTip">
                                     <string>Add new component</string>
                                    </property>
-                                   <property name="text">
+                                   <property name="whatsThis">
                                     <string>Add</string>
+                                   </property>
+                                   <property name="text">
+                                    <string/>
+                                   </property>
+                                   <property name="icon">
+                                    <iconset resource="../myressources.qrc">
+                                     <normaloff>:/images/Add.png</normaloff>:/images/Add.png</iconset>
                                    </property>
                                   </widget>
                                  </item>
@@ -664,7 +671,11 @@ p, li { white-space: pre-wrap; }
                                     <string/>
                                    </property>
                                    <property name="text">
-                                    <string>Cut</string>
+                                    <string/>
+                                   </property>
+                                   <property name="icon">
+                                    <iconset resource="../myressources.qrc">
+                                     <normaloff>:/images/win/editcut.png</normaloff>:/images/win/editcut.png</iconset>
                                    </property>
                                   </widget>
                                  </item>
@@ -2431,7 +2442,11 @@ p, li { white-space: pre-wrap; }
                                  <string>Add new component</string>
                                 </property>
                                 <property name="text">
-                                 <string>Add</string>
+                                 <string/>
+                                </property>
+                                <property name="icon">
+                                 <iconset resource="../myressources.qrc">
+                                  <normaloff>:/images/Add.png</normaloff>:/images/Add.png</iconset>
                                 </property>
                                </widget>
                               </item>
@@ -2456,7 +2471,11 @@ p, li { white-space: pre-wrap; }
                                  <string/>
                                 </property>
                                 <property name="text">
-                                 <string>Cut</string>
+                                 <string/>
+                                </property>
+                                <property name="icon">
+                                 <iconset resource="../myressources.qrc">
+                                  <normaloff>:/images/win/editcut.png</normaloff>:/images/win/editcut.png</iconset>
                                 </property>
                                </widget>
                               </item>
@@ -7186,7 +7205,7 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>554</width>
+                  <width>544</width>
                   <height>994</height>
                  </rect>
                 </property>
