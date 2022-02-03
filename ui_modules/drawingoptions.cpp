@@ -5318,10 +5318,11 @@ void DrawingOptions::on_ApplypushButton_3_clicked()
 void DrawingOptions::on_actionDocumentation_triggered()
 {
     QString link = "";
-    link  = (Parameters->docabsolutepath) == "" ?
+    link  = ((Parameters->docabsolutepath) == "" ?
     QApplication::applicationDirPath() + Parameters->docpartialpath :
-    Parameters->docabsolutepath;
-    QDesktopServices::openUrl(QUrl(QUrl::fromLocalFile(link)));
+    Parameters->docabsolutepath);
+    link.contains("http") ? QDesktopServices::openUrl(link):
+                            QDesktopServices::openUrl(QUrl(QUrl::fromLocalFile(link)));
 }
 
 void DrawingOptions::on_ScaleButton_clicked()

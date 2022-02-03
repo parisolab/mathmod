@@ -3,7 +3,7 @@
         "VersionNumber": "12.0.0",
         "ReleaseDate": "21/12/20",
         "DocPartialPath": "/documentation/index.html",
-        "DocAbsolutePath": ""
+        "DocAbsolutePath": "https://github.com/parisolab/mathmod/wiki/documentation"
     },
     "Parameters": {
         "IsoMaxGrid": 500,
