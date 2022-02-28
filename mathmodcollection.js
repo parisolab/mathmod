@@ -2,10 +2,10 @@
   "MathModels": [
     {
         "Iso3D": {
-            "Description": [" Ukraine Heart Flag by Abderrahman Taha 24/02/2022"],
+            "Description": ["Ukraine Heart Flag by Abderrahman Taha 24/02/2022"],
             "Name": ["Ukraine_Heart_Flag"],
             "Component": ["Heart"],
-            "Fxyz": ["(x^2+(9/4)*y^2+z^2-1)^3 -x^2*z^3 -(9/80)*y^2*z^3"],
+            "Fxyz": ["(x^2+(9/4)*y^2+z^2-1)^3-x^2*z^3-(9/80)*y^2*z^3"],
             "Xmax": ["13/10"],
             "Xmin": ["-13/10"],
             "Ymax": ["1"],
@@ -14,9 +14,9 @@
             "Zmin": ["-13/10"]
         },
         "Texture": {
-            "Colors": ["R=if((z>1/8), (0), (6/10))",
-                "G=if((z> 1/8), (1/10), (6/10))",
-                "B=if((z> 1/8), (9/10), (0))",
+            "Colors": ["R=if((z>1/8),(0),(6/10))",
+                "G=if((z>1/8),(1/10),(6/10))",
+                "B=if((z>1/8),(9/10),(0))",
                 "T=1"],
             "Name": "Ukraine_Flag",
             "Noise": ""
