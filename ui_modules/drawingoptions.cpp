@@ -5451,4 +5451,3 @@ void DrawingOptions::on_actionbox_triggered()
     MathmodRef->boundingboxOk();
     MathmodRef->update();
 }
-

@@ -20,8 +20,6 @@
 #include "mathmod.h"
 
 
-
-
 void MathMod::CalculateTexturePoints(int type)
 {
     double tmp, val[6]={0,0,0,0,0,0};
@@ -910,7 +908,6 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
         }
     }
     glDisable(GL_POLYGON_OFFSET_FILL);
-    //glUniform1i(uniformThereisRGBA, 0);
 }
 
 void MathMod::normOk()
