@@ -27,7 +27,7 @@
             "Description": ["Moebius_Spheres fabric animation by Abderrahman Taha 13/02/2019"],
             "Name": ["Moebius_Spheres"],
             "Funct": ["Fx=cos(v)+u*cos(k*v/2+t/P)*cos(v)","Fy=sin(v)+u*cos(k*v/2+t/P)*sin(v)","Fz=u*sin(k*v/2+t/P)","Fx=Fx(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=3 , t/k0, 0*t/k0), t)","Fy=Fy(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=3, t/k0, 0*t/k0), t)","Fz=Fz(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=3, t/k0, 0*t/k0), t)","Px=r0*cos(u)*cos(v)","Py=r0*cos(u)*sin(v)","Pz=r0*sin(u)","Sx=Px(u,v,t) + Fx(u1min+ (CmpId(0)%N)*Gu   ,  v1min + floor(CmpId(0)/N)*Gv,t)","Sy=Py(u,v,t) + Fy(u1min+ (CmpId(0)%N)*Gu    , v1min + floor(CmpId(0)/N)*Gv,t)","Sz=Pz(u,v,t) + Fz(u1min+ (CmpId(0)%N)*Gu    ,v1min + floor(CmpId(0)/N)*Gv,t)","Sx=Sx(u, v, t)","Sy=Sy(u, v, t)","Sz=Sz(u, v, t)"],
-            "Const": ["M=20","N=4","r0=0.13","umin=-pi/2","umax=pi/2","vmin=0","vmax=2*pi","u1min=-0.4","u1max=0.4","v1min=0","v1max=2*pi","Gu=(u1max-u1min)/(N-1)","Gv=(v1max-v1min)/(M)","k=1","k0=100","k1=100","k2=100","P=100"],
+            "Const": ["M=20","N=4","r0=13/100","umin=-pi/2","umax=pi/2","vmin=0","vmax=2*pi","u1min=-4/10","u1max=4/10","v1min=0","v1max=2*pi","Gu=(u1max-u1min)/(N-1)","Gv=(v1max-v1min)/(M)","k=1","k0=100","k1=100","k2=100","P=100"],
             "Component": ["Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19","Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19","Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19","Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19"],
             "Fx": ["Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)"],
             "Fy": ["Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)"],
@@ -45,7 +45,7 @@
             "Step": ["1"]
         },
         "Texture": {
-            "Colors": ["R=0.7","G=0.7","B=0.7","T=1"],
+            "Colors": ["R=7/10","G=7/10","B=7/10","T=1"],
             "Name": "Lines1",
             "Noise": ""
         }
@@ -66,8 +66,8 @@
         "Texture": {
             "Colors": ["H= arg(((Z^2-1)*(Z-2-1i)^2)/(Z*Z+2+3*1i))",
                 "S=(2/pi)*atan(abs(((Z^2-1)*(Z-2-1i)^2)/(Z*Z+2+3*1i)))",
-                "B= 0.51",
-                "T=1.0"],
+                "B= 51/100",
+                "T=1"],
             "Name": "Dream",
             "Noise": ""
         }
@@ -77,12 +77,12 @@
             "Description": ["Complex function: f(Z)=1/(Z*Z+1)"],
             "Name": ["Complex3D_02"],
             "Component": ["complex"],
-            "Const": ["A=1.5"],
+            "Const": ["A=15/10"],
             "Vect": ["1"],
             "Fx": ["u"],
             "Fy": ["v"],
             "Fz": ["psh(0, real(1/(Z*Z+1))) * if(csd(0)>A, A, if(csd(0)<-A, -A, csd(0)))"],
-            "Umax": ["2.5"],
+            "Umax": ["25/10"],
             "Umin": ["-2.5"],
             "Vmax": ["2.5"],
             "Vmin": ["-2.5"]
@@ -131,8 +131,6 @@
     {
         "Name": "Pariso_01",
         "ParIso": [
-
-
             {
                 "Param3D": {
                     "Description": ["Blobby Torus by Abderrahman Taha 07/10/2019"],
