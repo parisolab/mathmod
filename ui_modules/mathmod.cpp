@@ -628,27 +628,6 @@ void MathMod::PutObjectInsideCube()
     }
     else
         polynb = LocalScene.NbPolygnNbVertexPtMin;
-/*
-    labelinfos = "  \n Grid     : ";
-    (LocalScene.typedrawing == 1)
-    ? labelinfos += QString::number(Xgrid - CutX) + "x" +
-            QString::number(Ygrid - CutY) + "x" +
-            QString::number(Zgrid - CutZ) +" \n"
-            : labelinfos += QString::number(Ugrid - CutU) + "x" +
-                    QString::number(Vgrid - CutV) +" \n";
-    labelinfos+=" Vertices : "+QString::number(LocalScene.VertxNumber)+" \n"+
-                           " Triangles: "+QString::number(LocalScene.PolyNumber/3)+" \n"
-                           " Polygons : "+QString::number(polynb)+" \n";
-   if(LocalScene.morph==-1)
-       labelinfos+=" X["+QString::number(minx,'g',3)+","+QString::number(maxx,'g',3)+"]\n\
- Y["+QString::number(miny,'g',3)+","+QString::number(maxy,'g',3)+"]\n\
- Z["+QString::number(minz,'g',3)+","+QString::number(maxz,'g',3)+"]\n";
-else
-       labelinfos+=" X["+QString::number(oldminx,'g',3)+","+QString::number(oldmaxx,'g',3)+"]\n\
- Y["+QString::number(oldminy,'g',3)+","+QString::number(oldmaxy,'g',3)+"]\n\
- Z["+QString::number(oldminz,'g',3)+","+QString::number(oldmaxz,'g',3)+"]\n";
-*/
-
   labelinfos = "";
   if((LocalScene.typedrawing == 1) || (LocalScene.typedrawing == -1))
   {
