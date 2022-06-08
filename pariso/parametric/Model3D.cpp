@@ -525,8 +525,6 @@ ErrorMessage  Par3D::ParMorph()
 ErrorMessage  ParMasterThread::parse_expression()
 {
     double vals[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    std::string varliste   = "u,v,t";
-    std::string varliste_C = "u,v,t,Z";
     InitMasterParsers();
     if(constnotnull)
     {
@@ -2314,7 +2312,6 @@ void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
 
 void  Par3D::make_PolyIndexTri(uint index)
 {
-    uint k=0;
     for (uint i=0; i+CutU+1< Ugrid; i++)
         for (uint j=0; j+CutV+1< Vgrid; j++)
         {
@@ -2325,7 +2322,6 @@ void  Par3D::make_PolyIndexTri(uint index)
             IndexPolyTabVector.push_back(i*Vgrid + j+index);
             IndexPolyTabVector.push_back((i+1)*Vgrid + (j+1)+index);
             IndexPolyTabVector.push_back(i*Vgrid + (j+1)+index);
-            k+=6;
         }
 }
 
