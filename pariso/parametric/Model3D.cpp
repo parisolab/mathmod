@@ -566,7 +566,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 for(uint j=0; j<i; j++)
                     if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                         Fct[i].AddFunction(FunctNames[j], Fct[j]);
-                if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],varliste)) >= 0)
+                if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"u,v,t")) >= 0)
                 {
                     stdError.strError = Functs[i];
                     return stdError;
@@ -593,7 +593,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 for(uint j=0; j<i; j++)
                     if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                         Fct_C[i].AddFunction(FunctNames[j], Fct_C[j]);
-                if ((stdError.iErrorIndex = Fct_C[i].Parse(Functs[i],varliste_C)) >= 0)
+                if ((stdError.iErrorIndex = Fct_C[i].Parse(Functs[i],"u,v,t,Z")) >= 0)
                 {
                     stdError.strError = Functs[i];
                     return stdError;
@@ -823,14 +823,14 @@ ErrorMessage  ParMasterThread::parse_expression()
 
     for(uint index=0; index< componentsNumber; index++)
     {
-        if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, varliste)) >= 0)
+        if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].umin;
             return stdError;
         }
         u_inf[index] = myParserUmin[index].Eval(vals);
 
-        if ((stdError.iErrorIndex = myParserUmax[index].Parse(ParamStructs[index].umax, varliste)) >= 0)
+        if ((stdError.iErrorIndex = myParserUmax[index].Parse(ParamStructs[index].umax, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].umax;
             return stdError;
@@ -838,14 +838,14 @@ ErrorMessage  ParMasterThread::parse_expression()
         u_sup[index] = myParserUmax[index].Eval(vals);
         dif_u[index] = u_sup[index] - u_inf[index];
 
-        if ((stdError.iErrorIndex = myParserVmin[index].Parse(ParamStructs[index].vmin, varliste)) >= 0)
+        if ((stdError.iErrorIndex = myParserVmin[index].Parse(ParamStructs[index].vmin, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].vmin;
             return stdError;
         }
         v_inf[index] = myParserVmin[index].Eval(vals);
 
-        if ((stdError.iErrorIndex = myParserVmax[index].Parse(ParamStructs[index].vmax, varliste)) >= 0)
+        if ((stdError.iErrorIndex = myParserVmax[index].Parse(ParamStructs[index].vmax, "u,v,t")) >= 0)
         {
             stdError.strError = ParamStructs[index].vmax;
             return stdError;
@@ -855,26 +855,26 @@ ErrorMessage  ParMasterThread::parse_expression()
 
         if(!param3d_C && !param4d_C)
         {
-            if ((stdError.iErrorIndex = myParserX[index].Parse(ParamStructs[index].fx, varliste)) >= 0)
+            if ((stdError.iErrorIndex = myParserX[index].Parse(ParamStructs[index].fx, "u,v,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].fx;
                 return stdError;
             }
 
-            if ((stdError.iErrorIndex = myParserY[index].Parse(ParamStructs[index].fy, varliste)) >= 0)
+            if ((stdError.iErrorIndex = myParserY[index].Parse(ParamStructs[index].fy, "u,v,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].fy;
                 return stdError;
             }
 
-            if ((stdError.iErrorIndex = myParserZ[index].Parse(ParamStructs[index].fz, varliste)) >= 0)
+            if ((stdError.iErrorIndex = myParserZ[index].Parse(ParamStructs[index].fz, "u,v,t")) >= 0)
             {
                 stdError.strError = ParamStructs[index].fz;
                 return stdError;
             }
 
             if(param4D == 1)
-                if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].fw, varliste)) >= 0)
+                if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].fw, "u,v,t")) >= 0)
                 {
                     stdError.strError = ParamStructs[index].fw;
                     return stdError;
@@ -882,23 +882,23 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
         else
         {
-            if ((stdError.iErrorIndex = myParserX_C[index].Parse(ParamStructs[index].fx, varliste_C)) >= 0)
+            if ((stdError.iErrorIndex = myParserX_C[index].Parse(ParamStructs[index].fx, "u,v,t,Z")) >= 0)
             {
                 stdError.strError = ParamStructs[index].fx;
                 return stdError;
             }
-            if ((stdError.iErrorIndex = myParserY_C[index].Parse(ParamStructs[index].fy, varliste_C)) >= 0)
+            if ((stdError.iErrorIndex = myParserY_C[index].Parse(ParamStructs[index].fy, "u,v,t,Z")) >= 0)
             {
                 stdError.strError = ParamStructs[index].fy;
                 return stdError;
             }
-            if ((stdError.iErrorIndex = myParserZ_C[index].Parse(ParamStructs[index].fz, varliste_C)) >= 0)
+            if ((stdError.iErrorIndex = myParserZ_C[index].Parse(ParamStructs[index].fz, "u,v,t,Z")) >= 0)
             {
                 stdError.strError = ParamStructs[index].fz;
                 return stdError;
             }
             if(param4d_C)
-                if ((stdError.iErrorIndex = myParserW_C[index].Parse(ParamStructs[index].fw, varliste_C)) >= 0)
+                if ((stdError.iErrorIndex = myParserW_C[index].Parse(ParamStructs[index].fw, "u,v,t,Z")) >= 0)
                 {
                     stdError.strError = ParamStructs[index].fw;
                     return stdError;
