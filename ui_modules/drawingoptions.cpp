@@ -4242,12 +4242,6 @@ void DrawingOptions::UpdateGui(int argc)
     if(!Parameters->glFrontFacingSupport)
         SetglFrontFacingSupport();
 
-    // Show the two windows of the application:
-    //move(Parameters->ControlX, Parameters->ControlY);
-    //resize(Parameters->ControlW, Parameters->ControlH);
-    // ui.CndGroupBox->hide();
-    // ui.NameLabel->hide();
-    //MathmodRef->move(Parameters->GlwinX, Parameters->GlwinY);
     QList<int> Sizes1;
     Sizes1 << 600 << 750;
     ui.splitter_9->setSizes(Sizes1);
