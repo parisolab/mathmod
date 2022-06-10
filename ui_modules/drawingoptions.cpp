@@ -2527,7 +2527,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                 f.remove();
             if (!f.open(QIODevice::ReadWrite | QIODevice::Text))
             {
-                //statusBar()->showMessage(tr("Could not write to %1").arg(filename),2000);
                 return;
             }
             QTextStream t(&f);
