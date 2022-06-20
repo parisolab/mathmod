@@ -180,7 +180,7 @@
     },
     {
         "Param3D": {
-            "Description": ["Groupings of Knots  (from Lindsay D Taylor: http://www.mi.sanu.ac.rs/vismath/taylor2009/) by Abderrahman Taha 24/12/2020"],
+            "Description": ["Groupings of Knots (from Lindsay D Taylor: http://www.mi.sanu.ac.rs/vismath/taylor2009/) by Abderrahman Taha 24/12/2020"],
             "Name": ["Groupings_of_Knots"],
             "Component": ["Knots"],
             "Const": ["N=1","R=12","du=1/1000000"],
