@@ -3627,7 +3627,7 @@
           "th = atan2(Z(x,y,z,t), X(x,y,z,t))",
           "th = ((th(x,y,z,t)*A+y*B*A) % (2*pi))",
           "th = if (th(x,y,z,t) < (0),th(x,y,z,t)+2*pi, th(x,y,z,t))",
-          "Z = (th(x,y,z,t)-pi)/ E/ (B*A)",
+          "Z = (th(x,y,z,t)-pi)/E/(B*A)",
           "X = r(x,y,z,t)-D",
           "Z = if ((F = 1 | G = 0)=(0), X(x,y,z,t)*sin(G*pi/180)+Z(x,y,z,t)*cos(G*pi/180), Z(x,y,z,t))",
           "X = if ((F = 1 | G = 0)=(0), X(x,y,z,t)*cos(G*pi/180)-Z(x,y,z,t)*sin(G*pi/180), X(x,y,z,t))",
@@ -3877,7 +3877,7 @@
           "th = atan2(Z(x,y,z,t), X(x,y,z,t))",
           "th = ((th(x,y,z,t)*A+y*B*A) % (2*pi))",
           "th = if (th(x,y,z,t) < (0), th(x,y,z,t)+2*pi, th(x,y,z,t))",
-          "Z = (th(x,y,z,t)-pi)/ E/ (B*A)",
+          "Z = (th(x,y,z,t)-pi)/E/(B*A)",
           "X = r(x,y,z,t)-D",
           "Z = if ((F = 1 | G = 0)=(0), X(x,y,z,t)*sin(G*pi/180)+Z(x,y,z,t)*cos(G*pi/180), Z(x,y,z,t))",
           "X = if ((F = 1 | G = 0)=(0), X(x,y,z,t)*cos(G*pi/180)-Z(x,y,z,t)*sin(G*pi/180), X(x,y,z,t))",
@@ -3997,7 +3997,7 @@
     },
     {
       "Iso3D": {
-        "Description": ["Straw Basket (ref : http://www.povray.org/ ) by Abderrahman Taha 02/11/2019"],
+        "Description": ["Straw Basket (ref : http://www.povray.org/) by Abderrahman Taha 02/11/2019"],
         "Name": ["Straw_Basket_v1"],
         "Component": ["StrawBasket"],
         "Const": ["A = 1/2",
@@ -4035,7 +4035,7 @@
     },
     {
       "Iso3D": {
-        "Description": ["Mesh Torus ( reference : http://www.povray.org/ ) by Abderrahman Taha 02/11/2019   "],
+        "Description": ["Mesh Torus ( reference : http://www.povray.org/) by Abderrahman Taha 02/11/2019   "],
         "Name": ["Mesh_Torus_01"],
         "Component": ["MeshTorus"],
         "Const": ["A = 1/2",
@@ -4043,8 +4043,8 @@
           "C = 7/10",
           "D = 1/5",
           "E = 1/2",
-          "th = pi/ A",
-          "ph = pi/ B"],
+          "th = pi/A",
+          "ph = pi/B"],
         "Funct": ["r = (x % (A*2))",
           "r = abs( if (r(x,y,z,t) < (0), r(x,y,z,t)+A, r(x,y,z,t)-A))*C",
           "r2 = (y-cos(z*ph)*D)*E",
@@ -6081,9 +6081,9 @@
         "Component": ["LumpetTori"],
         "Const": ["cu=(1/10000)","cv=(1/10000)"],
         "Funct": ["Thickness= (1/5)*(abs(sin(14*u)*cos(14*v)))^9+(2/5)*((sin(8*u)))",
-          "Fx=-cos(u)/ (sqrt(2)+sin(v))",
-          "Fy=1/ (sqrt(2)+cos(v))",
-          "Fz=sin(u)/ (sqrt(2)+sin(v))",
+          "Fx=-cos(u)/(sqrt(2)+sin(v))",
+          "Fy=1/(sqrt(2)+cos(v))",
+          "Fz=sin(u)/(sqrt(2)+sin(v))",
           "DFxu=((Fx(u,v,t)-Fx(u+cu,v,t))/cu)",
           "DFxv=((Fx(u,v,t)-Fx(u,v+cv,t))/cv)",
           "DFyu=((Fy(u,v,t)-Fy(u+cu,v,t))/cu)",
@@ -7971,7 +7971,7 @@
     },
     {
       "Param3D": {
-        "Description": ["Original Klein Bottle formula from http://www.gnuplotting.org/klein-bottle/ . Implemented by Abderrahman Taha 03/04/2016"],
+        "Description": ["Original Klein Bottle formula from http://www.gnuplotting.org/klein-bottle/. Implemented by Abderrahman Taha 03/04/2016"],
         "Name": ["Klein_4"],
         "Component": ["Klein"],
         "Funct": ["tx=if(v<2*pi, (A-(A-1)*cos(v))*cos(u),if(v<3*pi,-B+(B+cos(u))*cos(v),-B+B*cos(v)-cos(u)))",
