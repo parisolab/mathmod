@@ -3881,7 +3881,7 @@
           "X = r(x,y,z,t)-D",
           "Z = if ((F = 1 | G = 0)=(0),X(x,y,z,t)*sin(G*pi/180)+Z(x,y,z,t)*cos(G*pi/180),Z(x,y,z,t))",
           "X = if ((F = 1 | G = 0)=(0),X(x,y,z,t)*cos(G*pi/180)-Z(x,y,z,t)*sin(G*pi/180),X(x,y,z,t))",
-          "r2 = if (F = (1),   sqrt(X(x,y,z,t)*X(x,y,z,t)+Z(x,y,z,t)*Z(x,y,z,t)),if ((F = 0)=(0),(((((abs(X(x,y,z,t)))^(2/F))+((abs(Z(x,y,z,t)))^(2/F))))^(F/2)),if (abs(X(x,y,z,t)) > abs(Z(x,y,z,t)),abs(X(x,y,z,t)),abs(Z(x,y,z,t)))))",
+          "r2 = if (F = (1),    sqrt(X(x,y,z,t)*X(x,y,z,t)+Z(x,y,z,t)*Z(x,y,z,t)),if ((F = 0)=(0),(((((abs(X(x,y,z,t)))^(2/F))+((abs(Z(x,y,z,t)))^(2/F))))^(F/2)),if (abs(X(x,y,z,t)) > abs(Z(x,y,z,t)),abs(X(x,y,z,t)),abs(Z(x,y,z,t)))))",
           "r3 = if((D+r(x,y,z,t)) < r2(x,y,z,t),(D+r(x,y,z,t)),r2(x,y,z,t))",
           "helix = (-C+r3(x,y,z,t))"],
         "Fxyz": ["-helix(sqrt(x*x+y*y)-(3),2*atan2(y,x),z,t)"],
