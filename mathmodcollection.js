@@ -148,7 +148,7 @@
                     "Vmax": ["2*pi","2*pi"],
                     "Vmin": ["0","0"]
                 },
-                "Texture": {"Colors": ["R= if(cmpId = (0),if((abs(7*u)%pi/2 & abs(7*v)%pi/3),(6/10),(1)),abs(cos(u)))","G=if(cmpId = (0),if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)),abs(cos(v)))","B=if(cmpId = (0),if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)),abs(sin(v)+sin(u))) ","T=1"],
+                "Texture": {"Colors": ["R= if(cmpId = (0),if((abs(7*u)%pi/2 &abs(7*v)%pi/3),(6/10),(1)),abs(cos(u)))","G=if(cmpId = (0),if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)),abs(cos(v)))","B=if(cmpId = (0),if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)),abs(sin(v)+sin(u))) ","T=1"],
                     "Name": "Candy",
                     "Noise": "1"
                 }
@@ -227,7 +227,7 @@
             "Step": ["1","1","1","1","1","1","1","1","1","1","1","1"]
         },
         "Texture": {
-            "Colors": ["R=if(j_indx>(max_j/4) & j_indx<(3*max_j/4),(6/10),(8/10))","G=if(j_indx>(max_j/4) & j_indx<(3*max_j/4),(1/10),(6/10))","B=if(j_indx>(max_j/4) & j_indx<(3*max_j/4),(1/10),(4/10))","T=1"],
+            "Colors": ["R=if(j_indx>(max_j/4) &j_indx<(3*max_j/4),(6/10),(8/10))","G=if(j_indx>(max_j/4) &j_indx<(3*max_j/4),(1/10),(6/10))","B=if(j_indx>(max_j/4) &j_indx<(3*max_j/4),(1/10),(4/10))","T=1"],
             "Name": "Lines",
             "Noise": ""
         }
@@ -553,7 +553,7 @@
                         "Vmin": ["0"]
                 },
                 "Texture": {
-                        "Colors": ["R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),1) ",
+                        "Colors": ["R= if((abs(7*u)%pi/2&abs(7*v)%pi/3),(6/10),1) ",
                             "G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)) ",
                             "B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)) ",
                             "T=1"],
@@ -593,7 +593,7 @@
                 "DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
                 "Rapp=(th/sqrt(x*x+y*y+z*z))",
                 "ThickIsoExterior=  psh((0),DFx(x,y,z,t))*psh((1),DFy(x,y,z,t))*psh((2),DFz(x,y,z,t))*(psh((3),Rapp(csd(0),csd(1),csd(2),t)))*(IsoExterior(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t))*(IsoExterior(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t))"],
-            "Fxyz": ["if((sqrt(x*x+y*y+z*z)-27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t),(1))"],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z)-27)<0 &abs(x)<(99/10),ThickIsoExterior(x,y,z,t),(1))"],
             "Xmax": ["10"],
             "Xmin": ["-10"],
             "Ymax": ["28"],
@@ -3623,7 +3623,7 @@
         "Funct": ["X = x",
           "Z = z",
           "r = sqrt(X(x,y,z,t)*X(x,y,z,t)+Z(x,y,z,t)*Z(x,y,z,t))",
-          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),(1/100000),X(x,y,z,t))",
+          "X= if ((X(x,y,z,t) = 0) &(Z(x,y,z,t) = 0),(1/100000),X(x,y,z,t))",
           "th = atan2(Z(x,y,z,t),X(x,y,z,t))",
           "th = ((th(x,y,z,t)*A+y*B*A) % (2*pi))",
           "th = if (th(x,y,z,t) < (0),th(x,y,z,t)+2*pi,th(x,y,z,t))",
@@ -3873,7 +3873,7 @@
         "Funct": ["X = x",
           "Z = z",
           "r = sqrt(X(x,y,z,t)*X(x,y,z,t)+Z(x,y,z,t)*Z(x,y,z,t))",
-          "X= if ((X(x,y,z,t) = 0) & (Z(x,y,z,t) = 0),(1/1000),X(x,y,z,t))",
+          "X= if ((X(x,y,z,t) = 0) &(Z(x,y,z,t) = 0),(1/1000),X(x,y,z,t))",
           "th = atan2(Z(x,y,z,t),X(x,y,z,t))",
           "th = ((th(x,y,z,t)*A+y*B*A) % (2*pi))",
           "th = if (th(x,y,z,t) < (0),th(x,y,z,t)+2*pi,th(x,y,z,t))",
@@ -4648,7 +4648,7 @@
         "Funct": ["Octahedron=(abs(x)+abs(y)+abs(z))-(1/(2*N))",
           "Octahedr = ((abs(x-A)+abs(y-A)+abs(z-A))-(1/2))",
           "Octahedr1 = ((abs(x-A)+abs(y-A)+abs(z-A))-(1/2-1/(N)))"],
-        "Fxyz": ["if(Octahedr(x,y,z,t)<(0) & Octahedr1(x,y,z,t)>(0),Octahedron((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t),1) "],
+        "Fxyz": ["if(Octahedr(x,y,z,t)<(0) &Octahedr1(x,y,z,t)>(0),Octahedron((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t),1) "],
         "Xmax": ["1"],
         "Xmin": ["0"],
         "Ymax": ["1"],
@@ -4829,7 +4829,7 @@
             "Name": ["SCosta"],
             "Component": ["SCosta"],
             "Const": ["N=6","c=1/10000","th=1/10","Xval=15","Yval=20","Zval=20"],
-            "Funct": ["Scherk=sinh(x)*sinh(y)-(35/10)*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(2+N+(3/100)*exp((abs((9/10)*x)))),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z-th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z+th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))","SCosta=if((sqrt(4*x*x+y*y+z*z)-19)<0 & abs(x)<(295/10),ThickIsoExterior(x,y,z,t),1)"],
+            "Funct": ["Scherk=sinh(x)*sinh(y)-(35/10)*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(2+N+(3/100)*exp((abs((9/10)*x)))),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z-th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z+th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))","SCosta=if((sqrt(4*x*x+y*y+z*z)-19)<0 &abs(x)<(295/10),ThickIsoExterior(x,y,z,t),1)"],
             "Fxyz": ["-SCosta((55/100)*x,y,z,t)"],
             "Xmax": ["Xval"],
             "Xmin": ["-Xval"],
@@ -4845,7 +4845,7 @@
             "Component": ["Arena"],
             "Const": ["c=1/10000","th=6/10","N=10"],
             "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z-th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+th*Rapp(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z+th*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))"],
-            "Fxyz": ["if((sqrt(x*x+y*y+z*z)-27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t),1)"],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z)-27)<0 &abs(x)<(99/10),ThickIsoExterior(x,y,z,t),1)"],
             "Name": ["Arena"],
             "Xmax": ["10"],
             "Xmin": ["-10"],
@@ -6721,7 +6721,7 @@
           "R=x/sqrt(x*x+y*y+z*z)",
           "Iso=(IsoExterior(x+t*Th*R(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+t*Th*R(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+t*Th*R(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
           "ThickIsoExterior=(Iso(x,y,z,1)*Iso(x,y,z,-1))"],
-        "Fxyz": ["if(y<(44/10) & y>-(24/10),ThickIsoExterior((10*x/15),y,z,t),1)"],
+        "Fxyz": ["if(y<(44/10) &y>-(24/10),ThickIsoExterior((10*x/15),y,z,t),1)"],
         "Xmax": ["45/10"],
         "Xmin": ["-45/10"],
         "Ymax": ["45/10"],
@@ -7292,9 +7292,9 @@
       "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
     },
       "Texture": {
-        "Colors": ["R= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(8/10)) ",
-          "G= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(1/10)) ",
-          "B= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(1/10)) ",
+        "Colors": ["R= if((int(i_indx)%MM>P &int(i_indx)%MM<P+2),(8/10),(8/10)) ",
+          "G= if((int(i_indx)%MM>P &int(i_indx)%MM<P+2),(8/10),(1/10)) ",
+          "B= if((int(i_indx)%MM>P &int(i_indx)%MM<P+2),(8/10),(1/10)) ",
           "T= 1 "],
         "Name": "Rings",
         "Noise": "1"
@@ -7534,7 +7534,7 @@
         "Const": ["N=10",
           "R=8"],
         "Funct": ["Scherk0=-((x*y-z)*(x*y-z)-4/10)",
-          "Scherk1=if((abs(x)<3 & abs(y)<3),Scherk0(sinh(x),sinh(y),sin(z),t),0)",
+          "Scherk1=if((abs(x)<3 &abs(y)<3),Scherk0(sinh(x),sinh(y),sin(z),t),0)",
           "Scherk2=Scherk1(x*cos(t)-y*sin(t),x*sin(t)+y*cos(t),z,t)",
           "Torus = Scherk2((sqrt(x*x+z*z)-R),y,N*atan2(z,x),t)"],
         "Fxyz": ["Torus(x,y,z,t)"],
@@ -7563,7 +7563,7 @@
         "Vmin": ["0"]
       },
       "Texture": {
-        "Colors": ["R= if((abs(7*u)%pi/2& abs(7*v)%pi/3),(6/10),1) ",
+        "Colors": ["R= if((abs(7*u)%pi/2&abs(7*v)%pi/3),(6/10),1) ",
           "G= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(8/10),(4/10)) ",
           "B= if((abs(7*u)%pi/2| abs(7*v)%pi/3),(6/10),(1/10)) ",
           "T=1"],
@@ -7706,7 +7706,7 @@
                 "G=((F(x-T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z-T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)))",
                 "L=(F(x+T*Rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+T*Rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+T*Rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
                 "Iso=(L(x,y,z,t)*G(x,y,z,t))",
-                "ExternalShape=(abs(x)+m<dx & abs(y)+m<dy & abs(z)+m<dz)"],
+                "ExternalShape=(abs(x)+m<dx &abs(y)+m<dy &abs(z)+m<dz)"],
             "Fxyz": ["if(ExternalShape(x,y,z,t),Iso(x,y,z,t),1)"],
             "Xmax": ["dx"],
             "Xmin": ["-dx"],
@@ -8410,7 +8410,7 @@
         "Description": ["Sinusoidal surface with chained patterns by Abderrahman Taha 12/10/2019"],
         "Name": ["Chained_Sinusoid"],
         "Const": ["u1min=-(15/10)","u1max=(15/10)","v1min=-(15/10)","v1max=(15/10)","M=13","N=13","r0=3","H=r0/95","du=1/10000","dv=1/10000","umin=0","umax=2*pi","vmin=0","vmax=2*pi","Gu=(u1max-u1min)/(M-1)","Gv=(v1max-v1min)/(N-1)","k0=3/100","k1=2/10","beta=pi/2","beta2=pi/2"],
-        "Funct": ["Yx=(k1+k0*cos(u))*cos(v)","Yy=(k1+k0*cos(u))*sin(v)","Yz=k0*sin(u)","Fx=v","Fy=u","Fz=-sin(pi*(u*u+v*v)/3)*10/26","Rapp=(u/sqrt(u*u+v*v+t*t))","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","n1=n1(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","n2=n2(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","n3=n3(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","Nx=Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Ny=Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Nz=Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))","n01= 0","n02= 0","n03= 1","n1=Rapp(n01(u,v,t),n02(u,v,t),n03(u,v,t))","n2=Rapp(n02(u,v,t),n03(u,v,t),n01(u,v,t))","n3=Rapp(n03(u,v,t),n01(u,v,t),n02(u,v,t))","u1=(n2(u,v,t)*Nz(u,v,t)-n3(u,v,t)*Ny(u,v,t))","u2=(n3(u,v,t)*Nx(u,v,t)-n1(u,v,t)*Nz(u,v,t))","u3=(n1(u,v,t)*Ny(u,v,t)-n2(u,v,t)*Nx(u,v,t))","U1=Rapp(u1(u,v,t),u2(u,v,t),u3(u,v,t))","U2=Rapp(u2(u,v,t),u3(u,v,t),u1(u,v,t))","U3=Rapp(u3(u,v,t),u1(u,v,t),u2(u,v,t))","c=n1(u,v,t)*Nx(u,v,t)+n2(u,v,t)*Ny(u,v,t)+n3(u,v,t)*Nz(u,v,t)","s=sin(acos(c(u,v,t)))","S0x=Yx(u,v,t) ","S0y=Yy(u,v,t) ","S0z=Yz(u,v,t) ","S2x=(U1(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0x(u,v,t)+(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))-U3(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U2(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2y=(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))+U3(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0y(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U1(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2z=(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U2(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U1(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U3(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+c(u,v,t))*S0z(u,v,t)","Tx=if((floor(CmpId(0)/M)%2) = (0),S2x(u,v,t)*cos(CmpId(0)*beta)-S2z(u,v,t)*sin(CmpId(0)*beta),S2x(u,v,t)) ","Ty=if((floor(CmpId(0)/M)%2) = (0),S2y(u,v,t),S2y(u,v,t)*cos(beta2)-S2z(u,v,t)*sin(beta2)) ","Tz=if((floor(CmpId(0)/M)%2) = (0),S2x(u,v,t)*sin(CmpId(0)*beta)+S2z(u,v,t)*cos(CmpId(0)*beta),S2y(u,v,t)*sin(beta2)+S2z(u,v,t)*cos(beta2))","Sx= S2x(u,v,t) ","Sy= S2y(u,v,t) ","Sz= S2z(u,v,t) ","n01=if((((floor(CmpId(0)/M)%2) = (0)) & (CmpId(0)%2)=(1)),(1),(0))","n02=if(((floor(CmpId(0)/M)%2) = (1)),(1),(0))","n03=if((((floor(CmpId(0)/M)%2) = (0)) & (CmpId(0)%2)=(0)),(1),(0))","n1=Rapp(n01(u,v,t),n02(u,v,t),n03(u,v,t))","n2=Rapp(n02(u,v,t),n03(u,v,t),n01(u,v,t))","n3=Rapp(n03(u,v,t),n01(u,v,t),n02(u,v,t))","u1=(n2(u,v,t)*Nz(u,v,t)-n3(u,v,t)*Ny(u,v,t))","u2=(n3(u,v,t)*Nx(u,v,t)-n1(u,v,t)*Nz(u,v,t))","u3=(n1(u,v,t)*Ny(u,v,t)-n2(u,v,t)*Nx(u,v,t))","U1=Rapp(u1(u,v,t),u2(u,v,t),u3(u,v,t))","U2=Rapp(u2(u,v,t),u3(u,v,t),u1(u,v,t))","U3=Rapp(u3(u,v,t),u1(u,v,t),u2(u,v,t))","c=if((((floor(CmpId(0)/M)%2) = 0) & (CmpId(0)%2)=0 ),(1),(0))","s=if((((floor(CmpId(0)/M)%2) = 0) & (CmpId(0)%2)=0 ),(0),(1))","S0x=Sx(u,v,t) ","S0y=Sy(u,v,t) ","S0z=Sz(u,v,t) ","S2x=(U1(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0x(u,v,t)+(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))-U3(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U2(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2y=(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))+U3(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0y(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U1(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2z=(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U2(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U1(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U3(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+c(u,v,t))*S0z(u,v,t)","Sx= S2x(u,v,t)+Fx(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","Sy= S2y(u,v,t)+Fy(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t) ","Sz= S2z(u,v,t)+Fz(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)"],
+        "Funct": ["Yx=(k1+k0*cos(u))*cos(v)","Yy=(k1+k0*cos(u))*sin(v)","Yz=k0*sin(u)","Fx=v","Fy=u","Fz=-sin(pi*(u*u+v*v)/3)*10/26","Rapp=(u/sqrt(u*u+v*v+t*t))","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","n1=n1(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","n2=n2(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","n3=n3(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","Nx=Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Ny=Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Nz=Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))","n01= 0","n02= 0","n03= 1","n1=Rapp(n01(u,v,t),n02(u,v,t),n03(u,v,t))","n2=Rapp(n02(u,v,t),n03(u,v,t),n01(u,v,t))","n3=Rapp(n03(u,v,t),n01(u,v,t),n02(u,v,t))","u1=(n2(u,v,t)*Nz(u,v,t)-n3(u,v,t)*Ny(u,v,t))","u2=(n3(u,v,t)*Nx(u,v,t)-n1(u,v,t)*Nz(u,v,t))","u3=(n1(u,v,t)*Ny(u,v,t)-n2(u,v,t)*Nx(u,v,t))","U1=Rapp(u1(u,v,t),u2(u,v,t),u3(u,v,t))","U2=Rapp(u2(u,v,t),u3(u,v,t),u1(u,v,t))","U3=Rapp(u3(u,v,t),u1(u,v,t),u2(u,v,t))","c=n1(u,v,t)*Nx(u,v,t)+n2(u,v,t)*Ny(u,v,t)+n3(u,v,t)*Nz(u,v,t)","s=sin(acos(c(u,v,t)))","S0x=Yx(u,v,t) ","S0y=Yy(u,v,t) ","S0z=Yz(u,v,t) ","S2x=(U1(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0x(u,v,t)+(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))-U3(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U2(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2y=(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))+U3(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0y(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U1(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2z=(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U2(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U1(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U3(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+c(u,v,t))*S0z(u,v,t)","Tx=if((floor(CmpId(0)/M)%2) = (0),S2x(u,v,t)*cos(CmpId(0)*beta)-S2z(u,v,t)*sin(CmpId(0)*beta),S2x(u,v,t)) ","Ty=if((floor(CmpId(0)/M)%2) = (0),S2y(u,v,t),S2y(u,v,t)*cos(beta2)-S2z(u,v,t)*sin(beta2)) ","Tz=if((floor(CmpId(0)/M)%2) = (0),S2x(u,v,t)*sin(CmpId(0)*beta)+S2z(u,v,t)*cos(CmpId(0)*beta),S2y(u,v,t)*sin(beta2)+S2z(u,v,t)*cos(beta2))","Sx= S2x(u,v,t) ","Sy= S2y(u,v,t) ","Sz= S2z(u,v,t) ","n01=if((((floor(CmpId(0)/M)%2) = (0)) &(CmpId(0)%2)=(1)),(1),(0))","n02=if(((floor(CmpId(0)/M)%2) = (1)),(1),(0))","n03=if((((floor(CmpId(0)/M)%2) = (0)) &(CmpId(0)%2)=(0)),(1),(0))","n1=Rapp(n01(u,v,t),n02(u,v,t),n03(u,v,t))","n2=Rapp(n02(u,v,t),n03(u,v,t),n01(u,v,t))","n3=Rapp(n03(u,v,t),n01(u,v,t),n02(u,v,t))","u1=(n2(u,v,t)*Nz(u,v,t)-n3(u,v,t)*Ny(u,v,t))","u2=(n3(u,v,t)*Nx(u,v,t)-n1(u,v,t)*Nz(u,v,t))","u3=(n1(u,v,t)*Ny(u,v,t)-n2(u,v,t)*Nx(u,v,t))","U1=Rapp(u1(u,v,t),u2(u,v,t),u3(u,v,t))","U2=Rapp(u2(u,v,t),u3(u,v,t),u1(u,v,t))","U3=Rapp(u3(u,v,t),u1(u,v,t),u2(u,v,t))","c=if((((floor(CmpId(0)/M)%2) = 0) &(CmpId(0)%2)=0 ),(1),(0))","s=if((((floor(CmpId(0)/M)%2) = 0) &(CmpId(0)%2)=0 ),(0),(1))","S0x=Sx(u,v,t) ","S0y=Sy(u,v,t) ","S0z=Sz(u,v,t) ","S2x=(U1(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0x(u,v,t)+(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))-U3(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U2(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2y=(U1(u,v,t)*U2(u,v,t)*(1-c(u,v,t))+U3(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)^2*(1-c(u,v,t))+c(u,v,t))*S0y(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U1(u,v,t)*s(u,v,t))*S0z(u,v,t) ","S2z=(U1(u,v,t)*U3(u,v,t)*(1-c(u,v,t))-U2(u,v,t)*s(u,v,t))*S0x(u,v,t)+(U2(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+U1(u,v,t)*s(u,v,t))*S0y(u,v,t)+(U3(u,v,t)*U3(u,v,t)*(1-c(u,v,t))+c(u,v,t))*S0z(u,v,t)","Sx= S2x(u,v,t)+Fx(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)","Sy= S2y(u,v,t)+Fy(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t) ","Sz= S2z(u,v,t)+Fz(u1min+(CmpId(0)%M)*Gu+if((floor(CmpId(0)/M)%2) = (0),(0),-(CmpId(0) %2)*Gu+Gu),v1min+(floor(CmpId(0)/N))*Gv,t)"],
         "Component": ["WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_00","WIRE_01","WIRE_02","WIRE_03","WIRE_04","WIRE_05","WIRE_06","WIRE_07","WIRE_08","WIRE_09","WIRE_10","WIRE_11","WIRE_12","WIRE_13","WIRE_14","WIRE_15","WIRE_16","WIRE_17","WIRE_18","WIRE_19","WIRE_20","WIRE_20"],
         "Fx": ["Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)"],
         "Fy": ["Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)"],
