@@ -1033,7 +1033,7 @@
       "Iso3D": {
         "Description": ["BlackHole by Abderrahman Taha 10/12/2019"],
         "Name": ["BlackHole"],
-        "Component": ["GravityPlan","EarthPlanet","MoonPlanet","WhiteStar"],
+        "Component": ["GravityPlan","EarthPlanet","MoonPlanet","WhiteStar "],
         "Const": ["M=pi/10"],
         "Funct": ["A=(x-4*sin(t*M))^2","B=(x-2*cos(t*M))^2","C=(x-2*sin(t*pi)-4*sin(t*M))^2","D=(x-2*cos(t*pi)-2*cos(t*M))^2","E=(x-1/5)*(x-1/5)-3/5","F=x*x-3/5","H=x*cos(2*t*pi)","G=x*sin(2*t*pi)"],
         "Grid": ["20","20","20","20"],
@@ -1112,11 +1112,11 @@
         "Component": ["Cayley_1"],
         "Fxyz": ["(x^2+y ^2-x^2*z+y ^2*z+z ^2-1)"],
         "Cnd": ["(sqrt(x^2 +y ^2+z ^2))< 4"],
-        "Xmin": ["-4"],
+        "Xmin": ["-4 "],
         "Xmax": ["4"],
-        "Ymin": ["-4"],
+        "Ymin": ["-4 "],
         "Ymax": ["4"],
-        "Zmin": ["-4"],
+        "Zmin": ["-4 "],
         "Zmax": ["4"]
       }
     },
@@ -1308,11 +1308,11 @@
         "Component": ["Scherk"],
         "Fxyz": ["sinh(x)*sinh(y)-sin(z)"],
         "Xmax": ["3"],
-        "Xmin": ["-3"],
+        "Xmin": ["-3 "],
         "Ymax": ["3"],
-        "Ymin": ["-3"],
+        "Ymin": ["-3 "],
         "Zmax": ["5*pi/2"],
-        "Zmin": ["-5*pi/2"]
+        "Zmin": ["-5*pi/2 "]
       }
     },
     {
@@ -1638,7 +1638,7 @@
         "Xmax": ["13/10","9/2","4/5","21/5"],
         "Ymin": ["-13/10","-3/2","11/5","9/5"],
         "Ymax": ["13/10","3/2","19/5","43/10"],
-        "Zmin": ["-13/10","-3/2","-4/5","-3/2"],
+        "Zmin": ["-13/10","-3/2","-4/5","-3/2 "],
         "Zmax": ["13/10","3/2","4/5","3/2"]
       }
     },
@@ -3824,7 +3824,7 @@
     },
     {
       "Iso3D": {
-        "Description": ["Wall Pattern Sphere(ref: http://www.povray.org/)by Abderrahman Taha 02/11/2019"],
+        "Description": ["Wall Pattern Sphere(ref: http://www.povray.org/)by Abderrahman Taha 02/11/2019 "],
         "Name": ["Wall_Pattern_Sphere_v1"],
         "Component": ["f_hex_y"],
         "Funct": ["f_hex_y_1=if(z*z-(1/100)<(0),f_hex_y(sin(x),(13/10)*sin(y),2*z,0),1)-(1/10)",
@@ -4035,7 +4035,7 @@
     },
     {
       "Iso3D": {
-        "Description": ["Mesh Torus(reference : http://www.povray.org/)by Abderrahman Taha 02/11/2019  "],
+        "Description": ["Mesh Torus(reference : http://www.povray.org/)by Abderrahman Taha 02/11/2019   "],
         "Name": ["Mesh_Torus_01"],
         "Component": ["MeshTorus"],
         "Const": ["A = 1/2",
@@ -4125,7 +4125,7 @@
         "Funct": ["HexaGrid=-(11/20)-88*(sqrt(x*x+y*y)-2)^2-cos(8*z)-cos(14*atan2(y,x)-4*z)-cos(14*atan2(y,x)+4*z)-(3/5)*(cos(28*atan2(y,x))+cos(12*z-14*atan2(y,x))+cos(12*z+14*atan2(y,x)))"],
         "Fxyz": ["HexaGrid((sqrt(x*x+z*z)-4),y,N*atan2(z,x),t)"],
         "Xmax": ["31/5"],
-        "Xmin": ["-31/5"],
+        "Xmin": ["-31/5 "],
         "Ymax": ["9/2"],
         "Ymin": ["-9/2"],
         "Zmax": ["31/5"],
@@ -4134,13 +4134,13 @@
     },
     {
       "Iso3D": {
-        "Description ": ["HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl"],
+        "Description ": ["HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl "],
         "Name": ["HexaGrid_Torus_01"],
         "Component": ["HexaGrid_Torus"],
         "Funct": ["HexaGrid=-(1/2)-88*(sqrt(x*x+y*y)-2)^2-cos(8*z)-cos(14*atan2(y,x)-4*z)-cos(14*atan2(y,x)+4*z)-(3/25)*(cos(28*atan2(y,x))+cos(12*z-14*atan2(y,x))+cos(12*z+14*atan2(y,x)))"],
         "Fxyz": ["HexaGrid((sqrt(x*x+z*z)-4),y,3*atan2(z,x),t)"],
         "Xmax": ["31/5"],
-        "Xmin": ["-31/5"],
+        "Xmin": ["-31/5 "],
         "Ymax": ["9/2"],
         "Ymin": ["-9/2"],
         "Zmax": ["31/5"],
@@ -7073,7 +7073,7 @@
         "Colors": ["R= if(int(i_indx)%(M/6)>P | int(j_indx)%(M)>P,(4/5),(4/5))",
           "G= if(int(i_indx)%(M/6)>P | int(j_indx)%(M)>P,(1/10),(4/5))",
           "B= if(int(i_indx)%(M/6)>P | int(j_indx)%(M)>P,(1/10),(4/5))",
-          "T= 1"],
+          "T= 1 "],
         "Name": "Candy",
         "Noise": "1"
       }
@@ -7295,7 +7295,7 @@
         "Colors": ["R= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(8/10))",
           "G= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(1/10))",
           "B= if((int(i_indx)%MM>P & int(i_indx)%MM<P+2),(8/10),(1/10))",
-          "T= 1"],
+          "T= 1 "],
         "Name": "Rings",
         "Noise": "1"
       }
@@ -7519,9 +7519,9 @@
           "Torus = ScherkTorus((sqrt(x*x+z*z)-R),y,N*atan2(z,x),t)"],
         "Fxyz": ["-Torus(x,z,y,t)"],
         "Xmax": ["11"],
-        "Xmin": ["-11"],
+        "Xmin": ["-11 "],
         "Ymax": ["11"],
-        "Ymin": ["-11"],
+        "Ymin": ["-11 "],
         "Zmax": ["35/10"],
         "Zmin": ["-35/10"]
       }
@@ -7539,11 +7539,11 @@
           "Torus = Scherk2((sqrt(x*x+z*z)-R),y,N*atan2(z,x),t)"],
         "Fxyz": ["Torus(x,y,z,t)"],
         "Xmax": ["11"],
-        "Xmin": ["-11"],
+        "Xmin": ["-11 "],
         "Ymax": ["35/10"],
-        "Ymin": ["-35/10"],
+        "Ymin": ["-35/10 "],
         "Zmax": ["11"],
-        "Zmin": ["-11"]
+        "Zmin": ["-11 "]
       }
     },
     {
@@ -8029,7 +8029,7 @@
         "Param3D": {
             "Description ": ["Multi-sided Torus by Abderrahman Taha(Update)08/10/2019"],
             "Name": ["Multi-sidedTorus"],
-            "Component": ["MultiSidedTorus"],
+            "Component": ["MultiSidedTorus "],
             "Const": ["N=10",
                 "R3=3",
                 "R=5",
@@ -8057,7 +8057,7 @@
             "Colors": ["R= if((i_indx)%(M)>P |(j_indx)%(M)>P,(1/2),(7/10))",
                 "G= if((i_indx)%(M)>P |(j_indx)%(M)>P,(1/2),(14/100))",
                 "B= if((i_indx)%(M)>P |(j_indx)%(M)>P,(3/10),(2/10))",
-                "T= 1"],
+                "T= 1 "],
             "Name": "square",
             "Noise": "1"
         }
