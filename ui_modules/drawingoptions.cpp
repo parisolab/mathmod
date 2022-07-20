@@ -4057,12 +4057,12 @@ void DrawingOptions::on_Fill_clicked()
 {
     MathmodRef->fill();
 }
-
+/*
 void DrawingOptions::on_Trian_clicked()
 {
     MathmodRef->slot_triangles_clicked();
 }
-
+*/
 void DrawingOptions::on_cut_clicked()
 {
     if (ui.IsoComponent->count() > 1)
