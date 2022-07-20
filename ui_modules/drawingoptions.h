@@ -324,7 +324,7 @@ public slots:
     void on_lineScrollBar_valueChanged(int);
     void on_coloneScrollBar_valueChanged(int);
     void on_actionScripts_selection_triggered();
-    void on_actionBoundingBox_clicked();
+    //void on_actionBoundingBox_clicked();
     void on_actionAnimation_Rotation_triggered();
     void on_actionMorph_use_t_parameter_triggered();
     void on_TreeViewButton_clicked();

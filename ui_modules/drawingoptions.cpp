@@ -5209,13 +5209,13 @@ void DrawingOptions::on_actionScripts_selection_triggered()
 {
     select.show();
 }
-
+/*
 void DrawingOptions::on_actionBoundingBox_clicked()
 {
     MathmodRef->boundingboxOk();
     MathmodRef->update();
 }
-
+*/
 void DrawingOptions::on_actionAnimation_Rotation_triggered()
 {
     MathmodRef->anim();
