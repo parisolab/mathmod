@@ -4047,11 +4047,12 @@ void DrawingOptions::on_actionEditor_triggered()
 {
     editorwin();
 }
-
+/*
 void DrawingOptions::on_Mesh_clicked()
 {
     MathmodRef->Mesh();
 }
+*/
 /*
 void DrawingOptions::on_Fill_clicked()
 {
