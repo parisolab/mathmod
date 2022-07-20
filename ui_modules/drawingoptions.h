@@ -325,8 +325,8 @@ public slots:
     void on_actionAnimation_Rotation_triggered();
     void on_actionMorph_use_t_parameter_triggered();
     void on_TreeViewButton_clicked();
-    void on_ObjectClasseCurrent_clicked(const QModelIndex &index);
-    void on_parisocomboBox_currentIndexChanged(int index);
+    void on_ObjectClasseCurrent_clicked(const QModelIndex &);
+    void on_parisocomboBox_currentIndexChanged(int);
     void on_ApplypushButton_clicked();
     void on_ApplypushButton_2_clicked();
     void on_ApplypushButton_3_clicked();
@@ -339,11 +339,11 @@ public slots:
     void on_ShowParComp_clicked();
     void on_actionAxe_triggered();
     void on_actionPlan_triggered();
-    void on_red_Ambient_valueChanged(int value);
-    void on_green_Ambient_valueChanged(int value);
-    void on_blue_Ambient_valueChanged(int value);
-    void on_transparent_Ambient_valueChanged(int value);
-    void on_red_Diffuse_valueChanged(int value);
+    void on_red_Ambient_valueChanged(int);
+    void on_green_Ambient_valueChanged(int);
+    void on_blue_Ambient_valueChanged(int);
+    void on_transparent_Ambient_valueChanged(int);
+    void on_red_Diffuse_valueChanged(int);
     void on_green_Diffuse_valueChanged(int value);
     void on_blue_Diffuse_valueChanged(int value);
     void on_transparent_Diffuse_valueChanged(int value);
