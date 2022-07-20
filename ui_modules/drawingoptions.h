@@ -230,7 +230,7 @@ public slots:
     QTreeWidgetItem *ChildItemTreeProperty(QTreeWidgetItem *item,
                                            QString proprty);
     void on_Mesh_clicked();
-    void on_Fill_clicked();
+    //void on_Fill_clicked();
     //void on_Trian_clicked();
     void on_cut_clicked();
     void on_actionConvert_K3DS_script_triggered();
