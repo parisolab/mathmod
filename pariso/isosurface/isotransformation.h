@@ -31,6 +31,7 @@ class IsoTransformation
 public:
     int scalex, scaley, scalez;
     int twistx, twisty, twistz;
+    int translx, transly, translz;
 public:
     //void IsoTransformation(FunctionParser);
     QString Twistx(QString);
