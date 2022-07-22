@@ -23,7 +23,7 @@ void IsoTransformation::Twist()
 {
     scalex = scaley = scalez=1;
     twistx = twisty = twistz = 0;
-    translx = transly = transl=1;
+    translx = transly = translz=1;
 }
 QString IsoTransformation::Twistx(QString ImplicitFunction)
 {
