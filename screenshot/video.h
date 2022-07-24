@@ -29,7 +29,6 @@
 class screenimage : public QMainWindow
 {
     Q_OBJECT
-
 public:
     screenimage(QImage);
     ~screenimage();
@@ -39,7 +38,6 @@ public slots:
     void connectcontrols();
     void saveas();
     void f_1(int);
-
 public:
     QLabel *l;
     QGroupBox *groupBox;

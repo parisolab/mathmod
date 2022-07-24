@@ -20,10 +20,6 @@
 #ifndef TABLEMAP_H
 #define TABLEMAP_H
 
-#endif // TABLEMAP_H
-
-
-
 
 unsigned int triTable_min[256][19] =
 {
@@ -544,3 +540,5 @@ unsigned int triTable[256][16] =
     {0, 3, 8, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111},
     {111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111}
 };
+
+#endif // TABLEMAP_H

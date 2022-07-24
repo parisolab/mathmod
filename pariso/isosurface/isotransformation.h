@@ -21,7 +21,6 @@
 #ifndef ISOTRANSFORMATION
 #define ISOTRANSFORMATION
 
-#endif // ISOTRANSFORMATION
 #include <QtCore>
 #include "../commun.h"
 
@@ -33,10 +32,10 @@ public:
     int twistx, twisty, twistz;
     int translx, transly, translz;
 public:
-    //void IsoTransformation(FunctionParser);
     QString Twistx(QString);
     QString Twisty(QString);
     QString Twistz(QString);
     void Twist();
-
 };
+
+#endif // ISOTRANSFORMATION

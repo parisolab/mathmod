@@ -236,6 +236,7 @@ bool FunctionParserBase<Value_t>::AddFunctionWrapper
     return addFunctionWrapperPtr
         (name, new DerivedWrapper(wrapper), paramsAmount);
 }
-#endif
 
 extern template class FunctionParserBase<double>; // explicit instantiation declaration
+
+#endif

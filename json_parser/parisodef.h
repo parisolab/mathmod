@@ -19,6 +19,7 @@
  ***************************************************************************/
 #ifndef PARISODEF_H
 #define PARISODEF_H
+
 #include "jiso.h"
 #include "jpar.h"
 
@@ -48,7 +49,5 @@ public:
     QJsonArray JTextures;
     QJsonArray JPigments;
 };
-
-
 
 #endif // PARISODEF_H

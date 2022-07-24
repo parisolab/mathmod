@@ -28,7 +28,6 @@ public:
     ~ParisoObject();
     uint CNDtoUse(uint, struct ComponentInfos *);
     void clear(struct ComponentInfos *);
-
 public:
     ObjectProperties *localScene;
     uint WorkerThreadsNumber;
@@ -42,7 +41,6 @@ class WorkerThread : public QThread
 public:
     WorkerThread();
     ~WorkerThread();
-
 public:
     uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish;
     double stepMorph=0.0, pace=0.0;
@@ -67,7 +65,6 @@ public:
     double Octaves, Lacunarity, Gain;
     int ParisoCondition;
     ErrorMessage stdError;
-
 public:
     MasterThread();
     ~MasterThread();
