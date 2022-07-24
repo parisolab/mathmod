@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
+#ifndef COMMUN_H
+#define COMMUN_H
+
 #include "../fparser/fparser.hh"
 #include <qthread.h>
 #include <complex.h>
@@ -280,3 +283,4 @@ extern std::vector<uint> IndexPolyTabMinVector;
 extern std::vector<uint> IndexPolyTabMinVector2;
 extern std::vector<uint> IndexPolyTabVector;
 static struct ComponentInfos *components = new (struct ComponentInfos);
+#endif // COMMUN_H
