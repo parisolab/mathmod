@@ -25,7 +25,6 @@ AddParamForm::AddParamForm(QWidget *parent) : QWidget(parent)
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
     ui.setupUi(this);
 }
-
 void AddParamForm::on_pushButton_clicked()
 {
     this->close();
