@@ -22,19 +22,14 @@ screenimage::screenimage(QImage buffer) : QMainWindow(nullptr)
 {
     buf = buffer;
     image_quality = 1;
-
-
     groupBox = new QGroupBox(this);
     groupBox->setGeometry(QRect(0, 317, 320, 25));
-
     l = new QLabel(this);
     l->resize(320, 320);
     resize(320, 343);
     this->setWindowTitle("ScreenShot");
-    //gridLayout = new QGridLayout(this);
     QPixmap ScreenshotIcon = QPixmap::fromImage(buf.scaled(320, 320));
     l->setPixmap(ScreenshotIcon); //  (ScreenshotIcon);
-
     about = new QPushButton(groupBox);
     about->setObjectName(QString::fromUtf8("about"));
     about->setText("OK");
@@ -45,7 +40,6 @@ screenimage::screenimage(QImage buffer) : QMainWindow(nullptr)
     pushScreenshot = new QPushButton("pushScreenshot", groupBox);
     pushScreenshot->setGeometry(QRect(250, 2, 75, 18));
     pushScreenshot->setText(tr("Save Screen"));
-
     gridLayout = new QGridLayout(this);
     gridLayout->addWidget(groupBox, 0, 0, 1, 1);
 }
