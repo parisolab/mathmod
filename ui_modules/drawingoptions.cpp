@@ -74,7 +74,6 @@ void DrawingOptions::ErrorMsg() const
     QMessageBox msgBox;
     if (scriptErrorType != SCRIPT_NO_ERROR)
     {
-        //statusBar()->showMessage(ScriptErrorMessage[scriptErrorType]);
         msgBox.setText(ScriptErrorMessage[scriptErrorType]);
         msgBox.exec();
     }
@@ -124,7 +123,6 @@ DrawingOptions::DrawingOptions(QWidget *parent) : QMainWindow(parent)
     connect(sliderconf.ui.ParametersComboBox, SIGNAL(activated(int)), this,SLOT(update_infos_param(int)));
     connect(addnewparam.ui.SaveButton, SIGNAL(clicked()), this,SLOT(add_new_param()));
     connect(&select, SIGNAL(UpdateSignal()), this, SLOT(SearchListModels()));
-    //statusBar()->addPermanentWidget(ui.Progressbarwidget, 1);
     SaveSlidersRef();
     BuildAllVect();
     ui.ObjectClasseCurrent->hide();
@@ -1175,8 +1173,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             QPar = listeParObj[0].toObject();
         if (listeIsoObj.size() > 0)
             QIso = listeIsoObj[0].toObject();
-
-        loadtext = loadpigm = false;
         if (QPar["Texture"].isObject())
             QTextureObj = QPar["Texture"].toObject();
         if (QPar["Pigment"].isObject())
