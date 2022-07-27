@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
+#ifndef VIDEO_H
+#define VIDEO_H
+
 #include <qfiledialog.h>
 #include <qgroupbox.h>
 #include <qimage.h>
@@ -46,3 +49,5 @@ public:
     QImage buf;
     int image_quality;
 };
+
+#endif // JPAR_H

@@ -351,4 +351,5 @@ public slots:
 private slots:
     void on_actionbox_triggered();
 };
+
 #endif

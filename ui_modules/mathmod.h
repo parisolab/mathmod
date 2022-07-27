@@ -20,6 +20,7 @@
 
 #ifndef mathmod_H
 #define mathmod_H
+
 #include "comvar.h"
 #include "../pariso/isosurface/Iso3D.h"
 #include "../pariso/parametric/Model3D.h"
@@ -318,4 +319,5 @@ public slots:
     void LoadShadersFiles();
     void UpdateGL();
 };
+
 #endif
