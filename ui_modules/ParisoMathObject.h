@@ -17,6 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
+
+#ifndef PARISOMATHOBJECT_H
+#define PARISOMATHOBJECT_H
+
 #include <QFileDialog>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -80,3 +84,5 @@ public:
     ~ParisoMathObject();
     void ReadJsonFile(QString, QJsonObject &);
 };
+
+#endif

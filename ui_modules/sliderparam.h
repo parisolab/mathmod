@@ -20,6 +20,7 @@
 
 #ifndef SLIDERPARAM
 #define SLIDERPARAM
+
 #include "ui_sliderparam.h"
 
 class SlidersForm : public QWidget
