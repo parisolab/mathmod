@@ -1191,8 +1191,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         // Save this Current Parametric Tree struct
         MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(
             MathmodRef->RootObjet.CurrentTreestruct);
-
-        //loadtext = loadpigm = false;
         if (QIso["Texture"].isObject())
             QTextureObj = QIso["Texture"].toObject();
         if (QIso["Pigment"].isObject())
@@ -1211,10 +1209,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         // Save this Current Isosurface Tree struct
         MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(
             MathmodRef->RootObjet.CurrentTreestruct);
-
         document.setObject(Jobj);
         MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
-
         // Update the current pariso struct
         MathmodRef->RootObjet.CurrentJsonObject = Jobj;
         CurrentFormulaType = 2;
@@ -1224,7 +1220,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             MathmodRef->LocalScene.componentsinfos.pariso = true;
             MathmodRef->ParisoObjectProcess();
         }
-
         ui.parisogroupbox->show();
     }
     else
@@ -1239,7 +1234,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
-
             // Pigment
             loadpigm = MathmodRef->IsoObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
@@ -1247,7 +1241,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
 
             LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj,
                                             loadpigm, QPigmentObj);
-
             QJsonObject Jobjtmp = Jobj;
             // Some keys cleaning..
             Jobjtmp.remove("ParIso");
@@ -1255,7 +1248,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             Jobjtmp.remove("Param4D");Jobjtmp.remove("Param4D_C");
             document.setObject(Jobjtmp);
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
-
             // Update the current parametric struct
             MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
             CurrentFormulaType = 2;
@@ -1864,7 +1856,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 QPar = listeParObj[0].toObject();
             if (listeIsoObj.size() > 0)
                 QIso = listeIsoObj[0].toObject();
-            loadtext = loadpigm = false;
             if (QPar["Texture"].isObject())
                 QTextureObj = QPar["Texture"].toObject();
             if (QPar["Pigment"].isObject())
