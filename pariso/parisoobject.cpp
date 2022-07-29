@@ -53,7 +53,6 @@ void ParisoObject::clear(struct ComponentInfos *cp)
     cp->NbTrianglesBorderCND.clear();
     cp->ParisoCurrentComponentIndex = 0;
     cp->ParisoNbComponents = 0;
-    //cp->NbParametricMeshLines=0;
     cp->Interleave = true;
     cp->pariso = false;
     cp->updateviewer = false;

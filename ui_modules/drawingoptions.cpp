@@ -1192,7 +1192,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(
             MathmodRef->RootObjet.CurrentTreestruct);
 
-        loadtext = loadpigm = false;
+        //loadtext = loadpigm = false;
         if (QIso["Texture"].isObject())
             QTextureObj = QIso["Texture"].toObject();
         if (QIso["Pigment"].isObject())

@@ -60,7 +60,7 @@ double f_hex_y(const double* pp)
         return(fabs(y1));
     }
 }
-double fmesh(const double* pp) // 40
+double fmesh(const double* pp)
 {
     double th, ph, r, r2, temp;
     double p[10];
@@ -132,7 +132,7 @@ double  fhelix1(const double* pp)
     (p[6] + r) < r2 ? r3 = (p[6] + r) : r3 = r2;
     return (-p[5] + r3);
 }
-double fhelix2(const double* pp) // 26
+double fhelix2(const double* pp)
 {
     double th, ph, x2, z2, r2, temp;
     double p[10];
@@ -156,6 +156,5 @@ double fhelix2(const double* pp) // 26
     }
     else
         r2 = maxim(fabs(p[0]), fabs(p[2]));
-
     return (r2 - p[5]);
 }

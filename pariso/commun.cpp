@@ -194,9 +194,7 @@ ImprovedNoise::ImprovedNoise(float xsize, float ysize, float zsize)
     for (int i = 0; i < 256; i++)
     {
         int k = int((tinyrnd() * (256 - i) + i));
-
         int l = p[i];
-
         p[i] = p[k];
         p[k] = l;
         p[i + 256] = p[i];
@@ -212,7 +210,6 @@ float ImprovedNoise::noise(float x, float y, float z)
     float u = fade(x), v = fade(y), w = fade(z);
     int A = p[X] + Y, AA = p[A] + Z, AB = p[A + 1] + Z, B = p[X + 1] + Y,
         BA = p[B] + Z, BB = p[B + 1] + Z;
-
     return lerp(
                w,
                lerp(v, lerp(u, grad(p[AA], x, y, z), grad(p[BA], x - 1, y, z)),

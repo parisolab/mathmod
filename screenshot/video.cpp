@@ -29,7 +29,7 @@ screenimage::screenimage(QImage buffer) : QMainWindow(nullptr)
     resize(320, 343);
     this->setWindowTitle("ScreenShot");
     QPixmap ScreenshotIcon = QPixmap::fromImage(buf.scaled(320, 320));
-    l->setPixmap(ScreenshotIcon); //  (ScreenshotIcon);
+    l->setPixmap(ScreenshotIcon);
     about = new QPushButton(groupBox);
     about->setObjectName(QString::fromUtf8("about"));
     about->setText("OK");
