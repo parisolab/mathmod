@@ -824,15 +824,6 @@ p, li { white-space: pre-wrap; }
                                       </color>
                                      </brush>
                                     </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>255</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
                                    </active>
                                    <inactive>
                                     <colorrole role="WindowText">
@@ -853,15 +844,6 @@ p, li { white-space: pre-wrap; }
                                       </color>
                                      </brush>
                                     </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>255</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
                                    </inactive>
                                    <disabled>
                                     <colorrole role="WindowText">
@@ -879,15 +861,6 @@ p, li { white-space: pre-wrap; }
                                        <red>120</red>
                                        <green>120</green>
                                        <blue>120</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>0</blue>
                                       </color>
                                      </brush>
                                     </colorrole>
@@ -1057,15 +1030,6 @@ p, li { white-space: pre-wrap; }
                                       </color>
                                      </brush>
                                     </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>255</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
                                     <colorrole role="PlaceholderText">
                                      <brush brushstyle="NoBrush">
                                       <color alpha="128">
@@ -1104,15 +1068,6 @@ p, li { white-space: pre-wrap; }
                                       </color>
                                      </brush>
                                     </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>255</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
                                     <colorrole role="PlaceholderText">
                                      <brush brushstyle="NoBrush">
                                       <color alpha="128">
@@ -1148,15 +1103,6 @@ p, li { white-space: pre-wrap; }
                                        <red>120</red>
                                        <green>120</green>
                                        <blue>120</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>0</blue>
                                       </color>
                                      </brush>
                                     </colorrole>
@@ -1294,15 +1240,6 @@ p, li { white-space: pre-wrap; }
                                       </color>
                                      </brush>
                                     </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>255</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
                                    </active>
                                    <inactive>
                                     <colorrole role="WindowText">
@@ -1319,15 +1256,6 @@ p, li { white-space: pre-wrap; }
                                       <color alpha="255">
                                        <red>0</red>
                                        <green>0</green>
-                                       <blue>255</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
                                        <blue>255</blue>
                                       </color>
                                      </brush>
@@ -1349,15 +1277,6 @@ p, li { white-space: pre-wrap; }
                                        <red>120</red>
                                        <green>120</green>
                                        <blue>120</blue>
-                                      </color>
-                                     </brush>
-                                    </colorrole>
-                                    <colorrole role="Base">
-                                     <brush brushstyle="SolidPattern">
-                                      <color alpha="255">
-                                       <red>255</red>
-                                       <green>255</green>
-                                       <blue>0</blue>
                                       </color>
                                      </brush>
                                     </colorrole>
@@ -1579,43 +1498,13 @@ p, li { white-space: pre-wrap; }
                            </property>
                            <property name="palette">
                             <palette>
-                             <active>
-                              <colorrole role="Base">
-                               <brush brushstyle="SolidPattern">
-                                <color alpha="255">
-                                 <red>255</red>
-                                 <green>255</green>
-                                 <blue>255</blue>
-                                </color>
-                               </brush>
-                              </colorrole>
-                             </active>
-                             <inactive>
-                              <colorrole role="Base">
-                               <brush brushstyle="SolidPattern">
-                                <color alpha="255">
-                                 <red>255</red>
-                                 <green>255</green>
-                                 <blue>255</blue>
-                                </color>
-                               </brush>
-                              </colorrole>
-                             </inactive>
-                             <disabled>
-                              <colorrole role="Base">
-                               <brush brushstyle="SolidPattern">
-                                <color alpha="255">
-                                 <red>255</red>
-                                 <green>170</green>
-                                 <blue>0</blue>
-                                </color>
-                               </brush>
-                              </colorrole>
-                             </disabled>
+                             <active/>
+                             <inactive/>
+                             <disabled/>
                             </palette>
                            </property>
                            <property name="title">
-                            <string>Iso Grid/Max Grid ( 64/500 ) :</string>
+                            <string>Iso Grid/Max Grid ( 40/500 ) :</string>
                            </property>
                            <layout class="QGridLayout" name="gridLayout_5">
                             <item row="0" column="0">
@@ -2608,15 +2497,6 @@ p, li { white-space: pre-wrap; }
                                    </color>
                                   </brush>
                                  </colorrole>
-                                 <colorrole role="Base">
-                                  <brush brushstyle="SolidPattern">
-                                   <color alpha="255">
-                                    <red>255</red>
-                                    <green>255</green>
-                                    <blue>255</blue>
-                                   </color>
-                                  </brush>
-                                 </colorrole>
                                 </active>
                                 <inactive>
                                  <colorrole role="WindowText">
@@ -2628,15 +2508,6 @@ p, li { white-space: pre-wrap; }
                                    </color>
                                   </brush>
                                  </colorrole>
-                                 <colorrole role="Base">
-                                  <brush brushstyle="SolidPattern">
-                                   <color alpha="255">
-                                    <red>255</red>
-                                    <green>255</green>
-                                    <blue>255</blue>
-                                   </color>
-                                  </brush>
-                                 </colorrole>
                                 </inactive>
                                 <disabled>
                                  <colorrole role="WindowText">
@@ -2645,15 +2516,6 @@ p, li { white-space: pre-wrap; }
                                     <red>120</red>
                                     <green>120</green>
                                     <blue>120</blue>
-                                   </color>
-                                  </brush>
-                                 </colorrole>
-                                 <colorrole role="Base">
-                                  <brush brushstyle="SolidPattern">
-                                   <color alpha="255">
-                                    <red>255</red>
-                                    <green>255</green>
-                                    <blue>0</blue>
                                    </color>
                                   </brush>
                                  </colorrole>
@@ -2747,15 +2609,6 @@ p, li { white-space: pre-wrap; }
                                    </color>
                                   </brush>
                                  </colorrole>
-                                 <colorrole role="Base">
-                                  <brush brushstyle="SolidPattern">
-                                   <color alpha="255">
-                                    <red>255</red>
-                                    <green>255</green>
-                                    <blue>255</blue>
-                                   </color>
-                                  </brush>
-                                 </colorrole>
                                 </active>
                                 <inactive>
                                  <colorrole role="WindowText">
@@ -2767,15 +2620,6 @@ p, li { white-space: pre-wrap; }
                                    </color>
                                   </brush>
                                  </colorrole>
-                                 <colorrole role="Base">
-                                  <brush brushstyle="SolidPattern">
-                                   <color alpha="255">
-                                    <red>255</red>
-                                    <green>255</green>
-                                    <blue>255</blue>
-                                   </color>
-                                  </brush>
-                                 </colorrole>
                                 </inactive>
                                 <disabled>
                                  <colorrole role="WindowText">
@@ -2784,15 +2628,6 @@ p, li { white-space: pre-wrap; }
                                     <red>120</red>
                                     <green>120</green>
                                     <blue>120</blue>
-                                   </color>
-                                  </brush>
-                                 </colorrole>
-                                 <colorrole role="Base">
-                                  <brush brushstyle="SolidPattern">
-                                   <color alpha="255">
-                                    <red>255</red>
-                                    <green>255</green>
-                                    <blue>0</blue>
                                    </color>
                                   </brush>
                                  </colorrole>
@@ -3416,15 +3251,6 @@ p, li { white-space: pre-wrap; }
                                  </color>
                                 </brush>
                                </colorrole>
-                               <colorrole role="Base">
-                                <brush brushstyle="SolidPattern">
-                                 <color alpha="255">
-                                  <red>255</red>
-                                  <green>255</green>
-                                  <blue>255</blue>
-                                 </color>
-                                </brush>
-                               </colorrole>
                               </active>
                               <inactive>
                                <colorrole role="WindowText">
@@ -3436,15 +3262,6 @@ p, li { white-space: pre-wrap; }
                                  </color>
                                 </brush>
                                </colorrole>
-                               <colorrole role="Base">
-                                <brush brushstyle="SolidPattern">
-                                 <color alpha="255">
-                                  <red>255</red>
-                                  <green>255</green>
-                                  <blue>255</blue>
-                                 </color>
-                                </brush>
-                               </colorrole>
                               </inactive>
                               <disabled>
                                <colorrole role="WindowText">
@@ -3453,15 +3270,6 @@ p, li { white-space: pre-wrap; }
                                   <red>120</red>
                                   <green>120</green>
                                   <blue>120</blue>
-                                 </color>
-                                </brush>
-                               </colorrole>
-                               <colorrole role="Base">
-                                <brush brushstyle="SolidPattern">
-                                 <color alpha="255">
-                                  <red>255</red>
-                                  <green>255</green>
-                                  <blue>0</blue>
                                  </color>
                                 </brush>
                                </colorrole>
@@ -3552,15 +3360,6 @@ p, li { white-space: pre-wrap; }
                                  </color>
                                 </brush>
                                </colorrole>
-                               <colorrole role="Base">
-                                <brush brushstyle="SolidPattern">
-                                 <color alpha="255">
-                                  <red>255</red>
-                                  <green>255</green>
-                                  <blue>255</blue>
-                                 </color>
-                                </brush>
-                               </colorrole>
                               </active>
                               <inactive>
                                <colorrole role="WindowText">
@@ -3572,15 +3371,6 @@ p, li { white-space: pre-wrap; }
                                  </color>
                                 </brush>
                                </colorrole>
-                               <colorrole role="Base">
-                                <brush brushstyle="SolidPattern">
-                                 <color alpha="255">
-                                  <red>255</red>
-                                  <green>255</green>
-                                  <blue>255</blue>
-                                 </color>
-                                </brush>
-                               </colorrole>
                               </inactive>
                               <disabled>
                                <colorrole role="WindowText">
@@ -3589,15 +3379,6 @@ p, li { white-space: pre-wrap; }
                                   <red>120</red>
                                   <green>120</green>
                                   <blue>120</blue>
-                                 </color>
-                                </brush>
-                               </colorrole>
-                               <colorrole role="Base">
-                                <brush brushstyle="SolidPattern">
-                                 <color alpha="255">
-                                  <red>255</red>
-                                  <green>255</green>
-                                  <blue>0</blue>
                                  </color>
                                 </brush>
                                </colorrole>
@@ -4558,39 +4339,9 @@ p, li { white-space: pre-wrap; }
                         </property>
                         <property name="palette">
                          <palette>
-                          <active>
-                           <colorrole role="Base">
-                            <brush brushstyle="SolidPattern">
-                             <color alpha="255">
-                              <red>255</red>
-                              <green>255</green>
-                              <blue>255</blue>
-                             </color>
-                            </brush>
-                           </colorrole>
-                          </active>
-                          <inactive>
-                           <colorrole role="Base">
-                            <brush brushstyle="SolidPattern">
-                             <color alpha="255">
-                              <red>255</red>
-                              <green>255</green>
-                              <blue>255</blue>
-                             </color>
-                            </brush>
-                           </colorrole>
-                          </inactive>
-                          <disabled>
-                           <colorrole role="Base">
-                            <brush brushstyle="SolidPattern">
-                             <color alpha="255">
-                              <red>255</red>
-                              <green>170</green>
-                              <blue>0</blue>
-                             </color>
-                            </brush>
-                           </colorrole>
-                          </disabled>
+                          <active/>
+                          <inactive/>
+                          <disabled/>
                          </palette>
                         </property>
                         <property name="text">
@@ -6320,39 +6071,9 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <property name="palette">
                     <palette>
-                     <active>
-                      <colorrole role="Base">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>255</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Base">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>255</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Base">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>170</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
+                     <active/>
+                     <inactive/>
+                     <disabled/>
                     </palette>
                    </property>
                    <property name="title">
@@ -6685,39 +6406,9 @@ p, li { white-space: pre-wrap; }
                    </property>
                    <property name="palette">
                     <palette>
-                     <active>
-                      <colorrole role="Base">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>255</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Base">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>255</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Base">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>170</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
+                     <active/>
+                     <inactive/>
+                     <disabled/>
                     </palette>
                    </property>
                    <property name="title">
