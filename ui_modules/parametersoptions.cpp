@@ -146,7 +146,6 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
         }
     }
     lst_2.insert(0, "Textures List (" + QString::number(lst_2.count()) + ")");
-
     // Pigments List:
     for (int i = 0; i < array3.size(); i++)
     {
