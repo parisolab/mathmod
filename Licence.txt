@@ -1,7 +1,7 @@
 Copyright © 2022 Abderrahman Taha (taha_ab@yahoo.fr)
 
 Download: https://sourceforge.net/projects/mathmod/
-FaceBook: https://www.facebook.com/pages/MathMod/529510253833102
+FaceBook: https://www.facebook.com/parisolab/
 Twitter : https://twitter.com/parisolab
 
   This Software is distributed under the GPL license.
