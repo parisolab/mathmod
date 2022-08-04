@@ -1930,8 +1930,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->RootObjet.CurrentTreestruct.text =
                     QString(document.toJson());
                 // Update the current parametric struct
-                // MathmodRef->RootObjet.CurrentIsoStruct =
-                // MathmodRef->RootObjet.IsoTable[indextable];
                 MathmodRef->RootObjet.CurrentJsonObject = array[i].toObject();
                 CurrentFormulaType = 2;
                 /// process the new surface
