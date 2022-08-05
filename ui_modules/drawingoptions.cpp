@@ -4173,6 +4173,7 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.xyzg->blockSignals(true);
     ui.xyzg->setMaximum(maxgrd);
     ui.xyzg->setValue(int(InitIsoGrid));
+    ui.Isogroupbox->setTitle("Iso Grid/Max Grid ("+QString(int(InitIsoGrid)) +"40/500 ) :");
     ui.xyzg->blockSignals(false);
     ui.linecolumn_2->blockSignals(true);
     ui.linecolumn_2->setMaximum(int(Parameters->ParMaxGrid));

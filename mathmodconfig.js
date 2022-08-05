@@ -7,7 +7,7 @@
     },
     "Parameters": {
         "IsoMaxGrid": 500,
-        "InitIsoGrid": 40,
+        "InitIsoGrid": 41,
         "ParMaxGrid": 5000,
         "InitParGrid": 64
     },
