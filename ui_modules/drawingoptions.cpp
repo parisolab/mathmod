@@ -5240,7 +5240,7 @@ void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
 
 void DrawingOptions::on_ApplypushButton_clicked()
 {
-    int maxisogrid = 0;
+    int maxisogrid = ui.IsoMaxGridLineEdit->text().toInt();
     Parameters->IsoMaxGrid = maxisogrid;
     ui.Isogroupbox->setTitle("Grid/MaxGrid = (" +
                              QString::number(ui.xyzg->value()) + "/" +
