@@ -5180,13 +5180,7 @@ void DrawingOptions::on_actionScripts_selection_triggered()
 {
     select.show();
 }
-/*
-void DrawingOptions::on_actionBoundingBox_clicked()
-{
-    MathmodRef->boundingboxOk();
-    MathmodRef->update();
-}
-*/
+
 void DrawingOptions::on_actionAnimation_Rotation_triggered()
 {
     MathmodRef->anim();
@@ -5272,6 +5266,7 @@ void DrawingOptions::on_ApplypushButton_2_clicked()
         (maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) != Parameters->ParMaxGrid)
         updateParametricGridSliders(maxpargrid);
 }
+
 void DrawingOptions::on_ApplypushButton_3_clicked()
 {
     int maxpargrid = 0;
