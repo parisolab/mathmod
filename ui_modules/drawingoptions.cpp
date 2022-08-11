@@ -5268,7 +5268,9 @@ void DrawingOptions::updateParametricGridSliders(int maxpargrid)
 void DrawingOptions::on_ApplypushButton_2_clicked()
 {
     int maxpargrid = 0;
-    updateParametricGridSliders(maxpargrid);
+    if ((ui.ParMaxGridLineEdit->text()).replace(" ", "")!= "" &&
+        (maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) != Parameters->ParMaxGrid)
+        updateParametricGridSliders(maxpargrid);
 }
 void DrawingOptions::on_ApplypushButton_3_clicked()
 {
