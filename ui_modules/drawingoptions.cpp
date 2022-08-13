@@ -4223,9 +4223,6 @@ void DrawingOptions::UpdateGui(int argc)
     HideSliders();
 
     // ProgressBar + text informations (set to minimum size 0)
- /*   QList<int> Sizes;
-    Sizes << 500 << 300;
-    ui.splitter_6->setSizes(Sizes);*/
     ui.Messagetext->setFontPointSize(12);
 }
 
@@ -5102,7 +5099,6 @@ void DrawingOptions::on_red_Specular_valueChanged(int value)
         ui.blue_Specular->blockSignals(false);
         MathmodRef->blueSpec(value);
     }
-    //MathmodRef->InitSpecularParameters();
 }
 
 void DrawingOptions::on_green_Specular_valueChanged(int value)
@@ -5122,7 +5118,6 @@ void DrawingOptions::on_green_Specular_valueChanged(int value)
         ui.blue_Specular->blockSignals(false);
         MathmodRef->blueSpec(value);
     }
-    //MathmodRef->InitSpecularParameters();
 }
 
 void DrawingOptions::on_blue_Specular_valueChanged(int value)
