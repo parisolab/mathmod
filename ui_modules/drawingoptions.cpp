@@ -5257,16 +5257,11 @@ void DrawingOptions::updateParametricGridSliders(int maxpargrid)
 void DrawingOptions::on_ApplypushButton_2_clicked()
 {
     int maxpargrid = 0;
-    if ((ui.ParMaxGridLineEdit->text()).replace(" ", "")!= "" &&
-        (maxpargrid = (ui.ParMaxGridLineEdit->text()).toInt()) != Parameters->ParMaxGrid)
+    bool IsInt=false;
+    QString maxtxt= ui.ParMaxGridLineEdit->text().replace(" ", "");
+    maxpargrid = maxtxt.toInt(&IsInt, 10);
+    if ( IsInt && maxpargrid != Parameters->ParMaxGrid)
         updateParametricGridSliders(maxpargrid);
-}
-
-bool DrawingOptions::isInt(QString const& str, int base = 10)
-{
-    bool ok = false;
-    str.toInt(&ok, base);
-    return ok;
 }
 
 void DrawingOptions::on_ApplypushButton_3_clicked()
@@ -5275,7 +5270,6 @@ void DrawingOptions::on_ApplypushButton_3_clicked()
     bool IsInt=false;
     QString maxtxt= ui.ParMaxGridLineEdit_2->text().replace(" ", "");
     maxpargrid = maxtxt.toInt(&IsInt, 10);
-
     if ( IsInt && maxpargrid != Parameters->ParMaxGrid)
         updateParametricGridSliders(maxpargrid);
 }
