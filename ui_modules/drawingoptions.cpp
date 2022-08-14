@@ -5262,11 +5262,21 @@ void DrawingOptions::on_ApplypushButton_2_clicked()
         updateParametricGridSliders(maxpargrid);
 }
 
+bool DrawingOptions::isInt(QString const& str, int base = 10)
+{
+    bool ok = false;
+    str.toInt(&ok, base);
+    return ok;
+}
+
 void DrawingOptions::on_ApplypushButton_3_clicked()
 {
     int maxpargrid = 0;
-    if ((ui.ParMaxGridLineEdit_2->text()).replace(" ", "")!= "" &&
-        (maxpargrid = (ui.ParMaxGridLineEdit_2->text()).toInt()) != Parameters->ParMaxGrid)
+    bool IsInt=false;
+    QString maxtxt= ui.ParMaxGridLineEdit_2->text().replace(" ", "");
+    maxpargrid = maxtxt.toInt(&IsInt, 10);
+
+    if ( IsInt && maxpargrid != Parameters->ParMaxGrid)
         updateParametricGridSliders(maxpargrid);
 }
 
