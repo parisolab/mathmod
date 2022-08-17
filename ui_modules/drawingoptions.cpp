@@ -5293,7 +5293,7 @@ void DrawingOptions::on_actionDocumentation_triggered()
 
 void DrawingOptions::on_ScaleButton_clicked()
 {
-    bool valx, valy, valz;
+    bool valx=false, valy=false, valz=false;
     double fx = ui.lineEditSx->text().toDouble(&valx);
     double fy = ui.lineEditSy->text().toDouble(&valy);
     double fz = ui.lineEditSz->text().toDouble(&valz);
