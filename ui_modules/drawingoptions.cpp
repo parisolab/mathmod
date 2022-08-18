@@ -5274,6 +5274,13 @@ void DrawingOptions::on_ApplypushButton_2_clicked()
     maxpargrid = maxtxt.toInt(&IsInt, 10);
     if ( IsInt && maxpargrid != Parameters->ParMaxGrid)
         updateParametricGridSliders(maxpargrid);
+
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Invalid number");
+        msgBox.exec();
+    }
 }
 
 void DrawingOptions::on_ApplypushButton_3_clicked()
