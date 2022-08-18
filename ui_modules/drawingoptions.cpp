@@ -5243,6 +5243,12 @@ void DrawingOptions::on_ApplypushButton_clicked()
         ui.xyzg->setMaximum(maxisogrid);
         ui.xyzg->blockSignals(false);
     }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Invalid number");
+        msgBox.exec();
+    }
 }
 
 void DrawingOptions::updateParametricGridSliders(int maxpargrid)
