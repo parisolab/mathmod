@@ -36,7 +36,7 @@ void MathMod::CalculateTexturePoints(int type)
         ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0
                 : LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
-    if (type == 0)
+    else if (type == 0)
     {
         LocalScene.componentsinfos.ThereisRGBA[0] = true;
         LocalScene.componentsinfos.NoiseParam[0].NoiseType = 1;
@@ -117,7 +117,7 @@ void MathMod::CalculatePigmentPoints(int type)
         ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0
                 : LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
-    if (type == 0)
+    else if (type == 0)
     {
         LocalScene.componentsinfos.ThereisRGBA[0] = true;
         LocalScene.componentsinfos.NoiseParam[0].NoiseType = 0; // Pigments
@@ -188,7 +188,7 @@ int MathMod::memoryallocation(uint nbthreads,
         ParObjet = new Par3D(nbthreads, initparGrid);
         return 1;
     }
-    catch (std::bad_alloc &)
+    catch (const std::bad_alloc&)
     {
         message.setText("Not enough memory available to complete this operation");
         message.adjustSize();
