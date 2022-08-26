@@ -8153,6 +8153,7 @@
         "Name": ["DiamondTori"],
         "Component": ["DiamondTori"],
         "Const": ["M=1","N1=10","N2=10","P=5","R=15"],
+        "Grid": ["150"],
         "Funct": ["Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
           "isoCondition_0=(x^2-(22/10)^2)",
           "isoCondition_1=(x^2-(16/10)^2)",
