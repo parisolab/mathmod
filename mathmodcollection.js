@@ -4348,7 +4348,8 @@
         "Ymax": ["15"],
         "Ymin": ["-15"],
         "Zmax": ["15"],
-        "Zmin": ["-15"]
+        "Zmin": ["-15"],
+        "Grid": ["150"]
       }
     },
     {
@@ -4625,7 +4626,7 @@
     {
       "Iso3D": {
         "Description": ["Diamon Torus by Abderrahman Taha 31/10/2019"],
-        "Name": ["Diamon_Torus"],
+        "Name": ["Diamond_Torus"],
         "Const": ["A=98/10","B=35/10"],
         "Component": ["Diamon Torus_1","DiamonTorus_2"],
         "Funct": ["Iso=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
@@ -4640,7 +4641,8 @@
         "Ymax": ["A","A"],
         "Ymin": ["-A","-A"],
         "Zmax": ["B","B"],
-        "Zmin": ["-B","-B"]
+        "Zmin": ["-B","-B"],
+        "Grid": ["150"]
       }
     },
     {
@@ -6731,7 +6733,8 @@
         "Ymax": [" 45/10"],
         "Ymin": ["-25/10"],
         "Zmax": [" 75/10"],
-        "Zmin": ["-75/10"]
+        "Zmin": ["-75/10"],
+        "Grid": ["150"]
       },
       "Texture": {
         "Colors": ["R=9/10",
