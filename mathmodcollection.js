@@ -6912,7 +6912,7 @@
                 "Angle2=atan2(x,(y+c))",
                 "rapp=x/sqrt(x*x+y*y+z*z)",
                 "CarvinCondition=abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(103/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2)",
-                "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
+                "Top=(sqrt(x*x+y*y)-3)^2+z*z-1",
                 "Bottom=(x*x+y*y+z*z-1)",
                 "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
                 "DFx2=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)",
@@ -6930,7 +6930,7 @@
                 "Iso6=(Iso(x+t*Th6*rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+t*Th6*rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+t*Th6*rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
                 "isoTransform_6=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0),-ThickIso2(S*x,S*y,S*z,t)*Iso6(x*S,y*S,z*S,-1)*(Iso6(x*S,y*S,z*S,1)),1)"],
             "Fxyz": ["isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
-                "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
+                "Top((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
                 "Bottom(x/(12/5),y/(12/5),2*(z+(51/10)),t)"],
             "Xmax": ["7/2","5","3"],
             "Xmin": ["-7/2","-5","-3"],
@@ -6938,7 +6938,7 @@
             "Ymin": ["-7/2","-5","-3"],
             "Zmax": ["(9/2)","10","-2"],
             "Zmin": ["-5","0","-7"],
-            "Grid": ["200"]
+            "Grid": ["200","60","60"]
         },
         "Texture": {
             "Colors": ["R=8/10",
