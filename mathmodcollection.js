@@ -6906,7 +6906,7 @@
         "Iso3D": {
             "Description": ["Old Vase by Abderrahman Taha 16/11/2019"],
             "Name": ["OldVase"],
-            "Component": ["Vase1","Vase5","Vase6"],
+            "Component": ["Vase","Top","Bottom"],
             "Const": ["c=(1/10000)","S=6","Th2=(1/4)","Th4=(1/5)","Th6=(6/5)"],
             "Funct": ["Angle1=atan2(sqrt(x*x+y*y),(-z+c))",
                 "Angle2=atan2(x,(y+c))",
