@@ -4878,7 +4878,7 @@
     {
       "Iso3D": {
         "Description": ["Schwarz Cube Torus by Abderrahman Taha 30/10/2019"],
-        "Name": ["Schwarz Cube Torus"],
+        "Name": ["Schwarz_Cube_Torus"],
         "Component": ["SchwarzCubeTorus_1","SchwarzCubeTorus_2","SchwarzCubeTorus_3","SchwarzCubeTorus_4"],
         "Const": ["k=6","C=65/10","D=65/10","E=(323/100)^20","Th=4/10"],
         "Funct": ["Iso=cos(x)+cos(y)+cos(z)",
@@ -4898,12 +4898,13 @@
         "Ymax": ["0","11","0","11"],
         "Ymin": ["-11","0","-11","0"],
         "Zmax": ["5","5","5","5"],
-        "Zmin": ["-5","-5","-5","-5"]
+        "Zmin": ["-5","-5","-5","-5"],
+        "Grid": ["130","130","130","130"]
       },
       "Texture": {
-        "Colors": ["R=8/10",
+        "Colors": ["R=6/10",
           "G=6/10",
-          "B=1/10",
+          "B=6/10",
           "T=1"],
         "Name": "Gold",
         "Noise": "1"
