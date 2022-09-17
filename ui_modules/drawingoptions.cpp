@@ -1111,6 +1111,7 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
     result.replace(" ", "");
     if (opt == ISO_TYPE)
     {
+        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->IsoObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->IsoObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->IsoObjet->masterthread->Noise = noise.toStdString();
@@ -1118,6 +1119,7 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
+        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->ParObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ParObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ParObjet->masterthread->Noise = noise.toStdString();
