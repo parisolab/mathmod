@@ -1826,7 +1826,6 @@ void DrawingOptions::BuildAllVect()
 
 int DrawingOptions::JSON_choice_activated(const QString &arg1)
 {
-    QString result;
     QJsonArray array = JSONMathModels["MathModels"].toArray();
     QJsonObject QObj, QObj1;
     QJsonObject QTextureObj, QPigmentObj;
@@ -4420,6 +4419,7 @@ void DrawingOptions::on_comboBoxTexture_activated(int index)
 {
     QJsonObject tmp;
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    //MathmodRef->LocalScene.componentsinfos.hsv.clear();
 
     if (index > 0)
     {
@@ -4435,6 +4435,7 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
 {
     QJsonObject tmp;
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    //MathmodRef->LocalScene.componentsinfos.hsv.clear();
     if (index > 0)
     {
         QJsonDocument document;
