@@ -1828,7 +1828,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
 {
     QString result;
     QJsonArray array = JSONMathModels["MathModels"].toArray();
-    QJsonArray lst;
     QJsonObject QObj, QObj1;
     QJsonObject QTextureObj, QPigmentObj;
     bool loadtext, loadpigm;
