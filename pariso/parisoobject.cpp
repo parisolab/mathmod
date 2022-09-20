@@ -45,6 +45,7 @@ void ParisoObject::clear(struct ComponentInfos *cp)
     cp->NbComponentsType.clear();
     cp->ThereisCND.clear();
     cp->ParisoCondition.clear();
+    cp->hsv.clear();
     cp->ShowParIsoCmp.clear();
     cp->ThereisRGBA.clear();
     cp->NbTrianglesVerifyCND.clear();
