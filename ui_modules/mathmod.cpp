@@ -822,7 +822,7 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     }
     else
     {
-        if(!scene->componentsinfos.hsv.empty())
+        if(scene->componentsinfos.hsv.size()>0)
             glUniform1i(uniformHSVactive, scene->componentsinfos.hsv[ParisoTypeIndex]?1:0);
         glUniform1i(uniformThereisRGBA, 0);
     }
