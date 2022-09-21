@@ -1057,6 +1057,7 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
 {
     QString noise1 = QObj["Noise"].toString();
     QJsonArray lst = QObj["Colors"].toArray();
+    bool hsv=false;
     noise1.replace("\n", "");
     noise1.replace("\t", "");
     noise1.replace(" ", "");
@@ -1065,18 +1066,18 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
 
     if (opt == ISO_TYPE)
     {
-        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->IsoObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->IsoObjet->masterthread->Noise = noise1.toStdString();
         MathmodRef->IsoObjet->masterthread->RgbtSize = uint(lst.size());
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
-        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->ParObjet->masterthread->Rgbt = result.toStdString();
         MathmodRef->ParObjet->masterthread->Noise = noise1.toStdString();
         MathmodRef->ParObjet->masterthread->RgbtSize = uint(lst.size());
     }
+    if((hsv=result.contains("H=")))
+        MathmodRef->LocalScene.componentsinfos.hsv.push_back(hsv);
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise1;
     MathmodRef->RootObjet.CurrentTreestruct.RGBT = result.split(";",Qt::SkipEmptyParts);
 }
@@ -1086,6 +1087,7 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
 {
     QString noise = "";
     QJsonArray tmp;
+    bool hsv=false;
     QString strtmp = QObj["Gradient"].toString();
     noise = QObj["Noise"].toString();
     QJsonArray lst = QObj["Colors"].toArray();
@@ -1111,7 +1113,6 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
     result.replace(" ", "");
     if (opt == ISO_TYPE)
     {
-        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->IsoObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->IsoObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->IsoObjet->masterthread->Noise = noise.toStdString();
@@ -1119,12 +1120,13 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
-        MathmodRef->LocalScene.componentsinfos.hsv.push_back(result.contains("H="));
         MathmodRef->ParObjet->masterthread->Gradient = strtmp.toStdString();
         MathmodRef->ParObjet->masterthread->VRgbt = result.toStdString();
         MathmodRef->ParObjet->masterthread->Noise = noise.toStdString();
         MathmodRef->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
+    if((hsv=result.contains("H=")))
+        MathmodRef->LocalScene.componentsinfos.hsv.push_back(hsv);
     MathmodRef->RootObjet.CurrentTreestruct.Noise = noise;
     MathmodRef->RootObjet.CurrentTreestruct.VRGBT =
         result.split(";",Qt::SkipEmptyParts);
@@ -1186,7 +1188,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         // Pigment
         loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                        (QPar["Pigment"].isObject() ||
-                        ((textureIndex != -1) && (textureIndex > 999)));
+                ((textureIndex != -1) && (textureIndex > 999)));
         LoadMandatoryAndOptionnalFields(QPar["Param3D"].toObject(), PAR_TYPE,
                                         loadtext, QTextureObj, loadpigm,
                                         QPigmentObj);
@@ -1204,7 +1206,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         // Pigment
         loadpigm = MathmodRef->IsoObjet->masterthread->vrgbtnotnull =
                        (QIso["Pigment"].isObject() ||
-                        ((textureIndex != -1) && (textureIndex > 999)));
+                ((textureIndex != -1) && (textureIndex > 999)));
+
         LoadMandatoryAndOptionnalFields(QIso["Iso3D"].toObject(), ISO_TYPE,
                                         loadtext, QTextureObj, loadpigm,
                                         QPigmentObj);
@@ -1239,7 +1242,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             // Pigment
             loadpigm = MathmodRef->IsoObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
-                            ((textureIndex != -1) && (textureIndex > 999)));
+                    ((textureIndex != -1) && (textureIndex > 999)));
 
             LoadMandatoryAndOptionnalFields(QObj, ISO_TYPE, loadtext, QTextureObj,
                                             loadpigm, QPigmentObj);
@@ -1285,7 +1288,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             // Pigment
             loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
-                            ((textureIndex != -1) && (textureIndex > 999)));
+                    ((textureIndex != -1) && (textureIndex > 999)));
 
             LoadMandatoryAndOptionnalFields(QObj, PAR_TYPE, loadtext, QTextureObj,
                                             loadpigm, QPigmentObj);
@@ -1336,7 +1339,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             // Pigment
             loadpigm = MathmodRef->ParObjet->masterthread->vrgbtnotnull =
                            (Jobj["Pigment"].isObject() ||
-                            ((textureIndex != -1) && (textureIndex > 1000)));
+                    ((textureIndex != -1) && (textureIndex > 1000)));
             LoadMandatoryAndOptionnalFields(QObj, PAR_4D_TYPE, loadtext, QTextureObj,
                                             loadpigm, QPigmentObj);
             QJsonObject Jobjtmp = Jobj;
@@ -4419,7 +4422,6 @@ void DrawingOptions::on_comboBoxTexture_activated(int index)
 {
     QJsonObject tmp;
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
-    //MathmodRef->LocalScene.componentsinfos.hsv.clear();
 
     if (index > 0)
     {
@@ -4435,7 +4437,6 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
 {
     QJsonObject tmp;
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
-    //MathmodRef->LocalScene.componentsinfos.hsv.clear();
     if (index > 0)
     {
         QJsonDocument document;
