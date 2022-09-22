@@ -4043,7 +4043,8 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["5"],
-        "Zmin": ["-5"]
+        "Zmin": ["-5"],
+        "Grid": ["120"]
       }
     },
     {
@@ -7342,8 +7343,8 @@
     {
       "Iso3D": {
         "Description": ["Straw Basket using the predefined MathMod function fmesh by Abderrahman Taha 17/09/2019"],
-        "Name": ["Straw Basket_02"],
-        "Component": ["Straw Basket"],
+        "Name": ["Straw_Basket_v2"],
+        "Component": ["StrawBasket"],
         "Const": ["A = 5",
           "B = 2",
           "C = 10",
@@ -7359,7 +7360,8 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["5"],
-        "Zmin": ["-5"]
+        "Zmin": ["-5"],
+        "Grid": ["120"]
       },
         "Sliders": {
             "Max": ["15","15","20","10","20"],
