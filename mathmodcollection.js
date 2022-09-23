@@ -5714,7 +5714,8 @@
             "L=1001/1000",
             "2L=2*L"],
         "Description ": [
-            "Hexagrams Menger L5 by Abderrahman Taha 18/01/2022"
+            "Hexagrams Menger L5 by Abderrahman Taha 18/01/2022.
+             NB:The grid should be set to 379 in order to perfectly rendr small hexagrams patterns"
         ],
         "Funct": [
             "Ax=((abs(x-2/3)<1/81)+(abs(x-20/27)<1/81)+(abs(x-16/27)<1/81)+(abs(x-8/9)<1/81)+(abs(x-26/27)<1/81)+(abs(x-22/27)<1/81)+(abs(x-4/9)<1/81)+(abs(x-14/27)<1/81)+(abs(x-10/27)<1/81)+(abs(x+2/3)<1/81)+(abs(x+16/27)<1/81)+(abs(x+20/27)<1/81)+(abs(x+4/9)<1/81)+(abs(x+10/27)<1/81)+(abs(x+14/27)<1/81)+(abs(x+8/9)<1/81)+(abs(x+22/27)<1/81)+(abs(x+26/27)<1/81)+(abs(x)<1/81)+(abs(x-2/27)<1/81)+(abs(x+2/27)<1/81)+(abs(x-2/9)<1/81)+(abs(x-8/27)<1/81)+(abs(x-4/27)<1/81)+(abs(x+2/9)<1/81)+(abs(x+4/27)<1/81)+(abs(x+8/27)<1/81))",
