@@ -7758,7 +7758,8 @@
             "Ymax": ["dy"],
             "Ymin": ["-dy"],
             "Zmax": ["dz"],
-            "Zmin": ["-dz"]
+            "Zmin": ["-dz"],
+            "Grid": ["100"]
         }
     },
     {
