@@ -7733,7 +7733,7 @@
     },
     {
         "Iso3D": {
-            "Description": ["Script by Abderrahman Taha (27/04/2020) to generate TPMS lattices with function definition F , thickness (T) and density (dx,dy,dz)"],
+            "Description": ["Script by Abderrahman Taha to generate TPMS lattices with the function definition F , thickness (T) and density (dx,dy,dz) (23/09/2022)"],
             "Name": ["SchwarzP_Lattice"],
             "Component": ["SchwarzP"],
             "Const": ["T=3/10",
