@@ -8045,10 +8045,10 @@
         "Description": ["Schwarz P Sphere  by Abderrahman Taha 29/03/2016"],
         "Name": ["Schwarz P Sphere"],
         "Component": ["SchwarzPSphere"],
-        "Const": ["M=1",
-          "N=10",
-          "P=10",
-          "th=4"],
+        "Const": ["M=7",
+          "N=8",
+          "P=6",
+          "th=6"],
         "Funct": ["Iso=cos(x)+cos(y)+cos(z)",
           "Iso2=th*x/(10*sqrt(x*x+y*y+z*z))",
           "Iso4=Iso(x+Iso2(sin(x), sin(y), sin(z),t),y+Iso2(sin(y), sin(x), sin(z),t),z+Iso2(sin(z), sin(y), sin(x),t),t)",
@@ -8062,13 +8062,14 @@
         "Ymax": ["13"],
         "Ymin": ["-13"],
         "Zmax": ["13"],
-        "Zmin": ["-13"]
+        "Zmin": ["-13"],
+        "Grid": ["130"]
       },
         "Sliders": {
           "Max": ["20","20","20","10","20","20","20","10","20","20","20","10"],
           "Min": ["0","0","0","0","0","0","0","0","0","0","0","0"],
           "Name": ["M","N","P","th"],
-          "Position": ["10","10","10","4","1","12","7","4","1","5","3","4"],
+          "Position": ["7","8","6","6","1","12","7","4","1","5","3","4"],
           "Step": ["1","1","1","1","1","1","1","1","1","1","1","1"]
         }
     },
