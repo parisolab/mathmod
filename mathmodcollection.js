@@ -7890,15 +7890,16 @@
     {
       "Iso3D": {
         "Description ": ["Red giant by Abderrahman Taha 08/10/2019"],
-        "Name": ["Red giant"],
-        "Component": ["Redgiant"],
+        "Name": ["Red_giant"],
+        "Component": ["Re_giant"],
         "Fxyz": ["-((x*x+y*y+z*z-1)+(if((t<pi/2), (1),(5)*if(t<pi,abs(sin(t-pi/2)), abs(sin(3*t-pi/2))) ))*(NoiseW(6*x,6*y,5*cos(t)+6*z,(4),(2),0)  +NoiseW(4*sin(t)+6*x,(5)*cos(t) + 6*y,(6)*z,(4),(0),0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *(x^2+y^2+z^2-(3/100))"],
         "Xmax": ["1"],
         "Xmin": ["-1"],
         "Ymax": ["1"],
         "Ymin": ["-1"],
         "Zmax": ["1"],
-        "Zmin": ["-1"]
+        "Zmin": ["-1"],
+        "Grid": ["100"]
       },
       "Texture": {
         "Colors": ["R=(6/10)",
