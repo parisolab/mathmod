@@ -4272,8 +4272,8 @@
     {
       "Iso3D": {
         "Description": ["W_Skeletal Sphere by Abderrahman Taha 01/11/2019"],
-        "Name": ["W_Skeletal Sphere"],
-        "Component": ["W_Skeletal Sphere"],
+        "Name": ["W_Skeletal_Sphere"],
+        "Component": ["W_Skeletal_Sphere"],
         "Const": ["M=1","N=10","P=7"],
         "Funct": ["W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
           "isoCondition_0=(x^2-(pi+1/2)^2)",
@@ -4286,7 +4286,8 @@
         "Ymax": ["16"],
         "Ymin": ["-16"],
         "Zmax": ["17"],
-        "Zmin": ["-17"]
+        "Zmin": ["-17"],
+        "Grid": ["120"]
       }
     },
     {
