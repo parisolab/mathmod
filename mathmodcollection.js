@@ -4254,7 +4254,7 @@
         "Description": ["W_Skeletal Tori by Abderrahman Taha 01/11/2019"],
         "Name": ["W_Skeletal_Tori"],
         "Component": ["W_SkeletalTori"],
-        "Const": ["M=1","N=8"],
+        "Const": ["M=100","N=8"],
         "Funct": ["W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
           "isoCondition_0=(x^2-(pi+1/2)^2)",
           "isoCondition_1=(x^2-(pi+3/10)^2)",
@@ -4266,7 +4266,8 @@
         "Ymax": ["26"],
         "Ymin": ["-26"],
         "Zmax": ["12"],
-        "Zmin": ["-12"]
+        "Zmin": ["-12"],
+        "Grid": ["120"]
       }
     },
     {
