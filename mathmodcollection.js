@@ -3927,7 +3927,8 @@
           "D = 1/50",
           "E = 1",
           "th = pi/A",
-          "ph = pi/B"],
+          "ph = pi/B",
+          "L = 11/10"],
         "Funct": ["r = (x % (A * 2))",
           "r = abs( if (r(x,y,z,t) < (0), r(x,y,z,t) + A, r(x,y,z,t) - A)) * C",
           "r2 = (y - cos(z * ph) * D) * E",
@@ -3946,12 +3947,13 @@
           "fmesh0 = max( -sqrt(r2(x,y,z,t) * r2(x,y,z,t) + r(x,y,z,t) * r(x,y,z,t)), temp(x,y,z,t)) +(3/100)",
           "fmesh0= fmesh0(atan2(y,x),sqrt(x*x+y*y+z*z) -(1),atan2(z,sqrt(x*x+y*y)),t)"],
         "Fxyz": ["fmesh0(x,y,z,t)"],
-        "Xmax": ["11/10"],
-        "Xmin": ["-11/10"],
-        "Ymax": ["11/10"],
-        "Ymin": ["-11/10"],
-        "Zmax": ["11/10"],
-        "Zmin": ["-11/10"]
+        "Xmax": ["L"],
+        "Xmin": ["-L"],
+        "Ymax": ["L"],
+        "Ymin": ["-L"],
+        "Zmax": ["L"],
+        "Zmin": ["-L"],
+        "Grid": ["120"]
       }
     },
     {
