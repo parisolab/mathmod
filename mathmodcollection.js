@@ -3888,7 +3888,7 @@
         "Description": ["Wired Torus (ref: http://www.povray.org/) by Abderrahman Taha 26/12/2019"],
         "Name": ["Wired_Torus_v1"],
         "Component": ["WiredTorus"],
-        "Const": ["A=1/5","B=1/5","C=1","D=1/25","E=1","th=pi/A","ph=pi/B"],
+        "Const": ["A=1/2","B=1/3","C=3/10","D=1/15","E=1/2","th=pi/A","ph=pi/B","XZ=16/5","Y=6/5"],
         "Funct": ["r=(x%(A*2))",
           "r=abs(if(r(x,y,z,t)<(0),r(x,y,z,t)+A,r(x,y,z,t)-A))*C",
           "r2=(y-cos(z*ph)*D)*E",
@@ -3908,12 +3908,12 @@
           "fmesh1=-fmesh0(atan2(y,x),sqrt(x*x+y*y)-(1),z,t)+(3/100)",
           "fmesh2=fmesh1(sqrt(x*x+z*z)-(2),y,atan2(z,x),t)"],
         "Fxyz": ["fmesh2(x,y,z,t)"],
-        "Xmax": ["31/10"],
-        "Xmin": ["-31/10"],
-        "Ymax": ["11/10"],
-        "Ymin": ["-11/10"],
-        "Zmax": ["31/10"],
-        "Zmin": ["-31/10"]
+        "Xmax": ["XZ"],
+        "Xmin": ["-XZ"],
+        "Ymax": ["Y"],
+        "Ymin": ["-Y"],
+        "Zmax": ["XZ"],
+        "Zmin": ["-XZ"]
       }
     },
     {
