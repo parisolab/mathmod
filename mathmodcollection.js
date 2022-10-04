@@ -3888,7 +3888,7 @@
         "Description": ["Wired Torus (ref: http://www.povray.org/) by Abderrahman Taha 26/12/2019"],
         "Name": ["Wired_Torus_v1"],
         "Component": ["WiredTorus"],
-        "Const": ["A=1/2","B=1/3","C=3/10","D=1/15","E=1/2","th=pi/A","ph=pi/B","XZ=16/5","Y=6/5"],
+        "Const": ["A=1/2","B=20/51","C=3/10","D=1/12","E=1/3","th=pi/A","ph=pi/B","XZ=16/5","Y=6/5"],
         "Funct": ["r=(x%(A*2))",
           "r=abs(if(r(x,y,z,t)<(0),r(x,y,z,t)+A,r(x,y,z,t)-A))*C",
           "r2=(y-cos(z*ph)*D)*E",
@@ -3913,7 +3913,8 @@
         "Ymax": ["Y"],
         "Ymin": ["-Y"],
         "Zmax": ["XZ"],
-        "Zmin": ["-XZ"]
+        "Zmin": ["-XZ"],
+        "Grid": ["120"]
       }
     },
     {
