@@ -1009,7 +1009,8 @@
         "Ymax": ["3/2"],
         "Ymin": ["-3/2"],
         "Zmax": ["1/2"],
-        "Zmin": ["-1/2"]
+        "Zmin": ["-1/2"],
+        "Grid": ["100"]
     }
     },
     {
@@ -4150,7 +4151,8 @@
             "Ymax": ["c4"],
             "Ymin": ["c3"],
             "Zmax": ["c4"],
-            "Zmin": ["c3"]
+            "Zmin": ["c3"],
+            "Grid": ["150"]
         },
         "Texture": {
             "Colors": ["R=(6/10)*sqrt(4*x^40+y^4+z^4)",
@@ -7968,8 +7970,8 @@
     {
       "Iso3D": {
         "Description": ["P_Skeletal Sphere by Abderrahman Taha 08/12/2015"],
-        "Name": ["P_Skeletal Sphere"],
-        "Component": ["P_Skeletal Sphere"],
+        "Name": ["P_Skeletal_Sphere"],
+        "Component": ["P_Skeletal_Sphere"],
         "Const": ["M=1",
           "N=4",
           "P=10",
@@ -7984,7 +7986,8 @@
         "Ymax": ["19"],
         "Ymin": ["-19"],
         "Zmax": ["19"],
-        "Zmin": ["-19"]
+        "Zmin": ["-19"],
+        "Grid": ["100"]
       },
         "Sliders": {
           "Max": ["50","50","30","30","100","50","50","50","30","30","100","50","50","50","30","30","100","50","50","50","30","30","100","50"],
