@@ -2275,7 +2275,8 @@
             "Ymax": ["4"],
             "Ymin": ["-4"],
             "Zmax": ["4"],
-            "Zmin": ["-4"]
+            "Zmin": ["-4"],
+            "Grid": ["120"]
         },
         "Texture": {
             "Colors": ["R=cos(x)*sin(z)+3/10","G=sin(x)*cos(y)+3/10","B=sin(y)*cos(z)+3/10","T=1"],
