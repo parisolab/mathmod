@@ -598,13 +598,14 @@
                 "DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
                 "Rapp=(th/sqrt(x*x+y*y+z*z))",
                 "ThickIsoExterior=  psh((0), DFx(x,y,z,t)) * psh((1), DFy(x,y,z,t)) * psh((2), DFz(x,y,z,t)) * (psh((3), Rapp(csd(0), csd(1), csd(2),t)))  * (IsoExterior(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t))*(IsoExterior(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t))"],
-            "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), (1))"],
+            "Fxyz": ["-if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), (1))"],
             "Xmax": ["10"],
             "Xmin": ["-10"],
             "Ymax": ["28"],
             "Ymin": ["-28"],
             "Zmax": ["28"],
-            "Zmin": ["-28"]
+            "Zmin": ["-28"],
+            "Grid": ["100"]
         }
     },
     {
@@ -4848,14 +4849,15 @@
             "Component": ["Arena"],
             "Const": ["c=1/10000","th=6/10","N=10"],
             "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))"],
-            "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), 1)"],
+            "Fxyz": ["-if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), 1)"],
             "Name": ["Arena"],
             "Xmax": ["10"],
             "Xmin": ["-10"],
             "Ymax": ["28"],
             "Ymin": ["-28"],
             "Zmax": ["28"],
-            "Zmin": ["-28"]
+            "Zmin": ["-28"],
+            "Grid": ["100"]
         }
     },
     {
