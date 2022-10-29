@@ -1339,13 +1339,15 @@
       "Iso3D": {
         "Name": ["Blobs"],
         "Component": ["Blobs"],
+        "Const": ["L=13/10"],
         "Fxyz": ["x^2 + y ^2 + z^2 +cos(4*x)+cos(4*y)+cos(4*z)-1/10"],
-        "Xmin": ["-2"],
-        "Xmax": [" 2"],
-        "Ymin": ["-2"],
-        "Ymax": [" 2"],
-        "Zmin": ["-2"],
-        "Zmax": [" 2"]
+        "Xmin": ["-L"],
+        "Xmax": [" L"],
+        "Ymin": ["-L"],
+        "Ymax": [" L"],
+        "Zmin": ["-L"],
+        "Zmax": [" L"],
+        "Grid": ["100"]
       }
     },
     {
