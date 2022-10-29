@@ -1339,7 +1339,7 @@
       "Iso3D": {
         "Name": ["Blobs"],
         "Component": ["Blobs"],
-        "Const": ["L=13/10"],
+        "Const": ["L=12/10"],
         "Fxyz": ["x^2 + y ^2 + z^2 +cos(4*x)+cos(4*y)+cos(4*z)-1/10"],
         "Xmin": ["-L"],
         "Xmax": [" L"],
