@@ -4686,10 +4686,10 @@
     },
     {
       "Iso3D": {
-        "Description": ["Cube of Spheres (update) by Abderrahman Taha 31/10/2019"],
-        "Name": ["Cube of Spheres"],
-        "Component": [" CubeSpheres"],
-        "Const": ["N=5"],
+        "Description": ["Cube of Spheres (update) by Abderrahman Taha 27/10/2022"],
+        "Name": ["Cube_of_Spheres"],
+        "Component": ["CubeSpheres"],
+        "Const": ["N=8"],
         "Funct": ["Sphere=sqrt(x*x+y*y+z*z)-1/(2*N+(1/1000))"],
         "Fxyz": ["if((((x < 1/N | x>(1-1/N)) | (y < 1/N | y>(1-1/N)) | (z < 1/N | z>(1-1/N)))), Sphere((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "],
         "Xmax": ["1"],
@@ -4697,13 +4697,14 @@
         "Ymax": ["1"],
         "Ymin": ["0"],
         "Zmax": ["1"],
-        "Zmin": ["0"]
+        "Zmin": ["0"],
+        "Grid": ["121"]
       },
       "Sliders": {
         "Max": ["20"],
         "Min": ["0"],
         "Name": ["N"],
-        "Position": ["5"],
+        "Position": ["8"],
         "Step": ["1"]
       }
     },
