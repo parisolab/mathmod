@@ -2140,12 +2140,13 @@
         "Name": ["Lidinoid"],
         "Component": ["Lidinoid"],
         "Fxyz": ["-((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+(3/20))"],
-        "Xmax": ["3"],
-        "Xmin": ["-3"],
-        "Ymax": ["3"],
-        "Ymin": ["-3"],
-        "Zmax": ["3"],
-        "Zmin": ["-3"]
+        "Xmax": ["pi"],
+        "Xmin": ["-pi"],
+        "Ymax": ["pi"],
+        "Ymin": ["-pi"],
+        "Zmax": ["pi"],
+        "Zmin": ["-pi"],
+        "Grid": ["100"]
       }
     },
     {
