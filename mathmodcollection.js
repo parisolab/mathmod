@@ -1,87 +1,20 @@
 {
   "MathModels": [
-        {
-            "Param3D": {
-                "Name": [
-                    "Spherical_Harmonics"
-                ],
-                "Description": [
-                    "Spherical harmonics by Abderrahman Taha 03/11/2022"
-                ],
-                "Component": [
-                    "SH_1",
-                    "SH_2",
-                    "SH_3",
-                    "SH_4",
-                    "SH_5",
-                    "SH_6"
-                ],
-                "Funct": [
-                    "H1=abs(1)",
-                    "H2=(7/4)*abs(cos(u))",
-                    "H3=abs(3*cos(u)^2-1)",
-                    "H4=3*abs(cos(u)*sin(u)*sin(v))",
-                    "H5=abs(5*cos(u)^3-3*cos(u))",
-                    "H6=abs((5*cos(u)^2-1)*cos(v)*sin(u))"
-                ],
-                "Fx": [
-                    "H1(u,v,t)*sin(u)*cos(v)",
-                    "H2(u,v,t)*sin(u)*cos(v)+3",
-                    "H3(u,v,t)*sin(u)*cos(v)+6",
-                    "H4(u,v,t)*sin(u)*cos(v)",
-                    "H5(u,v,t)*sin(u)*cos(v)+3",
-                    "H6(u,v,t)*sin(u)*cos(v)+6"
-                ],
-                "Fy": [
-                    "H1(u,v,t)*sin(u)*sin(v)",
-                    "H2(u,v,t)*sin(u)*sin(v)",
-                    "H3(u,v,t)*sin(u)*sin(v)",
-                    "H4(u,v,t)*sin(u)*sin(v)",
-                    "H5(u,v,t)*sin(u)*sin(v)",
-                    "H6(u,v,t)*sin(u)*sin(v)"
-                ],
-                "Fz": [
-                    "H1(u,v,t)*cos(u)",
-                    "H2(u,v,t)*cos(u)",
-                    "H3(u,v,t)*cos(u)",
-                    "H4(u,v,t)*cos(u)-4",
-                    "H5(u,v,t)*cos(u)-4",
-                    "H6(u,v,t)*cos(u)-4"
-                ],
-                "Umax": [
-                    "pi",
-                    "pi",
-                    "pi",
-                    "pi",
-                    "pi",
-                    "pi"
-                ],
-                "Umin": [
-                    "0",
-                    "0",
-                    "0",
-                    "0",
-                    "0",
-                    "0"
-                ],
-                "Vmax": [
-                    "2*pi",
-                    "2*pi",
-                    "2*pi",
-                    "2*pi",
-                    "2*pi",
-                    "2*pi"
-                ],
-                "Vmin": [
-                    "0",
-                    "0",
-                    "0",
-                    "0",
-                    "0",
-                    "0"
-                ]
-            }
-        },
+    {
+        "Param3D": {
+            "Name": ["Spherical_Harmonics"],
+            "Description": ["Spherical harmonics by Abderrahman Taha 03/11/2022"],
+            "Component": ["SH_1","SH_2","SH_3","SH_4","SH_5","SH_6"],
+            "Funct": ["H1=abs(1)","H2=(7/4)*abs(cos(u))","H3=abs(3*cos(u)^2-1)","H4=3*abs(cos(u)*sin(u)*sin(v))","H5=abs(5*cos(u)^3-3*cos(u))","H6=abs((5*cos(u)^2-1)*cos(v)*sin(u))"],
+            "Fx": ["H1(u,v,t)*sin(u)*cos(v)","H2(u,v,t)*sin(u)*cos(v)+3","H3(u,v,t)*sin(u)*cos(v)+6","H4(u,v,t)*sin(u)*cos(v)","H5(u,v,t)*sin(u)*cos(v)+3","H6(u,v,t)*sin(u)*cos(v)+6"],
+            "Fy": ["H1(u,v,t)*sin(u)*sin(v)","H2(u,v,t)*sin(u)*sin(v)","H3(u,v,t)*sin(u)*sin(v)","H4(u,v,t)*sin(u)*sin(v)","H5(u,v,t)*sin(u)*sin(v)","H6(u,v,t)*sin(u)*sin(v)"],
+            "Fz": ["H1(u,v,t)*cos(u)","H2(u,v,t)*cos(u)","H3(u,v,t)*cos(u)","H4(u,v,t)*cos(u)-4","H5(u,v,t)*cos(u)-4","H6(u,v,t)*cos(u)-4"],
+            "Umax": ["pi","pi","pi","pi","pi","pi"],
+            "Umin": ["0","0","0","0","0","0"],
+            "Vmax": ["2*pi","2*pi","2*pi","2*pi","2*pi","2*pi"],
+            "Vmin": ["0","0","0","0","0","0"]
+        }
+    },
     {
         "Iso3D": {
             "Description": ["Ukraine Heart Flag by Abderrahman Taha 24/02/2022"],
