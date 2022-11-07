@@ -5925,9 +5925,10 @@
     },
     {
         "Param3D": {
+            "Description ": ["Star by Abderrahman Taha 12/09/2018"],
+            "Name": ["Star_2"],
             "Component": ["Star"],
             "Const": ["cu=1/10000","cv=1/10000","N=5"],
-            "Description ": ["Star by Abderrahman Taha 12/09/2018"],
             "Funct": ["Thickness= ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v))",
                 "Fx=-cos(u+v)/(sqrt(2)+cos(v-u))",
                 "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
@@ -5948,7 +5949,6 @@
             "Fx": ["-Gx(u,v,t)"],
             "Fy": ["Gy(u,v,t)"],
             "Fz": ["Gz(u,v,t)"],
-            "Name": ["Star_2"],
             "Umax": ["pi"],
             "Umin": ["0"],
             "Vmax": ["2*pi"],
