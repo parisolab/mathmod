@@ -2,8 +2,8 @@
   "MathModels": [
     {
         "Param3D": {
-            "Name": ["Spherical_Harmonics"],
             "Description": ["Spherical harmonics by Abderrahman Taha 03/11/2022"],
+            "Name": ["Spherical_Harmonics"],
             "Component": ["SH_1","SH_2","SH_3","SH_4","SH_5","SH_6"],
             "Funct": ["H1=abs(1)","H2=(7/4)*abs(cos(u))","H3=abs(3*cos(u)^2-1)","H4=3*abs(cos(u)*sin(u)*sin(v))","H5=abs(5*cos(u)^3-3*cos(u))","H6=abs((5*cos(u)^2-1)*cos(v)*sin(u))"],
             "Fx": ["H1(u,v,t)*sin(u)*cos(v)","H2(u,v,t)*sin(u)*cos(v)+3","H3(u,v,t)*sin(u)*cos(v)+6","H4(u,v,t)*sin(u)*cos(v)","H5(u,v,t)*sin(u)*cos(v)+3","H6(u,v,t)*sin(u)*cos(v)+6"],
