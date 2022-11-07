@@ -5945,14 +5945,15 @@
                 "Gx=Fx(u,v,t)+Thickness(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
                 "Gy=Fy(u,v,t)+Thickness(u,v,t)*Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
                 "Gz=Fz(u,v,t)+Thickness(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
-            "Fx": ["Gx(u,v,t)"],
+            "Fx": ["-Gx(u,v,t)"],
             "Fy": ["Gy(u,v,t)"],
             "Fz": ["Gz(u,v,t)"],
             "Name": ["Star_2"],
             "Umax": ["pi"],
             "Umin": ["0"],
             "Vmax": ["2*pi"],
-            "Vmin": ["0"]
+            "Vmin": ["0"],
+            "Grid": ["400","400"]
         }
     },
     {
