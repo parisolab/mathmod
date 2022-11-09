@@ -3718,8 +3718,7 @@
                 "Dx=x^100",
                 "Dy=y^100",
                 "Dz=z^100"],
-            "Fxyz": [
-                "if(abs(x+y+z)<th,-(Dx(x,y,z,t)+Dy(x,y,z,t)+Dz(x,y,z,t)-1)*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx(x,y,z,t)*(Cy(x,y,z,t)+Cz(x,y,z,t))+Cz(x,y,z,t)*Cy(x,y,z,t))=0)*((Bx(x,y,z,t)*(By(x,y,z,t)+Bz(x,y,z,t))+Bz(x,y,z,t)*By(x,y,z,t))=0)*((Ax(x,y,z,t)*(Ay(x,y,z,t)+Az(x,y,z,t))+Az(x,y,z,t)*Ay(x,y,z,t))=0)),(0))"],
+            "Fxyz": ["if(abs(x+y+z)<th,-(Dx(x,y,z,t)+Dy(x,y,z,t)+Dz(x,y,z,t)-1)*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx(x,y,z,t)*(Cy(x,y,z,t)+Cz(x,y,z,t))+Cz(x,y,z,t)*Cy(x,y,z,t))=0)*((Bx(x,y,z,t)*(By(x,y,z,t)+Bz(x,y,z,t))+Bz(x,y,z,t)*By(x,y,z,t))=0)*((Ax(x,y,z,t)*(Ay(x,y,z,t)+Az(x,y,z,t))+Az(x,y,z,t)*Ay(x,y,z,t))=0)),(0))"],
             "Xmax": ["(1001/1000)"],
             "Xmin": ["-(1001/1000)"],
             "Ymax": ["(1001/1000)"],
@@ -3746,22 +3745,22 @@
         "Grid": ["100"]
         },
         "Sliders": {
-        "Max": ["50","50"],
-        "Min": ["0","0"],
-        "Name": ["N","R"],
-        "Position": ["10","16"],
-        "Step": ["1","1"]
+            "Max": ["50","50"],
+            "Min": ["0","0"],
+            "Name": ["N","R"],
+            "Position": ["10","16"],
+            "Step": ["1","1"]
         },
         "Texture": {
-        "Colors": ["R=(7/10)*(cos(x)*cos(y)*cos(z))^(1/10)","G=(7/10)","B=(7/10)","T=1"],
-        "Name": "Lines",
-        "Noise": ""
+            "Colors": ["R=(7/10)*(cos(x)*cos(y)*cos(z))^(1/10)","G=(7/10)","B=(7/10)","T=1"],
+            "Name": "Lines",
+            "Noise": ""
         }
     },
     {
       "Iso3D": {
         "Description": ["Wall Pattern Torus by Abderrahman Taha 18/10/2019"],
-         "Name": ["Wall_Pattern_Torus_v2"],
+        "Name": ["Wall_Pattern_Torus_v2"],
         "Component": ["f_hex_y"],
         "Const": ["X=(57/10)"],
         "Funct": ["f_hex_y_1=if(100*abs(z)<(6),f_hex_y(x,y,z,0)-(2/25),1)",
