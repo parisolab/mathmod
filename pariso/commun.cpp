@@ -43,58 +43,6 @@ static int permutation[256] =
     180
 };
 
-//associated legendre
-double legendre_a (int n, int m, double x)
-{
-    std::vector<double> v(n+1, 0.0);
-    if(m <= n ) {
-    v[m] = 1.0;
-        double fact = 1.0;
-        for(int k = 0; k < m; k++) {
-            v[m] *= -fact * std::sqrt(1.0 - x * x);
-            fact += 2.0;
-        }
-    }
-
-    if(m + 1 <= n ) {
-        v[m+1] = x * ( double ) ( 2 * m + 1 ) * v[m];
-    }
-
-    for(int j = m + 2; j <= n; j++ ) {
-        v[j] = ((double)(2 * j - 1 ) * x * v[(j-1)]
-                + (double)(- j - m + 1 ) * v[(j-2)])
-                / (double)(j - m);
-    }
-    return v[n];
-}
-
-//associated laguerre
-double laguerre_a(int n, int m, double x) {
-    double v[n+1];
-
-    if (n < 0) {
-        return -1;
-    }
-
-    v[0] = 1.0;
-    for (int i = 1; i <= n; i++) {
-        v[i] = 0.0;
-    }
-
-    if (n == 0) {
-        return v[0];
-    }
-
-    v[1] = (double)(m + 1) - x;
-
-    for (int i = 2; i <= n; i++) {
-        v[i] = (((double)(m + 2 * i - 1) - x) * v[i-1]
-               + ( double ) (-m - i + 1 ) * v[i-2])
-               / ( double ) (i);
-    }
-    return v[n];
-}
-
 float tinyrnd()
 {
     static unsigned trand = 0;
