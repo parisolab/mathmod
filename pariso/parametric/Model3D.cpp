@@ -451,16 +451,22 @@ void ParMasterThread::InitMasterParsers()
     GradientParser->AddConstant("pi", PI);
     GradientParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     GradientParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+    GradientParser->AddFunction("LegendreA",Legendre_a, 3);
+    GradientParser->AddFunction("LaguerreA",Laguerre_a, 3);
     Cstparser.AddConstant("pi", PI);
     NoiseParser->AddConstant("pi", PI);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+    NoiseParser->AddFunction("LegendreA",Legendre_a, 3);
+    NoiseParser->AddFunction("LaguerreA",Laguerre_a, 3);
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
     NoiseShapeParser->AddConstant("pi", PI);
     NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
     NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+    NoiseShapeParser->AddFunction("LegendreA",Legendre_a, 3);
+    NoiseShapeParser->AddFunction("LaguerreA",Laguerre_a, 3);
     for(uint i=0; i<componentsNumber; i++)
     {
         if(!param3d_C && !param4d_C)
@@ -469,14 +475,26 @@ void ParMasterThread::InitMasterParsers()
             myParserY[i].AddConstant("pi", PI);
             myParserZ[i].AddConstant("pi", PI);
             myParserW[i].AddConstant("pi", PI);
+
             myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            myParserX[i].AddFunction("LegendreA",Legendre_a, 3);
+            myParserX[i].AddFunction("LaguerreA",Laguerre_a, 3);
+
             myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            myParserY[i].AddFunction("LegendreA",Legendre_a, 3);
+            myParserY[i].AddFunction("LaguerreA",Laguerre_a, 3);
+
             myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            myParserZ[i].AddFunction("LegendreA",Legendre_a, 3);
+            myParserZ[i].AddFunction("LaguerreA",Laguerre_a, 3);
+
             myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            myParserW[i].AddFunction("LegendreA",Legendre_a, 3);
+            myParserW[i].AddFunction("LaguerreA",Laguerre_a, 3);
         }
         else
         {
@@ -492,6 +510,8 @@ void ParMasterThread::InitMasterParsers()
         myParserVmax[i].AddConstant("pi", PI);
         ParisoConditionParser[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
         ParisoConditionParser[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+        ParisoConditionParser[i].AddFunction("LegendreA",Legendre_a, 3);
+        ParisoConditionParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
     }
     for(uint i=0; i<RgbtSize; i++)
     {
@@ -632,6 +652,8 @@ ErrorMessage  ParMasterThread::parse_expression()
         VRgbtSize = HowManyVariables(VRgbt, 4);
         GradientParser->AddFunction("NoiseW",TurbulenceWorley2, 6);
         GradientParser->AddFunction("NoiseP",TurbulencePerlin2, 6);
+        GradientParser->AddFunction("LegendreA",Legendre_a, 3);
+        GradientParser->AddFunction("LaguerreA",Laguerre_a, 3);
         for(uint j=0; j<ConstSize; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
@@ -962,14 +984,27 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserY[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserZ[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserW[i].AddConstant("pi", PI);
+
             workerthreads[nbthreads].myParserX[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserX[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserX[i].AddFunction("LegendreA",Legendre_a, 3);
+            workerthreads[nbthreads].myParserX[i].AddFunction("LaguerreA",Laguerre_a, 3);
+
             workerthreads[nbthreads].myParserY[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserY[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserY[i].AddFunction("LegendreA",Legendre_a, 3);
+            workerthreads[nbthreads].myParserY[i].AddFunction("LaguerreA",Laguerre_a, 3);
+
             workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserZ[i].AddFunction("LegendreA",Legendre_a, 3);
+            workerthreads[nbthreads].myParserZ[i].AddFunction("LaguerreA",Laguerre_a, 3);
+
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
             workerthreads[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+            workerthreads[nbthreads].myParserW[i].AddFunction("LegendreA",Legendre_a, 3);
+            workerthreads[nbthreads].myParserW[i].AddFunction("LaguerreA",Laguerre_a, 3);
+
             for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].myParserX[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);

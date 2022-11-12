@@ -29,6 +29,9 @@
 #define MAGIC_SCALE 1.5707963f
 extern template class FunctionParserBase<double>; // explicit instantiation
 
+double Legendre_a(const double*);
+double Laguerre_a(const double*);
+
 struct GlobalParam
 {
     uint TypeDrawin = 10;
