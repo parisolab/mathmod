@@ -42,7 +42,7 @@ static int permutation[256] =
     222, 114, 67,  29,  24,  72,  243, 141, 128, 195, 78,  66,  215, 61,  156,
     180
 };
-/*
+
 //associated legendre
 double legendre_a (int n, int m, double x)
 {
@@ -94,7 +94,7 @@ double laguerre_a(int n, int m, double x) {
     }
     return v[n];
 }
-*/
+
 double Legendre_a(const double* pp)
 {
     return(legendre_a (int (pp[0]), int (pp[1]), pp[2]));
