@@ -29,6 +29,7 @@
 #define MAGIC_SCALE 1.5707963f
 extern template class FunctionParserBase<double>; // explicit instantiation
 
+double Mandelbrot(const double*);
 double Legendre_a(const double*);
 double Laguerre_a(const double*);
 

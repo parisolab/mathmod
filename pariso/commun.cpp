@@ -43,6 +43,42 @@ static int permutation[256] =
     180
 };
 
+double mandelbrot(double cx, double cy, int MAXCOUNT)
+{
+    double zx, zy, tempx;
+    int count;
+    // z_real
+    zx = 0;
+    // z_imaginary
+    zy = 0;
+    count = 0;
+
+    // Calculate whether c(c_real + c_imaginary) belongs
+    // to the Mandelbrot set or not and draw a pixel
+    // at coordinates (x, y) accordingly
+    // If you reach the Maximum number of iterations
+    // and If the distance from the origin is
+    // greater than 2 exit the loop
+    while ((zx * zx + zy * zy < 4) && (count < MAXCOUNT))
+    {
+        // Calculate Mandelbrot function
+        // z = z*z + c where z is a complex number
+
+        // tempx = z_real*_real - z_imaginary*z_imaginary + c_real
+        tempx = zx * zx - zy * zy + cx;
+
+        // 2*z_real*z_imaginary + c_imaginary
+        zy = 2 * zx * zy + cy;
+
+        // Updating z_real = tempx
+        zx = tempx;
+
+        // Increment count
+        count = count + 1;
+    }
+    return (double(count));
+}
+
 //associated legendre
 double legendre_a (int n, int m, double x)
 {
@@ -93,6 +129,11 @@ double laguerre_a(int n, int m, double x) {
                / ( double ) (i);
     }
     return v[n];
+}
+
+double Mandelbrot(const double* pp)
+{
+    return(mandelbrot (pp[0], pp[1], int (pp[2])));
 }
 
 double Legendre_a(const double* pp)
