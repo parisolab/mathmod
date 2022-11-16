@@ -2,6 +2,7 @@
   "MathModels": [
     {
         "Param3D": {
+            "Name": ["Mandelbrot"],
             "Component": ["Mandel"],
             "Const": ["Lu=3/2",
                 "Lv=3/2",
@@ -9,7 +10,6 @@
             "Fx": ["u"],
             "Fy": ["v"],
             "Fz": ["MandelFractal(u,v,100)/300"],
-            "Name": ["Mandelbrot"],
             "Umax": ["Lu-c"],
             "Umin": ["-Lu-c"],
             "Vmax": ["Lv"],
