@@ -2,6 +2,31 @@
   "MathModels": [
     {
         "Param3D": {
+            "Component": ["Mandel"],
+            "Const": ["Lu=3/2",
+                "Lv=3/2",
+                "c=3/5"],
+            "Fx": ["u"],
+            "Fy": ["v"],
+            "Fz": ["MandelFractal(u,v,100)/300"],
+            "Name": ["Mandelbrot"],
+            "Umax": ["Lu-c"],
+            "Umin": ["-Lu-c"],
+            "Vmax": ["Lv"],
+            "Vmin": ["-Lv"
+            ]
+        },
+        "Texture": {
+            "Colors": ["R=3*z",
+                "G=z",
+                "B=0.2*z",
+                "T=1"],
+            "Name": "Volcano",
+            "Noise": ""
+        }
+    },
+    {
+        "Param3D": {
             "Description": ["Spherical harmonics by Abderrahman Taha 03/11/2022"],
             "Name": ["Spherical_Harmonics"],
             "Component": ["SH_1","SH_2","SH_3","SH_4","SH_5","SH_6"],
