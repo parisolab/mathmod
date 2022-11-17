@@ -2,6 +2,7 @@
   "MathModels": [
     {
         "Param3D": {
+            "Description": ["MandelFractal by Abderrahman Taha 15/11/2022"],
             "Name": ["Mandelbrot"],
             "Component": ["Mandel"],
             "Const": ["Lu=3/2",
@@ -17,9 +18,9 @@
             ]
         },
         "Texture": {
-            "Colors": ["R=3*z",
-                "G=z",
-                "B=0.2*z",
+            "Colors": ["R=6*z",
+                "G=3*z/2",
+                "B=z/5",
                 "T=1"],
             "Name": "Volcano",
             "Noise": ""
