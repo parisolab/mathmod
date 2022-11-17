@@ -43,6 +43,22 @@ static int permutation[256] =
     180
 };
 
+double julia(double zx, double zy, double cx, double cy, int MAXCOUNT)
+{
+    double tempx;
+    int count;
+    count = 0;
+    while ((zx * zx + zy * zy < 4) && (count < MAXCOUNT))
+    {
+        tempx = zx * zx - zy * zy + cx;
+        zy = 2 * zx * zy + cy;
+        zx = tempx;
+        count = count + 1;
+    }
+    return (double(count));
+}
+
+
 double mandelbrot(double cx, double cy, int MAXCOUNT)
 {
     double zx, zy, tempx;
@@ -129,6 +145,11 @@ double laguerre_a(int n, int m, double x) {
                / ( double ) (i);
     }
     return v[n];
+}
+
+double Julia(const double* pp)
+{
+    return(julia (pp[0], pp[1], pp[2], pp[3], int (pp[4])));
 }
 
 double Mandelbrot(const double* pp)
