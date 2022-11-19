@@ -531,12 +531,24 @@ void ParMasterThread::InitMasterParsers()
     }
     for(uint i=0; i<RgbtSize; i++)
     {
-        RgbtParser[i].AddConstant("pi", PI);
         RgbtParser_C[i].AddConstant("pi", PI);
+        RgbtParser[i].AddConstant("pi", PI);
+        RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+        RgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+        RgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+        RgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+        RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
     }
     for(uint i=0; i<VRgbtSize; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
+        VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley2, 6);
+        VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin2, 6);
+        VRgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+        VRgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+        VRgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+        VRgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
     }
     for(uint i=0; i<FunctSize; i++)
     {
@@ -544,6 +556,10 @@ void ParMasterThread::InitMasterParsers()
         {
             Fct[i].AddConstant("pi", PI);
             Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
+            Fct[i].AddFunction("LegendreA",Legendre_a, 3);
+            Fct[i].AddFunction("LaguerreA",Laguerre_a, 3);
+            Fct[i].AddFunction("MandelFractal",Mandelbrot, 3);
+            Fct[i].AddFunction("JuliaFractal",Julia, 5);
         }
         else
         {
@@ -964,6 +980,10 @@ ErrorMessage  Par3D::parse_expression2()
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
+            workerthreads[nbthreads].Fct[ij].AddFunction("LegendreA",Legendre_a, 3);
+            workerthreads[nbthreads].Fct[ij].AddFunction("LaguerreA",Laguerre_a, 3);
+            workerthreads[nbthreads].Fct[ij].AddFunction("MandelFractal",Mandelbrot, 3);
+            workerthreads[nbthreads].Fct[ij].AddFunction("JuliaFractal",Julia, 5);
         }
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
