@@ -269,6 +269,10 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].Fct[ii].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].Fct[ii].AddFunction("MarbleP",MarblePerlin, 4);
+            workerthreads[nbthreads].Fct[ii].AddFunction("LegendreA",Legendre_a, 3);
+            workerthreads[nbthreads].Fct[ii].AddFunction("LaguerreA",Laguerre_a, 3);
+            workerthreads[nbthreads].Fct[ii].AddFunction("MandelFractal",Mandelbrot, 3);
+            workerthreads[nbthreads].Fct[ii].AddFunction("JuliaFractal",Julia, 5);
             for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
@@ -312,6 +316,10 @@ ErrorMessage  Iso3D::parse_expression2()
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("LegendreA",Legendre_a, 3);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("JuliaFractal",Julia, 5);
 
             for(uint j=0; j<masterthread->FunctSize; j++)
             {
@@ -898,6 +906,10 @@ ErrorMessage IsoMasterThread::ParserIso()
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+                RgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+                RgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+                RgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+                RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
             }
             //Add predefined constatnts:
             for(uint k=0; k<Nb_Sliders; k++)
@@ -927,6 +939,10 @@ ErrorMessage IsoMasterThread::ParserIso()
         GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
         GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
         GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
+        GradientParser->AddFunction("LegendreA",Legendre_a, 3);
+        GradientParser->AddFunction("LaguerreA",Laguerre_a, 3);
+        GradientParser->AddFunction("MandelFractal",Mandelbrot, 3);
+        GradientParser->AddFunction("JuliaFractal",Julia, 5);
         for(uint i=0; i<VRgbtSize; i++)
         {
             for(uint j=0; j<ConstSize; j++)
@@ -941,6 +957,10 @@ ErrorMessage IsoMasterThread::ParserIso()
                 VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+                VRgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+                VRgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+                VRgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+                VRgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
             }
         }
     }
@@ -1015,6 +1035,10 @@ ErrorMessage IsoMasterThread::ParserIso()
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+                RgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+                RgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+                RgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+                RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
             }
     // Add defined functions :
     if(vrgbtnotnull)
@@ -1025,6 +1049,10 @@ ErrorMessage IsoMasterThread::ParserIso()
             GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
             GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
             GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
+            GradientParser->AddFunction("LegendreA",Legendre_a, 3);
+            GradientParser->AddFunction("LaguerreA",Laguerre_a, 3);
+            GradientParser->AddFunction("MandelFractal",Mandelbrot, 3);
+            GradientParser->AddFunction("JuliaFractal",Julia, 5);
         }
 
         for(int i=0; i<4; i++)
@@ -1034,6 +1062,10 @@ ErrorMessage IsoMasterThread::ParserIso()
                 VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+                VRgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+                VRgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+                VRgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+                VRgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
             }
     }
     //delete NoiseFunction;
@@ -1056,10 +1088,18 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("fmesh",fmesh, 8);
         implicitFunctionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         implicitFunctionParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+        implicitFunctionParser[i].AddFunction("LegendreA",Legendre_a, 3);
+        implicitFunctionParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+        implicitFunctionParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+        implicitFunctionParser[i].AddFunction("JuliaFractal",Julia, 5);
     }
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
     NoiseParser->AddFunction("MarbleP",MarblePerlin, 4);
+    NoiseParser->AddFunction("LegendreA",Legendre_a, 3);
+    NoiseParser->AddFunction("LaguerreA",Laguerre_a, 3);
+    NoiseParser->AddFunction("MandelFractal",Mandelbrot, 3);
+    NoiseParser->AddFunction("JuliaFractal",Julia, 5);
     return ParseExpression();
 }
 ErrorMessage IsoMasterThread::ParseExpression()
@@ -1251,6 +1291,10 @@ void IsoMasterThread::InitMasterParsers()
         Fct[i].AddFunction("fmesh",fmesh, 8);
         Fct[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         Fct[i].AddFunction("MarbleP",MarblePerlin, 4);
+        Fct[i].AddFunction("LegendreA",Legendre_a, 3);
+        Fct[i].AddFunction("LaguerreA",Laguerre_a, 3);
+        Fct[i].AddFunction("MandelFractal",Mandelbrot, 3);
+        Fct[i].AddFunction("JuliaFractal",Julia, 5);
     }
     for(uint i=0; i< RgbtSize; i++)
     {
@@ -1261,6 +1305,10 @@ void IsoMasterThread::InitMasterParsers()
         RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+        RgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+        RgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+        RgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+        RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
     }
     for(uint i=0; i<VRgbtSize; i++)
     {
@@ -1271,6 +1319,10 @@ void IsoMasterThread::InitMasterParsers()
         VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
+        VRgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
+        VRgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
+        VRgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
+        VRgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
     }
     GradientParser->AddConstant("pi", PI);
     GradientParser->AddConstant("Lacunarity", Lacunarity);
@@ -1279,6 +1331,10 @@ void IsoMasterThread::InitMasterParsers()
     GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
     GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
+    GradientParser->AddFunction("LegendreA",Legendre_a, 3);
+    GradientParser->AddFunction("LaguerreA",Laguerre_a, 3);
+    GradientParser->AddFunction("MandelFractal",Mandelbrot, 3);
+    GradientParser->AddFunction("JuliaFractal",Julia, 5);
 }
 void IsoMasterThread::AllocateMasterParsers()
 {
