@@ -14,13 +14,13 @@
             "Umax": ["Lu-c"],
             "Umin": ["-Lu-c"],
             "Vmax": ["Lv"],
-            "Vmin": ["-Lv"
-            ]
+            "Vmin": ["-Lv"],
+            "Grid": ["800","800"]
         },
         "Texture": {
-            "Colors": ["R=6*z",
-                "G=3*z/2",
-                "B=z/5",
+            "Colors": ["R=6*z+1/10",
+                "G=3*z/2+1/10",
+                "B=z/5+1/10",
                 "T=1"],
             "Name": "Volcano",
             "Noise": ""
