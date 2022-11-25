@@ -1,70 +1,53 @@
 {
   "MathModels": [
-    {
-        "Param3D": {
-            "Component": [
-                "MandelbrotHighResolution"
-            ],
-            "Const": [
-                "c=1/100000"
-            ],
-            "Description ": [
-                "High Resolution Mandelbrot Abderrahman Taha 24/11/2022"
-            ],
-            "Funct": [
-                "Fx=-cos(u)*cos(v)",
-                "Fy=cos(u)*sin(v)",
-                "Fz=sin(u)",
-                "Thickness=MandelFractal(13/10*v-1/2,13/10*u,100)/8000000",
-                "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
-                "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
-                "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
-                "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
-                "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
-                "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
-                "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-                "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-                "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-                "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-                "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-                "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-                "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
-            ],
-            "Fx": [
-                "Gx(u,v,t)"
-            ],
-            "Fy": [
-                "Gy(u,v,t)"
-            ],
-            "Fz": [
-                "Gz(u,v,t)"
-            ],
-            "Name": ["MandelbrotHighResolution"
-            ],
-            "Umax": [
-                "1/30000"
-            ],
-            "Umin": [
-                "-1/30000"
-            ],
-            "Vmax": [
-                "-1.04776"
-            ],
-            "Vmin": [
-                "-1.04784"
-            ]
-        },
-        "Texture": {
-            "Colors": [
-                "R=MandelFractal(13/10*v-1/2,13/10*u,100)/500+0.2",
-                "G=MandelFractal(13/10*v-1/2,13/10*u,100)/600+0.3",
-                "B=0.7",
-                "T=1"
-            ],
-            "Name": "BlueOcean",
-            "Noise": ""
+        {
+            "Param3D": {
+                "Component": [
+                    "MandelbrotHighResolution"
+                ],
+                "Description ": [
+                    "High Resolution Mandelbrot Abderrahman Taha 24/11/2022"
+                ],
+                "Funct": [
+                    "Fx=u",
+                    "Fy=v",
+                    "Fz=MandelFractal(13/10*v-1/2,13/10*u,800)/300000000"
+                ],
+                "Fx": [
+                    "Fx(u,v,t)"
+                ],
+                "Fy": [
+                    "Fy(u,v,t)"
+                ],
+                "Fz": [
+                    "Fz(u,v,t)"
+                ],
+                "Name": ["MandelbrotHighResolution"
+                ],
+                "Umax": [
+                    "1/50000"
+                ],
+                "Umin": [
+                    "-1/50000"
+                ],
+                "Vmax": [
+                    "-1.04779"
+                ],
+                "Vmin": [
+                    "-1.04782"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R=z*(300000000/1500)+0.2",
+                    "G=z*300000000/20000+0.2",
+                    "B=0.4",
+                    "T=1"
+                ],
+                "Name": "Volcano",
+                "Noise": ""
+            }
         }
-    }
 ,
     {
         "Param3D": {
