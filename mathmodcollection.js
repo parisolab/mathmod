@@ -1,54 +1,32 @@
 {
   "MathModels": [
-        {
-            "Param3D": {
-                "Component": [
-                    "MandelbrotHighResolution"
-                ],
-                "Description ": [
-                    "High Resolution Mandelbrot Abderrahman Taha 24/11/2022"
-                ],
-                "Funct": [
-                    "Fx=u",
-                    "Fy=v",
-                    "Fz=MandelFractal(13/10*v-1/2,13/10*u,800)/300000000"
-                ],
-                "Fx": [
-                    "Fx(u,v,t)"
-                ],
-                "Fy": [
-                    "Fy(u,v,t)"
-                ],
-                "Fz": [
-                    "Fz(u,v,t)"
-                ],
-                "Name": ["MandelbrotHighResolution"
-                ],
-                "Umax": [
-                    "1/50000"
-                ],
-                "Umin": [
-                    "-1/50000"
-                ],
-                "Vmax": [
-                    "-1.04779"
-                ],
-                "Vmin": [
-                    "-1.04782"
-                ]
-            },
-            "Texture": {
-                "Colors": [
-                    "R=z*(300000000/1500)+0.2",
-                    "G=z*300000000/20000+0.2",
-                    "B=0.4",
-                    "T=1"
-                ],
-                "Name": "Volcano",
-                "Noise": ""
-            }
+    {
+        "Param3D": {
+            "Component": ["MandelbrotHighResolution"],
+            "Description ": ["High Resolution Mandelbrot Abderrahman Taha 24/11/2022"],
+            "Funct": [
+                "Fx=u",
+                "Fy=v",
+                "Fz=MandelFractal(13/10*v-1/2,13/10*u,800)/300000000"],
+            "Fx": ["Fx(u,v,t)"],
+            "Fy": ["Fy(u,v,t)"],
+            "Fz": ["Fz(u,v,t)"],
+            "Name": ["MandelbrotHighResolution"],
+            "Umax": ["1/50000"],
+            "Umin": ["-1/50000"],
+            "Vmax": ["-1.04779"],
+            "Vmin": ["-1.04782"]
+        },
+        "Texture": {
+            "Colors": [
+                "R=z*(3000000/15)+1/5",
+                "G=z*30000/2+1/5",
+                "B=2/5",
+                "T=1"],
+            "Name": "Volcano",
+            "Noise": ""
         }
-,
+    },
     {
         "Param3D": {
             "Description": ["MandelFractal by Abderrahman Taha 15/11/2022"],
