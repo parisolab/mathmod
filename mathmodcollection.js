@@ -1,5 +1,91 @@
 {
   "MathModels": [
+        {
+            "Iso3D": {
+                "Component": [
+                    "MandelbrotIsoSpheres"
+                ],
+                "Const": [
+                    "StepXY=12",
+                    "R0=700",
+                    "Step=1/StepXY",
+                    "R00=1/R0",
+                    "Iter=100",
+                    "Stepz=1/9"
+                ],
+                "Description": [
+                    "MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"
+                ],
+                "Funct": [
+                    "Sphere0 = (abs(x)+abs(y)+ abs(z)-2*R00)",
+                    "Sphere1 = (x*x+y*y+ z*z-R00)",
+                    "Sphere2 = -Sphere1(((abs(x)%Step)-Step/2),((abs(y)%Step)-Step/2),z,t)",
+                    "Plan2 =  psh(0, MandelFractal(floor(x/Step)*Step +Step/2,floor(y/Step)*Step, Iter))*psh(1, MandelFractal(floor(x/Step)*Step -Step/2,floor(y/Step)*Step, Iter))*psh(2, MandelFractal(floor(x/Step)*Step        ,floor(y/Step)*Step -Step/2, Iter))*psh(3, MandelFractal(floor(x/Step)*Step        ,floor(y/Step)*Step +Step/2, Iter))*psh(4, max(csd(0),    max(csd(1), max(csd(2),csd(3))   ) ))*if((csd(4)=Iter) ,Sphere2(x   ,        y  ,   z  ,1),if(abs(csd(4)-Iter)<96 ,Sphere2(x   ,        y  ,   z +Stepz ,1.5),    if(abs(csd(4)-Iter)<98  ,Sphere2(x   ,        y  ,   z  +2*Stepz,2.5),0*Sphere2(x   ,        y  ,   z +3*Stepz ,3))        )     )"
+                ],
+                "Fxyz": [
+                    "Plan2(x,y,z,t)"
+                ],
+                "Grid": [
+                    "200"
+                ],
+                "Name": [
+                    "SetofSpheres_02"
+                ],
+                "Vect": [
+                    "5"
+                ],
+                "Xmax": [
+                    "1"
+                ],
+                "Xmin": [
+                    "-17/10"
+                ],
+                "Ymax": [
+                    " 5/4"
+                ],
+                "Ymin": [
+                    "-5/4"
+                ],
+                "Zmax": [
+                    "1/10"
+                ],
+                "Zmin": [
+                    "-1/3"
+                ]
+            },
+            "Sliders": {
+                "Max": [
+                    "50",
+                    "5000"
+                ],
+                "Min": [
+                    "1",
+                    "1"
+                ],
+                "Name": [
+                    "StepXY",
+                    "R0"
+                ],
+                "Position": [
+                    "12",
+                    "700"
+                ],
+                "Step": [
+                    "1",
+                    "1"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R=MandelFractal(x,y,20)*abs(z)/3+0.6",
+                    "G=MandelFractal(x,y,20)*abs(z)/2+0.1",
+                    "B=3*abs(z)+ 0.1",
+                    "T=1"
+                ],
+                "Name": "Lines1",
+                "Noise": ""
+            }
+        },
     {
         "Param3D": {
             "Component": ["MandelbrotHighResolution"],
