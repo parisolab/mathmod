@@ -147,16 +147,15 @@
             },
             "Texture": {
                 "Colors": [
-                    "R=MandelFractal(v-1/2,u,100)/500+0.2",
-                    "G=MandelFractal(v-1/2,u,100)/600+0.3",
+                    "R=MandelFractal(v-1/2,u,100)/500+1/5",
+                    "G=MandelFractal(v-1/2,u,100)/600+3/10",
                     "B=0.7",
                     "T=1"
                 ],
                 "Name": "Volcano",
                 "Noise": ""
             }
-        }
-,
+        },
     {
         "Param3D": {
             "Description": ["MandelFractal by Abderrahman Taha 15/11/2022"],
