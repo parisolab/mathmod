@@ -2427,7 +2427,7 @@ void  Par3D::calcul_Norm(uint idx)
             b4  = sqrt((NormVertexTabVector[i*deplacement+j*10+idx+4]*NormVertexTabVector[i*deplacement+j*10+idx+4]) +
                        (NormVertexTabVector[i*deplacement+j*10+idx+5]*NormVertexTabVector[i*deplacement+j*10+idx+5]) +
                        (NormVertexTabVector[i*deplacement+j*10+idx+6]*NormVertexTabVector[i*deplacement+j*10+idx+6]));
-            if( b4 < float(0.000001))  b4 = float(0.000001);
+            if( b4 < float(0.0000001))  b4 = float(0.0000001);
 //Normalise:
             NormVertexTabVector[i*deplacement +j*10+idx+4]/=b4;
             NormVertexTabVector[i*deplacement +j*10+idx+5]/=b4;

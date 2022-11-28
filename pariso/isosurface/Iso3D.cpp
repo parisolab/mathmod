@@ -831,7 +831,7 @@ void Iso3D::SaveIsoGLMap(uint indx)
         scalar = double(sqrt((NormVertexTabVector[idx  ]*NormVertexTabVector[idx  ]) +
                              (NormVertexTabVector[idx+1]*NormVertexTabVector[idx+1]) +
                              (NormVertexTabVector[idx+2]*NormVertexTabVector[idx+2])));
-        if(scalar < 0.000000001)  scalar = 0.000000001;
+        if(scalar < 0.0000001)  scalar = 0.0000001;
         NormVertexTabVector[idx  ] /= float(scalar);
         NormVertexTabVector[idx+1] /= float(scalar);
         NormVertexTabVector[idx+2] /= float(scalar);

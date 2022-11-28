@@ -50,7 +50,7 @@ double f_hex_y(const double* pp)
         y1=y2;
     }
     if ((x1==0.0)&&(y1==0.0))
-        p[0]=0.000001;
+        p[0]=0.000000001;
     th=atan2(y1,x1);
     if (th<PI1/6)
         return(y1);
@@ -102,7 +102,7 @@ double  fhelix1(const double* pp)
         p[i] = pp[i];
     r = sqrt(p[0] * p[0] + p[2] * p[2]);
     if ((p[0] == 0.0) && (p[2] == 0.0))
-        p[0] = 0.000001;
+        p[0] = 0.0000000001;
     th = atan2(p[2], p[0]);
     th = fmod(th * p[3] + p[1] * p[4] * p[3], 2*PI1);
     if (th < 0)
