@@ -12,10 +12,6 @@
                     "MandelbrotTorus by Abderrahman Taha 27/11/2012"
                 ],
                 "Funct": [
-                    "Fx=-cos(u)*cos(v)",
-                    "Fy=cos(u)*sin(v)",
-                    "Fz=sin(u)",
-                    "Thickness1=MandelFractal(v-1/2,u,100)/2000",
                     "Fx=(1+cos(u)/2)*cos(v)",
                     "Fy=(1+cos(u)/2)*sin(v)",
                     "Fz=-sin(u)/2",
