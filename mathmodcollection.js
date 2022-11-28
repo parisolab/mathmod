@@ -39,9 +39,10 @@
                 "Fz": [
                     "Gz(u,v,t)"
                 ],
-                "Name": [
-                    "MandelbrotTorus"
+                "Grid": [
+                    "500","500"
                 ],
+                "Name": ["MandelbrotTorus"],
                 "Umax": [
                     "pi"
                 ],
@@ -62,7 +63,7 @@
                     "B=0.6",
                     "T=1"
                 ],
-                "Name": "Volcano",
+                "Name": "BlueOcean",
                 "Noise": ""
             }
         },
