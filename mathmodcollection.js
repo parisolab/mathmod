@@ -57,8 +57,8 @@
             },
             "Texture": {
                 "Colors": [
-                    "R=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/600+0.2",
-                    "G=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/800+0.4",
+                    "R=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/600+1/5",
+                    "G=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/800+2/5",
                     "B=0.6",
                     "T=1"
                 ],
