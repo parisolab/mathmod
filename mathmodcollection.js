@@ -3,6 +3,54 @@
         {
             "Param3D": {
                 "Component": [
+                    "Julia"
+                ],
+                "Const": [
+                    "Lu=3/2",
+                    "Lv=3/2"
+                ],
+                "Description": [
+                    "JuliaFractal by Abderrahman Taha 16/11/2022"
+                ],
+                "Fx": [
+                    "u"
+                ],
+                "Fy": [
+                    "v"
+                ],
+                "Fz": [
+                    "JuliaFractal(u,v,sin(t), cos(t),100)/300"
+                ],
+                "Name": [
+                    "JuliaFractal"
+                ],
+                "Umax": [
+                    "Lu"
+                ],
+                "Umin": [
+                    "-Lu"
+                ],
+                "Vmax": [
+                    "Lv"
+                ],
+                "Vmin": [
+                    "-Lv"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R=6*z",
+                    "G=3*z/2",
+                    "B=z/5",
+                    "T=1"
+                ],
+                "Name": "Volcano",
+                "Noise": ""
+            }
+        },
+        {
+            "Param3D": {
+                "Component": [
                     "MandelbrotTorus"
                 ],
                 "Const": [
