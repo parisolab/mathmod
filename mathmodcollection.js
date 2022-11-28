@@ -38,11 +38,11 @@
                 ]
             },
             "Texture": {
-                "Colors": [
-                    "R=6*z",
-                    "G=3*z/2",
-                    "B=z/5",
-                    "T=1"
+                    "Colors": [
+                        "R=8*z",
+                        "G=14*z/2+1/6",
+                        "B=z/5+1/2",
+                        "T=1"
                 ],
                 "Name": "Volcano",
                 "Noise": ""
