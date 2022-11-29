@@ -124,9 +124,7 @@
                 "Name": "Lines1",
                 "Noise": ""
             }
-        }
-
-,
+        },
         {
             "Param3D": {
                 "Component": [
