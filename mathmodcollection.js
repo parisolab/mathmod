@@ -2,14 +2,13 @@
   "MathModels": [
         {
             "Param3D": {
-                "Component": ["Julia"],
-                "Const": ["Lu=3/2",
-                    "Lv=3/2"],
                 "Description": ["JuliaFractal by Abderrahman Taha 16/11/2022"],
+                "Name": ["JuliaFractal"],
+                "Component": ["Julia"],
+                "Const": ["Lu=3/2","Lv=3/2","Realc=-0.63","Imagc=-0.41","Iter=600"],
                 "Fx": ["u"],
                 "Fy": ["v"],
-                "Fz": ["JuliaFractal(u,v,sin(t), cos(t),100)/300"],
-                "Name": ["JuliaFractal"],
+                "Fz": ["JuliaFractal(u,v,Realc,Imagc,Iter)/8000"],
                 "Umax": ["Lu"],
                 "Umin": ["-Lu"],
                 "Vmax": ["Lv"],
@@ -28,17 +27,11 @@
         },
         {
             "Param3D": {
-                "Component": [
-                    "MandelbrotTorus"
-                ],
-                "Const": [
-                    "c=1/100000"
-                ],
-                "Description ": [
-                    "MandelbrotTorus by Abderrahman Taha 27/11/2012"
-                ],
-                "Funct": [
-                    "Fx=(1+cos(u)/2)*cos(v)",
+                "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2012"],
+                "Name": ["MandelbrotTorus"],
+                "Component": ["MandelbrotTorus"],
+                "Const": ["c=1/100000"],
+                "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
                     "Fy=(1+cos(u)/2)*sin(v)",
                     "Fz=-sin(u)/2",
                     "Thickness=MandelFractal((2*u+1),(6*v)%(pi)-3/2,100)/2000",
@@ -54,41 +47,21 @@
                     "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
                     "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
                     "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-                    "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
-                ],
-                "Fx": [
-                    "Gx(u,v,t)"
-                ],
-                "Fy": [
-                    "Gy(u,v,t)"
-                ],
-                "Fz": [
-                    "Gz(u,v,t)"
-                ],
-                "Grid": [
-                    "500","500"
-                ],
-                "Name": ["MandelbrotTorus"],
-                "Umax": [
-                    "pi"
-                ],
-                "Umin": [
-                    "-pi"
-                ],
-                "Vmax": [
-                    "2*pi"
-                ],
-                "Vmin": [
-                    "0"
-                ]
+                    "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
+                "Fx": ["Gx(u,v,t)"],
+                "Fy": ["Gy(u,v,t)"],
+                "Fz": ["Gz(u,v,t)"],
+                "Grid": ["500","500"],
+                "Umax": ["pi"],
+                "Umin": ["-pi"],
+                "Vmax": ["2*pi"],
+                "Vmin": ["0"]
             },
             "Texture": {
-                "Colors": [
-                    "R=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/600+1/5",
+                "Colors": ["R=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/600+1/5",
                     "G=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/800+2/5",
                     "B=0.6",
-                    "T=1"
-                ],
+                    "T=1"],
                 "Name": "BlueOcean",
                 "Noise": ""
             }
