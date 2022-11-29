@@ -75,7 +75,7 @@
                     "StepXY=300",
                     "Stepz=7",
                     "R00=50"],
-                "Funct": ["Octahedron = (abs(x)+abs(y)+ abs(z)-2/R00)",
+                "Funct": ["Octahedron = (abs(x)+abs(y)+ abs(z)-1/R00)",
                     "Sphere = (x*x+y*y+ z*z-1/R00^2)",
                     "Sphere2 = -Sphere(((abs(x)%(1/StepXY))-(1/(2*StepXY))),((abs(y)%(1/StepXY))-(1/StepXY)/2),z,t)",
                     "MandelbrotSpheres =  psh((0), MandelFractal(floor(x/(1/StepXY))*(1/StepXY) +(1/(2*StepXY)),floor(y/(1/StepXY))*(1/StepXY), Iter))*psh((1),MandelFractal(floor(x/(1/StepXY))*(1/StepXY) -(1/(2*StepXY)),floor(y/(1/StepXY))*(1/StepXY),Iter))*psh((2), MandelFractal(floor(x/(1/StepXY))*(1/StepXY),floor(y/(1/StepXY))*(1/StepXY)-(1/(2*StepXY)),Iter))*psh((3),MandelFractal(floor(x/(1/StepXY))*(1/StepXY),floor(y/(1/StepXY))*(1/StepXY) +(1/(2*StepXY)),Iter))*psh((4),max(csd(0),max(csd(1), max(csd(2),csd(3)))))*if((csd(4)=Iter),Sphere2(x,y,z,(1)),if(abs(csd(4)-Iter)<(96) ,Sphere2(x,y,z +(1/Stepz),(3/2)),if(abs(csd(4)-Iter)<(98),Sphere2(x,y,z+2*(1/Stepz),(5/2)),(0))))"],
@@ -83,11 +83,11 @@
                 "Grid": ["200"],
                 "Vect": ["5"],
                 "Xmax": ["1"],
-                "Xmin": ["-17/10"],
+                "Xmin": ["-2"],
                 "Ymax": [" 5/4"],
                 "Ymin": ["-5/4"],
-                "Zmax": ["1/10"],
-                "Zmin": ["-1/3"]
+                "Zmax": ["1/20"],
+                "Zmin": ["-3/10"]
             },
             "Sliders": {
                 "Max": ["500",
@@ -103,10 +103,9 @@
                     "R00",
                     "Stepz"],
                 "Position": ["300",
-                    "100",
+                    "104",
                     "50",
                     "7",
-
                     "14",
                     "100",
                     "27",
@@ -115,12 +114,15 @@
                     "1",
                     "1",
                     "1"]
-            },
+            }
+            ,
             "Texture": {
-                "Colors": ["R=MandelFractal(x,y,20)*abs(z)/3+3/5",
-                    "G=MandelFractal(x,y,20)*abs(z)/2+1/10",
-                    "B=3*abs(z)+ 1/10",
-                    "T=1"],
+                "Colors": [
+                    "R=(6/5)*MandelFractal(x,y,(25))*abs(z)",
+                    "G=(1/2)*MandelFractal(x,y,(25))*abs(z)/2",
+                    "B=abs(z)",
+                    "T=1"
+                ],
                 "Name": "Lines1",
                 "Noise": ""
             }
