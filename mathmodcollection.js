@@ -68,45 +68,104 @@
         },
         {
             "Iso3D": {
-                "Component": ["MandelbrotIsoSpheres"],
-                "Const": ["StepXY=10",
-                    "R0=22",
-                    "Step=1/StepXY",
-                    "R00=1/R0",
+                "Component": [
+                    "MandelbrotIsoSpheres"
+                ],
+                "Const": [
                     "Iter=100",
-                    "Stepz=1/9"],
-                "Description": ["MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"],
-                "Funct": ["Sphere0 = (abs(x)+abs(y)+ abs(z)-2*R00)",
-                    "Sphere1 = (x*x+y*y+ z*z-R00^2)",
-                    "Sphere2 = -Sphere1(((abs(x)%Step)-Step/2),((abs(y)%Step)-Step/2),z,t)",
-                    "Plan2 =  psh(0, MandelFractal(floor(x/Step)*Step +Step/2,floor(y/Step)*Step, Iter))*psh(1, MandelFractal(floor(x/Step)*Step -Step/2,floor(y/Step)*Step, Iter))*psh(2, MandelFractal(floor(x/Step)*Step        ,floor(y/Step)*Step -Step/2, Iter))*psh(3, MandelFractal(floor(x/Step)*Step        ,floor(y/Step)*Step +Step/2, Iter))*psh(4, max(csd(0),    max(csd(1), max(csd(2),csd(3))   ) ))*if((csd(4)=Iter) ,Sphere2(x,y  ,z  ,1),if(abs(csd(4)-Iter)<96 ,Sphere2(x,y,z +Stepz ,3/2),    if(abs(csd(4)-Iter)<98  ,Sphere2(x   ,        y  ,z+2*Stepz,5/2),0*Sphere2(x   ,        y  ,   z +3*Stepz ,3))        )     )"],
-                "Fxyz": ["Plan2(x,y,z,t)"],
-                "Grid": ["200"],
-                "Name": ["SetofSpheres_02"],
-                "Vect": ["5"],
-                "Xmax": ["1"],
-                "Xmin": ["-17/10"],
-                "Ymax": [" 5/4"],
-                "Ymin": ["-5/4"],
-                "Zmax": ["1/10"],
-                "Zmin": ["-1/3"]
+                    "StepXY=300",
+                    "Stepz=7",
+                    "R00=50"
+                ],
+                "Description": [
+                    "MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"
+                ],
+                "Funct": [
+                    "Sphere0 = (abs(x)+abs(y)+ abs(z)-2/R00)",
+                    "Sphere1 = (x*x+y*y+ z*z-1/R00^2)",
+                    "Sphere2 = -Sphere1(((abs(x)%(1/StepXY))-(1/StepXY)/2),((abs(y)%(1/StepXY))-(1/StepXY)/2),z,t)",
+                    "Plan2 =  psh(0, MandelFractal(floor(x/(1/StepXY))*(1/StepXY) +(1/StepXY)/2,floor(y/(1/StepXY))*(1/StepXY), Iter))*psh(1, MandelFractal(floor(x/(1/StepXY))*(1/StepXY) -(1/StepXY)/2,floor(y/(1/StepXY))*(1/StepXY), Iter))*psh(2, MandelFractal(floor(x/(1/StepXY))*(1/StepXY)        ,floor(y/(1/StepXY))*(1/StepXY) -(1/StepXY)/2, Iter))*psh(3, MandelFractal(floor(x/(1/StepXY))*(1/StepXY)        ,floor(y/(1/StepXY))*(1/StepXY) +(1/StepXY)/2, Iter))*psh(4, max(csd(0),    max(csd(1), max(csd(2),csd(3))   ) ))*if((csd(4)=Iter) ,Sphere2(x,y  ,z  ,1),if(abs(csd(4)-Iter)<96 ,Sphere2(x,y,z +(1/Stepz),3/2),    if(abs(csd(4)-Iter)<98  ,Sphere2(x   ,        y  ,z+2*(1/Stepz),5/2),0*Sphere2(x   ,        y  ,   z +3*(1/Stepz) ,3))        )     )"
+                ],
+                "Fxyz": [
+                    "Plan2(x,y,z,t)"
+                ],
+                "Grid": [
+                    "200"
+                ],
+                "Name": [
+                    "SetofSpheres_02"
+                ],
+                "Vect": [
+                    "5"
+                ],
+                "Xmax": [
+                    "1"
+                ],
+                "Xmin": [
+                    "-17/10"
+                ],
+                "Ymax": [
+                    " 5/4"
+                ],
+                "Ymin": [
+                    "-5/4"
+                ],
+                "Zmax": [
+                    "1/10"
+                ],
+                "Zmin": [
+                    "-1/3"
+                ]
             },
             "Sliders": {
-                "Max": ["50","5000"],
-                "Min": ["1","1"],
-                "Name": ["StepXY","R0"],
-                "Position": ["12","700"],
-                "Step": ["1","1"]
+                "Max": [
+                    "500",
+                    "500",
+                    "500",
+                    "500"
+                ],
+                "Min": [
+                    "1",
+                    "1",
+                    "1",
+                    "1"
+                ],
+                "Name": [
+                    "StepXY",
+                    "Iter",
+                    "R00",
+                    "Stepz"
+                ],
+                "Position": [
+                    "300",
+                    "100",
+                    "50",
+                    "7",
+
+                    "14",
+                    "100",
+                    "27",
+                    "8"
+                ],
+                "Step": [
+                    "1",
+                    "1",
+                    "1",
+                    "1"
+                ]
             },
             "Texture": {
-                "Colors": ["R=MandelFractal(x,y,20)*abs(z)/3+3/5",
+                "Colors": [
+                    "R=MandelFractal(x,y,20)*abs(z)/3+3/5",
                     "G=MandelFractal(x,y,20)*abs(z)/2+1/10",
                     "B=3*abs(z)+ 1/10",
-                    "T=1"],
+                    "T=1"
+                ],
                 "Name": "Lines1",
                 "Noise": ""
             }
-        },
+        }
+,
         {
             "Param3D": {
                 "Component": [
