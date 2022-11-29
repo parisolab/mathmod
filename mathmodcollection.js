@@ -2,48 +2,26 @@
   "MathModels": [
         {
             "Param3D": {
-                "Component": [
-                    "Julia"
-                ],
-                "Const": [
-                    "Lu=3/2",
-                    "Lv=3/2"
-                ],
-                "Description": [
-                    "JuliaFractal by Abderrahman Taha 16/11/2022"
-                ],
-                "Fx": [
-                    "u"
-                ],
-                "Fy": [
-                    "v"
-                ],
-                "Fz": [
-                    "JuliaFractal(u,v,sin(t), cos(t),100)/300"
-                ],
-                "Name": [
-                    "JuliaFractal"
-                ],
-                "Umax": [
-                    "Lu"
-                ],
-                "Umin": [
-                    "-Lu"
-                ],
-                "Vmax": [
-                    "Lv"
-                ],
-                "Vmin": [
-                    "-Lv"
-                ]
+                "Component": ["Julia"],
+                "Const": ["Lu=3/2",
+                    "Lv=3/2"],
+                "Description": ["JuliaFractal by Abderrahman Taha 16/11/2022"],
+                "Fx": ["u"],
+                "Fy": ["v"],
+                "Fz": ["JuliaFractal(u,v,sin(t), cos(t),100)/300"],
+                "Name": ["JuliaFractal"],
+                "Umax": ["Lu"],
+                "Umin": ["-Lu"],
+                "Vmax": ["Lv"],
+                "Vmin": ["-Lv"],
+                "Grid": ["600","600"]
             },
             "Texture": {
                     "Colors": [
                         "R=8*z",
                         "G=14*z/2+1/6",
                         "B=z/5+1/2",
-                        "T=1"
-                ],
+                        "T=1"],
                 "Name": "Volcano",
                 "Noise": ""
             }
