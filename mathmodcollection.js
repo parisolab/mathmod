@@ -129,15 +129,10 @@
         },
         {
             "Param3D": {
-                "Component": [
-                    "Sphere"
-                ],
-                "Const": [
-                    "c=1/100000"
-                ],
-                "Description ": [
-                    "Mandelbrot Sphere by Abderrahman Taha 27/11/2012"
-                ],
+                "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2012"],
+                "Name": ["MandelbrotSphere"],
+                "Component": ["Sphere"],
+                "Const": ["c=1/100000"],
                 "Funct": [
                     "Fx=-cos(u)*cos(v)",
                     "Fy=cos(u)*sin(v)",
@@ -155,44 +150,22 @@
                     "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
                     "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
                     "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-                    "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"
-                ],
-                "Fx": [
-                    "Gx(u,v,t)"
-                ],
-                "Fy": [
-                    "Gy(u,v,t)"
-                ],
-                "Fz": [
-                    "Gz(u,v,t)"
-                ],
-                "Grid": [
-                    "500",
-                    "500"
-                ],
-                "Name": [
-                    "MandelbrotSphere"
-                ],
-                "Umax": [
-                    "pi/2"
-                ],
-                "Umin": [
-                    "-pi/2"
-                ],
-                "Vmax": [
-                    "pi/2"
-                ],
-                "Vmin": [
-                    "-pi/2"
-                ]
+                    "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
+                "Fx": ["Gx(u,v,t)"],
+                "Fy": ["Gy(u,v,t)"],
+                "Fz": ["Gz(u,v,t)"],
+                "Grid": ["500","500"],
+                "Umax": ["pi/2"],
+                "Umin": ["-pi/2"],
+                "Vmax": ["pi/2"],
+                "Vmin": ["-pi/2"]
             },
             "Texture": {
                 "Colors": [
                     "R=MandelFractal(v-1/2,u,100)/500+1/5",
                     "G=MandelFractal(v-1/2,u,100)/600+3/10",
-                    "B=0.7",
-                    "T=1"
-                ],
+                    "B=7/10",
+                    "T=1"],
                 "Name": "Volcano",
                 "Noise": ""
             }
