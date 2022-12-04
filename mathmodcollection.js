@@ -1,6 +1,46 @@
 {
   "MathModels": [
         {
+            "Iso3D": {
+                "Description": [
+                    "MandelGoldenTemple by Abderrahman Taha 03/12/2022"
+                ],
+                "Name": [
+                    "MandelGoldenTemple"
+                ],
+                "Component": [
+                    "MandelTemple"
+                ],
+                "Const": [
+                    "Iter=300"
+                ],
+                "Fxyz": [
+                    "-((x^2+y^2-(MandelFractal(-z,sqrt(x*x+y*y), Iter)/Iter)^2))"
+                ],
+                "Grid": [
+                    "150"
+                ],
+                "Xmax": [
+                    "1"
+                ],
+                "Xmin": [
+                    "-1"
+                ],
+                "Ymax": [
+                    "1"
+                ],
+                "Ymin": [
+                    "-1"
+                ],
+                "Zmax": [
+                    "2"
+                ],
+                "Zmin": [
+                    "-1/2"
+                ]
+            }
+        },
+        {
             "Param3D": {
                 "Description": ["JuliaFractal by Abderrahman Taha 16/11/2022"],
                 "Name": ["JuliaFractal"],
