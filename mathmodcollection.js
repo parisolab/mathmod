@@ -124,49 +124,49 @@
                 "Noise": ""
             }
         },
-        {
-            "Param3D": {
-                "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2012"],
-                "Name": ["MandelbrotSphere"],
-                "Component": ["Sphere"],
-                "Const": ["c=1/100000"],
-                "Funct": [
-                    "Fx=-cos(u)*cos(v)",
-                    "Fy=cos(u)*sin(v)",
-                    "Fz=sin(u)",
-                    "Thickness=MandelFractal(v-1/2,u,100)/2000",
-                    "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
-                    "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
-                    "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
-                    "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
-                    "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
-                    "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
-                    "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-                    "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-                    "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-                    "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-                    "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-                    "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-                    "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
-                "Fx": ["Gx(u,v,t)"],
-                "Fy": ["Gy(u,v,t)"],
-                "Fz": ["Gz(u,v,t)"],
-                "Grid": ["500","500"],
-                "Umax": ["pi/2"],
-                "Umin": ["-pi/2"],
-                "Vmax": ["pi/2"],
-                "Vmin": ["-pi/2"]
-            },
-            "Texture": {
-                "Colors": [
-                    "R=MandelFractal(v-1/2,u,100)/500+1/5",
-                    "G=MandelFractal(v-1/2,u,100)/600+3/10",
-                    "B=7/10",
-                    "T=1"],
-                "Name": "Volcano",
-                "Noise": ""
-            }
+    {
+        "Param3D": {
+            "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2012"],
+            "Name": ["MandelbrotSphere"],
+            "Component": ["Sphere"],
+            "Const": ["c=1/100000"],
+            "Funct": [
+                "Fx=-cos(u)*cos(v)",
+                "Fy=cos(u)*sin(v)",
+                "Fz=sin(u)",
+                "Thickness=MandelFractal(v-1/2,u,100)/2000",
+                "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+                "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+                "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+                "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+                "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+                "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+                "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+                "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+                "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+                "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+                "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
+                "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
+                "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
+            "Fx": ["Gx(u,v,t)"],
+            "Fy": ["Gy(u,v,t)"],
+            "Fz": ["Gz(u,v,t)"],
+            "Grid": ["500","500"],
+            "Umax": ["pi/2"],
+            "Umin": ["-pi/2"],
+            "Vmax": ["pi/2"],
+            "Vmin": ["-pi/2"]
         },
+        "Texture": {
+            "Colors": [
+                "R=MandelFractal(v-1/2,u,100)/500+1/5",
+                "G=MandelFractal(v-1/2,u,100)/600+3/10",
+                "B=7/10",
+                "T=1"],
+            "Name": "Volcano",
+            "Noise": ""
+        }
+    },
     {
         "Param3D": {
             "Description": ["MandelFractal by Abderrahman Taha 15/11/2022"],
