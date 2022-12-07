@@ -82,48 +82,48 @@
                 "Noise": ""
             }
         },
-        {
-            "Iso3D": {
-                "Description": ["MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"],
-                "Name": ["MandelbrotIsoSpheres"],
-                "Component": ["MandelbrotIsoSpheres"],
-                "Const": ["Iter=100",
-                    "Step_XY=300",
-                    "Step_Z=7",
-                    "R00=50"],
-                "Funct": ["Octahedron = (abs(x)+abs(y)+ abs(z)-1/R00)",
-                    "Sphere = (x*x+y*y+ z*z-1/R00^2)",
-                    "Sphere2 = -Sphere(((abs(x)%(1/Step_XY))-(1/(2*Step_XY))),((abs(y)%(1/Step_XY))-(1/Step_XY)/2),z,t)",
-                    "MandelbrotSpheres =  psh((0), MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY), Iter))*psh((1),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY) -(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY),Iter))*psh((2), MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY)-(1/(2*Step_XY)),Iter))*psh((3),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),Iter))*psh((4),max(csd(0),max(csd(1), max(csd(2),csd(3)))))*if((csd(4)=Iter),Sphere2(x,y,z,(1)),if(abs(csd(4)-Iter)<(96) ,Sphere2(x,y,z +(1/Step_Z),(3/2)),if(abs(csd(4)-Iter)<(98),Sphere2(x,y,z+2*(1/Step_Z),(5/2)),(0))))"],
-                "Fxyz": ["MandelbrotSpheres(x,y,z,t)"],
-                "Grid": ["200"],
-                "Vect": ["5"],
-                "Xmax": ["1"],
-                "Xmin": ["-2"],
-                "Ymax": [" 5/4"],
-                "Ymin": ["-5/4"],
-                "Zmax": ["1/20"],
-                "Zmin": ["-3/10"]
-            },
-            "Sliders": {
-                "Max": ["500","500","500","500"],
-                "Min": ["1","1","1","1"],
-                "Name": ["Step_XY","Iter","R00","Step_Z"],
-                "Position": ["300","104","50","7","14","100","27","8"],
-                "Step": ["1","1","1","1"]
-            }
-            ,
-            "Texture": {
-                "Colors": [
-                    "R=(6/5)*MandelFractal(x,y,(25))*abs(z)",
-                    "G=(1/2)*MandelFractal(x,y,(25))*abs(z)/2",
-                    "B=abs(z)",
-                    "T=1"
-                ],
-                "Name": "Lines1",
-                "Noise": ""
-            }
+    {
+        "Iso3D": {
+            "Description": ["MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"],
+            "Name": ["MandelbrotIsoSpheres"],
+            "Component": ["MandelbrotIsoSpheres"],
+            "Const": ["Iter=100",
+                "Step_XY=300",
+                "Step_Z=7",
+                "R00=50"],
+            "Funct": ["Octahedron = (abs(x)+abs(y)+ abs(z)-1/R00)",
+                "Sphere = (x*x+y*y+ z*z-1/R00^2)",
+                "Sphere2 = -Sphere(((abs(x)%(1/Step_XY))-(1/(2*Step_XY))),((abs(y)%(1/Step_XY))-(1/Step_XY)/2),z,t)",
+                "MandelbrotSpheres =  psh((0), MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY), Iter))*psh((1),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY) -(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY),Iter))*psh((2), MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY)-(1/(2*Step_XY)),Iter))*psh((3),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),Iter))*psh((4),max(csd(0),max(csd(1), max(csd(2),csd(3)))))*if((csd(4)=Iter),Sphere2(x,y,z,(1)),if(abs(csd(4)-Iter)<(96) ,Sphere2(x,y,z +(1/Step_Z),(3/2)),if(abs(csd(4)-Iter)<(98),Sphere2(x,y,z+2*(1/Step_Z),(5/2)),(0))))"],
+            "Fxyz": ["MandelbrotSpheres(x,y,z,t)"],
+            "Grid": ["200"],
+            "Vect": ["5"],
+            "Xmax": ["1"],
+            "Xmin": ["-2"],
+            "Ymax": [" 5/4"],
+            "Ymin": ["-5/4"],
+            "Zmax": ["1/20"],
+            "Zmin": ["-3/10"]
         },
+        "Sliders": {
+            "Max": ["500","500","500","500"],
+            "Min": ["1","1","1","1"],
+            "Name": ["Step_XY","Iter","R00","Step_Z"],
+            "Position": ["300","104","50","7","14","100","27","8"],
+            "Step": ["1","1","1","1"]
+        }
+        ,
+        "Texture": {
+            "Colors": [
+                "R=(6/5)*MandelFractal(x,y,(25))*abs(z)",
+                "G=(1/2)*MandelFractal(x,y,(25))*abs(z)/2",
+                "B=abs(z)",
+                "T=1"
+            ],
+            "Name": "Lines1",
+            "Noise": ""
+        }
+    },
     {
         "Param3D": {
             "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2012"],
