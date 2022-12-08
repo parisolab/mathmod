@@ -41,47 +41,47 @@
                 "Noise": ""
             }
         },
-        {
-            "Param3D": {
-                "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2012"],
-                "Name": ["MandelbrotTorus"],
-                "Component": ["MandelbrotTorus"],
-                "Const": ["c=1/100000"],
-                "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
-                    "Fy=(1+cos(u)/2)*sin(v)",
-                    "Fz=-sin(u)/2",
-                    "Thickness=MandelFractal((2*u+1),(6*v)%(pi)-3/2,100)/2000",
-                    "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
-                    "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
-                    "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
-                    "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
-                    "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
-                    "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
-                    "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-                    "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-                    "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-                    "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
-                    "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
-                    "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
-                    "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
-                "Fx": ["Gx(u,v,t)"],
-                "Fy": ["Gy(u,v,t)"],
-                "Fz": ["Gz(u,v,t)"],
-                "Grid": ["500","500"],
-                "Umax": ["pi"],
-                "Umin": ["-pi"],
-                "Vmax": ["2*pi"],
-                "Vmin": ["0"]
-            },
-            "Texture": {
-                "Colors": ["R=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/600+1/5",
-                    "G=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/800+2/5",
-                    "B=0.6",
-                    "T=1"],
-                "Name": "BlueOcean",
-                "Noise": ""
-            }
+    {
+        "Param3D": {
+            "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2012"],
+            "Name": ["MandelbrotTorus"],
+            "Component": ["MandelbrotTorus"],
+            "Const": ["c=1/100000"],
+            "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
+                "Fy=(1+cos(u)/2)*sin(v)",
+                "Fz=-sin(u)/2",
+                "Thickness=MandelFractal((2*u+1),(6*v)%(pi)-3/2,100)/2000",
+                "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+                "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+                "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+                "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+                "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+                "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+                "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+                "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+                "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+                "R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)",
+                "Gx=Fx(u,v,t)+Thickness(u,v,t)*n1(u,v,t)/R(u,v,t)",
+                "Gy=Fy(u,v,t)+Thickness(u,v,t)*n2(u,v,t)/R(u,v,t)",
+                "Gz=Fz(u,v,t)+Thickness(u,v,t)*n3(u,v,t)/R(u,v,t)"],
+            "Fx": ["Gx(u,v,t)"],
+            "Fy": ["Gy(u,v,t)"],
+            "Fz": ["Gz(u,v,t)"],
+            "Grid": ["500","500"],
+            "Umax": ["pi"],
+            "Umin": ["-pi"],
+            "Vmax": ["2*pi"],
+            "Vmin": ["0"]
         },
+        "Texture": {
+            "Colors": ["R=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/600+1/5",
+                "G=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/800+2/5",
+                "B=0.6",
+                "T=1"],
+            "Name": "BlueOcean",
+            "Noise": ""
+        }
+    },
     {
         "Iso3D": {
             "Description": ["MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"],
