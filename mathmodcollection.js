@@ -32,8 +32,7 @@
             "Grid": ["600","600"]
         },
         "Texture": {
-                "Colors": [
-                    "R=8*z",
+                "Colors": ["R=8*z",
                     "G=14*z/2+1/6",
                     "B=z/5+1/2",
                     "T=1"],
@@ -108,12 +107,10 @@
         }
         ,
         "Texture": {
-            "Colors": [
-                "R=(6/5)*MandelFractal(x,y,(25))*abs(z)",
+            "Colors": ["R=(6/5)*MandelFractal(x,y,(25))*abs(z)",
                 "G=(1/2)*MandelFractal(x,y,(25))*abs(z)/2",
                 "B=abs(z)",
-                "T=1"
-            ],
+                "T=1"],
             "Name": "Lines1",
             "Noise": ""
         }
