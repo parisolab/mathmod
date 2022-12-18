@@ -58,21 +58,18 @@ double julia(double zx, double zy, double cx, double cy, int MAXCOUNT)
     return (double(count));
 }
 
-
 double mandelbrot(double cx, double cy, int MAXCOUNT)
 {
-    double zx, zy, tempx;
+    double zx, zy, tempx, Zx, Zy;
     int count;
     zx = 0;
     zy = 0;
     count = 0;
-    while ((zx * zx + zy * zy < 4) && (count < MAXCOUNT))
+    while (((Zx=(zx * zx)) + (Zy=(zy * zy)) < 4) && (count < MAXCOUNT))
     {
-        tempx = zx * zx - zy * zy + cx;
+        tempx = Zx -  Zy + cx;
         zy = 2 * zx * zy + cy;
         zx = tempx;
-
-        // Increment count
         count = count + 1;
     }
     return (double(count));
@@ -90,11 +87,9 @@ double legendre_a (int n, int m, double x)
             fact += 2.0;
         }
     }
-
     if(m + 1 <= n ) {
         v[m+1] = x * ( double ) ( 2 * m + 1 ) * v[m];
     }
-
     for(int j = m + 2; j <= n; j++ ) {
         v[j] = ((double)(2 * j - 1 ) * x * v[(j-1)]
                 + (double)(- j - m + 1 ) * v[(j-2)])
@@ -106,22 +101,17 @@ double legendre_a (int n, int m, double x)
 //associated laguerre
 double laguerre_a(int n, int m, double x) {
     double v[n+1];
-
     if (n < 0) {
         return -1;
     }
-
     v[0] = 1.0;
     for (int i = 1; i <= n; i++) {
         v[i] = 0.0;
     }
-
     if (n == 0) {
         return v[0];
     }
-
     v[1] = (double)(m + 1) - x;
-
     for (int i = 2; i <= n; i++) {
         v[i] = (((double)(m + 2 * i - 1) - x) * v[i-1]
                + ( double ) (-m - i + 1 ) * v[i-2])
