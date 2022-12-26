@@ -485,7 +485,7 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     if (ShowCurrentObjectTree)
         UpdateTreeObject();
     // Update the "Script Edit" page
-    ui.ParamEdit->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
+    ui.ScriptEditor->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
     // Update the "Model Details" page
     if (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray())
     {
@@ -2112,7 +2112,7 @@ void DrawingOptions::Run_JsonObject_activeted()
 {
     QJsonParseError err;
     QString script =
-        ui.ParamEdit->toPlainText()
+        ui.ScriptEditor->toPlainText()
         .trimmed()
         .replace("\n", "")
         .replace("\t", "")
@@ -4229,7 +4229,7 @@ void DrawingOptions::UpdateGui(int argc)
     ui.Messagetext->setFontPointSize(12);
 
     // Script Editor font size
-    ui.ParamEdit->setFontPointSize(Parameters->scripteditorfontsize);
+    ui.ScriptEditor->setFontPointSize(Parameters->scripteditorfontsize);
 }
 
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
@@ -4374,7 +4374,7 @@ void DrawingOptions::on_pushButton_2_clicked()
     QJsonParseError err;
     QString sortie;
     QString script =
-        ui.ParamEdit->toPlainText().trimmed().replace("\n", "").replace("\t", "").replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str());
+        ui.ScriptEditor->toPlainText().trimmed().replace("\n", "").replace("\t", "").replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
     {

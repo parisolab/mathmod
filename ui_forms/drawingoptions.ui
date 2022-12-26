@@ -4092,7 +4092,7 @@ p, li { white-space: pre-wrap; }
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
-               <widget class="QTextEdit" name="ParamEdit">
+               <widget class="QTextEdit" name="ScriptEditor">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
