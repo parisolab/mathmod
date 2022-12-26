@@ -9,7 +9,8 @@
         "IsoMaxGrid": 500,
         "InitIsoGrid": 41,
         "ParMaxGrid": 5000,
-        "InitParGrid": 64
+        "InitParGrid": 64,
+        "ScriptEditorFontSize": 24
     },
     "StartOptions": {
         "Model": "CloseIso_1"

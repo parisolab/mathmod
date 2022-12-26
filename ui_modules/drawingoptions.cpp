@@ -4227,6 +4227,9 @@ void DrawingOptions::UpdateGui(int argc)
 
     // ProgressBar + text informations (set to minimum size 0)
     ui.Messagetext->setFontPointSize(12);
+
+    // Script Editor font size
+    ui.ParamEdit->setFontPointSize(Parameters->scripteditorfontsize);
 }
 
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)

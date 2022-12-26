@@ -337,6 +337,9 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
 
             if ((IsoParam)["InitIsoGrid"].isDouble())
                 InitIsoGrid = (IsoParam)["InitIsoGrid"].toInt();
+
+            if ((IsoParam)["ScriptEditorFontSize"].isDouble())
+                scripteditorfontsize = (IsoParam)["ScriptEditorFontSize"].toInt();
         }
 
         QJsonObject tmp;
