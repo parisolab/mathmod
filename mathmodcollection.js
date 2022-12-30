@@ -1,5 +1,57 @@
 {
   "MathModels": [
+        {
+            "Param3D": {
+                "Component": [
+                    "Catenoid"
+                ],
+                "Const": [
+                    "R=10",
+                    "r=2",
+                    "k=5",
+                    "umax=pi",
+                    "vmax=pi",
+                    "umin=-pi",
+                    "vmin=-pi",
+                    "Teta=pi/5"
+                ],
+                "Description": [
+                    "Pseudo Riemann's minimal surface building block by Abderrahman Taha 29/12/2022"
+                ],
+                "Funct": [
+                    "Rfctv=(v-vmax)/(vmin-vmax)",
+                    "Rfctu=if(u<0, - (umax+(u))/(umax-Teta) ,(umax-(u))/(umax-Teta))",
+                    "f1x= (R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u) -R*Rfctv(u,v,t)^k",
+                    "f2x= (R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta) *(pi-abs(u))/(pi-Teta) -R*Rfctv(u,v,t)^k ",
+                    "f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)",
+                    "f2y=(R*Rfctv(Teta,v,t)^k+r*cosh(v/2))*sin(Teta)*Rfctu(u,v,t) "
+                ],
+                "Fx": [
+                    " if(abs(u)<(Teta),  f1x(u,v,t), f1x(u,v,t)*(v-vmin)/(vmax-vmin) - f2x(u,v,t)*(v-vmax)/(vmax-vmin))"
+                ],
+                "Fy": [
+                    "if(abs(u)<(Teta),  f1y(u,v,t), f1y(u,v,t)*(v-vmin)/(vmax-vmin) - f2y(u,v,t)*(v-vmax)/(vmax-vmin))"
+                ],
+                "Fz": [
+                    "v"
+                ],
+                "Name": [
+                    "Riemann"
+                ],
+                "Umax": [
+                    "umax"
+                ],
+                "Umin": [
+                    "umin"
+                ],
+                "Vmax": [
+                    "vmax"
+                ],
+                "Vmin": [
+                    "vmin"
+                ]
+            }
+        },
     {
         "Iso3D": {
             "Description": ["MandelGoldenTemple by Abderrahman Taha 03/12/2022"],
