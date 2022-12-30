@@ -48,8 +48,112 @@
                     "vmax"
                 ],
                 "Vmin": [
+                    "vmin"]
+            }
+        },
+        {
+            "Param3D": {
+                "Component": [
+                    "Catenoid",
+                    "Catenoid_01"
+                ],
+                "Const": [
+                    "R=6",
+                    "r=2",
+                    "k=2",
+                    "P=15",
+                    "M=20",
+                    "Noid=3",
+                    "umax=pi",
+                    "vmax=pi",
+                    "umin=-pi",
+                    "vmin=-pi",
+                    "Teta=pi"
+                ],
+                "Description": [
+                    "Pseudo Riemann's minimal surface by Abderrahman Taha 29/12/2022"
+                ],
+                "Funct": [
+                    "Rfctv=(v-vmax)/(vmin-vmax)",
+                    "Rfctu=if(u<0,-(umax+(u))/(umax-Teta/Noid),(umax-(u))/(umax-Teta/Noid))",
+                    "f1x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u)-R*Rfctv(u,v,t)^k",
+                    "f2x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta/Noid)*(pi-abs(u))/(pi-Teta/Noid)-R*Rfctv(u,v,t)^k",
+                    "f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)",
+                    "f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)"
+                ],
+                "Fx": [
+                    "-if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-2*R",
+                    "if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))"
+                ],
+                "Fy": [
+                    "if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))",
+                    "if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))"
+                ],
+                "Fz": [
+                    "-v-2*pi",
+                    "v"
+                ],
+                "Name": [
+                    "Catenoid_2Noid"
+                ],
+                "Umax": [
+                    "umax",
+                    "umax"
+                ],
+                "Umin": [
+                    "umin",
+                    "umin"
+                ],
+                "Vmax": [
+                    "vmax",
+                    "vmax"
+                ],
+                "Vmin": [
+                    "vmin",
                     "vmin"
                 ]
+            },
+            "Sliders": {
+                "Max": [
+                    "20",
+                    "50",
+                    "50",
+                    "50"
+                ],
+                "Min": [
+                    "2",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "Name": [
+                    "Noid",
+                    "R",
+                    "r",
+                    "k"
+                ],
+                "Position": [
+                    "2",
+                    "6",
+                    "2",
+                    "2"
+                ],
+                "Step": [
+                    "1",
+                    "1",
+                    "1",
+                    "1"
+                ]
+            },
+            "Texture": {
+                "Colors": [
+                    "R=if((cmpId >-1), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(9/10)), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(2/10)) )",
+                    "G= if((cmpId >2), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(7/10)), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(1/10)) )",
+                    "B= if((cmpId >2), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(9/10)), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(2/10)) )",
+                    "T= 1"
+                ],
+                "Name": "square",
+                "Noise": "1"
             }
         },
     {
