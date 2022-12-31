@@ -2,6 +2,9 @@
   "MathModels": [
         {
             "Param3D": {
+                "Description": [
+                    "Pseudo Riemann's minimal surface building block by Abderrahman Taha 29/12/2022"
+                ],
                 "Component": [
                     "Catenoid"
                 ],
@@ -15,22 +18,22 @@
                     "vmin=-pi",
                     "Teta=pi/5"
                 ],
-                "Description": [
-                    "Pseudo Riemann's minimal surface building block by Abderrahman Taha 29/12/2022"
-                ],
                 "Funct": [
                     "Rfctv=(v-vmax)/(vmin-vmax)",
                     "Rfctu=if(u<0, - (umax+(u))/(umax-Teta) ,(umax-(u))/(umax-Teta))",
                     "f1x= (R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u) -R*Rfctv(u,v,t)^k",
                     "f2x= (R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta) *(pi-abs(u))/(pi-Teta) -R*Rfctv(u,v,t)^k ",
                     "f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)",
-                    "f2y=(R*Rfctv(Teta,v,t)^k+r*cosh(v/2))*sin(Teta)*Rfctu(u,v,t) "
+                    "f2y=(R*Rfctv(Teta,v,t)^k+r*cosh(v/2))*sin(Teta)*Rfctu(u,v,t) ",
+                    "F1x=if(abs(u)<(Teta),  f1x(u,v,t), f1x(u,v,t)*(v-vmin)/(vmax-vmin) - f2x(u,v,t)*(v-vmax)/(vmax-vmin))",
+                    "F1y=if(abs(u)<(Teta),  f1y(u,v,t), f1y(u,v,t)*(v-vmin)/(vmax-vmin) - f2y(u,v,t)*(v-vmax)/(vmax-vmin))"
+
                 ],
                 "Fx": [
-                    " if(abs(u)<(Teta),  f1x(u,v,t), f1x(u,v,t)*(v-vmin)/(vmax-vmin) - f2x(u,v,t)*(v-vmax)/(vmax-vmin))"
+                    " F1x(u,v,t)*cos(Teta)+F1y(u,v,t)*sin(Teta)"
                 ],
                 "Fy": [
-                    "if(abs(u)<(Teta),  f1y(u,v,t), f1y(u,v,t)*(v-vmin)/(vmax-vmin) - f2y(u,v,t)*(v-vmax)/(vmax-vmin))"
+                    " -F1x(u,v,t)*sin(Teta)+F1y(u,v,t)*cos(Teta)"
                 ],
                 "Fz": [
                     "v"
@@ -54,16 +57,26 @@
         {
             "Param3D": {
                 "Component": [
-                    "Catenoid",
-                    "Catenoid_01"
+                    "Catenoid_01",
+                    "Catenoid_02",
+                    "Catenoid_03",
+                    "Catenoid_04",
+                    "Catenoid_05",
+                    "Catenoid_06",
+                    "Catenoid_07",
+                    "Catenoid_08",
+                    "Catenoid_09",
+                    "Catenoid_10",
+                    "Catenoid_11",
+                    "Catenoid_12"
                 ],
                 "Const": [
                     "R=6",
-                    "r=2",
+                    "r=1",
                     "k=2",
-                    "P=15",
+                    "P=17",
                     "M=20",
-                    "Noid=3",
+                    "Noid=6",
                     "umax=pi",
                     "vmax=pi",
                     "umin=-pi",
@@ -79,36 +92,110 @@
                     "f1x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u)-R*Rfctv(u,v,t)^k",
                     "f2x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta/Noid)*(pi-abs(u))/(pi-Teta/Noid)-R*Rfctv(u,v,t)^k",
                     "f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)",
-                    "f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)"
+                    "f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)",
+                    "F1x=-if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-R",
+                    "F1y=if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))",
+                    "F1z=v",
+                    "l=(cos(Teta/Noid)^2+sin(Teta/Noid)^2)"
                 ],
                 "Fx": [
-                    "-if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-2*R",
-                    "if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))"
+                    "F1x(u,v,t)",
+                    " F1x(u,v,t)-2*(sin(Teta/Noid)* F1x(u,v,t) +cos(Teta/Noid)*F1y(u,v,t) )*sin(Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(2*Teta/Noid)* F1x(u,v,t) +cos(2*Teta/Noid)*F1y(u,v,t) )*sin(2*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(3*Teta/Noid)* F1x(u,v,t) +cos(3*Teta/Noid)*F1y(u,v,t) )*sin(3*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(4*Teta/Noid)* F1x(u,v,t) +cos(4*Teta/Noid)*F1y(u,v,t) )*sin(4*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(5*Teta/Noid)* F1x(u,v,t) +cos(5*Teta/Noid)*F1y(u,v,t) )*sin(5*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(6*Teta/Noid)*F1x(u,v,t)+cos(6*Teta/Noid)*F1y(u,v,t))*sin(6*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(7*Teta/Noid)*F1x(u,v,t)+cos(7*Teta/Noid)*F1y(u,v,t))*sin(7*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(8*Teta/Noid)*F1x(u,v,t)+cos(8*Teta/Noid)*F1y(u,v,t))*sin(8*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(9*Teta/Noid)*F1x(u,v,t)+cos(9*Teta/Noid)*F1y(u,v,t))*sin(9*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(10*Teta/Noid)*F1x(u,v,t)+cos(10*Teta/Noid)*F1y(u,v,t))*sin(10*Teta/Noid)/l(u,v,t)",
+                    "F1x(u,v,t)-2*(sin(11*Teta/Noid)*F1x(u,v,t)+cos(11*Teta/Noid)*F1y(u,v,t))*sin(11*Teta/Noid)/l(u,v,t)"
                 ],
                 "Fy": [
-                    "if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))",
-                    "if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))"
+                    "F1y(u,v,t)",
+                    " F1y(u,v,t)-2*(sin(Teta/Noid)* F1x(u,v,t) +cos(Teta/Noid)*F1y(u,v,t))*cos(Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(2*Teta/Noid)* F1x(u,v,t) +cos(2*Teta/Noid)*F1y(u,v,t))*cos(2*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(3*Teta/Noid)* F1x(u,v,t) +cos(3*Teta/Noid)*F1y(u,v,t))*cos(3*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(4*Teta/Noid)* F1x(u,v,t) +cos(4*Teta/Noid)*F1y(u,v,t))*cos(4*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(5*Teta/Noid)* F1x(u,v,t) +cos(5*Teta/Noid)*F1y(u,v,t))*cos(5*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(6*Teta/Noid)*F1x(u,v,t)+cos(6*Teta/Noid)*F1y(u,v,t))*cos(6*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(7*Teta/Noid)*F1x(u,v,t)+cos(7*Teta/Noid)*F1y(u,v,t))*cos(7*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(8*Teta/Noid)*F1x(u,v,t)+cos(8*Teta/Noid)*F1y(u,v,t))*cos(8*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(9*Teta/Noid)*F1x(u,v,t)+cos(9*Teta/Noid)*F1y(u,v,t))*cos(9*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(10*Teta/Noid)*F1x(u,v,t)+cos(10*Teta/Noid)*F1y(u,v,t))*cos(10*Teta/Noid)/l(u,v,t)",
+                    "F1y(u,v,t)-2*(sin(11*Teta/Noid)*F1x(u,v,t)+cos(11*Teta/Noid)*F1y(u,v,t))*cos(11*Teta/Noid)/l(u,v,t)"
                 ],
                 "Fz": [
-                    "-v-2*pi",
-                    "v"
+                    "F1z(u,v,t)",
+                    "-F1z(u,v,t) -2*pi",
+                    "F1z(u,v,t) ",
+                    "-F1z(u,v,t) -2*pi",
+                    "F1z(u,v,t) ",
+                    "-F1z(u,v,t) -2*pi",
+                    "F1z(u,v,t)",
+                    "-F1z(u,v,t)-2*pi",
+                    "F1z(u,v,t)",
+                    "-F1z(u,v,t)-2*pi",
+                    "F1z(u,v,t)",
+                    "-F1z(u,v,t)-2*pi"
                 ],
                 "Name": [
-                    "Catenoid_2Noid"
+                    "Riemann"
                 ],
                 "Umax": [
+                    "umax",
+                    "umax",
+                    "umax",
+                    "umax",
+                    "umax",
+                    "umax",
+                    "umax",
+                    "umax",
+                    "umax",
+                    "umax",
                     "umax",
                     "umax"
                 ],
                 "Umin": [
                     "umin",
+                    "umin",
+                    "umin",
+                    "umin",
+                    "umin",
+                    "umin",
+                    "umin",
+                    "umin",
+                    "umin",
+                    "umin",
+                    "umin",
                     "umin"
                 ],
                 "Vmax": [
                     "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
+                    "vmax",
                     "vmax"
                 ],
                 "Vmin": [
+                    "vmin",
+                    "vmin",
+                    "vmin",
+                    "vmin",
+                    "vmin",
+                    "vmin",
+                    "vmin",
+                    "vmin",
+                    "vmin",
+                    "vmin",
                     "vmin",
                     "vmin"
                 ]
@@ -118,9 +205,49 @@
                     "20",
                     "50",
                     "50",
+                    "50",
+                    "20",
+                    "50",
+                    "50",
+                    "50",
+                    "20",
+                    "50",
+                    "50",
+                    "50",
+                    "20",
+                    "50",
+                    "50",
+                    "50",
+                    "20",
+                    "50",
+                    "50",
+                    "50",
+                    "20",
+                    "50",
+                    "50",
                     "50"
                 ],
                 "Min": [
+                    "2",
+                    "0",
+                    "0",
+                    "0",
+                    "2",
+                    "0",
+                    "0",
+                    "0",
+                    "2",
+                    "0",
+                    "0",
+                    "0",
+                    "2",
+                    "0",
+                    "0",
+                    "0",
+                    "2",
+                    "0",
+                    "0",
+                    "0",
                     "2",
                     "0",
                     "0",
@@ -136,9 +263,49 @@
                     "2",
                     "6",
                     "2",
-                    "2"
+                    "2",
+                    "6",
+                    "15",
+                    "2",
+                    "7",
+                    "4",
+                    "8",
+                    "2",
+                    "7",
+                    "8",
+                    "15",
+                    "2",
+                    "7",
+                    "10",
+                    "15",
+                    "2",
+                    "7",
+                    "12",
+                    "15",
+                    "2",
+                    "7"
                 ],
                 "Step": [
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
                     "1",
                     "1",
                     "1",
@@ -147,9 +314,9 @@
             },
             "Texture": {
                 "Colors": [
-                    "R=if((cmpId >-1), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(9/10)), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(2/10)) )",
-                    "G= if((cmpId >2), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(7/10)), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(1/10)) )",
-                    "B= if((cmpId >2), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(9/10)), if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(2/10)) )",
+                    "R=if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(8/10))",
+                    "G= if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(4/10))",
+                    "B= if((i_indx)%(M)>P | (j_indx)%(M)>P,(8/10),(2/10))",
                     "T= 1"
                 ],
                 "Name": "square",
