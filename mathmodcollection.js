@@ -3,59 +3,8 @@
         {
             "Param3D": {
                 "Description": [
-                    "Pseudo Riemann's minimal surface building block by Abderrahman Taha 29/12/2022"
+                    "Pseudo Riemann's minimal surface by Abderrahman Taha 29/12/2022"
                 ],
-                "Component": [
-                    "Catenoid"
-                ],
-                "Const": [
-                    "R=10",
-                    "r=2",
-                    "k=5",
-                    "umax=pi",
-                    "vmax=pi",
-                    "umin=-pi",
-                    "vmin=-pi",
-                    "Teta=pi/5"
-                ],
-                "Funct": [
-                    "Rfctv=(v-vmax)/(vmin-vmax)",
-                    "Rfctu=if(u<0, - (umax+(u))/(umax-Teta) ,(umax-(u))/(umax-Teta))",
-                    "f1x= (R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u) -R*Rfctv(u,v,t)^k",
-                    "f2x= (R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta) *(pi-abs(u))/(pi-Teta) -R*Rfctv(u,v,t)^k ",
-                    "f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)",
-                    "f2y=(R*Rfctv(Teta,v,t)^k+r*cosh(v/2))*sin(Teta)*Rfctu(u,v,t) ",
-                    "F1x=if(abs(u)<(Teta),  f1x(u,v,t), f1x(u,v,t)*(v-vmin)/(vmax-vmin) - f2x(u,v,t)*(v-vmax)/(vmax-vmin))",
-                    "F1y=if(abs(u)<(Teta),  f1y(u,v,t), f1y(u,v,t)*(v-vmin)/(vmax-vmin) - f2y(u,v,t)*(v-vmax)/(vmax-vmin))"
-
-                ],
-                "Fx": [
-                    " F1x(u,v,t)*cos(Teta)+F1y(u,v,t)*sin(Teta)"
-                ],
-                "Fy": [
-                    " -F1x(u,v,t)*sin(Teta)+F1y(u,v,t)*cos(Teta)"
-                ],
-                "Fz": [
-                    "v"
-                ],
-                "Name": [
-                    "Riemann"
-                ],
-                "Umax": [
-                    "umax"
-                ],
-                "Umin": [
-                    "umin"
-                ],
-                "Vmax": [
-                    "vmax"
-                ],
-                "Vmin": [
-                    "vmin"]
-            }
-        },
-        {
-            "Param3D": {
                 "Component": [
                     "Catenoid_01",
                     "Catenoid_02",
@@ -83,9 +32,6 @@
                     "vmin=-pi",
                     "Teta=pi"
                 ],
-                "Description": [
-                    "Pseudo Riemann's minimal surface by Abderrahman Taha 29/12/2022"
-                ],
                 "Funct": [
                     "Rfctv=(v-vmax)/(vmin-vmax)",
                     "Rfctu=if(u<0,-(umax+(u))/(umax-Teta/Noid),(umax-(u))/(umax-Teta/Noid))",
@@ -95,53 +41,52 @@
                     "f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)",
                     "F1x=-if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-R",
                     "F1y=if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))",
-                    "F1z=v",
-                    "l=(cos(Teta/Noid)^2+sin(Teta/Noid)^2)"
+                    "F1z=v"
                 ],
                 "Fx": [
                     "F1x(u,v,t)",
-                    " F1x(u,v,t)-2*(sin(Teta/Noid)* F1x(u,v,t) +cos(Teta/Noid)*F1y(u,v,t) )*sin(Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(2*Teta/Noid)* F1x(u,v,t) +cos(2*Teta/Noid)*F1y(u,v,t) )*sin(2*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(3*Teta/Noid)* F1x(u,v,t) +cos(3*Teta/Noid)*F1y(u,v,t) )*sin(3*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(4*Teta/Noid)* F1x(u,v,t) +cos(4*Teta/Noid)*F1y(u,v,t) )*sin(4*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(5*Teta/Noid)* F1x(u,v,t) +cos(5*Teta/Noid)*F1y(u,v,t) )*sin(5*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(6*Teta/Noid)*F1x(u,v,t)+cos(6*Teta/Noid)*F1y(u,v,t))*sin(6*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(7*Teta/Noid)*F1x(u,v,t)+cos(7*Teta/Noid)*F1y(u,v,t))*sin(7*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(8*Teta/Noid)*F1x(u,v,t)+cos(8*Teta/Noid)*F1y(u,v,t))*sin(8*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(9*Teta/Noid)*F1x(u,v,t)+cos(9*Teta/Noid)*F1y(u,v,t))*sin(9*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(10*Teta/Noid)*F1x(u,v,t)+cos(10*Teta/Noid)*F1y(u,v,t))*sin(10*Teta/Noid)/l(u,v,t)",
-                    "F1x(u,v,t)-2*(sin(11*Teta/Noid)*F1x(u,v,t)+cos(11*Teta/Noid)*F1y(u,v,t))*sin(11*Teta/Noid)/l(u,v,t)"
+                    "F1x(u,v,t)-2*(sin(Teta/Noid)*F1x(u,v,t)+cos(Teta/Noid)*F1y(u,v,t))*sin(Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(2*Teta/Noid)*F1x(u,v,t)+cos(2*Teta/Noid)*F1y(u,v,t))*sin(2*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(3*Teta/Noid)*F1x(u,v,t)+cos(3*Teta/Noid)*F1y(u,v,t))*sin(3*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(4*Teta/Noid)*F1x(u,v,t)+cos(4*Teta/Noid)*F1y(u,v,t))*sin(4*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(5*Teta/Noid)*F1x(u,v,t)+cos(5*Teta/Noid)*F1y(u,v,t))*sin(5*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(6*Teta/Noid)*F1x(u,v,t)+cos(6*Teta/Noid)*F1y(u,v,t))*sin(6*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(7*Teta/Noid)*F1x(u,v,t)+cos(7*Teta/Noid)*F1y(u,v,t))*sin(7*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(8*Teta/Noid)*F1x(u,v,t)+cos(8*Teta/Noid)*F1y(u,v,t))*sin(8*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(9*Teta/Noid)*F1x(u,v,t)+cos(9*Teta/Noid)*F1y(u,v,t))*sin(9*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(10*Teta/Noid)*F1x(u,v,t)+cos(10*Teta/Noid)*F1y(u,v,t))*sin(10*Teta/Noid)",
+                    "F1x(u,v,t)-2*(sin(11*Teta/Noid)*F1x(u,v,t)+cos(11*Teta/Noid)*F1y(u,v,t))*sin(11*Teta/Noid)"
                 ],
                 "Fy": [
                     "F1y(u,v,t)",
-                    " F1y(u,v,t)-2*(sin(Teta/Noid)* F1x(u,v,t) +cos(Teta/Noid)*F1y(u,v,t))*cos(Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(2*Teta/Noid)* F1x(u,v,t) +cos(2*Teta/Noid)*F1y(u,v,t))*cos(2*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(3*Teta/Noid)* F1x(u,v,t) +cos(3*Teta/Noid)*F1y(u,v,t))*cos(3*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(4*Teta/Noid)* F1x(u,v,t) +cos(4*Teta/Noid)*F1y(u,v,t))*cos(4*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(5*Teta/Noid)* F1x(u,v,t) +cos(5*Teta/Noid)*F1y(u,v,t))*cos(5*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(6*Teta/Noid)*F1x(u,v,t)+cos(6*Teta/Noid)*F1y(u,v,t))*cos(6*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(7*Teta/Noid)*F1x(u,v,t)+cos(7*Teta/Noid)*F1y(u,v,t))*cos(7*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(8*Teta/Noid)*F1x(u,v,t)+cos(8*Teta/Noid)*F1y(u,v,t))*cos(8*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(9*Teta/Noid)*F1x(u,v,t)+cos(9*Teta/Noid)*F1y(u,v,t))*cos(9*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(10*Teta/Noid)*F1x(u,v,t)+cos(10*Teta/Noid)*F1y(u,v,t))*cos(10*Teta/Noid)/l(u,v,t)",
-                    "F1y(u,v,t)-2*(sin(11*Teta/Noid)*F1x(u,v,t)+cos(11*Teta/Noid)*F1y(u,v,t))*cos(11*Teta/Noid)/l(u,v,t)"
+                    "F1y(u,v,t)-2*(sin(Teta/Noid)* F1x(u,v,t) +cos(Teta/Noid)*F1y(u,v,t))*cos(Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(2*Teta/Noid)* F1x(u,v,t) +cos(2*Teta/Noid)*F1y(u,v,t))*cos(2*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(3*Teta/Noid)* F1x(u,v,t) +cos(3*Teta/Noid)*F1y(u,v,t))*cos(3*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(4*Teta/Noid)* F1x(u,v,t) +cos(4*Teta/Noid)*F1y(u,v,t))*cos(4*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(5*Teta/Noid)* F1x(u,v,t) +cos(5*Teta/Noid)*F1y(u,v,t))*cos(5*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(6*Teta/Noid)*F1x(u,v,t)+cos(6*Teta/Noid)*F1y(u,v,t))*cos(6*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(7*Teta/Noid)*F1x(u,v,t)+cos(7*Teta/Noid)*F1y(u,v,t))*cos(7*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(8*Teta/Noid)*F1x(u,v,t)+cos(8*Teta/Noid)*F1y(u,v,t))*cos(8*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(9*Teta/Noid)*F1x(u,v,t)+cos(9*Teta/Noid)*F1y(u,v,t))*cos(9*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(10*Teta/Noid)*F1x(u,v,t)+cos(10*Teta/Noid)*F1y(u,v,t))*cos(10*Teta/Noid)",
+                    "F1y(u,v,t)-2*(sin(11*Teta/Noid)*F1x(u,v,t)+cos(11*Teta/Noid)*F1y(u,v,t))*cos(11*Teta/Noid)"
                 ],
                 "Fz": [
                     "F1z(u,v,t)",
-                    "-F1z(u,v,t) -2*pi",
+                    "-F1z(u,v,t)-(vmax-vmin)",
                     "F1z(u,v,t) ",
-                    "-F1z(u,v,t) -2*pi",
+                    "-F1z(u,v,t)-(vmax-vmin)",
                     "F1z(u,v,t) ",
-                    "-F1z(u,v,t) -2*pi",
+                    "-F1z(u,v,t)-(vmax-vmin)",
                     "F1z(u,v,t)",
-                    "-F1z(u,v,t)-2*pi",
+                    "-F1z(u,v,t)-(vmax-vmin)",
                     "F1z(u,v,t)",
-                    "-F1z(u,v,t)-2*pi",
+                    "-F1z(u,v,t)-(vmax-vmin)",
                     "F1z(u,v,t)",
-                    "-F1z(u,v,t)-2*pi"
+                    "-F1z(u,v,t)-(vmax-vmin)"
                 ],
                 "Name": [
-                    "Riemann"
+                    "Riemann_Minimal_Surface"
                 ],
                 "Umax": [
                     "umax",
