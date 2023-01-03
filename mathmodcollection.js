@@ -5,6 +5,9 @@
                 "Description": [
                     "Pseudo Riemann's minimal surface by Abderrahman Taha 29/12/2022"
                 ],
+                "Name": [
+                    "Riemann_Minimal_Surface"
+                ],
                 "Component": [
                     "Catenoid_01",
                     "Catenoid_02",
@@ -84,9 +87,6 @@
                     "-F1z(u,v,t)-(vmax-vmin)",
                     "F1z(u,v,t)",
                     "-F1z(u,v,t)-(vmax-vmin)"
-                ],
-                "Name": [
-                    "Riemann_Minimal_Surface"
                 ],
                 "Umax": [
                     "umax",
