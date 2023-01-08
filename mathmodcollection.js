@@ -2,7 +2,7 @@
   "MathModels": [
         {
             "Param3D": {
-                "Description": ["Pseudo Riemann's minimal surface (v01) by Abderrahman Taha 29/12/2022"],
+                "Description": ["Pseudo Riemann's minimal surface (v01) by Abderrahman Taha 04/01/2023"],
                 "Name": ["Riemann_Minimal_Surface"],
                 "Component": ["Catenoid_01","Catenoid_02","Catenoid_03","Catenoid_04","Catenoid_05","Catenoid_06","Catenoid_07","Catenoid_08","Catenoid_09","Catenoid_10","Catenoid_11","Catenoid_12"],
                 "Const": ["R=6","r=1","k=2","P=8","M=10","Noid=6","umax=pi","vmax=pi","umin=-pi","vmin=-pi","Teta=pi"],
@@ -24,7 +24,7 @@
                 "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
             },
             "Texture": {
-                "Colors": ["R=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(8/10))","G=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(4/10))","B= if((i_indx)%(M)>P | (j_indx)%(M)>P,(4/10),(1/10))","T= 1"],
+                "Colors": ["R=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(8/10))","G=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(4/10))","B=if((i_indx)%(M)>P|(j_indx)%(M)>P,(4/10),(1/10))","T=1"],
                 "Name": "square",
                 "Noise": "1"
             }
