@@ -96,9 +96,9 @@
             "Vmin": ["0"]
         },
         "Texture": {
-            "Colors": ["R=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/600+1/5",
-                "G=MandelFractal((2*u+1),(6*v)%(pi)-3/2,200)/800+2/5",
-                "B=0.6",
+            "Colors": ["R=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),200)/600+1/5",
+                "G=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),200)/800+2/5",
+                "B=3/5",
                 "T=1"],
             "Name": "BlueOcean",
             "Noise": ""
