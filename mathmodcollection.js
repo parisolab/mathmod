@@ -78,7 +78,7 @@
             "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
                 "Fy=(1+cos(u)/2)*sin(v)",
                 "Fz=-sin(u)/2",
-                "Thickness=MandelFractal((2*u+1),(6*v)%(pi)-3/2,100)/2000",
+                "Thickness=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),100)/2000",
                 "n1=(-(-cos(u)/2)*((1+cos(u)/2)*cos(v)))",
                 "n2=((-cos(u)/2)*(-(1+cos(u)/2)*sin(v)))",
                 "n3=((-sin(u)*cos(v)/2)*((1+cos(u)/2)*cos(v))-(sin(u)*sin(v)/2)*((1+cos(u)/2)*sin(v)))",
