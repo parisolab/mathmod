@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(format);
-
     Parametersoptions Parameters;
     Parameters.LoadConfig(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));
@@ -49,13 +48,11 @@ int main(int argc, char *argv[])
     // save references:
     drawingopt.Parameters = &Parameters;
     drawingopt.MathmodRef = drawingopt.ui.openGLWidget;
-
     drawingopt.ui.openGLWidget->Xgrid = drawingopt.ui.openGLWidget->Ygrid = drawingopt.ui.openGLWidget->Zgrid=uint(InitIsoGrid);
     drawingopt.ui.openGLWidget->Ugrid = drawingopt.ui.openGLWidget->Vgrid = uint(InitParGrid);
     // GUI update:
     drawingopt.show();
     drawingopt.UpdateGui(argc);
-
     if (drawingopt.IsolistItemRef != nullptr)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
     QObject::connect(drawingopt.MathmodRef->IsoObjet->masterthread,
