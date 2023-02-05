@@ -172,8 +172,7 @@
             "Vmin": ["-pi/2"]
         },
         "Texture": {
-            "Colors": [
-                "R=MandelFractal(v-1/2,u,100)/500+1/5",
+            "Colors": ["R=MandelFractal(v-1/2,u,100)/500+1/5",
                 "G=MandelFractal(v-1/2,u,100)/600+3/10",
                 "B=7/10",
                 "T=1"],
