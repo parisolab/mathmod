@@ -32,7 +32,7 @@
     {
         "Iso3D": {
             "Description": ["MandelGoldenTemple by Abderrahman Taha 03/12/2022"],
-            "Name": ["MandelGoldenTemple"],
+            "Name": ["MandelTemple"],
             "Component": ["MandelTemple"],
             "Const": ["Iter=300"],
             "Fxyz": ["-((x^2+y^2-(MandelFractal(-z,sqrt(x*x+y*y), Iter)/Iter)^2))"],
