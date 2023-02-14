@@ -1,7 +1,7 @@
 {
     "ReleaseInfos": {
-        "VersionNumber": "12.0.0",
-        "ReleaseDate": "21/12/20",
+        "VersionNumber": "1200",
+        "ReleaseDate": "211220",
         "DocPartialPath": "/documentation/index.html",
         "DocAbsolutePath": "https://github.com/parisolab/mathmod/wiki/documentation"
     },
