@@ -2,7 +2,7 @@
   "MathModels": [
     {
         "Param3D": {
-            "Description": ["Pseudo Riemann's minimal surface (v01) by Abderrahman Taha 04/01/2023"],
+            "Description": ["Pseudo Riemann's minimal surface (v02) by Abderrahman Taha 23/03/2023"],
             "Name": ["Riemann_Minimal_Surface"],
             "Component": ["Riemann_01","Riemann_02","Riemann_03","Riemann_04","Riemann_05","Riemann_06","Riemann_07","Riemann_08","Riemann_09","Riemann_10","Riemann_11","Riemann_12"],
             "Const": ["R=6","r=1","k=2","P=8","M=10","Noid=6","umax=pi","vmax=pi","umin=-pi","vmin=-pi","Teta=pi"],
