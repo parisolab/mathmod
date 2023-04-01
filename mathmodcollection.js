@@ -2,31 +2,84 @@
   "MathModels": [
         {
             "Param3D": {
-                "Description": ["k-Noids minimal surface (v01) by Abderrahman Taha 27/03/2023"],
-                "Name": ["k_Noids"],
-                "Component": ["k_Noids"],
-                "Const": ["R=6","r=2","k=2","P=8","M=10","Noid=2","umax=pi","vmax=pi","umin=-pi","vmin=-pi","Teta=pi"],
+                "Component": [
+                    "k_Noids",
+                    "k_Noids_01"
+                ],
+                "Const": [
+                    "R=2",
+                    "r=2",
+                    "k=2",
+                    "P=8",
+                    "M=10",
+                    "Noid=2",
+                    "umax=pi",
+                    "vmax=pi",
+                    "umin=-pi",
+                    "vmin=-pi",
+                    "Teta=pi"
+                ],
+                "Description": [
+                    "k-Noids minimal surface (v01) by Abderrahman Taha 27/03/2023"
+                ],
                 "Funct": [
-                    "Spherex=cos(u)*cos(v)",
-                    "Spherey=cos(u)*sin(v)",
-                    "Spherez=sin(u)","Rfctv=(v-vmax)/(vmin-vmax)","Rfctu=if(u<0,-(umax+(u))/(umax-Teta/Noid),(umax-(u))/(umax-Teta/Noid))","f1x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u)-R*Rfctv(u,v,t)^k","f1_x=(r*cosh(v/2))*cos(u)*sin(v)","f2x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta/Noid)*(pi-abs(u))/(pi-Teta/Noid)-R*Rfctv(u,v,t)^k","f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)","f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)","F1x=-if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-R","F1y=if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))","F1z=v","Rotx=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)","Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)"],
-                "Fx": ["Rotx(F1x(u,v,t),F1y(u,v,t),(0))"],
-                "Fy": ["Roty(F1x(u,v,t),F1y(u,v,t),(0))"],
-                "Fz": ["F1z(u,v,t)"],
-                "Grid": ["149","149"],
-                "Umax": ["umax"],
-                "Umin": ["umin"],
-                "Vmax": ["vmax"],
-                "Vmin": ["vmin"]
-            },
-            "Sliders": {
-                "Max": ["20","50","50","50"],
-                "Min": ["2","0","0","0"],
-                "Name": ["Noid","R","r","k"],
-                "Position": ["2","6","2","2"],
-                "Step": ["1","1","1","1"]
+                    "Spherex=R*cos(u)*cos(v)",
+                    "Spherey=R*cos(u)*sin(v)",
+                    "Spherez=R*sin(u)",
+                    "Rfctv=(v-vmax)/(vmin-vmax)",
+                    "Rfctu=if(u<0,-(umax+(u))/(umax-Teta/Noid),(umax-(u))/(umax-Teta/Noid))",
+                    "f1x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u)-R*Rfctv(u,v,t)^k",
+                    "f1_x=(r*cosh(v/2))*cos(u)*sin(v)",
+                    "f2x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta/Noid)*(pi-abs(u))/(pi-Teta/Noid)-R*Rfctv(u,v,t)^k",
+                    "f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)",
+                    "f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)",
+                    "F1x=-if(abs(u)<(Teta/Noid),f1_x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-R",
+                    "F1_x=-if(abs(u)<(Teta/Noid),f1_x(u,v,t),f1x(u,v,t)-R)",
+                    "F1y=if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))",
+                    "F1z=v",
+                    "Rotx=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)",
+                    "Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)"
+                ],
+                "Fx": [
+                    "Rotx(F1x(u,v,t),F1y(u,v,t),(0))",
+                    "Spherex(u/2,v,t)"
+                ],
+                "Fy": [
+                    "Roty(F1x(u,v,t),F1y(u,v,t),(0))",
+                    "Spherey(u/2,v,t)"
+                ],
+                "Fz": [
+                    "F1z(u,v,t)",
+                    "Spherez(u/2,v,t)"
+                ],
+                "Grid": [
+                    "149",
+                    "149",
+                    "149",
+                    "149"
+                ],
+                "Name": [
+                    "k_Noids"
+                ],
+                "Umax": [
+                    "umax",
+                    "umax"
+                ],
+                "Umin": [
+                    "umin",
+                    "umin"
+                ],
+                "Vmax": [
+                    "vmax",
+                    "vmax"
+                ],
+                "Vmin": [
+                    "vmin",
+                    "vmin"
+                ]
             }
-        },
+        }
+,
     {
         "Param3D": {
             "Description": ["Pseudo Riemann's minimal surface (v02) by Abderrahman Taha 23/03/2023"],
