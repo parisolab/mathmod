@@ -7,12 +7,10 @@
                     "k_Noids_01"
                 ],
                 "Const": [
-                    "R=2",
-                    "r=1",
+                    "R=10",
+                    "r=2",
                     "k=2",
-                    "P=8",
-                    "M=10",
-                    "Noid=2",
+                    "Noid=6",
                     "umax=pi",
                     "umin=-pi",
                     "vmin=-pi",
@@ -41,7 +39,7 @@
                     "Spherey(u/2,v,t)"
                 ],
                 "Fz": [
-                    "Catenoidz(u,v,t)",
+                    "Catenoidz(u,v,t)+pi+R",
                     "Spherex(u/2,v,t)"
                 ],
                 "Name": [
@@ -57,11 +55,11 @@
                 ],
                 "Vmax": [
                     "vmax",
-                    "vmax"
+                    "vmax/Noid"
                 ],
                 "Vmin": [
                     "vmin",
-                    "vmin"
+                    "vmin/Noid"
                 ]
             }
         }
