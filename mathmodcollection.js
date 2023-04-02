@@ -9,7 +9,7 @@
                 "Const": [
                     "R=10",
                     "r=2",
-                    "k=2",
+                    "k=3",
                     "Noid=6",
                     "umax=pi",
                     "umin=-pi",
@@ -21,26 +21,30 @@
                     "k-Noids minimal surface (v02) by Abderrahman Taha 31/03/2023"
                 ],
                 "Funct": [
-                    "Spherex=R*cos(u)*cos(v)",
+                    "Spherez=R*cos(u)*cos(v)",
                     "Spherey=R*cos(u)*sin(v)",
-                    "Spherez=R*sin(u)",
+                    "Spherex=R*sin(u)",
                     "Catenoidx=r*cosh(v/2)*cos(u)",
                     "Catenoidy=r*cosh(v/2)*sin(u)",
-                    "Catenoidz=v",
+                    "Catenoidz=v+pi+R",
+                    "Ratio=((v-vmin)/(vmax-vmin))^k",
+                    "Catenoid_x=Catenoidx(u,v,t) + (1-Ratio(u,v,t))*Spherex(u/2,v,t)",
+                    "Catenoid_y=Catenoidy(u,v,t) + (1-Ratio(u,v,t))*Spherey(u/2,v,t)",
+                    "Catenoid_z=Catenoidz(u,v,t) + (1-Ratio(u,v,t))*Spherez(u/2,v,t)",
                     "Rotx=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)",
                     "Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)"
                 ],
                 "Fx": [
-                    "Catenoidx(u,v,t)",
-                    "Spherez(u/2,v,t)"
+                    "Catenoid_x(u,v,t)",
+                    "Spherex(u/2,v,t)"
                 ],
                 "Fy": [
-                    "Catenoidy(u,v,t)",
+                    "Catenoid_y(u,v,t)",
                     "Spherey(u/2,v,t)"
                 ],
                 "Fz": [
-                    "Catenoidz(u,v,t)+pi+R",
-                    "Spherex(u/2,v,t)"
+                    "Catenoid_z(u,v,t)",
+                    "Spherez(u/2,v,t)"
                 ],
                 "Name": [
                     "k_Noids"
