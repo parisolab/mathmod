@@ -21,18 +21,18 @@
                     "k-Noids minimal surface (v02) by Abderrahman Taha 31/03/2023"
                 ],
                 "Funct": [
-                    "Spherez=R*cos(u)*cos(v)",
-                    "Spherey=R*cos(u)*sin(v)",
                     "Spherex=R*sin(u)",
+                    "Spherey=R*cos(u)*sin(v)",
+                    "Spherez=R*cos(u)*cos(v)",
                     "Catenoidx=r*cosh(v/2)*cos(u)",
                     "Catenoidy=r*cosh(v/2)*sin(u)",
                     "Catenoidz=v+pi+R",
-                    "Ratio=((v-vmin)/(vmax-vmin))^k",
-                    "Catenoid_x=Catenoidx(u,v,t) + (1-Ratio(u,v,t))*Spherex(u/2,v,t)",
-                    "Catenoid_y=Catenoidy(u,v,t) + (1-Ratio(u,v,t))*Spherey(u/2,v,t)",
-                    "Catenoid_z=Catenoidz(u,v,t) + (1-Ratio(u,v,t))*Spherez(u/2,v,t)",
-                    "Rotx=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)",
-                    "Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)"
+                    "Sphere_x=R*sin(u)",
+                    "Sphere_y=if(u>0, R*cos(u)*sin(vmax/Noid),  R*cos(u)*sin(vmin/Noid))",
+                    "Sphere_z=if(u>0, R*cos(u)*cos(vmax/Noid),   R*cos(u)*cos(vmin/Noid))",
+                    "Catenoid_x=if(v>vmin, Catenoidx(u,v,t) ,  Sphere_x(u/2,v,t))",
+                    "Catenoid_y=if(v>vmin, Catenoidy(u,v,t) ,  Sphere_y(u/2,v,t))",
+                    "Catenoid_z=if(v>vmin, Catenoidz(u,v,t) ,  Sphere_z(u/2,v,t))"
                 ],
                 "Fx": [
                     "Catenoid_x(u,v,t)",
@@ -50,8 +50,8 @@
                     "k_Noids"
                 ],
                 "Umax": [
-                    "umax",
-                    "umax"
+                    "umax-1",
+                    "umax-1"
                 ],
                 "Umin": [
                     "umin",
@@ -59,7 +59,7 @@
                 ],
                 "Vmax": [
                     "vmax",
-                    "vmax/Noid"
+                    "vmax/Noid "
                 ],
                 "Vmin": [
                     "vmin",
