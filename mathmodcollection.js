@@ -31,9 +31,6 @@
                     "Sphere_x=threshold(u,v,t)*sin(2*u+pi/2)",
                     "Sphere_y=threshold(u,v,t)*cos(2*u+pi/2)*sin(vmin/Noid)",
                     "Sphere_z=(if(u<0,threshold(u,v,t)*cos(2*u+pi/2)*cos(vmin/Noid),-threshold(u,v,t)*cos(2*u+pi/2)*cos(vmin/Noid)))",
-                    "Catenoid_x=if(v>vmin,Catenoidx(u,v,t),Sphere_x(u/2,v,t))",
-                    "Catenoid_y=if(v>vmin,Catenoidy(u,v,t),Sphere_y(u/2,v,t))",
-                    "Catenoid_z=if(v>vmin,Catenoidz(u,v,t),Sphere_z(u/2,v,t))",
                     "Catenoid_x=threshold2(u,v,t)*Catenoidx(u,v,t)+Sphere_x(u/2,v,t)",
                     "Catenoid_y=threshold2(u,v,t)*Catenoidy(u,v,t)+Sphere_y(u/2,v,t)",
                     "Catenoid_z=threshold2(u,v,t)*Catenoidz(u,v,t)+Sphere_z(u/2,v,t)"
@@ -64,7 +61,6 @@
                 ]
             }
         }
-
 ,
     {
         "Param3D": {
