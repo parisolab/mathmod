@@ -10,7 +10,7 @@
                     "R=10",
                     "r=2",
                     "k=3",
-                    "Noid=6",
+                    "Noid=3",
                     "umax=pi",
                     "umin=-pi",
                     "vmin=-pi",
@@ -26,10 +26,10 @@
                     "Spherez=R*cos(u)*cos(v)",
                     "Catenoidx=r*cosh(v/2)*cos(u)",
                     "Catenoidy=r*cosh(v/2)*sin(u)",
-                    "Catenoidz=v",
-                    "Sphere_x=R*sin(u)",
-                    "Sphere_y=if(u>0, R*cos(u)*sin(vmin/Noid),  R*cos(u)*sin(vmin/Noid))",
-                    "Sphere_z=if(u>0, R*cos(u)*cos(vmax/Noid),   R*cos(u)*cos(vmax/Noid))",
+                    "Catenoidz=v+R+pi",
+                    "Sphere_x=R*sin(2*u+pi/2) ",
+                    "Sphere_y=R*cos(2*u+pi/2)*sin(vmin/Noid)",
+                    "Sphere_z=  if(u<0,   R*cos(2*u+pi/2)*cos(vmin/Noid),  - R*cos(2*u+pi/2)*cos(vmin/Noid))",
                     "Catenoid_x=if(v>vmin, Catenoidx(u,v,t) ,  Sphere_x(u/2,v,t))",
                     "Catenoid_y=if(v>vmin, Catenoidy(u,v,t) ,  Sphere_y(u/2,v,t))",
                     "Catenoid_z=if(v>vmin, Catenoidz(u,v,t) ,  Sphere_z(u/2,v,t))"
@@ -50,8 +50,8 @@
                     "k_Noids"
                 ],
                 "Umax": [
-                    "umax-1",
-                    "umax-1"
+                    "umax",
+                    "umax"
                 ],
                 "Umin": [
                     "umin",
