@@ -3,13 +3,12 @@
         {
             "Param3D": {
                 "Component": [
-                    "k_Noids",
-                    "k_Noids_01"
+                    "k_Noids"
                 ],
                 "Const": [
-                    "R=10",
+                    "R=8",
                     "r=2",
-                    "k=3",
+                    "k=2",
                     "Noid=3",
                     "umax=pi",
                     "umin=-pi",
@@ -27,46 +26,45 @@
                     "Catenoidx=r*cosh(v/2)*cos(u)",
                     "Catenoidy=r*cosh(v/2)*sin(u)",
                     "Catenoidz=v+R+pi",
-                    "Sphere_x=R*sin(2*u+pi/2) ",
-                    "Sphere_y=R*cos(2*u+pi/2)*sin(vmin/Noid)",
-                    "Sphere_z=  if(u<0,   R*cos(2*u+pi/2)*cos(vmin/Noid),  - R*cos(2*u+pi/2)*cos(vmin/Noid))",
-                    "Catenoid_x=if(v>vmin, Catenoidx(u,v,t) ,  Sphere_x(u/2,v,t))",
-                    "Catenoid_y=if(v>vmin, Catenoidy(u,v,t) ,  Sphere_y(u/2,v,t))",
-                    "Catenoid_z=if(v>vmin, Catenoidz(u,v,t) ,  Sphere_z(u/2,v,t))"
+                    "threshold=R*(1-(vmax-v)/(vmax-vmin))^(k)",
+                    "threshold2=((vmax-v)/(vmax-vmin))^(k)",
+                    "Sphere_x=threshold(u,v,t)*sin(2*u+pi/2)",
+                    "Sphere_y=threshold(u,v,t)*cos(2*u+pi/2)*sin(vmin/Noid)",
+                    "Sphere_z=(if(u<0,threshold(u,v,t)*cos(2*u+pi/2)*cos(vmin/Noid),-threshold(u,v,t)*cos(2*u+pi/2)*cos(vmin/Noid)))",
+                    "Catenoid_x=if(v>vmin,Catenoidx(u,v,t),Sphere_x(u/2,v,t))",
+                    "Catenoid_y=if(v>vmin,Catenoidy(u,v,t),Sphere_y(u/2,v,t))",
+                    "Catenoid_z=if(v>vmin,Catenoidz(u,v,t),Sphere_z(u/2,v,t))",
+                    "Catenoid_x=threshold2(u,v,t)*Catenoidx(u,v,t)+Sphere_x(u/2,v,t)",
+                    "Catenoid_y=threshold2(u,v,t)*Catenoidy(u,v,t)+Sphere_y(u/2,v,t)",
+                    "Catenoid_z=threshold2(u,v,t)*Catenoidz(u,v,t)+Sphere_z(u/2,v,t)"
                 ],
                 "Fx": [
-                    "Catenoid_x(u,v,t)",
-                    "Spherex(u/2,v,t)"
+                    "-Catenoid_x(u,v,t)"
                 ],
                 "Fy": [
-                    "Catenoid_y(u,v,t)",
-                    "Spherey(u/2,v,t)"
+                    "Catenoid_y(u,v,t)"
                 ],
                 "Fz": [
-                    "Catenoid_z(u,v,t)",
-                    "Spherez(u/2,v,t)"
+                    "Catenoid_z(u,v,t)"
                 ],
                 "Name": [
                     "k_Noids"
                 ],
                 "Umax": [
-                    "umax",
                     "umax"
                 ],
                 "Umin": [
-                    "umin",
                     "umin"
                 ],
                 "Vmax": [
-                    "vmax",
-                    "vmax/Noid "
+                    "vmax"
                 ],
                 "Vmin": [
-                    "vmin",
-                    "vmin/Noid"
+                    "vmin"
                 ]
             }
         }
+
 ,
     {
         "Param3D": {
