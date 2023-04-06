@@ -3,13 +3,16 @@
         {
             "Param3D": {
                 "Component": [
-                    "k_Noids"
+                    "k_Noids_01",
+                    "k_Noids_02",
+                    "k_Noids_03",
+                    "k_Noids_04"
                 ],
                 "Const": [
                     "R=8",
-                    "r=2",
+                    "r=1",
                     "k=2",
-                    "Noid=3",
+                    "Noid=4",
                     "umax=pi",
                     "umin=-pi",
                     "vmin=-pi",
@@ -17,7 +20,7 @@
                     "Teta=pi"
                 ],
                 "Description": [
-                    "k-Noids minimal surface (v02) by Abderrahman Taha 31/03/2023"
+                    "k-Noids minimal surface (v03) by Abderrahman Taha 05/04/2023"
                 ],
                 "Funct": [
                     "Spherex=R*sin(u)",
@@ -26,37 +29,59 @@
                     "Catenoidx=r*cosh(v/2)*cos(u)",
                     "Catenoidy=r*cosh(v/2)*sin(u)",
                     "Catenoidz=v+R+pi",
-                    "threshold=R*(1-(vmax-v)/(vmax-vmin))^(k)",
+                    "threshold=(1-(vmax-v)/(vmax-vmin))^(k)",
                     "threshold2=((vmax-v)/(vmax-vmin))^(k)",
-                    "Sphere_x=threshold(u,v,t)*sin(2*u+pi/2)",
-                    "Sphere_y=threshold(u,v,t)*cos(2*u+pi/2)*sin(vmin/Noid)",
-                    "Sphere_z=(if(u<0,threshold(u,v,t)*cos(2*u+pi/2)*cos(vmin/Noid),-threshold(u,v,t)*cos(2*u+pi/2)*cos(vmin/Noid)))",
-                    "Catenoid_x=threshold2(u,v,t)*Catenoidx(u,v,t)+Sphere_x(u/2,v,t)",
-                    "Catenoid_y=threshold2(u,v,t)*Catenoidy(u,v,t)+Sphere_y(u/2,v,t)",
-                    "Catenoid_z=threshold2(u,v,t)*Catenoidz(u,v,t)+Sphere_z(u/2,v,t)"
+                    "Sphere_x=R*sin(2*u+pi/2)",
+                    "Sphere_y=R*cos(2*u+pi/2)*sin(vmin/Noid)",
+                    "Sphere_z=(if(u<0,R*cos(2*u+pi/2)*cos(vmin/Noid),-R*cos(2*u+pi/2)*cos(vmin/Noid)))",
+                    "Catenoid_x=threshold2(u,v,t)*Catenoidx(u,v,t)+threshold(u,v,t)*Sphere_x(u/2,v,t)",
+                    "Catenoid_y=threshold2(u,v,t)*Catenoidy(u,v,t)+threshold(u,v,t)*Sphere_y(u/2,v,t)",
+                    "Catenoid_z=threshold2(u,v,t)*Catenoidz(u,v,t)+threshold(u,v,t)*Sphere_z(u/2,v,t)",
+                    "Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)",
+                    "Rotz=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)"
                 ],
                 "Fx": [
+                    "-Catenoid_x(u,v,t)    ",
+                    "-Catenoid_x(u,v,t)",
+                    "-Catenoid_x(u,v,t)",
                     "-Catenoid_x(u,v,t)"
                 ],
                 "Fy": [
-                    "Catenoid_y(u,v,t)"
+                    "Roty(Catenoid_y(u,v,t), Catenoid_z(u,v,t),(0))",
+                    "Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(1))",
+                    "Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(2))",
+                    "Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(3))"
                 ],
                 "Fz": [
-                    "Catenoid_z(u,v,t)"
+                    "Rotz(Catenoid_y(u,v,t), Catenoid_z(u,v,t),(0))",
+                    "Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(1))",
+                    "Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(2))",
+                    "Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(3))"
                 ],
                 "Name": [
-                    "k_Noids"
                 ],
                 "Umax": [
+                    "umax",
+                    "umax",
+                    "umax",
                     "umax"
                 ],
                 "Umin": [
+                    "umin",
+                    "umin",
+                    "umin",
                     "umin"
                 ],
                 "Vmax": [
+                    "vmax",
+                    "vmax",
+                    "vmax",
                     "vmax"
                 ],
                 "Vmin": [
+                    "vmin",
+                    "vmin",
+                    "vmin",
                     "vmin"
                 ]
             }
