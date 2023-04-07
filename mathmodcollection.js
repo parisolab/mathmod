@@ -58,7 +58,7 @@
                     "Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(2))",
                     "Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(3))"
                 ],
-                "Name": [
+                "Name": ["k_Noids"
                 ],
                 "Umax": [
                     "umax",
