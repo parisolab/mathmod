@@ -1,6 +1,75 @@
 {
   "MathModels": [
         {
+            "Description": [
+                "Noid building block (v01) by Abderrahman Taha 31/03/2023"
+            ],
+            "Param3D": {
+                "Component": ["Noid",
+                    "Sphere"
+                ],
+                "Const": [
+                    "R=6",
+                    "r=1",
+                    "k=1",
+                    "Noid=4",
+                    "umax=pi",
+                    "umin=-pi",
+                    "vmin=-pi",
+                    "vmax=pi",
+                    "Teta=pi"
+                ],
+                "Funct": [
+                    "threshold1=((v-vmin)/(vmax-vmin))^(0.2*k)",
+                    "threshold2=(1-(v-vmin)/(vmax-vmin))^(2*k)",
+                    "Spherex=R*sin(u)",
+                    "Spherey=R*cos(u)*sin(v)",
+                    "Spherez=R*cos(u)*cos(v)",
+                    "Catenoidx=r*cosh(v/2)*cos(u)",
+                    "Catenoidy=r*cosh(v/2)*sin(u)",
+                    "Catenoidz=v+R+pi",
+                    "Sphere_x=if(u<0, Spherex((2*u+pi)/2,v/Noid, t)  ,  -Spherex((2*u-pi)/2,  -v/Noid, t))",
+                    "Sphere_y=if(u<0, Spherey((2*u+pi)/2,v/Noid, t)  ,   Spherey((2*u-pi)/2,  -v/Noid, t))",
+                    "Sphere_z=if(u<0, Spherez((2*u+pi)/2,v/Noid, t)  ,   Spherez((2*u-pi)/2,  -v/Noid, t))",
+                    "Catenoid_x= threshold1(u,v,t)*Catenoidx(u,v,t) + threshold2(u,v,t)*Sphere_x(u,v,t)",
+                    "Catenoid_y= threshold1(u,v,t)*Catenoidy(u,v,t) + threshold2(u,v,t)*Sphere_y(u,v,t)",
+                    "Catenoid_z= threshold1(u,v,t)*Catenoidz(u,v,t) + threshold2(u,v,t)*Sphere_z(u,v, t)"
+                ],
+                "Fx": [
+                    "Catenoid_x(u,v,t)",
+                    "Spherex(u/2,v,t)"
+                ],
+                "Fy": [
+                    "Catenoid_y(u,v,t)",
+                    "Spherey(u/2,v,t)"
+                ],
+                "Fz": [
+                    "Catenoid_z(u,v,t)",
+                    "Spherez(u/2,v,t)"
+                ],
+                "Name": [
+                    "Noid"
+                ],
+                "Umax": [
+                    "umax",
+                    "umax"
+                ],
+                "Umin": [
+                    "umin",
+                    "umin"
+                ],
+                "Vmax": [
+                    "vmax",
+                    "vmax/Noid"
+                ],
+                "Vmin": [
+                    "vmin",
+                    "vmin/Noid"
+                ]
+            }
+        }
+,
+        {
             "Param3D": {
                 "Component": [
                     "k_Noids_01",
