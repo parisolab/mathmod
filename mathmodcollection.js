@@ -1,17 +1,15 @@
 {
   "MathModels": [
         {
-            "Description": [
-                "Noid building block (v01) by Abderrahman Taha 31/03/2023"
-            ],
             "Param3D": {
-                "Component": ["Noid",
-                    "Sphere"
+                "Component": [
+                    "k_Noids",
+                    "k_Noids_01"
                 ],
                 "Const": [
-                    "R=6",
-                    "r=1",
-                    "k=1",
+                    "R=18",
+                    "r=2",
+                    "k=15",
                     "Noid=4",
                     "umax=pi",
                     "umin=-pi",
@@ -19,18 +17,21 @@
                     "vmax=pi",
                     "Teta=pi"
                 ],
+                "Description": [
+                    "Noids minimal surface (v02) by Abderrahman Taha 08/04/2023"
+                ],
                 "Funct": [
-                    "threshold1=((v-vmin)/(vmax-vmin))^(0.2*k)",
-                    "threshold2=(1-(v-vmin)/(vmax-vmin))^(2*k)",
+                    "threshold1=(1-((vmax-v)/(vmax-vmin))^(k+2))",
+                    "threshold2=((vmax-v)/(vmax-vmin))^(k)",
                     "Spherex=R*sin(u)",
                     "Spherey=R*cos(u)*sin(v)",
                     "Spherez=R*cos(u)*cos(v)",
                     "Catenoidx=r*cosh(v/2)*cos(u)",
                     "Catenoidy=r*cosh(v/2)*sin(u)",
-                    "Catenoidz=v+R+pi",
-                    "Sphere_x=if(u<0, Spherex((2*u+pi)/2,v/Noid, t)  ,  -Spherex((2*u-pi)/2,  -v/Noid, t))",
-                    "Sphere_y=if(u<0, Spherey((2*u+pi)/2,v/Noid, t)  ,   Spherey((2*u-pi)/2,  -v/Noid, t))",
-                    "Sphere_z=if(u<0, Spherez((2*u+pi)/2,v/Noid, t)  ,   Spherez((2*u-pi)/2,  -v/Noid, t))",
+                    "Catenoidz=v+sqrt(R*R-r*r*(cosh(v/2))^2)+pi",
+                    "Sphere_x= (if(u<0,Spherex((2*u+pi)/2,v/Noid, t)  ,  -Spherex((2*u-pi)/2,  -v/Noid, t)))",
+                    "Sphere_y= (if(u<0,Spherey((2*u+pi)/2,v/Noid, t)  ,   Spherey((2*u-pi)/2,  -v/Noid, t)))",
+                    "Sphere_z= (if(u<0, Spherez((2*u+pi)/2,v/Noid, t)  ,   Spherez((2*u-pi)/2,  -v/Noid, t)))",
                     "Catenoid_x= threshold1(u,v,t)*Catenoidx(u,v,t) + threshold2(u,v,t)*Sphere_x(u,v,t)",
                     "Catenoid_y= threshold1(u,v,t)*Catenoidy(u,v,t) + threshold2(u,v,t)*Sphere_y(u,v,t)",
                     "Catenoid_z= threshold1(u,v,t)*Catenoidz(u,v,t) + threshold2(u,v,t)*Sphere_z(u,v, t)"
@@ -48,7 +49,7 @@
                     "Spherez(u/2,v,t)"
                 ],
                 "Name": [
-                    "Noid"
+                    "Noids"
                 ],
                 "Umax": [
                     "umax",
