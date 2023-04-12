@@ -1,74 +1,34 @@
 {
   "MathModels": [
-    {
-        "Param3D": {
-            "Description": [
-                "Noids minimal surface (v02) by Abderrahman Taha 08/04/2023"
-            ],
-            "Name": [
-                "Noids"
-            ],
-            "Component": [
-                "Noids_02",
-                "Noids_01"
-            ],
-            "Const": [
-                "R=18",
-                "r=2",
-                "k=15",
-                "Noid=4",
-                "umax=pi",
-                "umin=-pi",
-                "vmin=-pi",
-                "vmax=pi",
-                "Teta=pi"
-            ],
-            "Funct": [
-                "threshold1=(1-((vmax-v)/(vmax-vmin))^(k+2))",
-                "threshold2=((vmax-v)/(vmax-vmin))^(k)",
-                "Spherex=R*sin(u)",
-                "Spherey=R*cos(u)*sin(v)",
-                "Spherez=R*cos(u)*cos(v)",
-                "Catenoidx=r*cosh(v/2)*cos(u)",
-                "Catenoidy=r*cosh(v/2)*sin(u)",
-                "Catenoidz=v+sqrt(R*R-r*r*(cosh(v/2))^2)+pi",
-                "Sphere_x= (if(u<0,Spherex((2*u+pi)/2,v/Noid, t)  ,  -Spherex((2*u-pi)/2,  -v/Noid, t)))",
-                "Sphere_y= (if(u<0,Spherey((2*u+pi)/2,v/Noid, t)  ,   Spherey((2*u-pi)/2,  -v/Noid, t)))",
-                "Sphere_z= (if(u<0, Spherez((2*u+pi)/2,v/Noid, t)  ,   Spherez((2*u-pi)/2,  -v/Noid, t)))",
-                "Catenoid_x= threshold1(u,v,t)*Catenoidx(u,v,t) + threshold2(u,v,t)*Sphere_x(u,v,t)",
-                "Catenoid_y= threshold1(u,v,t)*Catenoidy(u,v,t) + threshold2(u,v,t)*Sphere_y(u,v,t)",
-                "Catenoid_z= threshold1(u,v,t)*Catenoidz(u,v,t) + threshold2(u,v,t)*Sphere_z(u,v, t)"
-            ],
-            "Fx": [
-                "Catenoid_x(u,v,t)",
-                "Spherex(u/2,v,t)"
-            ],
-            "Fy": [
-                "Catenoid_y(u,v,t)",
-                "Spherey(u/2,v,t)"
-            ],
-            "Fz": [
-                "Catenoid_z(u,v,t)",
-                "Spherez(u/2,v,t)"
-            ],
-            "Umax": [
-                "umax",
-                "umax"
-            ],
-            "Umin": [
-                "umin",
-                "umin"
-            ],
-            "Vmax": [
-                "vmax",
-                "vmax/Noid"
-            ],
-            "Vmin": [
-                "vmin",
-                "vmin/Noid"
-            ]
-        }
-    },
+        {
+            "Param3D": {
+                "Description": [
+                    "Noids minimal surface (v02) by Abderrahman Taha 08/04/2023"],
+                "Name": [
+                    "Noids"],
+                "Component": [
+                    "Noids_02","Noids_01"],
+                "Const": [
+                    "R=18","r=2","k=15","Noid=4","umax=pi","umin=-pi","vmin=-pi","vmax=pi","Teta=pi"],
+                "Funct": [
+                    "threshold1=(1-((vmax-v)/(vmax-vmin))^(k+2))","threshold2=((vmax-v)/(vmax-vmin))^(k)","Spherex=R*sin(u)","Spherey=R*cos(u)*sin(v)","Spherez=R*cos(u)*cos(v)","Catenoidx=r*cosh(v/2)*cos(u)","Catenoidy=r*cosh(v/2)*sin(u)","Catenoidz=v+sqrt(R*R-r*r*(cosh(v/2))^2)+pi","Sphere_x= (if(u<0,Spherex((2*u+pi)/2,v/Noid, t)  ,  -Spherex((2*u-pi)/2,  -v/Noid, t)))","Sphere_y= (if(u<0,Spherey((2*u+pi)/2,v/Noid, t)  ,   Spherey((2*u-pi)/2,  -v/Noid, t)))","Sphere_z= (if(u<0, Spherez((2*u+pi)/2,v/Noid, t)  ,   Spherez((2*u-pi)/2,  -v/Noid, t)))","Catenoid_x= threshold1(u,v,t)*Catenoidx(u,v,t) + threshold2(u,v,t)*Sphere_x(u,v,t)","Catenoid_y= threshold1(u,v,t)*Catenoidy(u,v,t) + threshold2(u,v,t)*Sphere_y(u,v,t)","Catenoid_z= threshold1(u,v,t)*Catenoidz(u,v,t) + threshold2(u,v,t)*Sphere_z(u,v, t)"],
+                "Fx": [
+                    "Catenoid_x(u,v,t)","Spherex(u/2,v,t)"],
+                "Fy": [
+                    "Catenoid_y(u,v,t)","Spherey(u/2,v,t)"],
+                "Fz": [
+                    "Catenoid_z(u,v,t)","Spherez(u/2,v,t)"],
+                "Umax": [
+                    "umax","umax"],
+                "Umin": [
+                    "umin","umin"],
+                "Vmax": [
+                    "vmax","vmax/Noid"],
+                "Vmin": [
+                    "vmin","vmin/Noid"
+                ]
+            }
+        },
     {
         "Param3D": {
             "Description": ["k-Noids minimal surface (v03) by Abderrahman Taha 05/04/2023"],
