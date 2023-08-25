@@ -34,7 +34,7 @@ std::vector<uint>  IndexPolyTabMinVector;
 std::vector<uint>  IndexPolyTabMinVector2;
 std::vector<uint>  IndexPolyTabVector;
 static CellNoise *NoiseFunction = new CellNoise();
-static ImprovedNoise *PNoise = new ImprovedNoise(4., 4., 4.);
+static ImprovedNoise *PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
 static QElapsedTimer times;
 static double IsoComponentId=0;
 static int nbvariables=0;
