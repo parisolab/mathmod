@@ -63,6 +63,21 @@
     },
     {
         "Iso3D": {
+            "Description": ["Mandelbulb by Abderrahman Taha 27/08/2023"],
+            "Name": ["MandelBulb"],
+            "Component": ["MandelBulb"],
+            "Const": ["L=6/5"],
+            "Fxyz": ["mandelbulb(x,y,z)"],
+            "Xmax": ["L"],
+            "Xmin": ["-L"],
+            "Ymax": ["L"],
+            "Ymin": ["-L"],
+            "Zmax": ["L"],
+            "Zmin": ["-L"]
+        }
+    },
+    {
+        "Iso3D": {
             "Description": ["MandelGoldenTemple by Abderrahman Taha 03/12/2022"],
             "Name": ["MandelTemple"],
             "Component": ["MandelTemple"],
