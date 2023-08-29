@@ -22,6 +22,29 @@
 #include <math.h>
 unsigned int ThreadsNumber =4;
 
+double mandelbulb(const double* pp) {
+  double x = pp[0];
+  double y = pp[1];
+  double z = pp[2];
+  double r2, theta, phi, r6, r8;
+  double dr = 1.0;
+  for(int i = 0; i < 6; i++) {
+    r2 = x * x + y * y + z * z;
+    if(r2 > 4) {
+      return 0.25 * sqrt(r2) * log(r2) / dr;
+    }
+    r6 = r2 * r2 * r2;
+    dr = 8.0 * r6 * sqrt(r2) * dr + 1.0;
+    theta = 8.0 * atan2(sqrt(x * x + y * y), z);
+    phi = 8.0 * atan2(y, x);
+    r8 = r6 * r2;
+    x = r8 * cos(phi) * sin(theta) + pp[0];
+    y = r8 * sin(phi) * sin(theta) + pp[1];
+    z = r8 * cos(theta) + pp[2];
+  }
+  return 0.0;
+}
+
 double maxim(double p1, double p2)
 {
     return p1 > p2 ? p1 : p2;
