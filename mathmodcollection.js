@@ -66,7 +66,7 @@
             "Description": ["Mandelbulb by Abderrahman Taha 27/08/2023"],
             "Name": ["MandelBulb"],
             "Component": ["MandelBulb"],
-            "Const": ["L=6/5"],
+            "Const": ["L=105/100"],
             "Fxyz": ["mandelbulb(x,y,z)"],
             "Xmax": ["L"],
             "Xmin": ["-L"],
