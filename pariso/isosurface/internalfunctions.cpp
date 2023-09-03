@@ -28,7 +28,7 @@ double mandelbulb(const double* pp) {
   double z = pp[2];
   double r2, theta, phi, r6, r8;
   double dr = 1.0;
-  for(int i = 0; i < pp[3]; i++) {
+  for(int i = 0; i < 6; i++) {
     r2 = x * x + y * y + z * z;
     if(r2 > 4) {
       return 0.25 * sqrt(r2) * log(r2) / dr;
