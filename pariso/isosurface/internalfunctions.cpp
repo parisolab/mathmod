@@ -30,7 +30,7 @@ double mandelbulb(const double* pp) {
   double dr = 1.0;
   for(int i = 0; i < pp[3]; i++) {
     R2 = x * x + y * y + z * z;
-    if(R2 > 3) {
+    if(R2 > 4) {
       return 0.25 * sqrt(R2) * log(R2) / dr;
     }
     R6 = R2 * R2 * R2;
