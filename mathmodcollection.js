@@ -67,7 +67,7 @@
             "Name": ["MandelBulb"],
             "Component": ["MandelBulb"],
             "Const": ["L=105/100"],
-            "Fxyz": ["mandelbulb(x,y,z,6)"],
+            "Fxyz": ["mandelbulb(x,y,z,24)"],
             "Xmax": ["L"],
             "Xmin": ["-L"],
             "Ymax": ["L"],
