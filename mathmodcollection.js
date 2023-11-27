@@ -2223,9 +2223,9 @@
         "Iso3D": {
             "Description": ["Chmutov_Schwarz surface by Abderrahman Taha 22/04/2019"],
             "Name": ["Chmutov_Schwarz"],
-            "Fxyz": ["-((x^k + y ^k + z^k ) -(cos(n*l*x/5) +cos(n*l*y/5) +cos(n*l*z/5)) -p)"],
             "Component": ["ChmutySchwarz"],
             "Const": ["k=12","l=7","p=1/100","n=1", "c=11/10"],
+            "Fxyz": ["-((x^k + y ^k + z^k ) -(cos(n*l*x/5) +cos(n*l*y/5) +cos(n*l*z/5)) -p)"],
             "Xmax": [" c"],
             "Xmin": ["-c"],
             "Ymax": [" c"],
