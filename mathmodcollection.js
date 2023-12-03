@@ -193,7 +193,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2012"],
+            "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2022"],
             "Name": ["MandelbrotSphere"],
             "Component": ["Sphere"],
             "Const": ["c=1/100000"],
