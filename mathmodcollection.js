@@ -118,7 +118,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2012"],
+            "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2022"],
             "Name": ["MandelbrotTorus"],
             "Component": ["MandelbrotTorus"],
             "Const": ["c=1/100000"],
