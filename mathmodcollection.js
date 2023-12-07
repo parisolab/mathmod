@@ -82,7 +82,7 @@
             "Name": ["MandelTemple"],
             "Component": ["MandelTemple"],
             "Const": ["Iter=300"],
-            "Fxyz": ["-((x^2+y^2-(MandelFractal(-z,sqrt(x*x+y*y), Iter)/Iter)^2))"],
+            "Fxyz": ["-((x^2+y^2-(MandelFractal(-z,sqrt(x*x+y*y),Iter)/Iter)^2))"],
             "Grid": ["150"],
             "Xmax": ["1"],
             "Xmin": ["-1"],
