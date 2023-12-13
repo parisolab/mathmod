@@ -1,4 +1,4 @@
-Copyright © 2023 Abderrahman Taha (طه عبدالرحمان , taha_ab@yahoo.fr)
+Copyright © 2024 Abderrahman Taha (طه عبدالرحمان , taha_ab@yahoo.fr)
 
 Download: https://sourceforge.net/projects/mathmod/   
           https://github.com/parisolab/mathmod/releases
