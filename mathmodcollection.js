@@ -1,271 +1,96 @@
 {
   "MathModels": [
-    {
-        "Param3D": {
-            "Description": ["Noids minimal surface (v02) by Abderrahman Taha 08/04/2023"],
-            "Name": ["Noids"],
-            "Component": ["Noids_02","Noids_01"],
-            "Const": ["R=18","r=2","k=15","Noid=4","umax=pi","umin=-pi","vmin=-pi","vmax=pi","Teta=pi"],
-            "Funct": ["threshold1=(1-((vmax-v)/(vmax-vmin))^(k+2))","threshold2=((vmax-v)/(vmax-vmin))^(k)","Spherex=R*sin(u)","Spherey=R*cos(u)*sin(v)","Spherez=R*cos(u)*cos(v)","Catenoidx=r*cosh(v/2)*cos(u)","Catenoidy=r*cosh(v/2)*sin(u)","Catenoidz=v+sqrt(R*R-r*r*(cosh(v/2))^2)+pi","Sphere_x=(if(u<0,Spherex((2*u+pi)/2,v/Noid, t), -Spherex((2*u-pi)/2, -v/Noid, t)))","Sphere_y= (if(u<0,Spherey((2*u+pi)/2,v/Noid, t), Spherey((2*u-pi)/2, -v/Noid, t)))","Sphere_z= (if(u<0, Spherez((2*u+pi)/2,v/Noid, t),Spherez((2*u-pi)/2,-v/Noid, t)))","Catenoid_x= threshold1(u,v,t)*Catenoidx(u,v,t) + threshold2(u,v,t)*Sphere_x(u,v,t)","Catenoid_y= threshold1(u,v,t)*Catenoidy(u,v,t) + threshold2(u,v,t)*Sphere_y(u,v,t)","Catenoid_z= threshold1(u,v,t)*Catenoidz(u,v,t) + threshold2(u,v,t)*Sphere_z(u,v,t)"],
-            "Fx": ["Catenoid_x(u,v,t)","Spherex(u/2,v,t)"],
-            "Fy": ["Catenoid_y(u,v,t)","Spherey(u/2,v,t)"],
-            "Fz": ["Catenoid_z(u,v,t)","Spherez(u/2,v,t)"],
-            "Umax": ["umax","umax"],
-            "Umin": ["umin","umin"],
-            "Vmax": ["vmax","vmax/Noid"],
-            "Vmin": ["vmin","vmin/Noid"]
-        }
-    },
-    {
-        "Param3D": {
-            "Description": ["k-Noids minimal surface (v03) by Abderrahman Taha 05/04/2023"],
-            "Name": ["k_Noids"],
-            "Component": ["k_Noids_01","k_Noids_02","k_Noids_03","k_Noids_04"],
-            "Const": ["R=8","r=1","k=2","Noid=4","umax=pi","umin=-pi","vmin=-pi","vmax=pi","Teta=pi"],
-            "Funct": ["Spherex=R*sin(u)","Spherey=R*cos(u)*sin(v)","Spherez=R*cos(u)*cos(v)","Catenoidx=r*cosh(v/2)*cos(u)","Catenoidy=r*cosh(v/2)*sin(u)","Catenoidz=v+R+pi","threshold=(1-(vmax-v)/(vmax-vmin))^(k)","threshold2=((vmax-v)/(vmax-vmin))^(k)","Sphere_x=R*sin(2*u+pi/2)","Sphere_y=R*cos(2*u+pi/2)*sin(vmin/Noid)","Sphere_z=(if(u<0,R*cos(2*u+pi/2)*cos(vmin/Noid),-R*cos(2*u+pi/2)*cos(vmin/Noid)))","Catenoid_x=threshold2(u,v,t)*Catenoidx(u,v,t)+threshold(u,v,t)*Sphere_x(u/2,v,t)","Catenoid_y=threshold2(u,v,t)*Catenoidy(u,v,t)+threshold(u,v,t)*Sphere_y(u/2,v,t)","Catenoid_z=threshold2(u,v,t)*Catenoidz(u,v,t)+threshold(u,v,t)*Sphere_z(u/2,v,t)","Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)","Rotz=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)"],
-            "Fx": ["-Catenoid_x(u,v,t)","-Catenoid_x(u,v,t)","-Catenoid_x(u,v,t)","-Catenoid_x(u,v,t)"],
-            "Fy": ["Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(0))","Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(1))","Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(2))","Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(3))"],
-            "Fz": ["Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(0))","Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(1))","Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(2))","Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(3))"],
-            "Umax": ["umax","umax","umax","umax"],
-            "Umin": ["umin","umin","umin","umin"],
-            "Vmax": ["vmax","vmax","vmax","vmax"],
-            "Vmin": ["vmin","vmin","vmin","vmin"]
-        }
-    },
-    {
-        "Param3D": {
-            "Description": ["Pseudo Riemann's minimal surface (v02) by Abderrahman Taha 23/03/2023"],
-            "Name": ["Riemann_Minimal_Surface"],
-            "Component": ["Riemann_01","Riemann_02","Riemann_03","Riemann_04","Riemann_05","Riemann_06","Riemann_07","Riemann_08","Riemann_09","Riemann_10","Riemann_11","Riemann_12"],
-            "Const": ["R=6","r=1","k=2","P=8","M=10","Noid=6","umax=pi","vmax=pi","umin=-pi","vmin=-pi","Teta=pi"],
-            "Funct": ["Rfctv=(v-vmax)/(vmin-vmax)","Rfctu=if(u<0,-(umax+(u))/(umax-Teta/Noid),(umax-(u))/(umax-Teta/Noid))","f1x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u)-R*Rfctv(u,v,t)^k","f2x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta/Noid)*(pi-abs(u))/(pi-Teta/Noid)-R*Rfctv(u,v,t)^k","f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)","f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)","F1x=-if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-R","F1y=if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))","F1z=v","Rotx=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)","Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)"],
-            "Fx": ["Rotx(F1x(u,v,t),F1y(u,v,t),(0))","Rotx(F1x(u,v,t),F1y(u,v,t),(1))","Rotx(F1x(u,v,t),F1y(u,v,t),(2))","Rotx(F1x(u,v,t),F1y(u,v,t),(3))","Rotx(F1x(u,v,t),F1y(u,v,t),(4))","Rotx(F1x(u,v,t),F1y(u,v,t),(5))","Rotx(F1x(u,v,t),F1y(u,v,t),(6))","Rotx(F1x(u,v,t),F1y(u,v,t),(7))","Rotx(F1x(u,v,t),F1y(u,v,t),(8))","Rotx(F1x(u,v,t),F1y(u,v,t),(9))","Rotx(F1x(u,v,t),F1y(u,v,t),(10))","Rotx(F1x(u,v,t),F1y(u,v,t),(11))"],
-            "Fy": ["Roty(F1x(u,v,t),F1y(u,v,t),(0))","Roty(F1x(u,v,t),F1y(u,v,t),(1))","Roty(F1x(u,v,t),F1y(u,v,t),(2))","Roty(F1x(u,v,t),F1y(u,v,t),(3))","Roty(F1x(u,v,t),F1y(u,v,t),(4))","Roty(F1x(u,v,t),F1y(u,v,t),(5))","Roty(F1x(u,v,t),F1y(u,v,t),(6))","Roty(F1x(u,v,t),F1y(u,v,t),(7))","Roty(F1x(u,v,t),F1y(u,v,t),(8))","Roty(F1x(u,v,t),F1y(u,v,t),(9))","Roty(F1x(u,v,t),F1y(u,v,t),(10))","Roty(F1x(u,v,t),F1y(u,v,t),(11))"],
-            "Fz": ["F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t) ","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t) ","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)"],
-            "Umax": ["umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax"],
-            "Umin": ["umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin"],
-            "Vmax": ["vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax"],
-            "Vmin": ["vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin"],
-            "Grid": ["149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149"]
-        },
-        "Sliders": {
-            "Max": ["20","50","50","50","20","50","50","50","20","50","50","50","20","50","50","50","20","50","50","50","20","50","50","50"],
-            "Min": ["2","0","0","0","2","0","0","0","2","0","0","0","2","0","0","0","2","0","0","0","2","0","0","0"],
-            "Name": ["Noid","R","r","k"],
-            "Position": ["2","6","2","2","6","15","2","7","4","8","2","7","8","15","2","7","10","15","2","7","12","15","2","7"],
-            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
-        },
-        "Texture": {
-            "Colors": ["R=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(8/10))","G=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(4/10))","B=if((i_indx)%(M)>P|(j_indx)%(M)>P,(4/10),(1/10))","T=1"],
-            "Name": "square",
-            "Noise": "1"
-        }
-    },
-    {
-        "Iso3D": {
-            "Description": ["Mandelbulb by Abderrahman Taha 27/08/2023"],
-            "Name": ["MandelBulb"],
-            "Component": ["MandelBulb"],
-            "Const": ["L=105/100"],
-            "Fxyz": ["mandelbulb(x,y,z,24)"],
-            "Xmax": ["L"],
-            "Xmin": ["-L"],
-            "Ymax": ["L"],
-            "Ymin": ["-L"],
-            "Zmax": ["L"],
-            "Zmin": ["-L"]
-        }
-    },
-    {
-        "Iso3D": {
-            "Description": ["MandelGoldenTemple by Abderrahman Taha 03/12/2022"],
-            "Name": ["MandelTemple"],
-            "Component": ["MandelTemple"],
-            "Const": ["Iter=300"],
-            "Fxyz": ["-((x^2+y^2-(MandelFractal(-z,sqrt(x*x+y*y),Iter)/Iter)^2))"],
-            "Grid": ["150"],
-            "Xmax": ["1"],
-            "Xmin": ["-1"],
-            "Ymax": ["1"],
-            "Ymin": ["-1"],
-            "Zmax": ["2"],
-            "Zmin": ["-1/2"]
-        }
-    },
-    {
-        "Param3D": {
-            "Description": ["JuliaFractal by Abderrahman Taha 16/11/2022"],
-            "Name": ["JuliaFractal"],
-            "Component": ["Julia"],
-            "Const": ["Lu=3/2","Lv=3/2","Realc=-63/100","Imagc=-41/100","Iter=600"],
-            "Fx": ["u"],
-            "Fy": ["v"],
-            "Fz": ["JuliaFractal(u,v,Realc,Imagc,Iter)/8000"],
-            "Umax": ["Lu"],
-            "Umin": ["-Lu"],
-            "Vmax": ["Lv"],
-            "Vmin": ["-Lv"],
-            "Grid": ["600","600"]
-        },
-        "Texture": {
-                "Colors": ["R=8*z",
-                    "G=14*z/2+1/6",
-                    "B=z/5+1/2",
-                    "T=1"],
-            "Name": "Volcano",
-            "Noise": ""
-        }
-    },
-    {
-        "Param3D": {
-            "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2022"],
-            "Name": ["MandelbrotTorus"],
-            "Component": ["MandelbrotTorus"],
-            "Const": ["c=1/100000"],
-            "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
-                "Fy=(1+cos(u)/2)*sin(v)",
-                "Fz=-sin(u)/2",
-                "Thickness=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),100)/2000",
-                "n1=(-(-cos(u)/2)*((1+cos(u)/2)*cos(v)))",
-                "n2=((-cos(u)/2)*(-(1+cos(u)/2)*sin(v)))",
-                "n3=((-sin(u)*cos(v)/2)*((1+cos(u)/2)*cos(v))-(sin(u)*sin(v)/2)*((1+cos(u)/2)*sin(v)))",
-                "R= u/sqrt(u^2+v^2+t^2)",
-                "Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-                "Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
-                "Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
-            "Fx": ["Gx(u,v,t)"],
-            "Fy": ["Gy(u,v,t)"],
-            "Fz": ["Gz(u,v,t)"],
-            "Grid": ["1000","1000"],
-            "Umax": ["pi"],
-            "Umin": ["-pi"],
-            "Vmax": ["2*pi"],
-            "Vmin": ["0"]
-        },
-        "Texture": {
-            "Colors": ["R=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),200)/600+1/5",
-                "G=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),200)/800+2/5",
-                "B=3/5",
-                "T=1"],
-            "Name": "BlueOcean",
-            "Noise": ""
-        }
-    },
-    {
-        "Iso3D": {
-            "Description": ["MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"],
-            "Name": ["MandelbrotIsoSpheres"],
-            "Component": ["MandelbrotIsoSpheres"],
-            "Const": ["Iter=100",
-                "Step_XY=300",
-                "Step_Z=7",
-                "R=50"],
-            "Funct": ["Octahedron = (abs(x)+abs(y)+ abs(z)-1/R)",
-                "Sphere =(x*x+y*y+ z*z-1/R^2)",
-                "Sphere2=-Sphere(((abs(x)%(1/Step_XY))-(1/(2*Step_XY))),((abs(y)%(1/Step_XY))-(1/Step_XY)/2),z,t)",
-                "MandelbrotSpheres = psh((0), MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY),Iter))*psh((1),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY)-(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY),Iter))*psh((2),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY)-(1/(2*Step_XY)),Iter))*psh((3),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),Iter))*psh((4),max(csd(0),max(csd(1), max(csd(2),csd(3)))))*if((csd(4)=Iter),Sphere2(x,y,z,(1)),if(abs(csd(4)-Iter)<(96),Sphere2(x,y,z+(1/Step_Z),(3/2)),if(abs(csd(4)-Iter)<(98),Sphere2(x,y,z+2*(1/Step_Z),(5/2)),(0))))"],
-            "Fxyz": ["MandelbrotSpheres(x,y,z,t)"],
-            "Grid": ["200"],
-            "Vect": ["5"],
-            "Xmax": ["1"],
-            "Xmin": ["-2"],
-            "Ymax": [" 5/4"],
-            "Ymin": ["-5/4"],
-            "Zmax": ["1/20"],
-            "Zmin": ["-3/10"]
-        },
-        "Sliders": {
-            "Max": ["500","500","500","500"],
-            "Min": ["1","1","1","1"],
-            "Name": ["Step_XY","Iter","R00","Step_Z"],
-            "Position": ["300","104","50","7","14","100","27","8"],
-            "Step": ["1","1","1","1"]
-        }
-        ,
-        "Texture": {
-            "Colors": ["R=(6/5)*MandelFractal(x,y,(25))*abs(z)",
-                "G=(1/2)*MandelFractal(x,y,(25))*abs(z)/2",
-                "B=abs(z)",
-                "T=1"],
-            "Name": "Lines1",
-            "Noise": ""
-        }
-    },
-    {
-        "Param3D": {
-            "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2022"],
-            "Name": ["MandelbrotSphere"],
-            "Component": ["Sphere"],
-            "Const": ["c=1/100000"],
-            "Funct": [
-                "Fx=-cos(u)*cos(v)",
-                "Fy=cos(u)*sin(v)",
-                "Fz=sin(u)",
-                "Thickness=MandelFractal(v-1/2,u,100)/2000",
-                "n1=(-cos(u)*cos(u)*cos(v))",
-                "n2=( cos(u)*cos(u)*sin(v))",
-                "n3= cos(u)*sin(u)*cos(v)*(sin(v) + cos(v))",
-                "R= u/sqrt(u^2+v^2+t^2)",
-                "Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-                "Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
-                "Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
-            "Fx": ["Gx(u,v,t)"],
-            "Fy": ["Gy(u,v,t)"],
-            "Fz": ["Gz(u,v,t)"],
-            "Grid": ["500","500"],
-            "Umax": ["pi/2"],
-            "Umin": ["-pi/2"],
-            "Vmax": ["pi/2"],
-            "Vmin": ["-pi/2"]
-        },
-        "Texture": {
-            "Colors": ["R=MandelFractal(v-1/2,u,100)/500+1/5",
-                "G=MandelFractal(v-1/2,u,100)/600+3/10",
-                "B=7/10",
-                "T=1"],
-            "Name": "Volcano",
-            "Noise": ""
-        }
-    },
-    {
-        "Param3D": {
-            "Description": ["MandelFractal by Abderrahman Taha 15/11/2022"],
-            "Name": ["Mandelbrot"],
-            "Component": ["Mandel"],
-            "Const": ["Lu=3/2","Lv=3/2","c=3/5"],
-            "Fx": ["u"],
-            "Fy": ["v"],
-            "Fz": ["MandelFractal(u,v,100)/300"],
-            "Umax": ["Lu-c"],
-            "Umin": ["-Lu-c"],
-            "Vmax": ["Lv"],
-            "Vmin": ["-Lv"],
-            "Grid": ["800","800"]
-        },
-        "Texture": {
-            "Colors": ["R=6*z+1/10",
-                "G=3*z/2+1/10",
-                "B=z/5+1/10",
-                "T=1"],
-            "Name": "Volcano",
-            "Noise": ""
-        }
-    },
-    {
-        "Param3D": {
-            "Description": ["Spherical harmonics by Abderrahman Taha 03/11/2022"],
-            "Name": ["Spherical_Harmonics"],
-            "Component": ["SH_1","SH_2","SH_3","SH_4","SH_5","SH_6"],
-            "Funct": ["H1=abs(1)","H2=(7/4)*abs(cos(u))","H3=abs(3*cos(u)^2-1)","H4=3*abs(cos(u)*sin(u)*sin(v))","H5=abs(5*cos(u)^3-3*cos(u))","H6=abs((5*cos(u)^2-1)*cos(v)*sin(u))"],
-            "Fx": ["H1(u,v,t)*sin(u)*cos(v)","H2(u,v,t)*sin(u)*cos(v)+3","H3(u,v,t)*sin(u)*cos(v)+6","H4(u,v,t)*sin(u)*cos(v)","H5(u,v,t)*sin(u)*cos(v)+3","H6(u,v,t)*sin(u)*cos(v)+6"],
-            "Fy": ["H1(u,v,t)*sin(u)*sin(v)","H2(u,v,t)*sin(u)*sin(v)","H3(u,v,t)*sin(u)*sin(v)","H4(u,v,t)*sin(u)*sin(v)","H5(u,v,t)*sin(u)*sin(v)","H6(u,v,t)*sin(u)*sin(v)"],
-            "Fz": ["H1(u,v,t)*cos(u)","H2(u,v,t)*cos(u)","H3(u,v,t)*cos(u)","H4(u,v,t)*cos(u)-4","H5(u,v,t)*cos(u)-4","H6(u,v,t)*cos(u)-4"],
-            "Umax": ["pi","pi","pi","pi","pi","pi"],
-            "Umin": ["0","0","0","0","0","0"],
-            "Vmax": ["2*pi","2*pi","2*pi","2*pi","2*pi","2*pi"],
-            "Vmin": ["0","0","0","0","0","0"]
-        }
-    },
+        {
+                    "Param3D": {
+                        "Component": [
+                            "Knots"
+                        ],
+                        "Const": [
+                            "r=2",
+                            "du=1/1000000"
+                        ],
+                        "Description": [
+                            "Trefoil_Sweep Creates a surface by sweeping a cross section curve along a spine curve"
+                        ],
+                        "Funct": [
+                            "C1x=r*cos(v)",
+                            "C1y=r*sin(v)",
+                            "Cx=5*(sin(u) + 2*sin(2*u))",
+                            "Cy=5*(cos(u) - 2*cos(2*u))",
+                            "Cz=5*sin(3*u)",
+                            "Rapp=u/sqrt(u*u+v*v+t*t)",
+                            "dCxu=(Cx(u+du,v,t)-Cx(u,v,t))/du",
+                            "dCyu=(Cy(u+du,v,t)-Cy(u,v,t))/du",
+                            "dCzu=(Cz(u+du,v,t)-Cz(u,v,t))/du",
+                            "axu=Rapp(dCxu(u,v,t),dCyu(u,v,t),dCzu(u,v,t))",
+                            "ayu=Rapp(dCyu(u,v,t),dCzu(u,v,t),dCxu(u,v,t))",
+                            "azu=Rapp(dCzu(u,v,t),dCxu(u,v,t),dCyu(u,v,t))",
+                            "d2Cxu=(axu(u+du,v,t)-axu(u,v,t))/du",
+                            "d2Cyu=(ayu(u+du,v,t)-ayu(u,v,t))/du",
+                            "d2Czu=(azu(u+du,v,t)-azu(u,v,t))/du",
+                            "Ax=Rapp(d2Cxu(u,v,t),d2Cyu(u,v,t),d2Czu(u,v,t))",
+                            "Ay=Rapp(d2Cyu(u,v,t),d2Czu(u,v,t),d2Cxu(u,v,t))",
+                            "Az=Rapp(d2Czu(u,v,t),d2Cxu(u,v,t),d2Cyu(u,v,t))",
+                            "nx=(ayu(u,v,t)*Az(u,v,t)-azu(u,v,t)*Ay(u,v,t))",
+                            "ny=(azu(u,v,t)*Ax(u,v,t)-axu(u,v,t)*Az(u,v,t))",
+                            "nz=(axu(u,v,t)*Ay(u,v,t)-ayu(u,v,t)*Ax(u,v,t))",
+                            "Bx=Rapp(nx(u,v,t),ny(u,v,t),nz(u,v,t))",
+                            "By=Rapp(ny(u,v,t),nz(u,v,t),nx(u,v,t))",
+                            "Bz=Rapp(nz(u,v,t),nx(u,v,t),ny(u,v,t))",
+                            "S1x=Cx(u,v,t)+(C1x(u,v,t)*Bx(u,v,t)+C1y(u,v,t)*Ax(u,v,t))",
+                            "S1y=Cy(u,v,t)+(C1x(u,v,t)*By(u,v,t)+C1y(u,v,t)*Ay(u,v,t))",
+                            "S1z=Cz(u,v,t)+(C1x(u,v,t)*Bz(u,v,t)+C1y(u,v,t)*Az(u,v,t))"
+                        ],
+                        "Fx": [
+                            "S1x(u,v,t)"
+                        ],
+                        "Fy": [
+                            "S1y(u,v,t)"
+                        ],
+                        "Fz": [
+                            "S1z(u,v,t)"
+                        ],
+                        "Grid": [
+                            "400",
+                            "50"
+                        ],
+                        "Name": [
+                            "Trefoil_Knot"
+                        ],
+                        "Umax": [
+                            "2*pi"
+                        ],
+                        "Umin": [
+                            "0"
+                        ],
+                        "Vmax": [
+                            "2*pi"
+                        ],
+                        "Vmin": [
+                            "0"
+                        ]
+                    },
+                    "Sliders": {
+                        "Max": [
+                            "30"
+                        ],
+                        "Min": [
+                            "0"
+                        ],
+                        "Name": [
+                            "r"
+                        ],
+                        "Position": [
+                            "2"
+                        ],
+                        "SetNames": [
+                            "Trefoil_Knot"
+                        ],
+                        "Step": [
+                            "1"
+                        ]
+                    }
+                } ,
     {
         "Iso3D": {
             "Description": ["Ukraine Heart Flag by Abderrahman Taha 24/02/2022"],
@@ -277,8 +102,7 @@
             "Ymax": ["1"],
             "Ymin": ["-1"],
             "Zmax": ["13/10"],
-            "Zmin": ["-13/10"],
-            "Grid": ["120"]
+            "Zmin": ["-13/10"]
         },
         "Texture": {
             "Colors": ["R=if((z>1/8),(0),(6/10))",
@@ -293,8 +117,8 @@
         "Param3D": {
             "Description": ["Moebius_Spheres fabric animation by Abderrahman Taha 13/02/2019"],
             "Name": ["Moebius_Spheres"],
-            "Funct": ["Fx=cos(v)+u*cos(Nb_Twists*v/2+t/P)*cos(v)","Fy=sin(v)+u*cos(Nb_Twists*v/2+t/P)*sin(v)","Fz=u*sin(Nb_Twists*v/2+t/P)","Fx=Fx(u,v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=(3), t/k0, 0*t/k0), t)","Fy=Fy(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=(3), t/k0, 0*t/k0), t)","Fz=Fz(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=(3), t/k0, 0*t/k0), t)","Px=r0*cos(u)*cos(v)","Py=r0*cos(u)*sin(v)","Pz=r0*sin(u)","Sx=Px(u,v,t) + Fx(u1min+ (CmpId(0)%N)*Gu   ,  v1min + floor(CmpId(0)/N)*Gv,t)","Sy=Py(u,v,t) + Fy(u1min+ (CmpId(0)%N)*Gu    , v1min + floor(CmpId(0)/N)*Gv,t)","Sz=Pz(u,v,t) + Fz(u1min+ (CmpId(0)%N)*Gu    ,v1min + floor(CmpId(0)/N)*Gv,t)","Sx=Sx(u, v, t)","Sy=Sy(u, v, t)","Sz=Sz(u, v, t)"],
-            "Const": ["M=20","N=4","r0=13/100","umin=-pi/2","umax=pi/2","vmin=0","vmax=2*pi","u1min=-4/10","u1max=4/10","v1min=0","v1max=2*pi","Gu=(u1max-u1min)/(N-1)","Gv=(v1max-v1min)/(M)","Nb_Twists=1","k0=100","k1=100","k2=100","P=100"],
+            "Funct": ["Fx=cos(v)+u*cos(k*v/2+t/P)*cos(v)","Fy=sin(v)+u*cos(k*v/2+t/P)*sin(v)","Fz=u*sin(k*v/2+t/P)","Fx=Fx(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=(3), t/k0, 0*t/k0), t)","Fy=Fy(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=(3), t/k0, 0*t/k0), t)","Fz=Fz(u, v+if((CmpId(0)%N)=0 | (CmpId(0)%N)=(3), t/k0, 0*t/k0), t)","Px=r0*cos(u)*cos(v)","Py=r0*cos(u)*sin(v)","Pz=r0*sin(u)","Sx=Px(u,v,t) + Fx(u1min+ (CmpId(0)%N)*Gu   ,  v1min + floor(CmpId(0)/N)*Gv,t)","Sy=Py(u,v,t) + Fy(u1min+ (CmpId(0)%N)*Gu    , v1min + floor(CmpId(0)/N)*Gv,t)","Sz=Pz(u,v,t) + Fz(u1min+ (CmpId(0)%N)*Gu    ,v1min + floor(CmpId(0)/N)*Gv,t)","Sx=Sx(u, v, t)","Sy=Sy(u, v, t)","Sz=Sz(u, v, t)"],
+            "Const": ["M=20","N=4","r0=13/100","umin=-pi/2","umax=pi/2","vmin=0","vmax=2*pi","u1min=-4/10","u1max=4/10","v1min=0","v1max=2*pi","Gu=(u1max-u1min)/(N-1)","Gv=(v1max-v1min)/(M)","k=1","k0=100","k1=100","k2=100","P=100"],
             "Component": ["Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19","Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19","Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19","Moebius_Sphere_00","Moebius_Sphere_01","Moebius_Sphere_02","Moebius_Sphere_03","Moebius_Sphere_04","Moebius_Sphere_05","Moebius_Sphere_06","Moebius_Sphere_07","Moebius_Sphere_08","Moebius_Sphere_09","Moebius_Sphere_10","Moebius_Sphere_11","Moebius_Sphere_12","Moebius_Sphere_13","Moebius_Sphere_14","Moebius_Sphere_15","Moebius_Sphere_16","Moebius_Sphere_17","Moebius_Sphere_18","Moebius_Sphere_19"],
             "Fx": ["Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)","Sx(u,v,t)"],
             "Fy": ["Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)","Sy(u,v,t)"],
@@ -307,7 +131,7 @@
         "Sliders": {
             "Max": ["50"],
             "Min": ["0"],
-            "Name": ["Nb_Twists"],
+            "Name": ["k"],
             "Position": ["1"],
             "Step": ["1"]
         },
@@ -541,8 +365,7 @@
             "Ymax": [" r+1/10"],
             "Ymin": ["-r-1/10"],
             "Zmax": ["R+r+1/10"],
-            "Zmin": ["-(R+r+1/10)"],
-            "Grid": ["120"]
+            "Zmin": ["-(R+r+1/10)"]
         },
         "Sliders": {
             "Max": ["10","20","20","20","10","20","20","20","10","20","20","20"],
@@ -566,8 +389,7 @@
             "Ymax": [" r+1/10","R+r+1/10"],
             "Ymin": ["-r-1/10","-(R+r+1/10)"],
             "Zmax": ["R+r+1/10","R+r+1/10+R"],
-            "Zmin": ["-(R+r+1/10)","-(R+r+1/10)+R"],
-            "Grid": ["120","120"]
+            "Zmin": ["-(R+r+1/10)","-(R+r+1/10)+R"]
         }
     },
     {
@@ -784,8 +606,7 @@
             "Ymax": ["L","L","L"],
             "Ymin": ["-L","-L","-L"],
             "Zmax": ["L","L","L"],
-            "Zmin": ["-L","-L","-L"],
-            "Grid": ["100","100","100"]
+            "Zmin": ["-L","-L","-L"]
         }
     },
     {
@@ -802,8 +623,7 @@
             "Ymax": ["L","L","L"],
             "Ymin": ["-L","-L","-L"],
             "Zmax": ["L","L","L"],
-            "Zmin": ["-L","-L","-L"],
-            "Grid": ["100","100","100"]
+            "Zmin": ["-L","-L","-L"]
         }
     },
     {
@@ -864,14 +684,13 @@
                 "DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)",
                 "Rapp=(th/sqrt(x*x+y*y+z*z))",
                 "ThickIsoExterior=  psh((0), DFx(x,y,z,t)) * psh((1), DFy(x,y,z,t)) * psh((2), DFz(x,y,z,t)) * (psh((3), Rapp(csd(0), csd(1), csd(2),t)))  * (IsoExterior(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t))*(IsoExterior(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t))"],
-            "Fxyz": ["-if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), (1))"],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), (1))"],
             "Xmax": ["10"],
             "Xmin": ["-10"],
             "Ymax": ["28"],
             "Ymin": ["-28"],
             "Zmax": ["28"],
-            "Zmin": ["-28"],
-            "Grid": ["100"]
+            "Zmin": ["-28"]
         }
     },
     {
@@ -1160,8 +979,7 @@
             "Ymax": ["1","1"],
             "Ymin": ["-1","-1"],
             "Zmax": ["(15/10)","(15/10)"],
-            "Zmin": ["-(12/10)","-1"],
-            "Grid": ["100","100"]
+            "Zmin": ["-(12/10)","-1"]
         },
         "Texture": {
             "Colors": ["R=if((x*x+y*y+z*z)>(81/100),(95/100)*cos((x*x+y*y+z*z)/(17/10)), (2/10))+(2/10)","G=if((x*x+y*y+z*z)>(8/10), (8/10)*(cos((x*x+y*y+z*z)/5)*sin((x*x+y*y+z*z)))*sin((x*x+y*y+z*z)/(3/10)), (5/10)*sin((x*x+y*y+z*z)*9))+(2/10)","B=if((x*x+y*y+z*z)<(8/10),(cos((x*x+y*y+z*z))*cos((x*x+y*y+z*z))*sin((x*x+y*y+z*z)))+(4/10), (1/10))+(5/10)","T=1"],
@@ -1201,9 +1019,8 @@
             "Xmin": ["-3/2"],
             "Ymax": ["3/2"],
             "Ymin": ["-3/2"],
-            "Zmax": ["100/235"],
-            "Zmin": ["-100/235"],
-            "Grid": ["60"]
+            "Zmax": ["1/2"],
+            "Zmin": ["-1/2"]
             }
     },
     {
@@ -1218,8 +1035,7 @@
             "Ymax": ["2"],
             "Ymin": ["-2"],
             "Zmax": ["10/14"],
-            "Zmin": ["-10/14"],
-            "Grid": ["100"]
+            "Zmin": ["-10/14"]
         }
     },
     {
@@ -1235,8 +1051,7 @@
             "Ymax": ["10","5","5","8","8"],
             "Ymin": ["-5","-15","-15","-20","-20"],
             "Zmax": ["1","1","1","1","1"],
-            "Zmin": ["-1","-1","-1","-1","-1"],
-            "Grid": ["100","100","100","100","100"]
+            "Zmin": ["-1","-1","-1","-1","-1"]
         },
         "Texture": {
             "Colors": [
@@ -1258,8 +1073,7 @@
         "Ymax": ["2"],
         "Ymin": ["-2"],
         "Zmax": ["2"],
-        "Zmin": ["-2"],
-        "Grid": ["120"]
+        "Zmin": ["-2"]
     }
     },
     {
@@ -1277,8 +1091,7 @@
         "Ymax": ["3/2"],
         "Ymin": ["-3/2"],
         "Zmax": ["1/2"],
-        "Zmin": ["-1/2"],
-        "Grid": ["100"]
+        "Zmin": ["-1/2"]
     }
     },
     {
@@ -1361,8 +1174,7 @@
         "Ymin": ["-1001/1000"],
         "Ymax": [" 1001/1000"],
         "Zmin": ["-1001/1000"],
-        "Zmax": [" 1001/1000"],
-        "Grid": [" 160"]
+        "Zmax": [" 1001/1000"]
       }
     },
     {
@@ -1457,8 +1269,7 @@
         "Ymin": ["-4"],
         "Ymax": [" 4"],
         "Zmin": ["-4"],
-        "Zmax": [" 4"],
-        "Grid": ["100"]
+        "Zmax": [" 4"]
       }
     },
     {
@@ -1474,8 +1285,7 @@
         "Ymax": ["3"],
         "Ymin": ["-3"],
         "Zmax": ["3"],
-        "Zmin": ["-3"],
-        "Grid": ["120"]
+        "Zmin": ["-3"]
       }
     },
     {
@@ -1515,8 +1325,7 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["5"],
-        "Zmin": ["-5"],
-        "Grid": ["200"]
+        "Zmin": ["-5"]
       }
     },
     {
@@ -1529,8 +1338,7 @@
         "Ymax": ["28/5"],
         "Ymin": ["-28/5"],
         "Zmax": ["28/5"],
-        "Zmin": ["-28/5"],
-        "Grid": ["150"]
+        "Zmin": ["-28/5"]
       }
     },
     {
@@ -1544,8 +1352,7 @@
         "Ymax": ["3"],
         "Ymin": ["-3"],
         "Zmax": ["3"],
-        "Zmin": ["-3"],
-        "Grid": ["120"]
+        "Zmin": ["-3"]
       }
     },
     {
@@ -1568,14 +1375,13 @@
         "Ymax": ["C"],
         "Ymin": ["-C"],
         "Zmax": ["C"],
-        "Zmin": ["-C"],
-        "Grid": ["120"]
+        "Zmin": ["-C"]
       }
     },
     {
       "Iso3D": {
-        "Name": ["Sarti_Dodecic"],
-        "Component": ["Sarti_Dodecic"],
+        "Name": ["SartiDodecic"],
+        "Component": ["Sarti-Dodecic"],
         "Cnd": ["(x^2+y^2+z^2)>13"],
         "Const": [" w  = 1"],
         "Fxyz": ["243*(33*sqrt(5)*(((x^2*y^2+z^2*w^2)^2*(x^2*z^2+y^2*w^2)-(x^2*y^2+z^2*w^2)*(x^2*z^2+y^2*w^2)^2)+((x^2*z^2+y^2*w^2)^2*(x^2*w^2+y^2*z^2)-(x^2*z^2+y^2*w^2)*(x^2*w^2+y^2*z^2)^2)+((x^2*w^2+y^2*z^2)^2*(x^2*y^2+z^2*w^2)-(x^2*w^2+y^2*z^2)*(x^2*y^2+z^2*w^2)^2))+19*(((x^2*y^2+z^2*w^2)^2*(x^2*z^2+y^2*w^2)+(x^2*y^2+z^2*w^2)*(x^2*z^2+y^2*w^2)^2)+((x^2*z^2+y^2*w^2)^2*(x^2*w^2+y^2*z^2)+(x^2*z^2+y^2*w^2)*(x^2*w^2+y^2*z^2)^2)+((x^2*w^2+y^2*z^2)^2*(x^2*y^2+z^2*w^2)+(x^2*w^2+y^2*z^2)*(x^2*y^2+z^2*w^2)^2))+10*((x^2*y^2+z^2*w^2)^3+(x^2*z^2+y^2*w^2)^3+(x^2*w^2+y^2*z^2)^3)-14*(x^4+y^4+z^4+w^4)*((x^2*y^2+z^2*w^2)*(x^2*z^2+y^2*w^2)+(x^2*y^2+z^2*w^2)*(x^2*w^2+y^2*z^2)+(x^2*z^2+y^2*w^2)*(x^2*w^2+y^2*z^2))+2*(x^4+y^4+z^4+w^4)^2*((x^2*y^2+z^2*w^2)+(x^2*z^2+y^2*w^2)+(x^2*w^2+y^2*z^2))-6*(x^4+y^4+z^4+w^4)*((x^2*y^2+z^2*w^2)^2+(x^2*z^2+y^2*w^2)^2+(x^2*w^2+y^2*z^2)^2)-352*(x*y*z*w)^2*((x^2*y^2+z^2*w^2)+(x^2*z^2+y^2*w^2)+(x^2*w^2+y^2*z^2))+336*(x*y*z*w)^2*(x^4+y^4+z^4+w^4)+48*((x^2*y^2+z^2*w^2)*(x^2*z^2+y^2*w^2)*(x^2*w^2+y^2*z^2)))-22*(x^2+y^2+z^2+w^2)^6"],
@@ -1584,8 +1390,7 @@
         "Ymax": ["37/10"],
         "Ymin": ["-37/10"],
         "Zmax": ["37/10"],
-        "Zmin": ["-37/10"],
-        "Grid": ["150"]
+        "Zmin": ["-37/10"]
       }
     },
     {
@@ -1605,15 +1410,13 @@
       "Iso3D": {
         "Name": ["Blobs"],
         "Component": ["Blobs"],
-        "Const": ["L=12/10"],
         "Fxyz": ["x^2 + y ^2 + z^2 +cos(4*x)+cos(4*y)+cos(4*z)-1/10"],
-        "Xmin": ["-L"],
-        "Xmax": [" L"],
-        "Ymin": ["-L"],
-        "Ymax": [" L"],
-        "Zmin": ["-L"],
-        "Zmax": [" L"],
-        "Grid": ["100"]
+        "Xmin": ["-2"],
+        "Xmax": [" 2"],
+        "Ymin": ["-2"],
+        "Ymax": [" 2"],
+        "Zmin": ["-2"],
+        "Zmax": [" 2"]
       }
     },
     {
@@ -1652,8 +1455,7 @@
         "Ymin": ["-1"],
         "Ymax": [" 1"],
         "Zmin": ["-1"],
-        "Zmax": [" 1"],
-        "Grid": ["100"]
+        "Zmax": [" 1"]
       }
     },
     {
@@ -1953,8 +1755,11 @@
             "Const": ["X=1",
                 "Y=1",
                 "Z=1",
+                "N=4",
                 "c=1/1000",
-                "T=2/100"],
+                "T=2/100",
+                "k1=1",
+                "k2=14/10"],
             "Funct": ["Clebsch =81*(x^3+y^3+z^3)-189*(x^2*y+x^2*z+y^2*x+y^2*z+z^2*x+z^2*y) +54*x*y*z+126*(x*y+x*z+y*z)-9*(x^2+y^2+z^2)-9*(x+y+z)+1 ",
                 "DFx=((Clebsch(x+c,y,z,t)-Clebsch(x,y,z,t))/c)",
                 "DFy=((Clebsch(x,y+c,z,t)-Clebsch(x,y,z,t))/c)",
@@ -2223,9 +2028,9 @@
         "Iso3D": {
             "Description": ["Chmutov_Schwarz surface by Abderrahman Taha 22/04/2019"],
             "Name": ["Chmutov_Schwarz"],
+            "Fxyz": ["-((x^k + y ^k + z^k ) -(cos(n*l*x/5) +cos(n*l*y/5) +cos(n*l*z/5)) -p)"],
             "Component": ["ChmutySchwarz"],
             "Const": ["k=12","l=7","p=1/100","n=1", "c=11/10"],
-            "Fxyz": ["-((x^k + y ^k + z^k ) -(cos(n*l*x/5) +cos(n*l*y/5) +cos(n*l*z/5)) -p)"],
             "Xmax": [" c"],
             "Xmin": ["-c"],
             "Ymax": [" c"],
@@ -2320,8 +2125,7 @@
         "Ymin": ["-41/5"],
         "Ymax": ["41/5"],
         "Zmin": ["-4"],
-        "Zmax": ["4"],
-        "Grid": ["100"]
+        "Zmax": ["4"]
       }
     },
     {
@@ -2375,8 +2179,7 @@
         "Ymax": ["9"],
         "Ymin": ["-9"],
         "Zmax": ["9"],
-        "Zmin": ["-9"],
-        "Grid": ["80"]
+        "Zmin": ["-9"]
       }
     },
     {
@@ -2394,8 +2197,7 @@
         "Ymax": ["3"],
         "Ymin": ["-3"],
         "Zmax": ["3"],
-        "Zmin": ["-3"],
-        "Grid": ["70"]
+        "Zmin": ["-3"]
       }
     },
     {
@@ -2403,13 +2205,12 @@
         "Name": ["Lidinoid"],
         "Component": ["Lidinoid"],
         "Fxyz": ["-((1/2)*(sin(2*x)*cos(y)*sin(z)+sin(2*y)*cos(z)*sin(x)+sin(2*z)*cos(x)*sin(y))-(1/2)*(cos(2*x)*cos(2*y)+cos(2*y)*cos(2*z)+cos(2*z)*cos(2*x))+(3/20))"],
-        "Xmax": ["pi"],
-        "Xmin": ["-pi"],
-        "Ymax": ["pi"],
-        "Ymin": ["-pi"],
-        "Zmax": ["pi"],
-        "Zmin": ["-pi"],
-        "Grid": ["100"]
+        "Xmax": ["3"],
+        "Xmin": ["-3"],
+        "Ymax": ["3"],
+        "Ymin": ["-3"],
+        "Zmax": ["3"],
+        "Zmin": ["-3"]
       }
     },
     {
@@ -2422,8 +2223,7 @@
         "Ymax": ["(11/4)*pi"],
         "Ymin": ["-pi/4"],
         "Zmax": ["(11/4)*pi"],
-        "Zmin": ["-pi/4"],
-        "Grid": ["120"]
+        "Zmin": ["-pi/4"]
       }
     },
     {
@@ -2436,8 +2236,7 @@
         "Ymax": ["(11/4)*pi"],
         "Ymin": ["-pi/4"],
         "Zmax": ["(11/4)*pi"],
-        "Zmin": ["-pi/4"],
-        "Grid": ["150"]
+        "Zmin": ["-pi/4"]
       }
     },
     {
@@ -2450,8 +2249,7 @@
         "Ymax": ["4*pi"],
         "Ymin": ["0"],
         "Zmax": ["4*pi"],
-        "Zmin": ["0"],
-        "Grid": ["100"]
+        "Zmin": ["0"]
       }
     },
     {
@@ -2534,8 +2332,67 @@
         "Ymax": ["2"],
         "Ymin": ["-2"],
         "Zmax": ["2"],
-        "Zmin": ["-2"],
-        "Grid": ["100"]
+        "Zmin": ["-2"]
+      },
+      "Pigment": {
+        "Colors": [
+          {
+            "Color": {
+              "Name": "Red",
+              "Vrgba": ["V=1/5",
+                "R=2/5",
+                "G=2/5",
+                "B=7/10",
+                "A=1"
+              ]
+            }
+          },
+          {
+            "Color": {
+              "Name": "Red",
+              "Vrgba": ["V=3/10",
+                "R=1",
+                "G=1/10",
+                "B=3/10",
+                "A=1"
+              ]
+            }
+          },
+          {
+            "Color": {
+              "Name": "Red",
+              "Vrgba": ["V=3/5",
+                "R=1/2",
+                "G=1/5",
+                "B=1",
+                "A=1"
+              ]
+            }
+          },
+          {
+            "Color": {
+              "Name": "Red",
+              "Vrgba": ["V=3/5",
+                "R=1",
+                "G=3/10",
+                "B=1/10",
+                "A=1"
+              ]
+            }
+          },
+          {
+            "Color": {
+              "Name": "Red",
+              "Vrgba": ["V=1",
+                "R=9/10",
+                "G=1/5",
+                "B=1/10",
+                "A=1"
+              ]
+            }
+          }
+        ],
+        "Gradient": "3*cos((x*x+y*y)*pi)*sin((y*y+z*z)*pi)"
       }
     },
     {
@@ -2549,8 +2406,7 @@
             "Ymax": ["4"],
             "Ymin": ["-4"],
             "Zmax": ["4"],
-            "Zmin": ["-4"],
-            "Grid": ["120"]
+            "Zmin": ["-4"]
         },
         "Texture": {
             "Colors": ["R=cos(x)*sin(z)+3/10","G=sin(x)*cos(y)+3/10","B=sin(y)*cos(z)+3/10","T=1"],
@@ -3723,8 +3579,7 @@
         "Umax": ["2*pi"],
         "Umin": ["0"],
         "Vmax": ["pi/2"],
-        "Vmin": ["-pi/2"],
-        "Grid": ["300","300"]
+        "Vmin": ["-pi/2"]
       }
     },
     {
@@ -3779,8 +3634,7 @@
         "Ymax": ["30"],
         "Ymin": ["-30"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["100"]
+        "Zmin": ["-15"]
       },
       "Sliders": {
         "Max": ["50","10","25","25","25","50","10","25","25","25","50","10","25","25","25","50","10","25","25","25"],
@@ -3801,8 +3655,7 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["11/5"],
-        "Zmin": ["-11/5"],
-        "Grid": ["150"]
+        "Zmin": ["-11/5"]
       },
       "Sliders": {
         "Max": ["10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30","10"," 10"," 10"," 30"," 30"," 30"," 20"," 30"],
@@ -3878,8 +3731,7 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["7/3"],
-        "Zmin": ["-7/3"],
-        "Grid": ["100"]
+        "Zmin": ["-7/3"]
       }
     },
     {
@@ -3916,7 +3768,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Exotic flower-01 by Abderrahman Taha 08/11/2022"],
+        "Description ": ["Exotic flower-01 by Abderrahman Taha 15/10/2019"],
         "Name": ["Exotic flower"],
         "Component": ["ExoticFlower"],
         "Const": ["c=1/10000","A=sqrt(2)"],
@@ -3943,40 +3795,42 @@
         "Umax": ["2*pi"],
         "Umin": ["0"],
         "Vmax": ["pi"],
-        "Vmin": ["0"],
-        "Grid": ["300","300"]
+        "Vmin": ["0"]
       }
     },
-    {
-        "Iso3D": {
-            "Description ": ["HexagramsMenger4 by Abderrahman Taha 12/01/2022"],
-            "Name": ["HexagramsMenger4"],
-            "Component": ["MengerSponge"],
-            "Grid": ["379"],
-            "Const": ["th=5/1000"],
-            "Funct": [
-                "Ax=((abs(x-2/3)<1/81)+(abs(x-20/27)<1/81)+(abs(x-16/27)<1/81)+(abs(x-8/9)<1/81)+(abs(x-26/27)<1/81)+(abs(x-22/27)<1/81)+(abs(x-4/9)<1/81)+(abs(x-14/27)<1/81)+(abs(x-10/27)<1/81)+(abs(x+2/3)<1/81)+(abs(x+16/27)<1/81)+(abs(x+20/27)<1/81)+(abs(x+4/9)<1/81)+(abs(x+10/27)<1/81)+(abs(x+14/27)<1/81)+(abs(x+8/9)<1/81)+(abs(x+22/27)<1/81)+(abs(x+26/27)<1/81)+(abs(x)<1/81)+(abs(x-2/27)<1/81)+(abs(x+2/27)<1/81)+(abs(x-2/9)<1/81)+(abs(x-8/27)<1/81)+(abs(x-4/27)<1/81)+(abs(x+2/9)<1/81)+(abs(x+4/27)<1/81)+(abs(x+8/27)<1/81))",
-                "Ay=((abs(y-2/3)<1/81)+(abs(y-20/27)<1/81)+(abs(y-16/27)<1/81)+(abs(y-8/9)<1/81)+(abs(y-26/27)<1/81)+(abs(y-22/27)<1/81)+(abs(y-4/9)<1/81)+(abs(y-14/27)<1/81)+(abs(y-10/27)<1/81)+(abs(y+2/3)<1/81)+(abs(y+16/27)<1/81)+(abs(y+20/27)<1/81)+(abs(y+4/9)<1/81)+(abs(y+10/27)<1/81)+(abs(y+14/27)<1/81)+(abs(y+8/9)<1/81)+(abs(y+22/27)<1/81)+(abs(y+26/27)<1/81)+(abs(y)<1/81)+(abs(y-2/27)<1/81)+(abs(y+2/27)<1/81)+(abs(y-2/9)<1/81)+(abs(y-8/27)<1/81)+(abs(y-4/27)<1/81)+(abs(y+2/9)<1/81)+(abs(y+4/27)<1/81)+(abs(y+8/27)<1/81))",
-                "Az=((abs(z-2/3)<1/81)+(abs(z-20/27)<1/81)+(abs(z-16/27)<1/81)+(abs(z-8/9)<1/81)+(abs(z-26/27)<1/81)+(abs(z-22/27)<1/81)+(abs(z-4/9)<1/81)+(abs(z-14/27)<1/81)+(abs(z-10/27)<1/81)+(abs(z+2/3)<1/81)+(abs(z+16/27)<1/81)+(abs(z+20/27)<1/81)+(abs(z+4/9)<1/81)+(abs(z+10/27)<1/81)+(abs(z+14/27)<1/81)+(abs(z+8/9)<1/81)+(abs(z+22/27)<1/81)+(abs(z+26/27)<1/81)+(abs(z)<1/81)+(abs(z-2/27)<1/81)+(abs(z+2/27)<1/81)+(abs(z-2/9)<1/81)+(abs(z-8/27)<1/81)+(abs(z-4/27)<1/81)+(abs(z+2/9)<1/81)+(abs(z+4/27)<1/81)+(abs(z+8/27)<1/81))",
-                "Bx=((abs(x-2/3)<1/27)+(abs(x-8/9)<1/27)+(abs(x-4/9)<1/27)+(abs(x+2/3)<1/27)+(abs(x+4/9)<1/27)+(abs(x+8/9)<1/27)+(abs(x)<1/27)+(abs(x-2/9)<1/27)+(abs(x+2/9)<1/27))",
-                "By=((abs(y-2/3)<1/27)+(abs(y-8/9)<1/27)+(abs(y-4/9)<1/27)+(abs(y+2/3)<1/27)+(abs(y+4/9)<1/27)+(abs(y+8/9)<1/27)+(abs(y)<1/27)+(abs(y-2/9)<1/27)+(abs(y+2/9)<1/27))",
-                "Bz=((abs(z-2/3)<1/27)+(abs(z-8/9)<1/27)+(abs(z-4/9)<1/27)+(abs(z+2/3)<1/27)+(abs(z+4/9)<1/27)+(abs(z+8/9)<1/27)+(abs(z)<1/27)+(abs(z-2/9)<1/27)+(abs(z+2/9)<1/27))",
-                "Cx=((abs(x-2/3)<1/9)+(abs(x+2/3)<1/9)+(abs(x)<1/9))",
-                "Cy=((abs(y-2/3)<1/9)+(abs(y+2/3)<1/9)+(abs(y)<1/9))",
-                "Cz=((abs(z-2/3)<1/9)+(abs(z+2/3)<1/9)+(abs(z)<1/9))",
-                "Dx=x^100",
-                "Dy=y^100",
-                "Dz=z^100"],
-            "Fxyz": ["if(abs(x+y+z)<th,-(Dx(x,y,z,t)+Dy(x,y,z,t)+Dz(x,y,z,t)-1)*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx(x,y,z,t)*(Cy(x,y,z,t)+Cz(x,y,z,t))+Cz(x,y,z,t)*Cy(x,y,z,t))=0)*((Bx(x,y,z,t)*(By(x,y,z,t)+Bz(x,y,z,t))+Bz(x,y,z,t)*By(x,y,z,t))=0)*((Ax(x,y,z,t)*(Ay(x,y,z,t)+Az(x,y,z,t))+Az(x,y,z,t)*Ay(x,y,z,t))=0)),(0))"],
-            "Xmax": ["(1001/1000)"],
-            "Xmin": ["-(1001/1000)"],
-            "Ymax": ["(1001/1000)"],
-            "Ymin": ["-(1001/1000)"],
-            "Zmax": ["(1001/1000)"],
-            "Zmin": ["-(1001/1000)"]
-        }
+
+{
+    "Iso3D": {
+        "Description ": ["HexagramsMenger4 by Abderrahman Taha 12/01/2022"],
+        "Name": ["HexagramsMenger4"],
+        "Component": ["MengerSponge"],
+        "Grid": ["379"],
+        "Const": ["th=5/1000"],
+        "Funct": [
+            "Ax=((abs(x-2/3)<1/81)+(abs(x-20/27)<1/81)+(abs(x-16/27)<1/81)+(abs(x-8/9)<1/81)+(abs(x-26/27)<1/81)+(abs(x-22/27)<1/81)+(abs(x-4/9)<1/81)+(abs(x-14/27)<1/81)+(abs(x-10/27)<1/81)+(abs(x+2/3)<1/81)+(abs(x+16/27)<1/81)+(abs(x+20/27)<1/81)+(abs(x+4/9)<1/81)+(abs(x+10/27)<1/81)+(abs(x+14/27)<1/81)+(abs(x+8/9)<1/81)+(abs(x+22/27)<1/81)+(abs(x+26/27)<1/81)+(abs(x)<1/81)+(abs(x-2/27)<1/81)+(abs(x+2/27)<1/81)+(abs(x-2/9)<1/81)+(abs(x-8/27)<1/81)+(abs(x-4/27)<1/81)+(abs(x+2/9)<1/81)+(abs(x+4/27)<1/81)+(abs(x+8/27)<1/81))",
+            "Ay=((abs(y-2/3)<1/81)+(abs(y-20/27)<1/81)+(abs(y-16/27)<1/81)+(abs(y-8/9)<1/81)+(abs(y-26/27)<1/81)+(abs(y-22/27)<1/81)+(abs(y-4/9)<1/81)+(abs(y-14/27)<1/81)+(abs(y-10/27)<1/81)+(abs(y+2/3)<1/81)+(abs(y+16/27)<1/81)+(abs(y+20/27)<1/81)+(abs(y+4/9)<1/81)+(abs(y+10/27)<1/81)+(abs(y+14/27)<1/81)+(abs(y+8/9)<1/81)+(abs(y+22/27)<1/81)+(abs(y+26/27)<1/81)+(abs(y)<1/81)+(abs(y-2/27)<1/81)+(abs(y+2/27)<1/81)+(abs(y-2/9)<1/81)+(abs(y-8/27)<1/81)+(abs(y-4/27)<1/81)+(abs(y+2/9)<1/81)+(abs(y+4/27)<1/81)+(abs(y+8/27)<1/81))",
+            "Az=((abs(z-2/3)<1/81)+(abs(z-20/27)<1/81)+(abs(z-16/27)<1/81)+(abs(z-8/9)<1/81)+(abs(z-26/27)<1/81)+(abs(z-22/27)<1/81)+(abs(z-4/9)<1/81)+(abs(z-14/27)<1/81)+(abs(z-10/27)<1/81)+(abs(z+2/3)<1/81)+(abs(z+16/27)<1/81)+(abs(z+20/27)<1/81)+(abs(z+4/9)<1/81)+(abs(z+10/27)<1/81)+(abs(z+14/27)<1/81)+(abs(z+8/9)<1/81)+(abs(z+22/27)<1/81)+(abs(z+26/27)<1/81)+(abs(z)<1/81)+(abs(z-2/27)<1/81)+(abs(z+2/27)<1/81)+(abs(z-2/9)<1/81)+(abs(z-8/27)<1/81)+(abs(z-4/27)<1/81)+(abs(z+2/9)<1/81)+(abs(z+4/27)<1/81)+(abs(z+8/27)<1/81))",
+            "Bx=((abs(x-2/3)<1/27)+(abs(x-8/9)<1/27)+(abs(x-4/9)<1/27)+(abs(x+2/3)<1/27)+(abs(x+4/9)<1/27)+(abs(x+8/9)<1/27)+(abs(x)<1/27)+(abs(x-2/9)<1/27)+(abs(x+2/9)<1/27))",
+            "By=((abs(y-2/3)<1/27)+(abs(y-8/9)<1/27)+(abs(y-4/9)<1/27)+(abs(y+2/3)<1/27)+(abs(y+4/9)<1/27)+(abs(y+8/9)<1/27)+(abs(y)<1/27)+(abs(y-2/9)<1/27)+(abs(y+2/9)<1/27))",
+            "Bz=((abs(z-2/3)<1/27)+(abs(z-8/9)<1/27)+(abs(z-4/9)<1/27)+(abs(z+2/3)<1/27)+(abs(z+4/9)<1/27)+(abs(z+8/9)<1/27)+(abs(z)<1/27)+(abs(z-2/9)<1/27)+(abs(z+2/9)<1/27))",
+            "Cx=((abs(x-2/3)<1/9)+(abs(x+2/3)<1/9)+(abs(x)<1/9))",
+            "Cy=((abs(y-2/3)<1/9)+(abs(y+2/3)<1/9)+(abs(y)<1/9))",
+            "Cz=((abs(z-2/3)<1/9)+(abs(z+2/3)<1/9)+(abs(z)<1/9))",
+            "Dx=x^100",
+            "Dy=y^100",
+            "Dz=z^100"],
+        "Fxyz": [
+            "if(abs(x+y+z)<th,-(Dx(x,y,z,t)+Dy(x,y,z,t)+Dz(x,y,z,t)-1)*(((abs(x)>1/3|abs(y)>1/3)*(abs(z)>1/3|abs(y)>1/3)*(abs(x)>1/3|abs(z)>1/3))*((Cx(x,y,z,t)*(Cy(x,y,z,t)+Cz(x,y,z,t))+Cz(x,y,z,t)*Cy(x,y,z,t))=0)*((Bx(x,y,z,t)*(By(x,y,z,t)+Bz(x,y,z,t))+Bz(x,y,z,t)*By(x,y,z,t))=0)*((Ax(x,y,z,t)*(Ay(x,y,z,t)+Az(x,y,z,t))+Az(x,y,z,t)*Ay(x,y,z,t))=0)),(0))"],
+        "Xmax": ["(1001/1000)"],
+        "Xmin": ["-(1001/1000)"],
+        "Ymax": ["(1001/1000)"],
+        "Ymin": ["-(1001/1000)"],
+        "Zmax": ["(1001/1000)"],
+        "Zmin": ["-(1001/1000)"]
     }
-    ,
+}
+,
+
     {
         "Iso3D": {
         "Description": ["The Dome by Abderrahman Taha 10/08/2018"],
@@ -3990,26 +3844,25 @@
         "Ymax": ["27"],
         "Ymin": ["-27"],
         "Zmax": ["18"],
-        "Zmin": ["-18"],
-        "Grid": ["100"]
+        "Zmin": ["-18"]
         },
         "Sliders": {
-            "Max": ["50","50"],
-            "Min": ["0","0"],
-            "Name": ["N","R"],
-            "Position": ["10","16"],
-            "Step": ["1","1"]
+        "Max": ["50","50"],
+        "Min": ["0","0"],
+        "Name": ["N","R"],
+        "Position": ["10","16"],
+        "Step": ["1","1"]
         },
         "Texture": {
-            "Colors": ["R=(7/10)*(cos(x)*cos(y)*cos(z))^(1/10)","G=(7/10)","B=(7/10)","T=1"],
-            "Name": "Lines",
-            "Noise": ""
+        "Colors": ["R=(7/10)*(cos(x)*cos(y)*cos(z))^(1/10)","G=(7/10)","B=(7/10)","T=1"],
+        "Name": "Lines",
+        "Noise": ""
         }
     },
     {
       "Iso3D": {
         "Description": ["Wall Pattern Torus by Abderrahman Taha 18/10/2019"],
-        "Name": ["Wall_Pattern_Torus_v2"],
+         "Name": ["Wall_Pattern_Torus_v2"],
         "Component": ["f_hex_y"],
         "Const": ["X=(57/10)"],
         "Funct": ["f_hex_y_1=if(100*abs(z)<(6),f_hex_y(x,y,z,0)-(2/25),1)",
@@ -4021,8 +3874,7 @@
         "Ymax": ["X"],
         "Ymin": ["-X"],
         "Zmax": ["8/5"],
-        "Zmin": ["-8/5"],
-        "Grid": ["120"]
+        "Zmin": ["-8/5"]
       }
     },
     {
@@ -4040,8 +3892,7 @@
             "Ymax": ["24/5"],
             "Ymin": ["-24/5"],
             "Zmax": ["24/5"],
-            "Zmin": ["-24/5"],
-            "Grid": ["120"]
+            "Zmin": ["-24/5"]
         }
     },
     {
@@ -4059,8 +3910,7 @@
         "Ymax": ["24/5"],
         "Ymin": ["-24/5"],
         "Zmax": ["24/5"],
-        "Zmin": ["-24/5"],
-        "Grid": ["120"]
+        "Zmin": ["-24/5"]
       }
     },
     {
@@ -4078,8 +3928,7 @@
         "Ymax": ["23/5"],
         "Ymin": ["-23/5"],
         "Zmax": ["23/5"],
-        "Zmin": ["-23/5"],
-        "Grid": ["120"]
+        "Zmin": ["-23/5"]
       }
     },
     {
@@ -4097,8 +3946,7 @@
         "Ymax": ["6"],
         "Ymin": ["-6"],
         "Zmax": ["8/5"],
-        "Zmin": ["-8/5"],
-        "Grid": ["120"]
+        "Zmin": ["-8/5"]
       }
     },
     {
@@ -4156,8 +4004,7 @@
         "Ymax": ["4"],
         "Ymin": ["-4"],
         "Zmax": ["4"],
-        "Zmin": ["-4"],
-        "Grid": ["100"]
+        "Zmin": ["-4"]
       },
       "Texture": {
         "Colors": ["R=4/5",
@@ -4173,7 +4020,7 @@
         "Description": ["Wired Torus (ref: http://www.povray.org/) by Abderrahman Taha 26/12/2019"],
         "Name": ["Wired_Torus_v1"],
         "Component": ["WiredTorus"],
-        "Const": ["A=1/2","B=20/51","C=3/10","D=1/12","E=1/3","th=pi/A","ph=pi/B","XZ=16/5","Y=6/5"],
+        "Const": ["A=1/5","B=1/5","C=1","D=1/25","E=1","th=pi/A","ph=pi/B"],
         "Funct": ["r=(x%(A*2))",
           "r=abs(if(r(x,y,z,t)<(0),r(x,y,z,t)+A,r(x,y,z,t)-A))*C",
           "r2=(y-cos(z*ph)*D)*E",
@@ -4193,13 +4040,12 @@
           "fmesh1=-fmesh0(atan2(y,x),sqrt(x*x+y*y)-(1),z,t)+(3/100)",
           "fmesh2=fmesh1(sqrt(x*x+z*z)-(2),y,atan2(z,x),t)"],
         "Fxyz": ["fmesh2(x,y,z,t)"],
-        "Xmax": ["XZ"],
-        "Xmin": ["-XZ"],
-        "Ymax": ["Y"],
-        "Ymin": ["-Y"],
-        "Zmax": ["XZ"],
-        "Zmin": ["-XZ"],
-        "Grid": ["120"]
+        "Xmax": ["31/10"],
+        "Xmin": ["-31/10"],
+        "Ymax": ["11/10"],
+        "Ymin": ["-11/10"],
+        "Zmax": ["31/10"],
+        "Zmin": ["-31/10"]
       }
     },
     {
@@ -4213,8 +4059,7 @@
           "D = 1/50",
           "E = 1",
           "th = pi/A",
-          "ph = pi/B",
-          "L = 11/10"],
+          "ph = pi/B"],
         "Funct": ["r = (x % (A * 2))",
           "r = abs( if (r(x,y,z,t) < (0), r(x,y,z,t) + A, r(x,y,z,t) - A)) * C",
           "r2 = (y - cos(z * ph) * D) * E",
@@ -4233,13 +4078,12 @@
           "fmesh0 = max( -sqrt(r2(x,y,z,t) * r2(x,y,z,t) + r(x,y,z,t) * r(x,y,z,t)), temp(x,y,z,t)) +(3/100)",
           "fmesh0= fmesh0(atan2(y,x),sqrt(x*x+y*y+z*z) -(1),atan2(z,sqrt(x*x+y*y)),t)"],
         "Fxyz": ["fmesh0(x,y,z,t)"],
-        "Xmax": ["L"],
-        "Xmin": ["-L"],
-        "Ymax": ["L"],
-        "Ymin": ["-L"],
-        "Zmax": ["L"],
-        "Zmin": ["-L"],
-        "Grid": ["120"]
+        "Xmax": ["11/10"],
+        "Xmin": ["-11/10"],
+        "Ymax": ["11/10"],
+        "Ymin": ["-11/10"],
+        "Zmax": ["11/10"],
+        "Zmin": ["-11/10"]
       }
     },
     {
@@ -4277,8 +4121,7 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["5"],
-        "Zmin": ["-5"],
-        "Grid": ["120"]
+        "Zmin": ["-5"]
       }
     },
     {
@@ -4317,8 +4160,7 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["12"],
-        "Zmin": ["-12"],
-        "Grid": ["150"]
+        "Zmin": ["-12"]
       }
     },
     {
@@ -4378,8 +4220,7 @@
         "Ymax": ["9/2"],
         "Ymin": ["-9/2"],
         "Zmax": [" 31/5"],
-        "Zmin": ["-31/5"],
-        "Grid": ["200"]
+        "Zmin": ["-31/5"]
       }
     },
     {
@@ -4394,8 +4235,7 @@
         "Ymax": [" 9/2"],
         "Ymin": ["-9/2"],
         "Zmax": [" 31/5"],
-        "Zmin": ["-31/5"],
-        "Grid": ["150"]
+        "Zmin": ["-31/5"]
       }
     },
     {
@@ -4425,8 +4265,7 @@
             "Ymax": ["c4"],
             "Ymin": ["c3"],
             "Zmax": ["c4"],
-            "Zmin": ["c3"],
-            "Grid": ["150"]
+            "Zmin": ["c3"]
         },
         "Texture": {
             "Colors": ["R=(6/10)*sqrt(4*x^40+y^4+z^4)",
@@ -4456,8 +4295,7 @@
         "Ymax": ["30"],
         "Ymin": ["-30"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["120"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -4477,8 +4315,7 @@
         "Ymax": ["30"],
         "Ymin": ["-30"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["150"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -4498,8 +4335,7 @@
         "Ymax": ["30"],
         "Ymin": ["-30"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["150"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -4519,8 +4355,7 @@
         "Ymax": ["19"],
         "Ymin": ["-19"],
         "Zmax": ["19"],
-        "Zmin": ["-19"],
-        "Grid": ["150"]
+        "Zmin": ["-19"]
       }
     },
     {
@@ -4540,8 +4375,7 @@
         "Ymax": ["26"],
         "Ymin": ["-26"],
         "Zmax": ["11"],
-        "Zmin": ["-11"],
-        "Grid": ["120"]
+        "Zmin": ["-11"]
       }
     },
     {
@@ -4549,7 +4383,7 @@
         "Description": ["W_Skeletal Tori by Abderrahman Taha 01/11/2019"],
         "Name": ["W_Skeletal_Tori"],
         "Component": ["W_SkeletalTori"],
-        "Const": ["M=100","N=8"],
+        "Const": ["M=1","N=8"],
         "Funct": ["W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
           "isoCondition_0=(x^2-(pi+1/2)^2)",
           "isoCondition_1=(x^2-(pi+3/10)^2)",
@@ -4561,15 +4395,14 @@
         "Ymax": ["26"],
         "Ymin": ["-26"],
         "Zmax": ["12"],
-        "Zmin": ["-12"],
-        "Grid": ["120"]
+        "Zmin": ["-12"]
       }
     },
     {
       "Iso3D": {
         "Description": ["W_Skeletal Sphere by Abderrahman Taha 01/11/2019"],
-        "Name": ["W_Skeletal_Sphere"],
-        "Component": ["W_Skeletal_Sphere"],
+        "Name": ["W_Skeletal Sphere"],
+        "Component": ["W_Skeletal Sphere"],
         "Const": ["M=1","N=10","P=7"],
         "Funct": ["W_Skeletal=cos(2*x)+cos(2*y)+cos(2*z)-2*(cos(x)*cos(y)+cos(y)*cos(z)+cos(z)*cos(x))+25/10",
           "isoCondition_0=(x^2-(pi+1/2)^2)",
@@ -4582,8 +4415,7 @@
         "Ymax": ["16"],
         "Ymin": ["-16"],
         "Zmax": ["17"],
-        "Zmin": ["-17"],
-        "Grid": ["120"]
+        "Zmin": ["-17"]
       }
     },
     {
@@ -4603,8 +4435,7 @@
         "Ymax": ["15"],
         "Ymin": ["-15"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["150"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -4624,8 +4455,7 @@
         "Ymax": ["15"],
         "Ymin": ["-15"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["150"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -4645,8 +4475,7 @@
         "Ymax": ["25"],
         "Ymin": ["-25"],
         "Zmax": ["21/2"],
-        "Zmin": ["-21/2"],
-        "Grid": ["150"]
+        "Zmin": ["-21/2"]
       }
     },
     {
@@ -4706,8 +4535,7 @@
         "Ymax": ["25"],
         "Ymin": ["-25"],
         "Zmax": ["21/2"],
-        "Zmin": ["-21/2"],
-        "Grid": ["100"]
+        "Zmin": ["-21/2"]
       }
     },
     {
@@ -4727,8 +4555,7 @@
         "Ymax": ["15"],
         "Ymin": ["-15"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["100"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -4769,8 +4596,7 @@
         "Ymax": ["15"],
         "Ymin": ["-15"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["150"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -4843,8 +4669,7 @@
         "Ymax": ["10"],
         "Ymin": ["-10"],
         "Zmax": ["35/10"],
-        "Zmin": ["-35/10"],
-        "Grid": ["100"]
+        "Zmin": ["-35/10"]
       }
     },
     {
@@ -4887,7 +4712,7 @@
     {
       "Iso3D": {
         "Description": ["Diamon Torus by Abderrahman Taha 31/10/2019"],
-        "Name": ["Diamond_Torus"],
+        "Name": ["Diamon_Torus"],
         "Const": ["A=98/10","B=35/10"],
         "Component": ["Diamon Torus_1","DiamonTorus_2"],
         "Funct": ["Iso=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
@@ -4902,8 +4727,7 @@
         "Ymax": ["A","A"],
         "Ymin": ["-A","-A"],
         "Zmax": ["B","B"],
-        "Zmin": ["-B","-B"],
-        "Grid": ["150","150"]
+        "Zmin": ["-B","-B"]
       }
     },
     {
@@ -4921,8 +4745,7 @@
         "Ymax": ["1"],
         "Ymin": ["0"],
         "Zmax": ["1"],
-        "Zmin": ["0"],
-        "Grid": ["150"]
+        "Zmin": ["0"]
       },
       "Sliders": {
         "Max": ["50"],
@@ -4951,10 +4774,10 @@
     },
     {
       "Iso3D": {
-        "Description": ["Cube of Spheres (update) by Abderrahman Taha 27/10/2022"],
-        "Name": ["Cube_of_Spheres"],
-        "Component": ["CubeSpheres"],
-        "Const": ["N=8"],
+        "Description": ["Cube of Spheres (update) by Abderrahman Taha 31/10/2019"],
+        "Name": ["Cube of Spheres"],
+        "Component": [" CubeSpheres"],
+        "Const": ["N=5"],
         "Funct": ["Sphere=sqrt(x*x+y*y+z*z)-1/(2*N+(1/1000))"],
         "Fxyz": ["if((((x < 1/N | x>(1-1/N)) | (y < 1/N | y>(1-1/N)) | (z < 1/N | z>(1-1/N)))), Sphere((x%(1/N))-1/(2*N),(y%(1/N))-1/(2*N),(z%(1/N))-1/(2*N),t), 1) "],
         "Xmax": ["1"],
@@ -4962,14 +4785,13 @@
         "Ymax": ["1"],
         "Ymin": ["0"],
         "Zmax": ["1"],
-        "Zmin": ["0"],
-        "Grid": ["121"]
+        "Zmin": ["0"]
       },
       "Sliders": {
         "Max": ["20"],
         "Min": ["0"],
         "Name": ["N"],
-        "Position": ["8"],
+        "Position": ["5"],
         "Step": ["1"]
       }
     },
@@ -5040,8 +4862,7 @@
         "Ymax": ["14","16"],
         "Ymin": ["-14","-16"],
         "Zmax": ["6","6"],
-        "Zmin": ["-6","-6"],
-        "Grid": ["90","90"]
+        "Zmin": ["-6","-6"]
       }
     },
     {
@@ -5068,8 +4889,7 @@
         "Ymax": ["16","16","16"],
         "Ymin": ["-16","-16","-16"],
         "Zmax": ["6","6","6"],
-        "Zmin": ["-6","-6","-6"],
-        "Grid": ["90","90","90"]
+        "Zmin": ["-6","-6","-6"]
       }
     },
     {
@@ -5091,8 +4911,7 @@
         "Ymax": ["15"],
         "Ymin": ["-15"],
         "Zmax": ["5"],
-        "Zmin": ["-5"],
-        "Grid": ["90"]
+        "Zmin": ["-5"]
       }
     },
     {
@@ -5100,7 +4919,7 @@
             "Description": ["Symmetrized Costa Surface with genus N by Abderrahman Taha 14/04/2019"],
             "Name": ["SCosta"],
             "Component": ["SCosta"],
-            "Const": ["N=6","c=1/10000","th=2/10","Xval=15","Yval=20","Zval=20"],
+            "Const": ["N=6","c=1/10000","th=1/10","Xval=15","Yval=20","Zval=20"],
             "Funct": ["Scherk=sinh(x)*sinh(y)-(35/10)*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(2+N+(3/100)*exp((abs((9/10)*x)))),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))","SCosta=if((sqrt(4*x*x+y*y+z*z) - 19)<0 & abs(x)<(295/10),ThickIsoExterior(x,y,z,t), 1)"],
             "Fxyz": ["-SCosta((55/100)*x,y,z,t)"],
             "Xmax": ["Xval"],
@@ -5108,8 +4927,7 @@
             "Ymax": ["Yval"],
             "Ymin": ["-Yval"],
             "Zmax": ["Zval"],
-            "Zmin": ["-Zval"],
-            "Grid": ["120"]
+            "Zmin": ["-Zval"]
         }
     },
     {
@@ -5118,21 +4936,20 @@
             "Component": ["Arena"],
             "Const": ["c=1/10000","th=6/10","N=10"],
             "Funct": ["Scherk=sinh(x)*sinh(y)-4*sin(z)","IsoExterior =Scherk(x,sqrt(y*y+z*z)-(16),N*atan2(z,y),t)","DFx=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)","DFy=((IsoExterior(x,y+c,z,t)-IsoExterior(x,y,z,t))/c)","DFz=((IsoExterior(x,y,z+c,t)-IsoExterior(x,y,z,t))/c)","Rapp=(x/sqrt(x*x+y*y+z*z))","Iso1=(IsoExterior(x-th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y-th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z-th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","Iso2=(IsoExterior(x+th*Rapp(DFx(x,y,z,t), DFy(x,y,z,t), DFz(x,y,z,t), t),y+th*Rapp(DFy(x,y,z,t), DFx(x,y,z,t), DFz(x,y,z,t), t),z+th*Rapp(DFz(x,y,z,t), DFx(x,y,z,t), DFy(x,y,z,t),t),t))","ThickIsoExterior=(Iso2(x,y,z,t)*Iso1(x,y,z,t))"],
-            "Fxyz": ["-if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), 1)"],
+            "Fxyz": ["if((sqrt(x*x+y*y+z*z) - 27)<0 & abs(x)<(99/10),ThickIsoExterior(x,y,z,t), 1)"],
             "Name": ["Arena"],
             "Xmax": ["10"],
             "Xmin": ["-10"],
             "Ymax": ["28"],
             "Ymin": ["-28"],
             "Zmax": ["28"],
-            "Zmin": ["-28"],
-            "Grid": ["100"]
+            "Zmin": ["-28"]
         }
     },
     {
       "Iso3D": {
         "Description": ["Schwarz Cube Torus by Abderrahman Taha 30/10/2019"],
-        "Name": ["Schwarz_Cube_Torus"],
+        "Name": ["Schwarz Cube Torus"],
         "Component": ["SchwarzCubeTorus_1","SchwarzCubeTorus_2","SchwarzCubeTorus_3","SchwarzCubeTorus_4"],
         "Const": ["k=6","C=65/10","D=65/10","E=(323/100)^20","Th=4/10"],
         "Funct": ["Iso=cos(x)+cos(y)+cos(z)",
@@ -5152,13 +4969,12 @@
         "Ymax": ["0","11","0","11"],
         "Ymin": ["-11","0","-11","0"],
         "Zmax": ["5","5","5","5"],
-        "Zmin": ["-5","-5","-5","-5"],
-        "Grid": ["130","130","130","130"]
+        "Zmin": ["-5","-5","-5","-5"]
       },
       "Texture": {
-        "Colors": ["R=6/10",
+        "Colors": ["R=8/10",
           "G=6/10",
-          "B=6/10",
+          "B=1/10",
           "T=1"],
         "Name": "Gold",
         "Noise": "1"
@@ -5186,8 +5002,7 @@
         "Ymax": ["14"],
         "Ymin": ["-14"],
         "Zmax": ["4"],
-        "Zmin": ["-4"],
-        "Grid": ["100"]
+        "Zmin": ["-4"]
       }
     },
     {
@@ -5212,8 +5027,7 @@
             "Ymax": ["14"],
             "Ymin": ["-14"],
             "Zmax": ["4"],
-            "Zmin": ["-4"],
-            "Grid": ["100"]
+            "Zmin": ["-4"]
         }
     },
     {
@@ -5271,8 +5085,7 @@
         "Ymax": ["4*pi"],
         "Ymin": ["0"],
         "Zmax": ["4*pi"],
-        "Zmin": ["0"],
-        "Grid": ["100"]
+        "Zmin": ["0"]
         }
     },
     {
@@ -5834,8 +5647,7 @@
         "Ymax": ["X","0","X","0","0","X","0","X"],
         "Ymin": ["0","-X","0","-X","-X","0","-X","0"],
         "Zmax": ["X","X","0","0","0","0","X","X"],
-        "Zmin": ["0","0","-X","-X","-X","-X","0","0"],
-        "Grid": ["120","120","120","120","120","120","120","120"]
+        "Zmin": ["0","0","-X","-X","-X","-X","0","0"]
       },
       "Texture": {
         "Colors": ["R=(7/10)*sqrt(4*x^40+y^4+z^4)",
@@ -5899,37 +5711,34 @@
             "Ymax": ["L","L","L"],
             "Ymin": ["-L","-L","-L"],
             "Zmax": ["L","L","L"],
-            "Zmin": ["-L","-L","-L"],
-            "Grid": ["100","100","100"]
+            "Zmin": ["-L","-L","-L"]
         }
     },
     {
         "Iso3D": {
-            "Description ": ["Hexagrams Menger Sponge Level 4 by Abderrahman Taha 30/10/2022"],
+            "Description ": ["Hexagrams Menger Sponge Level 4 by Abderrahman Taha 09/12/2019"],
             "Name": ["Hexagrams_Menger_Level4"],
             "Cnd": ["(x+y+z)> 0"],
-            "Const": ["a=1/81", "b=1/27", "c=1/9", "d=2/3", "e=8/9", "f=2/9", "g=4/9", "h=1/3", "L=1001/1000"],
             "Component": ["MengerSponge"],
-            "Funct": ["Ax = ((abs(x-d) <a)+ (abs(x-20/27) <a)+ (abs(x-16/27) <a)+(abs(x-e) <a) + (abs(x-26/27) <a) + (abs(x-22/27) <a) +(abs(x-g) <a) +(abs(x-14/27) <a) +(abs(x-10/27) <a) +(abs(x+d) <a) +(abs(x+16/27) <a) +(abs(x+20/27) <a) +(abs(x+g) <a) +(abs(x+10/27) <a) +(abs(x+14/27) <a) +(abs(x+e) <a) +(abs(x+22/27) <a) +(abs(x+26/27) <a) +(abs(x) <a) + (abs(x-2/27) <a) +(abs(x+2/27) <a) +(abs(x-f) <a) + (abs(x-8/27) <a) + (abs(x-4/27) <a) +(abs(x+f) <a)+(abs(x+4/27) <a)+(abs(x+8/27) <a))",
-                "Ay = ((abs(y-d) <a)+ (abs(y-20/27) <a)+ (abs(y-16/27) <a)+(abs(y-e) <a) + (abs(y-26/27) <a) + (abs(y-22/27) <a) +(abs(y-g) <a) +(abs(y-14/27) <a) +(abs(y-10/27) <a) +(abs(y+d) <a) +(abs(y+16/27) <a) +(abs(y+20/27) <a) +(abs(y+g) <a) +(abs(y+10/27) <a) +(abs(y+14/27) <a) +(abs(y+e) <a) +(abs(y+22/27) <a) +(abs(y+26/27) <a) +(abs(y) <a) + (abs(y-2/27) <a) +(abs(y+2/27) <a) +(abs(y-f) <a) + (abs(y-8/27) <a) + (abs(y-4/27) <a) +(abs(y+f) <a)+(abs(y+4/27) <a)+(abs(y+8/27) <a))",
-                "Az = ((abs(z-d) <a)+ (abs(z-20/27) <a)+ (abs(z-16/27) <a)+(abs(z-e) <a) + (abs(z-26/27) <a) + (abs(z-22/27) <a) +(abs(z-g) <a) +(abs(z-14/27) <a) +(abs(z-10/27) <a) +(abs(z+d) <a) +(abs(z+16/27) <a) +(abs(z+20/27) <a) +(abs(z+g) <a) +(abs(z+10/27) <a) +(abs(z+14/27) <a) +(abs(z+e) <a) +(abs(z+22/27) <a) +(abs(z+26/27) <a) +(abs(z) <a) + (abs(z-2/27) <a) +(abs(z+2/27) <a) +(abs(z-f) <a) + (abs(z-8/27) <a) + (abs(z-4/27) <a) +(abs(z+f) <a)+(abs(z+4/27) <a)+(abs(z+8/27) <a))",
-                "Bx = ((abs(x-d) <b)+(abs(x-e) <b) + (abs(x-g) <b) +(abs(x+d) <b) +(abs(x+g) <b) + (abs(x+e) <b) +(abs(x) <b) + (abs(x-f) <b) + (abs(x+f) <b))",
-                "By = ((abs(y-d) <b)+(abs(y-e) <b) + (abs(y-g) <b) +(abs(y+d) <b) +(abs(y+g) <b) + (abs(y+e) <b) +(abs(y) <b) + (abs(y-f) <b) + (abs(y+f) <b))",
-                "Bz = ((abs(z-d) <b)+(abs(z-e) <b) + (abs(z-g) <b) +(abs(z+d) <b) +(abs(z+g) <b) + (abs(z+e) <b) +(abs(z) <b) + (abs(z-f) <b) + (abs(z+f) <b))",
-                "Cx = ((abs(x-d) <c) + (abs(x+d) <c) + (abs(x) <c))",
-                "Cy = ((abs(y-d) <c) + (abs(y+d) <c) + (abs(y) <c))",
-                "Cz = ((abs(z-d) <c) + (abs(z+d) <c) + (abs(z) <c))",
+            "Funct": ["Ax = ((abs(x-2/3) <1/81)+ (abs(x-20/27) <1/81)+ (abs(x-16/27) <1/81)+(abs(x-8/9) <1/81) + (abs(x-26/27) <1/81) + (abs(x-22/27) <1/81) +(abs(x-4/9) <1/81) +(abs(x-14/27) <1/81) +(abs(x-10/27) <1/81) +(abs(x+2/3) <1/81) +(abs(x+16/27) <1/81) +(abs(x+20/27) <1/81) +(abs(x+4/9) <1/81) +(abs(x+10/27) <1/81) +(abs(x+14/27) <1/81) +(abs(x+8/9) <1/81) +(abs(x+22/27) <1/81) +(abs(x+26/27) <1/81) +(abs(x) <1/81) + (abs(x-2/27) <1/81) +(abs(x+2/27) <1/81) +(abs(x-2/9) <1/81) + (abs(x-8/27) <1/81) + (abs(x-4/27) <1/81) +(abs(x+2/9) <1/81)+(abs(x+4/27) <1/81)+(abs(x+8/27) <1/81))",
+                "Ay = ((abs(y-2/3) <1/81)+ (abs(y-20/27) <1/81)+ (abs(y-16/27) <1/81)+(abs(y-8/9) <1/81) + (abs(y-26/27) <1/81) + (abs(y-22/27) <1/81) +(abs(y-4/9) <1/81) +(abs(y-14/27) <1/81) +(abs(y-10/27) <1/81) +(abs(y+2/3) <1/81) +(abs(y+16/27) <1/81) +(abs(y+20/27) <1/81) +(abs(y+4/9) <1/81) +(abs(y+10/27) <1/81) +(abs(y+14/27) <1/81) +(abs(y+8/9) <1/81) +(abs(y+22/27) <1/81) +(abs(y+26/27) <1/81) +(abs(y) <1/81) + (abs(y-2/27) <1/81) +(abs(y+2/27) <1/81) +(abs(y-2/9) <1/81) + (abs(y-8/27) <1/81) + (abs(y-4/27) <1/81) +(abs(y+2/9) <1/81)+(abs(y+4/27) <1/81)+(abs(y+8/27) <1/81))",
+                "Az = ((abs(z-2/3) <1/81)+ (abs(z-20/27) <1/81)+ (abs(z-16/27) <1/81)+(abs(z-8/9) <1/81) + (abs(z-26/27) <1/81) + (abs(z-22/27) <1/81) +(abs(z-4/9) <1/81) +(abs(z-14/27) <1/81) +(abs(z-10/27) <1/81) +(abs(z+2/3) <1/81) +(abs(z+16/27) <1/81) +(abs(z+20/27) <1/81) +(abs(z+4/9) <1/81) +(abs(z+10/27) <1/81) +(abs(z+14/27) <1/81) +(abs(z+8/9) <1/81) +(abs(z+22/27) <1/81) +(abs(z+26/27) <1/81) +(abs(z) <1/81) + (abs(z-2/27) <1/81) +(abs(z+2/27) <1/81) +(abs(z-2/9) <1/81) + (abs(z-8/27) <1/81) + (abs(z-4/27) <1/81) +(abs(z+2/9) <1/81)+(abs(z+4/27) <1/81)+(abs(z+8/27) <1/81))",
+                "Bx = ((abs(x-2/3) <1/27)+(abs(x-8/9) <1/27) + (abs(x-4/9) <1/27) +(abs(x+2/3) <1/27) +(abs(x+4/9) <1/27) + (abs(x+8/9) <1/27) +(abs(x) <1/27) + (abs(x-2/9) <1/27) + (abs(x+2/9) <1/27))",
+                "By = ((abs(y-2/3) <1/27)+(abs(y-8/9) <1/27) + (abs(y-4/9) <1/27) +(abs(y+2/3) <1/27) +(abs(y+4/9) <1/27) + (abs(y+8/9) <1/27) +(abs(y) <1/27) + (abs(y-2/9) <1/27) + (abs(y+2/9) <1/27))",
+                "Bz = ((abs(z-2/3) <1/27)+(abs(z-8/9) <1/27) + (abs(z-4/9) <1/27) +(abs(z+2/3) <1/27) +(abs(z+4/9) <1/27) + (abs(z+8/9) <1/27) +(abs(z) <1/27) + (abs(z-2/9) <1/27) + (abs(z+2/9) <1/27))",
+                "Cx = ((abs(x-2/3) <1/9) + (abs(x+2/3) <1/9) + (abs(x) <1/9))",
+                "Cy = ((abs(y-2/3) <1/9) + (abs(y+2/3) <1/9) + (abs(y) <1/9))",
+                "Cz = ((abs(z-2/3) <1/9) + (abs(z+2/3) <1/9) + (abs(z) <1/9))",
                 "Dx = x^100",
                 "Dy = y^100",
                 "Dz = z^100"],
-            "Fxyz": ["-(Dx(x,y,z,t) + Dy(x,y,z,t) + Dz(x,y,z,t) -1)*(((abs(x) >h | abs(y) > h)*(abs(z) >h | abs(y) > h)*(abs(x) >h | abs(z) > h))*( (Cx(x,y,z,t)*(Cy(x,y,z,t)+Cz(x,y,z,t)) + Cz(x,y,z,t)*Cy(x,y,z,t)) =0)*( (Bx(x,y,z,t)*(By(x,y,z,t)+Bz(x,y,z,t)) + Bz(x,y,z,t)*By(x,y,z,t)) =0)*( (Ax(x,y,z,t)*(Ay(x,y,z,t)+Az(x,y,z,t)) + Az(x,y,z,t)*Ay(x,y,z,t)) =0) ) "],
-            "Xmax": [" L"],
-            "Xmin": ["-L"],
-            "Ymax": [" L"],
-            "Ymin": ["-L"],
-            "Zmax": [" L"],
-            "Zmin": ["-L"],
-            "Grid": ["154"]
+            "Fxyz": ["-(Dx(x,y,z,t) + Dy(x,y,z,t) + Dz(x,y,z,t) -1)*(((abs(x) >1/3 | abs(y) > 1/3)*(abs(z) >1/3 | abs(y) > 1/3)*(abs(x) >1/3 | abs(z) > 1/3))*( (Cx(x,y,z,t)*(Cy(x,y,z,t)+Cz(x,y,z,t)) + Cz(x,y,z,t)*Cy(x,y,z,t)) =0)*( (Bx(x,y,z,t)*(By(x,y,z,t)+Bz(x,y,z,t)) + Bz(x,y,z,t)*By(x,y,z,t)) =0)*( (Ax(x,y,z,t)*(Ay(x,y,z,t)+Az(x,y,z,t)) + Az(x,y,z,t)*Ay(x,y,z,t)) =0) ) "],
+            "Xmax": [" (1001/1000)"],
+            "Xmin": ["-(1001/1000)"],
+            "Ymax": [" (1001/1000)"],
+            "Ymin": ["-(1001/1000)"],
+            "Zmax": [" (1001/1000)"],
+            "Zmin": ["-(1001/1000)"]
         }
     },
     {
@@ -5960,8 +5769,7 @@
             "L=1001/1000",
             "2L=2*L"],
         "Description ": [
-            "Hexagrams Menger L5 by Abderrahman Taha 18/01/2022.
-             NB:The grid should be set to 379 in order to perfectly rendr small hexagrams patterns"
+            "Hexagrams Menger L5 by Abderrahman Taha 18/01/2022"
         ],
         "Funct": [
             "Ax=((abs(x-2/3)<1/81)+(abs(x-20/27)<1/81)+(abs(x-16/27)<1/81)+(abs(x-8/9)<1/81)+(abs(x-26/27)<1/81)+(abs(x-22/27)<1/81)+(abs(x-4/9)<1/81)+(abs(x-14/27)<1/81)+(abs(x-10/27)<1/81)+(abs(x+2/3)<1/81)+(abs(x+16/27)<1/81)+(abs(x+20/27)<1/81)+(abs(x+4/9)<1/81)+(abs(x+10/27)<1/81)+(abs(x+14/27)<1/81)+(abs(x+8/9)<1/81)+(abs(x+22/27)<1/81)+(abs(x+26/27)<1/81)+(abs(x)<1/81)+(abs(x-2/27)<1/81)+(abs(x+2/27)<1/81)+(abs(x-2/9)<1/81)+(abs(x-8/27)<1/81)+(abs(x-4/27)<1/81)+(abs(x+2/9)<1/81)+(abs(x+4/27)<1/81)+(abs(x+8/27)<1/81))",
@@ -6172,10 +5980,9 @@
     },
     {
         "Param3D": {
-            "Description ": ["Star by Abderrahman Taha 12/09/2018"],
-            "Name": ["Star_2"],
             "Component": ["Star"],
             "Const": ["cu=1/10000","cv=1/10000","N=5"],
+            "Description ": ["Star by Abderrahman Taha 12/09/2018"],
             "Funct": ["Thickness= ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v))",
                 "Fx=-cos(u+v)/(sqrt(2)+cos(v-u))",
                 "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
@@ -6193,14 +6000,14 @@
                 "Gx=Fx(u,v,t)+Thickness(u,v,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
                 "Gy=Fy(u,v,t)+Thickness(u,v,t)*Rapp(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
                 "Gz=Fz(u,v,t)+Thickness(u,v,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
-            "Fx": ["-Gx(u,v,t)"],
+            "Fx": ["Gx(u,v,t)"],
             "Fy": ["Gy(u,v,t)"],
             "Fz": ["Gz(u,v,t)"],
+            "Name": ["Star_2"],
             "Umax": ["pi"],
             "Umin": ["0"],
             "Vmax": ["2*pi"],
-            "Vmin": ["0"],
-            "Grid": ["400","400"]
+            "Vmin": ["0"]
         }
     },
     {
@@ -6437,8 +6244,7 @@
         "Ymax": ["(17/2)"],
         "Ymin": ["-(17/2)"],
         "Zmax": ["6"],
-        "Zmin": ["-6"],
-        "Grid": ["120"]
+        "Zmin": ["-6"]
       },
       "Texture": {
         "Colors": ["R=(22/25)*abs(cos(z*y*x))",
@@ -6659,8 +6465,7 @@
         "Ymax": ["L"],
         "Ymin": ["-L"],
         "Zmax": ["L"],
-        "Zmin": ["-L"],
-        "Grid": ["100"]
+        "Zmin": ["-L"]
       }
     },
         {
@@ -6828,8 +6633,7 @@
         "Ymax": ["L"],
         "Ymin": ["-L"],
         "Zmax": ["L"],
-        "Zmin": ["-L"],
-        "Grid": ["100"]
+        "Zmin": ["-L"]
       }
     },
     {
@@ -7014,8 +6818,7 @@
         "Ymax": [" 45/10"],
         "Ymin": ["-25/10"],
         "Zmax": [" 75/10"],
-        "Zmin": ["-75/10"],
-        "Grid": ["150"]
+        "Zmin": ["-75/10"]
       },
       "Texture": {
         "Colors": ["R=9/10",
@@ -7039,8 +6842,7 @@
         "Ymax": ["1","1"],
         "Ymin": ["-1","-1"],
         "Zmax": ["15/10","15/10"],
-        "Zmin": ["-1","-1"],
-        "Grid": ["100","100"]
+        "Zmin": ["-1","-1"]
       },
       "Texture": {
         "Colors": ["R=if((x*x+y*y+z*z)>(8/10),(95/100)*cos(10*(x*x+y*y+z*z)/17), (2/10))",
@@ -7176,13 +6978,13 @@
         "Iso3D": {
             "Description": ["Old Vase by Abderrahman Taha 16/11/2019"],
             "Name": ["OldVase"],
-            "Component": ["Vase","Top","Bottom"],
+            "Component": ["Vase1","Vase5","Vase6"],
             "Const": ["c=(1/10000)","S=6","Th2=(1/4)","Th4=(1/5)","Th6=(6/5)"],
             "Funct": ["Angle1=atan2(sqrt(x*x+y*y),(-z+c))",
                 "Angle2=atan2(x,(y+c))",
                 "rapp=x/sqrt(x*x+y*y+z*z)",
                 "CarvinCondition=abs((z-1)-(4/5)*cos(18*Angle2(x,y,z,t)/pi))<(103/10)|abs((z+3)-(3/10)*cos(18*Angle2(x,y,z,t)/pi+pi/4))<(1/2)",
-                "Top=(sqrt(x*x+y*y)-3)^2+z*z-1",
+                "Torus=(sqrt(x*x+y*y)-3)^2+z*z-1",
                 "Bottom=(x*x+y*y+z*z-1)",
                 "IsoExterior=x*x/3+y*y/3-abs((3/2)*sin(2*z/pi+(3/10))+(9/5))",
                 "DFx2=((IsoExterior(x+c,y,z,t)-IsoExterior(x,y,z,t))/c)",
@@ -7200,15 +7002,14 @@
                 "Iso6=(Iso(x+t*Th6*rapp(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+t*Th6*rapp(DFy(x,y,z,t),DFz(x,y,z,t),DFx(x,y,z,t),t),z+t*Th6*rapp(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t))",
                 "isoTransform_6=if((CarvinCondition(x,y,z,t)&ThickIsoExterior(x,y,z,t)<0),-ThickIso2(S*x,S*y,S*z,t)*Iso6(x*S,y*S,z*S,-1)*(Iso6(x*S,y*S,z*S,1)),1)"],
             "Fxyz": ["isoTransform_2(x,y,-z,t)*isoTransform_6(x,y,-z,t)",
-                "Top((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
+                "Torus((17/10)*x,(17/10)*y,(11/5)*(z+cos(pi/4*sqrt(x*x+y*y)))-(53/5),t)",
                 "Bottom(x/(12/5),y/(12/5),2*(z+(51/10)),t)"],
             "Xmax": ["7/2","5","3"],
             "Xmin": ["-7/2","-5","-3"],
             "Ymax": ["7/2","5","3"],
             "Ymin": ["-7/2","-5","-3"],
             "Zmax": ["(9/2)","10","-2"],
-            "Zmin": ["-5","0","-7"],
-            "Grid": ["200","60","60"]
+            "Zmin": ["-5","0","-7"]
         },
         "Texture": {
             "Colors": ["R=8/10",
@@ -7274,8 +7075,7 @@
         "Ymax": ["8"],
         "Ymin": ["-8"],
         "Zmax": ["8"],
-        "Zmin": ["-8"],
-        "Grid": ["160"]
+        "Zmin": ["-8"]
       }
     },
     {
@@ -7594,8 +7394,8 @@
     {
       "Iso3D": {
         "Description": ["Straw Basket using the predefined MathMod function fmesh by Abderrahman Taha 17/09/2019"],
-        "Name": ["Straw_Basket_v2"],
-        "Component": ["StrawBasket"],
+        "Name": ["Straw Basket_02"],
+        "Component": ["Straw Basket"],
         "Const": ["A = 5",
           "B = 2",
           "C = 10",
@@ -7611,8 +7411,7 @@
         "Ymax": ["5"],
         "Ymin": ["-5"],
         "Zmax": ["5"],
-        "Zmin": ["-5"],
-        "Grid": ["120"]
+        "Zmin": ["-5"]
       },
         "Sliders": {
             "Max": ["15","15","20","10","20"],
@@ -7701,8 +7500,7 @@
         "Ymax": [" 1393/100"],
         "Ymin": ["0"],
         "Zmax": [" 1"],
-        "Zmin": ["-1"],
-        "Grid": ["200"]
+        "Zmin": ["-1"]
       }
     },
     {
@@ -7720,9 +7518,8 @@
         "Xmin": ["-64/10"],
         "Ymax": [" 68/10"],
         "Ymin": ["-64/10"],
-        "Zmax": [" 9/10"],
-        "Zmin": ["-9/10"],
-        "Grid": ["160"]
+        "Zmax": [" 16/10"],
+        "Zmin": ["-16/10"]
       }
     },
     {
@@ -7746,8 +7543,7 @@
         "Ymax": [" R"],
         "Ymin": ["-R"],
         "Zmax": [" (P+R)"],
-        "Zmin": ["-(P+R)"],
-        "Grid": ["120"]
+        "Zmin": ["-(P+R)"]
       },
         "Sliders": {
           "Max": ["20","20","10","10","20","20","10","10","20","20","10","10","20","20","10","10"],
@@ -7790,8 +7586,7 @@
         "Ymax": [" P+R"],
         "Ymin": ["-(P+R)"],
         "Zmax": [" R"],
-        "Zmin": ["-R"],
-        "Grid": ["100"]
+        "Zmin": ["-R"]
       }
     },
     {
@@ -7819,8 +7614,7 @@
         "Ymax": [" 11"],
         "Ymin": ["-11 "],
         "Zmax": [" 35/10"],
-        "Zmin": ["-35/10"],
-        "Grid": ["100"]
+        "Zmin": ["-35/10"]
       }
     },
     {
@@ -7840,8 +7634,7 @@
         "Ymax": [" 35/10"],
         "Ymin": ["-35/10 "],
         "Zmax": [" 11"],
-        "Zmin": ["-11 "],
-        "Grid": ["100"]
+        "Zmin": ["-11 "]
       }
     },
     {
@@ -7986,7 +7779,7 @@
     },
     {
         "Iso3D": {
-            "Description": ["Script by Abderrahman Taha to generate TPMS lattices with the function definition F , thickness (T) and density (dx,dy,dz) (23/09/2022)"],
+            "Description": ["Script by Abderrahman Taha (27/04/2020) to generate TPMS lattices with function definition F , thickness (T) and density (dx,dy,dz)"],
             "Name": ["SchwarzP_Lattice"],
             "Component": ["SchwarzP"],
             "Const": ["T=3/10",
@@ -8011,8 +7804,7 @@
             "Ymax": ["dy"],
             "Ymin": ["-dy"],
             "Zmax": ["dz"],
-            "Zmin": ["-dz"],
-            "Grid": ["100"]
+            "Zmin": ["-dz"]
         }
     },
     {
@@ -8026,8 +7818,7 @@
         "Ymax": ["1"],
         "Ymin": ["-1"],
         "Zmax": ["1"],
-        "Zmin": ["-1"],
-        "Grid": ["70"]
+        "Zmin": ["-1"]
         }
     },
     {
@@ -8059,8 +7850,7 @@
         "Ymax": [" 28"],
         "Ymin": ["-28"],
         "Zmax": [" 12"],
-        "Zmin": ["-12"],
-        "Grid": ["160"]
+        "Zmin": ["-12"]
       }
     },
     {
@@ -8082,8 +7872,7 @@
         "Ymax": ["25"],
         "Ymin": ["-25"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["60"]
+        "Zmin": ["-15"]
       }
     },
     {
@@ -8109,8 +7898,7 @@
         "Ymax": [" ((P1+P2)/10 + R00/25)"],
         "Ymin": ["-((P1+P2)/10 + R00/25)"],
         "Zmax": [" (P1/10 + R00/25)"],
-        "Zmin": ["-(P1/10 + R00/25)"],
-        "Grid": ["120"]
+        "Zmin": ["-(P1/10 + R00/25)"]
       },
         "Sliders": {
           "Max": ["50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50","50"],
@@ -8145,8 +7933,7 @@
         "Ymax": [" 7"],
         "Ymin": ["-7"],
         "Zmax": [" 3"],
-        "Zmin": ["-3"],
-        "Grid": ["120"]
+        "Zmin": ["-3"]
       }
     },
     {
@@ -8175,8 +7962,7 @@
         "Ymax": [" 7"],
         "Ymin": ["-7"],
         "Zmax": [" 3"],
-        "Zmin": ["-3"],
-        "Grid": ["120"]
+        "Zmin": ["-3"]
       }
     },
     {
@@ -8199,23 +7985,21 @@
         "Ymax": ["30"],
         "Ymin": ["-30"],
         "Zmax": ["15"],
-        "Zmin": ["-15"],
-        "Grid": ["100"]
+        "Zmin": ["-15"]
       }
     },
     {
       "Iso3D": {
         "Description ": ["Red giant by Abderrahman Taha 08/10/2019"],
-        "Name": ["Red_giant"],
-        "Component": ["Re_giant"],
+        "Name": ["Red giant"],
+        "Component": ["Redgiant"],
         "Fxyz": ["-((x*x+y*y+z*z-1)+(if((t<pi/2), (1),(5)*if(t<pi,abs(sin(t-pi/2)), abs(sin(3*t-pi/2))) ))*(NoiseW(6*x,6*y,5*cos(t)+6*z,(4),(2),0)  +NoiseW(4*sin(t)+6*x,(5)*cos(t) + 6*y,(6)*z,(4),(0),0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *(x^2+y^2+z^2-(3/100))"],
         "Xmax": ["1"],
         "Xmin": ["-1"],
         "Ymax": ["1"],
         "Ymin": ["-1"],
         "Zmax": ["1"],
-        "Zmin": ["-1"],
-        "Grid": ["100"]
+        "Zmin": ["-1"]
       },
       "Texture": {
         "Colors": ["R=(6/10)",
@@ -8237,8 +8021,7 @@
         "Ymax": ["8"],
         "Ymin": ["-8"],
         "Zmax": ["8"],
-        "Zmin": ["-8"],
-        "Grid": ["100"]
+        "Zmin": ["-8"]
       },
       "Texture": {
         "Colors": ["R=(73/100)",
@@ -8251,8 +8034,8 @@
     {
       "Iso3D": {
         "Description": ["P_Skeletal Sphere by Abderrahman Taha 08/12/2015"],
-        "Name": ["P_Skeletal_Sphere"],
-        "Component": ["P_Skeletal_Sphere"],
+        "Name": ["P_Skeletal Sphere"],
+        "Component": ["P_Skeletal Sphere"],
         "Const": ["M=1",
           "N=4",
           "P=10",
@@ -8267,8 +8050,7 @@
         "Ymax": ["19"],
         "Ymin": ["-19"],
         "Zmax": ["19"],
-        "Zmin": ["-19"],
-        "Grid": ["100"]
+        "Zmin": ["-19"]
       },
         "Sliders": {
           "Max": ["50","50","30","30","100","50","50","50","30","30","100","50","50","50","30","30","100","50","50","50","30","30","100","50"],
@@ -8307,10 +8089,10 @@
         "Description": ["Schwarz P Sphere  by Abderrahman Taha 29/03/2016"],
         "Name": ["Schwarz P Sphere"],
         "Component": ["SchwarzPSphere"],
-        "Const": ["M=7",
-          "N=8",
-          "P=6",
-          "th=6"],
+        "Const": ["M=1",
+          "N=10",
+          "P=10",
+          "th=4"],
         "Funct": ["Iso=cos(x)+cos(y)+cos(z)",
           "Iso2=th*x/(10*sqrt(x*x+y*y+z*z))",
           "Iso4=Iso(x+Iso2(sin(x), sin(y), sin(z),t),y+Iso2(sin(y), sin(x), sin(z),t),z+Iso2(sin(z), sin(y), sin(x),t),t)",
@@ -8324,14 +8106,13 @@
         "Ymax": ["13"],
         "Ymin": ["-13"],
         "Zmax": ["13"],
-        "Zmin": ["-13"],
-        "Grid": ["130"]
+        "Zmin": ["-13"]
       },
         "Sliders": {
           "Max": ["20","20","20","10","20","20","20","10","20","20","20","10"],
           "Min": ["0","0","0","0","0","0","0","0","0","0","0","0"],
           "Name": ["M","N","P","th"],
-          "Position": ["7","8","6","6","1","12","7","4","1","5","3","4"],
+          "Position": ["10","10","10","4","1","12","7","4","1","5","3","4"],
           "Step": ["1","1","1","1","1","1","1","1","1","1","1","1"]
         }
     },
@@ -8447,8 +8228,7 @@
         "Ymax": ["27"],
         "Ymin": ["-27"],
         "Zmax": ["12"],
-        "Zmin": ["-12"],
-        "Grid": ["120"]
+        "Zmin": ["-12"]
       },
         "Sliders": {
           "Max": ["20","20","20","15","25","30","20","20","20","15","25","30","20","20","20","15","25","30"],
@@ -8464,7 +8244,6 @@
         "Name": ["DiamondTori"],
         "Component": ["DiamondTori"],
         "Const": ["M=1","N1=10","N2=10","P=5","R=15"],
-        "Grid": ["150"],
         "Funct": ["Diamond=sin(x)*sin(y)*sin(z)+sin(x)*cos(y)*cos(z)+cos(x)*sin(y)*cos(z)+cos(x)*cos(y)*sin(z)",
           "isoCondition_0=(x^2-(22/10)^2)",
           "isoCondition_1=(x^2-(16/10)^2)",
@@ -8499,7 +8278,6 @@
           "Iso2=Costa(x+T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z+T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)",
           "TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t)) + exp((4/10)*min((k1*x*x+k1*y*y-100), min(((x+6)^2+k2*y^2+z^2-80),min(((x-6)^2+k2*y^2+z^2-80), min (((y+6)^2+k2*x^2+z^2-80), ((y-6)^2+k2*x^2+z^2-80)))))) -1"],
         "Component": ["Schwarz"],
-        "Grid": ["150"],
         "Const": ["X=16","Y=16","Z=18","c=1/100","T=21/100","k1=1","k2=14/10"],
         "Fxyz": ["TickIsoExterior(x,y,(8*z/10),t)"],
         "Xmax": [" X"],
