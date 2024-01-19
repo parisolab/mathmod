@@ -12,6 +12,9 @@
                         "Description": [
                             "Trefoil_Sweep Creates a surface by sweeping a cross section curve along a spine curve"
                         ],
+                "Name": [
+                    "Trefoil_Knot"
+                ],
                         "Funct": [
                             "C1x=r*cos(v)",
                             "C1y=r*sin(v)",
@@ -54,9 +57,6 @@
                             "400",
                             "50"
                         ],
-                        "Name": [
-                            "Trefoil_Knot"
-                        ],
                         "Umax": [
                             "2*pi"
                         ],
@@ -71,6 +71,9 @@
                         ]
                     },
                     "Sliders": {
+                "SetNames": [
+                    "Trefoil_Knot"
+                ],
                         "Max": [
                             "30"
                         ],
@@ -82,9 +85,6 @@
                         ],
                         "Position": [
                             "2"
-                        ],
-                        "SetNames": [
-                            "Trefoil_Knot"
                         ],
                         "Step": [
                             "1"
