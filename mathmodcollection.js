@@ -2,6 +2,12 @@
   "MathModels": [
         {
                     "Param3D": {
+                "Description": [
+                    "Trefoil_Sweep Creates a surface by sweeping a cross section curve along a spine curve"
+                ],
+        "Name": [
+            "Trefoil_Knot"
+        ],
                         "Component": [
                             "Knots"
                         ],
@@ -9,12 +15,6 @@
                             "r=2",
                             "du=1/1000000"
                         ],
-                        "Description": [
-                            "Trefoil_Sweep Creates a surface by sweeping a cross section curve along a spine curve"
-                        ],
-                "Name": [
-                    "Trefoil_Knot"
-                ],
                         "Funct": [
                             "C1x=r*cos(v)",
                             "C1y=r*sin(v)",
