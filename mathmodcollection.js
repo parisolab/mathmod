@@ -8,6 +8,16 @@
             "Const":   ["r=2","du=1/1000000" ],
             "Funct":   ["C1x=r*cos(v)",
                 "C1y=r*sin(v)",
+                "C1x=r*sin(v)*sin(4*v)",
+                "C1y=r*cos(v)*sin(4*v)",
+
+
+                    "C1x=r*(2*cos(v)+5*cos(3*v/2))/5",
+                    "C1y=r*(2*sin(v)-5*sin(3*v/2))/5",
+
+
+
+
                 "Cx=5*(sin(u) + 2*sin(2*u))",
                 "Cy=5*(cos(u) - 2*cos(2*u))",
                 "Cz=5*sin(3*u)",
