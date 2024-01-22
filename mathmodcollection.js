@@ -2,8 +2,8 @@
   "MathModels": [
     {
         "Param3D": {
-        "Description":  ["Trefoil_Sweep  by Abderrahman Taha 19/01/204. Creates a surface by sweeping a cross section curve along a spine curve"],
-        "Name":  ["Trefoil_Knot"],
+            "Description":  ["Trefoil_Sweep  by Abderrahman Taha 19/01/204. Creates a surface by sweeping a cross section curve along a spine curve"],
+            "Name":  ["Trefoil_Knot"],
             "Component":   ["Knots" ],
             "Const":   ["r=2","du=1/1000000" ],
             "Funct":   ["C1x=r*cos(v)",
