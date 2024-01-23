@@ -5,7 +5,7 @@
             "Description":  ["Trefoil_Sweep  by Abderrahman Taha 19/01/204. Creates a surface by sweeping a cross section curve along a spine curve"],
             "Name":  ["Trefoil_Knot"],
             "Component":   ["Knots" ],
-            "Const":   ["r=2","du=1/1000000" ],
+            "Const":   ["r=2","du=1/1000000"],
             "Funct":   ["C1x=r*cos(v)",
                 "C1y=r*sin(v)",
                 "Rose_x=r*sin(v)*sin(4*v)",
@@ -38,14 +38,14 @@
                 "Bz=Rapp(nz(u,v,t),nx(u,v,t),ny(u,v,t))",
                 "S1x=Cx(u,v,t)+(C1x(u,v,t)*Bx(u,v,t)+C1y(u,v,t)*Ax(u,v,t))",
                 "S1y=Cy(u,v,t)+(C1x(u,v,t)*By(u,v,t)+C1y(u,v,t)*Ay(u,v,t))",
-                "S1z=Cz(u,v,t)+(C1x(u,v,t)*Bz(u,v,t)+C1y(u,v,t)*Az(u,v,t))" ],
-            "Fx":   ["S1x(u,v,t)" ],
-            "Fy":   ["S1y(u,v,t)" ],
-            "Fz":   ["S1z(u,v,t)" ],
-            "Grid":   ["400","50" ],
-            "Umax":   ["2*pi" ],
-            "Umin":   ["0" ],
-            "Vmax":   ["2*pi" ],
+                "S1z=Cz(u,v,t)+(C1x(u,v,t)*Bz(u,v,t)+C1y(u,v,t)*Az(u,v,t))"],
+            "Fx":   ["S1x(u,v,t)"],
+            "Fy":   ["S1y(u,v,t)"],
+            "Fz":   ["S1z(u,v,t)"],
+            "Grid":   ["400","50"],
+            "Umax":   ["2*pi"],
+            "Umin":   ["0"],
+            "Vmax":   ["2*pi"],
             "Vmin":   ["0"
             ]
         },
@@ -57,7 +57,7 @@
             "Position":   ["2"],
             "Step":   ["1"]
         }
-    } ,
+    },
     {
         "Iso3D": {
             "Description": ["Ukraine Heart Flag by Abderrahman Taha 24/02/2022"],
