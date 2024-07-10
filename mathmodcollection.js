@@ -1,9 +1,260 @@
 {
   "MathModels": [
+{
+        "Param3D": {
+            "Description": ["Noids minimal surface (v02) by Abderrahman Taha 08/04/2023"],
+            "Name": ["Noids"],
+            "Component": ["Noids_02","Noids_01"],
+            "Const": ["R=18","r=2","k=15","Noid=4","umax=pi","umin=-pi","vmin=-pi","vmax=pi","Teta=pi"],
+            "Funct": ["threshold1=(1-((vmax-v)/(vmax-vmin))^(k+2))","threshold2=((vmax-v)/(vmax-vmin))^(k)","Spherex=R*sin(u)","Spherey=R*cos(u)*sin(v)","Spherez=R*cos(u)*cos(v)","Catenoidx=r*cosh(v/2)*cos(u)","Catenoidy=r*cosh(v/2)*sin(u)","Catenoidz=v+sqrt(R*R-r*r*(cosh(v/2))^2)+pi","Sphere_x=(if(u<0,Spherex((2*u+pi)/2,v/Noid, t), -Spherex((2*u-pi)/2, -v/Noid, t)))","Sphere_y= (if(u<0,Spherey((2*u+pi)/2,v/Noid, t), Spherey((2*u-pi)/2, -v/Noid, t)))","Sphere_z= (if(u<0, Spherez((2*u+pi)/2,v/Noid, t),Spherez((2*u-pi)/2,-v/Noid, t)))","Catenoid_x= threshold1(u,v,t)*Catenoidx(u,v,t) + threshold2(u,v,t)*Sphere_x(u,v,t)","Catenoid_y= threshold1(u,v,t)*Catenoidy(u,v,t) + threshold2(u,v,t)*Sphere_y(u,v,t)","Catenoid_z= threshold1(u,v,t)*Catenoidz(u,v,t) + threshold2(u,v,t)*Sphere_z(u,v,t)"],
+            "Fx": ["Catenoid_x(u,v,t)","Spherex(u/2,v,t)"],
+            "Fy": ["Catenoid_y(u,v,t)","Spherey(u/2,v,t)"],
+            "Fz": ["Catenoid_z(u,v,t)","Spherez(u/2,v,t)"],
+            "Umax": ["umax","umax"],
+            "Umin": ["umin","umin"],
+            "Vmax": ["vmax","vmax/Noid"],
+            "Vmin": ["vmin","vmin/Noid"]
+        }
+    },
     {
         "Param3D": {
-            "Name": ["Spherical_Harmonics"],
+            "Description": ["k-Noids minimal surface (v03) by Abderrahman Taha 05/04/2023"],
+            "Name": ["k_Noids"],
+            "Component": ["k_Noids_01","k_Noids_02","k_Noids_03","k_Noids_04"],
+            "Const": ["R=8","r=1","k=2","Noid=4","umax=pi","umin=-pi","vmin=-pi","vmax=pi","Teta=pi"],
+            "Funct": ["Spherex=R*sin(u)","Spherey=R*cos(u)*sin(v)","Spherez=R*cos(u)*cos(v)","Catenoidx=r*cosh(v/2)*cos(u)","Catenoidy=r*cosh(v/2)*sin(u)","Catenoidz=v+R+pi","threshold=(1-(vmax-v)/(vmax-vmin))^(k)","threshold2=((vmax-v)/(vmax-vmin))^(k)","Sphere_x=R*sin(2*u+pi/2)","Sphere_y=R*cos(2*u+pi/2)*sin(vmin/Noid)","Sphere_z=(if(u<0,R*cos(2*u+pi/2)*cos(vmin/Noid),-R*cos(2*u+pi/2)*cos(vmin/Noid)))","Catenoid_x=threshold2(u,v,t)*Catenoidx(u,v,t)+threshold(u,v,t)*Sphere_x(u/2,v,t)","Catenoid_y=threshold2(u,v,t)*Catenoidy(u,v,t)+threshold(u,v,t)*Sphere_y(u/2,v,t)","Catenoid_z=threshold2(u,v,t)*Catenoidz(u,v,t)+threshold(u,v,t)*Sphere_z(u/2,v,t)","Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)","Rotz=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)"],
+            "Fx": ["-Catenoid_x(u,v,t)","-Catenoid_x(u,v,t)","-Catenoid_x(u,v,t)","-Catenoid_x(u,v,t)"],
+            "Fy": ["Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(0))","Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(1))","Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(2))","Roty(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(3))"],
+            "Fz": ["Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(0))","Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(1))","Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(2))","Rotz(Catenoid_y(u,v,t),Catenoid_z(u,v,t),(3))"],
+            "Umax": ["umax","umax","umax","umax"],
+            "Umin": ["umin","umin","umin","umin"],
+            "Vmax": ["vmax","vmax","vmax","vmax"],
+            "Vmin": ["vmin","vmin","vmin","vmin"]
+        }
+    },
+    {
+        "Param3D": {
+            "Description": ["Pseudo Riemann's minimal surface (v02) by Abderrahman Taha 23/03/2023"],
+            "Name": ["Riemann_Minimal_Surface"],
+            "Component": ["Riemann_01","Riemann_02","Riemann_03","Riemann_04","Riemann_05","Riemann_06","Riemann_07","Riemann_08","Riemann_09","Riemann_10","Riemann_11","Riemann_12"],
+            "Const": ["R=6","r=1","k=2","P=8","M=10","Noid=6","umax=pi","vmax=pi","umin=-pi","vmin=-pi","Teta=pi"],
+            "Funct": ["Rfctv=(v-vmax)/(vmin-vmax)","Rfctu=if(u<0,-(umax+(u))/(umax-Teta/Noid),(umax-(u))/(umax-Teta/Noid))","f1x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(u)-R*Rfctv(u,v,t)^k","f2x=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*cos(Teta/Noid)*(pi-abs(u))/(pi-Teta/Noid)-R*Rfctv(u,v,t)^k","f1y=(R*Rfctv(u,v,t)^k+r*cosh(v/2))*sin(u)","f2y=(R*Rfctv(Teta/Noid,v,t)^k+r*cosh(v/2))*sin(Teta/Noid)*Rfctu(u,v,t)","F1x=-if(abs(u)<(Teta/Noid),f1x(u,v,t),f1x(u,v,t)*(v-vmin)/(vmax-vmin)-f2x(u,v,t)*(v-vmax)/(vmax-vmin))-R","F1y=if(abs(u)<(Teta/Noid),f1y(u,v,t),f1y(u,v,t)*(v-vmin)/(vmax-vmin)-f2y(u,v,t)*(v-vmax)/(vmax-vmin))","F1z=v","Rotx=u-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*sin(t*Teta/Noid)","Roty=v-2*(sin(t*Teta/Noid)*u+cos(t*Teta/Noid)*v)*cos(t*Teta/Noid)"],
+            "Fx": ["Rotx(F1x(u,v,t),F1y(u,v,t),(0))","Rotx(F1x(u,v,t),F1y(u,v,t),(1))","Rotx(F1x(u,v,t),F1y(u,v,t),(2))","Rotx(F1x(u,v,t),F1y(u,v,t),(3))","Rotx(F1x(u,v,t),F1y(u,v,t),(4))","Rotx(F1x(u,v,t),F1y(u,v,t),(5))","Rotx(F1x(u,v,t),F1y(u,v,t),(6))","Rotx(F1x(u,v,t),F1y(u,v,t),(7))","Rotx(F1x(u,v,t),F1y(u,v,t),(8))","Rotx(F1x(u,v,t),F1y(u,v,t),(9))","Rotx(F1x(u,v,t),F1y(u,v,t),(10))","Rotx(F1x(u,v,t),F1y(u,v,t),(11))"],
+            "Fy": ["Roty(F1x(u,v,t),F1y(u,v,t),(0))","Roty(F1x(u,v,t),F1y(u,v,t),(1))","Roty(F1x(u,v,t),F1y(u,v,t),(2))","Roty(F1x(u,v,t),F1y(u,v,t),(3))","Roty(F1x(u,v,t),F1y(u,v,t),(4))","Roty(F1x(u,v,t),F1y(u,v,t),(5))","Roty(F1x(u,v,t),F1y(u,v,t),(6))","Roty(F1x(u,v,t),F1y(u,v,t),(7))","Roty(F1x(u,v,t),F1y(u,v,t),(8))","Roty(F1x(u,v,t),F1y(u,v,t),(9))","Roty(F1x(u,v,t),F1y(u,v,t),(10))","Roty(F1x(u,v,t),F1y(u,v,t),(11))"],
+            "Fz": ["F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t) ","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t) ","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)","F1z(u,v,t)","-F1z(u,v,t)-(vmax-vmin)"],
+            "Umax": ["umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax","umax"],
+            "Umin": ["umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin"],
+            "Vmax": ["vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax"],
+            "Vmin": ["vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin"],
+            "Grid": ["149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149","149"]
+        },
+        "Sliders": {
+            "Max": ["20","50","50","50","20","50","50","50","20","50","50","50","20","50","50","50","20","50","50","50","20","50","50","50"],
+            "Min": ["2","0","0","0","2","0","0","0","2","0","0","0","2","0","0","0","2","0","0","0","2","0","0","0"],
+            "Name": ["Noid","R","r","k"],
+            "Position": ["2","6","2","2","6","15","2","7","4","8","2","7","8","15","2","7","10","15","2","7","12","15","2","7"],
+            "Step": ["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]
+        },
+        "Texture": {
+            "Colors": ["R=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(8/10))","G=if((i_indx)%(M)>P|(j_indx)%(M)>P,(8/10),(4/10))","B=if((i_indx)%(M)>P|(j_indx)%(M)>P,(4/10),(1/10))","T=1"],
+            "Name": "square",
+            "Noise": "1"
+        }
+    },
+    {
+        "Iso3D": {
+            "Description": ["Mandelbulb by Abderrahman Taha 27/08/2023"],
+            "Name": ["MandelBulb"],
+            "Component": ["MandelBulb"],
+            "Const": ["L=105/100"],
+            "Fxyz": ["mandelbulb(x,y,z,24)"],
+            "Xmax": ["L"],
+            "Xmin": ["-L"],
+            "Ymax": ["L"],
+            "Ymin": ["-L"],
+            "Zmax": ["L"],
+            "Zmin": ["-L"]
+        }
+    },
+    {
+        "Iso3D": {
+            "Description": ["MandelGoldenTemple by Abderrahman Taha 03/12/2022"],
+            "Name": ["MandelTemple"],
+            "Component": ["MandelTemple"],
+            "Const": ["Iter=300"],
+            "Fxyz": ["-((x^2+y^2-(MandelFractal(-z,sqrt(x*x+y*y),Iter)/Iter)^2))"],
+            "Grid": ["150"],
+            "Xmax": ["1"],
+            "Xmin": ["-1"],
+            "Ymax": ["1"],
+            "Ymin": ["-1"],
+            "Zmax": ["2"],
+            "Zmin": ["-1/2"]
+        }
+    },
+    {
+        "Param3D": {
+            "Description": ["JuliaFractal by Abderrahman Taha 16/11/2022"],
+            "Name": ["JuliaFractal"],
+            "Component": ["Julia"],
+            "Const": ["Lu=3/2","Lv=3/2","Realc=-63/100","Imagc=-41/100","Iter=600"],
+            "Fx": ["u"],
+            "Fy": ["v"],
+            "Fz": ["JuliaFractal(u,v,Realc,Imagc,Iter)/8000"],
+            "Umax": ["Lu"],
+            "Umin": ["-Lu"],
+            "Vmax": ["Lv"],
+            "Vmin": ["-Lv"],
+            "Grid": ["600","600"]
+        },
+        "Texture": {
+                "Colors": ["R=8*z",
+                    "G=14*z/2+1/6",
+                    "B=z/5+1/2",
+                    "T=1"],
+            "Name": "Volcano",
+            "Noise": ""
+        }
+    },
+    {
+        "Param3D": {
+            "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2022"],
+            "Name": ["MandelbrotTorus"],
+            "Component": ["MandelbrotTorus"],
+            "Const": ["c=1/100000"],
+            "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
+                "Fy=(1+cos(u)/2)*sin(v)",
+                "Fz=-sin(u)/2",
+                "Thickness=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),100)/2000",
+                "n1=(-(-cos(u)/2)*((1+cos(u)/2)*cos(v)))",
+                "n2=((-cos(u)/2)*(-(1+cos(u)/2)*sin(v)))",
+                "n3=((-sin(u)*cos(v)/2)*((1+cos(u)/2)*cos(v))-(sin(u)*sin(v)/2)*((1+cos(u)/2)*sin(v)))",
+                "R= u/sqrt(u^2+v^2+t^2)",
+                "Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+                "Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+                "Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
+            "Fx": ["Gx(u,v,t)"],
+            "Fy": ["Gy(u,v,t)"],
+            "Fz": ["Gz(u,v,t)"],
+            "Grid": ["1000","1000"],
+            "Umax": ["pi"],
+            "Umin": ["-pi"],
+            "Vmax": ["2*pi"],
+            "Vmin": ["0"]
+        },
+        "Texture": {
+            "Colors": ["R=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),200)/600+1/5",
+                "G=MandelFractal((2*u+1),(6*v)%(pi)-(3/2),200)/800+2/5",
+                "B=3/5",
+                "T=1"],
+            "Name": "BlueOcean",
+            "Noise": ""
+        }
+    },
+    {
+        "Iso3D": {
+            "Description": ["MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"],
+            "Name": ["MandelbrotIsoSpheres"],
+            "Component": ["MandelbrotIsoSpheres"],
+            "Const": ["Iter=100",
+                "Step_XY=300",
+                "Step_Z=7",
+                "R=50"],
+            "Funct": ["Octahedron = (abs(x)+abs(y)+ abs(z)-1/R)",
+                "Sphere =(x*x+y*y+ z*z-1/R^2)",
+                "Sphere2=-Sphere(((abs(x)%(1/Step_XY))-(1/(2*Step_XY))),((abs(y)%(1/Step_XY))-(1/Step_XY)/2),z,t)",
+                "MandelbrotSpheres = psh((0), MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY),Iter))*psh((1),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY)-(1/(2*Step_XY)),floor(y/(1/Step_XY))*(1/Step_XY),Iter))*psh((2),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY)-(1/(2*Step_XY)),Iter))*psh((3),MandelFractal(floor(x/(1/Step_XY))*(1/Step_XY),floor(y/(1/Step_XY))*(1/Step_XY) +(1/(2*Step_XY)),Iter))*psh((4),max(csd(0),max(csd(1), max(csd(2),csd(3)))))*if((csd(4)=Iter),Sphere2(x,y,z,(1)),if(abs(csd(4)-Iter)<(96),Sphere2(x,y,z+(1/Step_Z),(3/2)),if(abs(csd(4)-Iter)<(98),Sphere2(x,y,z+2*(1/Step_Z),(5/2)),(0))))"],
+            "Fxyz": ["MandelbrotSpheres(x,y,z,t)"],
+            "Grid": ["200"],
+            "Vect": ["5"],
+            "Xmax": ["1"],
+            "Xmin": ["-2"],
+            "Ymax": [" 5/4"],
+            "Ymin": ["-5/4"],
+            "Zmax": ["1/20"],
+            "Zmin": ["-3/10"]
+        },
+        "Sliders": {
+            "Max": ["500","500","500","500"],
+            "Min": ["1","1","1","1"],
+            "Name": ["Step_XY","Iter","R00","Step_Z"],
+            "Position": ["300","104","50","7","14","100","27","8"],
+            "Step": ["1","1","1","1"]
+        }
+        ,
+        "Texture": {
+            "Colors": ["R=(6/5)*MandelFractal(x,y,(25))*abs(z)",
+                "G=(1/2)*MandelFractal(x,y,(25))*abs(z)/2",
+                "B=abs(z)",
+                "T=1"],
+            "Name": "Lines1",
+            "Noise": ""
+        }
+    },
+    {
+        "Param3D": {
+            "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2022"],
+            "Name": ["MandelbrotSphere"],
+            "Component": ["Sphere"],
+            "Const": ["c=1/100000"],
+            "Funct": [
+                "Fx=-cos(u)*cos(v)",
+                "Fy=cos(u)*sin(v)",
+                "Fz=sin(u)",
+                "Thickness=MandelFractal(v-1/2,u,100)/2000",
+                "n1=(-cos(u)*cos(u)*cos(v))",
+                "n2=( cos(u)*cos(u)*sin(v))",
+                "n3= cos(u)*sin(u)*cos(v)*(sin(v) + cos(v))",
+                "R= u/sqrt(u^2+v^2+t^2)",
+                "Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+                "Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
+                "Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
+            "Fx": ["Gx(u,v,t)"],
+            "Fy": ["Gy(u,v,t)"],
+            "Fz": ["Gz(u,v,t)"],
+            "Grid": ["500","500"],
+            "Umax": ["pi/2"],
+            "Umin": ["-pi/2"],
+            "Vmax": ["pi/2"],
+            "Vmin": ["-pi/2"]
+        },
+        "Texture": {
+            "Colors": ["R=MandelFractal(v-1/2,u,100)/500+1/5",
+                "G=MandelFractal(v-1/2,u,100)/600+3/10",
+                "B=7/10",
+                "T=1"],
+            "Name": "Volcano",
+            "Noise": ""
+        }
+    },
+    {
+        "Param3D": {
+            "Description": ["MandelFractal by Abderrahman Taha 15/11/2022"],
+            "Name": ["Mandelbrot"],
+            "Component": ["Mandel"],
+            "Const": ["Lu=3/2","Lv=3/2","c=3/5"],
+            "Fx": ["u"],
+            "Fy": ["v"],
+            "Fz": ["MandelFractal(u,v,100)/300"],
+            "Umax": ["Lu-c"],
+            "Umin": ["-Lu-c"],
+            "Vmax": ["Lv"],
+            "Vmin": ["-Lv"],
+            "Grid": ["800","800"]
+        },
+        "Texture": {
+            "Colors": ["R=6*z+1/10",
+                "G=3*z/2+1/10",
+                "B=z/5+1/10",
+                "T=1"],
+            "Name": "Volcano",
+            "Noise": ""
+        }
+    },
+    {
+        "Param3D": {
             "Description": ["Spherical harmonics by Abderrahman Taha 03/11/2022"],
+            "Name": ["Spherical_Harmonics"],
             "Component": ["SH_1","SH_2","SH_3","SH_4","SH_5","SH_6"],
             "Funct": ["H1=abs(1)","H2=(7/4)*abs(cos(u))","H3=abs(3*cos(u)^2-1)","H4=3*abs(cos(u)*sin(u)*sin(v))","H5=abs(5*cos(u)^3-3*cos(u))","H6=abs((5*cos(u)^2-1)*cos(v)*sin(u))"],
             "Fx": ["H1(u,v,t)*sin(u)*cos(v)","H2(u,v,t)*sin(u)*cos(v)+3","H3(u,v,t)*sin(u)*cos(v)+6","H4(u,v,t)*sin(u)*cos(v)","H5(u,v,t)*sin(u)*cos(v)+3","H6(u,v,t)*sin(u)*cos(v)+6"],
@@ -18,7 +269,7 @@
     {
         "Param3D": {
             "Description":  ["Trefoil_Sweep  by Abderrahman Taha 26/01/204. Creates a surface by sweeping a cross section curve along a spine curve"],
-            "Name":  ["Trefoil_Knot"],
+            "Name":  ["Trefoil_Knot_Sweep"],
             "Component":   ["Knots" ],
             "Const":   ["r=2","du=1/1000000"],
             "Funct":   ["C1x=r*cos(v)",
