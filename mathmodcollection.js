@@ -268,7 +268,7 @@
     },
     {
         "Param3D": {
-            "Description":  ["Trefoil_Sweep  by Abderrahman Taha 26/01/204. Creates a surface by sweeping a cross section curve along a spine curve"],
+            "Description":  ["Trefoil_Sweep  by Abderrahman Taha 26/01/2024. Creates a surface by sweeping a cross section curve along a spine curve"],
             "Name":  ["Trefoil_Knot_Sweep"],
             "Component":   ["Knots" ],
             "Const":   ["r=2","du=1/1000000"],
@@ -7112,7 +7112,7 @@
       "Param3D": {
         "Name": ["Richmond Polar_4"],
         "Component": ["richmondpolar"],
-        "Description ": ["richmondpolar(n)[t](u,v):={-cos(t + v)/(2*u) -u^(2*n + 1)*cos(t - (2*n + 1)*v)/(4*n + 2),-sin(t + v)/(2*u) +u^(2*n + 1)*sin(t - (2*n + 1)*v)/(4*n + 2),u^n*cos(t - n*v)/n}is the polar parametrization of a 1-parameter family of minimal surfaces such that {r,theta}->richmondpolar[n][0][r,theta] is a minimal surface with one planar end of degree n."],
+        "Description ": ["richmondpolar(n)[t](u,v):={-cos(t + v)/(2*u) -u^(2*n + 1)*cos(t - (2*n + 1)*v)/(4*n + 2),-sin(t + v)/(2*u) +u^(2*n + 1)*sin(t - (2*n + 1)*v)/(4*n + 2),u^n*cos(t - n*v)/n}is the polar parametrization of a 1-parameter family of minimal surfaces such that {r,theta}->richmondpolar[n][0][r,theta] is a minimal surface with one planar end of degree n"],
         "Fx": ["-cos(t + v)/(2*u) - u^3*cos(t - 3*v)/6"],
         "Fy": ["-sin(t + v)/(2*u) + u^3*sin(t - 3*v)/6"],
         "Fz": ["u*cos(t - v)"],
@@ -8295,7 +8295,7 @@
     },
     {
       "Param3D": {
-        "Description": ["Original Klein Bottle formula from http://www.gnuplotting.org/klein-bottle/ . Implemented by Abderrahman Taha 03/04/2016"],
+        "Description": ["Original Klein Bottle formula from http://www.gnuplotting.org/klein-bottle/ Implemented by Abderrahman Taha 03/04/2016"],
         "Name": ["Klein_4"],
         "Component": ["Klein"],
         "Funct": ["tx=if(v<2*pi, (A-(A-1)*cos(v))*cos(u),if(v<3*pi, -B+(B+cos(u))*cos(v),-B+B*cos(v)-cos(u)))",
