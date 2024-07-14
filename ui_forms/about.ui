@@ -14,23 +14,23 @@
    <string>About</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="2" column="0">
+    <widget class="QPushButton" name="about">
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
     <widget class="QLabel" name="textLabel2_4">
      <property name="font">
       <font/>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;MathMod-12.0&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Author: Abderrahman Taha (&lt;/span&gt;&lt;a href=&quot;taha_ab@yahoo.fr&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#60999e;&quot;&gt;taha_ab@yahoo.fr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;GitHub: &lt;/span&gt;&lt;a href=&quot;https://github.com/parisolab/mathmod&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://github.com/parisolab/mathmod&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Home&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#131313;&quot;&gt;:&lt;/span&gt;&lt;a href=&quot;https://sourceforge.net/projects/mathmod&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://sourceforge.net/projects/mathmod&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;FaceBook&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#009051;&quot;&gt;:&lt;/span&gt;&lt;a href=&quot;https://www.facebook.com/parisolab/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://www.facebook.com/parisolab/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Twitter :&lt;/span&gt;&lt;a href=&quot;https://twitter.com/parisolab&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://twitter.com/parisolab&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;MathMod-12.0&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Author: Abderrahman Taha (&lt;/span&gt;&lt;a href=&quot;taha_ab@yahoo.fr&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#20209e;&quot;&gt;taha_ab@yahoo.fr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Company: Parisolab Inc (&lt;/span&gt;&lt;span style=&quot; text-decoration: underline; color:#20209e;&quot;&gt;parisolab@gmail.com&lt;/span&gt;)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;GitHub: &lt;/span&gt;&lt;a href=&quot;https://github.com/parisolab/mathmod&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://github.com/parisolab/mathmod&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Home&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#131313;&quot;&gt;:&lt;/span&gt;&lt;a href=&quot;https://sourceforge.net/projects/mathmod&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://sourceforge.net/projects/mathmod&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;FaceBook&lt;/span&gt;&lt;span style=&quot; font-size:10pt; color:#009051;&quot;&gt;:&lt;/span&gt;&lt;a href=&quot;https://www.facebook.com/parisolab/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://www.facebook.com/parisolab/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Twitter :&lt;/span&gt;&lt;a href=&quot;https://twitter.com/parisolab&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#009051;&quot;&gt;https://twitter.com/parisolab&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QPushButton" name="about">
-     <property name="text">
-      <string>OK</string>
      </property>
     </widget>
    </item>
