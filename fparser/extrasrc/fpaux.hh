@@ -853,12 +853,11 @@ namespace FUNCTIONPARSERTYPES
     {
         if(value.imag() == T()) return os << value.real();
         if(value.real() == T()) return os << value.imag() << 'i';
-        /*
         if(value.imag() < T())
             return os << '(' << value.real() << "-" << -value.imag() << "i)";
         else
             return os << '(' << value.real() << "+" << value.imag() << "i)";
-        */
+        /*
         if(value.imag() < T())
         {
             std::string str = '(' + value.real() +  "-" + (-value.imag()) + "i)";
@@ -869,7 +868,7 @@ namespace FUNCTIONPARSERTYPES
             std::string str = '(' + value.real() +  "+" + value.imag() + "i)";
             return os << str;
         }
-
+        */
     }
 
     /* Less-than or greater-than operators are not technically defined
