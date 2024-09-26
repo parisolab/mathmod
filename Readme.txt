@@ -14,5 +14,3 @@ Change-log for MathMod-12.0 (25/09/2024)
 3) Mandelbrot and Julia fractal functions support
 4) New scripts: "Noids", "k_Noids", "Riemann_Minimal_Surface", "MandelBulb", "MandelTemple", "JuliaFractal", "MandelbrotTorus", "MandelbrotIsoSpheres", "MandelbrotSphere", "Mandelbrot", "Spherical_Harmonics"
 5) Bug-fixes, code optimization and documentation update.
-
-   For a complete list of changes made during the course of development: https://github.com/parisolab/mathmod/milestone/12?closed=1
