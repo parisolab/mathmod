@@ -5,11 +5,14 @@ Download: https://sourceforge.net/projects/mathmod/
 FaceBook: https://www.facebook.com/parisolab/
 Twitter : https://twitter.com/parisolab
 
-
-1) MathMod support for Android and IOS platforms
+Change-log for MathMod-12.0 (25/09/2024)
+1) MathMod support for Android and IOS platforms (MathMod on Google's PlayStore and Apple's AppStore)
 2) GUI improvement to support small screen formats:
    1) Merged MathMod's two main windows into one
    2) Added touch gestures support
    3) Multi cores calculations optimization for embedded systems
 3) Mandelbrot and Julia fractal functions support
 4) New scripts: "Noids", "k_Noids", "Riemann_Minimal_Surface", "MandelBulb", "MandelTemple", "JuliaFractal", "MandelbrotTorus", "MandelbrotIsoSpheres", "MandelbrotSphere", "Mandelbrot", "Spherical_Harmonics"
+5) Bug-fixes, code optimization and documentation update.
+
+   For a complete list of changes made during the course of development: https://github.com/parisolab/mathmod/milestone/12?closed=1
