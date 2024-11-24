@@ -15,9 +15,6 @@
     "StartOptions": {
         "Model": "CloseIso_1"
     },
-    "StartOptions": {
-        "Model": "CloseIso_1"
-    },
     "ThreadsConfig": {
         "AutoDetect": true,
         "ThreadsNumber": 8,
