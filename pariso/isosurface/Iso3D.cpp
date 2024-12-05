@@ -2233,10 +2233,9 @@ Iso3D::~Iso3D()
 
 uint Iso3D::SetMiniMmeshStruct()
 {
-    uint I_mi, J_mi, IJK_mi, Index_mi, lnew_mi, iter_mi, nbpl_mi, iterpl_mi;
+    uint I_mi, J_mi, IJK_mi, Index_mi, iter_mi, nbpl_mi, iterpl_mi;
     uint maxgrscalemaxgr = masterthread->GridVal*masterthread->GridVal;
 
-    lnew_mi = 0;
     NbPolyMin = 0;
     /// Copy Index Polygons :
     for(uint i=0; i+1 < masterthread->XYZgrid; i++)
@@ -2255,26 +2254,20 @@ uint Iso3D::SetMiniMmeshStruct()
                 {
                     NbPolyMin += nbpl_mi;
                     IndexPolyTabMinVector.push_back(triTable_min[Index_mi][17]);
-                    lnew_mi++;
                     for(iter_mi = 0; iter_mi < triTable_min[Index_mi][17]; iter_mi++)
                         IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK_mi].Edge_Points[triTable_min[Index_mi][iter_mi]]  + NbVertexTmp);
-                    lnew_mi+=triTable_min[Index_mi][17];
                 }
                 else if( nbpl_mi == 2)
                 {
                     NbPolyMin += nbpl_mi;
                     /// First Poly:
                     IndexPolyTabMinVector.push_back(triTable_min[Index_mi][17]);
-                    lnew_mi++;
                     for(iter_mi = 0; iter_mi < triTable_min[Index_mi][17]; iter_mi++)
                         IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK_mi].Edge_Points[triTable_min[Index_mi][iter_mi]]  + NbVertexTmp);
-                    lnew_mi+=triTable_min[Index_mi][17];
                     /// Second Poly:
                     IndexPolyTabMinVector.push_back(triTable_min[Index_mi][18]);
-                    lnew_mi++;
                     for(iter_mi = triTable_min[Index_mi][17]; iter_mi < triTable_min[Index_mi][17]+triTable_min[Index_mi][18]; iter_mi++)
                         IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK_mi].Edge_Points[triTable_min[Index_mi][iter_mi]]  + NbVertexTmp);
-                    lnew_mi+=triTable_min[Index_mi][17]+triTable_min[Index_mi][18];
                 }
                 else if( nbpl_mi > 2)
                 {
@@ -2287,7 +2280,6 @@ uint Iso3D::SetMiniMmeshStruct()
                         IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK_mi].Edge_Points[triTable_min[Index_mi][iter_mi  ]]  + NbVertexTmp);
                         IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK_mi].Edge_Points[triTable_min[Index_mi][iter_mi+1]]  + NbVertexTmp);
                         IndexPolyTabMinVector.push_back(GridVoxelVarPt[IJK_mi].Edge_Points[triTable_min[Index_mi][iter_mi+2]]  + NbVertexTmp);
-                        lnew_mi += 4;
                         iter_mi +=3;
                     }
                 }
