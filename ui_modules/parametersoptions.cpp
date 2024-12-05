@@ -324,20 +324,17 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
                 filecollection = str;
         }
 
-
         #ifdef Q_OS_MACOS
             {
                 MACOS = true;
                 QString appDirPath = QApplication::applicationDirPath();
-                appDirPath.truncate(appDirPath.lastIndexOf("/"));
-                appDirPath = appDirPath.remove(appDirPath.size()-5, 5);
+                if (appDirPath.endsWith("/"))
+                    appDirPath.lastIndexOf("/");
+                appDirPath.truncate(appDirPath.lastIndexOf("/")+1);
                 filecollection   = appDirPath + filecollection;
                 fileconfig       = appDirPath + fileconfig;
             }
         #endif
-
-
-
 
         // Check if fileconfig is there and read it, if not, read from the integrated one and create a new copy in the indicated location (if possible)
         QFile mathmodfileconfig(fileconfig);
@@ -378,38 +375,7 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
                                   QFileDevice::ReadOwner | QFileDevice::WriteOwner);
         }
     }
-
-
-
-
-
-
-/*
-
-    #ifdef Q_OS_MACOS
-      {
-        MACOS = true;
-        QString appDirPath = QApplication::applicationDirPath();
-        appDirPath = appDirPath.remove(appDirPath.size()-5, 5);
-        filecollection   = appDirPath + "Resources/" + filecollection;
-        fileconfig       = appDirPath + "Resources/" + fileconfig;
-       }
-    #endif
-    QFile mathmodfileconfig(fileconfig);
-    if (!mathmodfileconfig.exists() && ((argc > 1) || MACOS))
-    {
-        QFile file3(":/mathmodconfig.js");
-        file3.copy(fileconfig);
-        QFile::setPermissions(fileconfig,
-                              QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    }
-
-    QFile fconf(fileconfig);
-    if (fconf.exists())
-        ReadJsonFile(fileconfig, JConfig);
-    else
-        ReadJsonFile(":/mathmodconfig.js", JConfig);
-*/
+    // Extract data from the config file:
     {
         if (JConfig["Localization"].isObject())
         {
@@ -535,37 +501,6 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             docpartialpath = tmp["DocPartialPath"].toString();
             docabsolutepath = tmp["DocAbsolutePath"].toString();
             version = tmp["VersionNumber"].toString();
-            /*
-            if((str = tmp["FileCollection"].toString())!= "")
-                filecollection = str;
-            if((str = tmp["FileConfig"].toString())!= "")
-                fileconfig = str;
-*/
         }
     }
-    /*
-    QFile mathmodfile(filecollection);
-    if (!mathmodfile.exists() && ((argc > 1) || MACOS))
-    {
-        QFile file2(":/mathmodcollection.js");
-        QString str;
-        file2.open(QIODevice::ReadOnly | QIODevice::Text);
-        QTextStream stream(&file2);
-        str.append(stream.readAll());
-        str.replace("DOTSYMBOL", dotsymbol.toStdString().c_str());
-        QFile file(filecollection);
-        if (!file.open(QIODevice::WriteOnly))
-        {
-            std::cerr << "Cannot open file for writing: "
-                      << qPrintable(file.errorString()) << std::endl;
-            return;
-        }
-        QTextStream out(&file);
-        out << str <<Qt::endl;
-        file.close();
-        file.copy(filecollection);
-        QFile::setPermissions(filecollection,
-                              QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    }
-*/
 }
