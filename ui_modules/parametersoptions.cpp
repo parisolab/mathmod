@@ -312,7 +312,7 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
     }
     else
     {
-        // read the path to MathMod's config file from MathMod's integrated config file
+        // Read the path to MathMod's config file from MathMod's integrated config file
         ReadJsonFile(":/mathmodconfig.js", JConfig);
         if (JConfig["ReleaseInfos"].isObject())
         {
@@ -323,7 +323,7 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             if((str = tmp["FileCollection"].toString())!= "")
                 filecollection = str;
         }
-
+        // Check if fileconfig is there and read it, if not, read from the integrated one and create a new copy in the indicated location
         QFile mathmodfileconfig(fileconfig);
         if (!mathmodfileconfig.exists())
         {
@@ -337,6 +337,7 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
         {
             ReadJsonFile(fileconfig, JConfig);
         }
+
 
     }
 
