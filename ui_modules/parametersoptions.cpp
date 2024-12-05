@@ -289,33 +289,30 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
         QFile mathmodfilecollection(filecollection);
         if (!mathmodfileconfig.exists())
         {
-            // First, we will try to find mathmodcollection.js reference within fileconfig file
-            if (JConfig["ReleaseInfos"].isObject())
+            // Make a new copy from MathMod's integrated collection file:
+            QFile file2(":/mathmodcollection.js");
+            QString str;
+            file2.open(QIODevice::ReadOnly | QIODevice::Text);
+            QTextStream stream(&file2);
+            str.append(stream.readAll());
+            str.replace("DOTSYMBOL", dotsymbol.toStdString().c_str());
+            QFile file(filecollection);
+            if (!file.open(QIODevice::WriteOnly))
             {
-                QString str, filecollection2;
-                QJsonObject tmp = JConfig["ReleaseInfos"].toObject();
-                if((str = tmp["FileCollection"].toString())!= "")
-                    filecollection2 = str;
-                if(filecollection2 != filecollection)
-                {
-                }
+                std::cerr << "Cannot open file for writing: "
+                          << qPrintable(file.errorString()) << std::endl;
             }
-            QFile file(":/mathmodcollection.js");
+            QTextStream out(&file);
+            out << str <<Qt::endl;
+            file.close();
             file.copy(filecollection);
             QFile::setPermissions(filecollection,
                                   QFileDevice::ReadOwner | QFileDevice::WriteOwner);
         }
-
-
-
-
-
-
-
-
     }
     else
     {
+        // read the path to MathMod's config file from MathMod's integrated config file
         ReadJsonFile(":/mathmodconfig.js", JConfig);
         if (JConfig["ReleaseInfos"].isObject())
         {
@@ -327,7 +324,19 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
                 filecollection = str;
         }
 
-
+        QFile mathmodfileconfig(fileconfig);
+        if (!mathmodfileconfig.exists())
+        {
+            ReadJsonFile(":/mathmodconfig.js", JConfig);
+            QFile file(":/mathmodconfig.js");
+            file.copy(fileconfig);
+            QFile::setPermissions(fileconfig,
+                                  QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+        }
+        else
+        {
+            ReadJsonFile(fileconfig, JConfig);
+        }
 
     }
 
