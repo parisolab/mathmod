@@ -41,8 +41,8 @@ public:
     Parametersoptions();
     QString dotsymbol = ".";
     QString model = "CloseIso_2";
-    QString filecollection = "mathmodcollection.js";
-    QString fileconfig = "mathmodconfig.js";
+    QString JsCollectionFile = "mathmodcollection.js";
+    QString JsConfigFile = "mathmodconfig.js";
     QString docpartialpath = "/documentation/index.html";
     QString docabsolutepath = "";
     QString version = "12.1";

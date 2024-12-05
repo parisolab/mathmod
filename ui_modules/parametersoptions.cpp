@@ -120,9 +120,9 @@ ListeModelTexture
 Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
                                         jcollection &pariso, int argc)
 {
-    QFile fconllect(filecollection);
+    QFile fconllect(JsCollectionFile);
     if (fconllect.exists() && ((argc > 1) || MACOS))
-        ReadJsonFile(filecollection, Collection);
+        ReadJsonFile(JsCollectionFile, Collection);
     else
         ReadJsonFile(":/mathmodcollection.js", Collection);
 
@@ -269,24 +269,24 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
         if (!argv1.endsWith("/"))
             argv1 += "/";
 
-        fileconfig = argv1 + fileconfig;
-        filecollection = argv1 + filecollection;
+        JsConfigFile = argv1 + JsConfigFile;
+        JsCollectionFile = argv1 + JsCollectionFile;
 
-        QFile mathmodfileconfig(fileconfig);
+        QFile mathmodfileconfig(JsConfigFile);
         if (!mathmodfileconfig.exists())
         {
             ReadJsonFile(":/mathmodconfig.js", JConfig);
             QFile file(":/mathmodconfig.js");
-            file.copy(fileconfig);
-            QFile::setPermissions(fileconfig,
+            file.copy(JsConfigFile);
+            QFile::setPermissions(JsConfigFile,
                                   QFileDevice::ReadOwner | QFileDevice::WriteOwner);
         }
         else
         {
-            ReadJsonFile(fileconfig, JConfig);
+            ReadJsonFile(JsConfigFile, JConfig);
         }
 
-        QFile mathmodfilecollection(filecollection);
+        QFile mathmodfilecollection(JsCollectionFile);
         if (!mathmodfileconfig.exists())
         {
             // Make a new copy from MathMod's integrated collection file:
@@ -296,7 +296,7 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             QTextStream stream(&file2);
             str.append(stream.readAll());
             str.replace("DOTSYMBOL", dotsymbol.toStdString().c_str());
-            QFile file(filecollection);
+            QFile file(JsCollectionFile);
             if (!file.open(QIODevice::WriteOnly))
             {
                 std::cerr << "Cannot open file for writing: "
@@ -305,8 +305,8 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             QTextStream out(&file);
             out << str <<Qt::endl;
             file.close();
-            file.copy(filecollection);
-            QFile::setPermissions(filecollection,
+            file.copy(JsCollectionFile);
+            QFile::setPermissions(JsCollectionFile,
                                   QFileDevice::ReadOwner | QFileDevice::WriteOwner);
         }
     }
@@ -319,9 +319,9 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             QString str;
             QJsonObject tmp = JConfig["ReleaseInfos"].toObject();
             if((str = tmp["FileConfig"].toString())!= "")
-                fileconfig = str;
+                JsConfigFile = str;
             if((str = tmp["FileCollection"].toString())!= "")
-                filecollection = str;
+                JsCollectionFile = str;
         }
 
         #ifdef Q_OS_MACOS
@@ -331,28 +331,28 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
                 if (appDirPath.endsWith("/"))
                     appDirPath.lastIndexOf("/");
                 appDirPath.truncate(appDirPath.lastIndexOf("/")+1);
-                filecollection   = appDirPath + filecollection;
-                fileconfig       = appDirPath + fileconfig;
+                JsCollectionFile   = appDirPath + JsCollectionFile;
+                JsConfigFile       = appDirPath + JsConfigFile;
             }
         #endif
 
-        // Check if fileconfig is there and read it, if not, read from the integrated one and create a new copy in the indicated location (if possible)
-        QFile mathmodfileconfig(fileconfig);
+        // Check if JsConfigFile is there and read it, if not, read from the integrated one and create a new copy in the indicated location (if possible)
+        QFile mathmodfileconfig(JsConfigFile);
         if (!mathmodfileconfig.exists())
         {
             ReadJsonFile(":/mathmodconfig.js", JConfig);
             QFile file(":/mathmodconfig.js");
-            file.copy(fileconfig);
-            QFile::setPermissions(fileconfig,
+            file.copy(JsConfigFile);
+            QFile::setPermissions(JsConfigFile,
                                   QFileDevice::ReadOwner | QFileDevice::WriteOwner);
         }
         else
         {
-            ReadJsonFile(fileconfig, JConfig);
+            ReadJsonFile(JsConfigFile, JConfig);
         }
 
-        // Check if filecollection if not, read from the integrated one and create a new copy in the indicated location (if possible)
-        QFile mathmodfile(filecollection);
+        // Check if JsCollectionFile exist if not, read from the integrated one and create a new copy in the indicated location (if possible)
+        QFile mathmodfile(JsCollectionFile);
         if (!mathmodfile.exists())
         {
             QFile file2(":/mathmodcollection.js");
@@ -361,7 +361,7 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             QTextStream stream(&file2);
             str.append(stream.readAll());
             str.replace("DOTSYMBOL", dotsymbol.toStdString().c_str());
-            QFile file(filecollection);
+            QFile file(JsCollectionFile);
             if (!file.open(QIODevice::WriteOnly))
             {
                 std::cerr << "Cannot open file for writing: "
@@ -370,8 +370,8 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             QTextStream out(&file);
             out << str <<Qt::endl;
             file.close();
-            file.copy(filecollection);
-            QFile::setPermissions(filecollection,
+            file.copy(JsCollectionFile);
+            QFile::setPermissions(JsCollectionFile,
                                   QFileDevice::ReadOwner | QFileDevice::WriteOwner);
         }
     }
