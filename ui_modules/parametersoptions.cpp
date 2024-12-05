@@ -268,21 +268,85 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
         argv1 = QString(argv[1]);
         if (!argv1.endsWith("/"))
             argv1 += "/";
-        filecollection = argv1 + filecollection;
+
         fileconfig = argv1 + fileconfig;
-    }
-    /*
-    #ifdef Q_OS_MACOS
+        filecollection = argv1 + filecollection;
+
+        QFile mathmodfileconfig(fileconfig);
+        if (!mathmodfileconfig.exists())
+        {
+            ReadJsonFile(":/mathmodconfig.js", JConfig);
+            QFile file(":/mathmodconfig.js");
+            file.copy(fileconfig);
+            QFile::setPermissions(fileconfig,
+                                  QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+        }
         else
+        {
+            ReadJsonFile(fileconfig, JConfig);
+        }
+
+        QFile mathmodfilecollection(filecollection);
+        if (!mathmodfileconfig.exists())
+        {
+            // First, we will try to find mathmodcollection.js reference within fileconfig file
+            if (JConfig["ReleaseInfos"].isObject())
+            {
+                QString str, filecollection2;
+                QJsonObject tmp = JConfig["ReleaseInfos"].toObject();
+                if((str = tmp["FileCollection"].toString())!= "")
+                    filecollection2 = str;
+                if(filecollection2 != filecollection)
+                {
+                }
+            }
+            QFile file(":/mathmodcollection.js");
+            file.copy(filecollection);
+            QFile::setPermissions(filecollection,
+                                  QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+        }
+
+
+
+
+
+
+
+
+    }
+    else
+    {
+        ReadJsonFile(":/mathmodconfig.js", JConfig);
+        if (JConfig["ReleaseInfos"].isObject())
+        {
+            QString str;
+            QJsonObject tmp = JConfig["ReleaseInfos"].toObject();
+            if((str = tmp["FileConfig"].toString())!= "")
+                fileconfig = str;
+            if((str = tmp["FileCollection"].toString())!= "")
+                filecollection = str;
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+    #ifdef Q_OS_MACOS
       {
-            MACOS = true;
-            QString appDirPath = QApplication::applicationDirPath();
-            appDirPath = appDirPath.remove(fileconfig2.size()-5, 5);
-            filecollection   = appDirPath + "Resources/" + filecollection;
-            fileconfig       = appDirPath + "Resources/" + fileconfig;
-         }
+        MACOS = true;
+        QString appDirPath = QApplication::applicationDirPath();
+        appDirPath = appDirPath.remove(appDirPath.size()-5, 5);
+        filecollection   = appDirPath + "Resources/" + filecollection;
+        fileconfig       = appDirPath + "Resources/" + fileconfig;
+       }
     #endif
-    */
     QFile mathmodfileconfig(fileconfig);
     if (!mathmodfileconfig.exists() && ((argc > 1) || MACOS))
     {
@@ -419,13 +483,17 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
 
         if (JConfig["ReleaseInfos"].isObject())
         {
+            QString str;
             QJsonObject tmp = JConfig["ReleaseInfos"].toObject();
             docpartialpath = tmp["DocPartialPath"].toString();
             docabsolutepath = tmp["DocAbsolutePath"].toString();
+            if((str = tmp["FileCollection"].toString())!= "")
+                filecollection = str;
+            if((str = tmp["FileConfig"].toString())!= "")
+                fileconfig = str;
             version = tmp["VersionNumber"].toString();
         }
     }
-    fullpath = fileconfig;
     QFile mathmodfile(filecollection);
     if (!mathmodfile.exists() && ((argc > 1) || MACOS))
     {
