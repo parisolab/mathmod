@@ -4188,12 +4188,12 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.linecolumn_3->blockSignals(false);
 }
 
-void DrawingOptions::UpdateGui(int argc)
+void DrawingOptions::UpdateGui()
 {
 
     UpdateGuiMaxgrid();
     ListeModelTexture LstModelTexture = (Parameters->LoadCollectionModels(
-            JSONMathModels, MathmodRef->collection, argc));
+            JSONMathModels, MathmodRef->collection));
     // Load the script containing isosurface and parametric formulas:
     ui.choice->insertItems(0, LstModelTexture.listeModels);
     ui.comboBoxTexture->insertItems(0, LstModelTexture.listeTextures);
@@ -5309,8 +5309,12 @@ void DrawingOptions::on_ApplypushButton_3_clicked()
 void DrawingOptions::on_actionDocumentation_triggered()
 {
     QString link = "";
+    QString appDirPath = QApplication::applicationDirPath();
+    #ifdef Q_OS_MACOS
+        appDirPath = appDirPath.remove(appDirPath.size()-5, 5);
+    #endif
     link  = ((Parameters->docabsolutepath) == "" ?
-    QApplication::applicationDirPath() + Parameters->docpartialpath :
+    (appDirPath + Parameters->docpartialpath) :
     Parameters->docabsolutepath);
     link.contains("http") ? QDesktopServices::openUrl(link):
                             QDesktopServices::openUrl(QUrl(QUrl::fromLocalFile(link)));
