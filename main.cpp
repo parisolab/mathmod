@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     drawingopt.ui.openGLWidget->Ugrid = drawingopt.ui.openGLWidget->Vgrid = uint(InitParGrid);
     // GUI update:
     drawingopt.show();
-    drawingopt.UpdateGui(argc);
+    drawingopt.UpdateGui();
     if (drawingopt.IsolistItemRef != nullptr)
         drawingopt.ui.ObjectClasse->expandItem(drawingopt.IsolistItemRef);
     QObject::connect(drawingopt.MathmodRef->IsoObjet->masterthread,

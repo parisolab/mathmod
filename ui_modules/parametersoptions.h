@@ -41,8 +41,8 @@ public:
     Parametersoptions();
     QString dotsymbol = ".";
     QString model = "CloseIso_2";
-    QString JsCollectionFile = "mathmodcollection.js";
-    QString JsConfigFile = "mathmodconfig.js";
+    QString JsCollectionFile = "";
+    QString JsConfigFile = "";
     QString docpartialpath = "/documentation/index.html";
     QString docabsolutepath = "";
     QString version = "12.1";
@@ -70,7 +70,7 @@ public slots:
     void maxisogri_valueChanged(int);
     void maxpargri_valueChanged(int);
     void LoadConfig(int argc, char *argv[]);
-    ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &, int);
+    ListeModelTexture LoadCollectionModels(QJsonObject &, jcollection &);
     bool isFloat(std::string);
 };
 

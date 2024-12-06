@@ -118,11 +118,16 @@ void Parametersoptions::maxpargri_valueChanged(int value)
 
 ListeModelTexture
 Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
-                                        jcollection &pariso, int argc)
+                                        jcollection &pariso)
 {
-    QFile fconllect(JsCollectionFile);
-    if (fconllect.exists())
-        ReadJsonFile(JsCollectionFile, Collection);
+    if(JsCollectionFile !="")
+    {
+        QFile fconllect(JsCollectionFile);
+        if (fconllect.exists())
+            ReadJsonFile(JsCollectionFile, Collection);
+        else
+            ReadJsonFile(":/mathmodcollection.js", Collection);
+        }
     else
         ReadJsonFile(":/mathmodcollection.js", Collection);
 
@@ -357,7 +362,7 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
         }
         else
         {
-            ReadJsonFile(JsConfigFile, JConfig);
+            ReadJsonFile(":/mathmodconfig.js", JConfig);
         }
 
         // Check if JsCollectionFile exist if not, read from the integrated one and create a new copy in the indicated location (if possible)
