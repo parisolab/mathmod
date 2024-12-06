@@ -121,7 +121,7 @@ Parametersoptions::LoadCollectionModels(QJsonObject &Jcollection,
                                         jcollection &pariso, int argc)
 {
     QFile fconllect(JsCollectionFile);
-    if (fconllect.exists() && ((argc > 1) || MACOS))
+    if (fconllect.exists())
         ReadJsonFile(JsCollectionFile, Collection);
     else
         ReadJsonFile(":/mathmodcollection.js", Collection);
