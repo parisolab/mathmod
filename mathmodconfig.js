@@ -2,8 +2,12 @@
     "ReleaseInfos": {
         "VersionNumber": "1200",
         "ReleaseDate": "211220",
-        "DocPartialPath": "/documentation/index.html",
-        "DocAbsolutePath": "https://github.com/parisolab/mathmod/wiki/documentation"
+        "DocPartialPath": "Resources/documentation/index.html",
+        "DocAbsolutePath": "",
+        "_FileConfig": "Resources/mathmodconfig.js",
+        "_FileCollection": "Resources/mathmodcollection.js",
+        "FileConfig": "",
+        "FileCollection": "Resources/mathmodcollection.js"
     },
     "Parameters": {
         "IsoMaxGrid": 500,
