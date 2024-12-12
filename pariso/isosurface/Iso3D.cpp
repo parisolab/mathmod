@@ -27,7 +27,7 @@ static double *Results;
 static uint NbVertexTmp = 0;
 static std::vector<float> NormOriginaltmpVector;
 uint NbTriangleIsoSurface,NbPointIsoMap;
-uint OrignbX, OrignbY, OrignbZ;
+uint OrignbX=4, OrignbY=4, OrignbZ=4; // OrignbX, OrignbY and OrignbZ should be at least 1
 uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 std::vector<float> NormVertexTabVector;
 std::vector<uint>  IndexPolyTabMinVector;
@@ -651,11 +651,14 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint id=0;
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     uint nbstack=nbX*nbY*nbZ;
-    uint Iindice=0, Jindice=0, Kindice=0, nbvar=8;
+    uint Iindice=0, Jindice=0, Kindice=0 ;
+    uint nbvar=8;
     int PreviousSignal=0;
-    double vals[nbvar*nbstack];
-    double Res[nbstack];
+    std::vector<double> vals;
+    std::vector<double> Res;
 
+    vals.resize(nbvar*nbstack);
+    Res.resize(nbstack);
     vals[3]    = stepMorph;
     uint taille=0;
     iStart = 0;
@@ -718,7 +721,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     vals[l*nbvar+6]=Kindice+(l%nbZ);
                 }
                 IJK_jp = J_jp+Kindice;
-                double res = implicitFunctionParser[IsoIndex].Eval2(vals, nbvar, Res, nbstack);
+                double res = implicitFunctionParser[IsoIndex].Eval2(&(vals[0]), nbvar, &(Res[0]), nbstack);
                 if( abs(res - IF_FUNCT_ERROR) == 0.0)
                 {
                     for(uint l=0; l<nbstack; l++)
@@ -729,7 +732,13 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     StopCalculations = true;
                 }
                 if(StopCalculations)
+                {
+                    vals.clear();
+                    vals.shrink_to_fit();
+                    Res.clear();
+                    Res.shrink_to_fit();
                     return;
+                }
                 uint p=0;
                 uint sect=0;
                 for(uint ii=0; ii<nbX; ii++)
@@ -756,6 +765,10 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             }
         }
     }
+    vals.clear();
+    vals.shrink_to_fit();
+    Res.clear();
+    Res.shrink_to_fit();
 }
 void Iso3D::ConstructIsoNormale(uint idx)
 {
