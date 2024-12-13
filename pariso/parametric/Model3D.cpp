@@ -1959,8 +1959,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint nbstack=nbU*nbV;
     uint Iindice=0, Jindice=0;
     //std::complex<double> valcomplex[4*nbstack];
-    std::vector<std::complex<double>> valcomplex;
-    std::vector<double>  ResX, ResY, ResZ, ResW, vals;
     uint taille=0;
     std::complex<double> pc;
     double res;

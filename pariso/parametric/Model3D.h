@@ -54,6 +54,8 @@ public :
     int param4D;
     bool param3d_C, param4d_C;
     uint CurrentIndex;
+    std::vector<std::complex<double>> valcomplex;
+    std::vector<double>  ResX, ResY, ResZ, ResW, vals;
 
 public :
     void ParCompute(uint component =0, uint idx=0);
