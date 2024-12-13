@@ -18,7 +18,7 @@
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
 extern int Threads[3];
-extern int CalculFactor[3];
+extern int CalculFactor[6];
 
 extern int InitParGrid;
 extern int InitIsoGrid;

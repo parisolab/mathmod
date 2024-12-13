@@ -100,15 +100,11 @@ ParMasterThread::ParMasterThread()
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
 }
-Par3D::Par3D(uint nbThreads, uint nbGrid)
-{
-    initialiser_parametres(nbThreads, nbGrid);
-}
 void ParWorkerThread::run()
 {
     ParCompute(CurrentComponent, CurrentIndex);
 }
-void Par3D::initialiser_parametres(uint nbThreads, uint nbGrid)
+Par3D::Par3D(uint nbThreads, uint nbGrid)
 {
     Ugrid = nbGrid;
     Vgrid = nbGrid;

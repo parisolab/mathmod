@@ -118,7 +118,6 @@ public:
     void project_4D_to_3D(uint idx=0);
     void Invert_boite_englobante4D(uint idx=0);
     void boite_englobante4D(uint index=0);
-    void initialiser_parametres(uint, uint);
     void initialiser_LineColumn(uint, uint);
     void calcul_Norm(uint i=0);
     void make_PolyIndexTri(uint);
