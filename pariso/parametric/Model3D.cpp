@@ -1958,11 +1958,20 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint nbU=OrignbU, nbV=OrignbV;
     uint nbstack=nbU*nbV;
     uint Iindice=0, Jindice=0;
-    std::complex<double> valcomplex[4*nbstack];
-    double ResX[nbstack], ResY[nbstack], ResZ[nbstack], ResW[nbstack], vals[4*nbstack];
+    //std::complex<double> valcomplex[4*nbstack];
+    std::vector<std::complex<double>> valcomplex;
+    std::vector<double>  ResX, ResY, ResZ, ResW, vals;
     uint taille=0;
     std::complex<double> pc;
     double res;
+
+    ResX.resize(nbstack);
+    ResY.resize(nbstack);
+    ResZ.resize(nbstack);
+    ResW.resize(nbstack);
+    vals.resize(4*nbstack);
+    valcomplex.resize(4*nbstack);
+
     if(activeMorph == 1)
         stepMorph += pace;
     iStart = 0;
@@ -2023,10 +2032,24 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                 vals[l*3+1]= double(Jindice+(l%nbV))*dif_v[cmp]/double(Vgrid-1) + v_inf[cmp];
             }
             if(StopCalculations)
+            {
+                vals.clear();
+                vals.shrink_to_fit();
+                ResX.clear();
+                ResX.shrink_to_fit();
+                ResY.clear();
+                ResY.shrink_to_fit();
+                ResZ.clear();
+                ResZ.shrink_to_fit();
+                ResW.clear();
+                ResW.shrink_to_fit();
+                valcomplex.clear();
+                valcomplex.shrink_to_fit();
                 return;
+            }
             if(!param3d_C && !param4d_C)
             {
-                res = myParserX[cmp].Eval2(vals, 3, ResX, nbstack);
+                res = myParserX[cmp].Eval2(&(vals[0]), 3, &(ResX[0]), nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
@@ -2037,7 +2060,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     for(uint l=0; l<nbstack; l++)
                         ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
                 }
-                res = myParserY[cmp].Eval2(vals, 3, ResY, nbstack);
+                res = myParserY[cmp].Eval2(&(vals[0]), 3, &(ResY[0]), nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
@@ -2048,7 +2071,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     for(uint l=0; l<nbstack; l++)
                         ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
                 }
-                res = myParserZ[cmp].Eval2(vals, 3, ResZ, nbstack);
+                res = myParserZ[cmp].Eval2(&(vals[0]), 3, &(ResZ[0]), nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
@@ -2061,7 +2084,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                 }
                 if(param4D == 1)
                 {
-                    res = myParserW[cmp].Eval2(vals, 3, ResW, nbstack);
+                    res = myParserW[cmp].Eval2(&(vals[0]), 3, &(ResW[0]), nbstack);
                     if(int(res) == VAR_OVERFLOW)
                     {
                         StopCalculations=true;
@@ -2131,6 +2154,18 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                 }
         }
     }
+    vals.clear();
+    vals.shrink_to_fit();
+    ResX.clear();
+    ResX.shrink_to_fit();
+    ResY.clear();
+    ResY.shrink_to_fit();
+    ResZ.clear();
+    ResZ.shrink_to_fit();
+    ResW.clear();
+    ResW.shrink_to_fit();
+    valcomplex.clear();
+    valcomplex.shrink_to_fit();
 }
 
 void Par3D::emitErrorSignal()
