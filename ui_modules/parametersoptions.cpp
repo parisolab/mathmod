@@ -24,7 +24,7 @@
 #include <sstream>
 #include <string>
 int Threads[3]={8,1,64};
-int CalculFactor[3]={4,4,4};
+int CalculFactor[6]={4,4,4,8,8,8};
 int InitParGrid=50;
 int InitIsoGrid=40;
 static bool MACOS = false;
@@ -496,9 +496,12 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
         if (JConfig["CalculFactorConfig"].isObject())
         {
             QJsonObject tmp = JConfig["CalculFactorConfig"].toObject();
-            CalculFactor[0] = tmp["FactX"].toInt();
-            CalculFactor[1] = tmp["FactY"].toInt();
-            CalculFactor[2] = tmp["FactZ"].toInt();
+            CalculFactor[0] = tmp["IsoFactX"].toInt();
+            CalculFactor[1] = tmp["IsoFactY"].toInt();
+            CalculFactor[2] = tmp["IsoFactZ"].toInt();
+            CalculFactor[3] = tmp["ParFactU"].toInt();
+            CalculFactor[4] = tmp["ParFactV"].toInt();
+            CalculFactor[5] = tmp["ParFactW"].toInt();
         }
 
         if (JConfig["ThreadsConfig"].isObject())

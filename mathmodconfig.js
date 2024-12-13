@@ -13,7 +13,7 @@
     },
     "Parameters": {
         "IsoMaxGrid": 500,
-        "InitIsoGrid": 41,
+        "InitIsoGrid": 64,
         "ParMaxGrid": 5000,
         "InitParGrid": 64,
         "ScriptEditorFontSize": 18
@@ -44,9 +44,12 @@
         "DotSymbol": "."
     },
     "CalculFactorConfig": {
-        "FactX": 4,
-        "FactY": 4,
-        "FactZ": 4
+        "IsoFactX": 4,
+        "IsoFactY": 4,
+        "IsoFactZ": 4,
+        "ParFactU": 8,
+        "ParFactV": 8,
+        "ParFactW": 8
     },
     "OpenGlConfig": {
         "GL_SPECULAR": [50, 50, 50, 100],

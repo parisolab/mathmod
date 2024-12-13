@@ -1958,7 +1958,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint nbU=OrignbU, nbV=OrignbV;
     uint nbstack=nbU*nbV;
     uint Iindice=0, Jindice=0;
-    //std::complex<double> valcomplex[4*nbstack];
     uint taille=0;
     std::complex<double> pc;
     double res;
@@ -2132,7 +2131,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             id+=nbstack;
             if(MyIndex == 0 && activeMorph != 1)
             {
-                signalVal = int((id*100)/Totalpoints);
+                Totalpoints !=0 ? (signalVal = int((id*100)/Totalpoints)) : (signalVal = 100);
                 if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
                 {
                     PreviousSignal = signalVal;
