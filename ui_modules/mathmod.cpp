@@ -182,7 +182,7 @@ int MathMod::memoryallocation(uint nbthreads, uint initparGrid, uint initisoGrid
 {
     try
     {
-        IsoObjet = new Iso3D(nbthreads, initisoGrid, pt[0], pt[1], pt[2]);
+        IsoObjet = new Iso3D(nbthreads, initisoGrid, pt);
         ParObjet = new Par3D(nbthreads, initparGrid, pt);
         return 1;
     }

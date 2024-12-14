@@ -56,9 +56,6 @@ struct ImplicitStructure
     std::string cnd;
 };
 
-extern uint OrignbX, OrignbY, OrignbZ;
-extern uint Stack_Factor;
-
 struct Voxel
 {
     uint Edge_Points[12]; // reference to the Edge Points

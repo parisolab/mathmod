@@ -2234,9 +2234,10 @@ void DrawingOptions::LoadNewFileModels(bool upd)
 void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
 {
     int current = 0, currentfunction = 0, separator = 0;
-    QString name, line, IsoFct, Xfct, Yfct, Zfct, xlimit, ylimit, zlimit, ulimit,
+    QString
+            name, line, IsoFct, Xfct, Yfct, Zfct, xlimit, ylimit, zlimit, ulimit,
             vlimit, xmin, xmax, ymin, ymax, zmin, zmax, umin, umax, vmin, vmax,
-            condition, Au, Bu, Cu, Duv, Euv, Fuv, comments, fctcomts;
+            condition, Au, Bu, Cu, Duv, Euv, Fuv, comments;
     int EquationsNumber = 0;
     QString JsonString = "";
     int FctType = -1;

@@ -56,10 +56,13 @@ public :
     bool AllComponentTraited;
     uint GridVal;
     std::vector<double> xLocal2, yLocal2, zLocal2;
+    std::vector<double> vals, Res;
+    uint OrignbX, OrignbY, OrignbZ, StackFactor;
 public :
     void IsoCompute(uint);
     void VoxelEvaluation(uint);
     void AllocateParsersForWorkerThread(uint,uint);
+    void AllocateStackFactor(int *);
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
     IsoWorkerThread();
@@ -104,11 +107,7 @@ public :
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
 public :
-    Iso3D(uint nbThreads=8,
-          uint nbGrid=40,
-          uint factX=4,
-          uint factY=4,
-          uint factZ=4);
+    Iso3D(uint, uint, int *);
     ~Iso3D() override;
     inline void SignatureComputation();
     inline uint ConstructIsoSurface();

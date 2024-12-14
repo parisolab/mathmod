@@ -27,8 +27,6 @@ static double *Results;
 static uint NbVertexTmp = 0;
 static std::vector<float> NormOriginaltmpVector;
 uint NbTriangleIsoSurface,NbPointIsoMap;
-uint OrignbX=4, OrignbY=4, OrignbZ=4; // OrignbX, OrignbY and OrignbZ should be at least 1
-uint Stack_Factor=OrignbX*OrignbY*OrignbZ;
 std::vector<float> NormVertexTabVector;
 std::vector<uint>  IndexPolyTabMinVector;
 std::vector<uint>  IndexPolyTabMinVector2;
@@ -162,6 +160,8 @@ IsoMasterThread::~IsoMasterThread()
     VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
+    vals.clear();
+    Res.clear();
 }
 IsoWorkerThread::~IsoWorkerThread()
 {
@@ -282,7 +282,7 @@ ErrorMessage  Iso3D::parse_expression2()
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor, nbvariables);
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, nbvariables);
         }
     }
     //Add defined constantes:
@@ -348,18 +348,13 @@ ErrorMessage  Iso3D::parse_expression2()
 }
 Iso3D::Iso3D( uint nbThreads,
               uint nbGrid,
-              uint factX,
-              uint factY,
-              uint factZ)
+              int *pt)
 {
-    OrignbX= factX;
-    OrignbY= factY;
-    OrignbZ=factZ;
-    Stack_Factor = factX*factY*factZ;
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     WorkerThreadsNumber = ThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
+    masterthread->AllocateStackFactor(pt);
     masterthread->IsoMasterTable();
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
     masterthread->XYZgrid = nbGrid;
@@ -372,6 +367,7 @@ Iso3D::Iso3D( uint nbThreads,
         workerthreads[nbthreads].GridVal = nbGrid;
         workerthreads[nbthreads].MyIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+        workerthreads[nbthreads].AllocateStackFactor(pt);
     }
 }
 uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
@@ -643,6 +639,15 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
             workerthreads[nbthreads].zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k];
     }
 }
+void IsoWorkerThread::AllocateStackFactor(int *pt)
+{
+    OrignbX=uint(pt[0]);
+    OrignbY=uint(pt[1]);
+    OrignbZ=uint(pt[2]);
+    StackFactor=OrignbX*OrignbY*OrignbZ;
+    vals.resize(StackFactor*StackFactor);
+    Res.resize(StackFactor);
+}
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     uint maxgrscalemaxgr = GridVal*GridVal;
@@ -650,15 +655,12 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint I_jp, J_jp, IJK_jp;
     uint id=0;
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
-    uint nbstack=nbX*nbY*nbZ;
+    uint nbstack=StackFactor;
     uint Iindice=0, Jindice=0, Kindice=0 ;
     uint nbvar=8;
     int PreviousSignal=0;
-    std::vector<double> vals;
-    std::vector<double> Res;
 
-    vals.resize(nbvar*nbstack);
-    Res.resize(nbstack);
+
     vals[3]    = stepMorph;
     uint taille=0;
     iStart = 0;
@@ -679,7 +681,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
     uint Totalpoints=(iFinish-iStart)*limitY*limitZ;
-    implicitFunctionParser[IsoIndex].AllocateStackMemory(Stack_Factor, nbvariables);
+    implicitFunctionParser[IsoIndex].AllocateStackMemory(StackFactor, nbvariables);
     for(uint i=iStart; i<iFinish; i+=nbX )
     {
         Iindice = i;
@@ -733,10 +735,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 }
                 if(StopCalculations)
                 {
-                    vals.clear();
-                    vals.shrink_to_fit();
-                    Res.clear();
-                    Res.shrink_to_fit();
                     return;
                 }
                 uint p=0;
@@ -765,10 +763,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             }
         }
     }
-    vals.clear();
-    vals.shrink_to_fit();
-    Res.clear();
-    Res.shrink_to_fit();
 }
 void Iso3D::ConstructIsoNormale(uint idx)
 {
@@ -900,7 +894,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                 stdError.strError = Functs[i];
                 return stdError;
             }
-            Fct[i].AllocateStackMemory(Stack_Factor, nbvariables);
+            Fct[i].AllocateStackMemory(StackFactor, nbvariables);
         }
     }
     else

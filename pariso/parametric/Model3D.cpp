@@ -1451,11 +1451,13 @@ void ParMasterThread::HowManyParamSurface(std::string ParamFct, int type)
 void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
 {
     uint Iprime, Jprime,cmpId=0, K=0;
-    double tmp, ValCol[masterthread->VRgbtSize], val[12];
+    double tmp, val[12];
     std::complex<double> val_C[13];
+    std::vector<double> ValCol;
     val[11] = masterthread->stepMorph;
     val[0] = val[1] = val[2] = 0.0;
 
+    ValCol.resize(masterthread->VRgbtSize);
     if(comp->ThereisRGBA[index] == true &&  comp->NoiseParam[comp->ParisoCurrentComponentIndex].NoiseType == 0)
     {
         uint idx=0;
@@ -1616,6 +1618,8 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             }
         }
     }
+    ValCol.clear();
+    ValCol.shrink_to_fit();
 }
 
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
