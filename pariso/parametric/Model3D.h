@@ -56,10 +56,11 @@ public :
     uint CurrentIndex;
     std::vector<std::complex<double>> valcomplex;
     std::vector<double>  ResX, ResY, ResZ, ResW, vals;
-
+    uint OrignbU, OrignbV;
 public :
     void ParCompute(uint component =0, uint idx=0);
     void AllocateParsersForWorkerThread(uint, uint);
+    void AllocateStackFactor(int *);
     void DeleteWorkerParsers();
     void run() Q_DECL_OVERRIDE;
     ParWorkerThread();
@@ -110,7 +111,7 @@ public:
     double tetaxy, tetaxz, tetayz, tetaxw, tetayw, tetazw;
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
 public:
-    Par3D(uint nbThreads, uint nbGrid);
+    Par3D(uint nbThreads, uint nbGrid, int *);
     ~Par3D()  override;
     void rotation4();
     void calcul_points4(uint idx=0);

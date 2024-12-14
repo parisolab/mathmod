@@ -178,14 +178,12 @@ void MathMod::CalculatePigmentPoints(int type)
     }
 }
 
-int MathMod::memoryallocation(uint nbthreads,
-                              uint initparGrid, uint initisoGrid,
-                              uint FactX, uint FactY, uint FactZ)
+int MathMod::memoryallocation(uint nbthreads, uint initparGrid, uint initisoGrid, int *pt)
 {
     try
     {
-        IsoObjet = new Iso3D(nbthreads, initisoGrid, FactX, FactY, FactZ);
-        ParObjet = new Par3D(nbthreads, initparGrid);
+        IsoObjet = new Iso3D(nbthreads, initisoGrid, pt[0], pt[1], pt[2]);
+        ParObjet = new Par3D(nbthreads, initparGrid, pt);
         return 1;
     }
     catch (const std::bad_alloc&)
@@ -2092,8 +2090,7 @@ void MathMod::InitSpecularParameters()
 }
 
 MathMod::MathMod(QWidget *parent, uint nbthreads,
-                 uint initparGrid, uint initisoGrid, uint FactX, uint FactY,
-                 uint FactZ) :QOpenGLWidget(parent)
+                 uint initparGrid, uint initisoGrid, int * pt) :QOpenGLWidget(parent)
 {
     //nbthreads = Threads[0];
     PerlinNoise = new ImprovedNoise(4., 4., 4.);
@@ -2107,8 +2104,7 @@ MathMod::MathMod(QWidget *parent, uint nbthreads,
     hauteur_fenetre = 2*wh;
     timer = new QBasicTimer();
     xyzactivated = uvactivated = uvactivated4D = 1;
-    if (memoryallocation(nbthreads, initparGrid, initisoGrid,
-                               FactX, FactY, FactZ) != 1)
+    if (memoryallocation(nbthreads, initparGrid, initisoGrid, pt) != 1)
         exit(0);
 }
 

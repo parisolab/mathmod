@@ -214,8 +214,7 @@ public:
     qreal acc;
     QVector3D n;
 public:
-    MathMod(QWidget *, uint th  = Threads[0], uint initpargrid = InitParGrid, uint initisogrid = InitIsoGrid,
-            uint factx = CalculFactor[0], uint facty = CalculFactor[1], uint factz = CalculFactor[2]);
+    MathMod(QWidget *, uint  th= Threads[0], uint initpargrid = InitParGrid, uint initisogrid = InitIsoGrid, int *pt = CalculFactor);
     ~MathMod();
     void ParametricSurfaceProcess(int type = 1);
     void ParisoObjectProcess();
@@ -269,8 +268,7 @@ public slots:
     virtual void run();
     void InitSpecularParameters();
     void Shininess(int);
-    int memoryallocation(uint, uint initpargrid = 50, uint initgrid = 40,
-                         uint factx = 4, uint facty = 4, uint factz = 4);
+    int memoryallocation(uint, uint , uint , int *);
     void PutObjectInsideCube();
     void screenshot();
     void FramesShot();

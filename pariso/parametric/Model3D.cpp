@@ -88,6 +88,18 @@ ParMasterThread::~ParMasterThread()
     Consts.clear();
     ConstNames.clear();
     ConstValues.clear();
+    vals.clear();
+    vals.shrink_to_fit();
+    ResX.clear();
+    ResX.shrink_to_fit();
+    ResY.clear();
+    ResY.shrink_to_fit();
+    ResZ.clear();
+    ResZ.shrink_to_fit();
+    ResW.clear();
+    ResW.shrink_to_fit();
+    valcomplex.clear();
+    valcomplex.shrink_to_fit();
 }
 ParMasterThread::ParMasterThread()
 {
@@ -104,7 +116,7 @@ void ParWorkerThread::run()
 {
     ParCompute(CurrentComponent, CurrentIndex);
 }
-Par3D::Par3D(uint nbThreads, uint nbGrid)
+Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
 {
     Ugrid = nbGrid;
     Vgrid = nbGrid;
@@ -127,6 +139,7 @@ Par3D::Par3D(uint nbThreads, uint nbGrid)
     masterthread->MyIndex   = 0;
     masterthread->param4D   = param4D;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
+    masterthread->AllocateStackFactor(pt);
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].Ugrid  = Ugrid;
@@ -134,6 +147,7 @@ Par3D::Par3D(uint nbThreads, uint nbGrid)
         workerthreads[nbthreads].MyIndex   = nbthreads+1;
         workerthreads[nbthreads].param4D   = param4D;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+        workerthreads[nbthreads].AllocateStackFactor(pt);
     }
 }
 void Par3D::initialiser_LineColumn(uint li, uint cl)
@@ -1945,25 +1959,27 @@ void ParWorkerThread::emitMySignal()
 {
     emit mySignal(signalVal);
 }
+void ParWorkerThread::AllocateStackFactor(int *pt)
+{
+    OrignbU=uint(pt[3]);
+    OrignbV=uint(pt[4]);
+    ResX.resize(pt[3]*pt[4]);
+    ResY.resize(pt[3]*pt[4]);
+    ResZ.resize(pt[3]*pt[4]);
+    ResW.resize(pt[3]*pt[4]);
+    vals.resize(4*pt[3]*pt[4]);
+    valcomplex.resize(4*pt[3]*pt[4]);
+}
 void  ParWorkerThread::ParCompute(uint cmp, uint idx)
 {
     uint NewPosition =  10*idx, id=0;
     int PreviousSignal=0;
-    uint OrignbU=uint (std::sqrt(Stack_Factor));
-    uint OrignbV=OrignbU;
     uint nbU=OrignbU, nbV=OrignbV;
-    uint nbstack=nbU*nbV;
+    uint nbstack=OrignbU*OrignbV;
     uint Iindice=0, Jindice=0;
     uint taille=0;
     std::complex<double> pc;
     double res;
-
-    ResX.resize(nbstack);
-    ResY.resize(nbstack);
-    ResZ.resize(nbstack);
-    ResW.resize(nbstack);
-    vals.resize(4*nbstack);
-    valcomplex.resize(4*nbstack);
 
     if(activeMorph == 1)
         stepMorph += pace;
@@ -2026,18 +2042,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             }
             if(StopCalculations)
             {
-                vals.clear();
-                vals.shrink_to_fit();
-                ResX.clear();
-                ResX.shrink_to_fit();
-                ResY.clear();
-                ResY.shrink_to_fit();
-                ResZ.clear();
-                ResZ.shrink_to_fit();
-                ResW.clear();
-                ResW.shrink_to_fit();
-                valcomplex.clear();
-                valcomplex.shrink_to_fit();
                 return;
             }
             if(!param3d_C && !param4d_C)
@@ -2147,18 +2151,6 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                 }
         }
     }
-    vals.clear();
-    vals.shrink_to_fit();
-    ResX.clear();
-    ResX.shrink_to_fit();
-    ResY.clear();
-    ResY.shrink_to_fit();
-    ResZ.clear();
-    ResZ.shrink_to_fit();
-    ResW.clear();
-    ResW.shrink_to_fit();
-    valcomplex.clear();
-    valcomplex.shrink_to_fit();
 }
 
 void Par3D::emitErrorSignal()
