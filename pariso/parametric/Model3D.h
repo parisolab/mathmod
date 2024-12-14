@@ -56,7 +56,7 @@ public :
     uint CurrentIndex;
     std::vector<std::complex<double>> valcomplex;
     std::vector<double>  ResX, ResY, ResZ, ResW, vals;
-    uint OrignbU, OrignbV;
+    uint OrignbU, OrignbV, StackFactor;
 public :
     void ParCompute(uint component =0, uint idx=0);
     void AllocateParsersForWorkerThread(uint, uint);

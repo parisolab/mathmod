@@ -633,7 +633,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                     stdError.strError = Functs[i];
                     return stdError;
                 }
-                Fct[i].AllocateStackMemory(Stack_Factor, nbvariables);
+                Fct[i].AllocateStackMemory(StackFactor, nbvariables);
             }
         }
         else
@@ -660,7 +660,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                     stdError.strError = Functs[i];
                     return stdError;
                 }
-                Fct_C[i].AllocateStackMemory(Stack_Factor, nbvariables);
+                Fct_C[i].AllocateStackMemory(StackFactor, nbvariables);
             }
         }
     }
@@ -1017,7 +1017,7 @@ ErrorMessage  Par3D::parse_expression2()
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(Stack_Factor, nbvariables);
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, nbvariables);
         }
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -1155,7 +1155,7 @@ ErrorMessage  Par3D::parse_expression2_C()
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct_C[ii].AllocateStackMemory(Stack_Factor, nbvariables);
+            workerthreads[nbthreads].Fct_C[ii].AllocateStackMemory(masterthread->StackFactor, nbvariables);
         }
     }
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
@@ -1963,19 +1963,20 @@ void ParWorkerThread::AllocateStackFactor(int *pt)
 {
     OrignbU=uint(pt[3]);
     OrignbV=uint(pt[4]);
-    ResX.resize(pt[3]*pt[4]);
-    ResY.resize(pt[3]*pt[4]);
-    ResZ.resize(pt[3]*pt[4]);
-    ResW.resize(pt[3]*pt[4]);
-    vals.resize(4*pt[3]*pt[4]);
-    valcomplex.resize(4*pt[3]*pt[4]);
+    StackFactor=pt[3]*pt[4];
+    ResX.resize(StackFactor);
+    ResY.resize(StackFactor);
+    ResZ.resize(StackFactor);
+    ResW.resize(StackFactor);
+    vals.resize(4*StackFactor);
+    valcomplex.resize(4*StackFactor);
 }
 void  ParWorkerThread::ParCompute(uint cmp, uint idx)
 {
-    uint NewPosition =  10*idx, id=0;
+    uint NewPosition=10*idx, id=0;
     int PreviousSignal=0;
     uint nbU=OrignbU, nbV=OrignbV;
-    uint nbstack=OrignbU*OrignbV;
+    uint nbstack=StackFactor;
     uint Iindice=0, Jindice=0;
     uint taille=0;
     std::complex<double> pc;
@@ -2002,19 +2003,19 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
         vals[l*3+2]= stepMorph;
     if(!param3d_C && !param4d_C)
     {
-        myParserX[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
-        myParserY[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
-        myParserZ[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+        myParserX[cmp].AllocateStackMemory(StackFactor, nbvariables);
+        myParserY[cmp].AllocateStackMemory(StackFactor, nbvariables);
+        myParserZ[cmp].AllocateStackMemory(StackFactor, nbvariables);
         if(param4D == 1)
-            myParserW[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+            myParserW[cmp].AllocateStackMemory(StackFactor, nbvariables);
     }
     else
     {
-        myParserX_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
-        myParserY_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
-        myParserZ_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+        myParserX_C[cmp].AllocateStackMemory(StackFactor, nbvariables);
+        myParserY_C[cmp].AllocateStackMemory(StackFactor, nbvariables);
+        myParserZ_C[cmp].AllocateStackMemory(StackFactor, nbvariables);
         if(param4d_C)
-            myParserW_C[cmp].AllocateStackMemory(Stack_Factor, nbvariables);
+            myParserW_C[cmp].AllocateStackMemory(StackFactor, nbvariables);
     }
     for(uint il=iStart; il < iFinish   ; il+=nbU)
     {
