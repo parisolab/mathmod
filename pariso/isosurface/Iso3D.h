@@ -57,7 +57,7 @@ public :
     uint GridVal;
     std::vector<double> xLocal2, yLocal2, zLocal2;
     std::vector<double> vals, Res;
-    uint OrignbX, OrignbY, OrignbZ, StackFactor;
+    uint OrignbX, OrignbY, OrignbZ;
 public :
     void IsoCompute(uint);
     void VoxelEvaluation(uint);

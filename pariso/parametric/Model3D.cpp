@@ -1243,6 +1243,7 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].param3d_C   = masterthread->param3d_C;
         WorkerThreadsTmp[nbthreads].param4d_C   = masterthread->param4d_C;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
+        WorkerThreadsTmp[nbthreads].AllocateStackFactor(masterthread->ptStackFactor);
     }
 }
 
@@ -1965,6 +1966,7 @@ void ParWorkerThread::emitMySignal()
 }
 void ParWorkerThread::AllocateStackFactor(int *pt)
 {
+    ptStackFactor = pt;
     OrignbU=uint(pt[3]);
     OrignbV=uint(pt[4]);
     StackFactor=pt[3]*pt[4];

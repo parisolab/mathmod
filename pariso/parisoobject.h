@@ -42,10 +42,11 @@ public:
     WorkerThread();
     ~WorkerThread();
 public:
-    uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish;
+    uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish, StackFactor;
     double stepMorph=0.0, pace=0.0;
     bool StopCalculations, ParsersAllocated, ParsersAllocated_C;
     int activeMorph, signalVal;
+    int *ptStackFactor;
 };
 
 class MasterThread

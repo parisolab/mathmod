@@ -190,6 +190,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
         WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         WorkerThreadsTmp[nbthreads].GridVal = masterthread->GridVal;
+        WorkerThreadsTmp[nbthreads].AllocateStackFactor(masterthread->ptStackFactor);
     }
 }
 void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
@@ -641,6 +642,7 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
 }
 void IsoWorkerThread::AllocateStackFactor(int *pt)
 {
+    ptStackFactor = pt;
     OrignbX=uint(pt[0]);
     OrignbY=uint(pt[1]);
     OrignbZ=uint(pt[2]);
