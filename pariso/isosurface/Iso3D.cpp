@@ -25,14 +25,14 @@ static uint NbPolyMin;
 static Voxel *GridVoxelVarPt;
 static double *Results;
 static uint NbVertexTmp = 0;
-static std::vector<float> NormOriginaltmpVector;
+//static std::vector<float> NormOriginaltmpVector;
 uint NbTriangleIsoSurface,NbPointIsoMap;
 std::vector<float> NormVertexTabVector;
 std::vector<uint>  IndexPolyTabMinVector;
 std::vector<uint>  IndexPolyTabMinVector2;
 std::vector<uint>  IndexPolyTabVector;
 static CellNoise *NoiseFunction = new CellNoise();
-static ImprovedNoise *PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
+//static ImprovedNoise *PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
 static QElapsedTimer times;
 static double IsoComponentId=0;
 static int nbvariables=0;
@@ -353,6 +353,7 @@ Iso3D::Iso3D( uint nbThreads,
 {
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
+    PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
     WorkerThreadsNumber = ThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->AllocateStackFactor(pt);

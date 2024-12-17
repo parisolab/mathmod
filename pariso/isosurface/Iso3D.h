@@ -106,6 +106,9 @@ class Iso3D  : public ParisoObject
 public :
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
+    std::vector<float> NormOriginaltmpVector;
+    ImprovedNoise *PNoise;
+
 public :
     Iso3D(uint, uint, int *);
     ~Iso3D() override;
