@@ -100,7 +100,7 @@ double legendre_a (int n, int m, double x)
 
 //associated laguerre
 double laguerre_a(int n, int m, double x) {
-    double v[n+1];
+    std::vector<double> v(n+1, 0.0);
     if (n < 0) {
         return -1;
     }
