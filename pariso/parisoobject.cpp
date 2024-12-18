@@ -23,8 +23,12 @@ MasterThread::MasterThread() {}
 MasterThread::~MasterThread() {}
 WorkerThread::WorkerThread() {}
 WorkerThread::~WorkerThread() {}
+std::vector<uint> ParisoObject::IndexPolyTabVector;
+std::vector<float> ParisoObject::NormVertexTabVector;
+std::vector<uint> ParisoObject::IndexPolyTabMinVector;
+std::vector<uint> ParisoObject::IndexPolyTabMinVector2;
 ParisoObject::ParisoObject() {}
-ParisoObject::~ParisoObject() {}
+ParisoObject::~ParisoObject() {IndexPolyTabVector.clear();}
 uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)
 {
     uint idx = 0;

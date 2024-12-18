@@ -25,12 +25,7 @@ static uint NbPolyMin;
 static Voxel *GridVoxelVarPt;
 static double *Results;
 static uint NbVertexTmp = 0;
-//static std::vector<float> NormOriginaltmpVector;
 uint NbTriangleIsoSurface,NbPointIsoMap;
-std::vector<float> NormVertexTabVector;
-std::vector<uint>  IndexPolyTabMinVector;
-std::vector<uint>  IndexPolyTabMinVector2;
-std::vector<uint>  IndexPolyTabVector;
 static CellNoise *NoiseFunction = new CellNoise();
 static ImprovedNoise *PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
 static QElapsedTimer times;
@@ -41,7 +36,6 @@ double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
 }
-
 extern double TurbulenceWorley(const double *p)
 {
     return double (

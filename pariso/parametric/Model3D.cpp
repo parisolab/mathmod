@@ -116,6 +116,7 @@ void ParWorkerThread::run()
 {
     ParCompute(CurrentComponent, CurrentIndex);
 }
+
 Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
 {
     Ugrid = nbGrid;
@@ -2149,9 +2150,9 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             for(uint ii=0; ii<nbU; ii++)
                 for(uint jj=0; jj<nbV; jj++)
                 {
-                    NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +7 +NewPosition] = float(ResX[p]);
-                    NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +8 +NewPosition] = float(ResY[p]);
-                    NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
+                    ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +7 +NewPosition] = float(ResX[p]);
+                    ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +8 +NewPosition] = float(ResY[p]);
+                    ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
                     if((param4D == 1) || param4d_C)
                         ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
                     p++;

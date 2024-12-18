@@ -34,6 +34,10 @@ public:
     bool StopCalculations;
     ScriptErrorType messageerror;
     QString message;
+    static std::vector<uint>  IndexPolyTabVector;
+    static std::vector<float> NormVertexTabVector;
+    static std::vector<uint> IndexPolyTabMinVector;
+    static std::vector<uint> IndexPolyTabMinVector2;
 };
 
 class WorkerThread : public QThread

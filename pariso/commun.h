@@ -250,19 +250,19 @@ struct ObjectProperties
 
 class CellNoise
 {
-public:
-    float rd[3], featurePoint[4];
-    const static uint OFFSET_BASIS = 2166136261U;
-    const static uint FNV_PRIME = 16777619U;
+    public:
+        float rd[3], featurePoint[4];
+        const static uint OFFSET_BASIS = 2166136261U;
+        const static uint FNV_PRIME = 16777619U;
 
-    float CellNoiseFunc(float, float, float, int, int type = 2, int Dist = 0);
-    float EuclidianDistanceFunc(float, float, float, float, float, float);
-    float ManhattanDistanceFunc(float, float, float, float, float, float);
-    float ChebyshevDistanceFunc(float, float, float, float, float, float);
-    int probLookup(uint);
-    void insert(float *, float);
-    int lcgRandom(int);
-    int hash(int, int, int);
+        float CellNoiseFunc(float, float, float, int, int type = 2, int Dist = 0);
+        float EuclidianDistanceFunc(float, float, float, float, float, float);
+        float ManhattanDistanceFunc(float, float, float, float, float, float);
+        float ChebyshevDistanceFunc(float, float, float, float, float, float);
+        int probLookup(uint);
+        void insert(float *, float);
+        int lcgRandom(int);
+        int hash(int, int, int);
 };
 
 class ImprovedNoise
@@ -280,9 +280,6 @@ public:
     float lookup(float, float, float);
 };
 
-extern std::vector<float> NormVertexTabVector;
-extern std::vector<uint> IndexPolyTabMinVector;
-extern std::vector<uint> IndexPolyTabMinVector2;
-extern std::vector<uint> IndexPolyTabVector;
+
 static struct ComponentInfos *components = new (struct ComponentInfos);
 #endif // COMMUN_H

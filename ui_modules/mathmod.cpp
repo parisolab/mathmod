@@ -2092,7 +2092,6 @@ void MathMod::InitSpecularParameters()
 MathMod::MathMod(QWidget *parent, uint nbthreads,
                  uint initparGrid, uint initisoGrid, int * pt) :QOpenGLWidget(parent)
 {
-    //nbthreads = Threads[0];
     PerlinNoise = new ImprovedNoise(4., 4., 4.);
     latence = 10;
     Vgrid = Ugrid = 64;
