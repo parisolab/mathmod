@@ -107,7 +107,6 @@ public :
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
     std::vector<float> NormOriginaltmpVector;
-    ImprovedNoise *PNoise;
 
 public :
     Iso3D(uint, uint, int *);
