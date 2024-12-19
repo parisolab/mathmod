@@ -31,7 +31,7 @@ static ImprovedNoise *PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
 static QElapsedTimer times;
 static double IsoComponentId=0;
 static int nbvariables=0;
-int ThreadsJob[100];
+//int ThreadsJob[100];
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
@@ -678,7 +678,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
     uint Totalpoints=(iFinish-iStart)*limitY*limitZ;
-
+/*
     if(ThreadsJob[3*MyIndex  ] !=-1 || ThreadsJob[3*MyIndex+1] !=-1  || ThreadsJob[3*MyIndex+2] !=-1)
     {
         ThreadsJob[3*MyIndex+1] = iStart;
@@ -688,7 +688,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     ThreadsJob[3*MyIndex  ] = MyIndex;
     ThreadsJob[3*MyIndex+1] = iStart;
     ThreadsJob[3*MyIndex+2] = iFinish;
-
+*/
     implicitFunctionParser[IsoIndex].AllocateStackMemory(StackFactor, nbvariables);
     for(uint i=iStart; i<iFinish; i+=nbX )
     {
@@ -1466,9 +1466,11 @@ void Iso3D::IsoBuild (
     struct ComponentInfos * componentsPt
 )
 {
+    /*
     //IntThreadJobs tab
     for(uint i=0; i<100; i++)
         ThreadsJob[i] = -1;
+*/
     uint NbTriangleIsoSurfaceTmp, PreviousGridVal=masterthread->XYZgrid;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp = 0;
