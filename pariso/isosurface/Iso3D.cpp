@@ -31,7 +31,7 @@ static ImprovedNoise *PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
 static QElapsedTimer times;
 static double IsoComponentId=0;
 static int nbvariables=0;
-
+int ThreadsJob[100];
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
@@ -654,7 +654,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     uint nbstack=StackFactor;
     uint Iindice=0, Jindice=0, Kindice=0 ;
-    uint nbvar=8;
+    uint nbvar=8; //x,y,z,t,Iindex, Jindex,Kindex
     int PreviousSignal=0;
 
 
@@ -678,6 +678,17 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
     uint Totalpoints=(iFinish-iStart)*limitY*limitZ;
+
+    if(ThreadsJob[3*MyIndex  ] !=-1 || ThreadsJob[3*MyIndex+1] !=-1  || ThreadsJob[3*MyIndex+2] !=-1)
+    {
+        ThreadsJob[3*MyIndex+1] = iStart;
+        ThreadsJob[3*MyIndex+2] = iFinish;
+        return;
+    }
+    ThreadsJob[3*MyIndex  ] = MyIndex;
+    ThreadsJob[3*MyIndex+1] = iStart;
+    ThreadsJob[3*MyIndex+2] = iFinish;
+
     implicitFunctionParser[IsoIndex].AllocateStackMemory(StackFactor, nbvariables);
     for(uint i=iStart; i<iFinish; i+=nbX )
     {
@@ -714,7 +725,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     vals[l*nbvar  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
                     vals[l*nbvar+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
                     vals[l*nbvar+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
-
                     vals[l*nbvar+4]=Iindice+uint(l*nbX/nbstack);
                     vals[l*nbvar+5]=Jindice+((uint(l/nbZ))%nbY);
                     vals[l*nbvar+6]=Kindice+(l%nbZ);
@@ -1413,7 +1423,7 @@ void IsoMasterThread::initparser()
 }
 void IsoWorkerThread::IsoCompute(uint fctnb)
 {
-    (fctnb == 0) ? AllComponentTraited = true : AllComponentTraited = false;
+    (fctnb == 0) ? AllComponentTraited = true : AllComponentTraited = false;  // AllComponentTraited = (fctnb == 0);
     VoxelEvaluation(fctnb);
 }
 void Iso3D::stopcalculations(bool calculation)
@@ -1456,6 +1466,9 @@ void Iso3D::IsoBuild (
     struct ComponentInfos * componentsPt
 )
 {
+    //IntThreadJobs tab
+    for(uint i=0; i<100; i++)
+        ThreadsJob[i] = -1;
     uint NbTriangleIsoSurfaceTmp, PreviousGridVal=masterthread->XYZgrid;
     NbPointIsoMap= 0;
     NbVertexTmp = NbTriangleIsoSurfaceTmp = 0;
@@ -1556,6 +1569,13 @@ void Iso3D::IsoBuild (
             // Recalculate some tables values:
             ReinitVarTablesWhenMorphActiv(fctnb);
         }
+
+
+
+
+
+
+
         masterthread->start();
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].start();
