@@ -26,8 +26,8 @@ static Voxel *GridVoxelVarPt;
 static double *Results;
 static uint NbVertexTmp = 0;
 uint NbTriangleIsoSurface,NbPointIsoMap;
-static CellNoise *NoiseFunction = new CellNoise();
-static ImprovedNoise *PNoise;/* = new ImprovedNoise(4.0, 4.0, 4.0)*/;
+static CellNoise *NoiseFunction;/* = new CellNoise();*/
+static ImprovedNoise *PNoise;
 static QElapsedTimer times;
 static double IsoComponentId=0;
 static int nbvariables=0;
@@ -347,6 +347,7 @@ Iso3D::Iso3D( uint nbThreads,
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
     PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
+    NoiseFunction = new CellNoise();
     WorkerThreadsNumber = ThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->AllocateStackFactor(pt);
