@@ -19,10 +19,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
 
-#include <iostream>
-#include <string.h>
-#include <deque>
-#include <cmath>
+
 #include "../parisoobject.h"
 
 /*

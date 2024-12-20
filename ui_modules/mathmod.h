@@ -31,12 +31,10 @@
 #include <QResizeEvent>
 #include <QTextStream>
 #include <QTimer>
-#include <iostream>
 #include <math.h>
 #include <qpixmap.h>
 #include <qthread.h>
 #include <stdlib.h>
-#include <string>
 #include "../json_parser/parisodef.h"
 #include "../ui_modules/ParisoMathObject.h"
 #include <QOpenGLFunctions>
