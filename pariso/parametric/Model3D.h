@@ -18,14 +18,9 @@
  *   51 Franklin Street, Fifth Floor,Boston, MA 02110-1301 USA             *
  ***************************************************************************/
 
-#include <map>
-#include <vector>
-#include <iostream>
-#include <string.h>
-#include <cmath>
+
 #include "../parisoobject.h"
 #include "ND/Matrix4D.h"
-#include <qthread.h>
 using std::string;
 
 struct   ParStruct
@@ -110,6 +105,7 @@ public:
              mat_homothetie4D, mat_translation4D, mat_inversetranslation4D;
     double tetaxy, tetaxz, tetayz, tetaxw, tetayw, tetazw;
     int tetaxy_ok, tetaxz_ok, tetayz_ok, tetaxw_ok, tetayw_ok, tetazw_ok, param4D;
+    static std::vector<float>  ExtraDimensionVector;
 public:
     Par3D(uint nbThreads, uint nbGrid, int *);
     ~Par3D()  override;

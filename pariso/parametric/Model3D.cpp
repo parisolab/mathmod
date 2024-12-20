@@ -20,14 +20,14 @@
 #include "Model3D.h"
 #include <QElapsedTimer>
 static uint NbVertexTmp = 0;
-static std::vector<float>  ExtraDimensionVector;
 static CellNoise *NoiseFunction2 = new CellNoise();
-static ImprovedNoise *PNoise2 = new ImprovedNoise(4.0, 4.0, 4.0);
+static ImprovedNoise *PNoise2;
 static double ParamComponentId=0;
 static double ParamThreadId=0;
 static QElapsedTimer ptime;
 static int nbvariables=0;
 
+std::vector<float>  Par3D::ExtraDimensionVector;
 double CurrentParamCmpId(const double* p)
 {
     int pp = int(p[0]);
@@ -119,6 +119,7 @@ void ParWorkerThread::run()
 
 Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
 {
+    PNoise2 = new ImprovedNoise(4.0, 4.0, 4.0);
     Ugrid = nbGrid;
     Vgrid = nbGrid;
     CutV = CutU = 0;
@@ -2154,7 +2155,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +8 +NewPosition] = float(ResY[p]);
                     ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
                     if((param4D == 1) || param4d_C)
-                        ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
+                        Par3D::ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
                     p++;
                 }
         }
