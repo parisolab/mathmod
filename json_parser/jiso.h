@@ -23,10 +23,8 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStringList>
-#include <iostream>
 #include <math.h>
 #include <stdlib.h>
-#include <string>
 
 class jiso
 {

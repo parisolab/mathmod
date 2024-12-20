@@ -23,11 +23,9 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStringList>
-#include <iostream>
 #include <math.h>
 #include <qthread.h>
 #include <stdlib.h>
-#include <string>
 
 class jpar
 {

@@ -30,7 +30,6 @@
 #include <iostream>
 #include <qfile.h>
 #include <qstring.h>
-//#include <QDialog>
 
 enum ModelType { PAR_TYPE, PAR_4D_TYPE, ISO_TYPE, PARISO_TYPE, UNDEFINED_TYPE };
 

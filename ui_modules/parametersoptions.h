@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QApplication>
+#include <iostream>
 struct ListeModelTexture
 {
     QStringList listeModels;
