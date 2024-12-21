@@ -104,7 +104,8 @@ public :
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
     std::vector<float> NormOriginaltmpVector;
-
+    static double *Results;
+    static Voxel *GridVoxelVarPt;
 public :
     Iso3D(uint, uint, int *);
     ~Iso3D() override;

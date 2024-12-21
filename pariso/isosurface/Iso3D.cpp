@@ -22,15 +22,15 @@
 #include "internalfunctions.cpp"
 #include <QElapsedTimer>
 static uint NbPolyMin;
-static Voxel *GridVoxelVarPt;
-static double *Results;
 static uint NbVertexTmp = 0;
 uint NbTriangleIsoSurface,NbPointIsoMap;
-static CellNoise *NoiseFunction;/* = new CellNoise();*/
+static CellNoise *NoiseFunction;
 static ImprovedNoise *PNoise;
 static QElapsedTimer times;
 static double IsoComponentId=0;
 static int nbvariables=0;
+double * Iso3D::Results;
+Voxel  * Iso3D::GridVoxelVarPt;
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
@@ -740,9 +740,9 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                         for(uint kk=0; kk<nbZ; kk++)
                         {
                             sect= IJK_jp + (ii)*GridVal*GridVal+ (jj)*GridVal + (kk);
-                            Results[sect] = Res[p];
-                            GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
-                            GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
+                            Iso3D::Results[sect] = Res[p];
+                            Iso3D::GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
+                            Iso3D::GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
                             p++;
                         }
                 //Signal emission:
