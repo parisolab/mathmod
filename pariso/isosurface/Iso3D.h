@@ -55,6 +55,7 @@ public :
     std::vector<double> xLocal2, yLocal2, zLocal2;
     std::vector<double> vals, Res;
     uint OrignbX, OrignbY, OrignbZ;
+    static int nbvariables;
 public :
     void IsoCompute(uint);
     void VoxelEvaluation(uint);
@@ -106,7 +107,8 @@ public :
     std::vector<float> NormOriginaltmpVector;
     static double *Results;
     static Voxel *GridVoxelVarPt;
-    uint NbTriangleIsoSurface,NbPointIsoMap;
+    uint NbTriangleIsoSurface,NbPointIsoMap,NbPolyMin,NbVertexTmp;
+    QElapsedTimer times;
 public :
     Iso3D(uint, uint, int *);
     ~Iso3D() override;

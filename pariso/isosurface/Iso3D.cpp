@@ -21,15 +21,13 @@
 #include "Iso3D.h"
 #include "internalfunctions.cpp"
 #include <QElapsedTimer>
-static uint NbPolyMin;
-static uint NbVertexTmp = 0;
+
 static CellNoise *NoiseFunction;
 static ImprovedNoise *PNoise;
-static QElapsedTimer times;
 static double IsoComponentId=0;
-static int nbvariables=0;
 double * Iso3D::Results;
 Voxel  * Iso3D::GridVoxelVarPt;
+int IsoWorkerThread::nbvariables;
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
@@ -170,6 +168,7 @@ IsoWorkerThread::IsoWorkerThread()
     stepMorph = 0;
     pace = 1.0/30.0;
     activeMorph = -1;
+    nbvariables=0;
     AllComponentTraited = false;
     ParsersAllocated = false;
     StopCalculations = false;
@@ -275,7 +274,7 @@ ErrorMessage  Iso3D::parse_expression2()
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, nbvariables);
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, masterthread->nbvariables);
         }
     }
     //Add defined constantes:
