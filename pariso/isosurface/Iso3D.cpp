@@ -23,7 +23,6 @@
 #include <QElapsedTimer>
 static uint NbPolyMin;
 static uint NbVertexTmp = 0;
-uint NbTriangleIsoSurface,NbPointIsoMap;
 static CellNoise *NoiseFunction;
 static ImprovedNoise *PNoise;
 static QElapsedTimer times;
