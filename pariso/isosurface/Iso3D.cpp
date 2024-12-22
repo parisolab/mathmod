@@ -22,8 +22,6 @@
 #include "internalfunctions.cpp"
 #include <QElapsedTimer>
 
-//static CellNoise *NoiseFunction;
-//static ImprovedNoise *PNoise;
 static double IsoComponentId=0;
 double * Iso3D::Results;
 Voxel  * Iso3D::GridVoxelVarPt;

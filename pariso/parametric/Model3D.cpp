@@ -20,8 +20,6 @@
 #include "Model3D.h"
 #include <QElapsedTimer>
 static uint NbVertexTmp = 0;
-//static CellNoise *NoiseFunction2 = new CellNoise();
-//static ImprovedNoise *PNoise2;
 static double ParamComponentId=0;
 static double ParamThreadId=0;
 static QElapsedTimer ptime;
@@ -100,7 +98,6 @@ void ParWorkerThread::run()
 
 Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
 {
-    //PNoise2 = new ImprovedNoise(4.0, 4.0, 4.0);
     Ugrid = nbGrid;
     Vgrid = nbGrid;
     CutV = CutU = 0;
@@ -158,7 +155,7 @@ void  Par3D::rotation4()
         if(tetayw_ok == 1)    mat_rotation4D.ywrot(tetayw);
         if(tetazw_ok == 1)    mat_rotation4D.zwrot(tetazw);
     }
-// On applique cette transformation a la matrice principale "mat"
+    // On applique cette transformation a la matrice principale "mat"
     mat4D.mult(mat_rotation4D);
 }
 void  Par3D::boite_englobante4D(uint idx)
