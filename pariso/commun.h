@@ -33,6 +33,30 @@ double Mandelbrot(const double*);
 double Julia(const double*);
 double Legendre_a(const double*);
 double Laguerre_a(const double*);
+void ImprovedNoise(float, float, float);
+float noise(float, float, float);
+float fade(float);
+float lerp(float, float, float);
+float grad(int, float, float, float);
+float FractalNoise3D(float, float, float, int, float, float);
+float Marble(float, float, float, int);
+float lookup(float, float, float);
+float CellNoiseFunc(float, float, float, int, int type = 2, int Dist = 0);
+float EuclidianDistanceFunc(float, float, float, float, float, float);
+float ManhattanDistanceFunc(float, float, float, float, float, float);
+float ChebyshevDistanceFunc(float, float, float, float, float, float);
+int probLookup(uint);
+void insert(float *, float);
+int lcgRandom(int);
+int hash(int, int, int);
+float tinyrnd();
+double TurbulenceWorley2(const double*);
+double TurbulencePerlin2(const double*);
+double TurbulenceWorley(const double *);
+double TurbulencePerlin(const double *);
+double MarblePerlin(const double *);
+
+
 
 struct GlobalParam
 {
@@ -247,7 +271,7 @@ struct ObjectProperties
     uint vboId_ArrayNorVer_localPt;
     uint vboId_PolyIndices_localPt;
 };
-
+/*
 class CellNoise
 {
     public:
@@ -279,7 +303,7 @@ public:
     float Marble(float, float, float, int);
     float lookup(float, float, float);
 };
-
+*/
 
 static struct ComponentInfos *components = new (struct ComponentInfos);
 #endif // COMMUN_H

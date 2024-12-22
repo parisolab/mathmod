@@ -22,8 +22,8 @@
 #include "internalfunctions.cpp"
 #include <QElapsedTimer>
 
-static CellNoise *NoiseFunction;
-static ImprovedNoise *PNoise;
+//static CellNoise *NoiseFunction;
+//static ImprovedNoise *PNoise;
 static double IsoComponentId=0;
 double * Iso3D::Results;
 Voxel  * Iso3D::GridVoxelVarPt;
@@ -32,38 +32,7 @@ double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
 }
-extern double TurbulenceWorley(const double *p)
-{
-    return double (
-               NoiseFunction->CellNoiseFunc(
-                   float (p[0]),
-                   float (p[1]),
-                   float (p[2]),
-                   int (p[3]),
-                   int (p[4]),
-                   int (p[5]))
-           );
-}
-double TurbulencePerlin(const double *p)
-{
-    return double (
-               PNoise->FractalNoise3D(
-                   float (p[0]),
-                   float (p[1]),
-                   float (p[2]),
-                   int (p[3]),
-                   float (p[4]),
-                   float (p[5])));
-}
-double MarblePerlin(const double *p)
-{
-    return double (
-               PNoise->Marble(
-                   float (p[0]),
-                   float (p[1]),
-                   float (p[2]),
-                   int (p[3])));
-}
+
 void IsoWorkerThread::run()
 {
     IsoCompute(CurrentComponent);
@@ -344,8 +313,8 @@ Iso3D::Iso3D( uint nbThreads,
 {
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
-    PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
-    NoiseFunction = new CellNoise();
+    //PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
+    //NoiseFunction = new CellNoise();
     WorkerThreadsNumber = ThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->AllocateStackFactor(pt);

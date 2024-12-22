@@ -61,7 +61,7 @@ public:
     int TypeFormule;
     QMessageBox message;
     ErrorMessage stError;
-    ImprovedNoise *PerlinNoise;
+    //ImprovedNoise *PerlinNoise;
     int xyzactivated, isomesh, uvactivated, uvactivated4D;
     ParisoMathObject RootObjet;
     jcollection collection;

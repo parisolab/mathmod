@@ -20,8 +20,8 @@
 #include "Model3D.h"
 #include <QElapsedTimer>
 static uint NbVertexTmp = 0;
-static CellNoise *NoiseFunction2 = new CellNoise();
-static ImprovedNoise *PNoise2;
+//static CellNoise *NoiseFunction2 = new CellNoise();
+//static ImprovedNoise *PNoise2;
 static double ParamComponentId=0;
 static double ParamThreadId=0;
 static QElapsedTimer ptime;
@@ -36,26 +36,7 @@ double CurrentParamCmpId(const double* p)
     else
         return ParamThreadId;
 }
-double TurbulenceWorley2(const double* p)
-{
-    return double(NoiseFunction2->CellNoiseFunc(
-                      float(p[0]),
-                      float(p[1]),
-                      float(p[2]),
-                      int(p[3]),
-                      int(p[4]),
-                      int(p[5])));
-}
-double TurbulencePerlin2(const double* p)
-{
-    return double(PNoise2->FractalNoise3D(
-                      float(p[0]),
-                      float(p[1]),
-                      float(p[2]),
-                      int(p[3]),
-                      float(p[4]),
-                      float(p[5])));
-}
+
 Par3D::~Par3D()
 {
 }
@@ -119,7 +100,7 @@ void ParWorkerThread::run()
 
 Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
 {
-    PNoise2 = new ImprovedNoise(4.0, 4.0, 4.0);
+    //PNoise2 = new ImprovedNoise(4.0, 4.0, 4.0);
     Ugrid = nbGrid;
     Vgrid = nbGrid;
     CutV = CutU = 0;
