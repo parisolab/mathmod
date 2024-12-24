@@ -1446,15 +1446,22 @@ void Iso3D::IsoBuild (
             components->ParisoCurrentComponentIndex = componentsPt->ParisoCurrentComponentIndex;
             components->ParisoNbComponents = componentsPt->ParisoNbComponents;
         }
+        /*
         NormVertexTabVector.clear();
         NormVertexTabVector.shrink_to_fit();
         IndexPolyTabVector.clear();
         IndexPolyTabVector.shrink_to_fit();
         IndexPolyTabMinVector.clear();
         IndexPolyTabMinVector.shrink_to_fit();
+*/
+        NormVertexTabVector = std::vector<float>();
+        IndexPolyTabVector = std::vector<uint>();
+        IndexPolyTabMinVector = std::vector<uint>();
     }
+    /*
     NormOriginaltmpVector.clear();
-    NormOriginaltmpVector.shrink_to_fit();
+    NormOriginaltmpVector.shrink_to_fit();*/
+    NormOriginaltmpVector = std::vector<float>();
     //*****//
     uint maxx = std::max(masterthread->XYZgrid, masterthread->GridVal);
     if(masterthread->gridnotnull)
@@ -2165,7 +2172,7 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
             }
         //Copy the new index in the original one:
         IndexPolyTabVector.clear();
-        NewIndexPolyTabVector.shrink_to_fit();
+        IndexPolyTabVector.shrink_to_fit();
         IndexPolyTabVector = NewIndexPolyTabVector;
         NewIndexPolyTabVector.clear();
         NewIndexPolyTabVector.shrink_to_fit();
