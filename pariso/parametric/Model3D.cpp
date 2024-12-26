@@ -2139,12 +2139,10 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
         }
     }
 }
-
 void Par3D::emitErrorSignal()
 {
     emit ErrorSignal(int(messageerror));
 }
-
 void Par3D::copycomponent(struct ComponentInfos* copy, struct ComponentInfos* origin)
 {
     copy->ParisoTriangle = origin->ParisoTriangle;
