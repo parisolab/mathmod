@@ -614,7 +614,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     uint maxgrscalemaxgr = GridVal*GridVal;
     const uint limitY = XYZgrid, limitZ = XYZgrid;
-    uint I_jp, J_jp, IJK_jp;
+    uint I_jp, J_jp;
     uint id=0;
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     uint nbstack=StackFactor;
@@ -674,17 +674,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 }
                 nbstack = nbX*nbY*nbZ;
                 // X, Y and Z arrays construction:
-                /*
-                for(uint l=0; l<nbstack; l++)
-                {
-                    vals[l*nbvar  ]= xLocal2[IsoIndex*GridVal+Iindice+uint(l*nbX/nbstack)];
-                    vals[l*nbvar+1]= yLocal2[IsoIndex*GridVal+Jindice+((uint(l/nbZ))%nbY)];
-                    vals[l*nbvar+2]= zLocal2[IsoIndex*GridVal+Kindice+(l%nbZ)];
-                    vals[l*nbvar+4]=Iindice+uint(l*nbX/nbstack);
-                    vals[l*nbvar+5]=Jindice+((uint(l/nbZ))%nbY);
-                    vals[l*nbvar+6]=Kindice+(l%nbZ);
-                }
-                */
                 uint l=0;
                 for(uint ii=0; ii<nbX; ii++)
                     for(uint jj=0; jj<nbY; jj++)
@@ -698,7 +687,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                             vals[l*nbvar+6]= Kindice+kk;
                             l++;
                         }
-                IJK_jp = J_jp+Kindice;
                 double res = implicitFunctionParser[IsoIndex].Eval2(&(vals[0]), nbvar, &(Res[0]), nbstack);
                 if( abs(res - IF_FUNCT_ERROR) == 0.0)
                 {
@@ -713,20 +701,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 {
                     return;
                 }
-                /*
-                uint p=0;
-                uint sect=0;
-                for(uint ii=0; ii<nbX; ii++)
-                    for(uint jj=0; jj<nbY; jj++)
-                        for(uint kk=0; kk<nbZ; kk++)
-                        {
-                            sect= IJK_jp + (ii)*GridVal*GridVal+ (jj)*GridVal + (kk);
-                            Iso3D::Results[sect] = Res[p];
-                            Iso3D::GridVoxelVarPt[sect].Signature   = 0; // Signature initialisation
-                            Iso3D::GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
-                            p++;
-                        }
-                */
                 uint p=0;
                 uint sect=0;
                 for(uint ii=0; ii<nbX; ii++)
@@ -739,8 +713,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                             Iso3D::GridVoxelVarPt[sect].NbEdgePoint = 0; // No EdgePoint yet!
                             p++;
                         }
-
-
                 //Signal emission:
                 id+=nbstack;
                 if(MyIndex == 0 && activeMorph != 1)
