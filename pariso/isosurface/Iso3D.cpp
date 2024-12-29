@@ -607,17 +607,17 @@ void IsoWorkerThread::AllocateStackFactor(int *pt)
     OrignbY=uint(pt[1]);
     OrignbZ=uint(pt[2]);
     StackFactor=OrignbX*OrignbY*OrignbZ;
-    vals.resize(StackFactor*StackFactor);
+    vals.resize(8*StackFactor); // 8 because we have 8 parameters "x,y,z,t,i_indx,j_indx,k_indx,max_ijk"
     Res.resize(StackFactor);
 }
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
-    uint maxgrscalemaxgr = GridVal*GridVal;
+    //uint maxgrscalemaxgr = GridVal*GridVal;
     const uint limitY = XYZgrid, limitZ = XYZgrid;
-    uint I_jp, J_jp;
+    //uint I_jp, J_jp;
     uint id=0;
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
-    uint nbstack=StackFactor;
+    uint nbstack;
     uint Iindice=0, Jindice=0, Kindice=0 ;
     uint nbvar=8; //x,y,z,t,Iindex, Jindex,Kindex
     int PreviousSignal=0;
@@ -635,10 +635,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             iFinish  += 1;
     }
     iStart = iFinish - taille;
-    for(uint l=0; l<nbstack; l++)
-        vals[l*nbvar+3]= stepMorph;
-    for(uint l=0; l<nbstack; l++)
-        vals[l*nbvar+7]=GridVal;
     uint remX= (iFinish-iStart)%nbX;
     uint remY= limitY%nbY;
     uint remZ= limitZ%nbZ;
@@ -653,7 +649,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             nbX = remX;
             i= iFinish;
         }
-        I_jp = Iindice*maxgrscalemaxgr;
+        //I_jp = Iindice*maxgrscalemaxgr;
         for(uint j=0; j<limitY; j+=nbY)
         {
             Jindice = j;
@@ -663,7 +659,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 nbY = remY;
                 j= limitY;
             }
-            J_jp = I_jp + Jindice*GridVal;
+            //J_jp = I_jp + Jindice*GridVal;
             for(uint k=0; k<limitZ; k+=nbZ)
             {
                 Kindice = k;
@@ -682,9 +678,11 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                             vals[l*nbvar  ]= xLocal2[IsoIndex*GridVal+Iindice+ii];
                             vals[l*nbvar+1]= yLocal2[IsoIndex*GridVal+Jindice+jj];
                             vals[l*nbvar+2]= zLocal2[IsoIndex*GridVal+Kindice+kk];
+                            vals[l*nbvar+3]= stepMorph;
                             vals[l*nbvar+4]= Iindice+ii;
                             vals[l*nbvar+5]= Jindice+jj;
                             vals[l*nbvar+6]= Kindice+kk;
+                            vals[l*nbvar+7]=GridVal;
                             l++;
                         }
                 double res = implicitFunctionParser[IsoIndex].Eval2(&(vals[0]), nbvar, &(Res[0]), nbstack);
