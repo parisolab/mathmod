@@ -1954,8 +1954,8 @@ void ParWorkerThread::AllocateStackFactor(int *pt)
     ResY.resize(StackFactor);
     ResZ.resize(StackFactor);
     ResW.resize(StackFactor);
-    vals.resize(4*StackFactor);
-    valcomplex.resize(4*StackFactor);
+    vals.resize(4*StackFactor); // 4 because we have 4 parameters "u,v,t,Z" but we don't use Z yet
+    valcomplex.resize(4*StackFactor); // 4 because we have 4 parameters "u,v,t,Z"
 }
 void  ParWorkerThread::ParCompute(uint cmp, uint idx)
 {
