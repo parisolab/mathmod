@@ -28,7 +28,7 @@ std::vector<float> ParisoObject::NormVertexTabVector;
 std::vector<uint> ParisoObject::IndexPolyTabMinVector;
 std::vector<uint> ParisoObject::IndexPolyTabMinVector2;
 ParisoObject::ParisoObject() {}
-ParisoObject::~ParisoObject() {IndexPolyTabVector.clear();}
+ParisoObject::~ParisoObject() {}
 uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)
 {
     uint idx = 0;
