@@ -598,30 +598,6 @@ void Iso3D::ReinitVarTablesWhenMorphActiv(uint IsoIndex)
         for (uint k= 0; k < limitZ; k++)
             workerthreads[nbthreads].zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k];
     }
-
-    /*
-    masterthread->xLocal2[IsoIndex*maxgridval]=(masterthread->x_Sup[IsoIndex]=masterthread->xSupParser[IsoIndex].Eval(vals));
-    masterthread->yLocal2[IsoIndex*maxgridval]=(masterthread->y_Sup[IsoIndex]=masterthread->ySupParser[IsoIndex].Eval(vals));
-    masterthread->zLocal2[IsoIndex*maxgridval]=(masterthread->z_Sup[IsoIndex]=masterthread->zSupParser[IsoIndex].Eval(vals));
-    masterthread->x_Step[IsoIndex] = (masterthread->xLocal2[IsoIndex*maxgridval]-(masterthread->x_Inf[IsoIndex]=masterthread->xInfParser[IsoIndex].Eval(vals)))/(limitX-1);
-    masterthread->y_Step[IsoIndex] = (masterthread->yLocal2[IsoIndex*maxgridval]-(masterthread->y_Inf[IsoIndex]=masterthread->yInfParser[IsoIndex].Eval(vals)))/(limitY-1);
-    masterthread->z_Step[IsoIndex] = (masterthread->zLocal2[IsoIndex*maxgridval]-(masterthread->z_Inf[IsoIndex]=masterthread->zInfParser[IsoIndex].Eval(vals)))/(limitZ-1);
-    for (uint i= 1; i < limitX; i++)
-        masterthread->xLocal2[IsoIndex*maxgridval+i] = masterthread->xLocal2[IsoIndex*maxgridval+i-1] - masterthread->x_Step[IsoIndex];
-    for (uint j= 1; j < limitY; j++)
-        masterthread->yLocal2[IsoIndex*maxgridval+j] = masterthread->yLocal2[IsoIndex*maxgridval+j-1] - masterthread->y_Step[IsoIndex];
-    for (uint k= 1; k < limitZ; k++)
-        masterthread->zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k-1] - masterthread->z_Step[IsoIndex];
-    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-    {
-        for (uint k= 0; k < limitX; k++)
-            workerthreads[nbthreads].xLocal2[IsoIndex*maxgridval+k] = masterthread->xLocal2[IsoIndex*maxgridval+k];
-        for (uint k= 0; k < limitY; k++)
-            workerthreads[nbthreads].yLocal2[IsoIndex*maxgridval+k] = masterthread->yLocal2[IsoIndex*maxgridval+k];
-        for (uint k= 0; k < limitZ; k++)
-            workerthreads[nbthreads].zLocal2[IsoIndex*maxgridval+k] = masterthread->zLocal2[IsoIndex*maxgridval+k];
-    }
-    */
 }
 void IsoWorkerThread::AllocateStackFactor(int *pt)
 {
@@ -1194,22 +1170,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
         for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*GridVal+i] = xLocal2[IsoIndex*GridVal+i-1] + x_Step[IsoIndex];
         for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*GridVal+j] = yLocal2[IsoIndex*GridVal+j-1] + y_Step[IsoIndex];
         for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*GridVal+k] = zLocal2[IsoIndex*GridVal+k-1] + z_Step[IsoIndex];
-
-
-
-
-
-        /*
-        xLocal2[IsoIndex*GridVal]=(x_Sup[IsoIndex]=xSupParser[IsoIndex].Eval(vals));
-        yLocal2[IsoIndex*GridVal]=(y_Sup[IsoIndex]=ySupParser[IsoIndex].Eval(vals));
-        zLocal2[IsoIndex*GridVal]=(z_Sup[IsoIndex]=zSupParser[IsoIndex].Eval(vals));
-        x_Step[IsoIndex] = (xLocal2[IsoIndex*GridVal] - (x_Inf[IsoIndex]=xInfParser[IsoIndex].Eval(vals)))/(limitX-1);
-        y_Step[IsoIndex] = (yLocal2[IsoIndex*GridVal] - (y_Inf[IsoIndex]=yInfParser[IsoIndex].Eval(vals)))/(limitY-1);
-        z_Step[IsoIndex] = (zLocal2[IsoIndex*GridVal] - (z_Inf[IsoIndex]=zInfParser[IsoIndex].Eval(vals)))/(limitZ-1);
-        for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*GridVal+i] = xLocal2[IsoIndex*GridVal+i-1] - x_Step[IsoIndex];
-        for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*GridVal+j] = yLocal2[IsoIndex*GridVal+j-1] - y_Step[IsoIndex];
-        for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*GridVal+k] = zLocal2[IsoIndex*GridVal+k-1] - z_Step[IsoIndex];
-*/
     }
     return stdError;
 }
