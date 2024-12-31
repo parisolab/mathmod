@@ -26,11 +26,11 @@ static double IsoComponentId=0;
 double * Iso3D::Results;
 Voxel  * Iso3D::GridVoxelVarPt;
 int IsoWorkerThread::nbvariables;
+
 double CurrentIsoCmpId(const double* p)
 {
     return((int (p[0]))== 0 ? IsoComponentId:0);
 }
-
 void IsoWorkerThread::run()
 {
     IsoCompute(CurrentComponent);
