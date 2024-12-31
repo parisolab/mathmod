@@ -1965,6 +1965,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint nbstack=StackFactor;
     uint Iindice=0, Jindice=0;
     uint taille=0;
+    uint nbvar=3;// 3 because we have three parameters "u,v,t"
     std::complex<double> pc;
     double res;
 
@@ -1985,8 +1986,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint remU= (iFinish-iStart)%nbU;
     uint remV= Vgrid%nbV;
     uint Totalpoints=(iFinish-iStart)*Vgrid;
-    for(uint l=0; l<nbstack; l++)
-        vals[l*3+2]= stepMorph;
+
     if(!param3d_C && !param4d_C)
     {
         myParserX[cmp].AllocateStackMemory(StackFactor, nbvariables);
@@ -2012,28 +2012,31 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             nbU = remU;
             il= iFinish;
         }
-        for (uint j=0; j < Vgrid   ; j+=nbV)
+        for (uint j=0; j < Vgrid; j+=nbV)
         {
             Jindice = j;
-            nbstack = nbU*nbV;
             if((remV>0) && ((Jindice+remV)==(Vgrid)))
             {
                 nbV = remV;
                 j= Vgrid;
-                nbstack = nbU*nbV;
             }
-            for(uint l=0; l<nbstack; l++)
-            {
-                vals[l*3  ]= double(Iindice+ uint(l/nbV))*dif_u[cmp]/double(Ugrid-1) + u_inf[cmp];
-                vals[l*3+1]= double(Jindice+(l%nbV))*dif_v[cmp]/double(Vgrid-1) + v_inf[cmp];
-            }
+            nbstack = nbU*nbV;
+            int pp=0;
+            for(uint ii=0; ii<nbU; ii++)
+                for(uint jj=0; jj<nbV; jj++)
+                {
+                    vals[pp*nbvar  ]= double(Iindice+ ii)*dif_u[cmp]/double(Ugrid-1) + u_inf[cmp];
+                    vals[pp*nbvar+1]= double(Jindice+ jj)*dif_v[cmp]/double(Vgrid-1) + v_inf[cmp];
+                    vals[pp*nbvar+2]= stepMorph;
+                    ++pp;
+                }
             if(StopCalculations)
             {
                 return;
             }
             if(!param3d_C && !param4d_C)
             {
-                res = myParserX[cmp].Eval2(&(vals[0]), 3, &(ResX[0]), nbstack);
+                res = myParserX[cmp].Eval2(&(vals[0]), nbvar, &(ResX[0]), nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
@@ -2042,9 +2045,9 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        ResX[l] = myParserX[cmp].Eval(&(vals[l*3]));
+                        ResX[l] = myParserX[cmp].Eval(&(vals[l*nbvar]));
                 }
-                res = myParserY[cmp].Eval2(&(vals[0]), 3, &(ResY[0]), nbstack);
+                res = myParserY[cmp].Eval2(&(vals[0]), nbvar, &(ResY[0]), nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
@@ -2053,9 +2056,9 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        ResY[l] = myParserY[cmp].Eval(&(vals[l*3]));
+                        ResY[l] = myParserY[cmp].Eval(&(vals[l*nbvar]));
                 }
-                res = myParserZ[cmp].Eval2(&(vals[0]), 3, &(ResZ[0]), nbstack);
+                res = myParserZ[cmp].Eval2(&(vals[0]), nbvar, &(ResZ[0]), nbstack);
                 if(int(res) == VAR_OVERFLOW)
                 {
                     StopCalculations=true;
@@ -2064,11 +2067,11 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                 if(int(res) == IF_FUNCT_ERROR)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        ResZ[l] = myParserZ[cmp].Eval(&(vals[l*3]));
+                        ResZ[l] = myParserZ[cmp].Eval(&(vals[l*nbvar]));
                 }
                 if(param4D == 1)
                 {
-                    res = myParserW[cmp].Eval2(&(vals[0]), 3, &(ResW[0]), nbstack);
+                    res = myParserW[cmp].Eval2(&(vals[0]), nbvar, &(ResW[0]), nbstack);
                     if(int(res) == VAR_OVERFLOW)
                     {
                         StopCalculations=true;
@@ -2077,7 +2080,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     if(int(res) == IF_FUNCT_ERROR)
                     {
                         for(uint l=0; l<nbstack; l++)
-                            ResW[l] = myParserW[cmp].Eval(&(vals[l*3]));
+                            ResW[l] = myParserW[cmp].Eval(&(vals[l*nbvar]));
                     }
                 }
             }
@@ -2085,10 +2088,10 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             {
                 for(uint l=0; l<nbstack; l++)
                 {
-                    valcomplex[l*4  ] = std::complex<double>(vals[l*3  ] , 0);
-                    valcomplex[l*4+1] = std::complex<double>(vals[l*3+1] , 0);
-                    valcomplex[l*4+2] = std::complex<double>(vals[l*3+2] , 0);
-                    valcomplex[l*4+3] = std::complex<double>(vals[l*3] , vals[l*3+1]);
+                    valcomplex[l*4  ] = std::complex<double>(vals[l*nbvar  ] , 0);
+                    valcomplex[l*4+1] = std::complex<double>(vals[l*nbvar+1] , 0);
+                    valcomplex[l*4+2] = std::complex<double>(vals[l*nbvar+2] , 0);
+                    valcomplex[l*4+3] = std::complex<double>(vals[l*nbvar  ] , vals[l*nbvar+1]);
                 }
                 for(uint l=0; l<nbstack; l++)
                 {

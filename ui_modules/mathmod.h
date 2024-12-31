@@ -164,8 +164,8 @@ public:
     float lightAmbient[4]  = {0.5f, 0.5f, 0.5f, 1.0f};//{0.4f, 0.4f, 0.4f, 0.1};
     float lightDiffuse[4]  = {0.8f, 0.8f, 0.8f, 1.0};
     float lightSpecular[4] = {0.5f, 0.5f, 0.5f, 0.1f};//{0.4f, 0.4f, 0.4f, 0.1};
-    float frontColor[4] = {0.72f, 0.5f, 0.1, 1};
-    float backColor[4]  = {0.1f, 0.7f, 0.2f, 1};
+    float frontColor[4] = {0.1f, 0.7f, 0.2f, 1};
+    float backColor[4]  = {0.72f, 0.5f, 0.1, 1};
     int shininessVal=20;
     int screenWidth=100;
     int screenHeight=100;
