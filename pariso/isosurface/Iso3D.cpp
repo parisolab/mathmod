@@ -66,7 +66,7 @@ void Iso3D::BuildIso()
 IsoMasterThread::IsoMasterThread()
 {
     ParisoCondition = -1;
-    ImplicitFunction =  "cos(x) + cos(y) + cos(z)";
+    ImplicitFunction = "cos(x) + cos(y) + cos(z)";
     XlimitSup = "4";
     YlimitSup = "4";
     ZlimitSup = "4";
@@ -311,8 +311,6 @@ Iso3D::Iso3D( uint nbThreads,
 {
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
-    //PNoise = new ImprovedNoise(4.0, 4.0, 4.0);
-    //NoiseFunction = new CellNoise();
     WorkerThreadsNumber = ThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->AllocateStackFactor(pt);
@@ -612,7 +610,6 @@ void IsoWorkerThread::AllocateStackFactor(int *pt)
 }
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
-    //uint maxgrscalemaxgr = GridVal*GridVal;
     const uint limitY = XYZgrid, limitZ = XYZgrid;
     //uint I_jp, J_jp;
     uint id=0;
@@ -621,7 +618,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint Iindice=0, Jindice=0, Kindice=0 ;
     uint nbvar=8; //x,y,z,t,Iindex, Jindex,Kindex
     int PreviousSignal=0;
-
 
     vals[3]    = stepMorph;
     uint taille=0;
@@ -649,7 +645,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
             nbX = remX;
             i= iFinish;
         }
-        //I_jp = Iindice*maxgrscalemaxgr;
         for(uint j=0; j<limitY; j+=nbY)
         {
             Jindice = j;
@@ -659,7 +654,6 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                 nbY = remY;
                 j= limitY;
             }
-            //J_jp = I_jp + Jindice*GridVal;
             for(uint k=0; k<limitZ; k+=nbZ)
             {
                 Kindice = k;
@@ -682,7 +676,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                             vals[l*nbvar+4]= Iindice+ii;
                             vals[l*nbvar+5]= Jindice+jj;
                             vals[l*nbvar+6]= Kindice+kk;
-                            vals[l*nbvar+7]=GridVal;
+                            vals[l*nbvar+7]= GridVal;
                             l++;
                         }
                 double res = implicitFunctionParser[IsoIndex].Eval2(&(vals[0]), nbvar, &(Res[0]), nbstack);
