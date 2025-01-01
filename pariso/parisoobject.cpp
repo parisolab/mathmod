@@ -19,14 +19,24 @@
  ***************************************************************************/
 #include "parisoobject.h"
 
-MasterThread::MasterThread() {}
-MasterThread::~MasterThread() {}
-WorkerThread::WorkerThread() {}
-WorkerThread::~WorkerThread() {}
+
 std::vector<uint> ParisoObject::IndexPolyTabVector;
 std::vector<float> ParisoObject::NormVertexTabVector;
 std::vector<uint> ParisoObject::IndexPolyTabMinVector;
 std::vector<uint> ParisoObject::IndexPolyTabMinVector2;
+
+MasterThread::MasterThread() {}
+MasterThread::~MasterThread() {}
+WorkerThread::WorkerThread() {}
+WorkerThread::~WorkerThread() {}
+uint WorkerThread::count_comma(const std::string s)
+{
+    uint count = 0, size=0;
+    size=s.size();
+    for (uint i = 0; i < size; i++)
+        if (s[i] == ',') count++;
+    return count;
+}
 ParisoObject::ParisoObject() {}
 ParisoObject::~ParisoObject() {}
 uint ParisoObject::CNDtoUse(uint index, struct ComponentInfos *components)

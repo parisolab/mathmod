@@ -23,8 +23,8 @@
 
 struct ParametersString
 {
-    std::string IsoParameters="x,y,z,t,i_indx,j_indx,k_indx,max_ijk";
-    uint IsoNbParameters=8;
+    std::string FunctParameters;
+    uint FunctParametersNumb;
 };
 
 class ParisoObject : public QThread
@@ -51,6 +51,7 @@ class WorkerThread : public QThread
 public:
     WorkerThread();
     ~WorkerThread();
+    uint count_comma(const std::string);
 public:
     uint CurrentComponent, MyIndex, WorkerThreadsNumber, iStart, iFinish, StackFactor;
     double stepMorph=0.0, pace=0.0;
