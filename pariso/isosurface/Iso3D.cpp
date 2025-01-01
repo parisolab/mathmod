@@ -296,7 +296,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread-> ImplicitStructs[index].fxyz, "x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->StrParameters.IsoParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
@@ -606,19 +606,18 @@ void IsoWorkerThread::AllocateStackFactor(int *pt)
     OrignbY=uint(pt[1]);
     OrignbZ=uint(pt[2]);
     StackFactor=OrignbX*OrignbY*OrignbZ;
-    vals.resize(8*StackFactor); // 8 because we have 8 parameters "x,y,z,t,i_indx,j_indx,k_indx,max_ijk"
+    vals.resize(StrParameters.IsoNbParameters*StackFactor); // NbParameters=8 because we have "x,y,z,t,i_indx,j_indx,k_indx,max_ijk"
     Res.resize(StackFactor);
 }
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
 {
     const uint limitY = XYZgrid, limitZ = XYZgrid;
-    //uint I_jp, J_jp;
     uint id=0;
     uint nbX=OrignbX, nbY=OrignbY, nbZ=OrignbZ;
     uint nbstack;
     uint Iindice=0, Jindice=0, Kindice=0 ;
-    uint nbvar=8; //x,y,z,t,Iindex, Jindex,Kindex
     int PreviousSignal=0;
+    uint NbParameters=StrParameters.IsoNbParameters;
 
     vals[3]    = stepMorph;
     uint taille=0;
@@ -670,21 +669,21 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                     for(uint jj=0; jj<nbY; jj++)
                         for(uint kk=0; kk<nbZ; kk++)
                         {
-                            vals[l*nbvar  ]= xLocal2[IsoIndex*GridVal+Iindice+ii];
-                            vals[l*nbvar+1]= yLocal2[IsoIndex*GridVal+Jindice+jj];
-                            vals[l*nbvar+2]= zLocal2[IsoIndex*GridVal+Kindice+kk];
-                            vals[l*nbvar+3]= stepMorph;
-                            vals[l*nbvar+4]= Iindice+ii;
-                            vals[l*nbvar+5]= Jindice+jj;
-                            vals[l*nbvar+6]= Kindice+kk;
-                            vals[l*nbvar+7]= GridVal;
+                            vals[l*NbParameters  ]= xLocal2[IsoIndex*GridVal+Iindice+ii];
+                            vals[l*NbParameters+1]= yLocal2[IsoIndex*GridVal+Jindice+jj];
+                            vals[l*NbParameters+2]= zLocal2[IsoIndex*GridVal+Kindice+kk];
+                            vals[l*NbParameters+3]= stepMorph;
+                            vals[l*NbParameters+4]= Iindice+ii;
+                            vals[l*NbParameters+5]= Jindice+jj;
+                            vals[l*NbParameters+6]= Kindice+kk;
+                            vals[l*NbParameters+7]= GridVal;
                             l++;
                         }
-                double res = implicitFunctionParser[IsoIndex].Eval2(&(vals[0]), nbvar, &(Res[0]), nbstack);
+                double res = implicitFunctionParser[IsoIndex].Eval2(&(vals[0]), NbParameters, &(Res[0]), nbstack);
                 if( abs(res - IF_FUNCT_ERROR) == 0.0)
                 {
                     for(uint l=0; l<nbstack; l++)
-                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*nbvar]));
+                        Res[l] = implicitFunctionParser[IsoIndex].Eval(&(vals[l*NbParameters]));
                 }
                 else if( abs(res - DIVISION_BY_ZERO) == 0.0 || abs(res - VAR_OVERFLOW) == 0.0)
                 {
@@ -1110,7 +1109,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
         }
     for(uint i=0; i<componentsNumber; i++)
     {
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
+        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,StrParameters.IsoParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;
@@ -1333,7 +1332,7 @@ void IsoMasterThread::AllocateMasterParsers()
         if(!functnotnull)
             FunctSize = 0;
         Fct          = new FunctionParser[FunctSize];
-        UsedFunct    = new bool[4*componentsNumber*FunctSize];
+        UsedFunct    = new bool[componentsNumber*FunctSize]; //Why "4*" ? parametric object have 4 fcts (fx,fy,fz,fw) but isoObject have only one fxyz
         UsedFunct2   = new bool[FunctSize*FunctSize];
         vectnotnull? nbvariables=vect[0] : nbvariables=0;
         rgbtnotnull ?
@@ -1428,7 +1427,7 @@ void Iso3D::IsoBuild (
         NbVertexTmp = uint(NormVertexTabVector.size()/10);
 
         //*********************
-        // probleme with pariso objects comes from here since IndexPolyTabVector not only contains triangles but also lines
+        // probleme with pariso objects comes from here since IndexPolyTabVector contains not only triangles but also lines
         // inherited from it's parametric conterpart
         NbTriangleIsoSurfaceTmp = uint(IndexPolyTabVector.size()/3); // <==
         //*********************

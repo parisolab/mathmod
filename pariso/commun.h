@@ -57,7 +57,6 @@ double TurbulencePerlin(const double *);
 double MarblePerlin(const double *);
 
 
-
 struct GlobalParam
 {
     uint TypeDrawin = 10;

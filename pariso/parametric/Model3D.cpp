@@ -785,7 +785,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         {
             for(uint j=0; j<FunctSize; j++)
             {
-                if((UsedFunct[i*4*FunctSize+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
+                if((UsedFunct[i*4*FunctSize+4*j  ]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
                     myParserX[i].AddFunction(FunctNames[j], Fct[j]);
                 if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
                     myParserY[i].AddFunction(FunctNames[j], Fct[j]);
@@ -802,7 +802,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         {
             for(uint j=0; j<FunctSize; j++)
             {
-                if((UsedFunct[i*4*FunctSize+4*j]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
+                if((UsedFunct[i*4*FunctSize+4*j  ]=(ParamStructs[i].fx.find(FunctNames[j]) != std::string::npos)))
                     myParserX_C[i].AddFunction(FunctNames[j], Fct_C[j]);
                 if((UsedFunct[i*4*FunctSize+4*j+1]=(ParamStructs[i].fy.find(FunctNames[j]) != std::string::npos)))
                     myParserY_C[i].AddFunction(FunctNames[j], Fct_C[j]);
@@ -1062,7 +1062,7 @@ ErrorMessage  Par3D::parse_expression2()
         {
             for(uint j=0; j<masterthread->FunctSize; j++)
             {
-                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j])
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j  ])
                     workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
                 if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+1])
                     workerthreads[nbthreads].myParserY[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct[j]);
@@ -1171,7 +1171,7 @@ ErrorMessage  Par3D::parse_expression2_C()
         {
             for(uint j=0; j<masterthread->FunctSize; j++)
             {
-                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j])
+                if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j  ])
                     workerthreads[nbthreads].myParserX_C[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct_C[j]);
                 if(masterthread->UsedFunct[i*4*masterthread->FunctSize+4*j+1])
                     workerthreads[nbthreads].myParserY_C[i].AddFunction(masterthread->FunctNames[j], workerthreads[nbthreads].Fct_C[j]);
