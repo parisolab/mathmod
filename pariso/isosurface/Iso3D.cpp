@@ -296,7 +296,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->StrParameters.IsoParameters)) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->ParametersList.IsoParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
@@ -606,7 +606,7 @@ void IsoWorkerThread::AllocateStackFactor(int *pt)
     OrignbY=uint(pt[1]);
     OrignbZ=uint(pt[2]);
     StackFactor=OrignbX*OrignbY*OrignbZ;
-    vals.resize(StrParameters.IsoNbParameters*StackFactor); // NbParameters=8 because we have "x,y,z,t,i_indx,j_indx,k_indx,max_ijk"
+    vals.resize(ParametersList.IsoNbParameters*StackFactor); // NbParameters=8 because we have "x,y,z,t,i_indx,j_indx,k_indx,max_ijk"
     Res.resize(StackFactor);
 }
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
@@ -617,7 +617,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint nbstack;
     uint Iindice=0, Jindice=0, Kindice=0 ;
     int PreviousSignal=0;
-    uint NbParameters=StrParameters.IsoNbParameters;
+    uint NbParameters=ParametersList.IsoNbParameters;
 
     vals[3]    = stepMorph;
     uint taille=0;
@@ -1109,7 +1109,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
         }
     for(uint i=0; i<componentsNumber; i++)
     {
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,StrParameters.IsoParameters)) >= 0)
+        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,ParametersList.IsoParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;

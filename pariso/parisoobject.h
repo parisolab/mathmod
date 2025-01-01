@@ -57,7 +57,7 @@ public:
     bool StopCalculations, ParsersAllocated, ParsersAllocated_C;
     int activeMorph, signalVal;
     int *ptStackFactor;
-    struct ParametersString StrParameters;
+    struct ParametersString ParametersList;
 };
 
 class MasterThread
