@@ -21,12 +21,16 @@
 #define PARISOOBJECT_H
 #include "commun.h"
 
-struct ParametersString
+struct IsoParametersStringList
 {
     std::string FunctParameters;
-    uint FunctParametersNumb;
 };
 
+struct ParParametersStringList
+{
+    std::string ParFunctParameters;
+    std::string ParComplexFunctParameters;
+};
 class ParisoObject : public QThread
 {
 public:
@@ -58,7 +62,6 @@ public:
     bool StopCalculations, ParsersAllocated, ParsersAllocated_C;
     int activeMorph, signalVal;
     int *ptStackFactor;
-    struct ParametersString ParametersList;
 };
 
 class MasterThread

@@ -139,8 +139,7 @@ IsoWorkerThread::IsoWorkerThread()
     AllComponentTraited = false;
     ParsersAllocated = false;
     StopCalculations = false;
-    ParametersList.FunctParameters="x,y,z,t,i_indx,j_indx,k_indx,max_ijk";
-    ParametersList.FunctParametersNumb=count_comma(ParametersList.FunctParameters)+1;
+    IsoParametersList.FunctParameters="x,y,z,t,i_indx,j_indx,k_indx,max_ijk";
 }
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
@@ -298,7 +297,7 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->ParametersList.FunctParameters)) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->IsoParametersList.FunctParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
@@ -608,7 +607,7 @@ void IsoWorkerThread::AllocateStackFactor(int *pt)
     OrignbY=uint(pt[1]);
     OrignbZ=uint(pt[2]);
     StackFactor=OrignbX*OrignbY*OrignbZ;
-    vals.resize(ParametersList.FunctParametersNumb*StackFactor); // NbParameters=8 because we have "x,y,z,t,i_indx,j_indx,k_indx,max_ijk"
+    vals.resize((count_comma(IsoParametersList.FunctParameters)+1)*StackFactor); // NbParameters=8 because we have "x,y,z,t,i_indx,j_indx,k_indx,max_ijk"
     Res.resize(StackFactor);
 }
 void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
@@ -619,7 +618,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     uint nbstack;
     uint Iindice=0, Jindice=0, Kindice=0 ;
     int PreviousSignal=0;
-    uint NbParameters=ParametersList.FunctParametersNumb;
+    uint NbParameters = count_comma(IsoParametersList.FunctParameters)+1;
 
     vals[3]    = stepMorph;
     uint taille=0;
@@ -1111,7 +1110,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
         }
     for(uint i=0; i<componentsNumber; i++)
     {
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,ParametersList.FunctParameters)) >= 0)
+        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,IsoParametersList.FunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;

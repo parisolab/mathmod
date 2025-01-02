@@ -55,6 +55,7 @@ public :
     std::vector<double> xLocal2, yLocal2, zLocal2;
     std::vector<double> vals, Res;
     uint OrignbX, OrignbY, OrignbZ;
+    struct IsoParametersStringList IsoParametersList;
     static int nbvariables;
 public :
     void IsoCompute(uint);
