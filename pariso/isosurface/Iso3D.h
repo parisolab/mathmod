@@ -43,6 +43,11 @@
                  3.---------------2------------.2
 */
 
+struct IsoParametersStringList
+{
+    std::string FunctParameters;
+    std::string BasicFunctParameters; //ie : "x,y,z,t"
+};
 
 class IsoWorkerThread : public WorkerThread
 {

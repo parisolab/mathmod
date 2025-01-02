@@ -21,16 +21,7 @@
 #define PARISOOBJECT_H
 #include "commun.h"
 
-struct IsoParametersStringList
-{
-    std::string FunctParameters;
-};
 
-struct ParParametersStringList
-{
-    std::string ParFunctParameters;
-    std::string ParComplexFunctParameters;
-};
 class ParisoObject : public QThread
 {
 public:

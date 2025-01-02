@@ -140,6 +140,7 @@ IsoWorkerThread::IsoWorkerThread()
     ParsersAllocated = false;
     StopCalculations = false;
     IsoParametersList.FunctParameters="x,y,z,t,i_indx,j_indx,k_indx,max_ijk";
+    IsoParametersList.BasicFunctParameters="x,y,z,t";
 }
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
@@ -237,7 +238,7 @@ ErrorMessage  Iso3D::parse_expression2()
             for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],"x,y,z,t")) >= 0)
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],masterthread->IsoParametersList.BasicFunctParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 return masterthread->stdError;
@@ -846,7 +847,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             for(uint j=0; j<i; j++)
                 if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
-            if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],"x,y,z,t"))>=0)
+            if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],IsoParametersList.BasicFunctParameters))>=0)
             {
                 stdError.strError = Functs[i];
                 return stdError;
@@ -1117,38 +1118,38 @@ ErrorMessage IsoMasterThread::ParseExpression()
         }
         if(cndnotnull && (ImplicitStructs[i].cnd!=""))
         {
-            if ((stdError.iErrorIndex = ParisoConditionParser[i].Parse(ImplicitStructs[i].cnd,"x,y,z,t")) >= 0)
+            if ((stdError.iErrorIndex = ParisoConditionParser[i].Parse(ImplicitStructs[i].cnd,IsoParametersList.BasicFunctParameters)) >= 0)
             {
                 stdError.strError = ImplicitStructs[i].cnd;
                 return stdError;
             }
         }
-        if ((stdError.iErrorIndex = xSupParser[i].Parse(ImplicitStructs[i].xmax, "x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = xSupParser[i].Parse(ImplicitStructs[i].xmax, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].xmax;
             return stdError;
         }
-        if ((stdError.iErrorIndex = ySupParser[i].Parse(ImplicitStructs[i].ymax, "x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = ySupParser[i].Parse(ImplicitStructs[i].ymax, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].ymax;
             return stdError;
         }
-        if ((stdError.iErrorIndex = zSupParser[i].Parse(ImplicitStructs[i].zmax, "x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = zSupParser[i].Parse(ImplicitStructs[i].zmax, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].zmax;
             return stdError;
         }
-        if ((stdError.iErrorIndex = xInfParser[i].Parse(ImplicitStructs[i].xmin, "x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = xInfParser[i].Parse(ImplicitStructs[i].xmin, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].xmin;
             return stdError;
         }
-        if ((stdError.iErrorIndex = yInfParser[i].Parse(ImplicitStructs[i].ymin, "x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = yInfParser[i].Parse(ImplicitStructs[i].ymin, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].ymin;
             return stdError;
         }
-        if ((stdError.iErrorIndex = zInfParser[i].Parse(ImplicitStructs[i].zmin, "x,y,z,t")) >= 0)
+        if ((stdError.iErrorIndex = zInfParser[i].Parse(ImplicitStructs[i].zmin, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].zmin;
             return stdError;

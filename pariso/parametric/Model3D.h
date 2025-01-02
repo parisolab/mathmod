@@ -37,7 +37,11 @@ struct   ParStruct
     std::string grid;
     int  index;
 };
-
+struct ParParametersStringList
+{
+    std::string ParFunctParameters;
+    std::string ParComplexFunctParameters;
+};
 class ParWorkerThread : public WorkerThread
 {
     Q_OBJECT
