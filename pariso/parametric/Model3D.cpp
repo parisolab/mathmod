@@ -1,5 +1,5 @@
 ﻿/***************************************************************************
- *   Copyright (C) 2024 by Abderrahman Taha                                *
+ *   Copyright (C) 2025 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
