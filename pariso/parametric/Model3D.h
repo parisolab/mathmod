@@ -41,6 +41,8 @@ struct ParParametersStringList
 {
     std::string ParFunctParameters;
     std::string ParComplexFunctParameters;
+    std::string ColorFunctParameters;
+    std::string ColorComplexFunctParameters;
 };
 class ParWorkerThread : public WorkerThread
 {

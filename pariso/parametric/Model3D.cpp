@@ -49,6 +49,8 @@ ParWorkerThread::ParWorkerThread()
     ParsersAllocated = ParsersAllocated_C = false;
     ParParametersList.ParFunctParameters="u,v,t";
     ParParametersList.ParComplexFunctParameters="u,v,t,Z";
+    ParParametersList.ColorFunctParameters="x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t";
+    ParParametersList.ColorComplexFunctParameters="x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z";
 }
 ParWorkerThread::~ParWorkerThread()
 {
@@ -821,9 +823,9 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         for(uint i=0; i<RgbtSize; i++)
         {
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],ParParametersList.ColorFunctParameters)) >= 0)
             {
-                if((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z")) >= 0)
+                if((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],ParParametersList.ColorComplexFunctParameters)) >= 0)
                 {
                     stdError.strError = Rgbts[i];
                     return stdError;
@@ -839,7 +841,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         {
             for(uint i=0; i<RgbtSize; i++)
             {
-                if ((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t,Z")) >= 0)
+                if ((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],ParParametersList.ColorComplexFunctParameters)) >= 0)
                 {
                         stdError.strError = Rgbts[i];
                         return stdError;
@@ -850,20 +852,20 @@ ErrorMessage  ParMasterThread::parse_expression()
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
-        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
+        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,ParParametersList.ColorFunctParameters)) >= 0)
         {
             stdError.strError = Gradient;
             return stdError;
         }
         for(uint i=0; i<VRgbtSize; i++)
-            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],ParParametersList.ColorFunctParameters)) >= 0)
             {
                 stdError.strError = VRgbts[i];
                 return stdError;
             }
     }
     if(Noise != "")
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t")) >= 0)
+        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,ParParametersList.ColorFunctParameters)) >= 0)
         {
             stdError.strError = Noise;
             return stdError;
@@ -1956,18 +1958,18 @@ void ParWorkerThread::AllocateStackFactor(int *pt)
     ResY.resize(StackFactor);
     ResZ.resize(StackFactor);
     ResW.resize(StackFactor);
-    vals.resize(4*StackFactor); // 4 because we have 4 parameters ParParametersList.ParComplexFunctParameters but we don't use Z yet
-    valcomplex.resize(4*StackFactor); // 4 because we have 4 parameters ParParametersList.ParComplexFunctParameters
+    vals.resize((count_comma(ParParametersList.ParFunctParameters)+1)*StackFactor); //  "u,v,t"
+    valcomplex.resize((count_comma(ParParametersList.ParComplexFunctParameters)+1)*StackFactor); // "u,v,t,Z"
 }
 void  ParWorkerThread::ParCompute(uint cmp, uint idx)
 {
     uint NewPosition=10*idx, id=0;
     int PreviousSignal=0;
     uint nbU=OrignbU, nbV=OrignbV;
-    uint nbstack=StackFactor;
+    uint nbstack;
     uint Iindice=0, Jindice=0;
     uint taille=0;
-    uint nbvar=3;// 3 because we have three parameters ParParametersList.ParFunctParameters
+    uint nbvar=count_comma(ParParametersList.ParFunctParameters)+1;// 3 because we have three parameters ParParametersList.ParFunctParameters
     std::complex<double> pc;
     double res;
 

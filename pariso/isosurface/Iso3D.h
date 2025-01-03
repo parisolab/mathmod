@@ -47,6 +47,7 @@ struct IsoParametersStringList
 {
     std::string FunctParameters;
     std::string BasicFunctParameters; //ie : "x,y,z,t"
+    std::string ColorFunctParameters; //"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf"
 };
 
 class IsoWorkerThread : public WorkerThread

@@ -141,6 +141,7 @@ IsoWorkerThread::IsoWorkerThread()
     StopCalculations = false;
     IsoParametersList.FunctParameters="x,y,z,t,i_indx,j_indx,k_indx,max_ijk";
     IsoParametersList.BasicFunctParameters="x,y,z,t";
+    IsoParametersList.ColorFunctParameters="x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf";
 }
 void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 {
@@ -1083,7 +1084,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
     // Parse
     if(rgbtnotnull && RgbtSize == 4)
         for(uint i=0; i<RgbtSize; i++)
-            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
+            if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],IsoParametersList.ColorFunctParameters)) >= 0)
             {
                 stdError.strError = Rgbts[i];
                 return stdError;
@@ -1091,20 +1092,20 @@ ErrorMessage IsoMasterThread::ParseExpression()
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
-        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
+        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,IsoParametersList.ColorFunctParameters)) >= 0)
         {
             stdError.strError = Gradient;
             return stdError;
         }
         for(uint i=0; i<VRgbtSize; i++)
-            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
+            if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],IsoParametersList.ColorFunctParameters)) >= 0)
             {
                 stdError.strError = VRgbts[i];
                 return stdError;
             }
     }
     if(Noise != "")
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf")) >= 0)
+        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,IsoParametersList.ColorFunctParameters)) >= 0)
         {
             stdError.strError = Noise;
             return stdError;
