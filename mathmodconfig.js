@@ -13,9 +13,10 @@
     },
     "Parameters": {
         "IsoMaxGrid": 500,
-        "InitIsoGrid": 64,
+        "InitIsoGrid": 112,
+        "AutomaticInitGrid": true,
         "ParMaxGrid": 5000,
-        "InitParGrid": 64,
+        "InitParGrid": 112,
         "ScriptEditorFontSize": 18
     },
     "StartOptions": {
@@ -25,7 +26,7 @@
         "AutoDetect": true,
         "ThreadsNumber": 8,
         "MinThreadsNumber": 1,
-        "MaxThreadsNumber": 64
+        "MaxThreadsNumber": 256
     },
     "WindowSize": {
         "ControlH": 750,
@@ -48,8 +49,7 @@
         "IsoFactY": 4,
         "IsoFactZ": 4,
         "ParFactU": 8,
-        "ParFactV": 8,
-        "ParFactW": 8
+        "ParFactV": 8
     },
     "OpenGlConfig": {
         "GL_SPECULAR": [50, 50, 50, 100],

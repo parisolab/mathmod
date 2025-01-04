@@ -48,7 +48,7 @@ public:
     QString docabsolutepath = "";
     QString version = "12.1";
     qreal scripteditorfontsize=14;
-    QJsonObject JConfig, Collection, IsoParam;
+    QJsonObject JConfig, Collection, InitParameters;
     QPalette mypalette, mypalette2, darkpalette;
     int ControlX = 20;
     int ControlY = 20;

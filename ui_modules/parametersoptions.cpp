@@ -418,23 +418,52 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             model = tmp["Model"].toString();
         }
 
+        if (JConfig["CalculFactorConfig"].isObject())
+        {
+            QJsonObject tmp = JConfig["CalculFactorConfig"].toObject();
+            CalculFactor[0] = tmp["IsoFactX"].toInt();
+            CalculFactor[1] = tmp["IsoFactY"].toInt();
+            CalculFactor[2] = tmp["IsoFactZ"].toInt();
+            CalculFactor[3] = tmp["ParFactU"].toInt();
+            CalculFactor[4] = tmp["ParFactV"].toInt();
+        }
+
+        if (JConfig["ThreadsConfig"].isObject())
+        {
+            QJsonObject tmp = JConfig["ThreadsConfig"].toObject();
+            if (tmp["AutoDetect"].isBool() && tmp["AutoDetect"].toBool())
+                Threads[0] = QThread::idealThreadCount();
+            else
+                Threads[0] = tmp["ThreadsNumber"].toInt();
+            Threads[1] = tmp["MinThreadsNumber"].toInt();
+            Threads[2] = tmp["MaxThreadsNumber"].toInt();
+        }
+
         if (JConfig["Parameters"].isObject())
         {
-            IsoParam = JConfig["Parameters"].toObject();
-            if ((IsoParam)["IsoMaxGrid"].isDouble())
-                IsoMaxGrid = ((IsoParam)["IsoMaxGrid"]).toInt();
+            InitParameters = JConfig["Parameters"].toObject();
 
-            if ((IsoParam)["ParMaxGrid"].isDouble())
-                ParMaxGrid = ((IsoParam)["ParMaxGrid"]).toInt();
+            if ((InitParameters)["AutomaticInitGrid"].isBool()  && (InitParameters)["AutomaticInitGrid"].toBool())
+            {
+                InitIsoGrid = 2*Threads[0]*CalculFactor[0];
+                InitParGrid = 2*Threads[0]*CalculFactor[3];
+            }
+            else
+            {
+                if ((InitParameters)["InitIsoGrid"].isDouble())
+                    InitIsoGrid = (InitParameters)["InitIsoGrid"].toInt();
 
-            if ((IsoParam)["InitParGrid"].isDouble())
-                InitParGrid = (IsoParam)["InitParGrid"].toInt();
+                if ((InitParameters)["InitParGrid"].isDouble())
+                    InitParGrid = (InitParameters)["InitParGrid"].toInt();
+            }
+            if ((InitParameters)["IsoMaxGrid"].isDouble())
+                IsoMaxGrid = ((InitParameters)["IsoMaxGrid"]).toInt();
 
-            if ((IsoParam)["InitIsoGrid"].isDouble())
-                InitIsoGrid = (IsoParam)["InitIsoGrid"].toInt();
+            if ((InitParameters)["ParMaxGrid"].isDouble())
+                ParMaxGrid = ((InitParameters)["ParMaxGrid"]).toInt();
 
-            if ((IsoParam)["ScriptEditorFontSize"].isDouble())
-                scripteditorfontsize = (IsoParam)["ScriptEditorFontSize"].toInt();
+            if ((InitParameters)["ScriptEditorFontSize"].isDouble())
+                scripteditorfontsize = (InitParameters)["ScriptEditorFontSize"].toInt();
         }
 
         QJsonObject tmp;
@@ -491,27 +520,6 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
                 Diffuse[2]=(tmp2["GL_DIFFUSE"].toArray())[2].toInt();
                 Diffuse[3]=(tmp2["GL_DIFFUSE"].toArray())[3].toInt();
             }
-        }
-
-        if (JConfig["CalculFactorConfig"].isObject())
-        {
-            QJsonObject tmp = JConfig["CalculFactorConfig"].toObject();
-            CalculFactor[0] = tmp["IsoFactX"].toInt();
-            CalculFactor[1] = tmp["IsoFactY"].toInt();
-            CalculFactor[2] = tmp["IsoFactZ"].toInt();
-            CalculFactor[3] = tmp["ParFactU"].toInt();
-            CalculFactor[4] = tmp["ParFactV"].toInt();
-        }
-
-        if (JConfig["ThreadsConfig"].isObject())
-        {
-            QJsonObject tmp = JConfig["ThreadsConfig"].toObject();
-            if (tmp["AutoDetect"].isBool() && tmp["AutoDetect"].toBool())
-                Threads[0] = QThread::idealThreadCount();
-            else
-                Threads[0] = tmp["ThreadsNumber"].toInt();
-            Threads[1] = tmp["MinThreadsNumber"].toInt();
-            Threads[2] = tmp["MaxThreadsNumber"].toInt();
         }
 
         if (JConfig["ReleaseInfos"].isObject())
