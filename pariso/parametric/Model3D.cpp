@@ -1966,9 +1966,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     uint NewPosition=10*idx, id=0;
     int PreviousSignal=0;
     uint nbU=OrignbU, nbV=OrignbV;
-    uint nbstack;
-    uint Iindice=0, Jindice=0;
-    uint taille=0;
+    uint Iindice=0, Jindice=0, taille=0, nbstack=1;
     uint nbvar=count_comma(ParParametersList.ParFunctParameters)+1;// 3 because we have three parameters ParParametersList.ParFunctParameters
     std::complex<double> pc;
     double res;
