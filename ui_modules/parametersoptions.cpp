@@ -476,15 +476,6 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             GlwinY = tmp["GlwinY"].toInt();
         }
 
-        if (JConfig["WindowSize"].isObject())
-        {
-            tmp = JConfig["WindowSize"].toObject();
-            ControlW = tmp["ControlW"].toInt();
-            ControlH = tmp["ControlH"].toInt();
-            GlwinW = tmp["GlwinW"].toInt();
-            GlwinH = tmp["GlwinH"].toInt();
-        }
-
         if (JConfig["OpenGlConfig"].isObject())
         {
             QJsonObject tmp1, tmp2;

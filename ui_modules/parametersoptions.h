@@ -54,10 +54,6 @@ public:
     int ControlY = 20;
     int GlwinX = 575;
     int GlwinY = 20;
-    int ControlW = 538;
-    int ControlH = 700;
-    int GlwinW = 780;
-    int GlwinH = 700;
     int Specular[4]={50,50,50,100};
     int Ambient[4]={50,50,50,100};
     int Diffuse[4]={80,80,80,100};

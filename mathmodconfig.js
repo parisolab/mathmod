@@ -28,12 +28,6 @@
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 256
     },
-    "WindowSize": {
-        "ControlH": 750,
-        "ControlW": 1200,
-        "GlwinH": 750,
-        "GlwinW": 750
-    },
     "WindowPosition": {
         "ControlX": 80,
         "ControlY": 30,
