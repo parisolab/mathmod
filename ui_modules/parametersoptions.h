@@ -50,10 +50,6 @@ public:
     qreal scripteditorfontsize=14;
     QJsonObject JConfig, Collection, InitParameters;
     QPalette mypalette, mypalette2, darkpalette;
-    int ControlX = 20;
-    int ControlY = 20;
-    int GlwinX = 575;
-    int GlwinY = 20;
     int Specular[4]={50,50,50,100};
     int Ambient[4]={50,50,50,100};
     int Diffuse[4]={80,80,80,100};

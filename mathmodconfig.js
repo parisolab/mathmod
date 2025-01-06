@@ -13,8 +13,8 @@
     },
     "Parameters": {
         "IsoMaxGrid": 500,
-        "InitIsoGrid": 112,
-        "AutomaticInitGrid": true,
+        "InitIsoGrid": 64,
+        "AutomaticInitGrid": false,
         "ParMaxGrid": 5000,
         "InitParGrid": 112,
         "ScriptEditorFontSize": 18
@@ -28,12 +28,6 @@
         "MinThreadsNumber": 1,
         "MaxThreadsNumber": 256
     },
-    "WindowPosition": {
-        "ControlX": 80,
-        "ControlY": 30,
-        "GlwinX": 535,
-        "GlwinY": 30
-    },
     "Localization": {
         "AutomaticDetection": true,
         "DotSymbol": "."
@@ -44,6 +38,12 @@
         "IsoFactZ": 4,
         "ParFactU": 8,
         "ParFactV": 8
+    },
+    "WindowPosition": {
+        "ControlX": 0,
+        "ControlY": 0,
+        "GlwinX": 0,
+        "GlwinY": 0
     },
     "OpenGlConfig": {
         "GL_SPECULAR": [50, 50, 50, 100],

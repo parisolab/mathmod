@@ -465,17 +465,6 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             if ((InitParameters)["ScriptEditorFontSize"].isDouble())
                 scripteditorfontsize = (InitParameters)["ScriptEditorFontSize"].toInt();
         }
-
-        QJsonObject tmp;
-        if (JConfig["WindowPosition"].isObject())
-        {
-            tmp = JConfig["WindowPosition"].toObject();
-            ControlX = tmp["ControlX"].toInt();
-            ControlY = tmp["ControlY"].toInt();
-            GlwinX = tmp["GlwinX"].toInt();
-            GlwinY = tmp["GlwinY"].toInt();
-        }
-
         if (JConfig["OpenGlConfig"].isObject())
         {
             QJsonObject tmp1, tmp2;
