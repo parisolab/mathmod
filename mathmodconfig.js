@@ -39,12 +39,6 @@
         "ParFactU": 8,
         "ParFactV": 8
     },
-    "WindowPosition": {
-        "ControlX": 0,
-        "ControlY": 0,
-        "GlwinX": 0,
-        "GlwinY": 0
-    },
     "OpenGlConfig": {
         "GL_SPECULAR": [50, 50, 50, 100],
         "GL_AMBIANT" : [50, 50, 50, 100],
