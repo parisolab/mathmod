@@ -3,18 +3,19 @@
         "FileConfig": "",
         "FileCollection": "",
         "VersionNumber": "1200",
-        "ReleaseDate": "211220",
+        "ReleaseDateYMD": "250220",
         "DocAbsolutePath": "https://github.com/parisolab/mathmod/wiki/documentation",
         "DocPartialPath": "../Resources/documentation/index.html",
+
         "_DocPartialPath": "../Resources/documentation/index.html",
         "_DocAbsolutePath": "https://github.com/parisolab/mathmod/wiki/documentation",
         "_FileConfig": "Resources/mathmodconfig.js",
         "_FileCollection": "Resources/mathmodcollection.js"
     },
     "Parameters": {
+        "AutomaticInitGrid": false,
         "IsoMaxGrid": 500,
         "InitIsoGrid": 64,
-        "AutomaticInitGrid": false,
         "ParMaxGrid": 5000,
         "InitParGrid": 112,
         "ScriptEditorFontSize": 18
