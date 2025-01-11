@@ -1458,7 +1458,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                     cmpId++;
                 }
             }
-            val[0]= double(NormVertexTabVector[i*10+7]);
+            val[0]= double(NormVertexTabVector[i*10+7]); //"x,y,z,u,v,i_indx,j_indx,indx,max_i,max_j,cmpId,t"
             val[1]= double(NormVertexTabVector[i*10+8]);
             val[2]= double(NormVertexTabVector[i*10+9]);
             if(masterthread->gridnotnull)
@@ -1511,9 +1511,9 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                     {
                         fraction = (tmp-ValCol[j-5])/(ValCol[j]-ValCol[j-5]);
                         NormVertexTabVector[i*10  ] = float(ValCol[j+1])*(fraction) + (1-fraction)*float(ValCol[(j-5)+1]);
-                        NormVertexTabVector[i*10+1] = float(ValCol[j+2])*(fraction) + (1-fraction)*float(ValCol[(j-5)+2]);//float(ValCol[j+2]-ValCol[(j-5)+2])*fraction + float(ValCol[(j-5)+2]);
-                        NormVertexTabVector[i*10+2] = float(ValCol[j+3])*(fraction) + (1-fraction)*float(ValCol[(j-5)+3]);//float(ValCol[j+3]-ValCol[(j-5)+3])*fraction + float(ValCol[(j-5)+3]);
-                        NormVertexTabVector[i*10+3] = float(ValCol[(j)+4]);
+                        NormVertexTabVector[i*10+1] = float(ValCol[j+2])*(fraction) + (1-fraction)*float(ValCol[(j-5)+2]);
+                        NormVertexTabVector[i*10+2] = float(ValCol[j+3])*(fraction) + (1-fraction)*float(ValCol[(j-5)+3]);
+                        NormVertexTabVector[i*10+3] = float(ValCol[j+4]);
                         j = masterthread->VRgbtSize;
                     }
                 }

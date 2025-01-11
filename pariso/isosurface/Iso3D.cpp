@@ -1717,10 +1717,11 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             val[0]= double(NormVertexTabVector[i*10  + 7 ]);
             val[1]= double(NormVertexTabVector[i*10  + 8 ]);
             val[2]= double(NormVertexTabVector[i*10  + 9 ]);
+            //val[3]=?
             val[4]= double(K);
             if(masterthread->gridnotnull)
             {
-                val[5] = double(i);
+                val[5] = double(i); //"x,y,z,t,cmpId,indx,x_step,y_step,z_step,max_ijk,x_sup,y_sup,z_sup,x_inf,y_inf,z_inf"
                 val[6] = masterthread->x_Step[K];
                 val[7] = masterthread->y_Step[K];
                 val[8] = masterthread->z_Step[K];
@@ -1800,6 +1801,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             val[0]= double(NormVertexTabVector[i*10 + 7]);
             val[1]= double(NormVertexTabVector[i*10 + 8]);
             val[2]= double(NormVertexTabVector[i*10 + 9]);
+            //val[3]=?
             val[4]= double(K);
             if(masterthread->gridnotnull)
             {

@@ -263,7 +263,7 @@ void MathMod::SaveSceneAsObjPoly(int type)
                 {
                     (stream) << "f "
                              << "  " << (i*vgrid + j+index) +1<< "  "
-                             << ((i+1)*vgrid + j +index) +1<< "  "
+                             << ((i+1)*vgrid + j+index) +1<< "  "
                              << ((i+1)*vgrid + (j+1)+index) +1<< "  "
                              << (i*vgrid + (j+1)+index) +1<< "\n";
                 }
@@ -292,7 +292,6 @@ void MathMod::SaveSceneAsObjPoly(int type)
                  }
                  index += ugrid*vgrid;
             }
-
            // Isosurface components
            startpl = LocalScene.PolyNumber+LocalScene.componentsinfos.MinParametricMeshLines;
            uint kl=  LocalScene.componentsinfos.NbParametricMeshLines;
