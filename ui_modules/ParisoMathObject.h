@@ -64,6 +64,7 @@ struct TreeStruct
     QStringList vmax;
     QStringList tmin;
     QStringList tmax;
+    QStringList include;
     ModelType type;
 };
 
