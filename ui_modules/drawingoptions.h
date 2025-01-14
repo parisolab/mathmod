@@ -32,9 +32,9 @@
 #include "ui_drawingoptions.h"
 #include <QMainWindow>
 
-enum OptionnalParScriptFIELD {PAR_VECT, PAR_GRID, PAR_CND, PAR_CONST, PAR_FUNCT, IMPORT_PARFUNCT};
+enum OptionnalParScriptFIELD {PAR_VECT, PAR_GRID, PAR_CND, PAR_CONST, PAR_FUNCT, PAR_IMPORTFUNCT};
 
-enum OptionnalIsoScriptFIELD {ISO_VECT, ISO_GRID, ISO_CND, ISO_CONST, ISO_FUNCT, IMPORT_ISOFUNCT};
+enum OptionnalIsoScriptFIELD {ISO_VECT, ISO_GRID, ISO_CND, ISO_CONST, ISO_FUNCT, ISO_IMPORTFUNCT};
 
 enum MandatoryIsoField
 {

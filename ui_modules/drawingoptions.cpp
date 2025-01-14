@@ -1599,7 +1599,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         argnotnull = MathmodRef->IsoObjet->masterthread->functnotnull =
                          QObj[arg].isArray();
         break;
-    case IMPORT_ISOFUNCT:
+    case ISO_IMPORTFUNCT:
         arg = "Import";
         argnotnull = MathmodRef->IsoObjet->masterthread->importnotnull =
                          QObj[arg].isArray();
@@ -1690,7 +1690,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
             MathmodRef->IsoObjet->masterthread->ConstSize = 0;
         }
         break;
-    case IMPORT_ISOFUNCT:
+    case ISO_IMPORTFUNCT:
         if (argnotnull)
         {
             ObjArrayToVectString(lst, (MathmodRef->IsoObjet->masterthread->ImportedFunctions));
@@ -1734,6 +1734,11 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     case PAR_CND:
         arg = "Cnd";
         argnotnull = MathmodRef->ParObjet->masterthread->cndnotnull =
+                         QObj[arg].isArray();
+        break;
+    case PAR_IMPORTFUNCT:
+        arg = "Import";
+        argnotnull = MathmodRef->ParObjet->masterthread->importnotnull =
                          QObj[arg].isArray();
         break;
     }
@@ -1822,17 +1827,27 @@ void DrawingOptions::OptionalParScriptFieldprocess(
             MathmodRef->ParObjet->masterthread->FunctSize = 0;
         }
         break;
+    case PAR_IMPORTFUNCT:
+        if (argnotnull)
+        {
+            ObjArrayToVectString(lst, (MathmodRef->ParObjet->masterthread->ImportedFunctions));
+        }
+        else
+        {
+            MathmodRef->ParObjet->masterthread->ImportedFunctions.clear();
+        }
+        break;
     }
 }
 
 void DrawingOptions::BuildAllVect()
 {
-    const OptionnalIsoScriptFIELD optiso[] = {ISO_VECT, ISO_GRID, ISO_CND, ISO_CONST, ISO_FUNCT, IMPORT_ISOFUNCT};
+    const OptionnalIsoScriptFIELD optiso[] = {ISO_VECT, ISO_GRID, ISO_CND, ISO_CONST, ISO_FUNCT, ISO_IMPORTFUNCT};
     OptIsoFields = std::vector<OptionnalIsoScriptFIELD>(
                        optiso, optiso + sizeof(optiso) / sizeof(OptionnalIsoScriptFIELD));
 
     const OptionnalParScriptFIELD optpar[] = {PAR_VECT, PAR_GRID, PAR_CND, PAR_CONST,
-                                              PAR_FUNCT, IMPORT_PARFUNCT
+                                              PAR_FUNCT, PAR_IMPORTFUNCT
                                              };
     OptParFields = std::vector<OptionnalParScriptFIELD>(
                        optpar, optpar + sizeof(optpar) / sizeof(OptionnalParScriptFIELD));
