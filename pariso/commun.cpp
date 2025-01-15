@@ -54,7 +54,7 @@ float correction;
 
 
 
-double mandelbulb(const double* pp) {
+double Mandelbulb(const double* pp) {
     double x = pp[0];
     double y = pp[1];
     double z = pp[2];
@@ -81,7 +81,7 @@ double maxim(double p1, double p2)
 {
     return p1 > p2 ? p1 : p2;
 }
-double p_skeletal_int(const double* pp)
+double P_skeletal_int(const double* pp)
 {
     double  cx, cy,cz;
     cx=cos(pp[0]);
@@ -89,7 +89,7 @@ double p_skeletal_int(const double* pp)
     cz=cos(pp[2]);
     return(cx+cy+cz+0.51*(cx*cy+cy*cz+cz*cx)+1.2);
 }
-double f_hex_y(const double* pp)
+double F_hex_y(const double* pp)
 {
     double x1,y1,x2,y2, th;
     double p[10];
@@ -115,7 +115,7 @@ double f_hex_y(const double* pp)
         return(fabs(y1));
     }
 }
-double fmesh(const double* pp)
+double Fmesh(const double* pp)
 {
     double th, ph, r, r2, temp;
     double p[10];
@@ -149,7 +149,7 @@ double fmesh(const double* pp)
     r2 = (p[1] - cos(p[0] * th) * p[6]) * p[7];
     return (-maxim(-sqrt(r2 * r2 + r * r), temp));
 }
-double  fhelix1(const double* pp)
+double  Fhelix1(const double* pp)
 {
     double r, r2, r3, temp, th, ph, x2;
     double p[10];
@@ -187,7 +187,7 @@ double  fhelix1(const double* pp)
     (p[6] + r) < r2 ? r3 = (p[6] + r) : r3 = r2;
     return (-p[5] + r3);
 }
-double fhelix2(const double* pp)
+double Fhelix2(const double* pp)
 {
     double th, ph, x2, z2, r2, temp;
     double p[10];

@@ -27,7 +27,7 @@
 
 #define PI (double(314159265) / double(100000000))
 #define MAGIC_SCALE 1.5707963f
-extern template class FunctionParserBase<double>; // explicit instantiation
+//extern template class FunctionParserBase<double>; // explicit instantiation
 
 double Mandelbrot(const double*);
 double Julia(const double*);
@@ -55,27 +55,34 @@ double TurbulencePerlin2(const double*);
 double TurbulenceWorley(const double *);
 double TurbulencePerlin(const double *);
 double MarblePerlin(const double *);
-double  fhelix1(const double*);
-double fhelix2(const double*);
-double fmesh(const double*);
-double f_hex_y(const double*);
-double p_skeletal_int(const double*);
+double  Fhelix1(const double*);
+double Fhelix2(const double*);
+double Fmesh(const double*);
+double F_hex_y(const double*);
+double P_skeletal_int(const double*);
 double maxim(double, double);
 double maxim(double, double);
-double mandelbulb(const double*);
+double Mandelbulb(const double*);
 
 
 
 
-
-
-
-
-
-
-
-
-
+enum InternalFunctEnum
+{
+    NoiseW,
+    fhelix1,
+    fhelix2,
+    f_hex_y,
+    p_skeletal_int,
+    mandelbulb,
+    fmesh,
+    NoiseP,
+    MarbleP,
+    LegendreA,
+    LaguerreA,
+    MandelFractal,
+    JuliaFractal
+};
 
 struct InternalFuncDefinition
 {
@@ -87,18 +94,18 @@ struct InternalFuncDefinition
 const InternalFuncDefinition InternalFunctions[]=
     {
         { "NoiseW", TurbulenceWorley, 6},
-        { "fhelix1", fhelix1, 10},
-        { "fhelix2",fhelix2, 10},
-        { "f_hex_y",f_hex_y, 4},
-        { "p_skeletal_int",p_skeletal_int, 3},
-        { "mandelbulb",mandelbulb, 4},
-        { "fmesh",fmesh, 8},
+        { "fhelix1", Fhelix1, 10},
+        { "fhelix2",Fhelix2, 10},
+        { "f_hex_y",F_hex_y, 4},
+        { "p_skeletal_int",P_skeletal_int, 3},
+        { "mandelbulb",Mandelbulb, 4},
+        { "fmesh",Fmesh, 8},
         { "NoiseP",TurbulencePerlin, 6},
-        {"MarbleP",MarblePerlin, 4},
-        {"LegendreA",Legendre_a, 3},
-        {"LaguerreA",Laguerre_a, 3},
-        {"MandelFractal",Mandelbrot, 3},
-        {"JuliaFractal",Julia, 5}
+        { "MarbleP",MarblePerlin, 4},
+        { "LegendreA",Legendre_a, 3},
+        { "LaguerreA",Laguerre_a, 3},
+        { "MandelFractal",Mandelbrot, 3},
+        { "JuliaFractal",Julia, 5}
 };
 
 struct GlobalParam
