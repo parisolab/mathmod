@@ -182,8 +182,7 @@ public slots:
     void AddIsoObjectToTree(QTreeWidgetItem *, TreeStruct &);
     void AddParObjectToTree(QTreeWidgetItem *, TreeStruct &);
     void ObjArrayToString(QJsonArray &, QString &);
-    void ObjArrayToVectString(QJsonArray &, std::vector<string> &);
-    void ObjArrayToInternalFunctEnum(QJsonArray &, std::vector<InternalFunctEnum> &);
+    void ObjArrayToInternalFunctEnum(QJsonArray &, std::vector<InternalFuncDefinition> &);
     void AddParametersToTree(QTreeWidgetItem *, TreeStruct &);
     void on_IsoComponent_activated(int);
     void on_ParamComponent_activated(int);

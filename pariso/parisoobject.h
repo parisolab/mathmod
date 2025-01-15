@@ -61,8 +61,9 @@ public:
     FunctionParser *ParisoConditionParser, *RgbtParser, *VRgbtParser,
                    *GradientParser, *NoiseParser, *NoiseShapeParser, Cstparser;
     FunctionParser_cd *RgbtParser_C;
+    std::vector<InternalFuncDefinition> ImportedInternalFunctions;
     std::vector<std::string> Rgbts, RgbtNames, VRgbts, VRgbtNames, Functs,
-        FunctNames, Consts, ConstNames, SliderNames, ImportedFunctions;
+        FunctNames, Consts, ConstNames, SliderNames;
     std::string Vect, Grid, Const, Funct, Rgbt, VRgbt, Gradient, Noise;
     uint RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
     std::vector<uint> grid, vect;

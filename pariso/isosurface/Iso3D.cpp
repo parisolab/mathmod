@@ -119,7 +119,7 @@ IsoMasterThread::~IsoMasterThread()
     FunctNames.clear();
     vals.clear();
     Res.clear();
-    ImportedFunctions.clear();
+    ImportedInternalFunctions.clear();
 }
 IsoWorkerThread::~IsoWorkerThread()
 {

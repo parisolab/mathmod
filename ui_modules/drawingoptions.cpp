@@ -543,7 +543,6 @@ void DrawingOptions::HideSliders()
     sliderconf.ui.ParametersComboBox->clear();
     sliderconf.ui.ParametersComboBox->addItem("Parameters List");
 }
-
 void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
 {
     str = "";
@@ -555,14 +554,7 @@ void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
     str.replace("\t", "");
     str.replace(" ", "");
 }
-void DrawingOptions::ObjArrayToVectString(QJsonArray &lst, std::vector<string> &str)
-{
-    str.clear();
-    if(lst.size()>0)
-    for (int j = 0; j < lst.size(); j++)
-        str.push_back(lst[j].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString());
-}
-void DrawingOptions::ObjArrayToInternalFunctEnum(QJsonArray &lst, std::vector<InternalFunctEnum> &strFunct)
+void DrawingOptions::ObjArrayToInternalFunctEnum(QJsonArray &lst, std::vector<InternalFuncDefinition> &strFunct)
 {
     std::string str;
     uint size = InternalFunctions.size();
@@ -575,7 +567,7 @@ void DrawingOptions::ObjArrayToInternalFunctEnum(QJsonArray &lst, std::vector<In
         {
             if(str == InternalFunctions[i].name)
             {
-                strFunct.push_back(static_cast<InternalFunctEnum>(i));
+                strFunct.push_back(InternalFunctions[i]);
                 i=size;
             }
         }
@@ -1710,11 +1702,11 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
     case ISO_IMPORTFUNCT:
         if (argnotnull)
         {
-            ObjArrayToVectString(lst, (MathmodRef->IsoObjet->masterthread->ImportedFunctions));
+            ObjArrayToInternalFunctEnum(lst, (MathmodRef->IsoObjet->masterthread->ImportedInternalFunctions));
         }
         else
         {
-            MathmodRef->IsoObjet->masterthread->ImportedFunctions.clear();
+            MathmodRef->IsoObjet->masterthread->ImportedInternalFunctions.clear();
         }
         break;
     }
@@ -1847,11 +1839,11 @@ void DrawingOptions::OptionalParScriptFieldprocess(
     case PAR_IMPORTFUNCT:
         if (argnotnull)
         {
-            ObjArrayToVectString(lst, (MathmodRef->ParObjet->masterthread->ImportedFunctions));
+            ObjArrayToInternalFunctEnum(lst, (MathmodRef->ParObjet->masterthread->ImportedInternalFunctions));
         }
         else
         {
-            MathmodRef->ParObjet->masterthread->ImportedFunctions.clear();
+            MathmodRef->ParObjet->masterthread->ImportedInternalFunctions.clear();
         }
         break;
     }
