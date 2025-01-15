@@ -158,7 +158,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
 void Iso3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
     uint OldWorkerThreadsNumber = WorkerThreadsNumber;
-    WorkerThreadsNumber = ThreadsNumber = NewThreadsNumber;
+    WorkerThreadsNumber = NewThreadsNumber;
     IsoWorkerThread *workerthreadstmp = new IsoWorkerThread[WorkerThreadsNumber-1];
     WorkerThreadCopy(workerthreadstmp);
     //Free old memory:
@@ -315,7 +315,7 @@ Iso3D::Iso3D( uint nbThreads,
 {
     NbTriangleIsoSurface = 0;
     NbPointIsoMap = 0;
-    WorkerThreadsNumber = ThreadsNumber = nbThreads;
+    WorkerThreadsNumber = nbThreads;
     masterthread  = new IsoMasterThread();
     masterthread->AllocateStackFactor(pt);
     masterthread->IsoMasterTable();

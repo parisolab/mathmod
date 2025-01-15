@@ -55,7 +55,51 @@ double TurbulencePerlin2(const double*);
 double TurbulenceWorley(const double *);
 double TurbulencePerlin(const double *);
 double MarblePerlin(const double *);
+double  fhelix1(const double*);
+double fhelix2(const double*);
+double fmesh(const double*);
+double f_hex_y(const double*);
+double p_skeletal_int(const double*);
+double maxim(double, double);
+double maxim(double, double);
+double mandelbulb(const double*);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+struct InternalFuncDefinition
+{
+    const std::string name;
+    FunctionParser::FunctionPtr ptr;
+    uint param;
+};
+
+const InternalFuncDefinition InternalFunctions[]=
+    {
+        { "NoiseW", TurbulenceWorley, 6},
+        { "fhelix1", fhelix1, 10},
+        { "fhelix2",fhelix2, 10},
+        { "f_hex_y",f_hex_y, 4},
+        { "p_skeletal_int",p_skeletal_int, 3},
+        { "mandelbulb",mandelbulb, 4},
+        { "fmesh",fmesh, 8},
+        { "NoiseP",TurbulencePerlin, 6},
+        {"MarbleP",MarblePerlin, 4},
+        {"LegendreA",Legendre_a, 3},
+        {"LaguerreA",Laguerre_a, 3},
+        {"MandelFractal",Mandelbrot, 3},
+        {"JuliaFractal",Julia, 5}
+};
 
 struct GlobalParam
 {
