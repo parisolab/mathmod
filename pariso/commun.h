@@ -86,12 +86,12 @@ enum InternalFunctEnum
 
 struct InternalFuncDefinition
 {
-    const std::string name;
+    std::string name;
     FunctionParser::FunctionPtr ptr;
     uint param;
 };
 
-const InternalFuncDefinition InternalFunctions[]=
+const std::vector<InternalFuncDefinition> InternalFunctions=
     {
         { "NoiseW", TurbulenceWorley, 6},
         { "fhelix1", Fhelix1, 10},

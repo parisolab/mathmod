@@ -558,12 +558,29 @@ void DrawingOptions::ObjArrayToString(QJsonArray &lst, QString &str)
 void DrawingOptions::ObjArrayToVectString(QJsonArray &lst, std::vector<string> &str)
 {
     str.clear();
-    for (int j = 0; j < lst.size() - 1; j++)
+    if(lst.size()>0)
+    for (int j = 0; j < lst.size(); j++)
         str.push_back(lst[j].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString());
-    if (lst.size() >= 1)
-        str.push_back(lst[lst.size() - 1].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString());
 }
-
+void DrawingOptions::ObjArrayToInternalFunctEnum(QJsonArray &lst, std::vector<InternalFunctEnum> &strFunct)
+{
+    std::string str;
+    uint size = InternalFunctions.size();
+    strFunct.clear();
+    if(lst.size()>0)
+    for (int j = 0; j < lst.size(); j++)
+    {
+        str=lst[j].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString();
+        for(uint i=0; i<size; i++)
+        {
+            if(str == InternalFunctions[i].name)
+            {
+                strFunct.push_back(static_cast<InternalFunctEnum>(i));
+                i=size;
+            }
+        }
+    }
+}
 void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
 {
     QString result;
