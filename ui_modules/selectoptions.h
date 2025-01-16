@@ -53,17 +53,17 @@ public:
 private slots:
     void on_addpushButton_clicked();
     void on_CutpushButton_clicked();
-    void on_ShowAllcheckBox_clicked(bool checked);
-    void on_CaseSensitiveCheckBox_clicked(bool checked);
-    void on_AND_clicked(bool checked);
+    void on_ShowAllcheckBoxClicked(bool checked);
+    void on_CaseSensitiveCheckBoxClicked(bool checked);
+    void on_ANDClicked(bool checked);
 
-    void on_radioButton_clicked(bool checked);
+    void on_radioButtonClicked(bool checked);
 
-    void on_FunctcheckBox_clicked(bool checked);
+    void on_FunctcheckBoxClicked(bool checked);
 
-    void on_NamescheckBox_clicked(bool checked);
+    void on_NamescheckBoxClicked(bool checked);
 
-    void on_CompcheckBox_clicked(bool checked);
+    void on_CompcheckBoxClicked(bool checked);
 
     void on_pushButton_clicked();
 

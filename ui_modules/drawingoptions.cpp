@@ -3832,7 +3832,7 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
     }
 }
 
-void DrawingOptions::on_IsoComponent_activated(int index)
+void DrawingOptions::onIsoComponentActivated(int index)
 {
     UpdateDescription(index, ISO_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
     updateShowIsoCmp(index);
@@ -4016,38 +4016,38 @@ void DrawingOptions::on_InitMatrix_clicked()
     on_calculate_clicked();
 }
 
-void DrawingOptions::on_ActivateCND_clicked(bool checked)
+void DrawingOptions::on_ActivateCNDClicked(bool checked)
 {
     ui.CNDgroupBox->setEnabled(checked);
     MathmodRef->LocalScene.activarecnd = checked;
     MathmodRef->update();
 }
 
-void DrawingOptions::on_TCNDcheckBox_clicked(bool checked)
+void DrawingOptions::on_TCNDcheckBoxClicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[3] = checked;
     MathmodRef->update();
 }
 
-void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
+void DrawingOptions::on_FCNDcheckBoxClicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[0] = checked;
     MathmodRef->update();
 }
 
-void DrawingOptions::on_TNCNDcheckBox_clicked(bool checked)
+void DrawingOptions::on_TNCNDcheckBoxClicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[4] = checked;
     MathmodRef->update();
 }
 
-void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
+void DrawingOptions::on_FNCNDcheckBoxClicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[1] = checked;
     MathmodRef->update();
 }
 
-void DrawingOptions::on_TBordercheckBox_clicked(bool checked)
+void DrawingOptions::on_TBordercheckBoxClicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[2] = checked;
     MathmodRef->update();

@@ -184,7 +184,7 @@ public slots:
     void ObjArrayToString(QJsonArray &, QString &);
     void ObjArrayToInternalFunctEnum(QJsonArray &, std::vector<InternalFuncDefinition> &);
     void AddParametersToTree(QTreeWidgetItem *, TreeStruct &);
-    void on_IsoComponent_activated(int);
+    void onIsoComponentActivated(int);
     void on_ParamComponent_activated(int);
     void on_xycheckBox_clicked();
     void on_xyhorizontalScrollBar_valueChanged(int);
@@ -203,12 +203,12 @@ public slots:
     void on_uv4D_clicked();
     void on_uv_clicked();
     void on_InitMatrix_clicked();
-    void on_ActivateCND_clicked(bool);
-    void on_TBordercheckBox_clicked(bool);
-    void on_TCNDcheckBox_clicked(bool);
-    void on_FCNDcheckBox_clicked(bool);
-    void on_TNCNDcheckBox_clicked(bool);
-    void on_FNCNDcheckBox_clicked(bool);
+    void on_ActivateCNDClicked(bool);
+    void on_TBordercheckBoxClicked(bool);
+    void on_TCNDcheckBoxClicked(bool);
+    void on_FCNDcheckBoxClicked(bool);
+    void on_TNCNDcheckBoxClicked(bool);
+    void on_FNCNDcheckBoxClicked(bool);
     void on_actionMesh_triggered();
     void on_calculate_clicked();
     void on_actionAbout_2_triggered();

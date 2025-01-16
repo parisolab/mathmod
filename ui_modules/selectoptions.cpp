@@ -65,7 +65,7 @@ void SelectOptions::on_CutpushButton_clicked()
     emitUpdateSignal();
 }
 
-void SelectOptions::on_ShowAllcheckBox_clicked(bool checked)
+void SelectOptions::on_ShowAllcheckBoxClicked(bool checked)
 {
     ui.SelectgroupBox->setEnabled(!checked);
     ui.SelectgroupBox->setVisible(!checked);
@@ -74,7 +74,7 @@ void SelectOptions::on_ShowAllcheckBox_clicked(bool checked)
         emitUpdateSignal();
 }
 
-void SelectOptions::on_CaseSensitiveCheckBox_clicked(bool checked)
+void SelectOptions::on_CaseSensitiveCheckBoxClicked(bool checked)
 {
     selectedoptions.sensitive = checked;
     emitUpdateSignal();
@@ -85,33 +85,33 @@ void SelectOptions::emitUpdateSignal()
     emit UpdateSignal();
 }
 
-void SelectOptions::on_AND_clicked(bool checked)
+void SelectOptions::on_ANDClicked(bool checked)
 {
     selectedoptions.AND = checked;
     if (selectedoptions.selectedwords.count() > 1)
         emitUpdateSignal();
 }
 
-void SelectOptions::on_radioButton_clicked(bool checked)
+void SelectOptions::on_radioButtonClicked(bool checked)
 {
     selectedoptions.AND = !checked;
     if (selectedoptions.selectedwords.count() > 1)
         emitUpdateSignal();
 }
 
-void SelectOptions::on_FunctcheckBox_clicked(bool checked)
+void SelectOptions::on_FunctcheckBoxClicked(bool checked)
 {
     selectedoptions.parsefunctions = checked;
     emitUpdateSignal();
 }
 
-void SelectOptions::on_NamescheckBox_clicked(bool checked)
+void SelectOptions::on_NamescheckBoxClicked(bool checked)
 {
     selectedoptions.parsenames = checked;
     emitUpdateSignal();
 }
 
-void SelectOptions::on_CompcheckBox_clicked(bool checked)
+void SelectOptions::on_CompcheckBoxClicked(bool checked)
 {
     selectedoptions.parsecmpnames = checked;
     emitUpdateSignal();
