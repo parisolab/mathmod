@@ -76,6 +76,7 @@ public:
 public:
     MasterThread();
     ~MasterThread();
+    void clearTextureInfos();
 };
 
 #endif // PARISOOBJECT_H

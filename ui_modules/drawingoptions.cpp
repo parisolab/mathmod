@@ -1214,7 +1214,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         if (QPar["Pigment"].isObject())
             QPigmentObj = QPar["Pigment"].toObject();
         // Colors
-        MathmodRef->ParObjet->masterthread->Noise="";
         loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                        (QPar["Texture"].isObject() ||
                         ((textureIndex < 1000) && (textureIndex != -1)));
@@ -1234,7 +1233,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         if (QIso["Pigment"].isObject())
             QPigmentObj = QIso["Pigment"].toObject();
         // Colors
-        MathmodRef->IsoObjet->masterthread->Noise="";
         loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull =
                        (QIso["Texture"].isObject() ||
                         ((textureIndex < 1000) && (textureIndex != -1)));
@@ -1271,7 +1269,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             QObj = Jobj["Iso3D"].toObject();
 
             // Colors
-            MathmodRef->IsoObjet->masterthread->Noise="";
             loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
@@ -1317,7 +1314,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             else
                 QObj = Jobj["Param3D_C"].toObject();
             // Colors
-            MathmodRef->ParObjet->masterthread->Noise="";
             loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
@@ -1370,7 +1366,6 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             else
                 QObj = Jobj["Param4D_C"].toObject();
             // Colors
-            MathmodRef->ParObjet->masterthread->Noise="";
             loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (Jobj["Texture"].isObject() ||
                             ((textureIndex < 1000) && (textureIndex != -1)));
@@ -1932,7 +1927,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if (QPar["Pigment"].isObject())
                 QPigmentObj = QPar["Pigment"].toObject();
             // Colors
-            MathmodRef->ParObjet->masterthread->Noise="";
             loadtext = MathmodRef->ParObjet->masterthread->rgbtnotnull =
                            (QPar["Texture"].isObject());
             // Pigment
@@ -1950,7 +1944,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             if (QIso["Pigment"].isObject())
                 QPigmentObj = QIso["Pigment"].toObject();
             // Colors
-            MathmodRef->IsoObjet->masterthread->Noise="";
             loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull =
                            (QIso["Texture"].isObject());
             // Pigment
@@ -1991,7 +1984,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                     return (0);
                 ShowSliders(array[i].toObject());
                 // Colors
-                MathmodRef->IsoObjet->masterthread->Noise="";
                 if ((loadtext = MathmodRef->IsoObjet->masterthread->rgbtnotnull = QObj1["Texture"].isObject()))
                     QTextureObj = QObj1["Texture"].toObject();
                 // Pigment
@@ -2024,7 +2016,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                     return (0);
                 ShowSliders(array[i].toObject());
                 // Colors
-                MathmodRef->ParObjet->masterthread->Noise="";
                 if ((loadtext =
                             MathmodRef->ParObjet->masterthread->rgbtnotnull =
                                 QObj1["Texture"].isObject()))
@@ -2061,7 +2052,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                     return (0);
                 ShowSliders(array[i].toObject());
                 // Colors
-                MathmodRef->ParObjet->masterthread->Noise="";
                 if ((loadtext =
                             MathmodRef->ParObjet->masterthread->rgbtnotnull =
                                 QObj1["Texture"].isObject()))
@@ -2155,6 +2145,8 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
         break;
     }
     // Colors
+    MathmodRef->IsoObjet->masterthread->clearTextureInfos();
+    MathmodRef->ParObjet->masterthread->clearTextureInfos();
     if (loadtext)
     {
         LoadTexture(QTextureObj, mod);

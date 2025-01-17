@@ -27,6 +27,13 @@ std::vector<uint> ParisoObject::IndexPolyTabMinVector2;
 
 MasterThread::MasterThread() {}
 MasterThread::~MasterThread() {}
+
+
+void MasterThread::clearTextureInfos()
+{
+    Rgbt = VRgbt = Gradient = Noise="";
+}
+
 WorkerThread::WorkerThread() {}
 WorkerThread::~WorkerThread() {}
 uint WorkerThread::count_comma(const std::string s)
