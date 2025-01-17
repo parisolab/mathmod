@@ -224,6 +224,10 @@ ErrorMessage  Iso3D::parse_expression2()
         }
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
+            for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
+                workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->ImportedInternalFunctions[m].name,
+                                                             masterthread->ImportedInternalFunctions[m].ptr,
+                                                             masterthread->ImportedInternalFunctions[m].param);
             workerthreads[nbthreads].Fct[ii].AddFunction("NoiseW",TurbulenceWorley, 6);
             workerthreads[nbthreads].Fct[ii].AddFunction("fhelix1",Fhelix1, 10);
             workerthreads[nbthreads].Fct[ii].AddFunction("fhelix2",Fhelix2, 10);
@@ -271,6 +275,11 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint i=0; i<masterthread->componentsNumber; i++)
         {
+            for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
+                workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(
+                    masterthread->ImportedInternalFunctions[m].name,
+                    masterthread->ImportedInternalFunctions[m].ptr,
+                    masterthread->ImportedInternalFunctions[m].param);
             //Functions:
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
             workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("fhelix1",Fhelix1, 10);
@@ -872,6 +881,10 @@ ErrorMessage IsoMasterThread::ParserIso()
                 RgbtParser[i].AddConstant("Lacunarity", double(Lacunarity));
                 RgbtParser[i].AddConstant("Gain", double(Gain));
                 RgbtParser[i].AddConstant("Octaves", double(Octaves));
+                for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+                    RgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                              ImportedInternalFunctions[m].ptr,
+                                              ImportedInternalFunctions[m].param);
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
@@ -905,6 +918,10 @@ ErrorMessage IsoMasterThread::ParserIso()
         GradientParser->AddConstant("Lacunarity", Lacunarity);
         GradientParser->AddConstant("Gain", Gain);
         GradientParser->AddConstant("Octaves", Octaves);
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            GradientParser->AddFunction(ImportedInternalFunctions[m].name,
+                                        ImportedInternalFunctions[m].ptr,
+                                        ImportedInternalFunctions[m].param);
         GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
         GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
         GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
@@ -923,6 +940,10 @@ ErrorMessage IsoMasterThread::ParserIso()
                 VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
                 VRgbtParser[i].AddConstant("Gain", Gain);
                 VRgbtParser[i].AddConstant("Octaves", Octaves);
+                for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+                    VRgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                               ImportedInternalFunctions[m].ptr,
+                                               ImportedInternalFunctions[m].param);
                 VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
@@ -1001,6 +1022,10 @@ ErrorMessage IsoMasterThread::ParserIso()
             for(uint j=0; j<FunctSize; j++)
             {
                 RgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+                for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+                    RgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                              ImportedInternalFunctions[m].ptr,
+                                              ImportedInternalFunctions[m].param);
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
@@ -1015,6 +1040,10 @@ ErrorMessage IsoMasterThread::ParserIso()
         for(uint j=0; j<FunctSize; j++)
         {
             GradientParser->AddFunction(FunctNames[j], Fct[j]);
+            for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+                GradientParser->AddFunction(ImportedInternalFunctions[m].name,
+                                            ImportedInternalFunctions[m].ptr,
+                                            ImportedInternalFunctions[m].param);
             GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
             GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
             GradientParser->AddFunction("MarbleP",MarblePerlin, 4);
@@ -1028,6 +1057,10 @@ ErrorMessage IsoMasterThread::ParserIso()
             for(uint j=0; j<FunctSize; j++)
             {
                 VRgbtParser[i].AddFunction(FunctNames[j], Fct[j]);
+                for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+                    VRgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                               ImportedInternalFunctions[m].ptr,
+                                               ImportedInternalFunctions[m].param);
                 VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
@@ -1049,6 +1082,10 @@ ErrorMessage IsoMasterThread::ParserIso()
                 ParisoConditionParser[i].AddFunction(FunctNames[j], Fct[j]);
             }
         }
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            implicitFunctionParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                                  ImportedInternalFunctions[m].ptr,
+                                                  ImportedInternalFunctions[m].param);
         implicitFunctionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         implicitFunctionParser[i].AddFunction("fhelix1",Fhelix1, 10);
         implicitFunctionParser[i].AddFunction("fhelix2",Fhelix2, 10);
@@ -1063,6 +1100,10 @@ ErrorMessage IsoMasterThread::ParserIso()
         implicitFunctionParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
         implicitFunctionParser[i].AddFunction("JuliaFractal",Julia, 5);
     }
+    for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+        NoiseParser->AddFunction(ImportedInternalFunctions[m].name,
+                                              ImportedInternalFunctions[m].ptr,
+                                              ImportedInternalFunctions[m].param);
     NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
     NoiseParser->AddFunction("MarbleP",MarblePerlin, 4);
@@ -1253,6 +1294,10 @@ void IsoMasterThread::InitMasterParsers()
     {
         Fct[i].AddConstant("pi", PI);
         Fct[i].AddConstant("ThreadId", MyIndex);
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            Fct[i].AddFunction(ImportedInternalFunctions[m].name,
+                               ImportedInternalFunctions[m].ptr,
+                               ImportedInternalFunctions[m].param);
         Fct[i].AddFunction("CmpId",CurrentIsoCmpId, 1);
         Fct[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         Fct[i].AddFunction("fhelix1",Fhelix1, 10);
@@ -1274,6 +1319,10 @@ void IsoMasterThread::InitMasterParsers()
         RgbtParser[i].AddConstant("Lacunarity", Lacunarity);
         RgbtParser[i].AddConstant("Gain", Gain);
         RgbtParser[i].AddConstant("Octaves", Octaves);
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            RgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                      ImportedInternalFunctions[m].ptr,
+                                      ImportedInternalFunctions[m].param);
         RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
@@ -1288,6 +1337,10 @@ void IsoMasterThread::InitMasterParsers()
         VRgbtParser[i].AddConstant("Lacunarity", Lacunarity);
         VRgbtParser[i].AddConstant("Gain", Gain);
         VRgbtParser[i].AddConstant("Octaves", Octaves);
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            VRgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                       ImportedInternalFunctions[m].ptr,
+                                       ImportedInternalFunctions[m].param);
         VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
         VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
         VRgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
@@ -1300,6 +1353,10 @@ void IsoMasterThread::InitMasterParsers()
     GradientParser->AddConstant("Lacunarity", Lacunarity);
     GradientParser->AddConstant("Gain", Gain);
     GradientParser->AddConstant("Octaves", Octaves);
+    for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+        GradientParser->AddFunction(ImportedInternalFunctions[m].name,
+                                    ImportedInternalFunctions[m].ptr,
+                                    ImportedInternalFunctions[m].param);
     GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
     GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
     GradientParser->AddFunction("MarbleP",MarblePerlin, 4);

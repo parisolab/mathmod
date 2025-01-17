@@ -66,7 +66,7 @@ double Mandelbulb(const double*);
 
 
 
-
+/*
 enum InternalFunctEnum
 {
     NoiseW,
@@ -83,7 +83,7 @@ enum InternalFunctEnum
     MandelFractal,
     JuliaFractal
 };
-
+*/
 struct InternalFuncDefinition
 {
     std::string name;
