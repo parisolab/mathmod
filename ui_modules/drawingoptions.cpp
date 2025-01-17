@@ -558,17 +558,30 @@ void DrawingOptions::ObjArrayToInternalFunctEnum(QJsonArray &lst, std::vector<In
 {
     std::string str;
     uint size = InternalFunctions.size();
+    uint lstsize =lst.size();
     strFunct.clear();
     if(lst.size()>0)
-    for (int j = 0; j < lst.size(); j++)
     {
-        str=lst[j].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString();
-        for(uint i=0; i<size; i++)
+        if((lst[0].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString()) == "All")
         {
-            if(str == InternalFunctions[i].name)
+            for(uint i=0; i<size; i++)
             {
                 strFunct.push_back(InternalFunctions[i]);
-                i=size;
+            }
+        }
+        else
+        {
+            for (uint j = 0; j < lstsize; j++)
+            {
+                str=lst[j].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString();
+                for(uint i=0; i<size; i++)
+                {
+                    if(str == InternalFunctions[i].name)
+                    {
+                        strFunct.push_back(InternalFunctions[i]);
+                        i=size;
+                    }
+                }
             }
         }
     }
