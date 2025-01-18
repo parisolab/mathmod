@@ -50,8 +50,6 @@ void insert(float *, float);
 int lcgRandom(int);
 int hash(int, int, int);
 float tinyrnd();
-double TurbulenceWorley2(const double*);
-double TurbulencePerlin2(const double*);
 double TurbulenceWorley(const double *);
 double TurbulencePerlin(const double *);
 double MarblePerlin(const double *);

@@ -214,7 +214,7 @@ double Fhelix2(const double* pp)
     return (r2 - p[5]);
 }
 
-
+/*
 double TurbulenceWorley2(const double* p)
 {
     return double(CellNoiseFunc(
@@ -235,7 +235,7 @@ double TurbulencePerlin2(const double* p)
         float(p[4]),
         float(p[5])));
 }
-
+*/
 double TurbulenceWorley(const double *p)
 {
     return double (
