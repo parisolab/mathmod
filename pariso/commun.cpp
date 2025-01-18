@@ -213,29 +213,6 @@ double Fhelix2(const double* pp)
         r2 = maxim(fabs(p[0]), fabs(p[2]));
     return (r2 - p[5]);
 }
-
-/*
-double TurbulenceWorley2(const double* p)
-{
-    return double(CellNoiseFunc(
-        float(p[0]),
-        float(p[1]),
-        float(p[2]),
-        int(p[3]),
-        int(p[4]),
-        int(p[5])));
-}
-double TurbulencePerlin2(const double* p)
-{
-    return double(FractalNoise3D(
-        float(p[0]),
-        float(p[1]),
-        float(p[2]),
-        int(p[3]),
-        float(p[4]),
-        float(p[5])));
-}
-*/
 double TurbulenceWorley(const double *p)
 {
     return double (
