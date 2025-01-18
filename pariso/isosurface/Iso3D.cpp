@@ -857,13 +857,14 @@ ErrorMessage IsoMasterThread::ParserIso()
                     RgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
                                               ImportedInternalFunctions[m].ptr,
                                               ImportedInternalFunctions[m].param);
+                /*
                 RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
                 RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
                 RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
                 RgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
                 RgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
                 RgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
-                RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
+                RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);*/
             }
             //Add predefined constatnts:
             for(uint k=0; k<Nb_Sliders; k++)

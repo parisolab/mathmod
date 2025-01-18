@@ -443,30 +443,25 @@ void ParMasterThread::InitMasterParsers()
     DeleteMasterParsers();
     AllocateParsersForMasterThread();
     GradientParser->AddConstant("pi", PI);
-    GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
-    GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
-    GradientParser->AddFunction("LegendreA",Legendre_a, 3);
-    GradientParser->AddFunction("LaguerreA",Laguerre_a, 3);
-    GradientParser->AddFunction("MandelFractal",Mandelbrot, 3);
-    GradientParser->AddFunction("JuliaFractal",Julia, 5);
     Cstparser.AddConstant("pi", PI);
     NoiseParser->AddConstant("pi", PI);
-    NoiseParser->AddFunction("NoiseW",TurbulenceWorley, 6);
-    NoiseParser->AddFunction("NoiseP",TurbulencePerlin, 6);
-    NoiseParser->AddFunction("LegendreA",Legendre_a, 3);
-    NoiseParser->AddFunction("LaguerreA",Laguerre_a, 3);
-    NoiseParser->AddFunction("MandelFractal",Mandelbrot, 3);
-    NoiseParser->AddFunction("JuliaFractal",Julia, 5);
     NoiseParser->AddConstant("Lacunarity", Lacunarity);
     NoiseParser->AddConstant("Gain", Gain);
     NoiseParser->AddConstant("Octaves", Octaves);
     NoiseShapeParser->AddConstant("pi", PI);
-    NoiseShapeParser->AddFunction("NoiseW",TurbulenceWorley, 6);
-    NoiseShapeParser->AddFunction("NoiseP",TurbulencePerlin, 6);
-    NoiseShapeParser->AddFunction("LegendreA",Legendre_a, 3);
-    NoiseShapeParser->AddFunction("LaguerreA",Laguerre_a, 3);
-    NoiseShapeParser->AddFunction("MandelFractal",Mandelbrot, 3);
-    NoiseShapeParser->AddFunction("JuliaFractal",Julia, 5);
+
+    for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+    {
+        GradientParser->AddFunction(ImportedInternalFunctions[m].name,
+                                  ImportedInternalFunctions[m].ptr,
+                                  ImportedInternalFunctions[m].param);
+        NoiseParser->AddFunction(ImportedInternalFunctions[m].name,
+                                    ImportedInternalFunctions[m].ptr,
+                                    ImportedInternalFunctions[m].param);
+        NoiseShapeParser->AddFunction(ImportedInternalFunctions[m].name,
+                                    ImportedInternalFunctions[m].ptr,
+                                    ImportedInternalFunctions[m].param);
+    }
     for(uint i=0; i<componentsNumber; i++)
     {
         if(!param3d_C && !param4d_C)
@@ -475,34 +470,21 @@ void ParMasterThread::InitMasterParsers()
             myParserY[i].AddConstant("pi", PI);
             myParserZ[i].AddConstant("pi", PI);
             myParserW[i].AddConstant("pi", PI);
-
-            myParserX[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            myParserX[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            myParserX[i].AddFunction("LegendreA",Legendre_a, 3);
-            myParserX[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            myParserX[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            myParserX[i].AddFunction("JuliaFractal",Julia, 5);
-
-            myParserY[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            myParserY[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            myParserY[i].AddFunction("LegendreA",Legendre_a, 3);
-            myParserY[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            myParserY[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            myParserY[i].AddFunction("JuliaFractal",Julia, 5);
-
-            myParserZ[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            myParserZ[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            myParserZ[i].AddFunction("LegendreA",Legendre_a, 3);
-            myParserZ[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            myParserZ[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            myParserZ[i].AddFunction("JuliaFractal",Julia, 5);
-
-            myParserW[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            myParserW[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            myParserW[i].AddFunction("LegendreA",Legendre_a, 3);
-            myParserW[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            myParserW[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            myParserW[i].AddFunction("JuliaFractal",Julia, 5);
+            for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            {
+                myParserX[i].AddFunction(ImportedInternalFunctions[m].name,
+                            ImportedInternalFunctions[m].ptr,
+                            ImportedInternalFunctions[m].param);
+                myParserY[i].AddFunction(ImportedInternalFunctions[m].name,
+                            ImportedInternalFunctions[m].ptr,
+                            ImportedInternalFunctions[m].param);
+                myParserZ[i].AddFunction(ImportedInternalFunctions[m].name,
+                            ImportedInternalFunctions[m].ptr,
+                            ImportedInternalFunctions[m].param);
+                myParserW[i].AddFunction(ImportedInternalFunctions[m].name,
+                                         ImportedInternalFunctions[m].ptr,
+                                         ImportedInternalFunctions[m].param);
+            }
         }
         else
         {
@@ -516,44 +498,37 @@ void ParMasterThread::InitMasterParsers()
         myParserVmin[i].AddConstant("pi", PI);
         myParserUmax[i].AddConstant("pi", PI);
         myParserVmax[i].AddConstant("pi", PI);
-        ParisoConditionParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-        ParisoConditionParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-        ParisoConditionParser[i].AddFunction("LegendreA",Legendre_a, 3);
-        ParisoConditionParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
-        ParisoConditionParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
-        ParisoConditionParser[i].AddFunction("JuliaFractal",Julia, 5);
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            ParisoConditionParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                                 ImportedInternalFunctions[m].ptr,
+                                                 ImportedInternalFunctions[m].param);
     }
     for(uint i=0; i<RgbtSize; i++)
     {
         RgbtParser_C[i].AddConstant("pi", PI);
         RgbtParser[i].AddConstant("pi", PI);
-        RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-        RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-        RgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
-        RgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
-        RgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
-        RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            RgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                      ImportedInternalFunctions[m].ptr,
+                                      ImportedInternalFunctions[m].param);
     }
     for(uint i=0; i<VRgbtSize; i++)
     {
         VRgbtParser[i].AddConstant("pi", PI);
-        VRgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-        VRgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-        VRgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
-        VRgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
-        VRgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
-        VRgbtParser[i].AddFunction("JuliaFractal",Julia, 5);
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            VRgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
+                                       ImportedInternalFunctions[m].ptr,
+                                       ImportedInternalFunctions[m].param);
     }
     for(uint i=0; i<FunctSize; i++)
     {
         if(!param3d_C && !param4d_C)
         {
             Fct[i].AddConstant("pi", PI);
-            Fct[i].AddFunction("CmpId",CurrentParamCmpId, 1);
-            Fct[i].AddFunction("LegendreA",Legendre_a, 3);
-            Fct[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            Fct[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            Fct[i].AddFunction("JuliaFractal",Julia, 5);
+            for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+                Fct[i].AddFunction(ImportedInternalFunctions[m].name,
+                                   ImportedInternalFunctions[m].ptr,
+                                   ImportedInternalFunctions[m].param);
         }
         else
         {
@@ -676,12 +651,11 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(vrgbtnotnull)
     {
         VRgbtSize = HowManyVariables(VRgbt, 4);
-        GradientParser->AddFunction("NoiseW",TurbulenceWorley, 6);
-        GradientParser->AddFunction("NoiseP",TurbulencePerlin, 6);
-        GradientParser->AddFunction("LegendreA",Legendre_a, 3);
-        GradientParser->AddFunction("LaguerreA",Laguerre_a, 3);
-        GradientParser->AddFunction("MandelFractal",Mandelbrot, 3);
-        GradientParser->AddFunction("JuliaFractal",Julia, 5);
+
+        for (uint m=0; m<ImportedInternalFunctions.size(); m++)
+            GradientParser->AddFunction(ImportedInternalFunctions[m].name,
+                                        ImportedInternalFunctions[m].ptr,
+                                        ImportedInternalFunctions[m].param);
         for(uint j=0; j<ConstSize; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
@@ -1016,34 +990,21 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserY[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserZ[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserW[i].AddConstant("pi", PI);
-
-            workerthreads[nbthreads].myParserX[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            workerthreads[nbthreads].myParserX[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            workerthreads[nbthreads].myParserX[i].AddFunction("LegendreA",Legendre_a, 3);
-            workerthreads[nbthreads].myParserX[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            workerthreads[nbthreads].myParserX[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            workerthreads[nbthreads].myParserX[i].AddFunction("JuliaFractal",Julia, 5);
-
-            workerthreads[nbthreads].myParserY[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            workerthreads[nbthreads].myParserY[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            workerthreads[nbthreads].myParserY[i].AddFunction("LegendreA",Legendre_a, 3);
-            workerthreads[nbthreads].myParserY[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            workerthreads[nbthreads].myParserY[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            workerthreads[nbthreads].myParserY[i].AddFunction("JuliaFractal",Julia, 5);
-
-            workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            workerthreads[nbthreads].myParserZ[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            workerthreads[nbthreads].myParserZ[i].AddFunction("LegendreA",Legendre_a, 3);
-            workerthreads[nbthreads].myParserZ[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            workerthreads[nbthreads].myParserZ[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            workerthreads[nbthreads].myParserZ[i].AddFunction("JuliaFractal",Julia, 5);
-
-            workerthreads[nbthreads].myParserW[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-            workerthreads[nbthreads].myParserW[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-            workerthreads[nbthreads].myParserW[i].AddFunction("LegendreA",Legendre_a, 3);
-            workerthreads[nbthreads].myParserW[i].AddFunction("LaguerreA",Laguerre_a, 3);
-            workerthreads[nbthreads].myParserW[i].AddFunction("MandelFractal",Mandelbrot, 3);
-            workerthreads[nbthreads].myParserW[i].AddFunction("JuliaFractal",Julia, 5);
+            for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
+            {
+                workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->ImportedInternalFunctions[m].name,
+                                                                  masterthread->ImportedInternalFunctions[m].ptr,
+                                                                  masterthread->ImportedInternalFunctions[m].param);
+                workerthreads[nbthreads].myParserY[i].AddFunction(masterthread->ImportedInternalFunctions[m].name,
+                                                                  masterthread->ImportedInternalFunctions[m].ptr,
+                                                                  masterthread->ImportedInternalFunctions[m].param);
+                workerthreads[nbthreads].myParserZ[i].AddFunction(masterthread->ImportedInternalFunctions[m].name,
+                                                                  masterthread->ImportedInternalFunctions[m].ptr,
+                                                                  masterthread->ImportedInternalFunctions[m].param);
+                workerthreads[nbthreads].myParserW[i].AddFunction(masterthread->ImportedInternalFunctions[m].name,
+                                                                  masterthread->ImportedInternalFunctions[m].ptr,
+                                                                  masterthread->ImportedInternalFunctions[m].param);
+            }
 
             for(uint j=0; j<masterthread->ConstSize; j++)
             {
