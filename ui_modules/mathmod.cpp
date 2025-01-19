@@ -32,7 +32,7 @@ void MathMod::CalculateTexturePoints(int type)
             IsoObjet->masterthread->RgbtParser;
         LocalScene.componentsinfos.NoiseParam[0].NoiseParser =
             IsoObjet->masterthread->NoiseParser;
-        IsoObjet->masterthread->Noise == ""
+        IsoObjet->masterthread->NOISE_STR == ""
         ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0
                 : LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
@@ -42,7 +42,7 @@ void MathMod::CalculateTexturePoints(int type)
             ParObjet->masterthread->RgbtParser;
         LocalScene.componentsinfos.NoiseParam[0].NoiseParser =
             ParObjet->masterthread->NoiseParser;
-        ParObjet->masterthread->Noise == ""
+        ParObjet->masterthread->NOISE_STR == ""
         ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0
                 : LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
@@ -111,7 +111,7 @@ void MathMod::CalculatePigmentPoints(int type)
             IsoObjet->masterthread->VRgbtSize;
         LocalScene.componentsinfos.NoiseParam[0].NoiseParser =
             IsoObjet->masterthread->NoiseParser;
-        IsoObjet->masterthread->Noise == ""
+        IsoObjet->masterthread->NOISE_STR == ""
         ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0
                 : LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }
@@ -125,7 +125,7 @@ void MathMod::CalculatePigmentPoints(int type)
             ParObjet->masterthread->VRgbtSize;
         LocalScene.componentsinfos.NoiseParam[0].NoiseParser =
             ParObjet->masterthread->NoiseParser;
-        ParObjet->masterthread->Noise == ""
+        ParObjet->masterthread->NOISE_STR == ""
         ? LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 0
                 : LocalScene.componentsinfos.NoiseParam[0].NoiseShape = 1;
     }

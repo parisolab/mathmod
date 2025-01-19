@@ -19,6 +19,17 @@
  ***************************************************************************/
 #ifndef PARISOOBJECT_H
 #define PARISOOBJECT_H
+
+#define VECT_STR      TextureInfos[0]
+#define GRID_STR      TextureInfos[1]
+#define CONST_STR     TextureInfos[2]
+#define FUNCT_STR     TextureInfos[3]
+#define RGBT_STR      TextureInfos[4]
+#define VRGBT_STR     TextureInfos[5]
+#define GRADIENT_STR  TextureInfos[6]
+#define NOISE_STR     TextureInfos[7]
+
+
 #include "commun.h"
 
 
@@ -64,7 +75,8 @@ public:
     std::vector<InternalFuncDefinition> ImportedInternalFunctions;
     std::vector<std::string> Rgbts, RgbtNames, VRgbts, VRgbtNames, Functs,
         FunctNames, Consts, ConstNames, SliderNames;
-    std::string Vect, Grid, Const, Funct, Rgbt, VRgbt, Gradient, Noise;
+    std::string TextureInfos[10];
+    std::string Vect, Grid, Const, Funct, Rgbt, VRgbt;
     uint RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
     std::vector<uint> grid, vect;
     bool *UsedFunct, *UsedFunct2, gridnotnull, vectnotnull, constnotnull, functnotnull,

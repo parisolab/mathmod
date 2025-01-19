@@ -1097,13 +1097,13 @@ void DrawingOptions::LoadTexture(const QJsonObject &QObj,
     if (opt == ISO_TYPE)
     {
         MathmodRef->IsoObjet->masterthread->Rgbt = result.toStdString();
-        MathmodRef->IsoObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->IsoObjet->masterthread->NOISE_STR = noise1.toStdString();
         MathmodRef->IsoObjet->masterthread->RgbtSize = uint(lst.size());
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
         MathmodRef->ParObjet->masterthread->Rgbt = result.toStdString();
-        MathmodRef->ParObjet->masterthread->Noise = noise1.toStdString();
+        MathmodRef->ParObjet->masterthread->NOISE_STR = noise1.toStdString();
         MathmodRef->ParObjet->masterthread->RgbtSize = uint(lst.size());
     }
     if((hsv=result.contains("H=")))
@@ -1143,16 +1143,16 @@ void DrawingOptions::LoadPigment(const QJsonObject &QObj,
     result.replace(" ", "");
     if (opt == ISO_TYPE)
     {
-        MathmodRef->IsoObjet->masterthread->Gradient = strtmp.toStdString();
+        MathmodRef->IsoObjet->masterthread->GRADIENT_STR = strtmp.toStdString();
         MathmodRef->IsoObjet->masterthread->VRgbt = result.toStdString();
-        MathmodRef->IsoObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->IsoObjet->masterthread->NOISE_STR = noise.toStdString();
         MathmodRef->IsoObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
     else if (opt == PAR_TYPE || opt == PAR_4D_TYPE)
     {
-        MathmodRef->ParObjet->masterthread->Gradient = strtmp.toStdString();
+        MathmodRef->ParObjet->masterthread->GRADIENT_STR = strtmp.toStdString();
         MathmodRef->ParObjet->masterthread->VRgbt = result.toStdString();
-        MathmodRef->ParObjet->masterthread->Noise = noise.toStdString();
+        MathmodRef->ParObjet->masterthread->NOISE_STR = noise.toStdString();
         MathmodRef->ParObjet->masterthread->VRgbtSize = uint(VRgbtSize);
     }
     if((hsv=result.contains("H=")))

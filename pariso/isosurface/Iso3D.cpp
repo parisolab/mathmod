@@ -917,7 +917,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         VRgbtSize =0;
     }
-    if(Noise != "")
+    if(NOISE_STR != "")
     {
         for(uint j=0; j<ConstSize; j++)
             NoiseParser->AddConstant(ConstNames[j], ConstValues[j]);
@@ -1052,9 +1052,9 @@ ErrorMessage IsoMasterThread::ParseExpression()
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
-        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,IsoParametersList.ColorFunctParameters)) >= 0)
+        if ((stdError.iErrorIndex = GradientParser->Parse(GRADIENT_STR,IsoParametersList.ColorFunctParameters)) >= 0)
         {
-            stdError.strError = Gradient;
+            stdError.strError = GRADIENT_STR;
             return stdError;
         }
         for(uint i=0; i<VRgbtSize; i++)
@@ -1064,10 +1064,10 @@ ErrorMessage IsoMasterThread::ParseExpression()
                 return stdError;
             }
     }
-    if(Noise != "")
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,IsoParametersList.ColorFunctParameters)) >= 0)
+    if(NOISE_STR != "")
+        if ((stdError.iErrorIndex = NoiseParser->Parse(NOISE_STR,IsoParametersList.ColorFunctParameters)) >= 0)
         {
-            stdError.strError = Noise;
+            stdError.strError = NOISE_STR;
             return stdError;
         }
     for(uint i=0; i<componentsNumber; i++)
@@ -1558,7 +1558,7 @@ void Iso3D::IsoBuild (
         components->ThereisRGBA.push_back(false);
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = -1; //No Pigments or texture
     }
-    if(masterthread->Noise == "")
+    if(masterthread->NOISE_STR == "")
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 0;
     else
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 1;
@@ -1692,7 +1692,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
             {
                 ValCol[i] = masterthread->VRgbtParser[i].Eval(val);
             }
-            if(masterthread->Noise != "")
+            if(masterthread->NOISE_STR != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
@@ -1772,7 +1772,7 @@ void Iso3D::CalculateColorsPoints(struct ComponentInfos* comp, uint index)
                 val[14] = masterthread->y_Inf[0];
                 val[15] = masterthread->z_Inf[0];
             }
-            if(masterthread->Noise != "")
+            if(masterthread->NOISE_STR != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;

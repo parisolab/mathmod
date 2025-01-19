@@ -31,7 +31,7 @@ MasterThread::~MasterThread() {}
 
 void MasterThread::clearTextureInfos()
 {
-    Rgbt = VRgbt = Gradient = Noise="";
+    Rgbt = VRgbt = GRADIENT_STR = NOISE_STR="";
 }
 
 WorkerThread::WorkerThread() {}

@@ -452,15 +452,15 @@ void ParMasterThread::InitMasterParsers()
 
     for (uint m=0; m<ImportedInternalFunctions.size(); m++)
     {
-        GradientParser->AddFunction(ImportedInternalFunctions[m].name,
-                                  ImportedInternalFunctions[m].ptr,
-                                  ImportedInternalFunctions[m].param);
         NoiseParser->AddFunction(ImportedInternalFunctions[m].name,
+                                 ImportedInternalFunctions[m].ptr,
+                                 ImportedInternalFunctions[m].param);
+        GradientParser->AddFunction(ImportedInternalFunctions[m].name,
                                     ImportedInternalFunctions[m].ptr,
                                     ImportedInternalFunctions[m].param);
         NoiseShapeParser->AddFunction(ImportedInternalFunctions[m].name,
-                                    ImportedInternalFunctions[m].ptr,
-                                    ImportedInternalFunctions[m].param);
+                                      ImportedInternalFunctions[m].ptr,
+                                      ImportedInternalFunctions[m].param);
     }
     for(uint i=0; i<componentsNumber; i++)
     {
@@ -473,14 +473,14 @@ void ParMasterThread::InitMasterParsers()
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             {
                 myParserX[i].AddFunction(ImportedInternalFunctions[m].name,
-                            ImportedInternalFunctions[m].ptr,
-                            ImportedInternalFunctions[m].param);
+                                         ImportedInternalFunctions[m].ptr,
+                                         ImportedInternalFunctions[m].param);
                 myParserY[i].AddFunction(ImportedInternalFunctions[m].name,
-                            ImportedInternalFunctions[m].ptr,
-                            ImportedInternalFunctions[m].param);
+                                         ImportedInternalFunctions[m].ptr,
+                                         ImportedInternalFunctions[m].param);
                 myParserZ[i].AddFunction(ImportedInternalFunctions[m].name,
-                            ImportedInternalFunctions[m].ptr,
-                            ImportedInternalFunctions[m].param);
+                                         ImportedInternalFunctions[m].ptr,
+                                         ImportedInternalFunctions[m].param);
                 myParserW[i].AddFunction(ImportedInternalFunctions[m].name,
                                          ImportedInternalFunctions[m].ptr,
                                          ImportedInternalFunctions[m].param);
@@ -676,7 +676,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     {
         VRgbtSize =0;
     }
-    if(Noise != "")
+    if(NOISE_STR != "")
     {
         for(uint j=0; j<ConstSize; j++)
             NoiseParser->AddConstant(ConstNames[j], ConstValues[j]);
@@ -826,9 +826,9 @@ ErrorMessage  ParMasterThread::parse_expression()
     // Parse
     if(vrgbtnotnull && (VRgbtSize % 5) ==0)
     {
-        if ((stdError.iErrorIndex = GradientParser->Parse(Gradient,ParParametersList.ColorFunctParameters)) >= 0)
+        if ((stdError.iErrorIndex = GradientParser->Parse(GRADIENT_STR,ParParametersList.ColorFunctParameters)) >= 0)
         {
-            stdError.strError = Gradient;
+            stdError.strError = GRADIENT_STR;
             return stdError;
         }
         for(uint i=0; i<VRgbtSize; i++)
@@ -838,13 +838,12 @@ ErrorMessage  ParMasterThread::parse_expression()
                 return stdError;
             }
     }
-    if(Noise != "")
-        if ((stdError.iErrorIndex = NoiseParser->Parse(Noise,ParParametersList.ColorFunctParameters)) >= 0)
+    if(NOISE_STR != "")
+        if ((stdError.iErrorIndex = NoiseParser->Parse(NOISE_STR,ParParametersList.ColorFunctParameters)) >= 0)
         {
-            stdError.strError = Noise;
+            stdError.strError = NOISE_STR;
             return stdError;
         }
-
     for(uint index=0; index< componentsNumber; index++)
     {
         if ((stdError.iErrorIndex = myParserUmin[index].Parse(ParamStructs[index].umin, ParParametersList.ParFunctParameters)) >= 0)
@@ -853,7 +852,6 @@ ErrorMessage  ParMasterThread::parse_expression()
             return stdError;
         }
         u_inf[index] = myParserUmin[index].Eval(vals);
-
         if ((stdError.iErrorIndex = myParserUmax[index].Parse(ParamStructs[index].umax, ParParametersList.ParFunctParameters)) >= 0)
         {
             stdError.strError = ParamStructs[index].umax;
@@ -861,14 +859,12 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
         u_sup[index] = myParserUmax[index].Eval(vals);
         dif_u[index] = u_sup[index] - u_inf[index];
-
         if ((stdError.iErrorIndex = myParserVmin[index].Parse(ParamStructs[index].vmin, ParParametersList.ParFunctParameters)) >= 0)
         {
             stdError.strError = ParamStructs[index].vmin;
             return stdError;
         }
         v_inf[index] = myParserVmin[index].Eval(vals);
-
         if ((stdError.iErrorIndex = myParserVmax[index].Parse(ParamStructs[index].vmax, ParParametersList.ParFunctParameters)) >= 0)
         {
             stdError.strError = ParamStructs[index].vmax;
@@ -884,19 +880,16 @@ ErrorMessage  ParMasterThread::parse_expression()
                 stdError.strError = ParamStructs[index].fx;
                 return stdError;
             }
-
             if ((stdError.iErrorIndex = myParserY[index].Parse(ParamStructs[index].fy, ParParametersList.ParFunctParameters)) >= 0)
             {
                 stdError.strError = ParamStructs[index].fy;
                 return stdError;
             }
-
             if ((stdError.iErrorIndex = myParserZ[index].Parse(ParamStructs[index].fz, ParParametersList.ParFunctParameters)) >= 0)
             {
                 stdError.strError = ParamStructs[index].fz;
                 return stdError;
             }
-
             if(param4D == 1)
                 if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].fw, ParParametersList.ParFunctParameters)) >= 0)
                 {
@@ -1456,7 +1449,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             {
                 ValCol[li] = masterthread->VRgbtParser[li].Eval(val);
             }
-            if(masterthread->Noise != "")
+            if(masterthread->NOISE_STR != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
@@ -1536,7 +1529,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
                 val[4] = val[6]/double(Vgrid);
                 val[4] = val[4] * masterthread->dif_v[0]  + masterthread->v_inf[0];
             }
-            if(masterthread->Noise != "")
+            if(masterthread->NOISE_STR != "")
                 tmp  = masterthread->NoiseParser->Eval(val);
             else
                 tmp =1.0;
@@ -2266,7 +2259,7 @@ void  Par3D::ParamBuild(
         components->ThereisRGBA.push_back(false);
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = -1; //No Pigments or texture
     }
-    if(masterthread->Noise == "")
+    if(masterthread->NOISE_STR == "")
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 0;
     else
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseShape = 1;
