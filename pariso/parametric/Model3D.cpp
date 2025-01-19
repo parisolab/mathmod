@@ -630,7 +630,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     //Colors
     if(rgbtnotnull)
     {
-        RgbtSize = HowManyVariables(Rgbt, 3);
+        RgbtSize = HowManyVariables(RGBT_STR, 3);
         for(uint i=0; i<RgbtSize; i++)
             for(uint j=0; j<ConstSize; j++)
             {
@@ -650,7 +650,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     //Texture:
     if(vrgbtnotnull)
     {
-        VRgbtSize = HowManyVariables(VRgbt, 4);
+        VRgbtSize = HowManyVariables(VRGBT_STR, 4);
 
         for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             GradientParser->AddFunction(ImportedInternalFunctions[m].name,

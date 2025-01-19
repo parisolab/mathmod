@@ -76,7 +76,7 @@ public:
     std::vector<std::string> Rgbts, RgbtNames, VRgbts, VRgbtNames, Functs,
         FunctNames, Consts, ConstNames, SliderNames;
     std::string TextureInfos[10];
-    std::string Vect, Grid, Const, Funct, Rgbt, VRgbt;
+    std::string Vect, Grid, Const, Funct;
     uint RgbtSize, FunctSize, VRgbtSize, ConstSize, Nb_Sliders;
     std::vector<uint> grid, vect;
     bool *UsedFunct, *UsedFunct2, gridnotnull, vectnotnull, constnotnull, functnotnull,

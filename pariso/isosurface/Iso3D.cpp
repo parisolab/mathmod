@@ -844,7 +844,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
     if(rgbtnotnull)
     {
-        RgbtSize = HowManyVariables(Rgbt, 3);
+        RgbtSize = HowManyVariables(RGBT_STR, 3);
         for(uint i=0; i<RgbtSize; i++)
         {
             for(uint j=0; j<ConstSize; j++)
@@ -880,7 +880,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     //For Solid Texture :
     if(vrgbtnotnull)
     {
-        VRgbtSize = HowManyVariables(VRgbt, 4);
+        VRgbtSize = HowManyVariables(VRGBT_STR, 4);
         for(uint j=0; j<ConstSize; j++)
         {
             GradientParser->AddConstant(ConstNames[j], ConstValues[j]);
