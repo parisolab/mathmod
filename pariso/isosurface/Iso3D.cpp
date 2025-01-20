@@ -78,6 +78,7 @@ IsoMasterThread::IsoMasterThread()
     Octaves = 4;
     Cstparser.AddConstant("pi", PI);
     componentsNumber = ConstSize = FunctSize = RgbtSize = VRgbtSize = 0;
+    ImprovedNoise(4.0,4.0,4.0); // Initialize the Noise function
 }
 void IsoMasterThread::IsoMasterTable()
 {

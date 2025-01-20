@@ -92,6 +92,7 @@ ParMasterThread::ParMasterThread()
     Lacunarity = 0.5;
     UsedFunct    = new bool[0];
     UsedFunct2   = new bool[0];
+    ImprovedNoise(4.0,4.0,4.0); // Initialize the Noise function
 }
 void ParWorkerThread::run()
 {
