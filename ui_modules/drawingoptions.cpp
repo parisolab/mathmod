@@ -2121,6 +2121,10 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
             OptionnalParScriptFIELD Opt = *it;
             OptionalParScriptFieldprocess(qobj, Opt);
         }
+
+        // Colors
+        MathmodRef->ParObjet->masterthread->clearTextureInfos();
+
         break;
     case ISO_TYPE:
         for (std::vector<MandatoryIsoField>::const_iterator it =
@@ -2138,15 +2142,16 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
             OptionnalIsoScriptFIELD Opt = *it;
             OptionalIsoScriptFieldprocess(qobj, Opt);
         }
+        // Colors
+        MathmodRef->IsoObjet->masterthread->clearTextureInfos();
+
         break;
     case PARISO_TYPE:
         break;
     case UNDEFINED_TYPE:
         break;
     }
-    // Colors
-    MathmodRef->IsoObjet->masterthread->clearTextureInfos();
-    MathmodRef->ParObjet->masterthread->clearTextureInfos();
+
     if (loadtext)
     {
         LoadTexture(QTextureObj, mod);

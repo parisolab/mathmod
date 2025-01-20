@@ -112,9 +112,7 @@ IsoMasterThread::~IsoMasterThread()
     ConstNames.clear();
     ConstValues.clear();
     Rgbts.clear();
-    RgbtNames.clear();
     VRgbts.clear();
-    VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
     vals.clear();
@@ -338,12 +336,10 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 3)
             {
-                RgbtNames.push_back(tmp2.substr(0,jpos));
                 Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
-                VRgbtNames.push_back(tmp2.substr(0,jpos));
                 VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
@@ -366,12 +362,10 @@ uint IsoMasterThread::HowManyVariables(std::string NewVariables, uint type)
             }
             else if(type == 3)
             {
-                RgbtNames.push_back(tmp2.substr(0, jpos));
                 Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
-                VRgbtNames.push_back(tmp2.substr(0, jpos));
                 VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             NewVariables = "";
@@ -857,14 +851,6 @@ ErrorMessage IsoMasterThread::ParserIso()
                     RgbtParser[i].AddFunction(ImportedInternalFunctions[m].name,
                                               ImportedInternalFunctions[m].ptr,
                                               ImportedInternalFunctions[m].param);
-                /*
-                RgbtParser[i].AddFunction("NoiseW",TurbulenceWorley, 6);
-                RgbtParser[i].AddFunction("NoiseP",TurbulencePerlin, 6);
-                RgbtParser[i].AddFunction("MarbleP",MarblePerlin, 4);
-                RgbtParser[i].AddFunction("LegendreA",Legendre_a, 3);
-                RgbtParser[i].AddFunction("LaguerreA",Laguerre_a, 3);
-                RgbtParser[i].AddFunction("MandelFractal",Mandelbrot, 3);
-                RgbtParser[i].AddFunction("JuliaFractal",Julia, 5);*/
             }
             //Add predefined constatnts:
             for(uint k=0; k<Nb_Sliders; k++)
@@ -1175,9 +1161,7 @@ void IsoMasterThread::DeleteMasterParsers()
     ConstNames.clear();
     ConstValues.clear();
     Rgbts.clear();
-    RgbtNames.clear();
     VRgbts.clear();
-    VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
 }

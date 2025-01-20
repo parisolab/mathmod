@@ -73,7 +73,7 @@ public:
                    *GradientParser, *NoiseParser, *NoiseShapeParser, Cstparser;
     FunctionParser_cd *RgbtParser_C;
     std::vector<InternalFuncDefinition> ImportedInternalFunctions;
-    std::vector<std::string> Rgbts, RgbtNames, VRgbts, VRgbtNames, Functs,
+    std::vector<std::string> Rgbts, VRgbts, Functs,
         FunctNames, Consts, ConstNames, SliderNames;
     std::string TextureInfos[10];
     std::string Vect, Grid, Const, Funct;

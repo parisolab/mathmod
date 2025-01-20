@@ -63,9 +63,7 @@ ParMasterThread::~ParMasterThread()
     SliderValues.clear();
     SliderNames.clear();
     Rgbts.clear();
-    RgbtNames.clear();
     VRgbts.clear();
-    VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
     Consts.clear();
@@ -408,9 +406,7 @@ void ParMasterThread::DeleteMasterParsers()
     SliderValues.clear();
     SliderNames.clear();
     Rgbts.clear();
-    RgbtNames.clear();
     VRgbts.clear();
-    VRgbtNames.clear();
     Functs.clear();
     FunctNames.clear();
     Consts.clear();
@@ -651,7 +647,6 @@ ErrorMessage  ParMasterThread::parse_expression()
     if(vrgbtnotnull)
     {
         VRgbtSize = HowManyVariables(VRGBT_STR, 4);
-
         for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             GradientParser->AddFunction(ImportedInternalFunctions[m].name,
                                         ImportedInternalFunctions[m].ptr,
@@ -940,11 +935,10 @@ ErrorMessage  Par3D::parse_expression2()
         for(uint ij=0; ij<masterthread->FunctSize; ij++)
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
-            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
-            workerthreads[nbthreads].Fct[ij].AddFunction("LegendreA",Legendre_a, 3);
-            workerthreads[nbthreads].Fct[ij].AddFunction("LaguerreA",Laguerre_a, 3);
-            workerthreads[nbthreads].Fct[ij].AddFunction("MandelFractal",Mandelbrot, 3);
-            workerthreads[nbthreads].Fct[ij].AddFunction("JuliaFractal",Julia, 5);
+            for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
+                workerthreads[nbthreads].Fct[ij].AddFunction(masterthread->ImportedInternalFunctions[m].name,
+                                                             masterthread->ImportedInternalFunctions[m].ptr,
+                                                             masterthread->ImportedInternalFunctions[m].param);
         }
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
@@ -1233,12 +1227,10 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             }
             else if(type == 3)
             {
-                RgbtNames.push_back(tmp2.substr(0,jpos));
                 Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
-                VRgbtNames.push_back(tmp2.substr(0,jpos));
                 VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             tmp2 = NewVariables.substr(position+1, NewVariables.length()-1);
@@ -1261,12 +1253,10 @@ uint ParMasterThread::HowManyVariables(std::string NewVariables, int type)
             }
             else if(type == 3)
             {
-                RgbtNames.push_back(tmp2.substr(0, jpos));
                 Rgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             else if(type == 4)
             {
-                VRgbtNames.push_back(tmp2.substr(0, jpos));
                 VRgbts.push_back(tmp3.substr(jpos+1,position-1));
             }
             NewVariables = "";
