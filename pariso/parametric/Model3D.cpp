@@ -299,10 +299,10 @@ void ParMasterThread::AllocateParsersForMasterThread()
         u_sup.resize(componentsNumber);
         dif_v.resize(componentsNumber);
         dif_u.resize(componentsNumber);
-        (RGBT_STR != "") ?
+        rgbtnotnull ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
-        (RGBT_STR != "") ?
+        rgbtnotnull ?
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 4)] :
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 0)];
         UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
@@ -625,7 +625,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         FunctSize =0;
     }
     //Colors
-    if(RGBT_STR != "")
+    if(rgbtnotnull)
     {
         RgbtSize = HowManyVariables(RGBT_STR, 3);
         for(uint i=0; i<RgbtSize; i++)
@@ -789,7 +789,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     }
     // Parse
     rgbtnotnull_C = false;
-    if(RGBT_STR != "")
+    if(rgbtnotnull)
     {
         for(uint i=0; i<RgbtSize; i++)
         {
@@ -802,7 +802,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 }
                 else
                 {
-                    rgbtnotnull_C = true;  ///  Why not use param3D_C and param4D_C  to detect complex parametric objects?
+                    rgbtnotnull_C = true;
                     i=RgbtSize; //break;
                 }
             }
