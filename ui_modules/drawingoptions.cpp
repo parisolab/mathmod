@@ -3081,7 +3081,7 @@ void DrawingOptions::slot_unselect_clicked()
     MyselectionItemReference->removeChild(ui.ObjectClasse->currentItem());
 }
 
-void DrawingOptions::slot_XYZscrollBarValueChanged(int value)
+void DrawingOptions::slot_XYZscrollBar_valueChanged(int value)
 {
     MathmodRef->xyzg_valueChanged(value, ISO_TYPE);
 }
@@ -3818,7 +3818,7 @@ void DrawingOptions::on_linecolumn_2_valueChanged(int value)
     }
 }
 
-void DrawingOptions::on_lineScrollBarValueChanged(int value)
+void DrawingOptions::on_lineScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
         "Grid(u,v)/MaxGrid = (" + QString::number(value) + ", " +
@@ -3836,7 +3836,7 @@ void DrawingOptions::on_lineScrollBarValueChanged(int value)
     }
 }
 
-void DrawingOptions::on_coloneScrollBarValueChanged(int value)
+void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
 {
     ui.ParamgroupBox_2->setTitle(
         "Param Grid(u,v)/MaxGrid = (" +
@@ -3945,7 +3945,7 @@ void DrawingOptions::on_xycheckBox_clicked()
     MathmodRef->ParObjet->tetaxy_ok *= -1;
 }
 
-void DrawingOptions::on_xyhorizontalScrollBarValueChanged(int value)
+void DrawingOptions::on_xyhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetaxy = value / 4.0;
 }
@@ -3955,7 +3955,7 @@ void DrawingOptions::on_xzcheckBox_clicked()
     MathmodRef->ParObjet->tetaxz_ok *= -1;
 }
 
-void DrawingOptions::on_xzhorizontalScrollBarValueChanged(int value)
+void DrawingOptions::on_xzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetaxz = value / 4.0;
 }
@@ -3965,7 +3965,7 @@ void DrawingOptions::on_yzcheckBox_clicked()
     MathmodRef->ParObjet->tetayz_ok *= -1;
 }
 
-void DrawingOptions::on_yzhorizontalScrollBarValueChanged(int value)
+void DrawingOptions::on_yzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetayz = value / 4.0;
 }
@@ -3975,7 +3975,7 @@ void DrawingOptions::on_xwcheckBox_clicked()
     MathmodRef->ParObjet->tetaxw_ok *= -1;
 }
 
-void DrawingOptions::on_xwhorizontalScrollBarValueChanged(int value)
+void DrawingOptions::on_xwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetaxw = value / 4.0;
 }
@@ -3985,7 +3985,7 @@ void DrawingOptions::on_ywcheckBox_clicked()
     MathmodRef->ParObjet->tetayw_ok *= -1;
 }
 
-void DrawingOptions::on_ywhorizontalScrollBarValueChanged(int value)
+void DrawingOptions::on_ywhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetayw = value / 4.0;
 }
@@ -3995,7 +3995,7 @@ void DrawingOptions::on_zwcheckBox_clicked()
     MathmodRef->ParObjet->tetazw_ok *= -1;
 }
 
-void DrawingOptions::on_zwhorizontalScrollBarValueChanged(int value)
+void DrawingOptions::on_zwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetazw = value / 4.0;
 }
@@ -4303,7 +4303,7 @@ void DrawingOptions::UpdateGui()
     ui.ScriptEditor->setFontPointSize(Parameters->scripteditorfontsize);
 }
 
-void DrawingOptions::on_TimeStepScrollBarValueChanged(int value)
+void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
     double P = 1.0 / double(value);
     uint maxnbthreads = MathmodRef->IsoObjet->WorkerThreadsNumber;
@@ -4571,107 +4571,107 @@ void DrawingOptions::on_pushButton_5_clicked()
     }
 }
 
-void DrawingOptions::on_C1ScrollBarValueChanged(int val)
+void DrawingOptions::on_C1ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 0);
+    CScrollBar_valueChanged(val, 0);
 }
 
-void DrawingOptions::on_C2ScrollBarValueChanged(int val)
+void DrawingOptions::on_C2ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 1);
+    CScrollBar_valueChanged(val, 1);
 }
 
-void DrawingOptions::on_C3ScrollBarValueChanged(int val)
+void DrawingOptions::on_C3ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 2);
+    CScrollBar_valueChanged(val, 2);
 }
 
-void DrawingOptions::on_C4ScrollBarValueChanged(int val)
+void DrawingOptions::on_C4ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 3);
+    CScrollBar_valueChanged(val, 3);
 }
 
-void DrawingOptions::on_C5ScrollBarValueChanged(int val)
+void DrawingOptions::on_C5ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 4);
+    CScrollBar_valueChanged(val, 4);
 }
 
-void DrawingOptions::on_C6ScrollBarValueChanged(int val)
+void DrawingOptions::on_C6ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 5);
+    CScrollBar_valueChanged(val, 5);
 }
 
-void DrawingOptions::on_C7ScrollBarValueChanged(int val)
+void DrawingOptions::on_C7ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 6);
+    CScrollBar_valueChanged(val, 6);
 }
 
-void DrawingOptions::on_C8ScrollBarValueChanged(int val)
+void DrawingOptions::on_C8ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 7);
+    CScrollBar_valueChanged(val, 7);
 }
 
-void DrawingOptions::on_C9ScrollBarValueChanged(int val)
+void DrawingOptions::on_C9ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 8);
+    CScrollBar_valueChanged(val, 8);
 }
 
-void DrawingOptions::on_C10ScrollBarValueChanged(int val)
+void DrawingOptions::on_C10ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 9);
+    CScrollBar_valueChanged(val, 9);
 }
 
-void DrawingOptions::on_C11ScrollBarValueChanged(int val)
+void DrawingOptions::on_C11ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 10);
+    CScrollBar_valueChanged(val, 10);
 }
 
-void DrawingOptions::on_C12ScrollBarValueChanged(int val)
+void DrawingOptions::on_C12ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 11);
+    CScrollBar_valueChanged(val, 11);
 }
 
-void DrawingOptions::on_C13ScrollBarValueChanged(int val)
+void DrawingOptions::on_C13ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 12);
+    CScrollBar_valueChanged(val, 12);
 }
 
-void DrawingOptions::on_C14ScrollBarValueChanged(int val)
+void DrawingOptions::on_C14ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 13);
+    CScrollBar_valueChanged(val, 13);
 }
 
-void DrawingOptions::on_C15ScrollBarValueChanged(int val)
+void DrawingOptions::on_C15ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 14);
+    CScrollBar_valueChanged(val, 14);
 }
 
-void DrawingOptions::on_C16ScrollBarValueChanged(int val)
+void DrawingOptions::on_C16ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 15);
+    CScrollBar_valueChanged(val, 15);
 }
 
-void DrawingOptions::on_C17ScrollBarValueChanged(int val)
+void DrawingOptions::on_C17ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 16);
+    CScrollBar_valueChanged(val, 16);
 }
 
-void DrawingOptions::on_C18ScrollBarValueChanged(int val)
+void DrawingOptions::on_C18ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 17);
+    CScrollBar_valueChanged(val, 17);
 }
 
-void DrawingOptions::on_C19ScrollBarValueChanged(int val)
+void DrawingOptions::on_C19ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 18);
+    CScrollBar_valueChanged(val, 18);
 }
 
-void DrawingOptions::on_C20ScrollBarValueChanged(int val)
+void DrawingOptions::on_C20ScrollBar_valueChanged(int val)
 {
-    CScrollBarValueChanged(val, 19);
+    CScrollBar_valueChanged(val, 19);
 }
 
-void DrawingOptions::CScrollBarValueChanged(int val, int idx)
+void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
 {
     MathmodRef->LocalScene.slider = 1;
     MathmodRef->IsoObjet->masterthread->SliderValues[uint(idx)] =val;
@@ -5222,12 +5222,12 @@ void DrawingOptions::on_transparent_Specular_valueChanged(int value)
     MathmodRef->transSpec(value);
 }
 
-void DrawingOptions::on_ShininessScrollBarValueChanged(int value)
+void DrawingOptions::on_ShininessScrollBar_valueChanged(int value)
 {
     MathmodRef->Shininess(value);
 }
 
-void DrawingOptions::on_ThreadNumberScrollBarValueChanged(int value)
+void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->UpdateThredsNumber(uint(value));
     MathmodRef->IsoObjet->UpdateThredsNumber(uint(value));
