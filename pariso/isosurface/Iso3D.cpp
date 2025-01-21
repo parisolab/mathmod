@@ -837,7 +837,7 @@ ErrorMessage IsoMasterThread::ParserIso()
     {
         FunctSize =0;
     }
-    if(rgbtnotnull)
+    if(RGBT_STR!= "")
     {
         RgbtSize = HowManyVariables(RGBT_STR, 3);
         for(uint i=0; i<RgbtSize; i++)
@@ -865,7 +865,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         RgbtSize =0;
     }
     //For Solid Texture :
-    if(vrgbtnotnull)
+    if(VRGBT_STR != "")
     {
         VRgbtSize = HowManyVariables(VRGBT_STR, 4);
         for(uint j=0; j<ConstSize; j++)
@@ -963,7 +963,7 @@ ErrorMessage IsoMasterThread::ParserIso()
         }
     }
     // Add defined functions :
-    if(rgbtnotnull)
+    if(RGBT_STR!= "")
         for(int i=0; i<4; i++)
             for(uint j=0; j<FunctSize; j++)
             {
@@ -974,7 +974,7 @@ ErrorMessage IsoMasterThread::ParserIso()
                                               ImportedInternalFunctions[m].param);
             }
     // Add defined functions :
-    if(vrgbtnotnull)
+    if(VRGBT_STR != "")
     {
         for(uint j=0; j<FunctSize; j++)
         {
@@ -1029,7 +1029,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
     }
     vals[3] = stepMorph;
     // Parse
-    if(rgbtnotnull && RgbtSize == 4)
+    if((RGBT_STR!= "") && RgbtSize == 4)
         for(uint i=0; i<RgbtSize; i++)
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],IsoParametersList.ColorFunctParameters)) >= 0)
             {
@@ -1037,7 +1037,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
                 return stdError;
             }
     // Parse
-    if(vrgbtnotnull && (VRgbtSize % 5) ==0)
+    if((VRGBT_STR != "") && (VRgbtSize % 5) ==0)
     {
         if ((stdError.iErrorIndex = GradientParser->Parse(GRADIENT_STR,IsoParametersList.ColorFunctParameters)) >= 0)
         {
@@ -1264,10 +1264,10 @@ void IsoMasterThread::AllocateMasterParsers()
         UsedFunct    = new bool[componentsNumber*FunctSize]; //Why "4*" ? parametric object have 4 fcts (fx,fy,fz,fw) but isoObject have only one fxyz
         UsedFunct2   = new bool[FunctSize*FunctSize];
         vectnotnull? nbvariables=vect[0] : nbvariables=0;
-        rgbtnotnull ?
+        (RGBT_STR!= "") ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
-        vrgbtnotnull ?
+        (VRGBT_STR != "") ?
         VRgbtParser = new FunctionParser[VRgbtSize] :
         VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
         if(constnotnull)
