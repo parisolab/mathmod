@@ -52,8 +52,7 @@ public :
     FunctionParser *myParserZ, *myParserW, *myParserX, *myParserY, *Fct;
     FunctionParser_cd *myParserZ_C, *myParserW_C, *myParserX_C, *myParserY_C, *Fct_C;
     std::vector<double>  v_inf, v_sup,u_inf,u_sup,dif_v,dif_u;
-    int param4D;
-    bool param3d_C, param4d_C;
+    bool param4D, param3d_C, param4d_C;
     uint CurrentIndex;
     std::vector<std::complex<double>> valcomplex;
     std::vector<double>  ResX, ResY, ResZ, ResW, vals;

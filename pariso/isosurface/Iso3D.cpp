@@ -1197,6 +1197,7 @@ void IsoMasterThread::InitMasterParsers()
     {
         Fct[i].AddConstant("pi", PI);
         Fct[i].AddConstant("ThreadId", MyIndex);
+        Fct[i].AddFunction("CmpId",CurrentIsoCmpId, 1);
         for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             Fct[i].AddFunction(ImportedInternalFunctions[m].name,
                                ImportedInternalFunctions[m].ptr,
@@ -1522,7 +1523,7 @@ void Iso3D::IsoBuild (
         return;
     }
     // Pigment, Texture and Noise :
-    if(masterthread->vrgbtnotnull)
+    if(masterthread->VRGBT_STR != "")
     {
         components->ThereisRGBA.push_back(true);
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = 0; //Pigments

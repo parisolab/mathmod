@@ -1192,6 +1192,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
     updateCurrentTreestruct();
     MathmodRef->LocalScene.componentsinfos.ParisoCondition.clear();
     MathmodRef->LocalScene.componentsinfos.hsv.clear();
+    MathmodRef->ParObjet->masterthread->param3d_C=
+            MathmodRef->ParObjet->masterthread->param4D=
+            MathmodRef->ParObjet->param4D=
+            MathmodRef->ParObjet->masterthread->param4d_C=false;
     if (Jobj["ParIso"].isArray())
     {
         QJsonArray listeObj = Jobj["ParIso"].toArray();
@@ -1359,7 +1363,8 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 MathmodRef->update();
             }
         }
-        else if (Jobj["Param4D"].isObject() || (MathmodRef->ParObjet->masterthread->param4d_C=Jobj["Param4D_C"].isObject()))
+        else if ( (MathmodRef->ParObjet->masterthread->param4D=MathmodRef->ParObjet->param4D=Jobj["Param4D"].isObject())
+                  || (MathmodRef->ParObjet->masterthread->param4d_C=Jobj["Param4D_C"].isObject()))
         {
             if (Jobj["Param4D"].isObject())
                 QObj = Jobj["Param4D"].toObject();
@@ -1900,6 +1905,10 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
     updateCurrentTreestruct();
     MathmodRef->LocalScene.componentsinfos.ParisoCondition.clear();
     MathmodRef->LocalScene.componentsinfos.hsv.clear();
+    MathmodRef->ParObjet->masterthread->param3d_C=
+            MathmodRef->ParObjet->param4D=
+            MathmodRef->ParObjet->masterthread->param4D=
+            MathmodRef->ParObjet->masterthread->param4d_C=false;
     for (int i = 0; i < array.size(); i++)
     {
         if ((QObj1 = array[i].toObject())["ParIso"].isArray() &&
@@ -2038,7 +2047,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->ParametricSurfaceProcess(1);
                 return (1);
             }
-            else if (((array[i].toObject())["Param4D"].isObject() &&
+            else if (((( MathmodRef->ParObjet->masterthread->param4D = MathmodRef->ParObjet->param4D =  (array[i].toObject())["Param4D"].isObject())) &&
                      (QObj = (array[i].toObject())["Param4D"].toObject())["Name"]
                      .toArray()[0]
                      .toString() == arg1)  ||
@@ -2104,6 +2113,8 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
             OptionnalParScriptFIELD Opt = *it;
             OptionalParScriptFieldprocess(qobj, Opt);
         }
+        // Colors
+        MathmodRef->ParObjet->masterthread->clearTextureInfos();
         break;
     case PAR_4D_TYPE:
         for (std::vector<MandatoryParField>::const_iterator it =
@@ -2121,7 +2132,6 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
             OptionnalParScriptFIELD Opt = *it;
             OptionalParScriptFieldprocess(qobj, Opt);
         }
-
         // Colors
         MathmodRef->ParObjet->masterthread->clearTextureInfos();
 

@@ -299,16 +299,16 @@ void ParMasterThread::AllocateParsersForMasterThread()
         u_sup.resize(componentsNumber);
         dif_v.resize(componentsNumber);
         dif_u.resize(componentsNumber);
-        rgbtnotnull ?
+        (RGBT_STR != "") ?
         RgbtParser = new FunctionParser[(RgbtSize = 4)] :
         RgbtParser = new FunctionParser[(RgbtSize = 0)];
-        rgbtnotnull ?
+        (RGBT_STR != "") ?
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 4)] :
         RgbtParser_C = new FunctionParser_cd[(RgbtSize = 0)];
         UsedFunct    = new bool[4*uint(componentsNumber)*FunctSize];
         UsedFunct2   = new bool[FunctSize*FunctSize];
         vectnotnull? nbvariables=vect[0] : nbvariables=0;
-        vrgbtnotnull ?
+        (VRGBT_STR != "") ?
         VRgbtParser = new FunctionParser[VRgbtSize] :
         VRgbtParser = new FunctionParser[(VRgbtSize = 0)];
         if(constnotnull)
@@ -522,6 +522,7 @@ void ParMasterThread::InitMasterParsers()
         if(!param3d_C && !param4d_C)
         {
             Fct[i].AddConstant("pi", PI);
+            Fct[i].AddFunction("CmpId", CurrentParamCmpId, 1);
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
                 Fct[i].AddFunction(ImportedInternalFunctions[m].name,
                                    ImportedInternalFunctions[m].ptr,
@@ -625,7 +626,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         FunctSize =0;
     }
     //Colors
-    if(rgbtnotnull)
+    if(RGBT_STR != "")
     {
         RgbtSize = HowManyVariables(RGBT_STR, 3);
         for(uint i=0; i<RgbtSize; i++)
@@ -645,7 +646,7 @@ ErrorMessage  ParMasterThread::parse_expression()
         RgbtSize =0;
     }
     //Texture:
-    if(vrgbtnotnull)
+    if(VRGBT_STR != "")
     {
         VRgbtSize = HowManyVariables(VRGBT_STR, 4);
         for (uint m=0; m<ImportedInternalFunctions.size(); m++)
@@ -692,7 +693,7 @@ ErrorMessage  ParMasterThread::parse_expression()
     HowManyParamSurface(sup_u, 4);
     HowManyParamSurface(inf_v, 5);
     HowManyParamSurface(sup_v, 6);
-    if(param4D ==1)
+    if(param4D)
         HowManyParamSurface(expression_W, 7);
     if(cndnotnull)
     {
@@ -788,39 +789,31 @@ ErrorMessage  ParMasterThread::parse_expression()
         }
     }
     // Parse
-    rgbtnotnull_C = false;
-    if(rgbtnotnull)
+    //rgbtnotnull_C = false;
+    if((RGBT_STR != "") && (!param3d_C && !param4d_C))
     {
         for(uint i=0; i<RgbtSize; i++)
         {
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],ParParametersList.ColorFunctParameters)) >= 0)
             {
-                if((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],ParParametersList.ColorComplexFunctParameters)) >= 0)
-                {
-                    stdError.strError = Rgbts[i];
-                    return stdError;
-                }
-                else
-                {
-                    rgbtnotnull_C = true;
-                    i=RgbtSize; //break;
-                }
+                stdError.strError = Rgbts[i];
+                return stdError;
             }
         }
-        if(rgbtnotnull_C)
+    }
+    else
+    {
+        for(uint i=0; i<RgbtSize; i++)
         {
-            for(uint i=0; i<RgbtSize; i++)
+            if ((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],ParParametersList.ColorComplexFunctParameters)) >= 0)
             {
-                if ((stdError.iErrorIndex = RgbtParser_C[i].Parse(Rgbts[i],ParParametersList.ColorComplexFunctParameters)) >= 0)
-                {
-                        stdError.strError = Rgbts[i];
-                        return stdError;
-                }
+                stdError.strError = Rgbts[i];
+                return stdError;
             }
         }
     }
     // Parse
-    if(vrgbtnotnull && (VRgbtSize % 5) ==0)
+    if((VRGBT_STR != "") && (VRgbtSize % 5) ==0)
     {
         if ((stdError.iErrorIndex = GradientParser->Parse(GRADIENT_STR,ParParametersList.ColorFunctParameters)) >= 0)
         {
@@ -886,7 +879,7 @@ ErrorMessage  ParMasterThread::parse_expression()
                 stdError.strError = ParamStructs[index].fz;
                 return stdError;
             }
-            if(param4D == 1)
+            if(param4D)
                 if ((stdError.iErrorIndex = myParserW[index].Parse(ParamStructs[index].fw, ParParametersList.ParFunctParameters)) >= 0)
                 {
                     stdError.strError = ParamStructs[index].fw;
@@ -936,6 +929,7 @@ ErrorMessage  Par3D::parse_expression2()
         for(uint ij=0; ij<masterthread->FunctSize; ij++)
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
+            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
             for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
                 workerthreads[nbthreads].Fct[ij].AddFunction(masterthread->ImportedInternalFunctions[m].name,
                                                              masterthread->ImportedInternalFunctions[m].ptr,
@@ -1529,7 +1523,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             val[2]= tmp*double(NormVertexTabVector[i*10+9]);
             val[3]*= tmp;
             val[4]*= tmp;
-            if(!masterthread->rgbtnotnull_C)
+            if(!masterthread->param3d_C && !masterthread->param4d_C)
             {
                 NormVertexTabVector[i*10  ] = float(masterthread->RgbtParser[0].Eval(val));
                 NormVertexTabVector[i*10+1] = float(masterthread->RgbtParser[1].Eval(val));
@@ -1939,7 +1933,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
         myParserX[cmp].AllocateStackMemory(StackFactor, nbvariables);
         myParserY[cmp].AllocateStackMemory(StackFactor, nbvariables);
         myParserZ[cmp].AllocateStackMemory(StackFactor, nbvariables);
-        if(param4D == 1)
+        if(param4D)
             myParserW[cmp].AllocateStackMemory(StackFactor, nbvariables);
     }
     else
@@ -2016,7 +2010,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     for(uint l=0; l<nbstack; l++)
                         ResZ[l] = myParserZ[cmp].Eval(&(vals[l*nbvar]));
                 }
-                if(param4D == 1)
+                if(param4D)
                 {
                     res = myParserW[cmp].Eval2(&(vals[0]), nbvar, &(ResW[0]), nbstack);
                     if(int(res) == VAR_OVERFLOW)
@@ -2082,7 +2076,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
                     ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +7 +NewPosition] = float(ResX[p]);
                     ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +8 +NewPosition] = float(ResY[p]);
                     ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
-                    if((param4D == 1) || param4d_C)
+                    if(param4D || param4d_C)
                         Par3D::ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
                     p++;
                 }
@@ -2231,7 +2225,7 @@ void  Par3D::ParamBuild(
     //CND calculation for the triangles results:
     CNDCalculation(NbTriangleIsoSurfaceTmp, components);
     // Pigment, Texture and Noise :
-    if(masterthread->vrgbtnotnull)
+    if(masterthread->VRGBT_STR != "")
     {
         components->ThereisRGBA.push_back(true);
         components->NoiseParam[components->ParisoCurrentComponentIndex].NoiseType = 0; //Pigments
