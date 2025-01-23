@@ -27,7 +27,7 @@
 
 #define PI (double(314159265) / double(100000000))
 #define MAGIC_SCALE 1.5707963f
-//extern template class FunctionParserBase<double>; // explicit instantiation
+
 
 double Mandelbrot(const double*);
 double Julia(const double*);

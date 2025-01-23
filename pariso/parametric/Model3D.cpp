@@ -20,21 +20,25 @@
 #include "Model3D.h"
 #include <QElapsedTimer>
 static uint NbVertexTmp = 0;
-static double ParamComponentId=0;
-static double ParamThreadId=0;
 static QElapsedTimer ptime;
 static int nbvariables=0;
 
-std::vector<float>  Par3D::ExtraDimensionVector;
-double CurrentParamCmpId(const double* p)
-{
-    int pp = int(p[0]);
-    if(pp==0)
-        return ParamComponentId;
-    else
-        return ParamThreadId;
-}
+extern double ComponentId;
+extern double ParamThreadId;
 
+
+
+std::vector<float>  Par3D::ExtraDimensionVector;
+
+
+
+
+double ParComponentId=0;
+
+double CurrentParComponentId(const double* p)
+{
+    return ParComponentId;
+}
 Par3D::~Par3D()
 {
 }
@@ -119,7 +123,7 @@ Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
     masterthread  = new ParMasterThread();
     masterthread->Ugrid  = Ugrid;
     masterthread->Vgrid = Vgrid;
-    masterthread->MyIndex   = 0;
+    masterthread->ThreadIndex   = 0;
     masterthread->param4D   = param4D;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
     masterthread->AllocateStackFactor(pt);
@@ -127,7 +131,7 @@ Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
     {
         workerthreads[nbthreads].Ugrid  = Ugrid;
         workerthreads[nbthreads].Vgrid = Vgrid;
-        workerthreads[nbthreads].MyIndex   = nbthreads+1;
+        workerthreads[nbthreads].ThreadIndex   = nbthreads+1;
         workerthreads[nbthreads].param4D   = param4D;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         workerthreads[nbthreads].AllocateStackFactor(pt);
@@ -467,6 +471,17 @@ void ParMasterThread::InitMasterParsers()
             myParserY[i].AddConstant("pi", PI);
             myParserZ[i].AddConstant("pi", PI);
             myParserW[i].AddConstant("pi", PI);
+
+            myParserX[i].AddConstant("ThreadId",ThreadIndex);
+            myParserY[i].AddConstant("ThreadId",ThreadIndex);
+            myParserZ[i].AddConstant("ThreadId",ThreadIndex);
+            myParserW[i].AddConstant("ThreadId",ThreadIndex);
+
+            myParserX[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            myParserY[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            myParserZ[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            myParserW[i].AddFunction("CmpId",CurrentParComponentId, 1);
+
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             {
                 myParserX[i].AddFunction(ImportedInternalFunctions[m].name,
@@ -489,6 +504,11 @@ void ParMasterThread::InitMasterParsers()
             myParserY_C[i].AddConstant("pi", PI);
             myParserZ_C[i].AddConstant("pi", PI);
             myParserW_C[i].AddConstant("pi", PI);
+
+            myParserX_C[i].AddConstant("ThreadId",ThreadIndex);
+            myParserY_C[i].AddConstant("ThreadId",ThreadIndex);
+            myParserZ_C[i].AddConstant("ThreadId",ThreadIndex);
+            myParserW_C[i].AddConstant("ThreadId",ThreadIndex);
         }
         ParisoConditionParser[i].AddConstant("pi", PI);
         myParserUmin[i].AddConstant("pi", PI);
@@ -522,7 +542,8 @@ void ParMasterThread::InitMasterParsers()
         if(!param3d_C && !param4d_C)
         {
             Fct[i].AddConstant("pi", PI);
-            Fct[i].AddFunction("CmpId", CurrentParamCmpId, 1);
+            Fct[i].AddConstant("ThreadId", ThreadIndex);
+            Fct[i].AddFunction("CmpId",CurrentParComponentId, 1);
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
                 Fct[i].AddFunction(ImportedInternalFunctions[m].name,
                                    ImportedInternalFunctions[m].ptr,
@@ -530,7 +551,8 @@ void ParMasterThread::InitMasterParsers()
         }
         else
         {
-           Fct_C[i].AddConstant("pi", PI);
+            Fct_C[i].AddConstant("pi", PI);
+            Fct_C[i].AddConstant("ThreadId", ThreadIndex);
         }
     }
 }
@@ -929,7 +951,8 @@ ErrorMessage  Par3D::parse_expression2()
         for(uint ij=0; ij<masterthread->FunctSize; ij++)
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
-            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParamCmpId, 1);
+            workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId",workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParComponentId, 1);
             for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
                 workerthreads[nbthreads].Fct[ij].AddFunction(masterthread->ImportedInternalFunctions[m].name,
                                                              masterthread->ImportedInternalFunctions[m].ptr,
@@ -972,6 +995,16 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserY[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserZ[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserW[i].AddConstant("pi", PI);
+
+            workerthreads[nbthreads].myParserX[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].myParserY[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].myParserZ[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].myParserW[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+
+            workerthreads[nbthreads].myParserX[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            workerthreads[nbthreads].myParserY[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            workerthreads[nbthreads].myParserZ[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            workerthreads[nbthreads].myParserW[i].AddFunction("CmpId",CurrentParComponentId, 1);
             for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
             {
                 workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->ImportedInternalFunctions[m].name,
@@ -1097,6 +1130,11 @@ ErrorMessage  Par3D::parse_expression2_C()
             workerthreads[nbthreads].myParserY_C[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserZ_C[i].AddConstant("pi", PI);
             workerthreads[nbthreads].myParserW_C[i].AddConstant("pi", PI);
+
+            workerthreads[nbthreads].myParserX_C[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].myParserY_C[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].myParserZ_C[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].myParserW_C[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
             for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].myParserX_C[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
@@ -1165,7 +1203,7 @@ void Par3D::WorkerThreadCopy(ParWorkerThread *WorkerThreadsTmp)
     {
         WorkerThreadsTmp[nbthreads].Ugrid = masterthread->Ugrid;
         WorkerThreadsTmp[nbthreads].Vgrid = masterthread->Vgrid;
-        WorkerThreadsTmp[nbthreads].MyIndex = nbthreads+1;
+        WorkerThreadsTmp[nbthreads].ThreadIndex = nbthreads+1;
         WorkerThreadsTmp[nbthreads].param4D   = param4D;
         WorkerThreadsTmp[nbthreads].param3d_C   = masterthread->param3d_C;
         WorkerThreadsTmp[nbthreads].param4d_C   = masterthread->param4d_C;
@@ -1916,11 +1954,11 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
     iFinish = 0;
     for(uint i=0; i<Ugrid; i++)
     {
-        if((i% (WorkerThreadsNumber))  == MyIndex )
+        if((i% (WorkerThreadsNumber))  == ThreadIndex )
         {
             taille += 1;
         }
-        if(MyIndex <= (i% (WorkerThreadsNumber)))
+        if(ThreadIndex <= (i% (WorkerThreadsNumber)))
             iFinish  += 1;
     }
     iStart = iFinish - taille;
@@ -2060,7 +2098,7 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             }
             //Signal emission:
             id+=nbstack;
-            if(MyIndex == 0 && activeMorph != 1)
+            if(ThreadIndex == 0 && activeMorph != 1)
             {
                 Totalpoints !=0 ? (signalVal = int((id*100)/Totalpoints)) : (signalVal = 100);
                 if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
@@ -2167,7 +2205,7 @@ void  Par3D::ParamBuild(
             message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->componentsNumber)+"==> Math calculation");
             emitUpdateMessageSignal();
         }
-        ParamComponentId = fctnb;
+        ParComponentId = fctnb;
         if(masterthread->gridnotnull)
         {
             initialiser_LineColumn(masterthread->grid[2*fctnb], masterthread->grid[2*fctnb+1]);

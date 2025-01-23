@@ -53,7 +53,6 @@ float correction;
 
 
 
-
 double Mandelbulb(const double* pp) {
     double x = pp[0];
     double y = pp[1];

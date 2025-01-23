@@ -22,15 +22,12 @@
 #include "internalfunctions.cpp"
 #include <QElapsedTimer>
 
-static double IsoComponentId=0;
+
 double * Iso3D::Results;
 Voxel  * Iso3D::GridVoxelVarPt;
 int IsoWorkerThread::nbvariables;
 
-double CurrentIsoCmpId(const double* p)
-{
-    return((int (p[0]))== 0 ? IsoComponentId:0);
-}
+
 void IsoWorkerThread::run()
 {
     IsoCompute(CurrentComponent);
@@ -148,7 +145,7 @@ void Iso3D::WorkerThreadCopy(IsoWorkerThread *WorkerThreadsTmp)
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         WorkerThreadsTmp[nbthreads].XYZgrid = masterthread->XYZgrid;
-        WorkerThreadsTmp[nbthreads].MyIndex  = nbthreads+1;
+        WorkerThreadsTmp[nbthreads].ThreadIndex  = nbthreads+1;
         WorkerThreadsTmp[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         WorkerThreadsTmp[nbthreads].GridVal = masterthread->GridVal;
         WorkerThreadsTmp[nbthreads].AllocateStackFactor(masterthread->ptStackFactor);
@@ -205,9 +202,9 @@ ErrorMessage  Iso3D::parse_expression2()
     {
         for(uint ij=0; ij<masterthread->FunctSize; ij++)
         {
-            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentIsoCmpId, 1);
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
-            workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId", workerthreads[nbthreads].MyIndex);
+            workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].Fct[ij].AddConstant("CmpId", workerthreads[nbthreads].CurrentComponent);
         }
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
@@ -244,7 +241,8 @@ ErrorMessage  Iso3D::parse_expression2()
         for(uint i=0; i<masterthread->componentsNumber; i++)
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("ThreadId", workerthreads[nbthreads].MyIndex);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("cmpId",workerthreads[nbthreads].CurrentComponent);
             for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
@@ -302,13 +300,13 @@ Iso3D::Iso3D( uint nbThreads,
     workerthreads = new IsoWorkerThread[WorkerThreadsNumber-1];
     masterthread->XYZgrid = nbGrid;
     masterthread->GridVal = nbGrid;
-    masterthread->MyIndex = 0;
+    masterthread->ThreadIndex = 0;
     masterthread->WorkerThreadsNumber = WorkerThreadsNumber;
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         workerthreads[nbthreads].XYZgrid = nbGrid;
         workerthreads[nbthreads].GridVal = nbGrid;
-        workerthreads[nbthreads].MyIndex = nbthreads+1;
+        workerthreads[nbthreads].ThreadIndex = nbthreads+1;
         workerthreads[nbthreads].WorkerThreadsNumber = WorkerThreadsNumber;
         workerthreads[nbthreads].AllocateStackFactor(pt);
     }
@@ -605,9 +603,9 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
     iFinish = 0;
     for(uint i=0; i<XYZgrid; i++)
     {
-        if((i% (WorkerThreadsNumber))  == MyIndex )
+        if((i% (WorkerThreadsNumber))  == ThreadIndex )
             taille += 1;
-        if(MyIndex <= (i% (WorkerThreadsNumber)))
+        if(ThreadIndex <= (i% (WorkerThreadsNumber)))
             iFinish  += 1;
     }
     iStart = iFinish - taille;
@@ -687,7 +685,7 @@ void IsoWorkerThread::VoxelEvaluation(uint IsoIndex)
                         }
                 //Signal emission:
                 id+=nbstack;
-                if(MyIndex == 0 && activeMorph != 1)
+                if(ThreadIndex == 0 && activeMorph != 1)
                 {
                     signalVal = int((id*100)/Totalpoints);
                     if((signalVal - PreviousSignal) > 1 || id==Totalpoints)
@@ -1180,7 +1178,9 @@ void IsoMasterThread::InitMasterParsers()
     for(uint i=0; i<componentsNumber; i++)
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
-        implicitFunctionParser[i].AddConstant("ThreadId", MyIndex);
+        implicitFunctionParser[i].AddConstant("ThreadId", ThreadIndex);
+        implicitFunctionParser[i].AddConstant("CmpId", CurrentComponent);
+
         ParisoConditionParser[i].AddConstant("pi", PI);
         xSupParser[i].AddConstant("pi", PI);
         ySupParser[i].AddConstant("pi", PI);
@@ -1196,8 +1196,8 @@ void IsoMasterThread::InitMasterParsers()
     for(uint i=0; i<FunctSize; i++)
     {
         Fct[i].AddConstant("pi", PI);
-        Fct[i].AddConstant("ThreadId", MyIndex);
-        Fct[i].AddFunction("CmpId",CurrentIsoCmpId, 1);
+        Fct[i].AddConstant("ThreadId", ThreadIndex);
+        Fct[i].AddConstant("CmpId", CurrentComponent);
         for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             Fct[i].AddFunction(ImportedInternalFunctions[m].name,
                                ImportedInternalFunctions[m].ptr,
@@ -1424,7 +1424,6 @@ void Iso3D::IsoBuild (
         }
         if(masterthread->gridnotnull)
             Setgrid(masterthread->grid[fctnb]);
-        IsoComponentId = fctnb;
         masterthread->CurrentComponent = fctnb;
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].CurrentComponent = fctnb;
