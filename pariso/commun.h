@@ -62,26 +62,6 @@ double maxim(double, double);
 double maxim(double, double);
 double Mandelbulb(const double*);
 
-
-
-/*
-enum InternalFunctEnum
-{
-    NoiseW,
-    fhelix1,
-    fhelix2,
-    f_hex_y,
-    p_skeletal_int,
-    mandelbulb,
-    fmesh,
-    NoiseP,
-    MarbleP,
-    LegendreA,
-    LaguerreA,
-    MandelFractal,
-    JuliaFractal
-};
-*/
 struct InternalFuncDefinition
 {
     std::string name;
