@@ -50,8 +50,16 @@ const static uint FNV_PRIME = 16777619U;
 
 int passes;
 float correction;
+double ComponentId;
 
 
+double CurrentComponentId(const double* p)
+{
+    if((int)p[0] == 0)
+        return ComponentId;
+    else
+        return 0;
+}
 
 double Mandelbulb(const double* pp) {
     double x = pp[0];

@@ -22,32 +22,24 @@
 static uint NbVertexTmp = 0;
 static QElapsedTimer ptime;
 static int nbvariables=0;
-
-extern double ComponentId;
 extern double ParamThreadId;
-
-
-
+double ParComponentId=0;
+extern double ComponentId;
 std::vector<float>  Par3D::ExtraDimensionVector;
 
-
-
-
-double ParComponentId=0;
-
-double CurrentParComponentId(const double* p)
-{
-    return ParComponentId;
-}
 Par3D::~Par3D()
 {
 }
+
 void Par3D::emitUpdateMessageSignal()
 {
     emit UpdateMessageSignal(message);
 }
 ParWorkerThread::ParWorkerThread()
 {
+
+
+
     stepMorph = 0;
     pace = 1.0/30.0;
     ParsersAllocated = ParsersAllocated_C = false;
@@ -477,10 +469,10 @@ void ParMasterThread::InitMasterParsers()
             myParserZ[i].AddConstant("ThreadId",ThreadIndex);
             myParserW[i].AddConstant("ThreadId",ThreadIndex);
 
-            myParserX[i].AddFunction("CmpId",CurrentParComponentId, 1);
-            myParserY[i].AddFunction("CmpId",CurrentParComponentId, 1);
-            myParserZ[i].AddFunction("CmpId",CurrentParComponentId, 1);
-            myParserW[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            myParserX[i].AddFunction("CmpId",CurrentComponentId, 1);
+            myParserY[i].AddFunction("CmpId",CurrentComponentId, 1);
+            myParserZ[i].AddFunction("CmpId",CurrentComponentId, 1);
+            myParserW[i].AddFunction("CmpId",CurrentComponentId, 1);
 
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             {
@@ -543,7 +535,7 @@ void ParMasterThread::InitMasterParsers()
         {
             Fct[i].AddConstant("pi", PI);
             Fct[i].AddConstant("ThreadId", ThreadIndex);
-            Fct[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            Fct[i].AddFunction("CmpId",CurrentComponentId, 1);
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
                 Fct[i].AddFunction(ImportedInternalFunctions[m].name,
                                    ImportedInternalFunctions[m].ptr,
@@ -580,11 +572,11 @@ ErrorMessage  ParMasterThread::parse_expression()
             ConstValues.push_back(Cstparser.Eval(vals));
             Cstparser.AddConstant(ConstNames[j], ConstValues[j]);
         }
-    }
+    }/*
     else
     {
         ConstSize =0;
-    }
+    }*/
     if(functnotnull)
     {
         FunctSize = HowManyVariables(Funct, 2);
@@ -952,7 +944,7 @@ ErrorMessage  Par3D::parse_expression2()
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId",workerthreads[nbthreads].ThreadIndex);
-            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentParComponentId, 1);
+            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentComponentId, 1);
             for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
                 workerthreads[nbthreads].Fct[ij].AddFunction(masterthread->ImportedInternalFunctions[m].name,
                                                              masterthread->ImportedInternalFunctions[m].ptr,
@@ -1001,10 +993,10 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserZ[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
             workerthreads[nbthreads].myParserW[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
 
-            workerthreads[nbthreads].myParserX[i].AddFunction("CmpId",CurrentParComponentId, 1);
-            workerthreads[nbthreads].myParserY[i].AddFunction("CmpId",CurrentParComponentId, 1);
-            workerthreads[nbthreads].myParserZ[i].AddFunction("CmpId",CurrentParComponentId, 1);
-            workerthreads[nbthreads].myParserW[i].AddFunction("CmpId",CurrentParComponentId, 1);
+            workerthreads[nbthreads].myParserX[i].AddFunction("CmpId",CurrentComponentId, 1);
+            workerthreads[nbthreads].myParserY[i].AddFunction("CmpId",CurrentComponentId, 1);
+            workerthreads[nbthreads].myParserZ[i].AddFunction("CmpId",CurrentComponentId, 1);
+            workerthreads[nbthreads].myParserW[i].AddFunction("CmpId",CurrentComponentId, 1);
             for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
             {
                 workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->ImportedInternalFunctions[m].name,
@@ -2205,7 +2197,7 @@ void  Par3D::ParamBuild(
             message = QString("1) Cmp:"+QString::number(fctnb+1)+"/"+QString::number(masterthread->componentsNumber)+"==> Math calculation");
             emitUpdateMessageSignal();
         }
-        ParComponentId = fctnb;
+        ComponentId = fctnb;
         if(masterthread->gridnotnull)
         {
             initialiser_LineColumn(masterthread->grid[2*fctnb], masterthread->grid[2*fctnb+1]);

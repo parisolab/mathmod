@@ -29,6 +29,7 @@
 #define MAGIC_SCALE 1.5707963f
 
 
+double CurrentComponentId(const double*);
 double Mandelbrot(const double*);
 double Julia(const double*);
 double Legendre_a(const double*);
@@ -332,6 +333,5 @@ public:
     float lookup(float, float, float);
 };
 */
-
 static struct ComponentInfos *components = new (struct ComponentInfos);
 #endif // COMMUN_H
