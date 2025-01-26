@@ -65,6 +65,7 @@
         "Iso3D": {
             "Description": ["Mandelbulb by Abderrahman Taha 27/08/2023"],
             "Name": ["MandelBulb"],
+            "Import": ["mandelbulb"],
             "Component": ["MandelBulb"],
             "Const": ["L=105/100"],
             "Fxyz": ["mandelbulb(x,y,z,24)"],
@@ -80,6 +81,7 @@
         "Iso3D": {
             "Description": ["MandelGoldenTemple by Abderrahman Taha 03/12/2022"],
             "Name": ["MandelTemple"],
+            "Import": ["MandelFractal"],
             "Component": ["MandelTemple"],
             "Const": ["Iter=300"],
             "Fxyz": ["-((x^2+y^2-(MandelFractal(-z,sqrt(x*x+y*y),Iter)/Iter)^2))"],
@@ -120,6 +122,7 @@
         "Param3D": {
             "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2022"],
             "Name": ["MandelbrotTorus"],
+            "Import": ["MandelFractal"],
             "Component": ["MandelbrotTorus"],
             "Const": ["c=1/100000"],
             "Funct": ["Fx=(1+cos(u)/2)*cos(v)",
@@ -155,6 +158,7 @@
         "Iso3D": {
             "Description": ["MandelbrotIsoSpheres by Abderrahman Taha 27/11/2022"],
             "Name": ["MandelbrotIsoSpheres"],
+            "Import": ["MandelFractal"],
             "Component": ["MandelbrotIsoSpheres"],
             "Const": ["Iter=100",
                 "Step_XY=300",
@@ -196,6 +200,7 @@
             "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2022"],
             "Name": ["MandelbrotSphere"],
             "Component": ["Sphere"],
+            "Import": ["MandelFractal"],
             "Const": ["c=1/100000"],
             "Funct": [
                 "Fx=-cos(u)*cos(v)",
@@ -231,6 +236,7 @@
         "Param3D": {
             "Description": ["MandelFractal by Abderrahman Taha 15/11/2022"],
             "Name": ["Mandelbrot"],
+            "Import": ["MandelFractal"],
             "Component": ["Mandel"],
             "Const": ["Lu=3/2","Lv=3/2","c=3/5"],
             "Fx": ["u"],
