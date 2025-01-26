@@ -84,7 +84,8 @@ const std::vector<InternalFuncDefinition> InternalFunctions=
         { "LegendreA",Legendre_a, 3},
         { "LaguerreA",Laguerre_a, 3},
         { "MandelFractal",Mandelbrot, 3},
-        { "JuliaFractal",Julia, 5}
+        { "JuliaFractal",Julia, 5},
+        {"CmpId",CurrentComponentId, 1}
 };
 
 struct GlobalParam

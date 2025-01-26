@@ -204,7 +204,6 @@ ErrorMessage  Iso3D::parse_expression2()
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
-            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentComponentId, 1);
         }
         for(uint ii=0; ii<masterthread->FunctSize; ii++)
         {
@@ -242,7 +241,6 @@ ErrorMessage  Iso3D::parse_expression2()
         {
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("pi", PI);
             workerthreads[nbthreads].implicitFunctionParser[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction("CmpId",CurrentComponentId, 1);
             for(uint j=0; j<masterthread->ConstSize; j++)
             {
                 workerthreads[nbthreads].implicitFunctionParser[i].AddConstant(masterthread->ConstNames[j], masterthread->ConstValues[j]);
@@ -1179,7 +1177,6 @@ void IsoMasterThread::InitMasterParsers()
     {
         implicitFunctionParser[i].AddConstant("pi", PI);
         implicitFunctionParser[i].AddConstant("ThreadId", ThreadIndex);
-        implicitFunctionParser[i].AddFunction("CmpId",CurrentComponentId, 1);
 
         ParisoConditionParser[i].AddConstant("pi", PI);
         xSupParser[i].AddConstant("pi", PI);
@@ -1197,7 +1194,6 @@ void IsoMasterThread::InitMasterParsers()
     {
         Fct[i].AddConstant("pi", PI);
         Fct[i].AddConstant("ThreadId", ThreadIndex);
-        Fct[i].AddFunction("CmpId",CurrentComponentId, 1);
         for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             Fct[i].AddFunction(ImportedInternalFunctions[m].name,
                                ImportedInternalFunctions[m].ptr,

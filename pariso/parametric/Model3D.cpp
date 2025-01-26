@@ -469,11 +469,6 @@ void ParMasterThread::InitMasterParsers()
             myParserZ[i].AddConstant("ThreadId",ThreadIndex);
             myParserW[i].AddConstant("ThreadId",ThreadIndex);
 
-            myParserX[i].AddFunction("CmpId",CurrentComponentId, 1);
-            myParserY[i].AddFunction("CmpId",CurrentComponentId, 1);
-            myParserZ[i].AddFunction("CmpId",CurrentComponentId, 1);
-            myParserW[i].AddFunction("CmpId",CurrentComponentId, 1);
-
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
             {
                 myParserX[i].AddFunction(ImportedInternalFunctions[m].name,
@@ -535,7 +530,6 @@ void ParMasterThread::InitMasterParsers()
         {
             Fct[i].AddConstant("pi", PI);
             Fct[i].AddConstant("ThreadId", ThreadIndex);
-            Fct[i].AddFunction("CmpId",CurrentComponentId, 1);
             for (uint m=0; m<ImportedInternalFunctions.size(); m++)
                 Fct[i].AddFunction(ImportedInternalFunctions[m].name,
                                    ImportedInternalFunctions[m].ptr,
@@ -944,7 +938,6 @@ ErrorMessage  Par3D::parse_expression2()
         {
             workerthreads[nbthreads].Fct[ij].AddConstant("pi", PI);
             workerthreads[nbthreads].Fct[ij].AddConstant("ThreadId",workerthreads[nbthreads].ThreadIndex);
-            workerthreads[nbthreads].Fct[ij].AddFunction("CmpId",CurrentComponentId, 1);
             for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
                 workerthreads[nbthreads].Fct[ij].AddFunction(masterthread->ImportedInternalFunctions[m].name,
                                                              masterthread->ImportedInternalFunctions[m].ptr,
@@ -992,11 +985,6 @@ ErrorMessage  Par3D::parse_expression2()
             workerthreads[nbthreads].myParserY[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
             workerthreads[nbthreads].myParserZ[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
             workerthreads[nbthreads].myParserW[i].AddConstant("ThreadId", workerthreads[nbthreads].ThreadIndex);
-
-            workerthreads[nbthreads].myParserX[i].AddFunction("CmpId",CurrentComponentId, 1);
-            workerthreads[nbthreads].myParserY[i].AddFunction("CmpId",CurrentComponentId, 1);
-            workerthreads[nbthreads].myParserZ[i].AddFunction("CmpId",CurrentComponentId, 1);
-            workerthreads[nbthreads].myParserW[i].AddFunction("CmpId",CurrentComponentId, 1);
             for (uint m=0; m<masterthread->ImportedInternalFunctions.size(); m++)
             {
                 workerthreads[nbthreads].myParserX[i].AddFunction(masterthread->ImportedInternalFunctions[m].name,
