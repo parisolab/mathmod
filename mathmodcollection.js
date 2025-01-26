@@ -1214,6 +1214,7 @@
         "Iso3D": {
             "Description ": ["Geode by Abderrahman Taha 20/08/2018"],
             "Component": ["Geode1","Geode2"],
+            "Import": ["NoiseW"],
             "Const": ["A=4","B=3"],
             "Fxyz": ["-((((x/(101/100))^2+y^2+(z/(105/100))^2-1)+((4/10)*NoiseW(A*x,A*y,A*z,(4),(1),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)","-(((x^2+y^2+z^2-(21/100))*(atan2(x,y)<pi/2)*((x^2+y^2+z^2-2/10)+(NoiseW(B*x,B*y,B*z,(4),(2),(1))+NoiseW(B*x,B*y,B*z,(4),(2),(1)))/5)))"],
             "Name": ["Geode_02"],
@@ -1719,6 +1720,7 @@
       "Iso3D": {
         "Name": ["DuplinCyclides"],
         "Component": ["DuplinCyclides"],
+        "Import": ["NoiseW"],
         "Fxyz": ["-51*(x^4+y^4+z^4)-102*(x^2*y^2 + x^2*z^2 + y^2*z^2) + 141*(x-1)*(x^2+y^2+z^2) + 256*x*(x-2) + 282*y^2 + 256"],
         "Xmin": ["-2"],
         "Xmax": ["11/5"],
@@ -2644,6 +2646,7 @@
             "Description": ["CellNoiseSchwarz by Abderrahman Taha 08/03/2020"],
             "Name": ["CellNoiseSchwarz"],
             "Component": ["Schwarz"],
+            "Import": ["NoiseW"],
             "Fxyz": ["cos(x)+cos(y)+cos(z)-NoiseW(x,y,z,(1),(2),(0))"],
             "Xmax": ["4"],
             "Xmin": ["-4"],
@@ -3808,7 +3811,8 @@
     {
       "Param3D": {
         "Description": ["Torus_Noise by Abderrahman Taha 04/11/2019"],
-        "Name": ["Fresnel Noise"],
+        "Name": ["Fresnel_Noise"],
+        "Import": ["NoiseW"],
         "Component": ["FresnelNoise"],
         "Const": ["A=941/6000",
           "B=965/3000",
@@ -3830,8 +3834,8 @@
       "Param3D": {
         "Description": ["Torus_Noise by Abderrahman Taha 04/11/2019"],
         "Name": ["Torus_Noise"],
+        "Import": ["NoiseW","NoiseP"],
         "Component": ["TorusNoise"],
-        "Import": ["NoiseP"],
         "Fx": ["(1+(1/2)*cos(u))*cos(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),(0)))"],
         "Fy": ["(1+(1/2)*cos(u))*sin(v)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),(0)))"],
         "Fz": ["sin(u)*(1-NoiseW((1+(1/2)*cos(u))*cos(v),(1+(1/2)*cos(u))*sin(v),(1/2)*sin(u),(1),(2),(0)))"],
@@ -3894,6 +3898,7 @@
         "Name": ["fhelix"],
         "Description ": ["Fhelix internal function with sliders by Abderrahman Taha 04/11/2019"],
         "Component": ["fhelix1"],
+        "Import": ["fhelix1"],
         "Fxyz": ["-fhelix1(sqrt(x*x+y*y)-(3),Param1*atan2(y,x),z,Param2,Param3,Param4/(15),Param5/(15),Param6/(15),Param7/(10),Param8*pi/(15))"],
         "Xmax": ["5"],
         "Xmin": ["-5"],
@@ -4108,6 +4113,7 @@
       "Iso3D": {
         "Description": ["Wall Pattern Torus by Abderrahman Taha 18/10/2019"],
          "Name": ["Wall_Pattern_Torus_v2"],
+        "Import": ["f_hex_y"],
         "Component": ["f_hex_y"],
         "Const": ["X=(57/10)"],
         "Funct": ["f_hex_y_1=if(100*abs(z)<(6),f_hex_y(x,y,z,0)-(2/25),1)",
@@ -4126,7 +4132,8 @@
         "Iso3D": {
             "Description": ["Wall Pattern Sphere v3 by Abderrahman Taha 02/11/2019"],
             "Name": ["Wall_Pattern_Sphere_v3"],
-            "Component": ["f_hex_y"],
+            "Import": ["f_hex_y"],
+            "Component": ["f_hex_y_1"],
             "Funct": ["f_hex_y_1=if(abs(z)<(3/50),f_hex_y(x,y,z,0)-(2/25),1)",
                 "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
                 "Sphere=f_hex_y_1(4*atan2(x,sqrt(y*y+z*z)),(9/2)*atan2(z,y),sqrt(y*y+z*z+x*x)-(9/2),t)",
@@ -4144,6 +4151,7 @@
       "Iso3D": {
         "Description": ["Wall Pattern Sphere v2 by Abderrahman Taha 02/11/2019"],
         "Name": ["Wall_Pattern_Sphere_v2"],
+        "Import": ["f_hex_y"],
         "Component": ["f_hex_y"],
         "Funct": ["f_hex_y_1=if(abs(z)<(3/50),f_hex_y(sqrt(x*x+y*y)-(2),(475/100)*atan2(y,x),z,0)-(2/25),1)",
           "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
@@ -4162,6 +4170,7 @@
       "Iso3D": {
         "Description": ["Wall Pattern Sphere (ref: http://www.povray.org/) by Abderrahman Taha 02/11/2019 "],
         "Name": ["Wall_Pattern_Sphere_v1"],
+        "Import": ["f_hex_y"],
         "Component": ["f_hex_y"],
         "Funct": ["f_hex_y_1=if(z*z-(1/100) < (0),f_hex_y(sin(x),(13/10)*sin(y),2*z,0),1)-(1/10)",
           "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(3/2),t)",
@@ -4180,6 +4189,7 @@
       "Iso3D": {
         "Description": ["Wall Pattern Torus (ref: http://www.povray.org/) by Abderrahman Taha 02/11/2019"],
         "Name": ["Wall_Pattern_Torus_v1"],
+        "Import": ["f_hex_y"],
         "Component": ["f_hex_y"],
         "Funct": ["f_hex_y_1=if(z*z-(1/100) < (0),f_hex_y(sin(x),(13/10)*sin(y),2*z,0),1)-(1/10)",
           "Cylinder=-f_hex_y_1(x,(43/10)*atan2(z,y),sqrt(y*y+z*z)-(15/10),t)",
@@ -4413,8 +4423,9 @@
     {
       "Param3D": {
         "Description ": ["Bottle shape surface by Robert Israel 01/11/2019"],
-        "Name": ["Bottle shape"],
-        "Component": ["Bottle shape"],
+        "Name": ["Bottle_shape"],
+        "Import": ["NoiseW"],
+        "Component": ["Bottle_shape"],
         "Fx": [" (-2/15)*(cos(u)*(3*cos(v)-30*sin(u) + 90*cos(u)^4*sin(u) -60*cos(u)^6*sin(u) +5*cos(u)*cos(v)*sin(u))) "],
         "Fy": [" (-1/15)*sin(u)*(3*cos(v)-3*cos(u)^2*cos(v)-48*cos(u)^4*cos(v)+48*cos(u)^6 *cos(v)-60*sin(u)+5*cos(u)*cos(v)*sin(u)-5*cos(u)^3*cos(v)*sin(u) -80*cos(u)^5*cos(v)*sin(u)+80*cos(u)^7*cos(v)*sin(u) ) "],
         "Fz": [" (2/15)*(3+5*cos(u)*sin(u))*sin(v) "],
@@ -4436,6 +4447,8 @@
       "Param3D": {
         "Description ": ["Richmond Polar_2  parametric surface by Abderrahman Taha 01/11/2019"],
         "Name": ["Richmond_Polar_2"],
+        "Import": ["NoiseW"],
+        "Import": ["NoiseW"],
         "Component": ["RichmondPolar"],
         "Fx": ["-cos(v)/(2*u) - u^3*cos(3*v)/6"],
         "Fy": ["-sin(v)/(2*u) + u^3*sin(3*v)/6"],
@@ -5048,6 +5061,7 @@
       "Param3D": {
         "Description ": ["Belted Torus_1 by Abderrahman Taha 31/10/2019"],
         "Name": ["Belted_Torus"],
+        "Import": ["NoiseW"],
         "Component": ["BeltedTorus"],
         "Const": ["c=1/10000",
           "A=2/5",
@@ -5436,6 +5450,7 @@
         "Param3D": {
             "Description ": ["Lobed Torus_1 by Abderrahman Taha 29/10/2019"],
             "Name": ["Lobed_Torus_1"],
+            "Import": ["NoiseW"],
             "Component": ["LobedTorus"],
             "Const": ["c=1/10000","N=3"],
             "Funct": ["Th=(4/10)*sin(2*N*v-u) + (9/10)*sin((N*v)% pi/3)",
@@ -5476,6 +5491,7 @@
         "Param3D": {
             "Description ": ["Lobed Torus_2 by Abderrahman Taha 29/10/2019"],
             "Name": ["Lobed_Torus_2"],
+            "Import": ["NoiseW"],
             "Component": ["LobedTorus"],
             "Const": ["c=1/10000","N=3"],
             "Funct": ["Th=(9/10)*sin((N*v)% pi/3)",
@@ -5516,6 +5532,7 @@
         "Param3D": {
             "Description ": ["Lobed Torus_4 by Abderrahman Taha 29/10/2019"],
             "Name": ["Lobed_Torus_4"],
+            "Import": ["NoiseW"],
             "Component": ["LobedTorus"],
             "Const": ["c=1/10000","N=3"],
             "Funct": ["Th=(4/10)*sin(N*v)",
@@ -5556,6 +5573,7 @@
       "Param3D": {
         "Description ": ["Lobed Torus_5 by Abderrahman Taha 29/10/2019"],
         "Name": ["Lobed_Torus_5"],
+        "Import": ["NoiseW"],
         "Component": ["LobedTorus"],
         "Const": ["c=1/10000","N=3"],
         "Funct": ["Th=(4/10)*sin(N*v-u)^100",
@@ -5597,6 +5615,7 @@
       "Param3D": {
         "Description ": ["Lobed Torus_6 by Abderrahman Taha 29/10/2019"],
         "Name": ["Lobed_Torus_6"],
+        "Import": ["NoiseW"],
         "Component": ["LobedTorus"],
         "Const": ["c=1/10000","N=3"],
         "Funct": ["Th=(4/10)*sin(2*N*v-u)",
@@ -5639,6 +5658,7 @@
       "Param3D": {
         "Description ": ["Lobed Torus_7 by Abderrahman Taha 29/10/2019"],
         "Name": ["Lobed_Torus_7"],
+        "Import": ["NoiseW"],
         "Component": ["LobedTorus"],
         "Const": ["c=1/1000","N=3"],
         "Funct": ["Th=(4/10)*sin(N*v)^10",
@@ -5912,6 +5932,7 @@
       "Param3D": {
         "Description ": ["Double Nib Parametric surface by Abderrahman Taha 29/10/2019"],
         "Name": ["Double Nib"],
+        "Import": ["NoiseW"],
         "Component": ["DoubleNib"],
         "Const": ["c=1/10000"],
         "Funct": ["Fx=-cos(t+v)/(2*u)-u^3*cos(t-3*v)/6",
@@ -6198,6 +6219,7 @@
       "Param3D": {
         "Description ": ["Virus by Abderrahman Taha 15/05/2020"],
         "Name": ["Virus_2"],
+        "Import": ["NoiseW"],
         "Component": ["Virus"],
         "Funct": ["Thickness= -(3/10)*cos((abs(cos(12*v)+cos(6*(v-u))*sin(12*u))/(9/5))^5)*2*sin((abs(cos(7*v)+cos(7*(v-u))*sin(17*u))/(19/10))^(11/2))",
           "n1= (-(cos(u))*(cos(u)*cos(v)))",
@@ -6297,6 +6319,7 @@
       "Iso3D": {
         "Description ": ["The Beginning by Abderrahman Taha 21/10/2015"],
         "Name": ["The Beginning"],
+        "Import": ["NoiseW"],
         "Component": ["TheBeginning1","TheBeginning2"],
         "Funct": ["tail=x^2+y^2+z^2-(1/10)*t",
           "tail2=(x+sin(5*pi*y/20))^2 + (y/10)^2 + (z)^2 - 1",
@@ -6954,8 +6977,7 @@
     {
       "Param3D": {
         "Description ": ["Richmond polar Parametric surface by Abderrahman Taha 14/10/2019"],
-         "Name": [
-           "Richmond Polar_1"],
+         "Name": ["Richmond_Polar_1"],
         "Component": ["richmondpolar1"],
         "Const": ["c=1/10000",
           "Th=3/10"],
@@ -7084,6 +7106,7 @@
       "Iso3D": {
         "Description ": ["Geode by Abderrahman Taha 15/10/2019"],
         "Name": ["Geode_01"],
+        "Import": ["NoiseW"],
         "Component": ["Geode1","Geode2"],
         "Const": ["A=4","B=3"],
         "Fxyz": ["-(((x^2+y^2+z^2-1)+(NoiseW(A*x,A*y,A*z,(4),(2),(1))+NoiseW(A*x,A*y,A*z,(4),(0),(0)))/3))*(atan2(x,y)<pi/2)*(x^2+y^2+z^2-2/10)",
@@ -7108,6 +7131,7 @@
       "Iso3D": {
         "Description ": ["The core by Abderrahman Taha 15/10/2019"],
         "Name": ["The Core"],
+        "Import": ["NoiseW"],
         "Component": ["Core"],
         "Fxyz": ["-((x^2+y^2+z^2-1)+(NoiseW(6*x,6*y,6*z,(4),(2),0)+NoiseW(6*x,6*y,6*z,(4),(0),(0)))/5)*(atan2(x,y)<pi/2)"],
         "Xmax": ["1"],
@@ -7129,6 +7153,7 @@
     {
       "Param3D": {
         "Name": ["Richmond Polar_4"],
+        "Import": ["NoiseW"],
         "Component": ["richmondpolar"],
         "Description ": ["richmondpolar(n)[t](u,v):={-cos(t + v)/(2*u) -u^(2*n + 1)*cos(t - (2*n + 1)*v)/(4*n + 2),-sin(t + v)/(2*u) +u^(2*n + 1)*sin(t - (2*n + 1)*v)/(4*n + 2),u^n*cos(t - n*v)/n}is the polar parametrization of a 1-parameter family of minimal surfaces such that {r,theta}->richmondpolar[n][0][r,theta] is a minimal surface with one planar end of degree n"],
         "Fx": ["-cos(t + v)/(2*u) - u^3*cos(t - 3*v)/6"],
@@ -7152,6 +7177,7 @@
       "Param3D": {
         "Description": ["Flower by Abderrahman Taha 15/10/2019"],
         "Name": ["Flower"],
+        "Import": ["NoiseW"],
         "Component": ["BreatherNoise"],
         "Const": ["A=sqrt(84/100)","B=4/10","C=84/100"],
         "Fx": ["((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1-NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
@@ -7646,6 +7672,7 @@
       "Iso3D": {
         "Description": ["Straw Basket using the predefined MathMod function fmesh by Abderrahman Taha 17/09/2019"],
         "Name": ["Straw Basket_02"],
+        "Import": ["fmesh"],
         "Component": ["Straw Basket"],
         "Const": ["A = 5",
           "B = 2",
@@ -8078,6 +8105,7 @@
       "Iso3D": {
         "Description": ["Tori of Helices by Abderrahman Taha 07/05/2016"],
         "Name": ["Tori of helices"],
+        "Import": ["fhelix1"],
         "Component": ["TorHelices"],
         "Const": ["Step1=5",
           "N1=8",
@@ -8246,6 +8274,7 @@
         "Description ": ["Red giant by Abderrahman Taha 08/10/2019"],
         "Name": ["Red giant"],
         "Component": ["Redgiant"],
+        "Import": ["NoiseW"],
         "Fxyz": ["-((x*x+y*y+z*z-1)+(if((t<pi/2), (1),(5)*if(t<pi,abs(sin(t-pi/2)), abs(sin(3*t-pi/2))) ))*(NoiseW(6*x,6*y,5*cos(t)+6*z,(4),(2),0)  +NoiseW(4*sin(t)+6*x,(5)*cos(t) + 6*y,(6)*z,(4),(0),0))/5)*( atan2(y,x)<(pi/2) | atan2(sqrt(x*x+y*y),z)>(pi/2)) *(x^2+y^2+z^2-(3/100))"],
         "Xmax": ["1"],
         "Xmin": ["-1"],
@@ -8268,6 +8297,7 @@
         "Description": ["PrettyBall_2 by Abderrahman Taha 11/12/2019"],
         "Name": ["Pretty_Ball_2"],
         "Component": ["PrettyBall"],
+        "Import": ["NoiseW"],
         "Fxyz": ["if( (x*x+y*y+z*z<64),(cos(x-t)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x-t)) * (cos(x-t)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x-t)) -(6/10),(1))  + exp(((x)*(x)+y*y+z*z-64)/3)"],
         "Xmax": ["8"],
         "Xmin": ["-8"],
@@ -8409,7 +8439,8 @@
     {
       "Param3D": {
         "Description ": ["Under Sea by Abderrahman Taha 25/03/2016"],
-        "Name": ["Under The Sea"],
+        "Name": ["Under_The_Sea"],
+        "Import": ["NoiseW"],
         "Component": ["UnderSea"],
         "Const": ["M=9",
           "N=6",
