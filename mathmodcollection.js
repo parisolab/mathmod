@@ -99,6 +99,7 @@
             "Description": ["JuliaFractal by Abderrahman Taha 16/11/2022"],
             "Name": ["JuliaFractal"],
             "Component": ["Julia"],
+            "Import": ["JuliaFractal"],
             "Const": ["Lu=3/2","Lv=3/2","Realc=-63/100","Imagc=-41/100","Iter=600"],
             "Fx": ["u"],
             "Fy": ["v"],
