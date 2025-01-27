@@ -560,6 +560,7 @@ void DrawingOptions::ObjArrayToInternalFunctEnum(QJsonArray &lst, std::vector<In
     uint size = InternalFunctions.size();
     uint lstsize =lst.size();
     strFunct.clear();
+
     if(lst.size()>0)
     {
         if((lst[0].toString().replace("\n", "").replace("\n", "").replace(" ", "").toStdString()) == "All")
@@ -1301,7 +1302,10 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             }
             else
             {
-                int result = MathmodRef->ParseIso();
+                QJsonArray lst={"All"};
+                MathmodRef->IsoObjet->masterthread->ImportedInternalFunctions.clear();
+                ObjArrayToInternalFunctEnum(lst, (MathmodRef->IsoObjet->masterthread->ImportedInternalFunctions));
+                int result = MathmodRef->ParseIso();  ///?
                 if (result == -1)
                     return;
                 textureIndex < 1000
@@ -1353,6 +1357,9 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             }
             else
             {
+                QJsonArray lst={"All"};
+                MathmodRef->ParObjet->masterthread->ImportedInternalFunctions.clear();
+                ObjArrayToInternalFunctEnum(lst, (MathmodRef->ParObjet->masterthread->ImportedInternalFunctions));
                 int result = MathmodRef->ParsePar();
                 if (result == -1)
                     return;
@@ -1401,6 +1408,9 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             }
             else
             {
+                QJsonArray lst={"All"};
+                MathmodRef->ParObjet->masterthread->ImportedInternalFunctions.clear();
+                ObjArrayToInternalFunctEnum(lst, (MathmodRef->ParObjet->masterthread->ImportedInternalFunctions));
                 int result = MathmodRef->ParsePar();
                 if (result == -1)
                     return;
