@@ -3857,6 +3857,7 @@
       "Param3D": {
         "Description": ["Breather_Noise by Abderrahman Taha 04/11/2019"],
         "Name": ["Breather_Noise"],
+        "Import": ["NoiseW"],
         "Component": ["BreatherNoise"],
         "Const": ["A= sqrt(21/25)",
           "B= 2/5",
@@ -7178,7 +7179,7 @@
         "Description": ["Flower by Abderrahman Taha 15/10/2019"],
         "Name": ["Flower"],
         "Import": ["NoiseW"],
-        "Component": ["BreatherNoise"],
+        "Component": ["FlowerNoise"],
         "Const": ["A=sqrt(84/100)","B=4/10","C=84/100"],
         "Fx": ["((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1-NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
         "Fy": ["((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2)))*(1 -NoiseW(((2*A*cosh(B*u)*(-(A*cos(v)*cos(A*v))-sin(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),((2*A*cosh(B*u)*(-(A*sin(v)*cos(A*v))+cos(v)*sin(A*v)))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(-u+(2*C*cosh(B*u)*sinh(B*u))/(B*((A*cosh(B*u))^2+(B*sin(A*v))^2))),(1),(2),0))"],
