@@ -20,6 +20,12 @@
 
 #include "commun.h"
 
+float rd[3], featurePoint[4];
+const static uint OFFSET_BASIS = 2166136261U;
+const static uint FNV_PRIME = 16777619U;
+int passes;
+float correction;
+double ComponentId;
 static int p[512];
 static int permutation[256] =
 {
@@ -42,16 +48,6 @@ static int permutation[256] =
     222, 114, 67,  29,  24,  72,  243, 141, 128, 195, 78,  66,  215, 61,  156,
     180
 };
-
-
-float rd[3], featurePoint[4];
-const static uint OFFSET_BASIS = 2166136261U;
-const static uint FNV_PRIME = 16777619U;
-
-int passes;
-float correction;
-double ComponentId;
-
 
 double CurrentComponentId(const double* p)
 {

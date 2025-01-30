@@ -37,9 +37,6 @@ void Par3D::emitUpdateMessageSignal()
 }
 ParWorkerThread::ParWorkerThread()
 {
-
-
-
     stepMorph = 0;
     pace = 1.0/30.0;
     ParsersAllocated = ParsersAllocated_C = false;
