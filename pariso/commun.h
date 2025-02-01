@@ -196,7 +196,6 @@ struct ComponentInfos
     std::vector<uint> ParisoTriangle;
     std::vector<uint> ParisoVertex;
     std::vector<uint> NbComponentsType;
-
     std::vector<bool> ThereisCND;
     std::vector<bool> ThereisRGBA;
     std::vector<bool> ParisoCondition;
@@ -206,12 +205,10 @@ struct ComponentInfos
     uint NbParametricMeshLines=0;
     uint MinParametricMeshLines=0;
     std::vector<uint> ParametricGrid;
-
     std::vector<uint> NbTrianglesVerifyCND;
     std::vector<uint> NbTrianglesNoCND;
     std::vector<uint> NbTrianglesNotVerifyCND;
     std::vector<uint> NbTrianglesBorderCND;
-
     NoiseParemeters NoiseParam[2];
     bool Interleave = false;
     bool pariso = false;
@@ -248,7 +245,6 @@ struct ObjectProperties
     float animxValueStep = 0.0;
     float animyValueStep = 0.0;
     float animzValueStep = 0.0;
-
     int glFrontFacingSupport = 1;
     int slider = -1;
     int morph = -1;
