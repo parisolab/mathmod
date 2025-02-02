@@ -438,7 +438,6 @@ void MathMod::PutObjectInsideCube()
                     (double(LocalScene.ArrayNorVer_localPt[10 * i + 9]) + decalage_zo) /
                     difMaximum);
     }
-
     // Cube vertices and indexes
     float longX = wh * float(difX / float(difMaximum)),
           longY = wh * (difY / float(difMaximum)),
@@ -452,55 +451,42 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 2] = 0.8f;
         LocalScene.ArrayNorVer_localPt[10 * (NbVert+id) + 3] = 1.0f;
     }
-
     LocalScene.ArrayNorVer_localPt[10 * NbVert + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * NbVert + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * NbVert + 9] = -longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+1) + 7] =  longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+1) + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+1) + 9] = -longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+2) + 7] =  longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+2) + 8] =  longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+2) + 9] = -longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+3) + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+3) + 8] =  longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+3) + 9] = -longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+4) + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+4) + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+4) + 9] = -longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+5) + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+5) + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+5) + 9] =  longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+6) + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+6) + 8] =  longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+6) + 9] =  longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+7) + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+7) + 8] =  longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+7) + 9] = -longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+8) + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+8) + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+8) + 9] = -longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+9) + 7] = -longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+9) + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+9) + 9] =  longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+10) + 7] =  longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+10) + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+10) + 9] =  longZ;
-
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+11) + 7] =  longX;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+11) + 8] = -longY;
     LocalScene.ArrayNorVer_localPt[10 * (NbVert+11) + 9] = -longZ;
-
     // Plan vertices and indexes
     PlanStartIndex=NbVert+12;
     for(uint id=0; id<60; id++)
@@ -513,7 +499,6 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+8] = PlanArray[3*id+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+id)+9] = PlanArray[3*id+2];
     }
-
     // Axes vertices and indexes
     AxesStartIndex = NbVert+12+60;
     for(uint id=0; id<6; id++)
@@ -526,7 +511,6 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+8] = AxeArray[3*id+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+id)+9] = AxeArray[3*id+2];
     }
-
     // Head of the X Axe
     XStartIndex = NbVert+12+60+6;
     for(uint id=0; id<6; id++)
@@ -539,7 +523,6 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+8] = AxeArray[3*(id+6)+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+6+id)+9] = AxeArray[3*(id+6)+2];
     }
-
     // Head of the Y Axe
     YStartIndex = NbVert+12+60+12;
     for(uint id=0; id<6; id++)
@@ -552,7 +535,6 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+8] = AxeArray[3*(id+12)+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+12+id)+9] = AxeArray[3*(id+12)+2];
     }
-
     // Head of the Z Axe
     ZStartIndex = NbVert+12+60+18;
     for(uint id=0; id<6; id++)
@@ -565,7 +547,6 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+8] = AxeArray[3*(id+18)+1];
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+18+id)+9] = AxeArray[3*(id+18)+2];
     }
-
     // Letter X Axe
     XletterIndex = NbVert+12+60+24;
     for(uint id=0; id<4; id++)
@@ -932,7 +913,6 @@ void MathMod::CreateShaderProgram()
     bool shaderValid;
 
     shaderprogramId = glCreateProgram();
-
     //+++++++++++++++++++++++++++++++//
     //++++++++ Vertex shader ++++++++//
     //+++++++++++++++++++++++++++++++//
@@ -1133,7 +1113,6 @@ void MathMod::CreateShaderProgram()
                 gl_FragColor = fragColor;
             }
             )";
-
 
 /*
             R"(#version 300 es
