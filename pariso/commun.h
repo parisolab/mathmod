@@ -34,7 +34,7 @@ double Mandelbrot(const double*);
 double Julia(const double*);
 double Legendre_a(const double*);
 double Laguerre_a(const double*);
-void ImprovedNoise(float, float, float);
+void ImprovedNoise(float xsize=4.0, float ysize=4.0, float zsize=4.0);
 float noise(float, float, float);
 float fade(float);
 float lerp(float, float, float);
@@ -85,7 +85,7 @@ const std::vector<InternalFuncDefinition> InternalFunctions=
         { "LaguerreA",Laguerre_a, 3},
         { "MandelFractal",Mandelbrot, 3},
         { "JuliaFractal",Julia, 5},
-        {"CmpId",CurrentComponentId, 1}
+        { "CmpId",CurrentComponentId, 1}
 };
 
 struct GlobalParam
