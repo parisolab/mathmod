@@ -134,6 +134,7 @@ struct ErrorMessage
 {
     int iErrorIndex;
     std::string strError;
+    std::string ErrorType;
 };
 
 // Any modification to this enum must be translated to the same enum in

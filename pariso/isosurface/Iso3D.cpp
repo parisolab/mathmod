@@ -229,6 +229,7 @@ ErrorMessage  Iso3D::parse_expression2()
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],masterthread->IsoParametersList.BasicFunctParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
+                masterthread->stdError.ErrorType = workerthreads[nbthreads].Fct[ii].ErrorMsg();
                 return masterthread->stdError;
             }
             workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, masterthread->nbvariables);
@@ -791,6 +792,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             if ((stdError.iErrorIndex = Cstparser.Parse(Consts[j],"u")) >= 0)
             {
                 stdError.strError = Consts[j];
+                stdError.ErrorType = Cstparser.ErrorMsg();
                 return stdError;
             }
             ConstValues.push_back(Cstparser.Eval(&vals[3]));
