@@ -2193,21 +2193,22 @@ void MathMod::ShowErrormessage()
     message.setTextFormat(Qt::RichText);
     int before, after;
     QString sortie = QString::fromStdString(stError.strError);
-    if (sortie.length() > (stError.iErrorIndex + 30))
-        after = 30;
+    if (sortie.length() > (stError.iErrorIndex + 20))
+        after = 20;
     else
         after = sortie.length() - stError.iErrorIndex;
     sortie.truncate(stError.iErrorIndex + after);
-    if (stError.iErrorIndex - 30 > 0)
-        before = 30;
+    if (stError.iErrorIndex - 20 > 0)
+        before = 20;
     else
         before = 0;
     sortie = sortie.remove(0, stError.iErrorIndex - before);
     sortie.replace("\t", " ");
     sortie.replace("\n", " ");
-    sortie.insert(before, " <font size=14  color=#FF0033>Error => </font>");
-    message.setText("Error at position: " + QString::number(stError.iErrorIndex) +
-                    "<br><br>" + "..." + sortie + "...");
+    sortie.insert(before, " <font color=#FF3300> -> </font>");
+    message.setText(" <font color=#FF6600> Error Type: </font>"+QString::fromStdString(stError.ErrorType)
+                    +"<br><font color=#FF6600> Error position: </font>" + QString::number(stError.iErrorIndex)
+                    +"<br><font color=#FF6600> Error Localization: </font>..."+ sortie +"...");
     message.adjustSize();
     message.exec();
     return;

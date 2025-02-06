@@ -280,6 +280,7 @@ ErrorMessage  Iso3D::parse_expression2()
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(masterthread->ImplicitStructs[index].fxyz, masterthread->IsoParametersList.FunctParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
+                masterthread->stdError.ErrorType = workerthreads[nbthreads].implicitFunctionParser[index].ErrorMsg();
                 return masterthread->stdError;
             }
         }
@@ -826,6 +827,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i],IsoParametersList.BasicFunctParameters))>=0)
             {
                 stdError.strError = Functs[i];
+                stdError.ErrorType = Fct[i].ErrorMsg();
                 return stdError;
             }
             Fct[i].AllocateStackMemory(StackFactor, nbvariables);
@@ -1032,6 +1034,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
             if ((stdError.iErrorIndex = RgbtParser[i].Parse(Rgbts[i],IsoParametersList.ColorFunctParameters)) >= 0)
             {
                 stdError.strError = Rgbts[i];
+                stdError.ErrorType = RgbtParser[i].ErrorMsg();
                 return stdError;
             }
     // Parse
@@ -1040,12 +1043,14 @@ ErrorMessage IsoMasterThread::ParseExpression()
         if ((stdError.iErrorIndex = GradientParser->Parse(GRADIENT_STR,IsoParametersList.ColorFunctParameters)) >= 0)
         {
             stdError.strError = GRADIENT_STR;
+            stdError.ErrorType = GradientParser->ErrorMsg();
             return stdError;
         }
         for(uint i=0; i<VRgbtSize; i++)
             if ((stdError.iErrorIndex = VRgbtParser[i].Parse(VRgbts[i],IsoParametersList.ColorFunctParameters)) >= 0)
             {
                 stdError.strError = VRgbts[i];
+                stdError.ErrorType = VRgbtParser[i].ErrorMsg();
                 return stdError;
             }
     }
@@ -1053,6 +1058,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
         if ((stdError.iErrorIndex = NoiseParser->Parse(NOISE_STR,IsoParametersList.ColorFunctParameters)) >= 0)
         {
             stdError.strError = NOISE_STR;
+            stdError.ErrorType = NoiseParser->ErrorMsg();
             return stdError;
         }
     for(uint i=0; i<componentsNumber; i++)
@@ -1060,6 +1066,7 @@ ErrorMessage IsoMasterThread::ParseExpression()
         if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,IsoParametersList.FunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
+            stdError.ErrorType = implicitFunctionParser[i].ErrorMsg();
             return stdError;
         }
         if(cndnotnull && (ImplicitStructs[i].cnd!=""))
@@ -1067,37 +1074,44 @@ ErrorMessage IsoMasterThread::ParseExpression()
             if ((stdError.iErrorIndex = ParisoConditionParser[i].Parse(ImplicitStructs[i].cnd,IsoParametersList.BasicFunctParameters)) >= 0)
             {
                 stdError.strError = ImplicitStructs[i].cnd;
+                stdError.ErrorType = ParisoConditionParser[i].ErrorMsg();
                 return stdError;
             }
         }
         if ((stdError.iErrorIndex = xSupParser[i].Parse(ImplicitStructs[i].xmax, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].xmax;
+            stdError.ErrorType = xSupParser[i].ErrorMsg();
             return stdError;
         }
         if ((stdError.iErrorIndex = ySupParser[i].Parse(ImplicitStructs[i].ymax, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].ymax;
+            stdError.ErrorType = ySupParser[i].ErrorMsg();
             return stdError;
         }
         if ((stdError.iErrorIndex = zSupParser[i].Parse(ImplicitStructs[i].zmax, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].zmax;
+            stdError.ErrorType = zSupParser[i].ErrorMsg();
             return stdError;
         }
         if ((stdError.iErrorIndex = xInfParser[i].Parse(ImplicitStructs[i].xmin, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].xmin;
+            stdError.ErrorType = xInfParser[i].ErrorMsg();
             return stdError;
         }
         if ((stdError.iErrorIndex = yInfParser[i].Parse(ImplicitStructs[i].ymin, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].ymin;
+            stdError.ErrorType = yInfParser[i].ErrorMsg();
             return stdError;
         }
         if ((stdError.iErrorIndex = zInfParser[i].Parse(ImplicitStructs[i].zmin, IsoParametersList.BasicFunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].zmin;
+            stdError.ErrorType = zInfParser[i].ErrorMsg();
             return stdError;
         }
     }
