@@ -2184,7 +2184,7 @@ void MathMod::xyzg_valueChanged(int cl, ModelType type)
 {
     xyzg_valueupdate(cl);
     // process the new surface
-    if (xyzactivated == 1)
+    if (xyzactivated == 1 and cl>0)
         (type == PARISO_TYPE) ? ParisoObjectProcess() : ProcessNewIsoSurface();
 }
 
@@ -2311,7 +2311,7 @@ void MathMod::slot_checkBox73_clicked(ModelType type)
 {
     xyzactivated *= -1;
     // process the new surface
-    if (xyzactivated == 1)
+    if (xyzactivated == 1 && IsoObjet->masterthread->XYZgrid>0)
         (type == PARISO_TYPE) ? ParisoObjectProcess() : ProcessNewIsoSurface();
 }
 

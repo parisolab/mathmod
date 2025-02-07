@@ -1390,6 +1390,20 @@ void Iso3D::IsoBuild (
     }
     NormOriginaltmpVector = std::vector<float>();
     //*****//
+    if(GridVoxelVarPt != nullptr)
+        delete[] GridVoxelVarPt;
+    if(Results != nullptr)
+        delete[] Results;
+
+    if(masterthread->gridnotnull)
+        for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
+            if(masterthread->grid[fctnb]==0)
+            {
+                messageerror = NULL_GRID_VALUE;
+                emitErrorSignal();
+                return;
+            }
+
     uint maxx = std::max(masterthread->XYZgrid, masterthread->GridVal);
     if(masterthread->gridnotnull)
         for(uint fctnb= 0; fctnb< masterthread->componentsNumber; fctnb++)
@@ -1399,10 +1413,7 @@ void Iso3D::IsoBuild (
     {
         workerthreads[nbthreads].GridVal = masterthread->GridVal;
     }
-    if(GridVoxelVarPt != nullptr)
-        delete[] GridVoxelVarPt;
-    if(Results != nullptr)
-        delete[] Results;
+
     try
       {
         GridVoxelVarPt = new Voxel[masterthread->GridVal*masterthread->GridVal*masterthread->GridVal];
@@ -1437,6 +1448,7 @@ void Iso3D::IsoBuild (
         ComponentId = fctnb;
         if(masterthread->gridnotnull)
             Setgrid(masterthread->grid[fctnb]);
+
         masterthread->CurrentComponent = fctnb;
         for(uint nbthreads=0; nbthreads+1 < WorkerThreadsNumber; nbthreads++)
             workerthreads[nbthreads].CurrentComponent = fctnb;

@@ -64,9 +64,10 @@ static const char *ScriptErrorMessage[] =
     "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 31
     "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 32
     "GRID_SUPERIOR_TO_GRIDMAX",                 // 33
-    "Vect_DIMENSION_ERROR",                     // 34
-    "Not enough memory available to complete this operation", // 35
-    "EMPTY_MANDATORY_FIELD"                     // 36
+    "Null_GRID_VALUE",                          // 34
+    "Vect_DIMENSION_ERROR",                     // 35
+    "Not enough memory available to complete this operation", // 36
+    "EMPTY_MANDATORY_FIELD"                     // 37
 };
 
 void DrawingOptions::ErrorMsg() const
