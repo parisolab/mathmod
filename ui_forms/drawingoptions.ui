@@ -1551,7 +1551,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </size>
                                 </property>
                                 <property name="minimum">
-                                 <number>10</number>
+                                 <number>0</number>
                                 </property>
                                 <property name="maximum">
                                  <number>250</number>
