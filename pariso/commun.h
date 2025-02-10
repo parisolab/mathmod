@@ -150,6 +150,7 @@ enum EvalErrorType
     EVAL_NO_ERROR,
     VAR_OVERFLOW
 };
+// New entries added to ScriptErrorType enum must be translated to ScriptErrorMessage
 
 enum ScriptErrorType
 {
@@ -193,6 +194,49 @@ enum ScriptErrorType
     MEM_OVERFLOW,
     EMPTY_MANDATORY_FIELD
 };
+
+static const char *ScriptErrorMessage[] =
+    {
+        "SCRIPT_NO_ERROR",      // 0
+        "MAXGRID_OUT_OF_RANGE", // 1
+        "MAXPT_OUT_OF_RANGE",   // 2
+        "MAXTRI_OUT_OF_RANGE",  // 3
+        "FXYZ_OUT_OF_RANGE",    // 4
+        "FX_OUT_OF_RANGE",
+        "XMAX_NBCOMPONENT_MISMATCH",                // 5
+        "YMAX_NBCOMPONENT_MISMATCH",                // 6
+        "ZMAX_NBCOMPONENT_MISMATCH",                // 7
+        "XMIN_NBCOMPONENT_MISMATCH",                // 8
+        "YMIN_NBCOMPONENT_MISMATCH",                // 9
+        "ZMIN_NBCOMPONENT_MISMATCH",                // 10
+        "FY_FX_MISMATCH",                           // 11
+        "FZ_FX_MISMATCH",                           // 12
+        "FW_FX_MISMATCH",                           // 13
+        "UMAX_NBCOMPONENT_MISMATCH",                // 14
+        "VMAX_NBCOMPONENT_MISMATCH",                // 15
+        "WMAX_NBCOMPONENT_MISMATCH",                // 16
+        "UMIN_NBCOMPONENT_MISMATCH",                // 17
+        "VMIN_NBCOMPONENT_MISMATCH",                // 18
+        "WMIN_NBCOMPONENT_MISMATCH",                // 19
+        "GRID_NBCOMPONENT_MISMATCH",                // 20
+        "COMPONENT_NBCOMPONENT_MISMATCH",           // 21
+        "CND_NBCOMPONENT_MISMATCH",                 // 22
+        "NBSLIDERS_OUT_OF_RANGE",                   // 23
+        "NBSLIDERSVALUES_OUT_OF_RANGE",             // 24
+        "VERTEX_TAB_MEM_OVERFLOW",                  // 25
+        "TRIANGLES_TAB_MEM_OVERFLOW",               // 26
+        "MINPOLY_TAB_MEM_OVERFLOW",                 // 27
+        "POLY_TAB_MEM_OVERFLOW",                    // 28
+        "CND_TAB_MEM_OVERFLOW",                     // 29
+        "CND_POL_MEM_OVERFLOW",                     // 30
+        "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 31
+        "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 32
+        "GRID_SUPERIOR_TO_GRIDMAX",                 // 33
+        "Vect_DIMENSION_ERROR",                     // 34
+        "Not enough memory available to complete this operation", // 35
+        "EMPTY_MANDATORY_FIELD"                     // 36
+};
+
 struct ComponentInfos
 {
     std::vector<uint> ParisoTriangle;
