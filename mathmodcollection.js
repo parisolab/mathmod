@@ -1,6 +1,41 @@
 {
   "MathModels": [
-{
+    {
+        "Param3D": {
+            "Description ": ["Wentletrap_Shell Parametric surface by Abderrahman Taha 09/02/2025"],
+            "Name": ["Wentletrap_Shell"],
+            "Component": ["Wentletrap_Shell"],
+            "Const": ["a=20",
+                "b=20",
+                "d=1",
+                "aa=90",
+                "mu=5*pi/180",
+                "alpha=86*pi/180",
+                "beta=10*pi/180",
+                "omega=1*pi/180",
+                "phi=-45*pi/180",
+                "ll=4",
+                "p=6",
+                "w1=60",
+                "w2=0.14",
+                "n=8"],
+            "Funct": ["l=((2*pi)/n)*((n*u/(2*pi))-floor(n*u/(2*pi)))",
+                "k=if(w1=0|w2=0|n=0,0,ll*exp(-(2*(u-p)/w1)^2-(2*l(u,v,t)/w2)^2))",
+                "h=(1/(sqrt((cos(u)/a)^2+(sin(u)/b)^2)))+k(u,v,t)",
+                "h=h(v,u,t)",
+                "fx=d*(aa*sin(beta)*cos(u)+h(v,u,t)*(cos(v+phi)*cos(u+omega)-sin(mu)*sin(v+phi)*sin(u+omega)))*exp(u*cot(alpha))",
+                "fy=(-aa*sin(beta)*sin(u)-h(v,u,t)*(cos(v+phi)*sin(u+omega)+sin(mu)*sin(v+phi)*cos(u+omega)))*exp(u*cot(alpha))",
+                "fz=(-aa*cos(beta)+h(v,u,t)*sin(v+phi)*cos(mu))*exp(u*cot(alpha))"],
+            "Fx": ["fx(u,v,t)"],
+            "Fy": ["fy(u,v,t)"],
+            "Fz": ["fz(u,v,t)"],
+            "Umax": ["4*pi"],
+            "Umin": ["-16*pi"],
+            "Vmax": ["pi*90/180"],
+            "Vmin": ["-pi*270/180"]
+        }
+    },
+    {
         "Param3D": {
             "Description": ["Noids minimal surface (v02) by Abderrahman Taha 08/04/2023"],
             "Name": ["Noids"],
