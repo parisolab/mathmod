@@ -2218,6 +2218,7 @@ void DrawingOptions::LoadNewFileModels(bool upd)
         MathmodRef->RootObjet.NbIsoStruct = MathmodRef->RootObjet.NbParamStruct = 0;
         MathmodRef->collection.JPar.clear();
         MathmodRef->collection.JIso.clear();
+        MathmodRef->collection.JParIso.clear();
     }
     MathmodRef->RootObjet.ReadJsonFile(mathmodcollection, JSONMathModels);
     QJsonArray array = JSONMathModels["MathModels"].toArray();
@@ -2270,6 +2271,9 @@ void DrawingOptions::LoadNewFileModels(bool upd)
             MathmodRef->collection.JPar.append(newjpar);
             a = (jsobj)["Name"].toArray()[0].toString();
             lst.append(a);
+        }
+        else if ((array[i].toObject())["Pariso"].isObject())
+        {
         }
     }
     lst.insert(0, "Examples (" + QString::number(lst.count()) + ")");
