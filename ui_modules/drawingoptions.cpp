@@ -2272,9 +2272,6 @@ void DrawingOptions::LoadNewFileModels(bool upd)
             a = (jsobj)["Name"].toArray()[0].toString();
             lst.append(a);
         }
-        else if ((array[i].toObject())["Pariso"].isObject())
-        {
-        }
     }
     lst.insert(0, "Examples (" + QString::number(lst.count()) + ")");
     // Load the script containing isosurface and parametric formulas:
