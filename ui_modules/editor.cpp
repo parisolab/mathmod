@@ -64,7 +64,6 @@ void editor::setupEditor()
     font.setFamily("Courier");
     font.setFixedPitch(true);
     font.setPointSize(10);
-
     ui->textEdit = new QTextEdit;
     ui->textEdit->setFont(font);
     QFile file("mainwindow.h");
