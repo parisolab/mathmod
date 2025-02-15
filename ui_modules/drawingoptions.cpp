@@ -2272,6 +2272,43 @@ void DrawingOptions::LoadNewFileModels(bool upd)
             a = (jsobj)["Name"].toArray()[0].toString();
             lst.append(a);
         }
+        else if ((array[i].toObject())["ParIso"].isArray())
+        {
+            jpariso newjpariso;
+            jpar newjpar;
+            jiso newjiso;
+            QJsonArray jsarray = ((array[i].toObject())["ParIso"].toArray());
+            for(int i=0; i<jsarray.size(); i++)
+            {
+                if ((jsarray[i].toObject())["Param3D"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Param3D"].toObject();
+                   newjpar.read(jsobj);
+                   newjpariso.JPar = newjpar;
+                }
+                else if ((jsarray[i].toObject())["Param3D_C"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Param3D_C"].toObject();
+                   newjpar.read(jsobj);
+                   newjpariso.JPar = newjpar;
+                }
+                else if ((jsarray[i].toObject())["Param4D_C"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Param4D_C"].toObject();
+                   newjpar.read(jsobj);
+                   newjpariso.JPar = newjpar;
+                }
+                else if ((jsarray[i].toObject())["Iso3D"].isObject())
+                {
+                   jsobj =  (jsarray[i].toObject())["Iso3D"].toObject();
+                   newjiso.read(jsobj);
+                   newjpariso.JIso = newjiso;
+                }
+            }
+            a = newjpariso.Name = (array[i].toObject())["Name"].toString();
+            MathmodRef->collection.JParIso.append(newjpariso);
+            lst.append(a);
+        }
     }
     lst.insert(0, "Examples (" + QString::number(lst.count()) + ")");
     // Load the script containing isosurface and parametric formulas:
