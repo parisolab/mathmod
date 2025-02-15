@@ -46,15 +46,16 @@ void editor::newFile()
 }
 void editor::openFile(const QString &path)
 {
-    QString fileName = path;
+    filename = path;
     // if (fileName.isNull())
-    fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
+    filename = QFileDialog::getOpenFileName(this, tr("Open File"), "",
                                             "Files (*.js *.*)");
-    if (!fileName.isEmpty())
+    if (!filename.isEmpty())
     {
-        QFile file(fileName);
+        QFile file(filename);
         if (file.open(QFile::ReadOnly | QFile::Text))
             ui->textEdit->setPlainText(file.readAll());
+        file.close();
     }
 }
 void editor::setupEditor()
@@ -67,7 +68,7 @@ void editor::setupEditor()
     ui->textEdit = new QTextEdit;
     ui->textEdit->setFont(font);
     QFile file("mainwindow.h");
-    if (file.open(QFile::ReadOnly | QFile::Text))
+    if (file.open(QFile::ReadWrite | QFile::Text))
         ui->textEdit->setPlainText(file.readAll());
 }
 void editor::on_actionOpen_triggered()
@@ -83,16 +84,18 @@ void editor::save()
     }
     QString text = ui->textEdit->toPlainText();
     QFile f(filename);
-    if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (f.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        statusBar()->showMessage(tr("Could not write to %1").arg(filename), 2000);
+        QTextStream t(&f);
+        t << text.toUtf8();
+        f.close();
+        statusBar()->showMessage(tr("File %1 saved").arg(filename), 20000);
+    }
+    else
+    {
+        statusBar()->showMessage(tr("Could not write to %1").arg(filename), 20000);
         return;
     }
-
-    QTextStream t(&f);
-    t << text;
-    f.close();
-    statusBar()->showMessage(tr("File %1 saved").arg(filename), 2000);
 }
 void editor::saveAs()
 {
@@ -106,7 +109,7 @@ void editor::saveAs()
     }
     else
     {
-        statusBar()->showMessage(tr("Saving aborted"), 2000);
+        statusBar()->showMessage(tr("Saving aborted"), 20000);
     }
     workfile = fn;
 }
