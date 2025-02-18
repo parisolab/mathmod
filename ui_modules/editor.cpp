@@ -148,7 +148,6 @@ void editor::on_actionCopy_triggered()
 {
     ui->textEdit->copy();
 }
-
 void editor::on_actionAbout_MathMod_triggered()
 {
     ab.show();
