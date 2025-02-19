@@ -68,9 +68,8 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionMathMod"/>
     <addaction name="actionTutorials"/>
-    <addaction name="actionAbout"/>
+    <addaction name="actionAbout_MathMod"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -112,9 +111,9 @@
     <string>Cut</string>
    </property>
   </action>
-  <action name="actionMathMod">
+  <action name="actionAbout_MathMod">
    <property name="text">
-    <string>MathMod Doc</string>
+    <string>About MathMod</string>
    </property>
   </action>
   <action name="actionTutorials">

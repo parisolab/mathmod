@@ -1,0 +1,916 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		4D7D3C4580B6F0AC0713CDB2 /* Qt Preprocess */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "mathmod" */;
+			buildPhases = (
+				5E618435888B9D49F8540165 /* Qt Qmake */,
+				7EF0942E79C014DCEC8976BC /* Qt Preprocessors */,
+			);
+			dependencies = (
+			);
+			name = "Qt Preprocess";
+			productName = "Qt Preprocess";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0144C7616840456D7B783C53 /* QtOpenGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = FDEBE1802C24F4F48ADF7C34 /* QtOpenGL.framework */; };
+		13977EAB53CC2AD22D4CE651 /* moc_about.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C50DD85BE1F52CFE1802C4D0 /* moc_about.cpp */; settings = {ATTRIBUTES = (); }; };
+		1C76BA31B17FAC5FAA41D434 /* moc_Iso3D.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 67236002008E6270C37A53B3 /* moc_Iso3D.cpp */; settings = {ATTRIBUTES = (); }; };
+		1F14E1440F4D219DC1C774C7 /* moc_video.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B37BFFDD58BDD5C4B4FDED81 /* moc_video.cpp */; settings = {ATTRIBUTES = (); }; };
+		26BD177CAB1B6DD064A4DE15 /* commun.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = C93A070582E1F31E62978194 /* commun.cpp */; settings = {ATTRIBUTES = (); }; };
+		2AE2357797ED2878EE6460FD /* moc_addparam.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 88DAEEC3B26F22A993C2B938 /* moc_addparam.cpp */; settings = {ATTRIBUTES = (); }; };
+		2B0301CB2612BC696CF4719E /* about.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D1C55EBA7A96DF87A9808C50 /* about.cpp */; settings = {ATTRIBUTES = (); }; };
+		3235D57BE75BF16CD4E1B76F /* QtWidgets.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = BFEE9B409A88DFADD5BFD0BD /* QtWidgets.framework */; };
+		32F9B0B135E44722D42F3D06 /* Matrix4D.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 209B0B26272A8BD6178325BB /* Matrix4D.cpp */; settings = {ATTRIBUTES = (); }; };
+		3803816CF2B48E94419E1BD9 /* addparam.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 859251E3ADD533409536DD27 /* addparam.cpp */; settings = {ATTRIBUTES = (); }; };
+		3809D489D432ED3ED8D84F73 /* moc_mathmod.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 009E291FC4744A73FA157305 /* moc_mathmod.cpp */; settings = {ATTRIBUTES = (); }; };
+		5EDAF6E4643D594CA5BF48D7 /* Model3D.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F402D7A8C0CCD7CEEFFBD5B3 /* Model3D.cpp */; settings = {ATTRIBUTES = (); }; };
+		72708F0901187D4B87F8E861 /* main.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E81F193097F4CB25BAE30DEA /* main.cpp */; settings = {ATTRIBUTES = (); }; };
+		75AC534F38C851801ADF5E41 /* jpar.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9F5267AD059A98663D8347AE /* jpar.cpp */; settings = {ATTRIBUTES = (); }; };
+		79ED7628B555C31FE9A29146 /* sliderparam.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9E37E1748BD90C92CEF40C7C /* sliderparam.cpp */; settings = {ATTRIBUTES = (); }; };
+		7A41D9F4F61A2EEB67D88F44 /* ParisoMathObject.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 370A001AA61ACF1B4FB9E43C /* ParisoMathObject.cpp */; settings = {ATTRIBUTES = (); }; };
+		7A50D78305025FF43CCF80EF /* mathmod.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 9496E49A5AAFC21E9421AB4C /* mathmod.cpp */; settings = {ATTRIBUTES = (); }; };
+		7BEFB8AC0CD557F2A931E839 /* paratransformation.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 2B5CA536EE5CF7CF273B0350 /* paratransformation.cpp */; settings = {ATTRIBUTES = (); }; };
+		7C4A03F362980BFAB5DC5335 /* moc_Model3D.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = FF97C783CA12D5A8DD79BD8A /* moc_Model3D.cpp */; settings = {ATTRIBUTES = (); }; };
+		8771A8C96E9C391044035D99 /* OpenGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = D4B32C2222F82AC56BADEB21 /* OpenGL.framework */; };
+		88B27C88EDE1D420501E7F7F /* moc_sliderparam.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D006A5A8459DC837F569A96A /* moc_sliderparam.cpp */; settings = {ATTRIBUTES = (); }; };
+		8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = A1A67BEAA744704B29168D39 /* IOKit.framework */; };
+		93A31FF058C6D06474C0578E /* editor.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 61981A05AC4967B5FE078761 /* editor.cpp */; settings = {ATTRIBUTES = (); }; };
+		9A7641EF2D493DDA000AD058 /* documentation in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7641EE2D493DDA000AD058 /* documentation */; };
+		9A7641F52D493E98000AD058 /* Readme.txt in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7641F02D493E98000AD058 /* Readme.txt */; };
+		9A7641F62D493E98000AD058 /* Licence.txt in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7641F12D493E98000AD058 /* Licence.txt */; };
+		9A7641F72D493E98000AD058 /* mathmodconfig.js in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7641F22D493E98000AD058 /* mathmodconfig.js */; };
+		9A7641F82D493E98000AD058 /* mathmodcollection.js in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7641F32D493E98000AD058 /* mathmodcollection.js */; };
+		9A7641F92D493E98000AD058 /* mathmodcollection_empty.js in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7641F42D493E98000AD058 /* mathmodcollection_empty.js */; };
+		9A7641FB2D493EF7000AD058 /* Media.xcassets in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 9A7641FA2D493EF7000AD058 /* Media.xcassets */; };
+		A3E632F886F9775EB6033EC3 /* qrc_myressources.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = E1C81B57ED03F22A45BDCF00 /* qrc_myressources.cpp */; settings = {ATTRIBUTES = (); }; };
+		A99B2AA0F9CBBDD12BA126A4 /* DiskArbitration.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */; };
+		AAAF802D8B12A2CFA2081219 /* moc_drawingoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = F1C263506FB919FDDF7DED53 /* moc_drawingoptions.cpp */; settings = {ATTRIBUTES = (); }; };
+		B0F569EB2F0E38350E4D3E73 /* selectoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 49368B20B0D14DCE953383AE /* selectoptions.cpp */; settings = {ATTRIBUTES = (); }; };
+		B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 1B2543FCC48E9436F21C4F63 /* Metal.framework */; };
+		B63699972E9DC5068EC9B8DE /* Iso3D.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = A7D5BA6146E88B4051F7FA6A /* Iso3D.cpp */; settings = {ATTRIBUTES = (); }; };
+		BEA7CF45A91C2C4F1AC6B691 /* parisodef.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 323B77E21142216BE3EEDC16 /* parisodef.cpp */; settings = {ATTRIBUTES = (); }; };
+		C9E1C6C96015601201129142 /* video.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D926AB7056D4D34C6AB8E748 /* video.cpp */; settings = {ATTRIBUTES = (); }; };
+		D24D95CDC58F079E2F886030 /* QtCore.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 5AA495E0475F0BEF7805091F /* QtCore.framework */; };
+		D8A57E5639F54663040EE1C7 /* drawingoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 7B80339D5D8EB2E5408BB092 /* drawingoptions.cpp */; settings = {ATTRIBUTES = (); }; };
+		DAAE71EFEEBE6AFF36D64989 /* moc_selectoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 747A4F824686FFFCBE735B08 /* moc_selectoptions.cpp */; settings = {ATTRIBUTES = (); }; };
+		DD14CC4A57A7430FBAD018FD /* fparser.cc in Compile Sources */ = {isa = PBXBuildFile; fileRef = C4AD623B16892C81CD6B33A3 /* fparser.cc */; settings = {ATTRIBUTES = (); }; };
+		E4551A4A290E3483A6B7536C /* parametersoptions.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = D170E9A93E379119E2649D9A /* parametersoptions.cpp */; settings = {ATTRIBUTES = (); }; };
+		E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */; };
+		E517BAF9072C5EC0140DB432 /* QtGui.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 69274005F74A5CCE788D4EB8 /* QtGui.framework */; };
+		E87E38764186F4AE03AFF63F /* isotransformation.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = EC932F3DE0A97D116448FCCE /* isotransformation.cpp */; settings = {ATTRIBUTES = (); }; };
+		E927A5579EC6A0A96BF4D5C8 /* parisoobject.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 692861FC67E32767F02AB17E /* parisoobject.cpp */; settings = {ATTRIBUTES = (); }; };
+		EF74B93EF2C38B13E911E82A /* moc_editor.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = B56D73F5C78A03B718349789 /* moc_editor.cpp */; settings = {ATTRIBUTES = (); }; };
+		F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */ = {isa = PBXBuildFile; fileRef = 723F90793B2C195E2CCB2233 /* AppKit.framework */; };
+		F4E1B55D8A0ECE0BE0AF53C4 /* jiso.cpp in Compile Sources */ = {isa = PBXBuildFile; fileRef = 34D066EC2397A7EC49AEA0ED /* jiso.cpp */; settings = {ATTRIBUTES = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9A7641ED2D492D3C000AD058 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DB9C3763D02B1415CD9D565 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D7D3C4580B6F0AC0713CDB2;
+			remoteInfo = "Qt Preprocess";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		99542592E9780B9225F24AA8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				9A7641F52D493E98000AD058 /* Readme.txt in Embed Frameworks */,
+				9A7641F62D493E98000AD058 /* Licence.txt in Embed Frameworks */,
+				9A7641F72D493E98000AD058 /* mathmodconfig.js in Embed Frameworks */,
+				9A7641F82D493E98000AD058 /* mathmodcollection.js in Embed Frameworks */,
+				9A7641F92D493E98000AD058 /* mathmodcollection_empty.js in Embed Frameworks */,
+				9A7641EF2D493DDA000AD058 /* documentation in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		009E291FC4744A73FA157305 /* moc_mathmod.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_mathmod.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_mathmod.cpp; sourceTree = "<absolute>"; };
+		034D4B151606FCD3038A2347 /* addparam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = addparam.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/addparam.h; sourceTree = "<absolute>"; };
+		03FE397B1BEDF7DA6382A627 /* selectoptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = selectoptions.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/selectoptions.h; sourceTree = "<absolute>"; };
+		095C24009B336365EF0B52D0 /* myressources.qrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = myressources.qrc; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/myressources.qrc; sourceTree = "<absolute>"; };
+		0AE6E454E5004D7204E5E2DE /* fparser.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fparser.hh; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/fparser/fparser.hh; sourceTree = "<absolute>"; };
+		15CF5861551F8007AE1D34F7 /* TableMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TableMap.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/isosurface/TableMap.h; sourceTree = "<absolute>"; };
+		1B2543FCC48E9436F21C4F63 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = /System/Library/Frameworks/Metal.framework; sourceTree = "<absolute>"; };
+		209B0B26272A8BD6178325BB /* Matrix4D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Matrix4D.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parametric/ND/Matrix4D.cpp; sourceTree = "<absolute>"; };
+		218FD060589803F6AA7435F8 /* ui_drawingoptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_drawingoptions.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_drawingoptions.h; sourceTree = "<absolute>"; };
+		2B5CA536EE5CF7CF273B0350 /* paratransformation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = paratransformation.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parametric/paratransformation.cpp; sourceTree = "<absolute>"; };
+		2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = /System/Library/Frameworks/DiskArbitration.framework; sourceTree = "<absolute>"; };
+		323B77E21142216BE3EEDC16 /* parisodef.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = parisodef.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/json_parser/parisodef.cpp; sourceTree = "<absolute>"; };
+		34D066EC2397A7EC49AEA0ED /* jiso.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = jiso.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/json_parser/jiso.cpp; sourceTree = "<absolute>"; };
+		35FF986851BDEF84622D9B29 /* comvar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = comvar.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/comvar.h; sourceTree = "<absolute>"; };
+		370A001AA61ACF1B4FB9E43C /* ParisoMathObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParisoMathObject.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/ParisoMathObject.cpp; sourceTree = "<absolute>"; };
+		397F1CB4B58D11447B99FB57 /* parisodef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = parisodef.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/json_parser/parisodef.h; sourceTree = "<absolute>"; };
+		3E6E9A821CC3F5F041FC9209 /* ui_editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_editor.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_editor.h; sourceTree = "<absolute>"; };
+		3EACD79DA98B9D245739E5B4 /* ui_addparam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_addparam.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_addparam.h; sourceTree = "<absolute>"; };
+		42DD9B5B6A85D1C01A7CB166 /* Model3D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Model3D.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parametric/Model3D.h; sourceTree = "<absolute>"; };
+		4652D4966080D8780466B011 /* paratransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = paratransformation.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parametric/paratransformation.h; sourceTree = "<absolute>"; };
+		476B0638B931AB7F700FB383 /* Matrix4D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Matrix4D.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parametric/ND/Matrix4D.h; sourceTree = "<absolute>"; };
+		48BD6E4C933300494530A3F9 /* mathmod.pro */ = {isa = PBXFileReference; lastKnownFileType = text; name = mathmod.pro; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/mathmod.pro; sourceTree = "<absolute>"; };
+		49368B20B0D14DCE953383AE /* selectoptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = selectoptions.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/selectoptions.cpp; sourceTree = "<absolute>"; };
+		540C86309BA3410FA5E79249 /* commun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = commun.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/commun.h; sourceTree = "<absolute>"; };
+		5AA495E0475F0BEF7805091F /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = "/usr/local/Qt-5.15.15/lib/QtCore.framework"; sourceTree = "<absolute>"; };
+		6026A10841625F239CE22FC6 /* mm.rc */ = {isa = PBXFileReference; lastKnownFileType = text; name = mm.rc; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/mm.rc; sourceTree = "<absolute>"; };
+		61981A05AC4967B5FE078761 /* editor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = editor.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/editor.cpp; sourceTree = "<absolute>"; };
+		625CF7BDA279680282C3ADB3 /* ui_about.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_about.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_about.h; sourceTree = "<absolute>"; };
+		67236002008E6270C37A53B3 /* moc_Iso3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_Iso3D.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_Iso3D.cpp; sourceTree = "<absolute>"; };
+		68FC3B75B63B4D047B15A994 /* video.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = video.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/screenshot/video.h; sourceTree = "<absolute>"; };
+		69274005F74A5CCE788D4EB8 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = "/usr/local/Qt-5.15.15/lib/QtGui.framework"; sourceTree = "<absolute>"; };
+		692861FC67E32767F02AB17E /* parisoobject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = parisoobject.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parisoobject.cpp; sourceTree = "<absolute>"; };
+		6B329D3BBAAABD247B67BE6C /* jiso.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = jiso.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/json_parser/jiso.h; sourceTree = "<absolute>"; };
+		71C678328294821EF7D5DC47 /* drawingoptions.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = drawingoptions.ui; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_forms/drawingoptions.ui; sourceTree = "<absolute>"; };
+		723F90793B2C195E2CCB2233 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		747A4F824686FFFCBE735B08 /* moc_selectoptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_selectoptions.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_selectoptions.cpp; sourceTree = "<absolute>"; };
+		7B80339D5D8EB2E5408BB092 /* drawingoptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawingoptions.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/drawingoptions.cpp; sourceTree = "<absolute>"; };
+		7BE73AFFC3BD6AB78329F22E /* ui_selectoptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_selectoptions.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_selectoptions.h; sourceTree = "<absolute>"; };
+		7F869380222A20F940FABF7D /* parametersoptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = parametersoptions.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/parametersoptions.h; sourceTree = "<absolute>"; };
+		859251E3ADD533409536DD27 /* addparam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = addparam.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/addparam.cpp; sourceTree = "<absolute>"; };
+		85B084F001A6303D8BA4595D /* ui_sliderparam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui_sliderparam.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_sliderparam.h; sourceTree = "<absolute>"; };
+		88DAEEC3B26F22A993C2B938 /* moc_addparam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_addparam.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_addparam.cpp; sourceTree = "<absolute>"; };
+		8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
+		8FF98B1B276B8A30D8A2C2AD /* selectoptions.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = selectoptions.ui; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_forms/selectoptions.ui; sourceTree = "<absolute>"; };
+		9496E49A5AAFC21E9421AB4C /* mathmod.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = mathmod.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/mathmod.cpp; sourceTree = "<absolute>"; };
+		95D1BD6DDCE96C49BACEEFB5 /* sliderparam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sliderparam.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/sliderparam.h; sourceTree = "<absolute>"; };
+		999D64A260A1621BFDB86718 /* mathmod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = mathmod.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/mathmod.h; sourceTree = "<absolute>"; };
+		9A7641EE2D493DDA000AD058 /* documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = documentation; sourceTree = "<group>"; };
+		9A7641F02D493E98000AD058 /* Readme.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Readme.txt; sourceTree = "<group>"; };
+		9A7641F12D493E98000AD058 /* Licence.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Licence.txt; sourceTree = "<group>"; };
+		9A7641F22D493E98000AD058 /* mathmodconfig.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mathmodconfig.js; sourceTree = "<group>"; };
+		9A7641F32D493E98000AD058 /* mathmodcollection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mathmodcollection.js; sourceTree = "<group>"; };
+		9A7641F42D493E98000AD058 /* mathmodcollection_empty.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mathmodcollection_empty.js; sourceTree = "<group>"; };
+		9A7641FA2D493EF7000AD058 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		9A7641FC2D493FC3000AD058 /* mathmod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mathmod.entitlements; sourceTree = "<group>"; };
+		9E37E1748BD90C92CEF40C7C /* sliderparam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sliderparam.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/sliderparam.cpp; sourceTree = "<absolute>"; };
+		9F5267AD059A98663D8347AE /* jpar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = jpar.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/json_parser/jpar.cpp; sourceTree = "<absolute>"; };
+		A00221B3AF648DCB772640C2 /* jpar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = jpar.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/json_parser/jpar.h; sourceTree = "<absolute>"; };
+		A1A67BEAA744704B29168D39 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		A7D5BA6146E88B4051F7FA6A /* Iso3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Iso3D.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/isosurface/Iso3D.cpp; sourceTree = "<absolute>"; };
+		B29460C49D5E29842E76FEEC /* addparam.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = addparam.ui; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_forms/addparam.ui; sourceTree = "<absolute>"; };
+		B37BFFDD58BDD5C4B4FDED81 /* moc_video.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_video.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_video.cpp; sourceTree = "<absolute>"; };
+		B3D82A913906A6B55298A844 /* editor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = editor.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/editor.h; sourceTree = "<absolute>"; };
+		B56D73F5C78A03B718349789 /* moc_editor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_editor.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_editor.cpp; sourceTree = "<absolute>"; };
+		B6109FD6E9CB495CD485B2BF /* sliderparam.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = sliderparam.ui; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_forms/sliderparam.ui; sourceTree = "<absolute>"; };
+		BE5C25E45879D8ED631FE1D1 /* editor.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = editor.ui; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_forms/editor.ui; sourceTree = "<absolute>"; };
+		BFEE9B409A88DFADD5BFD0BD /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = "/usr/local/Qt-5.15.15/lib/QtWidgets.framework"; sourceTree = "<absolute>"; };
+		C106BF34ADC86C8F25EEB366 /* drawingoptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = drawingoptions.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/drawingoptions.h; sourceTree = "<absolute>"; };
+		C1DD3B7C89E3A39B311DB3D0 /* fpconfig.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fpconfig.hh; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/fparser/fpconfig.hh; sourceTree = "<absolute>"; };
+		C4AD623B16892C81CD6B33A3 /* fparser.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fparser.cc; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/fparser/fparser.cc; sourceTree = "<absolute>"; };
+		C50DD85BE1F52CFE1802C4D0 /* moc_about.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_about.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_about.cpp; sourceTree = "<absolute>"; };
+		C6E23D16FC7F1740AB9B9894 /* mathmod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mathmod.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C93A070582E1F31E62978194 /* commun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = commun.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/commun.cpp; sourceTree = "<absolute>"; };
+		CFBAA388DA86F437227BDBCF /* .qmake.stash */ = {isa = PBXFileReference; lastKnownFileType = text; name = .qmake.stash; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/.qmake.stash; sourceTree = "<absolute>"; };
+		D006A5A8459DC837F569A96A /* moc_sliderparam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_sliderparam.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_sliderparam.cpp; sourceTree = "<absolute>"; };
+		D044413352291B065BF1AE36 /* ParisoMathObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParisoMathObject.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/ParisoMathObject.h; sourceTree = "<absolute>"; };
+		D170E9A93E379119E2649D9A /* parametersoptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = parametersoptions.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/parametersoptions.cpp; sourceTree = "<absolute>"; };
+		D1C55EBA7A96DF87A9808C50 /* about.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = about.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/about.cpp; sourceTree = "<absolute>"; };
+		D4B32C2222F82AC56BADEB21 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		D64B9836ECF6CD7D433DD543 /* about.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = about.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_modules/about.h; sourceTree = "<absolute>"; };
+		D926AB7056D4D34C6AB8E748 /* video.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = video.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/screenshot/video.cpp; sourceTree = "<absolute>"; };
+		E1C81B57ED03F22A45BDCF00 /* qrc_myressources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = qrc_myressources.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/qrc_myressources.cpp; sourceTree = "<absolute>"; };
+		E81573DE89B0E49B6E56E1F2 /* parisoobject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = parisoobject.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parisoobject.h; sourceTree = "<absolute>"; };
+		E81F193097F4CB25BAE30DEA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/main.cpp; sourceTree = "<absolute>"; };
+		E8443E9A50225DF12E1BDFAC /* Iso3D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Iso3D.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/isosurface/Iso3D.h; sourceTree = "<absolute>"; };
+		EB2E76066FA82A42E210CEA8 /* about.ui */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = about.ui; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/ui_forms/about.ui; sourceTree = "<absolute>"; };
+		EC932F3DE0A97D116448FCCE /* isotransformation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = isotransformation.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/isosurface/isotransformation.cpp; sourceTree = "<absolute>"; };
+		F134A21DFEC2A70CAC30C127 /* isotransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = isotransformation.h; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/isosurface/isotransformation.h; sourceTree = "<absolute>"; };
+		F1C263506FB919FDDF7DED53 /* moc_drawingoptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_drawingoptions.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_drawingoptions.cpp; sourceTree = "<absolute>"; };
+		F402D7A8C0CCD7CEEFFBD5B3 /* Model3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Model3D.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/pariso/parametric/Model3D.cpp; sourceTree = "<absolute>"; };
+		FDEBE1802C24F4F48ADF7C34 /* QtOpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtOpenGL.framework; path = "/usr/local/Qt-5.15.15/lib/QtOpenGL.framework"; sourceTree = "<absolute>"; };
+		FF97C783CA12D5A8DD79BD8A /* moc_Model3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = moc_Model3D.cpp; path = /Users/abderrahmantaha/Documents/GitHub/mathmod/moc_Model3D.cpp; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D1C883685E82D5676953459A /* Link Binary With Libraries */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0144C7616840456D7B783C53 /* QtOpenGL.framework in Link Binary With Libraries */,
+				3235D57BE75BF16CD4E1B76F /* QtWidgets.framework in Link Binary With Libraries */,
+				E517BAF9072C5EC0140DB432 /* QtGui.framework in Link Binary With Libraries */,
+				F2A75ACAC9DF6A3F4E5711E7 /* AppKit.framework in Link Binary With Libraries */,
+				B3FE8FAC746D3D5BB24FA398 /* Metal.framework in Link Binary With Libraries */,
+				D24D95CDC58F079E2F886030 /* QtCore.framework in Link Binary With Libraries */,
+				A99B2AA0F9CBBDD12BA126A4 /* DiskArbitration.framework in Link Binary With Libraries */,
+				8D267F2E4776F0ECA2F49DC8 /* IOKit.framework in Link Binary With Libraries */,
+				8771A8C96E9C391044035D99 /* OpenGL.framework in Link Binary With Libraries */,
+				E45E51A644D5FC9F942ECE55 /* AGL.framework in Link Binary With Libraries */,
+			);
+			name = "Link Binary With Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		12E908B8A1C3C07C115504F5 /* Sources [uic] */ = {
+			isa = PBXGroup;
+			children = (
+				462EE10DFFC9FB769DDBD9DD /* ui_forms */,
+			);
+			name = "Sources [uic]";
+			sourceTree = "<group>";
+		};
+		1C022892D49E392671C0B4A5 /* isosurface */ = {
+			isa = PBXGroup;
+			children = (
+				A7D5BA6146E88B4051F7FA6A /* Iso3D.cpp */,
+				EC932F3DE0A97D116448FCCE /* isotransformation.cpp */,
+				E8443E9A50225DF12E1BDFAC /* Iso3D.h */,
+				15CF5861551F8007AE1D34F7 /* TableMap.h */,
+				F134A21DFEC2A70CAC30C127 /* isotransformation.h */,
+			);
+			name = isosurface;
+			sourceTree = "<group>";
+		};
+		227128628F29C311417D1C3D /* ND */ = {
+			isa = PBXGroup;
+			children = (
+				209B0B26272A8BD6178325BB /* Matrix4D.cpp */,
+				476B0638B931AB7F700FB383 /* Matrix4D.h */,
+			);
+			name = ND;
+			sourceTree = "<group>";
+		};
+		25B08E2869634E9BCBA333A2 /* Generated Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E1C81B57ED03F22A45BDCF00 /* qrc_myressources.cpp */,
+				F1C263506FB919FDDF7DED53 /* moc_drawingoptions.cpp */,
+				C50DD85BE1F52CFE1802C4D0 /* moc_about.cpp */,
+				009E291FC4744A73FA157305 /* moc_mathmod.cpp */,
+				747A4F824686FFFCBE735B08 /* moc_selectoptions.cpp */,
+				FF97C783CA12D5A8DD79BD8A /* moc_Model3D.cpp */,
+				67236002008E6270C37A53B3 /* moc_Iso3D.cpp */,
+				B37BFFDD58BDD5C4B4FDED81 /* moc_video.cpp */,
+				D006A5A8459DC837F569A96A /* moc_sliderparam.cpp */,
+				88DAEEC3B26F22A993C2B938 /* moc_addparam.cpp */,
+				B56D73F5C78A03B718349789 /* moc_editor.cpp */,
+				218FD060589803F6AA7435F8 /* ui_drawingoptions.h */,
+				625CF7BDA279680282C3ADB3 /* ui_about.h */,
+				3E6E9A821CC3F5F041FC9209 /* ui_editor.h */,
+				85B084F001A6303D8BA4595D /* ui_sliderparam.h */,
+				3EACD79DA98B9D245739E5B4 /* ui_addparam.h */,
+				7BE73AFFC3BD6AB78329F22E /* ui_selectoptions.h */,
+			);
+			name = "Generated Sources";
+			sourceTree = "<group>";
+		};
+		2EB56BE3C2D93CDAB0C52E67 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				69C3AAE2AFFA6D4508B29084 /* ui_modules */,
+				904E173D328EEC73DBD2B631 /* fparser */,
+				C97D95C75B2EE556FBC8E6AB /* pariso */,
+				E81F193097F4CB25BAE30DEA /* main.cpp */,
+				9CD4E8817A6FA2407CDDF9CA /* json_parser */,
+				A6ABEE09D843E3D154D0A260 /* screenshot */,
+				6026A10841625F239CE22FC6 /* mm.rc */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		462EE10DFFC9FB769DDBD9DD /* ui_forms */ = {
+			isa = PBXGroup;
+			children = (
+				71C678328294821EF7D5DC47 /* drawingoptions.ui */,
+				EB2E76066FA82A42E210CEA8 /* about.ui */,
+				BE5C25E45879D8ED631FE1D1 /* editor.ui */,
+				B6109FD6E9CB495CD485B2BF /* sliderparam.ui */,
+				B29460C49D5E29842E76FEEC /* addparam.ui */,
+				8FF98B1B276B8A30D8A2C2AD /* selectoptions.ui */,
+			);
+			name = ui_forms;
+			sourceTree = "<group>";
+		};
+		69C3AAE2AFFA6D4508B29084 /* ui_modules */ = {
+			isa = PBXGroup;
+			children = (
+				7B80339D5D8EB2E5408BB092 /* drawingoptions.cpp */,
+				D1C55EBA7A96DF87A9808C50 /* about.cpp */,
+				370A001AA61ACF1B4FB9E43C /* ParisoMathObject.cpp */,
+				61981A05AC4967B5FE078761 /* editor.cpp */,
+				9496E49A5AAFC21E9421AB4C /* mathmod.cpp */,
+				49368B20B0D14DCE953383AE /* selectoptions.cpp */,
+				D170E9A93E379119E2649D9A /* parametersoptions.cpp */,
+				9E37E1748BD90C92CEF40C7C /* sliderparam.cpp */,
+				859251E3ADD533409536DD27 /* addparam.cpp */,
+				C106BF34ADC86C8F25EEB366 /* drawingoptions.h */,
+				D64B9836ECF6CD7D433DD543 /* about.h */,
+				D044413352291B065BF1AE36 /* ParisoMathObject.h */,
+				35FF986851BDEF84622D9B29 /* comvar.h */,
+				999D64A260A1621BFDB86718 /* mathmod.h */,
+				03FE397B1BEDF7DA6382A627 /* selectoptions.h */,
+				7F869380222A20F940FABF7D /* parametersoptions.h */,
+				95D1BD6DDCE96C49BACEEFB5 /* sliderparam.h */,
+				034D4B151606FCD3038A2347 /* addparam.h */,
+				B3D82A913906A6B55298A844 /* editor.h */,
+			);
+			name = ui_modules;
+			sourceTree = "<group>";
+		};
+		74B182DB50CB5611B5C1C297 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				48BD6E4C933300494530A3F9 /* mathmod.pro */,
+				CFBAA388DA86F437227BDBCF /* .qmake.stash */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8267599CDC32DF5C41EC3E9E /* parametric */ = {
+			isa = PBXGroup;
+			children = (
+				F402D7A8C0CCD7CEEFFBD5B3 /* Model3D.cpp */,
+				227128628F29C311417D1C3D /* ND */,
+				2B5CA536EE5CF7CF273B0350 /* paratransformation.cpp */,
+				42DD9B5B6A85D1C01A7CB166 /* Model3D.h */,
+				4652D4966080D8780466B011 /* paratransformation.h */,
+			);
+			name = parametric;
+			sourceTree = "<group>";
+		};
+		87DF60DE337FB58864343E39 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				095C24009B336365EF0B52D0 /* myressources.qrc */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		904E173D328EEC73DBD2B631 /* fparser */ = {
+			isa = PBXGroup;
+			children = (
+				C4AD623B16892C81CD6B33A3 /* fparser.cc */,
+				0AE6E454E5004D7204E5E2DE /* fparser.hh */,
+				C1DD3B7C89E3A39B311DB3D0 /* fpconfig.hh */,
+			);
+			name = fparser;
+			sourceTree = "<group>";
+		};
+		9CD4E8817A6FA2407CDDF9CA /* json_parser */ = {
+			isa = PBXGroup;
+			children = (
+				323B77E21142216BE3EEDC16 /* parisodef.cpp */,
+				34D066EC2397A7EC49AEA0ED /* jiso.cpp */,
+				9F5267AD059A98663D8347AE /* jpar.cpp */,
+				397F1CB4B58D11447B99FB57 /* parisodef.h */,
+				6B329D3BBAAABD247B67BE6C /* jiso.h */,
+				A00221B3AF648DCB772640C2 /* jpar.h */,
+			);
+			name = json_parser;
+			sourceTree = "<group>";
+		};
+		A6ABEE09D843E3D154D0A260 /* screenshot */ = {
+			isa = PBXGroup;
+			children = (
+				D926AB7056D4D34C6AB8E748 /* video.cpp */,
+				68FC3B75B63B4D047B15A994 /* video.h */,
+			);
+			name = screenshot;
+			sourceTree = "<group>";
+		};
+		AF39DD055C3EF8226FBE929D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FDEBE1802C24F4F48ADF7C34 /* QtOpenGL.framework */,
+				BFEE9B409A88DFADD5BFD0BD /* QtWidgets.framework */,
+				69274005F74A5CCE788D4EB8 /* QtGui.framework */,
+				723F90793B2C195E2CCB2233 /* AppKit.framework */,
+				1B2543FCC48E9436F21C4F63 /* Metal.framework */,
+				5AA495E0475F0BEF7805091F /* QtCore.framework */,
+				2B774D8E4178765CE52EAAF5 /* DiskArbitration.framework */,
+				A1A67BEAA744704B29168D39 /* IOKit.framework */,
+				D4B32C2222F82AC56BADEB21 /* OpenGL.framework */,
+				8D9815BDB5BD9F90D2BC05C5 /* AGL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C97D95C75B2EE556FBC8E6AB /* pariso */ = {
+			isa = PBXGroup;
+			children = (
+				8267599CDC32DF5C41EC3E9E /* parametric */,
+				1C022892D49E392671C0B4A5 /* isosurface */,
+				692861FC67E32767F02AB17E /* parisoobject.cpp */,
+				C93A070582E1F31E62978194 /* commun.cpp */,
+				E81573DE89B0E49B6E56E1F2 /* parisoobject.h */,
+				540C86309BA3410FA5E79249 /* commun.h */,
+			);
+			name = pariso;
+			sourceTree = "<group>";
+		};
+		E8C543AB96796ECAA2E65C57 /* mathmod */ = {
+			isa = PBXGroup;
+			children = (
+				9A7641FC2D493FC3000AD058 /* mathmod.entitlements */,
+				9A7641FA2D493EF7000AD058 /* Media.xcassets */,
+				9A7641F12D493E98000AD058 /* Licence.txt */,
+				9A7641F32D493E98000AD058 /* mathmodcollection.js */,
+				9A7641F42D493E98000AD058 /* mathmodcollection_empty.js */,
+				9A7641F22D493E98000AD058 /* mathmodconfig.js */,
+				9A7641F02D493E98000AD058 /* Readme.txt */,
+				9A7641EE2D493DDA000AD058 /* documentation */,
+				2EB56BE3C2D93CDAB0C52E67 /* Sources */,
+				25B08E2869634E9BCBA333A2 /* Generated Sources */,
+				87DF60DE337FB58864343E39 /* Resources */,
+				12E908B8A1C3C07C115504F5 /* Sources [uic] */,
+				74B182DB50CB5611B5C1C297 /* Supporting Files */,
+				AF39DD055C3EF8226FBE929D /* Frameworks */,
+				FE0A091FDBFB3E9C31B7A1BD /* Products */,
+			);
+			name = mathmod;
+			sourceTree = "<group>";
+		};
+		FE0A091FDBFB3E9C31B7A1BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C6E23D16FC7F1740AB9B9894 /* mathmod.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2BD7234D5C84F601ADBBAD40 /* mathmod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "mathmod" */;
+			buildPhases = (
+				F7E50F631C51CD5B5DC0BC43 /* Compile Sources */,
+				D1C883685E82D5676953459A /* Link Binary With Libraries */,
+				30414803F31797EB689AE508 /* Copy Bundle Resources */,
+				99542592E9780B9225F24AA8 /* Embed Frameworks */,
+				9A7641FE2D494290000AD058 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				553E7D05B504BA053AAFC5BE /* PBXTargetDependency */,
+			);
+			name = mathmod;
+			productName = mathmod;
+			productReference = C6E23D16FC7F1740AB9B9894 /* mathmod.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6DB9C3763D02B1415CD9D565 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "mathmod" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E8C543AB96796ECAA2E65C57 /* mathmod */;
+			productRefGroup = FE0A091FDBFB3E9C31B7A1BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2BD7234D5C84F601ADBBAD40 /* mathmod */,
+				4D7D3C4580B6F0AC0713CDB2 /* Qt Preprocess */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30414803F31797EB689AE508 /* Copy Bundle Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A7641FB2D493EF7000AD058 /* Media.xcassets in Copy Bundle Resources */,
+			);
+			name = "Copy Bundle Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5E618435888B9D49F8540165 /* Qt Qmake */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "Qt Qmake";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/abderrahmantaha/Documents/GitHub/mathmod -f mathmod.xcodeproj/qt_makeqmake.mak";
+			showEnvVarsInLog = 0;
+		};
+		7EF0942E79C014DCEC8976BC /* Qt Preprocessors */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				myressources.qrc,
+				ui_modules/drawingoptions.h,
+				ui_modules/about.h,
+				ui_modules/mathmod.h,
+				ui_modules/selectoptions.h,
+				pariso/parametric/Model3D.h,
+				pariso/isosurface/Iso3D.h,
+				screenshot/video.h,
+				ui_modules/sliderparam.h,
+				ui_modules/addparam.h,
+				ui_modules/editor.h,
+				ui_forms/drawingoptions.ui,
+				ui_forms/about.ui,
+				ui_forms/editor.ui,
+				ui_forms/sliderparam.ui,
+				ui_forms/addparam.ui,
+				ui_forms/selectoptions.ui,
+			);
+			name = "Qt Preprocessors";
+			outputPaths = (
+				qrc_myressources.cpp,
+				moc_drawingoptions.cpp,
+				moc_about.cpp,
+				moc_mathmod.cpp,
+				moc_selectoptions.cpp,
+				moc_Model3D.cpp,
+				moc_Iso3D.cpp,
+				moc_video.cpp,
+				moc_sliderparam.cpp,
+				moc_addparam.cpp,
+				moc_editor.cpp,
+				ui_drawingoptions.h,
+				ui_about.h,
+				ui_editor.h,
+				ui_sliderparam.h,
+				ui_addparam.h,
+				ui_selectoptions.h,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/abderrahmantaha/Documents/GitHub/mathmod -f mathmod.xcodeproj/qt_preprocess.mak";
+			showEnvVarsInLog = 0;
+		};
+		9A7641FE2D494290000AD058 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/Users/abderrahmantaha/Desktop/MathMod/macdeployqt $CODESIGNING_FOLDER_PATH -qtdir=/usr/local/Qt-5.15.15\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F7E50F631C51CD5B5DC0BC43 /* Compile Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8A57E5639F54663040EE1C7 /* drawingoptions.cpp in Compile Sources */,
+				2B0301CB2612BC696CF4719E /* about.cpp in Compile Sources */,
+				7A41D9F4F61A2EEB67D88F44 /* ParisoMathObject.cpp in Compile Sources */,
+				93A31FF058C6D06474C0578E /* editor.cpp in Compile Sources */,
+				7A50D78305025FF43CCF80EF /* mathmod.cpp in Compile Sources */,
+				B0F569EB2F0E38350E4D3E73 /* selectoptions.cpp in Compile Sources */,
+				DD14CC4A57A7430FBAD018FD /* fparser.cc in Compile Sources */,
+				5EDAF6E4643D594CA5BF48D7 /* Model3D.cpp in Compile Sources */,
+				32F9B0B135E44722D42F3D06 /* Matrix4D.cpp in Compile Sources */,
+				B63699972E9DC5068EC9B8DE /* Iso3D.cpp in Compile Sources */,
+				E927A5579EC6A0A96BF4D5C8 /* parisoobject.cpp in Compile Sources */,
+				72708F0901187D4B87F8E861 /* main.cpp in Compile Sources */,
+				BEA7CF45A91C2C4F1AC6B691 /* parisodef.cpp in Compile Sources */,
+				F4E1B55D8A0ECE0BE0AF53C4 /* jiso.cpp in Compile Sources */,
+				75AC534F38C851801ADF5E41 /* jpar.cpp in Compile Sources */,
+				C9E1C6C96015601201129142 /* video.cpp in Compile Sources */,
+				E4551A4A290E3483A6B7536C /* parametersoptions.cpp in Compile Sources */,
+				26BD177CAB1B6DD064A4DE15 /* commun.cpp in Compile Sources */,
+				E87E38764186F4AE03AFF63F /* isotransformation.cpp in Compile Sources */,
+				7BEFB8AC0CD557F2A931E839 /* paratransformation.cpp in Compile Sources */,
+				79ED7628B555C31FE9A29146 /* sliderparam.cpp in Compile Sources */,
+				3803816CF2B48E94419E1BD9 /* addparam.cpp in Compile Sources */,
+				A3E632F886F9775EB6033EC3 /* qrc_myressources.cpp in Compile Sources */,
+				AAAF802D8B12A2CFA2081219 /* moc_drawingoptions.cpp in Compile Sources */,
+				13977EAB53CC2AD22D4CE651 /* moc_about.cpp in Compile Sources */,
+				3809D489D432ED3ED8D84F73 /* moc_mathmod.cpp in Compile Sources */,
+				DAAE71EFEEBE6AFF36D64989 /* moc_selectoptions.cpp in Compile Sources */,
+				7C4A03F362980BFAB5DC5335 /* moc_Model3D.cpp in Compile Sources */,
+				1C76BA31B17FAC5FAA41D434 /* moc_Iso3D.cpp in Compile Sources */,
+				1F14E1440F4D219DC1C774C7 /* moc_video.cpp in Compile Sources */,
+				88B27C88EDE1D420501E7F7F /* moc_sliderparam.cpp in Compile Sources */,
+				2AE2357797ED2878EE6460FD /* moc_addparam.cpp in Compile Sources */,
+				EF74B93EF2C38B13E911E82A /* moc_editor.cpp in Compile Sources */,
+			);
+			name = "Compile Sources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		553E7D05B504BA053AAFC5BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D7D3C4580B6F0AC0713CDB2 /* Qt Preprocess */;
+			targetProxy = 9A7641ED2D492D3C000AD058 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		339EE1B2CC4FC24589A0EA95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				ARCHS = (
+					x86_64,
+					arm64,
+				);
+				"ARCHS[sdk=macosx*]" = (
+					x86_64,
+					arm64,
+				);
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 6R6BCB2TZ5;
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"/usr/local/Qt-5.15.15/lib",
+					"/usr/local/Qt-5.15.15/lib",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					.,
+					"/usr/local/Qt-5.15.15/lib/QtOpenGL.framework/Headers",
+					"/usr/local/Qt-5.15.15/lib/QtWidgets.framework/Headers",
+					"/usr/local/Qt-5.15.15/lib/QtGui.framework/Headers",
+					"/usr/local/Qt-5.15.15/lib/QtCore.framework/Headers",
+					.,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/AGL.framework/Headers,
+					.,
+					"/usr/local/Qt-5.15.15/mkspecs/macx-clang",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				LIBRARY_SEARCH_PATHS = (
+					"/usr/local/Qt-5.15.15/lib",
+					/System/Library/Frameworks/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_COMPILER_SUPPORTS_SSE2",
+					"-DQT_COMPILER_SUPPORTS_NEON",
+					"-DQT_OPENGL_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-stdlib=libc++",
+					"-g",
+					"-std=gnu++11",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_COMPILER_SUPPORTS_SSE2",
+					"-DQT_COMPILER_SUPPORTS_NEON",
+					"-DQT_OPENGL_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_LDFLAGS = (
+					"-stdlib=libc++",
+					"-headerpad_max_install_names",
+					"-Wl,-rpath,@executable_path/../Frameworks",
+					"-Wl,-rpath,/usr/local/Qt-5.15.15/lib",
+					"-F/usr/local/Qt-5.15.15/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = mathmod;
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+				SYMROOT = .xcode;
+			};
+			name = Release;
+		};
+		3AA6C32AC930069E80220CF1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				ARCHS = (
+					x86_64,
+					arm64,
+				);
+				"ARCHS[sdk=macosx*]" = (
+					x86_64,
+					arm64,
+				);
+				CC = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 6R6BCB2TZ5;
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"/usr/local/Qt-5.15.15/lib",
+					"/usr/local/Qt-5.15.15/lib",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					.,
+					"/usr/local/Qt-5.15.15/lib/QtOpenGL.framework/Headers",
+					"/usr/local/Qt-5.15.15/lib/QtWidgets.framework/Headers",
+					"/usr/local/Qt-5.15.15/lib/QtGui.framework/Headers",
+					"/usr/local/Qt-5.15.15/lib/QtCore.framework/Headers",
+					.,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework/Headers,
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/AGL.framework/Headers,
+					.,
+					"/usr/local/Qt-5.15.15/mkspecs/macx-clang",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LDPLUSPLUS = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++";
+				LIBRARY_SEARCH_PATHS = (
+					"/usr/local/Qt-5.15.15/lib",
+					/System/Library/Frameworks/,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_COMPILER_SUPPORTS_SSE2",
+					"-DQT_COMPILER_SUPPORTS_NEON",
+					"-DQT_OPENGL_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-stdlib=libc++",
+					"-g",
+					"-std=gnu++11",
+					"-Wall",
+					"-Wextra",
+					"-fPIC",
+					"-DQT_COMPILER_SUPPORTS_SSE2",
+					"-DQT_COMPILER_SUPPORTS_NEON",
+					"-DQT_OPENGL_LIB",
+					"-DQT_WIDGETS_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+				);
+				OTHER_LDFLAGS = (
+					"-stdlib=libc++",
+					"-headerpad_max_install_names",
+					"-Wl,-rpath,@executable_path/../Frameworks",
+					"-Wl,-rpath,/usr/local/Qt-5.15.15/lib",
+					"-F/usr/local/Qt-5.15.15/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = mathmod;
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = _debug;
+				SDKROOT = macosx;
+				SYMROOT = .xcode;
+			};
+			name = Debug;
+		};
+		6666AA5E688052234F6758D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				"ARCHS[sdk=macosx*]" = (
+					x86_64,
+					arm64,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = mathmod.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 12.1;
+				DEVELOPMENT_TEAM = 6R6BCB2TZ5;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_KEY_CFBundleDisplayName = MathMod;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				MARKETING_VERSION = 12.1;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--deep";
+				PRODUCT_BUNDLE_IDENTIFIER = Parisolab.MathMod;
+				PRODUCT_NAME = mathmod;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		77418F46922677BB04ED38DD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
+				"ARCHS[sdk=macosx*]" = (
+					x86_64,
+					arm64,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = mathmod.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 12.1;
+				DEVELOPMENT_TEAM = 6R6BCB2TZ5;
+				ENABLE_BITCODE = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_KEY_CFBundleDisplayName = MathMod;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				MARKETING_VERSION = 12.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = Parisolab.MathMod;
+				PRODUCT_NAME = mathmod;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				QMAKE_FULL_VERSION = 1.0.0;
+				QMAKE_PKGINFO_TYPEINFO = "????";
+				QMAKE_SHORT_VERSION = 1.0;
+				QT_LIBRARY_SUFFIX = _debug;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6CC3B5D2136C7CD6A5CF5A59 /* Build configuration list for PBXNativeTarget "mathmod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77418F46922677BB04ED38DD /* Debug */,
+				6666AA5E688052234F6758D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DAC4C1AA5EDEA1C85E9CA5E6 /* Build configuration list for PBXProject "mathmod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AA6C32AC930069E80220CF1 /* Debug */,
+				339EE1B2CC4FC24589A0EA95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6DB9C3763D02B1415CD9D565 /* Project object */;
+}
