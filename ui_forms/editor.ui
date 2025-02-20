@@ -68,7 +68,6 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionTutorials"/>
     <addaction name="actionAbout_MathMod"/>
    </widget>
    <addaction name="menuFile"/>
@@ -113,12 +112,7 @@
   </action>
   <action name="actionAbout_MathMod">
    <property name="text">
-    <string>About MathMod</string>
-   </property>
-  </action>
-  <action name="actionTutorials">
-   <property name="text">
-    <string>Tutorials</string>
+    <string>MathMod</string>
    </property>
   </action>
   <action name="actionExit">
