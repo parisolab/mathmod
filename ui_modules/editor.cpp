@@ -32,14 +32,6 @@ editor::~editor()
 {
     delete ui;
 }
-void editor::about()
-{
-    QMessageBox::about(this, tr("About Syntax Highlighter"),
-                       tr("<p>The <b>Syntax Highlighter</b> example shows how "
-                          "to perform simple syntax highlighting by subclassing "
-                          "the QSyntaxHighlighter class and describing "
-                          "highlighting rules using regular expressions.</p>"));
-}
 void editor::newFile()
 {
     ui->textEdit->clear();
@@ -116,10 +108,6 @@ void editor::on_actionNew_triggered()
 {
     newFile();
 }
-void editor::on_actionAbout_triggered()
-{
-    about();
-}
 void editor::on_actionSave_triggered()
 {
     save();
@@ -151,6 +139,7 @@ void editor::on_actionCopy_triggered()
 void editor::on_actionAbout_MathMod_triggered()
 {
     ab.show();
+    return;
 }
 void editor::on_actionPaste_triggered()
 {

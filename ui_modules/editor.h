@@ -36,7 +36,6 @@ class editor : public QMainWindow
 public:
     explicit editor(QWidget *parent = nullptr);
     ~editor();
-    void about();
     void newFile();
     void openFile(const QString &);
     void setupEditor();
@@ -47,8 +46,6 @@ private slots:
     void on_actionOpen_triggered();
 
     void on_actionNew_triggered();
-
-    void on_actionAbout_triggered();
 
     void on_actionSave_triggered();
 
