@@ -70,8 +70,7 @@
                     "vmin"
                 ]
             }
-        }
-,
+        },
     {
         "Param3D": {
             "Description ": ["Wentletrap_Shell Parametric surface by Abderrahman Taha 09/02/2025"],
@@ -91,7 +90,6 @@
                 "w1=1",
                 "w2=1",
                 "n=1",
-
                 "a=20",
                 "b=20",
                 "d=1",
