@@ -1,72 +1,47 @@
 {
   "MathModels": [
         {
-            "Param3D": {
-                "Component": [
-                    "Lyria"
-                ],
-                "Const": [
-                    "r=pi/180",
-                    "alpha=83.9",
-                    "beta=-19",
-                    "phi=45",
-                    "mu=0",
-                    "Omega=0",
-                    "P=0*r",
-                    "w1=6",
-                    "w2=20",
-                    "A=50",
-                    "a=40",
-                    "b=14",
-                    "L=4",
-                    "N=8",
-                    "umin=-51",
-                    "umax=9",
-                    "vmin=-9",
-                    "vmax=6"
-                ],
-                "Description ": [
-                    "Lyria Parametric surface by Abderrahman Taha 22/02/2025"
-                ],
-                "Funct": [
-                    "RE=1/sqrt((cos(u)/a)^2+(sin(u)/b)^2)",
-                    "g=if(N=0,0,(2*pi/N)*(v*N/(2*pi)-int(v*N/(2*pi))))",
-                    "k=L*exp(-(2*(u-P*r)/(w1*r))^2)*exp(-(2*g(u,v,t)/(w2*r))^2)",
-                    "R = RE(u,v,t) + k(u,v,t)",
-                    "fx=(A*sin(beta*r)*cos(v)+R(u,v,t)*cos(u+phi*r)*cos(v+Omega*r)-R(u,v,t)*sin(mu*r)*sin(u+phi*r)*sin(v+Omega*r))*exp(v*cot(alpha*r))",
-                    "fy=(-A*sin(beta*r)*sin(v)-R(u,v,t)*cos(u+phi*r)*sin(v+Omega*r)-R(u,v,t)*sin(mu*r)*sin(u+phi*r)*cos(v+Omega*r))*exp(v*cot(alpha*r))",
-                    "fz=(-A*cos(beta*r)+R(u,v,t)*sin(u+phi*r)*cos(mu*r))*exp(v*cot(alpha*r))"
-                ],
-                "Fx": [
-                    "fx(u,v,t)"
-                ],
-                "Fy": [
-                    "fy(u,v,t)"
-                ],
-                "Fz": [
-                    "fz(u,v,t)"
-                ],
-                "Grid": [
-                    "100",
-                    "600"
-                ],
-                "Name": [
-                    "Lyria"
-                ],
-                "Umax": [
-                    "umax*r"
-                ],
-                "Umin": [
-                    "umin*r"
-                ],
-                "Vmax": [
-                    "vmax*pi"
-                ],
-                "Vmin": [
-                    "vmin*pi"
-                ]
-            }
-        },
+        "Param3D": {
+            "Description ": ["Lyria Parametric surface by Abderrahman Taha 22/02/2025"],
+            "Component": ["Lyria"],
+            "Const": [
+                "r=pi/180",
+                "alpha=83.9",
+                "beta=-19",
+                "phi=45",
+                "mu=0",
+                "Omega=0",
+                "P=0",
+                "w1=6",
+                "w2=20",
+                "A=50",
+                "a=40",
+                "b=14",
+                "L=4",
+                "N=8",
+                "umin=-51",
+                "umax=9",
+                "vmin=-9",
+                "vmax=6"],
+            "Funct": [
+                "RE=1/sqrt((cos(u)/a)^2+(sin(u)/b)^2)",
+                "g=if(N=0,0,(2*pi/N)*(v*N/(2*pi)-int(v*N/(2*pi))))",
+                "k=L*exp(-(2*(u-P*r)/(w1*r))^2)*exp(-(2*g(u,v,t)/(w2*r))^2)",
+                "R = RE(u,v,t) + k(u,v,t)",
+                "fx=(A*sin(beta*r)*cos(v)+R(u,v,t)*cos(u+phi*r)*cos(v+Omega*r)-R(u,v,t)*sin(mu*r)*sin(u+phi*r)*sin(v+Omega*r))*exp(v*cot(alpha*r))",
+                "fy=(-A*sin(beta*r)*sin(v)-R(u,v,t)*cos(u+phi*r)*sin(v+Omega*r)-R(u,v,t)*sin(mu*r)*sin(u+phi*r)*cos(v+Omega*r))*exp(v*cot(alpha*r))",
+                "fz=(-A*cos(beta*r)+R(u,v,t)*sin(u+phi*r)*cos(mu*r))*exp(v*cot(alpha*r))"],
+            "Fx": ["fx(u,v,t)"],
+            "Fy": ["fy(u,v,t)"],
+            "Fz": ["fz(u,v,t)"],
+            "Grid": ["100","600"],
+            "Name": ["Lyria"],
+            "Umax": ["umax*r"],
+            "Umin": ["umin*r"],
+            "Vmax": ["vmax*pi"],
+            "Vmin": ["vmin*pi"]
+        }
+    },
     {
         "Param3D": {
             "Description ": ["Wentletrap_Shell Parametric surface by Abderrahman Taha 09/02/2025"],
