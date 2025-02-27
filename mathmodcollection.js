@@ -30,7 +30,7 @@
                 ],
                 "Funct": [
                     "RE=1/sqrt((cos(u)/a)^2+(sin(u)/b)^2)",
-                    "g=if(N=0,0,(2*pi/N)*(v*N/(2*pi)-floor(v*N/(2*pi))))",
+                    "g=if(N=0,0,(2*pi/N)*(v*N/(2*pi)-int(v*N/(2*pi))))",
                     "k=L*exp(-(2*(u-P*r)/(w1*r))^2)*exp(-(2*g(u,v,t)/(w2*r))^2)",
                     "R = RE(u,v,t) + k(u,v,t)",
                     "fx=(A*sin(beta*r)*cos(v)+R(u,v,t)*cos(u+phi*r)*cos(v+Omega*r)-R(u,v,t)*sin(mu*r)*sin(u+phi*r)*sin(v+Omega*r))*exp(v*cot(alpha*r))",
