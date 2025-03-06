@@ -134,7 +134,6 @@ public:
                     uint *);
 
     void InitShowComponent(struct ComponentInfos *);
-    void BuildPar();
     void UpdateThredsNumber(uint);
     void stopcalculations(bool);
     void WorkerThreadCopy(ParWorkerThread *);
