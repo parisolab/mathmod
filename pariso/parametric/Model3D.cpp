@@ -1860,7 +1860,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     }
     return 1;
 }
-void Par3D::run()
+void Par3D::BuildPar()
 {
     ParamBuild(
         &(localScene->ArrayNorVer_localPt),
@@ -1871,7 +1871,11 @@ void Par3D::run()
         &(localScene->PolyIndices_localPtMin),
         &(localScene->NbPolygnNbVertexPtMin),
         &(localScene->NbPolygnNbVertexPtMinSize)
-        );
+    );
+}
+void Par3D::run()
+{
+    BuildPar();
 }
 void Par3D::UpdateThredsNumber(uint NewThreadsNumber)
 {
