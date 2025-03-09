@@ -846,11 +846,14 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-    if (((lst = QObj["Grid"].toArray()).size() > 0) && (lst.size() != NbFxyz))
+    if (((lst = QObj["Grid"].toArray()).size() > 0))
     {
-        scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
-        ErrorMsg();
-        return false;
+        if(lst.size() != NbFxyz)
+        {
+            scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
     }
     // variables
     if (((lst = QObj["Vect"].toArray()).size() > 1))
