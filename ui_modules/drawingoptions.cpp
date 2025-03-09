@@ -854,6 +854,15 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
             ErrorMsg();
             return false;
         }
+        for(int i=0; i<lst.size(); i++)
+        {
+            if(lst[i].toString().toInt() == 0)
+            {
+                scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+                ErrorMsg();
+                return false;
+            }
+        }
     }
     // variables
     if (((lst = QObj["Vect"].toArray()).size() > 1))
