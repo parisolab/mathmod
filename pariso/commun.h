@@ -192,8 +192,8 @@ enum ScriptErrorType
     NULL_GRID_VALUE,
     VECT_DIMENSION_ERROR,
     MEM_OVERFLOW,
-    EMPTY_MANDATORY_FIELD,
-    GRID_NULL_VALUE
+    GRID_NULL_VALUE,
+    EMPTY_MANDATORY_FIELD
 };
 
 static const char *ScriptErrorMessage[] =
@@ -235,8 +235,8 @@ static const char *ScriptErrorMessage[] =
         "GRID_SUPERIOR_TO_GRIDMAX",                 // 33
         "Vect_DIMENSION_ERROR",                     // 34
         "Not enough memory available to complete this operation", // 35
-        "EMPTY_MANDATORY_FIELD",                    // 36
-        "GRID_NULL_VALUE"                           // 37
+        "GRID_NULL_VALUE",                          // 36
+        "EMPTY_MANDATORY_FIELD"                     // 37
 };
 
 struct ComponentInfos
