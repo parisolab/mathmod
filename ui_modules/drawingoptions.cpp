@@ -18,6 +18,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA            *
  ***************************************************************************/
 #include "drawingoptions.h"
+#include "pariso/commun.h"
 #include <qmessagebox.h>
 
 static int IndexcurrentComponent = -1;
@@ -858,7 +859,7 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         {
             if(lst[i].toString().toInt() == 0)
             {
-                scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+                scriptErrorType = GRID_NULL_VALUE;
                 ErrorMsg();
                 return false;
             }
