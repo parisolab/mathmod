@@ -189,10 +189,10 @@ enum ScriptErrorType
     DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW,
     DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW,
     GRID_SUPERIOR_TO_GRIDMAX,
-    NULL_GRID_VALUE,
+    EMPTY_GRID_VALUE,
     VECT_DIMENSION_ERROR,
     MEM_OVERFLOW,
-    GRID_NULL_VALUE,
+    GRID_VALUE_0,
     EMPTY_MANDATORY_FIELD
 };
 
@@ -233,9 +233,10 @@ static const char *ScriptErrorMessage[] =
         "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 31
         "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 32
         "GRID_SUPERIOR_TO_GRIDMAX",                 // 33
+        "EMPTY_GRID_VALUE",
         "Vect_DIMENSION_ERROR",                     // 34
         "Not enough memory available to complete this operation", // 35
-        "GRID_NULL_VALUE",                          // 36
+        "GRID_VALUE_0",                          // 36
         "EMPTY_MANDATORY_FIELD"                     // 37
 };
 

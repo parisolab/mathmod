@@ -857,9 +857,15 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         }
         for(int i=0; i<lst.size(); i++)
         {
+            if(lst[i].toString() == "")
+            {
+                scriptErrorType = EMPTY_GRID_VALUE;
+                ErrorMsg();
+                return false;
+            }
             if(lst[i].toString().toInt() == 0)
             {
-                scriptErrorType = GRID_NULL_VALUE;
+                scriptErrorType = GRID_VALUE_0;
                 ErrorMsg();
                 return false;
             }
