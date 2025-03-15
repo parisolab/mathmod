@@ -1948,7 +1948,6 @@ uint Iso3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                         Alfa += 1;
                     }
                 }
-
                 //***********
                 //Add points:
                 //***********
@@ -2485,9 +2484,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
             } /// End of ( if ( k != nb_depth -1)....
         }
     }
-
-
-
     /// 2) Case i = nb_ligne-1
 
     i = XYZgridMinusOne;
@@ -2995,8 +2991,6 @@ uint Iso3D::PointEdgeComputation(uint isoindex)
     NbPointIsoMap =    NbPointIsoMap_local;
     return 1;
 }
-
-///+++++++++++++++++++++++++++++++++++++++++++++++++++++///
 void Iso3D::SignatureComputation()
 {
     uint I_si, J_si, IJK_si, IPLUSONEJK_si,
