@@ -584,13 +584,19 @@ void MathMod::PutObjectInsideCube()
         LocalScene.ArrayNorVer_localPt[10*(NbVert+12+60+32+id)+9] = AxeArray[3*(id+32)+2];
     }
     uint polynb=0;
+    uint grid=0;
     if(LocalScene.typedrawing == -1)
     {
         uint sz = LocalScene.componentsinfos.ParametricGrid.size();
+
         for (uint p = 0; p < sz; p += 2)
         {
-             polynb += (LocalScene.componentsinfos.ParametricGrid[p]-1) *
+            grid= (LocalScene.componentsinfos.ParametricGrid[p]*LocalScene.componentsinfos.ParametricGrid[p+1]);
+            if(grid!=0)
+                polynb += (LocalScene.componentsinfos.ParametricGrid[p]-1) *
                             (LocalScene.componentsinfos.ParametricGrid[p+1]-1);
+            else
+                polynb +=0;
         }
     }
     else
