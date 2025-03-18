@@ -859,15 +859,9 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
         {
             bool ok=false;
             int val=lst[i].toString().toInt(&ok);
-            if(!ok)
+            if(!ok || val<0)
             {
                 scriptErrorType = INVALID_GRID_VALUE;
-                ErrorMsg();
-                return false;
-            }
-            if(val == 0)
-            {
-                scriptErrorType = GRID_VALUE_0;
                 ErrorMsg();
                 return false;
             }
@@ -978,12 +972,40 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         return false;
     }
     // Start Grid field processing
+    /*
     if ((lst = QObj["Grid"].toArray()).size() > 0 && (lst.size() != 2 * NbFx))
     {
         scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
         ErrorMsg();
         return false;
     }
+    */
+
+    if (((lst = QObj["Grid"].toArray()).size() > 0))
+    {
+        if(lst.size() != 2 * NbFx)
+        {
+            scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
+            ErrorMsg();
+            return false;
+        }
+        for(int i=0; i<lst.size(); i++)
+        {
+            bool ok=false;
+            int val=lst[i].toString().toInt(&ok);
+            if(!ok || val<0)
+            {
+                scriptErrorType = INVALID_GRID_VALUE;
+                ErrorMsg();
+                return false;
+            }
+        }
+    }
+
+
+
+
+
     if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
         scriptErrorType = VECT_DIMENSION_ERROR;
