@@ -2187,11 +2187,9 @@ void  Par3D::ParamBuild(
         masterthread->CurrentIndex = NbVertexTmp;
         // Save Number of Polys and vertex :
         components->ParisoVertex.push_back(NbVertexTmp);
-        uint Nbply = ((Ugrid)*(Vgrid)==0)? 0: (Ugrid)*(Vgrid)-1;
-        components->ParisoVertex.push_back(NbVertexTmp + Nbply);
+        components->ParisoVertex.push_back(NbVertexTmp + (Ugrid)*(Vgrid)  -1);
 
-        Nbply= ((Ugrid-CutU)*(Vgrid-CutV)==0)? 0:(Ugrid  - CutU -1)*(Vgrid - CutV -1);
-        NbTriangleIsoSurfaceTmp     += 2*Nbply;
+        NbTriangleIsoSurfaceTmp     += 2*(Ugrid  - CutU -1)*(Vgrid - CutV -1);
         for(uint nbthreads=0; nbthreads+1< WorkerThreadsNumber; nbthreads++)
         {
             workerthreads[nbthreads].CurrentComponent = fctnb;
@@ -2225,10 +2223,9 @@ void  Par3D::ParamBuild(
         make_PolyIndexMin(NbVertexTmp, componentsPt);
         make_PolyIndexTri(NbVertexTmp);
         components->ParisoTriangle.push_back(6*NextPosition); //save the starting position of this component
-        Nbply= ((Ugrid-CutU)*(Vgrid-CutV)==0)? 0:(Ugrid  - CutU -1)*(Vgrid - CutV -1);
-        components->ParisoTriangle.push_back(2*Nbply); //save the number of Polygones of this component
+        components->ParisoTriangle.push_back(2*(Ugrid  - CutU -1)*(Vgrid - CutV -1)); //save the number of Polygones of this component
 
-        NextPosition   += Nbply;
+        NextPosition   += (Ugrid  - CutU-1)*(Vgrid - CutV-1);
         NbVertexTmp    += (Ugrid)*(Vgrid);
     }
     if(masterthread->activeMorph != 1)
