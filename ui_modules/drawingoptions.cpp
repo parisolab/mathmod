@@ -971,15 +971,6 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-    // Start Grid field processing
-    /*
-    if ((lst = QObj["Grid"].toArray()).size() > 0 && (lst.size() != 2 * NbFx))
-    {
-        scriptErrorType = GRID_NBCOMPONENT_MISMATCH;
-        ErrorMsg();
-        return false;
-    }
-    */
 
     if (((lst = QObj["Grid"].toArray()).size() > 0))
     {
