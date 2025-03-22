@@ -971,7 +971,6 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
         ErrorMsg();
         return false;
     }
-
     if (((lst = QObj["Grid"].toArray()).size() > 0))
     {
         if(lst.size() != 2 * NbFx)
@@ -992,11 +991,6 @@ bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
             }
         }
     }
-
-
-
-
-
     if (((lst = QObj["Vect"].toArray()).size() > 1))
     {
         scriptErrorType = VECT_DIMENSION_ERROR;
