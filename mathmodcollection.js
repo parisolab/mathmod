@@ -6,8 +6,7 @@
             "Name": ["SeaShells_Mathematical_Modeling"],
             "Component": ["SeaShells_Mathematical_Modeling"],
             "Const": ["r=pi/180","alpha=84","beta=-19","phi=45","mu=0","Omega=0","P=0","w1=6","w2=20","A=50","a=40","b=14","L=4","N=8","umin=-51","umax=9","vmin=-9","vmax=6"],
-            "Funct": [
-                "RE=1/sqrt((cos(u)/a)^2+(sin(u)/b)^2)",
+            "Funct": ["RE=1/sqrt((cos(u)/a)^2+(sin(u)/b)^2)",
                 "g=if(N=0,0,(2*pi/N)*(v*N/(2*pi)-int(v*N/(2*pi))))",
                 "k=L*exp(-(2*(u-P*r)/(w1*r))^2)*exp(-(2*g(u,v,t)/(w2*r))^2)",
                 "R = RE(u,v,t) + k(u,v,t)",
