@@ -6321,8 +6321,7 @@
         "Name": ["Star_3"],
         "Component": ["Star"],
         "Const": ["cu=1/10000","cv=1/10000","N=5"],
-        "Funct": [
-          "Thickness= ((sin(15*u)*cos(15*v)))^4 + (sin(2*N*u))",
+        "Funct": ["Thickness= ((sin(15*u)*cos(15*v)))^4 + (sin(2*N*u))",
           "Fx=-cos(u+v)/(sqrt(2)+cos(v-u))",
           "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
           "Fz=sin(u+v)/(sqrt(2)+cos(v-u))",
@@ -7716,7 +7715,7 @@
           "ph = B*pi/10"],
         "Funct": ["fmesh0=-fmesh(x,y,z,(A/10),(B/10),(C/10),(D/10),(E/10)) +(8/100) ",
           "fmesh3= if(atan2(z,sqrt(x*x+y*y))<(9/10), fmesh0(atan2(y,x),(sqrt(x*x+y*y+z*z)-4),atan2(z,sqrt(x*x+y*y)),t), 1)*(atan2(z,sqrt(x*x+y*y))<(9/10))"],
-        "Fxyz": ["  fmesh3(x,y,z,t)"],
+        "Fxyz": ["fmesh3(x,y,z,t)"],
         "Xmax": ["5"],
         "Xmin": ["-5"],
         "Ymax": ["5"],
@@ -8403,7 +8402,7 @@
     {
       "Iso3D": {
         "Description": ["Schwarz P Sphere  by Abderrahman Taha 29/03/2016"],
-        "Name": ["Schwarz P Sphere"],
+        "Name": ["Schwarz_P_Sphere"],
         "Component": ["SchwarzPSphere"],
         "Const": ["M=1",
           "N=10",
@@ -8435,8 +8434,8 @@
     {
         "Param3D": {
             "Description ": ["Multi-sided Torus by Abderrahman Taha (Update) 08/10/2019"],
-            "Name": ["Multi-sidedTorus"],
-            "Component": ["MultiSidedTorus "],
+            "Name": ["Multi_sidedTorus"],
+            "Component": ["MultiSidedTorus"],
             "Const": ["N=10",
                 "R3=3",
                 "R=5",
@@ -8530,7 +8529,7 @@
       "Iso3D": {
         "Description": ["Schwarz P Tori-1.0 by Abderrahman Taha 08/10/2019"],
         "Name": ["SchwarzP_Tori"],
-        "Component": ["Schwarz P Tori"],
+        "Component": ["Schwarz_PTori"],
         "Const": ["M=1","N1=15","N2=15","R1=8","R2=15","H=4"],
         "Funct": ["Iso=cos(x)+cos(y)+cos(z)",
           "R=H*x/(10*sqrt(x*x+y*y+z*z))",
@@ -8585,7 +8584,9 @@
     {
       "Iso3D": {
         "Description": ["Implicit Costa minimal surface by Abderrahman Taha 07/10/2019"],
-         "Name": ["Implicit Costa"],
+        "Name": ["Implicit_Costa"],
+        "Component": ["Schwarz"],
+        "Const": ["X=16","Y=16","Z=18","c=1/100","T=21/100","k1=1","k2=14/10"],
         "Funct": ["Costa=(z*((x^2+y^2)-18-8*sin((-11+abs(z*13/10))/4)-18*exp((-12+abs(z*13/10))/2))-(x^2-y^2)) ",
           "DFx=((Costa(x+c,y,z,t)-Costa(x,y,z,t))/c)",
           "DFy=((Costa(x,y+c,z,t)-Costa(x,y,z,t))/c)",
@@ -8594,8 +8595,6 @@
           "Iso3=Costa(x-T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y-T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z-T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)",
           "Iso2=Costa(x+T*Rapport(DFx(x,y,z,t),DFy(x,y,z,t),DFz(x,y,z,t),t),y+T*Rapport(DFy(x,y,z,t),DFx(x,y,z,t),DFz(x,y,z,t),t),z+T*Rapport(DFz(x,y,z,t),DFx(x,y,z,t),DFy(x,y,z,t),t),t)",
           "TickIsoExterior=(Iso2(x,y,z,t)*Iso3(x,y,z,t)) + exp((4/10)*min((k1*x*x+k1*y*y-100), min(((x+6)^2+k2*y^2+z^2-80),min(((x-6)^2+k2*y^2+z^2-80), min (((y+6)^2+k2*x^2+z^2-80), ((y-6)^2+k2*x^2+z^2-80)))))) -1"],
-        "Component": ["Schwarz"],
-        "Const": ["X=16","Y=16","Z=18","c=1/100","T=21/100","k1=1","k2=14/10"],
         "Fxyz": ["TickIsoExterior(x,y,(8*z/10),t)"],
         "Xmax": [" X"],
         "Xmin": ["-X"],
@@ -8799,7 +8798,7 @@
     {
         "Param3D": {
             "Description ": ["Triaxial weave fabric by Abderrahman Taha 14/10/2019"],
-            "Name": ["Triaxial weave"],
+            "Name": ["Triaxial_weave"],
             "Component": ["Triaxial_00","Triaxial_01","Triaxial_02","Triaxial_03","Triaxial_04","Triaxial_05","Triaxial_06","Triaxial_07","Triaxial_08","Triaxial_09","Triaxial_10","Triaxial_11"],
             "Const": ["c=1/10000","umax=1","umin=-1","vmax=1","vmin=-1","N=4","M=4","H=1/100","k=10/46","teta=pi/3","Th=0","p1=2","p2=1","p3=2"],
             "Funct": ["Thickness=Th*cos(((4*M*(v-vmin)/(vmax-vmin)+1/2)%M)*(pi/2))","Thickness1=H*cos(((4*M*(u-umin)/(umax-umin)+1/2)%M)*(pi/2))","Thickness2=-H*cos(((4*M*(u-umin)/(umax-umin))%M+1/2)*(pi/2))","U=u","V=v","U2=sin(teta)*u+cos(teta)*v","V2=cos(teta)*u-sin(teta)*v","U3=sin(2*teta)*u+cos(2*teta)*v","V3=cos(2*teta)*u-sin(2*teta)*v","Fx=u","Fy=v","Fz=0","DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)","DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)","DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)","DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)","DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)","DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u^2+v^2+t^2)","Gx=Fx(u,v,t)-Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)-Thickness(u,v,t)*R(n2(u,v,t),n1(u,v,t),n3(u,v,t))","Gz=Fz(u,v,t)-Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))","Gx2=Fx(u,v,t)+Thickness1(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy2=Fy(u,v,t)+Thickness1(u,v,t)*R(n2(u,v,t),n1(u,v,t),n3(u,v,t))","Gz2=Fz(u,v,t)+Thickness1(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))","Gx3=Fx(u,v,t)+Thickness2(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy3=Fy(u,v,t)+Thickness2(u,v,t)*R(n2(u,v,t),n1(u,v,t),n3(u,v,t))","Gz3=Fz(u,v,t)+Thickness2(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
