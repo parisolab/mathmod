@@ -599,7 +599,7 @@
     {
         "Param3D": {
             "Description": ["Interlocked Tori (parametric version) by Abderrahman Taha 11/12/2020"],
-            "Name": ["Interlocked_Tori_(parametric_version)"],
+            "Name": ["Interlocked_Tori(parametric_version)"],
             "Component": ["TorisTwist_00","TorisTwist_01"],
             "Const": ["k=0","r=1","N=3","R=2","c=pi/100","du=1/1000000"],
             "Funct": ["Cx=R*cos(u)","Cy=R*sin(u)","Cz=0","C1x=r*if(v<pi-k*c,cos(v+N*u/(2)),cos(k*c+N*u/(2)))","C1y=r*if(v<pi-k*c,sin(v+N*u/(2)),sin(k*c+N*u/(2)))","Rapp=u/sqrt(u*u+v*v+t*t)","C2x=r*if(v<2*pi-k*c,cos(v+N*u/(2)),cos(pi+k*c+N*u/(2)))","C2y=r*if(v<2*pi-k*c,sin(v+N*u/(2)),sin(pi+k*c+N*u/(2)))","dCxu=(Cx(u+du,v,t)-Cx(u,v,t))/du","dCyu=(Cy(u+du,v,t)-Cy(u,v,t))/du","dCzu=(Cz(u+du,v,t)-Cz(u,v,t))/du","axu=Rapp(dCxu(u,v,t),dCyu(u,v,t),dCzu(u,v,t))","ayu=Rapp(dCyu(u,v,t),dCzu(u,v,t),dCxu(u,v,t))","azu=Rapp(dCzu(u,v,t),dCxu(u,v,t),dCyu(u,v,t))","d2Cxu=(axu(u+du,v,t)-axu(u,v,t))/du","d2Cyu=(ayu(u+du,v,t)-ayu(u,v,t))/du","d2Czu=(azu(u+du,v,t)-azu(u,v,t))/du","Ax=Rapp(d2Cxu(u,v,t),d2Cyu(u,v,t),d2Czu(u,v,t))","Ay=Rapp(d2Cyu(u,v,t),d2Czu(u,v,t),d2Cxu(u,v,t))","Az=Rapp(d2Czu(u,v,t),d2Cxu(u,v,t),d2Cyu(u,v,t))","nx=(ayu(u,v,t)*Az(u,v,t)-azu(u,v,t)*Ay(u,v,t))","ny=(azu(u,v,t)*Ax(u,v,t)-axu(u,v,t)*Az(u,v,t))","nz=(axu(u,v,t)*Ay(u,v,t)-ayu(u,v,t)*Ax(u,v,t))","Bx=Rapp(nx(u,v,t),ny(u,v,t),nz(u,v,t))","By=Rapp(ny(u,v,t),nz(u,v,t),nx(u,v,t))","Bz=Rapp(nz(u,v,t),nx(u,v,t),ny(u,v,t))","S1x=Cx(u,v,t)+(C1x(u,v,t)*Bx(u,v,t)+C1y(u,v,t)*Ax(u,v,t))","S1y=Cy(u,v,t)+(C1x(u,v,t)*By(u,v,t)+C1y(u,v,t)*Ay(u,v,t))","S1z=Cz(u,v,t)+(C1x(u,v,t)*Bz(u,v,t)+C1y(u,v,t)*Az(u,v,t))","S2x=Cx(u,v,t)+(C2x(u,v,t)*Bx(u,v,t)+C2y(u,v,t)*Ax(u,v,t))","S2y=Cy(u,v,t)+(C2x(u,v,t)*By(u,v,t)+C2y(u,v,t)*Ay(u,v,t))","S2z=Cz(u,v,t)+(C2x(u,v,t)*Bz(u,v,t)+C2y(u,v,t)*Az(u,v,t))"],
@@ -749,7 +749,7 @@
         "Param3D": {
             "Description ": ["Planar Enneper Parametric surface by Abderrahman Taha 01/12/2020"],
             "Name": ["Planar_Enneper"],
-            "Component": ["Planar Enneper"],
+            "Component": ["Planar_Enneper"],
             "Const": ["c=1/10000","ki=6","k=11","Lxy=70","Lz=10","umax=0","umin=0"],
             "Funct": ["Fx=cos(v)/(u)+u^(2*k-1)*cos((2*k-1)*v)/Lxy","Fy=-sin(v)/(u)+u^(2*k-1)*sin(-(2*k-1)*v)/Lxy","Fz=u^(k)*cos((k-1)*v)/Lz"],
             "Fx": ["Fx(u,v,t)"],
@@ -781,6 +781,7 @@
     {
         "Param3D": {
             "Description": ["Viviani Curve by Abderrahman Taha 22/11/2020"],
+            "Name": ["Viviani_Curve"],
             "Component": ["VivianiCurve","Sphere","Cylinder"],
             "Const": ["du=1/1000000","r=20","R=3"],
             "Funct": ["Cylinderx=(R/2)*cos(v)+R/2",
@@ -820,7 +821,6 @@
             "Fy": ["Sy(u,v,t)","Spherey(u,v,t)","Cylindery(u,v,t)"],
             "Fz": ["Sz(u,v,t)","Spherez(u,v,t)","Cylinderz(u,v,t)"],
             "Grid": ["200","20","60","60","60","60"],
-            "Name": ["Viviani_Curve"],
             "Umax": ["2*pi","2*pi/4","3*R/2"],
             "Umin": ["0","-pi/2","-3*R/2"],
             "Vmax": ["2*pi","2*pi","2*pi"],
@@ -904,13 +904,13 @@
         "ParIso": [
             {
                 "Param3D": {"Description": ["Blobby Torus by Abderrahman Taha 19/05/2020"],
+                        "Name": ["Blobby_Torus"],
                         "Component": ["BlobbyTorus"],
                         "Funct": ["G1=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*cos(v)","G2=(8+(sin(2*(u-v+t+sin(v-u)))+3)*cos(u))*sin(v)","G3=((sin(2*(u-v+t+sin(v-u)))+3)*sin(u))"],
                         "Fx": ["-G1(u,v,t)"],
                         "Fy": ["G2(u,v,t)"],
                         "Fz": ["G3(u,v,t)-10"],
                         "Grid": ["100","200"],
-                        "Name": ["Blobby_Torus"],
                         "Umax": ["2*pi"],
                         "Umin": ["0"],
                         "Vmax": ["2*pi"],
@@ -927,10 +927,10 @@
             },
             {
                 "Iso3D": {"Description": ["Models Intersection by Abderrahman Taha 04/11/2019"],
+                        "Name": ["Models_Intersection"],
                         "Cnd": ["(x-y-(3/2)*z<0)",""],
                         "Component": ["Schwarz","Plan"],
                         "Fxyz": ["cos(x-4*sin(t*pi))+cos(y)+cos(z)","x-y-(3/2)*z-(1/100)"],
-                        "Name": ["Models_Intersection"],
                         "Xmax": ["4+4*sin(t*pi)","6"],
                         "Xmin": ["-4+4*sin(t*pi)","-6"],
                         "Ymax": ["4","6"],
@@ -1185,62 +1185,62 @@
     },
     {
         "Param3D": {
-        "Description": ["Basket by Abderrahman Taha 11/10/2018"],
-        "Name": ["Basket"],
-        "Component": ["Basket"],
-        "Const": ["d=(33/1000)","k=33","umin=0","umax=2*pi","vmin=0","vmax=2*pi","du=1/10000","dv=1/10000"],
-        "Funct": ["Fx=(u/4)*sin(k*u)+v","Fy=(u/4)*cos(k*u)+v","Fz=exp((u^(185/100))/55)+v","Rapp=u/sqrt(u*u+v*v+t*t)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","F2x=Fx(u,(0),t)","F2y=Fy(u,(0),t)","F2z=Fz(u,(0),t)","DF2xu=DFxu(u,(0),t)","DF2yu=DFyu(u,(0),t)","DF2zu=DFzu(u,(0),t)","DF2xu2=n1(u,(0),t)","DF2yu2=n2(u,(0),t)","DF2zu2=n3(u,(0),t)","Nxu=Rapp(DF2xu2(u,v,t),DF2yu2(u,v,t),DF2zu2(u,v,t))","Nyu=Rapp(DF2yu2(u,v,t),DF2xu2(u,v,t),DF2zu2(u,v,t))","Nzu=Rapp(DF2zu2(u,v,t),DF2yu2(u,v,t),DF2xu2(u,v,t))","Binxu=(DF2yu(u,v,t)*Nzu(u,v,t)-DF2zu(u,v,t)*Nyu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binyu=(DF2zu(u,v,t)*Nxu(u,v,t)-DF2xu(u,v,t)*Nzu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binzu=(DF2xu(u,v,t)*Nyu(u,v,t)-DF2yu(u,v,t)*Nxu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Tx=F2x(u,v,t)+d*(Nxu(u,v,t)*cos(v)+Binxu(u,v,t)*sin(v))","Ty=F2y(u,v,t)+d*(Nyu(u,v,t)*cos(v)+Binyu(u,v,t)*sin(v))","Tz=F2z(u,v,t)+d*(Nzu(u,v,t)*cos(v)+Binzu(u,v,t)*sin(v))"],
-        "Fx": ["Tx(u,v,t)"],
-        "Fy": ["Ty(u,v,t)"],
-        "Fz": ["Tz(u,v,t)"],
-        "Grid": ["40000","20"],
-        "Umax": ["umax"],
-        "Umin": ["umin"],
-        "Vmax": ["vmax"],
-        "Vmin": ["vmin"]
+            "Description": ["Basket by Abderrahman Taha 11/10/2018"],
+            "Name": ["Basket"],
+            "Component": ["Basket"],
+            "Const": ["d=(33/1000)","k=33","umin=0","umax=2*pi","vmin=0","vmax=2*pi","du=1/10000","dv=1/10000"],
+            "Funct": ["Fx=(u/4)*sin(k*u)+v","Fy=(u/4)*cos(k*u)+v","Fz=exp((u^(185/100))/55)+v","Rapp=u/sqrt(u*u+v*v+t*t)","DFxu=((Fx(u+du,v,t)-Fx(u,v,t))/du)","DFxv=((Fx(u,v+dv,t)-Fx(u,v,t))/dv)","DFyu=((Fy(u+du,v,t)-Fy(u,v,t))/du)","DFyv=((Fy(u,v+dv,t)-Fy(u,v,t))/dv)","DFzu=((Fz(u+du,v,t)-Fz(u,v,t))/du)","DFzv=((Fz(u,v+dv,t)-Fz(u,v,t))/dv)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","F2x=Fx(u,(0),t)","F2y=Fy(u,(0),t)","F2z=Fz(u,(0),t)","DF2xu=DFxu(u,(0),t)","DF2yu=DFyu(u,(0),t)","DF2zu=DFzu(u,(0),t)","DF2xu2=n1(u,(0),t)","DF2yu2=n2(u,(0),t)","DF2zu2=n3(u,(0),t)","Nxu=Rapp(DF2xu2(u,v,t),DF2yu2(u,v,t),DF2zu2(u,v,t))","Nyu=Rapp(DF2yu2(u,v,t),DF2xu2(u,v,t),DF2zu2(u,v,t))","Nzu=Rapp(DF2zu2(u,v,t),DF2yu2(u,v,t),DF2xu2(u,v,t))","Binxu=(DF2yu(u,v,t)*Nzu(u,v,t)-DF2zu(u,v,t)*Nyu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binyu=(DF2zu(u,v,t)*Nxu(u,v,t)-DF2xu(u,v,t)*Nzu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Binzu=(DF2xu(u,v,t)*Nyu(u,v,t)-DF2yu(u,v,t)*Nxu(u,v,t))/sqrt(DF2xu(u,v,t)^2+DF2yu(u,v,t)^2+DF2zu(u,v,t)^2)","Tx=F2x(u,v,t)+d*(Nxu(u,v,t)*cos(v)+Binxu(u,v,t)*sin(v))","Ty=F2y(u,v,t)+d*(Nyu(u,v,t)*cos(v)+Binyu(u,v,t)*sin(v))","Tz=F2z(u,v,t)+d*(Nzu(u,v,t)*cos(v)+Binzu(u,v,t)*sin(v))"],
+            "Fx": ["Tx(u,v,t)"],
+            "Fy": ["Ty(u,v,t)"],
+            "Fz": ["Tz(u,v,t)"],
+            "Grid": ["40000","20"],
+            "Umax": ["umax"],
+            "Umin": ["umin"],
+            "Vmax": ["vmax"],
+            "Vmin": ["vmin"]
         },
-        "Texture": {
-        "Colors": ["R=(20000*(3*(x^2+y^2)^4-6*x*x*y*y))%(4/10) +(46/100)","G=(100000*((x^2+y^2)-7*x*x*y*y))%(65/100)","B= (20000*((x^2+y^2)^3-10*x*x*y*y))%(2/10)+(1/10)","T=1"],
-        "Name": "Trefoil",
-        "Noise": ""
-        }
+            "Texture": {
+                "Colors": ["R=(20000*(3*(x^2+y^2)^4-6*x*x*y*y))%(4/10) +(46/100)","G=(100000*((x^2+y^2)-7*x*x*y*y))%(65/100)","B= (20000*((x^2+y^2)^3-10*x*x*y*y))%(2/10)+(1/10)","T=1"],
+                "Name": "Trefoil",
+                "Noise": ""
+            }
     },
     {
-         "Param3D": {
-         "Description ": ["Spiky Klein by Abderrahman Taha 19/08/2018"],
-         "Name": ["Spiky Klein"],
-         "Component": ["SpikyKlein"],
-         "Const": ["c=1/1000",
-         "N=5",
-         "A=35/10",
-         "B=2",
-         "C=3",
-         "D=3"],
-         "Funct": ["th = (3/10)* ((abs(sin(11*u) * cos(11*v)))^19+(1/10)*((sin(2*N*u))))",
-         "Fx= if(v<2*pi, (A-(A-1) * cos(v)) * cos(u), if(v<3*pi, - B + ( B+cos(u))*cos(v),- B + B *cos(v)-cos(u)))",
-         "Fy= if(v<2*pi,(A - (A-1)*cos(v))*sin(u), sin(u))",
-         "Fz= if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,(( D -1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
-         "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
-         "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
-         "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
-         "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
-         "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
-         "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
-         "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-         "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-         "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-         "Rapp= u/sqrt(u*u+v*v+t*t)",
-         "Gx= Fx(u,v,t)+th(u,v-3*t,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-         "Gy= Fy(u,v,t)+th(u,v-3*t,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
-         "Gz= Fz(u,v,t)+th(u,v-3*t,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
-         "Fx": ["Gx(u,v,t)"],
-         "Fy": ["Gy(u,v,t)"],
-         "Fz": ["Gz(u,v,t)"],
-         "Umax": ["2*pi"],
-         "Umin": ["0"],
-         "Vmax": ["4*pi"],
-         "Vmin": ["0"]
-         }
+        "Param3D": {
+             "Description ": ["Spiky Klein by Abderrahman Taha 19/08/2018"],
+             "Name": ["Spiky Klein"],
+             "Component": ["SpikyKlein"],
+             "Const": ["c=1/1000",
+             "N=5",
+             "A=35/10",
+             "B=2",
+             "C=3",
+             "D=3"],
+             "Funct": ["th = (3/10)* ((abs(sin(11*u) * cos(11*v)))^19+(1/10)*((sin(2*N*u))))",
+             "Fx= if(v<2*pi, (A-(A-1) * cos(v)) * cos(u), if(v<3*pi, - B + ( B+cos(u))*cos(v),- B + B *cos(v)-cos(u)))",
+             "Fy= if(v<2*pi,(A - (A-1)*cos(v))*sin(u), sin(u))",
+             "Fz= if(v<pi, -C*sin(v), if(v<2*pi, D*v-D*pi, if(v<3*pi,(( D -1)+cos(u))*sin(v)+D*pi,-D*v+D*4*pi)))",
+             "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
+             "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
+             "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
+             "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
+             "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
+             "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
+             "n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
+             "n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
+             "n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
+             "Rapp= u/sqrt(u*u+v*v+t*t)",
+             "Gx= Fx(u,v,t)+th(u,v-3*t,t)*Rapp(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
+             "Gy= Fy(u,v,t)+th(u,v-3*t,t)*Rapp(n2(u,v,t),n1(u,v,t),n3(u,v,t))",
+             "Gz= Fz(u,v,t)+th(u,v-3*t,t)*Rapp(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
+             "Fx": ["Gx(u,v,t)"],
+             "Fy": ["Gy(u,v,t)"],
+             "Fz": ["Gz(u,v,t)"],
+             "Umax": ["2*pi"],
+             "Umin": ["0"],
+             "Vmax": ["4*pi"],
+             "Vmin": ["0"]
+        }
     },
     {
         "Iso3D": {
@@ -1279,26 +1279,27 @@
             "Umin": ["umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin","umin"],
             "Vmax": ["vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax","vmax"],
             "Vmin": ["vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin","vmin"]
-        },    "Texture": {
+        },
+        "Texture": {
             "Colors": ["R=7/10","G=7/10","B=7/10","T=1"],
             "Name": "Lines",
             "Noise": ""
         }
     },
     {
-      "Iso3D": {
-        "Description": ["(2,5)-Torusknoten by Stephan Klaus 03/09/2018"],
-        "Component": ["Torusknoten"],
-        "Const": ["a=22/100","b=2/10","N=10"],
-        "Fxyz": ["x^18+9*x^16*y^2+36*x^14*y^4+84*x^12*y^6+126*x^10*y^8+126*x^8*y^10+84*x^6*y^12+36*x^4*y^14+9*x^2*y^16+y^18+4*x^16*z^2+32*x^14*y^2*z^2+112*x^12*y^4*z^2+224*x^10*y^6*z^2+280*x^8*y^8*z^2+224*x^6*y^10*z^2+112*x^4*y^12*z^2+32*x^2*y^14*z^2+4*y^16*z^2+6*x^14*z^4+42*x^12*y^2*z^4+126*x^10*y^4*z^4+210*x^8*y^6*z^4+210*x^6*y^8*z^4+126*x^4*y^10*z^4+42*x^2*y^12*z^4+6*y^14*z^4+4*x^12*z^6+24*x^10*y^2*z^6+60*x^8*y^4*z^6+80*x^6*y^6*z^6+60*x^4*y^8*z^6+24*x^2*y^10*z^6+4*y^12*z^6+x^10*z^8+5*x^8*y^2*z^8+10*x^6*y^4*z^8+10*x^4*y^6*z^8+5*x^2*y^8*z^8+y^10*z^8-40*x^14*y*z*a^2-120*x^12*y^3*z*a^2-8*x^10*y^5*z*a^2+360*x^8*y^7*z*a^2+520*x^6*y^9*z*a^2+280*x^4*y^11*z*a^2+40*x^2*y^13*z*a^2-8*y^15*z*a^2-80*x^12*y*z^3*a^2-160*x^10*y^3*z^3*a^2+144*x^8*y^5*z^3*a^2+576*x^6*y^7*z^3*a^2+464*x^4*y^9*z^3*a^2+96*x^2*y^11*z^3*a^2-16*y^13*z^3*a^2-40*x^10*y*z^5*a^2-40*x^8*y^3*z^5*a^2+112*x^6*y^5*z^5*a^2+176*x^4*y^7*z^5*a^2+56*x^2*y^9*z^5*a^2-8*y^11*z^5*a^2-2*x^14*a^4+86*x^12*y^2*a^4-242*x^10*y^4*a^4-330*x^8*y^6*a^4+330*x^6*y^8*a^4+242*x^4*y^10*a^4-86*x^2*y^12*a^4+2*y^14*a^4+12*x^12*z^2*a^4+272*x^10*y^2*z^2*a^4-420*x^8*y^4*z^2*a^4+320*x^6*y^6*z^2*a^4+900*x^4*y^8*z^2*a^4-80*x^2*y^10*z^2*a^4+20*y^12*z^2*a^4-2*x^10*z^4*a^4+90*x^8*y^2*z^4*a^4-420*x^6*y^4*z^4*a^4+420*x^4*y^6*z^4*a^4-90*x^2*y^8*z^4*a^4+2*y^10*z^4*a^4-40*x^10*y*z*a^6-40*x^8*y^3*z*a^6+112*x^6*y^5*z*a^6+176*x^4*y^7*z*a^6+56*x^2*y^9*z*a^6-8*y^11*z*a^6+x^10*a^8+5*x^8*y^2*a^8+10*x^6*y^4*a^8+10*x^4*y^6*a^8+5*x^2*y^8*a^8+y^10*a^8-4*x^16*b^2-32*x^14*y^2*b^2-112*x^12*y^4*b^2-224*x^10*y^6*b^2-280*x^8*y^8*b^2-224*x^6*y^10*b^2-112*x^4*y^12*b^2-32*x^2*y^14*b^2-4*y^16*b^2-12*x^14*z^2*b^2-84*x^12*y^2*z^2*b^2-252*x^10*y^4*z^2*b^2-420*x^8*y^6*z^2*b^2-420*x^6*y^8*z^2*b^2-252*x^4*y^10*z^2*b^2-84*x^2*y^12*z^2*b^2-12*y^14*z^2*b^2-12*x^12*z^4*b^2-72*x^10*y^2*z^4*b^2-180*x^8*y^4*z^4*b^2-240*x^6*y^6*z^4*b^2-180*x^4*y^8*z^4*b^2-72*x^2*y^10*z^4*b^2-12*y^12*z^4*b^2-4*x^10*z^6*b^2-20*x^8*y^2*z^6*b^2-40*x^6*y^4*z^6*b^2-40*x^4*y^6*z^6*b^2-20*x^2*y^8*z^6*b^2-4*y^10*z^6*b^2-4*x^14*a^2*b^2-28*x^12*y^2*a^2*b^2-84*x^10*y^4*a^2*b^2-140*x^8*y^6*a^2*b^2-140*x^6*y^8*a^2*b^2-84*x^4*y^10*a^2*b^2-28*x^2*y^12*a^2*b^2-4*y^14*a^2*b^2+80*x^12*y*z*a^2*b^2+160*x^10*y^3*z*a^2*b^2-144*x^8*y^5*z*a^2*b^2-576*x^6*y^7*z*a^2*b^2-464*x^4*y^9*z*a^2*b^2-96*x^2*y^11*z*a^2*b^2+16*y^13*z*a^2*b^2-8*x^12*z^2*a^2*b^2-48*x^10*y^2*z^2*a^2*b^2-120*x^8*y^4*z^2*a^2*b^2-160*x^6*y^6*z^2*a^2*b^2-120*x^4*y^8*z^2*a^2*b^2-48*x^2*y^10*z^2*a^2*b^2-8*y^12*z^2*a^2*b^2+80*x^10*y*z^3*a^2*b^2+80*x^8*y^3*z^3*a^2*b^2-224*x^6*y^5*z^3*a^2*b^2-352*x^4*y^7*z^3*a^2*b^2-112*x^2*y^9*z^3*a^2*b^2+16*y^11*z^3*a^2*b^2-4*x^10*z^4*a^2*b^2-20*x^8*y^2*z^4*a^2*b^2-40*x^6*y^4*z^4*a^2*b^2-40*x^4*y^6*z^4*a^2*b^2-20*x^2*y^8*z^4*a^2*b^2-4*y^10*z^4*a^2*b^2-4*x^12*a^4*b^2-24*x^10*y^2*a^4*b^2-60*x^8*y^4*a^4*b^2-80*x^6*y^6*a^4*b^2-60*x^4*y^8*a^4*b^2-24*x^2*y^10*a^4*b^2-4*y^12*a^4*b^2+80*x^10*y*z*a^4*b^2+80*x^8*y^3*z*a^4*b^2-224*x^6*y^5*z*a^4*b^2-352*x^4*y^7*z*a^4*b^2-112*x^2*y^9*z*a^4*b^2+16*y^11*z*a^4*b^2-4*x^10*z^2*a^4*b^2-20*x^8*y^2*z^2*a^4*b^2-40*x^6*y^4*z^2*a^4*b^2-40*x^4*y^6*z^2*a^4*b^2-20*x^2*y^8*z^2*a^4*b^2-4*y^10*z^2*a^4*b^2-4*x^10*a^6*b^2-20*x^8*y^2*a^6*b^2-40*x^6*y^4*a^6*b^2-40*x^4*y^6*a^6*b^2-20*x^2*y^8*a^6*b^2-4*y^10*a^6*b^2+6*x^14*b^4+42*x^12*y^2*b^4+126*x^10*y^4*b^4+210*x^8*y^6*b^4+210*x^6*y^8*b^4+126*x^4*y^10*b^4+42*x^2*y^12*b^4+6*y^14*b^4+12*x^12*z^2*b^4+72*x^10*y^2*z^2*b^4+180*x^8*y^4*z^2*b^4+240*x^6*y^6*z^2*b^4+180*x^4*y^8*z^2*b^4+72*x^2*y^10*z^2*b^4+12*y^12*z^2*b^4+6*x^10*z^4*b^4+30*x^8*y^2*z^4*b^4+60*x^6*y^4*z^4*b^4+60*x^4*y^6*z^4*b^4+30*x^2*y^8*z^4*b^4+6*y^10*z^4*b^4+8*x^12*a^2*b^4+48*x^10*y^2*a^2*b^4+120*x^8*y^4*a^2*b^4+160*x^6*y^6*a^2*b^4+120*x^4*y^8*a^2*b^4+48*x^2*y^10*a^2*b^4+8*y^12*a^2*b^4-40*x^10*y*z*a^2*b^4-40*x^8*y^3*z*a^2*b^4+112*x^6*y^5*z*a^2*b^4+176*x^4*y^7*z*a^2*b^4+56*x^2*y^9*z*a^2*b^4-8*y^11*z*a^2*b^4+8*x^10*z^2*a^2*b^4+40*x^8*y^2*z^2*a^2*b^4+80*x^6*y^4*z^2*a^2*b^4+80*x^4*y^6*z^2*a^2*b^4+40*x^2*y^8*z^2*a^2*b^4+8*y^10*z^2*a^2*b^4+6*x^10*a^4*b^4+30*x^8*y^2*a^4*b^4+60*x^6*y^4*a^4*b^4+60*x^4*y^6*a^4*b^4+30*x^2*y^8*a^4*b^4+6*y^10*a^4*b^4-4*x^12*b^6-24*x^10*y^2*b^6-60*x^8*y^4*b^6-80*x^6*y^6*b^6-60*x^4*y^8*b^6-24*x^2*y^10*b^6-4*y^12*b^6-4*x^10*z^2*b^6-20*x^8*y^2*z^2*b^6-40*x^6*y^4*z^2*b^6-40*x^4*y^6*z^2*b^6-20*x^2*y^8*z^2*b^6-4*y^10*z^2*b^6-4*x^10*a^2*b^6-20*x^8*y^2*a^2*b^6-40*x^6*y^4*a^2*b^6-40*x^4*y^6*a^2*b^6-20*x^2*y^8*a^2*b^6-4*y^10*a^2*b^6+x^10*b^8+5*x^8*y^2*b^8+10*x^6*y^4*b^8+10*x^4*y^6*b^8+5*x^2*y^8*b^8+y^10*b^8-8*x^15*a^2+40*x^13*y^2*a^2+280*x^11*y^4*a^2+520*x^9*y^6*a^2+360*x^7*y^8*a^2-8*x^5*y^10*a^2-120*x^3*y^12*a^2-40*x*y^14*a^2+16*x^13*z^2*a^2-96*x^11*y^2*z^2*a^2-464*x^9*y^4*z^2*a^2-576*x^7*y^6*z^2*a^2-144*x^5*y^8*z^2*a^2+160*x^3*y^10*z^2*a^2+80*x*y^12*z^2*a^2+24*x^11*z^4*a^2-168*x^9*y^2*z^4*a^2-528*x^7*y^4*z^4*a^2-336*x^5*y^6*z^4*a^2+120*x^3*y^8*z^4*a^2+120*x*y^10*z^4*a^2-80*x^11*y*z*a^4+880*x^9*y^3*z*a^4-1056*x^7*y^5*z*a^4-1056*x^5*y^7*z*a^4+880*x^3*y^9*z*a^4-80*x*y^11*z*a^4-80*x^9*y*z^3*a^4+960*x^7*y^3*z^3*a^4-2016*x^5*y^5*z^3*a^4+960*x^3*y^7*z^3*a^4-80*x*y^9*z^3*a^4+8*x^11*a^6-56*x^9*y^2*a^6-176*x^7*y^4*a^6-112*x^5*y^6*a^6+40*x^3*y^8*a^6+40*x*y^10*a^6-32*x^11*z^2*a^2*b^2+224*x^9*y^2*z^2*a^2*b^2+704*x^7*y^4*z^2*a^2*b^2+448*x^5*y^6*z^2*a^2*b^2-160*x^3*y^8*z^2*a^2*b^2-160*x*y^10*z^2*a^2*b^2-16*x^11*a^4*b^2+112*x^9*y^2*a^4*b^2+352*x^7*y^4*a^4*b^2+224*x^5*y^6*a^4*b^2-80*x^3*y^8*a^4*b^2-80*x*y^10*a^4*b^2+8*x^11*a^2*b^4-56*x^9*y^2*a^2*b^4-176*x^7*y^4*a^2*b^4-112*x^5*y^6*a^2*b^4+40*x^3*y^8*a^2*b^4+40*x*y^10*a^2*b^4-4*x^16-32*x^14*y^2-112*x^12*y^4-224*x^10*y^6-280*x^8*y^8-224*x^6*y^10-112*x^4*y^12-32*x^2*y^14-4*y^16-4*x^14*z^2-28*x^12*y^2*z^2-84*x^10*y^4*z^2-140*x^8*y^6*z^2-140*x^6*y^8*z^2-84*x^4*y^10*z^2-28*x^2*y^12*z^2-4*y^14*z^2+4*x^12*z^4+24*x^10*y^2*z^4+60*x^8*y^4*z^4+80*x^6*y^6*z^4+60*x^4*y^8*z^4+24*x^2*y^10*z^4+4*y^12*z^4+4*x^10*z^6+20*x^8*y^2*z^6+40*x^6*y^4*z^6+40*x^4*y^6*z^6+20*x^2*y^8*z^6+4*y^10*z^6-80*x^12*y*z*a^2-160*x^10*y^3*z*a^2+144*x^8*y^5*z*a^2+576*x^6*y^7*z*a^2+464*x^4*y^9*z*a^2+96*x^2*y^11*z*a^2-16*y^13*z*a^2+80*x^10*y*z^3*a^2+80*x^8*y^3*z^3*a^2-224*x^6*y^5*z^3*a^2-352*x^4*y^7*z^3*a^2-112*x^2*y^9*z^3*a^2+16*y^11*z^3*a^2+20*x^12*a^4-80*x^10*y^2*a^4+900*x^8*y^4*a^4+320*x^6*y^6*a^4-420*x^4*y^8*a^4+272*x^2*y^10*a^4+12*y^12*a^4+12*x^10*z^2*a^4-540*x^8*y^2*z^2*a^4+2520*x^6*y^4*z^2*a^4-2520*x^4*y^6*z^2*a^4+540*x^2*y^8*z^2*a^4-12*y^10*z^2*a^4+4*x^14*b^2+28*x^12*y^2*b^2+84*x^10*y^4*b^2+140*x^8*y^6*b^2+140*x^6*y^8*b^2+84*x^4*y^10*b^2+28*x^2*y^12*b^2+4*y^14*b^2-8*x^12*z^2*b^2-48*x^10*y^2*z^2*b^2-120*x^8*y^4*z^2*b^2-160*x^6*y^6*z^2*b^2-120*x^4*y^8*z^2*b^2-48*x^2*y^10*z^2*b^2-8*y^12*z^2*b^2-12*x^10*z^4*b^2-60*x^8*y^2*z^4*b^2-120*x^6*y^4*z^4*b^2-120*x^4*y^6*z^4*b^2-60*x^2*y^8*z^4*b^2-12*y^10*z^4*b^2-24*x^12*a^2*b^2-144*x^10*y^2*a^2*b^2-360*x^8*y^4*a^2*b^2-480*x^6*y^6*a^2*b^2-360*x^4*y^8*a^2*b^2-144*x^2*y^10*a^2*b^2-24*y^12*a^2*b^2-80*x^10*y*z*a^2*b^2-80*x^8*y^3*z*a^2*b^2+224*x^6*y^5*z*a^2*b^2+352*x^4*y^7*z*a^2*b^2+112*x^2*y^9*z*a^2*b^2-16*y^11*z*a^2*b^2-8*x^10*z^2*a^2*b^2-40*x^8*y^2*z^2*a^2*b^2-80*x^6*y^4*z^2*a^2*b^2-80*x^4*y^6*z^2*a^2*b^2-40*x^2*y^8*z^2*a^2*b^2-8*y^10*z^2*a^2*b^2-4*x^10*a^4*b^2-20*x^8*y^2*a^4*b^2-40*x^6*y^4*a^4*b^2-40*x^4*y^6*a^4*b^2-20*x^2*y^8*a^4*b^2-4*y^10*a^4*b^2+4*x^12*b^4+24*x^10*y^2*b^4+60*x^8*y^4*b^4+80*x^6*y^6*b^4+60*x^4*y^8*b^4+24*x^2*y^10*b^4+4*y^12*b^4+12*x^10*z^2*b^4+60*x^8*y^2*z^2*b^4+120*x^6*y^4*z^2*b^4+120*x^4*y^6*z^2*b^4+60*x^2*y^8*z^2*b^4+12*y^10*z^2*b^4+8*x^10*a^2*b^4+40*x^8*y^2*a^2*b^4+80*x^6*y^4*a^2*b^4+80*x^4*y^6*a^2*b^4+40*x^2*y^8*a^2*b^4+8*y^10*a^2*b^4-4*x^10*b^6-20*x^8*y^2*b^6-40*x^6*y^4*b^6-40*x^4*y^6*b^6-20*x^2*y^8*b^6-4*y^10*b^6+16*x^13*a^2-96*x^11*y^2*a^2-464*x^9*y^4*a^2-576*x^7*y^6*a^2-144*x^5*y^8*a^2+160*x^3*y^10*a^2+80*x*y^12*a^2+16*x^11*z^2*a^2-112*x^9*y^2*z^2*a^2-352*x^7*y^4*z^2*a^2-224*x^5*y^6*z^2*a^2+80*x^3*y^8*z^2*a^2+80*x*y^10*z^2*a^2+80*x^9*y*z*a^4-960*x^7*y^3*z*a^4+2016*x^5*y^5*z*a^4-960*x^3*y^7*z*a^4+80*x*y^9*z*a^4+6*x^14+42*x^12*y^2+126*x^10*y^4+210*x^8*y^6+210*x^6*y^8+126*x^4*y^10+42*x^2*y^12+6*y^14-4*x^12*z^2-24*x^10*y^2*z^2-60*x^8*y^4*z^2-80*x^6*y^6*z^2-60*x^4*y^8*z^2-24*x^2*y^10*z^2-4*y^12*z^2+6*x^10*z^4+30*x^8*y^2*z^4+60*x^6*y^4*z^4+60*x^4*y^6*z^4+30*x^2*y^8*z^4+6*y^10*z^4+120*x^10*y*z*a^2+120*x^8*y^3*z*a^2-336*x^6*y^5*z*a^2-528*x^4*y^7*z*a^2-168*x^2*y^9*z*a^2+24*y^11*z*a^2-2*x^10*a^4+90*x^8*y^2*a^4-420*x^6*y^4*a^4+420*x^4*y^6*a^4-90*x^2*y^8*a^4+2*y^10*a^4+4*x^12*b^2+24*x^10*y^2*b^2+60*x^8*y^4*b^2+80*x^6*y^6*b^2+60*x^4*y^8*b^2+24*x^2*y^10*b^2+4*y^12*b^2-12*x^10*z^2*b^2-60*x^8*y^2*z^2*b^2-120*x^6*y^4*z^2*b^2-120*x^4*y^6*z^2*b^2-60*x^2*y^8*z^2*b^2-12*y^10*z^2*b^2-4*x^10*a^2*b^2-20*x^8*y^2*a^2*b^2-40*x^6*y^4*a^2*b^2-40*x^4*y^6*a^2*b^2-20*x^2*y^8*a^2*b^2-4*y^10*a^2*b^2+6*x^10*b^4+30*x^8*y^2*b^4+60*x^6*y^4*b^4+60*x^4*y^6*b^4+30*x^2*y^8*b^4+6*y^10*b^4-8*x^11*a^2+56*x^9*y^2*a^2+176*x^7*y^4*a^2+112*x^5*y^6*a^2-40*x^3*y^8*a^2-40*x*y^10*a^2-4*x^12-24*x^10*y^2-60*x^8*y^4-80*x^6*y^6-60*x^4*y^8-24*x^2*y^10-4*y^12+4*x^10*z^2+20*x^8*y^2*z^2+40*x^6*y^4*z^2+40*x^4*y^6*z^2+20*x^2*y^8*z^2+4*y^10*z^2-4*x^10*b^2-20*x^8*y^2*b^2-40*x^6*y^4*b^2-40*x^4*y^6*b^2-20*x^2*y^8*b^2-4*y^10*b^2+x^10+5*x^8*y^2+10*x^6*y^4+10*x^4*y^6+5*x^2*y^8+y^10+1/10000"],
+        "Iso3D": {
+            "Description": ["(2,5)-Torusknoten by Stephan Klaus 03/09/2018"],
             "Name": ["Torusknoten"],
+            "Component": ["Torusknoten"],
+            "Const": ["a=22/100","b=2/10","N=10"],
+            "Fxyz": ["x^18+9*x^16*y^2+36*x^14*y^4+84*x^12*y^6+126*x^10*y^8+126*x^8*y^10+84*x^6*y^12+36*x^4*y^14+9*x^2*y^16+y^18+4*x^16*z^2+32*x^14*y^2*z^2+112*x^12*y^4*z^2+224*x^10*y^6*z^2+280*x^8*y^8*z^2+224*x^6*y^10*z^2+112*x^4*y^12*z^2+32*x^2*y^14*z^2+4*y^16*z^2+6*x^14*z^4+42*x^12*y^2*z^4+126*x^10*y^4*z^4+210*x^8*y^6*z^4+210*x^6*y^8*z^4+126*x^4*y^10*z^4+42*x^2*y^12*z^4+6*y^14*z^4+4*x^12*z^6+24*x^10*y^2*z^6+60*x^8*y^4*z^6+80*x^6*y^6*z^6+60*x^4*y^8*z^6+24*x^2*y^10*z^6+4*y^12*z^6+x^10*z^8+5*x^8*y^2*z^8+10*x^6*y^4*z^8+10*x^4*y^6*z^8+5*x^2*y^8*z^8+y^10*z^8-40*x^14*y*z*a^2-120*x^12*y^3*z*a^2-8*x^10*y^5*z*a^2+360*x^8*y^7*z*a^2+520*x^6*y^9*z*a^2+280*x^4*y^11*z*a^2+40*x^2*y^13*z*a^2-8*y^15*z*a^2-80*x^12*y*z^3*a^2-160*x^10*y^3*z^3*a^2+144*x^8*y^5*z^3*a^2+576*x^6*y^7*z^3*a^2+464*x^4*y^9*z^3*a^2+96*x^2*y^11*z^3*a^2-16*y^13*z^3*a^2-40*x^10*y*z^5*a^2-40*x^8*y^3*z^5*a^2+112*x^6*y^5*z^5*a^2+176*x^4*y^7*z^5*a^2+56*x^2*y^9*z^5*a^2-8*y^11*z^5*a^2-2*x^14*a^4+86*x^12*y^2*a^4-242*x^10*y^4*a^4-330*x^8*y^6*a^4+330*x^6*y^8*a^4+242*x^4*y^10*a^4-86*x^2*y^12*a^4+2*y^14*a^4+12*x^12*z^2*a^4+272*x^10*y^2*z^2*a^4-420*x^8*y^4*z^2*a^4+320*x^6*y^6*z^2*a^4+900*x^4*y^8*z^2*a^4-80*x^2*y^10*z^2*a^4+20*y^12*z^2*a^4-2*x^10*z^4*a^4+90*x^8*y^2*z^4*a^4-420*x^6*y^4*z^4*a^4+420*x^4*y^6*z^4*a^4-90*x^2*y^8*z^4*a^4+2*y^10*z^4*a^4-40*x^10*y*z*a^6-40*x^8*y^3*z*a^6+112*x^6*y^5*z*a^6+176*x^4*y^7*z*a^6+56*x^2*y^9*z*a^6-8*y^11*z*a^6+x^10*a^8+5*x^8*y^2*a^8+10*x^6*y^4*a^8+10*x^4*y^6*a^8+5*x^2*y^8*a^8+y^10*a^8-4*x^16*b^2-32*x^14*y^2*b^2-112*x^12*y^4*b^2-224*x^10*y^6*b^2-280*x^8*y^8*b^2-224*x^6*y^10*b^2-112*x^4*y^12*b^2-32*x^2*y^14*b^2-4*y^16*b^2-12*x^14*z^2*b^2-84*x^12*y^2*z^2*b^2-252*x^10*y^4*z^2*b^2-420*x^8*y^6*z^2*b^2-420*x^6*y^8*z^2*b^2-252*x^4*y^10*z^2*b^2-84*x^2*y^12*z^2*b^2-12*y^14*z^2*b^2-12*x^12*z^4*b^2-72*x^10*y^2*z^4*b^2-180*x^8*y^4*z^4*b^2-240*x^6*y^6*z^4*b^2-180*x^4*y^8*z^4*b^2-72*x^2*y^10*z^4*b^2-12*y^12*z^4*b^2-4*x^10*z^6*b^2-20*x^8*y^2*z^6*b^2-40*x^6*y^4*z^6*b^2-40*x^4*y^6*z^6*b^2-20*x^2*y^8*z^6*b^2-4*y^10*z^6*b^2-4*x^14*a^2*b^2-28*x^12*y^2*a^2*b^2-84*x^10*y^4*a^2*b^2-140*x^8*y^6*a^2*b^2-140*x^6*y^8*a^2*b^2-84*x^4*y^10*a^2*b^2-28*x^2*y^12*a^2*b^2-4*y^14*a^2*b^2+80*x^12*y*z*a^2*b^2+160*x^10*y^3*z*a^2*b^2-144*x^8*y^5*z*a^2*b^2-576*x^6*y^7*z*a^2*b^2-464*x^4*y^9*z*a^2*b^2-96*x^2*y^11*z*a^2*b^2+16*y^13*z*a^2*b^2-8*x^12*z^2*a^2*b^2-48*x^10*y^2*z^2*a^2*b^2-120*x^8*y^4*z^2*a^2*b^2-160*x^6*y^6*z^2*a^2*b^2-120*x^4*y^8*z^2*a^2*b^2-48*x^2*y^10*z^2*a^2*b^2-8*y^12*z^2*a^2*b^2+80*x^10*y*z^3*a^2*b^2+80*x^8*y^3*z^3*a^2*b^2-224*x^6*y^5*z^3*a^2*b^2-352*x^4*y^7*z^3*a^2*b^2-112*x^2*y^9*z^3*a^2*b^2+16*y^11*z^3*a^2*b^2-4*x^10*z^4*a^2*b^2-20*x^8*y^2*z^4*a^2*b^2-40*x^6*y^4*z^4*a^2*b^2-40*x^4*y^6*z^4*a^2*b^2-20*x^2*y^8*z^4*a^2*b^2-4*y^10*z^4*a^2*b^2-4*x^12*a^4*b^2-24*x^10*y^2*a^4*b^2-60*x^8*y^4*a^4*b^2-80*x^6*y^6*a^4*b^2-60*x^4*y^8*a^4*b^2-24*x^2*y^10*a^4*b^2-4*y^12*a^4*b^2+80*x^10*y*z*a^4*b^2+80*x^8*y^3*z*a^4*b^2-224*x^6*y^5*z*a^4*b^2-352*x^4*y^7*z*a^4*b^2-112*x^2*y^9*z*a^4*b^2+16*y^11*z*a^4*b^2-4*x^10*z^2*a^4*b^2-20*x^8*y^2*z^2*a^4*b^2-40*x^6*y^4*z^2*a^4*b^2-40*x^4*y^6*z^2*a^4*b^2-20*x^2*y^8*z^2*a^4*b^2-4*y^10*z^2*a^4*b^2-4*x^10*a^6*b^2-20*x^8*y^2*a^6*b^2-40*x^6*y^4*a^6*b^2-40*x^4*y^6*a^6*b^2-20*x^2*y^8*a^6*b^2-4*y^10*a^6*b^2+6*x^14*b^4+42*x^12*y^2*b^4+126*x^10*y^4*b^4+210*x^8*y^6*b^4+210*x^6*y^8*b^4+126*x^4*y^10*b^4+42*x^2*y^12*b^4+6*y^14*b^4+12*x^12*z^2*b^4+72*x^10*y^2*z^2*b^4+180*x^8*y^4*z^2*b^4+240*x^6*y^6*z^2*b^4+180*x^4*y^8*z^2*b^4+72*x^2*y^10*z^2*b^4+12*y^12*z^2*b^4+6*x^10*z^4*b^4+30*x^8*y^2*z^4*b^4+60*x^6*y^4*z^4*b^4+60*x^4*y^6*z^4*b^4+30*x^2*y^8*z^4*b^4+6*y^10*z^4*b^4+8*x^12*a^2*b^4+48*x^10*y^2*a^2*b^4+120*x^8*y^4*a^2*b^4+160*x^6*y^6*a^2*b^4+120*x^4*y^8*a^2*b^4+48*x^2*y^10*a^2*b^4+8*y^12*a^2*b^4-40*x^10*y*z*a^2*b^4-40*x^8*y^3*z*a^2*b^4+112*x^6*y^5*z*a^2*b^4+176*x^4*y^7*z*a^2*b^4+56*x^2*y^9*z*a^2*b^4-8*y^11*z*a^2*b^4+8*x^10*z^2*a^2*b^4+40*x^8*y^2*z^2*a^2*b^4+80*x^6*y^4*z^2*a^2*b^4+80*x^4*y^6*z^2*a^2*b^4+40*x^2*y^8*z^2*a^2*b^4+8*y^10*z^2*a^2*b^4+6*x^10*a^4*b^4+30*x^8*y^2*a^4*b^4+60*x^6*y^4*a^4*b^4+60*x^4*y^6*a^4*b^4+30*x^2*y^8*a^4*b^4+6*y^10*a^4*b^4-4*x^12*b^6-24*x^10*y^2*b^6-60*x^8*y^4*b^6-80*x^6*y^6*b^6-60*x^4*y^8*b^6-24*x^2*y^10*b^6-4*y^12*b^6-4*x^10*z^2*b^6-20*x^8*y^2*z^2*b^6-40*x^6*y^4*z^2*b^6-40*x^4*y^6*z^2*b^6-20*x^2*y^8*z^2*b^6-4*y^10*z^2*b^6-4*x^10*a^2*b^6-20*x^8*y^2*a^2*b^6-40*x^6*y^4*a^2*b^6-40*x^4*y^6*a^2*b^6-20*x^2*y^8*a^2*b^6-4*y^10*a^2*b^6+x^10*b^8+5*x^8*y^2*b^8+10*x^6*y^4*b^8+10*x^4*y^6*b^8+5*x^2*y^8*b^8+y^10*b^8-8*x^15*a^2+40*x^13*y^2*a^2+280*x^11*y^4*a^2+520*x^9*y^6*a^2+360*x^7*y^8*a^2-8*x^5*y^10*a^2-120*x^3*y^12*a^2-40*x*y^14*a^2+16*x^13*z^2*a^2-96*x^11*y^2*z^2*a^2-464*x^9*y^4*z^2*a^2-576*x^7*y^6*z^2*a^2-144*x^5*y^8*z^2*a^2+160*x^3*y^10*z^2*a^2+80*x*y^12*z^2*a^2+24*x^11*z^4*a^2-168*x^9*y^2*z^4*a^2-528*x^7*y^4*z^4*a^2-336*x^5*y^6*z^4*a^2+120*x^3*y^8*z^4*a^2+120*x*y^10*z^4*a^2-80*x^11*y*z*a^4+880*x^9*y^3*z*a^4-1056*x^7*y^5*z*a^4-1056*x^5*y^7*z*a^4+880*x^3*y^9*z*a^4-80*x*y^11*z*a^4-80*x^9*y*z^3*a^4+960*x^7*y^3*z^3*a^4-2016*x^5*y^5*z^3*a^4+960*x^3*y^7*z^3*a^4-80*x*y^9*z^3*a^4+8*x^11*a^6-56*x^9*y^2*a^6-176*x^7*y^4*a^6-112*x^5*y^6*a^6+40*x^3*y^8*a^6+40*x*y^10*a^6-32*x^11*z^2*a^2*b^2+224*x^9*y^2*z^2*a^2*b^2+704*x^7*y^4*z^2*a^2*b^2+448*x^5*y^6*z^2*a^2*b^2-160*x^3*y^8*z^2*a^2*b^2-160*x*y^10*z^2*a^2*b^2-16*x^11*a^4*b^2+112*x^9*y^2*a^4*b^2+352*x^7*y^4*a^4*b^2+224*x^5*y^6*a^4*b^2-80*x^3*y^8*a^4*b^2-80*x*y^10*a^4*b^2+8*x^11*a^2*b^4-56*x^9*y^2*a^2*b^4-176*x^7*y^4*a^2*b^4-112*x^5*y^6*a^2*b^4+40*x^3*y^8*a^2*b^4+40*x*y^10*a^2*b^4-4*x^16-32*x^14*y^2-112*x^12*y^4-224*x^10*y^6-280*x^8*y^8-224*x^6*y^10-112*x^4*y^12-32*x^2*y^14-4*y^16-4*x^14*z^2-28*x^12*y^2*z^2-84*x^10*y^4*z^2-140*x^8*y^6*z^2-140*x^6*y^8*z^2-84*x^4*y^10*z^2-28*x^2*y^12*z^2-4*y^14*z^2+4*x^12*z^4+24*x^10*y^2*z^4+60*x^8*y^4*z^4+80*x^6*y^6*z^4+60*x^4*y^8*z^4+24*x^2*y^10*z^4+4*y^12*z^4+4*x^10*z^6+20*x^8*y^2*z^6+40*x^6*y^4*z^6+40*x^4*y^6*z^6+20*x^2*y^8*z^6+4*y^10*z^6-80*x^12*y*z*a^2-160*x^10*y^3*z*a^2+144*x^8*y^5*z*a^2+576*x^6*y^7*z*a^2+464*x^4*y^9*z*a^2+96*x^2*y^11*z*a^2-16*y^13*z*a^2+80*x^10*y*z^3*a^2+80*x^8*y^3*z^3*a^2-224*x^6*y^5*z^3*a^2-352*x^4*y^7*z^3*a^2-112*x^2*y^9*z^3*a^2+16*y^11*z^3*a^2+20*x^12*a^4-80*x^10*y^2*a^4+900*x^8*y^4*a^4+320*x^6*y^6*a^4-420*x^4*y^8*a^4+272*x^2*y^10*a^4+12*y^12*a^4+12*x^10*z^2*a^4-540*x^8*y^2*z^2*a^4+2520*x^6*y^4*z^2*a^4-2520*x^4*y^6*z^2*a^4+540*x^2*y^8*z^2*a^4-12*y^10*z^2*a^4+4*x^14*b^2+28*x^12*y^2*b^2+84*x^10*y^4*b^2+140*x^8*y^6*b^2+140*x^6*y^8*b^2+84*x^4*y^10*b^2+28*x^2*y^12*b^2+4*y^14*b^2-8*x^12*z^2*b^2-48*x^10*y^2*z^2*b^2-120*x^8*y^4*z^2*b^2-160*x^6*y^6*z^2*b^2-120*x^4*y^8*z^2*b^2-48*x^2*y^10*z^2*b^2-8*y^12*z^2*b^2-12*x^10*z^4*b^2-60*x^8*y^2*z^4*b^2-120*x^6*y^4*z^4*b^2-120*x^4*y^6*z^4*b^2-60*x^2*y^8*z^4*b^2-12*y^10*z^4*b^2-24*x^12*a^2*b^2-144*x^10*y^2*a^2*b^2-360*x^8*y^4*a^2*b^2-480*x^6*y^6*a^2*b^2-360*x^4*y^8*a^2*b^2-144*x^2*y^10*a^2*b^2-24*y^12*a^2*b^2-80*x^10*y*z*a^2*b^2-80*x^8*y^3*z*a^2*b^2+224*x^6*y^5*z*a^2*b^2+352*x^4*y^7*z*a^2*b^2+112*x^2*y^9*z*a^2*b^2-16*y^11*z*a^2*b^2-8*x^10*z^2*a^2*b^2-40*x^8*y^2*z^2*a^2*b^2-80*x^6*y^4*z^2*a^2*b^2-80*x^4*y^6*z^2*a^2*b^2-40*x^2*y^8*z^2*a^2*b^2-8*y^10*z^2*a^2*b^2-4*x^10*a^4*b^2-20*x^8*y^2*a^4*b^2-40*x^6*y^4*a^4*b^2-40*x^4*y^6*a^4*b^2-20*x^2*y^8*a^4*b^2-4*y^10*a^4*b^2+4*x^12*b^4+24*x^10*y^2*b^4+60*x^8*y^4*b^4+80*x^6*y^6*b^4+60*x^4*y^8*b^4+24*x^2*y^10*b^4+4*y^12*b^4+12*x^10*z^2*b^4+60*x^8*y^2*z^2*b^4+120*x^6*y^4*z^2*b^4+120*x^4*y^6*z^2*b^4+60*x^2*y^8*z^2*b^4+12*y^10*z^2*b^4+8*x^10*a^2*b^4+40*x^8*y^2*a^2*b^4+80*x^6*y^4*a^2*b^4+80*x^4*y^6*a^2*b^4+40*x^2*y^8*a^2*b^4+8*y^10*a^2*b^4-4*x^10*b^6-20*x^8*y^2*b^6-40*x^6*y^4*b^6-40*x^4*y^6*b^6-20*x^2*y^8*b^6-4*y^10*b^6+16*x^13*a^2-96*x^11*y^2*a^2-464*x^9*y^4*a^2-576*x^7*y^6*a^2-144*x^5*y^8*a^2+160*x^3*y^10*a^2+80*x*y^12*a^2+16*x^11*z^2*a^2-112*x^9*y^2*z^2*a^2-352*x^7*y^4*z^2*a^2-224*x^5*y^6*z^2*a^2+80*x^3*y^8*z^2*a^2+80*x*y^10*z^2*a^2+80*x^9*y*z*a^4-960*x^7*y^3*z*a^4+2016*x^5*y^5*z*a^4-960*x^3*y^7*z*a^4+80*x*y^9*z*a^4+6*x^14+42*x^12*y^2+126*x^10*y^4+210*x^8*y^6+210*x^6*y^8+126*x^4*y^10+42*x^2*y^12+6*y^14-4*x^12*z^2-24*x^10*y^2*z^2-60*x^8*y^4*z^2-80*x^6*y^6*z^2-60*x^4*y^8*z^2-24*x^2*y^10*z^2-4*y^12*z^2+6*x^10*z^4+30*x^8*y^2*z^4+60*x^6*y^4*z^4+60*x^4*y^6*z^4+30*x^2*y^8*z^4+6*y^10*z^4+120*x^10*y*z*a^2+120*x^8*y^3*z*a^2-336*x^6*y^5*z*a^2-528*x^4*y^7*z*a^2-168*x^2*y^9*z*a^2+24*y^11*z*a^2-2*x^10*a^4+90*x^8*y^2*a^4-420*x^6*y^4*a^4+420*x^4*y^6*a^4-90*x^2*y^8*a^4+2*y^10*a^4+4*x^12*b^2+24*x^10*y^2*b^2+60*x^8*y^4*b^2+80*x^6*y^6*b^2+60*x^4*y^8*b^2+24*x^2*y^10*b^2+4*y^12*b^2-12*x^10*z^2*b^2-60*x^8*y^2*z^2*b^2-120*x^6*y^4*z^2*b^2-120*x^4*y^6*z^2*b^2-60*x^2*y^8*z^2*b^2-12*y^10*z^2*b^2-4*x^10*a^2*b^2-20*x^8*y^2*a^2*b^2-40*x^6*y^4*a^2*b^2-40*x^4*y^6*a^2*b^2-20*x^2*y^8*a^2*b^2-4*y^10*a^2*b^2+6*x^10*b^4+30*x^8*y^2*b^4+60*x^6*y^4*b^4+60*x^4*y^6*b^4+30*x^2*y^8*b^4+6*y^10*b^4-8*x^11*a^2+56*x^9*y^2*a^2+176*x^7*y^4*a^2+112*x^5*y^6*a^2-40*x^3*y^8*a^2-40*x*y^10*a^2-4*x^12-24*x^10*y^2-60*x^8*y^4-80*x^6*y^6-60*x^4*y^8-24*x^2*y^10-4*y^12+4*x^10*z^2+20*x^8*y^2*z^2+40*x^6*y^4*z^2+40*x^4*y^6*z^2+20*x^2*y^8*z^2+4*y^10*z^2-4*x^10*b^2-20*x^8*y^2*b^2-40*x^6*y^4*b^2-40*x^4*y^6*b^2-20*x^2*y^8*b^2-4*y^10*b^2+x^10+5*x^8*y^2+10*x^6*y^4+10*x^4*y^6+5*x^2*y^8+y^10+1/10000"],
             "Xmax": ["3/2"],
             "Xmin": ["-3/2"],
             "Ymax": ["3/2"],
             "Ymin": ["-3/2"],
             "Zmax": ["1/2"],
             "Zmin": ["-1/2"]
-            }
+        }
     },
     {
         "Iso3D": {
@@ -1317,8 +1318,7 @@
     },
     {
         "Iso3D": {
-            "Description": [
-                "Happy_New_Year based on the great work from Abdelhamid Belaid: http://abdelhamid394.blogspot.ca/"],
+            "Description": ["Happy_New_Year based on the great work from Abdelhamid Belaid: http://abdelhamid394.blogspot.ca/"],
             "Name": ["Happy_New_Year"],
             "Component": ["Happy","NW","E","YAR","E"],
             "Funct": ["A=4*min(abs(y+8/10),(-abs(x)*cos(pi/10)-y*sin(pi/10)+1))^2+(2*z)^200+(y/3)^200-1","B=4*min(abs(((abs(x)-1)^4+(y+125/100)^4)^(1/4)-125/100),min(x,abs(((abs(x)-5/10)^4+(y-125/100)^4)^(1/4)-125/100)))^2+(2*z)^100+(10*y/29)^200-1","C=max((4*((y^4+4*x^2)^(1/2)-25/10)^2+(2*z)^100-1),-((x-1)^2+(y*12/10)^100-1))","D=max(-2*x,((y*24/10)^4+(2*x)^4)^(2/100)-6)^2+(2*z)^100-1","E=4*min(abs(-(abs(abs(y)-125/100)-125/100)),x+25/100)^2+(2*z)^100+(10*y/29)^200+(x/2)^200-1","F=4*min(abs(-(abs(y-15/10)-1)),x+25/100)^2+(2*z)^100+(10*y/29)^200+(x/2)^200-1","G=min(min((2*(x-1))^100+(4*(y+8/10))^100+(2*z)^100-(1),(4*(x-125/100))^100+(2*(y+105/100))^100+(2*z)^100-1),max((4*((y^4+4*x^2)^(1/2)-25/10)^2+(2*z)^100-1),-((x-1)^2+(12*y/10)^100-1)))","H=4*min(abs(y),-abs(x*14/10)+2)^2+(2*z)^100+(y/3)^200-1","I=(2*x)^100+(y/3)^100+(2*z)^100-1","J=min(max(y+15/(10),(4)*(sqrt((x+1)^2+(y+15/10)^2)-1)^2+(2*z)^100-1),(2*x)^100+((y-15/20)/(45/20))^100+(2*z)^100-1)","L=4*min(y+25/(10),x+25/100)^2+(2*z)^100+(y/3)^200+(x/2)^200-1","M=4*min(-(-abs(x)*cos(pi/4)+y*sin(pi/4)),-abs(x)+175/100)^2+(2*z)^200+(y/3)^200-1","N=4*max(-(x+2),min(-(x-2),x*cos(pi/5)+y*sin(pi/5)))^2+(2*z)^100+(y/3)^300-1","O=4*((y^4+4*x^2)^(1/2)-25/10)^2+(2*z)^100-1","P=4*min(x,abs(((abs(x)-8/10)^4+(y-125/100)^4)^(1/4)-125/100))^2+(2*z)^100+(10*y/29)^200-1","Q=min((4*((y^4/4+4*x^2)^(1/2)-35/10)^2),16*(x*cos(pi/5)+y*sin(pi/5))^2+((y+2)*10/8)^200)+(2*z)^100-1","R=min(4*min(x,abs(((abs(x)-8/10)^4+(y-125/100)^4)^(1/4)-125/100))^2+(2*z)^100+(10*y/29)^200-(1),4*(x*cos(pi/10)+y*sin(pi/10)-12/10)^2+((y+15/10)*10/15)^200+(2*z)^100-1)","S=9*min(max((sqrt(x^2+(y-125/100)^2)-125/100)^(2),min(x,-y+15/10)),max((sqrt(x^2+(-y-125/100)^2)-125/100)^(2),min(-x,y+15/10)))+(2*z)^100-1","T=4*min(abs(x),-y+25/10)^2+(2*z)^100+(y/3)^200+(x/2)^200-1","U=4*max(abs(x)-(2),sqrt(x^2+(y-26/10)^2)-5)^2+(2*z)^100+(y/3)^200-1","V=4*(-abs(x)*cos(pi/10)+y*sin(pi/10)+1)^2+(2*z)^200+(y/3)^200-1","W=4*(-abs(abs(x)-1)*cos(pi/10)+y*sin(pi/10)+1)^2+(2*z)^200+(y/3)^200-1","X=4*min(abs(y*cos(pi/3)-x*sin(pi/3)),abs(y*cos(-pi/3)-x*sin(-pi/3)))^2+(2*z)^200+(y/3)^200-1","Y=4*min(y*cos(pi/3)-x*sin(pi/3),abs(y*cos(-pi/3)-x*sin(-pi/3)))^2+(2*z)^200+(y/3)^200-1","Z=4*max(-(-y+25/10),min(-(-y-25/10),-y*cos(pi/3)+x*sin(pi/3)))^2+(2*z)^100+(x/2)^300-1"],
@@ -1331,71 +1331,68 @@
             "Zmin": ["-1","-1","-1","-1","-1"]
         },
         "Texture": {
-            "Colors": [
-                "R=4/5","G=3/5","B=1/10","T=1"]
+            "Colors": ["R=4/5","G=3/5","B=1/10","T=1"]
         }
     },
     {
-    "Iso3D": {
-        "Name": ["Wonder_Tree"],
-        "Component": ["WonderTree"],
-        "Const": ["k=4","e=1/10000"],
-        "Funct": [
-            "R=k*(x/(x*x+y*y+z*z))",
+        "Iso3D": {
+            "Name": ["Wonder_Tree"],
+            "Component": ["WonderTree"],
+            "Const": ["k=4","e=1/10000"],
+            "Funct": ["R=k*(x/(x*x+y*y+z*z))",
             "Gyroid=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
             "Fct = Gyroid(R(x,y,z,t),R(y,x,z,t),R(z,y,x,t),t) + exp((1/10)*(x*x+y*y+z*z-(2/10))) - exp(-10*(x*x+y*y+z*z-(5/100)))"],
-        "Fxyz": ["-(Fct(x,y,z,t))"],
-        "Xmax": ["2"],
-        "Xmin": ["-2"],
-        "Ymax": ["2"],
-        "Ymin": ["-2"],
-        "Zmax": ["2"],
-        "Zmin": ["-2"]
-    }
+            "Fxyz": ["-(Fct(x,y,z,t))"],
+            "Xmax": ["2"],
+            "Xmin": ["-2"],
+            "Ymax": ["2"],
+            "Ymin": ["-2"],
+            "Zmax": ["2"],
+            "Zmin": ["-2"]
+        }
     },
     {
-    "Iso3D": {
-        "Description": ["Moebius band by Stephan Klaus 23/09/2019"],
-        "Name": ["Moebius_Strip"],
-        "Component": ["Moebius"],
-        "Const": [
-            "a=1/2",
+        "Iso3D": {
+            "Description": ["Moebius band by Stephan Klaus 23/09/2019"],
+            "Name": ["Moebius_Strip"],
+            "Component": ["Moebius"],
+            "Const": ["a=1/2",
             "b=1/10",
             "N=4"],
-        "Fxyz": ["((b^2*x^2+a^2*y^2)*(x^2+y^2)+b^2*(-x+y*z)^2+a^2*(y+x*z)^2-a^2*b^2*(x^2+y^2))^2-4*(x^2+y^2)*(b^2*x*(-x+y*z)-a^2*y*(y+x*z))^2"],
-        "Xmax": ["3/2"],
-        "Xmin": ["-3/2"],
-        "Ymax": ["3/2"],
-        "Ymin": ["-3/2"],
-        "Zmax": ["1/2"],
-        "Zmin": ["-1/2"]
-    }
+            "Fxyz": ["((b^2*x^2+a^2*y^2)*(x^2+y^2)+b^2*(-x+y*z)^2+a^2*(y+x*z)^2-a^2*b^2*(x^2+y^2))^2-4*(x^2+y^2)*(b^2*x*(-x+y*z)-a^2*y*(y+x*z))^2"],
+            "Xmax": ["3/2"],
+            "Xmin": ["-3/2"],
+            "Ymax": ["3/2"],
+            "Ymin": ["-3/2"],
+            "Zmax": ["1/2"],
+            "Zmin": ["-1/2"]
+        }
     },
     {
-      "Iso3D": {
-        "Name": ["Schwarz"],
-        "Component": ["Schwarz"],
-        "Fxyz": ["cos(x) + cos(y) + cos(z)"],
-        "Xmin": ["-4"],
-        "Xmax": [" 4"],
-        "Ymin": ["-4"],
-        "Ymax": [" 4"],
-        "Zmin": ["-4"],
-        "Zmax": [" 4"]
-      }
+        "Iso3D": {
+            "Name": ["Schwarz"],
+            "Component": ["Schwarz"],
+            "Fxyz": ["cos(x) + cos(y) + cos(z)"],
+            "Xmin": ["-4"],
+            "Xmax": [" 4"],
+            "Ymin": ["-4"],
+            "Ymax": [" 4"],
+            "Zmin": ["-4"],
+            "Zmax": [" 4"]
+        }
     },
     {
-      "Iso3D": {
-        "Name": ["Moon"],
-        "Component": ["GravityPlan","EarthPlanet","MoonPlanet"],
-        "Fxyz": ["((x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3)) + z*z - 3/5)*min( (x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + z*z - (3/5), z) +1/5","(x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + (z-1/5)*(z-1/5) - 3/5 ","(x-2*sin(t*pi)-4*sin(t*pi/3))*(x-2*sin(t*pi)-4*sin(t*pi/3)) + (y-2*cos(t*pi)-2*cos(t*pi/3))*(y-2*cos(t*pi)-2*cos(t*pi/3)) + (z-1/5)*(z-1/5) - 1/10"],
-        "Xmin": ["-5","-1+4*sin(t*pi/3)","-1+2*sin(t*pi)+4*sin(t*pi/3)"],
-        "Xmax": [" 5","1+4*sin(t*pi/3)","1+2*sin(t*pi)+4*sin(t*pi/3)"],
-        "Ymin": ["-4","-1+2*cos(t*pi/3)","-1+2*cos(t*pi)+2*cos(t*pi/3)"],
-        "Ymax": [" 4","1+2*cos(t*pi/3)","1+2*cos(t*pi)+2*cos(t*pi/3)"],
-        "Zmin": ["-1","-1","-1"],
-        "Zmax": [" 1","3/2","1"]
-      }
+        "Iso3D": {
+            "Name": ["Moon"],
+            "Component": ["GravityPlan","EarthPlanet","MoonPlanet"],
+            "Fxyz": ["((x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3)) + z*z - 3/5)*min( (x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + z*z - (3/5), z) +1/5","(x-4*sin(t*pi/3))*(x-4*sin(t*pi/3)) + (y-2*cos(t*pi/3))*(y-2*cos(t*pi/3))  + (z-1/5)*(z-1/5) - 3/5 ","(x-2*sin(t*pi)-4*sin(t*pi/3))*(x-2*sin(t*pi)-4*sin(t*pi/3)) + (y-2*cos(t*pi)-2*cos(t*pi/3))*(y-2*cos(t*pi)-2*cos(t*pi/3)) + (z-1/5)*(z-1/5) - 1/10"],
+            "Xmin": ["-5","-1+4*sin(t*pi/3)","-1+2*sin(t*pi)+4*sin(t*pi/3)"],
+            "Xmax": [" 5","1+4*sin(t*pi/3)","1+2*sin(t*pi)+4*sin(t*pi/3)"],
+            "Ymin": ["-4","-1+2*cos(t*pi/3)","-1+2*cos(t*pi)+2*cos(t*pi/3)"],
+            "Ymax": [" 4","1+2*cos(t*pi/3)","1+2*cos(t*pi)+2*cos(t*pi/3)"],
+            "Zmin": ["-1","-1","-1"],
+            "Zmax": [" 1","3/2","1"]
+        }
     },
     {
       "Iso3D": {
