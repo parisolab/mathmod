@@ -61,9 +61,10 @@ double Mandelbulb(const double* pp) {
     double x = pp[0];
     double y = pp[1];
     double z = pp[2];
+    double N = pp[3];
     double R2, theta, phi, R6, R8;
     double dr = 1.0;
-    for(int i = 0; i < pp[3]; i++) {
+    for(int i = 0; i < N; i++) {
         R2 = x * x + y * y + z * z;
         if(R2 > 4) {
             return 0.25 * sqrt(R2) * log(R2) / dr;
