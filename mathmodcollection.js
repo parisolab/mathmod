@@ -95,12 +95,12 @@
     },
     {
         "Iso3D": {
-            "Description": ["Mandelbulb by Abderrahman Taha 27/08/2023"],
+            "Description": ["Mandelbulb by Abderrahman Taha 27/08/2024"],
             "Name": ["MandelBulb"],
             "Import": ["mandelbulb"],
             "Component": ["MandelBulb"],
-            "Const": ["L=105/100"],
-            "Fxyz": ["mandelbulb(x,y,z,24)"],
+            "Const": ["L=115/100"],
+            "Fxyz": ["mandelbulb(x,y,z,24)-1/300"],
             "Xmax": ["L"],
             "Xmin": ["-L"],
             "Ymax": ["L"],
