@@ -46,7 +46,7 @@ public:
     QString JsConfigFile = "";
     QString docpartialpath = "/documentation/index.html";
     QString docabsolutepath = "";
-    QString version = "12.1";
+    QString version = "13.0";
     qreal scripteditorfontsize=14;
     QJsonObject JConfig, Collection, InitParameters;
     QPalette mypalette, mypalette2, darkpalette;
