@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MathMod-12.1</string>
+   <string>MathMod-13.0</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
