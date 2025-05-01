@@ -438,7 +438,7 @@
                  <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>3</number>
+                 <number>2</number>
                 </property>
                 <widget class="QWidget" name="page"/>
                 <widget class="QWidget" name="page_4">
@@ -3078,6 +3078,46 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </widget>
                         </item>
                        </layout>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="EquaGen">
+                     <attribute name="title">
+                      <string>Equations Generator</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_80">
+                      <item row="0" column="0">
+                       <widget class="QToolBox" name="toolBox">
+                        <property name="currentIndex">
+                         <number>1</number>
+                        </property>
+                        <widget class="QWidget" name="Thick">
+                         <property name="geometry">
+                          <rect>
+                           <x>0</x>
+                           <y>0</y>
+                           <width>100</width>
+                           <height>30</height>
+                          </rect>
+                         </property>
+                         <attribute name="label">
+                          <string>Thickness</string>
+                         </attribute>
+                        </widget>
+                        <widget class="QWidget" name="page_6">
+                         <property name="geometry">
+                          <rect>
+                           <x>0</x>
+                           <y>0</y>
+                           <width>521</width>
+                           <height>356</height>
+                          </rect>
+                         </property>
+                         <attribute name="label">
+                          <string>ScaleXYZ</string>
+                         </attribute>
+                        </widget>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
