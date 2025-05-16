@@ -136,6 +136,11 @@ public :
     void stopcalculations(bool);
     void WorkerThreadCopy(IsoWorkerThread *);
     ErrorMessage IsoMorph();
+    ErrorMessage IsoTorsion();
+    void InitGeneratorStruct();
+    void InitScaleStruct();
+    void InitTorsionStruct();
+    void InitVarParam();
     ErrorMessage parse_expression2();
     ErrorMessage ThreadParsersCopy();
     void ReinitVarTablesWhenMorphActiv(uint);

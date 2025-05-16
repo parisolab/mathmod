@@ -173,6 +173,22 @@ ErrorMessage  Iso3D::IsoMorph()
         ThreadParsersCopy();
     return err;
 }
+void Iso3D::InitTorsionStruct()
+{
+    IsoTr = {0,0,0,"$x$","$y$","$z$"};
+}
+void Iso3D::InitVarParam()
+{
+    Isoxyz = {"$X$","$Y$","$Z$"};
+}
+void Iso3D::InitScaleStruct()
+{
+    IsoSc = {1.0,1.0,1.0,"$x$","$y$","$z$"};
+}
+void  Iso3D::InitGeneratorStruct()
+{
+    InitTorsionStruct();
+}
 ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
