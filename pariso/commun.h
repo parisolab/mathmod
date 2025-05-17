@@ -96,6 +96,85 @@ struct GlobalParam
     uint NbVertexTmp = 0;
 };
 
+
+enum PreviousAction
+{
+    NOACTION = 0,
+    TORSX,
+    TORSY,
+    TORSZ,
+    SCALX,
+    SCALY,
+    SCALZ,
+    THICK
+};
+struct IsoThichnessParam
+{
+    QString ThExpression = "";
+    bool OriginalSurf = true;
+    bool UpperSurf = true;
+    bool BottomSurf = false;
+};
+struct IsoScaleParam
+{
+    float Sx=1.0;
+    float Sy=1.0;
+    float Sz=1.0;
+
+    QString ScalX="$x$";
+    QString ScalY="$y$";
+    QString ScalZ="$z$";
+};
+struct IsoVarParameters
+{
+    QString Vx = "$X$";
+    QString Vy = "$Y$";
+    QString Vz = "$Z$";
+    PreviousAction Previousaction = NOACTION;
+};
+struct IsoTorsionParam
+{
+    int Tetax = 0;
+    int Tetay = 0;
+    int Tetaz = 0;
+    QString TorsionX="$x$";
+    QString TorsionY="$y$";
+    QString TorsionZ="$z$";
+};
+struct ParThichnessParam
+{
+    QString ThExpression = "";
+    bool OriginalSurf = true;
+    bool UpperSurf = true;
+    bool BottomSurf = false;
+};
+struct ParScaleParam
+{
+    float Sx=1.0;
+    float Sy=1.0;
+    float Sz=1.0;
+
+    QString ScalX="$x$";
+    QString ScalY="$y$";
+    QString ScalZ="$z$";
+};
+struct ParVarParameters
+{
+    QString Vx = "$X$";
+    QString Vy = "$Y$";
+    QString Vz = "$Z$";
+    PreviousAction Previousaction = NOACTION;
+};
+struct ParTorsionParam
+{
+    int Tetax = 0;
+    int Tetay = 0;
+    int Tetaz = 0;
+    QString TorsionX="$x$";
+    QString TorsionY="$y$";
+    QString TorsionZ="$z$";
+};
+
 struct ImplicitStructure
 {
     std::string fxyz;
