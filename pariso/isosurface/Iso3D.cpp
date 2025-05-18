@@ -175,11 +175,17 @@ ErrorMessage  Iso3D::IsoMorph()
 }
 void Iso3D::InitTorsionStruct()
 {
-    IsoTr = {0,0,0,"$x$","$y$","$z$"};
+    IsoTr.TorsionX=IsoTr.TorsionY=IsoTr.TorsionZ=0.0;
+    IsoTr.TorsionX="$x$";
+    IsoTr.TorsionY="$y$";
+    IsoTr.TorsionZ="$z$";
 }
 void Iso3D::InitVarParam()
 {
-    Isoxyz = {"$X$","$Y$","$Z$"};
+    Isoxyz.Vx="$X$";
+    Isoxyz.Vy="$Y$";
+    Isoxyz.Vz="$Z$";
+    Isoxyz.Previousaction=NOACTION;
 }
 void Iso3D::InitScaleStruct()
 {

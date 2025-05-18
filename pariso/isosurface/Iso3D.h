@@ -109,6 +109,7 @@ class Iso3D  : public ParisoObject
 {
     Q_OBJECT
 public :
+    IsoVarParameters Isoxyz;
     IsoWorkerThread *workerthreads;
     IsoMasterThread *masterthread;
     std::vector<float> NormOriginaltmpVector;

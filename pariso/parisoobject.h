@@ -46,6 +46,13 @@ public:
     bool StopCalculations;
     ScriptErrorType messageerror;
     QString message;
+    IsoThichnessParam IsoTh;
+    IsoTorsionParam IsoTr;
+    IsoScaleParam IsoSc;
+    ParThichnessParam ParTh;
+    ParTorsionParam ParTr;
+    ParScaleParam ParSc;
+    ParVarParameters Parxyz;
     static std::vector<uint>  IndexPolyTabVector;
     static std::vector<float> NormVertexTabVector;
     static std::vector<uint> IndexPolyTabMinVector;
