@@ -189,7 +189,10 @@ void Iso3D::InitVarParam()
 }
 void Iso3D::InitScaleStruct()
 {
-    IsoSc = {1.0,1.0,1.0,"$x$","$y$","$z$"};
+    IsoSc.ScalX="$x$";
+    IsoSc.ScalY="$y$";
+    IsoSc.ScalZ="$z$";
+    IsoSc.Sx=IsoSc.Sy=IsoSc.Sz=1.0;
 }
 void  Iso3D::InitGeneratorStruct()
 {
