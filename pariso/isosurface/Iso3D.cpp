@@ -198,6 +198,61 @@ void  Iso3D::InitGeneratorStruct()
 {
     InitTorsionStruct();
 }
+ErrorMessage  Iso3D::AddThickness()
+{
+    ErrorMessage NoError;
+    QString T = IsoTh.ThExpression;
+    // masterthread parsing
+    for(uint i=0; i<masterthread->componentsNumber; i++)
+    {
+        QString I=QString::number(i);
+        QString fct("psh((0),(FFFxyz"+I+"(x+(1/1000000),y,z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
+                                                                                                              "*psh((1),(FFFxyz"+I+"(x,y+(1/1000000),z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
+                                                                                            "*psh((2),(FFFxyz"+I+"(x,y,z+(1/1000000),t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
+                                                                                            "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+        if(IsoTh.UpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+        if(IsoTh.BottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+        if(IsoTh.OriginalSurf)
+        {
+            if(IsoTh.UpperSurf || IsoTh.BottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
+            else fct = "(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
+        }
+        std::string str = fct.toStdString();
+        const char* p = str.c_str();
+        if ((masterthread->stdError.iErrorIndex = masterthread->implicitFunctionParser[i].Parse(p,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[i].fxyz;
+            return masterthread->stdError;
+        }
+    }
+    // workerthreads parsing
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        for(uint index=0; index< masterthread->componentsNumber; index++)
+        {
+            QString I=QString::number(index);
+            QString fct("psh((0),(FFFxyz"+I+"(x+(1/1000000),y,z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
+                                                                                                                  "*psh((1),(FFFxyz"+I+"(x,y+(1/1000000),z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
+                                                                                                "*psh((2),(FFFxyz"+I+"(x,y,z+(1/1000000),t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
+                                                                                                "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+            if(IsoTh.UpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+            if(IsoTh.BottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+            if(IsoTh.OriginalSurf)
+            {
+                if(IsoTh.UpperSurf || IsoTh.BottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
+                else fct = "(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
+            }
+            std::string str = fct.toStdString();
+            const char* p = str.c_str();
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(p,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
+                return masterthread->stdError;
+            }
+        }
+    }
+    return NoError;
+}
 ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)

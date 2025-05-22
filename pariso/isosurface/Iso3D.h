@@ -139,6 +139,7 @@ public :
     ErrorMessage IsoMorph();
     ErrorMessage IsoTorsion();
     void InitGeneratorStruct();
+    ErrorMessage AddThickness();
     void InitScaleStruct();
     void InitTorsionStruct();
     void InitVarParam();
