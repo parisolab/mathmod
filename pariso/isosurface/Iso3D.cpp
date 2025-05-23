@@ -253,6 +253,68 @@ ErrorMessage  Iso3D::AddThickness()
     }
     return NoError;
 }
+ErrorMessage  Iso3D::ScaleIso()
+{
+    ErrorMessage NoError;
+    // masterthread parsing
+    for(uint i=0; i<masterthread->componentsNumber; i++)
+    {
+        QString Vx = Isoxyz.Vx;
+        Vx.replace("$X$",IsoSc.ScalX);
+        Vx.replace("$Y$",IsoSc.ScalY);
+        Vx.replace("$Z$",IsoSc.ScalZ);
+        Vx.replace("$","");
+        QString Vy = Isoxyz.Vy;
+        Vy.replace("$X$",IsoSc.ScalX);
+        Vy.replace("$Y$",IsoSc.ScalY);
+        Vy.replace("$Z$",IsoSc.ScalZ);
+        Vy.replace("$","");
+        QString Vz = Isoxyz.Vz;
+        Vz.replace("$X$",IsoSc.ScalX);
+        Vz.replace("$Y$",IsoSc.ScalY);
+        Vz.replace("$Z$",IsoSc.ScalZ);
+        Vz.replace("$","");
+        std::string str;
+        str = ("FFFxyz"+QString::number(i)+"("+Vx+","+Vy+","+Vz+",t,i_indx,j_indx,k_indx,max_ijk)").toStdString() ;
+        const char* p = str.c_str();
+        if ((masterthread->stdError.iErrorIndex = masterthread->implicitFunctionParser[i].Parse(p,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
+        {
+            masterthread->stdError.strError = masterthread->ImplicitStructs[i].fxyz;
+            return masterthread->stdError;
+        }
+    }
+    // workerthreads parsing
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        for(uint index=0; index< masterthread->componentsNumber; index++)
+        {
+            QString Vx = Isoxyz.Vx;
+            Vx.replace("$X$",IsoSc.ScalX);
+            Vx.replace("$Y$",IsoSc.ScalY);
+            Vx.replace("$Z$",IsoSc.ScalZ);
+            Vx.replace("$","");
+            QString Vy = Isoxyz.Vy;
+            Vy.replace("$X$",IsoSc.ScalX);
+            Vy.replace("$Y$",IsoSc.ScalY);
+            Vy.replace("$Z$",IsoSc.ScalZ);
+            Vy.replace("$","");
+            QString Vz = Isoxyz.Vz;
+            Vz.replace("$X$",IsoSc.ScalX);
+            Vz.replace("$Y$",IsoSc.ScalY);
+            Vz.replace("$Z$",IsoSc.ScalZ);
+            Vz.replace("$","");
+            std::string str;
+            str = ("FFFxyz"+QString::number(index)+"("+Vx+","+Vy+","+Vz+",t,i_indx,j_indx,k_indx,max_ijk)").toStdString() ;
+            const char* p = str.c_str();
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(p,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
+                return masterthread->stdError;
+            }
+        }
+    }
+    return NoError;
+}
 ErrorMessage Iso3D::ThreadParsersCopy()
 {
     for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
