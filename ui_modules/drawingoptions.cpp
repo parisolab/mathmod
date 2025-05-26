@@ -5554,3 +5554,36 @@ void DrawingOptions::on_actionbox_triggered()
     MathmodRef->boundingboxOk();
     MathmodRef->update();
 }
+void DrawingOptions::on_ScaleXBar_valueChanged(int vx)
+{
+    float sx = float(vx)/20.0;
+    MathmodRef->IsoObjet->IsoSc.Sx = sx;
+    MathmodRef->IsoObjet->IsoSc.ScalX = (sx != 1.0 ?"("+QString::number(sx)+")*$x$" : "$x$");
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = SCALX;
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->ScaleIsoSurface();
+    }
+}
+void DrawingOptions::on_ScaleYBar_valueChanged(int vy)
+{
+    float sy = float(vy)/20.0;
+    MathmodRef->IsoObjet->IsoSc.Sy = sy;
+    MathmodRef->IsoObjet->IsoSc.ScalY = (sy != 1.0 ?"("+QString::number(sy)+")*$y$" : "$y$");
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = SCALY;
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->ScaleIsoSurface();
+    }
+}
+void DrawingOptions::on_ScaleZBar_valueChanged(int vz)
+{
+    float sz = float(vz)/20.0;
+    MathmodRef->IsoObjet->IsoSc.Sz = sz;
+    MathmodRef->IsoObjet->IsoSc.ScalZ = (sz != 1.0 ?"("+QString::number(sz)+")*$z$" : "$z$");
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = SCALZ;
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->ScaleIsoSurface();
+    }
+}

@@ -349,6 +349,9 @@ public slots:
     void on_blue_Diffuse_valueChanged(int);
     void on_transparent_Diffuse_valueChanged(int);
     void on_GLFrontSurfaceSupport_clicked();
+    void on_ScaleXBar_valueChanged(int);
+    void on_ScaleYBar_valueChanged(int);
+    void on_ScaleZBar_valueChanged(int);
 private slots:
     void on_actionbox_triggered();
 };
