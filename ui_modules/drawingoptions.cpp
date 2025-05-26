@@ -5587,3 +5587,69 @@ void DrawingOptions::on_ScaleZBar_valueChanged(int vz)
         MathmodRef->ScaleIsoSurface();
     }
 }
+void DrawingOptions::on_ApplyThicknessVal_clicked()
+{
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
+    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal->text().replace(" ", "");
+    MathmodRef->IsoObjet->IsoTh.OriginalSurf = ui.FctOriginal->isChecked();
+    MathmodRef->IsoObjet->IsoTh.UpperSurf = ui.UpperFct->isChecked();
+    MathmodRef->IsoObjet->IsoTh.BottomSurf = ui.DownFct->isChecked();
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->AddThicknessToIsoSurface();
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Invalid number");
+        msgBox.exec();
+    }
+}
+void DrawingOptions::on_TorsionX_valueChanged(int value)
+{
+    // Apply the torsion along the X axis
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = TORSX;
+    MathmodRef->IsoObjet->IsoTr.Tetax = value;
+    QString f = "(i_indx/max_ijk)*(";
+    QString Tx=QString::number(float(value-50)/2.5);
+    MathmodRef->IsoObjet->IsoTr.TorsionX = "($x$)";
+    MathmodRef->IsoObjet->IsoTr.TorsionY = "(sin("+f+Tx+"))*$y$ + cos("+f+Tx+"))*$z$)";
+    MathmodRef->IsoObjet->IsoTr.TorsionZ = "(cos("+f+Tx+"))*$y$ - sin("+f+Tx+"))*$z$)";
+    //Show torsion effect
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->TorsionIsoSurface();
+    }
+}
+void DrawingOptions::on_TorsionY_valueChanged(int value)
+{
+    // Apply the torsion along the Y axis
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = TORSY;
+    MathmodRef->IsoObjet->IsoTr.Tetay = value;
+    QString f = "(j_indx/max_ijk)*(";
+    QString Ty=QString::number(float(value-50)/2.5);
+    MathmodRef->IsoObjet->IsoTr.TorsionX = "(sin("+f+Ty+"))*$x$ + cos("+f+Ty+"))*$z$)";
+    MathmodRef->IsoObjet->IsoTr.TorsionY = "($y$)";
+    MathmodRef->IsoObjet->IsoTr.TorsionZ = "(cos("+f+Ty+"))*$x$ - sin("+f+Ty+"))*$z$)";
+    //Apply torsion effect
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->TorsionIsoSurface();
+    }
+}
+void DrawingOptions::on_TorsionZ_valueChanged(int value)
+{
+    // Apply the torsion along the Z axis
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = TORSZ;
+    MathmodRef->IsoObjet->IsoTr.Tetaz = value;
+    QString f = "(k_indx/max_ijk)*(";
+    QString Tz=QString::number(float(value-50)/2.5);
+    MathmodRef->IsoObjet->IsoTr.TorsionX = "(sin("+f+Tz+"))*$x$ + cos("+f+Tz+"))*$y$)";
+    MathmodRef->IsoObjet->IsoTr.TorsionY = "(cos("+f+Tz+"))*$x$ - sin("+f+Tz+"))*$y$)";
+    MathmodRef->IsoObjet->IsoTr.TorsionZ = "($z$)";
+    //Apply torsion effect
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->TorsionIsoSurface();
+    }
+}

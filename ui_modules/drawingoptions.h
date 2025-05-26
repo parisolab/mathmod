@@ -352,6 +352,10 @@ public slots:
     void on_ScaleXBar_valueChanged(int);
     void on_ScaleYBar_valueChanged(int);
     void on_ScaleZBar_valueChanged(int);
+    void on_ApplyThicknessVal_clicked();
+    void on_TorsionX_valueChanged(int);
+    void on_TorsionY_valueChanged(int);
+    void on_TorsionZ_valueChanged(int);
 private slots:
     void on_actionbox_triggered();
 };
