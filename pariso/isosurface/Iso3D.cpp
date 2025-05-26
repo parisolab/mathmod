@@ -22,7 +22,6 @@
 #include "internalfunctions.cpp"
 #include <QElapsedTimer>
 
-
 double * Iso3D::Results;
 Voxel  * Iso3D::GridVoxelVarPt;
 int IsoWorkerThread::nbvariables;
