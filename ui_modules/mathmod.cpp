@@ -2348,3 +2348,47 @@ void MathMod::Mesh()
     LocalScene.mesh *= -1;
     update();
 }
+
+int MathMod::TorsionIso()
+{
+    stError = IsoObjet->IsoTorsion();
+    if (stError.iErrorIndex >= 0)
+    {
+        ShowErrormessage();
+        return -1;
+    }
+    return 1;
+}
+
+void MathMod::TorsionIsoSurface()
+{
+    if (!IsoObjet->isRunning())
+    {
+        TorsionIso();
+        LocalScene.typedrawing = 1;
+        IsoObjet->localScene = &(LocalScene);
+        IsoObjet->start(QThread::LowPriority);
+    }
+}
+
+int MathMod::ThickIso()
+{
+    stError = IsoObjet->AddThickness();
+    if (stError.iErrorIndex >= 0)
+    {
+        ShowErrormessage();
+        return -1;
+    }
+    return 1;
+}
+
+void MathMod::AddThicknessToIsoSurface()
+{
+    if (!IsoObjet->isRunning())
+    {
+        ThickIso();
+        LocalScene.typedrawing = 1;
+        IsoObjet->localScene = &(LocalScene);
+        IsoObjet->start(QThread::LowPriority);
+    }
+}

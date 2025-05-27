@@ -314,6 +314,10 @@ public slots:
     void CalculatePigmentPoints(int type);
     void LoadShadersFiles();
     void UpdateGL();
+    int  TorsionIso();
+    int  ThickIso();
+    void TorsionIsoSurface();
+    void AddThicknessToIsoSurface();
 };
 
 #endif
