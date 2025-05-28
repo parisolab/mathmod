@@ -2392,3 +2392,26 @@ void MathMod::AddThicknessToIsoSurface()
         IsoObjet->start(QThread::LowPriority);
     }
 }
+
+int MathMod::ScaleIso()
+{
+    stError = IsoObjet->ScaleIso();
+    if (stError.iErrorIndex >= 0)
+    {
+        ShowErrormessage();
+        return -1;
+    }
+    return 1;
+}
+
+void MathMod::ScaleIsoSurface()
+{
+    if (!IsoObjet->isRunning())
+    {
+        ScaleIso();
+        LocalScene.typedrawing = 1;
+        IsoObjet->localScene = &(LocalScene);
+        IsoObjet->start(QThread::LowPriority);
+    }
+}
+

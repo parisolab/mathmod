@@ -318,6 +318,8 @@ public slots:
     int  ThickIso();
     void TorsionIsoSurface();
     void AddThicknessToIsoSurface();
+    int  ScaleIso();
+    void ScaleIsoSurface();
 };
 
 #endif
