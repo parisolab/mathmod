@@ -30,7 +30,6 @@ std::vector<float>  Par3D::ExtraDimensionVector;
 Par3D::~Par3D()
 {
 }
-
 void Par3D::emitUpdateMessageSignal()
 {
     emit UpdateMessageSignal(message);
@@ -91,7 +90,6 @@ void ParWorkerThread::run()
 {
     ParCompute(CurrentComponent, CurrentIndex);
 }
-
 Par3D::Par3D(uint nbThreads, uint nbGrid, int *pt)
 {
     Ugrid = nbGrid;
