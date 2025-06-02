@@ -5653,3 +5653,92 @@ void DrawingOptions::on_TorsionZ_valueChanged(int value)
         MathmodRef->TorsionIsoSurface();
     }
 }
+void DrawingOptions::on_InitializeButton_clicked()
+{
+    MathmodRef->IsoObjet->InitTorsionStruct();
+    ui.TorsionX->blockSignals(true);
+    ui.TorsionX->setValue(50);
+    ui.TorsionX->blockSignals(false);
+    ui.TorsionY->blockSignals(true);
+    ui.TorsionY->setValue(50);
+    ui.TorsionY->blockSignals(false);
+    ui.TorsionZ->blockSignals(true);
+    ui.TorsionZ->setValue(50);
+    ui.TorsionZ->blockSignals(false);
+    MathmodRef->IsoObjet->Isoxyz.Vx="$X$";
+    MathmodRef->IsoObjet->Isoxyz.Vy="$Y$";
+    MathmodRef->IsoObjet->Isoxyz.Vz="$Z$";
+    MathmodRef->IsoObjet->InitTorsionStruct();
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->TorsionIsoSurface();
+    }
+}
+void DrawingOptions::on_pushInitializeScale_clicked()
+{
+    MathmodRef->IsoObjet->InitScaleStruct();
+    ui.ScaleXBar->blockSignals(true);
+    ui.ScaleXBar->setValue(20);
+    ui.ScaleXBar->blockSignals(false);
+    ui.ScaleYBar->blockSignals(true);
+    ui.ScaleYBar->setValue(20);
+    ui.ScaleYBar->blockSignals(false);
+    ui.ScaleZBar->blockSignals(true);
+    ui.ScaleZBar->setValue(20);
+    ui.ScaleZBar->blockSignals(false);
+    MathmodRef->IsoObjet->InitScaleStruct();
+    MathmodRef->IsoObjet->Isoxyz.Vx = "$X$";
+    MathmodRef->IsoObjet->Isoxyz.Vy = "$Y$";
+    MathmodRef->IsoObjet->Isoxyz.Vz = "$Z$";
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->TorsionIsoSurface();
+    }
+}
+void DrawingOptions::on_SaveThButton_clicked()
+{
+}
+void DrawingOptions::on_SaveTrButton_clicked()
+{
+    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$X$", MathmodRef->IsoObjet->IsoTr.TorsionX);
+    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$Y$", MathmodRef->IsoObjet->IsoTr.TorsionY);
+    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$Z$", MathmodRef->IsoObjet->IsoTr.TorsionZ);
+    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$x$","$X$");
+    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$y$","$Y$");
+    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$z$","$Z$");
+
+    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$X$", MathmodRef->IsoObjet->IsoTr.TorsionX);
+    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$Y$", MathmodRef->IsoObjet->IsoTr.TorsionY);
+    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$Z$", MathmodRef->IsoObjet->IsoTr.TorsionZ);
+    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$x$","$X$");
+    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$y$","$Y$");
+    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$z$","$Z$");
+
+    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$X$", MathmodRef->IsoObjet->IsoTr.TorsionX);
+    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$Y$", MathmodRef->IsoObjet->IsoTr.TorsionY);
+    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$Z$", MathmodRef->IsoObjet->IsoTr.TorsionZ);
+    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$x$","$X$");
+    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$y$","$Y$");
+    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$z$","$Z$");
+}
+void DrawingOptions::on_TorsionX_2_valueChanged(int value)
+{
+}
+void DrawingOptions::on_TorsionY_2_valueChanged(int value)
+{
+}
+void DrawingOptions::on_TorsionZ_2_valueChanged(int value)
+{
+}
+void DrawingOptions::on_SaveTrButton_2_clicked()
+{
+}
+void DrawingOptions::on_InitializeButton_2_clicked()
+{
+}
+void DrawingOptions::on_SaveThButton_2_clicked()
+{
+}
+void DrawingOptions::on_ApplyThicknessVal_2_clicked()
+{
+}
