@@ -5674,27 +5674,6 @@ void DrawingOptions::on_InitializeButton_clicked()
         MathmodRef->TorsionIsoSurface();
     }
 }
-void DrawingOptions::on_pushInitializeScale_clicked()
-{
-    MathmodRef->IsoObjet->InitScaleStruct();
-    ui.ScaleXBar->blockSignals(true);
-    ui.ScaleXBar->setValue(20);
-    ui.ScaleXBar->blockSignals(false);
-    ui.ScaleYBar->blockSignals(true);
-    ui.ScaleYBar->setValue(20);
-    ui.ScaleYBar->blockSignals(false);
-    ui.ScaleZBar->blockSignals(true);
-    ui.ScaleZBar->setValue(20);
-    ui.ScaleZBar->blockSignals(false);
-    MathmodRef->IsoObjet->InitScaleStruct();
-    MathmodRef->IsoObjet->Isoxyz.Vx = "$X$";
-    MathmodRef->IsoObjet->Isoxyz.Vy = "$Y$";
-    MathmodRef->IsoObjet->Isoxyz.Vz = "$Z$";
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->TorsionIsoSurface();
-    }
-}
 void DrawingOptions::on_SaveThButton_clicked()
 {
 }
