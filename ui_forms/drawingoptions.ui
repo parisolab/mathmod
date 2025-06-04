@@ -2205,7 +2205,22 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <attribute name="title">
                          <string>Equation Generator</string>
                         </attribute>
-                        <layout class="QGridLayout" name="gridLayout_89">
+                        <layout class="QGridLayout" name="gridLayout_80">
+                         <property name="leftMargin">
+                          <number>2</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>5</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>2</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>2</number>
+                         </property>
+                         <property name="horizontalSpacing">
+                          <number>-1</number>
+                         </property>
                          <item row="0" column="0">
                           <widget class="QStackedWidget" name="stackedWidget">
                            <property name="currentIndex">
@@ -2713,6 +2728,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
                            </widget>
                            <widget class="QWidget" name="page_10">
                             <layout class="QGridLayout" name="gridLayout_85">
+                             <property name="leftMargin">
+                              <number>2</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>2</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>2</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>2</number>
+                             </property>
                              <item row="0" column="0">
                               <widget class="QToolBox" name="toolBox_3">
                                <property name="currentIndex">
@@ -2723,17 +2750,32 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <rect>
                                   <x>0</x>
                                   <y>0</y>
-                                  <width>158</width>
-                                  <height>105</height>
+                                  <width>543</width>
+                                  <height>125</height>
                                  </rect>
                                 </property>
                                 <attribute name="label">
                                  <string>Scale</string>
                                 </attribute>
                                 <layout class="QGridLayout" name="gridLayout_86">
+                                 <property name="leftMargin">
+                                  <number>2</number>
+                                 </property>
+                                 <property name="topMargin">
+                                  <number>5</number>
+                                 </property>
+                                 <property name="rightMargin">
+                                  <number>2</number>
+                                 </property>
+                                 <property name="bottomMargin">
+                                  <number>5</number>
+                                 </property>
                                  <item row="0" column="0">
                                   <layout class="QVBoxLayout" name="verticalLayout_16">
                                    <property name="spacing">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="leftMargin">
                                     <number>0</number>
                                    </property>
                                    <item>
@@ -2869,8 +2911,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <rect>
                                   <x>0</x>
                                   <y>0</y>
-                                  <width>214</width>
-                                  <height>105</height>
+                                  <width>543</width>
+                                  <height>125</height>
                                  </rect>
                                 </property>
                                 <attribute name="label">
@@ -3021,8 +3063,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <rect>
                                   <x>0</x>
                                   <y>0</y>
-                                  <width>487</width>
-                                  <height>105</height>
+                                  <width>543</width>
+                                  <height>125</height>
                                  </rect>
                                 </property>
                                 <attribute name="label">
@@ -4105,46 +4147,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </widget>
                         </item>
                        </layout>
-                      </item>
-                     </layout>
-                    </widget>
-                    <widget class="QWidget" name="EquaGen">
-                     <attribute name="title">
-                      <string>Equations Generator</string>
-                     </attribute>
-                     <layout class="QGridLayout" name="gridLayout_80">
-                      <item row="0" column="0">
-                       <widget class="QToolBox" name="toolBox">
-                        <property name="currentIndex">
-                         <number>1</number>
-                        </property>
-                        <widget class="QWidget" name="Thick">
-                         <property name="geometry">
-                          <rect>
-                           <x>0</x>
-                           <y>0</y>
-                           <width>100</width>
-                           <height>30</height>
-                          </rect>
-                         </property>
-                         <attribute name="label">
-                          <string>Thickness</string>
-                         </attribute>
-                        </widget>
-                        <widget class="QWidget" name="page_6">
-                         <property name="geometry">
-                          <rect>
-                           <x>0</x>
-                           <y>0</y>
-                           <width>45</width>
-                           <height>16</height>
-                          </rect>
-                         </property>
-                         <attribute name="label">
-                          <string>ScaleXYZ</string>
-                         </attribute>
-                        </widget>
-                       </widget>
                       </item>
                      </layout>
                     </widget>
