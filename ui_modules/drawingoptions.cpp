@@ -5654,7 +5654,7 @@ void DrawingOptions::on_TorsionZ_valueChanged(int value)
     }
 }
 void DrawingOptions::on_InitializeButton_clicked()
-{
+{/*
     MathmodRef->IsoObjet->InitTorsionStruct();
     ui.TorsionX->blockSignals(true);
     ui.TorsionX->setValue(50);
@@ -5672,7 +5672,7 @@ void DrawingOptions::on_InitializeButton_clicked()
     if (!MathmodRef->IsoObjet->isRunning())
     {
         MathmodRef->TorsionIsoSurface();
-    }
+    }*/
 }
 void DrawingOptions::on_SaveThButton_clicked()
 {
