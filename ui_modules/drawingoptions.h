@@ -359,9 +359,9 @@ public slots:
     void on_InitializeButton_clicked();
     void on_SaveThButton_clicked();
     void on_SaveTrButton_clicked();
-    void on_TorsionX_2_valueChanged(int);
-    void on_TorsionY_2_valueChanged(int);
-    void on_TorsionZ_2_valueChanged(int);
+    void on_TorsionX_2_valueChanged();
+    void on_TorsionY_2_valueChanged();
+    void on_TorsionZ_2_valueChanged();
     void on_SaveTrButton_2_clicked();
     void on_InitializeButton_2_clicked();
     void on_SaveThButton_2_clicked();
