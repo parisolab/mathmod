@@ -5700,13 +5700,13 @@ void DrawingOptions::on_SaveTrButton_clicked()
     (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$y$","$Y$");
     (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$z$","$Z$");
 }
-void DrawingOptions::on_TorsionX_2_valueChanged(int value)
+void DrawingOptions::on_TorsionX_2_valueChanged()
 {
 }
-void DrawingOptions::on_TorsionY_2_valueChanged(int value)
+void DrawingOptions::on_TorsionY_2_valueChanged()
 {
 }
-void DrawingOptions::on_TorsionZ_2_valueChanged(int value)
+void DrawingOptions::on_TorsionZ_2_valueChanged()
 {
 }
 void DrawingOptions::on_SaveTrButton_2_clicked()
