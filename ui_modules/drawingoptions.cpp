@@ -5718,6 +5718,3 @@ void DrawingOptions::on_InitializeButton_2_clicked()
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
 }
-void DrawingOptions::on_ApplyThicknessVal_2_clicked()
-{
-}

@@ -352,7 +352,6 @@ public slots:
     void on_ScaleXBar_valueChanged(int);
     void on_ScaleYBar_valueChanged(int);
     void on_ScaleZBar_valueChanged(int);
-    void on_ApplyThicknessVal_clicked();
     void on_TorsionX_valueChanged(int);
     void on_TorsionY_valueChanged(int);
     void on_TorsionZ_valueChanged(int);
@@ -365,7 +364,7 @@ public slots:
     void on_SaveTrButton_2_clicked();
     void on_InitializeButton_2_clicked();
     void on_SaveThButton_2_clicked();
-    void on_ApplyThicknessVal_2_clicked();
+    void on_ApplyThicknessVal_clicked();
 
 private slots:
     void on_actionbox_triggered();
