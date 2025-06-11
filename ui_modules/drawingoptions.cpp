@@ -5589,11 +5589,11 @@ void DrawingOptions::on_ScaleZBar_valueChanged(int vz)
 }
 void DrawingOptions::on_ApplyThicknessVal_clicked()
 {
-    /*MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
     MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal->text().replace(" ", "");
     MathmodRef->IsoObjet->IsoTh.OriginalSurf = ui.FctOriginal->isChecked();
     MathmodRef->IsoObjet->IsoTh.UpperSurf = ui.UpperFct->isChecked();
-    MathmodRef->IsoObjet->IsoTh.BottomSurf = ui.DownFct->isChecked();*/
+    MathmodRef->IsoObjet->IsoTh.BottomSurf = ui.DownFct->isChecked();
     if (!MathmodRef->IsoObjet->isRunning())
     {
         MathmodRef->AddThicknessToIsoSurface();
