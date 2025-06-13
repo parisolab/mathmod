@@ -5653,27 +5653,6 @@ void DrawingOptions::on_TorsionZ_valueChanged(int value)
         MathmodRef->TorsionIsoSurface();
     }
 }
-void DrawingOptions::on_InitializeButton_clicked()
-{
-    MathmodRef->IsoObjet->InitTorsionStruct();
-    ui.TorsionX->blockSignals(true);
-    ui.TorsionX->setValue(50);
-    ui.TorsionX->blockSignals(false);
-    ui.TorsionY->blockSignals(true);
-    ui.TorsionY->setValue(50);
-    ui.TorsionY->blockSignals(false);
-    ui.TorsionZ->blockSignals(true);
-    ui.TorsionZ->setValue(50);
-    ui.TorsionZ->blockSignals(false);
-    MathmodRef->IsoObjet->Isoxyz.Vx="$X$";
-    MathmodRef->IsoObjet->Isoxyz.Vy="$Y$";
-    MathmodRef->IsoObjet->Isoxyz.Vz="$Z$";
-    MathmodRef->IsoObjet->InitTorsionStruct();
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->TorsionIsoSurface();
-    }
-}
 void DrawingOptions::on_SaveThButton_clicked()
 {
 }
@@ -5712,9 +5691,28 @@ void DrawingOptions::on_TorsionZ_2_valueChanged()
 void DrawingOptions::on_SaveTrButton_2_clicked()
 {
 }
-void DrawingOptions::on_InitializeButton_2_clicked()
-{
-}
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
 }
+void DrawingOptions::on_InitializeTorsionButton_clicked()
+{
+    MathmodRef->IsoObjet->InitTorsionStruct();
+    ui.TorsionX->blockSignals(true);
+    ui.TorsionX->setValue(50);
+    ui.TorsionX->blockSignals(false);
+    ui.TorsionY->blockSignals(true);
+    ui.TorsionY->setValue(50);
+    ui.TorsionY->blockSignals(false);
+    ui.TorsionZ->blockSignals(true);
+    ui.TorsionZ->setValue(50);
+    ui.TorsionZ->blockSignals(false);
+    MathmodRef->IsoObjet->Isoxyz.Vx="$X$";
+    MathmodRef->IsoObjet->Isoxyz.Vy="$Y$";
+    MathmodRef->IsoObjet->Isoxyz.Vz="$Z$";
+    MathmodRef->IsoObjet->InitTorsionStruct();
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->TorsionIsoSurface();
+    }
+}
+
