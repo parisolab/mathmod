@@ -474,7 +474,7 @@ ErrorMessage  Iso3D::parse_expression2()
         }
     }
     // Final step: parsing
-    /*for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
@@ -482,19 +482,6 @@ ErrorMessage  Iso3D::parse_expression2()
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 masterthread->stdError.ErrorType = workerthreads[nbthreads].implicitFunctionParser[index].ErrorMsg();
-                return masterthread->stdError;
-            }
-        }
-    }*/
-    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-    {
-        for(uint index=0; index< masterthread->componentsNumber; index++)
-        {
-            std::string str = ("FFFxyz"+QString::number(index)+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk)").toStdString();
-            const char* p = str.c_str();
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(p, "x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
-            {
-                masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
             }
         }
@@ -1277,13 +1264,6 @@ ErrorMessage IsoMasterThread::ParseExpression()
         }
     for(uint i=0; i<componentsNumber; i++)
     {
-        std::string str = ("FFFxyz"+QString::number(i)+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk)").toStdString();
-        const char* p = str.c_str();
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(p,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
-        {
-            stdError.strError = ImplicitStructs[i].fxyz;
-            return stdError;
-        }
         if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,IsoParametersList.FunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
