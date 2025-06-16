@@ -1622,8 +1622,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         break;
     case ISO_FUNCT:
         arg = "Funct";
-        argnotnull = MathmodRef->IsoObjet->masterthread->functnotnull =
-                         QObj[arg].isArray();
+        argnotnull = MathmodRef->IsoObjet->masterthread->functnotnull = true;
         break;
     case ISO_IMPORTFUNCT:
         arg = "Import";
@@ -1688,10 +1687,18 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         }
         break;
     case ISO_FUNCT:
+        if(result !="")
+            result +=";";
+        for(uint ii=0;ii<MathmodRef->IsoObjet->masterthread->componentsNumber; ii++)
+        {
+            result += "FFFxyz"+QString::number(ii)+"="+ MathmodRef->RootObjet.CurrentTreestruct.fxyz[ii] ;
+            if((ii+1)<MathmodRef->IsoObjet->masterthread->componentsNumber)
+                result += ";";
+        }
         if (argnotnull)
         {
             MathmodRef->IsoObjet->masterthread->Funct = result.toStdString();
-            MathmodRef->IsoObjet->masterthread->FunctSize = uint(lst.size());
+            MathmodRef->IsoObjet->masterthread->FunctSize = uint(lst.size())+MathmodRef->IsoObjet->masterthread->componentsNumber;
             MathmodRef->RootObjet.CurrentTreestruct.Funct = result.split(";",Qt::SkipEmptyParts);
         }
         else
