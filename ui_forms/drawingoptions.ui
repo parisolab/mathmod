@@ -503,7 +503,7 @@
                         <enum>QTabWidget::Rounded</enum>
                        </property>
                        <property name="currentIndex">
-                        <number>2</number>
+                        <number>0</number>
                        </property>
                        <widget class="QWidget" name="FormulasPage1_2">
                         <attribute name="title">
@@ -2750,8 +2750,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <rect>
                                   <x>0</x>
                                   <y>0</y>
-                                  <width>543</width>
-                                  <height>125</height>
+                                  <width>138</width>
+                                  <height>91</height>
                                  </rect>
                                 </property>
                                 <attribute name="label">
@@ -3063,8 +3063,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <rect>
                                   <x>0</x>
                                   <y>0</y>
-                                  <width>543</width>
-                                  <height>125</height>
+                                  <width>142</width>
+                                  <height>99</height>
                                  </rect>
                                 </property>
                                 <attribute name="label">
