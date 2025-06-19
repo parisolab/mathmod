@@ -1735,7 +1735,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         break;
     }
 }
-
 void DrawingOptions::OptionalParScriptFieldprocess(
     const QJsonObject &QObj, OptionnalParScriptFIELD idx)
 {

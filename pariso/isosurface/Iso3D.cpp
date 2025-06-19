@@ -427,13 +427,30 @@ ErrorMessage  Iso3D::parse_expression2()
             for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
+
+
+            /*
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],masterthread->IsoParametersList.BasicFunctParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 masterthread->stdError.ErrorType = workerthreads[nbthreads].Fct[ii].ErrorMsg();
                 return masterthread->stdError;
             }
+            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, masterthread->nbvariables);*/
+
+
+            std::string str1 = QString("x,y,z,t").toStdString();
+            std::string str2 = QString("x,y,z,t,i_indx,j_indx,k_indx,max_ijk").toStdString();
+            const char* p = (ii < (masterthread->FunctSize - masterthread->componentsNumber)) ?   str1.c_str() : str2.c_str();
+
+            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii], p)) >= 0)
+            {
+                masterthread->stdError.strError = masterthread->Functs[ii];
+                return masterthread->stdError;
+            }
             workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, masterthread->nbvariables);
+
+
         }
     }
     //Add defined constantes:
@@ -464,6 +481,7 @@ ErrorMessage  Iso3D::parse_expression2()
                     masterthread->ImportedInternalFunctions[m].name,
                     masterthread->ImportedInternalFunctions[m].ptr,
                     masterthread->ImportedInternalFunctions[m].param);
+            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[     masterthread->FunctSize -(masterthread->componentsNumber -i )      ], workerthreads[nbthreads].Fct[   masterthread->FunctSize -(masterthread->componentsNumber -i )  ]);
             for(uint j=0; j<masterthread->FunctSize; j++)
             {
                 if(masterthread->UsedFunct[i*masterthread->FunctSize+j])
@@ -1034,7 +1052,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             }
         }
         for(uint i=0; i<FunctSize; i++)
-        {
+        {/*
             for(uint j=0; j<i; j++)
                 if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
@@ -1045,6 +1063,21 @@ ErrorMessage IsoMasterThread::ParserIso()
                 return stdError;
             }
             Fct[i].AllocateStackMemory(StackFactor, nbvariables);
+
+            */
+            for(uint j=0; j<i; j++)
+                if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
+                    Fct[i].AddFunction(FunctNames[j], Fct[j]);
+            std::string str1 = QString("x,y,z,t").toStdString();
+            std::string str2 = QString("x,y,z,t,i_indx,j_indx,k_indx,max_ijk").toStdString();
+            const char* p = (i < (FunctSize - componentsNumber)) ?   str1.c_str() : str2.c_str();
+            if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i], p))>=0)
+            {
+                stdError.strError = Functs[i];
+                return stdError;
+            }
+            Fct[i].AllocateStackMemory(StackFactor, nbvariables);
+
         }
     }
     else
@@ -1213,6 +1246,8 @@ ErrorMessage IsoMasterThread::ParserIso()
     //NoiseFunction = new CellNoise();
     for(uint i=0; i<componentsNumber; i++)
     {
+        implicitFunctionParser[i].AddFunction(FunctNames[FunctSize-(componentsNumber-i)], Fct[FunctSize-(componentsNumber-i)]);
+        ParisoConditionParser[i].AddFunction(FunctNames[FunctSize-(componentsNumber-i)], Fct[FunctSize-(componentsNumber-i)]);
         for(uint j=0; j<FunctSize; j++)
         {
             if((UsedFunct[i*FunctSize+j]=(ImplicitStructs[i].fxyz.find(FunctNames[j]) != std::string::npos)))
@@ -1283,13 +1318,13 @@ ErrorMessage IsoMasterThread::ParseExpression()
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             return stdError;
-        }
+        }/*
         if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,IsoParametersList.FunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             stdError.ErrorType = implicitFunctionParser[i].ErrorMsg();
             return stdError;
-        }
+        }*/
         if(cndnotnull && (ImplicitStructs[i].cnd!=""))
         {
             if ((stdError.iErrorIndex = ParisoConditionParser[i].Parse(ImplicitStructs[i].cnd,IsoParametersList.BasicFunctParameters)) >= 0)
