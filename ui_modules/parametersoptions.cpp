@@ -24,7 +24,7 @@
 #include <sstream>
 #include <string>
 int Threads[3]={8,1,64};
-int CalculFactor[6]={4,4,4,8,8};
+int CalculFactor[5]={4,4,4,8,8};
 int InitParGrid=50;
 int InitIsoGrid=40;
 static bool MACOS = false;
