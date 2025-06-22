@@ -851,12 +851,10 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
                 {
                     glUniform1i(uniformThereisRGBA, 0);
                 }
-                {
-                    size_t Offset = scene->componentsinfos.ParisoTriangle[2*(i+idx)]*sizeof( GL_FLOAT);
-                    glDrawElements(
-                        GL_TRIANGLES,
-                        int(3 * scene->componentsinfos.ParisoTriangle[2 * (i + idx) + 1]),GL_UNSIGNED_INT,(void *)(Offset));
-                }
+                size_t Offset = scene->componentsinfos.ParisoTriangle[2*(i+idx)]*sizeof( GL_FLOAT);
+                glDrawElements(
+                    GL_TRIANGLES,
+                    int(3 * scene->componentsinfos.ParisoTriangle[2 * (i + idx) + 1]),GL_UNSIGNED_INT,(void *)(Offset));
             }
         }
     }
