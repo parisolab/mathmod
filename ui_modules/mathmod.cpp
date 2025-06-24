@@ -1489,16 +1489,6 @@ void MathMod::Winitialize_GL()
         PutObjectInsideCube();
         PutObjectInsideCubeOk=true;
     }
-    // check OpenGL error
-    GLenum myGLEnum;
-    while ((myGLEnum = glGetError()) != GL_NO_ERROR) {
-        qDebug("Error_10 : ");
-        /*QMessageBox msgBox;
-        qDebug("Error_10: ");
-        msgBox.setText("Error_10 : " + QString::number(myGLEnum));
-        msgBox.adjustSize();
-        msgBox.exec();*/
-    }
 }
 
 void MathMod::UpdateGL()
