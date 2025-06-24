@@ -174,7 +174,7 @@ ErrorMessage  Iso3D::IsoMorph()
 }
 void Iso3D::InitTorsionStruct()
 {
-    IsoTr.TorsionX=IsoTr.TorsionY=IsoTr.TorsionZ=0.0;
+    IsoTr.TorsionX=IsoTr.TorsionY=IsoTr.TorsionZ=QString::number(0.0);
     IsoTr.TorsionX="$x$";
     IsoTr.TorsionY="$y$";
     IsoTr.TorsionZ="$z$";
