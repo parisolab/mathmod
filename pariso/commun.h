@@ -210,7 +210,7 @@ struct NoiseParemeters
 
 struct ErrorMessage
 {
-    int iErrorIndex;
+    int iErrorIndex=-2;
     std::string strError;
     std::string ErrorType;
 };
