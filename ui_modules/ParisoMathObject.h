@@ -78,6 +78,7 @@ public:
     TreeStruct CurrentTreestruct;
     std::vector<TreeStruct> CurrentParisoTreestruct;
     QString dotsymbol;
+    QJsonObject PreviousJsonObject[20];
 
 public:
     ParisoMathObject();
