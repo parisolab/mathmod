@@ -200,7 +200,7 @@ void  Iso3D::InitGeneratorStruct()
 ErrorMessage  Iso3D::AddThickness()
 {
     ErrorMessage NoError;
-    QString T = IsoTh.ThExpression;
+    /*QString T = IsoTh.ThExpression;
     // masterthread parsing
     for(uint i=0; i<masterthread->componentsNumber; i++)
     {
@@ -209,13 +209,14 @@ ErrorMessage  Iso3D::AddThickness()
                                                                                                               "*psh((1),(FFFxyz"+I+"(x,y+(1/1000000),z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                             "*psh((2),(FFFxyz"+I+"(x,y,z+(1/1000000),t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                             "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-        if(IsoTh.UpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
-        if(IsoTh.BottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
-        if(IsoTh.OriginalSurf)
+        if(IsoTh.ShowUpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+        if(IsoTh.ShowBottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+        if(IsoTh.ShowOriginalSurf)
         {
-            if(IsoTh.UpperSurf || IsoTh.BottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
+            if(IsoTh.ShowUpperSurf || IsoTh.ShowBottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
             else fct = "(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
         }
+        IsoTh.FctWithTh.append(fct);
         std::string str = fct.toStdString();
         const char* p = str.c_str();
         if ((masterthread->stdError.iErrorIndex = masterthread->implicitFunctionParser[i].Parse(p,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
@@ -234,11 +235,11 @@ ErrorMessage  Iso3D::AddThickness()
                                                                                                                   "*psh((1),(FFFxyz"+I+"(x,y+(1/1000000),z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                                 "*psh((2),(FFFxyz"+I+"(x,y,z+(1/1000000),t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                                 "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-            if(IsoTh.UpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
-            if(IsoTh.BottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
-            if(IsoTh.OriginalSurf)
+            if(IsoTh.ShowUpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+            if(IsoTh.ShowBottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+            if(IsoTh.ShowOriginalSurf)
             {
-                if(IsoTh.UpperSurf || IsoTh.BottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
+                if(IsoTh.ShowUpperSurf || IsoTh.ShowBottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
                 else fct = "(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
             }
             std::string str = fct.toStdString();
@@ -250,6 +251,7 @@ ErrorMessage  Iso3D::AddThickness()
             }
         }
     }
+    */
     return NoError;
 }
 ErrorMessage  Iso3D::ScaleIso()
@@ -427,30 +429,13 @@ ErrorMessage  Iso3D::parse_expression2()
             for(uint jj=0; jj<ii; jj++)
                 if(masterthread->UsedFunct2[ii*masterthread->FunctSize+jj])
                     workerthreads[nbthreads].Fct[ii].AddFunction(masterthread->FunctNames[jj], workerthreads[nbthreads].Fct[jj]);
-
-
-            /*
             if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii],masterthread->IsoParametersList.BasicFunctParameters)) >= 0)
             {
                 masterthread->stdError.strError = masterthread->Functs[ii];
                 masterthread->stdError.ErrorType = workerthreads[nbthreads].Fct[ii].ErrorMsg();
                 return masterthread->stdError;
             }
-            workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, masterthread->nbvariables);*/
-
-
-            std::string str1 = QString("x,y,z,t").toStdString();
-            std::string str2 = QString("x,y,z,t,i_indx,j_indx,k_indx,max_ijk").toStdString();
-            const char* p = (ii < (masterthread->FunctSize - masterthread->componentsNumber)) ?   str1.c_str() : str2.c_str();
-
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].Fct[ii].Parse(masterthread->Functs[ii], p)) >= 0)
-            {
-                masterthread->stdError.strError = masterthread->Functs[ii];
-                return masterthread->stdError;
-            }
             workerthreads[nbthreads].Fct[ii].AllocateStackMemory(masterthread->StackFactor, masterthread->nbvariables);
-
-
         }
     }
     //Add defined constantes:
@@ -481,7 +466,6 @@ ErrorMessage  Iso3D::parse_expression2()
                     masterthread->ImportedInternalFunctions[m].name,
                     masterthread->ImportedInternalFunctions[m].ptr,
                     masterthread->ImportedInternalFunctions[m].param);
-            workerthreads[nbthreads].implicitFunctionParser[i].AddFunction(masterthread->FunctNames[     masterthread->FunctSize -(masterthread->componentsNumber -i )      ], workerthreads[nbthreads].Fct[   masterthread->FunctSize -(masterthread->componentsNumber -i )  ]);
             for(uint j=0; j<masterthread->FunctSize; j++)
             {
                 if(masterthread->UsedFunct[i*masterthread->FunctSize+j])
@@ -492,7 +476,7 @@ ErrorMessage  Iso3D::parse_expression2()
         }
     }
     // Final step: parsing
-    /*for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
     {
         for(uint index=0; index< masterthread->componentsNumber; index++)
         {
@@ -500,19 +484,6 @@ ErrorMessage  Iso3D::parse_expression2()
             {
                 masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 masterthread->stdError.ErrorType = workerthreads[nbthreads].implicitFunctionParser[index].ErrorMsg();
-                return masterthread->stdError;
-            }
-        }
-    }*/
-    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
-    {
-        for(uint index=0; index< masterthread->componentsNumber; index++)
-        {
-            std::string str = ("FFFxyz"+QString::number(index)+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk)").toStdString();
-            const char* p = str.c_str();
-            if ((masterthread->stdError.iErrorIndex = workerthreads[nbthreads].implicitFunctionParser[index].Parse(p, "x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
-            {
-                masterthread->stdError.strError = masterthread->ImplicitStructs[index].fxyz;
                 return masterthread->stdError;
             }
         }
@@ -1052,7 +1023,7 @@ ErrorMessage IsoMasterThread::ParserIso()
             }
         }
         for(uint i=0; i<FunctSize; i++)
-        {/*
+        {
             for(uint j=0; j<i; j++)
                 if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
                     Fct[i].AddFunction(FunctNames[j], Fct[j]);
@@ -1063,21 +1034,6 @@ ErrorMessage IsoMasterThread::ParserIso()
                 return stdError;
             }
             Fct[i].AllocateStackMemory(StackFactor, nbvariables);
-
-            */
-            for(uint j=0; j<i; j++)
-                if( (UsedFunct2[i*FunctSize+j]=(Functs[i].find(FunctNames[j]) != std::string::npos)))
-                    Fct[i].AddFunction(FunctNames[j], Fct[j]);
-            std::string str1 = QString("x,y,z,t").toStdString();
-            std::string str2 = QString("x,y,z,t,i_indx,j_indx,k_indx,max_ijk").toStdString();
-            const char* p = (i < (FunctSize - componentsNumber)) ?   str1.c_str() : str2.c_str();
-            if ((stdError.iErrorIndex = Fct[i].Parse(Functs[i], p))>=0)
-            {
-                stdError.strError = Functs[i];
-                return stdError;
-            }
-            Fct[i].AllocateStackMemory(StackFactor, nbvariables);
-
         }
     }
     else
@@ -1246,8 +1202,6 @@ ErrorMessage IsoMasterThread::ParserIso()
     //NoiseFunction = new CellNoise();
     for(uint i=0; i<componentsNumber; i++)
     {
-        implicitFunctionParser[i].AddFunction(FunctNames[FunctSize-(componentsNumber-i)], Fct[FunctSize-(componentsNumber-i)]);
-        ParisoConditionParser[i].AddFunction(FunctNames[FunctSize-(componentsNumber-i)], Fct[FunctSize-(componentsNumber-i)]);
         for(uint j=0; j<FunctSize; j++)
         {
             if((UsedFunct[i*FunctSize+j]=(ImplicitStructs[i].fxyz.find(FunctNames[j]) != std::string::npos)))
@@ -1263,8 +1217,8 @@ ErrorMessage IsoMasterThread::ParserIso()
     }
     for (uint m=0; m<ImportedInternalFunctions.size(); m++)
         NoiseParser->AddFunction(ImportedInternalFunctions[m].name,
-                                              ImportedInternalFunctions[m].ptr,
-                                              ImportedInternalFunctions[m].param);
+                                 ImportedInternalFunctions[m].ptr,
+                                 ImportedInternalFunctions[m].param);
     return ParseExpression();
 }
 ErrorMessage IsoMasterThread::ParseExpression()
@@ -1312,19 +1266,12 @@ ErrorMessage IsoMasterThread::ParseExpression()
         }
     for(uint i=0; i<componentsNumber; i++)
     {
-        std::string str = ("FFFxyz"+QString::number(i)+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk)").toStdString();
-        const char* p = str.c_str();
-        if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(p,"x,y,z,t,i_indx,j_indx,k_indx,max_ijk")) >= 0)
-        {
-            stdError.strError = ImplicitStructs[i].fxyz;
-            return stdError;
-        }/*
         if ((stdError.iErrorIndex = implicitFunctionParser[i].Parse(ImplicitStructs[i].fxyz,IsoParametersList.FunctParameters)) >= 0)
         {
             stdError.strError = ImplicitStructs[i].fxyz;
             stdError.ErrorType = implicitFunctionParser[i].ErrorMsg();
             return stdError;
-        }*/
+        }
         if(cndnotnull && (ImplicitStructs[i].cnd!=""))
         {
             if ((stdError.iErrorIndex = ParisoConditionParser[i].Parse(ImplicitStructs[i].cnd,IsoParametersList.BasicFunctParameters)) >= 0)

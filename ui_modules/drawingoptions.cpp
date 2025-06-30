@@ -1622,7 +1622,7 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         break;
     case ISO_FUNCT:
         arg = "Funct";
-        argnotnull = MathmodRef->IsoObjet->masterthread->functnotnull = true;
+        argnotnull = MathmodRef->IsoObjet->masterthread->functnotnull = QObj[arg].isArray();
         break;
     case ISO_IMPORTFUNCT:
         arg = "Import";
@@ -1687,14 +1687,6 @@ void DrawingOptions::OptionalIsoScriptFieldprocess(
         }
         break;
     case ISO_FUNCT:
-        if(result !="")
-            result +=";";
-        for(uint ii=0;ii<MathmodRef->IsoObjet->masterthread->componentsNumber; ii++)
-        {
-            result += "FFFxyz"+QString::number(ii)+"="+ MathmodRef->RootObjet.CurrentTreestruct.fxyz[ii] ;
-            if((ii+1)<MathmodRef->IsoObjet->masterthread->componentsNumber)
-                result += ";";
-        }
         if (argnotnull)
         {
             MathmodRef->IsoObjet->masterthread->Funct = result.toStdString();
@@ -5593,24 +5585,6 @@ void DrawingOptions::on_ScaleZBar_valueChanged(int vz)
         MathmodRef->ScaleIsoSurface();
     }
 }
-void DrawingOptions::on_ApplyThicknessVal_clicked()
-{
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
-    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal->text().replace(" ", "");
-    MathmodRef->IsoObjet->IsoTh.OriginalSurf = ui.FctOriginal->isChecked();
-    MathmodRef->IsoObjet->IsoTh.UpperSurf = ui.UpperFct->isChecked();
-    MathmodRef->IsoObjet->IsoTh.BottomSurf = ui.DownFct->isChecked();
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->AddThicknessToIsoSurface();
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Invalid number");
-        msgBox.exec();
-    }
-}
 void DrawingOptions::on_TorsionX_valueChanged(int value)
 {
     // Apply the torsion along the X axis
@@ -5659,9 +5633,6 @@ void DrawingOptions::on_TorsionZ_valueChanged(int value)
         MathmodRef->TorsionIsoSurface();
     }
 }
-void DrawingOptions::on_SaveThButton_clicked()
-{
-}
 void DrawingOptions::on_SaveTrButton_clicked()
 {
     (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$X$", MathmodRef->IsoObjet->IsoTr.TorsionX);
@@ -5685,6 +5656,9 @@ void DrawingOptions::on_SaveTrButton_clicked()
     (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$y$","$Y$");
     (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$z$","$Z$");
 }
+void DrawingOptions::on_SaveThButton_clicked()
+{
+}
 void DrawingOptions::on_TorsionX_2_valueChanged()
 {
 }
@@ -5695,9 +5669,6 @@ void DrawingOptions::on_TorsionZ_2_valueChanged()
 {
 }
 void DrawingOptions::on_SaveTrButton_2_clicked()
-{
-}
-void DrawingOptions::on_SaveThButton_2_clicked()
 {
 }
 void DrawingOptions::on_InitializeTorsionButton_clicked()
@@ -5721,4 +5692,142 @@ void DrawingOptions::on_InitializeTorsionButton_clicked()
         MathmodRef->TorsionIsoSurface();
     }
 }
+void DrawingOptions::on_SaveThButton_2_clicked()
+{
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc;
+    QJsonObject tmp,tmp2;
+    bool FxyzWellSet=false;
 
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
+    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
+    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal_2->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct_2->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
+    tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    //Start Store current JsonObject
+    MathmodRef->RootObjet.PreviousJsonObject[(MathmodRef->RootObjet.IndexCurrentJsonObject+1)%(20)]=tmp;
+    MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1)%(20);
+    //End Store current JsonObject
+
+    //tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    tmp2= tmp["Iso3D"].toObject();
+    FxyzArray = tmp2["Fxyz"].toArray();
+    FctArray = tmp2["Funct"].toArray();
+
+    QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
+    // masterthread parsing
+    for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
+    {
+        QString I=QString::number(i);
+        QString fxyzt=FxyzArray.at(i).toString();
+
+        QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+(1/1000000),y,z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
+                                                                                                              "*psh((1),(fffxyz"+I+"(x,y+(1/1000000),z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
+                                                                                            "*psh((2),(fffxyz"+I+"(x,y,z+(1/1000000),t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
+                                                                                            "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+        if(MathmodRef->IsoObjet->IsoTh.ShowUpperSurf)  fct+= "*(fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t))";
+        if(MathmodRef->IsoObjet->IsoTh.ShowBottomSurf)  fct+= "*(fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t))";
+        if(MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf)
+        {
+            fct+= "*(fffxyz"+I+"(x,y,z,t))";
+        }
+
+        if(!fxyzt.contains("fffxyz"))
+            FctArray.append("fffxyz"+I+"="+fxyzt);
+        if(MathmodRef->IsoObjet->IsoTh.ShowUpperSurf || MathmodRef->IsoObjet->IsoTh.ShowBottomSurf)
+        {
+            FctArray.append(fct);
+        }
+        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+    }
+
+    tmp2["Fxyz"] = NewFxyzArray;
+    tmp2["Funct"]= FctArray;
+
+    if (!tmp2["Vect"].isArray())
+    {
+        (Vetc=tmp2["Vect"].toArray()).append("4");
+        tmp2["Vect"]= Vetc;
+    }
+    tmp["Iso3D"] = tmp2;
+    /*
+    array2 = tmp2["Position"].toArray();
+    position = array2.empty() ? 0 : array2.size();
+    if (names == 0)
+        array2.append(addnewparam.ui.PosEdit->text());
+    else
+        for (int i = 1; i * names <= position; i++)
+            array2.insert(i * names + i - 1, addnewparam.ui.PosEdit->text());
+    tmp2["Position"] = array2;
+    array2 = tmp2["Max"].toArray();
+    position = array2.empty() ? 0 : array2.size();
+    if (names == 0)
+        array2.append(addnewparam.ui.MaxEdit->text());
+    else
+        for (int i = 1; i * names <= position; i++)
+            array2.insert(i * names + i - 1, addnewparam.ui.MaxEdit->text());
+    tmp2["Max"] = array2;
+    array2 = tmp2["Min"].toArray();
+    position = array2.empty() ? 0 : array2.size();
+    if (names == 0)
+        array2.append(addnewparam.ui.MinEdit->text());
+    else
+        for (int i = 1; i * names <= position; i++)
+            array2.insert(i * names + i - 1, addnewparam.ui.MinEdit->text());
+    tmp2["Min"] = array2;
+    array2 = tmp2["Step"].toArray();
+    position = array2.empty() ? 0 : array2.size();
+    if (names == 0)
+        array2.append(addnewparam.ui.StepEdit->text());
+    else
+        for (int i = 1; i * names <= position; i++)
+            array2.insert(i * names + i - 1, addnewparam.ui.StepEdit->text());
+    tmp2["Step"] = array2;
+    tmp["Sliders"] = tmp2;
+    */
+    // Draw here
+    DrawJsonModel(tmp);
+}
+void DrawingOptions::on_ApplyThicknessVal_2_clicked()
+{
+    if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
+    {
+        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject[(MathmodRef->RootObjet.IndexCurrentJsonObject)%20]);
+        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1)%20;
+    }
+    /*
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
+    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
+    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal_2->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct_2->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->AddThicknessToIsoSurface();
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Invalid number");
+        msgBox.exec();
+    }
+    */
+}
+void DrawingOptions::on_ApplyThicknessVal_clicked()
+{
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
+    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal->text().replace(" ", "");
+    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct->isChecked();
+    if (!MathmodRef->IsoObjet->isRunning())
+    {
+        MathmodRef->AddThicknessToIsoSurface();
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Invalid number");
+        msgBox.exec();
+    }
+}

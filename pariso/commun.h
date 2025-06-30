@@ -111,9 +111,11 @@ enum PreviousAction
 struct IsoThichnessParam
 {
     QString ThExpression = "";
-    bool OriginalSurf = true;
-    bool UpperSurf = true;
-    bool BottomSurf = false;
+    QString FctOriginal = "";
+    QStringList FctWithTh;
+    bool ShowOriginalSurf = true;
+    bool ShowUpperSurf = true;
+    bool ShowBottomSurf = false;
 };
 struct IsoScaleParam
 {

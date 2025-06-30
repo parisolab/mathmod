@@ -16,7 +16,7 @@
         "ScriptEditorFontSize": 12
     },
     "StartOptions": {
-        "Model": "CloseIso_1"
+        "Model": "Gyroid"
     },
     "ThreadsConfig": {
         "AutoDetect": true,

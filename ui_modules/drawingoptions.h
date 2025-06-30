@@ -367,6 +367,7 @@ public slots:
 private slots:
     void on_actionbox_triggered();
     void on_InitializeTorsionButton_clicked();
+    void on_ApplyThicknessVal_2_clicked();
 };
 
 #endif
