@@ -5740,12 +5740,9 @@ void DrawingOptions::on_SaveThButton_2_clicked()
                     "*psh((1),(fffxyz"+I+"(x,y+(1/1000000),z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
                     "*psh((2),(fffxyz"+I+"(x,y,z+(1/1000000),t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
                     "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-        /*if(MathmodRef->IsoObjet->IsoTh.ShowUpperSurf)  */fct+= "*(if(ShowUpperSurf=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
-        /*if(MathmodRef->IsoObjet->IsoTh.ShowBottomSurf)  */fct+= "*(if(ShowBottomSurf=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-        /*if(MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf)*/
-        {
-            fct+= "*(if(ShowOriginalSurf=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-        }
+                fct+= "*(if(ShowUpperSurf=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowBottomSurf=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowOriginalSurf=(1),fffxyz"+I+"(x,y,z,t),(1)))";
 
         if(!fxyzt.contains("fffxyz"))
             FctArray.append("fffxyz"+I+"="+fxyzt);
