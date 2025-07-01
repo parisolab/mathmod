@@ -5694,9 +5694,9 @@ void DrawingOptions::on_InitializeTorsionButton_clicked()
 }
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
-    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc;
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray;
     QJsonObject tmp,tmp2;
-    bool FxyzWellSet=false;
+    QString Bool;
 
     MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
     MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
@@ -5713,6 +5713,21 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     tmp2= tmp["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
+    ConstArray = tmp2["Const"].toArray();
+    // Clear Const Array from previous values:
+    for (int i = 0; i < ConstArray.size(); i++)
+    {
+        if(ConstArray[i].toString().contains("Show"))
+            ConstArray.removeAt(i);
+    }
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
+    ConstArray.append("ShowBottomSurf="+Bool);
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowUpperSurf) ? "1" : "0");
+    ConstArray.append("ShowUpperSurf="+Bool);
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
+    ConstArray.append("ShowOriginalSurf="+Bool);
+
+
 
     QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
     // masterthread parsing
@@ -5722,14 +5737,14 @@ void DrawingOptions::on_SaveThButton_2_clicked()
         QString fxyzt=FxyzArray.at(i).toString();
 
         QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+(1/1000000),y,z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
-                                                                                                              "*psh((1),(fffxyz"+I+"(x,y+(1/1000000),z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
-                                                                                            "*psh((2),(fffxyz"+I+"(x,y,z+(1/1000000),t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
-                                                                                            "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-        if(MathmodRef->IsoObjet->IsoTh.ShowUpperSurf)  fct+= "*(fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t))";
-        if(MathmodRef->IsoObjet->IsoTh.ShowBottomSurf)  fct+= "*(fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t))";
-        if(MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf)
+                    "*psh((1),(fffxyz"+I+"(x,y+(1/1000000),z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
+                    "*psh((2),(fffxyz"+I+"(x,y,z+(1/1000000),t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
+                    "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+        /*if(MathmodRef->IsoObjet->IsoTh.ShowUpperSurf)  */fct+= "*(if(ShowUpperSurf=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+        /*if(MathmodRef->IsoObjet->IsoTh.ShowBottomSurf)  */fct+= "*(if(ShowBottomSurf=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+        /*if(MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf)*/
         {
-            fct+= "*(fffxyz"+I+"(x,y,z,t))";
+            fct+= "*(if(ShowOriginalSurf=(1),fffxyz"+I+"(x,y,z,t),(1)))";
         }
 
         if(!fxyzt.contains("fffxyz"))
@@ -5743,6 +5758,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
 
     tmp2["Fxyz"] = NewFxyzArray;
     tmp2["Funct"]= FctArray;
+    tmp2["Const"]= ConstArray;
 
     if (!tmp2["Vect"].isArray())
     {
