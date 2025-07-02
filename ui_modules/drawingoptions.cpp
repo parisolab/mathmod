@@ -5709,7 +5709,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1)%(20);
     //End Store current JsonObject
 
-    //tmp = MathmodRef->RootObjet.CurrentJsonObject;
     tmp2= tmp["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
