@@ -5772,41 +5772,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
         tmp2["Vect"]= Vetc;
     }
     tmp["Iso3D"] = tmp2;
-    /*
-    array2 = tmp2["Position"].toArray();
-    position = array2.empty() ? 0 : array2.size();
-    if (names == 0)
-        array2.append(addnewparam.ui.PosEdit->text());
-    else
-        for (int i = 1; i * names <= position; i++)
-            array2.insert(i * names + i - 1, addnewparam.ui.PosEdit->text());
-    tmp2["Position"] = array2;
-    array2 = tmp2["Max"].toArray();
-    position = array2.empty() ? 0 : array2.size();
-    if (names == 0)
-        array2.append(addnewparam.ui.MaxEdit->text());
-    else
-        for (int i = 1; i * names <= position; i++)
-            array2.insert(i * names + i - 1, addnewparam.ui.MaxEdit->text());
-    tmp2["Max"] = array2;
-    array2 = tmp2["Min"].toArray();
-    position = array2.empty() ? 0 : array2.size();
-    if (names == 0)
-        array2.append(addnewparam.ui.MinEdit->text());
-    else
-        for (int i = 1; i * names <= position; i++)
-            array2.insert(i * names + i - 1, addnewparam.ui.MinEdit->text());
-    tmp2["Min"] = array2;
-    array2 = tmp2["Step"].toArray();
-    position = array2.empty() ? 0 : array2.size();
-    if (names == 0)
-        array2.append(addnewparam.ui.StepEdit->text());
-    else
-        for (int i = 1; i * names <= position; i++)
-            array2.insert(i * names + i - 1, addnewparam.ui.StepEdit->text());
-    tmp2["Step"] = array2;
-    tmp["Sliders"] = tmp2;
-    */
     // Draw here
     DrawJsonModel(tmp);
 }
