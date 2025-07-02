@@ -5714,25 +5714,31 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
-    // Clear Const Array from previous values:
+    int ThCount=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(!(ConstArraytmp[i].toString().contains("Show") || ConstArraytmp[i].toString().contains("epsilon")  || ConstArraytmp[i].toString().contains("ScalVar")))
+        if(ConstArraytmp[i].toString().contains("ThCount"))
         {
-            ConstArray.append(ConstArraytmp[i].toString());
+            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
         }
+        else
+            ConstArray.append(ConstArraytmp[i].toString());
     }
+    ThCount = ThCount+1;
+    ConstArray.append("ThCount="+QString::number(ThCount));
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
-    ConstArray.append("ShowBottomSurf="+Bool);
+    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowUpperSurf) ? "1" : "0");
-    ConstArray.append("ShowUpperSurf="+Bool);
+    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
-    ConstArray.append("ShowOriginalSurf="+Bool);
-    ConstArray.append("epsilon=1/100000");
-    ConstArray.append("ScalVar=("+QString::number((ui.SscrollBar->value()- (ui.SscrollBar->maximum()-ui.SscrollBar->minimum())/2.)/10. )+")");
+    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
+    ConstArray.append("ScalVar_"+QString::number(ThCount)+"=("+QString::number((ui.SscrollBar->value()- (ui.SscrollBar->maximum()-ui.SscrollBar->minimum())/2.)/10. )+")");
 
-    QString T = "ScalVar*"+MathmodRef->IsoObjet->IsoTh.ThExpression;
-    // masterthread parsing
+    if(ThCount==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
+    QString T = "ScalVar_"+QString::number(ThCount)+"*"+MathmodRef->IsoObjet->IsoTh.ThExpression;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
         QString I=QString::number(i);
@@ -5742,9 +5748,9 @@ void DrawingOptions::on_SaveThButton_2_clicked()
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-                fct+= "*(if(ShowUpperSurf=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowBottomSurf=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowOriginalSurf=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+                fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
 
         if(!fxyzt.contains("fffxyz"))
             FctArray.append("fffxyz"+I+"="+fxyzt);
