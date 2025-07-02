@@ -5694,7 +5694,7 @@ void DrawingOptions::on_InitializeTorsionButton_clicked()
 }
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
-    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray;
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;
     QJsonObject tmp,tmp2;
     QString Bool;
 
@@ -5713,12 +5713,14 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     tmp2= tmp["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
-    ConstArray = tmp2["Const"].toArray();
+    ConstArraytmp = tmp2["Const"].toArray();
     // Clear Const Array from previous values:
-    for (int i = 0; i < ConstArray.size(); i++)
+    for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(ConstArray[i].toString().contains("Show"))
-            ConstArray.removeAt(i);
+        if(!(ConstArraytmp[i].toString().contains("Show") || ConstArraytmp[i].toString().contains("epsilon")  || ConstArraytmp[i].toString().contains("ScalVar")))
+        {
+            ConstArray.append(ConstArraytmp[i].toString());
+        }
     }
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
     ConstArray.append("ShowBottomSurf="+Bool);
@@ -5726,19 +5728,19 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     ConstArray.append("ShowUpperSurf="+Bool);
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
     ConstArray.append("ShowOriginalSurf="+Bool);
+    ConstArray.append("epsilon=1/100000");
+    ConstArray.append("ScalVar=("+QString::number((ui.SscrollBar->value()- (ui.SscrollBar->maximum()-ui.SscrollBar->minimum())/2.)/10. )+")");
 
-
-
-    QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
+    QString T = "ScalVar*"+MathmodRef->IsoObjet->IsoTh.ThExpression;
     // masterthread parsing
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
         QString I=QString::number(i);
         QString fxyzt=FxyzArray.at(i).toString();
 
-        QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+(1/1000000),y,z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
-                    "*psh((1),(fffxyz"+I+"(x,y+(1/1000000),z,t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
-                    "*psh((2),(fffxyz"+I+"(x,y,z+(1/1000000),t)-fffxyz"+I+"(x,y,z,t))/(1/1000000))"
+        QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
                 fct+= "*(if(ShowUpperSurf=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowBottomSurf=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
