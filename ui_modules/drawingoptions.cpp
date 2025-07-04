@@ -5696,7 +5696,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
 {
     QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;
     QJsonObject tmp,tmp2;
-    QString Bool;
+    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
 
     MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
     MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
@@ -5731,7 +5731,19 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
     ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
-    ConstArray.append("ScalVar_"+QString::number(ThCount)+"=("+QString::number((ui.SscrollBar->value()- (ui.SscrollBar->maximum()-ui.SscrollBar->minimum())/2.)/10. )+")");
+    //ConstArray.append("ScalVar_"+QString::number(ThCount)+"=("+QString::number((ui.SscrollBar->value()- (ui.SscrollBar->maximum()-ui.SscrollBar->minimum())/2.)/10. )+")");
+
+
+
+
+    tmpScalVar    = "ScalVar_"+QString::number(ThCount);
+    tmpScalVarmax = "ScalVarMax_"+QString::number(ThCount);
+    tmpScalVarmin = "ScalVarMin_"+QString::number(ThCount);
+    ConstArray.append(tmpScalVar+"="+QString::number(ui.SscrollBar->value()));
+    ConstArray.append(tmpScalVarmax+"="+QString::number(ui.SscrollBar->maximum()));
+    ConstArray.append(tmpScalVarmin+"="+QString::number(ui.SscrollBar->minimum()));
+
+    ScalVar = "(("+tmpScalVar+"-("+tmpScalVarmax+"-"+tmpScalVarmin+")/2)/10)";
 
     if(ThCount==1)
     {
@@ -5746,7 +5758,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
         QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((3),(ScalVar_"+QString::number(ThCount)+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
                 fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
