@@ -5705,8 +5705,8 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     //Start Store current JsonObject
-    MathmodRef->RootObjet.PreviousJsonObject[(MathmodRef->RootObjet.IndexCurrentJsonObject+1)%(20)]=tmp;
-    MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1)%(20);
+    MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
+    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
     //End Store current JsonObject
 
     tmp2= tmp["Iso3D"].toObject();
@@ -5791,8 +5791,8 @@ void DrawingOptions::on_ApplyThicknessVal_2_clicked()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
     {
-        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject[(MathmodRef->RootObjet.IndexCurrentJsonObject)%20]);
-        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1)%20;
+        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
+        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
     }
     /*
     MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;

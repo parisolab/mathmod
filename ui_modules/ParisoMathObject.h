@@ -78,7 +78,7 @@ public:
     TreeStruct CurrentTreestruct;
     std::vector<TreeStruct> CurrentParisoTreestruct;
     QString dotsymbol;
-    QJsonObject PreviousJsonObject[20];
+    QJsonArray PreviousJsonObject;
     int IndexCurrentJsonObject=-1;
 
 public:
