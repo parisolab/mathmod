@@ -5766,11 +5766,8 @@ void DrawingOptions::on_SaveThButton_2_clicked()
         if(!fxyzt.contains("fffxyz"))
             FctArray.append("fffxyz"+I+"="+fxyzt);
 
-        //if(MathmodRef->IsoObjet->IsoTh.ShowUpperSurf || MathmodRef->IsoObjet->IsoTh.ShowBottomSurf)
-        {
-            FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
-            FctArray.append(fct);
-        }
+        FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
+        FctArray.append(fct);
         NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
     }
 
