@@ -5754,7 +5754,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     {
         QString I=QString::number(i);
         QString fxyzt=FxyzArray.at(i).toString();
-
         QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
@@ -5762,19 +5761,15 @@ void DrawingOptions::on_SaveThButton_2_clicked()
                 fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-
         if(!fxyzt.contains("fffxyz"))
             FctArray.append("fffxyz"+I+"="+fxyzt);
-
         FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
         FctArray.append(fct);
         NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
     }
-
     tmp2["Fxyz"] = NewFxyzArray;
     tmp2["Funct"]= FctArray;
     tmp2["Const"]= ConstArray;
-
     if (!tmp2["Vect"].isArray())
     {
         (Vetc=tmp2["Vect"].toArray()).append("4");
@@ -5791,23 +5786,6 @@ void DrawingOptions::on_ApplyThicknessVal_2_clicked()
         DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
     }
-    /*
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
-    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
-    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal_2->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct_2->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->AddThicknessToIsoSurface();
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Invalid number");
-        msgBox.exec();
-    }
-    */
 }
 void DrawingOptions::on_ApplyThicknessVal_clicked()
 {
