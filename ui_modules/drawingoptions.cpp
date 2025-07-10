@@ -5805,3 +5805,13 @@ void DrawingOptions::on_ApplyThicknessVal_clicked()
         msgBox.exec();
     }
 }
+
+void DrawingOptions::on_RedopushButton_clicked()
+{
+    if(MathmodRef->RootObjet.IndexCurrentJsonObject < MathmodRef->RootObjet.PreviousJsonObject.size()-1)
+    {
+        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject+1).toObject());
+        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1);
+    }
+}
+
