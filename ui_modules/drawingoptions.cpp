@@ -5731,10 +5731,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
     ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
-    //ConstArray.append("ScalVar_"+QString::number(ThCount)+"=("+QString::number((ui.SscrollBar->value()- (ui.SscrollBar->maximum()-ui.SscrollBar->minimum())/2.)/10. )+")");
-
-
-
 
     tmpScalVar    = "ScalVar_"+QString::number(ThCount);
     tmpScalVarmax = "ScalVarMax_"+QString::number(ThCount);
@@ -5779,14 +5775,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     // Draw here
     DrawJsonModel(tmp);
 }
-void DrawingOptions::on_ApplyThicknessVal_2_clicked()
-{
-    if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
-    {
-        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
-        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
-    }
-}
 void DrawingOptions::on_ApplyThicknessVal_clicked()
 {
     MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
@@ -5805,7 +5793,14 @@ void DrawingOptions::on_ApplyThicknessVal_clicked()
         msgBox.exec();
     }
 }
-
+void DrawingOptions::on_ApplyThicknessVal_2_clicked()
+{
+    if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
+    {
+        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
+        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
+    }
+}
 void DrawingOptions::on_RedopushButton_clicked()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject < MathmodRef->RootObjet.PreviousJsonObject.size()-1)
