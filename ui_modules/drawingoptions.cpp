@@ -5795,18 +5795,32 @@ void DrawingOptions::on_ApplyThicknessVal_clicked()
 }
 void DrawingOptions::on_ApplyThicknessVal_2_clicked()
 {
+
+}
+void DrawingOptions::on_RedopushButton_clicked()
+{
+}
+
+void DrawingOptions::on_UndoChanges_clicked()
+{
     if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
     {
         DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
     }
 }
-void DrawingOptions::on_RedopushButton_clicked()
+
+void DrawingOptions::on_RedoChanges_clicked()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject < MathmodRef->RootObjet.PreviousJsonObject.size()-1)
     {
         DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject+1).toObject());
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1);
     }
+}
+
+void DrawingOptions::on_Clear_clicked()
+{
+
 }
 
