@@ -367,8 +367,6 @@ public slots:
 private slots:
     void on_actionbox_triggered();
     void on_InitializeTorsionButton_clicked();
-    void on_ApplyThicknessVal_2_clicked();
-    void on_RedopushButton_clicked();
     void on_UndoChanges_clicked();
     void on_RedoChanges_clicked();
     void on_Clear_clicked();

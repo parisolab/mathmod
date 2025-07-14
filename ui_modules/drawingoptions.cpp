@@ -5793,13 +5793,6 @@ void DrawingOptions::on_ApplyThicknessVal_clicked()
         msgBox.exec();
     }
 }
-void DrawingOptions::on_ApplyThicknessVal_2_clicked()
-{
-
-}
-void DrawingOptions::on_RedopushButton_clicked()
-{
-}
 
 void DrawingOptions::on_UndoChanges_clicked()
 {
