@@ -5800,5 +5800,6 @@ void DrawingOptions::on_RedoChanges_clicked()
 void DrawingOptions::on_Clear_clicked()
 {
     MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
+    MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
 
