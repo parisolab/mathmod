@@ -5659,18 +5659,6 @@ void DrawingOptions::on_SaveTrButton_clicked()
 void DrawingOptions::on_SaveThButton_clicked()
 {
 }
-void DrawingOptions::on_TorsionX_2_valueChanged()
-{
-}
-void DrawingOptions::on_TorsionY_2_valueChanged()
-{
-}
-void DrawingOptions::on_TorsionZ_2_valueChanged()
-{
-}
-void DrawingOptions::on_SaveTrButton_2_clicked()
-{
-}
 void DrawingOptions::on_InitializeTorsionButton_clicked()
 {
     MathmodRef->IsoObjet->InitTorsionStruct();
@@ -5793,7 +5781,6 @@ void DrawingOptions::on_ApplyThicknessVal_clicked()
         msgBox.exec();
     }
 }
-
 void DrawingOptions::on_UndoChanges_clicked()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
@@ -5802,7 +5789,6 @@ void DrawingOptions::on_UndoChanges_clicked()
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
     }
 }
-
 void DrawingOptions::on_RedoChanges_clicked()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject < MathmodRef->RootObjet.PreviousJsonObject.size()-1)
@@ -5811,9 +5797,8 @@ void DrawingOptions::on_RedoChanges_clicked()
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1);
     }
 }
-
 void DrawingOptions::on_Clear_clicked()
 {
-
+    MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
 }
 
