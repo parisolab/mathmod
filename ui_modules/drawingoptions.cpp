@@ -462,7 +462,9 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
         }
     }
     else if (MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].isObject())
+    {
         UpdateIsoModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
+    }
     else if (MathmodRef->RootObjet.CurrentJsonObject["Param3D"].isObject() ||
              MathmodRef->RootObjet.CurrentJsonObject["Param3D_C"].isObject())
         UpdatePar3DModelDetailsPage(MathmodRef->RootObjet.CurrentTreestruct);
@@ -1381,6 +1383,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
                 Jobjtmp.remove("Param4D");
             Jobjtmp.remove("Iso3D");
             Jobjtmp.remove("Param3D");
+            Jobjtmp.remove("ParIso");
 
             QJsonDocument document;
             document.setObject(Jobjtmp);
@@ -2034,7 +2037,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 document.setObject(array[i].toObject());
                 MathmodRef->RootObjet.CurrentTreestruct.text =
                     QString(document.toJson());
-
                 MathmodRef->RootObjet.CurrentJsonObject = array[i].toObject();
                 CurrentFormulaType = 1;
                 /// process the new surface
@@ -2169,6 +2171,7 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
 
 void DrawingOptions::on_choice_activated(const QString &arg)
 {
+    QJsonObject tmp;
     // Draw here
     int Result = JSON_choice_activated(arg);
     if (Result != 0)
@@ -2176,6 +2179,12 @@ void DrawingOptions::on_choice_activated(const QString &arg)
         UpdateScriptEditorAndTreeObject();
     }
     //return Result;
+
+    //Start Store current JsonObject
+
+    tmp["Iso3D"] = MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].toObject();
+    MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
+    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
 }
 
 void DrawingOptions::grabGestures(const QList<Qt::GestureType> &gestures)
@@ -3825,6 +3834,8 @@ void DrawingOptions::on_updateButton_clicked()
         on_updateJObject(CurrentObject);
         RunUpdatedJObject(CurrentObject);
     }
+    MathmodRef->RootObjet.PreviousJsonObject.append(CurrentObject);
+    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
 }
 
 void DrawingOptions::on_updateParam_clicked()
@@ -4123,10 +4134,37 @@ void DrawingOptions::on_actionMesh_triggered()
     MathmodRef->Mesh();
 }
 
+ModelType DrawingOptions::Modeltype(const QJsonObject &jsObj)
+{
+    QJsonObject tmp;
+    //Start Store current JsonObject
+    //MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
+    //MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    //End Store current JsonObject
+    if(jsObj["Iso3D"].isObject())
+        return ISO_TYPE;
+    else
+        if(jsObj["Par3D"].isObject())
+            return PAR_TYPE;
+    else
+        if(jsObj["Par4D"].isObject())
+            return PAR_4D_TYPE;
+    else
+        if(jsObj["ParIso"].isObject())
+            return PARISO_TYPE;
+    else
+        return UNDEFINED_TYPE;
+}
 void DrawingOptions::on_calculate_clicked()
 {
+    QJsonObject tmp;
     on_InitTButton_clicked();
     Run_JsonObject_activeted();
+    //Start Store current JsonObject
+    //MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
+    //MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    //End Store current JsonObject
+
 }
 
 void DrawingOptions::on_actionAbout_2_triggered()
@@ -5693,8 +5731,8 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     //Start Store current JsonObject
-    MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
-    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    //MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
+    //MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
     //End Store current JsonObject
 
     tmp2= tmp["Iso3D"].toObject();
