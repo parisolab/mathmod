@@ -211,7 +211,7 @@ public slots:
     void on_FNCNDcheckBox_clicked(bool);
     void on_actionMesh_triggered();
     void on_calculate_clicked();
-    ModelType Modeltype(const QJsonObject &);
+    QJsonObject Modeltype(const QJsonObject &);
     void on_actionAbout_2_triggered();
     void LoadNewFileModels(bool upd = false);
     void on_actionLoad_json_script_triggered();

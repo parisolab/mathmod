@@ -2168,7 +2168,6 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
         LoadPigment(QPigmentObj, mod);
     }
 }
-
 void DrawingOptions::on_choice_activated(const QString &arg)
 {
     QJsonObject tmp;
@@ -2178,15 +2177,11 @@ void DrawingOptions::on_choice_activated(const QString &arg)
     {
         UpdateScriptEditorAndTreeObject();
     }
-    //return Result;
-
     //Start Store current JsonObject
-
     tmp["Iso3D"] = MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].toObject();
     MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
     MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
 }
-
 void DrawingOptions::grabGestures(const QList<Qt::GestureType> &gestures)
 {
     ui.openGLWidget->grabGestures(gestures);
@@ -4134,7 +4129,7 @@ void DrawingOptions::on_actionMesh_triggered()
     MathmodRef->Mesh();
 }
 
-ModelType DrawingOptions::Modeltype(const QJsonObject &jsObj)
+QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
 {
     QJsonObject tmp;
     //Start Store current JsonObject
@@ -4142,18 +4137,23 @@ ModelType DrawingOptions::Modeltype(const QJsonObject &jsObj)
     //MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
     //End Store current JsonObject
     if(jsObj["Iso3D"].isObject())
-        return ISO_TYPE;
+        tmp["Iso3D"]= jsObj["Iso3D"].toObject();
     else
         if(jsObj["Par3D"].isObject())
-            return PAR_TYPE;
+            tmp["Par3D"]= jsObj["Par3D"].toObject();
+    else
+        if(jsObj["Par3D_C"].isObject())
+            tmp["Par3D_C"]= jsObj["Par3D_C"].toObject();
     else
         if(jsObj["Par4D"].isObject())
-            return PAR_4D_TYPE;
+            tmp["Par4D"]= jsObj["Par4D"].toObject();
+    else
+        if(jsObj["Par4D_C"].isObject())
+            tmp["Par4D_C"]= jsObj["Par4D_C"].toObject();
     else
         if(jsObj["ParIso"].isObject())
-            return PARISO_TYPE;
-    else
-        return UNDEFINED_TYPE;
+            tmp["ParIso"]= jsObj["ParIso"].toObject();
+    return tmp;
 }
 void DrawingOptions::on_calculate_clicked()
 {
@@ -4161,12 +4161,10 @@ void DrawingOptions::on_calculate_clicked()
     on_InitTButton_clicked();
     Run_JsonObject_activeted();
     //Start Store current JsonObject
-    //MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
-    //MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(MathmodRef->RootObjet.CurrentJsonObject));
+    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
     //End Store current JsonObject
-
 }
-
 void DrawingOptions::on_actionAbout_2_triggered()
 {
     ab.show();
