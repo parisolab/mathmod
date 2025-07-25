@@ -369,6 +369,7 @@ private slots:
     void on_Clear_clicked();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
+    void on_actionClear_triggered();
 };
 
 #endif

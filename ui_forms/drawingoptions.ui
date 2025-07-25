@@ -11087,6 +11087,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="actionClear"/>
     <addaction name="separator"/>
     <addaction name="actionTriangles"/>
     <addaction name="actionMesh"/>
@@ -11481,6 +11482,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="text">
+    <string>Clear     ⇧⌘C</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+C</string>
    </property>
   </action>
  </widget>
