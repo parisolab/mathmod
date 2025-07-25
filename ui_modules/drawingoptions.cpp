@@ -5838,3 +5838,23 @@ void DrawingOptions::on_Clear_clicked()
     MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
 
+
+void DrawingOptions::on_actionUndo_triggered()
+{
+    if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
+    {
+        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
+        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
+    }
+}
+
+
+void DrawingOptions::on_actionRedo_triggered()
+{
+    if(MathmodRef->RootObjet.IndexCurrentJsonObject < MathmodRef->RootObjet.PreviousJsonObject.size()-1)
+    {
+        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject+1).toObject());
+        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1);
+    }
+}
+

@@ -367,6 +367,8 @@ private slots:
     void on_UndoChanges_clicked();
     void on_RedoChanges_clicked();
     void on_Clear_clicked();
+    void on_actionUndo_triggered();
+    void on_actionRedo_triggered();
 };
 
 #endif

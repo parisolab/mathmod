@@ -11085,6 +11085,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <property name="title">
      <string>&amp;Options</string>
     </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
     <addaction name="actionTriangles"/>
     <addaction name="actionMesh"/>
     <addaction name="actionFill"/>
@@ -11462,6 +11465,22 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
    <property name="text">
     <string>box</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo      ⌘Z</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="text">
+    <string>Redo     ⇧⌘Z</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
  </widget>
