@@ -5528,13 +5528,11 @@ void DrawingOptions::on_actionAxe_triggered()
     MathmodRef->LocalScene.axe *=-1;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_actionPlan_triggered()
 {
     MathmodRef->LocalScene.plan *=-1;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_red_Ambient_valueChanged(int value)
 {
     MathmodRef->redAmb(value);
@@ -5544,12 +5542,10 @@ void DrawingOptions::on_green_Ambient_valueChanged(int value)
 {
     MathmodRef->greenAmb(value);
 }
-
 void DrawingOptions::on_blue_Ambient_valueChanged(int value)
 {
     MathmodRef->blueAmb(value);
 }
-
 void DrawingOptions::on_transparent_Ambient_valueChanged(int value)
 {
     MathmodRef->transAmb(value);
@@ -5559,12 +5555,10 @@ void DrawingOptions::on_red_Diffuse_valueChanged(int value)
 {
     MathmodRef->redDiff(value);
 }
-
 void DrawingOptions::on_green_Diffuse_valueChanged(int value)
 {
     MathmodRef->greenDiff(value);
 }
-
 void DrawingOptions::on_blue_Diffuse_valueChanged(int value)
 {
     MathmodRef->blueDiff(value);
@@ -5574,7 +5568,6 @@ void DrawingOptions::on_transparent_Diffuse_valueChanged(int value)
 {
     MathmodRef->transDiff(value);
 }
-
 void DrawingOptions::on_GLFrontSurfaceSupport_clicked()
 {
     if(!(ui.GLFrontSurfaceSupport->isChecked()))
@@ -5582,7 +5575,6 @@ void DrawingOptions::on_GLFrontSurfaceSupport_clicked()
     else
         MathmodRef->glfrontfacesupp(1);
 }
-
 void DrawingOptions::on_actionbox_triggered()
 {
     MathmodRef->boundingboxOk();
@@ -5837,7 +5829,6 @@ void DrawingOptions::on_Clear_clicked()
     MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
     MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
-
 void DrawingOptions::on_actionUndo_triggered()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
@@ -5846,7 +5837,6 @@ void DrawingOptions::on_actionUndo_triggered()
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
     }
 }
-
 void DrawingOptions::on_actionRedo_triggered()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject < MathmodRef->RootObjet.PreviousJsonObject.size()-1)
@@ -5855,10 +5845,8 @@ void DrawingOptions::on_actionRedo_triggered()
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1);
     }
 }
-
 void DrawingOptions::on_actionClear_triggered()
 {
     MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
     MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
-
