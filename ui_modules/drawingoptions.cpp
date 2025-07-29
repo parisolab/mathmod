@@ -5314,33 +5314,27 @@ void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
         "  <  " + QString::number(value) + "  <  " +
         QString::number(ui.ThreadNumberScrollBar->maximum()));
 }
-
 void DrawingOptions::on_StopCalculationsButton_clicked()
 {
     MathmodRef->IsoObjet->stopcalculations(true);
     MathmodRef->ParObjet->stopcalculations(true);
 }
-
 void DrawingOptions::on_stopButton_clicked()
 {
     on_StopCalculationsButton_clicked();
 }
-
 void DrawingOptions::on_actionScripts_selection_triggered()
 {
     select.show();
 }
-
 void DrawingOptions::on_actionAnimation_Rotation_triggered()
 {
     MathmodRef->anim();
 }
-
 void DrawingOptions::on_actionMorph_use_t_parameter_triggered()
 {
     MathmodRef->morph();
 }
-
 void DrawingOptions::on_TreeViewButton_clicked()
 {
     ShowCurrentObjectTree = !ShowCurrentObjectTree;
@@ -5355,7 +5349,6 @@ void DrawingOptions::on_TreeViewButton_clicked()
         ui.ObjectClasseCurrent->hide();
     }
 }
-
 void DrawingOptions::on_ObjectClasseCurrent_clicked(const QModelIndex &idx)
 {
     QModelIndex parentItem = idx.parent();
@@ -5367,7 +5360,6 @@ void DrawingOptions::on_ObjectClasseCurrent_clicked(const QModelIndex &idx)
             ui.parisocomboBox->setCurrentIndex(row);
     }
 }
-
 void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
 {
     if (index >= 0)
@@ -5381,7 +5373,6 @@ void DrawingOptions::on_parisocomboBox_currentIndexChanged(int index)
             UpdatePar4DModelDetailsPage(MathmodRef->RootObjet.CurrentParisoTreestruct[index]);
     }
 }
-
 void DrawingOptions::on_ApplypushButton_clicked()
 {
     int maxisogrid = 0;
@@ -5405,7 +5396,6 @@ void DrawingOptions::on_ApplypushButton_clicked()
         msgBox.exec();
     }
 }
-
 void DrawingOptions::updateParametricGridSliders(int maxpargrid)
 {
     Parameters->ParMaxGrid = maxpargrid;
@@ -5420,7 +5410,6 @@ void DrawingOptions::updateParametricGridSliders(int maxpargrid)
     ui.ParamgroupBox_2->setTitle("Grid(u,v)/MaxGrid = ("+ QString::number(ui.linecolumn_2->value()) +
                                  ", " + QString::number(ui.linecolumn_2->value()) +")/"+QString::number(maxpargrid));
 }
-
 void DrawingOptions::on_ApplypushButton_2_clicked()
 {
     int maxpargrid = 0;
@@ -5437,7 +5426,6 @@ void DrawingOptions::on_ApplypushButton_2_clicked()
         msgBox.exec();
     }
 }
-
 void DrawingOptions::on_ApplypushButton_3_clicked()
 {
     int maxpargrid = 0;
@@ -5453,7 +5441,6 @@ void DrawingOptions::on_ApplypushButton_3_clicked()
         msgBox.exec();
     }
 }
-
 #include <QDesktopServices>
 void DrawingOptions::on_actionDocumentation_triggered()
 {
@@ -5466,7 +5453,6 @@ void DrawingOptions::on_actionDocumentation_triggered()
     link.contains("http") ? QDesktopServices::openUrl(link):
                             QDesktopServices::openUrl(QUrl(link, QUrl::TolerantMode));
 }
-
 void DrawingOptions::on_ScaleButton_clicked()
 {
     bool valx=false, valy=false, valz=false;
@@ -5486,7 +5472,6 @@ void DrawingOptions::on_ScaleButton_clicked()
         msgBox.exec();
     }
 }
-
 void DrawingOptions::on_ShowIsoComp_clicked()
 {
     if(!ui.ShowIsoComp->isChecked())
@@ -5507,7 +5492,6 @@ void DrawingOptions::on_ShowIsoComp_clicked()
     }
     MathmodRef->update();
 }
-
 void DrawingOptions::on_ShowParComp_clicked()
 {
     if(!ui.ShowParComp->isChecked())
@@ -5522,7 +5506,6 @@ void DrawingOptions::on_ShowParComp_clicked()
     }
     MathmodRef->update();
 }
-
 void DrawingOptions::on_actionAxe_triggered()
 {
     MathmodRef->LocalScene.axe *=-1;
@@ -5537,7 +5520,6 @@ void DrawingOptions::on_red_Ambient_valueChanged(int value)
 {
     MathmodRef->redAmb(value);
 }
-
 void DrawingOptions::on_green_Ambient_valueChanged(int value)
 {
     MathmodRef->greenAmb(value);
@@ -5550,7 +5532,6 @@ void DrawingOptions::on_transparent_Ambient_valueChanged(int value)
 {
     MathmodRef->transAmb(value);
 }
-
 void DrawingOptions::on_red_Diffuse_valueChanged(int value)
 {
     MathmodRef->redDiff(value);
