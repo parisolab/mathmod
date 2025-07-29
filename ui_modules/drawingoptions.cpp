@@ -3836,6 +3836,8 @@ void DrawingOptions::on_updateButton_clicked()
 void DrawingOptions::on_updateParam_clicked()
 {
     on_updateButton_clicked();
+    MathmodRef->RootObjet.PreviousJsonObject.append(CurrentObject);
+    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
 }
 
 void DrawingOptions::on_actionPolygonWavefront_obj_triggered()
@@ -4214,6 +4216,8 @@ void DrawingOptions::on_ParamComponent_2_activated(int index)
 void DrawingOptions::on_updateParam_2_clicked()
 {
     on_updateButton_clicked();
+    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(MathmodRef->RootObjet.CurrentJsonObject));
+    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
 }
 
 void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
