@@ -3836,7 +3836,7 @@ void DrawingOptions::on_updateButton_clicked()
 void DrawingOptions::on_updateParam_clicked()
 {
     on_updateButton_clicked();
-    MathmodRef->RootObjet.PreviousJsonObject.append(CurrentObject);
+    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(MathmodRef->RootObjet.CurrentJsonObject));
     MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
 }
 
@@ -4155,6 +4155,9 @@ QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
     else
         if(jsObj["ParIso"].isObject())
             tmp["ParIso"]= jsObj["ParIso"].toObject();
+    else
+        if(jsObj["Sliders"].isObject())
+            tmp["Sliders"]= jsObj["Sliders"].toObject();
     return tmp;
 }
 void DrawingOptions::on_calculate_clicked()
@@ -4171,22 +4174,18 @@ void DrawingOptions::on_actionAbout_2_triggered()
 {
     ab.show();
 }
-
 void DrawingOptions::on_actionLoad_json_script_triggered()
 {
     LoadNewFileModels(true);
 }
-
 void DrawingOptions::on_actionScreenshot_triggered()
 {
     videoplay();
 }
-
 void DrawingOptions::on_actionEditor_triggered()
 {
     editorwin();
 }
-
 void DrawingOptions::on_cut_clicked()
 {
     if (ui.IsoComponent->count() > 1)
@@ -4197,22 +4196,19 @@ void DrawingOptions::on_cut_clicked()
     else
     {
         QMessageBox msgBox;
-        msgBox.setText("Only one component in this mathematical model.");
+        msgBox.setText("There is only one component");
         msgBox.exec();
     }
 }
-
 void DrawingOptions::on_actionConvert_K3DS_script_triggered()
 {
     LoadK3DSurfScript("", 1);
 }
-
 void DrawingOptions::on_ParamComponent_2_activated(int index)
 {
     UpdateDescription(index, PAR_4D_TYPE,
                       MathmodRef->RootObjet.CurrentTreestruct);
 }
-
 void DrawingOptions::on_updateParam_2_clicked()
 {
     on_updateButton_clicked();
