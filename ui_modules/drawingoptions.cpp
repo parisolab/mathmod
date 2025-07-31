@@ -4160,6 +4160,13 @@ QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
             tmp["Sliders"]= jsObj["Sliders"].toObject();
     return tmp;
 }
+void DrawingOptions::PreviousJsonObject(const QJsonObject &jsObj)
+{
+    //Start Store current JsonObject
+    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(jsObj));
+    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    //End Store current JsonObject
+}
 void DrawingOptions::on_calculate_clicked()
 {
     QJsonObject tmp;

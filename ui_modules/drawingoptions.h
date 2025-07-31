@@ -210,6 +210,7 @@ public slots:
     void on_TNCNDcheckBox_clicked(bool);
     void on_FNCNDcheckBox_clicked(bool);
     void on_actionMesh_triggered();
+    void PreviousJsonObject(const QJsonObject &);
     void on_calculate_clicked();
     QJsonObject Modeltype(const QJsonObject &);
     void on_actionAbout_2_triggered();
