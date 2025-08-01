@@ -2179,8 +2179,7 @@ void DrawingOptions::on_choice_activated(const QString &arg)
     }
     //Start Store current JsonObject
     tmp["Iso3D"] = MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].toObject();
-    MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
-    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    PreviousJsonObject(tmp);
 }
 void DrawingOptions::grabGestures(const QList<Qt::GestureType> &gestures)
 {
@@ -3829,15 +3828,13 @@ void DrawingOptions::on_updateButton_clicked()
         on_updateJObject(CurrentObject);
         RunUpdatedJObject(CurrentObject);
     }
-    MathmodRef->RootObjet.PreviousJsonObject.append(CurrentObject);
-    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    PreviousJsonObject(CurrentObject);
 }
 
 void DrawingOptions::on_updateParam_clicked()
 {
     on_updateButton_clicked();
-    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(MathmodRef->RootObjet.CurrentJsonObject));
-    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    PreviousJsonObject(MathmodRef->RootObjet.CurrentJsonObject);
 }
 
 void DrawingOptions::on_actionPolygonWavefront_obj_triggered()
@@ -4134,10 +4131,6 @@ void DrawingOptions::on_actionMesh_triggered()
 QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
 {
     QJsonObject tmp;
-    //Start Store current JsonObject
-    //MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
-    //MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
-    //End Store current JsonObject
     if(jsObj["Iso3D"].isObject())
         tmp["Iso3D"]= jsObj["Iso3D"].toObject();
     else
@@ -4172,10 +4165,7 @@ void DrawingOptions::on_calculate_clicked()
     QJsonObject tmp;
     on_InitTButton_clicked();
     Run_JsonObject_activeted();
-    //Start Store current JsonObject
-    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(MathmodRef->RootObjet.CurrentJsonObject));
-    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
-    //End Store current JsonObject
+    PreviousJsonObject(MathmodRef->RootObjet.CurrentJsonObject);
 }
 void DrawingOptions::on_actionAbout_2_triggered()
 {
@@ -4219,8 +4209,7 @@ void DrawingOptions::on_ParamComponent_2_activated(int index)
 void DrawingOptions::on_updateParam_2_clicked()
 {
     on_updateButton_clicked();
-    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(MathmodRef->RootObjet.CurrentJsonObject));
-    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
+    PreviousJsonObject(MathmodRef->RootObjet.CurrentJsonObject);
 }
 
 void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
@@ -5773,10 +5762,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     tmp["Iso3D"] = tmp2;
     // Draw here
     DrawJsonModel(tmp);
-    //Start Store current JsonObject
-    MathmodRef->RootObjet.PreviousJsonObject.append(tmp);
-    MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
-    //End Store current JsonObject
+    PreviousJsonObject(tmp);
 }
 void DrawingOptions::on_ApplyThicknessVal_clicked()
 {
