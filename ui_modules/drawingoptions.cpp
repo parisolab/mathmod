@@ -2178,8 +2178,7 @@ void DrawingOptions::on_choice_activated(const QString &arg)
         UpdateScriptEditorAndTreeObject();
     }
     //Start Store current JsonObject
-    tmp["Iso3D"] = MathmodRef->RootObjet.CurrentJsonObject["Iso3D"].toObject();
-    PreviousJsonObject(tmp);
+    PreviousJsonObject(MathmodRef->RootObjet.CurrentJsonObject);
 }
 void DrawingOptions::grabGestures(const QList<Qt::GestureType> &gestures)
 {
