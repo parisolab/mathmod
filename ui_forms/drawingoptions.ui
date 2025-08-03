@@ -2928,45 +2928,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                      </item>
                                     </layout>
                                    </item>
-                                   <item>
-                                    <widget class="QGroupBox" name="StoredScripts">
-                                     <property name="title">
-                                      <string>Previeous generated scripts:</string>
-                                     </property>
-                                     <layout class="QGridLayout" name="gridLayout_88">
-                                      <item row="0" column="0">
-                                       <widget class="QPushButton" name="UndoChanges">
-                                        <property name="enabled">
-                                         <bool>true</bool>
-                                        </property>
-                                        <property name="sizePolicy">
-                                         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                                          <horstretch>0</horstretch>
-                                          <verstretch>0</verstretch>
-                                         </sizepolicy>
-                                        </property>
-                                        <property name="text">
-                                         <string>Undo</string>
-                                        </property>
-                                       </widget>
-                                      </item>
-                                      <item row="0" column="1">
-                                       <widget class="QPushButton" name="RedoChanges">
-                                        <property name="text">
-                                         <string>Redo</string>
-                                        </property>
-                                       </widget>
-                                      </item>
-                                      <item row="0" column="2">
-                                       <widget class="QPushButton" name="Clear">
-                                        <property name="text">
-                                         <string>Clear All</string>
-                                        </property>
-                                       </widget>
-                                      </item>
-                                     </layout>
-                                    </widget>
-                                   </item>
                                   </layout>
                                  </item>
                                  <item row="1" column="0">

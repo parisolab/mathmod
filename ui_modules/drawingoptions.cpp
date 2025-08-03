@@ -2177,7 +2177,7 @@ void DrawingOptions::on_choice_activated(const QString &arg)
     {
         UpdateScriptEditorAndTreeObject();
     }
-    //Start Store current JsonObject
+    //Store current JsonObject
     PreviousJsonObject(MathmodRef->RootObjet.CurrentJsonObject);
 }
 void DrawingOptions::grabGestures(const QList<Qt::GestureType> &gestures)
@@ -5780,27 +5780,6 @@ void DrawingOptions::on_ApplyThicknessVal_clicked()
         msgBox.setText("Invalid number");
         msgBox.exec();
     }
-}
-void DrawingOptions::on_UndoChanges_clicked()
-{
-    if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
-    {
-        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
-        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
-    }
-}
-void DrawingOptions::on_RedoChanges_clicked()
-{
-    if(MathmodRef->RootObjet.IndexCurrentJsonObject < MathmodRef->RootObjet.PreviousJsonObject.size()-1)
-    {
-        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject+1).toObject());
-        MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject+1);
-    }
-}
-void DrawingOptions::on_Clear_clicked()
-{
-    MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
-    MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
 void DrawingOptions::on_actionUndo_triggered()
 {
