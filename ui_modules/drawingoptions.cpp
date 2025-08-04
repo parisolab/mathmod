@@ -4593,17 +4593,14 @@ void DrawingOptions::on_comboBoxPigment_activated(int index)
     }
     return;
 }
-
 void DrawingOptions::on_actionTrianglesWavefront_obj_triggered()
 {
     MathmodRef->SaveSceneAsObjTrian();
 }
-
 void DrawingOptions::on_actionColorTrianglesWavefront_obj_triggered()
 {
     MathmodRef->SaveSceneAsObjTrian(1);
 }
-
 void DrawingOptions::on_ShowtextureScript_clicked()
 {
     static int show = -1;
@@ -4619,7 +4616,6 @@ void DrawingOptions::on_ShowtextureScript_clicked()
         ui.ShowtextureScript->setText("Show Script");
     }
 }
-
 void DrawingOptions::on_pushButton_5_clicked()
 {
     QJsonParseError err;
@@ -4643,107 +4639,86 @@ void DrawingOptions::on_pushButton_5_clicked()
         on_comboBoxPigment_activated(ui.comboBoxPigment->currentIndex());
     }
 }
-
 void DrawingOptions::on_C1ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 0);
 }
-
 void DrawingOptions::on_C2ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 1);
 }
-
 void DrawingOptions::on_C3ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 2);
 }
-
 void DrawingOptions::on_C4ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 3);
 }
-
 void DrawingOptions::on_C5ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 4);
 }
-
 void DrawingOptions::on_C6ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 5);
 }
-
 void DrawingOptions::on_C7ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 6);
 }
-
 void DrawingOptions::on_C8ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 7);
 }
-
 void DrawingOptions::on_C9ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 8);
 }
-
 void DrawingOptions::on_C10ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 9);
 }
-
 void DrawingOptions::on_C11ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 10);
 }
-
 void DrawingOptions::on_C12ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 11);
 }
-
 void DrawingOptions::on_C13ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 12);
 }
-
 void DrawingOptions::on_C14ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 13);
 }
-
 void DrawingOptions::on_C15ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 14);
 }
-
 void DrawingOptions::on_C16ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 15);
 }
-
 void DrawingOptions::on_C17ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 16);
 }
-
 void DrawingOptions::on_C18ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 17);
 }
-
 void DrawingOptions::on_C19ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 18);
 }
-
 void DrawingOptions::on_C20ScrollBar_valueChanged(int val)
 {
     CScrollBar_valueChanged(val, 19);
 }
-
 void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
 {
     MathmodRef->LocalScene.slider = 1;
@@ -4756,7 +4731,6 @@ void DrawingOptions::CScrollBar_valueChanged(int val, int idx)
         MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
     MathmodRef->LocalScene.slider = -1;
 }
-
 void DrawingOptions::on_PredefinedSets_activated(int index)
 {
     indexcurrentSet = index;
@@ -4812,107 +4786,86 @@ void DrawingOptions::CIndextoolButton_clicked(int idx)
     sliderconf.ui.ParametersComboBox->blockSignals(false);
     sliderconf.show();
 }
-
 void DrawingOptions::on_C20toolButton_clicked()
 {
     CIndextoolButton_clicked(20);
 }
-
 void DrawingOptions::on_C19toolButton_clicked()
 {
     CIndextoolButton_clicked(19);
 }
-
 void DrawingOptions::on_C18toolButton_clicked()
 {
     CIndextoolButton_clicked(18);
 }
-
 void DrawingOptions::on_C17toolButton_clicked()
 {
     CIndextoolButton_clicked(17);
 }
-
 void DrawingOptions::on_C16toolButton_clicked()
 {
     CIndextoolButton_clicked(16);
 }
-
 void DrawingOptions::on_C15toolButton_clicked()
 {
     CIndextoolButton_clicked(15);
 }
-
 void DrawingOptions::on_C14toolButton_clicked()
 {
     CIndextoolButton_clicked(14);
 }
-
 void DrawingOptions::on_C13toolButton_clicked()
 {
     CIndextoolButton_clicked(13);
 }
-
 void DrawingOptions::on_C12toolButton_clicked()
 {
     CIndextoolButton_clicked(12);
 }
-
 void DrawingOptions::on_C11toolButton_clicked()
 {
     CIndextoolButton_clicked(11);
 }
-
 void DrawingOptions::on_C10toolButton_clicked()
 {
     CIndextoolButton_clicked(10);
 }
-
 void DrawingOptions::on_C9toolButton_clicked()
 {
     CIndextoolButton_clicked(9);
 }
-
 void DrawingOptions::on_C8toolButton_clicked()
 {
     CIndextoolButton_clicked(8);
 }
-
 void DrawingOptions::on_C7toolButton_clicked()
 {
     CIndextoolButton_clicked(7);
 }
-
 void DrawingOptions::on_C6toolButton_clicked()
 {
     CIndextoolButton_clicked(6);
 }
-
 void DrawingOptions::on_C5toolButton_clicked()
 {
     CIndextoolButton_clicked(5);
 }
-
 void DrawingOptions::on_C4toolButton_clicked()
 {
     CIndextoolButton_clicked(4);
 }
-
 void DrawingOptions::on_C3toolButton_clicked()
 {
     CIndextoolButton_clicked(3);
 }
-
 void DrawingOptions::on_C2toolButton_clicked()
 {
     CIndextoolButton_clicked(2);
 }
-
 void DrawingOptions::on_C1toolButton_clicked()
 {
     CIndextoolButton_clicked(1);
 }
-
 void DrawingOptions::update_slider_param()
 {
     int SliderIndex = sliderconf.currentSlider;
@@ -4949,7 +4902,6 @@ void DrawingOptions::update_slider_param()
         MathmodRef->ParametricSurfaceProcess(CurrentFormulaType);
     MathmodRef->LocalScene.slider = -1;
 }
-
 void DrawingOptions::on_AddSetButton_clicked()
 {
     QJsonArray array1, array2, array3, array4, array5;
@@ -4992,7 +4944,6 @@ void DrawingOptions::on_AddSetButton_clicked()
     // Draw here
     DrawJsonModel(tmp);
 }
-
 void DrawingOptions::on_CutSetButton_clicked()
 {
     int size2 = qlstPos.size();
@@ -5035,7 +4986,6 @@ void DrawingOptions::on_CutSetButton_clicked()
         DrawJsonModel(tmp);
     }
 }
-
 void DrawingOptions::on_AddParam_clicked()
 {
     addnewparam.ui.NameEdit->setText("ParamName");
@@ -5045,7 +4995,6 @@ void DrawingOptions::on_AddParam_clicked()
     addnewparam.ui.PosEdit->setText("10");
     addnewparam.show();
 }
-
 void DrawingOptions::on_CutParam_clicked()
 {
     int index = ui.ParametersList->currentIndex();
@@ -5085,7 +5034,6 @@ void DrawingOptions::on_CutParam_clicked()
         DrawJsonModel(tmp);
     }
 }
-
 void DrawingOptions::add_new_param()
 {
     QJsonArray array2;
@@ -5133,18 +5081,15 @@ void DrawingOptions::add_new_param()
     // Draw here
     DrawJsonModel(tmp);
 }
-
 void DrawingOptions::update_infos_param(int index)
 {
     CIndextoolButton_clicked(index);
     sliderconf.currentSlider = index - 1;
 }
-
 void DrawingOptions::on_actionFrames_triggered()
 {
     MathmodRef->frames_clicked();
 }
-
 void DrawingOptions::SetSpecularValues(int *spec)
 {
     ui.red_Specular->blockSignals(true);
@@ -5202,7 +5147,6 @@ void DrawingOptions::SetAmbientValues(int *spec)
     MathmodRef->lightAmbient[2]= Parameters->Ambient[2]/100.0f;
     MathmodRef->lightAmbient[3]= Parameters->Ambient[3]/100.0f;
 }
-
 void DrawingOptions::SetThreadValues(int *thread)
 {
     ui.ThreadNumberScrollBar->blockSignals(true);
@@ -5215,7 +5159,6 @@ void DrawingOptions::SetThreadValues(int *thread)
         QString::number(ui.ThreadNumberScrollBar->maximum()));
     ui.ThreadNumberScrollBar->blockSignals(false);
 }
-
 void DrawingOptions::SetShininessValue(int shin)
 {
     ui.ShininessScrollBar->blockSignals(true);
@@ -5223,7 +5166,6 @@ void DrawingOptions::SetShininessValue(int shin)
     ui.ShininessScrollBar->blockSignals(false);
     MathmodRef->LocalScene.shininess = Parameters->Shininess;
 }
-
 void DrawingOptions::SetglFrontFacingSupport()
 {
     ui.GLFrontSurfaceSupport->blockSignals(true);
@@ -5231,7 +5173,6 @@ void DrawingOptions::SetglFrontFacingSupport()
     ui.GLFrontSurfaceSupport->blockSignals(false);
     MathmodRef->LocalScene.glFrontFacingSupport = 0;
 }
-
 void DrawingOptions::on_red_Specular_valueChanged(int value)
 {
     MathmodRef->redSpec(value);
@@ -5250,7 +5191,6 @@ void DrawingOptions::on_red_Specular_valueChanged(int value)
         MathmodRef->blueSpec(value);
     }
 }
-
 void DrawingOptions::on_green_Specular_valueChanged(int value)
 {
     MathmodRef->greenSpec(value);
@@ -5269,7 +5209,6 @@ void DrawingOptions::on_green_Specular_valueChanged(int value)
         MathmodRef->blueSpec(value);
     }
 }
-
 void DrawingOptions::on_blue_Specular_valueChanged(int value)
 {
     MathmodRef->blueSpec(value);
@@ -5289,17 +5228,14 @@ void DrawingOptions::on_blue_Specular_valueChanged(int value)
     }
     //MathmodRef->InitSpecularParameters();
 }
-
 void DrawingOptions::on_transparent_Specular_valueChanged(int value)
 {
     MathmodRef->transSpec(value);
 }
-
 void DrawingOptions::on_ShininessScrollBar_valueChanged(int value)
 {
     MathmodRef->Shininess(value);
 }
-
 void DrawingOptions::on_ThreadNumberScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->UpdateThredsNumber(uint(value));
@@ -5539,7 +5475,6 @@ void DrawingOptions::on_blue_Diffuse_valueChanged(int value)
 {
     MathmodRef->blueDiff(value);
 }
-
 void DrawingOptions::on_transparent_Diffuse_valueChanged(int value)
 {
     MathmodRef->transDiff(value);
