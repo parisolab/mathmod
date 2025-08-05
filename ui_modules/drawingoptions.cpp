@@ -4619,7 +4619,6 @@ void DrawingOptions::on_ShowtextureScript_clicked()
 void DrawingOptions::on_pushButton_5_clicked()
 {
     QJsonParseError err;
-    QString sortie;
     QString script = ui.textureEdit->toPlainText().trimmed().replace("\n", "").replace("\t", "").replace("DOTSYMBOL", Parameters->dotsymbol.toStdString().c_str());
     QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
     if (err.error)
@@ -5598,6 +5597,7 @@ void DrawingOptions::on_SaveTrButton_clicked()
 void DrawingOptions::on_SaveThButton_clicked()
 {
 }
+/*
 void DrawingOptions::on_InitializeTorsionButton_clicked()
 {
     MathmodRef->IsoObjet->InitTorsionStruct();
@@ -5619,6 +5619,7 @@ void DrawingOptions::on_InitializeTorsionButton_clicked()
         MathmodRef->TorsionIsoSurface();
     }
 }
+*/
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
     QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;

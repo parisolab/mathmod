@@ -364,7 +364,7 @@ public slots:
 
 private slots:
     void on_actionbox_triggered();
-    void on_InitializeTorsionButton_clicked();
+    //void on_InitializeTorsionButton_clicked();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionClear_triggered();
