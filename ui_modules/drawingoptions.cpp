@@ -5631,16 +5631,13 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
     ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
-
     tmpScalVar    = "ScalVar_"+QString::number(ThCount);
     tmpScalVarmax = "ScalVarMax_"+QString::number(ThCount);
     tmpScalVarmin = "ScalVarMin_"+QString::number(ThCount);
     ConstArray.append(tmpScalVar+"="+QString::number(ui.SscrollBar->value()));
     ConstArray.append(tmpScalVarmax+"="+QString::number(ui.SscrollBar->maximum()));
     ConstArray.append(tmpScalVarmin+"="+QString::number(ui.SscrollBar->minimum()));
-
     ScalVar = "(("+tmpScalVar+"-("+tmpScalVarmax+"-"+tmpScalVarmin+")/2)/10)";
-
     if(ThCount==1)
     {
         ConstArray.append("epsilon=1/100000");
