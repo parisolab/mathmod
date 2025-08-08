@@ -4035,17 +4035,14 @@ void DrawingOptions::on_ywhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetayw = value / 4.0;
 }
-
 void DrawingOptions::on_zwcheckBox_clicked()
 {
     MathmodRef->ParObjet->tetazw_ok *= -1;
 }
-
 void DrawingOptions::on_zwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetazw = value / 4.0;
 }
-
 void DrawingOptions::on_linecolumn_3_valueChanged(int value)
 {
     ui.ParamgroupBox_3->setTitle("Grid(u,v)/MaxGrid = (" + QString::number(value) +
@@ -4062,71 +4059,59 @@ void DrawingOptions::on_linecolumn_3_valueChanged(int value)
         MathmodRef->uvactivated4D = -1;
     }
 }
-
 void DrawingOptions::oncolor_4activated(int index)
 {
     MathmodRef->colorstypeParam(index);
 }
-
 void DrawingOptions::on_uv4D_clicked()
 {
     MathmodRef->slot_uv4D_clicked();
 }
-
 void DrawingOptions::on_uv_clicked()
 {
     (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray()) ?
     MathmodRef->slot_uv_clicked(PARISO_TYPE) : MathmodRef->slot_uv_clicked(PAR_TYPE);
 }
-
 void DrawingOptions::on_InitMatrix_clicked()
 {
     MathmodRef->ParObjet->mat4D.unit();
     on_calculate_clicked();
 }
-
 void DrawingOptions::on_ActivateCND_clicked(bool checked)
 {
     ui.CNDgroupBox->setEnabled(checked);
     MathmodRef->LocalScene.activarecnd = checked;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_TCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[3] = checked;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_FCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[0] = checked;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_TNCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[4] = checked;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_FNCNDcheckBox_clicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[1] = checked;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_TBordercheckBox_clicked(bool checked)
 {
     MathmodRef->LocalScene.cndoptions[2] = checked;
     MathmodRef->update();
 }
-
 void DrawingOptions::on_actionMesh_triggered()
 {
     MathmodRef->Mesh();
 }
-
 QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
 {
     QJsonObject tmp;
@@ -4210,7 +4195,6 @@ void DrawingOptions::on_updateParam_2_clicked()
     on_updateButton_clicked();
     PreviousJsonObject(MathmodRef->RootObjet.CurrentJsonObject);
 }
-
 void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
                                 int index)
 {
@@ -4291,7 +4275,6 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
         tmp["Grid"] = oldgrid;
     iso["Iso3D"] = tmp;
 }
-
 void DrawingOptions::on_Multiplier_clicked()
 {
     int i = ui.xcomboBox->currentIndex(), j = ui.ycomboBox->currentIndex(),
@@ -4313,7 +4296,6 @@ void DrawingOptions::on_Multiplier_clicked()
     ui.ycomboBox->setCurrentIndex(0);
     ui.zcomboBox->setCurrentIndex(0);
 }
-
 void DrawingOptions::UpdateGuiMaxgrid()
 {
     int maxgrd = int(Parameters->IsoMaxGrid);
@@ -4331,7 +4313,6 @@ void DrawingOptions::UpdateGuiMaxgrid()
     ui.linecolumn_3->setValue(int(InitParGrid));
     ui.linecolumn_3->blockSignals(false);
 }
-
 void DrawingOptions::UpdateGui()
 {
 
@@ -4375,7 +4356,6 @@ void DrawingOptions::UpdateGui()
     // Script Editor font size
     ui.ScriptEditor->setFontPointSize(Parameters->scripteditorfontsize);
 }
-
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {
     double P = 1.0 / double(value);
@@ -4388,7 +4368,6 @@ void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
         MathmodRef->ParObjet->workerthreads[nbthreds].pace = P;
 }
-
 void DrawingOptions::on_InitTButton_clicked()
 {
     uint maxnbthreads = MathmodRef->IsoObjet->WorkerThreadsNumber;
@@ -4399,7 +4378,6 @@ void DrawingOptions::on_InitTButton_clicked()
     for (uint nbthreds = 0; nbthreds < maxnbthreads - 1; nbthreds++)
         MathmodRef->ParObjet->workerthreads[nbthreds].stepMorph = 0;
 }
-
 void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
 {
     QString sortie;
@@ -4427,7 +4405,6 @@ void DrawingOptions::ShowErrorMessage(QJsonParseError &err, QString &script)
     message.exec();
     return;
 }
-
 void DrawingOptions::ReadCollectionFile(QString JsonFileName,
         QJsonObject &js)
 {
@@ -4484,7 +4461,6 @@ void DrawingOptions::ReadCollectionFile(QString JsonFileName,
     }
     return;
 }
-
 void DrawingOptions::SaveToFile_CurentMathModel(
     QJsonObject CurrentJsonObject)
 {
@@ -4512,7 +4488,6 @@ void DrawingOptions::SaveToFile_CurentMathModel(
         }
     }
 }
-
 void DrawingOptions::on_pushButton_2_clicked()
 {
     QJsonParseError err;
@@ -4527,13 +4502,11 @@ void DrawingOptions::on_pushButton_2_clicked()
     }
     SaveToFile_CurentMathModel(doc.object());
 }
-
 void DrawingOptions::on_pushButton_3_clicked()
 {
     ui.isoNameEdit->setText(ui.isoNameEdit->toPlainText() + "_01");
     on_updateButton_clicked();
 }
-
 void DrawingOptions::on_cut_2_clicked()
 {
     if (ui.ParamComponent->count() > 1)
@@ -4548,23 +4521,19 @@ void DrawingOptions::on_cut_2_clicked()
         msgBox.exec();
     }
 }
-
 void DrawingOptions::on_pushButton_4_clicked()
 {
     ui.paramNameEdit->setText(ui.paramNameEdit->toPlainText() + "_01");
     on_updateButton_clicked();
 }
-
 void DrawingOptions::on_color_5_activated(int index)
 {
     MathmodRef->colorstypeParIso(index);
 }
-
 void DrawingOptions::on_transparent_ParIso_valueChanged(int value)
 {
     MathmodRef->transparency(value, IndexcurrentComponent);
 }
-
 void DrawingOptions::on_comboBoxTexture_activated(int index)
 {
     QJsonObject tmp;
@@ -4579,7 +4548,6 @@ void DrawingOptions::on_comboBoxTexture_activated(int index)
     }
     return;
 }
-
 void DrawingOptions::on_comboBoxPigment_activated(int index)
 {
     QJsonObject tmp;
