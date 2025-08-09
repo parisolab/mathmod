@@ -3900,7 +3900,6 @@ void DrawingOptions::on_coloneScrollBar_valueChanged(int value)
         MathmodRef->uvactivated = -1;
     }
 }
-
 void DrawingOptions::on_IsoComponent_activated(int index)
 {
     UpdateDescription(index, ISO_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
@@ -3942,42 +3941,34 @@ void DrawingOptions::on_ParamComponent_activated(int index)
     UpdateDescription(index, PAR_TYPE, MathmodRef->RootObjet.CurrentTreestruct);
     updateShowParComp(index);
 }
-
 void DrawingOptions::on_xyzcheckBox2_clicked()
 {
     MathmodRef->LocalScene.animxyz *= -1;
 }
-
 void DrawingOptions::on_xycheckBox2_clicked()
 {
     MathmodRef->LocalScene.animx *= -1;
 }
-
 void DrawingOptions::on_xyhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->LocalScene.animxValueStep = float(value) / 4;
 }
-
 void DrawingOptions::on_xzcheckBox2_clicked()
 {
     MathmodRef->LocalScene.animy *= -1;
 }
-
 void DrawingOptions::on_xzhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->LocalScene.animyValueStep = float(value) / 4;
 }
-
 void DrawingOptions::on_yzcheckBox2_clicked()
 {
     MathmodRef->LocalScene.animz *= -1;
 }
-
 void DrawingOptions::on_yzhorizontalScrollBar2_valueChanged(int value)
 {
     MathmodRef->LocalScene.animzValueStep = float(value) / 4;
 }
-
 void DrawingOptions::on_InitMatrix_2_clicked()
 {
     MathmodRef->LocalScene.RotStrength =
@@ -3985,52 +3976,42 @@ void DrawingOptions::on_InitMatrix_2_clicked()
             MathmodRef->LocalScene.animyValueStep =
                 MathmodRef->LocalScene.animzValueStep = 0.0;
 }
-
 void DrawingOptions::on_xycheckBox_clicked()
 {
     MathmodRef->ParObjet->tetaxy_ok *= -1;
 }
-
 void DrawingOptions::on_xyhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetaxy = value / 4.0;
 }
-
 void DrawingOptions::on_xzcheckBox_clicked()
 {
     MathmodRef->ParObjet->tetaxz_ok *= -1;
 }
-
 void DrawingOptions::on_xzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetaxz = value / 4.0;
 }
-
 void DrawingOptions::on_yzcheckBox_clicked()
 {
     MathmodRef->ParObjet->tetayz_ok *= -1;
 }
-
 void DrawingOptions::on_yzhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetayz = value / 4.0;
 }
-
 void DrawingOptions::on_xwcheckBox_clicked()
 {
     MathmodRef->ParObjet->tetaxw_ok *= -1;
 }
-
 void DrawingOptions::on_xwhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetaxw = value / 4.0;
 }
-
 void DrawingOptions::on_ywcheckBox_clicked()
 {
     MathmodRef->ParObjet->tetayw_ok *= -1;
 }
-
 void DrawingOptions::on_ywhorizontalScrollBar_valueChanged(int value)
 {
     MathmodRef->ParObjet->tetayw = value / 4.0;
