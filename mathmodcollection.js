@@ -43,7 +43,7 @@
             ],
             "Fy": [
                 "Fy(u,v,t)",
-                "if(u<umin     & !(v<vmin | v>vmax),Fy(umin,v,t),if(u>umax  & !(v<vmin | v>vmax),Fy(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fy(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fy(u,vmax,t) ,   if(u<umin  & v<vmin,  Fy(umin,vmin,t)       ,    if(u<umin  & v>vmax,  Fy(umin,vmin,t)   ,     if(v<vmin  & u>umax,  Fy(umax,vmin,t) ,     if(v>vmax  & u>umax,  Fy(umax,vmax,t)     ,Gy(u,v,t)))))))))"
+                "if(u<umin     & !(v<vmin | v>vmax),Fy(umin,v,t),if(u>umax  & !(v<vmin | v>vmax),Fy(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fy(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fy(u,vmax,t) ,   if(u<umin  & v<vmin,  Fy(umin,vmin,t)       ,    if(u<umin  & v>vmax,  Fy(umin,vmax,t)   ,     if(v<vmin  & u>umax,  Fy(umax,vmin,t) ,     if(v>vmax  & u>umax,  Fy(umax,vmax,t)     ,Gy(u,v,t)))))))))"
             ],
             "Fz": [
                 "Fz(u,v,t)",
