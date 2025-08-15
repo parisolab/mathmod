@@ -39,18 +39,18 @@
             ],
             "Fx": [
                 "Fx(u,v,t)",
-                "if(u<umin  & !(v<vmin | v>vmax),Fx(umin,v,t),if(u>umax  & !(v<vmin | v>vmax),Fx(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fx(u,vmin,t),if(v>vmax  & !(u<umin | u>umax)   ,Fx(u,vmax,t)  ,   if(u<umin  & v<vmin,  Fx(umin,vmin,t)      ,    if(u<umin  & v>vmax,  Fx(umin,vmax,t)  ,     if(v<vmin  & u>umax,  Fx(umax,vmin,t)   ,     if(v>vmax  & u>umax,  Fx(umax,vmax,t)     ,Gx(u,v,t)))))))))"
+                "if(u<umin  & !(v<vmin | v>vmax),Fx(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fx(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fx(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fx(u,vmax,t), if(u<umin  & v<vmin,  Fx(umin,vmin,t) , if(u<umin  & v>vmax,  Fx(umin,vmax,t) , if(v<vmin  & u>umax,  Fx(umax,vmin,t), if(v>vmax  & u>umax,  Fx(umax,vmax,t),Gx(u,v,t)))))))))"
             ],
             "Fy": [
                 "Fy(u,v,t)",
-                "if(u<umin     & !(v<vmin | v>vmax),Fy(umin,v,t),if(u>umax  & !(v<vmin | v>vmax),Fy(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fy(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fy(u,vmax,t) ,   if(u<umin  & v<vmin,  Fy(umin,vmin,t)       ,    if(u<umin  & v>vmax,  Fy(umin,vmax,t)   ,     if(v<vmin  & u>umax,  Fy(umax,vmin,t) ,     if(v>vmax  & u>umax,  Fy(umax,vmax,t)     ,Gy(u,v,t)))))))))"
+                "if(u<umin  & !(v<vmin | v>vmax),Fy(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fy(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fy(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fy(u,vmax,t), if(u<umin  & v<vmin,  Fy(umin,vmin,t) , if(u<umin  & v>vmax,  Fy(umin,vmax,t) , if(v<vmin  & u>umax,  Fy(umax,vmin,t), if(v>vmax  & u>umax,  Fy(umax,vmax,t),Gy(u,v,t)))))))))"
             ],
             "Fz": [
                 "Fz(u,v,t)",
-                "if(u<umin  & !(v<vmin | v>vmax),Fz(umin,v,t),if(u>umax  & !(v<vmin | v>vmax),Fz(umax,v,t),if(v<vmin & !(u<umin | u>umax),Fz(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fz(u,vmax,t),    if(u<umin  & v<vmin,  Fz(umin,vmin,t) ,    if(u<umin  & v>vmax,  Fz(umin,vmax,t) ,     if(v<vmin  & u>umax,  Fz(umax,vmin,t)  ,     if(v>vmax  & u>umax,  Fz(umax,vmax,t)    ,Gz(u,v,t)))))))))"
+                "if(u<umin  & !(v<vmin | v>vmax),Fz(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fz(umax,v,t),if(v<vmin & !(u<umin | u>umax),Fz(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fz(u,vmax,t),  if(u<umin  & v<vmin,  Fz(umin,vmin,t) , if(u<umin  & v>vmax,  Fz(umin,vmax,t) , if(v<vmin  & u>umax,  Fz(umax,vmin,t), if(v>vmax  & u>umax,  Fz(umax,vmax,t),Gz(u,v,t)))))))))"
             ],
             "Name": [
-                "Thick_Parametric"
+                "Two_Component_Thick_Parametric"
             ],
             "Umax": [
                 "umax",
