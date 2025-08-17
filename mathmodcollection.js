@@ -2,72 +2,18 @@
   "MathModels": [
     {
         "Param3D": {
-            "Component": [
-                "Torus_1",
-                "Torus_1_01"
-            ],
-            "Const": [
-                "T=0.1",
-                "c=1/1000000",
-                "umax=1",
-                "umin=-1",
-                "vmax=1",
-                "vmin=-1",
-                "cu=(umax-umin)/1000",
-                "cv=(vmax-vmin)/1000"
-            ],
-            "Description": [
-                "The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"
-            ],
-            "Funct": [
-                "Fx=u",
-                "Fy=v",
-                "Fz=-sin(pi*((u)^2+(v)^2))/3",
-                "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
-                "DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)",
-                "DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)",
-                "DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)",
-                "DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)",
-                "DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)",
-                "n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))",
-                "n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))",
-                "n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))",
-                "R=u/sqrt(u*u+v*v+t*t)",
-                "Gx=Fx(u,v,t)+T*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))",
-                "Gy=Fy(u,v,t)+T*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))",
-                "Gz=Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"
-            ],
-            "Fx": [
-                "Fx(u,v,t)",
-                "if(u<umin  & !(v<vmin | v>vmax),Fx(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fx(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fx(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fx(u,vmax,t), if(u<umin  & v<vmin,  Fx(umin,vmin,t) , if(u<umin  & v>vmax,  Fx(umin,vmax,t) , if(v<vmin  & u>umax,  Fx(umax,vmin,t), if(v>vmax  & u>umax,  Fx(umax,vmax,t),Gx(u,v,t)))))))))"
-            ],
-            "Fy": [
-                "Fy(u,v,t)",
-                "if(u<umin  & !(v<vmin | v>vmax),Fy(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fy(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fy(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fy(u,vmax,t), if(u<umin  & v<vmin,  Fy(umin,vmin,t) , if(u<umin  & v>vmax,  Fy(umin,vmax,t) , if(v<vmin  & u>umax,  Fy(umax,vmin,t), if(v>vmax  & u>umax,  Fy(umax,vmax,t),Gy(u,v,t)))))))))"
-            ],
-            "Fz": [
-                "Fz(u,v,t)",
-                "if(u<umin  & !(v<vmin | v>vmax),Fz(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fz(umax,v,t),if(v<vmin & !(u<umin | u>umax),Fz(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fz(u,vmax,t),  if(u<umin  & v<vmin,  Fz(umin,vmin,t) , if(u<umin  & v>vmax,  Fz(umin,vmax,t) , if(v<vmin  & u>umax,  Fz(umax,vmin,t), if(v>vmax  & u>umax,  Fz(umax,vmax,t),Gz(u,v,t)))))))))"
-            ],
-            "Name": [
-                "Two_Component_Thick_Parametric"
-            ],
-            "Umax": [
-                "umax",
-                "umax+cu"
-            ],
-            "Umin": [
-                "umin",
-                "umin-cu"
-            ],
-            "Vmax": [
-                "vmax",
-                "vmax+cv"
-            ],
-            "Vmin": [
-                "vmin",
-                "vmin-cv"
-            ]
+            "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"],
+            "Name": ["Two_Component_Thick_Parametric"],
+            "Component": ["Torus_1","Torus_1_01"],
+            "Const": ["T=0.1","c=1/1000000","umax=1","umin=-1","vmax=1","vmin=-1","cu=(umax-umin)/1000","cv=(vmax-vmin)/1000"],
+            "Funct": ["Fx=u","Fy=v","Fz=-sin(pi*((u)^2+(v)^2))/3","DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)","DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)","DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)","DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)","DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)","DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Gx=Fx(u,v,t)+T*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)+T*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Gz=Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
+            "Fx": ["Fx(u,v,t)","if(u<umin  & !(v<vmin | v>vmax),Fx(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fx(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fx(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fx(u,vmax,t), if(u<umin  & v<vmin,  Fx(umin,vmin,t) , if(u<umin  & v>vmax,  Fx(umin,vmax,t) , if(v<vmin  & u>umax,  Fx(umax,vmin,t), if(v>vmax  & u>umax,  Fx(umax,vmax,t),Gx(u,v,t)))))))))"],
+            "Fy": ["Fy(u,v,t)","if(u<umin  & !(v<vmin | v>vmax),Fy(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fy(umax,v,t),if(v<vmin & !(u<umin | u>umax) ,Fy(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fy(u,vmax,t), if(u<umin  & v<vmin,  Fy(umin,vmin,t) , if(u<umin  & v>vmax,  Fy(umin,vmax,t) , if(v<vmin  & u>umax,  Fy(umax,vmin,t), if(v>vmax  & u>umax,  Fy(umax,vmax,t),Gy(u,v,t)))))))))"],
+            "Fz": ["Fz(u,v,t)","if(u<umin  & !(v<vmin | v>vmax),Fz(umin,v,t),if(u>umax & !(v<vmin | v>vmax),Fz(umax,v,t),if(v<vmin & !(u<umin | u>umax),Fz(u,vmin,t),if(v>vmax & !(u<umin | u>umax),Fz(u,vmax,t),  if(u<umin  & v<vmin,  Fz(umin,vmin,t) , if(u<umin  & v>vmax,  Fz(umin,vmax,t) , if(v<vmin  & u>umax,  Fz(umax,vmin,t), if(v>vmax  & u>umax,  Fz(umax,vmax,t),Gz(u,v,t)))))))))"],
+            "Umax": ["umax","umax+cu"],
+            "Umin": ["umin","umin-cu"],
+            "Vmax": ["vmax","vmax+cv"],
+            "Vmin": ["vmin","vmin-cv"]
         }
     },
     {
