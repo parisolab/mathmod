@@ -3,7 +3,7 @@
         {
         "Param3D": {
             "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')WhereT=Thicknessvalue;'n1=(a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))','n2=(a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))','n3=(a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))','R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)''a1=dFx/du','a2=dFy/du','a3=dFz/du','b1=dFx/dv','b2=dFy/dv','b3=dFz/dv'"],
-            "Name": ["One_Component_Thick_Parametric"],
+            "Name": ["Thick_Sin_One_Component"],
             "Component": ["Sinus"],
             "Const": ["T=0.1","c=1/10000","umax=1","umin=-1","vmax=1","vmin=-1"],
             "Funct": ["Fx=u","Fy=v","Fz=-sin(pi*((u)^2+(v)^2))/3","DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)","DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)","DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)","DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)","DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)","DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Gx=if(u<umax & (v=vmin | v=vmax | u = umin), Fx(u,v,t), Fx(u,v,t) +T*R(n1(u,v,t),n2(u,v,t),n3(u,v,t)))","Gy=if(u<umax & (v=vmin | v=vmax | u = umin), Fy(u,v,t), Fy(u,v,t)+T*R(n2(u,v,t),n3(u,v,t),n1(u,v,t)))","Gz=if(u<umax & (v=vmin | v=vmax | u = umin), Fz(u,v,t), Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t)))"],
@@ -19,7 +19,7 @@
     {
         "Param3D": {
             "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"],
-            "Name": ["Two_Component_Thick_Parametric"],
+            "Name": ["Thick_Sin_Two_Component"],
             "Component": ["Torus_1","Torus_1_01"],
             "Const": ["T=0.1","c=1/1000000","umax=1","umin=-1","vmax=1","vmin=-1","cu=(umax-umin)/1000","cv=(vmax-vmin)/1000"],
             "Funct": ["Fx=u","Fy=v","Fz=-sin(pi*((u)^2+(v)^2))/3","DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)","DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)","DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)","DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)","DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)","DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Gx=Fx(u,v,t)+T*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)+T*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Gz=Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
