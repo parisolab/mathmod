@@ -2,7 +2,7 @@
   "MathModels": [
         {
         "Param3D": {
-            "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')WhereT=Thicknessvalue;'n1=(a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))','n2=(a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))','n3=(a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))','R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)''a1=dFx/du','a2=dFy/du','a3=dFz/du','b1=dFx/dv','b2=dFy/dv','b3=dFz/dv'"],
+            "Description": [" "],
             "Name": ["Thick_Sin_One_Component"],
             "Component": ["Sinus"],
             "Const": ["T=0.1","c=1/10000","umax=1","umin=-1","vmax=1","vmin=-1"],
