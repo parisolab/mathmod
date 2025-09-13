@@ -1,13 +1,10 @@
 {
   "MathModels": [{
             "Param3D": {
-                "Component": [
-                    "Torus_1",
+                "Component": ["Torus_1",
                     "Torus_1_01",
-                    "Torus_1_01_01"
-                ],
-                "Const": [
-                    "T=0.1",
+                    "Torus_1_01_01"],
+                "Const": ["T=0.1",
                     "c=1/1000000",
                     "umax=1",
                     "umin=-1",
@@ -17,13 +14,9 @@
                     "umax3=1",
                     "umin3=-1",
                     "vmax3=T",
-                    "vmin3=0"
-                ],
-                "Description": [
-                    "The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"
-                ],
-                "Funct": [
-                    "Fx=u",
+                    "vmin3=0"],
+                "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"],
+                "Funct": ["Fx=u",
                     "Fy=v",
                     "Fz=-sin(pi*((u)^2+(v)^2))/3",
                     "DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)",
@@ -41,46 +34,29 @@
                     "Gz=Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))",
                     "Fx3=(Gx(u,v,t)-Fx(u,v,t))*(v-vmin3)/(vmax3-vmin3)",
                     "Fy3=(Gy(u,v,t)-Fy(u,v,t))*(v-vmin3)/(vmax3-vmin3)",
-                    "Fz3=(Gz(u,v,t)-Fz(u,v,t))*(v-vmin3)/(vmax3-vmin3)"
-                ],
-                "Fx": [
-                    "Fx(u,v,t)",
+                    "Fz3=(Gz(u,v,t)-Fz(u,v,t))*(v-vmin3)/(vmax3-vmin3)"],
+                "Fx": ["Fx(u,v,t)",
                     "Gx(u,v,t)",
-                    "Fx3(u,v,t)"
-                ],
-                "Fy": [
-                    "Fy(u,v,t)",
+                    "Fx3(u,v,t)"],
+                "Fy": ["Fy(u,v,t)",
                     "Gy(u,v,t)",
-                    "Fy3(u,v,t)"
-                ],
-                "Fz": [
-                    "Fz(u,v,t)",
+                    "Fy3(u,v,t)"],
+                "Fz": ["Fz(u,v,t)",
                     "Gz(u,v,t)",
-                    "Fz3(u,v,t)"
-                ],
-                "Name": [
-                    "Three_Component_Thick_Parametric"
-                ],
-                "Umax": [
+                    "Fz3(u,v,t)"],
+                "Name": ["Three_Component_Thick_Parametric"],
+                "Umax": ["umax",
                     "umax",
-                    "umax",
-                    "umax3"
-                ],
-                "Umin": [
+                    "umax3"],
+                "Umin": ["umin",
                     "umin",
-                    "umin",
-                    "umin3"
-                ],
-                "Vmax": [
+                    "umin3"],
+                "Vmax": ["vmax",
                     "vmax",
-                    "vmax",
-                    "vmax3"
-                ],
-                "Vmin": [
+                    "vmax3"],
+                "Vmin": ["vmin",
                     "vmin",
-                    "vmin",
-                    "vmin3"
-                ]
+                    "vmin3"]
             }
         },
         {
