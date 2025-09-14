@@ -1,6 +1,8 @@
 {
   "MathModels": [{
             "Param3D": {
+                "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"],
+                "Name": ["Three_Component_Thick_Parametric"],
                 "Component": ["Torus_1",
                     "Torus_1_01",
                     "Torus_1_01_01"],
@@ -15,7 +17,6 @@
                     "umin3=-1",
                     "vmax3=T",
                     "vmin3=0"],
-                "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"],
                 "Funct": ["Fx=u",
                     "Fy=v",
                     "Fz=-sin(pi*((u)^2+(v)^2))/3",
@@ -44,7 +45,6 @@
                 "Fz": ["Fz(u,v,t)",
                     "Gz(u,v,t)",
                     "Fz3(u,v,t)"],
-                "Name": ["Three_Component_Thick_Parametric"],
                 "Umax": ["umax",
                     "umax",
                     "umax3"],
