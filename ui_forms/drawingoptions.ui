@@ -2730,7 +2730,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                <property name="currentIndex">
                                 <number>0</number>
                                </property>
-                               <widget class="QWidget" name="page_13">
+                               <widget class="QWidget" name="IsoThickness">
                                 <property name="geometry">
                                  <rect>
                                   <x>0</x>
@@ -2740,7 +2740,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </rect>
                                 </property>
                                 <attribute name="label">
-                                 <string>Thichness</string>
+                                 <string>Thickness</string>
                                 </attribute>
                                 <layout class="QGridLayout" name="gridLayout_89">
                                  <item row="0" column="0">
@@ -2978,7 +2978,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    <number>2</number>
                   </property>
                   <item row="0" column="0">
-                   <widget class="QTabWidget" name="colorgrid">
+                   <widget class="QTabWidget" name="ParamEquationGen">
                     <property name="minimumSize">
                      <size>
                       <width>10</width>
@@ -3830,6 +3830,33 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </widget>
                         </item>
                        </layout>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="ParamEquationsGen">
+                     <attribute name="title">
+                      <string>Equations Generator</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_86">
+                      <item row="0" column="0">
+                       <widget class="QToolBox" name="EquaGenTool">
+                        <property name="currentIndex">
+                         <number>0</number>
+                        </property>
+                        <widget class="QWidget" name="ParamThickness">
+                         <property name="geometry">
+                          <rect>
+                           <x>0</x>
+                           <y>0</y>
+                           <width>521</width>
+                           <height>386</height>
+                          </rect>
+                         </property>
+                         <attribute name="label">
+                          <string>Thickness</string>
+                         </attribute>
+                        </widget>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
