@@ -146,9 +146,9 @@ struct IsoTorsionParam
 struct ParThichnessParam
 {
     QString ThExpression = "";
-    bool OriginalSurf = true;
-    bool UpperSurf = true;
-    bool BottomSurf = false;
+    bool ShowOriginalSurf = true;
+    bool ShowUpperSurf = true;
+    bool ShowBottomSurf = false;
 };
 struct ParScaleParam
 {

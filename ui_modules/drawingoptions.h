@@ -351,22 +351,14 @@ public slots:
     void on_blue_Diffuse_valueChanged(int);
     void on_transparent_Diffuse_valueChanged(int);
     void on_GLFrontSurfaceSupport_clicked();
-    void on_ScaleXBar_valueChanged(int);
-    void on_ScaleYBar_valueChanged(int);
-    void on_ScaleZBar_valueChanged(int);
-    void on_TorsionX_valueChanged(int);
-    void on_TorsionY_valueChanged(int);
-    void on_TorsionZ_valueChanged(int);
-    void on_SaveThButton_clicked();
-    void on_SaveTrButton_clicked();
     void on_SaveThButton_2_clicked();
-    void on_ApplyThicknessVal_clicked();
 
 private slots:
     void on_actionbox_triggered();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionClear_triggered();
+    void on_SaveThButton_1_clicked();
 };
 
 #endif

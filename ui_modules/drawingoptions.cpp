@@ -5439,113 +5439,6 @@ void DrawingOptions::on_actionbox_triggered()
     MathmodRef->boundingboxOk();
     MathmodRef->update();
 }
-void DrawingOptions::on_ScaleXBar_valueChanged(int vx)
-{
-    float sx = float(vx)/20.0;
-    MathmodRef->IsoObjet->IsoSc.Sx = sx;
-    MathmodRef->IsoObjet->IsoSc.ScalX = (sx != 1.0 ?"("+QString::number(sx)+")*$x$" : "$x$");
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = SCALX;
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->ScaleIsoSurface();
-    }
-}
-void DrawingOptions::on_ScaleYBar_valueChanged(int vy)
-{
-    float sy = float(vy)/20.0;
-    MathmodRef->IsoObjet->IsoSc.Sy = sy;
-    MathmodRef->IsoObjet->IsoSc.ScalY = (sy != 1.0 ?"("+QString::number(sy)+")*$y$" : "$y$");
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = SCALY;
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->ScaleIsoSurface();
-    }
-}
-void DrawingOptions::on_ScaleZBar_valueChanged(int vz)
-{
-    float sz = float(vz)/20.0;
-    MathmodRef->IsoObjet->IsoSc.Sz = sz;
-    MathmodRef->IsoObjet->IsoSc.ScalZ = (sz != 1.0 ?"("+QString::number(sz)+")*$z$" : "$z$");
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = SCALZ;
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->ScaleIsoSurface();
-    }
-}
-void DrawingOptions::on_TorsionX_valueChanged(int value)
-{
-    // Apply the torsion along the X axis
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = TORSX;
-    MathmodRef->IsoObjet->IsoTr.Tetax = value;
-    QString f = "(i_indx/max_ijk)*(";
-    QString Tx=QString::number(float(value-50)/2.5);
-    MathmodRef->IsoObjet->IsoTr.TorsionX = "($x$)";
-    MathmodRef->IsoObjet->IsoTr.TorsionY = "(sin("+f+Tx+"))*$y$ + cos("+f+Tx+"))*$z$)";
-    MathmodRef->IsoObjet->IsoTr.TorsionZ = "(cos("+f+Tx+"))*$y$ - sin("+f+Tx+"))*$z$)";
-    //Show torsion effect
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->TorsionIsoSurface();
-    }
-}
-void DrawingOptions::on_TorsionY_valueChanged(int value)
-{
-    // Apply the torsion along the Y axis
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = TORSY;
-    MathmodRef->IsoObjet->IsoTr.Tetay = value;
-    QString f = "(j_indx/max_ijk)*(";
-    QString Ty=QString::number(float(value-50)/2.5);
-    MathmodRef->IsoObjet->IsoTr.TorsionX = "(sin("+f+Ty+"))*$x$ + cos("+f+Ty+"))*$z$)";
-    MathmodRef->IsoObjet->IsoTr.TorsionY = "($y$)";
-    MathmodRef->IsoObjet->IsoTr.TorsionZ = "(cos("+f+Ty+"))*$x$ - sin("+f+Ty+"))*$z$)";
-    //Apply torsion effect
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->TorsionIsoSurface();
-    }
-}
-void DrawingOptions::on_TorsionZ_valueChanged(int value)
-{
-    // Apply the torsion along the Z axis
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = TORSZ;
-    MathmodRef->IsoObjet->IsoTr.Tetaz = value;
-    QString f = "(k_indx/max_ijk)*(";
-    QString Tz=QString::number(float(value-50)/2.5);
-    MathmodRef->IsoObjet->IsoTr.TorsionX = "(sin("+f+Tz+"))*$x$ + cos("+f+Tz+"))*$y$)";
-    MathmodRef->IsoObjet->IsoTr.TorsionY = "(cos("+f+Tz+"))*$x$ - sin("+f+Tz+"))*$y$)";
-    MathmodRef->IsoObjet->IsoTr.TorsionZ = "($z$)";
-    //Apply torsion effect
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->TorsionIsoSurface();
-    }
-}
-void DrawingOptions::on_SaveTrButton_clicked()
-{
-    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$X$", MathmodRef->IsoObjet->IsoTr.TorsionX);
-    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$Y$", MathmodRef->IsoObjet->IsoTr.TorsionY);
-    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$Z$", MathmodRef->IsoObjet->IsoTr.TorsionZ);
-    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$x$","$X$");
-    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$y$","$Y$");
-    (MathmodRef->IsoObjet->Isoxyz.Vx).replace("$z$","$Z$");
-
-    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$X$", MathmodRef->IsoObjet->IsoTr.TorsionX);
-    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$Y$", MathmodRef->IsoObjet->IsoTr.TorsionY);
-    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$Z$", MathmodRef->IsoObjet->IsoTr.TorsionZ);
-    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$x$","$X$");
-    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$y$","$Y$");
-    (MathmodRef->IsoObjet->Isoxyz.Vy).replace("$z$","$Z$");
-
-    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$X$", MathmodRef->IsoObjet->IsoTr.TorsionX);
-    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$Y$", MathmodRef->IsoObjet->IsoTr.TorsionY);
-    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$Z$", MathmodRef->IsoObjet->IsoTr.TorsionZ);
-    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$x$","$X$");
-    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$y$","$Y$");
-    (MathmodRef->IsoObjet->Isoxyz.Vz).replace("$z$","$Z$");
-}
-void DrawingOptions::on_SaveThButton_clicked()
-{
-}
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
     QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;
@@ -5622,24 +5515,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
 }
-void DrawingOptions::on_ApplyThicknessVal_clicked()
-{
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
-    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal->text().replace(" ", "");
-    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct->isChecked();
-    if (!MathmodRef->IsoObjet->isRunning())
-    {
-        MathmodRef->AddThicknessToIsoSurface();
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Invalid number");
-        msgBox.exec();
-    }
-}
 void DrawingOptions::on_actionUndo_triggered()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
@@ -5661,3 +5536,80 @@ void DrawingOptions::on_actionClear_triggered()
     MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
     MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
+
+void DrawingOptions::on_SaveThButton_1_clicked()
+{
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;
+    QJsonObject tmp,tmp2;
+    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
+
+    MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
+    MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
+    MathmodRef->ParObjet->ParTh.ShowUpperSurf = ui.UpperFct_1->isChecked();
+    MathmodRef->ParObjet->ParTh.ShowBottomSurf = ui.DownFct_1->isChecked();
+    tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    tmp2= tmp["Iso3D"].toObject();
+    FxyzArray = tmp2["Fxyz"].toArray();
+    FctArray = tmp2["Funct"].toArray();
+    ConstArraytmp = tmp2["Const"].toArray();
+    int ThCount=0;
+    for (int i = 0; i < ConstArraytmp.size(); ++i)
+    {
+        if(ConstArraytmp[i].toString().contains("ThCount"))
+        {
+            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+        }
+        else
+            ConstArray.append(ConstArraytmp[i].toString());
+    }
+    ThCount = ThCount+1;
+    ConstArray.append("ThCount="+QString::number(ThCount));
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
+    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowUpperSurf) ? "1" : "0");
+    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
+    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
+    tmpScalVar    = "ScalVar_"+QString::number(ThCount);
+    tmpScalVarmax = "ScalVarMax_"+QString::number(ThCount);
+    tmpScalVarmin = "ScalVarMin_"+QString::number(ThCount);
+    ConstArray.append(tmpScalVar+"="+QString::number(ui.SscrollBar->value()));
+    ConstArray.append(tmpScalVarmax+"="+QString::number(ui.SscrollBar->maximum()));
+    ConstArray.append(tmpScalVarmin+"="+QString::number(ui.SscrollBar->minimum()));
+    ScalVar = "(("+tmpScalVar+"-("+tmpScalVarmax+"-"+tmpScalVarmin+")/2)/10)";
+    if(ThCount==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
+    QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
+    for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
+    {
+        QString I=QString::number(i);
+        QString fxyzt=FxyzArray.at(i).toString();
+        QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+        if(!fxyzt.contains("fffxyz"))
+            FctArray.append("fffxyz"+I+"="+fxyzt);
+        FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
+        FctArray.append(fct);
+        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+    }
+    tmp2["Fxyz"] = NewFxyzArray;
+    tmp2["Funct"]= FctArray;
+    tmp2["Const"]= ConstArray;
+    if (!tmp2["Vect"].isArray())
+    {
+        (Vetc=tmp2["Vect"].toArray()).append("4");
+        tmp2["Vect"]= Vetc;
+    }
+    tmp["Iso3D"] = tmp2;
+    // Draw here
+    DrawJsonModel(tmp);
+    PreviousJsonObject(tmp);
+}
+
