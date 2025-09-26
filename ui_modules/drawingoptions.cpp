@@ -5539,8 +5539,8 @@ void DrawingOptions::on_actionClear_triggered()
 
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
-    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;
-    QJsonObject tmp,tmp2;
+    QJsonArray FxArray, FyArray, FzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;
+    QJsonObject tmp,tmp2,tmpx,tmpy,tmpz;
     QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
 
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
@@ -5548,8 +5548,10 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     MathmodRef->ParObjet->ParTh.ShowUpperSurf = ui.UpperFct_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowBottomSurf = ui.DownFct_1->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
-    tmp2= tmp["Iso3D"].toObject();
-    FxyzArray = tmp2["Fxyz"].toArray();
+    tmp2= tmp["Param3D"].toObject();
+    FxArray = tmp2["Fx"].toArray();
+    FyArray = tmp2["Fy"].toArray();
+    FzArray = tmp2["Fz"].toArray();
     FctArray = tmp2["Funct"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
     int ThCount=0;
@@ -5564,11 +5566,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     }
     ThCount = ThCount+1;
     ConstArray.append("ThCount="+QString::number(ThCount));
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
+    Bool = ((MathmodRef->ParObjet->ParTh.ShowBottomSurf) ? "1" : "0");
     ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowUpperSurf) ? "1" : "0");
+    Bool = ((MathmodRef->ParObjet->ParTh.ShowUpperSurf) ? "1" : "0");
     ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
+    Bool = ((MathmodRef->ParObjet->ParTh.ShowOriginalSurf) ? "1" : "0");
     ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
     tmpScalVar    = "ScalVar_"+QString::number(ThCount);
     tmpScalVarmax = "ScalVarMax_"+QString::number(ThCount);
@@ -5581,11 +5583,15 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     {
         ConstArray.append("epsilon=1/100000");
     }
-    QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
-    for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
+    QString T = MathmodRef->ParObjet->ParTh.ThExpression;
+    for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
     {
         QString I=QString::number(i);
-        QString fxyzt=FxyzArray.at(i).toString();
+        QString fx=FxArray.at(i).toString();
+        QString fy=FyArray.at(i).toString();
+        QString fz=FzArray.at(i).toString();
+
+
         QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
@@ -5593,11 +5599,17 @@ void DrawingOptions::on_SaveThButton_1_clicked()
                 fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-        if(!fxyzt.contains("fffxyz"))
-            FctArray.append("fffxyz"+I+"="+fxyzt);
+        if(!fx.contains("fffx"))
+            FctArray.append("fffx"+I+"="+fx);
+        if(!fy.contains("fffy"))
+            FctArray.append("fffy"+I+"="+fy);
+        if(!fz.contains("fffz"))
+            FctArray.append("fffz"+I+"="+fz);
         FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
         FctArray.append(fct);
-        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+        NewFxyzArray.append("fffx"+I+"(u,v,t)");
+        NewFxyzArray.append("fffy"+I+"(u,v,t)");
+        NewFxyzArray.append("fffz"+I+"(u,v,t)");
     }
     tmp2["Fxyz"] = NewFxyzArray;
     tmp2["Funct"]= FctArray;
