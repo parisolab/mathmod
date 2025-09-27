@@ -5592,12 +5592,12 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         QString fz=FzArray.at(i).toString();
 
 
-        QString fct("fffxyz"+I+"=psh((0),(fffx"+I+"(u+epsilon,v,t)-fffx"+I+"(u,u,t))/epsilon)"
+        QString fct("fffxyz"+I+"=psh((0),(fffx"+I+"(u+epsilon,v,t)-fffx"+I+"(u,v,t))/epsilon)"
                     "*psh((1),(fffx"+I+"(u,v+epsilon,t)-fffx"+I+"(u,v,t))/epsilon)"
-                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-                fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffx"+I+"(u+csd(0)*csd(3),v+csd(1)*csd(3),t),(1)))";
+                fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffx"+I+"(u-csd(0)*csd(3),v-csd(1)*csd(3),t),(1)))";
+                fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffx"+I+"(u,v,t),(1)))";
         if(!fx.contains("fffx"))
             FctArray.append("fffx"+I+"="+fx);
         if(!fy.contains("fffy"))
