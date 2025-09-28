@@ -5591,12 +5591,12 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         QString fy=FyArray.at(i).toString();
         QString fz=FzArray.at(i).toString();
 
-        FctArray.append("DFFFxu=((FFFx(u+c,v,t)-FFFx(u,v,t))/c)");
-        FctArray.append("DFFFxv=((FFFx(u,v+c,t)-FFFx(u,v,t))/c)");
-        FctArray.append("DFFFyu=((FFFy(u+c,v,t)-FFFy(u,v,t))/c)");
-        FctArray.append("DFFFyv=((FFFy(u,v+c,t)-FFFy(u,v,t))/c)");
-        FctArray.append("DFFFzu=((FFFz(u+c,v,t)-FFFz(u,v,t))/c)");
-        FctArray.append("DFFFzv=((FFFz(u,v+c,t)-FFFz(u,v,t))/c)");
+        FctArray.append("DFFFxu=((FFFx"+I+"(u+c,v,t)-FFFx"+I+"(u,v,t))/c)");
+        FctArray.append("DFFFxv=((FFFx"+I+"(u,v+c,t)-FFFx"+I+"(u,v,t))/c)");
+        FctArray.append("DFFFyu=((FFFy"+I+"(u+c,v,t)-FFFy"+I+"(u,v,t))/c)");
+        FctArray.append("DFFFyv=((FFFy"+I+"(u,v+c,t)-FFFy"+I+"(u,v,t))/c)");
+        FctArray.append("DFFFzu=((FFFz"+I+"(u+c,v,t)-FFFz(u,v,t))/c)");
+        FctArray.append("DFFFzv=((FFFz"+I+"(u,v+c,t)-FFFz"+I+"(u,v,t))/c)");
         FctArray.append("n1=(DFFFyu(u,v,t)*DFFFzv(u,v,t)-DFFFzu(u,v,t)*DFFFyv(u,v,t))");
         FctArray.append("n2=(DFFFzu(u,v,t)*DFFFxv(u,v,t)-DFFFxu(u,v,t)*DFFFzv(u,v,t))");
         FctArray.append("n3=(DFFFxu(u,v,t)*DFFFyv(u,v,t)-DFFFyu(u,v,t)*DFFFxv(u,v,t))");
