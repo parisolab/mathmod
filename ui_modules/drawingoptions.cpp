@@ -5591,6 +5591,39 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         QString fy=FyArray.at(i).toString();
         QString fz=FzArray.at(i).toString();
 
+        FctArray.append("DFFFxu=((FFFx(u+c,v,t)-FFFx(u,v,t))/c)");
+        FctArray.append("DFFFxv=((FFFx(u,v+c,t)-FFFx(u,v,t))/c)");
+        FctArray.append("DFFFyu=((FFFy(u+c,v,t)-FFFy(u,v,t))/c)");
+        FctArray.append("DFFFyv=((FFFy(u,v+c,t)-FFFy(u,v,t))/c)");
+        FctArray.append("DFFFzu=((FFFz(u+c,v,t)-FFFz(u,v,t))/c)");
+        FctArray.append("DFFFzv=((FFFz(u,v+c,t)-FFFz(u,v,t))/c)");
+        FctArray.append("n1=(DFFFyu(u,v,t)*DFFFzv(u,v,t)-DFFFzu(u,v,t)*DFFFyv(u,v,t))");
+        FctArray.append("n2=(DFFFzu(u,v,t)*DFFFxv(u,v,t)-DFFFxu(u,v,t)*DFFFzv(u,v,t))");
+        FctArray.append("n3=(DFFFxu(u,v,t)*DFFFyv(u,v,t)-DFFFyu(u,v,t)*DFFFxv(u,v,t))");
+        FctArray.append("R=u/sqrt(u*u+v*v+t*t)");
+        FctArray.append("GGGx"+I+"=FFFx(u,v,t)+Thexpr(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
+        FctArray.append("GGGy"+I+"=FFFy(u,v,t)+Thexpr(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
+        FctArray.append("GGGz"+I+"=FFFz(u,v,t)+Thexpr(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
+        FctArray.append("FFFx3"+I+"=FFFx(u,vmin,t)+(Thexpr(u,vmin,t)*R(n1(u,vmin,t),n2(u,vmin,t),n3(u,vmin,t)))*(v-vmin)/(vmax-vmin)");
+        FctArray.append("FFFy3"+I+"=FFFy(u,vmin,t)+(Thexpr(u,vmin,t)*R(n2(u,vmin,t),n3(u,vmin,t),n1(u,vmin,t)))*(v-vmin)/(vmax-vmin)");
+        FctArray.append("FFFz3"+I+"=FFFz(u,vmin,t)+(Thexpr(u,vmin,t)*R(n3(u,vmin,t),n1(u,vmin,t),n2(u,vmin,t)))*(v-vmin)/(vmax-vmin)");
+        FctArray.append("FFFx4"+I+"=FFFx(u,vmax,t)+(Thexpr(u,vmax,t)*R(n1(u,vmax,t),n2(u,vmax,t),n3(u,vmax,t)))*(v-vmin)/(vmax-vmin)");
+        FctArray.append("FFFy4"+I+"=FFFy(u,vmax,t)+(Thexpr(u,vmax,t)*R(n2(u,vmax,t),n3(u,vmax,t),n1(u,vmax,t)))*(v-vmin)/(vmax-vmin)");
+        FctArray.append("FFFz4"+I+"=FFFz(u,vmax,t)+(Thexpr(u,vmax,t)*R(n3(u,vmax,t),n1(u,vmax,t),n2(u,vmax,t)))*(v-vmin)/(vmax-vmin)");
+        FctArray.append("FFFx5"+I+"=FFFx(umin,v,t)+(Thexpr(umin,v,t)*R(n1(umin,v,t),n2(umin,v,t),n3(umin,v,t)))*(u-umin)/(umax-umin)");
+        FctArray.append("FFFy5"+I+"=FFFy(umin,v,t)+(Thexpr(umin,v,t)*R(n2(umin,v,t),n3(umin,v,t),n1(umin,v,t)))*(u-umin)/(umax-umin)");
+        FctArray.append("FFFz5"+I+"=FFFz(umin,v,t)+(Thexpr(umin,v,t)*R(n3(umin,v,t),n1(umin,v,t),n2(umin,v,t)))*(u-umin)/(umax-umin)");
+        FctArray.append("FFFx6"+I+"=FFFx(umax,v,t)+(Thexpr(umax,v,t)*R(n1(umax,v,t),n2(umax,v,t),n3(umax,v,t)))*(u-umin)/(umax-umin)");
+        FctArray.append("FFFy6"+I+"=FFFy(umax,v,t)+(Thexpr(umax,v,t)*R(n2(umax,v,t),n3(umax,v,t),n1(umax,v,t)))*(u-umin)/(umax-umin)");
+        FctArray.append("FFFz6"+I+"=FFFz(umax,v,t)+(Thexpr(umax,v,t)*R(n3(umax,v,t),n1(umax,v,t),n2(umax,v,t)))*(u-umin)/(umax-umin)");
+
+
+
+
+
+
+
+
 
         QString fct("fffxyz"+I+"=psh((0),(fffx"+I+"(u+epsilon,v,t)-fffx"+I+"(u,v,t))/epsilon)"
                     "*psh((1),(fffx"+I+"(u,v+epsilon,t)-fffx"+I+"(u,v,t))/epsilon)"
