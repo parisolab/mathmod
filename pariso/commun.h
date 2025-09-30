@@ -149,6 +149,7 @@ struct ParThichnessParam
     bool ShowOriginalSurf = true;
     bool ShowUpperSurf = true;
     bool ShowBottomSurf = false;
+    bool ShowBoumdarySurfs = false;
 };
 struct ParScaleParam
 {

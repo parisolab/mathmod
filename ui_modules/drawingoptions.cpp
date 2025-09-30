@@ -5552,6 +5552,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowUpperSurf = ui.UpperFct_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowBottomSurf = ui.DownFct_1->isChecked();
+    MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
@@ -5606,76 +5607,123 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         QString Vmin="Vmin__"+I;
         QString Vmax="Vmax__"+I;
 
-        FctArray.append("FFFx"+I+"="+fx);
-        FctArray.append("FFFy"+I+"="+fy);
-        FctArray.append("FFFz"+I+"="+fz);
+        FctArray.append("FFFx_Orig"+I+"="+fx);
+        FctArray.append("FFFy_Orig"+I+"="+fy);
+        FctArray.append("FFFz_Orig"+I+"="+fz);
 
         FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
 
-        FctArray.append("DFFFxu=((FFFx"+I+"(u+epsilon,v,t)-FFFx"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFxv=((FFFx"+I+"(u,v+epsilon,t)-FFFx"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFyu=((FFFy"+I+"(u+epsilon,v,t)-FFFy"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFyv=((FFFy"+I+"(u,v+epsilon,t)-FFFy"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFzu=((FFFz"+I+"(u+epsilon,v,t)-FFFz"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFzv=((FFFz"+I+"(u,v+epsilon,t)-FFFz"+I+"(u,v,t))/epsilon)");
+        FctArray.append("DFFFxu=((FFFx_Orig"+I+"(u+epsilon,v,t)-FFFx_Orig"+I+"(u,v,t))/epsilon)");
+        FctArray.append("DFFFxv=((FFFx_Orig"+I+"(u,v+epsilon,t)-FFFx_Orig"+I+"(u,v,t))/epsilon)");
+        FctArray.append("DFFFyu=((FFFy_Orig"+I+"(u+epsilon,v,t)-FFFy_Orig"+I+"(u,v,t))/epsilon)");
+        FctArray.append("DFFFyv=((FFFy_Orig"+I+"(u,v+epsilon,t)-FFFy_Orig"+I+"(u,v,t))/epsilon)");
+        FctArray.append("DFFFzu=((FFFz_Orig"+I+"(u+epsilon,v,t)-FFFz_Orig"+I+"(u,v,t))/epsilon)");
+        FctArray.append("DFFFzv=((FFFz_Orig"+I+"(u,v+epsilon,t)-FFFz_Orig"+I+"(u,v,t))/epsilon)");
 
         FctArray.append("n1=(DFFFyu(u,v,t)*DFFFzv(u,v,t)-DFFFzu(u,v,t)*DFFFyv(u,v,t))");
         FctArray.append("n2=(DFFFzu(u,v,t)*DFFFxv(u,v,t)-DFFFxu(u,v,t)*DFFFzv(u,v,t))");
         FctArray.append("n3=(DFFFxu(u,v,t)*DFFFyv(u,v,t)-DFFFyu(u,v,t)*DFFFxv(u,v,t))");
         FctArray.append("R=u/sqrt(u*u+v*v+t*t)");
-        FctArray.append("GGGx"+I+"=FFFx"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
-        FctArray.append("GGGy"+I+"=FFFy"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
-        FctArray.append("GGGz"+I+"=FFFz"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
-        FctArray.append("FFFx3"+I+"=FFFx"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-        FctArray.append("FFFy3"+I+"=FFFy"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-        FctArray.append("FFFz3"+I+"=FFFz"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n3(u,"+Vmin+",t),n1(u,"+Vmin+",t),n2(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-        FctArray.append("FFFx4"+I+"=FFFx"+I+"(u,"+Vmax+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R(n1(u,"+Vmax+",t),n2(u,"+Vmax+",t),n3(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-        FctArray.append("FFFy4"+I+"=FFFy"+I+"(u,"+Vmax+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R(n2(u,"+Vmax+",t),n3(u,"+Vmax+",t),n1(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-        FctArray.append("FFFz4"+I+"=FFFz"+I+"(u,"+Vmax+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R(n3(u,"+Vmax+",t),n1(u,"+Vmax+",t),n2(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
 
-        FctArray.append("FFFx5"+I+"=FFFx"+I+"("+Umin+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R(n1("+Umin+",v,t),n2("+Umin+",v,t),n3("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-        FctArray.append("FFFy5"+I+"=FFFy"+I+"("+Umin+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R(n2("+Umin+",v,t),n3("+Umin+",v,t),n1("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-        FctArray.append("FFFz5"+I+"=FFFz"+I+"("+Umin+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R(n3("+Umin+",v,t),n1("+Umin+",v,t),n2("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-        FctArray.append("FFFx6"+I+"=FFFx"+I+"("+Umax+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R(n1("+Umax+",v,t),n2("+Umax+",v,t),n3("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-        FctArray.append("FFFy6"+I+"=FFFy"+I+"("+Umax+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R(n2("+Umax+",v,t),n3("+Umax+",v,t),n1("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-        FctArray.append("FFFz6"+I+"=FFFz"+I+"("+Umax+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R(n3("+Umax+",v,t),n1("+Umax+",v,t),n2("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-        for(uint j=0; j<6; j++)
-        {
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-        }
+        FctArray.append("FFFx_Up"+I+"=FFFx_Orig"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
+        FctArray.append("FFFy_Up"+I+"=FFFy_Orig"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
+        FctArray.append("FFFz_Up"+I+"=FFFz_Orig"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
+
+        FctArray.append("FFFx_Down"+I+"=FFFx_Orig"+I+"(u,v,t)-ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
+        FctArray.append("FFFy_Down"+I+"=FFFy_Orig"+I+"(u,v,t)-ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
+        FctArray.append("FFFz_Down"+I+"=FFFz_Orig"+I+"(u,v,t)-ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
+
+        FctArray.append("FFFx_Right"+I+"=FFFx_Orig"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+        FctArray.append("FFFy_Right"+I+"=FFFy_Orig"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+        FctArray.append("FFFz_Right"+I+"=FFFz_Orig"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n3(u,"+Vmin+",t),n1(u,"+Vmin+",t),n2(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+
+        FctArray.append("FFFx_Left"+I+"=FFFx_Orig"+I+"(u,"+Vmax+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R(n1(u,"+Vmax+",t),n2(u,"+Vmax+",t),n3(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+        FctArray.append("FFFy_Left"+I+"=FFFy_Orig"+I+"(u,"+Vmax+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R(n2(u,"+Vmax+",t),n3(u,"+Vmax+",t),n1(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+        FctArray.append("FFFz_Left"+I+"=FFFz_Orig"+I+"(u,"+Vmax+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R(n3(u,"+Vmax+",t),n1(u,"+Vmax+",t),n2(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+
+        FctArray.append("FFFx_Front"+I+"=FFFx_Orig"+I+"("+Umin+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R(n1("+Umin+",v,t),n2("+Umin+",v,t),n3("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+        FctArray.append("FFFy_Front"+I+"=FFFy_Orig"+I+"("+Umin+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R(n2("+Umin+",v,t),n3("+Umin+",v,t),n1("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+        FctArray.append("FFFz_Front"+I+"=FFFz_Orig"+I+"("+Umin+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R(n3("+Umin+",v,t),n1("+Umin+",v,t),n2("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+
+        FctArray.append("FFFx_Back"+I+"=FFFx_Orig"+I+"("+Umax+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R(n1("+Umax+",v,t),n2("+Umax+",v,t),n3("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+        FctArray.append("FFFy_Back"+I+"=FFFy_Orig"+I+"("+Umax+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R(n2("+Umax+",v,t),n3("+Umax+",v,t),n1("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+        FctArray.append("FFFz_Back"+I+"=FFFz_Orig"+I+"("+Umax+",v,t)+(ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R(n3("+Umax+",v,t),n1("+Umax+",v,t),n2("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
 
         ConstArray.append("Umin__"+I+"="+FuminArray.at(i).toString());
         ConstArray.append("Umax__"+I+"="+FumaxArray.at(i).toString());
         ConstArray.append("Vmin__"+I+"="+FvminArray.at(i).toString());
         ConstArray.append("Vmax__"+I+"="+FvmaxArray.at(i).toString());
+        if(MathmodRef->ParObjet->ParTh.ShowOriginalSurf)
+        {
+            NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
+            NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
+            NewFzArray.append("FFFz_Orig"+I+"(u,v,t)");
+            NewFuminArray.append("Umin__"+I);
+            NewFumaxArray.append("Umax__"+I);
+            NewFvminArray.append("Vmin__"+I);
+            NewFvmaxArray.append("Vmax__"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+        }
+        if(MathmodRef->ParObjet->ParTh.ShowUpperSurf)
+        {
+            NewFxArray.append("FFFx_Up"+I+"(u,v,t)");
+            NewFyArray.append("FFFy_Up"+I+"(u,v,t)");
+            NewFzArray.append("FFFz_Up"+I+"(u,v,t)");
+            NewFuminArray.append("Umin__"+I);
+            NewFumaxArray.append("Umax__"+I);
+            NewFvminArray.append("Vmin__"+I);
+            NewFvmaxArray.append("Vmax__"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+        }
+        if(MathmodRef->ParObjet->ParTh.ShowBottomSurf)
+        {
+            NewFxArray.append("FFFx_Down"+I+"(u,v,t)");
+            NewFyArray.append("FFFy_Down"+I+"(u,v,t)");
+            NewFzArray.append("FFFz_Down"+I+"(u,v,t)");
+            NewFuminArray.append("Umin__"+I);
+            NewFumaxArray.append("Umax__"+I);
+            NewFvminArray.append("Vmin__"+I);
+            NewFvmaxArray.append("Vmax__"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+        }
+        if(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)
+        {
+            NewFxArray.append("FFFx_Left"+I+"(u,v,t)");
+            NewFyArray.append("FFFy_Left"+I+"(u,v,t)");
+            NewFzArray.append("FFFz_Left"+I+"(u,v,t)");
+            NewFuminArray.append("Umin__"+I);
+            NewFumaxArray.append("Umax__"+I);
+            NewFvminArray.append("Vmin__"+I);
+            NewFvmaxArray.append("Vmax__"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
 
-        NewFxArray.append("FFFx"+I+"(u,v,t)");
-        NewFxArray.append("GGGx"+I+"(u,v,t)");
-        NewFxArray.append("FFFx3"+I+"(u,v,t)");
-        NewFxArray.append("FFFx4"+I+"(u,v,t)");
-        NewFxArray.append("FFFx5"+I+"(u,v,t)");
-        NewFxArray.append("FFFx6"+I+"(u,v,t)");
+            NewFxArray.append("FFFx_Right"+I+"(u,v,t)");
+            NewFyArray.append("FFFy_Right"+I+"(u,v,t)");
+            NewFzArray.append("FFFz_Right"+I+"(u,v,t)");
+            NewFuminArray.append("Umin__"+I);
+            NewFumaxArray.append("Umax__"+I);
+            NewFvminArray.append("Vmin__"+I);
+            NewFvmaxArray.append("Vmax__"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
 
-        NewFyArray.append("FFFy"+I+"(u,v,t)");
-        NewFyArray.append("GGGy"+I+"(u,v,t)");
-        NewFyArray.append("FFFy3"+I+"(u,v,t)");
-        NewFyArray.append("FFFy4"+I+"(u,v,t)");
-        NewFyArray.append("FFFy5"+I+"(u,v,t)");
-        NewFyArray.append("FFFy6"+I+"(u,v,t)");
+            NewFxArray.append("FFFx_Front"+I+"(u,v,t)");
+            NewFyArray.append("FFFy_Front"+I+"(u,v,t)");
+            NewFzArray.append("FFFz_Front"+I+"(u,v,t)");
+            NewFuminArray.append("Umin__"+I);
+            NewFumaxArray.append("Umax__"+I);
+            NewFvminArray.append("Vmin__"+I);
+            NewFvmaxArray.append("Vmax__"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
 
-        NewFzArray.append("FFFz"+I+"(u,v,t)");
-        NewFzArray.append("GGGz"+I+"(u,v,t)");
-        NewFzArray.append("FFFz3"+I+"(u,v,t)");
-        NewFzArray.append("FFFz4"+I+"(u,v,t)");
-        NewFzArray.append("FFFz5"+I+"(u,v,t)");
-        NewFzArray.append("FFFz6"+I+"(u,v,t)");
-
-
-
+            NewFxArray.append("FFFx_Back"+I+"(u,v,t)");
+            NewFyArray.append("FFFy_Back"+I+"(u,v,t)");
+            NewFzArray.append("FFFz_Back"+I+"(u,v,t)");
+            NewFuminArray.append("Umin__"+I);
+            NewFumaxArray.append("Umax__"+I);
+            NewFvminArray.append("Vmin__"+I);
+            NewFvmaxArray.append("Vmax__"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+        }
     }
     tmp2["Fx"] = NewFxArray;
     tmp2["Fy"] = NewFyArray;
