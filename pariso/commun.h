@@ -148,7 +148,6 @@ struct ParThichnessParam
     QString ThExpression = "";
     bool ShowOriginalSurf = true;
     bool ShowUpperSurf = true;
-    bool ShowBottomSurf = false;
     bool ShowBoumdarySurfs = false;
 };
 struct ParScaleParam

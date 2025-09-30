@@ -5551,7 +5551,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowUpperSurf = ui.UpperFct_1->isChecked();
-    MathmodRef->ParObjet->ParTh.ShowBottomSurf = ui.DownFct_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
     tmp2= tmp["Param3D"].toObject();
@@ -5577,12 +5576,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     }
     ThCount = ThCount+1;
     ConstArray.append("ThCount="+QString::number(ThCount));
-    Bool = ((MathmodRef->ParObjet->ParTh.ShowBottomSurf) ? "1" : "0");
-    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->ParObjet->ParTh.ShowUpperSurf) ? "1" : "0");
-    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->ParObjet->ParTh.ShowOriginalSurf) ? "1" : "0");
-    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
     tmpScalVar    = "ScalVar_"+QString::number(ThCount);
     tmpScalVarmax = "ScalVarMax_"+QString::number(ThCount);
     tmpScalVarmin = "ScalVarMin_"+QString::number(ThCount);
@@ -5629,10 +5622,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         FctArray.append("FFFy_Up"+I+"=FFFy_Orig"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
         FctArray.append("FFFz_Up"+I+"=FFFz_Orig"+I+"(u,v,t)+ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
 
-        FctArray.append("FFFx_Down"+I+"=FFFx_Orig"+I+"(u,v,t)-ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
-        FctArray.append("FFFy_Down"+I+"=FFFy_Orig"+I+"(u,v,t)-ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
-        FctArray.append("FFFz_Down"+I+"=FFFz_Orig"+I+"(u,v,t)-ThExpression_"+QString::number(ThCount)+"(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
-
         FctArray.append("FFFx_Right"+I+"=FFFx_Orig"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
         FctArray.append("FFFy_Right"+I+"=FFFy_Orig"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
         FctArray.append("FFFz_Right"+I+"=FFFz_Orig"+I+"(u,"+Vmin+",t)+(ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R(n3(u,"+Vmin+",t),n1(u,"+Vmin+",t),n2(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
@@ -5669,17 +5658,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFxArray.append("FFFx_Up"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Up"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Up"+I+"(u,v,t)");
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-        }
-        if(MathmodRef->ParObjet->ParTh.ShowBottomSurf)
-        {
-            NewFxArray.append("FFFx_Down"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Down"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Down"+I+"(u,v,t)");
             NewFuminArray.append("Umin__"+I);
             NewFumaxArray.append("Umax__"+I);
             NewFvminArray.append("Vmin__"+I);

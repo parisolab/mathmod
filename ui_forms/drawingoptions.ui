@@ -3314,7 +3314,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <attribute name="title">
                       <string>Equations Generator</string>
                      </attribute>
-                     <layout class="QGridLayout" name="gridLayout_86">
+                     <layout class="QGridLayout" name="gridLayout_82">
                       <item row="0" column="0">
                        <widget class="QToolBox" name="EquaGenTool">
                         <property name="currentIndex">
@@ -3332,7 +3332,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <attribute name="label">
                           <string>Thickness</string>
                          </attribute>
-                         <layout class="QGridLayout" name="gridLayout_82">
+                         <layout class="QGridLayout" name="gridLayout_83">
                           <item row="0" column="0">
                            <layout class="QHBoxLayout" name="horizontalLayout_56">
                             <item>
@@ -3417,16 +3417,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  </widget>
                                 </item>
                                 <item>
-                                 <widget class="QCheckBox" name="DownFct_1">
-                                  <property name="text">
-                                   <string>Fct-</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
                                  <widget class="QCheckBox" name="checkBoxBoundary">
                                   <property name="text">
                                    <string>Boundary</string>
+                                  </property>
+                                  <property name="checked">
+                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
