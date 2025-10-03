@@ -359,7 +359,6 @@ private slots:
     void on_actionRedo_triggered();
     void on_actionClear_triggered();
     void on_SaveThButton_1_clicked();
-    void on_SscrollBar_valueChanged(int value);
 };
 
 #endif

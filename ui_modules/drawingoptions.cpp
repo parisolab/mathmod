@@ -5539,8 +5539,8 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             FctArray, Vetc, ConstArray, ConstArraytmp,
             FuminArray, FvminArray, FumaxArray, FvmaxArray,
             NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray,
-            ComponentArray, NewComponentArray;
-    QJsonObject tmp,tmp2,tmpx,tmpy,tmpz;
+            ComponentArray, NewComponentArray, SlidersArray;
+    QJsonObject tmp,tmp2,tmpx,tmpy,tmpz, SlidersObj;
     QString ScalVar;
 
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
@@ -5573,6 +5573,14 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     ConstArray.append("ThCount="+QString::number(ThCount));
     ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
     ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
+    /*
+    SlidersObj = (tmp["Param3D"].toObject())["Sliders"].toObject();
+    if(!SlidersObj.isEmpty())
+    {
+        SlidersArray = SlidersObj["Max"].toArray();
+        SlidersObj["Sliders"].["Max"] = {};
+    };
+    */
     if(ThCount==1)
     {
         ConstArray.append("epsilon=1/100000");
@@ -5692,6 +5700,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
         }
+        //if(!SlidersArray.isEmpty() && SlidersArray)
     }
     tmp2["Fx"] = NewFxArray;
     tmp2["Fy"] = NewFyArray;
@@ -5709,10 +5718,3 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
 }
-
-
-void DrawingOptions::on_SscrollBar_valueChanged(int value)
-{
-
-}
-
