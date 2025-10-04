@@ -5577,44 +5577,24 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     {
         ConstArray.append("epsilon=1/100000");
     }
-
-
-    //*****//
-
-    QJsonArray array2;
-    tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    //Add Slider
     tmp2 = tmp["Sliders"].toObject();
-    array2 = tmp2["Name"].toArray();
-    array2.append("ScalVar_"+QString::number(ThCount));
-    tmp2["Name"] = array2;
-    array2 = tmp2["Position"].toArray();
-    array2.append("60");
-    tmp2["Position"] = array2;
-    array2 = tmp2["Max"].toArray();
-    array2.append("100");
-    tmp2["Max"] = array2;
-    array2 = tmp2["Min"].toArray();
-    array2.append("-100");
-    tmp2["Min"] = array2;
-    array2 = tmp2["Step"].toArray();
-    array2.append("1");
-    tmp2["Step"] = array2;
+    SlidersArray = tmp2["Name"].toArray();
+    SlidersArray.append("ScalVar_"+QString::number(ThCount));
+    tmp2["Name"] = SlidersArray;
+    SlidersArray = tmp2["Position"].toArray();
+    SlidersArray.append("60");
+    tmp2["Position"] = SlidersArray;
+    SlidersArray = tmp2["Max"].toArray();
+    SlidersArray.append("100");
+    tmp2["Max"] = SlidersArray;
+    SlidersArray = tmp2["Min"].toArray();
+    SlidersArray.append("-100");
+    tmp2["Min"] = SlidersArray;
+    SlidersArray = tmp2["Step"].toArray();
+    SlidersArray.append("1");
+    tmp2["Step"] = SlidersArray;
     tmp["Sliders"] = tmp2;
-    // Draw here
-    // DrawJsonModel(tmp);
-
-    //*****//
-
-
-
-
-
-
-
-
-
-
-
     QString T = MathmodRef->ParObjet->ParTh.ThExpression;
     for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
     {
