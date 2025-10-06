@@ -5441,8 +5441,9 @@ void DrawingOptions::on_actionbox_triggered()
 }
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
-    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp;
-    QJsonObject tmp,tmp2;
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
+            CNDArray, NewCNDArray, SlidersArray;
+    QJsonObject tmp,tmp2,tmp3;
     QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
 
     MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
@@ -5479,6 +5480,24 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     {
         ConstArray.append("epsilon=1/100000");
     }
+    //Add Slider
+    tmp3 = tmp["Sliders"].toObject();
+    SlidersArray = tmp3["Name"].toArray();
+    SlidersArray.append("ScalVar_"+QString::number(ThCount));
+    tmp3["Name"] = SlidersArray;
+    SlidersArray = tmp3["Position"].toArray();
+    SlidersArray.append("60");
+    tmp3["Position"] = SlidersArray;
+    SlidersArray = tmp3["Max"].toArray();
+    SlidersArray.append("100");
+    tmp3["Max"] = SlidersArray;
+    SlidersArray = tmp3["Min"].toArray();
+    SlidersArray.append("-100");
+    tmp3["Min"] = SlidersArray;
+    SlidersArray = tmp3["Step"].toArray();
+    SlidersArray.append("1");
+    tmp3["Step"] = SlidersArray;
+    tmp["Sliders"] = tmp3;
     QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
@@ -5536,13 +5555,13 @@ void DrawingOptions::on_SaveThButton_1_clicked()
 {
     QJsonArray FxArray, FyArray, FzArray,
             NewFxArray, NewFyArray, NewFzArray,
-            FctArray, Vetc, ConstArray, ConstArraytmp,
+            FctArray, ConstArray, ConstArraytmp,
             FuminArray, FvminArray, FumaxArray, FvmaxArray,
             NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray,
-            ComponentArray, NewComponentArray, SlidersArray;
-    QJsonObject tmp,tmp2,tmpx,tmpy,tmpz;
+            ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray;
+    QJsonObject tmp,tmp2,tmp3,tmpx,tmpy,tmpz;
     QString ScalVar;
-
+    bool CND=false, Grid=false;
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowUpperSurf = ui.UpperFct_1->isChecked();
@@ -5559,6 +5578,8 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     FctArray = tmp2["Funct"].toArray();
     ComponentArray = tmp2["Component"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
+    CND = (CNDArray = tmp2["Cnd"].toArray()).isEmpty();
+    Grid = (GridArray = tmp2["Grid"].toArray()).isEmpty();
     int ThCount=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
@@ -5578,23 +5599,23 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         ConstArray.append("epsilon=1/100000");
     }
     //Add Slider
-    tmp2 = tmp["Sliders"].toObject();
-    SlidersArray = tmp2["Name"].toArray();
+    tmp3 = tmp["Sliders"].toObject();
+    SlidersArray = tmp3["Name"].toArray();
     SlidersArray.append("ScalVar_"+QString::number(ThCount));
-    tmp2["Name"] = SlidersArray;
-    SlidersArray = tmp2["Position"].toArray();
+    tmp3["Name"] = SlidersArray;
+    SlidersArray = tmp3["Position"].toArray();
     SlidersArray.append("60");
-    tmp2["Position"] = SlidersArray;
-    SlidersArray = tmp2["Max"].toArray();
+    tmp3["Position"] = SlidersArray;
+    SlidersArray = tmp3["Max"].toArray();
     SlidersArray.append("100");
-    tmp2["Max"] = SlidersArray;
-    SlidersArray = tmp2["Min"].toArray();
+    tmp3["Max"] = SlidersArray;
+    SlidersArray = tmp3["Min"].toArray();
     SlidersArray.append("-100");
-    tmp2["Min"] = SlidersArray;
-    SlidersArray = tmp2["Step"].toArray();
+    tmp3["Min"] = SlidersArray;
+    SlidersArray = tmp3["Step"].toArray();
     SlidersArray.append("1");
-    tmp2["Step"] = SlidersArray;
-    tmp["Sliders"] = tmp2;
+    tmp3["Step"] = SlidersArray;
+    tmp["Sliders"] = tmp3;
     QString T = MathmodRef->ParObjet->ParTh.ThExpression;
     for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
     {
@@ -5660,6 +5681,13 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            if(!CND)
+                NewCNDArray.append(CNDArray.at(i));
+            if(!Grid)
+            {
+                NewGridArray.append(GridArray.at(2*i));
+                NewGridArray.append(GridArray.at(2*i+1));
+            }
         }
         if(MathmodRef->ParObjet->ParTh.ShowUpperSurf)
         {
@@ -5671,6 +5699,13 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            if(!CND)
+                NewCNDArray.append(CNDArray.at(i));
+            if(!Grid)
+            {
+                NewGridArray.append(GridArray.at(2*i));
+                NewGridArray.append(GridArray.at(2*i+1));
+            }
         }
         if(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)
         {
@@ -5682,6 +5717,13 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            if(!CND)
+                NewCNDArray.append(CNDArray.at(i));
+            if(!Grid)
+            {
+                NewGridArray.append(GridArray.at(2*i));
+                NewGridArray.append(GridArray.at(2*i+1));
+            }
 
             NewFxArray.append("FFFx_Right"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Right"+I+"(u,v,t)");
@@ -5691,6 +5733,13 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            if(!CND)
+                NewCNDArray.append(CNDArray.at(i));
+            if(!Grid)
+            {
+                NewGridArray.append(GridArray.at(2*i));
+                NewGridArray.append(GridArray.at(2*i+1));
+            }
 
             NewFxArray.append("FFFx_Front"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Front"+I+"(u,v,t)");
@@ -5700,6 +5749,13 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            if(!CND)
+                NewCNDArray.append(CNDArray.at(i));
+            if(!Grid)
+            {
+                NewGridArray.append(GridArray.at(2*i));
+                NewGridArray.append(GridArray.at(2*i+1));
+            }
 
             NewFxArray.append("FFFx_Back"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Back"+I+"(u,v,t)");
@@ -5709,6 +5765,13 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            if(!CND)
+                NewCNDArray.append(CNDArray.at(i));
+            if(!Grid)
+            {
+                NewGridArray.append(GridArray.at(2*i));
+                NewGridArray.append(GridArray.at(2*i+1));
+            }
         }
     }
     tmp2["Fx"] = NewFxArray;
@@ -5721,7 +5784,9 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp2["Umax"]= NewFumaxArray;
     tmp2["Vmin"]= NewFvminArray;
     tmp2["Vmax"]= NewFvmaxArray;
-
+    tmp2["Grid"]= NewGridArray;
+    if(!CND)
+        tmp2["Cnd"]= NewCNDArray;
     tmp["Param3D"] = tmp2;
     // Draw here
     DrawJsonModel(tmp);
