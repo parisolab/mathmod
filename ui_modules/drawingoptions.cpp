@@ -5501,7 +5501,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
-        QString I=QString::number(i);
+        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
         QString fxyzt=FxyzArray.at(i).toString();
         QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
@@ -5510,8 +5510,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
                 fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
                 fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-        if(!fxyzt.contains("fffxyz"))
-            FctArray.append("fffxyz"+I+"="+fxyzt);
+        FctArray.append("fffxyz"+I+"="+fxyzt);
         FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
         FctArray.append(fct);
         NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
@@ -5619,7 +5618,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     QString T = MathmodRef->ParObjet->ParTh.ThExpression;
     for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
     {
-        QString I=QString::number(i);
+        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
         QString fx=FxArray.at(i).toString();
         QString fy=FyArray.at(i).toString();
         QString fz=FzArray.at(i).toString();
@@ -5784,7 +5783,8 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp2["Umax"]= NewFumaxArray;
     tmp2["Vmin"]= NewFvminArray;
     tmp2["Vmax"]= NewFvmaxArray;
-    tmp2["Grid"]= NewGridArray;
+    if(!Grid)
+        tmp2["Grid"]= NewGridArray;
     if(!CND)
         tmp2["Cnd"]= NewCNDArray;
     tmp["Param3D"] = tmp2;
