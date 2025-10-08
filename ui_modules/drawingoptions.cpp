@@ -5558,7 +5558,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             FuminArray, FvminArray, FumaxArray, FvmaxArray,
             NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray,
             ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray;
-    QJsonObject tmp,tmp2,tmp3,tmpx,tmpy,tmpz;
+    QJsonObject tmp,tmp2,tmp3;
     QString ScalVar;
     bool CND=false, Grid=false;
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
