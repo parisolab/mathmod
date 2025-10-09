@@ -5558,7 +5558,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             FuminArray, FvminArray, FumaxArray, FvmaxArray,
             NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray,
             ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray;
-    QJsonObject tmp,tmp2,tmp3;
+    QJsonObject tmp,tmp2,tmpJsObj;
     QString ScalVar;
     bool CND=false, Grid=false;
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
@@ -5598,23 +5598,23 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         ConstArray.append("epsilon=1/100000");
     }
     //Add Slider
-    tmp3 = tmp["Sliders"].toObject();
-    SlidersArray = tmp3["Name"].toArray();
+    tmpJsObj = tmp["Sliders"].toObject();
+    SlidersArray = tmpJsObj["Name"].toArray();
     SlidersArray.append("ScalVar_"+QString::number(ThCount));
-    tmp3["Name"] = SlidersArray;
-    SlidersArray = tmp3["Position"].toArray();
+    tmpJsObj["Name"] = SlidersArray;
+    SlidersArray = tmpJsObj["Position"].toArray();
     SlidersArray.append("60");
-    tmp3["Position"] = SlidersArray;
-    SlidersArray = tmp3["Max"].toArray();
+    tmpJsObj["Position"] = SlidersArray;
+    SlidersArray = tmpJsObj["Max"].toArray();
     SlidersArray.append("100");
-    tmp3["Max"] = SlidersArray;
-    SlidersArray = tmp3["Min"].toArray();
+    tmpJsObj["Max"] = SlidersArray;
+    SlidersArray = tmpJsObj["Min"].toArray();
     SlidersArray.append("-100");
-    tmp3["Min"] = SlidersArray;
-    SlidersArray = tmp3["Step"].toArray();
+    tmpJsObj["Min"] = SlidersArray;
+    SlidersArray = tmpJsObj["Step"].toArray();
     SlidersArray.append("1");
-    tmp3["Step"] = SlidersArray;
-    tmp["Sliders"] = tmp3;
+    tmpJsObj["Step"] = SlidersArray;
+    tmp["Sliders"] = tmpJsObj;
     QString T = MathmodRef->ParObjet->ParTh.ThExpression;
     for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
     {
