@@ -63,7 +63,7 @@
     {
         "Param3D": {
             "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')'"],
-            "Name": ["Thick_Sin_Two_Component"],
+            "Name": ["Thick_Two_Components_Parametric"],
             "Component": ["Sin_1","Sin_2"],
             "Const": ["T=0.1","c=1/1000000","umax=1","umin=-1","vmax=1","vmin=-1","cu=(umax-umin)/1000","cv=(vmax-vmin)/1000"],
             "Funct": ["Fx=u","Fy=v","Fz=-sin(pi*((u)^2+(v)^2))/3","DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)","DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)","DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)","DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)","DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)","DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)","n1=(DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2=(DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3=(DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Gx=Fx(u,v,t)+T*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)+T*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Gz=Fz(u,v,t)+T*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
