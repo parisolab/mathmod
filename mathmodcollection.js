@@ -19,7 +19,7 @@
     {
         "Param3D": {
             "Description": ["Script by Abderrahman Taha. "],
-            "Name": ["Six_Component_Thick_Parametric"],
+            "Name": ["Thick_Six_Components_parametric"],
             "Component": ["Sin_1","Sin_2","Sin_3","Sin_4","Sin_5","Sin_6"],
             "Const": ["c=1/1000000","umax=1","umin=-1","vmax=1","vmin=-1"],
             "Funct": ["Fx=u",
