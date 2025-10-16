@@ -2425,7 +2425,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                     IsoFct += line.remove(0, 4);
                     current = 1;
                     break;
-
                 case 21:
                     Xfct += line.replace("X():", "");
                     current = 21;
@@ -2446,7 +2445,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                     vlimit += line.replace("[v]:", "");
                     current = 25;
                     break;
-
                 case 2:
                     xlimit = line.remove(0, 4);
                     current = 2;
@@ -2540,7 +2538,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                         JsonString += "\"Zmax\": [\"" + zmax + "\"] ";
                         JsonString += "}}";
                     }
-
                     else if (FctType == 1)
                     {
                         EquationsNumber++;
