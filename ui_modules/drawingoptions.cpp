@@ -4107,7 +4107,7 @@ QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
 void DrawingOptions::PreviousJsonObject(const QJsonObject &jsObj)
 {
     //Start Store current JsonObject
-    MathmodRef->RootObjet.PreviousJsonObject.append(jsObj);//Modeltype(jsObj));
+    MathmodRef->RootObjet.PreviousJsonObject.append(jsObj);
     MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
     //End Store current JsonObject
 }
