@@ -4107,7 +4107,7 @@ QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
 void DrawingOptions::PreviousJsonObject(const QJsonObject &jsObj)
 {
     //Start Store current JsonObject
-    MathmodRef->RootObjet.PreviousJsonObject.append(Modeltype(jsObj));
+    MathmodRef->RootObjet.PreviousJsonObject.append(jsObj);//Modeltype(jsObj));
     MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
     //End Store current JsonObject
 }
@@ -5456,7 +5456,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
     ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
     ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append(ScalVar+" = 60");
+    ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
     if(ThCount==1)
     {
         ConstArray.append("epsilon=1/100000");
