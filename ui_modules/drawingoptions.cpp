@@ -2171,7 +2171,6 @@ void DrawingOptions::LoadMandatoryAndOptionnalFields(
 void DrawingOptions::on_choice_activated(const QString &arg)
 {
     QJsonObject tmp;
-    // Draw here
     int Result = JSON_choice_activated(arg);
     if (Result != 0)
     {
@@ -2199,7 +2198,6 @@ void DrawingOptions::Run_JsonObject_activeted()
         ShowErrorMessage(err, script);
         return;
     }
-    // Draw here
     DrawJsonModel(doc.object());
 }
 
@@ -2378,7 +2376,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                     currentfunction = 3;
                 else if (line.contains("[z]:"))
                     currentfunction = 4;
-
                 else if (line.contains("X():"))
                 {
                     currentfunction = 21;
@@ -2392,7 +2389,6 @@ void DrawingOptions::LoadK3DSurfScript(QString filename, int type)
                     currentfunction = 24;
                 else if (line.contains("[v]:"))
                     currentfunction = 25;
-
                 else if (line.contains("Cnd:"))
                     currentfunction = 5;
                 else if (line.contains("A[u]:"))
@@ -2992,7 +2988,6 @@ void DrawingOptions::AddListModels(bool update)
     {
         QTreeWidgetItem *nameitem = new QTreeWidgetItem(ParisolistItem);
         nameitem->setText(0, MathmodRef->collection.JParIso[i].Name);
-
     }
     ParisolistItem->sortChildren(0, Qt::AscendingOrder);
     // My Selection:
@@ -3059,8 +3054,6 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                         {
                             if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Iso3D"]).toObject()["Name"].toArray()[0].toString()))
                             {
-                                // Draw here
-
                                 DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
@@ -3069,7 +3062,6 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                         {
                             if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param3D"]).toObject()["Name"].toArray()[0].toString()))
                             {
-                                // Draw here
                                 DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
@@ -3078,7 +3070,6 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                         {
                             if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param4D"]).toObject()["Name"].toArray()[0].toString()))
                             {
-                                // Draw here
                                 DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
@@ -3087,7 +3078,6 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                         {
                             if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param3D_C"]).toObject()["Name"].toArray()[0].toString()))
                             {
-                                // Draw here
                                 DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
@@ -3096,7 +3086,6 @@ void DrawingOptions::on_ObjectClasse_clicked(const QModelIndex &index)
                         {
                             if (s == (tst = (MathmodRef->RootObjet.MyJsonObjectSelection[i].toObject()["Param4D_C"]).toObject()["Name"].toArray()[0].toString()))
                             {
-                                // Draw here
                                 DrawJsonModel(MathmodRef->RootObjet.MyJsonObjectSelection.at(i).toObject());
                                 return;
                             }
@@ -4266,7 +4255,6 @@ void DrawingOptions::on_Multiplier_clicked()
         copyCurrentObject.remove("Param3D_C");
         copyCurrentObject.remove("Param4D_C");
         Multiplier(i, j, k, copyCurrentObject, IndexcurrentComponent);
-        // Draw here
         DrawJsonModel(copyCurrentObject);
     }
     // Init Combo
@@ -4886,7 +4874,6 @@ void DrawingOptions::on_AddSetButton_clicked()
     tmp2["Max"] = array4;
     tmp2["Step"] = array5;
     tmp["Sliders"] = tmp2;
-    // Draw here
     DrawJsonModel(tmp);
 }
 void DrawingOptions::on_CutSetButton_clicked()
@@ -4927,7 +4914,6 @@ void DrawingOptions::on_CutSetButton_clicked()
         tmp2["Max"] = array4;
         tmp2["Step"] = array5;
         tmp["Sliders"] = tmp2;
-        // Draw here
         DrawJsonModel(tmp);
     }
 }
@@ -4975,7 +4961,6 @@ void DrawingOptions::on_CutParam_clicked()
             array2.removeAt(index - 1 - i + i * names);
         tmp2["Position"] = array2;
         tmp["Sliders"] = tmp2;
-        // Draw here
         DrawJsonModel(tmp);
     }
 }
@@ -5023,7 +5008,6 @@ void DrawingOptions::add_new_param()
             array2.insert(i * names + i - 1, addnewparam.ui.StepEdit->text());
     tmp2["Step"] = array2;
     tmp["Sliders"] = tmp2;
-    // Draw here
     DrawJsonModel(tmp);
 }
 void DrawingOptions::update_infos_param(int index)
@@ -5521,7 +5505,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
         tmp2["Vect"]= Vetc;
     }
     tmp["Iso3D"] = tmp2;
-    // Draw here
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
 }
@@ -5785,7 +5768,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     if(!CND)
         tmp2["Cnd"]= NewCNDArray;
     tmp["Param3D"] = tmp2;
-    // Draw here
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
 }
