@@ -5510,9 +5510,9 @@ void DrawingOptions::on_SaveThButton_2_clicked()
 }
 void DrawingOptions::on_actionUndo_triggered()
 {
-    if(MathmodRef->RootObjet.IndexCurrentJsonObject>-1)
+    if(MathmodRef->RootObjet.IndexCurrentJsonObject>0)
     {
-        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject).toObject());
+        DrawJsonModel(MathmodRef->RootObjet.PreviousJsonObject.at(MathmodRef->RootObjet.IndexCurrentJsonObject-1).toObject());
         MathmodRef->RootObjet.IndexCurrentJsonObject = (MathmodRef->RootObjet.IndexCurrentJsonObject-1);
     }
 }
