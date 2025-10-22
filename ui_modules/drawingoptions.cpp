@@ -5423,7 +5423,7 @@ void DrawingOptions::on_actionbox_triggered()
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
     QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
-            CNDArray, NewCNDArray, SlidersArray;
+            CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
     QJsonObject tmp,tmp2,tmp3;
     QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
 
@@ -5437,6 +5437,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
+    (ImportArraytmp = tmp2["Import"].toArray()).append("All");
     int ThCount=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
@@ -5504,6 +5505,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
         (Vetc=tmp2["Vect"].toArray()).append("4");
         tmp2["Vect"]= Vetc;
     }
+    tmp2["Import"] = ImportArraytmp;
     tmp["Iso3D"] = tmp2;
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
@@ -5536,7 +5538,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFxArray, NewFyArray, NewFzArray,
             FctArray, ConstArray, ConstArraytmp,
             FuminArray, FvminArray, FumaxArray, FvmaxArray,
-            NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray,
+            NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray, ImportArraytmp,
             ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray;
     QJsonObject tmp,tmp2,tmpJsObj;
     QString ScalVar;
@@ -5557,6 +5559,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     FctArray = tmp2["Funct"].toArray();
     ComponentArray = tmp2["Component"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
+    (ImportArraytmp = tmp2["Import"].toArray()).append("All");
     if((CND=!tmp2["Cnd"].isArray()))
     {
         CNDArray = tmp2["Cnd"].toArray();
@@ -5757,6 +5760,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             }
         }
     }
+
     tmp2["Fx"] = NewFxArray;
     tmp2["Fy"] = NewFyArray;
     tmp2["Fz"] = NewFzArray;
@@ -5775,6 +5779,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         tmp2["Cnd"]= NewCNDArray;
     else
         tmp2.remove("Cnd");
+    tmp2["Import"] = ImportArraytmp;
     tmp["Param3D"] = tmp2;
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
