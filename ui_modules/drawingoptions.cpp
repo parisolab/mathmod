@@ -5560,11 +5560,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     ComponentArray = tmp2["Component"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
     (ImportArraytmp = tmp2["Import"].toArray()).append("All");
-    if((CND=!tmp2["Cnd"].isArray()))
+    if((CND=tmp2["Cnd"].isArray()))
     {
         CNDArray = tmp2["Cnd"].toArray();
     }
-    if((Grid=!tmp2["Grid"].isArray()))
+    if((Grid=tmp2["Grid"].isArray()))
     {
         GridArray = tmp2["Grid"].toArray();
     }
@@ -5648,9 +5648,9 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-            if(!CND)
+            if(CND)
                 NewCNDArray.append(CNDArray.at(i));
-            if(!Grid)
+            if(Grid)
             {
                 NewGridArray.append(GridArray.at(2*i));
                 NewGridArray.append(GridArray.at(2*i+1));
@@ -5669,12 +5669,12 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-            if(!CND)
+            if(CND)
                 NewCNDArray.append(CNDArray.at(i));
-            if(!Grid)
+            if(Grid)
             {
-                NewGridArray.append(GridArray.at(2*i));
-                NewGridArray.append(GridArray.at(2*i+1));
+                NewGridArray.append(GridArray.at(2*i).toString());
+                NewGridArray.append(GridArray.at(2*i+1).toString());
             }
         }
         if(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)
@@ -5703,9 +5703,9 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-            if(!CND)
+            if(CND)
                 NewCNDArray.append(CNDArray.at(i));
-            if(!Grid)
+            if(Grid)
             {
                 NewGridArray.append(GridArray.at(2*i));
                 NewGridArray.append(GridArray.at(2*i+1));
@@ -5719,9 +5719,9 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-            if(!CND)
+            if(CND)
                 NewCNDArray.append(CNDArray.at(i));
-            if(!Grid)
+            if(Grid)
             {
                 NewGridArray.append(GridArray.at(2*i));
                 NewGridArray.append(GridArray.at(2*i+1));
@@ -5735,9 +5735,9 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-            if(!CND)
+            if(CND)
                 NewCNDArray.append(CNDArray.at(i));
-            if(!Grid)
+            if(Grid)
             {
                 NewGridArray.append(GridArray.at(2*i));
                 NewGridArray.append(GridArray.at(2*i+1));
@@ -5751,9 +5751,9 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFvminArray.append("Vmin__"+I);
             NewFvmaxArray.append("Vmax__"+I);
             NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
-            if(!CND)
+            if(CND)
                 NewCNDArray.append(CNDArray.at(i));
-            if(!Grid)
+            if(Grid)
             {
                 NewGridArray.append(GridArray.at(2*i));
                 NewGridArray.append(GridArray.at(2*i+1));
@@ -5771,11 +5771,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp2["Umax"]= NewFumaxArray;
     tmp2["Vmin"]= NewFvminArray;
     tmp2["Vmax"]= NewFvmaxArray;
-    if(!Grid)
+    if(Grid)
         tmp2["Grid"]= NewGridArray;
     else
         tmp2.remove("Grid");
-    if(!CND)
+    if(CND)
         tmp2["Cnd"]= NewCNDArray;
     else
         tmp2.remove("Cnd");
