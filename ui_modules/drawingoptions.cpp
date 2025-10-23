@@ -5638,7 +5638,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         ConstArray.append("Umax__"+I+"="+FumaxArray.at(i).toString());
         ConstArray.append("Vmin__"+I+"="+FvminArray.at(i).toString());
         ConstArray.append("Vmax__"+I+"="+FvmaxArray.at(i).toString());
-        if(MathmodRef->ParObjet->ParTh.ShowOriginalSurf)
+        if(MathmodRef->ParObjet->ParTh.ShowOriginalSurf || (!MathmodRef->ParObjet->ParTh.ShowUpperSurf && !MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs))
         {
             NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
