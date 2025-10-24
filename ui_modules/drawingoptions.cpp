@@ -5433,6 +5433,11 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct_2->isChecked();
     MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    if(!tmp["ParIso"].isNull())
+    {
+        MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
+        return;
+    }
     tmp2= tmp["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
@@ -5543,11 +5548,22 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     QJsonObject tmp,tmp2,tmpJsObj;
     QString ScalVar;
     bool CND=false, Grid=false;
+
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowUpperSurf = ui.UpperFct_1->isChecked();
     MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    if(!tmp["Param3D_C"].isNull() || !tmp["Param4D_C"].isNull() || !tmp["ParIso"].isNull())
+    {
+        MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
+        return;
+    }
+    if(!tmp["ParIso"].isNull())
+    {
+        MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
+        return;
+    }
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
     FyArray = tmp2["Fy"].toArray();

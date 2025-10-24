@@ -273,7 +273,9 @@ enum ScriptErrorType
     VECT_DIMENSION_ERROR,
     MEM_OVERFLOW,
     GRID_VALUE_0,
-    EMPTY_MANDATORY_FIELD
+    EMPTY_MANDATORY_FIELD,
+    COMPLEX_FCTS_UNSUPPORTED,
+    PARISO_OBJ_UNSUPPORTED
 };
 
 static const char *ScriptErrorMessage[] =
@@ -316,8 +318,10 @@ static const char *ScriptErrorMessage[] =
         "INVALID_GRID_VALUE",
         "Vect_DIMENSION_ERROR",                     // 34
         "Not enough memory available to complete this operation", // 35
-        "GRID_VALUE_0",                          // 36
-        "EMPTY_MANDATORY_FIELD"                     // 37
+        "GRID_VALUE_0",                             // 36
+        "EMPTY_MANDATORY_FIELD",                    // 37
+        "COMPLEX_FCTS_UNSUPPORTED",                 //38
+        "PARISO_OBJ_UNSUPPORTED"
 };
 
 struct ComponentInfos
