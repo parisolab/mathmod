@@ -5784,3 +5784,23 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
 }
+
+void DrawingOptions::on_UndoPushButton_clicked()
+{
+    on_actionUndo_triggered();
+}
+
+void DrawingOptions::on_RedoPushButton_clicked()
+{
+    on_actionRedo_triggered();
+}
+
+void DrawingOptions::on_RedoPushButton_0_clicked()
+{
+    on_actionRedo_triggered();
+}
+
+void DrawingOptions::on_UndopushButton_0_clicked()
+{
+    on_actionUndo_triggered();
+}
