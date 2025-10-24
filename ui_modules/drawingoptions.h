@@ -359,6 +359,10 @@ private slots:
     void on_actionRedo_triggered();
     void on_actionClear_triggered();
     void on_SaveThButton_1_clicked();
+    void on_UndoPushButton_clicked();
+    void on_RedoPushButton_clicked();
+    void on_RedoPushButton_0_clicked();
+    void on_UndopushButton_0_clicked();
 };
 
 #endif
