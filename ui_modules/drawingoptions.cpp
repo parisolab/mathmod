@@ -5443,20 +5443,8 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
-    ImportArraytmp = tmp2["Import"].toArray();
-    for (int i = 0; i < ImportArraytmp.size(); ++i)
-    {
-        if(ImportArraytmp[i].toString().contains("All"))
-        {
-            Import = true;
-            break;
-        }
-    }
-    if(!Import)
-    {
-        ImportArraytmp.
-    }
-
+    tmp2.remove("Import");
+    ImportArraytmp.append("All");
     int ThCount=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
@@ -5519,12 +5507,13 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     tmp2["Fxyz"] = NewFxyzArray;
     tmp2["Funct"]= FctArray;
     tmp2["Const"]= ConstArray;
+    tmp2["Import"]= ImportArraytmp;
     if (!tmp2["Vect"].isArray())
     {
         (Vetc=tmp2["Vect"].toArray()).append("4");
         tmp2["Vect"]= Vetc;
     }
-    tmp2["Import"] = ImportArraytmp;
+    //tmp2["Import"] = ImportArraytmp;
     tmp["Iso3D"] = tmp2;
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
@@ -5561,7 +5550,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray;
     QJsonObject tmp,tmp2,tmpJsObj;
     QString ScalVar;
-    bool CND=false, Grid=false, Import=false;
+    bool CND=false, Grid=false;
 
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
@@ -5589,19 +5578,8 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     FctArray = tmp2["Funct"].toArray();
     ComponentArray = tmp2["Component"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
-    ImportArraytmp = tmp2["Import"].toArray();
-    for (int i = 0; i < ImportArraytmp.size(); ++i)
-    {
-        if(ImportArraytmp[i].toString().contains("All"))
-        {
-            Import = true;
-            break;
-        }
-    }
-    if(!Import)
-    {
-        ImportArraytmp.append("All");
-    }
+    tmp2.remove("Import");
+    ImportArraytmp.append("All");
     if((CND=tmp2["Cnd"].isArray()))
     {
         CNDArray = tmp2["Cnd"].toArray();
@@ -5813,6 +5791,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp2["Umax"]= NewFumaxArray;
     tmp2["Vmin"]= NewFvminArray;
     tmp2["Vmax"]= NewFvmaxArray;
+    tmp2["Import"]= ImportArraytmp;
     if(Grid)
         tmp2["Grid"]= NewGridArray;
     else
@@ -5821,7 +5800,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         tmp2["Cnd"]= NewCNDArray;
     else
         tmp2.remove("Cnd");
-    tmp2["Import"] = ImportArraytmp;
     tmp["Param3D"] = tmp2;
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
