@@ -5426,6 +5426,7 @@ void DrawingOptions::on_SaveThButton_2_clicked()
             CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
     QJsonObject tmp,tmp2,tmp3;
     QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
+    bool Import=false;
 
     MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
     MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
@@ -5442,7 +5443,20 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
-    (ImportArraytmp = tmp2["Import"].toArray()).append("All");
+    ImportArraytmp = tmp2["Import"].toArray();
+    for (int i = 0; i < ImportArraytmp.size(); ++i)
+    {
+        if(ImportArraytmp[i].toString().contains("All"))
+        {
+            Import = true;
+            break;
+        }
+    }
+    if(!Import)
+    {
+        ImportArraytmp.
+    }
+
     int ThCount=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
@@ -5547,7 +5561,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray;
     QJsonObject tmp,tmp2,tmpJsObj;
     QString ScalVar;
-    bool CND=false, Grid=false;
+    bool CND=false, Grid=false, Import=false;
 
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
@@ -5575,7 +5589,19 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     FctArray = tmp2["Funct"].toArray();
     ComponentArray = tmp2["Component"].toArray();
     ConstArraytmp = tmp2["Const"].toArray();
-    (ImportArraytmp = tmp2["Import"].toArray()).append("All");
+    ImportArraytmp = tmp2["Import"].toArray();
+    for (int i = 0; i < ImportArraytmp.size(); ++i)
+    {
+        if(ImportArraytmp[i].toString().contains("All"))
+        {
+            Import = true;
+            break;
+        }
+    }
+    if(!Import)
+    {
+        ImportArraytmp.append("All");
+    }
     if((CND=tmp2["Cnd"].isArray()))
     {
         CNDArray = tmp2["Cnd"].toArray();
