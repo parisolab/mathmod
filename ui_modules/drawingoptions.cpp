@@ -761,6 +761,9 @@ bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const Man
 bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const MandatoryParField &idx)
 {
     QString arg = MandatoryParFieldToQString(idx);
+
+    if(QObj[arg].toArray().empty())
+        return false;
     for(int i=0; i<(QObj[arg].toArray()).size(); i++)
     {
         if((QObj[arg].toArray())[i].toString().replace(" ","") == "")
@@ -769,15 +772,18 @@ bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const Man
     return true;
 }
 
-bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj)
+bool DrawingOptions::VerifyParEmptySpace(const QJsonObject& QObj, bool T4D)
 {
     for (std::vector<MandatoryParField>::const_iterator it =
                 MandParFields.begin();
             it != MandParFields.end(); ++it)
     {
         MandatoryParField Opt = *it;
-        if(!VerifyParFieldEmptySpace(QObj, Opt))
+        if((Opt!= PAR_FW) || (Opt== PAR_FW && T4D))
+        {
+          if(!VerifyParFieldEmptySpace(QObj, Opt))
             return false;
+        }
     }
     return true;
 }
@@ -896,11 +902,11 @@ bool DrawingOptions::VerifiedIsoJsonModel(const QJsonObject &QObj)
     return true;
 }
 
-bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj)
+bool DrawingOptions::VerifiedParJsonModel(const QJsonObject &QObj, bool T4D)
 {
     QJsonArray lst;
     int NbFx;
-    if (!VerifyParEmptySpace(QObj))
+    if (!VerifyParEmptySpace(QObj, T4D))
     {
         scriptErrorType = EMPTY_MANDATORY_FIELD;
         ErrorMsg();
@@ -1013,6 +1019,7 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
 {
     QJsonObject QObj;
     bool verif = false;
+    bool T4D=false;
     if (!Inspect)
         return true;
     if (Jobj["Iso3D"].isObject())
@@ -1033,13 +1040,16 @@ bool DrawingOptions::VerifiedJsonModel(const QJsonObject &Jobj, bool Inspect)
         if(Jobj["Param3D"].isObject())
             QObj = Jobj["Param3D"].toObject();
         else if(Jobj["Param4D"].isObject())
+        {
                 QObj = Jobj["Param4D"].toObject();
+                T4D = true;
+        }
         else if(Jobj["Param3D_C"].isObject())
                 QObj = Jobj["Param3D_C"].toObject();
         else if(Jobj["Param4D_C"].isObject())
                 QObj = Jobj["Param4D_C"].toObject();
         MathmodRef->LocalScene.componentsinfos.ParisoNbComponents = 1;
-        verif = VerifiedParJsonModel(QObj);
+        verif = VerifiedParJsonModel(QObj, T4D);
         if (verif)
         {
             MathmodRef->LocalScene.componentsinfos.pariso = false;
@@ -5658,7 +5668,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         ConstArray.append("Umax__"+I+"="+FumaxArray.at(i).toString());
         ConstArray.append("Vmin__"+I+"="+FvminArray.at(i).toString());
         ConstArray.append("Vmax__"+I+"="+FvmaxArray.at(i).toString());
-        if(MathmodRef->ParObjet->ParTh.ShowOriginalSurf || (!MathmodRef->ParObjet->ParTh.ShowUpperSurf && !MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs))
+        if(MathmodRef->ParObjet->ParTh.ShowOriginalSurf /*|| (!MathmodRef->ParObjet->ParTh.ShowUpperSurf && !MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)*/)
         {
             NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
