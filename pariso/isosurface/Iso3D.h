@@ -21,6 +21,7 @@
 
 
 #include "../parisoobject.h"
+#include <QElapsedTimer>
 
 /*
 

@@ -20,7 +20,6 @@
 #include "TableMap.h"
 #include "Iso3D.h"
 #include "internalfunctions.cpp"
-#include <QElapsedTimer>
 
 double * Iso3D::Results;
 Voxel  * Iso3D::GridVoxelVarPt;
