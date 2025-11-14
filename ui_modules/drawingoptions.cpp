@@ -1954,7 +1954,6 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             // Save this Current Parametric Tree struct
             MathmodRef->RootObjet.CurrentParisoTreestruct.push_back(
                 MathmodRef->RootObjet.CurrentTreestruct);
-            loadtext = loadpigm = false;
             if (QIso["Texture"].isObject())
                 QTextureObj = QIso["Texture"].toObject();
             if (QIso["Pigment"].isObject())
@@ -5438,7 +5437,6 @@ void DrawingOptions::on_SaveThButton_2_clicked()
             CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
     QJsonObject tmp,tmp2,tmp3;
     QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
-    bool Import=false;
 
     MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
     MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
