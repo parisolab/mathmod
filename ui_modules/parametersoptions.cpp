@@ -70,28 +70,30 @@ void Parametersoptions::ReadJsonFile(QString JsonFile, QJsonObject &js)
             QMessageBox message;
             message.setWindowTitle("Error at : " + JsonFile);
             file.close();
-            file.open(QIODevice::ReadOnly | QIODevice::Text);
-            sortie = (file.readAll());
-            int before, after;
-            if (sortie.length() > (err.offset + 30))
-                after = 30;
-            else
-                after = sortie.length() - err.offset;
-            sortie.truncate(err.offset + after);
-            if (err.offset - 30 > 0)
-                before = 30;
-            else
-                before = 0;
-            sortie = sortie.remove(0, err.offset - before);
-            sortie.replace("\t", " ");
-            sortie.replace("\n", " ");
-            sortie.insert(before, " >>> Error <<< ");
-            message.setText("Error : " + err.errorString() +
-                            " at position: " + QString::number(err.offset) +
-                            "\n\n***********\n" + "..." + sortie + "...");
-            message.adjustSize();
-            message.exec();
-            file.close();
+            if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                sortie = (file.readAll());
+                int before, after;
+                if (sortie.length() > (err.offset + 30))
+                    after = 30;
+                else
+                    after = sortie.length() - err.offset;
+                sortie.truncate(err.offset + after);
+                if (err.offset - 30 > 0)
+                    before = 30;
+                else
+                    before = 0;
+                sortie = sortie.remove(0, err.offset - before);
+                sortie.replace("\t", " ");
+                sortie.replace("\n", " ");
+                sortie.insert(before, " >>> Error <<< ");
+                message.setText("Error : " + err.errorString() +
+                                " at position: " + QString::number(err.offset) +
+                                "\n\n***********\n" + "..." + sortie + "...");
+                message.adjustSize();
+                message.exec();
+                file.close();
+            }
             return;
         }
         js = doc.object();
@@ -297,7 +299,11 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             // Make a new copy from MathMod's integrated collection file:
             QFile file2(":/mathmodcollection.js");
             QString str;
-            file2.open(QIODevice::ReadOnly | QIODevice::Text);
+            if(!file2.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                std::cerr << "Cannot open file for writing: "
+                          << qPrintable(file2.errorString()) << std::endl;
+            }
             QTextStream stream(&file2);
             str.append(stream.readAll());
             str.replace("DOTSYMBOL", dotsymbol.toStdString().c_str());
@@ -373,7 +379,11 @@ void Parametersoptions::LoadConfig(int argc, char *argv[])
             {
                 QFile file2(":/mathmodcollection.js");
                 QString str;
-                file2.open(QIODevice::ReadOnly | QIODevice::Text);
+                if(!file2.open(QIODevice::ReadOnly | QIODevice::Text))
+                {
+                    std::cerr << "Cannot open file for writing: "
+                              << qPrintable(file2.errorString()) << std::endl;
+                }
                 QTextStream stream(&file2);
                 str.append(stream.readAll());
                 str.replace("DOTSYMBOL", dotsymbol.toStdString().c_str());
