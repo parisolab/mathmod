@@ -17,7 +17,7 @@
 #define ONCE_FPARSER_AUX_H_
 
 #include "fptypes.hh"
-
+#include <iostream>
 #include <cmath>
 
 #ifdef FP_SUPPORT_MPFR_FLOAT_TYPE
