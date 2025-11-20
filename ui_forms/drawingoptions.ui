@@ -29,14 +29,14 @@
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter_9">
       <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
+       <enum>Qt::Horizontal</enum>
       </property>
       <property name="handleWidth">
        <number>20</number>
       </property>
       <widget class="QSplitter" name="splitter">
        <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
+        <enum>Qt::Horizontal</enum>
        </property>
        <property name="handleWidth">
         <number>20</number>
@@ -96,7 +96,7 @@
               </font>
              </property>
              <property name="frameShape">
-              <enum>QFrame::Shape::StyledPanel</enum>
+              <enum>QFrame::StyledPanel</enum>
              </property>
              <property name="lineWidth">
               <number>1</number>
@@ -114,7 +114,7 @@
               <bool>true</bool>
              </property>
              <property name="dragDropMode">
-              <enum>QAbstractItemView::DragDropMode::NoDragDrop</enum>
+              <enum>QAbstractItemView::NoDragDrop</enum>
              </property>
              <property name="alternatingRowColors">
               <bool>true</bool>
@@ -217,7 +217,7 @@
               <number>100</number>
              </property>
              <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -278,7 +278,7 @@
          <string>Schwarz</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
+         <set>Qt::AlignCenter</set>
         </property>
         <layout class="QGridLayout" name="gridLayout_30">
          <property name="leftMargin">
@@ -308,19 +308,19 @@
             <string/>
            </property>
            <property name="layoutDirection">
-            <enum>Qt::LayoutDirection::LeftToRight</enum>
+            <enum>Qt::LeftToRight</enum>
            </property>
            <property name="tabPosition">
-            <enum>QTabWidget::TabPosition::West</enum>
+            <enum>QTabWidget::West</enum>
            </property>
            <property name="tabShape">
-            <enum>QTabWidget::TabShape::Triangular</enum>
+            <enum>QTabWidget::Triangular</enum>
            </property>
            <property name="currentIndex">
             <number>0</number>
            </property>
            <property name="elideMode">
-            <enum>Qt::TextElideMode::ElideLeft</enum>
+            <enum>Qt::ElideLeft</enum>
            </property>
            <property name="movable">
             <bool>true</bool>
@@ -357,7 +357,7 @@
              <item row="0" column="0">
               <widget class="QSplitter" name="splitter_8">
                <property name="orientation">
-                <enum>Qt::Orientation::Vertical</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <widget class="QGroupBox" name="parisogroupbox">
                 <property name="sizePolicy">
@@ -382,7 +382,7 @@
                  <string>Pariso Component selector:</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignmentFlag::AlignCenter</set>
+                 <set>Qt::AlignCenter</set>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_16">
                  <property name="leftMargin">
@@ -435,7 +435,7 @@
                  </size>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::Shape::NoFrame</enum>
+                 <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="currentIndex">
                  <number>1</number>
@@ -470,7 +470,7 @@
                      <string/>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignmentFlag::AlignCenter</set>
+                     <set>Qt::AlignCenter</set>
                     </property>
                     <layout class="QGridLayout" name="gridLayout">
                      <property name="leftMargin">
@@ -497,10 +497,10 @@
                         </font>
                        </property>
                        <property name="layoutDirection">
-                        <enum>Qt::LayoutDirection::LeftToRight</enum>
+                        <enum>Qt::LeftToRight</enum>
                        </property>
                        <property name="tabShape">
-                        <enum>QTabWidget::TabShape::Rounded</enum>
+                        <enum>QTabWidget::Rounded</enum>
                        </property>
                        <property name="currentIndex">
                         <number>0</number>
@@ -596,7 +596,7 @@
                                   </font>
                                  </property>
                                  <property name="frameShape">
-                                  <enum>QFrame::Shape::StyledPanel</enum>
+                                  <enum>QFrame::StyledPanel</enum>
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -724,10 +724,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </font>
                            </property>
                            <property name="frameShape">
-                            <enum>QFrame::Shape::StyledPanel</enum>
+                            <enum>QFrame::StyledPanel</enum>
                            </property>
                            <property name="frameShadow">
-                            <enum>QFrame::Shadow::Sunken</enum>
+                            <enum>QFrame::Sunken</enum>
                            </property>
                            <property name="html">
                             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -756,13 +756,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </size>
                            </property>
                            <property name="layoutDirection">
-                            <enum>Qt::LayoutDirection::LeftToRight</enum>
+                            <enum>Qt::LeftToRight</enum>
                            </property>
                            <property name="tabPosition">
-                            <enum>QTabWidget::TabPosition::North</enum>
+                            <enum>QTabWidget::North</enum>
                            </property>
                            <property name="tabShape">
-                            <enum>QTabWidget::TabShape::Triangular</enum>
+                            <enum>QTabWidget::Triangular</enum>
                            </property>
                            <property name="currentIndex">
                             <number>0</number>
@@ -880,7 +880,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </font>
                                  </property>
                                  <property name="frameShape">
-                                  <enum>QFrame::Shape::Box</enum>
+                                  <enum>QFrame::Box</enum>
                                  </property>
                                  <property name="text">
                                   <string>Y</string>
@@ -908,10 +908,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </size>
                                  </property>
                                  <property name="verticalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                                  <enum>Qt::ScrollBarAsNeeded</enum>
                                  </property>
                                  <property name="horizontalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                                  <enum>Qt::ScrollBarAlwaysOff</enum>
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -946,10 +946,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </size>
                                  </property>
                                  <property name="verticalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                                  <enum>Qt::ScrollBarAsNeeded</enum>
                                  </property>
                                  <property name="horizontalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                                  <enum>Qt::ScrollBarAlwaysOff</enum>
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -984,10 +984,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </size>
                                  </property>
                                  <property name="verticalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                                  <enum>Qt::ScrollBarAsNeeded</enum>
                                  </property>
                                  <property name="horizontalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                                  <enum>Qt::ScrollBarAlwaysOff</enum>
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1140,13 +1140,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </font>
                                  </property>
                                  <property name="frameShape">
-                                  <enum>QFrame::Shape::Box</enum>
+                                  <enum>QFrame::Box</enum>
                                  </property>
                                  <property name="text">
                                   <string>X</string>
                                  </property>
                                  <property name="alignment">
-                                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                                  <set>Qt::AlignCenter</set>
                                  </property>
                                 </widget>
                                </item>
@@ -1171,10 +1171,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </size>
                                  </property>
                                  <property name="verticalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                                  <enum>Qt::ScrollBarAsNeeded</enum>
                                  </property>
                                  <property name="horizontalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                                  <enum>Qt::ScrollBarAlwaysOff</enum>
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1209,10 +1209,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </size>
                                  </property>
                                  <property name="verticalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                                  <enum>Qt::ScrollBarAsNeeded</enum>
                                  </property>
                                  <property name="horizontalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                                  <enum>Qt::ScrollBarAlwaysOff</enum>
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1311,13 +1311,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </font>
                                  </property>
                                  <property name="frameShape">
-                                  <enum>QFrame::Shape::Box</enum>
+                                  <enum>QFrame::Box</enum>
                                  </property>
                                  <property name="text">
                                   <string>Z</string>
                                  </property>
                                  <property name="alignment">
-                                  <set>Qt::AlignmentFlag::AlignCenter</set>
+                                  <set>Qt::AlignCenter</set>
                                  </property>
                                 </widget>
                                </item>
@@ -1342,10 +1342,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </size>
                                  </property>
                                  <property name="verticalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+                                  <enum>Qt::ScrollBarAsNeeded</enum>
                                  </property>
                                  <property name="horizontalScrollBarPolicy">
-                                  <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                                  <enum>Qt::ScrollBarAlwaysOff</enum>
                                  </property>
                                  <property name="html">
                                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1560,7 +1560,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <number>40</number>
                                 </property>
                                 <property name="orientation">
-                                 <enum>Qt::Orientation::Horizontal</enum>
+                                 <enum>Qt::Horizontal</enum>
                                 </property>
                                </widget>
                               </item>
@@ -1591,7 +1591,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             <item row="1" column="0">
                              <spacer name="verticalSpacer_13">
                               <property name="orientation">
-                               <enum>Qt::Orientation::Vertical</enum>
+                               <enum>Qt::Vertical</enum>
                               </property>
                               <property name="sizeHint" stdset="0">
                                <size>
@@ -1607,7 +1607,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <item row="1" column="0">
                           <spacer name="verticalSpacer">
                            <property name="orientation">
-                            <enum>Qt::Orientation::Vertical</enum>
+                            <enum>Qt::Vertical</enum>
                            </property>
                            <property name="sizeHint" stdset="0">
                             <size>
@@ -1660,10 +1660,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    </size>
                                   </property>
                                   <property name="frameShape">
-                                   <enum>QFrame::Shape::Box</enum>
+                                   <enum>QFrame::Box</enum>
                                   </property>
                                   <property name="frameShadow">
-                                   <enum>QFrame::Shadow::Raised</enum>
+                                   <enum>QFrame::Raised</enum>
                                   </property>
                                   <property name="text">
                                    <string>IsoMaxGrid=</string>
@@ -1830,7 +1830,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </font>
                               </property>
                               <property name="layoutDirection">
-                               <enum>Qt::LayoutDirection::LeftToRight</enum>
+                               <enum>Qt::LeftToRight</enum>
                               </property>
                               <item>
                                <property name="text">
@@ -1974,7 +1974,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </font>
                               </property>
                               <property name="layoutDirection">
-                               <enum>Qt::LayoutDirection::LeftToRight</enum>
+                               <enum>Qt::LeftToRight</enum>
                               </property>
                               <item>
                                <property name="text">
@@ -2118,7 +2118,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </font>
                               </property>
                               <property name="layoutDirection">
-                               <enum>Qt::LayoutDirection::LeftToRight</enum>
+                               <enum>Qt::LeftToRight</enum>
                               </property>
                               <item>
                                <property name="text">
@@ -2216,8 +2216,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>491</width>
-                              <height>406</height>
+                              <width>511</width>
+                              <height>375</height>
                              </rect>
                             </property>
                             <attribute name="label">
@@ -2251,10 +2251,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                       </size>
                                      </property>
                                      <property name="frameShape">
-                                      <enum>QFrame::Shape::Box</enum>
+                                      <enum>QFrame::Box</enum>
                                      </property>
                                      <property name="frameShadow">
-                                      <enum>QFrame::Shadow::Raised</enum>
+                                      <enum>QFrame::Raised</enum>
                                      </property>
                                      <property name="text">
                                       <string>Thickness = </string>
@@ -2391,7 +2391,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <item row="1" column="0">
                               <spacer name="verticalSpacer_6">
                                <property name="orientation">
-                                <enum>Qt::Orientation::Vertical</enum>
+                                <enum>Qt::Vertical</enum>
                                </property>
                                <property name="sizeHint" stdset="0">
                                 <size>
@@ -2440,7 +2440,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      </size>
                     </property>
                     <property name="layoutDirection">
-                     <enum>Qt::LayoutDirection::LeftToRight</enum>
+                     <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="currentIndex">
                      <number>0</number>
@@ -2522,13 +2522,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </size>
                               </property>
                               <property name="frameShape">
-                               <enum>QFrame::Shape::StyledPanel</enum>
+                               <enum>QFrame::StyledPanel</enum>
                               </property>
                               <property name="verticalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                               <property name="horizontalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                              </widget>
                             </item>
@@ -2625,7 +2625,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item row="1" column="0">
                        <widget class="QSplitter" name="splitter_2">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Vertical</enum>
+                         <enum>Qt::Vertical</enum>
                         </property>
                         <widget class="QTextEdit" name="XEdit">
                          <property name="font">
@@ -2671,13 +2671,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </size>
                         </property>
                         <property name="layoutDirection">
-                         <enum>Qt::LayoutDirection::LeftToRight</enum>
+                         <enum>Qt::LeftToRight</enum>
                         </property>
                         <property name="tabPosition">
-                         <enum>QTabWidget::TabPosition::North</enum>
+                         <enum>QTabWidget::North</enum>
                         </property>
                         <property name="tabShape">
-                         <enum>QTabWidget::TabShape::Triangular</enum>
+                         <enum>QTabWidget::Triangular</enum>
                         </property>
                         <property name="currentIndex">
                          <number>0</number>
@@ -2762,13 +2762,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </font>
                               </property>
                               <property name="frameShape">
-                               <enum>QFrame::Shape::Box</enum>
+                               <enum>QFrame::Box</enum>
                               </property>
                               <property name="text">
                                <string>U</string>
                               </property>
                               <property name="alignment">
-                               <set>Qt::AlignmentFlag::AlignCenter</set>
+                               <set>Qt::AlignCenter</set>
                               </property>
                              </widget>
                             </item>
@@ -2787,10 +2787,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </size>
                               </property>
                               <property name="verticalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                               <property name="horizontalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                              </widget>
                             </item>
@@ -2809,10 +2809,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </size>
                               </property>
                               <property name="verticalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                               <property name="horizontalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                              </widget>
                             </item>
@@ -2874,7 +2874,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </font>
                               </property>
                               <property name="frameShape">
-                               <enum>QFrame::Shape::Box</enum>
+                               <enum>QFrame::Box</enum>
                               </property>
                               <property name="text">
                                <string>V</string>
@@ -2896,10 +2896,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </size>
                               </property>
                               <property name="verticalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                               <property name="horizontalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                              </widget>
                             </item>
@@ -2918,10 +2918,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </size>
                               </property>
                               <property name="verticalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                               <property name="horizontalScrollBarPolicy">
-                               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                               <enum>Qt::ScrollBarAlwaysOff</enum>
                               </property>
                              </widget>
                             </item>
@@ -3113,7 +3113,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                               <number>50</number>
                              </property>
                              <property name="orientation">
-                              <enum>Qt::Orientation::Vertical</enum>
+                              <enum>Qt::Vertical</enum>
                              </property>
                             </widget>
                            </item>
@@ -3149,7 +3149,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>50</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -3180,7 +3180,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>50</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -3210,7 +3210,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item row="1" column="0">
                        <spacer name="verticalSpacer_2">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Vertical</enum>
+                         <enum>Qt::Vertical</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3239,10 +3239,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </size>
                             </property>
                             <property name="frameShape">
-                             <enum>QFrame::Shape::Box</enum>
+                             <enum>QFrame::Box</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Shadow::Raised</enum>
+                             <enum>QFrame::Raised</enum>
                             </property>
                             <property name="text">
                              <string>ParMaxGrid=</string>
@@ -3302,8 +3302,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>320</width>
-                           <height>131</height>
+                           <width>521</width>
+                           <height>386</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -3337,10 +3337,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    </size>
                                   </property>
                                   <property name="frameShape">
-                                   <enum>QFrame::Shape::Box</enum>
+                                   <enum>QFrame::Box</enum>
                                   </property>
                                   <property name="frameShadow">
-                                   <enum>QFrame::Shadow::Raised</enum>
+                                   <enum>QFrame::Raised</enum>
                                   </property>
                                   <property name="text">
                                    <string>Thickness = </string>
@@ -3456,7 +3456,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <item row="1" column="0">
                            <spacer name="verticalSpacer_7">
                             <property name="orientation">
-                             <enum>Qt::Orientation::Vertical</enum>
+                             <enum>Qt::Vertical</enum>
                             </property>
                             <property name="sizeHint" stdset="0">
                              <size>
@@ -3502,7 +3502,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      </size>
                     </property>
                     <property name="layoutDirection">
-                     <enum>Qt::LayoutDirection::LeftToRight</enum>
+                     <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="currentIndex">
                      <number>0</number>
@@ -3572,7 +3572,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                            </size>
                           </property>
                           <property name="frameShape">
-                           <enum>QFrame::Shape::StyledPanel</enum>
+                           <enum>QFrame::StyledPanel</enum>
                           </property>
                          </widget>
                         </item>
@@ -3581,7 +3581,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item row="0" column="1">
                        <spacer name="horizontalSpacer_4">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3600,7 +3600,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </sizepolicy>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Vertical</enum>
+                         <enum>Qt::Vertical</enum>
                         </property>
                         <widget class="QTextEdit" name="XEdit_2">
                          <property name="font">
@@ -3704,7 +3704,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </font>
                             </property>
                             <property name="frameShape">
-                             <enum>QFrame::Shape::Box</enum>
+                             <enum>QFrame::Box</enum>
                             </property>
                             <property name="text">
                              <string>V</string>
@@ -3726,10 +3726,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </size>
                             </property>
                             <property name="verticalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                             <property name="horizontalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                            </widget>
                           </item>
@@ -3748,10 +3748,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </size>
                             </property>
                             <property name="verticalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                             <property name="horizontalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                            </widget>
                           </item>
@@ -3813,13 +3813,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </font>
                             </property>
                             <property name="frameShape">
-                             <enum>QFrame::Shape::Box</enum>
+                             <enum>QFrame::Box</enum>
                             </property>
                             <property name="text">
                              <string>U</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignmentFlag::AlignCenter</set>
+                             <set>Qt::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -3838,10 +3838,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </size>
                             </property>
                             <property name="verticalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                             <property name="horizontalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                            </widget>
                           </item>
@@ -3860,10 +3860,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </size>
                             </property>
                             <property name="verticalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                             <property name="horizontalScrollBarPolicy">
-                             <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                             <enum>Qt::ScrollBarAlwaysOff</enum>
                             </property>
                            </widget>
                           </item>
@@ -3906,7 +3906,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item row="1" column="0">
                        <spacer name="verticalSpacer_9">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Vertical</enum>
+                         <enum>Qt::Vertical</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -3993,7 +3993,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>10</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -4044,7 +4044,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>10</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -4095,7 +4095,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>10</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -4146,7 +4146,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>10</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -4197,7 +4197,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>10</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -4248,7 +4248,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <number>10</number>
                                </property>
                                <property name="orientation">
-                                <enum>Qt::Orientation::Horizontal</enum>
+                                <enum>Qt::Horizontal</enum>
                                </property>
                               </widget>
                              </item>
@@ -4261,7 +4261,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                            <item>
                             <spacer name="horizontalSpacer_9">
                              <property name="orientation">
-                              <enum>Qt::Orientation::Horizontal</enum>
+                              <enum>Qt::Horizontal</enum>
                              </property>
                              <property name="sizeHint" stdset="0">
                               <size>
@@ -4293,7 +4293,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                            <item>
                             <spacer name="horizontalSpacer_10">
                              <property name="orientation">
-                              <enum>Qt::Orientation::Horizontal</enum>
+                              <enum>Qt::Horizontal</enum>
                              </property>
                              <property name="sizeHint" stdset="0">
                               <size>
@@ -4311,7 +4311,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item row="3" column="0">
                        <spacer name="verticalSpacer_3">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Vertical</enum>
+                         <enum>Qt::Vertical</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -4346,10 +4346,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </size>
                             </property>
                             <property name="frameShape">
-                             <enum>QFrame::Shape::Box</enum>
+                             <enum>QFrame::Box</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Shadow::Raised</enum>
+                             <enum>QFrame::Raised</enum>
                             </property>
                             <property name="text">
                              <string>ParMaxGrid=</string>
@@ -4433,7 +4433,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                               <number>50</number>
                              </property>
                              <property name="orientation">
-                              <enum>Qt::Orientation::Horizontal</enum>
+                              <enum>Qt::Horizontal</enum>
                              </property>
                             </widget>
                            </item>
@@ -4458,7 +4458,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <item row="1" column="0">
                           <spacer name="verticalSpacer_14">
                            <property name="orientation">
-                            <enum>Qt::Orientation::Vertical</enum>
+                            <enum>Qt::Vertical</enum>
                            </property>
                            <property name="sizeHint" stdset="0">
                             <size>
@@ -4511,7 +4511,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <item row="0" column="0">
               <widget class="QSplitter" name="splitter_7">
                <property name="orientation">
-                <enum>Qt::Orientation::Vertical</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <widget class="QTextEdit" name="ScriptEditor">
                 <property name="sizePolicy">
@@ -4533,7 +4533,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  </font>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::Shape::StyledPanel</enum>
+                 <enum>QFrame::StyledPanel</enum>
                 </property>
                 <property name="html">
                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -4561,10 +4561,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                </widget>
                <widget class="QTreeWidget" name="ObjectClasseCurrent">
                 <property name="horizontalScrollBarPolicy">
-                 <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+                 <enum>Qt::ScrollBarAlwaysOn</enum>
                 </property>
                 <property name="sizeAdjustPolicy">
-                 <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
                 </property>
                 <property name="autoScroll">
                  <bool>false</bool>
@@ -4573,7 +4573,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <number>6</number>
                 </property>
                 <property name="editTriggers">
-                 <set>QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed</set>
+                 <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
                 </property>
                 <attribute name="headerStretchLastSection">
                  <bool>false</bool>
@@ -4686,7 +4686,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <item row="1" column="0">
               <spacer name="verticalSpacer_4">
                <property name="orientation">
-                <enum>Qt::Orientation::Vertical</enum>
+                <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -4730,7 +4730,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <string>CND view controls:</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                    <set>Qt::AlignCenter</set>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_43">
                     <property name="leftMargin">
@@ -4928,7 +4928,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="1" column="0">
                   <spacer name="verticalSpacer_12">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -4975,7 +4975,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <string>Rotation controls :</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                    <set>Qt::AlignCenter</set>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_21">
                     <property name="leftMargin">
@@ -5063,7 +5063,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>40</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -5074,7 +5074,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item>
                        <spacer name="horizontalSpacer_11">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -5106,7 +5106,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item>
                        <spacer name="horizontalSpacer_12">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -5163,7 +5163,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>40</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -5214,7 +5214,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>40</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -5254,7 +5254,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <string>Time:</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                    <set>Qt::AlignCenter</set>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_6">
                     <property name="leftMargin">
@@ -5331,7 +5331,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>30</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -5342,7 +5342,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item>
                        <spacer name="horizontalSpacer_6">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -5368,7 +5368,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <item>
                        <spacer name="horizontalSpacer_2">
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
@@ -5386,7 +5386,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="1" column="0">
                   <spacer name="verticalSpacer_11">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5427,7 +5427,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     <string>Scale factor (for exported mesh)</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignmentFlag::AlignCenter</set>
+                    <set>Qt::AlignCenter</set>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_23">
                     <property name="leftMargin">
@@ -5519,7 +5519,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="1" column="0">
                   <spacer name="verticalSpacer_10">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -5694,7 +5694,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <number>249</number>
                       </property>
                       <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
+                       <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
@@ -5772,7 +5772,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <number>170</number>
                       </property>
                       <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
+                       <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
@@ -5847,7 +5847,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <number>255</number>
                       </property>
                       <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
+                       <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
@@ -5888,7 +5888,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <number>100</number>
                       </property>
                       <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
+                       <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
@@ -5933,7 +5933,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="0" column="0">
                   <widget class="QSplitter" name="splitter_3">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <widget class="QWidget" name="layoutWidget02">
                     <layout class="QGridLayout" name="gridLayout_22">
@@ -5999,7 +5999,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    <item>
                     <spacer name="horizontalSpacer_8">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -6019,7 +6019,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    <item>
                     <spacer name="horizontalSpacer_5">
                      <property name="orientation">
-                      <enum>Qt::Orientation::Horizontal</enum>
+                      <enum>Qt::Horizontal</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -6034,7 +6034,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="2" column="0">
                   <spacer name="verticalSpacer_16">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -6149,7 +6149,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6250,7 +6250,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6351,7 +6351,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6415,7 +6415,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>100</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6457,7 +6457,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>110</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6589,7 +6589,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6668,7 +6668,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6747,7 +6747,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -6793,7 +6793,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <number>100</number>
                       </property>
                       <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
+                       <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
@@ -6803,7 +6803,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="1" column="0">
                   <spacer name="verticalSpacer_15">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -6924,7 +6924,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -7003,7 +7003,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -7082,7 +7082,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <number>20</number>
                         </property>
                         <property name="orientation">
-                         <enum>Qt::Orientation::Horizontal</enum>
+                         <enum>Qt::Horizontal</enum>
                         </property>
                        </widget>
                       </item>
@@ -7128,7 +7128,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <number>100</number>
                       </property>
                       <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
+                       <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
@@ -7138,7 +7138,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="1" column="0">
                   <spacer name="verticalSpacer_17">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -7209,7 +7209,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                        <number>8</number>
                       </property>
                       <property name="orientation">
-                       <enum>Qt::Orientation::Horizontal</enum>
+                       <enum>Qt::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
@@ -7219,7 +7219,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="1" column="0">
                   <spacer name="verticalSpacer_8">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -7262,7 +7262,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>534</width>
+                  <width>554</width>
                   <height>994</height>
                  </rect>
                 </property>
@@ -7288,7 +7288,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </sizepolicy>
                    </property>
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <widget class="QGroupBox" name="groupBox_29">
                     <property name="enabled">
@@ -7374,7 +7374,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </font>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>Name=Value(Step)      </string>
@@ -7433,7 +7433,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </font>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>Min</string>
@@ -7492,13 +7492,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </font>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>Slider</string>
                        </property>
                        <property name="alignment">
-                        <set>Qt::AlignmentFlag::AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                        </property>
                       </widget>
                      </item>
@@ -7608,7 +7608,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </font>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>Max</string>
@@ -7630,10 +7630,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </font>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="frameShadow">
-                        <enum>QFrame::Shadow::Raised</enum>
+                        <enum>QFrame::Raised</enum>
                        </property>
                        <property name="text">
                         <string>...</string>
@@ -7659,11 +7659,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <string/>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
+                     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                     </property>
                     <layout class="QGridLayout" name="gridLayout_69">
                      <property name="sizeConstraint">
-                      <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+                      <enum>QLayout::SetDefaultConstraint</enum>
                      </property>
                      <property name="leftMargin">
                       <number>2</number>
@@ -7686,7 +7686,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C1 =         </string>
@@ -7708,7 +7708,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -7742,7 +7742,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -7761,7 +7761,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -7839,7 +7839,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -7852,7 +7852,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C2 =         </string>
@@ -7887,7 +7887,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -7909,7 +7909,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -7956,7 +7956,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C3 =         </string>
@@ -7978,7 +7978,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8012,7 +8012,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8031,7 +8031,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8091,7 +8091,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C4 =         </string>
@@ -8113,7 +8113,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8147,7 +8147,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8166,7 +8166,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8226,7 +8226,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C5 =         </string>
@@ -8248,7 +8248,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8282,7 +8282,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8301,7 +8301,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8361,7 +8361,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C6 =         </string>
@@ -8383,7 +8383,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8417,7 +8417,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8436,7 +8436,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8496,7 +8496,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C7 =         </string>
@@ -8518,7 +8518,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8552,7 +8552,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8571,7 +8571,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8631,7 +8631,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C8 =         </string>
@@ -8653,7 +8653,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8687,7 +8687,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8706,7 +8706,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8766,7 +8766,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C9 =         </string>
@@ -8788,7 +8788,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8822,7 +8822,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8841,7 +8841,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8901,7 +8901,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C10 =         </string>
@@ -8923,7 +8923,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -8957,7 +8957,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -8976,7 +8976,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9036,7 +9036,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C11 =         </string>
@@ -9058,7 +9058,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9092,7 +9092,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -9111,7 +9111,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9171,7 +9171,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C12 =         </string>
@@ -9193,7 +9193,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9227,7 +9227,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -9246,7 +9246,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9306,7 +9306,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C13 =         </string>
@@ -9328,7 +9328,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9362,7 +9362,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -9381,7 +9381,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9441,7 +9441,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C14 =         </string>
@@ -9463,7 +9463,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9497,7 +9497,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -9516,7 +9516,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9576,7 +9576,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C15 =         </string>
@@ -9598,7 +9598,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9632,7 +9632,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -9651,7 +9651,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9711,7 +9711,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C16 =         </string>
@@ -9733,7 +9733,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9767,7 +9767,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -9786,7 +9786,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9846,7 +9846,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C17 =         </string>
@@ -9868,7 +9868,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9902,7 +9902,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -9921,7 +9921,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -9981,7 +9981,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C18 =         </string>
@@ -10003,7 +10003,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -10037,7 +10037,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -10056,7 +10056,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -10116,7 +10116,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C19 =         </string>
@@ -10138,7 +10138,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -10172,7 +10172,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -10191,7 +10191,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -10251,7 +10251,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </sizepolicy>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Box</enum>
+                        <enum>QFrame::Box</enum>
                        </property>
                        <property name="text">
                         <string>C20 =         </string>
@@ -10273,7 +10273,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -10307,7 +10307,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         <number>5</number>
                        </property>
                        <property name="orientation">
-                        <enum>Qt::Orientation::Horizontal</enum>
+                        <enum>Qt::Horizontal</enum>
                        </property>
                       </widget>
                      </item>
@@ -10326,7 +10326,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </size>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::Shape::Panel</enum>
+                        <enum>QFrame::Panel</enum>
                        </property>
                        <property name="text">
                         <string>TextLabel</string>
@@ -10353,7 +10353,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                  <item row="1" column="0">
                   <spacer name="verticalSpacer_5">
                    <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
+                    <enum>Qt::Vertical</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
@@ -10370,12 +10370,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
              <item row="0" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_49">
                <property name="sizeConstraint">
-                <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
+                <enum>QLayout::SetMinimumSize</enum>
                </property>
                <item>
                 <spacer name="horizontalSpacer_7">
                  <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
+                  <enum>Qt::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -10410,7 +10410,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </font>
                      </property>
                      <property name="layoutDirection">
-                      <enum>Qt::LayoutDirection::LeftToRight</enum>
+                      <enum>Qt::LeftToRight</enum>
                      </property>
                      <property name="currentText">
                       <string>Predefined Sets</string>
@@ -10494,7 +10494,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </font>
                      </property>
                      <property name="layoutDirection">
-                      <enum>Qt::LayoutDirection::LeftToRight</enum>
+                      <enum>Qt::LeftToRight</enum>
                      </property>
                      <property name="currentText">
                       <string>Parameters List</string>
@@ -10563,7 +10563,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                <item>
                 <spacer name="horizontalSpacer_13">
                  <property name="orientation">
-                  <enum>Qt::Orientation::Horizontal</enum>
+                  <enum>Qt::Horizontal</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -10584,7 +10584,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </widget>
       <widget class="QSplitter" name="splitter_6">
        <property name="orientation">
-        <enum>Qt::Orientation::Vertical</enum>
+        <enum>Qt::Vertical</enum>
        </property>
        <widget class="MathMod" name="openGLWidget">
         <property name="sizePolicy">
@@ -10608,22 +10608,22 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </size>
         </property>
         <property name="inputMethodHints">
-         <set>Qt::InputMethodHint::ImhMultiLine</set>
+         <set>Qt::ImhMultiLine</set>
         </property>
         <property name="frameShape">
-         <enum>QFrame::Shape::NoFrame</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Shadow::Plain</enum>
+         <enum>QFrame::Plain</enum>
         </property>
         <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="sizeAdjustPolicy">
-         <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
         </property>
         <property name="lineWrapColumnOrWidth">
          <number>1</number>
@@ -10659,50 +10659,51 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <x>0</x>
      <y>0</y>
      <width>1048</width>
-     <height>25</height>
+     <height>24</height>
     </rect>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-     <horstretch>3</horstretch>
-     <verstretch>3</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>25</width>
-     <height>25</height>
-    </size>
-   </property>
    <property name="layoutDirection">
-    <enum>Qt::LayoutDirection::LeftToRight</enum>
+    <enum>Qt::LeftToRight</enum>
    </property>
-   <property name="nativeMenuBar">
-    <bool>false</bool>
-   </property>
-   <widget class="QMenu" name="menuMathMod">
+   <widget class="QMenu" name="menu_File">
     <property name="title">
-     <string>MathMod</string>
+     <string>&amp;Project</string>
     </property>
-    <addaction name="actionAbout_2"/>
-    <addaction name="actionDocumentation"/>
+    <addaction name="actionLoad_json_script"/>
+    <addaction name="actionConvert_K3DS_script"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
    </widget>
-   <widget class="QMenu" name="menuOptions">
+   <widget class="QMenu" name="menu_About">
     <property name="title">
-     <string>Options</string>
+     <string>&amp;Help</string>
     </property>
+    <addaction name="actionDocumentation"/>
+    <addaction name="actionAbout_2"/>
+   </widget>
+   <widget class="QMenu" name="menu_Options">
+    <property name="title">
+     <string>&amp;Options</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="actionClear"/>
+    <addaction name="separator"/>
+    <addaction name="actionTriangles"/>
     <addaction name="actionMesh"/>
     <addaction name="actionFill"/>
     <addaction name="actionInfos"/>
-    <addaction name="actionAxe"/>
-    <addaction name="actionPlan"/>
-    <addaction name="actionTriangles"/>
+    <addaction name="separator"/>
+    <addaction name="actionScreenshot"/>
+    <addaction name="actionEditor"/>
+    <addaction name="actionFrames"/>
+    <addaction name="actionScripts_selection"/>
+    <addaction name="separator"/>
     <addaction name="actionAnimation_Rotation"/>
     <addaction name="actionMorph_use_t_parameter"/>
-    <addaction name="actionScreenshot"/>
-    <addaction name="actionFrames"/>
+    <addaction name="separator"/>
+    <addaction name="actionAxe"/>
+    <addaction name="actionPlan"/>
    </widget>
    <widget class="QMenu" name="menuExport">
     <property name="title">
@@ -10710,33 +10711,22 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </property>
     <addaction name="actionPolygonWavefront_obj"/>
     <addaction name="actionTrianglesWavefront_obj"/>
+    <addaction name="separator"/>
     <addaction name="actionColorPolygonWavefront_obj"/>
     <addaction name="actionColorTrianglesWavefront_obj"/>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
-    <addaction name="actionClear"/>
     <addaction name="separator"/>
-    <addaction name="actionEditor"/>
-    <addaction name="actionScripts_selection"/>
-    <addaction name="actionLoad_json_script"/>
-    <addaction name="actionConvert_K3DS_script"/>
    </widget>
-   <addaction name="menuMathMod"/>
-   <addaction name="menuEdit"/>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Options"/>
    <addaction name="menuExport"/>
-   <addaction name="menuOptions"/>
+   <addaction name="menu_About"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
    <property name="layoutDirection">
-    <enum>Qt::LayoutDirection::RightToLeft</enum>
+    <enum>Qt::RightToLeft</enum>
    </property>
    <property name="movable">
     <bool>true</bool>
@@ -10748,7 +10738,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </size>
    </property>
    <attribute name="toolBarArea">
-    <enum>RightToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
@@ -10768,16 +10758,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <addaction name="separator"/>
    <addaction name="actionFill"/>
    <addaction name="separator"/>
-   <addaction name="action_Exit"/>
-   <addaction name="separator"/>
   </widget>
   <action name="action_Exit">
-   <property name="icon">
-    <iconset resource="../myressources.qrc">
-     <normaloff>:/images/win/stop.png</normaloff>:/images/win/stop.png</iconset>
-   </property>
    <property name="text">
-    <string>&amp;Quit MathMod</string>
+    <string>&amp;Exit</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -10786,9 +10770,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="actionAbout_2">
-   <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::HelpAbout"/>
-   </property>
    <property name="text">
     <string>About</string>
    </property>
@@ -11088,9 +11069,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="actionUndo">
-   <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::EditUndo"/>
-   </property>
    <property name="text">
     <string>Undo      ⌘Z</string>
    </property>
@@ -11099,9 +11077,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="actionRedo">
-   <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::EditRedo"/>
-   </property>
    <property name="text">
     <string>Redo     ⇧⌘Z</string>
    </property>
