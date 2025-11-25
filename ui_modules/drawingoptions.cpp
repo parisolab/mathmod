@@ -5557,10 +5557,10 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             FctArray, ConstArray, ConstArraytmp,
             FuminArray, FvminArray, FumaxArray, FvmaxArray,
             NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray, ImportArraytmp,
-            ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray;
-    QJsonObject tmp,tmp2,tmpJsObj;
+            ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray, tmpArray, transArray;
+    QJsonObject tmp,tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
-    bool CND=false, Grid=false;
+    bool CND=false, Grid=false, Trans=false;
 
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
@@ -5577,6 +5577,41 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
     }
+    tmp.remove("Iso3D");
+    tmp.remove("ParIso");
+    tmp.remove("Param3D_C");
+    tmp.remove("Param4D_C");
+
+    QString T = MathmodRef->ParObjet->ParTh.ThExpression;
+
+    //Look for an attached Transformations lists:
+    //transObj = ThtransObj["ThTransf"].toObject();
+    //ThExpression:
+    tmpArray = transObj["ThExpression"].toArray();
+    tmpArray.append(T);
+    transObj["ThExpression"] = tmpArray;
+    //Surfaces:
+    tmpArray = transObj["Surfaces"].toArray();
+    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowOriginalSurf);
+    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowUpperSurf);
+    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs);
+    transObj["Surfaces"] = tmpArray;
+    ThtransObj["ThTransf"] = transObj;
+    tmpJsObj = tmp["Operations"].toObject();
+    transArray = tmpJsObj["OperationsList"].toArray();
+    transArray.append(ThtransObj);
+    tmpJsObj["OperationsList"]= transArray;
+
+
+
+    if(tmp["Operations"].isNull())
+    {
+        tmp.remove("Operations");
+        tmpJsObj["OriginalObj"] = tmp;
+    }
+    tmp["Operations"] = tmpJsObj;
+
+
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
     FyArray = tmp2["Fy"].toArray();
@@ -5634,7 +5669,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     SlidersArray.append("1");
     tmpJsObj["Step"] = SlidersArray;
     tmp["Sliders"] = tmpJsObj;
-    QString T = MathmodRef->ParObjet->ParTh.ThExpression;
+
     for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
     {
         QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
