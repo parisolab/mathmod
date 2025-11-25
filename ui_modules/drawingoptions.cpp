@@ -5585,24 +5585,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     QString T = MathmodRef->ParObjet->ParTh.ThExpression;
 
     //Look for an attached Transformations lists:
-
-    //ThExpression:
-    tmpArray = transObj["ThExpression"].toArray();
-    tmpArray.append(T);
-    transObj["ThExpression"] = tmpArray;
-    //Surfaces:
-    tmpArray = transObj["Surfaces"].toArray();
-    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowOriginalSurf);
-    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowUpperSurf);
-    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs);
-    transObj["Surfaces"] = tmpArray;
-    ThtransObj["ThTransf"] = transObj;
-    tmpJsObj = tmp["Operations"].toObject();
-    transArray = tmpJsObj["OperationsList"].toArray();
-    transArray.append(ThtransObj);
-    tmpJsObj["OperationsList"]= transArray;
-
-    /*
     tmpJsObj = tmp["Operations"].toObject();
     transArray = tmpJsObj["OperationsList"].toArray();
     tmpArray.append(1);
@@ -5612,7 +5594,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmpArray.append(T);
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
-    */
+
     if(tmp["Operations"].isNull())
     {
         tmp.remove("Operations");
