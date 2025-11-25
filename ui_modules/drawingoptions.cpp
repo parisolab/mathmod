@@ -5560,7 +5560,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray, tmpArray, transArray;
     QJsonObject tmp,tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
-    bool CND=false, Grid=false, Trans=false;
+    bool CND=false, Grid=false;
 
     MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
     MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
@@ -5587,7 +5587,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     //Look for an attached Transformations lists:
     tmpJsObj = tmp["Operations"].toObject();
     transArray = tmpJsObj["OperationsList"].toArray();
-    tmpArray.append(1);
+    tmpArray.append(THICK_PAR_OP);
     tmpArray.append(MathmodRef->ParObjet->ParTh.ShowOriginalSurf);
     tmpArray.append(MathmodRef->ParObjet->ParTh.ShowUpperSurf);
     tmpArray.append(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs);
@@ -5601,7 +5601,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         tmpJsObj["OriginalObj"] = tmp;
     }
     tmp["Operations"] = tmpJsObj;
-
 
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
