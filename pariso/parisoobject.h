@@ -37,7 +37,7 @@ class GenOperation
 {
 public:
     virtual ~GenOperation() = default;
-    virtual void performAction(QJsonArray){};
+    virtual void performAction(const QJsonArray&){};
 };
 class ParThickness : public GenOperation
 {
@@ -48,14 +48,14 @@ public:
     OperationsType OpType=NO_OP;
     bool OriginalSurf=false, UpperSurf=false, BoumdarySurfs=false;
     QString ThExpression="";
-    void performAction(QJsonArray) override;
+    void performAction(const QJsonArray&) override;
 };
 class IsoThickness  : public GenOperation
 {
 public:
     IsoThickness();
     ~IsoThickness();
-    void performAction(QJsonArray) override;
+    void performAction(const QJsonArray&) override;
 };
 class ParisoObject : public QThread
 {
