@@ -32,7 +32,31 @@
 
 #include "commun.h"
 
-
+#include <QJsonArray>
+class GenOperation
+{
+public:
+    virtual ~GenOperation() = default;
+    virtual void performAction(QJsonArray){};
+};
+class ParThickness : public GenOperation
+{
+public:
+    ParThickness();
+    ~ParThickness();
+public:
+    OperationsType OpType=NO_OP;
+    bool OriginalSurf=false, UpperSurf=false, BoumdarySurfs=false;
+    QString ThExpression="";
+    void performAction(QJsonArray) override;
+};
+class IsoThickness  : public GenOperation
+{
+public:
+    IsoThickness();
+    ~IsoThickness();
+    void performAction(QJsonArray) override;
+};
 class ParisoObject : public QThread
 {
 public:
@@ -46,10 +70,10 @@ public:
     bool StopCalculations;
     ScriptErrorType messageerror;
     QString message;
-    IsoThichnessParam IsoTh;
+    IsoThicknessParam IsoTh;
     IsoTorsionParam IsoTr;
     IsoScaleParam IsoSc;
-    ParThichnessParam ParTh;
+    ParThicknessParam ParTh;
     ParTorsionParam ParTr;
     ParScaleParam ParSc;
     ParVarParameters Parxyz;
@@ -57,6 +81,7 @@ public:
     static std::vector<float> NormVertexTabVector;
     static std::vector<uint> IndexPolyTabMinVector;
     static std::vector<uint> IndexPolyTabMinVector2;
+    std::vector<std::shared_ptr<GenOperation>> OperationsTree;
 };
 
 class WorkerThread : public QThread

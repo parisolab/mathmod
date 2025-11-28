@@ -95,8 +95,7 @@ struct GlobalParam
     uint NbPolyMinimalTopology = 0;
     uint NbVertexTmp = 0;
 };
-
-
+enum OperationsType { THICK_PAR_OP, THICK_ISO_OP, NO_OP};
 enum PreviousAction
 {
     NOACTION = 0,
@@ -108,7 +107,7 @@ enum PreviousAction
     SCALZ,
     THICK
 };
-struct IsoThichnessParam
+struct IsoThicknessParam
 {
     QString ThExpression = "";
     QString FctOriginal = "";
@@ -143,7 +142,7 @@ struct IsoTorsionParam
     QString TorsionY="$y$";
     QString TorsionZ="$z$";
 };
-struct ParThichnessParam
+struct ParThicknessParam
 {
     QString ThExpression = "";
     bool ShowOriginalSurf = true;

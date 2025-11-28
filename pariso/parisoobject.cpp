@@ -25,9 +25,24 @@ std::vector<float> ParisoObject::NormVertexTabVector;
 std::vector<uint> ParisoObject::IndexPolyTabMinVector;
 std::vector<uint> ParisoObject::IndexPolyTabMinVector2;
 
+ParThickness::ParThickness(){}
+ParThickness::~ParThickness(){}
+void ParThickness::performAction(QJsonArray ptr)
+{
+    OpType = (OperationsType)ptr[0].toInt();
+    OriginalSurf           = ptr[1].toBool();
+    UpperSurf              = ptr[2].toBool();
+    BoumdarySurfs          = ptr[3].toBool();
+    ThExpression           = ptr[4].toString();
+};
+IsoThickness::IsoThickness(){}
+IsoThickness::~IsoThickness(){}
+
+void IsoThickness::performAction(QJsonArray)
+{
+}
 MasterThread::MasterThread() {}
 MasterThread::~MasterThread() {}
-
 
 void MasterThread::clearTextureInfos()
 {
