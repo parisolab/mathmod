@@ -5549,6 +5549,17 @@ void DrawingOptions::on_actionClear_triggered()
     MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
     MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
+void DrawingOptions::loadOperations(const QJsonArray& jsArray)
+{
+    QJsonArray tmpArray;
+    MathmodRef->ParObjet->OperationsTree.clear();
+    for(int i=0; i<jsArray.size(); i++)
+    {
+        tmpArray = jsArray[i].toArray();
+        MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
+        MathmodRef->ParObjet->OperationsTree[i]->loadOperation(tmpArray);
+    }
+}
 
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
@@ -5583,7 +5594,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp.remove("Param4D_C");
 
     QString T = MathmodRef->ParObjet->ParTh.ThExpression;
-
     //Look for an attached Transformations lists:
     tmpJsObj = tmp["Operations"].toObject();
     transArray = tmpJsObj["OperationsList"].toArray();
@@ -5602,13 +5612,8 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     }
     tmp["Operations"] = tmpJsObj;
 
-    MathmodRef->ParObjet->OperationsTree.clear();
-    for(int i=0; i<transArray.size(); i++)
-    {
-        tmpArray = transArray[i].toArray();
-        MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
-        MathmodRef->ParObjet->OperationsTree[i]->loadOperation(tmpArray);
-    }
+    loadOperations(transArray);
+
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
     FyArray = tmp2["Fy"].toArray();
