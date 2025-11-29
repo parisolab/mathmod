@@ -27,7 +27,7 @@ std::vector<uint> ParisoObject::IndexPolyTabMinVector2;
 
 ParThickness::ParThickness(){}
 ParThickness::~ParThickness(){}
-void ParThickness::loadAction(const QJsonArray& ptr)
+void ParThickness::loadOperation(const QJsonArray& ptr)
 {
     OpType = (OperationsType)ptr[0].toInt();
     OriginalSurf           = ptr[1].toBool();
@@ -38,7 +38,7 @@ void ParThickness::loadAction(const QJsonArray& ptr)
 IsoThickness::IsoThickness(){}
 IsoThickness::~IsoThickness(){}
 
-void IsoThickness::loadAction(const QJsonArray&)
+void IsoThickness::loadOperation(const QJsonArray&)
 {
 }
 MasterThread::MasterThread() {}
