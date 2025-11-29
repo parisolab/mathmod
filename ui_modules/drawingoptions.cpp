@@ -5674,15 +5674,15 @@ void DrawingOptions::on_SaveThButton_1_clicked()
 
     for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
     {
-        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
+        QString I=QString::number(ThCount)+"_"+QString::number(i);
         QString fx=FxArray.at(i).toString();
         QString fy=FyArray.at(i).toString();
         QString fz=FzArray.at(i).toString();
 
-        QString Umin="Umin__"+I;
-        QString Umax="Umax__"+I;
-        QString Vmin="Vmin__"+I;
-        QString Vmax="Vmax__"+I;
+        QString Umin="Umin_"+I;
+        QString Umax="Umax_"+I;
+        QString Vmin="Vmin_"+I;
+        QString Vmax="Vmax_"+I;
 
         FctArray.append("FFFx_Orig"+I+"="+fx);
         FctArray.append("FFFy_Orig"+I+"="+fy);
@@ -5701,20 +5701,20 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         FctArray.append("n2=(DFFFzu(u,v,t)*DFFFxv(u,v,t)-DFFFxu(u,v,t)*DFFFzv(u,v,t))");
         FctArray.append("n3=(DFFFxu(u,v,t)*DFFFyv(u,v,t)-DFFFyu(u,v,t)*DFFFxv(u,v,t))");
         FctArray.append("R_fct=u/sqrt(u*u+v*v+t*t)");
-        ConstArray.append("Umin__"+I+"="+FuminArray.at(i).toString());
-        ConstArray.append("Umax__"+I+"="+FumaxArray.at(i).toString());
-        ConstArray.append("Vmin__"+I+"="+FvminArray.at(i).toString());
-        ConstArray.append("Vmax__"+I+"="+FvmaxArray.at(i).toString());
+        ConstArray.append("Umin_"+I+"="+FuminArray.at(i).toString());
+        ConstArray.append("Umax_"+I+"="+FumaxArray.at(i).toString());
+        ConstArray.append("Vmin_"+I+"="+FvminArray.at(i).toString());
+        ConstArray.append("Vmax_"+I+"="+FvmaxArray.at(i).toString());
         if(MathmodRef->ParObjet->ParTh.ShowOriginalSurf /*|| (!MathmodRef->ParObjet->ParTh.ShowUpperSurf && !MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)*/)
         {
             NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Orig"+I+"(u,v,t)");
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            NewFuminArray.append("Umin_"+I);
+            NewFumaxArray.append("Umax_"+I);
+            NewFvminArray.append("Vmin_"+I);
+            NewFvmaxArray.append("Vmax_"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
             if(CND)
                 NewCNDArray.append(CNDArray.at(i));
             if(Grid)
@@ -5731,11 +5731,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFxArray.append("FFFx_Up"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Up"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Up"+I+"(u,v,t)");
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            NewFuminArray.append("Umin_"+I);
+            NewFumaxArray.append("Umax_"+I);
+            NewFvminArray.append("Vmin_"+I);
+            NewFvmaxArray.append("Vmax_"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
             if(CND)
                 NewCNDArray.append(CNDArray.at(i));
             if(Grid)
@@ -5765,11 +5765,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFxArray.append("FFFx_Left"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Left"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Left"+I+"(u,v,t)");
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            NewFuminArray.append("Umin_"+I);
+            NewFumaxArray.append("Umax_"+I);
+            NewFvminArray.append("Vmin_"+I);
+            NewFvmaxArray.append("Vmax_"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
             if(CND)
                 NewCNDArray.append(CNDArray.at(i));
             if(Grid)
@@ -5781,11 +5781,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFxArray.append("FFFx_Right"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Right"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Right"+I+"(u,v,t)");
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            NewFuminArray.append("Umin_"+I);
+            NewFumaxArray.append("Umax_"+I);
+            NewFvminArray.append("Vmin_"+I);
+            NewFvmaxArray.append("Vmax_"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
             if(CND)
                 NewCNDArray.append(CNDArray.at(i));
             if(Grid)
@@ -5797,11 +5797,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFxArray.append("FFFx_Front"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Front"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Front"+I+"(u,v,t)");
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            NewFuminArray.append("Umin_"+I);
+            NewFumaxArray.append("Umax_"+I);
+            NewFvminArray.append("Vmin_"+I);
+            NewFvmaxArray.append("Vmax_"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
             if(CND)
                 NewCNDArray.append(CNDArray.at(i));
             if(Grid)
@@ -5813,11 +5813,11 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             NewFxArray.append("FFFx_Back"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Back"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Back"+I+"(u,v,t)");
-            NewFuminArray.append("Umin__"+I);
-            NewFumaxArray.append("Umax__"+I);
-            NewFvminArray.append("Vmin__"+I);
-            NewFvmaxArray.append("Vmax__"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"__"+I);
+            NewFuminArray.append("Umin_"+I);
+            NewFumaxArray.append("Umax_"+I);
+            NewFvminArray.append("Vmin_"+I);
+            NewFvmaxArray.append("Vmax_"+I);
+            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
             if(CND)
                 NewCNDArray.append(CNDArray.at(i));
             if(Grid)
