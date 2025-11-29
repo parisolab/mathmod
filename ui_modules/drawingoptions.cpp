@@ -5607,7 +5607,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     {
         tmpArray = transArray[i].toArray();
         MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
-        MathmodRef->ParObjet->OperationsTree[i]->performAction(tmpArray);
+        MathmodRef->ParObjet->OperationsTree[i]->loadAction(tmpArray);
     }
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
