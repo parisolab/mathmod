@@ -1254,6 +1254,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
         MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
         // Update the current pariso struct
         MathmodRef->RootObjet.CurrentJsonObject = Jobj;
+        loadOperations(Jobj);
         CurrentFormulaType = 2;
         /// process the new surface
         if (textureIndex == -1)
@@ -1291,6 +1292,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
             // Update the current parametric struct
             MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
+            loadOperations(Jobjtmp);
             CurrentFormulaType = 2;
             /// process the new surface
             if (textureIndex == -1)
@@ -1347,6 +1349,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
 
             MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
+            loadOperations(Jobjtmp);
             CurrentFormulaType = 1;
             /// process the new surface
             if (textureIndex == -1)
@@ -1399,6 +1402,7 @@ void DrawingOptions::ShowJsonModel(const QJsonObject &Jobj, int textureIndex)
             document.setObject(Jobjtmp);
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
             MathmodRef->RootObjet.CurrentJsonObject = Jobjtmp;
+            loadOperations(Jobjtmp);
             CurrentFormulaType = 3;
             /// process the new surface
             if (textureIndex == -1)
@@ -1975,6 +1979,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
             MathmodRef->RootObjet.CurrentTreestruct.text = QString(document.toJson());
             // Update the current pariso struct
             MathmodRef->RootObjet.CurrentJsonObject = QObj1;
+            loadOperations(QObj1);
             CurrentFormulaType = 2;
             /// process the new surface
             MathmodRef->LocalScene.componentsinfos.ParisoCurrentComponentIndex = 0;
@@ -2012,6 +2017,8 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                     QString(document.toJson());
                 // Update the current parametric struct
                 MathmodRef->RootObjet.CurrentJsonObject = array[i].toObject();
+                loadOperations(MathmodRef->RootObjet.CurrentJsonObject);
+
                 CurrentFormulaType = 2;
                 /// process the new surface
                 MathmodRef->ProcessNewIsoSurface();
@@ -2047,6 +2054,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->RootObjet.CurrentTreestruct.text =
                     QString(document.toJson());
                 MathmodRef->RootObjet.CurrentJsonObject = array[i].toObject();
+                loadOperations(MathmodRef->RootObjet.CurrentJsonObject);
                 CurrentFormulaType = 1;
                 /// process the new surface
                 MathmodRef->ParametricSurfaceProcess(1);
@@ -2082,6 +2090,7 @@ int DrawingOptions::JSON_choice_activated(const QString &arg1)
                 MathmodRef->RootObjet.CurrentTreestruct.text =
                     QString(document.toJson());
                 MathmodRef->RootObjet.CurrentJsonObject = array[i].toObject();
+                loadOperations(MathmodRef->RootObjet.CurrentJsonObject);
                 CurrentFormulaType = 3;
                 /// process the new surface
                 MathmodRef->ParametricSurfaceProcess(3);
@@ -4115,10 +4124,9 @@ QJsonObject DrawingOptions::Modeltype(const QJsonObject &jsObj)
 }
 void DrawingOptions::PreviousJsonObject(const QJsonObject &jsObj)
 {
-    //Start Store current JsonObject
+    //Store current JsonObject
     MathmodRef->RootObjet.PreviousJsonObject.append(jsObj);
     MathmodRef->RootObjet.IndexCurrentJsonObject = MathmodRef->RootObjet.PreviousJsonObject.size()-1;
-    //End Store current JsonObject
 }
 void DrawingOptions::on_calculate_clicked()
 {
@@ -5549,15 +5557,33 @@ void DrawingOptions::on_actionClear_triggered()
     MathmodRef->RootObjet.PreviousJsonObject = QJsonArray();
     MathmodRef->RootObjet.IndexCurrentJsonObject = -1;
 }
-void DrawingOptions::loadOperations(const QJsonArray& jsArray)
+void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
 {
-    QJsonArray tmpArray;
-    MathmodRef->ParObjet->OperationsTree.clear();
-    for(int i=0; i<jsArray.size(); i++)
+    if(CurrentJsObject["Operations"].isObject())
     {
-        tmpArray = jsArray[i].toArray();
-        MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
-        MathmodRef->ParObjet->OperationsTree[i]->loadOperation(tmpArray);
+        QJsonObject tmpJsObj = CurrentJsObject["Operations"].toObject();
+        QJsonArray transArray = tmpJsObj["OperationsList"].toArray();
+        //transArray = tmpJsObj["OperationsList"].toArray();
+        QJsonArray tmpArray;
+        MathmodRef->ParObjet->OperationsTree.clear();
+        MathmodRef->IsoObjet->OperationsTree.clear();
+        for(int i=0; i<transArray.size(); i++)
+        {
+            tmpArray = transArray[i].toArray();
+            switch(tmpArray[0].toInt())
+            {
+                case THICK_ISO_OP:
+                    MathmodRef->IsoObjet->OperationsTree.push_back(std::make_shared<IsoThickness>());
+                    MathmodRef->IsoObjet->OperationsTree[i]->loadOperation(tmpArray);
+                    break;
+                case THICK_PAR_OP:
+                    MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
+                    MathmodRef->ParObjet->OperationsTree[i]->loadOperation(tmpArray);
+                    break;
+                default :
+                    break;
+            }
+        }
     }
 }
 
@@ -5612,7 +5638,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     }
     tmp["Operations"] = tmpJsObj;
 
-    loadOperations(transArray);
+    //loadOperations(transArray);
 
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();

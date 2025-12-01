@@ -21,6 +21,7 @@
 #ifndef PARISOMATHOBJECT_H
 #define PARISOMATHOBJECT_H
 
+#include "pariso/parisoobject.h"
 #include <QFileDialog>
 #include <QJsonArray>
 #include <QJsonDocument>
