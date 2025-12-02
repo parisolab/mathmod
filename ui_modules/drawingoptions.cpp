@@ -5589,7 +5589,7 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
 void DrawingOptions::ApplyOperations(QJsonObject mathObject)
 {
     QJsonArray OperationArray, FxArray, FyArray, FzArray,
-            FctArray, ConstArray, ConstArraytmp,
+            FctArray, ConstArraytmp,
             FuminArray, FvminArray, FumaxArray, FvmaxArray,
             ImportArraytmp, ComponentArray, SlidersArray,
             CNDArray, GridArray, tmpArray, transArray;
@@ -5696,18 +5696,15 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
     for(uint i=0; i<componentNumber; i++)
     {
         QString I=QString::number(ThCount)+"_"+QString::number(i);
-        QString fx=FxArray.at(i).toString();
-        QString fy=FyArray.at(i).toString();
-        QString fz=FzArray.at(i).toString();
 
         QString Umin="Umin_"+I;
         QString Umax="Umax_"+I;
         QString Vmin="Vmin_"+I;
         QString Vmax="Vmax_"+I;
 
-        FctArray.append("FFFx_Orig"+I+"="+fx);
-        FctArray.append("FFFy_Orig"+I+"="+fy);
-        FctArray.append("FFFz_Orig"+I+"="+fz);
+        FctArray.append("FFFx_Orig"+I+"="+FxArray.at(i).toString());
+        FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
+        FctArray.append("FFFz_Orig"+I+"="+FzArray.at(i).toString());
 
         FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
 
@@ -5726,7 +5723,7 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         ConstArray.append("Umax_"+I+"="+FumaxArray.at(i).toString());
         ConstArray.append("Vmin_"+I+"="+FvminArray.at(i).toString());
         ConstArray.append("Vmax_"+I+"="+FvmaxArray.at(i).toString());
-        if(ShowOriginalSurf /*|| (!MathmodRef->ParObjet->ParTh.ShowUpperSurf && !MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)*/)
+        if(ShowOriginalSurf)
         {
             NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
@@ -5870,8 +5867,6 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         tmp2.remove("Cnd");
     tmp3JsObj["Param3D"] = tmp2;
     }
-
-
     DrawJsonModel(tmp3JsObj);
     PreviousJsonObject(tmp3JsObj);
 }
@@ -6179,8 +6174,8 @@ void DrawingOptions::on_RedoPushButton_clicked()
 
 void DrawingOptions::on_RedoPushButton_0_clicked()
 {
-    on_actionRedo_triggered();
-    //ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
+    //on_actionRedo_triggered();
+    ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
 }
 
 void DrawingOptions::on_UndopushButton_0_clicked()
