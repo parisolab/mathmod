@@ -5897,6 +5897,20 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
     }
+    if(tmp["Param3D"].isNull())
+    {
+        if(tmp["Iso3D"].isNull())
+        {
+            MemoryErrorMsg(UNKOWN_MATH_OBJECT);
+            return;
+        }
+        else
+            tmp.remove("Param3D");
+    }
+    else
+    {
+
+    }
     tmp.remove("Iso3D");
     tmp.remove("ParIso");
     tmp.remove("Param3D_C");
@@ -5922,7 +5936,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp["Operations"] = tmpJsObj;
 
     //loadOperations(transArray);
-
     tmp2= tmp["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
     FyArray = tmp2["Fy"].toArray();

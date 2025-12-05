@@ -274,7 +274,8 @@ enum ScriptErrorType
     GRID_VALUE_0,
     EMPTY_MANDATORY_FIELD,
     COMPLEX_FCTS_UNSUPPORTED,
-    PARISO_OBJ_UNSUPPORTED
+    PARISO_OBJ_UNSUPPORTED,
+    UNKOWN_MATH_OBJECT
 };
 
 static const char *ScriptErrorMessage[] =
@@ -320,7 +321,8 @@ static const char *ScriptErrorMessage[] =
         "GRID_VALUE_0",                             // 36
         "EMPTY_MANDATORY_FIELD",                    // 37
         "COMPLEX_FCTS_UNSUPPORTED",                 //38
-        "PARISO_OBJ_UNSUPPORTED"
+        "PARISO_OBJ_UNSUPPORTED",                 //39
+        "UNKOWN_MATH_OBJECT"    //40
 };
 
 struct ComponentInfos
