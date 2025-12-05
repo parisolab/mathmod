@@ -1,6 +1,54 @@
 {
   "MathModels": [
     {
+        "Iso3D": {
+            "Description": ["Polynomial equation for the 1-twisted Mobius strip Moebius band by Stephan Klaus https://www.imaginary.org/sites/default/files/moebiusband.pdf (5/12/2025) "],
+            "Name": ["Moebius_1_Polynomial"],
+            "Component": ["Moebius"],
+            "Const": ["a=2/6",
+                "b=1/250"],
+            "Fxyz": ["((a-b)*(x*(x^2 + y^2-z^2 + 1)-2*y*z)-(2*a+ 2*b+ a*b)*(x^2 + y^2))^2- (x^2 + y^2)* ((a+ b)*(x^2 + y^2 + z^2 + 1) + 2*(a-b)*(y*z-x))^2"],
+            "Xmax": ["3/2"],
+            "Xmin": ["-3/2"],
+            "Ymax": ["3/2"],
+            "Ymin": ["-3/2"],
+            "Zmax": ["1/2"],
+            "Zmin": ["-1/2"]
+        }
+    },
+    {
+        "Iso3D": {
+            "Description": ["Polynomial equation for the 2-twisted Mobius strip Moebius band by Stephan Klaus https://www.imaginary.org/sites/default/files/moebiusband.pdf (5/12/2025) "],
+            "Name": ["Moebius_2_Polynomial"],
+            "Component": ["Moebius"],
+            "Const": ["a=2/5",
+                "b=1/20"],
+            "Fxyz": ["-((b^2*x^2+a^2*y^2)*(x^2+y^2)+b^2*(-x+y*z)^2+a^2*(y+x*z)^2-a^2*b^2*(x^2+y^2))^2+4*(x^2+y^2)*(b^2*x*(-x+y*z)-a^2*y*(y+x*z))^2"],
+            "Xmax": ["3/2"],
+            "Xmin": ["-3/2"],
+            "Ymax": ["3/2"],
+            "Ymin": ["-3/2"],
+            "Zmax": ["1/2"],
+            "Zmin": ["-1/2"]
+        }
+    },
+    {
+        "Iso3D": {
+            "Description": ["Polynomial equation for the 3-twisted Mobius strip Moebius band by Stephan Klaus https://www.imaginary.org/sites/default/files/moebiusband.pdf (5/12/2025) "],
+            "Name": ["Moebius_3_Polynomial"],
+            "Component": ["Moebius"],
+            "Const": ["a=2/9",
+                "b=1/180"],
+            "Fxyz": ["(-2*(a+b)*(x^2+y^2)^2+(a-b)*((x^3-3*x*y^2)*(x^2+y^2+1-z^2)-2 *(3 *x^2 *y-y^3) *z))^2-(x^2 + y^2) *((a+ b) *(x^2 + y^2) *(x^2 + y^2 + 1 + z^2)-2*(a-b)*(x^3-3*x*y^2-z*(3*x^2*y-y^3))-2*a*b*(x^2+y^2))^2"],
+            "Xmax": ["3/2"],
+            "Xmin": ["-3/2"],
+            "Ymax": ["3/2"],
+            "Ymin": ["-3/2"],
+            "Zmax": ["1/2"],
+            "Zmin": ["-1/2"]
+        }
+    },
+    {
         "Param3D": {
            "Description": ["The formula is: 'Gx': ('Fx(u,v,t)+T*n1(u,v,t)/R(u,v,t)')'Gy': ('Fy(u,v,t)+T*n2(u,v,t)/R(u,v,t)')'Gz': ('Fz(u,v,t)+T*n3(u,v,t)/R(u,v,t)')WhereT=Thicknessvalue;'n1=(a2(u,v,t)*b3(u,v,t)-a3(u,v,t)*b2(u,v,t))','n2=(a3(u,v,t)*b1(u,v,t)-a1(u,v,t)*b3(u,v,t))','n3=(a1(u,v,t)*b2(u,v,t)-a2(u,v,t)*b1(u,v,t))','R=sqrt(n1(u,v,t)^2+n2(u,v,t)^2+n3(u,v,t)^2)''a1=dFx/du','a2=dFy/du','a3=dFz/du','b1=dFx/dv','b2=dFy/dv','b3=dFz/dv'"],
             "Name": ["Thick_One_Component_Parametric"],
@@ -1425,23 +1473,6 @@
             "Ymin": ["-2"],
             "Zmax": ["2"],
             "Zmin": ["-2"]
-        }
-    },
-    {
-        "Iso3D": {
-            "Description": ["Moebius band by Stephan Klaus 23/09/2019"],
-            "Name": ["Moebius_Strip"],
-            "Component": ["Moebius"],
-            "Const": ["a=1/2",
-            "b=1/10",
-            "N=4"],
-            "Fxyz": ["((b^2*x^2+a^2*y^2)*(x^2+y^2)+b^2*(-x+y*z)^2+a^2*(y+x*z)^2-a^2*b^2*(x^2+y^2))^2-4*(x^2+y^2)*(b^2*x*(-x+y*z)-a^2*y*(y+x*z))^2"],
-            "Xmax": ["3/2"],
-            "Xmin": ["-3/2"],
-            "Ymax": ["3/2"],
-            "Ymin": ["-3/2"],
-            "Zmax": ["1/2"],
-            "Zmin": ["-1/2"]
         }
     },
     {
