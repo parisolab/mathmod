@@ -275,54 +275,58 @@ enum ScriptErrorType
     EMPTY_MANDATORY_FIELD,
     COMPLEX_FCTS_UNSUPPORTED,
     PARISO_OBJ_UNSUPPORTED,
-    UNKOWN_MATH_OBJECT
+    UNKOWN_MATH_OBJECT,
+    NOT_PARAM_OBJECT,
+    NOT_ISO_OBJECT
 };
 
 static const char *ScriptErrorMessage[] =
     {
-        "SCRIPT_NO_ERROR",      // 0
-        "MAXGRID_OUT_OF_RANGE", // 1
-        "MAXPT_OUT_OF_RANGE",   // 2
-        "MAXTRI_OUT_OF_RANGE",  // 3
-        "FXYZ_OUT_OF_RANGE",    // 4
-        "FX_OUT_OF_RANGE",
-        "XMAX_NBCOMPONENT_MISMATCH",                // 5
-        "YMAX_NBCOMPONENT_MISMATCH",                // 6
-        "ZMAX_NBCOMPONENT_MISMATCH",                // 7
-        "XMIN_NBCOMPONENT_MISMATCH",                // 8
-        "YMIN_NBCOMPONENT_MISMATCH",                // 9
-        "ZMIN_NBCOMPONENT_MISMATCH",                // 10
-        "FY_FX_MISMATCH",                           // 11
-        "FZ_FX_MISMATCH",                           // 12
-        "FW_FX_MISMATCH",                           // 13
-        "UMAX_NBCOMPONENT_MISMATCH",                // 14
-        "VMAX_NBCOMPONENT_MISMATCH",                // 15
-        "WMAX_NBCOMPONENT_MISMATCH",                // 16
-        "UMIN_NBCOMPONENT_MISMATCH",                // 17
-        "VMIN_NBCOMPONENT_MISMATCH",                // 18
-        "WMIN_NBCOMPONENT_MISMATCH",                // 19
-        "GRID_NBCOMPONENT_MISMATCH",                // 20
-        "COMPONENT_NBCOMPONENT_MISMATCH",           // 21
-        "CND_NBCOMPONENT_MISMATCH",                 // 22
-        "NBSLIDERS_OUT_OF_RANGE",                   // 23
-        "NBSLIDERSVALUES_OUT_OF_RANGE",             // 24
-        "VERTEX_TAB_MEM_OVERFLOW",                  // 25
-        "TRIANGLES_TAB_MEM_OVERFLOW",               // 26
-        "MINPOLY_TAB_MEM_OVERFLOW",                 // 27
-        "POLY_TAB_MEM_OVERFLOW",                    // 28
-        "CND_TAB_MEM_OVERFLOW",                     // 29
-        "CND_POL_MEM_OVERFLOW",                     // 30
-        "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 31
-        "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 32
-        "GRID_SUPERIOR_TO_GRIDMAX",                 // 33
-        "INVALID_GRID_VALUE",
-        "Vect_DIMENSION_ERROR",                     // 34
-        "Not enough memory available to complete this operation", // 35
-        "GRID_VALUE_0",                             // 36
-        "EMPTY_MANDATORY_FIELD",                    // 37
-        "COMPLEX_FCTS_UNSUPPORTED",                 //38
-        "PARISO_OBJ_UNSUPPORTED",                 //39
-        "UNKOWN_MATH_OBJECT"    //40
+        "SCRIPT_NO_ERROR",                          // 0
+        "MAXGRID_OUT_OF_RANGE",                     // 1
+        "MAXPT_OUT_OF_RANGE",                       // 2
+        "MAXTRI_OUT_OF_RANGE",                      // 3
+        "FXYZ_OUT_OF_RANGE",                        // 4
+        "FX_OUT_OF_RANGE",                          // 5
+        "XMAX_NBCOMPONENT_MISMATCH",                // 6
+        "YMAX_NBCOMPONENT_MISMATCH",                // 7
+        "ZMAX_NBCOMPONENT_MISMATCH",                // 8
+        "XMIN_NBCOMPONENT_MISMATCH",                // 9
+        "YMIN_NBCOMPONENT_MISMATCH",                // 10
+        "ZMIN_NBCOMPONENT_MISMATCH",                // 11
+        "FY_FX_MISMATCH",                           // 12
+        "FZ_FX_MISMATCH",                           // 13
+        "FW_FX_MISMATCH",                           // 14
+        "UMAX_NBCOMPONENT_MISMATCH",                // 15
+        "VMAX_NBCOMPONENT_MISMATCH",                // 16
+        "WMAX_NBCOMPONENT_MISMATCH",                // 17
+        "UMIN_NBCOMPONENT_MISMATCH",                // 18
+        "VMIN_NBCOMPONENT_MISMATCH",                // 19
+        "WMIN_NBCOMPONENT_MISMATCH",                // 20
+        "GRID_NBCOMPONENT_MISMATCH",                // 21
+        "COMPONENT_NBCOMPONENT_MISMATCH",           // 22
+        "CND_NBCOMPONENT_MISMATCH",                 // 23
+        "NBSLIDERS_OUT_OF_RANGE",                   // 24
+        "NBSLIDERSVALUES_OUT_OF_RANGE",             // 25
+        "VERTEX_TAB_MEM_OVERFLOW",                  // 26
+        "TRIANGLES_TAB_MEM_OVERFLOW",               // 27
+        "MINPOLY_TAB_MEM_OVERFLOW",                 // 28
+        "POLY_TAB_MEM_OVERFLOW",                    // 29
+        "CND_TAB_MEM_OVERFLOW",                     // 30
+        "CND_POL_MEM_OVERFLOW",                     // 31
+        "DEFINED_PARAM_GRID_VERTEX_TAB_OVERFLOW",   // 32
+        "DEFINED_PARAM_GRID_TRIANGLE_TAB_OVERFLOW", // 33
+        "GRID_SUPERIOR_TO_GRIDMAX",                 // 34
+        "INVALID_GRID_VALUE",                       // 35
+        "Vect_DIMENSION_ERROR",                     // 36
+        "Not enough memory available",              // 37
+        "GRID_VALUE_0",                             // 38
+        "EMPTY_MANDATORY_FIELD",                    // 39
+        "COMPLEX_FCTS_UNSUPPORTED",                 // 40
+        "PARISO_OBJ_UNSUPPORTED",                   // 41
+        "UNKOWN_MATH_OBJECT",                       // 42
+        "NOT_PARAM3D_OBJECT",                       // 43
+        "NOT_ISO3D_OBJECT"                          // 44
 };
 
 struct ComponentInfos

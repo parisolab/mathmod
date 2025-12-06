@@ -5905,11 +5905,10 @@ void DrawingOptions::on_SaveThButton_1_clicked()
             return;
         }
         else
-            tmp.remove("Param3D");
-    }
-    else
-    {
-
+        {
+            MemoryErrorMsg(NOT_PARAM_OBJECT);
+            return;
+        }
     }
     tmp.remove("Iso3D");
     tmp.remove("ParIso");
