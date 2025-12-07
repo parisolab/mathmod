@@ -5586,6 +5586,10 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
         }
     }
 }
+void DrawingOptions::ApplyOperations(QJsonObject mathObject, QJsonArray OperationsArray)
+{
+
+}
 void DrawingOptions::ApplyOperations(QJsonObject mathObject)
 {
     QJsonObject tmp3JsObj;
