@@ -5604,7 +5604,7 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
     }
-    mathObject.remove("Iso3D");
+    //mathObject.remove("Iso3D");
     mathObject.remove("ParIso");
     mathObject.remove("Param3D_C");
     mathObject.remove("Param4D_C");
@@ -5886,11 +5886,32 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     QString ScalVar;
     bool CND=false, Grid=false;
 
-    MathmodRef->ParObjet->ParTh.ThExpression = ui.ThicknessVal_1->text().replace(" ", "");
-    MathmodRef->ParObjet->ParTh.ShowOriginalSurf = ui.FctOriginal_1->isChecked();
-    MathmodRef->ParObjet->ParTh.ShowUpperSurf = ui.UpperFct_1->isChecked();
-    MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
+    QString T  = ui.ThicknessVal_1->text().replace(" ", "");
+    bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
+    bool ShowUpperSurf = ui.UpperFct_1->isChecked();
+    bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
     tmp = MathmodRef->RootObjet.CurrentJsonObject;
+
+    //Look for an attached Transformations lists:
+    tmpJsObj = tmp["Operations"].toObject();
+    transArray = tmpJsObj["OperationsList"].toArray();
+    tmpArray.append(THICK_PAR_OP);
+    tmpArray.append(ShowOriginalSurf);
+    tmpArray.append(ShowUpperSurf);
+    tmpArray.append(ShowBoumdarySurfs);
+    tmpArray.append(T);
+    transArray.append(tmpArray);
+    tmpJsObj["OperationsList"] = transArray;
+    if(tmp["Operations"].isNull())
+    {
+        tmp.remove("Operations");
+        tmpJsObj["OriginalObj"] = tmp;
+    }
+    tmp["Operations"] = tmpJsObj;
+
+    ApplyOperations(tmp);
+
+    /*
     if(!tmp["Param3D_C"].isNull() || !tmp["Param4D_C"].isNull() || !tmp["ParIso"].isNull())
     {
         MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
@@ -5930,7 +5951,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmpArray.append(T);
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
-
     if(tmp["Operations"].isNull())
     {
         tmp.remove("Operations");
@@ -6030,7 +6050,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         ConstArray.append("Umax_"+I+"="+FumaxArray.at(i).toString());
         ConstArray.append("Vmin_"+I+"="+FvminArray.at(i).toString());
         ConstArray.append("Vmax_"+I+"="+FvmaxArray.at(i).toString());
-        if(MathmodRef->ParObjet->ParTh.ShowOriginalSurf /*|| (!MathmodRef->ParObjet->ParTh.ShowUpperSurf && !MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)*/)
+        if(ShowOriginalSurf)
         {
             NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
@@ -6048,7 +6068,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
                 NewGridArray.append(GridArray.at(2*i+1));
             }
         }
-        if(MathmodRef->ParObjet->ParTh.ShowUpperSurf)
+        if(ShowUpperSurf)
         {
             FctArray.append("FFFx_Up"+I+"=FFFx_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
             FctArray.append("FFFy_Up"+I+"=FFFy_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
@@ -6069,7 +6089,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
                 NewGridArray.append(GridArray.at(2*i+1).toString());
             }
         }
-        if(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs)
+        if(ShowBoumdarySurfs)
         {
             FctArray.append("FFFx_Right"+I+"=FFFx_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
             FctArray.append("FFFy_Right"+I+"=FFFy_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
@@ -6175,6 +6195,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp["Param3D"] = tmp2;
     DrawJsonModel(tmp);
     PreviousJsonObject(tmp);
+    */
 }
 
 void DrawingOptions::on_UndoPushButton_clicked()
