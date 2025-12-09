@@ -45,7 +45,7 @@ public:
     ParThickness();
     ~ParThickness();
 public:
-    OperationsType OpType=NO_OP;
+    QString OpType="NO_OP";
     bool OriginalSurf=false, UpperSurf=false, BoumdarySurfs=false;
     QString ThExpression="";
     void loadOperation(const QJsonArray&) override;

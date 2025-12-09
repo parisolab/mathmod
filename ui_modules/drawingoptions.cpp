@@ -5563,33 +5563,26 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
     {
         QJsonObject tmpJsObj = CurrentJsObject["Operations"].toObject();
         QJsonArray transArray = tmpJsObj["OperationsList"].toArray();
-        //transArray = tmpJsObj["OperationsList"].toArray();
         QJsonArray tmpArray;
         MathmodRef->ParObjet->OperationsTree.clear();
         MathmodRef->IsoObjet->OperationsTree.clear();
         for(int i=0; i<transArray.size(); i++)
         {
             tmpArray = transArray[i].toArray();
-            switch(tmpArray[0].toInt())
+            if(tmpArray[0].toString().contains("_PAR"))
             {
-                case THICK_ISO_OP:
+                MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
+                MathmodRef->ParObjet->OperationsTree[i]->loadOperation(tmpArray);
+            }
+            else if(tmpArray[0].toString().contains("_ISO"))
+                {
                     MathmodRef->IsoObjet->OperationsTree.push_back(std::make_shared<IsoThickness>());
                     MathmodRef->IsoObjet->OperationsTree[i]->loadOperation(tmpArray);
-                    break;
-                case THICK_PAR_OP:
-                    MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
-                    MathmodRef->ParObjet->OperationsTree[i]->loadOperation(tmpArray);
-                    break;
-                default :
-                    break;
-            }
+                }
         }
     }
 }
-void DrawingOptions::ApplyOperations(QJsonObject mathObject, QJsonArray OperationsArray)
-{
 
-}
 void DrawingOptions::ApplyOperations(QJsonObject mathObject)
 {
     QJsonObject tmp3JsObj;
@@ -5604,13 +5597,22 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
     }
-    //mathObject.remove("Iso3D");
     mathObject.remove("ParIso");
     mathObject.remove("Param3D_C");
     mathObject.remove("Param4D_C");
 
     tmp3JsObj = ((mathObject["Operations"]).toObject())["OriginalObj"].toObject();
     transArray = ((mathObject["Operations"]).toObject())["OperationsList"].toArray();
+    if(tmp3JsObj["Param3D"].isNull())
+    {
+        if(tmp3JsObj["Iso3D"].isNull())
+            return;
+        else
+        {
+            tmp3JsObj.remove("Param3D");
+
+        }
+    }
 
     bool ShowOriginalSurf, ShowUpperSurf, ShowBoumdarySurfs ;
 
@@ -5629,6 +5631,8 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         QString ScalVar;
         bool CND=false, Grid=false;
         tmpArray = transArray[l].toArray();
+
+        QString Type = tmpArray[0].toString();
         ShowOriginalSurf =  tmpArray[1].toBool();
         ShowUpperSurf =  tmpArray[2].toBool();
         ShowBoumdarySurfs =  tmpArray[3].toBool();
@@ -5876,15 +5880,8 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
 
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
-    QJsonArray FxArray, FyArray, FzArray,
-            NewFxArray, NewFyArray, NewFzArray,
-            FctArray, ConstArray, ConstArraytmp,
-            FuminArray, FvminArray, FumaxArray, FvmaxArray,
-            NewFuminArray, NewFvminArray, NewFumaxArray, NewFvmaxArray, ImportArraytmp,
-            ComponentArray, NewComponentArray, SlidersArray, CNDArray, NewCNDArray, GridArray, NewGridArray, tmpArray, transArray;
-    QJsonObject tmp,tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
-    QString ScalVar;
-    bool CND=false, Grid=false;
+    QJsonArray tmpArray, transArray;
+    QJsonObject tmp,tmpJsObj;
 
     QString T  = ui.ThicknessVal_1->text().replace(" ", "");
     bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
@@ -5895,7 +5892,7 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     //Look for an attached Transformations lists:
     tmpJsObj = tmp["Operations"].toObject();
     transArray = tmpJsObj["OperationsList"].toArray();
-    tmpArray.append(THICK_PAR_OP);
+    tmpArray.append("THICK_PAR_OP");
     tmpArray.append(ShowOriginalSurf);
     tmpArray.append(ShowUpperSurf);
     tmpArray.append(ShowBoumdarySurfs);
@@ -5910,292 +5907,6 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     tmp["Operations"] = tmpJsObj;
 
     ApplyOperations(tmp);
-
-    /*
-    if(!tmp["Param3D_C"].isNull() || !tmp["Param4D_C"].isNull() || !tmp["ParIso"].isNull())
-    {
-        MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
-        return;
-    }
-    if(!tmp["ParIso"].isNull())
-    {
-        MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
-        return;
-    }
-    if(tmp["Param3D"].isNull())
-    {
-        if(tmp["Iso3D"].isNull())
-        {
-            MemoryErrorMsg(UNKOWN_MATH_OBJECT);
-            return;
-        }
-        else
-        {
-            MemoryErrorMsg(NOT_PARAM_OBJECT);
-            return;
-        }
-    }
-    tmp.remove("Iso3D");
-    tmp.remove("ParIso");
-    tmp.remove("Param3D_C");
-    tmp.remove("Param4D_C");
-
-    QString T = MathmodRef->ParObjet->ParTh.ThExpression;
-    //Look for an attached Transformations lists:
-    tmpJsObj = tmp["Operations"].toObject();
-    transArray = tmpJsObj["OperationsList"].toArray();
-    tmpArray.append(THICK_PAR_OP);
-    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowOriginalSurf);
-    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowUpperSurf);
-    tmpArray.append(MathmodRef->ParObjet->ParTh.ShowBoumdarySurfs);
-    tmpArray.append(T);
-    transArray.append(tmpArray);
-    tmpJsObj["OperationsList"] = transArray;
-    if(tmp["Operations"].isNull())
-    {
-        tmp.remove("Operations");
-        tmpJsObj["OriginalObj"] = tmp;
-    }
-    tmp["Operations"] = tmpJsObj;
-
-    //loadOperations(transArray);
-    tmp2= tmp["Param3D"].toObject();
-    FxArray = tmp2["Fx"].toArray();
-    FyArray = tmp2["Fy"].toArray();
-    FzArray = tmp2["Fz"].toArray();
-    FuminArray = tmp2["Umin"].toArray();
-    FumaxArray = tmp2["Umax"].toArray();
-    FvminArray = tmp2["Vmin"].toArray();
-    FvmaxArray = tmp2["Vmax"].toArray();
-    FctArray = tmp2["Funct"].toArray();
-    ComponentArray = tmp2["Component"].toArray();
-    ConstArraytmp = tmp2["Const"].toArray();
-    tmp2.remove("Import");
-    ImportArraytmp.append("All");
-    if((CND=tmp2["Cnd"].isArray()))
-    {
-        CNDArray = tmp2["Cnd"].toArray();
-    }
-    if((Grid=tmp2["Grid"].isArray()))
-    {
-        GridArray = tmp2["Grid"].toArray();
-    }
-    int ThCount=0;
-    for (int i = 0; i < ConstArraytmp.size(); ++i)
-    {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
-        {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
-        }
-        else
-            ConstArray.append(ConstArraytmp[i].toString());
-    }
-    ThCount = ThCount+1;
-    ConstArray.append("ThCount="+QString::number(ThCount));
-    ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
-    if(ThCount==1)
-    {
-        ConstArray.append("epsilon=1/100000");
-    }
-    //Add Slider
-    tmpJsObj = tmp["Sliders"].toObject();
-    SlidersArray = tmpJsObj["Name"].toArray();
-    SlidersArray.append("ScalVar_"+QString::number(ThCount));
-    tmpJsObj["Name"] = SlidersArray;
-    SlidersArray = tmpJsObj["Position"].toArray();
-    SlidersArray.append("60");
-    tmpJsObj["Position"] = SlidersArray;
-    SlidersArray = tmpJsObj["Max"].toArray();
-    SlidersArray.append("100");
-    tmpJsObj["Max"] = SlidersArray;
-    SlidersArray = tmpJsObj["Min"].toArray();
-    SlidersArray.append("-100");
-    tmpJsObj["Min"] = SlidersArray;
-    SlidersArray = tmpJsObj["Step"].toArray();
-    SlidersArray.append("1");
-    tmpJsObj["Step"] = SlidersArray;
-    tmp["Sliders"] = tmpJsObj;
-
-    for(uint i=0; i<MathmodRef->ParObjet->masterthread->componentsNumber; i++)
-    {
-        QString I=QString::number(ThCount)+"_"+QString::number(i);
-        QString fx=FxArray.at(i).toString();
-        QString fy=FyArray.at(i).toString();
-        QString fz=FzArray.at(i).toString();
-
-        QString Umin="Umin_"+I;
-        QString Umax="Umax_"+I;
-        QString Vmin="Vmin_"+I;
-        QString Vmax="Vmax_"+I;
-
-        FctArray.append("FFFx_Orig"+I+"="+fx);
-        FctArray.append("FFFy_Orig"+I+"="+fy);
-        FctArray.append("FFFz_Orig"+I+"="+fz);
-
-        FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
-
-        FctArray.append("DFFFxu=((FFFx_Orig"+I+"(u+epsilon,v,t)-FFFx_Orig"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFxv=((FFFx_Orig"+I+"(u,v+epsilon,t)-FFFx_Orig"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFyu=((FFFy_Orig"+I+"(u+epsilon,v,t)-FFFy_Orig"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFyv=((FFFy_Orig"+I+"(u,v+epsilon,t)-FFFy_Orig"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFzu=((FFFz_Orig"+I+"(u+epsilon,v,t)-FFFz_Orig"+I+"(u,v,t))/epsilon)");
-        FctArray.append("DFFFzv=((FFFz_Orig"+I+"(u,v+epsilon,t)-FFFz_Orig"+I+"(u,v,t))/epsilon)");
-
-        FctArray.append("n1=(DFFFyu(u,v,t)*DFFFzv(u,v,t)-DFFFzu(u,v,t)*DFFFyv(u,v,t))");
-        FctArray.append("n2=(DFFFzu(u,v,t)*DFFFxv(u,v,t)-DFFFxu(u,v,t)*DFFFzv(u,v,t))");
-        FctArray.append("n3=(DFFFxu(u,v,t)*DFFFyv(u,v,t)-DFFFyu(u,v,t)*DFFFxv(u,v,t))");
-        FctArray.append("R_fct=u/sqrt(u*u+v*v+t*t)");
-        ConstArray.append("Umin_"+I+"="+FuminArray.at(i).toString());
-        ConstArray.append("Umax_"+I+"="+FumaxArray.at(i).toString());
-        ConstArray.append("Vmin_"+I+"="+FvminArray.at(i).toString());
-        ConstArray.append("Vmax_"+I+"="+FvmaxArray.at(i).toString());
-        if(ShowOriginalSurf)
-        {
-            NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Orig"+I+"(u,v,t)");
-            NewFuminArray.append("Umin_"+I);
-            NewFumaxArray.append("Umax_"+I);
-            NewFvminArray.append("Vmin_"+I);
-            NewFvmaxArray.append("Vmax_"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
-            if(CND)
-                NewCNDArray.append(CNDArray.at(i));
-            if(Grid)
-            {
-                NewGridArray.append(GridArray.at(2*i));
-                NewGridArray.append(GridArray.at(2*i+1));
-            }
-        }
-        if(ShowUpperSurf)
-        {
-            FctArray.append("FFFx_Up"+I+"=FFFx_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
-            FctArray.append("FFFy_Up"+I+"=FFFy_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
-            FctArray.append("FFFz_Up"+I+"=FFFz_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
-            NewFxArray.append("FFFx_Up"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Up"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Up"+I+"(u,v,t)");
-            NewFuminArray.append("Umin_"+I);
-            NewFumaxArray.append("Umax_"+I);
-            NewFvminArray.append("Vmin_"+I);
-            NewFvmaxArray.append("Vmax_"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
-            if(CND)
-                NewCNDArray.append(CNDArray.at(i));
-            if(Grid)
-            {
-                NewGridArray.append(GridArray.at(2*i).toString());
-                NewGridArray.append(GridArray.at(2*i+1).toString());
-            }
-        }
-        if(ShowBoumdarySurfs)
-        {
-            FctArray.append("FFFx_Right"+I+"=FFFx_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFy_Right"+I+"=FFFy_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFz_Right"+I+"=FFFz_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n3(u,"+Vmin+",t),n1(u,"+Vmin+",t),n2(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-
-            FctArray.append("FFFx_Left"+I+"=FFFx_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R_fct(n1(u,"+Vmax+",t),n2(u,"+Vmax+",t),n3(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFy_Left"+I+"=FFFy_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R_fct(n2(u,"+Vmax+",t),n3(u,"+Vmax+",t),n1(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFz_Left"+I+"=FFFz_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R_fct(n3(u,"+Vmax+",t),n1(u,"+Vmax+",t),n2(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-
-            FctArray.append("FFFx_Front"+I+"=FFFx_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R_fct(n1("+Umin+",v,t),n2("+Umin+",v,t),n3("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFy_Front"+I+"=FFFy_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R_fct(n2("+Umin+",v,t),n3("+Umin+",v,t),n1("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFz_Front"+I+"=FFFz_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R_fct(n3("+Umin+",v,t),n1("+Umin+",v,t),n2("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-
-            FctArray.append("FFFx_Back"+I+"=FFFx_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R_fct(n1("+Umax+",v,t),n2("+Umax+",v,t),n3("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFy_Back"+I+"=FFFy_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R_fct(n2("+Umax+",v,t),n3("+Umax+",v,t),n1("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFz_Back"+I+"=FFFz_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R_fct(n3("+Umax+",v,t),n1("+Umax+",v,t),n2("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-
-            NewFxArray.append("FFFx_Left"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Left"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Left"+I+"(u,v,t)");
-            NewFuminArray.append("Umin_"+I);
-            NewFumaxArray.append("Umax_"+I);
-            NewFvminArray.append("Vmin_"+I);
-            NewFvmaxArray.append("Vmax_"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
-            if(CND)
-                NewCNDArray.append(CNDArray.at(i));
-            if(Grid)
-            {
-                NewGridArray.append(GridArray.at(2*i));
-                NewGridArray.append(GridArray.at(2*i+1));
-            }
-
-            NewFxArray.append("FFFx_Right"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Right"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Right"+I+"(u,v,t)");
-            NewFuminArray.append("Umin_"+I);
-            NewFumaxArray.append("Umax_"+I);
-            NewFvminArray.append("Vmin_"+I);
-            NewFvmaxArray.append("Vmax_"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
-            if(CND)
-                NewCNDArray.append(CNDArray.at(i));
-            if(Grid)
-            {
-                NewGridArray.append(GridArray.at(2*i));
-                NewGridArray.append(GridArray.at(2*i+1));
-            }
-
-            NewFxArray.append("FFFx_Front"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Front"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Front"+I+"(u,v,t)");
-            NewFuminArray.append("Umin_"+I);
-            NewFumaxArray.append("Umax_"+I);
-            NewFvminArray.append("Vmin_"+I);
-            NewFvmaxArray.append("Vmax_"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
-            if(CND)
-                NewCNDArray.append(CNDArray.at(i));
-            if(Grid)
-            {
-                NewGridArray.append(GridArray.at(2*i));
-                NewGridArray.append(GridArray.at(2*i+1));
-            }
-
-            NewFxArray.append("FFFx_Back"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Back"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Back"+I+"(u,v,t)");
-            NewFuminArray.append("Umin_"+I);
-            NewFumaxArray.append("Umax_"+I);
-            NewFvminArray.append("Vmin_"+I);
-            NewFvmaxArray.append("Vmax_"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
-            if(CND)
-                NewCNDArray.append(CNDArray.at(i));
-            if(Grid)
-            {
-                NewGridArray.append(GridArray.at(2*i));
-                NewGridArray.append(GridArray.at(2*i+1));
-            }
-        }
-    }
-
-    tmp2["Fx"] = NewFxArray;
-    tmp2["Fy"] = NewFyArray;
-    tmp2["Fz"] = NewFzArray;
-    tmp2["Funct"]= FctArray;
-    tmp2["Const"]= ConstArray;
-    tmp2["Component"]= NewComponentArray;
-    tmp2["Umin"]= NewFuminArray;
-    tmp2["Umax"]= NewFumaxArray;
-    tmp2["Vmin"]= NewFvminArray;
-    tmp2["Vmax"]= NewFvmaxArray;
-    tmp2["Import"]= ImportArraytmp;
-    if(Grid)
-        tmp2["Grid"]= NewGridArray;
-    else
-        tmp2.remove("Grid");
-    if(CND)
-        tmp2["Cnd"]= NewCNDArray;
-    else
-        tmp2.remove("Cnd");
-    tmp["Param3D"] = tmp2;
-    DrawJsonModel(tmp);
-    PreviousJsonObject(tmp);
-    */
 }
 
 void DrawingOptions::on_UndoPushButton_clicked()

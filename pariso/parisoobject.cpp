@@ -29,7 +29,7 @@ ParThickness::ParThickness(){}
 ParThickness::~ParThickness(){}
 void ParThickness::loadOperation(const QJsonArray& ptr)
 {
-    OpType = (OperationsType)ptr[0].toInt();
+    OpType                 = ptr[0].toString();
     OriginalSurf           = ptr[1].toBool();
     UpperSurf              = ptr[2].toBool();
     BoumdarySurfs          = ptr[3].toBool();
