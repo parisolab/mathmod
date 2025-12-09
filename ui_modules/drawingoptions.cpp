@@ -5885,8 +5885,6 @@ void DrawingOptions::THICK_PAR_OP(QJsonObject* tmp)
     bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
     bool ShowUpperSurf = ui.UpperFct_1->isChecked();
     bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
-    //tmp = MathmodRef->RootObjet.CurrentJsonObject;
-
     //Look for an attached Transformations lists:
     tmpJsObj = (*tmp)["Operations"].toObject();
     transArray = tmpJsObj["OperationsList"].toArray();
@@ -5906,34 +5904,6 @@ void DrawingOptions::THICK_PAR_OP(QJsonObject* tmp)
 }
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
-    /*
-    QJsonArray tmpArray, transArray;
-    QJsonObject tmp,tmpJsObj;
-
-    QString T  = ui.ThicknessVal_1->text().replace(" ", "");
-    bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
-    bool ShowUpperSurf = ui.UpperFct_1->isChecked();
-    bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
-
-    tmp = MathmodRef->RootObjet.CurrentJsonObject;
-    //Look for an attached Transformations lists:
-    tmpJsObj = tmp["Operations"].toObject();
-    transArray = tmpJsObj["OperationsList"].toArray();
-    tmpArray.append("THICK_PAR_OP");
-    tmpArray.append(ShowOriginalSurf);
-    tmpArray.append(ShowUpperSurf);
-    tmpArray.append(ShowBoumdarySurfs);
-    tmpArray.append(T);
-    transArray.append(tmpArray);
-    tmpJsObj["OperationsList"] = transArray;
-    if(tmp["Operations"].isNull())
-    {
-        tmp.remove("Operations");
-        tmpJsObj["OriginalObj"] = tmp;
-    }
-    tmp["Operations"] = tmpJsObj;
-    */
-
     THICK_PAR_OP(&MathmodRef->RootObjet.CurrentJsonObject);
     ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
 }
