@@ -95,8 +95,6 @@ struct GlobalParam
     uint NbPolyMinimalTopology = 0;
     uint NbVertexTmp = 0;
 };
-//enum OperationsType { THICK_PAR_OP, NO_OP, THICK_ISO_OP};
-//QStringList OperationsType = {"PAR_THICK_OP", "NO_OP", "ISO_THICK_OP"};
 enum PreviousAction
 {
     NOACTION = 0,

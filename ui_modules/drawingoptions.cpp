@@ -5615,7 +5615,6 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
     }
 
     bool ShowOriginalSurf, ShowUpperSurf, ShowBoumdarySurfs ;
-
     for(int l=0; l<transArray.size(); l++)
     {
         QJsonArray NewFxArray, NewFyArray, NewFzArray,
@@ -5877,9 +5876,37 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
     DrawJsonModel(tmp3JsObj);
     PreviousJsonObject(tmp3JsObj);
 }
+void DrawingOptions::THICK_PAR_OP(QJsonObject* tmp)
+{
+    QJsonArray tmpArray, transArray;
+    QJsonObject tmpJsObj;
 
+    QString T  = ui.ThicknessVal_1->text().replace(" ", "");
+    bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
+    bool ShowUpperSurf = ui.UpperFct_1->isChecked();
+    bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
+    //tmp = MathmodRef->RootObjet.CurrentJsonObject;
+
+    //Look for an attached Transformations lists:
+    tmpJsObj = (*tmp)["Operations"].toObject();
+    transArray = tmpJsObj["OperationsList"].toArray();
+    tmpArray.append("THICK_PAR_OP");
+    tmpArray.append(ShowOriginalSurf);
+    tmpArray.append(ShowUpperSurf);
+    tmpArray.append(ShowBoumdarySurfs);
+    tmpArray.append(T);
+    transArray.append(tmpArray);
+    tmpJsObj["OperationsList"] = transArray;
+    if((*tmp)["Operations"].isNull())
+    {
+        (*tmp).remove("Operations");
+        tmpJsObj["OriginalObj"] = (*tmp);
+    }
+    (*tmp)["Operations"] = tmpJsObj;
+}
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
+    /*
     QJsonArray tmpArray, transArray;
     QJsonObject tmp,tmpJsObj;
 
@@ -5887,8 +5914,8 @@ void DrawingOptions::on_SaveThButton_1_clicked()
     bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
     bool ShowUpperSurf = ui.UpperFct_1->isChecked();
     bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
-    tmp = MathmodRef->RootObjet.CurrentJsonObject;
 
+    tmp = MathmodRef->RootObjet.CurrentJsonObject;
     //Look for an attached Transformations lists:
     tmpJsObj = tmp["Operations"].toObject();
     transArray = tmpJsObj["OperationsList"].toArray();
@@ -5905,8 +5932,10 @@ void DrawingOptions::on_SaveThButton_1_clicked()
         tmpJsObj["OriginalObj"] = tmp;
     }
     tmp["Operations"] = tmpJsObj;
+    */
 
-    ApplyOperations(tmp);
+    THICK_PAR_OP(&MathmodRef->RootObjet.CurrentJsonObject);
+    ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
 }
 
 void DrawingOptions::on_UndoPushButton_clicked()

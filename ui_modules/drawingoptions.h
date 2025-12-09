@@ -365,6 +365,7 @@ private slots:
     void on_UndopushButton_0_clicked();
     void loadOperations (QJsonObject);
     void ApplyOperations(QJsonObject);
+    void THICK_PAR_OP(QJsonObject*);
 };
 
 #endif
