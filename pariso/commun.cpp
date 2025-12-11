@@ -20,6 +20,11 @@
 
 #include "commun.h"
 
+#if defined(__cpp_lib_interpolate)
+#include <cmath> // for std::lerp (C++20)
+using std::lerp;
+#endif
+
 float rd[3], featurePoint[4];
 const static uint OFFSET_BASIS = 2166136261U;
 const static uint FNV_PRIME = 16777619U;
@@ -423,10 +428,12 @@ float fade(float f)
 {
     return f*f*f*(f*(f*6-15)+10); // t * t * (3.0 - 2.0 * t);
 }
+#if !defined(__cpp_lib_interpolate)
 float lerp(float t, float a, float b)
 {
     return a + t*(b - a);
 }
+#endif
 float grad(int hash, float x, float y, float z)
 {
     int h = hash & 15;       // CONVERT LO 4 BITS OF HASH CODE
