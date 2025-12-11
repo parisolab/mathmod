@@ -548,6 +548,12 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
     QString result;
     QJsonArray lst;
     QJsonObject QObj;
+    MathmodRef->IsoObjet->masterthread->SliderNames.clear();
+    MathmodRef->IsoObjet->masterthread->SliderValues.clear();
+    MathmodRef->ParObjet->masterthread->SliderNames.clear();
+    MathmodRef->ParObjet->masterthread->SliderValues.clear();
+    MathmodRef->IsoObjet->masterthread->Nb_Sliders = 0;
+    MathmodRef->ParObjet->masterthread->Nb_Sliders = 0;
     if (Jobj["Sliders"].isObject())
     {
         // Hide all sliders
@@ -646,8 +652,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
     }
     else
     {
-        MathmodRef->IsoObjet->masterthread->Nb_Sliders = 0;
-        MathmodRef->ParObjet->masterthread->Nb_Sliders = 0;
         HideSliders();
     }
 }

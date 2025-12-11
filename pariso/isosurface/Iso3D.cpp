@@ -102,8 +102,8 @@ IsoMasterThread::~IsoMasterThread()
     delete[] UsedFunct;
     delete[] UsedFunct2;
     grid.clear();
-    SliderValues.clear();
-    SliderNames.clear();
+    //SliderValues.clear();
+    //SliderNames.clear();
     Consts.clear();
     ConstNames.clear();
     ConstValues.clear();
@@ -1370,8 +1370,8 @@ void IsoMasterThread::DeleteMasterParsers()
     x_Inf.clear();
     y_Inf.clear();
     z_Inf.clear();
-    SliderValues.clear();
-    SliderNames.clear();
+    //SliderValues.clear();
+    //SliderNames.clear();
     Consts.clear();
     ConstNames.clear();
     ConstValues.clear();

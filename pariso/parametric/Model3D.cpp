@@ -51,8 +51,8 @@ ParMasterThread::~ParMasterThread()
     delete[] UsedFunct;
     delete[] UsedFunct2;
     ParamStructs.clear();
-    SliderValues.clear();
-    SliderNames.clear();
+    //SliderValues.clear();
+    //SliderNames.clear();
     Rgbts.clear();
     VRgbts.clear();
     Functs.clear();
@@ -394,8 +394,8 @@ void ParMasterThread::DeleteMasterParsers()
     u_sup.clear();
     dif_v.clear();
     dif_u.clear();
-    SliderValues.clear();
-    SliderNames.clear();
+    //SliderValues.clear();
+    //SliderNames.clear();
     Rgbts.clear();
     VRgbts.clear();
     Functs.clear();
