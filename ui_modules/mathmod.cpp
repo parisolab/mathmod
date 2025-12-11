@@ -2273,7 +2273,6 @@ int MathMod::ParsePar()
         ParObjet->ThreadParsersCopy();
     return 1;
 }
-
 void MathMod::ParametricSurfaceProcess(int type)
 {
     if (!ParObjet->isRunning())

@@ -30,12 +30,7 @@ static QStringList qlstPos, qlstStep, qlstmin, qlstmax, qlstnames;
 
 void DrawingOptions::ErrorMsg() const
 {
-    QMessageBox msgBox;
-    if (scriptErrorType != SCRIPT_NO_ERROR)
-    {
-        msgBox.setText(ScriptErrorMessage[scriptErrorType]);
-        msgBox.exec();
-    }
+    MemoryErrorMsg(scriptErrorType);
 }
 
 void DrawingOptions::MemoryErrorMsg(int err) const
@@ -656,7 +651,6 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
         HideSliders();
     }
 }
-
 void DrawingOptions::DrawJsonModel(const QJsonObject &Jobj, int textureIndex,
                                    bool Inspect)
 {
@@ -4822,6 +4816,10 @@ void DrawingOptions::update_slider_param()
 {
     int SliderIndex = sliderconf.currentSlider;
 
+    MathmodRef->IsoObjet->masterthread->SliderNames.clear();
+    MathmodRef->IsoObjet->masterthread->SliderValues.clear();
+    MathmodRef->ParObjet->masterthread->SliderNames.clear();
+    MathmodRef->ParObjet->masterthread->SliderValues.clear();
     for (int sl = 0; sl < 20; sl++)
     {
         if (SliderIndex == sl)
@@ -5583,16 +5581,31 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
     }
 }
 
-void DrawingOptions::ApplyOperations(QJsonObject mathObject)
+bool DrawingOptions::InsupportedFieldExistAndValid(QJsonObject  & myObject, QString fieldName)
+{
+    if (myObject.contains(fieldName))
+    {
+        QJsonValue value = myObject.value(fieldName);
+        if (value.isNull())
+        {
+            myObject.remove(fieldName);
+            return false;
+        } else
+            return (value.isArray());
+    }
+    return false;
+}
+
+void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 {
     QJsonObject tmp3JsObj;
     QJsonArray transArray;
-    if(!mathObject["Param3D_C"].isNull() || !mathObject["Param4D_C"].isNull() || !mathObject["ParIso"].isNull())
+    if(InsupportedFieldExistAndValid(mathObject,"Param3D_C") || InsupportedFieldExistAndValid(mathObject,"Param4D_C"))
     {
         MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
         return;
     }
-    if(!mathObject["ParIso"].isNull())
+    if(InsupportedFieldExistAndValid(mathObject,"ParIso"))
     {
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
@@ -5600,7 +5613,6 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
     mathObject.remove("ParIso");
     mathObject.remove("Param3D_C");
     mathObject.remove("Param4D_C");
-
     tmp3JsObj = ((mathObject["Operations"]).toObject())["OriginalObj"].toObject();
     transArray = ((mathObject["Operations"]).toObject())["OperationsList"].toArray();
     if(tmp3JsObj["Param3D"].isNull())
@@ -5610,7 +5622,6 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         else
         {
             tmp3JsObj.remove("Param3D");
-
         }
     }
 
@@ -5694,14 +5705,11 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         SlidersArray.append("1");
         tmpJsObj["Step"] = SlidersArray;
         tmp3JsObj["Sliders"] = tmpJsObj;
-
-
         uint componentNumber = ComponentArray.size();
         ///****************************************///
         for(uint i=0; i<componentNumber; i++)
         {
             QString I=QString::number(ThCount)+"_"+QString::number(i);
-
             QString Umin="Umin_"+I;
             QString Umax="Umax_"+I;
             QString Vmin="Vmin_"+I;
@@ -5876,17 +5884,20 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
     DrawJsonModel(tmp3JsObj);
     PreviousJsonObject(tmp3JsObj);
 }
-void DrawingOptions::THICK_PAR_OP(QJsonObject* tmp)
+void DrawingOptions::THICK_PAR_OP(QJsonObject & tmp)
 {
     QJsonArray tmpArray, transArray;
     QJsonObject tmpJsObj;
-
+    if(tmp["Iso3D"].isNull())
+        tmp.remove("Iso3D");
+    if(tmp["ParIso"].isNull())
+        tmp.remove("ParIso");
     QString T  = ui.ThicknessVal_1->text().replace(" ", "");
     bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
     bool ShowUpperSurf = ui.UpperFct_1->isChecked();
     bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
     //Look for an attached Transformations lists:
-    tmpJsObj = (*tmp)["Operations"].toObject();
+    tmpJsObj = tmp["Operations"].toObject();
     transArray = tmpJsObj["OperationsList"].toArray();
     tmpArray.append("THICK_PAR_OP");
     tmpArray.append(ShowOriginalSurf);
@@ -5895,16 +5906,16 @@ void DrawingOptions::THICK_PAR_OP(QJsonObject* tmp)
     tmpArray.append(T);
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
-    if((*tmp)["Operations"].isNull())
+    if(tmp["Operations"].isNull())
     {
-        (*tmp).remove("Operations");
-        tmpJsObj["OriginalObj"] = (*tmp);
+        tmp.remove("Operations");
+        tmpJsObj["OriginalObj"] = tmp;
     }
-    (*tmp)["Operations"] = tmpJsObj;
+    tmp["Operations"] = tmpJsObj;
 }
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
-    THICK_PAR_OP(&MathmodRef->RootObjet.CurrentJsonObject);
+    THICK_PAR_OP(MathmodRef->RootObjet.CurrentJsonObject);
     ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
 }
 
