@@ -36,7 +36,9 @@ double Laguerre_a(const double*);
 void ImprovedNoise(float xsize=4.0, float ysize=4.0, float zsize=4.0);
 float noise(float, float, float);
 float fade(float);
+#if !defined(__cpp_lib_interpolate)
 float lerp(float, float, float);
+#endif
 float grad(int, float, float, float);
 float FractalNoise3D(float, float, float, int, float, float);
 float Marble(float, float, float, int);
