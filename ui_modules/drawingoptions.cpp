@@ -548,10 +548,7 @@ void DrawingOptions::ShowSliders(const QJsonObject &Jobj)
     QString result;
     QJsonArray lst;
     QJsonObject QObj;
-    MathmodRef->IsoObjet->masterthread->SliderNames.clear();
-    MathmodRef->IsoObjet->masterthread->SliderValues.clear();
-    MathmodRef->ParObjet->masterthread->SliderNames.clear();
-    MathmodRef->ParObjet->masterthread->SliderValues.clear();
+    clear_slider();
     MathmodRef->IsoObjet->masterthread->Nb_Sliders = 0;
     MathmodRef->ParObjet->masterthread->Nb_Sliders = 0;
     if (Jobj["Sliders"].isObject())
@@ -4816,14 +4813,16 @@ void DrawingOptions::on_C1toolButton_clicked()
 {
     CIndextoolButton_clicked(1);
 }
-void DrawingOptions::update_slider_param()
+void DrawingOptions::clear_slider()
 {
-    int SliderIndex = sliderconf.currentSlider;
-
     MathmodRef->IsoObjet->masterthread->SliderNames.clear();
     MathmodRef->IsoObjet->masterthread->SliderValues.clear();
     MathmodRef->ParObjet->masterthread->SliderNames.clear();
     MathmodRef->ParObjet->masterthread->SliderValues.clear();
+}
+void DrawingOptions::update_slider_param()
+{
+    int SliderIndex = sliderconf.currentSlider;
     for (int sl = 0; sl < 20; sl++)
     {
         if (SliderIndex == sl)

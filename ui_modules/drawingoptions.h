@@ -226,6 +226,7 @@ public slots:
     void on_actionScreenshot_triggered();
     void on_actionEditor_triggered();
     void update_slider_param();
+    void clear_slider();
     void add_new_param();
     void update_infos_param(int);
     void SearchListModels();
