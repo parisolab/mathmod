@@ -366,7 +366,7 @@ private slots:
     void on_UndopushButton_0_clicked();
     void loadOperations (QJsonObject);
     void ApplyOperations(QJsonObject &);
-    bool InsupportedFieldExistAndValid(QJsonObject  &, QString);
+    bool FieldExistAndValid(QJsonObject  &, QString);
     void THICK_PAR_OP(QJsonObject &);
 };
 

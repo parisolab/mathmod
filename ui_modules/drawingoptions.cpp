@@ -5560,7 +5560,7 @@ void DrawingOptions::on_actionClear_triggered()
 }
 void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
 {
-    if(CurrentJsObject["Operations"].isObject())
+    if(CurrentJsObject.contains("Operations"))
     {
         QJsonObject tmpJsObj = CurrentJsObject["Operations"].toObject();
         QJsonArray transArray = tmpJsObj["OperationsList"].toArray();
@@ -5593,12 +5593,12 @@ bool DrawingOptions::InsupportedFieldExistAndValid(QJsonObject  & myObject, QStr
         {
             myObject.remove(fieldName);
             return false;
-        } else
-            return (value.isArray());
+        } //else
+            //return (value.isArray()); // why isArray()????
     }
     return false;
 }
-
+//Takes the operations list in mathobject and apply them to "OriginalObj" script
 void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 {
     QJsonObject tmp3JsObj;
