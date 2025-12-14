@@ -5604,7 +5604,7 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 {
     QJsonObject tmp3JsObj;
     QJsonArray transArray;
-    QString Type="";
+    QString ObjType="";
     if(FieldExistAndValid(mathObject,"Param3D_C") || FieldExistAndValid(mathObject,"Param4D_C"))
     {
         MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
@@ -5623,13 +5623,13 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 
     if(FieldExistAndValid(tmp3JsObj,"Param3D"))
     {
-        Type="_PAR";
+        ObjType="_PAR";
     }
     else
     {
         if(FieldExistAndValid(tmp3JsObj,"Iso3D"))
         {
-            Type="_ISO";
+            ObjType="_ISO";
         }
         else
             return;
@@ -5657,15 +5657,27 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         ShowUpperSurf =  tmpArray[2].toBool();
         ShowBoumdarySurfs =  tmpArray[3].toBool();
         T = tmpArray[4].toString();
+        if(ObjType=="_PAR")
+        {
+            tmp2 = tmp3JsObj["Param3D"].toObject();
+            FxArray = tmp2["Fx"].toArray();
+            FyArray = tmp2["Fy"].toArray();
+            FzArray = tmp2["Fz"].toArray();
+            FuminArray = tmp2["Umin"].toArray();
+            FumaxArray = tmp2["Umax"].toArray();
+            FvminArray = tmp2["Vmin"].toArray();
+            FvmaxArray = tmp2["Vmax"].toArray();
+        }
+        else
+        {
+            if((ObjType=="_ISO")) {
 
-        tmp2 = tmp3JsObj["Param3D"].toObject();
-        FxArray = tmp2["Fx"].toArray();
-        FyArray = tmp2["Fy"].toArray();
-        FzArray = tmp2["Fz"].toArray();
-        FuminArray = tmp2["Umin"].toArray();
-        FumaxArray = tmp2["Umax"].toArray();
-        FvminArray = tmp2["Vmin"].toArray();
-        FvmaxArray = tmp2["Vmax"].toArray();
+            }
+            else {
+                MemoryErrorMsg(UNKOWN_MATH_OBJECT);
+                return;
+            }
+        }
         FctArray = tmp2["Funct"].toArray();
         ComponentArray = tmp2["Component"].toArray();
         ConstArraytmp = tmp2["Const"].toArray();
