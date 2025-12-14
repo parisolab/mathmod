@@ -5584,7 +5584,7 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
     }
 }
 
-bool DrawingOptions::InsupportedFieldExistAndValid(QJsonObject  & myObject, QString fieldName)
+bool DrawingOptions::FieldExistAndValid(QJsonObject  & myObject, QString fieldName)
 {
     if (myObject.contains(fieldName))
     {
@@ -5593,8 +5593,9 @@ bool DrawingOptions::InsupportedFieldExistAndValid(QJsonObject  & myObject, QStr
         {
             myObject.remove(fieldName);
             return false;
-        } //else
-            //return (value.isArray()); // why isArray()????
+        }
+        else
+            return true;
     }
     return false;
 }
@@ -5603,12 +5604,13 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 {
     QJsonObject tmp3JsObj;
     QJsonArray transArray;
-    if(InsupportedFieldExistAndValid(mathObject,"Param3D_C") || InsupportedFieldExistAndValid(mathObject,"Param4D_C"))
+    QString Type="";
+    if(FieldExistAndValid(mathObject,"Param3D_C") || FieldExistAndValid(mathObject,"Param4D_C"))
     {
         MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
         return;
     }
-    if(InsupportedFieldExistAndValid(mathObject,"ParIso"))
+    if(FieldExistAndValid(mathObject,"ParIso"))
     {
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
@@ -5618,14 +5620,19 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
     mathObject.remove("Param4D_C");
     tmp3JsObj = ((mathObject["Operations"]).toObject())["OriginalObj"].toObject();
     transArray = ((mathObject["Operations"]).toObject())["OperationsList"].toArray();
-    if(tmp3JsObj["Param3D"].isNull())
+
+    if(FieldExistAndValid(tmp3JsObj,"Param3D"))
     {
-        if(tmp3JsObj["Iso3D"].isNull())
-            return;
-        else
+        Type="_PAR";
+    }
+    else
+    {
+        if(FieldExistAndValid(tmp3JsObj,"Iso3D"))
         {
-            tmp3JsObj.remove("Param3D");
+            Type="_ISO";
         }
+        else
+            return;
     }
 
     bool ShowOriginalSurf, ShowUpperSurf, ShowBoumdarySurfs ;
@@ -5900,7 +5907,13 @@ void DrawingOptions::THICK_PAR_OP(QJsonObject & tmp)
     bool ShowUpperSurf = ui.UpperFct_1->isChecked();
     bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
     //Look for an attached Transformations lists:
-    tmpJsObj = tmp["Operations"].toObject();
+    if(FieldExistAndValid(tmp,"Operations"))
+        tmpJsObj = tmp["Operations"].toObject();
+    else
+    {
+        tmpJsObj = tmp["Operations"].toObject();
+        tmp.remove("Operations");
+    }
     transArray = tmpJsObj["OperationsList"].toArray();
     tmpArray.append("THICK_PAR_OP");
     tmpArray.append(ShowOriginalSurf);
@@ -5909,9 +5922,8 @@ void DrawingOptions::THICK_PAR_OP(QJsonObject & tmp)
     tmpArray.append(T);
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
-    if(tmp["Operations"].isNull())
+    if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
     {
-        tmp.remove("Operations");
         tmpJsObj["OriginalObj"] = tmp;
     }
     tmp["Operations"] = tmpJsObj;
