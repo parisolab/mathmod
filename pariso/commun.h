@@ -278,7 +278,8 @@ enum ScriptErrorType
     PARISO_OBJ_UNSUPPORTED,
     UNKOWN_MATH_OBJECT,
     NOT_PARAM_OBJECT,
-    NOT_ISO_OBJECT
+    NOT_ISO_OBJECT,
+    EMPTY_OP_LIST
 };
 
 static const char *ScriptErrorMessage[] =
@@ -327,7 +328,8 @@ static const char *ScriptErrorMessage[] =
         "PARISO_OBJ_UNSUPPORTED",                   // 41
         "UNKOWN_MATH_OBJECT",                       // 42
         "NOT_PARAM3D_OBJECT",                       // 43
-        "NOT_ISO3D_OBJECT"                          // 44
+        "NOT_ISO3D_OBJECT",                          // 44
+        "EMPTY_OPERATIONS_LIST"
 };
 
 struct ComponentInfos

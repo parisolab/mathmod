@@ -367,7 +367,7 @@ private slots:
     void loadOperations (QJsonObject);
     void ApplyOperations(QJsonObject &);
     bool FieldExistAndValid(QJsonObject  &, QString);
-    void THICK_PAR_OP(QJsonObject &);
+    void THICK_OP(QJsonObject &, QString);
 };
 
 #endif

@@ -5440,103 +5440,7 @@ void DrawingOptions::on_actionbox_triggered()
     MathmodRef->boundingboxOk();
     MathmodRef->update();
 }
-void DrawingOptions::on_SaveThButton_2_clicked()
-{
-    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
-            CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
-    QJsonObject tmp,tmp2,tmp3;
-    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
 
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
-    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
-    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal_2->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct_2->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
-    tmp = MathmodRef->RootObjet.CurrentJsonObject;
-    if(!tmp["ParIso"].isNull())
-    {
-        MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
-        return;
-    }
-    tmp2= tmp["Iso3D"].toObject();
-    FxyzArray = tmp2["Fxyz"].toArray();
-    FctArray = tmp2["Funct"].toArray();
-    ConstArraytmp = tmp2["Const"].toArray();
-    tmp2.remove("Import");
-    ImportArraytmp.append("All");
-    int ThCount=0;
-    for (int i = 0; i < ConstArraytmp.size(); ++i)
-    {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
-        {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
-        }
-        else
-            ConstArray.append(ConstArraytmp[i].toString());
-    }
-    ThCount = ThCount+1;
-    ConstArray.append("ThCount="+QString::number(ThCount));
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
-    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowUpperSurf) ? "1" : "0");
-    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
-    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
-    ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
-    if(ThCount==1)
-    {
-        ConstArray.append("epsilon=1/100000");
-    }
-    //Add Slider
-    tmp3 = tmp["Sliders"].toObject();
-    SlidersArray = tmp3["Name"].toArray();
-    SlidersArray.append("ScalVar_"+QString::number(ThCount));
-    tmp3["Name"] = SlidersArray;
-    SlidersArray = tmp3["Position"].toArray();
-    SlidersArray.append("60");
-    tmp3["Position"] = SlidersArray;
-    SlidersArray = tmp3["Max"].toArray();
-    SlidersArray.append("100");
-    tmp3["Max"] = SlidersArray;
-    SlidersArray = tmp3["Min"].toArray();
-    SlidersArray.append("-100");
-    tmp3["Min"] = SlidersArray;
-    SlidersArray = tmp3["Step"].toArray();
-    SlidersArray.append("1");
-    tmp3["Step"] = SlidersArray;
-    tmp["Sliders"] = tmp3;
-    QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
-    for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
-    {
-        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
-        QString fxyzt=FxyzArray.at(i).toString();
-        QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-                fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-        FctArray.append("fffxyz"+I+"="+fxyzt);
-        FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
-        FctArray.append(fct);
-        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
-    }
-    tmp2["Fxyz"] = NewFxyzArray;
-    tmp2["Funct"]= FctArray;
-    tmp2["Const"]= ConstArray;
-    tmp2["Import"]= ImportArraytmp;
-    if (!tmp2["Vect"].isArray())
-    {
-        (Vetc=tmp2["Vect"].toArray()).append("4");
-        tmp2["Vect"]= Vetc;
-    }
-    //tmp2["Import"] = ImportArraytmp;
-    tmp["Iso3D"] = tmp2;
-    DrawJsonModel(tmp);
-    PreviousJsonObject(tmp);
-}
 void DrawingOptions::on_actionUndo_triggered()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject>0)
@@ -5615,12 +5519,16 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
     }
+    if(!FieldExistAndValid(mathObject,"Operations"))
+    {
+        MemoryErrorMsg(EMPTY_OP_LIST);
+        return;
+    }
     mathObject.remove("ParIso");
     mathObject.remove("Param3D_C");
     mathObject.remove("Param4D_C");
     tmp3JsObj = ((mathObject["Operations"]).toObject())["OriginalObj"].toObject();
     transArray = ((mathObject["Operations"]).toObject())["OperationsList"].toArray();
-
     if(FieldExistAndValid(tmp3JsObj,"Param3D"))
     {
         ObjType="_PAR";
@@ -5634,7 +5542,8 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         else
             return;
     }
-
+    if(ObjType=="_PAR")
+    {
     bool ShowOriginalSurf, ShowUpperSurf, ShowBoumdarySurfs ;
     for(int l=0; l<transArray.size(); l++)
     {
@@ -5653,31 +5562,24 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         tmpArray = transArray[l].toArray();
 
         QString Type = tmpArray[0].toString();
+        // Skip this operations when the model type doesn't much the operation type
+        if(!Type.contains("_PAR"))
+            continue;
+        // End Skip
         ShowOriginalSurf =  tmpArray[1].toBool();
         ShowUpperSurf =  tmpArray[2].toBool();
         ShowBoumdarySurfs =  tmpArray[3].toBool();
         T = tmpArray[4].toString();
-        if(ObjType=="_PAR")
-        {
-            tmp2 = tmp3JsObj["Param3D"].toObject();
-            FxArray = tmp2["Fx"].toArray();
-            FyArray = tmp2["Fy"].toArray();
-            FzArray = tmp2["Fz"].toArray();
-            FuminArray = tmp2["Umin"].toArray();
-            FumaxArray = tmp2["Umax"].toArray();
-            FvminArray = tmp2["Vmin"].toArray();
-            FvmaxArray = tmp2["Vmax"].toArray();
-        }
-        else
-        {
-            if((ObjType=="_ISO")) {
 
-            }
-            else {
-                MemoryErrorMsg(UNKOWN_MATH_OBJECT);
-                return;
-            }
-        }
+        tmp2 = tmp3JsObj["Param3D"].toObject();
+        FxArray = tmp2["Fx"].toArray();
+        FyArray = tmp2["Fy"].toArray();
+        FzArray = tmp2["Fz"].toArray();
+        FuminArray = tmp2["Umin"].toArray();
+        FumaxArray = tmp2["Umax"].toArray();
+        FvminArray = tmp2["Vmin"].toArray();
+        FvmaxArray = tmp2["Vmax"].toArray();
+
         FctArray = tmp2["Funct"].toArray();
         ComponentArray = tmp2["Component"].toArray();
         ConstArraytmp = tmp2["Const"].toArray();
@@ -5902,36 +5804,156 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
             tmp2.remove("Cnd");
         tmp3JsObj["Param3D"] = tmp2;
         }
+    }
+    else {
+    if(ObjType=="_ISO")
+    {
+        bool ShowOriginalSurf, ShowUpperSurf, ShowBottomSurf ;
+        for(int l=0; l<transArray.size(); l++)
+        {
+        QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
+                CNDArray, NewCNDArray, SlidersArray, ImportArraytmp, tmpArray;
+        QJsonObject tmp2,tmp3;
+        QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
+        QString T = "";
+        tmpArray = transArray[l].toArray();
+
+        QString Type = tmpArray[0].toString();
+        // Skip this operations when the model type doesn't much the operation type
+        if(!Type.contains("_ISO"))
+            continue;
+        // End Skip
+        ShowOriginalSurf =  tmpArray[1].toBool();
+        ShowUpperSurf =  tmpArray[2].toBool();
+        ShowBottomSurf =  tmpArray[3].toBool();
+        T = tmpArray[4].toString();
+
+
+        tmp2= tmp3JsObj["Iso3D"].toObject();
+        FxyzArray = tmp2["Fxyz"].toArray();
+        FctArray = tmp2["Funct"].toArray();
+        ConstArraytmp = tmp2["Const"].toArray();
+        tmp2.remove("Import");
+        ImportArraytmp.append("All");
+        int ThCount=0;
+        for (int i = 0; i < ConstArraytmp.size(); ++i)
+        {
+            if(ConstArraytmp[i].toString().contains("ThCount"))
+            {
+                ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+            }
+            else
+                ConstArray.append(ConstArraytmp[i].toString());
+        }
+        ThCount = ThCount+1;
+        ConstArray.append("ThCount="+QString::number(ThCount));
+        Bool = ((ShowBottomSurf) ? "1" : "0");
+        ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
+        Bool = ((ShowUpperSurf) ? "1" : "0");
+        ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
+        Bool = ((ShowOriginalSurf) ? "1" : "0");
+        ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
+        ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
+        if(ThCount==1)
+        {
+            ConstArray.append("epsilon=1/100000");
+        }
+        //Add Slider
+        tmp3 = tmp3JsObj["Sliders"].toObject();
+        SlidersArray = tmp3["Name"].toArray();
+        SlidersArray.append("ScalVar_"+QString::number(ThCount));
+        tmp3["Name"] = SlidersArray;
+        SlidersArray = tmp3["Position"].toArray();
+        SlidersArray.append("60");
+        tmp3["Position"] = SlidersArray;
+        SlidersArray = tmp3["Max"].toArray();
+        SlidersArray.append("100");
+        tmp3["Max"] = SlidersArray;
+        SlidersArray = tmp3["Min"].toArray();
+        SlidersArray.append("-100");
+        tmp3["Min"] = SlidersArray;
+        SlidersArray = tmp3["Step"].toArray();
+        SlidersArray.append("1");
+        tmp3["Step"] = SlidersArray;
+        tmp3JsObj["Sliders"] = tmp3;
+        for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
+        {
+            QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
+            QString fxyzt=FxyzArray.at(i).toString();
+            QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                        "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                        "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                        "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                    fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+                    fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+                    fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+            FctArray.append("fffxyz"+I+"="+fxyzt);
+            FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
+            FctArray.append(fct);
+            NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+        }
+        tmp2["Fxyz"] = NewFxyzArray;
+        tmp2["Funct"]= FctArray;
+        tmp2["Const"]= ConstArray;
+        tmp2["Import"]= ImportArraytmp;
+        if (!tmp2["Vect"].isArray())
+        {
+            (Vetc=tmp2["Vect"].toArray()).append("4");
+            tmp2["Vect"]= Vetc;
+        }
+        tmp3JsObj["Iso3D"] = tmp2;
+    }
+
+    }
+    }
+
+
+
     tmp3JsObj["Operations"] = (mathObject["Operations"]).toObject();
     DrawJsonModel(tmp3JsObj);
     PreviousJsonObject(tmp3JsObj);
 }
-void DrawingOptions::THICK_PAR_OP(QJsonObject & tmp)
+void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
 {
     QJsonArray tmpArray, transArray;
     QJsonObject tmpJsObj;
+    QString T  = "";
+    bool ShowOriginalSurf = false,
+            ShowUpperSurf = false,
+            ShowBoumdarySurfs = false,
+            ShowBottomSurf = false;
+
     if(tmp["Iso3D"].isNull())
         tmp.remove("Iso3D");
     if(tmp["ParIso"].isNull())
         tmp.remove("ParIso");
-    QString T  = ui.ThicknessVal_1->text().replace(" ", "");
-    bool ShowOriginalSurf = ui.FctOriginal_1->isChecked();
-    bool ShowUpperSurf = ui.UpperFct_1->isChecked();
-    bool ShowBoumdarySurfs = ui.checkBoxBoundary->isChecked();
-    //Look for an attached Transformations lists:
-    if(FieldExistAndValid(tmp,"Operations"))
-        tmpJsObj = tmp["Operations"].toObject();
-    else
-    {
-        tmpJsObj = tmp["Operations"].toObject();
-        tmp.remove("Operations");
+
+        //Look for an attached Transformations lists:
+        if(FieldExistAndValid(tmp,"Operations"))
+            tmpJsObj = tmp["Operations"].toObject();
+        else
+        {
+            tmpJsObj = tmp["Operations"].toObject();
+            tmp.remove("Operations");
+        }
+        transArray = tmpJsObj["OperationsList"].toArray();
+        if(type == "_PAR")
+        {
+        tmpArray.append("THICK_PAR_OP");
+        tmpArray.append(ui.FctOriginal_1->isChecked());
+        tmpArray.append(ui.UpperFct_1->isChecked());
+        tmpArray.append(ui.checkBoxBoundary->isChecked());
+        tmpArray.append(ui.ThicknessVal_1->text().replace(" ", ""));
     }
-    transArray = tmpJsObj["OperationsList"].toArray();
-    tmpArray.append("THICK_PAR_OP");
-    tmpArray.append(ShowOriginalSurf);
-    tmpArray.append(ShowUpperSurf);
-    tmpArray.append(ShowBoumdarySurfs);
-    tmpArray.append(T);
+    else if(type == "_ISO")
+    {
+        tmpArray.append("THICK_ISO_OP");
+        tmpArray.append(ui.FctOriginal_2->isChecked());
+        tmpArray.append(ui.UpperFct_2->isChecked());
+        tmpArray.append(ui.DownFct_2->isChecked());
+        tmpArray.append(ui.ThicknessVal_2->text().replace(" ", ""));
+    }
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
     if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
@@ -5942,9 +5964,116 @@ void DrawingOptions::THICK_PAR_OP(QJsonObject & tmp)
 }
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
-    THICK_PAR_OP(MathmodRef->RootObjet.CurrentJsonObject);
+    THICK_OP(MathmodRef->RootObjet.CurrentJsonObject, "_PAR");
     ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
 }
+void DrawingOptions::on_SaveThButton_2_clicked()
+{
+    THICK_OP(MathmodRef->RootObjet.CurrentJsonObject, "_ISO");
+    ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
+}
+
+/*
+void DrawingOptions::on_SaveThButton_2_clicked()
+{
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
+            CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
+    QJsonObject tmp,tmp2,tmp3;
+    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
+
+    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
+    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
+    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal_2->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct_2->isChecked();
+    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
+    tmp = MathmodRef->RootObjet.CurrentJsonObject;
+    if(!tmp["ParIso"].isNull())
+    {
+        MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
+        return;
+    }
+    tmp2= tmp["Iso3D"].toObject();
+    FxyzArray = tmp2["Fxyz"].toArray();
+    FctArray = tmp2["Funct"].toArray();
+    ConstArraytmp = tmp2["Const"].toArray();
+    tmp2.remove("Import");
+    ImportArraytmp.append("All");
+    int ThCount=0;
+    for (int i = 0; i < ConstArraytmp.size(); ++i)
+    {
+        if(ConstArraytmp[i].toString().contains("ThCount"))
+        {
+            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+        }
+        else
+            ConstArray.append(ConstArraytmp[i].toString());
+    }
+    ThCount = ThCount+1;
+    ConstArray.append("ThCount="+QString::number(ThCount));
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
+    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowUpperSurf) ? "1" : "0");
+    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
+    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
+    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
+    ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
+    if(ThCount==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
+    //Add Slider
+    tmp3 = tmp["Sliders"].toObject();
+    SlidersArray = tmp3["Name"].toArray();
+    SlidersArray.append("ScalVar_"+QString::number(ThCount));
+    tmp3["Name"] = SlidersArray;
+    SlidersArray = tmp3["Position"].toArray();
+    SlidersArray.append("60");
+    tmp3["Position"] = SlidersArray;
+    SlidersArray = tmp3["Max"].toArray();
+    SlidersArray.append("100");
+    tmp3["Max"] = SlidersArray;
+    SlidersArray = tmp3["Min"].toArray();
+    SlidersArray.append("-100");
+    tmp3["Min"] = SlidersArray;
+    SlidersArray = tmp3["Step"].toArray();
+    SlidersArray.append("1");
+    tmp3["Step"] = SlidersArray;
+    tmp["Sliders"] = tmp3;
+    QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
+    for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
+    {
+        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
+        QString fxyzt=FxyzArray.at(i).toString();
+        QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
+                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+                fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+        FctArray.append("fffxyz"+I+"="+fxyzt);
+        FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
+        FctArray.append(fct);
+        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+    }
+    tmp2["Fxyz"] = NewFxyzArray;
+    tmp2["Funct"]= FctArray;
+    tmp2["Const"]= ConstArray;
+    tmp2["Import"]= ImportArraytmp;
+    if (!tmp2["Vect"].isArray())
+    {
+        (Vetc=tmp2["Vect"].toArray()).append("4");
+        tmp2["Vect"]= Vetc;
+    }
+    //tmp2["Import"] = ImportArraytmp;
+    tmp["Iso3D"] = tmp2;
+    DrawJsonModel(tmp);
+    PreviousJsonObject(tmp);
+}
+
+
+*/
 
 void DrawingOptions::on_UndoPushButton_clicked()
 {
