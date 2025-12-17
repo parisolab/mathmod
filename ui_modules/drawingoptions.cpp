@@ -5560,7 +5560,6 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         QString ScalVar;
         bool CND=false, Grid=false;
         tmpArray = transArray[l].toArray();
-
         QString Type = tmpArray[0].toString();
         // Skip this operations when the model type doesn't much the operation type
         if(!Type.contains("_PAR"))
@@ -5786,13 +5785,16 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         tmp2["Fx"] = NewFxArray;
         tmp2["Fy"] = NewFyArray;
         tmp2["Fz"] = NewFzArray;
-        tmp2["Funct"]= FctArray;
-        tmp2["Const"]= ConstArray;
-        tmp2["Component"]= NewComponentArray;
         tmp2["Umin"]= NewFuminArray;
         tmp2["Umax"]= NewFumaxArray;
         tmp2["Vmin"]= NewFvminArray;
         tmp2["Vmax"]= NewFvmaxArray;
+
+
+
+        tmp2["Funct"]= FctArray;
+        tmp2["Const"]= ConstArray;
+        tmp2["Component"]= NewComponentArray;
         tmp2["Import"]= ImportArraytmp;
         if(Grid)
             tmp2["Grid"]= NewGridArray;
