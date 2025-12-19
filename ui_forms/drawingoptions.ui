@@ -22,7 +22,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MathMod-13.0</string>
+   <string>MathMod-13.1</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_31">
@@ -2225,9 +2225,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </attribute>
                             <layout class="QGridLayout" name="gridLayout_80">
                              <item row="0" column="0">
-                              <layout class="QHBoxLayout" name="horizontalLayout_58">
+                              <layout class="QHBoxLayout" name="horizontalLayout_60">
                                <item>
-                                <layout class="QVBoxLayout" name="verticalLayout_20">
+                                <layout class="QVBoxLayout" name="verticalLayout_13">
                                  <item>
                                   <layout class="QHBoxLayout" name="horizontalLayout_65">
                                    <item>
@@ -2286,10 +2286,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </layout>
                                  </item>
                                  <item>
-                                  <layout class="QHBoxLayout" name="horizontalLayout_63">
-                                   <property name="spacing">
-                                    <number>0</number>
-                                   </property>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_58">
                                    <item>
                                     <widget class="QCheckBox" name="FctOriginal_2">
                                      <property name="text">
@@ -2318,6 +2315,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                     </widget>
                                    </item>
                                   </layout>
+                                 </item>
+                                 <item>
+                                  <widget class="QCheckBox" name="Rawscript_2">
+                                   <property name="toolTip">
+                                    <string extracomment="no functions optimization for fast rendering"/>
+                                   </property>
+                                   <property name="text">
+                                    <string>Raw script (no script functions optimization)</string>
+                                   </property>
+                                  </widget>
                                  </item>
                                 </layout>
                                </item>
@@ -3294,6 +3301,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <layout class="QGridLayout" name="gridLayout_83">
                       <item row="0" column="0">
                        <widget class="QToolBox" name="EquaGenTool">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="currentIndex">
                          <number>0</number>
                         </property>
@@ -3375,6 +3388,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                <layout class="QHBoxLayout" name="horizontalLayout_34">
                                 <item>
                                  <widget class="QCheckBox" name="FctOriginal_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
                                   <property name="text">
                                    <string>Fct</string>
                                   </property>
@@ -3385,6 +3404,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 </item>
                                 <item>
                                  <widget class="QCheckBox" name="UpperFct_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
                                   <property name="text">
                                    <string>Fct+</string>
                                   </property>
@@ -3395,6 +3420,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 </item>
                                 <item>
                                  <widget class="QCheckBox" name="checkBoxBoundary">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
                                   <property name="text">
                                    <string>Boundary</string>
                                   </property>
