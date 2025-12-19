@@ -5810,7 +5810,7 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
     else {
     if(ObjType=="_ISO")
     {
-        bool ShowOriginalSurf, ShowUpperSurf, ShowBottomSurf ;
+        bool ShowOriginalSurf, ShowUpperSurf, ShowBottomSurf, RawScript ;
         for(int l=0; l<transArray.size(); l++)
         {
         QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
@@ -5829,6 +5829,7 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         ShowUpperSurf =  tmpArray[2].toBool();
         ShowBottomSurf =  tmpArray[3].toBool();
         T = tmpArray[4].toString();
+        RawScript =  tmpArray[5].toBool();
 
 
         tmp2= tmp3JsObj["Iso3D"].toObject();
@@ -5856,6 +5857,8 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
         Bool = ((ShowOriginalSurf) ? "1" : "0");
         ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
+        Bool = ((RawScript) ? "1" : "0");
+        ConstArray.append("RawScript_"+QString::number(ThCount)+"="+Bool);
         ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
         if(ThCount==1)
@@ -5904,12 +5907,6 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 
 
             QString ThExpression= "ThExpression_"+QString::number(ThCount);
-                    FctArray.append(ThExpression+"="+T);
-                    FctArray.append("R_fct="+ScalVar+"*x/sqrt(x*x+y*y+z*z)");
-                    FctArray.append("fffxyz"+I+"="+fxyzt);
-                    FctArray.append("DFFFx=((fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
-                    FctArray.append("DFFFy=((fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
-                    FctArray.append("DFFFz=((fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
             QString fct_raw="fffxyz_raw"+I+"=";
                     fct_raw+= "(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
                                                                                          "y+"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
@@ -5921,9 +5918,18 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
                                                                                            "t),(1)))";
                     fct_raw+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
 
-            QString fct="if(ShowRawScript=(1), "+fct_raw+"(x,y,z,t), "+fct_opt+"(x,y,z,t))";
-                    FctArray.append(fct);
-                    NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+            QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(ThCount)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
+
+            FctArray.append(ThExpression+"="+T);
+            FctArray.append("R_fct="+ScalVar+"*x/sqrt(x*x+y*y+z*z)");
+            FctArray.append("fffxyz"+I+"="+fxyzt);
+            FctArray.append("DFFFx=((fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
+            FctArray.append("DFFFy=((fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
+            FctArray.append("DFFFz=((fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
+            FctArray.append(fct_opt);
+            FctArray.append(fct_raw);
+            FctArray.append(fct);
+            NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
 
         }
         tmp2["Fxyz"] = NewFxyzArray;
@@ -5952,10 +5958,6 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
     QJsonArray tmpArray, transArray;
     QJsonObject tmpJsObj;
     QString T  = "";
-    bool ShowOriginalSurf = false,
-            ShowUpperSurf = false,
-            ShowBoumdarySurfs = false,
-            ShowBottomSurf = false;
 
     if(tmp["Iso3D"].isNull())
         tmp.remove("Iso3D");
@@ -5986,6 +5988,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
         tmpArray.append(ui.UpperFct_2->isChecked());
         tmpArray.append(ui.DownFct_2->isChecked());
         tmpArray.append(ui.ThicknessVal_2->text().replace(" ", ""));
+        tmpArray.append(ui.Rawscript_2->isChecked());
     }
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
