@@ -5487,7 +5487,6 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
         }
     }
 }
-
 bool DrawingOptions::FieldExistAndValid(QJsonObject  & myObject, QString fieldName)
 {
     if (myObject.contains(fieldName))
@@ -5946,10 +5945,15 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 
     }
     }
-
-
-
     tmp3JsObj["Operations"] = (mathObject["Operations"]).toObject();
+
+    QString strFromObj = QJsonDocument((mathObject["Operations"]).toObject()).toJson(QJsonDocument::Indented).toStdString().c_str();
+
+    if(ObjType=="_PAR")
+        ui.OperationsTextEditPAR->setText(strFromObj);
+    else if(ObjType=="_ISO")
+        ui.OperationsTextEditISO->setText(strFromObj);
+
     DrawJsonModel(tmp3JsObj);
     PreviousJsonObject(tmp3JsObj);
 }
@@ -5958,23 +5962,21 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
     QJsonArray tmpArray, transArray;
     QJsonObject tmpJsObj;
     QString T  = "";
-
     if(tmp["Iso3D"].isNull())
         tmp.remove("Iso3D");
     if(tmp["ParIso"].isNull())
         tmp.remove("ParIso");
-
-        //Look for an attached Transformations lists:
-        if(FieldExistAndValid(tmp,"Operations"))
-            tmpJsObj = tmp["Operations"].toObject();
-        else
-        {
-            tmpJsObj = tmp["Operations"].toObject();
-            tmp.remove("Operations");
-        }
-        transArray = tmpJsObj["OperationsList"].toArray();
-        if(type == "_PAR")
-        {
+    //Look for an attached Transformations lists:
+    if(FieldExistAndValid(tmp,"Operations"))
+        tmpJsObj = tmp["Operations"].toObject();
+    else
+    {
+        tmpJsObj = tmp["Operations"].toObject();
+        tmp.remove("Operations");
+    }
+    transArray = tmpJsObj["OperationsList"].toArray();
+    if(type == "_PAR")
+    {
         tmpArray.append("THICK_PAR_OP");
         tmpArray.append(ui.FctOriginal_1->isChecked());
         tmpArray.append(ui.UpperFct_1->isChecked());
@@ -6000,116 +6002,16 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
 }
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
-    THICK_OP(MathmodRef->RootObjet.CurrentJsonObject, "_PAR");
-    ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    THICK_OP(CurrentJsonObject, "_PAR");
+    ApplyOperations(CurrentJsonObject);
 }
 void DrawingOptions::on_SaveThButton_2_clicked()
 {
-    THICK_OP(MathmodRef->RootObjet.CurrentJsonObject, "_ISO");
-    ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    THICK_OP(CurrentJsonObject, "_ISO");
+    ApplyOperations(CurrentJsonObject);
 }
-
-/*
-void DrawingOptions::on_SaveThButton_2_clicked()
-{
-    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
-            CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
-    QJsonObject tmp,tmp2,tmp3;
-    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
-
-    MathmodRef->IsoObjet->Isoxyz.Previousaction = THICK;
-    MathmodRef->IsoObjet->IsoTh.ThExpression = ui.ThicknessVal_2->text().replace(" ", "");
-    MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf = ui.FctOriginal_2->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowUpperSurf = ui.UpperFct_2->isChecked();
-    MathmodRef->IsoObjet->IsoTh.ShowBottomSurf = ui.DownFct_2->isChecked();
-    tmp = MathmodRef->RootObjet.CurrentJsonObject;
-    if(!tmp["ParIso"].isNull())
-    {
-        MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
-        return;
-    }
-    tmp2= tmp["Iso3D"].toObject();
-    FxyzArray = tmp2["Fxyz"].toArray();
-    FctArray = tmp2["Funct"].toArray();
-    ConstArraytmp = tmp2["Const"].toArray();
-    tmp2.remove("Import");
-    ImportArraytmp.append("All");
-    int ThCount=0;
-    for (int i = 0; i < ConstArraytmp.size(); ++i)
-    {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
-        {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
-        }
-        else
-            ConstArray.append(ConstArraytmp[i].toString());
-    }
-    ThCount = ThCount+1;
-    ConstArray.append("ThCount="+QString::number(ThCount));
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowBottomSurf) ? "1" : "0");
-    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowUpperSurf) ? "1" : "0");
-    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((MathmodRef->IsoObjet->IsoTh.ShowOriginalSurf) ? "1" : "0");
-    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
-    ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
-    if(ThCount==1)
-    {
-        ConstArray.append("epsilon=1/100000");
-    }
-    //Add Slider
-    tmp3 = tmp["Sliders"].toObject();
-    SlidersArray = tmp3["Name"].toArray();
-    SlidersArray.append("ScalVar_"+QString::number(ThCount));
-    tmp3["Name"] = SlidersArray;
-    SlidersArray = tmp3["Position"].toArray();
-    SlidersArray.append("60");
-    tmp3["Position"] = SlidersArray;
-    SlidersArray = tmp3["Max"].toArray();
-    SlidersArray.append("100");
-    tmp3["Max"] = SlidersArray;
-    SlidersArray = tmp3["Min"].toArray();
-    SlidersArray.append("-100");
-    tmp3["Min"] = SlidersArray;
-    SlidersArray = tmp3["Step"].toArray();
-    SlidersArray.append("1");
-    tmp3["Step"] = SlidersArray;
-    tmp["Sliders"] = tmp3;
-    QString T = MathmodRef->IsoObjet->IsoTh.ThExpression;
-    for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
-    {
-        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
-        QString fxyzt=FxyzArray.at(i).toString();
-        QString fct("fffxyz"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-                fct+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-                fct+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-        FctArray.append("fffxyz"+I+"="+fxyzt);
-        FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
-        FctArray.append(fct);
-        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
-    }
-    tmp2["Fxyz"] = NewFxyzArray;
-    tmp2["Funct"]= FctArray;
-    tmp2["Const"]= ConstArray;
-    tmp2["Import"]= ImportArraytmp;
-    if (!tmp2["Vect"].isArray())
-    {
-        (Vetc=tmp2["Vect"].toArray()).append("4");
-        tmp2["Vect"]= Vetc;
-    }
-    //tmp2["Import"] = ImportArraytmp;
-    tmp["Iso3D"] = tmp2;
-    DrawJsonModel(tmp);
-    PreviousJsonObject(tmp);
-}
-
-
-*/
 
 void DrawingOptions::on_UndoPushButton_clicked()
 {
@@ -6123,8 +6025,7 @@ void DrawingOptions::on_RedoPushButton_clicked()
 
 void DrawingOptions::on_RedoPushButton_0_clicked()
 {
-    //on_actionRedo_triggered();
-    ApplyOperations(MathmodRef->RootObjet.CurrentJsonObject);
+    on_actionRedo_triggered();
 }
 
 void DrawingOptions::on_UndopushButton_0_clicked()
@@ -6132,3 +6033,14 @@ void DrawingOptions::on_UndopushButton_0_clicked()
     on_actionUndo_triggered();
 }
 
+void DrawingOptions::on_RegenerateButtonISO_clicked()
+{
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    ApplyOperations(CurrentJsonObject);
+}
+
+void DrawingOptions::on_RegenerateButtonPAR_clicked()
+{
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    ApplyOperations(CurrentJsonObject);
+}
