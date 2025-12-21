@@ -6035,12 +6035,38 @@ void DrawingOptions::on_UndopushButton_0_clicked()
 
 void DrawingOptions::on_RegenerateButtonISO_clicked()
 {
-    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    ApplyOperations(CurrentJsonObject);
+    QJsonParseError err;
+    QString script = ui.OperationsTextEditISO->toPlainText().trimmed().replace("\n","").replace("\t","");
+    QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
+    if (err.error)
+    {
+        ShowErrorMessage(err, script);
+        return;
+    }
+    QJsonObject tmp = doc.object();
+    if (tmp["OriginalObj"].isObject() && tmp["OperationsList"].isArray())
+    {
+        QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+        CurrentJsonObject["Operations"]=tmp;
+        ApplyOperations(CurrentJsonObject);
+    }
 }
 
 void DrawingOptions::on_RegenerateButtonPAR_clicked()
 {
-    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    ApplyOperations(CurrentJsonObject);
+    QJsonParseError err;
+    QString script = ui.OperationsTextEditPAR->toPlainText().trimmed().replace("\n","").replace("\t","");
+    QJsonDocument doc = QJsonDocument::fromJson(script.toUtf8(), &err);
+    if (err.error)
+    {
+        ShowErrorMessage(err, script);
+        return;
+    }
+    QJsonObject tmp = doc.object();
+    if (tmp["OriginalObj"].isObject() && tmp["OperationsList"].isArray())
+    {
+        QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+        CurrentJsonObject["Operations"]=tmp;
+        ApplyOperations(CurrentJsonObject);
+    }
 }
