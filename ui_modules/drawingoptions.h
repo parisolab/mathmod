@@ -370,6 +370,10 @@ private slots:
     void THICK_OP(QJsonObject &, QString);
     void on_RegenerateButtonISO_clicked();
     void on_RegenerateButtonPAR_clicked();
+    void ApplyParOperation(QJsonObject &, QJsonArray &);
+    void ApplyIsoOperation(QJsonObject &, QJsonArray &);
+    void ApplyThiParOperation(QJsonObject &, QJsonArray &);
+    void ApplyThiIsoOperation(QJsonObject &, QJsonArray &);
 };
 
 #endif
