@@ -5477,12 +5477,12 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
             if(tmpArray[0].toString().contains("_PAR"))
             {
                 MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
-                MathmodRef->ParObjet->OperationsTree[i]->loadOperation(tmpArray);
+                MathmodRef->ParObjet->OperationsTree[MathmodRef->ParObjet->OperationsTree.size()-1]->loadOperation(tmpArray);
             }
             else if(tmpArray[0].toString().contains("_ISO"))
                 {
                     MathmodRef->IsoObjet->OperationsTree.push_back(std::make_shared<IsoThickness>());
-                    MathmodRef->IsoObjet->OperationsTree[i]->loadOperation(tmpArray);
+                    MathmodRef->IsoObjet->OperationsTree[MathmodRef->IsoObjet->OperationsTree.size()-1]->loadOperation(tmpArray);
                 }
         }
     }
