@@ -439,7 +439,7 @@ void DrawingOptions::UpdateScriptEditorAndTreeObject()
     if (ShowCurrentObjectTree)
         UpdateTreeObject();
     // Update the "Script Edit" page
-    ui.ScriptEditor->setText(MathmodRef->RootObjet.CurrentTreestruct.text);
+    ui.ScriptEditor->setText(MathmodRef->RootObjet.CurrentTreestruct.text.replace("\"\n", "\"").replace("[\n", "[").replace("[           ", "[").replace("        ]", "]"));
     // Update the "Model Details" page
     if (MathmodRef->RootObjet.CurrentJsonObject["ParIso"].isArray())
     {
