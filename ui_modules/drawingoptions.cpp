@@ -5983,7 +5983,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
     transArray = tmpJsObj["OperationsList"].toArray();
     if(type == "_PAR")
     {
-        tmpArray.append("THICK_PAR_OP");
+        tmpArray.append("THICK_PAR_ALL");
         tmpArray.append(ui.FctOriginal_1->isChecked());
         tmpArray.append(ui.UpperFct_1->isChecked());
         tmpArray.append(ui.checkBoxBoundary->isChecked());
@@ -5991,7 +5991,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
     }
     else if(type == "_ISO")
     {
-        tmpArray.append("THICK_ISO_OP");
+        tmpArray.append("THICK_ISO_ALL");
         tmpArray.append(ui.FctOriginal_2->isChecked());
         tmpArray.append(ui.UpperFct_2->isChecked());
         tmpArray.append(ui.DownFct_2->isChecked());
