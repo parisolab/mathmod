@@ -5878,6 +5878,7 @@ void DrawingOptions::ApplyIsoOperation(QJsonObject & OriginalObj, QJsonArray &Op
     {
         Operation = OperationsList[l].toArray();
         QString Type = Operation[0].toString();
+        QStringList TypeInfos= Type.split("_",Qt::SkipEmptyParts);
         // Skip this operations when the model type doesn't much the operation type
         if(!Type.contains("_ISO"))
             continue;
@@ -5894,6 +5895,7 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
     {
         Operation = OperationsList[l].toArray();
         QString Type = Operation[0].toString();
+        QStringList TypeInfos= Type.split("_",Qt::SkipEmptyParts);
         // Skip this operations when the model type doesn't much the operation type
         if(!Type.contains("_PAR"))
             continue;
