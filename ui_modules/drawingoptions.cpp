@@ -5907,15 +5907,15 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
 //Takes the operations list in mathobject and apply them to "OriginalObj" script
 void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
 {
-    QJsonObject OriginalObj;
-    QJsonArray OperationsList;
+    QJsonObject OriginalObj=((mathObject["Operations"]).toObject())["OriginalObj"].toObject();
+    QJsonArray OperationsList=((mathObject["Operations"]).toObject())["OperationsList"].toArray();
     QString ObjType="";
-    if(FieldExistAndValid(mathObject,"Param3D_C") || FieldExistAndValid(mathObject,"Param4D_C"))
+    if(FieldExistAndValid(OriginalObj,"Param3D_C") || FieldExistAndValid(OriginalObj,"Param4D_C"))
     {
         MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
         return;
     }
-    if(FieldExistAndValid(mathObject,"ParIso"))
+    if(FieldExistAndValid(OriginalObj,"ParIso"))
     {
         MemoryErrorMsg(PARISO_OBJ_UNSUPPORTED);
         return;
@@ -5925,11 +5925,6 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         MemoryErrorMsg(EMPTY_OP_LIST);
         return;
     }
-    mathObject.remove("ParIso");
-    mathObject.remove("Param3D_C");
-    mathObject.remove("Param4D_C");
-    OriginalObj = ((mathObject["Operations"]).toObject())["OriginalObj"].toObject();
-    OperationsList = ((mathObject["Operations"]).toObject())["OperationsList"].toArray();
     if(FieldExistAndValid(OriginalObj,"Param3D"))
     {
         ObjType="_PAR";
@@ -5941,7 +5936,10 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
             ObjType="_ISO";
         }
         else
+        {
+            MemoryErrorMsg(UNKOWN_MATH_OBJECT);
             return;
+        }
     }
     if(ObjType=="_PAR")
     {
@@ -6054,7 +6052,7 @@ void DrawingOptions::on_RegenerateButtonISO_clicked()
     QJsonObject tmp = doc.object();
     if (tmp["OriginalObj"].isObject() && tmp["OperationsList"].isArray())
     {
-        QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+        QJsonObject CurrentJsonObject= MathmodRef->RootObjet.CurrentJsonObject; //= tmp["OriginalObj"].toObject();
         CurrentJsonObject["Operations"]=tmp;
         ApplyOperations(CurrentJsonObject);
     }
