@@ -5905,11 +5905,13 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
     }
 }
 //Takes the operations list in mathobject and apply them to "OriginalObj" script
-void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
+void DrawingOptions::ApplyOperations(QJsonObject mathObject)
 {
     QJsonObject OriginalObj=((mathObject["Operations"]).toObject())["OriginalObj"].toObject();
     QJsonArray OperationsList=((mathObject["Operations"]).toObject())["OperationsList"].toArray();
     QString ObjType="";
+    QString strFromObj = QJsonDocument((mathObject["Operations"]).toObject()).toJson(QJsonDocument::Indented).toStdString().c_str();
+
     if(FieldExistAndValid(OriginalObj,"Param3D_C") || FieldExistAndValid(OriginalObj,"Param4D_C"))
     {
         MemoryErrorMsg(COMPLEX_FCTS_UNSUPPORTED);
@@ -5925,15 +5927,18 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
         MemoryErrorMsg(EMPTY_OP_LIST);
         return;
     }
+    OriginalObj["Operations"] = (mathObject["Operations"]).toObject();
     if(FieldExistAndValid(OriginalObj,"Param3D"))
     {
-        ObjType="_PAR";
+        ApplyParOperation(OriginalObj, OperationsList);
+        ui.OperationsTextEditPAR->setText(strFromObj.replace("[\n", "[").replace("[                ", "[").replace("            ]", "]").replace("\n]", "]").replace("\t", "").replace("[            ", "["));
     }
     else
     {
         if(FieldExistAndValid(OriginalObj,"Iso3D"))
         {
-            ObjType="_ISO";
+            ApplyIsoOperation(OriginalObj, OperationsList);
+            ui.OperationsTextEditISO->setText(strFromObj.replace("[\n", "[").replace("[                ", "[").replace("            ]", "]").replace("\n]", "]").replace("\t", "").replace("[            ", "["));
         }
         else
         {
@@ -5941,25 +5946,6 @@ void DrawingOptions::ApplyOperations(QJsonObject & mathObject)
             return;
         }
     }
-    if(ObjType=="_PAR")
-    {
-        ApplyParOperation(OriginalObj, OperationsList);
-    }
-    else {
-    if(ObjType=="_ISO")
-    {
-        ApplyIsoOperation(OriginalObj, OperationsList);
-    }
-    }
-    OriginalObj["Operations"] = (mathObject["Operations"]).toObject();
-
-    QString strFromObj = QJsonDocument((mathObject["Operations"]).toObject()).toJson(QJsonDocument::Indented).toStdString().c_str();
-
-    if(ObjType=="_PAR")
-        ui.OperationsTextEditPAR->setText(strFromObj);
-    else if(ObjType=="_ISO")
-        ui.OperationsTextEditISO->setText(strFromObj);
-
     DrawJsonModel(OriginalObj);
     PreviousJsonObject(OriginalObj);
 }

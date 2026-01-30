@@ -365,7 +365,7 @@ private slots:
     void on_RedoPushButton_0_clicked();
     void on_UndopushButton_0_clicked();
     void loadOperations (QJsonObject);
-    void ApplyOperations(QJsonObject &);
+    void ApplyOperations(QJsonObject);
     bool FieldExistAndValid(QJsonObject  &, QString);
     void THICK_OP(QJsonObject &, QString);
     void on_RegenerateButtonISO_clicked();
