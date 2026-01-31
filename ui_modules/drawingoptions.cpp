@@ -5938,7 +5938,7 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
         if(FieldExistAndValid(OriginalObj,"Iso3D"))
         {
             ApplyIsoOperation(OriginalObj, OperationsList);
-            ui.OperationsTextEditISO->setText(strFromObj.replace("[\n", "[").replace("[                ", "[").replace("            ]", "]").replace("\n]", "]").replace("\t", "").replace("[            ", "["));
+            ui.OperationsTextEditISO->setText(strFromObj.replace("[\n                ", "[").replace("[                ", "[").replace("            ]", "]").replace("\n]", "]").replace("\t", "").replace("[            ", "["));
         }
         else
         {
