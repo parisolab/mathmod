@@ -5931,7 +5931,7 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
     if(FieldExistAndValid(OriginalObj,"Param3D"))
     {
         ApplyParOperation(OriginalObj, OperationsList);
-        ui.OperationsTextEditPAR->setText(strFromObj.replace("[\n", "[").replace("[                ", "[").replace("            ]", "]").replace("\n]", "]").replace("\t", "").replace("[            ", "["));
+        ui.OperationsTextEditPAR->setText(strFromObj.replace("[\n                ", "[").replace("[                ", "[").replace("            ]", "]").replace("\n]", "]").replace("\t", "").replace("[            ", "["));
     }
     else
     {
