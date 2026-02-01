@@ -5632,7 +5632,8 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
     bool CND=false, Grid=false;
-
+    //QString Type = Operation[0].toString();
+    QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     ShowOriginalSurf =  Operation[1].toBool();
     ShowUpperSurf =  Operation[2].toBool();
     ShowBoumdarySurfs =  Operation[3].toBool();
@@ -5894,13 +5895,13 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
     for(int l=0; l<OperationsList.size(); l++)
     {
         Operation = OperationsList[l].toArray();
-        QString Type = Operation[0].toString();
-        QStringList TypeInfos= Type.split("_",Qt::SkipEmptyParts);
+        //QString Type = Operation[0].toString();
+        QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
         // Skip this operations when the model type doesn't much the operation type
-        if(!Type.contains("_PAR"))
+        if(TypeInfos[1] != "PAR")
             continue;
         // End Skip
-        if(Type.contains("THICK_"))
+        if(TypeInfos[0] != "THICK")
             ApplyThiParOperation(OriginalObj, Operation);
     }
 }
