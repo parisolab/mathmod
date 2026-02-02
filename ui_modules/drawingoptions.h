@@ -374,6 +374,7 @@ private slots:
     void ApplyIsoOperation(QJsonObject &, QJsonArray &);
     void ApplyThiParOperation(QJsonObject &, QJsonArray &);
     void ApplyThiIsoOperation(QJsonObject &, QJsonArray &);
+    bool ApplyOpToComponent(int, QStringList &);
 };
 
 #endif

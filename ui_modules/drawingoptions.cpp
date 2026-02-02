@@ -5617,6 +5617,18 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         OriginalObj["Iso3D"] = tmp2;
     }
 }
+bool DrawingOptions::ApplyOpToComponent(int ComponentId, QStringList & ComponentList)
+{
+    bool ok=false;
+    int cpId=0;
+    for(int i=0; i<ComponentList.size(); i++)
+    {
+        cpId=ComponentList[i].toInt(&ok, 10);
+        if(ok && ComponentId==cpId)
+            return true;
+    }
+    return false;
+}
 void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
     bool ShowOriginalSurf, ShowUpperSurf, ShowBoumdarySurfs ;
@@ -5632,8 +5644,9 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
     bool CND=false, Grid=false;
-    //QString Type = Operation[0].toString();
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
+    bool ALL= TypeInfos.contains("ALL");
+    bool IncludeComponent = false;
     ShowOriginalSurf =  Operation[1].toBool();
     ShowUpperSurf =  Operation[2].toBool();
     ShowBoumdarySurfs =  Operation[3].toBool();
@@ -5700,6 +5713,8 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     uint componentNumber = ComponentArray.size();
     for(uint i=0; i<componentNumber; i++)
     {
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         QString I=QString::number(ThCount)+"_"+QString::number(i);
         QString Umin="Umin_"+I;
         QString Umax="Umax_"+I;
@@ -5727,7 +5742,7 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
         ConstArray.append("Umax_"+I+"="+FumaxArray.at(i).toString());
         ConstArray.append("Vmin_"+I+"="+FvminArray.at(i).toString());
         ConstArray.append("Vmax_"+I+"="+FvmaxArray.at(i).toString());
-        if(ShowOriginalSurf)
+        if(ShowOriginalSurf || !ALL)
         {
             NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
@@ -5745,7 +5760,7 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
                 NewGridArray.append(GridArray.at(2*i+1));
             }
         }
-        if(ShowUpperSurf)
+        if((ShowUpperSurf && ALL) || (ShowUpperSurf && (!ALL && IncludeComponent)))
         {
             FctArray.append("FFFx_Up"+I+"=FFFx_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
             FctArray.append("FFFy_Up"+I+"=FFFy_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
@@ -5766,7 +5781,7 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
                 NewGridArray.append(GridArray.at(2*i+1).toString());
             }
         }
-        if(ShowBoumdarySurfs)
+        if((ShowBoumdarySurfs && ALL) || (ShowUpperSurf && (!ALL && IncludeComponent)))
         {
             FctArray.append("FFFx_Right"+I+"=FFFx_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
             FctArray.append("FFFy_Right"+I+"=FFFy_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
@@ -5878,13 +5893,12 @@ void DrawingOptions::ApplyIsoOperation(QJsonObject & OriginalObj, QJsonArray &Op
     for(int l=0; l<OperationsList.size(); l++)
     {
         Operation = OperationsList[l].toArray();
-        QString Type = Operation[0].toString();
-        QStringList TypeInfos= Type.split("_",Qt::SkipEmptyParts);
+        QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
         // Skip this operations when the model type doesn't much the operation type
-        if(!Type.contains("_ISO"))
+        if(!TypeInfos.contains("ISO"))
             continue;
         // End Skip
-        if(Type.contains("THICK_"))
+        if(TypeInfos.contains("THICK"))
             ApplyThiIsoOperation(OriginalObj, Operation);
     }
 }
@@ -5895,13 +5909,12 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
     for(int l=0; l<OperationsList.size(); l++)
     {
         Operation = OperationsList[l].toArray();
-        //QString Type = Operation[0].toString();
         QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
         // Skip this operations when the model type doesn't much the operation type
-        if(TypeInfos[1] != "PAR")
+        if(!TypeInfos.contains("PAR"))
             continue;
         // End Skip
-        if(TypeInfos[0] != "THICK")
+        if(TypeInfos.contains("THICK"))
             ApplyThiParOperation(OriginalObj, Operation);
     }
 }
