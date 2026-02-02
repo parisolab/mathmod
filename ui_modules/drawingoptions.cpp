@@ -743,6 +743,8 @@ QString DrawingOptions::MandatoryIsoFieldToQString(const MandatoryIsoField &idx)
 bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const MandatoryIsoField &idx)
 {
     QString arg = MandatoryIsoFieldToQString(idx);
+    if(QObj[arg].toArray().empty())
+        return false;
     for(int i=0; i<(QObj[arg].toArray()).size(); i++)
     {
         if((QObj[arg].toArray())[i].toString().replace(" ","") == "")
@@ -756,7 +758,6 @@ bool DrawingOptions::VerifyIsoFieldEmptySpace(const QJsonObject &QObj, const Man
 bool DrawingOptions::VerifyParFieldEmptySpace(const QJsonObject &QObj, const MandatoryParField &idx)
 {
     QString arg = MandatoryParFieldToQString(idx);
-
     if(QObj[arg].toArray().empty())
         return false;
     for(int i=0; i<(QObj[arg].toArray()).size(); i++)
@@ -3395,7 +3396,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             if ((ui.isoNameEdit->toPlainText()).replace(" ", "") == "")
             {
                 for(uint ui=0; ui<MandatoryIsosurfaceFields.size(); ui++)
-                    removeat(IndexcurrentComponent, copyCurrentObject2, MandatoryIsosurfaceFields[ui]);
+                    if(MandatoryIsosurfaceFields[ui] != "Name")
+                        removeat(IndexcurrentComponent, copyCurrentObject2, MandatoryIsosurfaceFields[ui]);
 
                 removeat2(IndexcurrentComponent, copyCurrentObject2, "Grid");
                 removeat2(IndexcurrentComponent, copyCurrentObject2, "Cnd");
@@ -3513,7 +3515,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             if ((ui.paramNameEdit->toPlainText()).replace(" ", "") == "")
             {
                 for(uint ui=0; ui<MandatoryParmetric3DFields.size(); ui++)
-                    removeat(IndexcurrentComponent, copyCurrentObject2, MandatoryParmetric3DFields[ui]);
+                    if(MandatoryParmetric3DFields[ui] != "Name")
+                        removeat(IndexcurrentComponent, copyCurrentObject2, MandatoryParmetric3DFields[ui]);
                 removeat2(2*IndexcurrentComponent, copyCurrentObject2, "Grid");
                 removeat2(2*IndexcurrentComponent, copyCurrentObject2, "Grid");
                 removeat2(IndexcurrentComponent, copyCurrentObject2, "Cnd");
@@ -3661,7 +3664,8 @@ void DrawingOptions::on_updateJObject(QJsonObject &copyCurrentObject)
             if ((ui.paramNameEdit_2->toPlainText()).replace(" ", "") == "")
             {
                 for(uint ui=0; ui<MandatoryParmetric4DFields.size(); ui++)
-                    removeat(IndexcurrentComponent, copyCurrentObject2, MandatoryParmetric4DFields[ui]);
+                    if(MandatoryParmetric4DFields[ui] != "Name")
+                        removeat(IndexcurrentComponent, copyCurrentObject2, MandatoryParmetric4DFields[ui]);
                 removeat2(2*IndexcurrentComponent, copyCurrentObject2, "Grid");
                 removeat2(2*IndexcurrentComponent, copyCurrentObject2, "Grid");
                 if(copyCurrentObject["Param4D"].isObject())
