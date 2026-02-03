@@ -5516,6 +5516,9 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     QJsonObject tmp2,tmp3;
     QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
     QString T = "";
+    QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
+    bool ALL= TypeInfos.contains("ALL");
+    bool IncludeComponent = false;
 
     ShowOriginalSurf =  Operation[1].toBool();
     ShowUpperSurf =  Operation[2].toBool();
@@ -5572,30 +5575,56 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     SlidersArray.append("1");
     tmp3["Step"] = SlidersArray;
     OriginalObj["Sliders"] = tmp3;
+    QString ShowUpperSurfStr, ShowBottomSurfStr, ShowOriginalSurfStr;
+    QString ShowUpperSurfRawStr, ShowBottomSurfRawStr, ShowOriginalSurfRawStr;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
+        QString ThExpression= "ThExpression_"+QString::number(ThCount);
         QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
         QString fxyzt=FxyzArray.at(i).toString();
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
+
+        if((ShowUpperSurf && ALL) || (ShowUpperSurf && (!ALL && IncludeComponent)))
+        {
+                ShowUpperSurfRawStr = "(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
+                                                                                                                    "y+"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
+                                                                                                                    "z+"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
+                                                                                                                    "t), (1)))";
+                ShowUpperSurfStr = "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+        }
+        else
+            ShowUpperSurfStr = ShowUpperSurfRawStr = "";
+
+        if((ShowBottomSurf && ALL) || (ShowBottomSurf && (!ALL && IncludeComponent)))
+        {
+                ShowBottomSurfRawStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
+                                                                                                                       "y-"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
+                                                                                                                       "z-"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
+                                                                                                                       "t),(1)))";
+                ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+        }
+        else
+            ShowBottomSurfStr = ShowBottomSurfRawStr = "";
+
+        if(ShowOriginalSurf || !ALL)
+        {
+            ShowOriginalSurfStr = ShowOriginalSurfRawStr = "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+        }
+        else
+            ShowOriginalSurfStr = ShowOriginalSurfRawStr = "";
 
         QString fct_opt("fffxyz_opt"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-                fct_opt+= "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
-                fct_opt+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-                fct_opt+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-
-        QString ThExpression= "ThExpression_"+QString::number(ThCount);
+                fct_opt+= ShowUpperSurfStr;
+                fct_opt+= ShowBottomSurfStr;
+                fct_opt+= ShowOriginalSurfStr;
         QString fct_raw="fffxyz_raw"+I+"=";
-                fct_raw+= "(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
-                                                                                     "y+"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
-                                                                                     "z+"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
-                                                                                     "t), (1)))";
-                fct_raw+= "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
-                                                                                       "y-"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
-                                                                                       "z-"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
-                                                                                       "t),(1)))";
-                fct_raw+= "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+                fct_raw+= ShowUpperSurfRawStr;
+                fct_raw+= ShowBottomSurfRawStr;
+                fct_raw+= ShowOriginalSurfRawStr;
 
         QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(ThCount)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
 
