@@ -5585,9 +5585,20 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         if(!ALL)
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
 
-        if((ShowUpperSurf && ALL) || (ShowUpperSurf && (!ALL && IncludeComponent)))
+        if(ALL || (!ALL && IncludeComponent))
         {
-                ShowUpperSurfRawStr = "(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
+            ShowOriginalSurfStr = "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+            ShowOriginalSurfRawStr = "(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+        }
+        else
+        {
+            ShowOriginalSurfStr = "*(fffxyz"+I+"(x,y,z,t))";
+            ShowOriginalSurfRawStr = "(fffxyz"+I+"(x,y,z,t))";
+        }
+
+        if(ALL || (!ALL && IncludeComponent))
+        {
+                ShowUpperSurfRawStr = "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
                                                                                                                     "y+"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
                                                                                                                     "z+"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
                                                                                                                     "t), (1)))";
@@ -5596,35 +5607,29 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         else
             ShowUpperSurfStr = ShowUpperSurfRawStr = "";
 
-        if((ShowBottomSurf && ALL) || (ShowBottomSurf && (!ALL && IncludeComponent)))
+        if(ALL || (!ALL && IncludeComponent))
         {
-                ShowBottomSurfRawStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
+            ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+            ShowBottomSurfRawStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
                                                                                                                        "y-"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
                                                                                                                        "z-"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
                                                                                                                        "t),(1)))";
-                ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
         }
         else
             ShowBottomSurfStr = ShowBottomSurfRawStr = "";
-
-        if(ShowOriginalSurf || !ALL)
-        {
-            ShowOriginalSurfStr = ShowOriginalSurfRawStr = "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-        }
-        else
-            ShowOriginalSurfStr = ShowOriginalSurfRawStr = "";
 
         QString fct_opt("fffxyz_opt"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-                fct_opt+= ShowUpperSurfStr;
-                fct_opt+= ShowBottomSurfStr;
-                fct_opt+= ShowOriginalSurfStr;
+        fct_opt+= ShowOriginalSurfStr;
+        fct_opt+= ShowUpperSurfStr;
+        fct_opt+= ShowBottomSurfStr;
+
         QString fct_raw="fffxyz_raw"+I+"=";
-                fct_raw+= ShowUpperSurfRawStr;
-                fct_raw+= ShowBottomSurfRawStr;
-                fct_raw+= ShowOriginalSurfRawStr;
+        fct_raw+= ShowOriginalSurfRawStr;
+        fct_raw+= ShowUpperSurfRawStr;
+        fct_raw+= ShowBottomSurfRawStr;
 
         QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(ThCount)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
 
