@@ -5444,7 +5444,6 @@ void DrawingOptions::on_actionbox_triggered()
     MathmodRef->boundingboxOk();
     MathmodRef->update();
 }
-
 void DrawingOptions::on_actionUndo_triggered()
 {
     if(MathmodRef->RootObjet.IndexCurrentJsonObject>0)
@@ -5506,11 +5505,9 @@ bool DrawingOptions::FieldExistAndValid(QJsonObject  & myObject, QString fieldNa
     }
     return false;
 }
-
 void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
     bool ShowOriginalSurf, ShowUpperSurf, ShowBottomSurf, RawScript ;
-
     QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
             CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
     QJsonObject tmp2,tmp3;
@@ -5897,7 +5894,6 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
             }
         }
     }
-
     tmp2["Fx"] = NewFxArray;
     tmp2["Fy"] = NewFyArray;
     tmp2["Fz"] = NewFzArray;
@@ -6051,27 +6047,22 @@ void DrawingOptions::on_SaveThButton_2_clicked()
     THICK_OP(CurrentJsonObject, "_ISO");
     ApplyOperations(CurrentJsonObject);
 }
-
 void DrawingOptions::on_UndoPushButton_clicked()
 {
     on_actionUndo_triggered();
 }
-
 void DrawingOptions::on_RedoPushButton_clicked()
 {
     on_actionRedo_triggered();
 }
-
 void DrawingOptions::on_RedoPushButton_0_clicked()
 {
     on_actionRedo_triggered();
 }
-
 void DrawingOptions::on_UndopushButton_0_clicked()
 {
     on_actionUndo_triggered();
 }
-
 void DrawingOptions::on_RegenerateButtonISO_clicked()
 {
     QJsonParseError err;
@@ -6090,7 +6081,6 @@ void DrawingOptions::on_RegenerateButtonISO_clicked()
         ApplyOperations(CurrentJsonObject);
     }
 }
-
 void DrawingOptions::on_RegenerateButtonPAR_clicked()
 {
     QJsonParseError err;
