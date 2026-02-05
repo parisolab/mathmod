@@ -5622,14 +5622,9 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-        fct_opt+= ShowOriginalSurfStr;
-        fct_opt+= ShowUpperSurfStr;
-        fct_opt+= ShowBottomSurfStr;
+        fct_opt+= ShowOriginalSurfStr+ShowUpperSurfStr+ShowBottomSurfStr;
 
-        QString fct_raw="fffxyz_raw"+I+"=";
-        fct_raw+= ShowOriginalSurfRawStr;
-        fct_raw+= ShowUpperSurfRawStr;
-        fct_raw+= ShowBottomSurfRawStr;
+        QString fct_raw="fffxyz_raw"+I+"="+ShowOriginalSurfRawStr+ShowUpperSurfRawStr+ShowBottomSurfRawStr;
 
         QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(ThCount)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
 
