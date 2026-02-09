@@ -5511,7 +5511,7 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
             CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
     QJsonObject tmp2,tmp3;
-    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ScalVar;
+    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ThickVar;
     QString T = "";
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
@@ -5548,8 +5548,8 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
     Bool = ((RawScript) ? "1" : "0");
     ConstArray.append("RawScript_"+QString::number(ThCount)+"="+Bool);
-    ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
+    ThickVar    = "((ThickVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("ThickVar_"+QString::number(ThCount)+" = 60");
     if(ThCount==1)
     {
         ConstArray.append("epsilon=1/100000");
@@ -5557,7 +5557,7 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     //Add Slider
     tmp3 = OriginalObj["Sliders"].toObject();
     SlidersArray = tmp3["Name"].toArray();
-    SlidersArray.append("ScalVar_"+QString::number(ThCount));
+    SlidersArray.append("ThickVar_"+QString::number(ThCount));
     tmp3["Name"] = SlidersArray;
     SlidersArray = tmp3["Position"].toArray();
     SlidersArray.append("60");
@@ -5617,12 +5617,12 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         QString fct_opt("fffxyz_opt"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((3),("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                    "*psh((3),("+ThickVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
         fct_opt+= ShowOriginalSurfStr+ShowUpperSurfStr+ShowBottomSurfStr;
         QString fct_raw="fffxyz_raw"+I+"="+ShowOriginalSurfRawStr+ShowUpperSurfRawStr+ShowBottomSurfRawStr;
         QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(ThCount)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
         FctArray.append(ThExpression+"="+T);
-        FctArray.append("R_fct="+ScalVar+"*x/sqrt(x*x+y*y+z*z)");
+        FctArray.append("R_fct="+ThickVar+"*x/sqrt(x*x+y*y+z*z)");
         FctArray.append("fffxyz"+I+"="+fxyzt);
         FctArray.append("DFFFx=((fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
         FctArray.append("DFFFy=((fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
