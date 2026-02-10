@@ -2207,12 +2207,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </attribute>
                         <layout class="QGridLayout" name="gridLayout_84">
                          <item row="0" column="0">
-                          <widget class="QToolBox" name="toolBox_3">
+                          <widget class="QToolBox" name="EquationGen">
                            <property name="sizePolicy">
                             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
+                           </property>
+                           <property name="layoutDirection">
+                            <enum>Qt::LeftToRight</enum>
                            </property>
                            <property name="currentIndex">
                             <number>0</number>
@@ -2424,6 +2427,146 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </item>
                             </layout>
                            </widget>
+                           <widget class="QWidget" name="IsoScal">
+                            <attribute name="label">
+                             <string>Scal</string>
+                            </attribute>
+                            <layout class="QGridLayout" name="gridLayout_86">
+                             <item row="0" column="0">
+                              <layout class="QHBoxLayout" name="horizontalLayout_63">
+                               <property name="spacing">
+                                <number>-1</number>
+                               </property>
+                               <property name="leftMargin">
+                                <number>1</number>
+                               </property>
+                               <property name="rightMargin">
+                                <number>1</number>
+                               </property>
+                               <property name="bottomMargin">
+                                <number>1</number>
+                               </property>
+                               <item>
+                                <layout class="QVBoxLayout" name="verticalLayout_15">
+                                 <item>
+                                  <widget class="QScrollBar" name="SxScrollBar">
+                                   <property name="minimum">
+                                    <number>-100</number>
+                                   </property>
+                                   <property name="maximum">
+                                    <number>200</number>
+                                   </property>
+                                   <property name="value">
+                                    <number>60</number>
+                                   </property>
+                                   <property name="orientation">
+                                    <enum>Qt::Horizontal</enum>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QScrollBar" name="SyScrollBar">
+                                   <property name="minimum">
+                                    <number>-100</number>
+                                   </property>
+                                   <property name="maximum">
+                                    <number>200</number>
+                                   </property>
+                                   <property name="value">
+                                    <number>60</number>
+                                   </property>
+                                   <property name="orientation">
+                                    <enum>Qt::Horizontal</enum>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <widget class="QScrollBar" name="SzScrollBar">
+                                   <property name="minimum">
+                                    <number>-100</number>
+                                   </property>
+                                   <property name="maximum">
+                                    <number>200</number>
+                                   </property>
+                                   <property name="value">
+                                    <number>60</number>
+                                   </property>
+                                   <property name="orientation">
+                                    <enum>Qt::Horizontal</enum>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                </layout>
+                               </item>
+                               <item>
+                                <layout class="QVBoxLayout" name="verticalLayout_14">
+                                 <property name="spacing">
+                                  <number>0</number>
+                                 </property>
+                                 <item>
+                                  <widget class="QPushButton" name="SaveScButton">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="minimumSize">
+                                    <size>
+                                     <width>0</width>
+                                     <height>60</height>
+                                    </size>
+                                   </property>
+                                   <property name="text">
+                                    <string>Show</string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_62">
+                                   <property name="spacing">
+                                    <number>-1</number>
+                                   </property>
+                                   <property name="topMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="bottomMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <item>
+                                    <widget class="QPushButton" name="RedoPushButton_2">
+                                     <property name="sizePolicy">
+                                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                       <horstretch>0</horstretch>
+                                       <verstretch>0</verstretch>
+                                      </sizepolicy>
+                                     </property>
+                                     <property name="text">
+                                      <string>Redo</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QPushButton" name="UndoPushButton_2">
+                                     <property name="sizePolicy">
+                                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                       <horstretch>0</horstretch>
+                                       <verstretch>0</verstretch>
+                                      </sizepolicy>
+                                     </property>
+                                     <property name="text">
+                                      <string>Undo</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </item>
+                                </layout>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
                           </widget>
                          </item>
                          <item row="1" column="0">
@@ -2445,19 +2588,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
                            </property>
                            <layout class="QGridLayout" name="gridLayout_80">
                             <property name="leftMargin">
-                             <number>1</number>
+                             <number>0</number>
                             </property>
                             <property name="topMargin">
-                             <number>1</number>
+                             <number>0</number>
                             </property>
                             <property name="rightMargin">
-                             <number>1</number>
+                             <number>0</number>
                             </property>
                             <property name="bottomMargin">
-                             <number>1</number>
+                             <number>0</number>
                             </property>
                             <property name="spacing">
-                             <number>1</number>
+                             <number>0</number>
                             </property>
                             <item row="1" column="0">
                              <layout class="QHBoxLayout" name="horizontalLayout_61">
@@ -3405,7 +3548,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>521</width>
+                           <width>316</width>
                            <height>121</height>
                           </rect>
                          </property>
@@ -10805,7 +10948,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <x>0</x>
      <y>0</y>
      <width>1048</width>
-     <height>24</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="layoutDirection">

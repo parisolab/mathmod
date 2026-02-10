@@ -5646,21 +5646,18 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
 
 void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
-    bool ShowOriginalSurf, ShowUpperSurf, ShowBottomSurf, RawScript ;
+    QString SxVar, SyVar, SzVar;
     QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
             CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
     QJsonObject tmp2,tmp3;
-    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, ThickVar;
-    QString T = "";
+    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, Sx,Sy,Sz;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
 
-    ShowOriginalSurf =  Operation[1].toBool();
-    ShowUpperSurf =  Operation[2].toBool();
-    ShowBottomSurf =  Operation[3].toBool();
-    T = Operation[4].toString();
-    RawScript =  Operation[5].toBool();
+    Sx =  Operation[1].toBool();
+    Sy =  Operation[2].toBool();
+    Sz =  Operation[3].toBool();
     tmp2= OriginalObj["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
@@ -5679,110 +5676,65 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     }
     ThCount = ThCount+1;
     ConstArray.append("ThCount="+QString::number(ThCount));
-    Bool = ((ShowBottomSurf) ? "1" : "0");
-    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((ShowUpperSurf) ? "1" : "0");
-    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((ShowOriginalSurf) ? "1" : "0");
-    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
-    Bool = ((RawScript) ? "1" : "0");
-    ConstArray.append("RawScript_"+QString::number(ThCount)+"="+Bool);
-    ThickVar    = "((ThickVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("ThickVar_"+QString::number(ThCount)+" = 60");
+    ConstArray.append("Sx_"+QString::number(ThCount)+"=60");
+    ConstArray.append("Sy_"+QString::number(ThCount)+"=60");
+    ConstArray.append("Sz_"+QString::number(ThCount)+"=60");
     if(ThCount==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
+    SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
+    SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
+    SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
     //Add Slider
     tmp3 = OriginalObj["Sliders"].toObject();
     SlidersArray = tmp3["Name"].toArray();
-    SlidersArray.append("ThickVar_"+QString::number(ThCount));
+    SlidersArray.append("SxVar_"+QString::number(ThCount));
+    SlidersArray.append("SyVar_"+QString::number(ThCount));
+    SlidersArray.append("SzVar_"+QString::number(ThCount));
     tmp3["Name"] = SlidersArray;
     SlidersArray = tmp3["Position"].toArray();
+    SlidersArray.append("60");
+    SlidersArray.append("60");
     SlidersArray.append("60");
     tmp3["Position"] = SlidersArray;
     SlidersArray = tmp3["Max"].toArray();
     SlidersArray.append("100");
+    SlidersArray.append("100");
+    SlidersArray.append("100");
     tmp3["Max"] = SlidersArray;
     SlidersArray = tmp3["Min"].toArray();
+    SlidersArray.append("-100");
+    SlidersArray.append("-100");
     SlidersArray.append("-100");
     tmp3["Min"] = SlidersArray;
     SlidersArray = tmp3["Step"].toArray();
     SlidersArray.append("1");
+    SlidersArray.append("1");
+    SlidersArray.append("1");
     tmp3["Step"] = SlidersArray;
     OriginalObj["Sliders"] = tmp3;
-    QString ShowUpperSurfStr, ShowBottomSurfStr, ShowOriginalSurfStr;
-    QString ShowUpperSurfRawStr, ShowBottomSurfRawStr, ShowOriginalSurfRawStr;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
-        QString ThExpression= "ThExpression_"+QString::number(ThCount);
         QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
         QString fxyzt=FxyzArray.at(i).toString();
         if(!ALL)
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
-
-        if(ALL || (!ALL && IncludeComponent))
-        {
-            ShowOriginalSurfStr = "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-            ShowOriginalSurfRawStr = "(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-        }
-        else
-        {
-            ShowOriginalSurfStr = "*(fffxyz"+I+"(x,y,z,t))";
-            ShowOriginalSurfRawStr = "(fffxyz"+I+"(x,y,z,t))";
-        }
-
-        if(ALL || (!ALL && IncludeComponent))
-        {
-                ShowUpperSurfRawStr = "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
-                                                                                                                    "y+"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
-                                                                                                                    "z+"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
-                                                                                                                    "t), (1)))";
-                ShowUpperSurfStr = "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
-        }
-        else
-            ShowUpperSurfStr = ShowUpperSurfRawStr = "";
-
-        if(ALL || (!ALL && IncludeComponent))
-        {
-            ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-            ShowBottomSurfRawStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
-                                                                                                                       "y-"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
-                                                                                                                       "z-"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
-                                                                                                                       "t),(1)))";
-        }
-        else
-            ShowBottomSurfStr = ShowBottomSurfRawStr = "";
-        QString fct_opt("fffxyz_opt"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((3),("+ThickVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-        fct_opt+= ShowOriginalSurfStr+ShowUpperSurfStr+ShowBottomSurfStr;
-        QString fct_raw="fffxyz_raw"+I+"="+ShowOriginalSurfRawStr+ShowUpperSurfRawStr+ShowBottomSurfRawStr;
-        QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(ThCount)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
-        FctArray.append(ThExpression+"="+T);
-        FctArray.append("R_fct="+ThickVar+"*x/sqrt(x*x+y*y+z*z)");
         FctArray.append("fffxyz"+I+"="+fxyzt);
-        FctArray.append("DFFFx=((fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
-        FctArray.append("DFFFy=((fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
-        FctArray.append("DFFFz=((fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)");
-        FctArray.append(fct_opt);
-        FctArray.append(fct_raw);
-        FctArray.append(fct);
-        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+        if(IncludeComponent)
+            NewFxyzArray.append("fffxyz"+I+"(SxVar_"+QString::number(ThCount)+"*x,SyVar_"+QString::number(ThCount)+"*y,SzVar_"+QString::number(ThCount)+"*z,t)");
+        else
+            NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
         tmp2["Fxyz"] = NewFxyzArray;
         tmp2["Funct"]= FctArray;
         tmp2["Const"]= ConstArray;
         tmp2["Import"]= ImportArraytmp;
-        if (!tmp2["Vect"].isArray())
-        {
-            (Vetc=tmp2["Vect"].toArray()).append("4");
-            tmp2["Vect"]= Vetc;
-        }
         OriginalObj["Iso3D"] = tmp2;
     }
 }
-
 bool DrawingOptions::ApplyOpToComponent(int ComponentId, QStringList & ComponentList)
 {
     bool ok=false;
