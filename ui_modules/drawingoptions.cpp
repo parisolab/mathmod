@@ -5655,9 +5655,9 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
 
-    Sx =  Operation[1].toBool();
-    Sy =  Operation[2].toBool();
-    Sz =  Operation[3].toBool();
+    Sx =  Operation[1].toString();
+    Sy =  Operation[2].toString();
+    Sz =  Operation[3].toString();
     tmp2= OriginalObj["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
@@ -5724,8 +5724,8 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         if(!ALL)
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         FctArray.append("fffxyz"+I+"="+fxyzt);
-        if(IncludeComponent)
-            NewFxyzArray.append("fffxyz"+I+"(SxVar_"+QString::number(ThCount)+"*x,SyVar_"+QString::number(ThCount)+"*y,SzVar_"+QString::number(ThCount)+"*z,t)");
+        if(ALL || (!ALL && IncludeComponent))
+            NewFxyzArray.append("fffxyz"+I+"("+SxVar+"*x,"+SyVar+"*y,"+SzVar+"*z,t)");
         else
             NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
         tmp2["Fxyz"] = NewFxyzArray;
@@ -6017,6 +6017,8 @@ void DrawingOptions::ApplyIsoOperation(QJsonObject & OriginalObj, QJsonArray &Op
         // End Skip
         if(TypeInfos.contains("THICK"))
             ApplyThiIsoOperation(OriginalObj, Operation);
+        if(TypeInfos.contains("SCAL"))
+            ApplyScaIsoOperation(OriginalObj, Operation);
     }
 }
 void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & OperationsList)
@@ -6123,6 +6125,46 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
     }
     tmp["Operations"] = tmpJsObj;
 }
+void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
+{
+    QJsonArray tmpArray, transArray;
+    QJsonObject tmpJsObj;
+    QString T  = "";
+    if(tmp["Iso3D"].isNull())
+        tmp.remove("Iso3D");
+    if(tmp["ParIso"].isNull())
+        tmp.remove("ParIso");
+    //Look for an attached Transformations lists:
+    if(FieldExistAndValid(tmp,"Operations"))
+        tmpJsObj = tmp["Operations"].toObject();
+    else
+    {
+        tmpJsObj = tmp["Operations"].toObject();
+        tmp.remove("Operations");
+    }
+    transArray = tmpJsObj["OperationsList"].toArray();
+    if(type == "_PAR")
+    {
+        tmpArray.append("SCAL_PAR_ALL");
+        tmpArray.append(ui.SxScrollBar->value());
+        tmpArray.append(ui.SyScrollBar->value());
+        tmpArray.append(ui.SzScrollBar->value());
+    }
+    else if(type == "_ISO")
+    {
+        tmpArray.append("SCAL_ISO_ALL");
+        tmpArray.append(ui.SxScrollBar->value());
+        tmpArray.append(ui.SyScrollBar->value());
+        tmpArray.append(ui.SzScrollBar->value());
+    }
+    transArray.append(tmpArray);
+    tmpJsObj["OperationsList"] = transArray;
+    if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
+    {
+        tmpJsObj["OriginalObj"] = tmp;
+    }
+    tmp["Operations"] = tmpJsObj;
+}
 void DrawingOptions::on_SaveThButton_1_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
@@ -6187,3 +6229,11 @@ void DrawingOptions::on_RegenerateButtonPAR_clicked()
         ApplyOperations(CurrentJsonObject);
     }
 }
+
+void DrawingOptions::on_SaveScButton_clicked()
+{
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    SCAL_OP(CurrentJsonObject, "_ISO");
+    ApplyOperations(CurrentJsonObject);
+}
+

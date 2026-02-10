@@ -2428,6 +2428,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </layout>
                            </widget>
                            <widget class="QWidget" name="IsoScal">
+                            <property name="geometry">
+                             <rect>
+                              <x>0</x>
+                              <y>0</y>
+                              <width>511</width>
+                              <height>111</height>
+                             </rect>
+                            </property>
                             <attribute name="label">
                              <string>Scal</string>
                             </attribute>
