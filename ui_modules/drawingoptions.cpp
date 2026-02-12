@@ -5643,21 +5643,19 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         OriginalObj["Iso3D"] = tmp2;
     }
 }
-
+void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
+{
+}
 void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
     QString SxVar, SyVar, SzVar;
-    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
-            CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, ConstArray, ConstArraytmp,
+            SlidersArray, ImportArraytmp;
     QJsonObject tmp2,tmp3;
-    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, Sx,Sy,Sz;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
 
-    Sx =  Operation[1].toString();
-    Sy =  Operation[2].toString();
-    Sz =  Operation[3].toString();
     tmp2= OriginalObj["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
