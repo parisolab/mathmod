@@ -5645,7 +5645,7 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
 }
 void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
-    QString Sx, Sy, Sz ;
+    QString Sx, Sy, Sz, SxVar, SyVar, SzVar ;
     QJsonArray NewFxArray, NewFyArray, NewFzArray,
             NewFuminArray, NewFvminArray, NewFumaxArray,
             NewFvmaxArray, NewComponentArray, NewCNDArray, NewGridArray, ConstArray;
