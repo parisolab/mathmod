@@ -5647,11 +5647,9 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
 {
     QString Sx, Sy, Sz, SxVar, SyVar, SzVar ;
     QJsonArray NewFxArray, NewFyArray, NewFzArray,
-            NewFuminArray, NewFvminArray, NewFumaxArray,
-            NewFvmaxArray, NewComponentArray, NewCNDArray, NewGridArray, ConstArray;
+            ConstArray;
     QJsonArray FxArray, FyArray, FzArray,
             FctArray, ConstArraytmp,
-            FuminArray, FvminArray, FumaxArray, FvmaxArray,
             ImportArraytmp, ComponentArray, SlidersArray,
             CNDArray, GridArray, tmpArray;
     QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
@@ -5667,10 +5665,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     FxArray = tmp2["Fx"].toArray();
     FyArray = tmp2["Fy"].toArray();
     FzArray = tmp2["Fz"].toArray();
-    FuminArray = tmp2["Umin"].toArray();
-    FumaxArray = tmp2["Umax"].toArray();
-    FvminArray = tmp2["Vmin"].toArray();
-    FvmaxArray = tmp2["Vmax"].toArray();
 
     FctArray = tmp2["Funct"].toArray();
     ComponentArray = tmp2["Component"].toArray();
@@ -5693,11 +5687,11 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         ConstArray.append("epsilon=1/100000");
     }
     SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
+    ConstArray.append("SxVar_"+QString::number(ThCount)+" ="+Sx);
     SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
+    ConstArray.append("SyVar_"+QString::number(ThCount)+" ="+Sy);
     SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
+    ConstArray.append("SzVar_"+QString::number(ThCount)+" ="+Sz);
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
     SlidersArray = tmpJsObj["Name"].toArray();
@@ -5738,12 +5732,15 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         FctArray.append("FFFx_Orig"+I+"="+FxArray.at(i).toString());
         FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
         FctArray.append("FFFz_Orig"+I+"="+FzArray.at(i).toString());
-        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
 
-        QString fxyzt=FxArray.at(i).toString();
+        QString fx=FxArray.at(i).toString();
+        QString fy=FyArray.at(i).toString();
+        QString fz=FzArray.at(i).toString();
         if(!ALL)
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
-        FctArray.append("fffxyz"+I+"="+fxyzt);
+        FctArray.append("fffx"+I+"="+fx);
+        FctArray.append("fffy"+I+"="+fy);
+        FctArray.append("fffz"+I+"="+fz);
         if(ALL || (!ALL && IncludeComponent))
         {
             NewFxArray.append(Sx+"*fffx"+I+"(u,v,t)");
@@ -5752,52 +5749,24 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         }
         else
         {
-            NewFxArray.append("fffxyz"+I+"(x,y,z,t)");
+            NewFxArray.append("fffx"+I+"(x,y,z,t)");
+            NewFyArray.append("fffy"+I+"(x,y,z,t)");
+            NewFzArray.append("fffz"+I+"(x,y,z,t)");
         }
-        tmp2["Fxyz"] = NewFxyzArray;
+        tmp2["Fx"] = NewFxArray;
+        tmp2["Fy"] = NewFyArray;
+        tmp2["Fz"] = NewFzArray;
         tmp2["Funct"]= FctArray;
         tmp2["Const"]= ConstArray;
         tmp2["Import"]= ImportArraytmp;
-        OriginalObj["Iso3D"] = tmp2;
-
-        if(ShowOriginalSurf || !ALL)
-        {
-            NewFxArray.append("FFFx_Orig"+I+"(u,v,t)");
-            NewFyArray.append("FFFy_Orig"+I+"(u,v,t)");
-            NewFzArray.append("FFFz_Orig"+I+"(u,v,t)");
-            NewFuminArray.append("Umin_"+I);
-            NewFumaxArray.append("Umax_"+I);
-            NewFvminArray.append("Vmin_"+I);
-            NewFvmaxArray.append("Vmax_"+I);
-            NewComponentArray.append(ComponentArray.at(i).toString()+"_"+I);
-            if(CND)
-                NewCNDArray.append(CNDArray.at(i));
-            if(Grid)
-            {
-                NewGridArray.append(GridArray.at(2*i));
-                NewGridArray.append(GridArray.at(2*i+1));
-            }
-        }
+        OriginalObj["Param3D"] = tmp2;
     }
     tmp2["Fx"] = NewFxArray;
     tmp2["Fy"] = NewFyArray;
     tmp2["Fz"] = NewFzArray;
-    tmp2["Umin"]= NewFuminArray;
-    tmp2["Umax"]= NewFumaxArray;
-    tmp2["Vmin"]= NewFvminArray;
-    tmp2["Vmax"]= NewFvmaxArray;
     tmp2["Funct"]= FctArray;
     tmp2["Const"]= ConstArray;
-    tmp2["Component"]= NewComponentArray;
     tmp2["Import"]= ImportArraytmp;
-    if(Grid)
-        tmp2["Grid"]= NewGridArray;
-    else
-        tmp2.remove("Grid");
-    if(CND)
-        tmp2["Cnd"]= NewCNDArray;
-    else
-        tmp2.remove("Cnd");
     OriginalObj["Param3D"] = tmp2;
 }
 void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
