@@ -5694,32 +5694,37 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArray.append("SzVar_"+QString::number(ThCount)+" ="+Sz);
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
+
     SlidersArray = tmpJsObj["Name"].toArray();
     SlidersArray.append("SxVar_"+QString::number(ThCount));
     SlidersArray.append("SyVar_"+QString::number(ThCount));
     SlidersArray.append("SzVar_"+QString::number(ThCount));
     tmpJsObj["Name"] = SlidersArray;
+
     SlidersArray = tmpJsObj["Position"].toArray();
-    SlidersArray.append("60");
+    SlidersArray.append(Sx);
+    SlidersArray.append(Sy);
+    SlidersArray.append(Sz);
     tmpJsObj["Position"] = SlidersArray;
-    SlidersArray.append("60");
-    SlidersArray.append("60");
-    SlidersArray.append("60");
+
     SlidersArray = tmpJsObj["Max"].toArray();
     SlidersArray.append("100");
     SlidersArray.append("100");
     SlidersArray.append("100");
     tmpJsObj["Max"] = SlidersArray;
+
     SlidersArray = tmpJsObj["Min"].toArray();
     SlidersArray.append("-100");
     SlidersArray.append("-100");
     SlidersArray.append("-100");
     tmpJsObj["Min"] = SlidersArray;
+
     SlidersArray = tmpJsObj["Step"].toArray();
     SlidersArray.append("1");
     SlidersArray.append("1");
     SlidersArray.append("1");
     tmpJsObj["Step"] = SlidersArray;
+
     OriginalObj["Sliders"] = tmpJsObj;
 
     uint componentNumber = ComponentArray.size();
