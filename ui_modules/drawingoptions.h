@@ -379,6 +379,12 @@ private slots:
     void ApplyScaParOperation(QJsonObject &, QJsonArray &);
     bool ApplyOpToComponent(int, QStringList &);
     void on_SaveScButton_clicked();
+    void on_SaveThButton_3_clicked();
+    void on_RedoPushButton_1_clicked();
+    void on_UndopushButton_1_clicked();
+    void on_SxParScroll_valueChanged(int value);
+    void on_SyParScroll_valueChanged(int value);
+    void on_SzParScroll_valueChanged(int value);
 };
 
 #endif
