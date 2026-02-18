@@ -2206,6 +2206,21 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          <string>Equation Generator</string>
                         </attribute>
                         <layout class="QGridLayout" name="gridLayout_84">
+                         <property name="leftMargin">
+                          <number>2</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>2</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>2</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>2</number>
+                         </property>
+                         <property name="spacing">
+                          <number>1</number>
+                         </property>
                          <item row="0" column="0">
                           <widget class="QToolBox" name="EquationGen">
                            <property name="sizePolicy">
@@ -2225,7 +2240,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>511</width>
+                              <width>547</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -2432,7 +2447,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>223</width>
+                              <width>547</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -2441,68 +2456,206 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </attribute>
                             <layout class="QGridLayout" name="gridLayout_86">
                              <item row="0" column="0">
-                              <layout class="QHBoxLayout" name="horizontalLayout_63">
+                              <layout class="QHBoxLayout" name="horizontalLayout_73">
                                <property name="spacing">
                                 <number>-1</number>
                                </property>
-                               <property name="leftMargin">
-                                <number>1</number>
-                               </property>
-                               <property name="rightMargin">
-                                <number>1</number>
-                               </property>
-                               <property name="bottomMargin">
-                                <number>1</number>
-                               </property>
                                <item>
                                 <layout class="QVBoxLayout" name="verticalLayout_15">
+                                 <property name="spacing">
+                                  <number>1</number>
+                                 </property>
                                  <item>
-                                  <widget class="QScrollBar" name="SxScrollBar">
-                                   <property name="minimum">
-                                    <number>-100</number>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_63">
+                                   <property name="spacing">
+                                    <number>1</number>
                                    </property>
-                                   <property name="maximum">
-                                    <number>200</number>
+                                   <property name="leftMargin">
+                                    <number>2</number>
                                    </property>
-                                   <property name="value">
-                                    <number>60</number>
+                                   <property name="topMargin">
+                                    <number>2</number>
                                    </property>
-                                   <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
+                                   <property name="rightMargin">
+                                    <number>2</number>
                                    </property>
-                                  </widget>
+                                   <property name="bottomMargin">
+                                    <number>2</number>
+                                   </property>
+                                   <item>
+                                    <widget class="QLabel" name="Sxlabel_2">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>20</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true">color: rgb(255, 36, 17);</string>
+                                     </property>
+                                     <property name="text">
+                                      <string>Sx</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QLineEdit" name="SxlineEdit_2">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>50</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QScrollBar" name="SxScrollBar">
+                                     <property name="minimum">
+                                      <number>-100</number>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>200</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>60</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
                                  </item>
                                  <item>
-                                  <widget class="QScrollBar" name="SyScrollBar">
-                                   <property name="minimum">
-                                    <number>-100</number>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_71">
+                                   <property name="spacing">
+                                    <number>1</number>
                                    </property>
-                                   <property name="maximum">
-                                    <number>200</number>
+                                   <property name="leftMargin">
+                                    <number>2</number>
                                    </property>
-                                   <property name="value">
-                                    <number>60</number>
+                                   <property name="topMargin">
+                                    <number>2</number>
                                    </property>
-                                   <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
+                                   <property name="rightMargin">
+                                    <number>2</number>
                                    </property>
-                                  </widget>
+                                   <property name="bottomMargin">
+                                    <number>2</number>
+                                   </property>
+                                   <item>
+                                    <widget class="QLabel" name="Sylabel_2">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>20</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true">color: rgb(48, 255, 36);</string>
+                                     </property>
+                                     <property name="text">
+                                      <string>Sy</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QLineEdit" name="SylineEdit_2">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>50</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QScrollBar" name="SyScrollBar">
+                                     <property name="minimum">
+                                      <number>-100</number>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>200</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>60</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
                                  </item>
                                  <item>
-                                  <widget class="QScrollBar" name="SzScrollBar">
-                                   <property name="minimum">
-                                    <number>-100</number>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_72">
+                                   <property name="spacing">
+                                    <number>1</number>
                                    </property>
-                                   <property name="maximum">
-                                    <number>200</number>
+                                   <property name="leftMargin">
+                                    <number>2</number>
                                    </property>
-                                   <property name="value">
-                                    <number>60</number>
+                                   <property name="topMargin">
+                                    <number>2</number>
                                    </property>
-                                   <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
+                                   <property name="rightMargin">
+                                    <number>2</number>
                                    </property>
-                                  </widget>
+                                   <property name="bottomMargin">
+                                    <number>2</number>
+                                   </property>
+                                   <item>
+                                    <widget class="QLabel" name="Szlabel_2">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>20</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true">color: rgb(6, 113, 231);</string>
+                                     </property>
+                                     <property name="text">
+                                      <string>Sz</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QLineEdit" name="SzlineEdit_2">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>50</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QScrollBar" name="SzScrollBar">
+                                     <property name="minimum">
+                                      <number>-100</number>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>200</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>60</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
                                  </item>
                                 </layout>
                                </item>
@@ -2691,7 +2844,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="currentIndex">
-                     <number>2</number>
+                     <number>0</number>
                     </property>
                     <widget class="QWidget" name="tab_2">
                      <attribute name="title">
@@ -3549,189 +3702,183 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </sizepolicy>
                         </property>
                         <property name="currentIndex">
-                         <number>1</number>
+                         <number>0</number>
                         </property>
                         <widget class="QWidget" name="ParamThickness">
                          <property name="geometry">
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>98</width>
-                           <height>28</height>
+                           <width>521</width>
+                           <height>121</height>
                           </rect>
                          </property>
                          <attribute name="label">
                           <string>Thickness</string>
                          </attribute>
-                         <widget class="QWidget" name="layoutWidget">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>292</width>
-                            <height>97</height>
-                           </rect>
-                          </property>
-                          <layout class="QHBoxLayout" name="horizontalLayout_59">
-                           <item>
-                            <layout class="QVBoxLayout" name="verticalLayout_10">
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_67">
-                               <item>
-                                <widget class="QLabel" name="ThVal_1">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="minimumSize">
-                                  <size>
-                                   <width>2</width>
-                                   <height>0</height>
-                                  </size>
-                                 </property>
-                                 <property name="maximumSize">
-                                  <size>
-                                   <width>90</width>
-                                   <height>16777215</height>
-                                  </size>
-                                 </property>
-                                 <property name="frameShape">
-                                  <enum>QFrame::Box</enum>
-                                 </property>
-                                 <property name="frameShadow">
-                                  <enum>QFrame::Raised</enum>
-                                 </property>
-                                 <property name="text">
-                                  <string>Thickness = </string>
-                                 </property>
-                                 <property name="wordWrap">
-                                  <bool>false</bool>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QLineEdit" name="ThicknessVal_1">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="minimumSize">
-                                  <size>
-                                   <width>2</width>
-                                   <height>0</height>
-                                  </size>
-                                 </property>
-                                 <property name="text">
-                                  <string>(1/10)</string>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </item>
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_34">
-                               <item>
-                                <widget class="QCheckBox" name="FctOriginal_1">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="text">
-                                  <string>Fct</string>
-                                 </property>
-                                 <property name="checked">
-                                  <bool>true</bool>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QCheckBox" name="UpperFct_1">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="text">
-                                  <string>Fct+</string>
-                                 </property>
-                                 <property name="checked">
-                                  <bool>true</bool>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QCheckBox" name="checkBoxBoundary">
-                                 <property name="sizePolicy">
-                                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                                   <horstretch>0</horstretch>
-                                   <verstretch>0</verstretch>
-                                  </sizepolicy>
-                                 </property>
-                                 <property name="text">
-                                  <string>Boundary</string>
-                                 </property>
-                                 <property name="checked">
-                                  <bool>true</bool>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </item>
-                            </layout>
-                           </item>
-                           <item>
-                            <layout class="QVBoxLayout" name="verticalLayout_12">
-                             <item>
-                              <widget class="QPushButton" name="SaveThButton_1">
-                               <property name="sizePolicy">
-                                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                                 <horstretch>0</horstretch>
-                                 <verstretch>0</verstretch>
-                                </sizepolicy>
-                               </property>
-                               <property name="minimumSize">
-                                <size>
-                                 <width>0</width>
-                                 <height>60</height>
-                                </size>
-                               </property>
-                               <property name="text">
-                                <string>Show</string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <layout class="QHBoxLayout" name="horizontalLayout_56">
-                               <property name="spacing">
-                                <number>2</number>
-                               </property>
-                               <item>
-                                <widget class="QPushButton" name="RedoPushButton_0">
-                                 <property name="text">
-                                  <string>Redo</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
-                                <widget class="QPushButton" name="UndopushButton_0">
-                                 <property name="text">
-                                  <string>Undo</string>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </item>
-                            </layout>
-                           </item>
-                          </layout>
-                         </widget>
+                         <layout class="QGridLayout" name="gridLayout_87">
+                          <item row="0" column="0">
+                           <layout class="QHBoxLayout" name="horizontalLayout_59">
+                            <item>
+                             <layout class="QVBoxLayout" name="verticalLayout_10">
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_67">
+                                <item>
+                                 <widget class="QLabel" name="ThVal_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
+                                  <property name="minimumSize">
+                                   <size>
+                                    <width>2</width>
+                                    <height>0</height>
+                                   </size>
+                                  </property>
+                                  <property name="maximumSize">
+                                   <size>
+                                    <width>90</width>
+                                    <height>16777215</height>
+                                   </size>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::Box</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <property name="text">
+                                   <string>Thickness = </string>
+                                  </property>
+                                  <property name="wordWrap">
+                                   <bool>false</bool>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLineEdit" name="ThicknessVal_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
+                                  <property name="minimumSize">
+                                   <size>
+                                    <width>2</width>
+                                    <height>0</height>
+                                   </size>
+                                  </property>
+                                  <property name="text">
+                                   <string>(1/10)</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </item>
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_34">
+                                <item>
+                                 <widget class="QCheckBox" name="FctOriginal_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
+                                  <property name="text">
+                                   <string>Fct</string>
+                                  </property>
+                                  <property name="checked">
+                                   <bool>true</bool>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QCheckBox" name="UpperFct_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
+                                  <property name="text">
+                                   <string>Fct+</string>
+                                  </property>
+                                  <property name="checked">
+                                   <bool>true</bool>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QCheckBox" name="checkBoxBoundary">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
+                                  <property name="text">
+                                   <string>Boundary</string>
+                                  </property>
+                                  <property name="checked">
+                                   <bool>true</bool>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </item>
+                             </layout>
+                            </item>
+                            <item>
+                             <layout class="QVBoxLayout" name="verticalLayout_12">
+                              <item>
+                               <widget class="QPushButton" name="SaveThButton_1">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>0</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Show</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_56">
+                                <property name="spacing">
+                                 <number>2</number>
+                                </property>
+                                <item>
+                                 <widget class="QPushButton" name="RedoPushButton_0">
+                                  <property name="text">
+                                   <string>Redo</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QPushButton" name="UndopushButton_0">
+                                  <property name="text">
+                                   <string>Undo</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </item>
+                             </layout>
+                            </item>
+                           </layout>
+                          </item>
+                         </layout>
                         </widget>
                         <widget class="QWidget" name="ScalTool">
                          <property name="geometry">
@@ -3746,8 +3893,32 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <string>Scal</string>
                          </attribute>
                          <layout class="QGridLayout" name="gridLayout_83">
+                          <property name="leftMargin">
+                           <number>2</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>2</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>2</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>2</number>
+                          </property>
+                          <property name="spacing">
+                           <number>1</number>
+                          </property>
                           <item row="0" column="0">
                            <layout class="QHBoxLayout" name="horizontalLayout_70">
+                            <property name="spacing">
+                             <number>-1</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>1</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>1</number>
+                            </property>
                             <item>
                              <layout class="QVBoxLayout" name="verticalLayout_18">
                               <property name="spacing">
@@ -3757,6 +3928,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                <layout class="QHBoxLayout" name="horizontalLayout_66">
                                 <property name="spacing">
                                  <number>1</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>4</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>2</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>4</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>2</number>
                                 </property>
                                 <item>
                                  <widget class="QLabel" name="Sxlabel">
@@ -3810,6 +3993,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 <property name="spacing">
                                  <number>1</number>
                                 </property>
+                                <property name="leftMargin">
+                                 <number>2</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>2</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>2</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>2</number>
+                                </property>
                                 <item>
                                  <widget class="QLabel" name="Sylabel">
                                   <property name="maximumSize">
@@ -3861,6 +4056,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                <layout class="QHBoxLayout" name="horizontalLayout_69">
                                 <property name="spacing">
                                  <number>1</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>4</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>2</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>4</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>2</number>
                                 </property>
                                 <item>
                                  <widget class="QLabel" name="Szlabel">

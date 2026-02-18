@@ -6351,45 +6351,32 @@ void DrawingOptions::on_RegenerateButtonPAR_clicked()
         ApplyOperations(CurrentJsonObject);
     }
 }
-
 void DrawingOptions::on_SaveScButton_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     SCAL_OP(CurrentJsonObject, "_ISO");
     ApplyOperations(CurrentJsonObject);
 }
-
-
 void DrawingOptions::on_SaveThButton_3_clicked()
 {
 
 }
-
-
 void DrawingOptions::on_RedoPushButton_1_clicked()
 {
 
 }
-
-
 void DrawingOptions::on_UndopushButton_1_clicked()
 {
 
 }
-
-
 void DrawingOptions::on_SxParScroll_valueChanged(int value)
 {
 
 }
-
-
 void DrawingOptions::on_SyParScroll_valueChanged(int value)
 {
 
 }
-
-
 void DrawingOptions::on_SzParScroll_valueChanged(int value)
 {
 
