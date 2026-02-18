@@ -6268,16 +6268,16 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
     if(type == "_PAR")
     {
         tmpArray.append("SCAL_PAR_ALL");
-        tmpArray.append(ui.SxScrollBar->value());
-        tmpArray.append(ui.SyScrollBar->value());
-        tmpArray.append(ui.SzScrollBar->value());
+        tmpArray.append(ui.SxParlineEdit->text());
+        tmpArray.append(ui.SyParlineEdit->text());
+        tmpArray.append(ui.SzParlineEdit->text());
     }
     else if(type == "_ISO")
     {
         tmpArray.append("SCAL_ISO_ALL");
-        tmpArray.append(ui.SxScrollBar->value());
-        tmpArray.append(ui.SyScrollBar->value());
-        tmpArray.append(ui.SzScrollBar->value());
+        tmpArray.append(ui.SxIsolineEdit->text());
+        tmpArray.append(ui.SyIsolineEdit->text());
+        tmpArray.append(ui.SzIsolineEdit->text());
     }
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
@@ -6351,34 +6351,73 @@ void DrawingOptions::on_RegenerateButtonPAR_clicked()
         ApplyOperations(CurrentJsonObject);
     }
 }
-void DrawingOptions::on_SaveScButton_clicked()
+
+void DrawingOptions::on_RedoPushButton_1_clicked()
+{
+    on_actionRedo_triggered();
+}
+void DrawingOptions::on_UndopushButton_1_clicked()
+{
+    on_actionUndo_triggered();
+}
+void DrawingOptions::on_RedoPushButton_2_clicked()
+{
+    on_actionRedo_triggered();
+}
+void DrawingOptions::on_UndoPushButton_2_clicked()
+{
+    on_actionUndo_triggered();
+}
+
+
+void DrawingOptions::on_SxParScrollBar_valueChanged(int sx)
+{
+    ui.SxParlineEdit->setText(QString::number((sx-50)/60));
+}
+
+
+void DrawingOptions::on_SyParScrollBar_valueChanged(int sy)
+{
+    ui.SyParlineEdit->setText(QString::number((sy-50)/60));
+}
+
+
+void DrawingOptions::on_SzParScrollBar_valueChanged(int sz)
+{
+    ui.SzParlineEdit->setText(QString::number((sz-50)/60));
+}
+
+
+void DrawingOptions::on_SxIsoScrollBar_valueChanged(int sx)
+{
+    ui.SxIsolineEdit->setText(QString::number((sx-50)/60));
+}
+
+
+void DrawingOptions::on_SyIsoScrollBar_valueChanged(int sy)
+{
+    ui.SyIsolineEdit->setText(QString::number((sy-50)/60));
+}
+
+
+void DrawingOptions::on_SzIsoScrollBar_valueChanged(int sz)
+{
+    ui.SzIsolineEdit->setText(QString::number((sz-50)/60));
+}
+
+
+void DrawingOptions::on_SaveScIsoButton_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     SCAL_OP(CurrentJsonObject, "_ISO");
     ApplyOperations(CurrentJsonObject);
 }
-void DrawingOptions::on_SaveThButton_3_clicked()
-{
 
-}
-void DrawingOptions::on_RedoPushButton_1_clicked()
-{
 
-}
-void DrawingOptions::on_UndopushButton_1_clicked()
+void DrawingOptions::on_SaveScParButton_clicked()
 {
-
-}
-void DrawingOptions::on_SxParScroll_valueChanged(int value)
-{
-
-}
-void DrawingOptions::on_SyParScroll_valueChanged(int value)
-{
-
-}
-void DrawingOptions::on_SzParScroll_valueChanged(int value)
-{
-
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    SCAL_OP(CurrentJsonObject, "PAR");
+    ApplyOperations(CurrentJsonObject);
 }
 
