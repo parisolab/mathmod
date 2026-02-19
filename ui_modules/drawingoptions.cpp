@@ -6372,37 +6372,37 @@ void DrawingOptions::on_UndoPushButton_2_clicked()
 
 void DrawingOptions::on_SxParScrollBar_valueChanged(int sx)
 {
-    ui.SxParlineEdit->setText(QString::number((sx-50)/60));
+    ui.SxParlineEdit->setText(QString::number(float(sx-50)/60,'f', 2));
 }
 
 
 void DrawingOptions::on_SyParScrollBar_valueChanged(int sy)
 {
-    ui.SyParlineEdit->setText(QString::number((sy-50)/60));
+    ui.SyParlineEdit->setText(QString::number(float(sy-50)/60,'f', 2));
 }
 
 
 void DrawingOptions::on_SzParScrollBar_valueChanged(int sz)
 {
-    ui.SzParlineEdit->setText(QString::number((sz-50)/60));
+    ui.SzParlineEdit->setText(QString::number(float(sz-50)/60,'f', 2));
 }
 
 
 void DrawingOptions::on_SxIsoScrollBar_valueChanged(int sx)
 {
-    ui.SxIsolineEdit->setText(QString::number((sx-50)/60));
+    ui.SxIsolineEdit->setText(QString::number(float(sx-50)/60,'f', 2));
 }
 
 
 void DrawingOptions::on_SyIsoScrollBar_valueChanged(int sy)
 {
-    ui.SyIsolineEdit->setText(QString::number((sy-50)/60));
+    ui.SyIsolineEdit->setText(QString::number(float(sy-50)/60,'f', 2));
 }
 
 
 void DrawingOptions::on_SzIsoScrollBar_valueChanged(int sz)
 {
-    ui.SzIsolineEdit->setText(QString::number((sz-50)/60));
+    ui.SzIsolineEdit->setText(QString::number(float(sz-50)/60,'f', 2));
 }
 
 
