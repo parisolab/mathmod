@@ -35,6 +35,13 @@ void ParThickness::loadOperation(const QJsonArray& ptr)
     BoumdarySurfs          = ptr[3].toBool();
     ThExpression           = ptr[4].toString();
 };
+void ParScal::loadOperation(const QJsonArray& ptr)
+{
+    OpType                 = ptr[0].toString();
+    Scx                    = ptr[1].toDouble();
+    Scy                    = ptr[2].toDouble();
+    Scz                    = ptr[3].toDouble();
+};
 IsoThickness::IsoThickness(){}
 IsoThickness::~IsoThickness(){}
 

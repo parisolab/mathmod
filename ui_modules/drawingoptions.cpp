@@ -6368,56 +6368,39 @@ void DrawingOptions::on_UndoPushButton_2_clicked()
 {
     on_actionUndo_triggered();
 }
-
-
 void DrawingOptions::on_SxParScrollBar_valueChanged(int sx)
 {
     ui.SxParlineEdit->setText(QString::number(float(sx-50)/60,'f', 2));
 }
-
-
 void DrawingOptions::on_SyParScrollBar_valueChanged(int sy)
 {
     ui.SyParlineEdit->setText(QString::number(float(sy-50)/60,'f', 2));
 }
-
-
 void DrawingOptions::on_SzParScrollBar_valueChanged(int sz)
 {
     ui.SzParlineEdit->setText(QString::number(float(sz-50)/60,'f', 2));
 }
-
-
 void DrawingOptions::on_SxIsoScrollBar_valueChanged(int sx)
 {
     ui.SxIsolineEdit->setText(QString::number(float(sx-50)/60,'f', 2));
 }
-
-
 void DrawingOptions::on_SyIsoScrollBar_valueChanged(int sy)
 {
     ui.SyIsolineEdit->setText(QString::number(float(sy-50)/60,'f', 2));
 }
-
-
 void DrawingOptions::on_SzIsoScrollBar_valueChanged(int sz)
 {
     ui.SzIsolineEdit->setText(QString::number(float(sz-50)/60,'f', 2));
 }
-
-
 void DrawingOptions::on_SaveScIsoButton_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     SCAL_OP(CurrentJsonObject, "_ISO");
     ApplyOperations(CurrentJsonObject);
 }
-
-
 void DrawingOptions::on_SaveScParButton_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     SCAL_OP(CurrentJsonObject, "PAR");
     ApplyOperations(CurrentJsonObject);
 }
-

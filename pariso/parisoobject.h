@@ -50,11 +50,28 @@ public:
     QString ThExpression="";
     void loadOperation(const QJsonArray&) override;
 };
+class ParScal : public GenOperation
+{
+public:
+    ParScal();
+    ~ParScal();
+public:
+    QString OpType="NO_OP";
+    float Scx=1.0, Scy=1.0, Scz=1.0;
+    void loadOperation(const QJsonArray&) override;
+};
 class IsoThickness  : public GenOperation
 {
 public:
     IsoThickness();
     ~IsoThickness();
+    void loadOperation(const QJsonArray&) override;
+};
+class IsoScal  : public GenOperation
+{
+public:
+    IsoScal();
+    ~IsoScal();
     void loadOperation(const QJsonArray&) override;
 };
 class ParisoObject : public QThread
