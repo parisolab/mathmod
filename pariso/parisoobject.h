@@ -38,6 +38,8 @@ class GenOperation
 public:
     virtual ~GenOperation() = default;
     virtual void loadOperation(const QJsonArray&){};
+public:
+    QString OpType="NO_OP";
 };
 class ParThickness : public GenOperation
 {
@@ -45,7 +47,6 @@ public:
     ParThickness();
     ~ParThickness();
 public:
-    QString OpType="NO_OP";
     bool OriginalSurf=false, UpperSurf=false, BoumdarySurfs=false;
     QString ThExpression="";
     void loadOperation(const QJsonArray&) override;
@@ -56,7 +57,6 @@ public:
     ParScal();
     ~ParScal();
 public:
-    QString OpType="NO_OP";
     float Scx=1.0, Scy=1.0, Scz=1.0;
     void loadOperation(const QJsonArray&) override;
 };

@@ -5469,23 +5469,24 @@ void DrawingOptions::loadOperations(QJsonObject CurrentJsObject)
 {
     if(CurrentJsObject.contains("Operations"))
     {
-        QJsonObject tmpJsObj = CurrentJsObject["Operations"].toObject();
-        QJsonArray transArray = tmpJsObj["OperationsList"].toArray();
-        QJsonArray tmpArray;
+        QJsonObject Operations = CurrentJsObject["Operations"].toObject();
+        QJsonArray OperationsList = Operations["OperationsList"].toArray();
+        QJsonArray Operation;
         MathmodRef->ParObjet->OperationsTree.clear();
         MathmodRef->IsoObjet->OperationsTree.clear();
-        for(int i=0; i<transArray.size(); i++)
+        for(int i=0; i<OperationsList.size(); i++)
         {
-            tmpArray = transArray[i].toArray();
-            if(tmpArray[0].toString().contains("_PAR"))
+            Operation = OperationsList[i].toArray();
+            QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
+            if(TypeInfos.contains("PAR"))
             {
                 MathmodRef->ParObjet->OperationsTree.push_back(std::make_shared<ParThickness>());
-                MathmodRef->ParObjet->OperationsTree[MathmodRef->ParObjet->OperationsTree.size()-1]->loadOperation(tmpArray);
+                MathmodRef->ParObjet->OperationsTree[MathmodRef->ParObjet->OperationsTree.size()-1]->loadOperation(Operation);
             }
-            else if(tmpArray[0].toString().contains("_ISO"))
+            else if(TypeInfos.contains("ISO"))
                 {
                     MathmodRef->IsoObjet->OperationsTree.push_back(std::make_shared<IsoThickness>());
-                    MathmodRef->IsoObjet->OperationsTree[MathmodRef->IsoObjet->OperationsTree.size()-1]->loadOperation(tmpArray);
+                    MathmodRef->IsoObjet->OperationsTree[MathmodRef->IsoObjet->OperationsTree.size()-1]->loadOperation(Operation);
                 }
         }
     }
@@ -6382,6 +6383,8 @@ void DrawingOptions::on_SzParScrollBar_valueChanged(int sz)
 }
 void DrawingOptions::on_SxIsoScrollBar_valueChanged(int sx)
 {
+    int size=MathmodRef->ParObjet->OperationsTree.size();
+    float SxOrigin=MathmodRef->ParObjet->OperationsTree[size-1];
     ui.SxIsolineEdit->setText(QString::number(float(sx-50)/60,'f', 2));
 }
 void DrawingOptions::on_SyIsoScrollBar_valueChanged(int sy)
