@@ -503,7 +503,7 @@
                         <enum>QTabWidget::Rounded</enum>
                        </property>
                        <property name="currentIndex">
-                        <number>0</number>
+                        <number>2</number>
                        </property>
                        <widget class="QWidget" name="FormulasPage1_2">
                         <attribute name="title">
@@ -2218,20 +2218,20 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             <enum>Qt::LeftToRight</enum>
                            </property>
                            <property name="frameShape">
-                            <enum>QFrame::Box</enum>
+                            <enum>QFrame::StyledPanel</enum>
                            </property>
                            <property name="frameShadow">
                             <enum>QFrame::Raised</enum>
                            </property>
                            <property name="currentIndex">
-                            <number>0</number>
+                            <number>1</number>
                            </property>
                            <widget class="QWidget" name="IsoThickness">
                             <property name="geometry">
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>507</width>
+                              <width>509</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -2384,7 +2384,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                     </size>
                                    </property>
                                    <property name="text">
-                                    <string>Show</string>
+                                    <string>Apply</string>
                                    </property>
                                   </widget>
                                  </item>
@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>357</width>
+                              <width>509</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -2727,12 +2727,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             <enum>Qt::Vertical</enum>
                            </property>
                            <property name="sizeType">
-                            <enum>QSizePolicy::Fixed</enum>
+                            <enum>QSizePolicy::Minimum</enum>
                            </property>
                            <property name="sizeHint" stdset="0">
                             <size>
                              <width>20</width>
-                             <height>5</height>
+                             <height>15</height>
                             </size>
                            </property>
                           </spacer>
@@ -3716,7 +3716,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>316</width>
+                           <width>521</width>
                            <height>121</height>
                           </rect>
                          </property>
