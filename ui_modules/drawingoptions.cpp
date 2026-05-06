@@ -6432,9 +6432,8 @@ void DrawingOptions::on_SaveScParButton_clicked()
     SCAL_OP(CurrentJsonObject, "PAR");
     ApplyOperations(CurrentJsonObject);
 }
-
-void DrawingOptions::on_choice_activated(int index)
+void DrawingOptions::on_choice_currentTextChanged(const QString &ScriptName)
 {
-    on_choice_activated(ui.choice->itemText(index));
+    on_choice_activated(ScriptName);
 }
 

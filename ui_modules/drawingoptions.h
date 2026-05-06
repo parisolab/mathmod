@@ -390,7 +390,7 @@ private slots:
     void on_SzIsoScrollBar_valueChanged(int value);
     void on_SaveScIsoButton_clicked();
     void on_SaveScParButton_clicked();
-    void on_choice_activated(int index);
+    void on_choice_currentTextChanged(const QString &);
 };
 
 #endif
