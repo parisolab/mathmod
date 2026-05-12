@@ -2370,7 +2370,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   <number>0</number>
                                  </property>
                                  <item>
-                                  <widget class="QPushButton" name="SaveThButton_2">
+                                  <widget class="QPushButton" name="SaveThButtonISO">
                                    <property name="sizePolicy">
                                     <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                                      <horstretch>0</horstretch>
@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>357</width>
+                              <width>262</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -3716,7 +3716,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>316</width>
+                           <width>521</width>
                            <height>121</height>
                           </rect>
                          </property>
@@ -3842,7 +3842,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             <item>
                              <layout class="QVBoxLayout" name="verticalLayout_12">
                               <item>
-                               <widget class="QPushButton" name="SaveThButton_1">
+                               <widget class="QPushButton" name="SaveThButtonPAR">
                                 <property name="sizePolicy">
                                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                                   <horstretch>0</horstretch>
