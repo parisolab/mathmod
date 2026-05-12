@@ -438,8 +438,9 @@
                  <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
+                <widget class="QWidget" name="page"/>
                 <widget class="QWidget" name="page_4">
                  <layout class="QGridLayout" name="gridLayout_13">
                   <property name="leftMargin">
@@ -2437,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>262</width>
+                              <width>357</width>
                               <height>111</height>
                              </rect>
                             </property>
