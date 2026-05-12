@@ -352,14 +352,14 @@ public slots:
     void on_blue_Diffuse_valueChanged(int);
     void on_transparent_Diffuse_valueChanged(int);
     void on_GLFrontSurfaceSupport_clicked();
-    void on_SaveThButton_2_clicked();
+    void on_SaveThButtonISO_clicked();
 
 private slots:
     void on_actionbox_triggered();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
     void on_actionClear_triggered();
-    void on_SaveThButton_1_clicked();
+    void on_SaveThButtonPAR_clicked();
     void on_UndoPushButton_clicked();
     void on_RedoPushButton_clicked();
     void on_RedoPushButton_0_clicked();

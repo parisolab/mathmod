@@ -6301,13 +6301,13 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
     }
     tmp["Operations"] = tmpJsObj;
 }
-void DrawingOptions::on_SaveThButton_1_clicked()
+void DrawingOptions::on_SaveThButtonPAR_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     THICK_OP(CurrentJsonObject, "_PAR");
     ApplyOperations(CurrentJsonObject);
 }
-void DrawingOptions::on_SaveThButton_2_clicked()
+void DrawingOptions::on_SaveThButtonISO_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     THICK_OP(CurrentJsonObject, "_ISO");
