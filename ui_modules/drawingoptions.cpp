@@ -4324,7 +4324,7 @@ void DrawingOptions::UpdateGui()
         SetglFrontFacingSupport();
 
     QList<int> Sizes1;
-    Sizes1 << 750 << 650;
+    Sizes1 << 600 << 750;
     ui.splitter_9->setSizes(Sizes1);
 
     // Pigment/texture
@@ -4337,8 +4337,6 @@ void DrawingOptions::UpdateGui()
 
     // Script Editor font size
     ui.ScriptEditor->setFontPointSize(Parameters->scripteditorfontsize);
-
-    resize(1350, 700);
 }
 void DrawingOptions::on_TimeStepScrollBar_valueChanged(int value)
 {

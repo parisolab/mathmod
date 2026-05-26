@@ -2272,7 +2272,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                       <enum>QFrame::Raised</enum>
                                      </property>
                                      <property name="text">
-                                      <string>Th(x,y,z,t)= </string>
+                                      <string>Thickness = </string>
                                      </property>
                                      <property name="wordWrap">
                                       <bool>false</bool>
@@ -3757,7 +3757,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    <enum>QFrame::Raised</enum>
                                   </property>
                                   <property name="text">
-                                   <string>Th(u,v,t) = </string>
+                                   <string>Thickness = </string>
                                   </property>
                                   <property name="wordWrap">
                                    <bool>false</bool>
