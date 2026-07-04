@@ -2438,8 +2438,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>262</width>
-                              <height>111</height>
+                              <width>492</width>
+                              <height>123</height>
                              </rect>
                             </property>
                             <attribute name="label">
@@ -2448,14 +2448,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             <layout class="QGridLayout" name="gridLayout_86">
                              <item row="0" column="0">
                               <layout class="QHBoxLayout" name="horizontalLayout_73">
-                               <property name="spacing">
-                                <number>-1</number>
-                               </property>
                                <item>
                                 <layout class="QVBoxLayout" name="verticalLayout_15">
-                                 <property name="spacing">
-                                  <number>1</number>
-                                 </property>
                                  <item>
                                   <layout class="QHBoxLayout" name="horizontalLayout_63">
                                    <property name="spacing">
@@ -2499,22 +2493,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                      </property>
                                      <property name="text">
                                       <string>1</string>
-                                     </property>
-                                    </widget>
-                                   </item>
-                                   <item>
-                                    <widget class="QScrollBar" name="SxIsoScrollBar">
-                                     <property name="minimum">
-                                      <number>-100</number>
-                                     </property>
-                                     <property name="maximum">
-                                      <number>200</number>
-                                     </property>
-                                     <property name="value">
-                                      <number>60</number>
-                                     </property>
-                                     <property name="orientation">
-                                      <enum>Qt::Horizontal</enum>
                                      </property>
                                     </widget>
                                    </item>
@@ -2566,22 +2544,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                      </property>
                                     </widget>
                                    </item>
-                                   <item>
-                                    <widget class="QScrollBar" name="SyIsoScrollBar">
-                                     <property name="minimum">
-                                      <number>-100</number>
-                                     </property>
-                                     <property name="maximum">
-                                      <number>200</number>
-                                     </property>
-                                     <property name="value">
-                                      <number>60</number>
-                                     </property>
-                                     <property name="orientation">
-                                      <enum>Qt::Horizontal</enum>
-                                     </property>
-                                    </widget>
-                                   </item>
                                   </layout>
                                  </item>
                                  <item>
@@ -2627,22 +2589,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                      </property>
                                      <property name="text">
                                       <string>1</string>
-                                     </property>
-                                    </widget>
-                                   </item>
-                                   <item>
-                                    <widget class="QScrollBar" name="SzIsoScrollBar">
-                                     <property name="minimum">
-                                      <number>-100</number>
-                                     </property>
-                                     <property name="maximum">
-                                      <number>200</number>
-                                     </property>
-                                     <property name="value">
-                                      <number>60</number>
-                                     </property>
-                                     <property name="orientation">
-                                      <enum>Qt::Horizontal</enum>
                                      </property>
                                     </widget>
                                    </item>
@@ -3892,7 +3838,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>232</width>
+                           <width>521</width>
                            <height>101</height>
                           </rect>
                          </property>
@@ -3977,22 +3923,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </property>
                                  </widget>
                                 </item>
-                                <item>
-                                 <widget class="QScrollBar" name="SxParScrollBar">
-                                  <property name="minimum">
-                                   <number>-200</number>
-                                  </property>
-                                  <property name="maximum">
-                                   <number>200</number>
-                                  </property>
-                                  <property name="sliderPosition">
-                                   <number>60</number>
-                                  </property>
-                                  <property name="orientation">
-                                   <enum>Qt::Horizontal</enum>
-                                  </property>
-                                 </widget>
-                                </item>
                                </layout>
                               </item>
                               <item>
@@ -4041,22 +3971,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </property>
                                  </widget>
                                 </item>
-                                <item>
-                                 <widget class="QScrollBar" name="SyParScrollBar">
-                                  <property name="minimum">
-                                   <number>-200</number>
-                                  </property>
-                                  <property name="maximum">
-                                   <number>200</number>
-                                  </property>
-                                  <property name="sliderPosition">
-                                   <number>60</number>
-                                  </property>
-                                  <property name="orientation">
-                                   <enum>Qt::Horizontal</enum>
-                                  </property>
-                                 </widget>
-                                </item>
                                </layout>
                               </item>
                               <item>
@@ -4102,22 +4016,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                   </property>
                                   <property name="text">
                                    <string>1</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QScrollBar" name="SzParScrollBar">
-                                  <property name="minimum">
-                                   <number>-200</number>
-                                  </property>
-                                  <property name="maximum">
-                                   <number>200</number>
-                                  </property>
-                                  <property name="sliderPosition">
-                                   <number>60</number>
-                                  </property>
-                                  <property name="orientation">
-                                   <enum>Qt::Horizontal</enum>
                                   </property>
                                  </widget>
                                 </item>

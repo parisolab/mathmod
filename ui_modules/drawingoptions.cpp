@@ -6439,3 +6439,4 @@ void DrawingOptions::on_choice_currentTextChanged(const QString &ScriptName)
     on_choice_activated(ScriptName);
 }
 
+
