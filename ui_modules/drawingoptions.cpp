@@ -6383,45 +6383,6 @@ void DrawingOptions::on_UndoPushButton_2_clicked()
 {
     on_actionUndo_triggered();
 }
-void DrawingOptions::on_SxParScrollBar_valueChanged(int sx)
-{
-    int size=MathmodRef->ParObjet->OperationsTree.size();
-    for(int i=0; i<size; i++)
-    {
-        QStringList OpType=(MathmodRef->ParObjet->OperationsTree[size-1-i]->OpType).split("_",Qt::SkipEmptyParts);
-
-        if(OpType.contains("PAR") && OpType.contains("SCAL"))
-        {
-            //std::shared_ptr<GenOperation> basePtr = std::make_shared<ParScal>();
-            // Cast the first element
-            if (auto derivedPtr = std::dynamic_pointer_cast<ParScal>(MathmodRef->ParObjet->OperationsTree[size-1-i]))
-            {
-                float Scx=(derivedPtr)->Scx*float(sx)/10.0;
-                ui.SxParlineEdit->setText(QString::number(Scx,'f', 2));
-                return;
-            }
-        }
-    }
-}
-void DrawingOptions::on_SyParScrollBar_valueChanged(int sy)
-{
-    ui.SyParlineEdit->setText(QString::number(float(sy-50)/60,'f', 2));
-}
-void DrawingOptions::on_SzParScrollBar_valueChanged(int sz)
-{
-    ui.SzParlineEdit->setText(QString::number(float(sz-50)/60,'f', 2));
-}
-void DrawingOptions::on_SxIsoScrollBar_valueChanged(int sx)
-{
-}
-void DrawingOptions::on_SyIsoScrollBar_valueChanged(int sy)
-{
-    ui.SyIsolineEdit->setText(QString::number(float(sy-50)/60,'f', 2));
-}
-void DrawingOptions::on_SzIsoScrollBar_valueChanged(int sz)
-{
-    ui.SzIsolineEdit->setText(QString::number(float(sz-50)/60,'f', 2));
-}
 void DrawingOptions::on_SaveScIsoButton_clicked()
 {
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;

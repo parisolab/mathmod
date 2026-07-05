@@ -382,12 +382,6 @@ private slots:
     void on_UndopushButton_1_clicked();
     void on_RedoPushButton_2_clicked();
     void on_UndoPushButton_2_clicked();
-    void on_SxParScrollBar_valueChanged(int value);
-    void on_SyParScrollBar_valueChanged(int value);
-    void on_SzParScrollBar_valueChanged(int value);
-    void on_SxIsoScrollBar_valueChanged(int value);
-    void on_SyIsoScrollBar_valueChanged(int value);
-    void on_SzIsoScrollBar_valueChanged(int value);
     void on_SaveScIsoButton_clicked();
     void on_SaveScParButton_clicked();
     void on_choice_currentTextChanged(const QString &);
