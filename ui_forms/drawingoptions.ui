@@ -2604,7 +2604,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                  <item>
                                   <widget class="QPushButton" name="SaveScIsoButton">
                                    <property name="sizePolicy">
-                                    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                                      <horstretch>0</horstretch>
                                      <verstretch>0</verstretch>
                                     </sizepolicy>
@@ -2634,7 +2634,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    <item>
                                     <widget class="QPushButton" name="RedoPushButton_2">
                                      <property name="sizePolicy">
-                                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                                        <horstretch>0</horstretch>
                                        <verstretch>0</verstretch>
                                       </sizepolicy>
@@ -2647,7 +2647,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    <item>
                                     <widget class="QPushButton" name="UndoPushButton_2">
                                      <property name="sizePolicy">
-                                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                                        <horstretch>0</horstretch>
                                        <verstretch>0</verstretch>
                                       </sizepolicy>
@@ -3662,7 +3662,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>521</width>
+                           <width>316</width>
                            <height>121</height>
                           </rect>
                          </property>
@@ -3838,7 +3838,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>521</width>
+                           <width>177</width>
                            <height>101</height>
                           </rect>
                          </property>
