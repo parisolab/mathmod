@@ -5864,7 +5864,7 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         FctArray.append("fffxyz"+I+"="+fxyzt);
         if(ALL || (!ALL && IncludeComponent))
-            NewFxyzArray.append("fffxyz"+I+"("+SxVar+"*x,"+SyVar+"*y,"+SzVar+"*z,t)");
+            NewFxyzArray.append("fffxyz"+I+"("+SxVar+"*("+Operation[1].toString() +")*x,"+SyVar+"*("+Operation[2].toString() +")*y,"+SzVar+"*("+Operation[3].toString() +")*z,t)");
         else
             NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
         tmp2["Fxyz"] = NewFxyzArray;
@@ -6291,9 +6291,9 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
     else if(type == "ISO")
     {
         tmpArray.append("SCAL_ISO_ALL");
-        tmpArray.append((ui.SxIsolineEdit->text()).toDouble());
-        tmpArray.append((ui.SyIsolineEdit->text()).toDouble());
-        tmpArray.append((ui.SzIsolineEdit->text()).toDouble());
+        tmpArray.append((ui.SxIsolineEdit->text()));
+        tmpArray.append((ui.SyIsolineEdit->text()));
+        tmpArray.append((ui.SzIsolineEdit->text()));
     }
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
