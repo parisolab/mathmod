@@ -438,7 +438,7 @@
                  <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>2</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="page"/>
                 <widget class="QWidget" name="page_4">
@@ -2231,7 +2231,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>314</width>
+                              <width>507</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>211</width>
+                              <width>492</width>
                               <height>123</height>
                              </rect>
                             </property>
@@ -2471,7 +2471,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                     <widget class="QLabel" name="SxIsolabel">
                                      <property name="maximumSize">
                                       <size>
-                                       <width>20</width>
+                                       <width>60</width>
                                        <height>16777215</height>
                                       </size>
                                      </property>
@@ -2519,7 +2519,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                     <widget class="QLabel" name="SyIsolabel">
                                      <property name="maximumSize">
                                       <size>
-                                       <width>20</width>
+                                       <width>60</width>
                                        <height>16777215</height>
                                       </size>
                                      </property>
@@ -2567,7 +2567,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                     <widget class="QLabel" name="SzIsolabel">
                                      <property name="maximumSize">
                                       <size>
-                                       <width>20</width>
+                                       <width>60</width>
                                        <height>16777215</height>
                                       </size>
                                      </property>
@@ -3876,7 +3876,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>506</width>
+                           <width>521</width>
                            <height>113</height>
                           </rect>
                          </property>
