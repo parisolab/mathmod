@@ -2231,7 +2231,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>507</width>
+                              <width>314</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>492</width>
+                              <width>211</width>
                               <height>123</height>
                              </rect>
                             </property>
@@ -3646,6 +3646,44 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       <string>Equations Generator</string>
                      </attribute>
                      <layout class="QGridLayout" name="gridLayout_85">
+                      <item row="1" column="0">
+                       <layout class="QVBoxLayout" name="verticalLayout_16">
+                        <item>
+                         <widget class="QGroupBox" name="groupBox_PAR">
+                          <property name="title">
+                           <string>Oerations list and Original script:</string>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_82">
+                           <property name="leftMargin">
+                            <number>1</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>1</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>1</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>1</number>
+                           </property>
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <item row="0" column="0">
+                            <widget class="QTextEdit" name="OperationsTextEditPAR"/>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="RegenerateButtonPAR">
+                          <property name="text">
+                           <string>Regenerate Script</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
                       <item row="0" column="0">
                        <widget class="QToolBox" name="EquaGenTool">
                         <property name="sizePolicy">
@@ -3838,67 +3876,31 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>521</width>
-                           <height>101</height>
+                           <width>506</width>
+                           <height>113</height>
                           </rect>
                          </property>
                          <attribute name="label">
                           <string>Scal</string>
                          </attribute>
                          <layout class="QGridLayout" name="gridLayout_83">
-                          <property name="leftMargin">
-                           <number>2</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>2</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>2</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>2</number>
-                          </property>
-                          <property name="spacing">
-                           <number>1</number>
-                          </property>
                           <item row="0" column="0">
                            <layout class="QHBoxLayout" name="horizontalLayout_70">
                             <property name="spacing">
-                             <number>-1</number>
-                            </property>
-                            <property name="rightMargin">
-                             <number>1</number>
-                            </property>
-                            <property name="bottomMargin">
-                             <number>1</number>
+                             <number>0</number>
                             </property>
                             <item>
                              <layout class="QVBoxLayout" name="verticalLayout_18">
                               <property name="spacing">
-                               <number>1</number>
+                               <number>0</number>
                               </property>
                               <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_66">
-                                <property name="spacing">
-                                 <number>1</number>
-                                </property>
-                                <property name="leftMargin">
-                                 <number>4</number>
-                                </property>
-                                <property name="topMargin">
-                                 <number>2</number>
-                                </property>
-                                <property name="rightMargin">
-                                 <number>4</number>
-                                </property>
-                                <property name="bottomMargin">
-                                 <number>2</number>
-                                </property>
+                               <layout class="QHBoxLayout" name="horizontalLayout_69">
                                 <item>
                                  <widget class="QLabel" name="SxParlabel">
                                   <property name="maximumSize">
                                    <size>
-                                    <width>20</width>
+                                    <width>62</width>
                                     <height>16777215</height>
                                    </size>
                                   </property>
@@ -3927,26 +3929,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
                               </item>
                               <item>
                                <layout class="QHBoxLayout" name="horizontalLayout_68">
-                                <property name="spacing">
-                                 <number>1</number>
-                                </property>
-                                <property name="leftMargin">
-                                 <number>2</number>
-                                </property>
-                                <property name="topMargin">
-                                 <number>2</number>
-                                </property>
-                                <property name="rightMargin">
-                                 <number>2</number>
-                                </property>
-                                <property name="bottomMargin">
-                                 <number>2</number>
-                                </property>
                                 <item>
                                  <widget class="QLabel" name="SyParlabel">
                                   <property name="maximumSize">
                                    <size>
-                                    <width>20</width>
+                                    <width>60</width>
                                     <height>16777215</height>
                                    </size>
                                   </property>
@@ -3974,27 +3961,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                </layout>
                               </item>
                               <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_69">
-                                <property name="spacing">
-                                 <number>1</number>
-                                </property>
-                                <property name="leftMargin">
-                                 <number>4</number>
-                                </property>
-                                <property name="topMargin">
-                                 <number>2</number>
-                                </property>
-                                <property name="rightMargin">
-                                 <number>4</number>
-                                </property>
-                                <property name="bottomMargin">
-                                 <number>2</number>
-                                </property>
+                               <layout class="QHBoxLayout" name="horizontalLayout_66">
                                 <item>
                                  <widget class="QLabel" name="SzParlabel">
                                   <property name="maximumSize">
                                    <size>
-                                    <width>20</width>
+                                    <width>60</width>
                                     <height>16777215</height>
                                    </size>
                                   </property>
@@ -4025,10 +3997,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </item>
                             <item>
                              <layout class="QVBoxLayout" name="verticalLayout_17">
+                              <property name="spacing">
+                               <number>2</number>
+                              </property>
                               <item>
                                <widget class="QPushButton" name="SaveScParButton">
                                 <property name="sizePolicy">
-                                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                                   <horstretch>0</horstretch>
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
@@ -4051,6 +4026,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 </property>
                                 <item>
                                  <widget class="QPushButton" name="RedoPushButton_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
                                   <property name="text">
                                    <string>Redo</string>
                                   </property>
@@ -4058,6 +4039,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                 </item>
                                 <item>
                                  <widget class="QPushButton" name="UndopushButton_1">
+                                  <property name="sizePolicy">
+                                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                   </sizepolicy>
+                                  </property>
                                   <property name="text">
                                    <string>Undo</string>
                                   </property>
@@ -4072,44 +4059,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </layout>
                         </widget>
                        </widget>
-                      </item>
-                      <item row="1" column="0">
-                       <layout class="QVBoxLayout" name="verticalLayout_16">
-                        <item>
-                         <widget class="QGroupBox" name="groupBox_PAR">
-                          <property name="title">
-                           <string>Oerations list and Original script:</string>
-                          </property>
-                          <layout class="QGridLayout" name="gridLayout_82">
-                           <property name="leftMargin">
-                            <number>1</number>
-                           </property>
-                           <property name="topMargin">
-                            <number>1</number>
-                           </property>
-                           <property name="rightMargin">
-                            <number>1</number>
-                           </property>
-                           <property name="bottomMargin">
-                            <number>1</number>
-                           </property>
-                           <property name="spacing">
-                            <number>0</number>
-                           </property>
-                           <item row="0" column="0">
-                            <widget class="QTextEdit" name="OperationsTextEditPAR"/>
-                           </item>
-                          </layout>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QPushButton" name="RegenerateButtonPAR">
-                          <property name="text">
-                           <string>Regenerate Script</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
                       </item>
                      </layout>
                     </widget>
