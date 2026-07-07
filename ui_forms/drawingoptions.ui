@@ -438,7 +438,7 @@
                  <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>2</number>
                 </property>
                 <widget class="QWidget" name="page"/>
                 <widget class="QWidget" name="page_4">
@@ -2479,7 +2479,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                       <string notr="true">color: rgb(255, 36, 17);</string>
                                      </property>
                                      <property name="text">
-                                      <string>Sx</string>
+                                      <string>Sx(x,y,z,t)</string>
                                      </property>
                                     </widget>
                                    </item>
@@ -2527,7 +2527,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                       <string notr="true">color: rgb(48, 255, 36);</string>
                                      </property>
                                      <property name="text">
-                                      <string>Sy</string>
+                                      <string>Sy(x,y,z,t)</string>
                                      </property>
                                     </widget>
                                    </item>
@@ -2575,7 +2575,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                       <string notr="true">color: rgb(6, 113, 231);</string>
                                      </property>
                                      <property name="text">
-                                      <string>Sz</string>
+                                      <string>Sz(x,y,z,t)</string>
                                      </property>
                                     </widget>
                                    </item>
@@ -3662,7 +3662,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>316</width>
+                           <width>521</width>
                            <height>121</height>
                           </rect>
                          </property>
@@ -3838,7 +3838,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>177</width>
+                           <width>521</width>
                            <height>101</height>
                           </rect>
                          </property>
@@ -3906,7 +3906,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    <string notr="true">color: rgb(255, 36, 17);</string>
                                   </property>
                                   <property name="text">
-                                   <string>Sx</string>
+                                   <string>Sx(u,v,t)</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -3954,7 +3954,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    <string notr="true">color: rgb(48, 255, 36);</string>
                                   </property>
                                   <property name="text">
-                                   <string>Sy</string>
+                                   <string>Sy(u,v,t)</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -4002,7 +4002,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    <string notr="true">color: rgb(6, 113, 231);</string>
                                   </property>
                                   <property name="text">
-                                   <string>Sz</string>
+                                   <string>Sz(u,v,t)</string>
                                   </property>
                                  </widget>
                                 </item>
