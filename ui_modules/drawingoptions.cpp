@@ -5711,9 +5711,8 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
     SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
     ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
-    //Add Slider
+    //Add Sliders
     tmpJsObj = OriginalObj["Sliders"].toObject();
-
     SlidersArray = tmpJsObj["Name"].toArray();
     SlidersArray.append("SxVar_"+QString::number(ThCount));
     SlidersArray.append("SyVar_"+QString::number(ThCount));
