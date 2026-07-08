@@ -5792,13 +5792,14 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
 }
 void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
-    QString SxVar, SyVar, SzVar;
+    QString SxVar="", SyVar="", SzVar="";
     QJsonArray FxyzArray, NewFxyzArray, FctArray, ConstArray, ConstArraytmp,
             SlidersArray, ImportArraytmp;
     QJsonObject tmp2,tmp3;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
+    bool Scx, Scy, Scz;
     tmp2= OriginalObj["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     FctArray = tmp2["Funct"].toArray();
@@ -5821,38 +5822,65 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         ConstArray.append("epsilon=1/100000");
     }
-    SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
-    SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
-    SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
+    Scx = (Operation[1].toString().remove(" ") != "");
+    if (Scx) {
+        SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
+        SxVar = SxVar+"*("+Operation[1].toString().remove(" ") +")*";
+    }
+    Scy = (Operation[2].toString().remove(" ") != "");
+    if (Scy) {
+        SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
+        SyVar = SyVar+"*("+Operation[2].toString().remove(" ") +")*";
+    }
+    Scz = (Operation[3].toString().remove(" ") != "");
+    if (Scz) {
+        SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
+        SzVar = SzVar+"*("+Operation[3].toString().remove(" ") +")*";
+    }
     //Add Slider
     tmp3 = OriginalObj["Sliders"].toObject();
     SlidersArray = tmp3["Name"].toArray();
-    SlidersArray.append("SxVar_"+QString::number(ThCount));
-    SlidersArray.append("SyVar_"+QString::number(ThCount));
-    SlidersArray.append("SzVar_"+QString::number(ThCount));
+    if(Scx)
+        SlidersArray.append("SxVar_"+QString::number(ThCount));
+    if(Scy)
+        SlidersArray.append("SyVar_"+QString::number(ThCount));
+    if(Scz)
+        SlidersArray.append("SzVar_"+QString::number(ThCount));
     tmp3["Name"] = SlidersArray;
     SlidersArray = tmp3["Position"].toArray();
-    SlidersArray.append("60");
-    SlidersArray.append("60");
-    SlidersArray.append("60");
+    if(Scx)
+        SlidersArray.append("60");
+    if(Scy)
+        SlidersArray.append("60");
+    if(Scz)
+        SlidersArray.append("60");
     tmp3["Position"] = SlidersArray;
     SlidersArray = tmp3["Max"].toArray();
-    SlidersArray.append("100");
-    SlidersArray.append("100");
-    SlidersArray.append("100");
+    if(Scx)
+        SlidersArray.append("100");
+    if(Scy)
+        SlidersArray.append("100");
+    if(Scz)
+        SlidersArray.append("100");
     tmp3["Max"] = SlidersArray;
     SlidersArray = tmp3["Min"].toArray();
-    SlidersArray.append("-100");
-    SlidersArray.append("-100");
-    SlidersArray.append("-100");
+    if(Scx)
+        SlidersArray.append("-100");
+    if(Scy)
+        SlidersArray.append("-100");
+    if(Scz)
+        SlidersArray.append("-100");
     tmp3["Min"] = SlidersArray;
     SlidersArray = tmp3["Step"].toArray();
-    SlidersArray.append("1");
-    SlidersArray.append("1");
-    SlidersArray.append("1");
+    if(Scx)
+        SlidersArray.append("1");
+    if(Scy)
+        SlidersArray.append("1");
+    if(Scz)
+        SlidersArray.append("1");
     tmp3["Step"] = SlidersArray;
     OriginalObj["Sliders"] = tmp3;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
@@ -5863,7 +5891,7 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         FctArray.append("fffxyz"+I+"="+fxyzt);
         if(ALL || (!ALL && IncludeComponent))
-            NewFxyzArray.append("fffxyz"+I+"("+SxVar+"*("+Operation[1].toString() +")*x,"+SyVar+"*("+Operation[2].toString() +")*y,"+SzVar+"*("+Operation[3].toString() +")*z,t)");
+            NewFxyzArray.append("fffxyz"+I+"("+SxVar+"x,"+SyVar+"y,"+SzVar+"z,t)");
         else
             NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
         tmp2["Fxyz"] = NewFxyzArray;
