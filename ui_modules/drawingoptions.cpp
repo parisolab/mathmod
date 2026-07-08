@@ -5794,7 +5794,7 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
 {
     QString SxVar="", SyVar="", SzVar="";
     QJsonArray FxyzArray, NewFxyzArray, FctArray, ConstArray, ConstArraytmp,
-            SlidersArray, ImportArraytmp;
+            SlidersNameArray,SlidersPositionArray,SlidersMaxArray,SlidersMinArray,SlidersStepArray,ImportArraytmp;
     QJsonObject tmp2,tmp3;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
@@ -5842,46 +5842,38 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     }
     //Add Slider
     tmp3 = OriginalObj["Sliders"].toObject();
-    SlidersArray = tmp3["Name"].toArray();
-    if(Scx)
-        SlidersArray.append("SxVar_"+QString::number(ThCount));
-    if(Scy)
-        SlidersArray.append("SyVar_"+QString::number(ThCount));
-    if(Scz)
-        SlidersArray.append("SzVar_"+QString::number(ThCount));
-    tmp3["Name"] = SlidersArray;
-    SlidersArray = tmp3["Position"].toArray();
-    if(Scx)
-        SlidersArray.append("60");
-    if(Scy)
-        SlidersArray.append("60");
-    if(Scz)
-        SlidersArray.append("60");
-    tmp3["Position"] = SlidersArray;
-    SlidersArray = tmp3["Max"].toArray();
-    if(Scx)
-        SlidersArray.append("100");
-    if(Scy)
-        SlidersArray.append("100");
-    if(Scz)
-        SlidersArray.append("100");
-    tmp3["Max"] = SlidersArray;
-    SlidersArray = tmp3["Min"].toArray();
-    if(Scx)
-        SlidersArray.append("-100");
-    if(Scy)
-        SlidersArray.append("-100");
-    if(Scz)
-        SlidersArray.append("-100");
-    tmp3["Min"] = SlidersArray;
-    SlidersArray = tmp3["Step"].toArray();
-    if(Scx)
-        SlidersArray.append("1");
-    if(Scy)
-        SlidersArray.append("1");
-    if(Scz)
-        SlidersArray.append("1");
-    tmp3["Step"] = SlidersArray;
+    SlidersNameArray = tmp3["Name"].toArray();
+    SlidersPositionArray = tmp3["Position"].toArray();
+    SlidersMinArray = tmp3["Min"].toArray();
+    SlidersMaxArray = tmp3["Max"].toArray();
+    SlidersStepArray = tmp3["Step"].toArray();
+    if(Scx) {
+        SlidersNameArray.append("SxVar_"+QString::number(ThCount));
+        SlidersPositionArray.append("60");
+        SlidersMaxArray.append("100");
+        SlidersMinArray.append("-100");
+        SlidersStepArray.append("1");
+    }
+    if(Scy) {
+        SlidersNameArray.append("SyVar_"+QString::number(ThCount));
+        SlidersPositionArray.append("60");
+        SlidersMaxArray.append("100");
+        SlidersMinArray.append("-100");
+        SlidersStepArray.append("1");
+    }
+    if(Scz) {
+        SlidersNameArray.append("SzVar_"+QString::number(ThCount));
+        SlidersPositionArray.append("60");
+        SlidersMaxArray.append("100");
+        SlidersMinArray.append("-100");
+        SlidersStepArray.append("1");
+    }
+
+    tmp3["Name"] = SlidersNameArray;
+    tmp3["Position"] = SlidersPositionArray;
+    tmp3["Max"] = SlidersMaxArray;
+    tmp3["Min"] = SlidersMinArray;
+    tmp3["Step"] = SlidersStepArray;
     OriginalObj["Sliders"] = tmp3;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
