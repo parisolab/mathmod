@@ -5676,9 +5676,9 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
-    Sx =  QString::number(Operation[1].toDouble());
-    Sy =  QString::number(Operation[2].toDouble());
-    Sz =  QString::number(Operation[3].toDouble());
+    Sx =  "("+Operation[1].toString()+")";
+    Sy =  "("+Operation[2].toString()+")";
+    Sz =  "("+Operation[3].toString()+")";
 
     tmp2 = OriginalObj["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
@@ -5705,12 +5705,20 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         ConstArray.append("epsilon=1/100000");
     }
+    /*
     SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
     ConstArray.append("SxVar_"+QString::number(ThCount)+" ="+Sx);
     SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
     ConstArray.append("SyVar_"+QString::number(ThCount)+" ="+Sy);
     SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
     ConstArray.append("SzVar_"+QString::number(ThCount)+" ="+Sz);
+    */
+    SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
+    SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
+    SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
+    ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
 
@@ -5765,9 +5773,9 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         FctArray.append("fffz"+I+"="+fz);
         if(ALL || (!ALL && IncludeComponent))
         {
-            NewFxArray.append(Sx+"*fffx"+I+"(u,v,t)");
-            NewFyArray.append(Sy+"*fffy"+I+"(u,v,t)");
-            NewFzArray.append(Sz+"*fffz"+I+"(u,v,t)");
+            NewFxArray.append(Sx+"*"+SxVar+"*fffx"+I+"(u,v,t)");
+            NewFyArray.append(Sy+"*"+SyVar+"*fffy"+I+"(u,v,t)");
+            NewFzArray.append(Sz+"*"+SzVar+"*fffz"+I+"(u,v,t)");
         }
         else
         {
@@ -6284,9 +6292,9 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
     if(type == "PAR")
     {
         tmpArray.append("SCAL_PAR_ALL");
-        tmpArray.append((ui.SxParlineEdit->text()).toDouble());
-        tmpArray.append((ui.SyParlineEdit->text()).toDouble());
-        tmpArray.append((ui.SzParlineEdit->text()).toDouble());
+        tmpArray.append((ui.SxParlineEdit->text()));
+        tmpArray.append((ui.SyParlineEdit->text()));
+        tmpArray.append((ui.SzParlineEdit->text()));
     }
     else if(type == "ISO")
     {
