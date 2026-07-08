@@ -5705,14 +5705,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         ConstArray.append("epsilon=1/100000");
     }
-    /*
-    SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SxVar_"+QString::number(ThCount)+" ="+Sx);
-    SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SyVar_"+QString::number(ThCount)+" ="+Sy);
-    SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("SzVar_"+QString::number(ThCount)+" ="+Sz);
-    */
     SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
     ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
     SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
