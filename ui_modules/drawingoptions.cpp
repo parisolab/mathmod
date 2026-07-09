@@ -5756,12 +5756,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     tmpJsObj["Max"] = SlidersMaxArray;
     tmpJsObj["Min"] = SlidersMinArray;
     tmpJsObj["Step"] = SlidersStepArray;
-
-
-
-
-
-
     OriginalObj["Sliders"] = tmpJsObj;
 
     uint componentNumber = ComponentArray.size();
