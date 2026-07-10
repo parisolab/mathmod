@@ -6252,7 +6252,7 @@ void DrawingOptions::ApplyOperations(QJsonObject mathObject)
     DrawJsonModel(OriginalObj);
     PreviousJsonObject(OriginalObj);
 }
-void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
+void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type, QString th)
 {
     QJsonArray tmpArray, transArray;
     QJsonObject tmpJsObj;
@@ -6276,7 +6276,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
         tmpArray.append(ui.FctOriginal_1->isChecked());
         tmpArray.append(ui.UpperFct_1->isChecked());
         tmpArray.append(ui.checkBoxBoundary->isChecked());
-        tmpArray.append(ui.ThicknessVal_1->text().replace(" ", ""));
+        tmpArray.append(th);
     }
     else if(type == "_ISO")
     {
@@ -6284,7 +6284,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type)
         tmpArray.append(ui.FctOriginal_2->isChecked());
         tmpArray.append(ui.UpperFct_2->isChecked());
         tmpArray.append(ui.DownFct_2->isChecked());
-        tmpArray.append(ui.ThicknessVal_2->text().replace(" ", ""));
+        tmpArray.append(th);
         tmpArray.append(ui.Rawscript_2->isChecked());
     }
     transArray.append(tmpArray);
@@ -6337,14 +6337,32 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
 }
 void DrawingOptions::on_SaveThButtonPAR_clicked()
 {
+    QString Thickness = ui.ThicknessVal_1->text().replace(" ", "");
+    if (Thickness == "")
+    {
+        QMessageBox message;
+        message.setText("Error : Th(u,v,t)");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    THICK_OP(CurrentJsonObject, "_PAR");
+    THICK_OP(CurrentJsonObject, "_PAR", Thickness);
     ApplyOperations(CurrentJsonObject);
 }
 void DrawingOptions::on_SaveThButtonISO_clicked()
 {
+    QString Thickness = ui.ThicknessVal_2->text().replace(" ", "");
+    if (Thickness == "")
+    {
+        QMessageBox message;
+        message.setText("Error : Th(x,y,z,t)");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    THICK_OP(CurrentJsonObject, "_ISO");
+    THICK_OP(CurrentJsonObject, "_ISO", Thickness);
     ApplyOperations(CurrentJsonObject);
 }
 void DrawingOptions::on_UndoPushButton_clicked()
