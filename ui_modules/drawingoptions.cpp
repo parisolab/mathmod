@@ -6441,7 +6441,7 @@ void DrawingOptions::on_SaveScIsoButton_clicked()
     if (Sx == "" && Sy == "" && Sz == "")
     {
         QMessageBox message;
-        message.setText("Error : Sx(x,y,z,t), Sx(x,y,z,t), Sy(x,y,z,t) and Sz(x,y,z,t) are empty");
+        message.setText("Error : Sx(x,y,z,t), Sy(x,y,z,t) and Sz(x,y,z,t) are empty");
         message.adjustSize();
         message.exec();
         return;
@@ -6471,5 +6471,3 @@ void DrawingOptions::on_choice_currentTextChanged(const QString &ScriptName)
 {
     on_choice_activated(ScriptName);
 }
-
-
