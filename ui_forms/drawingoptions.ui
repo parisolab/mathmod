@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>250</width>
+                              <width>492</width>
                               <height>123</height>
                              </rect>
                             </property>
@@ -2492,7 +2492,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                       </size>
                                      </property>
                                      <property name="text">
-                                      <string>2</string>
+                                      <string>3</string>
                                      </property>
                                     </widget>
                                    </item>
@@ -2797,7 +2797,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="currentIndex">
-                     <number>2</number>
+                     <number>0</number>
                     </property>
                     <widget class="QWidget" name="tab_2">
                      <attribute name="title">
@@ -3876,7 +3876,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>222</width>
+                           <width>521</width>
                            <height>113</height>
                           </rect>
                          </property>
@@ -3921,7 +3921,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    </size>
                                   </property>
                                   <property name="text">
-                                   <string>2</string>
+                                   <string>3</string>
                                   </property>
                                  </widget>
                                 </item>
