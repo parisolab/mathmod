@@ -6295,7 +6295,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type, QString th)
     }
     tmp["Operations"] = tmpJsObj;
 }
-void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
+void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type, QString sx, QString sy, QString sz)
 {
     QJsonArray tmpArray, transArray;
     QJsonObject tmpJsObj;
@@ -6316,16 +6316,16 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type)
     if(type == "PAR")
     {
         tmpArray.append("SCAL_PAR_ALL");
-        tmpArray.append((ui.SxParlineEdit->text()));
-        tmpArray.append((ui.SyParlineEdit->text()));
-        tmpArray.append((ui.SzParlineEdit->text()));
+        tmpArray.append(sx);
+        tmpArray.append(sy);
+        tmpArray.append(sz);
     }
     else if(type == "ISO")
     {
         tmpArray.append("SCAL_ISO_ALL");
-        tmpArray.append((ui.SxIsolineEdit->text()));
-        tmpArray.append((ui.SyIsolineEdit->text()));
-        tmpArray.append((ui.SzIsolineEdit->text()));
+        tmpArray.append(sx);
+        tmpArray.append(sy);
+        tmpArray.append(sz);
     }
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
@@ -6341,7 +6341,7 @@ void DrawingOptions::on_SaveThButtonPAR_clicked()
     if (Thickness == "")
     {
         QMessageBox message;
-        message.setText("Error : Th(u,v,t)");
+        message.setText("Error : Th(u,v,t) is empty");
         message.adjustSize();
         message.exec();
         return;
@@ -6356,7 +6356,7 @@ void DrawingOptions::on_SaveThButtonISO_clicked()
     if (Thickness == "")
     {
         QMessageBox message;
-        message.setText("Error : Th(x,y,z,t)");
+        message.setText("Error : Th(x,y,z,t) is empty");
         message.adjustSize();
         message.exec();
         return;
@@ -6435,14 +6435,36 @@ void DrawingOptions::on_UndoPushButton_2_clicked()
 }
 void DrawingOptions::on_SaveScIsoButton_clicked()
 {
+    QString Sx= ui.SxIsolineEdit->text().replace(" ", ""),
+            Sy= ui.SyIsolineEdit->text().replace(" ", ""),
+            Sz= ui.SzIsolineEdit->text().replace(" ", "");
+    if (Sx == "" && Sy == "" && Sz == "")
+    {
+        QMessageBox message;
+        message.setText("Error : Sx(x,y,z,t), Sx(x,y,z,t), Sy(x,y,z,t) and Sz(x,y,z,t) are empty");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    SCAL_OP(CurrentJsonObject, "ISO");
+    SCAL_OP(CurrentJsonObject, "ISO", Sx, Sy, Sz);
     ApplyOperations(CurrentJsonObject);
 }
 void DrawingOptions::on_SaveScParButton_clicked()
 {
+    QString Sx= ui.SxParlineEdit->text().replace(" ", ""),
+            Sy= ui.SyParlineEdit->text().replace(" ", ""),
+            Sz= ui.SzParlineEdit->text().replace(" ", "");
+    if (Sx == "" && Sy == "" && Sz == "")
+    {
+        QMessageBox message;
+        message.setText("Error : Sx(u,v,t), Sy(u,v,t) and Sz(u,v,t) are empty");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    SCAL_OP(CurrentJsonObject, "PAR");
+    SCAL_OP(CurrentJsonObject, "PAR", Sx, Sy, Sz);
     ApplyOperations(CurrentJsonObject);
 }
 void DrawingOptions::on_choice_currentTextChanged(const QString &ScriptName)

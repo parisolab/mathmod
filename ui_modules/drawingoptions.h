@@ -368,7 +368,7 @@ private slots:
     void ApplyOperations(QJsonObject);
     bool FieldExistAndValid(QJsonObject  &, QString);
     void THICK_OP(QJsonObject &, QString, QString th="");
-    void SCAL_OP(QJsonObject &, QString);
+    void SCAL_OP(QJsonObject &, QString, QString sx="", QString sy="", QString sz="");
     void on_RegenerateButtonISO_clicked();
     void on_RegenerateButtonPAR_clicked();
     void ApplyParOperation(QJsonObject &, QJsonArray &);
