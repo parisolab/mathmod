@@ -6270,7 +6270,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type, QString th)
         tmp.remove("Operations");
     }
     transArray = tmpJsObj["OperationsList"].toArray();
-    if(type == "_PAR")
+    if(type == "PAR")
     {
         tmpArray.append("THICK_PAR_ALL");
         tmpArray.append(ui.FctOriginal_1->isChecked());
@@ -6278,7 +6278,7 @@ void DrawingOptions::THICK_OP(QJsonObject & tmp, QString type, QString th)
         tmpArray.append(ui.checkBoxBoundary->isChecked());
         tmpArray.append(th);
     }
-    else if(type == "_ISO")
+    else if(type == "ISO")
     {
         tmpArray.append("THICK_ISO_ALL");
         tmpArray.append(ui.FctOriginal_2->isChecked());
@@ -6347,7 +6347,7 @@ void DrawingOptions::on_SaveThButtonPAR_clicked()
         return;
     }
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    THICK_OP(CurrentJsonObject, "_PAR", Thickness);
+    THICK_OP(CurrentJsonObject, "PAR", Thickness);
     ApplyOperations(CurrentJsonObject);
 }
 void DrawingOptions::on_SaveThButtonISO_clicked()
@@ -6362,7 +6362,7 @@ void DrawingOptions::on_SaveThButtonISO_clicked()
         return;
     }
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    THICK_OP(CurrentJsonObject, "_ISO", Thickness);
+    THICK_OP(CurrentJsonObject, "ISO", Thickness);
     ApplyOperations(CurrentJsonObject);
 }
 void DrawingOptions::on_UndoPushButton_clicked()
