@@ -5804,7 +5804,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     OriginalObj["Param3D"] = tmp2;
 }void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
-    QString SxVar="", SyVar="", SzVar="";
+    QString TxVar="", TyVar="", TzVar="";
     QJsonArray NewFxArray, NewFyArray, NewFzArray,
             ConstArray;
     QJsonArray FxArray, FyArray, FzArray,
@@ -5813,7 +5813,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
             CNDArray, GridArray, tmpArray,SlidersNameArray,SlidersPositionArray,SlidersMaxArray,SlidersMinArray,SlidersStepArray;
     QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
-    bool Scx, Scy, Scz;
+    bool Trx, Try, Trz;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
@@ -5844,23 +5844,23 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         ConstArray.append("epsilon=1/100000");
     }
 
-    Scx = (Operation[1].toString().remove(" ") != "");
-    if (Scx) {
-        SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
+    Trx = (Operation[1].toString().remove(" ") != "");
+    if (Trx) {
+        TxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
-        SxVar = SxVar+"*("+Operation[1].toString().remove(" ") +")*";
+        TxVar = TxVar+"*("+Operation[1].toString().remove(" ") +")*";
     }
-    Scy = (Operation[2].toString().remove(" ") != "");
-    if (Scy) {
-        SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
+    Try = (Operation[2].toString().remove(" ") != "");
+    if (Try) {
+        TyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
-        SyVar = SyVar+"*("+Operation[2].toString().remove(" ") +")*";
+        TyVar = TyVar+"*("+Operation[2].toString().remove(" ") +")*";
     }
-    Scz = (Operation[3].toString().remove(" ") != "");
-    if (Scz) {
-        SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
+    Trz = (Operation[3].toString().remove(" ") != "");
+    if (Trz) {
+        TzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
-        SzVar = SzVar+"*("+Operation[3].toString().remove(" ") +")*";
+        TzVar = TzVar+"*("+Operation[3].toString().remove(" ") +")*";
     }
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
@@ -5869,22 +5869,22 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     SlidersMinArray = tmpJsObj["Min"].toArray();
     SlidersMaxArray = tmpJsObj["Max"].toArray();
     SlidersStepArray = tmpJsObj["Step"].toArray();
-    if(Scx) {
-        SlidersNameArray.append("SxVar_"+QString::number(ThCount));
+    if(Trx) {
+        SlidersNameArray.append("TxVar_"+QString::number(ThCount));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
         SlidersStepArray.append("1");
     }
-    if(Scy) {
-        SlidersNameArray.append("SyVar_"+QString::number(ThCount));
+    if(Try) {
+        SlidersNameArray.append("TyVar_"+QString::number(ThCount));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
         SlidersStepArray.append("1");
     }
-    if(Scz) {
-        SlidersNameArray.append("SzVar_"+QString::number(ThCount));
+    if(Trz) {
+        SlidersNameArray.append("TzVar_"+QString::number(ThCount));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
@@ -5917,9 +5917,9 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         FctArray.append("fffz"+I+"="+fz);
         if(ALL || (!ALL && IncludeComponent))
         {
-            NewFxArray.append(SxVar+"fffx"+I+"(u,v,t)");
-            NewFyArray.append(SyVar+"fffy"+I+"(u,v,t)");
-            NewFzArray.append(SzVar+"fffz"+I+"(u,v,t)");
+            NewFxArray.append(TxVar+"fffx"+I+"(u,v,t)");
+            NewFyArray.append(TyVar+"fffy"+I+"(u,v,t)");
+            NewFzArray.append(TzVar+"fffz"+I+"(u,v,t)");
         }
         else
         {
