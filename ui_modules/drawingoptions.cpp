@@ -6335,6 +6335,46 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type, QString sx, QStrin
     }
     tmp["Operations"] = tmpJsObj;
 }
+void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString tx, QString ty, QString tz)
+{
+    QJsonArray tmpArray, transArray;
+    QJsonObject tmpJsObj;
+    QString T  = "";
+    if(tmp["Iso3D"].isNull())
+        tmp.remove("Iso3D");
+    if(tmp["ParIso"].isNull())
+        tmp.remove("ParIso");
+    //Look for an attached Transformations lists:
+    if(FieldExistAndValid(tmp,"Operations"))
+        tmpJsObj = tmp["Operations"].toObject();
+    else
+    {
+        tmpJsObj = tmp["Operations"].toObject();
+        tmp.remove("Operations");
+    }
+    transArray = tmpJsObj["OperationsList"].toArray();
+    if(type == "PAR")
+    {
+        tmpArray.append("TORS_PAR_ALL");
+        tmpArray.append(tx);
+        tmpArray.append(ty);
+        tmpArray.append(tz);
+    }
+    else if(type == "ISO")
+    {
+        tmpArray.append("TORS_ISO_ALL");
+        tmpArray.append(tx);
+        tmpArray.append(ty);
+        tmpArray.append(tz);
+    }
+    transArray.append(tmpArray);
+    tmpJsObj["OperationsList"] = transArray;
+    if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
+    {
+        tmpJsObj["OriginalObj"] = tmp;
+    }
+    tmp["Operations"] = tmpJsObj;
+}
 void DrawingOptions::on_SaveThButtonPAR_clicked()
 {
     QString Thickness = ui.ThicknessVal_1->text().replace(" ", "");
@@ -6471,3 +6511,23 @@ void DrawingOptions::on_choice_currentTextChanged(const QString &ScriptName)
 {
     on_choice_activated(ScriptName);
 }
+
+void DrawingOptions::on_SaveTorParButton_clicked()
+{
+    QString Tx= ui.TxParlineEdit->text().replace(" ", ""),
+            Ty= ui.TyParlineEdit->text().replace(" ", ""),
+            Tz= ui.TzParlineEdit->text().replace(" ", "");
+    if (Tx == "" && Ty == "" && Tz == "")
+    {
+        QMessageBox message;
+        message.setText("Error : TwistX, TwistY and TwistZ are empty");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    TORS_OP(CurrentJsonObject, "PAR", Tx, Ty, Tz);
+    ApplyOperations(CurrentJsonObject);
+
+}
+

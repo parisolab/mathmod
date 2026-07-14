@@ -413,38 +413,38 @@ MathMod::~MathMod()
 
 void MathMod::PutObjectInsideCube()
 {
-    minx = 999999999.0;
-    miny = 999999999.0;
-    minz = 999999999.0;
-    maxx = -999999999.0;
-    maxy = -999999999.0;
-    maxz = -999999999.0;
+    BoxMinX = 999999999.0;
+    BoxMinY = 999999999.0;
+    BoxMinZ = 999999999.0;
+    BoxMaxX = -999999999.0;
+    BoxMaxY = -999999999.0;
+    BoxMaxZ = -999999999.0;
     if ((LocalScene.morph != 1 ||
             (LocalScene.morph == 1 && FistTimecalibrate == 1)) &&
             LocalScene.slider != 1)
     {
         for (uint i = 0; i < LocalScene.VertxNumber; i++)
         {
-            if (minx > LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4])
-                minx = LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4];
-            if (miny > LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4])
-                miny = LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4];
-            if (minz > LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4])
-                minz = LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4];
+            if (BoxMinX > LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4])
+                BoxMinX = LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4];
+            if (BoxMinY > LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4])
+                BoxMinY = LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4];
+            if (BoxMinZ > LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4])
+                BoxMinZ = LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4];
 
-            if (maxx < LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4])
-                maxx = LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4];
-            if (maxy < LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4])
-                maxy = LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4];
-            if (maxz < LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4])
-                maxz = LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4];
+            if (BoxMaxX < LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4])
+                BoxMaxX = LocalScene.ArrayNorVer_localPt[10 * i + 3 + 4];
+            if (BoxMaxY < LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4])
+                BoxMaxY = LocalScene.ArrayNorVer_localPt[10 * i + 4 + 4];
+            if (BoxMaxZ < LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4])
+                BoxMaxZ = LocalScene.ArrayNorVer_localPt[10 * i + 5 + 4];
         }
         FistTimecalibrate = -1;
-        oldminx = minx; oldminy = miny; oldminz=minz;
-        oldmaxx = maxx; oldmaxy = maxy; oldmaxz=maxz;
-        difX = maxx - minx;
-        difY = maxy - miny;
-        difZ = maxz - minz;
+        oldminx = BoxMinX; oldminy = BoxMinY; oldminz=BoxMinZ;
+        oldmaxx = BoxMaxX; oldmaxy = BoxMaxY; oldmaxz=BoxMaxZ;
+        difX = BoxMaxX - BoxMinX;
+        difY = BoxMaxY - BoxMinY;
+        difZ = BoxMaxZ - BoxMinZ;
         // Recherche du maximum :
         difMaximum = double(difX);
         if (difY > float(difMaximum))
@@ -457,9 +457,9 @@ void MathMod::PutObjectInsideCube()
         }
         /// On va inclure cet objet dans un cube de langueur maximum
         /// egale a "hauteur_fenetre"
-        decalage_xo = -double(minx + maxx) / 2;
-        decalage_yo = -double(miny + maxy) / 2;
-        decalage_zo = -double(minz + maxz) / 2;
+        decalage_xo = -double(BoxMinX + BoxMaxX) / 2;
+        decalage_yo = -double(BoxMinY + BoxMaxY) / 2;
+        decalage_zo = -double(BoxMinZ + BoxMaxZ) / 2;
     }
     for (uint i = 0; i < LocalScene.VertxNumber; i++)
     {
@@ -654,9 +654,9 @@ void MathMod::PutObjectInsideCube()
                            " Triangls["+QString::number(LocalScene.PolyNumber/3)+"]"+
                            " Polygons["+QString::number(polynb)+"]";
   if(LocalScene.morph==-1)
-       labelinfos+=" X["+QString::number(minx,'g',3)+","+QString::number(maxx,'g',3)+"]\
- Y["+QString::number(miny,'g',3)+","+QString::number(maxy,'g',3)+"]\
- Z["+QString::number(minz,'g',3)+","+QString::number(maxz,'g',3)+"]";
+       labelinfos+=" X["+QString::number(BoxMinX,'g',3)+","+QString::number(BoxMaxX,'g',3)+"]\
+ Y["+QString::number(BoxMinY,'g',3)+","+QString::number(BoxMaxY,'g',3)+"]\
+ Z["+QString::number(BoxMinZ,'g',3)+","+QString::number(BoxMaxZ,'g',3)+"]";
 else
        labelinfos+=" X["+QString::number(oldminx,'g',3)+","+QString::number(oldmaxx,'g',3)+"]\
  Y["+QString::number(oldminy,'g',3)+","+QString::number(oldmaxy,'g',3)+"]\

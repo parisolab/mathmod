@@ -68,7 +68,7 @@ public:
     QString labelinfos;
     int FistTimecalibrate = -1;
     double hauteur_fenetre,difMaximum,decalage_xo,decalage_yo,decalage_zo;
-    GLfloat minx, miny, minz,maxx, maxy, maxz;
+    GLfloat BoxMinX, BoxMinY, BoxMinZ,BoxMaxX, BoxMaxY, BoxMaxZ;
     GLfloat oldminx, oldminy, oldminz,oldmaxx,oldmaxy,oldmaxz;
     GLfloat difX, difY, difZ;
     uint CubeStartIndex=0, PlanStartIndex=0, AxesStartIndex=0;
