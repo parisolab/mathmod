@@ -5802,6 +5802,146 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     tmp2["Const"]= ConstArray;
     tmp2["Import"]= ImportArraytmp;
     OriginalObj["Param3D"] = tmp2;
+}void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
+{
+    QString SxVar="", SyVar="", SzVar="";
+    QJsonArray NewFxArray, NewFyArray, NewFzArray,
+            ConstArray;
+    QJsonArray FxArray, FyArray, FzArray,
+            FctArray, ConstArraytmp,
+            ImportArraytmp, ComponentArray, SlidersArray,
+            CNDArray, GridArray, tmpArray,SlidersNameArray,SlidersPositionArray,SlidersMaxArray,SlidersMinArray,SlidersStepArray;
+    QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
+    QString ScalVar;
+    bool Scx, Scy, Scz;
+    QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
+    bool ALL= TypeInfos.contains("ALL");
+    bool IncludeComponent = false;
+
+    tmp2 = OriginalObj["Param3D"].toObject();
+    FxArray = tmp2["Fx"].toArray();
+    FyArray = tmp2["Fy"].toArray();
+    FzArray = tmp2["Fz"].toArray();
+
+    FctArray = tmp2["Funct"].toArray();
+    ComponentArray = tmp2["Component"].toArray();
+    ConstArraytmp = tmp2["Const"].toArray();
+    tmp2.remove("Import");
+    ImportArraytmp.append("All");
+    int ThCount=0;
+    for (int i = 0; i < ConstArraytmp.size(); ++i)
+    {
+        if(ConstArraytmp[i].toString().contains("ThCount"))
+        {
+            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+        }
+        else
+            ConstArray.append(ConstArraytmp[i].toString());
+    }
+    ThCount = ThCount+1;
+    if(ThCount==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
+
+    Scx = (Operation[1].toString().remove(" ") != "");
+    if (Scx) {
+        SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
+        SxVar = SxVar+"*("+Operation[1].toString().remove(" ") +")*";
+    }
+    Scy = (Operation[2].toString().remove(" ") != "");
+    if (Scy) {
+        SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
+        SyVar = SyVar+"*("+Operation[2].toString().remove(" ") +")*";
+    }
+    Scz = (Operation[3].toString().remove(" ") != "");
+    if (Scz) {
+        SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
+        SzVar = SzVar+"*("+Operation[3].toString().remove(" ") +")*";
+    }
+    //Add Slider
+    tmpJsObj = OriginalObj["Sliders"].toObject();
+    SlidersNameArray = tmpJsObj["Name"].toArray();
+    SlidersPositionArray = tmpJsObj["Position"].toArray();
+    SlidersMinArray = tmpJsObj["Min"].toArray();
+    SlidersMaxArray = tmpJsObj["Max"].toArray();
+    SlidersStepArray = tmpJsObj["Step"].toArray();
+    if(Scx) {
+        SlidersNameArray.append("SxVar_"+QString::number(ThCount));
+        SlidersPositionArray.append("60");
+        SlidersMaxArray.append("100");
+        SlidersMinArray.append("-100");
+        SlidersStepArray.append("1");
+    }
+    if(Scy) {
+        SlidersNameArray.append("SyVar_"+QString::number(ThCount));
+        SlidersPositionArray.append("60");
+        SlidersMaxArray.append("100");
+        SlidersMinArray.append("-100");
+        SlidersStepArray.append("1");
+    }
+    if(Scz) {
+        SlidersNameArray.append("SzVar_"+QString::number(ThCount));
+        SlidersPositionArray.append("60");
+        SlidersMaxArray.append("100");
+        SlidersMinArray.append("-100");
+        SlidersStepArray.append("1");
+    }
+
+    tmpJsObj["Name"] = SlidersNameArray;
+    tmpJsObj["Position"] = SlidersPositionArray;
+    tmpJsObj["Max"] = SlidersMaxArray;
+    tmpJsObj["Min"] = SlidersMinArray;
+    tmpJsObj["Step"] = SlidersStepArray;
+    OriginalObj["Sliders"] = tmpJsObj;
+
+    uint componentNumber = ComponentArray.size();
+    for(uint i=0; i<componentNumber; i++)
+    {
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
+        QString I=QString::number(ThCount)+"_"+QString::number(i);
+        FctArray.append("FFFx_Orig"+I+"="+FxArray.at(i).toString());
+        FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
+        FctArray.append("FFFz_Orig"+I+"="+FzArray.at(i).toString());
+        QString fx=FxArray.at(i).toString();
+        QString fy=FyArray.at(i).toString();
+        QString fz=FzArray.at(i).toString();
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
+        FctArray.append("fffx"+I+"="+fx);
+        FctArray.append("fffy"+I+"="+fy);
+        FctArray.append("fffz"+I+"="+fz);
+        if(ALL || (!ALL && IncludeComponent))
+        {
+            NewFxArray.append(SxVar+"fffx"+I+"(u,v,t)");
+            NewFyArray.append(SyVar+"fffy"+I+"(u,v,t)");
+            NewFzArray.append(SzVar+"fffz"+I+"(u,v,t)");
+        }
+        else
+        {
+            NewFxArray.append("fffx"+I+"(x,y,z,t)");
+            NewFyArray.append("fffy"+I+"(x,y,z,t)");
+            NewFzArray.append("fffz"+I+"(x,y,z,t)");
+        }
+        tmp2["Fx"] = NewFxArray;
+        tmp2["Fy"] = NewFyArray;
+        tmp2["Fz"] = NewFzArray;
+        tmp2["Funct"]= FctArray;
+        tmp2["Const"]= ConstArray;
+        tmp2["Import"]= ImportArraytmp;
+        OriginalObj["Param3D"] = tmp2;
+    }
+    tmp2["Fx"] = NewFxArray;
+    tmp2["Fy"] = NewFyArray;
+    tmp2["Fz"] = NewFzArray;
+    tmp2["Funct"]= FctArray;
+    tmp2["Const"]= ConstArray;
+    tmp2["Import"]= ImportArraytmp;
+    OriginalObj["Param3D"] = tmp2;
 }
 void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
@@ -6205,6 +6345,8 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
             ApplyThiParOperation(OriginalObj, Operation);
         if(TypeInfos.contains("SCAL"))
             ApplyScaParOperation(OriginalObj, Operation);
+        if(TypeInfos.contains("TORS"))
+            ApplyTorParOperation(OriginalObj, Operation);
     }
 }
 //Takes the operations list in mathobject and apply them to "OriginalObj" script
