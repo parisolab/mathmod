@@ -5927,7 +5927,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         {
             NewFxArray.append("fffx"+I+"(u,v,t)");
             NewFyArray.append("fffy"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")-fffz"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")");
-            NewFzArray.append("fffy"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")-fffz"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")");
+            NewFzArray.append("fffy"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")+fffz"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")");
         }
         else
         {
