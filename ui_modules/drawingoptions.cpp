@@ -5804,7 +5804,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     OriginalObj["Param3D"] = tmp2;
 }void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
-    QString TxVar="", TyVar="", TzVar="";
+    QString TxVar="", TyVar="", TzVar="", MinX="", MinY="", MinZ="", MaxX="", MaxY="", MaxZ="", DifX="", DifY="", DifZ="";
     QJsonArray NewFxArray, NewFyArray, NewFzArray,
             ConstArray;
     QJsonArray FxArray, FyArray, FzArray,
@@ -5817,7 +5817,15 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
-
+    MaxX=QString::number(MathmodRef->BoxMaxX);
+    MaxY=QString::number(MathmodRef->BoxMaxY);
+    MaxZ=QString::number(MathmodRef->BoxMaxZ);
+    MinX=QString::number(MathmodRef->BoxMinX);
+    MinY=QString::number(MathmodRef->BoxMinY);
+    MinZ=QString::number(MathmodRef->BoxMinZ);
+    DifX = "("+MaxX+"-"+MinX+")";
+    DifY = "("+MaxY+"-"+MinY+")";
+    DifZ = "("+MaxZ+"-"+MinZ+")";
     tmp2 = OriginalObj["Param3D"].toObject();
     FxArray = tmp2["Fx"].toArray();
     FyArray = tmp2["Fy"].toArray();
@@ -5846,21 +5854,21 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
 
     Trx = (Operation[1].toString().remove(" ") != "");
     if (Trx) {
-        TxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
-        TxVar = TxVar+"*("+Operation[1].toString().remove(" ") +")*";
+        TxVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
+        TxVar = TxVar+"*(("+Operation[1].toString().remove(" ") +")*2*pi)/"+DifX;
     }
     Try = (Operation[2].toString().remove(" ") != "");
     if (Try) {
-        TyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
-        TyVar = TyVar+"*("+Operation[2].toString().remove(" ") +")*";
+        TyVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
+        TyVar = TyVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)*";
     }
     Trz = (Operation[3].toString().remove(" ") != "");
     if (Trz) {
-        TzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
-        TzVar = TzVar+"*("+Operation[3].toString().remove(" ") +")*";
+        TzVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
+        TzVar = TzVar+"*(("+Operation[3].toString().remove(" ") +")*2*pi)*";
     }
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
@@ -5917,15 +5925,15 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         FctArray.append("fffz"+I+"="+fz);
         if(ALL || (!ALL && IncludeComponent))
         {
-            NewFxArray.append(TxVar+"fffx"+I+"(u,v,t)");
-            NewFyArray.append(TyVar+"fffy"+I+"(u,v,t)");
-            NewFzArray.append(TzVar+"fffz"+I+"(u,v,t)");
+            NewFxArray.append("fffx"+I+"(u,v,t)");
+            NewFyArray.append("fffy"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")-fffz"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")");
+            NewFzArray.append("fffy"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")-fffz"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")");
         }
         else
         {
-            NewFxArray.append("fffx"+I+"(x,y,z,t)");
-            NewFyArray.append("fffy"+I+"(x,y,z,t)");
-            NewFzArray.append("fffz"+I+"(x,y,z,t)");
+            NewFxArray.append("fffx"+I+"(u,v,t)");
+            NewFyArray.append("fffy"+I+"(u,v,t)");
+            NewFzArray.append("fffz"+I+"(u,v,t)");
         }
         tmp2["Fx"] = NewFxArray;
         tmp2["Fy"] = NewFyArray;
