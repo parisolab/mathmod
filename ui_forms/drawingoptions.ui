@@ -438,7 +438,7 @@
                  <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>2</number>
                 </property>
                 <widget class="QWidget" name="page"/>
                 <widget class="QWidget" name="page_4">
@@ -2231,7 +2231,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>506</width>
+                              <width>314</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -4059,6 +4059,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
                          </layout>
                         </widget>
                         <widget class="QWidget" name="TorsionTool">
+                         <property name="geometry">
+                          <rect>
+                           <x>0</x>
+                           <y>0</y>
+                           <width>520</width>
+                           <height>113</height>
+                          </rect>
+                         </property>
                          <attribute name="label">
                           <string>Torsion</string>
                          </attribute>
@@ -4076,18 +4084,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                               <item>
                                <layout class="QHBoxLayout" name="horizontalLayout_75">
                                 <item>
-                                 <widget class="QLabel" name="Twistx">
-                                  <property name="maximumSize">
-                                   <size>
-                                    <width>62</width>
-                                    <height>16777215</height>
-                                   </size>
-                                  </property>
-                                  <property name="styleSheet">
-                                   <string notr="true">color: rgb(255, 36, 17);</string>
-                                  </property>
+                                 <widget class="QRadioButton" name="XradioButton">
                                   <property name="text">
-                                   <string>TwistX</string>
+                                   <string>TwistX(u,v,t)</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -4100,7 +4099,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                    </size>
                                   </property>
                                   <property name="text">
-                                   <string>3</string>
+                                   <string>1</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -4109,18 +4108,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                               <item>
                                <layout class="QHBoxLayout" name="horizontalLayout_76">
                                 <item>
-                                 <widget class="QLabel" name="Twisty">
-                                  <property name="maximumSize">
-                                   <size>
-                                    <width>60</width>
-                                    <height>16777215</height>
-                                   </size>
-                                  </property>
-                                  <property name="styleSheet">
-                                   <string notr="true">color: rgb(48, 255, 36);</string>
-                                  </property>
+                                 <widget class="QRadioButton" name="YradioButton">
                                   <property name="text">
-                                   <string>TwistY</string>
+                                   <string>TwistY(u,v,t)</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -4142,18 +4132,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
                               <item>
                                <layout class="QHBoxLayout" name="horizontalLayout_77">
                                 <item>
-                                 <widget class="QLabel" name="Twistz">
-                                  <property name="maximumSize">
-                                   <size>
-                                    <width>60</width>
-                                    <height>16777215</height>
-                                   </size>
-                                  </property>
-                                  <property name="styleSheet">
-                                   <string notr="true">color: rgb(6, 113, 231);</string>
-                                  </property>
+                                 <widget class="QRadioButton" name="ZradioButton">
                                   <property name="text">
-                                   <string>TwistZ</string>
+                                   <string>TwistZ(u,v,t)</string>
                                   </property>
                                  </widget>
                                 </item>

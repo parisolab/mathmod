@@ -369,7 +369,7 @@ private slots:
     bool FieldExistAndValid(QJsonObject  &, QString);
     void THICK_OP(QJsonObject &, QString, QString th="");
     void SCAL_OP(QJsonObject &, QString, QString sx="", QString sy="", QString sz="");
-    void TORS_OP(QJsonObject &, QString, QString tx="", QString ty="", QString tz="");
+    void TORS_OP(QJsonObject &, QString, QString Axe="", QString ty="");
     void on_RegenerateButtonISO_clicked();
     void on_RegenerateButtonPAR_clicked();
     void ApplyParOperation(QJsonObject &, QJsonArray &);
@@ -388,6 +388,8 @@ private slots:
     void on_SaveScParButton_clicked();
     void on_choice_currentTextChanged(const QString &);
     void on_SaveTorParButton_clicked();
+    void on_RedoTorButton_clicked();
+    void on_UndoTorButton_clicked();
 };
 
 #endif

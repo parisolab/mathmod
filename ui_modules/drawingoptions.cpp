@@ -5804,7 +5804,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     OriginalObj["Param3D"] = tmp2;
 }void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
-    QString TxVar="", TyVar="", TzVar="", MinX="", MinY="", MinZ="", MaxX="", MaxY="", MaxZ="", DifX="", DifY="", DifZ="";
+    QString axis, twist, TwistVar, MinX="", MinY="", MinZ="", MaxX="", MaxY="", MaxZ="", DifX="", DifY="", DifZ="";
     QJsonArray NewFxArray, NewFyArray, NewFzArray,
             ConstArray;
     QJsonArray FxArray, FyArray, FzArray,
@@ -5813,7 +5813,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
             CNDArray, GridArray, tmpArray,SlidersNameArray,SlidersPositionArray,SlidersMaxArray,SlidersMinArray,SlidersStepArray;
     QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
-    bool Trx, Try, Trz;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
@@ -5852,24 +5851,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         ConstArray.append("epsilon=1/100000");
     }
 
-    Trx = (Operation[1].toString().remove(" ") != "");
-    if (Trx) {
-        TxVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
-        TxVar = TxVar+"*(("+Operation[1].toString().remove(" ") +")*2*pi)/"+DifX;
-    }
-    Try = (Operation[2].toString().remove(" ") != "");
-    if (Try) {
-        TyVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
-        TyVar = TyVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)*";
-    }
-    Trz = (Operation[3].toString().remove(" ") != "");
-    if (Trz) {
-        TzVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
-        TzVar = TzVar+"*(("+Operation[3].toString().remove(" ") +")*2*pi)*";
-    }
+    axis = (Operation[1].toString().remove(" ") != "");
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
     SlidersNameArray = tmpJsObj["Name"].toArray();
@@ -5877,27 +5859,18 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     SlidersMinArray = tmpJsObj["Min"].toArray();
     SlidersMaxArray = tmpJsObj["Max"].toArray();
     SlidersStepArray = tmpJsObj["Step"].toArray();
-    if(Trx) {
+    if (axis=="X") {
+        TwistVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
+        TwistVar = TwistVar+"*(("+Operation[1].toString().remove(" ") +")*2*pi)/"+DifX;
         SlidersNameArray.append("TxVar_"+QString::number(ThCount));
-        SlidersPositionArray.append("60");
-        SlidersMaxArray.append("100");
-        SlidersMinArray.append("-100");
-        SlidersStepArray.append("1");
     }
-    if(Try) {
-        SlidersNameArray.append("TyVar_"+QString::number(ThCount));
-        SlidersPositionArray.append("60");
-        SlidersMaxArray.append("100");
-        SlidersMinArray.append("-100");
-        SlidersStepArray.append("1");
-    }
-    if(Trz) {
-        SlidersNameArray.append("TzVar_"+QString::number(ThCount));
-        SlidersPositionArray.append("60");
-        SlidersMaxArray.append("100");
-        SlidersMinArray.append("-100");
-        SlidersStepArray.append("1");
-    }
+
+
+    SlidersPositionArray.append("60");
+    SlidersMaxArray.append("100");
+    SlidersMinArray.append("-100");
+    SlidersStepArray.append("1");
 
     tmpJsObj["Name"] = SlidersNameArray;
     tmpJsObj["Position"] = SlidersPositionArray;
@@ -6485,7 +6458,7 @@ void DrawingOptions::SCAL_OP(QJsonObject & tmp, QString type, QString sx, QStrin
     }
     tmp["Operations"] = tmpJsObj;
 }
-void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString tx, QString ty, QString tz)
+void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString axis, QString twist)
 {
     QJsonArray tmpArray, transArray;
     QJsonObject tmpJsObj;
@@ -6506,16 +6479,14 @@ void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString tx, QStrin
     if(type == "PAR")
     {
         tmpArray.append("TORS_PAR_ALL");
-        tmpArray.append(tx);
-        tmpArray.append(ty);
-        tmpArray.append(tz);
+        tmpArray.append(axis);
+        tmpArray.append(twist);
     }
     else if(type == "ISO")
     {
         tmpArray.append("TORS_ISO_ALL");
-        tmpArray.append(tx);
-        tmpArray.append(ty);
-        tmpArray.append(tz);
+        tmpArray.append(axis);
+        tmpArray.append(twist);
     }
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
@@ -6666,7 +6637,8 @@ void DrawingOptions::on_SaveTorParButton_clicked()
 {
     QString Tx= ui.TxParlineEdit->text().replace(" ", ""),
             Ty= ui.TyParlineEdit->text().replace(" ", ""),
-            Tz= ui.TzParlineEdit->text().replace(" ", "");
+            Tz= ui.TzParlineEdit->text().replace(" ", ""),
+    twist="", axis="";
     if (Tx == "" && Ty == "" && Tz == "")
     {
         QMessageBox message;
@@ -6675,9 +6647,67 @@ void DrawingOptions::on_SaveTorParButton_clicked()
         message.exec();
         return;
     }
+    if(ui.XradioButton->isChecked())
+    {
+        if( Tx != "")
+        {
+            twist=Tx;
+            axis="X";
+        }
+        else
+        {
+            QMessageBox message;
+            message.setText("Error : TwistX is empty");
+            message.adjustSize();
+            message.exec();
+            return;
+        }
+    }
+
+    if(ui.YradioButton->isChecked())
+    {
+        if( Ty != "")
+        {
+            twist=Ty;
+            axis="Y";
+        }
+        else
+        {
+            QMessageBox message;
+            message.setText("Error : TwistY is empty");
+            message.adjustSize();
+            message.exec();
+            return;
+        }
+    }
+
+    if(ui.ZradioButton->isChecked())
+    {
+        if( Tz != "")
+        {
+            twist=Tz;
+            axis="Z";
+        }
+        else
+        {
+            QMessageBox message;
+            message.setText("Error : TwistZ is empty");
+            message.adjustSize();
+            message.exec();
+            return;
+        }
+    }
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
-    TORS_OP(CurrentJsonObject, "PAR", Tx, Ty, Tz);
+    TORS_OP(CurrentJsonObject, "PAR", axis, twist);
     ApplyOperations(CurrentJsonObject);
 
+}
+void DrawingOptions::on_RedoTorButton_clicked()
+{
+    on_actionRedo_triggered();
+}
+void DrawingOptions::on_UndoTorButton_clicked()
+{
+    on_actionUndo_triggered();
 }
 
