@@ -5761,8 +5761,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     uint componentNumber = ComponentArray.size();
     for(uint i=0; i<componentNumber; i++)
     {
-        if(!ALL)
-            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         QString I=QString::number(ThCount)+"_"+QString::number(i);
         FctArray.append("FFFx_Orig"+I+"="+FxArray.at(i).toString());
         FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
@@ -5770,11 +5768,11 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         QString fx=FxArray.at(i).toString();
         QString fy=FyArray.at(i).toString();
         QString fz=FzArray.at(i).toString();
-        if(!ALL)
-            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         FctArray.append("fffx"+I+"="+fx);
         FctArray.append("fffy"+I+"="+fy);
         FctArray.append("fffz"+I+"="+fz);
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         if(ALL || (!ALL && IncludeComponent))
         {
             NewFxArray.append(SxVar+"fffx"+I+"(u,v,t)");
@@ -5900,8 +5898,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     uint componentNumber = ComponentArray.size();
     for(uint i=0; i<componentNumber; i++)
     {
-        if(!ALL)
-            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         QString I=QString::number(ThCount)+"_"+QString::number(i);
         FctArray.append("FFFx_Orig"+I+"="+FxArray.at(i).toString());
         FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
@@ -5909,16 +5905,28 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
         QString fx=FxArray.at(i).toString();
         QString fy=FyArray.at(i).toString();
         QString fz=FzArray.at(i).toString();
-        if(!ALL)
-            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         FctArray.append("fffx"+I+"="+fx);
         FctArray.append("fffy"+I+"="+fy);
         FctArray.append("fffz"+I+"="+fz);
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
         if(ALL || (!ALL && IncludeComponent))
         {
-            NewFxArray.append("fffx"+I+"(u,v,t)");
-            NewFyArray.append("fffy"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")-fffz"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")");
-            NewFzArray.append("fffy"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")+fffz"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TxVar+")");
+            if (axis=="X") {
+                NewFxArray.append("fffx"+I+"(u,v,t)");
+                NewFyArray.append("fffy"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")-fffz"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+                NewFzArray.append("fffy"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")+fffz"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+            }
+            if (axis=="Y") {
+                NewFxArray.append("fffx"+I+"(u,v,t)*cos((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")-fffz"+I+"(u,v,t)*sin((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+                NewFyArray.append("fffy"+I+"(u,v,t)");
+                NewFzArray.append("fffx"+I+"(u,v,t)*sin((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")+fffz"+I+"(u,v,t)*cos((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+            }
+            if (axis=="Z") {
+                NewFxArray.append("fffx"+I+"(u,v,t)*sin((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")+fffy"+I+"(u,v,t)*cos((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+                NewFyArray.append("fffx"+I+"(u,v,t)*cos((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")-fffy"+I+"(u,v,t)*sin((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+                NewFzArray.append("fffz"+I+"(u,v,t)");
+            }
         }
         else
         {
