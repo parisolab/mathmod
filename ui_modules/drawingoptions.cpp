@@ -5812,7 +5812,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
-    axis = (Operation[1].toString().remove(" ") != "");
+    axis = Operation[1].toString().remove(" ");
     if(axis!="X" && axis !="Y" && axis !="Z")
     {
         QMessageBox message;
