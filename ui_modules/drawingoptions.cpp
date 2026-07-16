@@ -5814,6 +5814,15 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
     QString ScalVar;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
+    axis = (Operation[1].toString().remove(" ") != "");
+    if(axis!="X" && axis !="Y" && axis !="Z")
+    {
+        QMessageBox message;
+        message.setText("Error : Axis must be X, Y or Z");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
     MaxX=QString::number(MathmodRef->BoxMaxX);
@@ -5850,8 +5859,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         ConstArray.append("epsilon=1/100000");
     }
-
-    axis = (Operation[1].toString().remove(" ") != "");
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
     SlidersNameArray = tmpJsObj["Name"].toArray();
@@ -5862,10 +5869,21 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     if (axis=="X") {
         TwistVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
-        TwistVar = TwistVar+"*(("+Operation[1].toString().remove(" ") +")*2*pi)/"+DifX;
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/"+DifX;
         SlidersNameArray.append("TxVar_"+QString::number(ThCount));
     }
-
+    if (axis=="Y") {
+        TwistVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/"+DifX;
+        SlidersNameArray.append("TyVar_"+QString::number(ThCount));
+    }
+    if (axis=="Z") {
+        TwistVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/"+DifX;
+        SlidersNameArray.append("TzVar_"+QString::number(ThCount));
+    }
 
     SlidersPositionArray.append("60");
     SlidersMaxArray.append("100");
