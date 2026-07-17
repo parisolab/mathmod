@@ -5873,13 +5873,13 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     if (axis=="Y") {
         TwistVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
-        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/"+DifX;
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/"+DifY;
         SlidersNameArray.append("TyVar_"+QString::number(ThCount));
     }
     if (axis=="Z") {
         TwistVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
-        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/"+DifX;
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/"+DifZ;
         SlidersNameArray.append("TzVar_"+QString::number(ThCount));
     }
 
@@ -5918,13 +5918,13 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
                 NewFzArray.append("fffy"+I+"(u,v,t)*sin((fffx"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")+fffz"+I+"(u,v,t)*cos((fffx"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
             }
             if (axis=="Y") {
-                NewFxArray.append("fffx"+I+"(u,v,t)*cos((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")-fffz"+I+"(u,v,t)*sin((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+                NewFxArray.append("fffx"+I+"(u,v,t)*cos((fffy"+I+"(u,v,t)-"+MinY+")*"+TwistVar+")-fffz"+I+"(u,v,t)*sin((fffy"+I+"(u,v,t)-"+MinY+")*"+TwistVar+")");
                 NewFyArray.append("fffy"+I+"(u,v,t)");
-                NewFzArray.append("fffx"+I+"(u,v,t)*sin((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")+fffz"+I+"(u,v,t)*cos((fffy"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+                NewFzArray.append("fffx"+I+"(u,v,t)*sin((fffy"+I+"(u,v,t)-"+MinY+")*"+TwistVar+")+fffz"+I+"(u,v,t)*cos((fffy"+I+"(u,v,t)-"+MinY+")*"+TwistVar+")");
             }
             if (axis=="Z") {
-                NewFxArray.append("fffx"+I+"(u,v,t)*sin((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")+fffy"+I+"(u,v,t)*cos((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
-                NewFyArray.append("fffx"+I+"(u,v,t)*cos((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")-fffy"+I+"(u,v,t)*sin((fffz"+I+"(u,v,t)-"+MinX+")*"+TwistVar+")");
+                NewFxArray.append("fffx"+I+"(u,v,t)*sin((fffz"+I+"(u,v,t)-"+MinZ+")*"+TwistVar+")+fffy"+I+"(u,v,t)*cos((fffz"+I+"(u,v,t)-"+MinZ+")*"+TwistVar+")");
+                NewFyArray.append("fffx"+I+"(u,v,t)*cos((fffz"+I+"(u,v,t)-"+MinZ+")*"+TwistVar+")-fffy"+I+"(u,v,t)*sin((fffz"+I+"(u,v,t)-"+MinZ+")*"+TwistVar+")");
                 NewFzArray.append("fffz"+I+"(u,v,t)");
             }
         }
