@@ -6689,7 +6689,6 @@ void DrawingOptions::on_SaveTorParButton_clicked()
             return;
         }
     }
-
     if(ui.YradioButton->isChecked())
     {
         if( Ty != "")
@@ -6706,7 +6705,6 @@ void DrawingOptions::on_SaveTorParButton_clicked()
             return;
         }
     }
-
     if(ui.ZradioButton->isChecked())
     {
         if( Tz != "")
