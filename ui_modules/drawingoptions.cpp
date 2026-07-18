@@ -6665,6 +6665,9 @@ void DrawingOptions::on_SaveTorParButton_clicked()
             Ty= ui.TyParlineEdit->text().replace(" ", ""),
             Tz= ui.TzParlineEdit->text().replace(" ", ""),
     twist="", axis="";
+    bool Twistx=ui.XradioButton->isChecked(),
+         Twisty=ui.YradioButton->isChecked(),
+         Twistz=ui.ZradioButton->isChecked();
     if (Tx == "" && Ty == "" && Tz == "")
     {
         QMessageBox message;
@@ -6673,7 +6676,15 @@ void DrawingOptions::on_SaveTorParButton_clicked()
         message.exec();
         return;
     }
-    if(ui.XradioButton->isChecked())
+    if (!Twistx && !Twisty && !Twistz)
+    {
+        QMessageBox message;
+        message.setText("Error : No action has been activated");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
+    if(Twistx)
     {
         if( Tx != "")
         {
@@ -6689,7 +6700,7 @@ void DrawingOptions::on_SaveTorParButton_clicked()
             return;
         }
     }
-    if(ui.YradioButton->isChecked())
+    if(Twisty)
     {
         if( Ty != "")
         {
@@ -6705,7 +6716,7 @@ void DrawingOptions::on_SaveTorParButton_clicked()
             return;
         }
     }
-    if(ui.ZradioButton->isChecked())
+    if(Twistz)
     {
         if( Tz != "")
         {
