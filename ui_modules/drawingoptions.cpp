@@ -5823,12 +5823,12 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     }
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
-    MaxX=QString::number(MathmodRef->BoxMaxX);
-    MaxY=QString::number(MathmodRef->BoxMaxY);
-    MaxZ=QString::number(MathmodRef->BoxMaxZ);
-    MinX=QString::number(MathmodRef->BoxMinX);
-    MinY=QString::number(MathmodRef->BoxMinY);
-    MinZ=QString::number(MathmodRef->BoxMinZ);
+    MaxX=Operation[3].toString().remove(" ");
+    MinX=Operation[4].toString().remove(" ");
+    MaxY=Operation[5].toString().remove(" ");
+    MinY=Operation[6].toString().remove(" ");
+    MaxZ=Operation[7].toString().remove(" ");
+    MinZ=Operation[8].toString().remove(" ");
     DifX = "("+MaxX+"-"+MinX+")";
     DifY = "("+MaxY+"-"+MinY+")";
     DifZ = "("+MaxZ+"-"+MinZ+")";
