@@ -6507,6 +6507,12 @@ void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString axis, QStr
         tmpArray.append("TORS_PAR_ALL");
         tmpArray.append(axis);
         tmpArray.append(twist);
+        tmpArray.append(QString::number(MathmodRef->BoxMaxX,'g',3));
+        tmpArray.append(QString::number(MathmodRef->BoxMinX,'g',3));
+        tmpArray.append(QString::number(MathmodRef->BoxMaxY,'g',3));
+        tmpArray.append(QString::number(MathmodRef->BoxMinY,'g',3));
+        tmpArray.append(QString::number(MathmodRef->BoxMaxZ,'g',3));
+        tmpArray.append(QString::number(MathmodRef->BoxMinZ,'g',3));
     }
     else if(type == "ISO")
     {
