@@ -2231,7 +2231,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>506</width>
+                              <width>489</width>
                               <height>111</height>
                              </rect>
                             </property>
@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>250</width>
+                              <width>489</width>
                               <height>123</height>
                              </rect>
                             </property>
@@ -2665,6 +2665,161 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              </item>
                             </layout>
                            </widget>
+                           <widget class="QWidget" name="page_3">
+                            <attribute name="label">
+                             <string>Twist</string>
+                            </attribute>
+                            <layout class="QGridLayout" name="gridLayout_89">
+                             <item row="0" column="0">
+                              <layout class="QHBoxLayout" name="horizontalLayout_79">
+                               <property name="spacing">
+                                <number>0</number>
+                               </property>
+                               <item>
+                                <layout class="QVBoxLayout" name="verticalLayout_21">
+                                 <property name="spacing">
+                                  <number>0</number>
+                                 </property>
+                                 <item>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_80">
+                                   <item>
+                                    <widget class="QRadioButton" name="XISOradioButton">
+                                     <property name="text">
+                                      <string>TwistX(u,v,t)</string>
+                                     </property>
+                                     <property name="checked">
+                                      <bool>true</bool>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QLineEdit" name="TxIsolineEdit">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>50</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </item>
+                                 <item>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_81">
+                                   <item>
+                                    <widget class="QRadioButton" name="YISOradioButton">
+                                     <property name="text">
+                                      <string>TwistY(u,v,t)</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QLineEdit" name="TyIsolineEdit">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>50</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="text">
+                                      <string/>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </item>
+                                 <item>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_82">
+                                   <item>
+                                    <widget class="QRadioButton" name="ZISOradioButton">
+                                     <property name="text">
+                                      <string>TwistZ(u,v,t)</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QLineEdit" name="TzIsolineEdit">
+                                     <property name="maximumSize">
+                                      <size>
+                                       <width>50</width>
+                                       <height>16777215</height>
+                                      </size>
+                                     </property>
+                                     <property name="text">
+                                      <string/>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </item>
+                                </layout>
+                               </item>
+                               <item>
+                                <layout class="QVBoxLayout" name="verticalLayout_22">
+                                 <property name="spacing">
+                                  <number>2</number>
+                                 </property>
+                                 <item>
+                                  <widget class="QPushButton" name="SaveTorIso">
+                                   <property name="sizePolicy">
+                                    <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                                     <horstretch>0</horstretch>
+                                     <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                   </property>
+                                   <property name="minimumSize">
+                                    <size>
+                                     <width>0</width>
+                                     <height>60</height>
+                                    </size>
+                                   </property>
+                                   <property name="text">
+                                    <string>Show</string>
+                                   </property>
+                                  </widget>
+                                 </item>
+                                 <item>
+                                  <layout class="QHBoxLayout" name="horizontalLayout_83">
+                                   <property name="spacing">
+                                    <number>2</number>
+                                   </property>
+                                   <item>
+                                    <widget class="QPushButton" name="RedoTorIso">
+                                     <property name="sizePolicy">
+                                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                       <horstretch>0</horstretch>
+                                       <verstretch>0</verstretch>
+                                      </sizepolicy>
+                                     </property>
+                                     <property name="text">
+                                      <string>Redo</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item>
+                                    <widget class="QPushButton" name="UndoTorIso">
+                                     <property name="sizePolicy">
+                                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                       <horstretch>0</horstretch>
+                                       <verstretch>0</verstretch>
+                                      </sizepolicy>
+                                     </property>
+                                     <property name="text">
+                                      <string>Undo</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </item>
+                                </layout>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
                           </widget>
                          </item>
                          <item row="1" column="0">
@@ -2797,7 +2952,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="currentIndex">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <widget class="QWidget" name="tab_2">
                      <attribute name="title">
