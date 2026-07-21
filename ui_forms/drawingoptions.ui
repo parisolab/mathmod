@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>489</width>
+                              <width>250</width>
                               <height>123</height>
                              </rect>
                             </property>
@@ -2666,6 +2666,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             </layout>
                            </widget>
                            <widget class="QWidget" name="page_3">
+                            <property name="geometry">
+                             <rect>
+                              <x>0</x>
+                              <y>-23</y>
+                              <width>489</width>
+                              <height>113</height>
+                             </rect>
+                            </property>
                             <attribute name="label">
                              <string>Twist</string>
                             </attribute>
@@ -2952,7 +2960,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                      <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="currentIndex">
-                     <number>2</number>
+                     <number>0</number>
                     </property>
                     <widget class="QWidget" name="tab_2">
                      <attribute name="title">
@@ -4218,7 +4226,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>520</width>
+                           <width>260</width>
                            <height>113</height>
                           </rect>
                          </property>

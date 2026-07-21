@@ -6741,7 +6741,6 @@ void DrawingOptions::on_SaveTorParButton_clicked()
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     TORS_OP(CurrentJsonObject, "PAR", axis, twist);
     ApplyOperations(CurrentJsonObject);
-
 }
 void DrawingOptions::on_RedoTorButton_clicked()
 {
@@ -6751,4 +6750,15 @@ void DrawingOptions::on_UndoTorButton_clicked()
 {
     on_actionUndo_triggered();
 }
+void DrawingOptions::on_SaveTorIso_clicked()
+{
 
+}
+void DrawingOptions::on_RedoTorIso_clicked()
+{
+    on_actionRedo_triggered();
+}
+void DrawingOptions::on_UndoTorIso_clicked()
+{
+    on_actionUndo_triggered();
+}

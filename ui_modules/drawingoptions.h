@@ -390,6 +390,9 @@ private slots:
     void on_SaveTorParButton_clicked();
     void on_RedoTorButton_clicked();
     void on_UndoTorButton_clicked();
+    void on_SaveTorIso_clicked();
+    void on_RedoTorIso_clicked();
+    void on_UndoTorIso_clicked();
 };
 
 #endif
