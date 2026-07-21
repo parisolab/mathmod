@@ -6752,6 +6752,80 @@ void DrawingOptions::on_UndoTorButton_clicked()
 }
 void DrawingOptions::on_SaveTorIso_clicked()
 {
+    QString Tx= ui.TxIsolineEdit->text().replace(" ", ""),
+            Ty= ui.TyIsolineEdit->text().replace(" ", ""),
+            Tz= ui.TzIsolineEdit->text().replace(" ", ""),
+    twist="", axis="";
+    bool Twistx=ui.XradioButton->isChecked(),
+         Twisty=ui.YradioButton->isChecked(),
+         Twistz=ui.ZradioButton->isChecked();
+    if (Tx == "" && Ty == "" && Tz == "")
+    {
+        QMessageBox message;
+        message.setText("Error : TwistX, TwistY and TwistZ are empty");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
+    if (!Twistx && !Twisty && !Twistz)
+    {
+        QMessageBox message;
+        message.setText("Error : No action has been activated");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
+    if(Twistx)
+    {
+        if( Tx != "")
+        {
+            twist=Tx;
+            axis="X";
+        }
+        else
+        {
+            QMessageBox message;
+            message.setText("Error : TwistX is empty");
+            message.adjustSize();
+            message.exec();
+            return;
+        }
+    }
+    if(Twisty)
+    {
+        if( Ty != "")
+        {
+            twist=Ty;
+            axis="Y";
+        }
+        else
+        {
+            QMessageBox message;
+            message.setText("Error : TwistY is empty");
+            message.adjustSize();
+            message.exec();
+            return;
+        }
+    }
+    if(Twistz)
+    {
+        if( Tz != "")
+        {
+            twist=Tz;
+            axis="Z";
+        }
+        else
+        {
+            QMessageBox message;
+            message.setText("Error : TwistZ is empty");
+            message.adjustSize();
+            message.exec();
+            return;
+        }
+    }
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    TORS_OP(CurrentJsonObject, "ISO", axis, twist);
+    ApplyOperations(CurrentJsonObject);
 
 }
 void DrawingOptions::on_RedoTorIso_clicked()
