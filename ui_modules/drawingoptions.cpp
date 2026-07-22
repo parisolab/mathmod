@@ -5800,7 +5800,132 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     tmp2["Const"]= ConstArray;
     tmp2["Import"]= ImportArraytmp;
     OriginalObj["Param3D"] = tmp2;
-}void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
+}
+void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
+{
+    QString axis, twist, TwistVar, min, dif;
+    QJsonArray NewFxyzArray, ConstArray, MinX, MinY, MinZ, MaxX, MaxY, MaxZ;
+    QJsonArray FxyzArray, FctArray, ConstArraytmp,
+            ImportArraytmp, ComponentArray, SlidersArray,
+            CNDArray, GridArray, tmpArray,SlidersNameArray,SlidersPositionArray,SlidersMaxArray,SlidersMinArray,SlidersStepArray;
+    QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
+    QString ScalVar;
+    QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
+    axis = Operation[1].toString().remove(" ");
+    if(axis!="X" && axis !="Y" && axis !="Z")
+    {
+        QMessageBox message;
+        message.setText("Error : Axis must be X, Y or Z");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
+    bool ALL= TypeInfos.contains("ALL");
+    bool IncludeComponent = false;
+    tmp2 = OriginalObj["Param3D"].toObject();
+    FxyzArray = tmp2["Fxyz"].toArray();
+    MaxX = tmp2["Xmax"].toArray();
+    MinX = tmp2["Xmin"].toArray();
+    MaxY = tmp2["Ymax"].toArray();
+    MinY = tmp2["Ymin"].toArray();
+    MaxZ = tmp2["Zmax"].toArray();
+    MinZ = tmp2["Zmin"].toArray();
+    FctArray = tmp2["Funct"].toArray();
+    ComponentArray = tmp2["Component"].toArray();
+    ConstArraytmp = tmp2["Const"].toArray();
+    tmp2.remove("Import");
+    ImportArraytmp.append("All");
+    int ThCount=0;
+    for (int i = 0; i < ConstArraytmp.size(); ++i)
+    {
+        if(ConstArraytmp[i].toString().contains("ThCount"))
+        {
+            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+        }
+        else
+            ConstArray.append(ConstArraytmp[i].toString());
+    }
+    ThCount = ThCount+1;
+    if(ThCount==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
+    //Add Slider
+    tmpJsObj = OriginalObj["Sliders"].toObject();
+    SlidersNameArray = tmpJsObj["Name"].toArray();
+    SlidersPositionArray = tmpJsObj["Position"].toArray();
+    SlidersMinArray = tmpJsObj["Min"].toArray();
+    SlidersMaxArray = tmpJsObj["Max"].toArray();
+    SlidersStepArray = tmpJsObj["Step"].toArray();
+    if (axis=="X") {
+        TwistVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/";
+        SlidersNameArray.append("TxVar_"+QString::number(ThCount));
+    }
+    if (axis=="Y") {
+        TwistVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/";
+        SlidersNameArray.append("TyVar_"+QString::number(ThCount));
+    }
+    if (axis=="Z") {
+        TwistVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
+        ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
+        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/";
+        SlidersNameArray.append("TzVar_"+QString::number(ThCount));
+    }
+
+    SlidersPositionArray.append("60");
+    SlidersMaxArray.append("100");
+    SlidersMinArray.append("-100");
+    SlidersStepArray.append("1");
+
+    tmpJsObj["Name"] = SlidersNameArray;
+    tmpJsObj["Position"] = SlidersPositionArray;
+    tmpJsObj["Max"] = SlidersMaxArray;
+    tmpJsObj["Min"] = SlidersMinArray;
+    tmpJsObj["Step"] = SlidersStepArray;
+    OriginalObj["Sliders"] = tmpJsObj;
+
+    uint componentNumber = ComponentArray.size();
+    for(uint i=0; i<componentNumber; i++)
+    {
+        QString I=QString::number(ThCount)+"_"+QString::number(i);
+        FctArray.append("FFFxyz_Orig"+I+"="+FxyzArray.at(i).toString());
+        QString fxyz=FxyzArray.at(i).toString();
+        FctArray.append("fffxyz"+I+"="+fxyz);
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
+        if(ALL || (!ALL && IncludeComponent))
+        {
+            if (axis=="X") {
+                min= MinX.at(i).toString();
+                dif= "("+MaxX.at(i).toString()+"-"+MinX.at(i).toString()+")";
+                NewFxyzArray.append("fffxyz"+I+"(x,y*cos((x-"+min+")*"+TwistVar+dif+") - z*sin((x-"+min+")*"+TwistVar+dif+") ,  y*sin((x-"+min+")*"+TwistVar+dif+") + z*cos((x-"+min+")*"+TwistVar+dif+") , t)");
+            }
+            if (axis=="Y") {
+            }
+            if (axis=="Z") {
+            }
+        }
+        else
+        {
+            NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+        }
+        tmp2["Fxyz"] = NewFxyzArray;
+        tmp2["Funct"]= FctArray;
+        tmp2["Const"]= ConstArray;
+        tmp2["Import"]= ImportArraytmp;
+        OriginalObj["Param3D"] = tmp2;
+    }
+    tmp2["Fxyz"] = NewFxyzArray;
+    tmp2["Funct"]= FctArray;
+    tmp2["Const"]= ConstArray;
+    tmp2["Import"]= ImportArraytmp;
+    OriginalObj["Param3D"] = tmp2;
+}
+void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
     QString axis, twist, TwistVar, MinX="", MinY="", MinZ="", MaxX="", MaxY="", MaxZ="", DifX="", DifY="", DifZ="";
     QJsonArray NewFxArray, NewFyArray, NewFzArray,
@@ -6334,6 +6459,8 @@ void DrawingOptions::ApplyIsoOperation(QJsonObject & OriginalObj, QJsonArray &Op
             ApplyThiIsoOperation(OriginalObj, Operation);
         if(TypeInfos.contains("SCAL"))
             ApplyScaIsoOperation(OriginalObj, Operation);
+        if(TypeInfos.contains("TORS"))
+            ApplyTorIsoOperation(OriginalObj, Operation);
     }
 }
 void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & OperationsList)
@@ -6756,9 +6883,9 @@ void DrawingOptions::on_SaveTorIso_clicked()
             Ty= ui.TyIsolineEdit->text().replace(" ", ""),
             Tz= ui.TzIsolineEdit->text().replace(" ", ""),
     twist="", axis="";
-    bool Twistx=ui.XradioButton->isChecked(),
-         Twisty=ui.YradioButton->isChecked(),
-         Twistz=ui.ZradioButton->isChecked();
+    bool Twistx=ui.XISOradioButton->isChecked(),
+         Twisty=ui.YISOradioButton->isChecked(),
+         Twistz=ui.ZISOradioButton->isChecked();
     if (Tx == "" && Ty == "" && Tz == "")
     {
         QMessageBox message;
