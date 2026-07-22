@@ -5822,7 +5822,7 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     }
     bool ALL= TypeInfos.contains("ALL");
     bool IncludeComponent = false;
-    tmp2 = OriginalObj["Param3D"].toObject();
+    tmp2 = OriginalObj["Iso3D"].toObject();
     FxyzArray = tmp2["Fxyz"].toArray();
     MaxX = tmp2["Xmax"].toArray();
     MinX = tmp2["Xmin"].toArray();
@@ -5917,13 +5917,13 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         tmp2["Funct"]= FctArray;
         tmp2["Const"]= ConstArray;
         tmp2["Import"]= ImportArraytmp;
-        OriginalObj["Param3D"] = tmp2;
+        OriginalObj["Iso3D"] = tmp2;
     }
     tmp2["Fxyz"] = NewFxyzArray;
     tmp2["Funct"]= FctArray;
     tmp2["Const"]= ConstArray;
     tmp2["Import"]= ImportArraytmp;
-    OriginalObj["Param3D"] = tmp2;
+    OriginalObj["Iso3D"] = tmp2;
 }
 void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
