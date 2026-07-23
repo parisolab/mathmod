@@ -5902,11 +5902,17 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
             if (axis=="X") {
                 min= MinX.at(i).toString();
                 dif= "("+MaxX.at(i).toString()+"-"+MinX.at(i).toString()+")";
-                NewFxyzArray.append("fffxyz"+I+"(x,y*cos((x-"+min+")*"+TwistVar+dif+") - z*sin((x-"+min+")*"+TwistVar+dif+") ,  y*sin((x-"+min+")*"+TwistVar+dif+") + z*cos((x-"+min+")*"+TwistVar+dif+") , t)");
+                NewFxyzArray.append("fffxyz"+I+"(x,y*cos((x-"+min+")*"+TwistVar+dif+") - z*sin((x-"+min+")*"+TwistVar+dif+"), y*sin((x-"+min+")*"+TwistVar+dif+") + z*cos((x-"+min+")*"+TwistVar+dif+"), t)");
             }
             if (axis=="Y") {
+                min= MinY.at(i).toString();
+                dif= "("+MaxY.at(i).toString()+"-"+MinY.at(i).toString()+")";
+                NewFxyzArray.append("fffxyz"+I+"(x*cos((y-"+min+")*"+TwistVar+dif+") - z*sin((y-"+min+")*"+TwistVar+dif+"), y, x*sin((y-"+min+")*"+TwistVar+dif+") + z*cos((y-"+min+")*"+TwistVar+dif+"), t)");
             }
             if (axis=="Z") {
+                min= MinZ.at(i).toString();
+                dif= "("+MaxZ.at(i).toString()+"-"+MinZ.at(i).toString()+")";
+                NewFxyzArray.append("fffxyz"+I+"(x*cos((z-"+min+")*"+TwistVar+dif+") - y*sin((z-"+min+")*"+TwistVar+dif+"), x*sin((z-"+min+")*"+TwistVar+dif+") + y*cos((z-"+min+")*"+TwistVar+dif+"), z, t)");
             }
         }
         else
