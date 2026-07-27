@@ -2669,7 +2669,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                             <property name="geometry">
                              <rect>
                               <x>0</x>
-                              <y>-23</y>
+                              <y>0</y>
                               <width>489</width>
                               <height>113</height>
                              </rect>
@@ -2709,7 +2709,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                                       </size>
                                      </property>
                                      <property name="text">
-                                      <string>1</string>
+                                      <string>pi</string>
                                      </property>
                                     </widget>
                                    </item>
@@ -3863,7 +3863,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>520</width>
+                           <width>316</width>
                            <height>121</height>
                           </rect>
                          </property>
