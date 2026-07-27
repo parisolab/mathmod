@@ -5860,19 +5860,19 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     if (axis=="X") {
         TwistVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
-        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/";
+        TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
         SlidersNameArray.append("TxVar_"+QString::number(ThCount));
     }
     if (axis=="Y") {
         TwistVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
-        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/";
+        TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
         SlidersNameArray.append("TyVar_"+QString::number(ThCount));
     }
     if (axis=="Z") {
         TwistVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
         ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
-        TwistVar = TwistVar+"*(("+Operation[2].toString().remove(" ") +")*2*pi)/";
+        TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
         SlidersNameArray.append("TzVar_"+QString::number(ThCount));
     }
 
