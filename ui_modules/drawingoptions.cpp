@@ -5552,13 +5552,16 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().toInt();
-            ConstArraytmp[i].toString().remove("OpIndex=");
+            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
     OpIndex = OpIndex+1;
+    if(OpIndex==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
     ConstArray.append("OpIndex="+QString::number(OpIndex));
     Bool = ((ShowBottomSurf) ? "1" : "0");
     ConstArray.append("ShowBottomSurf_"+QString::number(OpIndex)+"="+Bool);
@@ -5570,10 +5573,6 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArray.append("RawScript_"+QString::number(OpIndex)+"="+Bool);
     ThickVar    = "((ThickVar_"+QString::number(OpIndex)+"-50)/10)";
     ConstArray.append("ThickVar_"+QString::number(OpIndex)+" = 60");
-    if(OpIndex==1)
-    {
-        ConstArray.append("epsilon=1/100000");
-    }
     //Add Slider
     tmp3 = OriginalObj["Sliders"].toObject();
     SlidersArray = tmp3["Name"].toArray();
@@ -5694,13 +5693,13 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().toInt();
-            ConstArraytmp[i].toString().remove("OpIndex=");
+            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
     OpIndex = OpIndex+1;
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
     if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
@@ -5842,13 +5841,13 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().toInt();
-            ConstArraytmp[i].toString().remove("OpIndex=");
+            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
     OpIndex = OpIndex+1;
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
     if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
@@ -5981,13 +5980,13 @@ void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().toInt();
-            ConstArraytmp[i].toString().remove("OpIndex=");
+            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
     OpIndex = OpIndex+1;
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
     if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
@@ -6106,8 +6105,7 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().toInt();
-            ConstArraytmp[i].toString().remove("OpIndex=");
+            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
@@ -6251,20 +6249,19 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().toInt();
-            ConstArraytmp[i].toString().remove("OpIndex=");
+            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
     OpIndex = OpIndex+1;
     ConstArray.append("OpIndex="+QString::number(OpIndex));
-    ScalVar    = "((ScalVar_"+QString::number(OpIndex)+"-50)/10)";
-    ConstArray.append("ScalVar_"+QString::number(OpIndex)+" = 60");
     if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
+    ScalVar    = "((ScalVar_"+QString::number(OpIndex)+"-50)/10)";
+    ConstArray.append("ScalVar_"+QString::number(OpIndex)+" = 60");
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
     SlidersArray = tmpJsObj["Name"].toArray();
