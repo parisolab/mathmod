@@ -5786,15 +5786,6 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
             NewFyArray.append("fffy"+I+"(x,y,z,t)");
             NewFzArray.append("fffz"+I+"(x,y,z,t)");
         }
-        /*
-        tmp2["Fx"] = NewFxArray;
-        tmp2["Fy"] = NewFyArray;
-        tmp2["Fz"] = NewFzArray;
-        tmp2["Funct"]= FctArray;
-        tmp2["Const"]= ConstArray;
-        tmp2["Import"]= ImportArraytmp;
-        OriginalObj["Param3D"] = tmp2;
-        */
     }
     tmp2["Fx"] = NewFxArray;
     tmp2["Fy"] = NewFyArray;
@@ -5923,13 +5914,6 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         {
             NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
         }
-        /*
-        tmp2["Fxyz"] = NewFxyzArray;
-        tmp2["Funct"]= FctArray;
-        tmp2["Const"]= ConstArray;
-        tmp2["Import"]= ImportArraytmp;
-        OriginalObj["Iso3D"] = tmp2;
-        */
     }
     tmp2["Fxyz"] = NewFxyzArray;
     tmp2["Funct"]= FctArray;
@@ -6072,15 +6056,6 @@ void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray 
             NewFyArray.append("fffy"+I+"(u,v,t)");
             NewFzArray.append("fffz"+I+"(u,v,t)");
         }
-        /*
-        tmp2["Fx"] = NewFxArray;
-        tmp2["Fy"] = NewFyArray;
-        tmp2["Fz"] = NewFzArray;
-        tmp2["Funct"]= FctArray;
-        tmp2["Const"]= ConstArray;
-        tmp2["Import"]= ImportArraytmp;
-        OriginalObj["Param3D"] = tmp2;
-        */
     }
     tmp2["Fx"] = NewFxArray;
     tmp2["Fy"] = NewFyArray;
