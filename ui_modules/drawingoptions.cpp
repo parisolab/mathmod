@@ -5552,7 +5552,7 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
@@ -5693,7 +5693,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
@@ -5841,7 +5841,7 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
@@ -5980,7 +5980,7 @@ void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
@@ -6105,7 +6105,7 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
@@ -6249,7 +6249,7 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            OpIndex = ConstArraytmp[i].toString().remove("OpIndex=").toInt();
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
