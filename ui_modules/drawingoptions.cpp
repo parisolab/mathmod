@@ -5547,36 +5547,37 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArraytmp = tmp2["Const"].toArray();
     tmp2.remove("Import");
     ImportArraytmp.append("All");
-    int ThCount=0;
+    int OpIndex=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+            OpIndex = ConstArraytmp[i].toString().toInt();
+            ConstArraytmp[i].toString().remove("OpIndex=");
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
-    ThCount = ThCount+1;
-    ConstArray.append("ThCount="+QString::number(ThCount));
+    OpIndex = OpIndex+1;
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
     Bool = ((ShowBottomSurf) ? "1" : "0");
-    ConstArray.append("ShowBottomSurf_"+QString::number(ThCount)+"="+Bool);
+    ConstArray.append("ShowBottomSurf_"+QString::number(OpIndex)+"="+Bool);
     Bool = ((ShowUpperSurf) ? "1" : "0");
-    ConstArray.append("ShowUpperSurf_"+QString::number(ThCount)+"="+Bool);
+    ConstArray.append("ShowUpperSurf_"+QString::number(OpIndex)+"="+Bool);
     Bool = ((ShowOriginalSurf) ? "1" : "0");
-    ConstArray.append("ShowOriginalSurf_"+QString::number(ThCount)+"="+Bool);
+    ConstArray.append("ShowOriginalSurf_"+QString::number(OpIndex)+"="+Bool);
     Bool = ((RawScript) ? "1" : "0");
-    ConstArray.append("RawScript_"+QString::number(ThCount)+"="+Bool);
-    ThickVar    = "((ThickVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("ThickVar_"+QString::number(ThCount)+" = 60");
-    if(ThCount==1)
+    ConstArray.append("RawScript_"+QString::number(OpIndex)+"="+Bool);
+    ThickVar    = "((ThickVar_"+QString::number(OpIndex)+"-50)/10)";
+    ConstArray.append("ThickVar_"+QString::number(OpIndex)+" = 60");
+    if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
     //Add Slider
     tmp3 = OriginalObj["Sliders"].toObject();
     SlidersArray = tmp3["Name"].toArray();
-    SlidersArray.append("ThickVar_"+QString::number(ThCount));
+    SlidersArray.append("ThickVar_"+QString::number(OpIndex));
     tmp3["Name"] = SlidersArray;
     SlidersArray = tmp3["Position"].toArray();
     SlidersArray.append("60");
@@ -5595,16 +5596,16 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     QString ShowUpperSurfRawStr, ShowBottomSurfRawStr, ShowOriginalSurfRawStr;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
-        QString ThExpression= "ThExpression_"+QString::number(ThCount);
-        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
+        QString ThExpression= "ThExpression_"+QString::number(OpIndex);
+        QString I="_"+QString::number(OpIndex)+"_"+QString::number(i);
         QString fxyzt=FxyzArray.at(i).toString();
         if(!ALL)
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
 
         if(ALL || (!ALL && IncludeComponent))
         {
-            ShowOriginalSurfStr = "*(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
-            ShowOriginalSurfRawStr = "(if(ShowOriginalSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+            ShowOriginalSurfStr = "*(if(ShowOriginalSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
+            ShowOriginalSurfRawStr = "(if(ShowOriginalSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x,y,z,t),(1)))";
         }
         else
         {
@@ -5614,19 +5615,19 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
 
         if(ALL || (!ALL && IncludeComponent))
         {
-                ShowUpperSurfRawStr = "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
+                ShowUpperSurfRawStr = "*(if(ShowUpperSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x+"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
                                                                                                                     "y+"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
                                                                                                                     "z+"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
                                                                                                                     "t), (1)))";
-                ShowUpperSurfStr = "*(if(ShowUpperSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+                ShowUpperSurfStr = "*(if(ShowUpperSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
         }
         else
             ShowUpperSurfStr = ShowUpperSurfRawStr = "";
 
         if(ALL || (!ALL && IncludeComponent))
         {
-            ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
-            ShowBottomSurfRawStr = "*(if(ShowBottomSurf_"+QString::number(ThCount)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
+            ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+            ShowBottomSurfRawStr = "*(if(ShowBottomSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
                                                                                                                        "y-"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
                                                                                                                        "z-"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
                                                                                                                        "t),(1)))";
@@ -5636,10 +5637,10 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         QString fct_opt("fffxyz_opt"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((3),("+ThickVar+"*ThExpression_"+QString::number(ThCount)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                    "*psh((3),("+ThickVar+"*ThExpression_"+QString::number(OpIndex)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
         fct_opt+= ShowOriginalSurfStr+ShowUpperSurfStr+ShowBottomSurfStr;
         QString fct_raw="fffxyz_raw"+I+"="+ShowOriginalSurfRawStr+ShowUpperSurfRawStr+ShowBottomSurfRawStr;
-        QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(ThCount)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
+        QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(OpIndex)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";
         FctArray.append(ThExpression+"="+T);
         FctArray.append("R_fct="+ThickVar+"*x/sqrt(x*x+y*y+z*z)");
         FctArray.append("fffxyz"+I+"="+fxyzt);
@@ -5688,38 +5689,39 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArraytmp = tmp2["Const"].toArray();
     tmp2.remove("Import");
     ImportArraytmp.append("All");
-    int ThCount=0;
+    int OpIndex=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+            OpIndex = ConstArraytmp[i].toString().toInt();
+            ConstArraytmp[i].toString().remove("OpIndex=");
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
-    ThCount = ThCount+1;
-    if(ThCount==1)
+    OpIndex = OpIndex+1;
+    if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
 
     Scx = (Operation[1].toString().remove(" ") != "");
     if (Scx) {
-        SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
+        SxVar    = "((SxVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("SxVar_"+QString::number(OpIndex)+" = 60");
         SxVar = SxVar+"*("+Operation[1].toString().remove(" ") +")*";
     }
     Scy = (Operation[2].toString().remove(" ") != "");
     if (Scy) {
-        SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
+        SyVar    = "((SyVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("SyVar_"+QString::number(OpIndex)+" = 60");
         SyVar = SyVar+"*("+Operation[2].toString().remove(" ") +")*";
     }
     Scz = (Operation[3].toString().remove(" ") != "");
     if (Scz) {
-        SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
+        SzVar    = "((SzVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("SzVar_"+QString::number(OpIndex)+" = 60");
         SzVar = SzVar+"*("+Operation[3].toString().remove(" ") +")*";
     }
     //Add Slider
@@ -5730,21 +5732,21 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     SlidersMaxArray = tmpJsObj["Max"].toArray();
     SlidersStepArray = tmpJsObj["Step"].toArray();
     if(Scx) {
-        SlidersNameArray.append("SxVar_"+QString::number(ThCount));
+        SlidersNameArray.append("SxVar_"+QString::number(OpIndex));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
         SlidersStepArray.append("1");
     }
     if(Scy) {
-        SlidersNameArray.append("SyVar_"+QString::number(ThCount));
+        SlidersNameArray.append("SyVar_"+QString::number(OpIndex));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
         SlidersStepArray.append("1");
     }
     if(Scz) {
-        SlidersNameArray.append("SzVar_"+QString::number(ThCount));
+        SlidersNameArray.append("SzVar_"+QString::number(OpIndex));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
@@ -5761,7 +5763,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     uint componentNumber = ComponentArray.size();
     for(uint i=0; i<componentNumber; i++)
     {
-        QString I=QString::number(ThCount)+"_"+QString::number(i);
+        QString I=QString::number(OpIndex)+"_"+QString::number(i);
         FctArray.append("FFFx_Orig"+I+"="+FxArray.at(i).toString());
         FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
         FctArray.append("FFFz_Orig"+I+"="+FzArray.at(i).toString());
@@ -5835,18 +5837,19 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArraytmp = tmp2["Const"].toArray();
     tmp2.remove("Import");
     ImportArraytmp.append("All");
-    int ThCount=0;
+    int OpIndex=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+            OpIndex = ConstArraytmp[i].toString().toInt();
+            ConstArraytmp[i].toString().remove("OpIndex=");
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
-    ThCount = ThCount+1;
-    if(ThCount==1)
+    OpIndex = OpIndex+1;
+    if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
@@ -5858,22 +5861,22 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     SlidersMaxArray = tmpJsObj["Max"].toArray();
     SlidersStepArray = tmpJsObj["Step"].toArray();
     if (axis=="X") {
-        TwistVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
+        TwistVar    = "((TxVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TxVar_"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
-        SlidersNameArray.append("TxVar_"+QString::number(ThCount));
+        SlidersNameArray.append("TxVar_"+QString::number(OpIndex));
     }
     if (axis=="Y") {
-        TwistVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
+        TwistVar    = "((TyVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TyVar_"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
-        SlidersNameArray.append("TyVar_"+QString::number(ThCount));
+        SlidersNameArray.append("TyVar_"+QString::number(OpIndex));
     }
     if (axis=="Z") {
-        TwistVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
+        TwistVar    = "((TzVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TzVar_"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
-        SlidersNameArray.append("TzVar_"+QString::number(ThCount));
+        SlidersNameArray.append("TzVar_"+QString::number(OpIndex));
     }
 
     SlidersPositionArray.append("60");
@@ -5891,7 +5894,7 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     uint componentNumber = ComponentArray.size();
     for(uint i=0; i<componentNumber; i++)
     {
-        QString I=QString::number(ThCount)+"_"+QString::number(i);
+        QString I=QString::number(OpIndex)+"_"+QString::number(i);
         FctArray.append("FFFxyz_Orig"+I+"="+FxyzArray.at(i).toString());
         QString fxyz=FxyzArray.at(i).toString();
         FctArray.append("fffxyz"+I+"="+fxyz);
@@ -5973,18 +5976,19 @@ void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArraytmp = tmp2["Const"].toArray();
     tmp2.remove("Import");
     ImportArraytmp.append("All");
-    int ThCount=0;
+    int OpIndex=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+            OpIndex = ConstArraytmp[i].toString().toInt();
+            ConstArraytmp[i].toString().remove("OpIndex=");
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
-    ThCount = ThCount+1;
-    if(ThCount==1)
+    OpIndex = OpIndex+1;
+    if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
@@ -5996,22 +6000,22 @@ void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray 
     SlidersMaxArray = tmpJsObj["Max"].toArray();
     SlidersStepArray = tmpJsObj["Step"].toArray();
     if (axis=="X") {
-        TwistVar    = "((TxVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TxVar_"+QString::number(ThCount)+" = 60");
+        TwistVar    = "((TxVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TxVar_"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/"+DifX;
-        SlidersNameArray.append("TxVar_"+QString::number(ThCount));
+        SlidersNameArray.append("TxVar_"+QString::number(OpIndex));
     }
     if (axis=="Y") {
-        TwistVar    = "((TyVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TyVar_"+QString::number(ThCount)+" = 60");
+        TwistVar    = "((TyVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TyVar_"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/"+DifY;
-        SlidersNameArray.append("TyVar_"+QString::number(ThCount));
+        SlidersNameArray.append("TyVar_"+QString::number(OpIndex));
     }
     if (axis=="Z") {
-        TwistVar    = "((TzVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("TzVar_"+QString::number(ThCount)+" = 60");
+        TwistVar    = "((TzVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TzVar_"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/"+DifZ;
-        SlidersNameArray.append("TzVar_"+QString::number(ThCount));
+        SlidersNameArray.append("TzVar_"+QString::number(OpIndex));
     }
 
     SlidersPositionArray.append("60");
@@ -6029,7 +6033,7 @@ void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray 
     uint componentNumber = ComponentArray.size();
     for(uint i=0; i<componentNumber; i++)
     {
-        QString I=QString::number(ThCount)+"_"+QString::number(i);
+        QString I=QString::number(OpIndex)+"_"+QString::number(i);
         FctArray.append("FFFx_Orig"+I+"="+FxArray.at(i).toString());
         FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
         FctArray.append("FFFz_Orig"+I+"="+FzArray.at(i).toString());
@@ -6097,38 +6101,39 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArraytmp = tmp2["Const"].toArray();
     tmp2.remove("Import");
     ImportArraytmp.append("All");
-    int ThCount=0;
+    int OpIndex=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+            OpIndex = ConstArraytmp[i].toString().toInt();
+            ConstArraytmp[i].toString().remove("OpIndex=");
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
-    ThCount = ThCount+1;
-    ConstArray.append("ThCount="+QString::number(ThCount));
-    if(ThCount==1)
+    OpIndex = OpIndex+1;
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
+    if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
     Scx = (Operation[1].toString().remove(" ") != "");
     if (Scx) {
-        SxVar    = "((SxVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SxVar_"+QString::number(ThCount)+" = 60");
+        SxVar    = "((SxVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("SxVar_"+QString::number(OpIndex)+" = 60");
         SxVar = SxVar+"*("+Operation[1].toString().remove(" ") +")*";
     }
     Scy = (Operation[2].toString().remove(" ") != "");
     if (Scy) {
-        SyVar    = "((SyVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SyVar_"+QString::number(ThCount)+" = 60");
+        SyVar    = "((SyVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("SyVar_"+QString::number(OpIndex)+" = 60");
         SyVar = SyVar+"*("+Operation[2].toString().remove(" ") +")*";
     }
     Scz = (Operation[3].toString().remove(" ") != "");
     if (Scz) {
-        SzVar    = "((SzVar_"+QString::number(ThCount)+"-50)/10)";
-        ConstArray.append("SzVar_"+QString::number(ThCount)+" = 60");
+        SzVar    = "((SzVar_"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("SzVar_"+QString::number(OpIndex)+" = 60");
         SzVar = SzVar+"*("+Operation[3].toString().remove(" ") +")*";
     }
     //Add Slider
@@ -6139,21 +6144,21 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     SlidersMaxArray = tmp3["Max"].toArray();
     SlidersStepArray = tmp3["Step"].toArray();
     if(Scx) {
-        SlidersNameArray.append("SxVar_"+QString::number(ThCount));
+        SlidersNameArray.append("SxVar_"+QString::number(OpIndex));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
         SlidersStepArray.append("1");
     }
     if(Scy) {
-        SlidersNameArray.append("SyVar_"+QString::number(ThCount));
+        SlidersNameArray.append("SyVar_"+QString::number(OpIndex));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
         SlidersStepArray.append("1");
     }
     if(Scz) {
-        SlidersNameArray.append("SzVar_"+QString::number(ThCount));
+        SlidersNameArray.append("SzVar_"+QString::number(OpIndex));
         SlidersPositionArray.append("60");
         SlidersMaxArray.append("100");
         SlidersMinArray.append("-100");
@@ -6168,7 +6173,7 @@ void DrawingOptions::ApplyScaIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     OriginalObj["Sliders"] = tmp3;
     for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
     {
-        QString I="_"+QString::number(ThCount)+"_"+QString::number(i);
+        QString I="_"+QString::number(OpIndex)+"_"+QString::number(i);
         QString fxyzt=FxyzArray.at(i).toString();
         if(!ALL)
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
@@ -6241,28 +6246,29 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         GridArray = tmp2["Grid"].toArray();
     }
-    int ThCount=0;
+    int OpIndex=0;
     for (int i = 0; i < ConstArraytmp.size(); ++i)
     {
-        if(ConstArraytmp[i].toString().contains("ThCount"))
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
         {
-            ThCount = ConstArraytmp[i].toString().remove("ThCount=").toInt();
+            OpIndex = ConstArraytmp[i].toString().toInt();
+            ConstArraytmp[i].toString().remove("OpIndex=");
         }
         else
             ConstArray.append(ConstArraytmp[i].toString());
     }
-    ThCount = ThCount+1;
-    ConstArray.append("ThCount="+QString::number(ThCount));
-    ScalVar    = "((ScalVar_"+QString::number(ThCount)+"-50)/10)";
-    ConstArray.append("ScalVar_"+QString::number(ThCount)+" = 60");
-    if(ThCount==1)
+    OpIndex = OpIndex+1;
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
+    ScalVar    = "((ScalVar_"+QString::number(OpIndex)+"-50)/10)";
+    ConstArray.append("ScalVar_"+QString::number(OpIndex)+" = 60");
+    if(OpIndex==1)
     {
         ConstArray.append("epsilon=1/100000");
     }
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
     SlidersArray = tmpJsObj["Name"].toArray();
-    SlidersArray.append("ScalVar_"+QString::number(ThCount));
+    SlidersArray.append("ScalVar_"+QString::number(OpIndex));
     tmpJsObj["Name"] = SlidersArray;
     SlidersArray = tmpJsObj["Position"].toArray();
     SlidersArray.append("60");
@@ -6282,7 +6288,7 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         if(!ALL)
             IncludeComponent = ApplyOpToComponent(i, TypeInfos);
-        QString I=QString::number(ThCount)+"_"+QString::number(i);
+        QString I=QString::number(OpIndex)+"_"+QString::number(i);
         QString Umin="Umin_"+I;
         QString Umax="Umax_"+I;
         QString Vmin="Vmin_"+I;
@@ -6292,7 +6298,7 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
         FctArray.append("FFFy_Orig"+I+"="+FyArray.at(i).toString());
         FctArray.append("FFFz_Orig"+I+"="+FzArray.at(i).toString());
 
-        FctArray.append("ThExpression_"+QString::number(ThCount)+"="+T);
+        FctArray.append("ThExpression_"+QString::number(OpIndex)+"="+T);
 
         FctArray.append("DFFFxu=((FFFx_Orig"+I+"(u+epsilon,v,t)-FFFx_Orig"+I+"(u,v,t))/epsilon)");
         FctArray.append("DFFFxv=((FFFx_Orig"+I+"(u,v+epsilon,t)-FFFx_Orig"+I+"(u,v,t))/epsilon)");
@@ -6329,9 +6335,9 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
         }
         if((ShowUpperSurf && ALL) || (ShowUpperSurf && (!ALL && IncludeComponent)))
         {
-            FctArray.append("FFFx_Up"+I+"=FFFx_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
-            FctArray.append("FFFy_Up"+I+"=FFFy_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
-            FctArray.append("FFFz_Up"+I+"=FFFz_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,v,t)*R_fct(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
+            FctArray.append("FFFx_Up"+I+"=FFFx_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,v,t)*R_fct(n1(u,v,t),n2(u,v,t),n3(u,v,t))");
+            FctArray.append("FFFy_Up"+I+"=FFFy_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,v,t)*R_fct(n2(u,v,t),n3(u,v,t),n1(u,v,t))");
+            FctArray.append("FFFz_Up"+I+"=FFFz_Orig"+I+"(u,v,t)+"+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,v,t)*R_fct(n3(u,v,t),n1(u,v,t),n2(u,v,t))");
             NewFxArray.append("FFFx_Up"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Up"+I+"(u,v,t)");
             NewFzArray.append("FFFz_Up"+I+"(u,v,t)");
@@ -6350,21 +6356,21 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
         }
         if((ShowBoumdarySurfs && ALL) || (ShowUpperSurf && (!ALL && IncludeComponent)))
         {
-            FctArray.append("FFFx_Right"+I+"=FFFx_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFy_Right"+I+"=FFFy_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFz_Right"+I+"=FFFz_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmin+",t)*R_fct(n3(u,"+Vmin+",t),n1(u,"+Vmin+",t),n2(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+            FctArray.append("FFFx_Right"+I+"=FFFx_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,"+Vmin+",t)*R_fct(n1(u,"+Vmin+",t),n2(u,"+Vmin+",t),n3(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+            FctArray.append("FFFy_Right"+I+"=FFFy_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,"+Vmin+",t)*R_fct(n2(u,"+Vmin+",t),n3(u,"+Vmin+",t),n1(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+            FctArray.append("FFFz_Right"+I+"=FFFz_Orig"+I+"(u,"+Vmin+",t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,"+Vmin+",t)*R_fct(n3(u,"+Vmin+",t),n1(u,"+Vmin+",t),n2(u,"+Vmin+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
 
-            FctArray.append("FFFx_Left"+I+"=FFFx_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R_fct(n1(u,"+Vmax+",t),n2(u,"+Vmax+",t),n3(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFy_Left"+I+"=FFFy_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R_fct(n2(u,"+Vmax+",t),n3(u,"+Vmax+",t),n1(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
-            FctArray.append("FFFz_Left"+I+"=FFFz_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"(u,"+Vmax+",t)*R_fct(n3(u,"+Vmax+",t),n1(u,"+Vmax+",t),n2(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+            FctArray.append("FFFx_Left"+I+"=FFFx_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,"+Vmax+",t)*R_fct(n1(u,"+Vmax+",t),n2(u,"+Vmax+",t),n3(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+            FctArray.append("FFFy_Left"+I+"=FFFy_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,"+Vmax+",t)*R_fct(n2(u,"+Vmax+",t),n3(u,"+Vmax+",t),n1(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
+            FctArray.append("FFFz_Left"+I+"=FFFz_Orig"+I+"(u,"+Vmax+",t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"(u,"+Vmax+",t)*R_fct(n3(u,"+Vmax+",t),n1(u,"+Vmax+",t),n2(u,"+Vmax+",t)))*(v-"+Vmin+")/("+Vmax+"-"+Vmin+")");
 
-            FctArray.append("FFFx_Front"+I+"=FFFx_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R_fct(n1("+Umin+",v,t),n2("+Umin+",v,t),n3("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFy_Front"+I+"=FFFy_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R_fct(n2("+Umin+",v,t),n3("+Umin+",v,t),n1("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFz_Front"+I+"=FFFz_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umin+",v,t)*R_fct(n3("+Umin+",v,t),n1("+Umin+",v,t),n2("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+            FctArray.append("FFFx_Front"+I+"=FFFx_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"("+Umin+",v,t)*R_fct(n1("+Umin+",v,t),n2("+Umin+",v,t),n3("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+            FctArray.append("FFFy_Front"+I+"=FFFy_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"("+Umin+",v,t)*R_fct(n2("+Umin+",v,t),n3("+Umin+",v,t),n1("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+            FctArray.append("FFFz_Front"+I+"=FFFz_Orig"+I+"("+Umin+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"("+Umin+",v,t)*R_fct(n3("+Umin+",v,t),n1("+Umin+",v,t),n2("+Umin+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
 
-            FctArray.append("FFFx_Back"+I+"=FFFx_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R_fct(n1("+Umax+",v,t),n2("+Umax+",v,t),n3("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFy_Back"+I+"=FFFy_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R_fct(n2("+Umax+",v,t),n3("+Umax+",v,t),n1("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
-            FctArray.append("FFFz_Back"+I+"=FFFz_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(ThCount)+"("+Umax+",v,t)*R_fct(n3("+Umax+",v,t),n1("+Umax+",v,t),n2("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+            FctArray.append("FFFx_Back"+I+"=FFFx_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"("+Umax+",v,t)*R_fct(n1("+Umax+",v,t),n2("+Umax+",v,t),n3("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+            FctArray.append("FFFy_Back"+I+"=FFFy_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"("+Umax+",v,t)*R_fct(n2("+Umax+",v,t),n3("+Umax+",v,t),n1("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
+            FctArray.append("FFFz_Back"+I+"=FFFz_Orig"+I+"("+Umax+",v,t)+("+ScalVar+"*ThExpression_"+QString::number(OpIndex)+"("+Umax+",v,t)*R_fct(n3("+Umax+",v,t),n1("+Umax+",v,t),n2("+Umax+",v,t)))*(u-"+Umin+")/("+Umax+"-"+Umin+")");
 
             NewFxArray.append("FFFx_Left"+I+"(u,v,t)");
             NewFyArray.append("FFFy_Left"+I+"(u,v,t)");
