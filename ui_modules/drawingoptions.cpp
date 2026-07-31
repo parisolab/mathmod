@@ -5802,7 +5802,7 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     QJsonArray FxyzArray, FctArray, ConstArraytmp,
             ImportArraytmp, ComponentArray, SlidersArray,
             CNDArray, GridArray, tmpArray,SlidersNameArray,SlidersPositionArray,SlidersMaxArray,SlidersMinArray,SlidersStepArray;
-    QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
+    QJsonObject tmp2,tmpJsObj;
     QString ScalVar;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     axis = Operation[1].toString().remove(" ");
