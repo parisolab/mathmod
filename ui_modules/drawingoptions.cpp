@@ -5795,7 +5795,7 @@ void DrawingOptions::ApplyScaParOperation(QJsonObject & OriginalObj, QJsonArray 
     tmp2["Import"]= ImportArraytmp;
     OriginalObj["Param3D"] = tmp2;
 }
-void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
+void DrawingOptions::ApplyTwistIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
     QString axis, twist, TwistVar, min, dif;
     QJsonArray NewFxyzArray, ConstArray, MinX, MinY, MinZ, MaxX, MaxY, MaxZ;
@@ -5921,7 +5921,7 @@ void DrawingOptions::ApplyTorIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     tmp2["Import"]= ImportArraytmp;
     OriginalObj["Iso3D"] = tmp2;
 }
-void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
+void DrawingOptions::ApplyTwistParOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
 {
     QString axis, twist, TwistVar, MinX="", MinY="", MinZ="", MaxX="", MaxY="", MaxZ="", DifX="", DifY="", DifZ="";
     QJsonArray NewFxArray, NewFyArray, NewFzArray,
@@ -5930,7 +5930,7 @@ void DrawingOptions::ApplyTorParOperation(QJsonObject & OriginalObj, QJsonArray 
             FctArray, ConstArraytmp,
             ImportArraytmp, ComponentArray, SlidersArray,
             CNDArray, GridArray, tmpArray,SlidersNameArray,SlidersPositionArray,SlidersMaxArray,SlidersMinArray,SlidersStepArray;
-    QJsonObject tmp2,tmpJsObj, tmp2JsObj, transObj, ThtransObj;
+    QJsonObject tmp2,tmpJsObj;
     QString ScalVar;
     QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
     axis = Operation[1].toString().remove(" ");
@@ -6450,7 +6450,7 @@ void DrawingOptions::ApplyIsoOperation(QJsonObject & OriginalObj, QJsonArray &Op
         if(TypeInfos.contains("SCAL"))
             ApplyScaIsoOperation(OriginalObj, Operation);
         if(TypeInfos.contains("TORS"))
-            ApplyTorIsoOperation(OriginalObj, Operation);
+            ApplyTwistIsoOperation(OriginalObj, Operation);
     }
 }
 void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & OperationsList)
@@ -6470,7 +6470,7 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
         if(TypeInfos.contains("SCAL"))
             ApplyScaParOperation(OriginalObj, Operation);
         if(TypeInfos.contains("TORS"))
-            ApplyTorParOperation(OriginalObj, Operation);
+            ApplyTwistParOperation(OriginalObj, Operation);
     }
 }
 //Takes the operations list in mathobject and apply them to "OriginalObj" script
