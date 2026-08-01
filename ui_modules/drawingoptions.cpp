@@ -5853,22 +5853,22 @@ void DrawingOptions::ApplyTwistIsoOperation(QJsonObject & OriginalObj, QJsonArra
     SlidersMaxArray = tmpJsObj["Max"].toArray();
     SlidersStepArray = tmpJsObj["Step"].toArray();
     if (axis=="X") {
-        TwistVar    = "((TxVar_"+QString::number(OpIndex)+"-50)/10)";
-        ConstArray.append("TxVar_"+QString::number(OpIndex)+" = 60");
+        TwistVar    = "((TwistX"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TwistX"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
-        SlidersNameArray.append("TxVar_"+QString::number(OpIndex));
+        SlidersNameArray.append("TwistX"+QString::number(OpIndex));
     }
     if (axis=="Y") {
-        TwistVar    = "((TyVar_"+QString::number(OpIndex)+"-50)/10)";
-        ConstArray.append("TyVar_"+QString::number(OpIndex)+" = 60");
+        TwistVar    = "((TwistY"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TwistY"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
-        SlidersNameArray.append("TyVar_"+QString::number(OpIndex));
+        SlidersNameArray.append("TwistY"+QString::number(OpIndex));
     }
     if (axis=="Z") {
-        TwistVar    = "((TzVar_"+QString::number(OpIndex)+"-50)/10)";
-        ConstArray.append("TzVar_"+QString::number(OpIndex)+" = 60");
+        TwistVar    = "((TwistZ"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TwistZ"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/";
-        SlidersNameArray.append("TzVar_"+QString::number(OpIndex));
+        SlidersNameArray.append("TwistZ"+QString::number(OpIndex));
     }
 
     SlidersPositionArray.append("60");
@@ -5987,22 +5987,22 @@ void DrawingOptions::ApplyTwistParOperation(QJsonObject & OriginalObj, QJsonArra
     SlidersMaxArray = tmpJsObj["Max"].toArray();
     SlidersStepArray = tmpJsObj["Step"].toArray();
     if (axis=="X") {
-        TwistVar    = "((TxVar_"+QString::number(OpIndex)+"-50)/10)";
-        ConstArray.append("TxVar_"+QString::number(OpIndex)+" = 60");
+        TwistVar    = "((TwistX"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TwistX"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/"+DifX;
-        SlidersNameArray.append("TxVar_"+QString::number(OpIndex));
+        SlidersNameArray.append("TwistX"+QString::number(OpIndex));
     }
     if (axis=="Y") {
-        TwistVar    = "((TyVar_"+QString::number(OpIndex)+"-50)/10)";
-        ConstArray.append("TyVar_"+QString::number(OpIndex)+" = 60");
+        TwistVar    = "((TwistY"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TwistY"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/"+DifY;
-        SlidersNameArray.append("TyVar_"+QString::number(OpIndex));
+        SlidersNameArray.append("TwistY"+QString::number(OpIndex));
     }
     if (axis=="Z") {
-        TwistVar    = "((TzVar_"+QString::number(OpIndex)+"-50)/10)";
-        ConstArray.append("TzVar_"+QString::number(OpIndex)+" = 60");
+        TwistVar    = "((TwistZ"+QString::number(OpIndex)+"-50)/10)";
+        ConstArray.append("TwistZ"+QString::number(OpIndex)+" = 60");
         TwistVar = TwistVar+"*("+Operation[2].toString().remove(" ") +")/"+DifZ;
-        SlidersNameArray.append("TzVar_"+QString::number(OpIndex));
+        SlidersNameArray.append("TwistZ"+QString::number(OpIndex));
     }
 
     SlidersPositionArray.append("60");
