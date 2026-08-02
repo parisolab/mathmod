@@ -5571,12 +5571,12 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
     ConstArray.append("ShowOriginalSurf_"+QString::number(OpIndex)+"="+Bool);
     Bool = ((RawScript) ? "1" : "0");
     ConstArray.append("RawScript_"+QString::number(OpIndex)+"="+Bool);
-    ThickVar    = "((ThickVar_"+QString::number(OpIndex)+"-50)/10)";
-    ConstArray.append("ThickVar_"+QString::number(OpIndex)+" = 60");
+    ThickVar    = "((Thick"+QString::number(OpIndex)+"-50)/10)";
+    ConstArray.append("Thick"+QString::number(OpIndex)+" = 60");
     //Add Slider
     tmp3 = OriginalObj["Sliders"].toObject();
     SlidersArray = tmp3["Name"].toArray();
-    SlidersArray.append("ThickVar_"+QString::number(OpIndex));
+    SlidersArray.append("Thick"+QString::number(OpIndex));
     tmp3["Name"] = SlidersArray;
     SlidersArray = tmp3["Position"].toArray();
     SlidersArray.append("60");
@@ -6241,12 +6241,12 @@ void DrawingOptions::ApplyThiParOperation(QJsonObject & OriginalObj, QJsonArray 
     {
         ConstArray.append("epsilon=1/100000");
     }
-    ScalVar    = "((ScalVar_"+QString::number(OpIndex)+"-50)/10)";
-    ConstArray.append("ScalVar_"+QString::number(OpIndex)+" = 60");
+    ScalVar    = "((Thick"+QString::number(OpIndex)+"-50)/10)";
+    ConstArray.append("Thick"+QString::number(OpIndex)+" = 60");
     //Add Slider
     tmpJsObj = OriginalObj["Sliders"].toObject();
     SlidersArray = tmpJsObj["Name"].toArray();
-    SlidersArray.append("ScalVar_"+QString::number(OpIndex));
+    SlidersArray.append("Thick"+QString::number(OpIndex));
     tmpJsObj["Name"] = SlidersArray;
     SlidersArray = tmpJsObj["Position"].toArray();
     SlidersArray.append("60");
