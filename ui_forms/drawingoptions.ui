@@ -2438,7 +2438,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>489</width>
+                              <width>250</width>
                               <height>123</height>
                              </rect>
                             </property>
@@ -4231,7 +4231,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           </rect>
                          </property>
                          <attribute name="label">
-                          <string>Torsion</string>
+                          <string>Twist</string>
                          </attribute>
                          <layout class="QGridLayout" name="gridLayout_88">
                           <item row="0" column="0">
