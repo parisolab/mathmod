@@ -451,35 +451,118 @@ You can give it another name (ie: "Infos" , ...) or delete it from the script (r
 
 <tr>
 <td><code>"Operations"</code></td>
-<td> There are three types of operations for both parametric and implicit surfaces :
+<td> There are three types of operations for parametric and implicit surfaces :
 Twist, Thichness and scal operations.
-<br> See the <a href="#Model_Transformation">"Models_Intersection"</a> script
-<br><code>"Operations": {
-"OperationsList": [ [     "THICK_ISO_ALL",
-        true,
-        true,
-        true,
-        "(1/10)",
-        false
-],
-    [     "TORS_ISO_ALL",
-        "X",
-        "pi"    ]
-],
-"OriginalObj": {
-    "Iso3D": {
-        "Component": [         "Gyroid"        ],
-        "Fxyz": [         "cos(x) * sin(y) + cos(y) * sin(z) + cos(z) * sin(x)"        ],
-        "Name": [         "Gyroid"        ],
-        "Xmax": [         " 4"        ],
-        "Xmin": [         "-4"        ],
-        "Ymax": [         " 4"        ],
-        "Ymin": [         "-4"        ],
-        "Zmax": [         " 4"        ],
-        "Zmin": [         "-4"        ]
-    }
-}
-}</code>
+
+
+
+<p><table border=2>
+
+
+
+
+<tr>
+<td> </td>
+<td>Isosurfaces</td>
+<td>Implicit surfaces</td>
+</tr>
+
+
+
+
+
+
+
+
+
+<tr>
+<td><code>Thichness</code></td>
+<td><pre>
+[
+    "THICK_ISO_ALL",
+    true,
+    true,
+    true,
+    "(1/10)",
+    false
+]</pre></td>
+
+<td><pre>
+[
+    "THICK_PAR_ALL",
+    true,
+    true,
+    true,
+    "(1/10)"
+]</pre></td>
+</tr>
+
+
+
+
+<tr>
+<td><code>Torsion</code></td>
+<td><pre>
+[
+    "TORS_ISO_ALL",
+    "X",
+    "pi"
+]</pre></td>
+
+
+<td><pre>
+[
+    "TORS_PAR_ALL",
+    "X",
+    "pi",
+    "3.1",
+    "-3.1",
+    "17.3",
+    "-1.69",
+    "7.1",
+    "-7.1"
+]</pre></td>
+
+
+
+
+
+
+</tr>
+
+
+
+
+
+
+<tr>
+<td><code>Scal</code></td>
+<td><pre>
+[
+    "SCAL_ISO_ALL",
+    "3",
+    "2",
+    "5"
+]</pre></td>
+
+<td><pre>
+[
+    "SCAL_PAR_ALL",
+    "3",
+    "2",
+    "5"
+]</pre></td>
+
+
+</tr>
+</table>
+
+
+
+
+<br> See the <a href="#Model_Transformation">"Models_Transformation"</a> script
+
+
 </td>
 </tr>
 
@@ -1540,32 +1623,48 @@ See also some animated GIF made with MathMod on <a href="https://www.reddit.com/
 
 
 <a name="Model_Transformation"></a>
-<li><pre>"Operations": {
-"OperationsList": [ [     "THICK_ISO_ALL",
+<li><pre>{
+"OperationsList": [
+    [
+        "SCAL_PAR_ALL",
+        "3",
+        "5",
+        "7"
+    ],
+    [
+        "THICK_PAR_ALL",
         true,
         true,
         true,
-        "(1/10)",
-        false
-],
-    [     "TORS_ISO_ALL",
+        "(1/10)"
+    ],
+    [
+        "TORS_PAR_ALL",
         "X",
-        "pi"    ]
+        "pi",
+        "3.1",
+        "-3.1",
+        "17.3",
+        "-1.69",
+        "7.1",
+        "-7.1"
+    ]
 ],
 "OriginalObj": {
-    "Iso3D": {
-        "Component": [         "Gyroid"        ],
-        "Fxyz": [         "cos(x) * sin(y) + cos(y) * sin(z) + cos(z) * sin(x)"        ],
-        "Name": [         "Gyroid"        ],
-        "Xmax": [         " 4"        ],
-        "Xmin": [         "-4"        ],
-        "Ymax": [         " 4"        ],
-        "Ymin": [         "-4"        ],
-        "Zmax": [         " 4"        ],
-        "Zmin": [         "-4"        ]
-    }
+"Param3D": {
+    "Component": [ "Cone"],
+    "Fx": [ "u*cos(v)"],
+    "Fy": [ "u*sin(v)"],
+    "Fz": [ "u"],
+    "Name": [ "Cone"],
+    "Umax": [ "1"],
+    "Umin": [ "-1"],
+    "Vmax": [ "2*pi"],
+    "Vmin": [ "0"]
 }
-}</pre>
+}
+}
+</pre>
 <a href="images/Examples/Model_Transformation.png">See attached image</a>
 
 
