@@ -452,9 +452,10 @@ You can give it another name (ie: "Infos" , ...) or delete it from the script (r
 <tr>
 <td><code>"Operations"</code></td>
 <td> There are three types of operations for parametric and implicit surfaces :
-Twist, Thichness and scal operations.
-
-
+Twist, Thichness and scal operations. Each operation is defined by the first field
+in the operation array which gives a hint about the mathematical model type (ISO or PAR),
+the operation name (SCAL, TWIST or THICK) and a list of components ID (ie: 00_02 means the operation
+will be applyed only to the component 00 and 02 and ALL means that the the operation will be applyed to all components)
 
 <p><table border=2>
 
@@ -485,7 +486,9 @@ Twist, Thichness and scal operations.
     true,
     "(1/10)",
     false
-]</pre></td>
+]</pre>
+<br>See  <a href="images/EquationGenerator/IsoThickness.png">Isosurfaces Thickness tool</a>)
+</td>
 
 <td><pre>
 [
@@ -494,7 +497,9 @@ Twist, Thichness and scal operations.
     true,
     true,
     "(1/10)"
-]</pre></td>
+]</pre>
+<br>See  <a href="images/EquationGenerator/ParThickness.png">Parametric Thickness tool</a>)
+</td>
 </tr>
 
 
@@ -507,7 +512,9 @@ Twist, Thichness and scal operations.
     "TORS_ISO_ALL",
     "X",  // Twist axis
     "pi"  // Angle of twist
-]</pre></td>
+]</pre>
+<br>See  <a href="images/EquationGenerator/IsoTwist.png">Isosurfaces Twist tool</a>)
+</td>
 
 
 <td><pre>
@@ -521,7 +528,9 @@ Twist, Thichness and scal operations.
     "-1.69",// Ymin border
     "7.1",  // Zmax border
     "-7.1"  // Zmin border
-]</pre></td>
+]</pre>
+<br>See  <a href="images/EquationGenerator/ParTwist.png">Parametric surfaces Twist tool</a>)
+</td>
 
 
 
