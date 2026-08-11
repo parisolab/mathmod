@@ -6469,7 +6469,7 @@ void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & O
             ApplyThiParOperation(OriginalObj, Operation);
         if(TypeInfos.contains("SCAL"))
             ApplyScaParOperation(OriginalObj, Operation);
-        if(TypeInfos.contains("TORS"))
+        if(TypeInfos.contains("TWIST"))
             ApplyTwistParOperation(OriginalObj, Operation);
     }
 }
@@ -6621,7 +6621,7 @@ void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString axis, QStr
     transArray = tmpJsObj["OperationsList"].toArray();
     if(type == "PAR")
     {
-        tmpArray.append("TORS_PAR_ALL");
+        tmpArray.append("TWIST_PAR_ALL");
         tmpArray.append(axis);
         tmpArray.append(twist);
         tmpArray.append(QString::number(MathmodRef->BoxMaxX,'g',3));
@@ -6633,7 +6633,7 @@ void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString axis, QStr
     }
     else if(type == "ISO")
     {
-        tmpArray.append("TORS_ISO_ALL");
+        tmpArray.append("TWIST_ISO_ALL");
         tmpArray.append(axis);
         tmpArray.append(twist);
     }
