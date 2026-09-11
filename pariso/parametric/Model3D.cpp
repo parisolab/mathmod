@@ -36,6 +36,7 @@ void Par3D::emitUpdateMessageSignal()
 ParWorkerThread::ParWorkerThread()
 {
     stepMorph = 0;
+    activeMorph = -1;
     pace = 1.0/30.0;
     ParsersAllocated = ParsersAllocated_C = false;
     ParParametersList.ParFunctParameters="u,v,t";
