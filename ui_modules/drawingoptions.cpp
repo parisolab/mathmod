@@ -6449,7 +6449,7 @@ void DrawingOptions::ApplyIsoOperation(QJsonObject & OriginalObj, QJsonArray &Op
             ApplyThiIsoOperation(OriginalObj, Operation);
         if(TypeInfos.contains("SCAL"))
             ApplyScaIsoOperation(OriginalObj, Operation);
-        if(TypeInfos.contains("TORS"))
+        if(TypeInfos.contains("TWIST"))
             ApplyTwistIsoOperation(OriginalObj, Operation);
     }
 }
