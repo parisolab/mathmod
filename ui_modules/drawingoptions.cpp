@@ -4202,6 +4202,59 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
     if ((cndb = (iso["Iso3D"].toObject()["Cnd"].isArray())))
         cnd = (oldcnd = iso["Iso3D"].toObject()["Cnd"].toArray())[index].toString();
     componentName = oldcmpname[index].toString();
+
+
+    //************//
+
+
+    QJsonArray ConstArraytmp, ConstArray, SlidersArray;
+    QString CutWidth;
+    QJsonObject tmpJsObj;
+
+    int OpIndex=0;
+    for (int i = 0; i < ConstArraytmp.size(); ++i)
+    {
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
+        {
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
+        }
+        else
+            ConstArray.append(ConstArraytmp[i].toString());
+    }
+    OpIndex = OpIndex+1;
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
+    if(OpIndex==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
+    CutWidth    = "((CutWidth"+QString::number(OpIndex)+"-50)/10)";
+    ConstArray.append("CutWidth"+QString::number(OpIndex)+" = 60");
+    //Add Slider
+    tmpJsObj = iso["Sliders"].toObject();
+    SlidersArray = tmpJsObj["Name"].toArray();
+    SlidersArray.append("CutWidth"+QString::number(OpIndex));
+    tmpJsObj["Name"] = SlidersArray;
+    SlidersArray = tmpJsObj["Position"].toArray();
+    SlidersArray.append("60");
+    tmpJsObj["Position"] = SlidersArray;
+    SlidersArray = tmpJsObj["Max"].toArray();
+    SlidersArray.append("100");
+    tmpJsObj["Max"] = SlidersArray;
+    SlidersArray = tmpJsObj["Min"].toArray();
+    SlidersArray.append("-100");
+    tmpJsObj["Min"] = SlidersArray;
+    SlidersArray = tmpJsObj["Step"].toArray();
+    SlidersArray.append("1");
+    tmpJsObj["Step"] = SlidersArray;
+    iso["Sliders"] = tmpJsObj;
+
+
+
+    //************//
+
+
+
+
     fct = oldfxyz[index].toString();
     Minx = "(" + oldminx[index].toString() + ")";
     Miny = "(" + oldminy[index].toString() + ")";
@@ -4217,12 +4270,12 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
         for (int j = 0; j < y; j++)
             for (int k = 0; k < z; k++)
             {
-                oldminx.append(Minx + "+" + QString::number(i) + "*" + Difx);
-                oldmaxx.append(Minx + "+" + QString::number(i + 1) + "*" + Difx);
-                oldminy.append(Miny + "+" + QString::number(j) + "*" + Dify);
-                oldmaxy.append(Miny + "+" + QString::number(j + 1) + "*" + Dify);
-                oldminz.append(Minz + "+" + QString::number(k) + "*" + Difz);
-                oldmaxz.append(Minz + "+" + QString::number(k + 1) + "*" + Difz);
+                oldminx.append(Minx + "+" + QString::number(i) + "*" + Difx +"+"+CutWidth);
+                oldmaxx.append(Minx + "+" + QString::number(i + 1) + "*" + Difx +"-"+CutWidth);
+                oldminy.append(Miny + "+" + QString::number(j) + "*" + Dify +"+"+CutWidth);
+                oldmaxy.append(Miny + "+" + QString::number(j + 1) + "*" + Dify +"-"+CutWidth);
+                oldminz.append(Minz + "+" + QString::number(k) + "*" + Difz +"+"+CutWidth);
+                oldmaxz.append(Minz + "+" + QString::number(k + 1) + "*" + Difz +"-"+CutWidth);
                 oldcmpname.append(componentName + QString::number(l));
                 oldfxyz.append(fct);
                 if (cndb)
