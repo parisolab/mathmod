@@ -370,6 +370,7 @@ private slots:
     void THICK_OP(QJsonObject &, QString, QString th="");
     void SCAL_OP(QJsonObject &, QString, QString sx="", QString sy="", QString sz="");
     void TORS_OP(QJsonObject &, QString, QString Axe="", QString ty="");
+    void SPLT_OP(QJsonObject &, QString, QString sx="", QString sy="", QString sz="");
     void on_RegenerateButtonISO_clicked();
     void on_RegenerateButtonPAR_clicked();
     void ApplyParOperation(QJsonObject &, QJsonArray &);

@@ -4251,10 +4251,6 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
 
 
     //************//
-
-
-
-
     fct = oldfxyz[index].toString();
     Minx = "(" + oldminx[index].toString() + ")";
     Miny = "(" + oldminy[index].toString() + ")";
@@ -6690,6 +6686,41 @@ void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString axis, QStr
         tmpArray.append(axis);
         tmpArray.append(twist);
     }
+    transArray.append(tmpArray);
+    tmpJsObj["OperationsList"] = transArray;
+    if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
+    {
+        tmpJsObj["OriginalObj"] = tmp;
+    }
+    tmp["Operations"] = tmpJsObj;
+}
+void DrawingOptions::SPLT_OP(QJsonObject & tmp, QString type, QString sx, QString sy, QString sz)
+{
+    QJsonArray tmpArray, transArray;
+    QJsonObject tmpJsObj;
+    QString T  = "";
+    if(tmp["Iso3D"].isNull())
+        tmp.remove("Iso3D");
+    if(tmp["ParIso"].isNull())
+        tmp.remove("ParIso");
+    //Look for an attached Transformations lists:
+    if(FieldExistAndValid(tmp,"Operations"))
+        tmpJsObj = tmp["Operations"].toObject();
+    else
+    {
+        tmpJsObj = tmp["Operations"].toObject();
+        tmp.remove("Operations");
+    }
+    transArray = tmpJsObj["OperationsList"].toArray();
+    if(type == "ISO")
+    {
+        tmpArray.append("TPLT_ISO_ALL");
+        tmpArray.append(sx);
+        tmpArray.append(sy);
+        tmpArray.append(sz);
+    }
+    else
+        return;
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
     if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
