@@ -381,6 +381,7 @@ private slots:
     void ApplyScaParOperation(QJsonObject &, QJsonArray &);
     void ApplyTwistParOperation(QJsonObject &, QJsonArray &);
     void ApplyTwistIsoOperation(QJsonObject &, QJsonArray &);
+    void ApplySplitIsoOperation(QJsonObject &, QJsonArray &);
     bool ApplyOpToComponent(int, QStringList &);
     void on_RedoPushButton_1_clicked();
     void on_UndopushButton_1_clicked();

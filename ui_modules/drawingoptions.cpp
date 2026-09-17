@@ -4307,26 +4307,6 @@ void DrawingOptions::Multiplier(int x, int y, int z, QJsonObject &iso,
         tmp["Grid"] = oldgrid;
     iso["Iso3D"] = tmp;
 }
-void DrawingOptions::on_Multiplier_clicked()
-{
-    int i = ui.xcomboBox->currentIndex(), j = ui.ycomboBox->currentIndex(),
-        k = ui.zcomboBox->currentIndex();
-    if (i > 0 && j > 0 && k > 0)
-    {
-        QJsonObject copyCurrentObject = MathmodRef->RootObjet.CurrentJsonObject;
-        // Erase unused Keys:
-        copyCurrentObject.remove("Param3D");
-        copyCurrentObject.remove("Param4D");
-        copyCurrentObject.remove("Param3D_C");
-        copyCurrentObject.remove("Param4D_C");
-        Multiplier(i, j, k, copyCurrentObject, IndexcurrentComponent);
-        DrawJsonModel(copyCurrentObject);
-    }
-    // Init Combo
-    ui.xcomboBox->setCurrentIndex(0);
-    ui.ycomboBox->setCurrentIndex(0);
-    ui.zcomboBox->setCurrentIndex(0);
-}
 void DrawingOptions::UpdateGuiMaxgrid()
 {
     int maxgrd = int(Parameters->IsoMaxGrid);
@@ -6500,6 +6480,8 @@ void DrawingOptions::ApplyIsoOperation(QJsonObject & OriginalObj, QJsonArray &Op
             ApplyScaIsoOperation(OriginalObj, Operation);
         if(TypeInfos.contains("TWIST"))
             ApplyTwistIsoOperation(OriginalObj, Operation);
+        if(TypeInfos.contains("SPLT"))
+            ApplyTwistIsoOperation(OriginalObj, Operation);
     }
 }
 void DrawingOptions::ApplyParOperation(QJsonObject & OriginalObj, QJsonArray & OperationsList)
@@ -6686,41 +6668,6 @@ void DrawingOptions::TORS_OP(QJsonObject & tmp, QString type, QString axis, QStr
         tmpArray.append(axis);
         tmpArray.append(twist);
     }
-    transArray.append(tmpArray);
-    tmpJsObj["OperationsList"] = transArray;
-    if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
-    {
-        tmpJsObj["OriginalObj"] = tmp;
-    }
-    tmp["Operations"] = tmpJsObj;
-}
-void DrawingOptions::SPLT_OP(QJsonObject & tmp, QString type, QString sx, QString sy, QString sz)
-{
-    QJsonArray tmpArray, transArray;
-    QJsonObject tmpJsObj;
-    QString T  = "";
-    if(tmp["Iso3D"].isNull())
-        tmp.remove("Iso3D");
-    if(tmp["ParIso"].isNull())
-        tmp.remove("ParIso");
-    //Look for an attached Transformations lists:
-    if(FieldExistAndValid(tmp,"Operations"))
-        tmpJsObj = tmp["Operations"].toObject();
-    else
-    {
-        tmpJsObj = tmp["Operations"].toObject();
-        tmp.remove("Operations");
-    }
-    transArray = tmpJsObj["OperationsList"].toArray();
-    if(type == "ISO")
-    {
-        tmpArray.append("TPLT_ISO_ALL");
-        tmpArray.append(sx);
-        tmpArray.append(sy);
-        tmpArray.append(sz);
-    }
-    else
-        return;
     transArray.append(tmpArray);
     tmpJsObj["OperationsList"] = transArray;
     if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
@@ -7036,4 +6983,199 @@ void DrawingOptions::on_RedoTorIso_clicked()
 void DrawingOptions::on_UndoTorIso_clicked()
 {
     on_actionUndo_triggered();
+}
+void DrawingOptions::SPLT_OP(QJsonObject & tmp, QString type, QString sx, QString sy, QString sz)
+{
+    QJsonArray tmpArray, transArray;
+    QJsonObject tmpJsObj;
+    QString T  = "";
+    if(tmp["Iso3D"].isNull())
+        tmp.remove("Iso3D");
+    if(tmp["ParIso"].isNull())
+        tmp.remove("ParIso");
+    //Look for an attached Transformations lists:
+    if(FieldExistAndValid(tmp,"Operations"))
+        tmpJsObj = tmp["Operations"].toObject();
+    else
+    {
+        tmpJsObj = tmp["Operations"].toObject();
+        tmp.remove("Operations");
+    }
+    transArray = tmpJsObj["OperationsList"].toArray();
+    if(type == "ISO")
+    {
+        tmpArray.append("TPLT_ISO_ALL");
+        tmpArray.append(sx);
+        tmpArray.append(sy);
+        tmpArray.append(sz);
+    }
+    else
+        if(type == "PAR")
+        {}
+        else
+            return;
+    transArray.append(tmpArray);
+    tmpJsObj["OperationsList"] = transArray;
+    if(!FieldExistAndValid(tmpJsObj,"OriginalObj"))
+    {
+        tmpJsObj["OriginalObj"] = tmp;
+    }
+    tmp["Operations"] = tmpJsObj;
+}
+void DrawingOptions::on_Multiplier_clicked()
+{
+    /*
+    int i = ui.xcomboBox->currentIndex(), j = ui.ycomboBox->currentIndex(),
+        k = ui.zcomboBox->currentIndex();
+    if (i > 0 && j > 0 && k > 0)
+    {
+        QJsonObject copyCurrentObject = MathmodRef->RootObjet.CurrentJsonObject;
+        // Erase unused Keys:
+        copyCurrentObject.remove("Param3D");
+        copyCurrentObject.remove("Param4D");
+        copyCurrentObject.remove("Param3D_C");
+        copyCurrentObject.remove("Param4D_C");
+        Multiplier(i, j, k, copyCurrentObject, IndexcurrentComponent);
+        DrawJsonModel(copyCurrentObject);
+    }
+    // Init Combo
+    ui.xcomboBox->setCurrentIndex(0);
+    ui.ycomboBox->setCurrentIndex(0);
+    ui.zcomboBox->setCurrentIndex(0);
+
+    */
+
+
+
+
+
+    //************************//
+
+    QString Tx= QString::number(ui.xcomboBox->currentIndex()),
+            Ty= QString::number(ui.ycomboBox->currentIndex()),
+            Tz= QString::number(ui.zcomboBox->currentIndex());
+    if (Tx == "" || Ty == "" || Tz == "" || (Tx == "1" && Ty == "1" && Tz == "1"))
+    {
+        QMessageBox message;
+        message.setText("Error : SplitX, SplitY and SplitZ not set");
+        message.adjustSize();
+        message.exec();
+        return;
+    }
+    QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
+    SPLT_OP(CurrentJsonObject, "ISO", Tx, Ty, Tz);
+    ApplyOperations(CurrentJsonObject);
+
+    //************************//
+}
+
+void DrawingOptions::ApplySplitIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
+{
+    QJsonArray FxyzArray, NewFxyzArray, FctArray, Vetc, ConstArray, ConstArraytmp,
+            CNDArray, NewCNDArray, SlidersArray, ImportArraytmp;
+    QJsonObject tmp2,tmp3;
+    QString Bool, tmpScalVar, tmpScalVarmax, tmpScalVarmin, SplitVar;
+    QString T = "", Tx = "", Ty = "", Tz = "";
+    QStringList TypeInfos= Operation[0].toString().split("_",Qt::SkipEmptyParts);
+    bool ALL= TypeInfos.contains("ALL");
+    bool IncludeComponent = false;
+
+    Tx =  Operation[1].toString();
+    Ty =  Operation[2].toString();
+    Tz =  Operation[3].toString();
+    tmp2= OriginalObj["Iso3D"].toObject();
+    FxyzArray = tmp2["Fxyz"].toArray();
+    FctArray = tmp2["Funct"].toArray();
+    ConstArraytmp = tmp2["Const"].toArray();
+    tmp2.remove("Import");
+    ImportArraytmp.append("All");
+    int OpIndex=0;
+    for (int i = 0; i < ConstArraytmp.size(); ++i)
+    {
+        if(ConstArraytmp[i].toString().contains("OpIndex"))
+        {
+            OpIndex = ConstArraytmp[i].toString().remove(" ").remove("OpIndex=").toInt();
+        }
+        else
+            ConstArray.append(ConstArraytmp[i].toString());
+    }
+    OpIndex = OpIndex+1;
+    if(OpIndex==1)
+    {
+        ConstArray.append("epsilon=1/100000");
+    }
+    ConstArray.append("OpIndex="+QString::number(OpIndex));
+    SplitVar    = "((SplitVar"+QString::number(OpIndex)+"-50)/10)";
+    ConstArray.append("SplitVar"+QString::number(OpIndex)+" = 60");
+    //Add Slider
+    tmp3 = OriginalObj["Sliders"].toObject();
+    SlidersArray = tmp3["Name"].toArray();
+    SlidersArray.append("Thick"+QString::number(OpIndex));
+    tmp3["Name"] = SlidersArray;
+    SlidersArray = tmp3["Position"].toArray();
+    SlidersArray.append("60");
+    tmp3["Position"] = SlidersArray;
+    SlidersArray = tmp3["Max"].toArray();
+    SlidersArray.append("100");
+    tmp3["Max"] = SlidersArray;
+    SlidersArray = tmp3["Min"].toArray();
+    SlidersArray.append("-100");
+    tmp3["Min"] = SlidersArray;
+    SlidersArray = tmp3["Step"].toArray();
+    SlidersArray.append("1");
+    tmp3["Step"] = SlidersArray;
+    OriginalObj["Sliders"] = tmp3;
+    for(uint i=0; i<MathmodRef->IsoObjet->masterthread->componentsNumber; i++)
+    {
+        QString I="_"+QString::number(OpIndex)+"_"+QString::number(i);
+        QString fxyzt=FxyzArray.at(i).toString();
+        FctArray.append("fffxyz"+I+"="+fxyzt);
+        if(!ALL)
+            IncludeComponent = ApplyOpToComponent(i, TypeInfos);
+
+        if(ALL || (!ALL && IncludeComponent))
+        {
+            /*
+            QString Minx, Miny, Minz, Maxx, Maxy, Maxz;
+            QString Difx, Dify, Difz;
+            QString componentName, fct, cnd, grid;
+            QJsonArray oldminx, oldminy, oldminz, oldmaxx, oldmaxy, oldmaxz, oldcmpname,
+                       oldfxyz, oldcnd, oldgrid;
+            bool cndb = false;
+            bool gridb = false;
+            oldminx = iso["Iso3D"].toObject()["Xmin"].toArray();
+            oldminy = iso["Iso3D"].toObject()["Ymin"].toArray();
+            oldminz = iso["Iso3D"].toObject()["Zmin"].toArray();
+            oldmaxx = iso["Iso3D"].toObject()["Xmax"].toArray();
+            oldmaxy = iso["Iso3D"].toObject()["Ymax"].toArray();
+            oldmaxz = iso["Iso3D"].toObject()["Zmax"].toArray();
+            oldcmpname = iso["Iso3D"].toObject()["Component"].toArray();
+            oldfxyz = iso["Iso3D"].toObject()["Fxyz"].toArray();
+            if ((gridb = (iso["Iso3D"].toObject()["Grid"].isArray())))
+                grid =
+                    (oldgrid = iso["Iso3D"].toObject()["Grid"].toArray())[index].toString();
+            if ((cndb = (iso["Iso3D"].toObject()["Cnd"].isArray())))
+                cnd = (oldcnd = iso["Iso3D"].toObject()["Cnd"].toArray())[index].toString();
+            componentName = oldcmpname[index].toString();
+*/
+
+
+
+
+        }
+        else
+        {
+        }
+        NewFxyzArray.append("fffxyz"+I+"(x,y,z,t)");
+    }
+    tmp2["Fxyz"] = NewFxyzArray;
+    tmp2["Funct"]= FctArray;
+    tmp2["Const"]= ConstArray;
+    tmp2["Import"]= ImportArraytmp;
+    if (!tmp2["Vect"].isArray())
+    {
+        (Vetc=tmp2["Vect"].toArray()).append("4");
+        tmp2["Vect"]= Vetc;
+    }
+    OriginalObj["Iso3D"] = tmp2;
 }
