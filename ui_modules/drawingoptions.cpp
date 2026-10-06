@@ -7158,10 +7158,6 @@ void DrawingOptions::ApplySplitIsoOperation(QJsonObject & OriginalObj, QJsonArra
                 cnd = (oldcnd = iso["Iso3D"].toObject()["Cnd"].toArray())[index].toString();
             componentName = oldcmpname[index].toString();
 */
-
-
-
-
         }
         else
         {
