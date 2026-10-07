@@ -7044,11 +7044,6 @@ void DrawingOptions::on_Multiplier_clicked()
     ui.zcomboBox->setCurrentIndex(0);
 
     */
-
-
-
-
-
     //************************//
 
     QString Tx= QString::number(ui.xcomboBox->currentIndex()),
