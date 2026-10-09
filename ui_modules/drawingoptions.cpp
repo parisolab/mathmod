@@ -7042,10 +7042,7 @@ void DrawingOptions::on_Multiplier_clicked()
     ui.xcomboBox->setCurrentIndex(0);
     ui.ycomboBox->setCurrentIndex(0);
     ui.zcomboBox->setCurrentIndex(0);
-
     */
-    //************************//
-
     QString Tx= QString::number(ui.xcomboBox->currentIndex()),
             Ty= QString::number(ui.ycomboBox->currentIndex()),
             Tz= QString::number(ui.zcomboBox->currentIndex());
@@ -7060,8 +7057,6 @@ void DrawingOptions::on_Multiplier_clicked()
     QJsonObject CurrentJsonObject = MathmodRef->RootObjet.CurrentJsonObject;
     SPLT_OP(CurrentJsonObject, "ISO", Tx, Ty, Tz);
     ApplyOperations(CurrentJsonObject);
-
-    //************************//
 }
 
 void DrawingOptions::ApplySplitIsoOperation(QJsonObject & OriginalObj, QJsonArray & Operation)
