@@ -7024,25 +7024,6 @@ void DrawingOptions::SPLT_OP(QJsonObject & tmp, QString type, QString sx, QStrin
 }
 void DrawingOptions::on_Multiplier_clicked()
 {
-    /*
-    int i = ui.xcomboBox->currentIndex(), j = ui.ycomboBox->currentIndex(),
-        k = ui.zcomboBox->currentIndex();
-    if (i > 0 && j > 0 && k > 0)
-    {
-        QJsonObject copyCurrentObject = MathmodRef->RootObjet.CurrentJsonObject;
-        // Erase unused Keys:
-        copyCurrentObject.remove("Param3D");
-        copyCurrentObject.remove("Param4D");
-        copyCurrentObject.remove("Param3D_C");
-        copyCurrentObject.remove("Param4D_C");
-        Multiplier(i, j, k, copyCurrentObject, IndexcurrentComponent);
-        DrawJsonModel(copyCurrentObject);
-    }
-    // Init Combo
-    ui.xcomboBox->setCurrentIndex(0);
-    ui.ycomboBox->setCurrentIndex(0);
-    ui.zcomboBox->setCurrentIndex(0);
-    */
     QString Tx= QString::number(ui.xcomboBox->currentIndex()),
             Ty= QString::number(ui.ycomboBox->currentIndex()),
             Tz= QString::number(ui.zcomboBox->currentIndex());
