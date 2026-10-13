@@ -7106,29 +7106,6 @@ void DrawingOptions::ApplySplitIsoOperation(QJsonObject & OriginalObj, QJsonArra
 
         if(ALL || (!ALL && IncludeComponent))
         {
-            /*
-            QString Minx, Miny, Minz, Maxx, Maxy, Maxz;
-            QString Difx, Dify, Difz;
-            QString componentName, fct, cnd, grid;
-            QJsonArray oldminx, oldminy, oldminz, oldmaxx, oldmaxy, oldmaxz, oldcmpname,
-                       oldfxyz, oldcnd, oldgrid;
-            bool cndb = false;
-            bool gridb = false;
-            oldminx = iso["Iso3D"].toObject()["Xmin"].toArray();
-            oldminy = iso["Iso3D"].toObject()["Ymin"].toArray();
-            oldminz = iso["Iso3D"].toObject()["Zmin"].toArray();
-            oldmaxx = iso["Iso3D"].toObject()["Xmax"].toArray();
-            oldmaxy = iso["Iso3D"].toObject()["Ymax"].toArray();
-            oldmaxz = iso["Iso3D"].toObject()["Zmax"].toArray();
-            oldcmpname = iso["Iso3D"].toObject()["Component"].toArray();
-            oldfxyz = iso["Iso3D"].toObject()["Fxyz"].toArray();
-            if ((gridb = (iso["Iso3D"].toObject()["Grid"].isArray())))
-                grid =
-                    (oldgrid = iso["Iso3D"].toObject()["Grid"].toArray())[index].toString();
-            if ((cndb = (iso["Iso3D"].toObject()["Cnd"].isArray())))
-                cnd = (oldcnd = iso["Iso3D"].toObject()["Cnd"].toArray())[index].toString();
-            componentName = oldcmpname[index].toString();
-*/
         }
         else
         {
