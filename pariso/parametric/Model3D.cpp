@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2025 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -1551,8 +1551,7 @@ void Par3D::CalculateColorsPoints(struct ComponentInfos *comp, uint index)
             }
         }
     }
-    ValCol.clear();
-    ValCol.shrink_to_fit();
+    // ValCol is freed by its destructor
 }
 
 uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos *comp)
@@ -1568,6 +1567,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
     {
         double vals[4];
         std::vector<int> PointVerifyCond;
+        PointVerifyCond.reserve(NbVertexTmp - startpoint); // exact final size
         vals[3] = masterthread->stepMorph;
         for(uint i= startpoint; i < NbVertexTmp; i++)
         {
@@ -1778,6 +1778,7 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
         //Reorganize the triangles index:
         //***********
         std::vector<uint>NewIndexPolyTabVector;
+        NewIndexPolyTabVector.reserve(3*NbTriangleIsoSurfaceTmp); // exact final size
         uint k, l, M, N;
         k = l = M = N = 0;
         // In case we have a ParIso object, this will save the triangle arrangement for the parametric CND
@@ -1820,22 +1821,15 @@ uint Par3D::CNDCalculation(uint & NbTriangleIsoSurfaceTmp, struct ComponentInfos
                 NewIndexPolyTabVector.push_back(IndexPolyTabVector[3*i+2]);
                 M++;
             }
-        //Copy the new index in the original one:
-        IndexPolyTabVector.clear();
-        IndexPolyTabVector.shrink_to_fit();
-        IndexPolyTabVector = NewIndexPolyTabVector;
-        NewIndexPolyTabVector.clear();
-        NewIndexPolyTabVector.shrink_to_fit();
+        //Copy the new index in the original one (swap: no copy, no reallocation)
+        IndexPolyTabVector.swap(NewIndexPolyTabVector);
         NbTriangleIsoSurfaceTmp = M + l + k + N;
         comp->NbTrianglesNoCND.push_back(N);
         comp->NbTrianglesVerifyCND.push_back(k);
         comp->NbTrianglesNotVerifyCND.push_back(l);
         comp->NbTrianglesBorderCND.push_back(M);
         comp->ThereisCND.push_back(true);
-        PointVerifyCond.clear();
-        PointVerifyCond.shrink_to_fit();
-        TypeIsoSurfaceTriangleListeCNDVector.clear();
-        TypeIsoSurfaceTriangleListeCNDVector.shrink_to_fit();
+        // PointVerifyCond / TypeIsoSurfaceTriangleListeCNDVector are freed by their destructors
     }
     else
     {
@@ -1969,13 +1963,17 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             nbstack = nbU*nbV;
             int pp=0;
             for(uint ii=0; ii<nbU; ii++)
+            {
+                // u depends only on ii: compute it once per row
+                const double u = double(Iindice+ ii)*dif_u[cmp]/double(Ugrid-1) + u_inf[cmp];
                 for(uint jj=0; jj<nbV; jj++)
                 {
-                    vals[pp*nbvar  ]= double(Iindice+ ii)*dif_u[cmp]/double(Ugrid-1) + u_inf[cmp];
+                    vals[pp*nbvar  ]= u;
                     vals[pp*nbvar+1]= double(Jindice+ jj)*dif_v[cmp]/double(Vgrid-1) + v_inf[cmp];
                     vals[pp*nbvar+2]= stepMorph;
                     ++pp;
                 }
+            }
             if(StopCalculations)
             {
                 return;
@@ -2076,15 +2074,18 @@ void  ParWorkerThread::ParCompute(uint cmp, uint idx)
             }
             int p=0;
             for(uint ii=0; ii<nbU; ii++)
+            {
+                const uint base = (Iindice+ii)*10*Vgrid + NewPosition;
                 for(uint jj=0; jj<nbV; jj++)
                 {
-                    ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +7 +NewPosition] = float(ResX[p]);
-                    ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +8 +NewPosition] = float(ResY[p]);
-                    ParisoObject::NormVertexTabVector[(Iindice+ii)*10*Vgrid + 10*(Jindice +jj) +9 +NewPosition] = float(ResZ[p]);
+                    ParisoObject::NormVertexTabVector[base + 10*(Jindice +jj) +7] = float(ResX[p]);
+                    ParisoObject::NormVertexTabVector[base + 10*(Jindice +jj) +8] = float(ResY[p]);
+                    ParisoObject::NormVertexTabVector[base + 10*(Jindice +jj) +9] = float(ResZ[p]);
                     if(param4D || param4d_C)
                         Par3D::ExtraDimensionVector[(Iindice+ii)*Vgrid + (Jindice +jj) + idx] = float(ResW[p]);
                     p++;
                 }
+            }
         }
     }
 }
@@ -2150,15 +2151,13 @@ void  Par3D::ParamBuild(
             components->ParisoCurrentComponentIndex = componentsPt->ParisoCurrentComponentIndex;
             components->ParisoNbComponents = componentsPt->ParisoNbComponents;
         }
+        // clear() only: the capacity is immediately re-used by the resizes below,
+        // freeing it (shrink_to_fit) would only force a full reallocation
         NormVertexTabVector.clear();
-        NormVertexTabVector.shrink_to_fit();
         IndexPolyTabVector.clear();
-        IndexPolyTabVector.shrink_to_fit();
         IndexPolyTabMinVector.clear();
-        IndexPolyTabMinVector.shrink_to_fit();
     }
-    ExtraDimensionVector.clear();
-    ExtraDimensionVector.shrink_to_fit();
+    ExtraDimensionVector.clear(); // capacity is re-used by the resize below
     components->NbComponentsType.push_back(masterthread->componentsNumber);
     stopcalculations(false);
     if(masterthread->activeMorph != 1)
@@ -2330,6 +2329,10 @@ void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
     cp->MinParametricMeshLines += 2*Ugrid*Vgrid;
     cp->ParametricGrid.push_back(Ugrid);
     cp->ParametricGrid.push_back(Vgrid);
+    // Reserve exactly the number of entries pushed below (no reallocation)
+    const uint nU = (Ugrid > CutU) ? Ugrid - CutU : 0;
+    const uint nV = (Vgrid > CutV) ? Vgrid - CutV : 0;
+    IndexPolyTabMinVector.reserve(IndexPolyTabMinVector.size() + 2*nU*nV + nU + nV);
     for (uint i=0; i+CutU < Ugrid ; i++)
     {
         IndexPolyTabMinVector.push_back(Vgrid);
@@ -2350,6 +2353,10 @@ void  Par3D::make_PolyIndexMin(uint index, ComponentInfos *cp)
 
 void  Par3D::make_PolyIndexTri(uint index)
 {
+    // Reserve exactly the number of entries pushed below (no reallocation)
+    const uint nU = (Ugrid > CutU+1) ? Ugrid - CutU - 1 : 0;
+    const uint nV = (Vgrid > CutV+1) ? Vgrid - CutV - 1 : 0;
+    IndexPolyTabVector.reserve(IndexPolyTabVector.size() + 6*nU*nV);
     for (uint i=0; i+CutU+1< Ugrid; i++)
         for (uint j=0; j+CutV+1< Vgrid; j++)
         {
