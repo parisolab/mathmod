@@ -3439,14 +3439,14 @@ void FunctionParserBase<Value_t>::AllocateStackMemory(unsigned int nbStack, int 
 }
 
 template<typename Value_t>
-Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, Value_t* results, unsigned NbStack, int SP)
+Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, Value_t* results, unsigned NbStack, int SP, unsigned vStride)
 {
     if(mData->mParseErrorType != FP_NO_ERROR) return Value_t(0);
 
     const unsigned* const byteCode = &(mData->mByteCode[0]);
     const Value_t* const immed = mData->mImmed.empty() ? 0 : &(mData->mImmed[0]);
     const unsigned byteCodeSize = unsigned(mData->mByteCode.size());
-    unsigned IP, DP=0, Nbval;
+    unsigned IP, DP=0, Nbval, tileBase;
     /* No thread safety, so use a global stack. */
     std::vector<Value_t>& Stack  = mData->mStack;
     std::vector<Value_t>& Stacki = mData->mStacki;
@@ -3455,137 +3455,171 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     int VarSize = StackSave.size();
     Value_t stt;
 
+    // SP-major super-stack: stack slot s holds the whole batch for that
+    // slot contiguously at Stacki[s*NbStack + e]. Each opcode therefore
+    // streams contiguous data (auto-vectorizable) instead of striding
+    // through a value-major layout.
+    // Cache tiling: the working set (NbStack elements x Size slots) is
+    // swept once per bytecode instruction, so the un-tiled batch is
+    // memory-bandwidth bound. Process the batch in tiles whose working
+    // set (tileN*Size*8 bytes) stays in L1 cache instead.
+    // Every opcode is independent per element, so tiling produces
+    // bit-identical results. The one semantic difference: the
+    // if()/absIf() uniformity test is now per tile rather than per whole
+    // batch, so a condition that is uniform within each tile is accepted
+    // (same numbers) where the un-tiled version would have returned
+    // IF_FUNCT_ERROR and forced the caller's scalar fallback.
+    //
+    // vStride: top-level callers lay Vars out point-major
+    // (Vars[e*NbVar + v]) and use the default vStride=1. A parent parser
+    // invoking a sub parser via cPCall instead points Vars at its own
+    // SP-major parameter slots with NbVar=1 and vStride=NbStack, so the
+    // sub reads Vars[v*NbStack + e] straight from the parent's stack.
+    unsigned TileSize = 32768u / (8u * (Size > 1 ? (unsigned)Size : 1u));
+    if(TileSize < 1) TileSize = 1;
+    if(TileSize > NbStack) TileSize = NbStack;
+    // Shared buffers for all cPCall/cFCall occurrences of this invocation
+    // (the un-tiled code allocated a fresh vector per call per opcode).
+    std::vector<Value_t> pcallRes;
+    std::vector<Value_t> fcallPrm;
+    const int SP0 = SP;
+
+    for(tileBase=0; tileBase<NbStack; tileBase += TileSize)
+    {
+        const unsigned tileN = (tileBase + TileSize <= NbStack) ? TileSize : (NbStack - tileBase);
+        DP = 0;
+        SP = SP0;
     for(IP=0; IP<byteCodeSize; ++IP)
     {
         switch(byteCode[IP])
         {
 // Functions:
           case   cCos:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = fp_cos(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP)*NbStack + tileBase + Nbval] = fp_cos(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case   cAbs:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = fp_abs(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP)*NbStack + tileBase + Nbval] = fp_abs(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case  cAcos:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result == false
-              && (Stacki[Nbval*Size+SP] < Value_t(-1) || Stacki[Nbval*Size+SP] > Value_t(1)))
+              && (Stacki[(SP)*NbStack + tileBase + Nbval] < Value_t(-1) || Stacki[(SP)*NbStack + tileBase + Nbval] > Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
-                  Stacki[Nbval*Size+SP] = fp_acos(Stacki[Nbval*Size+SP]);
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = fp_acos(Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
             break;
 
           case cAcosh:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result == false
-              && Stacki[Nbval*Size+SP] < Value_t(1))
+              && Stacki[(SP)*NbStack + tileBase + Nbval] < Value_t(1))
               { mData->mEvalErrorType=4; return Value_t(0); }
-                  Stacki[Nbval*Size+SP] = fp_acosh(Stacki[Nbval*Size+SP]);
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = fp_acosh(Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
             break;
 
           case  cAsin:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result == false
-              && (Stacki[Nbval*Size+SP] < Value_t(-1) || Stacki[Nbval*Size+SP] > Value_t(1)))
+              && (Stacki[(SP)*NbStack + tileBase + Nbval] < Value_t(-1) || Stacki[(SP)*NbStack + tileBase + Nbval] > Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
-                  Stacki[Nbval*Size+SP] = fp_asin(Stacki[Nbval*Size+SP]);
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = fp_asin(Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
             break;
 
           case cAsinh:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_asinh(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_asinh(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case  cAtan:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_atan(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_atan(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case cAtan2:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] = fp_atan2(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_atan2(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
                        --SP; break;
 
           case cAtanh:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result
-              ?  (Stacki[Nbval*Size+SP] == Value_t(-1) || Stacki[Nbval*Size+SP] == Value_t(1))
-              :  (Stacki[Nbval*Size+SP] <= Value_t(-1) || Stacki[Nbval*Size+SP] >= Value_t(1)))
+              ?  (Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(-1) || Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(1))
+              :  (Stacki[(SP)*NbStack + tileBase + Nbval] <= Value_t(-1) || Stacki[(SP)*NbStack + tileBase + Nbval] >= Value_t(1)))
               { mData->mEvalErrorType=4; return Value_t(0); }
-                Stacki[Nbval*Size+SP] = fp_atanh(Stacki[Nbval*Size+SP]);
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_atanh(Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
             break;
 
           case  cCbrt:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_cbrt(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_cbrt(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case  cCeil:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_ceil(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_ceil(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case  cCosh:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_cosh(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_cosh(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case   cCot:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
               {
-                  const Value_t t = fp_tan(Stacki[Nbval*Size+SP]);
+                  const Value_t t = fp_tan(Stacki[(SP)*NbStack + tileBase + Nbval]);
                   if(t == Value_t(0))
                   { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
-                  Stacki[Nbval*Size+SP] = Value_t(1)/t;
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/t;
               }
              break;
 
           case   cCsc:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
               {
-                  const Value_t s = fp_sin(Stacki[Nbval*Size+SP]);
+                  const Value_t s = fp_sin(Stacki[(SP)*NbStack + tileBase + Nbval]);
                   if(s == Value_t(0))
                   { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
-                  Stacki[Nbval*Size+SP] = Value_t(1)/s;
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/s;
               }
              break;
 
           case   cExp:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_exp(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_exp(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case   cExp2:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_exp2(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_exp2(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case cFloor:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_floor(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_floor(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case cHypot:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] = fp_hypot(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_hypot(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             --SP;
             break;
 
         case    cIf:
         {
-            bool valid = fp_truth(Stacki[SP]);
+            bool valid = fp_truth(Stacki[SP*NbStack + tileBase]);
 
-            for(Nbval=1; Nbval<NbStack; Nbval++)
-                if(valid != fp_truth(Stacki[Nbval*Size+SP]))
+            for(Nbval=1; Nbval<tileN; Nbval++)
+                if(valid != fp_truth(Stacki[(SP)*NbStack + tileBase + Nbval]))
                 {
                     mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(5);
                 }
@@ -3601,51 +3635,51 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             SP--;
             break;
       case   cInt:
-        for(Nbval=0; Nbval<NbStack; Nbval++)
-            Stacki[Nbval*Size+SP] = fp_int(Stacki[Nbval*Size+SP]);
+        for(Nbval=0; Nbval<tileN; Nbval++)
+            Stacki[(SP)*NbStack + tileBase + Nbval] = fp_int(Stacki[(SP)*NbStack + tileBase + Nbval]);
         break;
 
       case   cLog:
-        for(Nbval=0; Nbval<NbStack; Nbval++)
+        for(Nbval=0; Nbval<tileN; Nbval++)
         {
           if(IsComplexType<Value_t>::result
-           ?   Stacki[Nbval*Size+SP] == Value_t(0)
-           :   !(Stacki[Nbval*Size+SP] > Value_t(0)))
+           ?   Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(0)
+           :   !(Stacki[(SP)*NbStack + tileBase + Nbval] > Value_t(0)))
           { mData->mEvalErrorType=3; return Value_t(0); }
-              Stacki[Nbval*Size+SP] = fp_log(Stacki[Nbval*Size+SP]);
+              Stacki[(SP)*NbStack + tileBase + Nbval] = fp_log(Stacki[(SP)*NbStack + tileBase + Nbval]);
         }
         break;
 
           case cLog10:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result
-               ?   Stacki[Nbval*Size+SP] == Value_t(0)
-               :   !(Stacki[Nbval*Size+SP] > Value_t(0)))
+               ?   Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(0)
+               :   !(Stacki[(SP)*NbStack + tileBase + Nbval] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
-                  Stacki[Nbval*Size+SP] = fp_log10(Stacki[Nbval*Size+SP]);
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = fp_log10(Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
               break;
 
           case  cLog2:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result
-               ?   Stacki[Nbval*Size+SP] == Value_t(0)
-               :   !(Stacki[Nbval*Size+SP] > Value_t(0)))
+               ?   Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(0)
+               :   !(Stacki[(SP)*NbStack + tileBase + Nbval] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
-                  Stacki[Nbval*Size+SP] = fp_log2(Stacki[Nbval*Size+SP]);
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = fp_log2(Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
               break;
 
           case   cMax:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] = fp_max(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_max(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
                        --SP; break;
 
           case   cMin:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] = fp_min(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_min(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
                        --SP; break;
 
           case   cPow:
@@ -3658,96 +3692,96 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               { mEvalErrorType=3; return Value_t(0); }*/
               // x:0 ^ y:negative is failure
 
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
-              if(Stacki[Nbval*Size+SP-1] == Value_t(0) &&
-                 Stacki[Nbval*Size+SP] < Value_t(0))
+              if(Stacki[(SP-1)*NbStack + tileBase + Nbval] == Value_t(0) &&
+                 Stacki[(SP)*NbStack + tileBase + Nbval] < Value_t(0))
               { mData->mEvalErrorType=3; return Value_t(0); }
-                  Stacki[Nbval*Size+SP-1] = fp_pow(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+                  Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_pow(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
               --SP; break;
         case cPsh:
-          for(Nbval=0; Nbval<NbStack; Nbval++)
+          for(Nbval=0; Nbval<tileN; Nbval++)
           {
-              stt = (Value_t(NbStack)*(Stacki[Nbval*Size+SP-1])+Value_t(Nbval));
+              stt = (Value_t(NbStack)*(Stacki[(SP-1)*NbStack + tileBase + Nbval])+Value_t(tileBase+Nbval));
               if(stt >= Value_t(VarSize) || stt < Value_t(0))
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
                   return Value_t(7);
               }
-              StackSave[abs(stt)] = Stacki[Nbval*Size+SP];
-              Stacki[Nbval*Size+SP-1] = 1.0;
+              StackSave[abs(stt)] = Stacki[(SP)*NbStack + tileBase + Nbval];
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = 1.0;
           }
           --SP;
           break;
         case cCsd:
-          for(Nbval=0; Nbval<NbStack; Nbval++)
+          for(Nbval=0; Nbval<tileN; Nbval++)
           {
-              stt = (Value_t(NbStack)*(Stacki[Nbval*Size+SP])+Value_t(Nbval));
+              stt = (Value_t(NbStack)*(Stacki[(SP)*NbStack + tileBase + Nbval])+Value_t(tileBase+Nbval));
               if(stt >= Value_t(VarSize) || stt < Value_t(0))
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
                   return Value_t(7);
               }
-              Stacki[Nbval*Size+SP] = StackSave[abs(stt)];
+              Stacki[(SP)*NbStack + tileBase + Nbval] = StackSave[abs(stt)];
           }
           break;
           case  cTrunc:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_trunc(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_trunc(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case   cSec:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
               {
-                  const Value_t c = fp_cos(Stacki[Nbval*Size+SP]);
+                  const Value_t c = fp_cos(Stacki[(SP)*NbStack + tileBase + Nbval]);
                   if(c == Value_t(0))
                   {
                       mData->mEvalErrorType=DIVISION_BY_ZERO;
                       return Value_t(1);
                   }
-                  Stacki[Nbval*Size+SP] = Value_t(1)/c;
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/c;
               }
               break;
           case   cSin:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_sin(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_sin(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case  cSinh:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_sinh(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_sinh(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case  cSqrt:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result == false &&
-                 Stacki[Nbval*Size+SP] < Value_t(0))
+                 Stacki[(SP)*NbStack + tileBase + Nbval] < Value_t(0))
               {
                   mData->mEvalErrorType=2;
                   return Value_t(0);
               }
-              Stacki[Nbval*Size+SP] = fp_sqrt(Stacki[Nbval*Size+SP]);
+              Stacki[(SP)*NbStack + tileBase + Nbval] = fp_sqrt(Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
             break;
 
           case   cTan:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_tan(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_tan(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case  cTanh:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_tanh(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_tanh(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
 
 // Misc:
           case cImmed:
             ++SP;
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = immed[DP];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = immed[DP];
             DP++;
             break;
           case  cJump:
@@ -3759,111 +3793,111 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               }
 // Operators:
           case   cNeg:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = -Stacki[Nbval*Size+SP];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = -Stacki[(SP)*NbStack + tileBase + Nbval];
             break;
           case   cAdd:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] += Stacki[Nbval*Size+SP];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] += Stacki[(SP)*NbStack + tileBase + Nbval];
             --SP;
             break;
           case   cSub:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] -= Stacki[Nbval*Size+SP];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] -= Stacki[(SP)*NbStack + tileBase + Nbval];
             --SP;
             break;
           case   cMul:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] *= Stacki[Nbval*Size+SP];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] *= Stacki[(SP)*NbStack + tileBase + Nbval];
             --SP;
             break;
           case   cDiv:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
-              if(Stacki[Nbval*Size+SP] == Value_t(0))
+              if(Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(0))
               {
                   mData->mEvalErrorType=DIVISION_BY_ZERO;
                   return Value_t(1);
               }
-              Stacki[Nbval*Size+SP-1] /= Stacki[Nbval*Size+SP];
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] /= Stacki[(SP)*NbStack + tileBase + Nbval];
             }
             --SP; break;
           case   cMod:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
-              if(Stacki[Nbval*Size+SP] == Value_t(0))
+              if(Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(0))
               {
                   mData->mEvalErrorType=DIVISION_BY_ZERO;
                   return Value_t(0);
               }
-              Stacki[Nbval*Size+SP-1] = fp_mod(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_mod(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             }
             --SP;
             break;
           case cEqual:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_equal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_equal(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             --SP;
             break;
           case cNEqual:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_nequal(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_nequal(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             --SP;
             break;
           case  cLess:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_less(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_less(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             --SP;
             break;
 
           case  cLessOrEq:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_lessOrEq(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_lessOrEq(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             --SP;
             break;
 
           case cGreater:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_less(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP-1]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_less(Stacki[(SP)*NbStack + tileBase + Nbval], Stacki[(SP-1)*NbStack + tileBase + Nbval]);
             --SP;
             break;
 
           case cGreaterOrEq:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_lessOrEq(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP-1]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_lessOrEq(Stacki[(SP)*NbStack + tileBase + Nbval], Stacki[(SP-1)*NbStack + tileBase + Nbval]);
             --SP;
             break;
 
           case   cNot:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_not(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_not(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case cNotNot:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_notNot(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_notNot(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
           case   cAnd:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_and(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_and(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             --SP;
             break;
 
           case    cOr:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP-1] = fp_or(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_or(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
             --SP;
             break;
 
 // Degrees-radians conversion:
           case   cDeg:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = RadiansToDegrees(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = RadiansToDegrees(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case   cRad:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = DegreesToRadians(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = DegreesToRadians(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
 
 // User-defined function calls:
@@ -3871,14 +3905,28 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               {
                   const unsigned index = byteCode[++IP];
                   const unsigned params = mData->mFuncPtrs[index].mParams;
-                  for(Nbval=0; Nbval<NbStack; Nbval++)
+                  // SP-major layout: an element's parameters are no longer
+                  // contiguous, so gather them before the call. Double
+                  // buffering lets the gather of element e+1 overlap with
+                  // the (latency-dominated) call for element e.
+                  if(fcallPrm.size() < params*2) fcallPrm.resize(params*2);
+                  Value_t* prmA = &fcallPrm[0];
+                  Value_t* prmB = &fcallPrm[params];
+                  const bool isRaw = mData->mFuncPtrs[index].mRawFuncPtr != 0;
+                  for(unsigned k=0;k<params;k++)
+                      prmA[k] = Stacki[(SP-params+1+k)*NbStack + tileBase];
+                  for(Nbval=0; Nbval<tileN; Nbval++)
                   {
-                  const Value_t retVal =
-                      mData->mFuncPtrs[index].mRawFuncPtr ?
-                      mData->mFuncPtrs[index].mRawFuncPtr(&(Stacki[Nbval*Size+SP-params+1])) :
-                      mData->mFuncPtrs[index].mFuncWrapperPtr->callFunction
-                      (&Stacki[Nbval*Size+SP-params+1]);
-                  Stacki[Nbval*Size+SP-(int(params)-1)] = retVal;
+                      Value_t* cur = prmA;
+                      prmA = prmB; prmB = cur;
+                      if(Nbval+1 < tileN)
+                          for(unsigned k=0;k<params;k++)
+                              prmA[k] = Stacki[(SP-params+1+k)*NbStack + tileBase + Nbval + 1];
+                      Stacki[(SP-params+1)*NbStack + tileBase + Nbval] =
+                          isRaw ?
+                          mData->mFuncPtrs[index].mRawFuncPtr(cur) :
+                          mData->mFuncPtrs[index].mFuncWrapperPtr->callFunction
+                          (cur);
                   }
                   SP -= int(params)-1;
                   break;
@@ -3887,8 +3935,8 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
           case   cFetch:
               {
                   unsigned stackOffs = byteCode[++IP];
-                  for(Nbval=0; Nbval<NbStack; Nbval++)
-                    Stacki[Nbval*Size+SP+1] = Stacki[Nbval*Size+stackOffs];
+                  for(Nbval=0; Nbval<tileN; Nbval++)
+                    Stacki[(SP+1)*NbStack + tileBase + Nbval] = Stacki[(stackOffs)*NbStack + tileBase + Nbval];
                   ++SP;
                   break;
               }
@@ -3898,20 +3946,20 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               {
                   unsigned stackOffs_target = byteCode[++IP];
                   unsigned stackOffs_source = byteCode[++IP];
-                  for(Nbval=0; Nbval<NbStack; Nbval++)
-                      Stacki[Nbval*Size+stackOffs_target] = Stacki[Nbval*Size+stackOffs_source];
+                  for(Nbval=0; Nbval<tileN; Nbval++)
+                      Stacki[(stackOffs_target)*NbStack + tileBase + Nbval] = Stacki[(stackOffs_source)*NbStack + tileBase + Nbval];
                   SP = stackOffs_target;
                   break;
               }
 
           case  cLog2by:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
               if(IsComplexType<Value_t>::result
-               ?   Stacki[Nbval*Size+SP-1] == Value_t(0)
-               :   !(Stacki[Nbval*Size+SP-1] > Value_t(0)))
+               ?   Stacki[(SP-1)*NbStack + tileBase + Nbval] == Value_t(0)
+               :   !(Stacki[(SP-1)*NbStack + tileBase + Nbval] > Value_t(0)))
               { mData->mEvalErrorType=3; return Value_t(0); }
-                  Stacki[Nbval*Size+SP-1] = fp_log2(Stacki[Nbval*Size+SP-1]) * Stacki[Nbval*Size+SP];
+                  Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_log2(Stacki[(SP-1)*NbStack + tileBase + Nbval]) * Stacki[(SP)*NbStack + tileBase + Nbval];
             }
               --SP;
               break;
@@ -3920,38 +3968,38 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
 #endif // FP_SUPPORT_OPTIMIZER
 
           case cSinCos:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  fp_sinCos(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP+1], Stacki[Nbval*Size+SP]);
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                  fp_sinCos(Stacki[(SP)*NbStack + tileBase + Nbval], Stacki[(SP+1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
               ++SP;
               break;
           case cSinhCosh:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  fp_sinhCosh(Stacki[Nbval*Size+SP], Stacki[Nbval*Size+SP+1], Stacki[Nbval*Size+SP]);
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                  fp_sinhCosh(Stacki[(SP)*NbStack + tileBase + Nbval], Stacki[(SP+1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
               ++SP;
               break;
 
           case cAbsNot:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP] = fp_absNot(Stacki[Nbval*Size+SP]);
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = fp_absNot(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case cAbsNotNot:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP] = fp_absNotNot(Stacki[Nbval*Size+SP]);
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = fp_absNotNot(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case cAbsAnd:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP-1] = fp_absAnd(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                  Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_absAnd(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
               --SP; break;
           case cAbsOr:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                  Stacki[Nbval*Size+SP-1] = fp_absOr(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                  Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_absOr(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
               --SP; break;
           case cAbsIf:
             {
-                bool valid = fp_absTruth(Stacki[SP]);
+                bool valid = fp_absTruth(Stacki[SP*NbStack + tileBase]);
 
-                for(Nbval=1; Nbval<NbStack; Nbval++)
-                    if(valid != fp_absTruth(Stacki[Nbval*Size+SP]))
+                for(Nbval=1; Nbval<tileN; Nbval++)
+                    if(valid != fp_absTruth(Stacki[(SP)*NbStack + tileBase + Nbval]))
                         { mData->mEvalErrorType=IF_FUNCT_ERROR; return Value_t(5); }
 
                 if(valid)
@@ -3966,67 +4014,67 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             SP--;
             break;
           case   cDup:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP+1] = Stacki[Nbval*Size+SP];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP+1)*NbStack + tileBase + Nbval] = Stacki[(SP)*NbStack + tileBase + Nbval];
             ++SP; break;
 
           case   cInv:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
-              if(Stacki[Nbval*Size+SP] == Value_t(0))
+              if(Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(0))
               { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
-              Stacki[Nbval*Size+SP] = Value_t(1)/Stacki[Nbval*Size+SP];
+              Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/Stacki[(SP)*NbStack + tileBase + Nbval];
             }
               break;
 
           case   cSqr:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
-                      Stacki[Nbval*Size+SP] = Stacki[Nbval*Size+SP]*Stacki[Nbval*Size+SP];
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                      Stacki[(SP)*NbStack + tileBase + Nbval] = Stacki[(SP)*NbStack + tileBase + Nbval]*Stacki[(SP)*NbStack + tileBase + Nbval];
               break;
 
           case   cRDiv:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
+            for(Nbval=0; Nbval<tileN; Nbval++)
             {
-              if(Stacki[Nbval*Size+SP-1] == Value_t(0))
+              if(Stacki[(SP-1)*NbStack + tileBase + Nbval] == Value_t(0))
               { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
-              Stacki[Nbval*Size+SP-1] = Stacki[Nbval*Size+SP] / Stacki[Nbval*Size+SP-1];
+              Stacki[(SP-1)*NbStack + tileBase + Nbval] = Stacki[(SP)*NbStack + tileBase + Nbval] / Stacki[(SP-1)*NbStack + tileBase + Nbval];
             }
             --SP; break;
 
           case   cRSub:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] = Stacki[Nbval*Size+SP] - Stacki[Nbval*Size+SP-1];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] = Stacki[(SP)*NbStack + tileBase + Nbval] - Stacki[(SP-1)*NbStack + tileBase + Nbval];
             --SP; break;
 
           case   cRSqrt:
-              for(Nbval=0; Nbval<NbStack; Nbval++)
+              for(Nbval=0; Nbval<tileN; Nbval++)
               {
-                if(Stacki[Nbval*Size+SP] == Value_t(0))
+                if(Stacki[(SP)*NbStack + tileBase + Nbval] == Value_t(0))
                 { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
-                Stacki[Nbval*Size+SP] = Value_t(1) / fp_sqrt(Stacki[Nbval*Size+SP]);
+                Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1) / fp_sqrt(Stacki[(SP)*NbStack + tileBase + Nbval]);
               }
                 break;
 
 #ifdef FP_SUPPORT_COMPLEX_NUMBERS
           case   cReal:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_real(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_real(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case   cImag:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_imag(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_imag(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case   cArg:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_arg(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_arg(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case   cConj:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP] = fp_conj(Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_conj(Stacki[(SP)*NbStack + tileBase + Nbval]);
             break;
           case   cPolar:
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-                Stacki[Nbval*Size+SP-1] = fp_polar(Stacki[Nbval*Size+SP-1], Stacki[Nbval*Size+SP]);
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP-1)*NbStack + tileBase + Nbval] = fp_polar(Stacki[(SP-1)*NbStack + tileBase + Nbval], Stacki[(SP)*NbStack + tileBase + Nbval]);
               --SP;
             break;
 #endif
@@ -4035,40 +4083,44 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             {
                 unsigned index = byteCode[++IP];
                 unsigned params = mData->mFuncParsers[index].mParams;
-                std::vector<Value_t> res(NbStack);
+                if(pcallRes.size() < tileN) pcallRes.resize(tileN);
+                // The sub parser reads its parameters directly from this
+                // parser's SP-major slots via the vStride convention:
+                // Vars[v*NbStack + e] is exactly slot SP-params+1+v,
+                // element tileBase+e. The sub evaluates batch elements
+                // tileBase..tileBase+tileN-1 with its own tiling.
                 Value_t rest=mData->mFuncParsers[index].mParserPtr->Eval2
-                (&(Stacki[SP-params+1]), Size, &(res[0]), NbStack);
+                (&Stacki[(SP-params+1)*NbStack + tileBase], 1, &pcallRes[0], tileN, -1, NbStack);
                 if (rest == Value_t(5))
                 {
                     mData->mEvalErrorType = IF_FUNCT_ERROR;
-                    res.clear();
                     return Value_t(mData->mEvalErrorType);
                 }
                 if (rest == Value_t(7))
                 {
                     mData->mEvalErrorType = VAR_OVERFLOW;
-                    res.clear();
                     return Value_t(7);
                 }
-                for(Nbval=0; Nbval<NbStack; Nbval++)
+                for(Nbval=0; Nbval<tileN; Nbval++)
                 {
-                  Stacki[Nbval*Size+SP - (int(params)-1)] = res[Nbval];
+                  Stacki[(SP - (int(params)-1))*NbStack + tileBase + Nbval] = pcallRes[Nbval];
                 }
                 SP -= int(params)-1;
-                res.clear();
                 break;
             }
 // Variables:
           default:
             ++SP;
-            for(Nbval=0; Nbval<NbStack; Nbval++)
-              Stacki[Nbval*Size+SP] = Vars[byteCode[IP]+ NbVar*Nbval-VarBegin];
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              Stacki[(SP)*NbStack + tileBase + Nbval] = Vars[(byteCode[IP]-VarBegin)*vStride + NbVar*(tileBase+Nbval)];
         }
+    }
+
     }
 
     mData->mEvalErrorType=EVAL_NO_ERROR;
     for(Nbval=0; Nbval<NbStack; Nbval++)
-        results[Nbval] = Stacki[Nbval*Size+SP];
+        results[Nbval] = Stacki[SP*NbStack + Nbval];
     return Value_t(Value_t(6));
 }
 

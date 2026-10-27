@@ -71,7 +71,10 @@ class FunctionParserBase
     Value_t Eval(const Value_t* Vars);
     std::complex<double> EvalC(const std::complex<double>* );
     void AllocateStackMemory( unsigned int, int nbvar=0);
-    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, Value_t* results, unsigned, int position=-1);
+    // vStride: stride of Vars for the variable index. Top-level callers use
+    // point-major Vars (Vars[e*Nbvar + v]) and the default vStride=1;
+    // cPCall sub-parser calls use Vars[v*NbStack + e] with vStride=NbStack.
+    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, Value_t* results, unsigned, int position=-1, unsigned vStride=1);
     int EvalError() const;
 
     bool AddConstant(const std::string& name, Value_t value);
