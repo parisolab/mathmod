@@ -126,7 +126,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["SEASHELLS Mathematical Modeling by Abderrahman Taha 22/02/2025"],
+            "Description": ["SEASHELLS Mathematical Modeling by Abderrahman Taha 22/02/2025"],
             "Name": ["SeaShells_Mathematical_Modeling"],
             "Component": ["SeaShells_Mathematical_Modeling"],
             "Const": ["r=pi/180","alpha=84","beta=-19","phi=45","mu=0","Omega=0","P=0","w1=6","w2=20","A=50","a=40","b=14","L=4","N=8","umin=-51","umax=9","vmin=-9","vmax=6"],
@@ -277,7 +277,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["MandelbrotTorus by Abderrahman Taha 27/11/2022"],
+            "Description": ["MandelbrotTorus by Abderrahman Taha 27/11/2022"],
             "Name": ["MandelbrotTorus"],
             "Import": ["MandelFractal"],
             "Component": ["MandelbrotTorus"],
@@ -354,7 +354,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2022"],
+            "Description": ["Mandelbrot Sphere by Abderrahman Taha 27/11/2022"],
             "Name": ["MandelbrotSphere"],
             "Component": ["Sphere"],
             "Import": ["MandelFractal"],
@@ -871,7 +871,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Planar Enneper Parametric surface by Abderrahman Taha 01/12/2020"],
+            "Description": ["Planar Enneper Parametric surface by Abderrahman Taha 01/12/2020"],
             "Name": ["Planar_Enneper"],
             "Component": ["Planar_Enneper"],
             "Const": ["c=1/10000","ki=6","k=11","Lxy=70","Lz=10","umax=0","umin=0"],
@@ -1331,7 +1331,7 @@
     },
     {
         "Param3D": {
-             "Description ": ["Spiky Klein by Abderrahman Taha 19/08/2018"],
+             "Description": ["Spiky Klein by Abderrahman Taha 19/08/2018"],
              "Name": ["Spiky Klein"],
              "Component": ["SpikyKlein"],
              "Const": ["c=1/1000",
@@ -1368,7 +1368,7 @@
     },
     {
         "Iso3D": {
-            "Description ": ["Geode by Abderrahman Taha 20/08/2018"],
+            "Description": ["Geode by Abderrahman Taha 20/08/2018"],
             "Component": ["Geode1","Geode2"],
             "Import": ["NoiseW"],
             "Const": ["A=4","B=3"],
@@ -4033,7 +4033,7 @@
     {
       "Iso3D": {
         "Name": ["fhelix"],
-        "Description ": ["Fhelix internal function with sliders by Abderrahman Taha 04/11/2019"],
+        "Description": ["Fhelix internal function with sliders by Abderrahman Taha 04/11/2019"],
         "Component": ["fhelix1"],
         "Import": ["fhelix1"],
         "Fxyz": ["-fhelix1(sqrt(x*x+y*y)-(3),Param1*atan2(y,x),z,Param2,Param3,Param4/(15),Param5/(15),Param6/(15),Param7/(10),Param8*pi/(15))"],
@@ -4054,7 +4054,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Inka Star by Abderrahman Taha 04/11/2019"],
+        "Description": ["Inka Star by Abderrahman Taha 04/11/2019"],
         "Name": ["Inka_Star"],
         "Component": ["InkaStar"],
         "Const": ["c=1/10000",
@@ -4123,7 +4123,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Spiky Fresnel by Abderrahman Taha 04/11/2019"],
+        "Description": ["Spiky Fresnel by Abderrahman Taha 04/11/2019"],
         "Name": ["Spiky_Fresnel"],
         "Component": ["SpikyFresnel"],
         "Const": ["c=1/10000"],
@@ -4155,7 +4155,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Exotic flower-01 by Abderrahman Taha 15/10/2019"],
+        "Description": ["Exotic flower-01 by Abderrahman Taha 15/10/2019"],
         "Name": ["Exotic flower"],
         "Component": ["ExoticFlower"],
         "Const": ["c=1/10000","A=sqrt(2)"],
@@ -4188,7 +4188,7 @@
 
 {
     "Iso3D": {
-        "Description ": ["HexagramsMenger4 by Abderrahman Taha 12/01/2022"],
+        "Description": ["HexagramsMenger4 by Abderrahman Taha 12/01/2022"],
         "Name": ["HexagramsMenger4"],
         "Component": ["MengerSponge"],
         "Grid": ["379"],
@@ -4559,7 +4559,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Bottle shape surface by Robert Israel 01/11/2019"],
+        "Description": ["Bottle shape surface by Robert Israel 01/11/2019"],
         "Name": ["Bottle_shape"],
         "Import": ["NoiseW"],
         "Component": ["Bottle_shape"],
@@ -4582,7 +4582,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Richmond Polar_2  parametric surface by Abderrahman Taha 01/11/2019"],
+        "Description": ["Richmond Polar_2  parametric surface by Abderrahman Taha 01/11/2019"],
         "Name": ["Richmond_Polar_2"],
         "Import": ["NoiseW"],
         "Import": ["NoiseW"],
@@ -4606,7 +4606,7 @@
     },
     {
       "Iso3D": {
-        "Description ": [" HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl"],
+        "Description": [" HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl"],
         "Name": ["HexaGrid_Torus_02"],
         "Component": ["HexaGrid Torus"],
         "Const": ["N=3"],
@@ -4622,7 +4622,7 @@
     },
     {
       "Iso3D": {
-        "Description ": [" HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl "],
+        "Description": [" HexaGrid Torus by Aberrahman Taha 01/11/2019. Origin: Gerd Platl "],
         "Name": ["HexaGrid_Torus_01"],
         "Component": ["HexaGrid_Torus"],
         "Funct": ["HexaGrid=-(1/2)-88*(sqrt(x*x+y*y)-2)^2-cos( 8*z)-cos(14*atan2(y,x) -4*z)-cos(14*atan2(y,x) +4*z)-(3/25)*( cos( 28*atan2(y,x))+cos(12*z -14*atan2(y,x))+cos(12*z +14*atan2(y,x)))"],
@@ -4877,7 +4877,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Sleeping bugs by Abderrahman Taha 31/10/2019"],
+        "Description": ["Sleeping bugs by Abderrahman Taha 31/10/2019"],
         "Name": ["Sleeping_bugs"],
         "Import": ["NoiseP","NoiseW"],
         "Component": ["SleepingBugs"],
@@ -5196,7 +5196,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Belted Torus_1 by Abderrahman Taha 31/10/2019"],
+        "Description": ["Belted Torus_1 by Abderrahman Taha 31/10/2019"],
         "Name": ["Belted_Torus"],
         "Import": ["NoiseW"],
         "Component": ["BeltedTorus"],
@@ -5553,7 +5553,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Bullet by Abderrahman Taha 30/10/2019"],
+            "Description": ["Bullet by Abderrahman Taha 30/10/2019"],
             "Name": ["Bullet"],
             "Component": ["Bullet1","Bullet2"],
             "Const": ["c=1/10000"],
@@ -5585,7 +5585,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Lobed Torus_1 by Abderrahman Taha 29/10/2019"],
+            "Description": ["Lobed Torus_1 by Abderrahman Taha 29/10/2019"],
             "Name": ["Lobed_Torus_1"],
             "Import": ["NoiseW"],
             "Component": ["LobedTorus"],
@@ -5626,7 +5626,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Lobed Torus_2 by Abderrahman Taha 29/10/2019"],
+            "Description": ["Lobed Torus_2 by Abderrahman Taha 29/10/2019"],
             "Name": ["Lobed_Torus_2"],
             "Import": ["NoiseW"],
             "Component": ["LobedTorus"],
@@ -5667,7 +5667,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Lobed Torus_4 by Abderrahman Taha 29/10/2019"],
+            "Description": ["Lobed Torus_4 by Abderrahman Taha 29/10/2019"],
             "Name": ["Lobed_Torus_4"],
             "Import": ["NoiseW"],
             "Component": ["LobedTorus"],
@@ -5708,7 +5708,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Lobed Torus_5 by Abderrahman Taha 29/10/2019"],
+        "Description": ["Lobed Torus_5 by Abderrahman Taha 29/10/2019"],
         "Name": ["Lobed_Torus_5"],
         "Import": ["NoiseW"],
         "Component": ["LobedTorus"],
@@ -5750,7 +5750,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Lobed Torus_6 by Abderrahman Taha 29/10/2019"],
+        "Description": ["Lobed Torus_6 by Abderrahman Taha 29/10/2019"],
         "Name": ["Lobed_Torus_6"],
         "Import": ["NoiseW"],
         "Component": ["LobedTorus"],
@@ -5793,7 +5793,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Lobed Torus_7 by Abderrahman Taha 29/10/2019"],
+        "Description": ["Lobed Torus_7 by Abderrahman Taha 29/10/2019"],
         "Name": ["Lobed_Torus_7"],
         "Import": ["NoiseW"],
         "Component": ["LobedTorus"],
@@ -5834,7 +5834,7 @@
     },
     {
       "Iso3D": {
-        "Description ": ["Torus Distortion due to moving surface by Abderrahman Taha 11/12/2019"],
+        "Description": ["Torus Distortion due to moving surface by Abderrahman Taha 11/12/2019"],
         "Name": ["Torus_Distortion"],
         "Component": ["Drope","Torus"],
         "Fxyz": ["z-(15/10)*x*sin(2*t)*exp(-x*x-y*y)-2*y*cos(3*t)*exp(-x*x-y*y)","(sqrt((x-(15/10)*x*sin(2*t)*exp(-x*x-y*y))^2 + (y-2*y*cos(3*t)*exp(-x*x-y*y))^2) -1)^2 +(z-(3/2)*x*sin(2*t)*exp(-x*x-y*y)-2*y*cos(3*t)*exp(-x*x-y*y))^2 -(1/10)"],
@@ -5848,7 +5848,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Lobs by Abderrahman Taha 28/10/2019"],
+        "Description": ["Lobs by Abderrahman Taha 28/10/2019"],
         "Name": ["Lobs"],
         "Component": ["Lobs1","Lobs2"],
         "Const": ["c=1/10000"],
@@ -5880,7 +5880,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Sphere Parts by Abderrahman Taha 29/10/2019"],
+        "Description": ["Sphere Parts by Abderrahman Taha 29/10/2019"],
         "Name": ["Sphere_Parts"],
         "Import": ["NoiseW"],
         "Component": ["Sphere1","Sphere2"],
@@ -5953,7 +5953,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Enneper_k_Curls by Abderrahman Taha 24/08/2020"],
+        "Description": ["Enneper_k_Curls by Abderrahman Taha 24/08/2020"],
         "Name": ["Enneper_k_Curls"],
         "Component": ["Enneper"],
         "Const": ["k=4"],
@@ -5976,7 +5976,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Parametric approximation of the Symmetrized Double Enneper by Abderrahman Taha 17/08/2020"],
+            "Description": ["Parametric approximation of the Symmetrized Double Enneper by Abderrahman Taha 17/08/2020"],
             "Name": ["Symmetrized_Double_Enneper"],
             "Component": ["Enneper_1","Enneper_2"],
             "Const": ["k=10"],
@@ -6067,7 +6067,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Double Nib Parametric surface by Abderrahman Taha 29/10/2019"],
+        "Description": ["Double Nib Parametric surface by Abderrahman Taha 29/10/2019"],
         "Name": ["Double Nib"],
         "Import": ["NoiseW"],
         "Component": ["DoubleNib"],
@@ -6124,7 +6124,7 @@
     },
     {
         "Iso3D": {
-            "Description ": ["Hexagrams Menger Sponge Level 4 by Abderrahman Taha 09/12/2019"],
+            "Description": ["Hexagrams Menger Sponge Level 4 by Abderrahman Taha 09/12/2019"],
             "Name": ["Hexagrams_Menger_Level4"],
             "Cnd": ["(x+y+z)> 0"],
             "Component": ["MengerSponge"],
@@ -6176,7 +6176,7 @@
             "th=5/1000",
             "L=1001/1000",
             "2L=2*L"],
-        "Description ": [
+        "Description": [
             "Hexagrams Menger L5 by Abderrahman Taha 18/01/2022"
         ],
         "Funct": [
@@ -6354,7 +6354,7 @@
 },
  {
       "Param3D": {
-        "Description ": ["Virus by Abderrahman Taha 15/05/2020"],
+        "Description": ["Virus by Abderrahman Taha 15/05/2020"],
         "Name": ["Virus_2"],
         "Import": ["NoiseW"],
         "Component": ["Virus"],
@@ -6391,7 +6391,7 @@
         "Param3D": {
             "Component": ["Star"],
             "Const": ["cu=1/10000","cv=1/10000","N=5"],
-            "Description ": ["Star by Abderrahman Taha 12/09/2018"],
+            "Description": ["Star by Abderrahman Taha 12/09/2018"],
             "Funct": ["Thickness= ((sin(15*u)*cos(15*u)))^4 + (sin(2*N*v))",
                 "Fx=-cos(u+v)/(sqrt(2)+cos(v-u))",
                 "Fy=sin(v-u)/(sqrt(2)+cos(v-u))",
@@ -6421,7 +6421,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Star by Abderrahman Taha 23/10/2015"],
+        "Description": ["Star by Abderrahman Taha 23/10/2015"],
         "Name": ["Star_3"],
         "Component": ["Star"],
         "Const": ["cu=1/10000","cv=1/10000","N=5"],
@@ -6453,7 +6453,7 @@
     },
     {
       "Iso3D": {
-        "Description ": ["The Beginning by Abderrahman Taha 21/10/2015"],
+        "Description": ["The Beginning by Abderrahman Taha 21/10/2015"],
         "Name": ["The Beginning"],
         "Import": ["NoiseW"],
         "Component": ["TheBeginning1","TheBeginning2"],
@@ -6480,7 +6480,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Space Ship by Abderrahman Taha 20/10/2015"],
+        "Description": ["Space Ship by Abderrahman Taha 20/10/2015"],
         "Name": ["Space Ship_1"],
         "Component": ["SpaceShip"],
         "Const": ["cu=(1/1000000)","cv=(1/1000000)","N1=16","N2=11","N3=6"],
@@ -6512,7 +6512,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Space Ship by Abderrahman Taha 20/10/2015"],
+        "Description": ["Space Ship by Abderrahman Taha 20/10/2015"],
         "Name": ["Space Ship_2"],
         "Component": ["SpaceShip"],
         "Const": ["cu=(1/1000000)","cv=(1/1000000)","N1=12","N2=7","N3=5"],
@@ -6544,7 +6544,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Space Ship by Abderrahman Taha 20/10/2015"],
+        "Description": ["Space Ship by Abderrahman Taha 20/10/2015"],
         "Name": ["Space Ship_3"],
         "Component": ["SpaceShip"],
         "Const": ["N1=12","N2=7","N3=5","c=(1/1000000)"],
@@ -6576,7 +6576,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Lumpet Tori by Abderrahman Taha 10/10/2015"],
+        "Description": ["Lumpet Tori by Abderrahman Taha 10/10/2015"],
         "Name": ["Lumpet Tori"],
         "Component": ["LumpetTori"],
         "Const": ["cu=(1/10000)","cv=(1/10000)"],
@@ -6608,7 +6608,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Sphere modelling by Abderrahman Taha 18/10/2015"],
+        "Description": ["Sphere modelling by Abderrahman Taha 18/10/2015"],
         "Name": ["Sphere modelling"],
         "Component": ["Sphere modelling1","SphereModelling2"],
         "Const": ["cu=(1/100000)","cv=(1/100000)","N=(3/2)"],
@@ -6640,7 +6640,7 @@
     },
     {
       "Iso3D": {
-        "Description ": ["The lamp by Abderrahman Taha 18/10/2015"],
+        "Description": ["The lamp by Abderrahman Taha 18/10/2015"],
         "Name": ["Lamp"],
         "Component": ["Lamp"],
         "Import": ["NoiseP"],
@@ -6667,7 +6667,7 @@
     },
     {
       "Iso3D": {
-        "Description ": ["Pseudo 4-Noids by Abderrahman Taha 12/10/2015"],
+        "Description": ["Pseudo 4-Noids by Abderrahman Taha 12/10/2015"],
         "Name": ["Pseudo 4-Noids_0"],
         "Component": ["Pseudo-4-Noids"],
         "Fxyz": ["((x^2) - (685/1000)*(y)^2)^2 - (5/2)*(z)^2 - (x^2 + (3/4)*abs(y*cos((3/10)*x) - z*sin((3/5)*x))^2 + (y*sin((3/2)*x) + z*cos((1/20)*x))^2-(1/2))"],
@@ -6681,7 +6681,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Pseudo Hopf Tori by Abderrahman Taha 14/10/2019"],
+        "Description": ["Pseudo Hopf Tori by Abderrahman Taha 14/10/2019"],
         "Name": ["Pseudo Hopf Tori"],
         "Component": ["PseudoHopfTori"],
         "Const": ["c=1/100000","N=3"],
@@ -6713,7 +6713,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Embedding of the Square Flat Torus (Level 3 ) by Abderrahman Taha 14/10/2019"],
+        "Description": ["Embedding of the Square Flat Torus (Level 3 ) by Abderrahman Taha 14/10/2019"],
         "Name": ["Embedded Square Flat Torus L3"],
         "Component": ["EmbeddedSquareFlatTorus"],
         "Const": ["c=1/1000","N=10"],
@@ -6746,7 +6746,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Embedding of the Square Flat Torus (Level 2 ) by Abderrahman Taha 14/10/2019"],
+        "Description": ["Embedding of the Square Flat Torus (Level 2 ) by Abderrahman Taha 14/10/2019"],
         "Name": ["Embedded Square Flat Torus L2"],
         "Component": ["EmbeddedSquareFlatTorus"],
         "Const": ["c=1/1000","N=10"],
@@ -6778,7 +6778,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Alien by Abderrahman Taha 10/10/2015"],
+        "Description": ["Alien by Abderrahman Taha 10/10/2015"],
         "Name": ["Alien"],
         "Component": ["Alien"],
         "Const": ["cu=(1/10000)","cv=(1/10000)"],
@@ -6810,7 +6810,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Shells by Abderrahman Taha 14/10/2019"],
+        "Description": ["Shells by Abderrahman Taha 14/10/2019"],
         "Name": ["Shells_1"],
         "Component": ["Shells"],
         "Const": ["c=1/10000"],
@@ -6842,7 +6842,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Spiny Torus by Abderrahman Taha 09/10/2015"],
+        "Description": ["Spiny Torus by Abderrahman Taha 09/10/2015"],
         "Name": ["Spiny Torus"],
         "Component": ["SpinyTorus"],
         "Funct": ["Thickness=-((27/100)*abs(cos(11*(u+v))^2 - sin(13*(v-u))^5 ))^(29/10)"],
@@ -6880,7 +6880,7 @@
     },
         {
         "Param3D": {
-        "Description ": ["Clifford Torus with spines (urchin) by Abderrahman Taha 11/10/2019"],
+        "Description": ["Clifford Torus with spines (urchin) by Abderrahman Taha 11/10/2019"],
         "Name": ["Urchin"],
         "Funct": ["Fx=-(cos(u+v)/(sqrt(2)+cos(v-u)))","Fy=sin(v-u)/(sqrt(2)+cos(v-u))","Fz=sin(u+v)/(sqrt(2)+cos(v-u))","DFxu=((Fx(u+c,v,t)-Fx(u,v,t))/c)","DFxv=((Fx(u,v+c,t)-Fx(u,v,t))/c)","DFyu=((Fy(u+c,v,t)-Fy(u,v,t))/c)","DFyv=((Fy(u,v+c,t)-Fy(u,v,t))/c)","DFzu=((Fz(u+c,v,t)-Fz(u,v,t))/c)","DFzv=((Fz(u,v+c,t)-Fz(u,v,t))/c)","n1= (DFyu(u,v,t)*DFzv(u,v,t)-DFzu(u,v,t)*DFyv(u,v,t))","n2= (DFzu(u,v,t)*DFxv(u,v,t)-DFxu(u,v,t)*DFzv(u,v,t))","n3= (DFxu(u,v,t)*DFyv(u,v,t)-DFyu(u,v,t)*DFxv(u,v,t))","R=u/sqrt(u*u+v*v+t*t)","Thickness=-((abs(sin(15*u)*cos(15*v)))^11)/3","Gx=Fx(u,v,t)+Thickness(u,v,t)*R(n1(u,v,t),n2(u,v,t),n3(u,v,t))","Gy=Fy(u,v,t)+Thickness(u,v,t)*R(n2(u,v,t),n3(u,v,t),n1(u,v,t))","Gz=Fz(u,v,t)+Thickness(u,v,t)*R(n3(u,v,t),n1(u,v,t),n2(u,v,t))"],
         "Component": ["HoledCliffordTorus"],
@@ -6896,7 +6896,7 @@
         },
     {
       "Param3D": {
-        "Description ": ["Holed Spheres by Abderrahman Taha 14/10/2019"],
+        "Description": ["Holed Spheres by Abderrahman Taha 14/10/2019"],
         "Name": ["Holed_Spheres"],
         "Component": ["HoledSpheres"],
         "Const": ["c=1/100000"],
@@ -6928,7 +6928,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Holed Clifford Torus by Abderrahman Taha 14/10/2019"],
+        "Description": ["Holed Clifford Torus by Abderrahman Taha 14/10/2019"],
         "Name": ["Holed Clifford Torus"],
         "Component": ["HoledCliffordTorus"],
         "Const": ["c=1/100000"],
@@ -6960,7 +6960,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Spiny Sea Creature by Abderrahman Taha 14/10/2019"],
+        "Description": ["Spiny Sea Creature by Abderrahman Taha 14/10/2019"],
         "Name": ["Spiny Sea Creature"],
         "Component": ["SpinySeaCreature"],
         "Const": ["c=1/100000"],
@@ -6992,7 +6992,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Skeletal Sphere (parametric version) by Abderrahman Taha 14/10/2019"],
+        "Description": ["Skeletal Sphere (parametric version) by Abderrahman Taha 14/10/2019"],
         "Name": ["Skeletal_Sphere_parametric"],
         "Component": ["SkeletalSphere"],
         "Const": ["c=1/100000"],
@@ -7048,7 +7048,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Twisted Clifford Torus by Abderrahman Taha 14/10/2019"],
+        "Description": ["Twisted Clifford Torus by Abderrahman Taha 14/10/2019"],
         "Name": ["Twisted Clifford Torus"],
         "Component": ["TwistedClifford"],
         "Const": ["c=1/100000"],
@@ -7081,7 +7081,7 @@
     {
       "Param3D": {
         "Name": ["Bumpy Klein"],
-        "Description ": ["Bumpy Klein by Abderrahman Taha 14/10/2019"],
+        "Description": ["Bumpy Klein by Abderrahman Taha 14/10/2019"],
         "Component": ["Klein"],
         "Const": ["c=1/100000"],
         "Funct": ["Fx=(2+cos(v/2)*sin(u)-sin(v/2)*sin(2*u))*cos(v)",
@@ -7112,7 +7112,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Richmond polar Parametric surface by Abderrahman Taha 14/10/2019"],
+        "Description": ["Richmond polar Parametric surface by Abderrahman Taha 14/10/2019"],
          "Name": ["Richmond_Polar_1"],
         "Component": ["richmondpolar1"],
         "Const": ["c=1/10000",
@@ -7144,7 +7144,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Richmond polar Parametric surface by Abderrahman Taha 15/10/2019"],
+        "Description": ["Richmond polar Parametric surface by Abderrahman Taha 15/10/2019"],
         "Name": ["Richmond Polar_3"],
         "Component": ["richmondpolar1","richmondpolar2"],
         "Const": ["c=1/10000"],
@@ -7176,7 +7176,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Richmond polar Parametric surface by Abderrahman Taha 15/10/2019"],
+        "Description": ["Richmond polar Parametric surface by Abderrahman Taha 15/10/2019"],
         "Name": ["Bat coat"],
         "Component": ["Bat_coat"],
         "Const": ["c=1/10000"],
@@ -7240,7 +7240,7 @@
     },
     {
       "Iso3D": {
-        "Description ": ["Geode by Abderrahman Taha 15/10/2019"],
+        "Description": ["Geode by Abderrahman Taha 15/10/2019"],
         "Name": ["Geode_01"],
         "Import": ["NoiseW"],
         "Component": ["Geode1","Geode2"],
@@ -7265,7 +7265,7 @@
     },
     {
       "Iso3D": {
-        "Description ": ["The core by Abderrahman Taha 15/10/2019"],
+        "Description": ["The core by Abderrahman Taha 15/10/2019"],
         "Name": ["The Core"],
         "Import": ["NoiseW"],
         "Component": ["Core"],
@@ -7291,7 +7291,7 @@
         "Name": ["Richmond Polar_4"],
         "Import": ["NoiseW"],
         "Component": ["richmondpolar"],
-        "Description ": ["richmondpolar(n)[t](u,v):={-cos(t + v)/(2*u) -u^(2*n + 1)*cos(t - (2*n + 1)*v)/(4*n + 2),-sin(t + v)/(2*u) +u^(2*n + 1)*sin(t - (2*n + 1)*v)/(4*n + 2),u^n*cos(t - n*v)/n}is the polar parametrization of a 1-parameter family of minimal surfaces such that {r,theta}->richmondpolar[n][0][r,theta] is a minimal surface with one planar end of degree n"],
+        "Description": ["richmondpolar(n)[t](u,v):={-cos(t + v)/(2*u) -u^(2*n + 1)*cos(t - (2*n + 1)*v)/(4*n + 2),-sin(t + v)/(2*u) +u^(2*n + 1)*sin(t - (2*n + 1)*v)/(4*n + 2),u^n*cos(t - n*v)/n}is the polar parametrization of a 1-parameter family of minimal surfaces such that {r,theta}->richmondpolar[n][0][r,theta] is a minimal surface with one planar end of degree n"],
         "Fx": ["-cos(t + v)/(2*u) - u^3*cos(t - 3*v)/6"],
         "Fy": ["-sin(t + v)/(2*u) + u^3*sin(t - 3*v)/6"],
         "Fz": ["u*cos(t - v)"],
@@ -7619,7 +7619,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Twin Klein by Abderrahman Taha 29/04/2017"],
+        "Description": ["Twin Klein by Abderrahman Taha 29/04/2017"],
         "Name": ["Twin Klein"],
         "Component": ["TwinKlein"],
         "Const": ["cu=(1/1000)",
@@ -7665,7 +7665,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Sea Shell by Abderrahman Taha 04/10/2019"],
+        "Description": ["Sea Shell by Abderrahman Taha 04/10/2019"],
         "Name": ["Sea_Shell_001"],
         "Component": ["Sea Shell"],
         "Const": ["c=1/10000",
@@ -7707,7 +7707,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Seashell by Abderrahman Taha 04/10/2019"],
+        "Description": ["Seashell by Abderrahman Taha 04/10/2019"],
         "Name": ["Sea_Shell_002"],
         "Component": ["Sea Shell"],
         "Const": ["c=1/10000",
@@ -7859,7 +7859,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Inka_Sun and Twisted_Toroids v02 by Abderrahman Taha 04/10/2019"],
+        "Description": ["Inka_Sun and Twisted_Toroids v02 by Abderrahman Taha 04/10/2019"],
         "Name": ["InkaSun"],
         "Component": ["InkaSun_1","InkaSun_2"],
         "Const": ["N=4","M=1","T=1/2"
@@ -8078,7 +8078,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Wireframe NKlein v1 (Jenner's NKlein) by Abderrahman Taha 03/08/2019"],
+            "Description": ["Wireframe NKlein v1 (Jenner's NKlein) by Abderrahman Taha 03/08/2019"],
             "Name": ["NKlein_wire_01"],
             "Import": ["CmpId"],
             "Const": ["T=6","S=3","r1=6","H=r1/99","du=1/100000","dv=1/100000","u1max=2*pi","u1min=0","v1max=2*pi","v1min=0","M=114","N=16","umin=0","umax=2*pi","vmin=0","vmax=2*pi","Gu=(u1max-u1min)/N","Gv=(v1max-v1min)/M"],
@@ -8101,7 +8101,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Wireframe NKlein v2 (Bonan-Jeener's Klein) by Abderrahman Taha 07/10/2019"],
+            "Description": ["Wireframe NKlein v2 (Bonan-Jeener's Klein) by Abderrahman Taha 07/10/2019"],
             "Name": ["NKlein_wire_02"],
             "Import": ["CmpId"],
             "Const": ["T=-3/2","S=5","r1=6","H=-r1/99","du=1/100000","dv=1/100000","u1max=2*pi","u1min=0","v1max=2*pi","v1min=0","M=114","N=16","umin=0","umax=2*pi","vmin=0","vmax=2*pi","Gu=(u1max-u1min)/N","Gv=(v1max-v1min)/M"],
@@ -8174,7 +8174,7 @@
     },
     {
         "Param3D": {
-        "Description ": ["Gears by Abderrahman Taha (Update) 27/06/2018"],
+        "Description": ["Gears by Abderrahman Taha (Update) 27/06/2018"],
         "Name": ["Gears"],
         "Funct": ["F1=(R3+(R/(10*N))*cos(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*cos(N2*u/N+v))","F2=((R/(10*N))*sin(N2*u/N+((R/(10*N))-R/10)/(R/(10*N))*v)+(R/10-(R/(10*N)))*sin(N2*u/N+v))","F3=(R3+(R/(10*N1))*cos(N2*u/N1+((R/(10*N1))-R/10)/(R/(10*N1))*v)+(R/10-(R/(10*N1)))*cos(N2*u/N1+v))","F4=((R/(10*N1))*sin(N2*u/N1+((R/(10*N1))-R/10)/(R/(10*N1))*v)+(R/10-(R/(10*N1)))*sin(N2*u/N1+v))"],
         "Fx": ["-sin(u)*F1(u-t,v,t)","-sin(u)*F3(u-t,v,t)","-sin(u)*F3(u-t,v,t)"],
@@ -8407,7 +8407,7 @@
     },
     {
       "Iso3D": {
-        "Description ": ["Red giant by Abderrahman Taha 08/10/2019"],
+        "Description": ["Red giant by Abderrahman Taha 08/10/2019"],
         "Name": ["Red giant"],
         "Component": ["Redgiant"],
         "Import": ["NoiseW"],
@@ -8537,7 +8537,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Multi-sided Torus by Abderrahman Taha (Update) 08/10/2019"],
+            "Description": ["Multi-sided Torus by Abderrahman Taha (Update) 08/10/2019"],
             "Name": ["Multi_sidedTorus"],
             "Component": ["MultiSidedTorus"],
             "Const": ["N=10",
@@ -8574,7 +8574,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Under Sea by Abderrahman Taha 25/03/2016"],
+        "Description": ["Under Sea by Abderrahman Taha 25/03/2016"],
         "Name": ["Under_The_Sea"],
         "Import": ["NoiseW"],
         "Component": ["UnderSea"],
@@ -8715,7 +8715,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Plain weave patterns over sinusoidal surfaces by Abderrahman Taha 07/10/2019"],
+        "Description": ["Plain weave patterns over sinusoidal surfaces by Abderrahman Taha 07/10/2019"],
         "Name": ["Sinus_Plain_weave"],
         "Component": ["PlainWeave_00","PlainWeave_01","PlainWeave_02","PlainWeave_03","PlainWeave_04","PlainWeave_05","PlainWeave_06","PlainWeave_07","PlainWeave_08","PlainWeave_09","PlainWeave_10","PlainWeave_11","PlainWeave_12","PlainWeave_13","PlainWeave_14","PlainWeave_15"],
         "Const": ["c=1/10000","umax=1","umin=-1","vmax=1","vmin=-1","N=8","M=8","H=25/1000","k=1/40"],
@@ -8736,7 +8736,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Plain weave Catenoid by Abderrahman Taha 07/10/2019"],
+        "Description": ["Plain weave Catenoid by Abderrahman Taha 07/10/2019"],
         "Name": ["Catenoid_Plain_weave"],
         "Component": ["PlainWeave_00","PlainWeave_01","PlainWeave_02","PlainWeave_03","PlainWeave_04","PlainWeave_05","PlainWeave_06","PlainWeave_07","PlainWeave_08","PlainWeave_09","PlainWeave_10","PlainWeave_11","PlainWeave_12","PlainWeave_13","PlainWeave_14","PlainWeave_15"],
         "Const": ["c=1/10000","umax=pi","umin=-pi","vmax=pi","vmin=-pi","N=8","M=8","H=200/1000","k=1/20"],
@@ -8798,7 +8798,7 @@
     },
     {
       "Param3D": {
-        "Description ": ["Knot weave patterns by Abderrahman Taha 20/12/2017"],
+        "Description": ["Knot weave patterns by Abderrahman Taha 20/12/2017"],
         "Name": ["knot_weave"],
         "Const": ["c=1/10000","umax=pi","umin=-pi","vmax=2*pi","vmin=0","N=114","M=16","H=1/100","k=1/180","k1=1/50","p=7","q=2","R=30","r=1","r0=20","r00=30"],
         "Funct": ["Rapp = (u/sqrt(u*u+v*v+t*t))","Bx = 1/sqrt(u*u+v*v+t*t)",
@@ -8823,7 +8823,7 @@
     },
     {
         "Param3D": {
-        "Description ": ["Wireframe Knot by Abderrahman Taha 11/10/2019"],
+        "Description": ["Wireframe Knot by Abderrahman Taha 11/10/2019"],
         "Name": ["Knot_wireframe"],
         "Import": ["CmpId"],
         "Funct": ["Rapp=u/sqrt(u*u+v*v+t*t)","Bx = 1/sqrt(u*u+v*v+t*t)",
@@ -8901,7 +8901,7 @@
     },
     {
         "Param3D": {
-            "Description ": ["Triaxial weave fabric by Abderrahman Taha 14/10/2019"],
+            "Description": ["Triaxial weave fabric by Abderrahman Taha 14/10/2019"],
             "Name": ["Triaxial_weave"],
             "Component": ["Triaxial_00","Triaxial_01","Triaxial_02","Triaxial_03","Triaxial_04","Triaxial_05","Triaxial_06","Triaxial_07","Triaxial_08","Triaxial_09","Triaxial_10","Triaxial_11"],
             "Const": ["c=1/10000","umax=1","umin=-1","vmax=1","vmin=-1","N=4","M=4","H=1/100","k=10/46","teta=pi/3","Th=0","p1=2","p2=1","p3=2"],
