@@ -8942,6 +8942,20 @@
         "Name": "Gray",
         "Noise": ""
       }
+    },
+    {
+      "Param3D": {
+        "Description": ["Strict Helicoid-Catenoid minimal family: minimal in every frame (unstretched companion of Helicoid_To_Catenoid) 29/10/2026"],
+        "Name": ["Minimal_Helicoid_Catenoid"],
+        "Component": ["StrictHelicoidCatenoid"],
+        "Fx": ["sin(2*t*pi)*cosh(v)*cos(u)+cos(2*t*pi)*sinh(v)*sin(u)"],
+        "Fy": ["sin(2*t*pi)*cosh(v)*sin(u)-cos(2*t*pi)*sinh(v)*cos(u)"],
+        "Fz": ["v*sin(2*t*pi)+u*cos(2*t*pi)"],
+        "Umax": ["pi"],
+        "Umin": ["-pi"],
+        "Vmax": ["pi"],
+        "Vmin": ["-pi"]
+      }
     }
   ],
   "TexturesList": [
