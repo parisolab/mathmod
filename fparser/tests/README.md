@@ -25,7 +25,7 @@ Or with a single compiler command:
     ./fparser_eval2_test check          # hand-picked cases: batch vs scalar
     ./fparser_eval2_test fuzz [seed] [count]
     ./fparser_eval2_test bench [NB]     # single-thread throughput
-    ./fparser_eval2_test bench_mt [T] [NBtotal]   # multithreaded, mimics the app
+    ./fparser_eval2_test bench_mt [T] [NBtotal]   # multithreaded, mimicking the app
 
 Exit code is `0` on pass, `1` on fail for `check` and `fuzz`.
 
@@ -60,3 +60,32 @@ This fparser fork differs from upstream:
 - `Vars` are point-major: point `e`, variable `v` is at `Vars[e*NbVar+v]`.
 
 The test file documents these; keep it in sync if they ever change.
+
+## strict_minimal_model_test
+
+Regression check for the collection's catenoid-helicoid associate family
+(`Helicoid_To_Catenoid` and its strict companion `Minimal_Helicoid_Catenoid`
+at the end of `mathmodcollection.js`). It replicates the exact
+compile/eval mechanism of `pariso/parametric/Model3D.cpp` (one
+`FunctionParser` per field, `AddConstant("pi", PI)` with the app's 9-digit
+PI from `pariso/commun.h` — **not** `M_PI` —, `Parse(expr, "u,v,t")`,
+`AllocateStackMemory(NB, 3)`, batch `Eval2`) and verifies:
+
+- all six expressions parse without error;
+- batch results are **bit-identical** to a closed-form C++ reference
+  (same operation order, same PI, same libm) over the app bounds
+  `[-pi,pi]x[-pi,pi]` at 9 t-values;
+- the identities model-219 (x,y) == strict family (x,y) and
+  model-219 z == 3 x strict z (bit-exact);
+- mean curvature from fparser values only (central differences):
+  unit-sphere control |H| = 1, strict model |H| < 1e-5 in **every**
+  frame (minimal everywhere, including the catenoid frame), and model 219
+  |H| ~ 0.44 (= 4/9 at the waist) at the t=0.25 catenoid frame — the
+  3x z-stretch is what makes that frame non-minimal.
+
+Both translation units must be compiled without FMA contraction
+(buildable via `strict_minimal_model_test.pro` or):
+
+    c++ -O2 -std=c++17 -ffp-contract=off strict_minimal_model_test.cpp \
+        -I.. ../fparser.cc -o strict_minimal_model_test
+    ./strict_minimal_model_test        # exit 0 = pass
