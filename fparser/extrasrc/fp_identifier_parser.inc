@@ -188,7 +188,13 @@ lJ
 lE's':if('d' l5
 2])l0(cCsd
 l6
-l4
+lJ
+/* csc: hand-added name registration (the cCsc opcode was fully
+   implemented but its name was missing from this generated table) */
+if('c'==uptr[2]) l0(cCsc
+l6
+lJ
+l0 3;
 lE'e':if('x' l5
 1]&&'p' l5
 2])l0(cExp
@@ -212,7 +218,14 @@ lE'p':if('s' l5
 1]&&'h' l5
 2])l0(cPsh
 l6
-lM's' lB'e':if('c' l5
+lJ
+/* pow: hand-added name registration (the cPow opcode is what `^`
+   compiles to; its name was missing from this generated table) */
+if('o'==uptr[1]&&'w'==uptr[2]) l0(cPow
+l6
+lJ
+l0 3;
+lH's' lB'e':if('c' l5
 2])l0(cSec
 l6
 lM'i':if(lK
