@@ -89,3 +89,20 @@ Both translation units must be compiled without FMA contraction
     c++ -O2 -std=c++17 -ffp-contract=off strict_minimal_model_test.cpp \
         -I.. ../fparser.cc -o strict_minimal_model_test
     ./strict_minimal_model_test        # exit 0 = pass
+
+## pow_csc_test
+
+Value verification for the `pow` and `csc` names (registered in
+`extrasrc/fp_identifier_parser.inc`; both opcodes, `cPow`/`cCsc`, were
+already implemented — `^` compiles to `cPow`):
+
+- `pow(x,y)` is bit-identical to `x^y` (same opcode) and to a faithful
+  replication of `fp_pow` (fparser's pow is a hybrid: integer exponents
+  use repeated squaring, `x>0` uses `exp(y*log(x))`, fallback `std::pow`
+  — it is deliberately **not** libm `pow`);
+- `csc(x)` is bit-identical to `1/sin(x)`;
+- `csc(0)` aborts the batch with code 1 (division by zero).
+
+    c++ -O2 -std=c++17 -ffp-contract=off pow_csc_test.cpp \
+        -I.. ../fparser.cc -o pow_csc_test
+    ./pow_csc_test                     # exit 0 = pass

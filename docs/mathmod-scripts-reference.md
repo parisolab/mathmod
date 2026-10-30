@@ -183,16 +183,26 @@ single-thread mode). On top of those: every `Const` name and every
 `Sliders` name of the model. There are **no other built-in constants**
 (`E` is *not* available; `exp(1)` gives e if you need it).
 
-### 5.2 Built-in functions (complete list from the fparser name table)
+### 5.2 Built-in functions (verified by parse-probe against the real engine)
 
-1-arg: `abs acos asin atan atanh cbrt ceil conj cos cosh cot csd exp
-if* int log log2 log10 real sinh sin sqrt tan tanh trunc`
+1-arg: `abs acos acosh asin asinh atan atanh cbrt ceil cos cosh cot csc
+exp exp2 floor int log log10 log2 sec sin sinh sqrt tan tanh trunc`
 
-2-arg: `atan2 hypot imag* max min polar* psh*`
+2-arg: `atan2 hypot max min pow psh`
 
-(`*` notes: `if(c,a,b)` is the conditional — see §5.5; `conj` = complex
-conjugate; `polar` = complex polar form; `psh`/`csd`/`real`/`imag` =
-complex store/retrieve/extract, §5.4. `atan2(y,x)`, `hypot(x,y)`.)
+3-arg: `if(c, a, b)` — the conditional (§5.5).
+
+Slot read: `csd(slot)` — reads the per-point slot written by
+`psh(slot, value)` (§5.4).
+
+**Complex-only** (available in the `*_C` models' complex parser, not in
+the real one): `real`, `imag`, `conj`, `arg` (1-arg), `polar(r, phi)`
+(2-arg).
+
+Note: `pow(x,y)` is **not** libm `pow` — fparser uses repeated
+squaring for integer exponents and `exp(y*log(x))` for `x > 0`
+(`fp_pow`, `fparser/extrasrc/fpaux.hh`); it is bit-identical to `x^y`.
+See `fparser/tests/pow_csc_test.cpp`.
 
 ### 5.3 Importable app-internal functions
 
