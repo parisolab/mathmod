@@ -214,6 +214,9 @@ bool FUNCTIONPARSERTYPES::HasInvalidRangesOpcode(unsigned op)
           case cAtanh: // allowed range: x != +-1
           //case cCot: // allowed range: tan(x) != 0
           //case cCsc: // allowed range: sin(x) != 0
+          //case cCoth: // allowed range: tanh(x) != 0
+          //case cSech: // allowed range: cosh(x) != 0
+          //case cCsch: // allowed range: sinh(x) != 0
           case cLog:   // allowed range: x != 0
           case cLog2:  // allowed range: x != 0
           case cLog10: // allowed range: x != 0
@@ -242,6 +245,9 @@ bool FUNCTIONPARSERTYPES::HasInvalidRangesOpcode(unsigned op)
           case cAtanh: // allowed range: |x| < 1
           //case cCot: // allowed range: tan(x) != 0
           //case cCsc: // allowed range: sin(x) != 0
+          //case cCoth: // allowed range: tanh(x) != 0
+          //case cSech: // allowed range: cosh(x) != 0
+          //case cCsch: // allowed range: sinh(x) != 0
           case cLog:   // allowed range: x > 0
           case cLog2:  // allowed range: x > 0
           case cLog10: // allowed range: x > 0
@@ -2705,6 +2711,36 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
                   Stack[SP] = Value_t(1)/s; break;
               }
 
+          // --- hand-added: erf, round, sign, coth, sech, csch ---
+          case   cErf: Stack[SP] = fp_erf(Stack[SP]); break;
+
+          case   cRound: Stack[SP] = fp_round(Stack[SP]); break;
+
+          case   cSign: Stack[SP] = fp_sign(Stack[SP]); break;
+
+          case   cCoth:
+              {
+                  const Value_t t = fp_tanh(Stack[SP]);
+                  if(t == Value_t(0))
+                  { mData->mEvalErrorType=1; return Value_t(0); }
+                  Stack[SP] = Value_t(1)/t; break;
+              }
+
+          case   cSech:
+              {
+                  const Value_t c = fp_cosh(Stack[SP]);
+                  if(c == Value_t(0))
+                  { mData->mEvalErrorType=1; return Value_t(0); }
+                  Stack[SP] = Value_t(1)/c; break;
+              }
+
+          case   cCsch:
+              {
+                  const Value_t s = fp_sinh(Stack[SP]);
+                  if(s == Value_t(0))
+                  { mData->mEvalErrorType=1; return Value_t(0); }
+                  Stack[SP] = Value_t(1)/s; break;
+              }
 
           case   cExp: Stack[SP] = fp_exp(Stack[SP]); break;
 
@@ -3117,6 +3153,30 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
                   Stack[SP] = (1.0)/s; break;
               }
 
+          // --- hand-added: erf, round, sign, coth, sech, csch ---
+          case   cErf: Stack[SP] = fp_erf(Stack[SP]); break;
+
+          case   cRound: Stack[SP] = fp_round(Stack[SP]); break;
+
+          case   cSign: Stack[SP] = fp_sign(Stack[SP]); break;
+
+          case   cCoth:
+              {
+                  const std::complex<double> t = fp_tanh(Stack[SP]);
+                  Stack[SP] = (1.0)/t; break;
+              }
+
+          case   cSech:
+              {
+                  const std::complex<double> c = fp_cosh(Stack[SP]);
+                  Stack[SP] = (1.0)/c; break;
+              }
+
+          case   cCsch:
+              {
+                  const std::complex<double> s = fp_sinh(Stack[SP]);
+                  Stack[SP] = (1.0)/s; break;
+              }
 
           case   cExp: Stack[SP] = fp_exp(Stack[SP]); break;
 
@@ -3587,6 +3647,52 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
             for(Nbval=0; Nbval<tileN; Nbval++)
               {
                   const Value_t s = fp_sin(Stacki[(SP)*NbStack + tileBase + Nbval]);
+                  if(s == Value_t(0))
+                  { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/s;
+              }
+             break;
+
+          // --- hand-added: erf, round, sign, coth, sech, csch ---
+          case   cErf:
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_erf(Stacki[(SP)*NbStack + tileBase + Nbval]);
+            break;
+
+          case   cRound:
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_round(Stacki[(SP)*NbStack + tileBase + Nbval]);
+            break;
+
+          case   cSign:
+            for(Nbval=0; Nbval<tileN; Nbval++)
+                Stacki[(SP)*NbStack + tileBase + Nbval] = fp_sign(Stacki[(SP)*NbStack + tileBase + Nbval]);
+            break;
+
+          case   cCoth:
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              {
+                  const Value_t t = fp_tanh(Stacki[(SP)*NbStack + tileBase + Nbval]);
+                  if(t == Value_t(0))
+                  { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/t;
+              }
+             break;
+
+          case   cSech:
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              {
+                  const Value_t c = fp_cosh(Stacki[(SP)*NbStack + tileBase + Nbval]);
+                  if(c == Value_t(0))
+                  { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
+                  Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/c;
+              }
+             break;
+
+          case   cCsch:
+            for(Nbval=0; Nbval<tileN; Nbval++)
+              {
+                  const Value_t s = fp_sinh(Stacki[(SP)*NbStack + tileBase + Nbval]);
                   if(s == Value_t(0))
                   { mData->mEvalErrorType=DIVISION_BY_ZERO; return Value_t(1); }
                   Stacki[(SP)*NbStack + tileBase + Nbval] = Value_t(1)/s;

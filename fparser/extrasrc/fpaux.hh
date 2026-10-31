@@ -19,6 +19,7 @@
 #include "fptypes.hh"
 #include <iostream>
 #include <cmath>
+#include <limits>
 
 #ifdef FP_SUPPORT_MPFR_FLOAT_TYPE
 #include "mpfr/MpfrFloat.hh"
@@ -179,6 +180,9 @@ namespace FUNCTIONPARSERTYPES
     inline Value_t fp_exp(const Value_t& x) { return std::exp(x); }
 
     template<typename Value_t>
+    inline Value_t fp_erf(const Value_t& x) { return std::erf(x); }
+
+    template<typename Value_t>
     inline Value_t fp_floor(const Value_t& x) { return std::floor(x); }
 
     template<typename Value_t>
@@ -187,6 +191,13 @@ namespace FUNCTIONPARSERTYPES
     template<typename Value_t>
     inline Value_t fp_mod(const Value_t& x, const Value_t& y)
     { return std::fmod(x, y); }
+
+    template<typename Value_t>
+    inline Value_t fp_round(const Value_t& x) { return std::round(x); }
+
+    template<typename Value_t>
+    inline Value_t fp_sign(const Value_t& x)
+    { return x > Value_t(0) ? Value_t(1) : (x < Value_t(0) ? Value_t(-1) : Value_t(0)); }
 
     template<typename Value_t>
     inline Value_t fp_sin(const Value_t& x) { return std::sin(x); }
@@ -592,6 +603,150 @@ namespace FUNCTIONPARSERTYPES
     inline std::complex<T> fp_ceil(const std::complex<T>& x)
     {
         return std::complex<T> (fp_ceil(x.real()), fp_ceil(x.imag()));
+    }
+    // Helper for the complex fp_erf below:
+    // erfi(t) for t >= 0, from the all-positive series
+    //   erfi(t) = (2/sqrt(pi)) * sum_{k>=0} t^{2k+1}/(k! (2k+1))
+    template<typename T>
+    inline T fp_erfi_positive(T t)
+    {
+        T s = T(), term = t;
+        for(int k = 0; k < 4000; ++k)
+        {
+            s += term;
+            if(term == T()) break;
+            term *= t*t*T(2*k+1) / (T(k+1)*T(2*k+3));
+            if(std::isinf(term)) break;
+            if(term < T(1e-18)*s) break;
+        }
+        return T(2.0)/std::sqrt(T(3.14159265358979323846)) * s;
+    }
+    // std::erf() does not exist for complex numbers,
+    // so implement it as a hybrid of several methods:
+    //  - Taylor series for |z| <= 3
+    //  - the erfi series on the imaginary axis
+    //  - a near-axis expansion for small |x|
+    //  - the Stieltjes continued fraction for the rest
+    // Overflow is tracked per component, because a component can be
+    // finite even when the magnitude overflows
+    // (e.g. erf(x+iy) with large y: each component grows like e^y^2).
+    template<typename T>
+    inline std::complex<T> fp_erf(const std::complex<T>& z0)
+    {
+        typedef std::complex<T> Cplx;
+        const T sqrtPi = std::sqrt(T(3.14159265358979323846));
+        const T scale = (sizeof(T) >= 8) ? T(700.0) : T(80.0);
+
+        // Oddness: erf(-z) = -erf(z); reduce to Re(z) >= 0
+        std::complex<T> z = z0;
+        bool neg = (z.real() < T());
+        if(neg) z = -z;
+        const T x = z.real(), y = z.imag();
+        const T ay = (y < T()) ? -y : y;
+
+        // 1) Taylor series: erf(z) = (2/sqrt(pi)) sum (-1)^k z^{2k+1}/(k!(2k+1))
+        if(std::hypot(x, ay) <= T(3.0))
+        {
+            Cplx s(T(0)), term = z;
+            const Cplx z2 = z*z;
+            for(int k = 0; k < 400; ++k)
+            {
+                s += term;
+                term *= -z2 * T(2*k+1) / (T(k+1) * T(2*k+3));
+                if(term == Cplx(T(0)) || std::abs(term) < T(1e-19)*std::max(T(1.0), std::abs(s))) break;
+            }
+            Cplx res = Cplx(T(2.0)/sqrtPi) * s;
+            return neg ? -res : res;
+        }
+
+        // 2) Imaginary axis: erf(iy) = i*sign(y)*erfi(|y|)
+        if(x == T(0))
+        {
+            const T v = fp_erfi_positive(ay);
+            Cplx res(T(0), (y < T()) ? -v : v);
+            return neg ? -res : res;
+        }
+
+        // 3) Near the imaginary axis, small |x|:
+        //    erf(x+iy) = i*erfi(y)*(1+D),
+        //    D = (2/(i*sqrt(pi))) * S/(e^{-y^2}*erfi(y)),
+        //    S = int_0^x e^{-s^2} e^{-2iys} ds
+        //    evaluated from the power series S = sum c_n x^{n+1}/(n+1)
+        //    with the second-order recurrence (n+1)c_{n+1} = -2c_{n-1} - 2iy c_n
+        if(x <= T(0.5) && ay <= T(8.0) && T(2.0)*x*ay <= T(12.0))
+        {
+            const T erfi = fp_erfi_positive(ay);
+            const T e = std::exp(-ay*ay) * erfi * (y < T() ? T(-1.0) : T(1.0));  // signed erfi(y)
+            Cplx S(x);  // the c_0 * x term
+            Cplx cn1(T(1.0), T(0.0));           // c_0
+            Cplx cn(T(0.0), T(-2.0)*y);         // c_1 = -2iy
+            Cplx pn(x*x);
+            S += cn * pn / T(2.0);
+            for(int n = 1; n < 400; ++n)
+            {
+                pn *= x;
+                const Cplx cn2 = (T(-2.0)*cn1 - Cplx(T(0.0), T(2.0)*y)*cn) / T(n+1);
+                const Cplx contrib = cn2 * pn / T(n+2);
+                S += contrib;
+                if(contrib == Cplx(T(0)) || std::abs(contrib) < T(1e-19)*std::max(T(1.0), std::abs(S))) break;
+                cn1 = cn; cn = cn2;
+            }
+            const Cplx D = (T(2.0)/sqrtPi) * Cplx(S.imag(), -S.real()) * (T(1.0)/e);  // S/i
+            const Cplx base(T(0.0), (y < T()) ? -erfi : erfi);
+            Cplx res = base * (Cplx(T(1.0), T(0.0)) + D);
+            return neg ? -res : res;
+        }
+
+        // 4) Stieltjes continued fraction:
+        //    erf(z) = 1 - e^{-z^2} G(z)/sqrt(pi),
+        //    G(z) = 1/(z + 1/(2z + 2/(z + 3/(2z + 4/(z + ...)))))
+        const T re = ay*ay - x*x;   // |e^{-z^2}| = e^{re}
+        if(re >= T(2.0)*scale + T(20.0))
+        {
+            // both components overflow for every phase alignment
+            const T ph = std::sin(T(2.0)*x*ay), qh = std::cos(T(2.0)*x*ay);
+            const T sgn = (y < T()) ? T(-1.0) : T(1.0);
+            const T infv = std::numeric_limits<T>::infinity();
+            const T rr = (ph == T(0)) ? T(0.0) : std::copysign(infv, ph*sgn);
+            const T ii = (qh == T(0)) ? T(0.0) : std::copysign(infv, qh*sgn);
+            Cplx res(rr, ii);
+            return neg ? -res : res;
+        }
+        Cplx V(T(0.0), T(0.0));
+        for(int k = 1024; k >= 1; --k)
+        {
+            const Cplx b = z * (k & 1 ? T(2.0) : T(1.0));
+            V = Cplx(T(k)) / (b + V);
+        }
+        const Cplx G = Cplx(T(1.0)) / (z + V);
+        Cplx res;
+        if(re <= scale)
+            res = Cplx(T(1.0)) - std::exp(-(z*z)) * G / sqrtPi;
+        else
+        {
+            // scaled: split e^{-z^2} = e^{(re-scale)/2} * e^{-2ixy} * e^{(re-scale)/2} * e^{scale}
+            // so the components may overflow independently (the correct behavior)
+            const T e1 = (re - scale) * T(0.5);
+            const Cplx A = std::exp(e1) * G / sqrtPi;
+            const Cplx B = A * Cplx(std::cos(T(2.0)*x*y), T(-std::sin(T(2.0)*x*y)));  // signed y
+            const Cplx C2 = B * std::exp(e1);
+            res = Cplx(T(1.0)) - C2 * Cplx(std::exp(scale), T(0.0));
+        }
+        return neg ? -res : res;
+    }
+    template<typename T>
+    inline std::complex<T> fp_round(const std::complex<T>& x)
+    {
+        // No std::round() for complex numbers;
+        // round the real and imaginary parts separately
+        return std::complex<T> (fp_round(x.real()), fp_round(x.imag()));
+    }
+    template<typename T>
+    inline std::complex<T> fp_sign(const std::complex<T>& x)
+    {
+        // No standard definition for the sign of a complex number;
+        // use the sign of the real and imaginary parts
+        return std::complex<T> (fp_sign(x.real()), fp_sign(x.imag()));
     }
     template<typename T>
     inline std::complex<T> fp_abs(const std::complex<T>& x)

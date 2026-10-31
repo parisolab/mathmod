@@ -271,9 +271,19 @@ l6
 lO's':if('h' l5
 3])l0(cCosh
 l6
+/* coth: hand-added name registration (new cCoth opcode) */
+lO't':if('h' l5
+3])l0(cCoth
+l6
 l3
 l8
 4;}
+/* csch: hand-added name registration (new cCsch opcode) */
+lH's':if('c' l5
+2]&&'h' l5
+3])l0(cCsch
+l6
+l3
 l8
 4;}
 lH'e':{lI'x','p','2'}
@@ -296,9 +306,21 @@ lH'r':{lI'e','a','l'}
 cReal
 l6
 l3}
-lH's' lB'i':if(lK
+lH's' lB
+/* sech: hand-added name registration (new cSech opcode) */
+'e':if('c' l5
+2]&&'h' l5
+3])l0(cSech
+l6
+lO'i':if(lK
 2]&&'h' l5
 3])l0(cSinh
+l6
+l3
+/* sign: hand-added name registration (new cSign opcode) */
+if('g' l5
+2]&&lK
+3])l0(cSign
 l6
 lO'q':if('r' l5
 2]&&'t' l5
@@ -381,6 +403,17 @@ l7't':{l1
 4
 lF
 cTrunc
+l6
+lG
+l0
+5;}
+/* round: hand-added name registration (new cRound opcode) */
+lH'r':{l1
+4]={'o','u','n','d'}
+;if(l2
+4
+lF
+cRound
 l6
 lG
 l0

@@ -46,6 +46,8 @@ namespace FUNCTIONPARSERTYPES
         cReal, /* get real part of a complex value */
         cSec, cSin, cSinh, cSqrt, cTan, cTanh,
         cTrunc,
+// Appended after cTrunc (do not reorder: values must index Functions[]):
+        cCoth, cCsch, cErf, cRound, cSech, cSign,
 
 // These do not need any ordering:
 // Except that if you change the order of {eq,neq,lt,le,gt,ge}, you
@@ -158,7 +160,14 @@ namespace FUNCTIONPARSERTYPES
         /*cSqrt */ { FP_FNAME("sqrt")  1, 0 },
         /*cTan  */ { FP_FNAME("tan")   1, FuncDefinition::AngleIn },
         /*cTanh */ { FP_FNAME("tanh")  1, FuncDefinition::AngleIn },
-        /*cTrunc*/ { FP_FNAME("trunc") 1, 0 }
+        /*cTrunc*/ { FP_FNAME("trunc") 1, 0 },
+// Appended after cTrunc (must stay in sync with the OPCODE enum above):
+        /*cCoth */ { FP_FNAME("coth")  1, FuncDefinition::AngleIn },
+        /*cCsch */ { FP_FNAME("csch")  1, FuncDefinition::AngleIn },
+        /*cErf  */ { FP_FNAME("erf")   1, 0 },
+        /*cRound*/ { FP_FNAME("round") 1, FuncDefinition::OkForInt },
+        /*cSech */ { FP_FNAME("sech")  1, FuncDefinition::AngleIn },
+        /*cSign */ { FP_FNAME("sign")  1, FuncDefinition::OkForInt }
     };
 #undef FP_FNAME
 
