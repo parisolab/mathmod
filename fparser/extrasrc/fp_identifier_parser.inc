@@ -199,7 +199,16 @@ lE'e':if('x' l5
 1]&&'p' l5
 2])l0(cExp
 l6
-lM'i':if(lK
+lJ
+/* erf: hand-added name registration (new cErf opcode); must come
+   before the 'e' case fallback return */
+if('r' l5
+1]&&'f' l5
+2])l0(cErf
+l6
+lJ
+l0 3;
+lH'i':if(lK
 1]&&'t' l5
 2])l0(cInt
 l6
@@ -316,13 +325,15 @@ lO'i':if(lK
 2]&&'h' l5
 3])l0(cSinh
 l6
-l3
-/* sign: hand-added name registration (new cSign opcode) */
+0x80000004U;
+/* sign: hand-added name registration (new cSign opcode); must come
+   before the 'i' case fallback return */
 if('g' l5
 2]&&lK
 3])l0(cSign
 l6
-lO'q':if('r' l5
+l3
+lH'q':if('r' l5
 2]&&'t' l5
 3])l0(cSqrt
 l6
