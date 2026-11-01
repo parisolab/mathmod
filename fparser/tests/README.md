@@ -106,3 +106,62 @@ already implemented — `^` compiles to `cPow`):
     c++ -O2 -std=c++17 -ffp-contract=off pow_csc_test.cpp \
         -I.. ../fparser.cc -o pow_csc_test
     ./pow_csc_test                     # exit 0 = pass
+
+## sixfn_test
+
+Value verification for the six built-ins added to this fork:
+`erf`, `round`, `sign`, `coth`, `sech`, `csch` (opcodes in
+`extrasrc/fptypes.hh`, name registrations in
+`extrasrc/fp_identifier_parser.inc`, math routines in
+`extrasrc/fpaux.hh`). Everything goes through the real engine
+(Parse + Eval / Eval2):
+
+- name probe: the six new names parse as built-ins, all
+  pre-existing names still parse, ComplexOnly names are still
+  treated as variables, unknown names still fail;
+- real (double) values: `erf` bit-identical to `std::erf`,
+  `round` to `std::round`, `coth`/`sech`/`csch` to
+  `1/tanh`/`1/cosh`/`1/sinh`; `sign` exact (1/-1/0, NaN->0);
+  `coth(0)`/`csch(0)` set `EvalError() == 1` (division by zero);
+- complex (double) values through `FunctionParser_cd`:
+  `coth`/`sech`/`csch` bit-identical to `1/std::tanh`/`1/std::cosh`/
+  `1/std::sinh` of the complex argument; `round`/`sign`
+  component-wise (the complex `erf` hybrid is covered by
+  `erf_complex_test`);
+- batch `Eval2` (tiled) bit-identical to scalar `Eval` for all
+  six; a `coth`/`csch` batch containing x=0 aborts with code 1.
+
+    c++ -O2 -std=c++17 -ffp-contract=off sixfn_test.cpp \
+        -I.. ../fparser.cc -o sixfn_test
+    ./sixfn_test                      # exit 0 = pass
+
+## erf_complex_test
+
+Verification of the self-implemented complex `fp_erf`
+(`extrasrc/fpaux.hh` — the standard library has no `std::erf()`
+for complex numbers). It compares the engine's results, through
+`FunctionParser_cd`, against the reference table `erf_ref_table.h`
+(3177 points of `erf(x+i y)` computed with mpmath 1.4.1 at
+dps = 60 and converted to double, `INFINITY` where the true
+component overflows double). The grid covers all four hybrid
+branches (Taylor |z| <= 3, imaginary-axis erfi, near-axis D-strip,
+Stieltjes continued fraction), their switching boundaries
+(|z| ~ 3, Re(z^2) ~ 700), the negative-x oddness path, and the
+component-overflow band (|erf| ~ 1e305..1e308).
+
+Acceptance: finite reference components within
+`5e-12 * max(1, |Re(ref)|, |Im(ref)|)` (measured worst case
+~1e-13), infinite reference components must be inf of the same
+sign; oddness (`erf(-z) == -erf(z)`) and conjugate symmetry
+(`erf(conj(z)) == conj(erf(z))`) bit-exact; a few points
+through the `std::complex<float>` instantiation with a
+float-precision tolerance.
+
+`erf_ref_table.h` is auto-generated (do not edit by hand);
+regenerate it with the mpmath generator script used in the
+development session (grid layout documented in the comments of
+`erf_ref_table.h`).
+
+    c++ -O2 -std=c++17 -ffp-contract=off erf_complex_test.cpp \
+        -I.. ../fparser.cc -o erf_complex_test
+    ./erf_complex_test                # exit 0 = pass

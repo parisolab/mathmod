@@ -38,7 +38,8 @@ int main()
     const double TOL = 5e-12;
 
     FunctionParser_cd p;
-    if(p.Parse("erf(z)", "x,y,z") != -1)
+    // single variable "z": Eval(&z) reads NbVar consecutive values
+    if(p.Parse("erf(z)", "z") != -1)
     {
         std::printf("FAIL: cannot parse erf(z): %s\n", p.ErrorMsg());
         return 1;
@@ -142,7 +143,7 @@ int main()
     static const double fp[][2] = { {1.0, 2.0}, {0.5, 3.3}, {0.0, 5.0}, {-1.5, 2.2} };
     const float TOLF = 1e-4f;
     FunctionParser_cf pf;
-    if(pf.Parse("erf(z)", "x,y,z") != -1)
+    if(pf.Parse("erf(z)", "z") != -1)
     {
         std::printf("FAIL: cannot parse erf(z) (float): %s\n", pf.ErrorMsg());
         gFail++;

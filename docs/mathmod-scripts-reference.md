@@ -185,8 +185,9 @@ single-thread mode). On top of those: every `Const` name and every
 
 ### 5.2 Built-in functions (verified by parse-probe against the real engine)
 
-1-arg: `abs acos acosh asin asinh atan atanh cbrt ceil cos cosh cot csc
-exp exp2 floor int log log10 log2 sec sin sinh sqrt tan tanh trunc`
+1-arg: `abs acos acosh asin asinh atan atanh cbrt ceil cos cosh cot coth
+csc csch exp exp2 floor int log log10 log2 round sec sech sin sign sinh
+sqrt tan tanh trunc`
 
 2-arg: `atan2 hypot max min pow psh`
 
@@ -203,6 +204,29 @@ Note: `pow(x,y)` is **not** libm `pow` — fparser uses repeated
 squaring for integer exponents and `exp(y*log(x))` for `x > 0`
 (`fp_pow`, `fparser/extrasrc/fpaux.hh`); it is bit-identical to `x^y`.
 See `fparser/tests/pow_csc_test.cpp`.
+
+Newer additions (this fparser fork):
+
+- `coth(x) = 1/tanh(x)`, `sech(x) = 1/cosh(x)`, `csch(x) = 1/sinh(x)` —
+  exact reciprocals, real and complex. `coth(0)` and `csch(0)` are
+  division by zero: the evaluation (or batch) aborts with error code 1;
+  `sech(0) = 1` is fine.
+- `round(x)` — round to nearest integer, halves away from zero
+  (`std::round`), e.g. `round(2.5) = 3`, `round(-2.5) = -3`.
+  Semantically the same as the pre-existing `int(x)` (both round half
+  away from zero), backed by `std::round`.
+- `sign(x)` — `1` / `-1` / `0` (0 at `x = 0`, also for NaN).
+- `erf(x)` — the (real) error function, `std::erf`. Also available in
+  the `*_C` complex parser; since the standard library has no complex
+  `std::erf`, the fork implements one (hybrid: Taylor series,
+  imaginary-axis erfi series, near-axis expansion, Stieltjes continued
+  fraction, with per-component overflow tracking; verified against
+  mpmath — see `fparser/tests/erf_complex_test.cpp` and its reference
+  table). For complex `z`, `erf(-z) = -erf(z)` and
+  `erf(conj(z)) = conj(erf(z))` hold exactly.
+- In the complex parser, `round(z)` and `sign(z)` are applied
+  component-wise (there is no standard definition for the sign of a
+  complex number).
 
 ### 5.3 Importable app-internal functions
 

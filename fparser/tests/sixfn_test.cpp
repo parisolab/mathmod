@@ -209,7 +209,9 @@ static void complexValues()
     };
     char tag[96];
 
-    p.Parse("coth(z)", "x,y,z");
+    // NOTE: single variable "z" — Eval(&z) reads NbVar consecutive
+    // values starting at z, so a 3-variable layout would read garbage.
+    p.Parse("coth(z)", "z");
     for(unsigned i = 0; i < sizeof zs / sizeof zs[0]; ++i)
     {
         const std::complex<double> want = std::complex<double>(1.0) / std::tanh(zs[i]);
@@ -219,7 +221,7 @@ static void complexValues()
         checkBits(tag, got.imag(), want.imag());
     }
 
-    p.Parse("sech(z)", "x,y,z");
+    p.Parse("sech(z)", "z");
     for(unsigned i = 0; i < sizeof zs / sizeof zs[0]; ++i)
     {
         const std::complex<double> want = std::complex<double>(1.0) / std::cosh(zs[i]);
@@ -229,7 +231,7 @@ static void complexValues()
         checkBits(tag, got.imag(), want.imag());
     }
 
-    p.Parse("csch(z)", "x,y,z");
+    p.Parse("csch(z)", "z");
     for(unsigned i = 0; i < sizeof zs / sizeof zs[0]; ++i)
     {
         const std::complex<double> want = std::complex<double>(1.0) / std::sinh(zs[i]);
@@ -240,7 +242,7 @@ static void complexValues()
     }
 
     // round: component-wise
-    p.Parse("round(z)", "x,y,z");
+    p.Parse("round(z)", "z");
     std::complex<double> rs[] = {{1.4, 2.6}, {-0.5, 0.5}, {2.5, -2.5}, {0.0, -1.0}};
     for(unsigned i = 0; i < sizeof rs / sizeof rs[0]; ++i)
     {
@@ -252,7 +254,7 @@ static void complexValues()
     }
 
     // sign: component-wise
-    p.Parse("sign(z)", "x,y,z");
+    p.Parse("sign(z)", "z");
     std::complex<double> ss[] = {{2.3, -1.7}, {0.0, 5.0}, {-4.0, 0.0}, {0.5, -0.5}};
     for(unsigned i = 0; i < sizeof ss / sizeof ss[0]; ++i)
     {
