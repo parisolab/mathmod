@@ -8956,6 +8956,34 @@
         "Vmax": ["pi"],
         "Vmin": ["-pi"]
       }
+    },
+    {
+      "Iso3D": {
+        "Description": ["GyroidVoronoi honeycomb perforated by Abderrahman Taha 03/11/2026"],
+        "Name": ["Gyroid_Voronoi_Perforated"],
+        "Component": ["GyroidVoronoiPerforated"],
+        "Import": ["NoiseW"],
+        "Const": ["T=.15",
+          "G=-T",
+          "L=6",
+          "S=0.9",
+          "Wd=0.2",
+          "M=0.5",
+          "seed=10"],
+        "Funct": ["R=sqrt((-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2)",
+          "df=(-sin(x)*sin(y)+cos(x)*cos(z))",
+          "Gyroid=(cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x))",
+          "Gyr=Gyroid(x-df(x,y,z,t)*T/R(x,y,z,t),y-df(y,z,x,t)*T/R(x,y,z,t),z-df(z,x,y,t)*T/R(x,y,z,t),t)*Gyroid(x-df(x,y,z,t)*G/R(x,y,z,t),y-df(y,z,x,t)*G/R(x,y,z,t),z-df(z,x,y,t)*G/R(x,y,z,t),t)",
+          "E=NoiseW((x-df(x,y,z,t)*T/R(x,y,z,t))*S,(y-df(y,z,x,t)*T/R(x,y,z,t))*S,(z-df(z,x,y,t)*T/R(x,y,z,t))*S,seed,2,1)",
+          "C2=pow(min(1,E(x,y,z,t)/Wd),2)"],
+        "Fxyz": ["-max(Gyr(x,y,z,t), (x^10+y^10+z^10-((L-0.1)^10)))+M*C2(x,y,z,t)"],
+        "Xmax": ["L"],
+        "Xmin": ["-L"],
+        "Ymax": ["L"],
+        "Ymin": ["-L"],
+        "Zmax": ["L"],
+        "Zmin": ["-L"]
+      }
     }
   ],
   "TexturesList": [
