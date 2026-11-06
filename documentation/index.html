@@ -1121,8 +1121,21 @@ or functions using the following operators in this order of precedence:
   <td><code>cosh(A)</code></td>
   <td>Same as cos() but for hyperbolic cosine.</td>
 </tr><tr>
+  <td><code>coth(A)</code></td>
+  <td>Hyperbolic cotangent of A. Equivalent to <code>1/tanh(A)</code>.</td>
+</tr><tr>
   <td><code>cot(A)</code></td>
   <td>Cotangent of A. Equivalent to <code>1/tan(A)</code>.</td>
+</tr><tr>
+  <td><code>csc(A)</code></td>
+  <td>Cosecant of A. Equivalent to <code>1/sin(A)</code>.</td>
+</tr><tr>
+  <td><code>csch(A)</code></td>
+  <td>Hyperbolic cosecant of A. Equivalent to <code>1/sinh(A)</code>.</td>
+</tr><tr>
+  <td><code>erf(A)</code></td>
+  <td>Error function of A. Returns the normalized integral of the Gaussian
+      function; erf(0)=0, erf(+infinity)=1, erf(-infinity)=-1.</td>
 </tr><tr>
   <td><code>eval(...)</code></td>
   <td>This a recursive call to the function to be evaluated. The
@@ -1177,6 +1190,10 @@ or functions using the following operators in this order of precedence:
   <td>If A&lt;B, the result is A, else B.</td>
 </tr>
 <tr>
+  <td><code>pow(A,B)</code></td>
+  <td>A raised to the power B. Equivalent to <code>A^B</code>.</td>
+</tr>
+<tr>
 <td><code>real(A)</code></td>
 <td>Return the real part of complex number A. Equivalent to <code>abs(A)*cos(arg(A))</code>.</td>
 </tr>
@@ -1186,8 +1203,22 @@ or functions using the following operators in this order of precedence:
       Equivalent to <code>real(A)*(cos(real(B))+1i*sin(real(B)))</code>.</td>
 </tr>
 <tr>
+  <td><code>round(A)</code></td>
+  <td>Rounded value of A. Returns the closest integer to A.
+      Equidistant values are rounded away from zero.
+      E.g. -2.9 and -2.5 are rounded to -3.0; -2.1 is rounded to -2.0,
+      and 2.9 and 2.5 are rounded to 3.0; 2.1 is rounded to 2.0.</td>
+</tr>
+<tr>
   <td><code>sec(A)</code></td>
   <td>Secant of A. Equivalent to <code>1/cos(A)</code>.</td>
+</tr><tr>
+  <td><code>sech(A)</code></td>
+  <td>Hyperbolic secant of A. Equivalent to <code>1/cosh(A)</code>.</td>
+</tr><tr>
+  <td><code>sign(A)</code></td>
+  <td>Sign of A. Returns 1 if A is positive, -1 if A is negative,
+      0 if A is 0.</td>
 </tr>
 <tr>
   <td><code>sin(A)</code></td>
