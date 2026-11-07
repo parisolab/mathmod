@@ -5647,14 +5647,14 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
                                                                                                                     "y+"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
                                                                                                                     "z+"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
                                                                                                                     "t), (1)))";
-                ShowUpperSurfStr = "*(if(ShowUpperSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t),(1)))";
+                ShowUpperSurfStr = "*(if(ShowUpperSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x+get(0)*get(3),y+get(1)*get(3),z+get(2)*get(3),t),(1)))";
         }
         else
             ShowUpperSurfStr = ShowUpperSurfRawStr = "";
 
         if(ALL || (!ALL && IncludeComponent))
         {
-            ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t),(1)))";
+            ShowBottomSurfStr = "*(if(ShowBottomSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x-get(0)*get(3),y-get(1)*get(3),z-get(2)*get(3),t),(1)))";
             ShowBottomSurfRawStr = "*(if(ShowBottomSurf_"+QString::number(OpIndex)+"=(1),fffxyz"+I+"(x-"+ThExpression+"(x,y,z,t)*R_fct(DFFFx(x,y,z,t), DFFFy(x,y,z,t), DFFFz(x,y,z,t),t),"
                                                                                                                        "y-"+ThExpression+"(x,y,z,t)*R_fct(DFFFy(x,y,z,t), DFFFz(x,y,z,t), DFFFx(x,y,z,t),t),"
                                                                                                                        "z-"+ThExpression+"(x,y,z,t)*R_fct(DFFFz(x,y,z,t), DFFFx(x,y,z,t), DFFFy(x,y,z,t),t),"
@@ -5665,7 +5665,7 @@ void DrawingOptions::ApplyThiIsoOperation(QJsonObject & OriginalObj, QJsonArray 
         QString fct_opt("fffxyz_opt"+I+"=psh((0),(fffxyz"+I+"(x+epsilon,y,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((1),(fffxyz"+I+"(x,y+epsilon,z,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
                     "*psh((2),(fffxyz"+I+"(x,y,z+epsilon,t)-fffxyz"+I+"(x,y,z,t))/epsilon)"
-                    "*psh((3),("+ThickVar+"*ThExpression_"+QString::number(OpIndex)+"(x,y,z,t)/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
+                    "*psh((3),("+ThickVar+"*ThExpression_"+QString::number(OpIndex)+"(x,y,z,t)/sqrt(get(0)*get(0)+ get(1)*get(1)+ get(2)*get(2))))");
         fct_opt+= ShowOriginalSurfStr+ShowUpperSurfStr+ShowBottomSurfStr;
         QString fct_raw="fffxyz_raw"+I+"="+ShowOriginalSurfRawStr+ShowUpperSurfRawStr+ShowBottomSurfRawStr;
         QString fct="fffxyz"+I+"= if(RawScript_"+QString::number(OpIndex)+"=(1), fffxyz_raw"+I+"(x,y,z,t), fffxyz_opt"+I+"(x,y,z,t))";

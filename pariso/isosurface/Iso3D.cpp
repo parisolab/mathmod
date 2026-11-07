@@ -205,9 +205,9 @@ ErrorMessage  Iso3D::AddThickness()
         QString fct("psh((0),(FFFxyz"+I+"(x+(1/1000000),y,z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                                               "*psh((1),(FFFxyz"+I+"(x,y+(1/1000000),z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                             "*psh((2),(FFFxyz"+I+"(x,y,z+(1/1000000),t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
-                                                                                            "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-        if(IsoTh.ShowUpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
-        if(IsoTh.ShowBottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+                                                                                            "*psh((3),("+T+"/sqrt(get(0)*get(0)+ get(1)*get(1)+ get(2)*get(2))))");
+        if(IsoTh.ShowUpperSurf)  fct+= "*(FFFxyz"+I+"(x+get(0)*get(3),y+get(1)*get(3),z+get(2)*get(3),t,i_indx,j_indx,k_indx,max_ijk))";
+        if(IsoTh.ShowBottomSurf)  fct+= "*(FFFxyz"+I+"(x-get(0)*get(3),y-get(1)*get(3),z-get(2)*get(3),t,i_indx,j_indx,k_indx,max_ijk))";
         if(IsoTh.ShowOriginalSurf)
         {
             if(IsoTh.ShowUpperSurf || IsoTh.ShowBottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
@@ -231,9 +231,9 @@ ErrorMessage  Iso3D::AddThickness()
             QString fct("psh((0),(FFFxyz"+I+"(x+(1/1000000),y,z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                                                   "*psh((1),(FFFxyz"+I+"(x,y+(1/1000000),z,t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
                                                                                                 "*psh((2),(FFFxyz"+I+"(x,y,z+(1/1000000),t,i_indx,j_indx,k_indx,max_ijk)-FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))/(1/1000000))"
-                                                                                                "*psh((3),("+T+"/sqrt(csd(0)*csd(0)+ csd(1)*csd(1)+ csd(2)*csd(2))))");
-            if(IsoTh.ShowUpperSurf)  fct+= "*(FFFxyz"+I+"(x+csd(0)*csd(3),y+csd(1)*csd(3),z+csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
-            if(IsoTh.ShowBottomSurf)  fct+= "*(FFFxyz"+I+"(x-csd(0)*csd(3),y-csd(1)*csd(3),z-csd(2)*csd(3),t,i_indx,j_indx,k_indx,max_ijk))";
+                                                                                                "*psh((3),("+T+"/sqrt(get(0)*get(0)+ get(1)*get(1)+ get(2)*get(2))))");
+            if(IsoTh.ShowUpperSurf)  fct+= "*(FFFxyz"+I+"(x+get(0)*get(3),y+get(1)*get(3),z+get(2)*get(3),t,i_indx,j_indx,k_indx,max_ijk))";
+            if(IsoTh.ShowBottomSurf)  fct+= "*(FFFxyz"+I+"(x-get(0)*get(3),y-get(1)*get(3),z-get(2)*get(3),t,i_indx,j_indx,k_indx,max_ijk))";
             if(IsoTh.ShowOriginalSurf)
             {
                 if(IsoTh.ShowUpperSurf || IsoTh.ShowBottomSurf) fct+= "*(FFFxyz"+I+"(x,y,z,t,i_indx,j_indx,k_indx,max_ijk))";
