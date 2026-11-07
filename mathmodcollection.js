@@ -8984,6 +8984,23 @@
         "Zmax": ["L"],
         "Zmin": ["-L"]
       }
+    },
+    {
+      "Iso3D": {
+        "Description": ["Recursive Takagi-like fractal surface using eval() by Abderrahman Taha 06/11/2026"],
+        "Name": ["Takagi_Fractal_eval"],
+        "Component": ["TakagiFractalEval"],
+        "Const": ["MAXD=6"],
+        "Vect": ["1"],
+        "Funct": ["H=psh(0, get(0) - MAXD*floor(get(0)/MAXD) + 1)*if(get(0) >= MAXD, 0, (1-abs(2*(x-floor(x))-1))*(1-abs(2*(y-floor(y))-1)) + 0.5*eval(2*x-floor(2*x), 2*y-floor(2*y), z, t))"],
+        "Fxyz": ["z - H(x,y,z,t)"],
+        "Xmax": ["1"],
+        "Xmin": ["0"],
+        "Ymax": ["1"],
+        "Ymin": ["0"],
+        "Zmax": ["1.5"],
+        "Zmin": ["0"]
+      }
     }
   ],
   "TexturesList": [
