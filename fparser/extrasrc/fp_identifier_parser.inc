@@ -185,10 +185,7 @@ lJ
 lH't':l0(cCot
 l6
 lJ
-lE's':if('d' l5
-2])l0(cCsd
-l6
-lJ
+lE's':
 /* csc: hand-added name registration (the cCsc opcode was fully
    implemented but its name was missing from this generated table) */
 if('c'==uptr[2]) l0(cCsc
@@ -205,6 +202,14 @@ lJ
 if('r' l5
 1]&&'f' l5
 2])l0(cErf
+l6
+lJ
+l0 3;
+/* get: hand-added name registration (renamed from csd; cGet opcode);
+   must come before the 'i' case */
+lH'g':if('e' l5
+1]&&'t' l5
+2])l0(cGet
 l6
 lJ
 l0 3;
@@ -299,7 +304,16 @@ lH'e':{lI'x','p','2'}
 ;if(lC
 cExp2
 l6
-l3}
+0x80000004U;
+/* eval: hand-added name registration (new cEval opcode, recursive
+   self-call); must come before the fallback return */
+if('v' l5
+1]&&'a' l5
+2]&&'l' l5
+3])l0(cEval
+l6
+0x80000004U;
+l0 4;}
 lH'i':{lI'm','a','g'}
 ;if(lC
 cImag

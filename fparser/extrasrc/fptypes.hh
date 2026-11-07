@@ -36,7 +36,7 @@ namespace FUNCTIONPARSERTYPES
         cAtan, cAtan2, cAtanh,
         cCbrt, cCeil,
         cConj,  /* get the complex conjugate of a complex value */
-        cCos, cCosh, cCot, cCsc, cCsd,
+        cCos, cCosh, cCot, cCsc, cGet,
         cExp, cExp2, cFloor, cHypot,
         cIf,
         cImag,  /* get imaginary part of a complex value */
@@ -47,7 +47,7 @@ namespace FUNCTIONPARSERTYPES
         cSec, cSin, cSinh, cSqrt, cTan, cTanh,
         cTrunc,
 // Appended after cTrunc (do not reorder: values must index Functions[]):
-        cCoth, cCsch, cErf, cRound, cSech, cSign,
+        cCoth, cCsch, cErf, cRound, cSech, cSign, cEval,
 
 // These do not need any ordering:
 // Except that if you change the order of {eq,neq,lt,le,gt,ge}, you
@@ -167,7 +167,11 @@ namespace FUNCTIONPARSERTYPES
         /*cErf  */ { FP_FNAME("erf")   1, 0 },
         /*cRound*/ { FP_FNAME("round") 1, FuncDefinition::OkForInt },
         /*cSech */ { FP_FNAME("sech")  1, FuncDefinition::AngleIn },
-        /*cSign */ { FP_FNAME("sign")  1, FuncDefinition::OkForInt }
+        /*cSign */ { FP_FNAME("sign")  1, FuncDefinition::OkForInt },
+        /*cEval */ { FP_FNAME("eval")  0, 0 }
+// cEval params=0 is a placeholder: eval() is a recursive call of the
+// function being evaluated, so its arity is the number of variables of
+// that function (enforced at parse time in CompileFunction()).
     };
 #undef FP_FNAME
 

@@ -2017,7 +2017,10 @@ inline const char* FunctionParserBase<Value_t>::CompileFunction
     if(func_opcode == cIf) // "if" is a special case
         return CompileIf(function);
 
-    unsigned requiredParams = funcDef.params;
+    // eval() is a recursive call of the function being evaluated: its
+    // arity is the number of variables of this function.
+    const unsigned requiredParams =
+        (func_opcode == cEval) ? mData->mVariablesAmount : funcDef.params;
 
     function = CompileFunctionParams(function, requiredParams);
     if(!function) return 0;
@@ -2823,7 +2826,7 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             --SP;
             break;
 
-          case cCsd:
+          case cGet:
             if(Stack[SP] >= Value_t(VarSize) || Stack[SP] <Value_t(0))
             {
                 mData->mEvalErrorType=VAR_OVERFLOW;
@@ -2831,6 +2834,36 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
             }
             Stack[SP] = StackSave[abs(Stack[SP])];
             break;
+
+          // --- eval(): recursive call of the function being evaluated.
+          //     Args = the N values on top of the stack (N = number of
+          //     variables of the function, fixed at parse time). The
+          //     interpreter state is saved, the whole bytecode is
+          //     re-run with the new variable values, the state is
+          //     restored and the result is left where the args were.
+          //     Must be used inside if() to avoid infinite recursion.
+          case   cEval:
+              {
+                  const unsigned N = mData->mVariablesAmount;
+                  const int targetSP = SP - int(N) + 1;
+                  Value_t* const stackBase = &Stack[0];
+                  std::vector<Value_t> args(N);
+                  for(unsigned i = 0; i < N; ++i)
+                      args[i] = stackBase[targetSP+int(i)];
+                  std::vector<Value_t> savedStack;
+                  savedStack.assign(stackBase, stackBase + SP + 1);
+                  const unsigned savedIP = IP, savedDP = DP;
+                  const int savedSP = SP;
+                  const Value_t innerResult =
+                      (N ? Eval(&args[0]) : Eval(0));
+                  if(mData->mEvalErrorType != 0)
+                      return Value_t(0);
+                  IP = savedIP; DP = savedDP; SP = savedSP;
+                  std::copy(savedStack.begin(), savedStack.end(), stackBase);
+                  SP = targetSP;
+                  Stack[SP] = innerResult;
+                  break;
+              }
 
           case  cTrunc:
             Stack[SP] = fp_trunc(Stack[SP]);
@@ -3244,7 +3277,7 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
               Stack[SP-1]  = 1.0;
               --SP;
               break;
-          case cCsd:
+          case cGet:
 
               if(Stack[SP].real()  >= VarSize || Stack[SP].real() < 0)
               {
@@ -3253,6 +3286,32 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
               }
               Stack[SP] = StackSave[abs(Stack[SP])];
               break;
+
+          // --- eval(): recursive self-call (see the cEval case in Eval()).
+          case   cEval:
+              {
+                  const unsigned N = mData->mVariablesAmount;
+                  const int targetSP = SP - int(N) + 1;
+                  // EvalC's stack is always complex double, whatever
+                  // Value_t is.
+                  std::complex<double>* const stackBase = Stack;
+                  std::vector<std::complex<double> > args(N);
+                  for(unsigned i = 0; i < N; ++i)
+                      args[i] = stackBase[targetSP+int(i)];
+                  std::vector<std::complex<double> > savedStack;
+                  savedStack.assign(stackBase, stackBase + SP + 1);
+                  const unsigned savedIP = IP, savedDP = DP;
+                  const int savedSP = SP;
+                  const std::complex<double> innerResult =
+                      (N ? EvalC(&args[0]) : EvalC(0));
+                  if(mData->mEvalErrorType != 0)
+                      return Value_t(0);
+                  IP = savedIP; DP = savedDP; SP = savedSP;
+                  std::copy(savedStack.begin(), savedStack.end(), stackBase);
+                  SP = targetSP;
+                  Stack[SP] = innerResult;
+                  break;
+              }
           case  cTrunc: Stack[SP] = fp_trunc(Stack[SP]); break;
 
           case   cSec:
@@ -3491,6 +3550,23 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
 
 
 
+namespace
+{
+    // Convert the error code carried in Eval2's return value to an int.
+    // For the complex instantiations the code is a real-valued complex.
+    template<typename T>
+    inline int eval2ErrorCodeAsInt(const T& v) { return int(v); }
+#ifdef FP_SUPPORT_COMPLEX_DOUBLE_TYPE
+    inline int eval2ErrorCodeAsInt(const std::complex<double>& v) { return int(v.real()); }
+#endif
+#ifdef FP_SUPPORT_COMPLEX_FLOAT_TYPE
+    inline int eval2ErrorCodeAsInt(const std::complex<float>& v) { return int(v.real()); }
+#endif
+#ifdef FP_SUPPORT_COMPLEX_LONG_DOUBLE_TYPE
+    inline int eval2ErrorCodeAsInt(const std::complex<long double>& v) { return int(v.real()); }
+#endif
+}
+
 template<typename Value_t>
 void FunctionParserBase<Value_t>::AllocateStackMemory(unsigned int nbStack, int nbvar)
 {
@@ -3512,6 +3588,11 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     std::vector<Value_t>& Stacki = mData->mStacki;
     std::vector<Value_t>& StackSave = mData->mStackSave;
     int Size = Stack.size();
+    // Lazy safety net: AllocateStackMemory() sizes mStacki from
+    // mStack.size(), which is only known after Parse(); grow here if it
+    // was called earlier (or not at all) so the SP-major stack is valid.
+    if(Size > 0 && Stacki.size() < (size_t)NbStack*(unsigned)Size)
+        Stacki.resize(NbStack*(unsigned)Size);
     int VarSize = StackSave.size();
     Value_t stt;
 
@@ -3542,6 +3623,8 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     // (the un-tiled code allocated a fresh vector per call per opcode).
     std::vector<Value_t> pcallRes;
     std::vector<Value_t> fcallPrm;
+    // Results of nested eval() (cEval) recursive runs, per tile.
+    std::vector<Value_t> evalRes;
     const int SP0 = SP;
 
     for(tileBase=0; tileBase<NbStack; tileBase += TileSize)
@@ -3820,7 +3903,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
           }
           --SP;
           break;
-        case cCsd:
+        case cGet:
           for(Nbval=0; Nbval<tileN; Nbval++)
           {
               stt = (Value_t(NbStack)*(Stacki[(SP)*NbStack + tileBase + Nbval])+Value_t(tileBase+Nbval));
@@ -3832,6 +3915,52 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
               Stacki[(SP)*NbStack + tileBase + Nbval] = StackSave[abs(stt)];
           }
           break;
+        case cEval:
+          {
+              // Recursive self-call. The N argument slots targetSP..SP of
+              // this tile must first be copied out: the sub-run shares
+              // mData->mStacki, and its own stack writes would clobber
+              // the argument slots mid-run (which is why a cPCall
+              // sub-parser, owning a separate stack, can pass slots by
+              // pointer - we can't). Layout: evalArgs[v*tileN + e'];
+              // the sub-run's variable loader reads Vars[v*vStride + e']
+              // with vStride = tileN and NbVar = 1.
+              const unsigned N = mData->mVariablesAmount;
+              if(evalRes.size() < tileN) evalRes.resize(tileN);
+              const int targetSP = SP - int(N) + 1;
+              std::vector<Value_t> evalArgs;
+              evalArgs.resize(size_t(N)*tileN);
+              for(unsigned v = 0; v < N; ++v)
+                  std::copy(&Stacki[(targetSP+int(v))*NbStack + tileBase],
+                            &Stacki[(targetSP+int(v))*NbStack + tileBase] + tileN,
+                            &evalArgs[size_t(v)*tileN]);
+              // Save the outer tile state (slots 0..SP) so the sub-run's
+              // writes to the shared Stacki can't clobber it; only the
+              // recursive result survives.
+              std::vector<Value_t> savedStack;
+              savedStack.reserve(unsigned(SP + 1) * tileN);
+              for(int s = 0; s <= SP; ++s)
+                  savedStack.insert(savedStack.end(),
+                      &Stacki[s*NbStack + tileBase],
+                      &Stacki[s*NbStack + tileBase] + tileN);
+              const Value_t rest = Eval2
+                  ((N ? &evalArgs[0] : 0),
+                   1, &evalRes[0], tileN, -1, tileN);
+              if(rest == Value_t(5))
+              { mData->mEvalErrorType = IF_FUNCT_ERROR; return Value_t(5); }
+              if(rest == Value_t(7))
+              { mData->mEvalErrorType = VAR_OVERFLOW; return Value_t(7); }
+              if(rest != Value_t(6))
+              { mData->mEvalErrorType = eval2ErrorCodeAsInt(rest); return rest; }
+              for(int s = 0; s <= SP; ++s)
+                  std::copy(savedStack.begin() + size_t(s)*tileN,
+                            savedStack.begin() + size_t(s+1)*tileN,
+                            &Stacki[s*NbStack + tileBase]);
+              for(Nbval=0; Nbval<tileN; Nbval++)
+                  Stacki[targetSP*NbStack + tileBase + Nbval] = evalRes[Nbval];
+              SP = targetSP;
+              break;
+          }
           case  cTrunc:
             for(Nbval=0; Nbval<tileN; Nbval++)
                 Stacki[(SP)*NbStack + tileBase + Nbval] = fp_trunc(Stacki[(SP)*NbStack + tileBase + Nbval]);
