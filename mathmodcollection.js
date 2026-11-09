@@ -9017,6 +9017,47 @@
         "Zmax": ["15/100"],
         "Zmin": ["0"]
       }
+    },
+    {
+      "Iso3D": {
+        "Name": ["Mandelbulb_eval"],
+        "Component": ["MandelbulbEval"],
+        "Const": [
+          "MAXD=12",
+          "N=8",
+          "Cx=-10",
+          "Cy=-10",
+          "Cz=-10",
+          "EPS=1/100000000"
+        ],
+        "Description": ["Mandelbulb fractal isosurface built from a recursive eval() spherical power map with Julia offset, by Abderrahman Taha 09/11/2026"],
+        "Funct": [
+          "R2=x*x+y*y+z*z",
+          "R=sqrt(R2(x,y,z,t))",
+          "TH=acos(min(1, max(-1, z/R(x,y,z,t))))",
+          "PH=atan2(y,x)",
+          "RN=pow(R(x,y,z,t), N)",
+          "NX=RN(x,y,z,t)*sin(N*TH(x,y,z,t))*cos(N*PH(x,y,z,t))+Cx/20",
+          "NY=RN(x,y,z,t)*sin(N*TH(x,y,z,t))*sin(N*PH(x,y,z,t))+Cy/20",
+          "NZ=RN(x,y,z,t)*cos(N*TH(x,y,z,t))+Cz/20",
+          "H=if(t >= MAXD, R2(x,y,z,t)-4, if(R2(x,y,z,t) > 4, R2(x,y,z,t)-4, if(R2(x,y,z,t) < EPS, -4, eval(NX(x,y,z,t), NY(x,y,z,t), NZ(x,y,z,t), t+1))))"
+        ],
+        "Fxyz": ["H(x,y,z,0)"],
+        "Grid": ["150"],
+        "Xmax": ["3/2"],
+        "Xmin": ["-3/2"],
+        "Ymax": ["3/2"],
+        "Ymin": ["-3/2"],
+        "Zmax": ["3/2"],
+        "Zmin": ["-3/2"]
+      },
+      "Sliders": {
+        "Max": ["16", "24", "20", "20", "20"],
+        "Min": ["2", "4", "-20", "-20", "-20"],
+        "Name": ["N", "MAXD", "Cx", "Cy", "Cz"],
+        "Position": ["8", "12", "0", "0", "-10"],
+        "Step": ["1", "1", "1", "1", "1"]
+      }
     }
   ],
   "TexturesList": [
