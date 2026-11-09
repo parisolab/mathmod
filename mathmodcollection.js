@@ -9058,6 +9058,43 @@
         "Position": ["8", "12", "0", "0", "-10"],
         "Step": ["1", "1", "1", "1", "1"]
       }
+    },
+    {
+      "Iso3D": {
+        "Component": ["MengerSpongeEval"],
+        "Const": [
+          "MAXD=4",
+          "K=1"
+        ],
+        "Description": ["Menger sponge fractal isosurface via recursive eval() subdivision, K = max middle-third coordinates kept per level, by Abderrahman Taha 09/11/2026"],
+        "Funct": [
+          "U=x-floor(x)",
+          "V=y-floor(y)",
+          "W=z-floor(z)",
+          "Mx=(floor(3*U(x,y,z,t))=1)",
+          "My=(floor(3*V(x,y,z,t))=1)",
+          "Mz=(floor(3*W(x,y,z,t))=1)",
+          "Cnt=Mx(x,y,z,t)+My(x,y,z,t)+Mz(x,y,z,t)",
+          "RM=(Cnt(x,y,z,t)>K)",
+          "H=if(t >= MAXD, -1, if((RM(x,y,z,t))=1, 1, eval(3*U(x,y,z,t), 3*V(x,y,z,t), 3*W(x,y,z,t), t+1)))"
+        ],
+        "Fxyz": ["H(x,y,z,0)"],
+        "Grid": ["200"],
+        "Name": ["Menger_Sponge_eval"],
+        "Xmax": ["1"],
+        "Xmin": ["0"],
+        "Ymax": ["1"],
+        "Ymin": ["0"],
+        "Zmax": ["1"],
+        "Zmin": ["0"]
+      },
+      "Sliders": {
+        "Max": ["8", "2"],
+        "Min": ["3", "0"],
+        "Name": ["MAXD", "K"],
+        "Position": ["4", "1"],
+        "Step": ["1", "1"]
+      }
     }
   ],
   "TexturesList": [
