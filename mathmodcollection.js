@@ -9001,6 +9001,22 @@
         "Zmax": ["1.5"],
         "Zmin": ["0"]
       }
+    },
+    {
+      "Iso3D": {
+        "Description": ["Mandelbrot escape-time terrain via recursive eval() by Abderrahman Taha 08/11/2026"],
+        "Name": ["Mandelbrot_escape_eval"],
+        "Component": ["MandelbrotEval"],
+        "Const": ["MAXD=16"],
+        "Funct": ["H=if(floor(t) + 1 >= MAXD, 0, if((z*z - (4*(t - floor(t)) - 2)*(4*(t - floor(t)) - 2) + x)*(z*z - (4*(t - floor(t)) - 2)*(4*(t - floor(t)) - 2) + x) + (2*z*(4*(t - floor(t)) - 2) + y)*(2*z*(4*(t - floor(t)) - 2) + y) > 4, floor(t) + 1, eval(x, y, z*z - (4*(t - floor(t)) - 2)*(4*(t - floor(t)) - 2) + x, floor(t) + 1 + (2*z*(4*(t - floor(t)) - 2) + y + 2)/4)))"],
+        "Fxyz": ["100*z - H(x,y,0,5/10)"],
+        "Xmax": ["1.1"],
+        "Xmin": ["-2.1"],
+        "Ymax": ["13/10"],
+        "Ymin": ["-13/10"],
+        "Zmax": ["15/100"],
+        "Zmin": ["0"]
+      }
     }
   ],
   "TexturesList": [
