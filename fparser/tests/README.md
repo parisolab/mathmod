@@ -165,3 +165,31 @@ development session (grid layout documented in the comments of
     c++ -O2 -std=c++17 -ffp-contract=off erf_complex_test.cpp \
         -I.. ../fparser.cc -o erf_complex_test
     ./erf_complex_test                # exit 0 = pass
+
+## eval_test
+
+Value verification of the `eval()` built-in (opcode `cEval`, a
+recursive call of the function being evaluated) and of the `csd` ->
+`get` rename of the `psh`/`get` slot accessor (opcode `cGet`; `csd`
+is no longer a built-in). Everything goes through the real engine
+(Parse + Eval / EvalC / Eval2):
+
+- name probe: `get(x)` parses as a built-in, `csd(x)` is unknown,
+  `eval(...)` only when its argument count equals the number of
+  variables of the function (arity enforced in `CompileFunction`);
+- `psh`/`get` slot semantics (scalar; out-of-range slot -> code 7);
+- `eval()` real semantics: factorial, multi-variable recursion,
+  interpreter-state restoration after the recursive call, arguments
+  computed on the stack, `psh`/`get` inside recursion (each level
+  re-runs the whole bytecode, so it re-stores its own slots);
+- `eval()` complex semantics through `FunctionParser_cd`;
+- batch `Eval2` bit-identical to scalar `Eval`; a nested `eval()` run
+  that hits a non-uniform `if()` propagates code 5 (IF_FUNCT_ERROR)
+  so the app can fall back to scalar evaluation.
+
+Note: a batched `eval()` only succeeds when every point of the batch
+recurses to the same depth.
+
+    c++ -O2 -std=c++17 -ffp-contract=off eval_test.cpp \
+        -I.. ../fparser.cc -o eval_test
+    ./eval_test                       # exit 0 = pass

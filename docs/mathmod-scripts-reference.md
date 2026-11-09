@@ -57,7 +57,7 @@ plus any combination of the auxiliary blocks `Sliders`, `Texture`,
 | `Iso3D` | 154 | implicit surface `F(x,y,z[,t]) = 0` in a bounding box |
 | `Param3D` | 129 | parametric surface `(Fx,Fy,Fz)(u,v,t)` |
 | `Param4D` | 6 | 4-D parametric `(Fx,Fy,Fz,Fw)(u,v,t)` (hypercube slice view) |
-| `Param3D_C` | 1 | complex-valued surface (uses `Z`, `real`, `psh`/`csd`) |
+| `Param3D_C` | 1 | complex-valued surface (uses `Z`, `real`, `psh`/`get`) |
 | `Param4D_C` | 1 | complex 4-D |
 | `ParIso` | 2 | **composite**: an array mixing `Param*` and `Iso3D` objects, rendered together (see §6) |
 
@@ -87,7 +87,7 @@ length 1; a two-surface model has length 2 in every parallel array.
 | `Xmin Xmax Ymin Ymax Zmin Zmax` | **core** | bounding box, one string per component |
 | `Cnd` | – | per-component boolean *region* condition in `x,y,z` (keep points where true); `""` = none |
 | `Grid` | – | grid resolutions, e.g. `["150"]` |
-| `Vect` | – | e.g. `["5"]` (vector/step-related display option) |
+| `Vect` | – | per-point scratch slots for `psh`/`get` (§5.2): `"N"` allocates N slots (0..N-1); **required** whenever the model uses `psh`/`get`, otherwise slot memory is empty and the calls fail with VAR_OVERFLOW (7) |
 
 ### Param3D (and Param3D_C)
 
@@ -99,7 +99,7 @@ length 1; a two-surface model has length 2 in every parallel array.
 | `Cnd` | – | rarely used |
 
 `Param3D_C` additionally relies on the complex machinery (§5.4):
-`Fx="u"`, `Fy="v"`, `Fz="psh((0), real(1/(Z*Z+1))) * if(csd(0)>A, A, ...)"`.
+`Fx="u"`, `Fy="v"`, `Fz="psh((0), real(1/(Z*Z+1))) * if(get(0)>A, A, ...)"`.
 
 ### Param4D / Param4D_C
 
@@ -125,6 +125,16 @@ All six keys observed: `SetNames Name Max Min Step Position`, parallel
 arrays. `SetNames` is a list of *named value sets* — choosing a set
 fills all sliders at once (used for multi-shape models where the same
 `Const`s parametrize different animals).
+
+**Integer-only values**: every entry of `Min`/`Max`/`Step`/`Position`
+must be an **integer** — the UI sliders are QScrollBar-based and only
+support integer ranges/steps, so fractional entries (e.g. `1/100`) do
+not work; all models in the collection use integers. For finer control,
+keep the slider integral and scale inside the expression instead: e.g.
+a slider `-20..20` step `1` used as `Cx/20` (see `Mandelbulb_eval`).
+Note that at load time the slider `Position` values override same-named
+`Const`s (sliders are added to the parsers after the constants), so keep
+both consistent.
 
 ### `Texture` (top-level)
 
@@ -193,8 +203,25 @@ sqrt tan tanh trunc`
 
 3-arg: `if(c, a, b)` — the conditional (§5.5).
 
-Slot read: `csd(slot)` — reads the per-point slot written by
-`psh(slot, value)` (§5.4).
+Slot read: `get(slot)` — reads the per-point slot written by
+`psh(slot, value)` (§5.4). The model **must** declare
+`"Vect": ["N"]` to allocate N per-point slots (the app uses the first
+entry, `vect[0]`, as the slot count — `pariso/isosurface/Iso3D.cpp:1359`);
+without it the slot memory is empty and `psh`/`get` abort evaluation
+with VAR_OVERFLOW (error 7). Slot values persist across evaluations
+(including across `eval()` recursion levels), and the engine's scalar
+and batch modes use different slot layouts, so code that reads stale
+slot values should normalize them branchlessly (e.g.
+`psh(0, get(0) - MAXD*floor(get(0)/MAXD) + 1)` maps any stale value
+back into the valid range) to keep batch evaluation uniform.
+Caveat — a slot-based depth counter only works when **every point
+recurses to the same depth**: a point that terminates early leaves an
+arbitrary stale value and corrupts the next point's depth budget. For
+data-dependent termination (e.g. escape-time fractals), pass the
+counter as an `eval` argument instead — stateless, no `Vect` needed;
+e.g. `1 + floor(z)*(1 - min(1, 100*abs(z - floor(z))))` maps any
+non-integer top-level argument to 1 and increments exact integers by
+1, so each recursion level sees the level number.
 
 **Complex-only** (available in the `*_C` models' complex parser, not in
 the real one): `real`, `imag`, `conj`, `arg` (1-arg), `polar(r, phi)`
@@ -227,6 +254,19 @@ Newer additions (this fparser fork):
 - In the complex parser, `round(z)` and `sign(z)` are applied
   component-wise (there is no standard definition for the sign of a
   complex number).
+- `get(N)` — renamed from `csd(N)`: reads the per-point scratch slot
+  written by `psh(N, val)` (§5.4). `csd` is no longer a built-in.
+- `eval(a1, ..., aN)` — recursive call of the function being evaluated:
+  re-runs the whole function with the given arguments; `N` must equal
+  the number of variables of the function (enforced at parse time). The
+  interpreter state is restored after each recursive call, and `psh`/`get`
+  slots inside the recursion are self-consistent per run level. Must be
+  called inside `if(...)` to avoid infinite recursion. In batch mode
+  (Eval2) the recursion succeeds only if every point of the batch
+  recurses to the same depth; otherwise the batch aborts with error code
+  5 (IF_FUNCT_ERROR) and the app falls back to scalar evaluation.
+  Verified by `fparser/tests/eval_test.cpp` (scalar real, complex and
+  batch paths).
 
 ### 5.3 Importable app-internal functions
 
@@ -254,9 +294,10 @@ component of a multi-component model behave differently.
 - `Z` is the complex point `u + i·v`.
 - `real(...)` / `imag(...)` / `conj(...)` / `polar(...)` extract/convert.
 - `psh(slot, value)` stores `value` into a per-point scratch slot;
-  `csd(slot)` reads it back. Idiom for computing one complex value and
+  `get(slot)` reads it back (the model must declare `"Vect"` to
+  allocate the slots — §5.2). Idiom for computing one complex value and
   reusing it in several coordinate expressions (e.g.
-  `Fz="psh((0), real(1/(Z*Z+1))) * if(csd(0)>A, A, if(csd(0)<-A, -A, csd(0)))"`
+  `Fz="psh((0), real(1/(Z*Z+1))) * if(get(0)>A, A, if(get(0)<-A, -A, get(0)))"`
   — store Re(f(Z)), then clamp it). Slots are numbered, per point.
 
 ### 5.5 Operators
@@ -376,7 +417,9 @@ companions; `Pariso_02` = `Param3D` "Blobby_Torus" + `Iso3D`
   models it can have 1, 2 or per-component entries (observed 2 up to
   338-element arrays — one value per grid line direction, sometimes
   repeated per component).
-- `Vect` holds small ints (`"1"`, `"4"`, `"5"`); display/vector option.
+- `Vect` holds small ints (`"1"`, `"4"`, `"5"`); the first entry is the
+  per-point `psh`/`get` slot count (§5.2) — it allocates scratch memory,
+  it is not a display option.
 - The two `ParIso` entries keep their display name at top level
   (`"Name": ["Pariso_01"]`), not inside the surface block.
 - Do not "fix" `DOTSYMBOL` strings in `advancedmodels.js` by hand —
@@ -459,5 +502,5 @@ positionally (see §5.6):
     "Xmax": ["2"], "Xmin": ["-2"], "Ymax": ["2"], "Ymin": ["-2"],
     "Zmax": ["2"], "Zmin": ["-2"] },
   "Sliders": { "Name": ["A"], "Min": ["0"], "Max": ["2"],
-               "Step": ["1/100"], "Position": ["1"] } }
+               "Step": ["1"], "Position": ["1"] } }
 ```

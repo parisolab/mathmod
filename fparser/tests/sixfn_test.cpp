@@ -90,13 +90,13 @@ static void nameProbe()
         { "abs(x)",   true }, { "floor(x)", true }, { "ceil(x)", true },
         { "trunc(x)", true },
         { "int(x)",   true }, { "max(x,y)", true }, { "min(x,y)", true },
-        { "if(x>0,y,z)", true }, { "psh(x,y)", true }, { "csd(x)", true },
+        { "if(x>0,y,z)", true }, { "psh(x,y)", true }, { "get(x)", true },
         // ComplexOnly -> treated as variable in the real parser
         { "real(x)",  false }, { "imag(x)", false }, { "conj(x)", false },
         { "polar(x,y)", false }, { "arg(x)", false },
         // must remain unknown (variables)
         { "erfc(x)",  false }, { "rint(x)", false }, { "gamma(x)", false },
-        { "fmod(x,y)", false }, { "get(x)", false },
+        { "fmod(x,y)", false }, { "gets(x)", false },
     };
     for(unsigned i = 0; i < sizeof c / sizeof c[0]; ++i)
     {
