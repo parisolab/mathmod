@@ -9153,6 +9153,171 @@
         "Position": ["6", "2", "3"],
         "Step": ["1", "1", "1"]
       }
+    },
+    {
+      "Iso3D": {
+        "Component": [
+          "Gyroid Voronoi Honeycomb"
+        ],
+        "Const": [
+          "T=.02",
+          "G=-T",
+          "H=.19",
+          "L=5/3",
+          "P=1.6",
+          "Ro=.24",
+          "Rw=.075",
+          "Rc=.09",
+          "Eps=.000001",
+          "CRX=1",
+          "CRY=1.31",
+          "CRZ=1.77",
+          "C1=.309016994",
+          "S1=.951056516",
+          "C2=-.809016994",
+          "S2=.587785252",
+          "C3=-.809016994",
+          "S3=-.587785252",
+          "C4=.309016994",
+          "S4=-.951056516"
+        ],
+        "Description": [
+          "GyroidVoronoi honeycomb with surface-projected BCC perforation and normal-aligned 5-star section by Abderrahman Taha 03/11/2026"
+        ],
+        "Funct": [
+          "R=sqrt((-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2)",
+          "df=(-sin(x)*sin(y)+cos(x)*cos(z))",
+          "Gyroid=(cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x))",
+          "Gyr=Gyroid(x-df(x,y,z,t)*T/R(x,y,z,t),y-df(y,z,x,t)*T/R(x,y,z,t),z-df(z,x,y,t)*T/R(x,y,z,t),t)*Gyroid(x-df(x,y,z,t)*G/R(x,y,z,t),y-df(y,z,x,t)*G/R(x,y,z,t),z-df(z,x,y,t)*G/R(x,y,z,t),t)",
+          "ProjF=Gyroid(x,y,z,t)",
+          "ProjGX=df(x,y,z,t)",
+          "ProjGY=df(y,z,x,t)",
+          "ProjGZ=df(z,x,y,t)",
+          "ProjGN=ProjGX(x,y,z,t)^2+ProjGY(x,y,z,t)^2+ProjGZ(x,y,z,t)^2+Eps",
+          "ProjX=x-ProjF(x,y,z,t)*ProjGX(x,y,z,t)/ProjGN(x,y,z,t)",
+          "ProjY=y-ProjF(x,y,z,t)*ProjGY(x,y,z,t)/ProjGN(x,y,z,t)",
+          "ProjZ=z-ProjF(x,y,z,t)*ProjGZ(x,y,z,t)/ProjGN(x,y,z,t)",
+          "PX=ProjX(x,y,z,t)",
+          "PY=ProjY(x,y,z,t)",
+          "PZ=ProjZ(x,y,z,t)",
+          "ProjX2=ProjX(PX(x,y,z,t),PY(x,y,z,t),PZ(x,y,z,t),t)",
+          "ProjY2=ProjY(PX(x,y,z,t),PY(x,y,z,t),PZ(x,y,z,t),t)",
+          "ProjZ2=ProjZ(PX(x,y,z,t),PY(x,y,z,t),PZ(x,y,z,t),t)",
+          "TRI=max(max(y,-y)+(Rw/Ro)*x-Rw,max(-x,x-Ro))",
+          "STAR=min(min(min(min(sqrt(x*x+y*y)-Rc,TRI(x,y,x,y)),TRI(C1*x+S1*y,-S1*x+C1*y,x,y)),min(TRI(C2*x+S2*y,-S2*x+C2*y,x,y),TRI(C3*x+S3*y,-S3*x+C3*y,x,y))),TRI(C4*x+S4*y,-S4*x+C4*y,x,y))",
+          "WTX=1/(x*x+Eps)+CRX",
+          "WTY=1/(y*y+Eps)+CRY",
+          "WTZ=1/(z*z+Eps)+CRZ",
+          "TXR=y*WTZ(x,y,z,t)-z*WTY(x,y,z,t)",
+          "TYR=z*WTX(x,y,z,t)-x*WTZ(x,y,z,t)",
+          "TZR=x*WTY(x,y,z,t)-y*WTX(x,y,z,t)",
+          "TLEN=sqrt(TXR(x,y,z,t)^2+TYR(x,y,z,t)^2+TZR(x,y,z,t)^2)+Eps",
+          "TXF=TXR(x,y,z,t)/TLEN(x,y,z,t)",
+          "TYF=TYR(x,y,z,t)/TLEN(x,y,z,t)",
+          "TZF=TZR(x,y,z,t)/TLEN(x,y,z,t)",
+          "BXR=y*TZF(x,y,z,t)-z*TYF(x,y,z,t)",
+          "BYR=z*TXF(x,y,z,t)-x*TZF(x,y,z,t)",
+          "BZR=x*TYF(x,y,z,t)-y*TXF(x,y,z,t)",
+          "BLEN=sqrt(BXR(x,y,z,t)^2+BYR(x,y,z,t)^2+BZR(x,y,z,t)^2)+Eps",
+          "BXF=BXR(x,y,z,t)/BLEN(x,y,z,t)",
+          "BYF=BYR(x,y,z,t)/BLEN(x,y,z,t)",
+          "BZF=BZR(x,y,z,t)/BLEN(x,y,z,t)",
+          "CX0=P*floor(x/P+0.5)",
+          "CY0=P*floor(y/P+0.5)",
+          "CZ0=P*floor(z/P+0.5)",
+          "SX0=ProjX2(CX0(x,y,z,t),CY0(x,y,z,t),CZ0(x,y,z,t),t)",
+          "SY0=ProjY2(CX0(x,y,z,t),CY0(x,y,z,t),CZ0(x,y,z,t),t)",
+          "SZ0=ProjZ2(CX0(x,y,z,t),CY0(x,y,z,t),CZ0(x,y,z,t),t)",
+          "NX0=df(SX0(x,y,z,t),SY0(x,y,z,t),SZ0(x,y,z,t),t)",
+          "NY0=df(SY0(x,y,z,t),SZ0(x,y,z,t),SX0(x,y,z,t),t)",
+          "NZ0=df(SZ0(x,y,z,t),SX0(x,y,z,t),SY0(x,y,z,t),t)",
+          "NN0=sqrt(NX0(x,y,z,t)^2+NY0(x,y,z,t)^2+NZ0(x,y,z,t)^2)+Eps",
+          "UX0=NX0(x,y,z,t)/NN0(x,y,z,t)",
+          "UY0=NY0(x,y,z,t)/NN0(x,y,z,t)",
+          "UZ0=NZ0(x,y,z,t)/NN0(x,y,z,t)",
+          "TX0=TXF(UX0(x,y,z,t),UY0(x,y,z,t),UZ0(x,y,z,t),t)",
+          "TY0=TYF(UX0(x,y,z,t),UY0(x,y,z,t),UZ0(x,y,z,t),t)",
+          "TZ0=TZF(UX0(x,y,z,t),UY0(x,y,z,t),UZ0(x,y,z,t),t)",
+          "BX0=BXF(UX0(x,y,z,t),UY0(x,y,z,t),UZ0(x,y,z,t),t)",
+          "BY0=BYF(UX0(x,y,z,t),UY0(x,y,z,t),UZ0(x,y,z,t),t)",
+          "BZ0=BZF(UX0(x,y,z,t),UY0(x,y,z,t),UZ0(x,y,z,t),t)",
+          "VX0=x-SX0(x,y,z,t)",
+          "VY0=y-SY0(x,y,z,t)",
+          "VZ0=z-SZ0(x,y,z,t)",
+          "AX0=VX0(x,y,z,t)*UX0(x,y,z,t)+VY0(x,y,z,t)*UY0(x,y,z,t)+VZ0(x,y,z,t)*UZ0(x,y,z,t)",
+          "WX0=VX0(x,y,z,t)-AX0(x,y,z,t)*UX0(x,y,z,t)",
+          "WY0=VY0(x,y,z,t)-AX0(x,y,z,t)*UY0(x,y,z,t)",
+          "WZ0=VZ0(x,y,z,t)-AX0(x,y,z,t)*UZ0(x,y,z,t)",
+          "PU0=WX0(x,y,z,t)*TX0(x,y,z,t)+WY0(x,y,z,t)*TY0(x,y,z,t)+WZ0(x,y,z,t)*TZ0(x,y,z,t)",
+          "QV0=WX0(x,y,z,t)*BX0(x,y,z,t)+WY0(x,y,z,t)*BY0(x,y,z,t)+WZ0(x,y,z,t)*BZ0(x,y,z,t)",
+          "ST0=STAR(PU0(x,y,z,t),QV0(x,y,z,t),x,y)",
+          "AD0=sqrt(AX0(x,y,z,t)^2)-H",
+          "D0=max(ST0(x,y,z,t),AD0(x,y,z,t))",
+          "CX1=P*(floor(x/P)+0.5)",
+          "CY1=P*(floor(y/P)+0.5)",
+          "CZ1=P*(floor(z/P)+0.5)",
+          "SX1=ProjX2(CX1(x,y,z,t),CY1(x,y,z,t),CZ1(x,y,z,t),t)",
+          "SY1=ProjY2(CX1(x,y,z,t),CY1(x,y,z,t),CZ1(x,y,z,t),t)",
+          "SZ1=ProjZ2(CX1(x,y,z,t),CY1(x,y,z,t),CZ1(x,y,z,t),t)",
+          "NX1=df(SX1(x,y,z,t),SY1(x,y,z,t),SZ1(x,y,z,t),t)",
+          "NY1=df(SY1(x,y,z,t),SZ1(x,y,z,t),SX1(x,y,z,t),t)",
+          "NZ1=df(SZ1(x,y,z,t),SX1(x,y,z,t),SY1(x,y,z,t),t)",
+          "NN1=sqrt(NX1(x,y,z,t)^2+NY1(x,y,z,t)^2+NZ1(x,y,z,t)^2)+Eps",
+          "UX1=NX1(x,y,z,t)/NN1(x,y,z,t)",
+          "UY1=NY1(x,y,z,t)/NN1(x,y,z,t)",
+          "UZ1=NZ1(x,y,z,t)/NN1(x,y,z,t)",
+          "TX1=TXF(UX1(x,y,z,t),UY1(x,y,z,t),UZ1(x,y,z,t),t)",
+          "TY1=TYF(UX1(x,y,z,t),UY1(x,y,z,t),UZ1(x,y,z,t),t)",
+          "TZ1=TZF(UX1(x,y,z,t),UY1(x,y,z,t),UZ1(x,y,z,t),t)",
+          "BX1=BXF(UX1(x,y,z,t),UY1(x,y,z,t),UZ1(x,y,z,t),t)",
+          "BY1=BYF(UX1(x,y,z,t),UY1(x,y,z,t),UZ1(x,y,z,t),t)",
+          "BZ1=BZF(UX1(x,y,z,t),UY1(x,y,z,t),UZ1(x,y,z,t),t)",
+          "VX1=x-SX1(x,y,z,t)",
+          "VY1=y-SY1(x,y,z,t)",
+          "VZ1=z-SZ1(x,y,z,t)",
+          "AX1=VX1(x,y,z,t)*UX1(x,y,z,t)+VY1(x,y,z,t)*UY1(x,y,z,t)+VZ1(x,y,z,t)*UZ1(x,y,z,t)",
+          "WX1=VX1(x,y,z,t)-AX1(x,y,z,t)*UX1(x,y,z,t)",
+          "WY1=VY1(x,y,z,t)-AX1(x,y,z,t)*UY1(x,y,z,t)",
+          "WZ1=VZ1(x,y,z,t)-AX1(x,y,z,t)*UZ1(x,y,z,t)",
+          "PU1=WX1(x,y,z,t)*TX1(x,y,z,t)+WY1(x,y,z,t)*TY1(x,y,z,t)+WZ1(x,y,z,t)*TZ1(x,y,z,t)",
+          "QV1=WX1(x,y,z,t)*BX1(x,y,z,t)+WY1(x,y,z,t)*BY1(x,y,z,t)+WZ1(x,y,z,t)*BZ1(x,y,z,t)",
+          "ST1=STAR(PU1(x,y,z,t),QV1(x,y,z,t),x,y)",
+          "AD1=sqrt(AX1(x,y,z,t)^2)-H",
+          "D1=max(ST1(x,y,z,t),AD1(x,y,z,t))",
+          "Ball=min(D0(x,y,z,t),D1(x,y,z,t))",
+          "GyrH=max(Gyr(x,y,z,t),-Ball(x,y,z,t))"
+        ],
+        "Fxyz": [
+          "-max(GyrH(x,y,z,t), (x^10+y^10+z^10-((L-0.1)^10)))"
+        ],
+        "Import": [
+          "NoiseW"
+        ],
+        "Name": [
+          "Gyroid_Voronoi_Honeycomb"
+        ],
+        "Xmax": [
+          "L"
+        ],
+        "Xmin": [
+          "-L"
+        ],
+        "Ymax": [
+          "L"
+        ],
+        "Ymin": [
+          "-L"
+        ],
+        "Zmax": [
+          "L"
+        ],
+        "Zmin": [
+          "-L"
+        ],
+        "Grid": [
+          "150"
+        ]
+      }
     }
   ],
   "TexturesList": [
