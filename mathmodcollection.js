@@ -8966,9 +8966,9 @@
         "Const": ["T=.15",
           "G=-T",
           "L=6",
-          "S=0.9",
-          "Wd=0.2",
-          "M=0.5",
+          "S=2.5",
+          "Wd=0.15",
+          "M=0.6",
           "seed=10"],
         "Funct": ["R=sqrt((-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2)",
           "df=(-sin(x)*sin(y)+cos(x)*cos(z))",
@@ -9094,6 +9094,64 @@
         "Name": ["MAXD", "K"],
         "Position": ["4", "1"],
         "Step": ["1", "1"]
+      }
+    },
+    {
+      "Iso3D": {
+        "Component": ["GyroidLatticePerforated"],
+        "Const": [
+          "T=.15",
+          "G=-T",
+          "L=6",
+          "PC=6",
+          "RH=2",
+          "MH=3"
+        ],
+        "Description": ["Gyroid perforated by a hashed lattice of round holes - one jittered hole per lattice cell, clean even distribution, by Abderrahman Taha 10/11/2026"],
+        "Funct": [
+          "R=sqrt((-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2)",
+          "df=(-sin(x)*sin(y)+cos(x)*cos(z))",
+          "Gyroid=(cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x))",
+          "Gyr=Gyroid(x-df(x,y,z,t)*T/R(x,y,z,t),y-df(y,z,x,t)*T/R(x,y,z,t),z-df(z,x,y,t)*T/R(x,y,z,t),t)*Gyroid(x-df(x,y,z,t)*G/R(x,y,z,t),y-df(y,z,x,t)*G/R(x,y,z,t),z-df(z,x,y,t)*G/R(x,y,z,t),t)",
+          "QX=x-df(x,y,z,t)*T/R(x,y,z,t)",
+          "QY=y-df(y,z,x,t)*T/R(x,y,z,t)",
+          "QZ=z-df(z,x,y,t)*T/R(x,y,z,t)",
+          "IX=floor(QX(x,y,z,t)/(PC/10))",
+          "IY=floor(QY(x,y,z,t)/(PC/10))",
+          "IZ=floor(QZ(x,y,z,t)/(PC/10))",
+          "H1=sin(x*127.1+y*311.7+z*74.7)*43758.5453",
+          "H2=sin(x*269.5+y*183.3+z*246.1)*28001.8384",
+          "H3=sin(x*82.7+y*247.3+z*121.9)*46252.13",
+          "F1=H1(x,y,z,t)-floor(H1(x,y,z,t))",
+          "F2=H2(x,y,z,t)-floor(H2(x,y,z,t))",
+          "F3=H3(x,y,z,t)-floor(H3(x,y,z,t))",
+          "D0=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)+F1(IX(x,y,z,t),IY(x,y,z,t),IZ(x,y,z,t),t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)+F2(IX(x,y,z,t),IY(x,y,z,t),IZ(x,y,z,t),t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)+F3(IX(x,y,z,t),IY(x,y,z,t),IZ(x,y,z,t),t)))^2",
+          "D1=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)-1+F1(IX(x,y,z,t)-1,IY(x,y,z,t),IZ(x,y,z,t),t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)+F2(IX(x,y,z,t)-1,IY(x,y,z,t),IZ(x,y,z,t),t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)+F3(IX(x,y,z,t)-1,IY(x,y,z,t),IZ(x,y,z,t),t)))^2",
+          "D2=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)+F1(IX(x,y,z,t),IY(x,y,z,t)-1,IZ(x,y,z,t),t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)-1+F2(IX(x,y,z,t),IY(x,y,z,t)-1,IZ(x,y,z,t),t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)+F3(IX(x,y,z,t),IY(x,y,z,t)-1,IZ(x,y,z,t),t)))^2",
+          "D3=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)-1+F1(IX(x,y,z,t)-1,IY(x,y,z,t)-1,IZ(x,y,z,t),t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)-1+F2(IX(x,y,z,t)-1,IY(x,y,z,t)-1,IZ(x,y,z,t),t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)+F3(IX(x,y,z,t)-1,IY(x,y,z,t)-1,IZ(x,y,z,t),t)))^2",
+          "D4=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)+F1(IX(x,y,z,t),IY(x,y,z,t),IZ(x,y,z,t)-1,t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)+F2(IX(x,y,z,t),IY(x,y,z,t),IZ(x,y,z,t)-1,t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)-1+F3(IX(x,y,z,t),IY(x,y,z,t),IZ(x,y,z,t)-1,t)))^2",
+          "D5=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)-1+F1(IX(x,y,z,t)-1,IY(x,y,z,t),IZ(x,y,z,t)-1,t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)+F2(IX(x,y,z,t)-1,IY(x,y,z,t),IZ(x,y,z,t)-1,t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)-1+F3(IX(x,y,z,t)-1,IY(x,y,z,t),IZ(x,y,z,t)-1,t)))^2",
+          "D6=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)+F1(IX(x,y,z,t),IY(x,y,z,t)-1,IZ(x,y,z,t)-1,t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)-1+F2(IX(x,y,z,t),IY(x,y,z,t)-1,IZ(x,y,z,t)-1,t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)-1+F3(IX(x,y,z,t),IY(x,y,z,t)-1,IZ(x,y,z,t)-1,t)))^2",
+          "D7=(QX(x,y,z,t)-PC/10*(IX(x,y,z,t)-1+F1(IX(x,y,z,t)-1,IY(x,y,z,t)-1,IZ(x,y,z,t)-1,t)))^2+(QY(x,y,z,t)-PC/10*(IY(x,y,z,t)-1+F2(IX(x,y,z,t)-1,IY(x,y,z,t)-1,IZ(x,y,z,t)-1,t)))^2+(QZ(x,y,z,t)-PC/10*(IZ(x,y,z,t)-1+F3(IX(x,y,z,t)-1,IY(x,y,z,t)-1,IZ(x,y,z,t)-1,t)))^2",
+          "DM=min(D0(x,y,z,t),min(D1(x,y,z,t),min(D2(x,y,z,t),min(D3(x,y,z,t),min(D4(x,y,z,t),min(D5(x,y,z,t),min(D6(x,y,z,t),D7(x,y,z,t))))))))",
+          "B=max(0,((RH/10)^2-DM(x,y,z,t))/(RH/10)^2)"
+        ],
+        "Fxyz": ["-max(Gyr(x,y,z,t),(x^10+y^10+z^10-((L-0.1)^10)))-MH/10*B(x,y,z,t)"],
+        "Grid": ["150"],
+        "Name": ["Gyroid_Lattice_Perforated"],
+        "Xmax": ["L"],
+        "Xmin": ["-L"],
+        "Ymax": ["L"],
+        "Ymin": ["-L"],
+        "Zmax": ["L"],
+        "Zmin": ["-L"]
+      },
+      "Sliders": {
+        "Max": ["12", "4", "8"],
+        "Min": ["4", "1", "1"],
+        "Name": ["PC", "RH", "MH"],
+        "Position": ["6", "2", "3"],
+        "Step": ["1", "1", "1"]
       }
     }
   ],
