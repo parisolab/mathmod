@@ -418,6 +418,13 @@ def _or(a, b): return 1.0 if (abs(a) >= 0.5 or abs(b) >= 0.5) else 0.0
 def _fmod(a, b):
     try: return float(_math.fmod(a, b))
     except ZeroDivisionError: raise ValueError("division by zero in %%")
+def _pow(a, b):
+    try:
+        r = a ** b
+        if isinstance(r, complex): return float('nan')
+        return float(r)
+    except (ValueError, OverflowError, ZeroDivisionError):
+        return float('nan')
 '''
 
 
@@ -488,6 +495,8 @@ class MathModel:
                 f"def {pyname}({varlist}, _env=_env_{pyname[2:]}):\n"
                 f"    return {_emit(ast, env_names, name)}"
             )
+            # register for eval() self-recursion (late binding: latest def wins)
+            lines.append(f"_FUNCTS['{name}'] = {pyname}")
             funct_env[name] = pyname
             known.add(name)
 
@@ -545,8 +554,8 @@ class MathModel:
             raise ValueError("model has no Fxyz field")
         ns = self.ns
         ns["REGBOX"]["r"] = [0.0] * self.nslots
-        locals_ = {v: 0.0 for v in self.vars}
-        locals_["t"] = t
+        # Iso3D vars are exactly (x, y, z, t) in order
+        locals_ = dict(zip(self.vars, (x, y, z, t)))
         return float(eval(self.fxyz_code, ns, locals_))
 
     def bounds(self, t: float = 0.0) -> tuple[float, float, float, float, float, float]:
