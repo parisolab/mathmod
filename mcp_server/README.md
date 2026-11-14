@@ -72,8 +72,8 @@ Smoke-test without any MCP client:
 
 Add a new **stdio** MCP server in the app's MCP settings with:
 
-- **Command:** `/Users/abderrahmantaha/Documents/GitHub/mathmodAI/mcp_server/.venv/bin/python`
-- **Args:** `/Users/abderrahmantaha/Documents/GitHub/mathmodAI/mcp_server/mathmod_mcp.py`
+- **Command:** `/pathTo_mcp_servermcp_server/.venv/bin/python`
+- **Args:** `/pathTo_mcp_server/mcp_server/mathmod_mcp.py`
 
 No environment variables are required — the server defaults to the collection files in the
 repo root. To point it elsewhere, set:
