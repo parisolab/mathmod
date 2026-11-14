@@ -72,7 +72,7 @@ Smoke-test without any MCP client:
 
 Add a new **stdio** MCP server in the app's MCP settings with:
 
-- **Command:** `/pathTo_mcp_servermcp_server/.venv/bin/python`
+- **Command:** `/pathTo_mcp_server/mcp_server/.venv/bin/python`
 - **Args:** `/pathTo_mcp_server/mcp_server/mathmod_mcp.py`
 
 No environment variables are required — the server defaults to the collection files in the
