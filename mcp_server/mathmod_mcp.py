@@ -481,6 +481,16 @@ class MathModel:
             self._resolve(ast, known - {nm}, f"Sliders Position {nm!r}")
             lines.append(f"{nm} = {_emit(ast, set(), None)}")  # overrides same-named const
 
+        # ---- call-arity guard (fparser cPCall consumes exactly len(vars)) --
+        def _arity_guard(ast, where):
+            def f(n):
+                if n[0] == "call" and n[1] in funct_env \
+                        and len(n[2]) != len(self.vars):
+                    raise ValueError(
+                        f"{where}: call to {n[1]}() with {len(n[2])} argument(s) — "
+                        f"user functions take exactly {len(self.vars)} ({','.join(self.vars)})")
+            walk(ast, f)
+
         # ---- user functions with per-entry env snapshots ------------------
         funct_env: dict[str, str] = {}  # name -> python def name
         for line in functs:
@@ -488,6 +498,7 @@ class MathModel:
             pyname = f"_f_{re.sub(r'\\W', '_', name)}"
             ast = parse_expr(body)
             self._resolve(ast, known | set(funct_env), f"Funct {name!r}")
+            _arity_guard(ast, f"Funct {name!r}")
             env_names = set(funct_env)
             snap = ", ".join(f"'{n}': {funct_env[n]}" for n in sorted(env_names))
             lines.append(f"_env_{pyname[2:]} = {{{snap}}}")
@@ -510,6 +521,7 @@ class MathModel:
             for idx, ex in enumerate(exprs):
                 ast = parse_expr(ex)
                 self._resolve(ast, known | set(funct_env), f"{fname}[{idx}]")
+                _arity_guard(ast, f"{fname}[{idx}]")
                 self.field_asts.setdefault(fname, []).append((idx, ast))
 
         # ---- compile -------------------------------------------------------
@@ -783,6 +795,22 @@ def _validate_surface_block(stype: str, block: Any, md: dict, issues: list[dict]
                 _ev(n[2], under_if); _ev(n[3], under_if)
 
         _ev(ast, False)
+        # call-arity: fparser cPCall consumes exactly len(vars) stack slots,
+        # so user-function calls must pass all surface variables; imported
+        # functions have fixed arities from the InternalFunctions registry.
+        def _ary(n):
+            if n[0] != "call":
+                return
+            nm = n[1]
+            if nm in funct_names and len(n[2]) != len(vars_):
+                err(f"Funct {name!r}",
+                    f"call to {nm}() with {len(n[2])} argument(s) — user functions "
+                    f"take exactly {len(vars_)} ({','.join(vars_)})")
+            elif nm in IMPORTABLE and len(n[2]) != IMPORTABLE[nm]:
+                err(f"Funct {name!r}",
+                    f"imported {nm}() takes {IMPORTABLE[nm]} argument(s), got {len(n[2])}")
+
+        walk(ast, _ary)
         # psh/get slot bounds
         for slot_ast, kind in psh_get_slots(ast):
             if slot_ast[0] == "num":
@@ -815,6 +843,20 @@ def _validate_surface_block(stype: str, block: Any, md: dict, issues: list[dict]
             unknown = ids - field_known
             if unknown:
                 err(f"{f}[{i}]", f"unknown identifier(s): {sorted(unknown)}")
+
+            def _ary2(n, where=f"{f}[{i}]"):
+                if n[0] != "call":
+                    return
+                nm = n[1]
+                if nm in funct_names and len(n[2]) != len(vars_):
+                    err(where,
+                        f"call to {nm}() with {len(n[2])} argument(s) — user functions "
+                        f"take exactly {len(vars_)} ({','.join(vars_)})")
+                elif nm in IMPORTABLE and len(n[2]) != IMPORTABLE[nm]:
+                    err(where,
+                        f"imported {nm}() takes {IMPORTABLE[nm]} argument(s), got {len(n[2])}")
+
+            walk(ast, _ary2)
 
     # Grid sanity
     grid = block.get("Grid", [])
