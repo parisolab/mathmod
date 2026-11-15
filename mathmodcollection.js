@@ -9154,7 +9154,7 @@
         "Step": ["1", "1", "1"]
       }
     },
-    {
+        {
       "Iso3D": {
         "Component": [
           "Gyroid Voronoi Honeycomb"
@@ -9182,7 +9182,7 @@
           "S4=-.951056516"
         ],
         "Description": [
-          "GyroidVoronoi honeycomb with surface-projected BCC perforation and normal-aligned 5-star section by Abderrahman Taha 03/11/2026"
+          "GyroidVoronoi honeycomb with BCC perforation; hole profile = any user-defined 2D implicit shape SH(x,y) (negative inside), normal-aligned at each BCC site - edit the SH line to change it (default: 5-star). Ready-made shapes: circle sqrt(x*x+y*y)-Ro | square max(abs(x),abs(y))-(Ro/2) | triangle TRI(x,y,x,y) | hexagon max(max(abs((sqrt(3)/2)*x+y/2),abs(y)),abs(-((sqrt(3)/2)*x+y/2)))-(Ro/2). by Abderrahman Taha 14/11/2026"
         ],
         "Funct": [
           "R=sqrt((-sin(x)*sin(y)+cos(x)*cos(z))^2+(-sin(y)*sin(z)+cos(y)*cos(x))^2+(-sin(z)*sin(x)+cos(z)*cos(y))^2)",
@@ -9204,7 +9204,7 @@
           "ProjY2=ProjY(PX(x,y,z,t),PY(x,y,z,t),PZ(x,y,z,t),t)",
           "ProjZ2=ProjZ(PX(x,y,z,t),PY(x,y,z,t),PZ(x,y,z,t),t)",
           "TRI=max(max(y,-y)+(Rw/Ro)*x-Rw,max(-x,x-Ro))",
-          "STAR=min(min(min(min(sqrt(x*x+y*y)-Rc,TRI(x,y,x,y)),TRI(C1*x+S1*y,-S1*x+C1*y,x,y)),min(TRI(C2*x+S2*y,-S2*x+C2*y,x,y),TRI(C3*x+S3*y,-S3*x+C3*y,x,y))),TRI(C4*x+S4*y,-S4*x+C4*y,x,y))",
+          "SH=min(min(min(min(sqrt(x*x+y*y)-Rc,TRI(x,y,x,y)),TRI(C1*x+S1*y,-S1*x+C1*y,x,y)),min(TRI(C2*x+S2*y,-S2*x+C2*y,x,y),TRI(C3*x+S3*y,-S3*x+C3*y,x,y))),TRI(C4*x+S4*y,-S4*x+C4*y,x,y))",
           "WTX=1/(x*x+Eps)+CRX",
           "WTY=1/(y*y+Eps)+CRY",
           "WTZ=1/(z*z+Eps)+CRZ",
@@ -9250,7 +9250,7 @@
           "WZ0=VZ0(x,y,z,t)-AX0(x,y,z,t)*UZ0(x,y,z,t)",
           "PU0=WX0(x,y,z,t)*TX0(x,y,z,t)+WY0(x,y,z,t)*TY0(x,y,z,t)+WZ0(x,y,z,t)*TZ0(x,y,z,t)",
           "QV0=WX0(x,y,z,t)*BX0(x,y,z,t)+WY0(x,y,z,t)*BY0(x,y,z,t)+WZ0(x,y,z,t)*BZ0(x,y,z,t)",
-          "ST0=STAR(PU0(x,y,z,t),QV0(x,y,z,t),x,y)",
+          "ST0=SH(PU0(x,y,z,t),QV0(x,y,z,t),x,y)",
           "AD0=sqrt(AX0(x,y,z,t)^2)-H",
           "D0=max(ST0(x,y,z,t),AD0(x,y,z,t))",
           "CX1=P*(floor(x/P)+0.5)",
@@ -9281,7 +9281,7 @@
           "WZ1=VZ1(x,y,z,t)-AX1(x,y,z,t)*UZ1(x,y,z,t)",
           "PU1=WX1(x,y,z,t)*TX1(x,y,z,t)+WY1(x,y,z,t)*TY1(x,y,z,t)+WZ1(x,y,z,t)*TZ1(x,y,z,t)",
           "QV1=WX1(x,y,z,t)*BX1(x,y,z,t)+WY1(x,y,z,t)*BY1(x,y,z,t)+WZ1(x,y,z,t)*BZ1(x,y,z,t)",
-          "ST1=STAR(PU1(x,y,z,t),QV1(x,y,z,t),x,y)",
+          "ST1=SH(PU1(x,y,z,t),QV1(x,y,z,t),x,y)",
           "AD1=sqrt(AX1(x,y,z,t)^2)-H",
           "D1=max(ST1(x,y,z,t),AD1(x,y,z,t))",
           "Ball=min(D0(x,y,z,t),D1(x,y,z,t))",
@@ -10562,6 +10562,54 @@
         "Ymin": [ "-L"],
         "Zmax": [ "L"],
         "Zmin": [ "-L"]
+      }
+    },
+    {
+      "Iso3D": {
+          "Component": [ "Perforated implicit shell - universal"],
+          "Const": [ "T=.02",
+              "G=-T",
+              "H=.22",
+              "L=pi",
+              "P=1.6",
+              "Ro=.24",
+              "Rw=.075",
+              "Rc=.09",
+              "Eps=.000001",
+              "EpsD=.0001",
+              "CRX=1",
+              "CRY=1.31",
+              "CRZ=1.77",
+              "C1=.309016994",
+              "S1=.951056516",
+              "C2=-.809016994",
+              "S2=.587785252",
+              "C3=-.809016994",
+              "S3=-.587785252",
+              "C4=.309016994",
+              "S4=-.951056516"],
+          "Description": [ "Universal surface-projected BCC perforation of any implicit surface. Edit Srf only. 3 Newton projections + tangent frame + user 2D hole profile SH(x,y). Generalisation of Gyroid_Voronoi_Honeycomb by Abderrahman Taha."],
+          "Funct": [ "TRI=max(max(y,-y)+(Rw/Ro)*x-Rw,max(-x,x-Ro))",
+              "SH=min(min(min(min(sqrt(x*x+y*y)-Rc,TRI(x,y,x,y)),TRI(C1*x+S1*y,-S1*x+C1*y,x,y)),min(TRI(C2*x+S2*y,-S2*x+C2*y,x,y),TRI(C3*x+S3*y,-S3*x+C3*y,x,y))),TRI(C4*x+S4*y,-S4*x+C4*y,x,y))",
+              "Srf=cos(x)*sin(y)+cos(y)*sin(z)+cos(z)*sin(x)",
+              "Sx=(Srf(x+Eps, y,z,t)-Srf(x,y,z,t))/Eps",
+              "Sy=(Srf(x, y +Eps,z,t)-Srf(x,y,z,t))/Eps",
+              "Sz=(Srf(x, y,z+Eps,t)-Srf(x,y,z,t))/Eps",
+              "Shl=psh(0,Sx(x,y,z,t))*psh(1,Sy(x,y,z,t))*psh(2,Sz(x,y,z,t))*psh(3,1/(sqrt(get(0)^2+get(1)^2+get(2)^2)+Eps))*psh(4,Srf(x-get(0)*get(3)*T,y-get(1)*get(3)*T,z-get(2)*get(3)*T,t))*psh(5,Srf(x-get(0)*get(3)*G,y-get(1)*get(3)*G,z-get(2)*get(3)*G,t))*get(4)*get(5)",
+              "D0=psh(0,P*floor(x/P+0.5))*psh(1,P*floor(y/P+0.5))*psh(2,P*floor(z/P+0.5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,Srf(get(0),get(1),get(2),t)/(get(3)^2+get(4)^2+get(5)^2+Eps))*psh(0,get(0)-get(6)*get(3))*psh(1,get(1)-get(6)*get(4))*psh(2,get(2)-get(6)*get(5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,Srf(get(0),get(1),get(2),t)/(get(3)^2+get(4)^2+get(5)^2+Eps))*psh(0,get(0)-get(6)*get(3))*psh(1,get(1)-get(6)*get(4))*psh(2,get(2)-get(6)*get(5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,Srf(get(0),get(1),get(2),t)/(get(3)^2+get(4)^2+get(5)^2+Eps))*psh(0,get(0)-get(6)*get(3))*psh(1,get(1)-get(6)*get(4))*psh(2,get(2)-get(6)*get(5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,1/(sqrt(get(3)^2+get(4)^2+get(5)^2)+Eps))*psh(10,get(3)*get(6))*psh(11,get(4)*get(6))*psh(12,get(5)*get(6))*psh(3,1/(get(10)^2+Eps)+CRX)*psh(4,1/(get(11)^2+Eps)+CRY)*psh(5,1/(get(12)^2+Eps)+CRZ)*psh(6,1/(sqrt((get(11)*get(5)-get(12)*get(4))^2+(get(12)*get(3)-get(10)*get(5))^2+(get(10)*get(4)-get(11)*get(3))^2)+Eps))*psh(7,(get(11)*get(5)-get(12)*get(4))*get(6))*psh(8,(get(12)*get(3)-get(10)*get(5))*get(6))*psh(9,(get(10)*get(4)-get(11)*get(3))*get(6))*psh(3,(x-get(0))*get(7)+(y-get(1))*get(8)+(z-get(2))*get(9))*psh(4,(x-get(0))*(get(11)*get(9)-get(12)*get(8))+(y-get(1))*(get(12)*get(7)-get(10)*get(9))+(z-get(2))*(get(10)*get(8)-get(11)*get(7)))*psh(5,(x-get(0))*get(10)+(y-get(1))*get(11)+(z-get(2))*get(12))*max(SH(get(3),get(4),x,y),(sqrt(get(5)^2)-H))",
+              "D1=psh(0,P*(floor(x/P)+0.5))*psh(1,P*(floor(y/P)+0.5))*psh(2,P*(floor(z/P)+0.5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,Srf(get(0),get(1),get(2),t)/(get(3)^2+get(4)^2+get(5)^2+Eps))*psh(0,get(0)-get(6)*get(3))*psh(1,get(1)-get(6)*get(4))*psh(2,get(2)-get(6)*get(5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,Srf(get(0),get(1),get(2),t)/(get(3)^2+get(4)^2+get(5)^2+Eps))*psh(0,get(0)-get(6)*get(3))*psh(1,get(1)-get(6)*get(4))*psh(2,get(2)-get(6)*get(5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,Srf(get(0),get(1),get(2),t)/(get(3)^2+get(4)^2+get(5)^2+Eps))*psh(0,get(0)-get(6)*get(3))*psh(1,get(1)-get(6)*get(4))*psh(2,get(2)-get(6)*get(5))*psh(3,Sx(get(0),get(1),get(2),t))*psh(4,Sy(get(0),get(1),get(2),t))*psh(5,Sz(get(0),get(1),get(2),t))*psh(6,1/(sqrt(get(3)^2+get(4)^2+get(5)^2)+Eps))*psh(10,get(3)*get(6))*psh(11,get(4)*get(6))*psh(12,get(5)*get(6))*psh(3,1/(get(10)^2+Eps)+CRX)*psh(4,1/(get(11)^2+Eps)+CRY)*psh(5,1/(get(12)^2+Eps)+CRZ)*psh(6,1/(sqrt((get(11)*get(5)-get(12)*get(4))^2+(get(12)*get(3)-get(10)*get(5))^2+(get(10)*get(4)-get(11)*get(3))^2)+Eps))*psh(7,(get(11)*get(5)-get(12)*get(4))*get(6))*psh(8,(get(12)*get(3)-get(10)*get(5))*get(6))*psh(9,(get(10)*get(4)-get(11)*get(3))*get(6))*psh(3,(x-get(0))*get(7)+(y-get(1))*get(8)+(z-get(2))*get(9))*psh(4,(x-get(0))*(get(11)*get(9)-get(12)*get(8))+(y-get(1))*(get(12)*get(7)-get(10)*get(9))+(z-get(2))*(get(10)*get(8)-get(11)*get(7)))*psh(5,(x-get(0))*get(10)+(y-get(1))*get(11)+(z-get(2))*get(12))*max(SH(get(3),get(4),x,y),(sqrt(get(5)^2)-H))",
+              "Cut=min(D0(x,y,z,t),D1(x,y,z,t))",
+              "Perf=max(Shl(x,y,z,t),-Cut(x,y,z,t))"],
+          "Fxyz": [ "-max(Perf(x,y,z,t),(x^10+y^10+z^10-((L-0.1)^10)))"],
+          "Grid": [ "320"],
+          "Name": [ "Gyroid_Honeycomb_universal_SH"],
+          "Vect": [ "13"],
+          "Xmax": [ "L"],
+          "Xmin": [ "-L"],
+          "Ymax": [ "L"],
+          "Ymin": [ "-L"],
+          "Zmax": [ "L"],
+          "Zmin": [ "-L"]
       }
     }
   ],
