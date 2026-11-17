@@ -482,6 +482,20 @@ ErrorMessage  Iso3D::parse_expression2()
             }
         }
     }
+    // Shared psh()/get() slots, one storage per worker thread (same size
+    // and rules as on the master side, see ParseExpression()). Done after
+    // every Parse(): a later CopyOnWrite copies the pointer along.
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        if(masterthread->nbvariables > 0 && workerthreads[nbthreads].StackFactor > 0)
+        {
+            workerthreads[nbthreads].SharedSlots.resize(size_t(masterthread->nbvariables)*workerthreads[nbthreads].StackFactor, 0.0);
+            for(uint ij=0; ij<masterthread->FunctSize; ij++)
+                workerthreads[nbthreads].Fct[ij].SetSharedStackSave(&workerthreads[nbthreads].SharedSlots);
+            for(uint i=0; i<masterthread->componentsNumber; i++)
+                workerthreads[nbthreads].implicitFunctionParser[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlots);
+        }
+    }
     return NodError;
 }
 Iso3D::Iso3D( uint nbThreads,
@@ -1213,6 +1227,37 @@ ErrorMessage IsoMasterThread::ParseExpression()
         for (uint i= 1; i < limitX; i++) xLocal2[IsoIndex*GridVal+i] = xLocal2[IsoIndex*GridVal+i-1] + x_Step[IsoIndex];
         for (uint j= 1; j < limitY; j++) yLocal2[IsoIndex*GridVal+j] = yLocal2[IsoIndex*GridVal+j-1] + y_Step[IsoIndex];
         for (uint k= 1; k < limitZ; k++) zLocal2[IsoIndex*GridVal+k] = zLocal2[IsoIndex*GridVal+k-1] + z_Step[IsoIndex];
+    }
+    // Share the psh()/get() slots between all parsers of this model so
+    // that user functions can read slots written by their caller (bypass
+    // the write-before-read-within-the-same-body rule). Sized exactly
+    // like AllocateStackMemory sizes the private storage: nbvariables
+    // slots x StackFactor batch elements (slot stride StackFactor in the
+    // tiled batch Eval2). Done after every Parse(): a later CopyOnWrite
+    // copies the pointer along with the data.
+    if(nbvariables > 0 && StackFactor > 0)
+    {
+        SharedSlots.resize(size_t(nbvariables)*StackFactor, 0.0);
+        for(uint i=0; i<FunctSize; i++)
+            Fct[i].SetSharedStackSave(&SharedSlots);
+        for(uint i=0; i<RgbtSize; i++)
+            RgbtParser[i].SetSharedStackSave(&SharedSlots);
+        for(uint i=0; i<VRgbtSize; i++)
+            VRgbtParser[i].SetSharedStackSave(&SharedSlots);
+        GradientParser->SetSharedStackSave(&SharedSlots);
+        NoiseParser->SetSharedStackSave(&SharedSlots);
+        for(uint i=0; i<componentsNumber; i++)
+        {
+            implicitFunctionParser[i].SetSharedStackSave(&SharedSlots);
+            if(cndnotnull)
+                ParisoConditionParser[i].SetSharedStackSave(&SharedSlots);
+            xSupParser[i].SetSharedStackSave(&SharedSlots);
+            ySupParser[i].SetSharedStackSave(&SharedSlots);
+            zSupParser[i].SetSharedStackSave(&SharedSlots);
+            xInfParser[i].SetSharedStackSave(&SharedSlots);
+            yInfParser[i].SetSharedStackSave(&SharedSlots);
+            zInfParser[i].SetSharedStackSave(&SharedSlots);
+        }
     }
     return stdError;
 }

@@ -71,10 +71,21 @@ class FunctionParserBase
     Value_t Eval(const Value_t* Vars);
     std::complex<double> EvalC(const std::complex<double>* );
     void AllocateStackMemory( unsigned int, int nbvar=0);
+    // Point the psh()/get() slots of this parser at a storage vector
+    // shared with other parsers (typically the linked parsers of one
+    // model), so that a function can read slots written by its caller.
+    // The vector must be sized like AllocateStackMemory sizes the
+    // private storage: nbvar*NbStack elements (slot stride NbStack in
+    // batch Eval2). Pass 0 to go back to the private per-parser slots.
+    void SetSharedStackSave(std::vector<Value_t>* slots);
     // vStride: stride of Vars for the variable index. Top-level callers use
     // point-major Vars (Vars[e*Nbvar + v]) and the default vStride=1;
     // cPCall sub-parser calls use Vars[v*NbStack + e] with vStride=NbStack.
-    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, Value_t* results, unsigned, int position=-1, unsigned vStride=1);
+    // slotStride/slotOffset: layout of the psh()/get() slots inside
+    // StackSave. 0 (default) = own layout (slot*NbStack+element); a sub-run
+    // of a tiled batch passes its parent's stride and base so that all
+    // parsers of the call chain index shared slots consistently.
+    Value_t Eval2(const Value_t* Vars, unsigned Nbvar, Value_t* results, unsigned, int position=-1, unsigned vStride=1, unsigned slotStride=0, unsigned slotOffset=0);
     int EvalError() const;
 
     bool AddConstant(const std::string& name, Value_t value);

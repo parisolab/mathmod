@@ -60,6 +60,11 @@ public :
     uint GridVal;
     std::vector<double> xLocal2, yLocal2, zLocal2;
     std::vector<double> vals, Res;
+    // Model-wide psh()/get() slot storage for this thread's parsers, so
+    // that user functions can read slots written by their caller (see
+    // SetSharedStackSave). One copy per thread: threads evaluate disjoint
+    // points, slots are per-point scratch space.
+    std::vector<double> SharedSlots;
     uint OrignbX, OrignbY, OrignbZ;
     struct IsoParametersStringList IsoParametersList;
     static int nbvariables;

@@ -285,6 +285,11 @@ struct FunctionParserBase<Value_t>::Data
     std::vector<Value_t> mStack;
     std::vector<Value_t> mStacki;
     std::vector<Value_t> mStackSave;
+    // Optional external storage for the psh()/get() slots, shared by
+    // several (linked) parsers of one model, so that a function can
+    // read slots written by its caller (see SetSharedStackSave).
+    // NULL: use the private mStackSave instead.
+    std::vector<Value_t>* mSharedStackSave;
     // Note: When mStack exists,
     //       mStack.size() and mStackSize are mutually redundant.
 #endif

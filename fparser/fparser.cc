@@ -723,6 +723,10 @@ FunctionParserBase<Value_t>::Data::Data():
     mUseDegreeConversion(false),
     mErrorLocation(0),
     mVariablesAmount(0),
+#if !defined(FP_USE_THREAD_SAFE_EVAL) && \
+    !defined(FP_USE_THREAD_SAFE_EVAL_WITH_ALLOCA)
+    mSharedStackSave(0),
+#endif
     mStackSize(0)
 {}
 
@@ -743,6 +747,12 @@ FunctionParserBase<Value_t>::Data::Data(const Data& rhs):
     mImmed(rhs.mImmed),
 #ifndef FP_USE_THREAD_SAFE_EVAL
     mStack(rhs.mStackSize),
+#endif
+#if !defined(FP_USE_THREAD_SAFE_EVAL) && \
+    !defined(FP_USE_THREAD_SAFE_EVAL_WITH_ALLOCA)
+    // Copies share the same shared-slot storage pointer on purpose:
+    // linked parsers of one model must keep using the same slots.
+    mSharedStackSave(rhs.mSharedStackSave),
 #endif
     mStackSize(rhs.mStackSize)
 {
@@ -2609,7 +2619,10 @@ Value_t FunctionParserBase<Value_t>::Eval(const Value_t* Vars)
     unsigned IP, DP=0;
     int SP=-1;
     //int stt =0;
-    std::vector<Value_t>& StackSave = mData->mStackSave;
+    // Shared-slot mode: use the model-wide storage when set (see
+    // SetSharedStackSave) so linked parsers pass slots across calls.
+    std::vector<Value_t>& StackSave =
+        (mData->mSharedStackSave ? *mData->mSharedStackSave : mData->mStackSave);
     int VarSize = StackSave.size();
 
 #ifdef FP_USE_THREAD_SAFE_EVAL
@@ -3110,7 +3123,9 @@ std::complex<double> FunctionParserBase<Value_t>::EvalC(const std::complex<doubl
     const unsigned byteCodeSize = unsigned(mData->mByteCode.size());
     unsigned IP, DP=0;
     int SP=-1;
-    std::vector<Value_t>& StackSave = mData->mStackSave;
+    // Shared-slot mode: see SetSharedStackSave.
+    std::vector<Value_t>& StackSave =
+        (mData->mSharedStackSave ? *mData->mSharedStackSave : mData->mStackSave);
     unsigned int VarSize = StackSave.size();
 
 #ifdef FP_USE_THREAD_SAFE_EVAL
@@ -3575,7 +3590,13 @@ void FunctionParserBase<Value_t>::AllocateStackMemory(unsigned int nbStack, int 
 }
 
 template<typename Value_t>
-Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, Value_t* results, unsigned NbStack, int SP, unsigned vStride)
+void FunctionParserBase<Value_t>::SetSharedStackSave(std::vector<Value_t>* slots)
+{
+    mData->mSharedStackSave = slots;
+}
+
+template<typename Value_t>
+Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, Value_t* results, unsigned NbStack, int SP, unsigned vStride, unsigned slotStride, unsigned slotOffset)
 {
     if(mData->mParseErrorType != FP_NO_ERROR) return Value_t(0);
 
@@ -3586,7 +3607,16 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
     /* No thread safety, so use a global stack. */
     std::vector<Value_t>& Stack  = mData->mStack;
     std::vector<Value_t>& Stacki = mData->mStacki;
-    std::vector<Value_t>& StackSave = mData->mStackSave;
+    // Shared-slot mode: see SetSharedStackSave. The slot layout stays
+    // element-strided (slot*NbStack+e); cPCall/cEval sub-runs inherit
+    // SStride/SlotOffset below so every parser of the call chain maps
+    // (slot, element) to the same shared index.
+    std::vector<Value_t>& StackSave =
+        (mData->mSharedStackSave ? *mData->mSharedStackSave : mData->mStackSave);
+    // Effective slot stride/offset: own layout by default (slot*NbStack+e),
+    // parent layout when this is a sub-run of a tiled batch.
+    const unsigned SStride  = slotStride ? slotStride : NbStack;
+    const unsigned SlotBase = slotOffset;
     int Size = Stack.size();
     // Lazy safety net: AllocateStackMemory() sizes mStacki from
     // mStack.size(), which is only known after Parse(); grow here if it
@@ -3892,7 +3922,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
         case cPsh:
           for(Nbval=0; Nbval<tileN; Nbval++)
           {
-              stt = (Value_t(NbStack)*(Stacki[(SP-1)*NbStack + tileBase + Nbval])+Value_t(tileBase+Nbval));
+              stt = (Value_t(SStride)*(Stacki[(SP-1)*NbStack + tileBase + Nbval])+Value_t(SlotBase+tileBase+Nbval));
               if(stt >= Value_t(VarSize) || stt < Value_t(0))
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
@@ -3906,7 +3936,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
         case cGet:
           for(Nbval=0; Nbval<tileN; Nbval++)
           {
-              stt = (Value_t(NbStack)*(Stacki[(SP)*NbStack + tileBase + Nbval])+Value_t(tileBase+Nbval));
+              stt = (Value_t(SStride)*(Stacki[(SP)*NbStack + tileBase + Nbval])+Value_t(SlotBase+tileBase+Nbval));
               if(stt >= Value_t(VarSize) || stt < Value_t(0))
               {
                   mData->mEvalErrorType=VAR_OVERFLOW;
@@ -3945,7 +3975,7 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                       &Stacki[s*NbStack + tileBase] + tileN);
               const Value_t rest = Eval2
                   ((N ? &evalArgs[0] : 0),
-                   1, &evalRes[0], tileN, -1, tileN);
+                   1, &evalRes[0], tileN, -1, tileN, SStride, SlotBase+tileBase);
               if(rest == Value_t(5))
               { mData->mEvalErrorType = IF_FUNCT_ERROR; return Value_t(5); }
               if(rest == Value_t(7))
@@ -4324,8 +4354,11 @@ Value_t FunctionParserBase<Value_t>::Eval2(const Value_t* Vars, unsigned NbVar, 
                 // Vars[v*NbStack + e] is exactly slot SP-params+1+v,
                 // element tileBase+e. The sub evaluates batch elements
                 // tileBase..tileBase+tileN-1 with its own tiling.
+                // SStride/SlotBase+tileBase keep the sub's psh()/get() slot
+                // indices in the same layout as this run's (required for
+                // shared slots across linked parsers in tiled batches).
                 Value_t rest=mData->mFuncParsers[index].mParserPtr->Eval2
-                (&Stacki[(SP-params+1)*NbStack + tileBase], 1, &pcallRes[0], tileN, -1, NbStack);
+                (&Stacki[(SP-params+1)*NbStack + tileBase], 1, &pcallRes[0], tileN, -1, NbStack, SStride, SlotBase+tileBase);
                 if (rest == Value_t(5))
                 {
                     mData->mEvalErrorType = IF_FUNCT_ERROR;

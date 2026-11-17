@@ -58,6 +58,16 @@ This fparser fork differs from upstream:
 - `Eval2()` returns `6` (EVAL_NO_ERROR), `5` (IF_FUNCT_ERROR), `7`
   (VAR_OVERFLOW), `1` (DIVISION_BY_ZERO), or `0` (domain errors 2..4).
 - `Vars` are point-major: point `e`, variable `v` is at `Vars[e*NbVar+v]`.
+- `SetSharedStackSave(std::vector<Value_t>*)` points the `psh()`/`get()`
+  slots of a parser at storage shared with other (linked) parsers, so a
+  function can read slots written by its caller (used by the pariso
+  engines, which share one slot vector per model per thread). The vector
+  must be sized `nbvar*NbStack` exactly like `AllocateStackMemory` sizes
+  the private storage; in `Eval2` the slot index is `slot*NbStack+e` and
+  `cPCall`/`cEval` sub-runs inherit the parent's stride/offset (the two
+  trailing default parameters of `Eval2`) so the layout stays consistent
+  across the whole call chain in tiled batches. `psh()`/`get()` semantics
+  are otherwise unchanged (per-parser private slots by default).
 
 The test file documents these; keep it in sync if they ever change.
 
