@@ -240,6 +240,12 @@ public slots:
     int ParsePar();
     void ShowErrormessage();
     void frames_clicked();
+    void SortTransparentIndices(
+        const float* vertices,           // Pointer to vertex position array (x, y, z, ...)
+        size_t vertexStrideFloats,       // Number of floats per vertex (e.g., 3 if tightly packed, or stride/sizeof(float))
+        const std::vector<uint32_t>& originalIndices,
+        const float* modelViewMatrix,    // Column-major 4x4 matrix (standard OpenGL layout)
+        GLuint indexBufferId);
     void CreateShaderProgram();
     void draw(ObjectProperties *);
     void plan();

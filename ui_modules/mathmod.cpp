@@ -939,6 +939,75 @@ void MathMod::restarttimer(int newlatence)
         timer->start(latence, this);
     }
 }
+#include <vector>
+#include <algorithm>
+#include <cstdint>
+
+struct TriangleDepth {
+    uint32_t i0, i1, i2; // Use uint16_t if your GLES2 index buffer uses GL_UNSIGNED_SHORT
+    float depthZ;
+};
+
+// Call this whenever the model/view rotation changes while transparency is active
+void MathMod::SortTransparentIndices(
+    const float* vertices,           // Pointer to vertex position array (x, y, z, ...)
+    size_t vertexStrideFloats,       // Number of floats per vertex (e.g., 3 if tightly packed, or stride/sizeof(float))
+    const std::vector<uint32_t>& originalIndices,
+    const float* modelViewMatrix,    // Column-major 4x4 matrix (standard OpenGL layout)
+    GLuint indexBufferId)            // Your GL_ELEMENT_ARRAY_BUFFER VBO
+{
+    size_t numTriangles = originalIndices.size() / 3;
+    if (numTriangles == 0) return;
+
+    // Extract the 3rd row (Z-axis in view space) from the column-major ModelView matrix
+    // Column-major indices for row 2 are:, [6], [10], [14]
+    const float m2  = modelViewMatrix[2];
+    const float m6  = modelViewMatrix[6];
+    const float m10 = modelViewMatrix[10];
+    // Note: translation (m14) is constant for all vertices, so we can omit it for sorting!
+
+    std::vector<TriangleDepth> triangles(numTriangles);
+
+    for (size_t t = 0; t < numTriangles; ++t) {
+        uint32_t idx0 = originalIndices[t * 3 + 0];
+        uint32_t idx1 = originalIndices[t * 3 + 1];
+        uint32_t idx2 = originalIndices[t * 3 + 2];
+
+        const float* v0 = vertices + idx0 * vertexStrideFloats;
+        const float* v1 = vertices + idx1 * vertexStrideFloats;
+        const float* v2 = vertices + idx2 * vertexStrideFloats;
+
+        // Sum of vertex positions (no need to divide by 3; scalar factor preserves order)
+        float sumX = v0[0] + v1[0] + v2[0];
+        float sumY = v0[1] + v1[1] + v2[1];
+        float sumZ = v0[2] + v1[2] + v2[2];
+
+        // View-space Z proportional to centroid depth
+        float z = m2 * sumX + m6 * sumY + m10 * sumZ;
+
+        triangles[t] = { idx0, idx1, idx2, z };
+    }
+
+    // Sort back-to-front: most negative Z (farthest from camera) comes first
+    std::sort(triangles.begin(), triangles.end(),
+              [](const TriangleDepth& a, const TriangleDepth& b) {
+                  return a.depthZ < b.depthZ;
+              });
+
+    // Write sorted indices back into a flat buffer
+    std::vector<uint32_t> sortedIndices(originalIndices.size());
+    for (size_t t = 0; t < numTriangles; ++t) {
+        sortedIndices[t * 3 + 0] = triangles[t].i0;
+        sortedIndices[t * 3 + 1] = triangles[t].i1;
+        sortedIndices[t * 3 + 2] = triangles[t].i2;
+    }
+
+    // Upload the reordered indices to the GPU
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0,
+                    sortedIndices.size() * sizeof(uint32_t),
+                    sortedIndices.data());
+}
 
 void MathMod::CreateShaderProgram()
 {
@@ -987,7 +1056,8 @@ void MathMod::CreateShaderProgram()
             void main()
             {
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
-                esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
+                //esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
+esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
                 color = vertexColor;
                 if(glFrontFacing_1 == 0)
                 {
@@ -1145,6 +1215,7 @@ void MathMod::CreateShaderProgram()
                     color1 = vec4(hsv2rgb(color1.xyz), color1.w);
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
+/*
                 vec4 fragColor = lightAmbient * color1;
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
@@ -1153,6 +1224,17 @@ void MathMod::CreateShaderProgram()
                 // set frag color
                 //gl_FragColor = (hsvactive == 1)? vec4(hsv2rgb(fragColor.xyz), fragColor.w) : fragColor;
                 gl_FragColor = fragColor;
+*/
+
+
+
+vec3 litRGB = lightAmbient.rgb * color1.rgb;
+float dotNL = max(dot(normal, light), 0.0);
+litRGB += lightDiffuse.rgb * color1.rgb * dotNL;
+float dotNH = max(dot(normal, halfv), 0.0);
+litRGB += (pow(dotNH, shininess) * lightSpecular.rgb) * color1.rgb;
+
+gl_FragColor = vec4(litRGB, color1.a);
             }
             )";
 
