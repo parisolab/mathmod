@@ -223,12 +223,15 @@ e.g. `1 + floor(z)*(1 - min(1, 100*abs(z - floor(z))))` maps any
 non-integer top-level argument to 1 and increments exact integers by
 1, so each recursion level sees the level number.
 
-**Shared slots between `Funct` (Iso3D, since the shared-slot engine
-build).** In `Iso3D` models all parsers of the model — `Fxyz`, every
-`Funct` definition, the bound/condition and texture parsers — share
-one per-thread slot storage (one vector per render thread), so a
-function can **read slots written by its caller**: the old
-write-before-read-within-the-same-body rule no longer applies. Typical
+**Shared slots between `Funct` (Iso3D and Param3D/Param4D, since the
+shared-slot engine build).** In `Iso3D` models all parsers of the
+model — `Fxyz`, every `Funct` definition, the bound/condition and
+texture parsers — share one per-thread slot storage (one vector per
+render thread); `Param3D`/`Param4D` models are wired the same way
+(every `Fx/Fy/Fz/Fw` and `Funct` parser of the model shares one
+per-thread storage, plus the master-side bound/condition/texture
+parsers). So a function can **read slots written by its caller**: the
+old write-before-read-within-the-same-body rule no longer applies. Typical
 pattern: the caller writes its point into slots and calls the helper,
 which reads them back, e.g. `D0=psh(13,x)*psh(14,y)*psh(15,z)*Proj(P*floor(x/P+0.5),...)*...` with `Proj` reading `get(13..15)`.
 Every `psh/get` chain is evaluated strictly left-to-right (calls are
@@ -238,9 +241,9 @@ caller call. Slots are per-point scratch space: a helper should only
 read slots its caller chain is guaranteed to have written for the
 current point (branchless code does this by construction; an `if()`
 branch that skips a `psh` can expose a stale value from another
-point). `Param3D/Param4D` models are not wired to shared slots yet
-(their `Funct` parsers keep private per-parser slots), so cross-call
-slot passing currently works in `Iso3D` scripts only.
+point). Real `Param3D`/`Param4D` models share the real slot storage;
+complex `Param3D_C`/`Param4D_C` models share a separate complex one —
+a real and a complex parser never share slots.
 
 **Complex-only** (available in the `*_C` models' complex parser, not in
 the real one): `real`, `imag`, `conj`, `arg` (1-arg), `polar(r, phi)`

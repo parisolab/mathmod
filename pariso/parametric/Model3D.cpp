@@ -916,6 +916,52 @@ ErrorMessage  ParMasterThread::parse_expression()
                 return stdError;
             }
     }
+    // Share the psh()/get() slots between all parsers of this model (same
+    // rules as Iso3D, see IsoMasterThread::ParseExpression) so that user
+    // functions can read slots written by their caller. Real and complex
+    // parsers get separate storages: their slot vectors differ in type.
+    // Sized exactly like AllocateStackMemory sizes the private storage:
+    // nbvariables slots x StackFactor batch elements. Done after every
+    // Parse(): a later CopyOnWrite copies the pointer along with the data.
+    if(nbvariables > 0 && StackFactor > 0)
+    {
+        SharedSlots.resize(size_t(nbvariables)*StackFactor, 0.0);
+        for(uint i=0; i<FunctSize; i++)
+            Fct[i].SetSharedStackSave(&SharedSlots);
+        for(uint i=0; i<componentsNumber; i++)
+        {
+            myParserX[i].SetSharedStackSave(&SharedSlots);
+            myParserY[i].SetSharedStackSave(&SharedSlots);
+            myParserZ[i].SetSharedStackSave(&SharedSlots);
+            myParserW[i].SetSharedStackSave(&SharedSlots);
+            myParserUmin[i].SetSharedStackSave(&SharedSlots);
+            myParserUmax[i].SetSharedStackSave(&SharedSlots);
+            myParserVmin[i].SetSharedStackSave(&SharedSlots);
+            myParserVmax[i].SetSharedStackSave(&SharedSlots);
+            if(cndnotnull)
+                ParisoConditionParser[i].SetSharedStackSave(&SharedSlots);
+        }
+        for(uint i=0; i<RgbtSize; i++)
+            RgbtParser[i].SetSharedStackSave(&SharedSlots);
+        for(uint i=0; i<VRgbtSize; i++)
+            VRgbtParser[i].SetSharedStackSave(&SharedSlots);
+        GradientParser->SetSharedStackSave(&SharedSlots);
+        NoiseParser->SetSharedStackSave(&SharedSlots);
+        NoiseShapeParser->SetSharedStackSave(&SharedSlots);
+
+        SharedSlotsC.resize(size_t(nbvariables)*StackFactor, 0.0);
+        for(uint i=0; i<FunctSize; i++)
+            Fct_C[i].SetSharedStackSave(&SharedSlotsC);
+        for(uint i=0; i<componentsNumber; i++)
+        {
+            myParserX_C[i].SetSharedStackSave(&SharedSlotsC);
+            myParserY_C[i].SetSharedStackSave(&SharedSlotsC);
+            myParserZ_C[i].SetSharedStackSave(&SharedSlotsC);
+            myParserW_C[i].SetSharedStackSave(&SharedSlotsC);
+        }
+        for(uint i=0; i<RgbtSize; i++)
+            RgbtParser_C[i].SetSharedStackSave(&SharedSlotsC);
+    }
     return stdError;
 }
 
@@ -1051,6 +1097,26 @@ ErrorMessage  Par3D::parse_expression2()
                 }
         }
     }
+    // Shared psh()/get() slots, one storage per worker thread (real
+    // parsers; same size and rules as on the master side, see
+    // ParMasterThread::parse_expression()). Done after every Parse(): a
+    // later CopyOnWrite copies the pointer along.
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        if(nbvariables > 0 && workerthreads[nbthreads].StackFactor > 0)
+        {
+            workerthreads[nbthreads].SharedSlots.resize(size_t(nbvariables)*workerthreads[nbthreads].StackFactor, 0.0);
+            for(uint ij=0; ij<masterthread->FunctSize; ij++)
+                workerthreads[nbthreads].Fct[ij].SetSharedStackSave(&workerthreads[nbthreads].SharedSlots);
+            for(uint i=0; i<masterthread->componentsNumber; i++)
+            {
+                workerthreads[nbthreads].myParserX[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlots);
+                workerthreads[nbthreads].myParserY[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlots);
+                workerthreads[nbthreads].myParserZ[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlots);
+                workerthreads[nbthreads].myParserW[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlots);
+            }
+        }
+    }
     return NodError;
 }
 
@@ -1163,6 +1229,26 @@ ErrorMessage  Par3D::parse_expression2_C()
                     masterthread->stdError.strError = masterthread->ParamStructs[index].fw;
                     return masterthread->stdError;
                 }
+        }
+    }
+    // Shared psh()/get() slots, one storage per worker thread (complex
+    // parsers; separate storage from the real parsers, see the master side
+    // in ParMasterThread::parse_expression()). Done after every Parse(): a
+    // later CopyOnWrite copies the pointer along.
+    for(uint nbthreads=0; nbthreads+1<WorkerThreadsNumber; nbthreads++)
+    {
+        if(nbvariables > 0 && workerthreads[nbthreads].StackFactor > 0)
+        {
+            workerthreads[nbthreads].SharedSlotsC.resize(size_t(nbvariables)*workerthreads[nbthreads].StackFactor, 0.0);
+            for(uint ij=0; ij<masterthread->FunctSize; ij++)
+                workerthreads[nbthreads].Fct_C[ij].SetSharedStackSave(&workerthreads[nbthreads].SharedSlotsC);
+            for(uint i=0; i<masterthread->componentsNumber; i++)
+            {
+                workerthreads[nbthreads].myParserX_C[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlotsC);
+                workerthreads[nbthreads].myParserY_C[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlotsC);
+                workerthreads[nbthreads].myParserZ_C[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlotsC);
+                workerthreads[nbthreads].myParserW_C[i].SetSharedStackSave(&workerthreads[nbthreads].SharedSlotsC);
+            }
         }
     }
     return NodError;

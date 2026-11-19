@@ -55,6 +55,13 @@ public :
     bool param4D, param3d_C, param4d_C;
     uint CurrentIndex;
     std::vector<std::complex<double>> valcomplex;
+    // Model-wide psh()/get() slot storage for this thread's parsers (same
+    // mechanism as Iso3D): all real parsers of the model share SharedSlots,
+    // all complex parsers share SharedSlotsC, so a Funct can read slots
+    // written by its caller. One copy per thread: threads evaluate
+    // disjoint points, slots are per-point scratch space.
+    std::vector<double> SharedSlots;
+    std::vector<std::complex<double>> SharedSlotsC;
     std::vector<double>  ResX, ResY, ResZ, ResW, vals;
     uint OrignbU, OrignbV;
     struct ParParametersStringList ParParametersList;
