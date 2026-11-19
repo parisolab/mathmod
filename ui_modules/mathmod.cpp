@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2025 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -948,34 +948,44 @@ struct TriangleDepth {
     float depthZ;
 };
 
-// Call this whenever the model/view rotation changes while transparency is active
+// Call this whenever the model/view rotation changes while transparency is active.
+// Sorts one contiguous range of triangle indices back-to-front (farthest from
+// the camera first) so that alpha blending produces correct occlusion. The CPU-
+// side index array is sorted in place (it stays the source of truth for the next
+// sort and for CopyData re-uploads) and only the sorted range is re-uploaded to
+// the element VBO at bufferByteOffset.
 void MathMod::SortTransparentIndices(
-    const float* vertices,           // Pointer to vertex position array (x, y, z, ...)
-    size_t vertexStrideFloats,       // Number of floats per vertex (e.g., 3 if tightly packed, or stride/sizeof(float))
-    const std::vector<uint32_t>& originalIndices,
+    const float* vertices,           // Pointer to interleaved vertex array (color/normal/position)
+    size_t vertexStrideFloats,       // Number of floats per vertex (10 for interleaved color/normal/position)
+    size_t positionOffsetFloats,     // Float offset of the position within a vertex (7 for this layout)
+    uint* indices,                   // CPU-side index array (sorted in place)
+    size_t startIndex,               // First index of the range (index offset, multiple of 3)
+    size_t rangeTriangles,           // Number of triangles in the range
     const float* modelViewMatrix,    // Column-major 4x4 matrix (standard OpenGL layout)
-    GLuint indexBufferId)            // Your GL_ELEMENT_ARRAY_BUFFER VBO
+    GLuint indexBufferId,            // GL_ELEMENT_ARRAY_BUFFER VBO
+    size_t bufferByteOffset)         // Byte offset of the range in the VBO (= startIndex * sizeof(GLuint))
 {
-    size_t numTriangles = originalIndices.size() / 3;
-    if (numTriangles == 0) return;
+    if (rangeTriangles == 0 || indices == nullptr || vertices == nullptr)
+        return;
 
     // Extract the 3rd row (Z-axis in view space) from the column-major ModelView matrix
-    // Column-major indices for row 2 are:, [6], [10], [14]
+    // Column-major indices for row 2 are: [2], [6], [10]
     const float m2  = modelViewMatrix[2];
     const float m6  = modelViewMatrix[6];
     const float m10 = modelViewMatrix[10];
     // Note: translation (m14) is constant for all vertices, so we can omit it for sorting!
 
-    std::vector<TriangleDepth> triangles(numTriangles);
+    std::vector<TriangleDepth> triangles(rangeTriangles);
+    uint* range = indices + startIndex;
 
-    for (size_t t = 0; t < numTriangles; ++t) {
-        uint32_t idx0 = originalIndices[t * 3 + 0];
-        uint32_t idx1 = originalIndices[t * 3 + 1];
-        uint32_t idx2 = originalIndices[t * 3 + 2];
+    for (size_t t = 0; t < rangeTriangles; ++t) {
+        uint32_t idx0 = range[t * 3 + 0];
+        uint32_t idx1 = range[t * 3 + 1];
+        uint32_t idx2 = range[t * 3 + 2];
 
-        const float* v0 = vertices + idx0 * vertexStrideFloats;
-        const float* v1 = vertices + idx1 * vertexStrideFloats;
-        const float* v2 = vertices + idx2 * vertexStrideFloats;
+        const float* v0 = vertices + idx0 * vertexStrideFloats + positionOffsetFloats;
+        const float* v1 = vertices + idx1 * vertexStrideFloats + positionOffsetFloats;
+        const float* v2 = vertices + idx2 * vertexStrideFloats + positionOffsetFloats;
 
         // Sum of vertex positions (no need to divide by 3; scalar factor preserves order)
         float sumX = v0[0] + v1[0] + v2[0];
@@ -994,19 +1004,19 @@ void MathMod::SortTransparentIndices(
                   return a.depthZ < b.depthZ;
               });
 
-    // Write sorted indices back into a flat buffer
-    std::vector<uint32_t> sortedIndices(originalIndices.size());
-    for (size_t t = 0; t < numTriangles; ++t) {
-        sortedIndices[t * 3 + 0] = triangles[t].i0;
-        sortedIndices[t * 3 + 1] = triangles[t].i1;
-        sortedIndices[t * 3 + 2] = triangles[t].i2;
+    // Write the sorted indices back in place (whole triangles move as units,
+    // so every 3-index group still forms a valid triangle / line loop)
+    for (size_t t = 0; t < rangeTriangles; ++t) {
+        range[t * 3 + 0] = triangles[t].i0;
+        range[t * 3 + 1] = triangles[t].i1;
+        range[t * 3 + 2] = triangles[t].i2;
     }
 
-    // Upload the reordered indices to the GPU
+    // Upload the reordered range to the GPU
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0,
-                    sortedIndices.size() * sizeof(uint32_t),
-                    sortedIndices.data());
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)bufferByteOffset,
+                    (GLsizeiptr)(rangeTriangles * 3 * sizeof(uint32_t)),
+                    range);
 }
 
 void MathMod::CreateShaderProgram()
@@ -1056,8 +1066,8 @@ void MathMod::CreateShaderProgram()
             void main()
             {
                 esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
-                //esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
-esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
+                esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
+//esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
                 color = vertexColor;
                 if(glFrontFacing_1 == 0)
                 {
@@ -1215,7 +1225,7 @@ esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
                     color1 = vec4(hsv2rgb(color1.xyz), color1.w);
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
-/*
+
                 vec4 fragColor = lightAmbient * color1;
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
@@ -1224,9 +1234,9 @@ esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
                 // set frag color
                 //gl_FragColor = (hsvactive == 1)? vec4(hsv2rgb(fragColor.xyz), fragColor.w) : fragColor;
                 gl_FragColor = fragColor;
-*/
 
 
+/*
 
 vec3 litRGB = lightAmbient.rgb * color1.rgb;
 float dotNL = max(dot(normal, light), 0.0);
@@ -1235,6 +1245,7 @@ float dotNH = max(dot(normal, halfv), 0.0);
 litRGB += (pow(dotNH, shininess) * lightSpecular.rgb) * color1.rgb;
 
 gl_FragColor = vec4(litRGB, color1.a);
+*/
             }
             )";
 
@@ -1836,8 +1847,87 @@ void MathMod::draw(ObjectProperties *scene)
         glUniformMatrix4fv(uniformMatrixNormal, 1, false, matrixNormalx.data());
     }
     // Blend Effect activation:
-    if (scene->transparency == 1)
+    // The model is transparent when the transparency flag is set or when any
+    // surface color has an alpha < 1 (alpha slider). Transparent surfaces must
+    // not write to the depth buffer, and their triangles are drawn back-to-front
+    // (order-independent transparency) to avoid the Z-buffer occlusion artifact.
+    bool transparent = (scene->transparency == 1);
+    if (!transparent)
+        for (int i = 0; i < 40; i += 4)
+            if (scene->frontcols[i + 3] < 1.0f || scene->backcols[i + 3] < 1.0f)
+            {
+                transparent = true;
+                break;
+            }
+    if (transparent)
+    {
         glDepthMask(GL_FALSE);
+        // Re-sort the model's triangles back-to-front whenever the view rotation
+        // changes (mouse drag or animated rotations) or the model's triangle count
+        // changed. Sorting is done per contiguous index range (per component, or
+        // per CND block) so the per-component draw offsets and the line-loop ranges
+        // (mesh, borders, minimal topology) stay intact.
+        const float* mv = matrixViewx.constData();
+        bool rotChanged = !transparentSorted || (scene->PolyNumber != lastSortedPolyNumber);
+        if (!rotChanged)
+            for (int c = 0; c < 3 && !rotChanged; c++)
+                for (int r = 0; r < 3; r++)
+                {
+                    float d = mv[3 * c + r] - lastSortedViewRot[3 * c + r];
+                    if (d > 1e-7f || d < -1e-7f)
+                        rotChanged = true;
+                }
+        if (rotChanged)
+        {
+            for (int c = 0; c < 3; c++)
+                for (int r = 0; r < 3; r++)
+                    lastSortedViewRot[3 * c + r] = mv[3 * c + r];
+            transparentSorted = true;
+            lastSortedPolyNumber = scene->PolyNumber;
+            const auto& ci = scene->componentsinfos;
+            uint idx = 0;
+            for (size_t t = 0; t < ci.NbComponentsType.size(); t++)
+            {
+                if (ci.NbComponentsType[t] == 0)
+                    continue;
+                if (ci.ThereisCND[t])
+                {
+                    // CND type: three triangle blocks per type (the border block is
+                    // drawn as line loops: leave it untouched). Offsets are index counts.
+                    uint b0 = ci.ParisoTriangle[2 * idx];
+                    uint b1 = b0 + 3 * ci.NbTrianglesNoCND[t];
+                    uint b2 = b1 + 3 * ci.NbTrianglesVerifyCND[t];
+                    uint b3 = b2 + 3 * ci.NbTrianglesNotVerifyCND[t];
+                    SortTransparentIndices(scene->ArrayNorVer_localPt, 10, 7,
+                                           scene->PolyIndices_localPt, b0,
+                                           (b1 - b0) / 3, mv, vbo[1],
+                                           b0 * sizeof(GLuint));
+                    SortTransparentIndices(scene->ArrayNorVer_localPt, 10, 7,
+                                           scene->PolyIndices_localPt, b1,
+                                           (b2 - b1) / 3, mv, vbo[1],
+                                           b1 * sizeof(GLuint));
+                    SortTransparentIndices(scene->ArrayNorVer_localPt, 10, 7,
+                                           scene->PolyIndices_localPt, b2,
+                                           (b3 - b2) / 3, mv, vbo[1],
+                                           b2 * sizeof(GLuint));
+                }
+                else
+                {
+                    for (uint i = 0; i < ci.NbComponentsType[t]; i++)
+                    {
+                        // ParisoTriangle[2k] = index offset, [2k+1] = triangle count
+                        uint s = ci.ParisoTriangle[2 * (i + idx)];
+                        uint n = ci.ParisoTriangle[2 * (i + idx) + 1];
+                        SortTransparentIndices(scene->ArrayNorVer_localPt, 10, 7,
+                                               scene->PolyIndices_localPt, s,
+                                               n, mv, vbo[1],
+                                               s * sizeof(GLuint));
+                    }
+                }
+                idx += ci.NbComponentsType[t];
+            }
+        }
+    }
 
     // Axe :
     if (scene->axe == 1)
@@ -1867,7 +1957,7 @@ void MathMod::draw(ObjectProperties *scene)
     if (scene->norm == 1 && scene->componentsinfos.updateviewer)
         DrawNormals(scene);
 
-    if (scene->transparency == 1)
+    if (transparent)
         glDepthMask(GL_TRUE);
 }
 

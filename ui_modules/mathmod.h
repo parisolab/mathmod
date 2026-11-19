@@ -209,6 +209,14 @@ public:
     QQuaternion oldRotation= rotation;
     QMatrix4x4 matrixModelViewProjectionx;
     QMatrix4x4 matrixNormalx;
+    // Order-independent transparency state: the 3x3 rotation block of the
+    // model-view matrix (column-major) when the triangle indices were last
+    // sorted back-to-front. transparentSorted starts false so the first
+    // transparent frame always sorts; lastSortedPolyNumber detects a new
+    // model (different triangle count) even without rotation change.
+    float lastSortedViewRot[9] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    bool transparentSorted = false;
+    uint lastSortedPolyNumber = 0;
     qreal acc;
     QVector3D n;
 public:
@@ -240,12 +248,21 @@ public slots:
     int ParsePar();
     void ShowErrormessage();
     void frames_clicked();
+    // Back-to-front sort of one contiguous range of the model's triangle
+    // indices (order-independent transparency). Sorts [startIndex, startIndex+3*rangeTriangles)
+    // of the CPU-side index array in place and re-uploads that range to the element VBO
+    // at bufferByteOffset. Call it whenever the model/view rotation changes while
+    // transparency is active.
     void SortTransparentIndices(
-        const float* vertices,           // Pointer to vertex position array (x, y, z, ...)
-        size_t vertexStrideFloats,       // Number of floats per vertex (e.g., 3 if tightly packed, or stride/sizeof(float))
-        const std::vector<uint32_t>& originalIndices,
+        const float* vertices,           // Pointer to interleaved vertex array (color/normal/position)
+        size_t vertexStrideFloats,       // Number of floats per vertex (10 for interleaved color/normal/position)
+        size_t positionOffsetFloats,     // Float offset of the position within a vertex (7 for this layout)
+        uint* indices,                   // CPU-side index array (sorted in place)
+        size_t startIndex,               // First index of the range (index offset, multiple of 3)
+        size_t rangeTriangles,           // Number of triangles in the range
         const float* modelViewMatrix,    // Column-major 4x4 matrix (standard OpenGL layout)
-        GLuint indexBufferId);
+        GLuint indexBufferId,            // GL_ELEMENT_ARRAY_BUFFER VBO
+        size_t bufferByteOffset);        // Byte offset of the range in the VBO (= startIndex * sizeof(GLuint))
     void CreateShaderProgram();
     void draw(ObjectProperties *);
     void plan();
