@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2025 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -22,6 +22,7 @@
 #include "ui_modules/drawingoptions.h"
 #include "ui_modules/mathmod.h"
 #include "ui_modules/parametersoptions.h"
+#include "ui_modules/uicontrolserver.h"
 #include <QApplication>
 #include <QTextStream>
 #include <QGuiApplication>
@@ -81,5 +82,10 @@ int main(int argc, char *argv[])
                      SLOT(UpdateGL()), Qt::UniqueConnection);
     drawingopt.ui.openGLWidget->LoadShadersFiles();
     drawingopt.on_choice_activated(Parameters.model);
+    // Loopback HTTP control API (127.0.0.1:61234 by default, override with
+    // the MATHMOD_UI_PORT environment variable) so external tools such as
+    // the AI-agent MCP server (mcp_server/mathmod_ui_mcp.py) can inspect
+    // and drive the UI. See ui_modules/uicontrolserver.h.
+    UiControlServer uiControlServer(&drawingopt);
     return app.exec();
 }

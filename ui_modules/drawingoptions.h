@@ -215,6 +215,21 @@ public slots:
     QJsonObject Modeltype(const QJsonObject &);
     void on_actionAbout_2_triggered();
     void LoadNewFileModels(bool upd = false);
+    /**
+     * @brief Load a collection .js file directly, without a QFileDialog.
+     * Replaces the current collection state (same teardown as
+     * LoadNewFileModels(true)). Used by the UI control API
+     * (UiControlServer "load_file" action).
+     * @return false if the file does not exist.
+     */
+    bool LoadCollectionFileDirect(const QString &path);
+    /** Teardown of collection state (model tree + cached JIso/JPar/JParIso). */
+    void ClearCollectionState();
+    /**
+     * @brief Fill MathmodRef->collection and the model combo box from a
+     * parsed collection JSON (the "MathModels" array).
+     */
+    void PopulateCollectionFromJson(QJsonObject &models);
     void on_actionLoad_json_script_triggered();
     void on_red_ParIso_valueChanged(int);
     void on_green_ParIso_valueChanged(int);

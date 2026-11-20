@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
  *   Copyright (C) 2025 by Abderrahman Taha                                *
  *                                                                         *
  *                                                                         *
@@ -20,6 +20,7 @@
 #include "drawingoptions.h"
 #include "pariso/commun.h"
 #include <qmessagebox.h>
+#include <QFile>
 
 static int IndexcurrentComponent = -1;
 static int indexcurrentSet = 0;
@@ -2250,18 +2251,27 @@ void DrawingOptions::LoadNewFileModels(bool upd)
     mathmodcollection = QFileDialog::getOpenFileName(
                             nullptr, tr("Load Json Script"), "", tr("Json (*.js)"));
     if (upd)
-    {
-        ui.ObjectClasse->clear();
-        for (int i = 0; i < MathmodRef->RootObjet.MyJsonObjectSelection.count();
-                i++)
-            MathmodRef->RootObjet.MyJsonObjectSelection.removeAt(i);
-        MathmodRef->RootObjet.NbIsoStruct = MathmodRef->RootObjet.NbParamStruct = 0;
-        MathmodRef->collection.JPar.clear();
-        MathmodRef->collection.JIso.clear();
-        MathmodRef->collection.JParIso.clear();
-    }
+        ClearCollectionState();
     MathmodRef->RootObjet.ReadJsonFile(mathmodcollection, JSONMathModels);
-    QJsonArray array = JSONMathModels["MathModels"].toArray();
+    PopulateCollectionFromJson(JSONMathModels);
+    AddListModels(upd);
+}
+
+void DrawingOptions::ClearCollectionState()
+{
+    ui.ObjectClasse->clear();
+    for (int i = 0; i < MathmodRef->RootObjet.MyJsonObjectSelection.count();
+            i++)
+        MathmodRef->RootObjet.MyJsonObjectSelection.removeAt(i);
+    MathmodRef->RootObjet.NbIsoStruct = MathmodRef->RootObjet.NbParamStruct = 0;
+    MathmodRef->collection.JPar.clear();
+    MathmodRef->collection.JIso.clear();
+    MathmodRef->collection.JParIso.clear();
+}
+
+void DrawingOptions::PopulateCollectionFromJson(QJsonObject &models)
+{
+    QJsonArray array = models["MathModels"].toArray();
     QStringList lst;
     QString a;
     QJsonObject jsobj;
@@ -2354,7 +2364,17 @@ void DrawingOptions::LoadNewFileModels(bool upd)
     // Load the script containing isosurface and parametric formulas:
     ui.choice->clear();
     ui.choice->insertItems(0, lst);
-    AddListModels(upd);
+}
+
+bool DrawingOptions::LoadCollectionFileDirect(const QString &path)
+{
+    if (!QFile::exists(path))
+        return false;
+    ClearCollectionState();
+    MathmodRef->RootObjet.ReadJsonFile(path, JSONMathModels);
+    PopulateCollectionFromJson(JSONMathModels);
+    AddListModels(true);
+    return true;
 }
 
 void DrawingOptions::LoadK3DSurfScript(QString filename, int type)

@@ -21,6 +21,7 @@ HEADERS   = ui_modules/drawingoptions.h \
             ui_modules/sliderparam.h \
             ui_modules/addparam.h \
             ui_modules/editor.h \
+            ui_modules/uicontrolserver.h \
             fparser/fpconfig.hh
 SOURCES   = ui_modules/drawingoptions.cpp \
             ui_modules/about.cpp \
@@ -44,7 +45,8 @@ SOURCES   = ui_modules/drawingoptions.cpp \
             pariso/parametric/paratransformation.cpp \
             pariso/isosurface/internalfunctions.cpp \
             ui_modules/sliderparam.cpp \
-            ui_modules/addparam.cpp
+            ui_modules/addparam.cpp \
+            ui_modules/uicontrolserver.cpp
 
 FORMS     = ui_forms/drawingoptions.ui \
             ui_forms/about.ui \
@@ -55,7 +57,7 @@ FORMS     = ui_forms/drawingoptions.ui \
 
 RC_FILE 	= mm.rc
 RESOURCES       += myressources.qrc
-QT              += opengl  widgets
+QT              += opengl  widgets network
 greaterThan(QT_MAJOR_VERSION, 5) {
     QT += openglwidgets
 }
