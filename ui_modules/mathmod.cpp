@@ -1226,6 +1226,10 @@ void MathMod::CreateShaderProgram()
                 vec3 view = normalize(-esVertex);
                 vec3 halfv = normalize(light + view);
 
+
+
+
+
                 vec4 fragColor = lightAmbient * color1;
                 float dotNL = max(dot(normal, light), 0.0);
                 fragColor += lightDiffuse* color1 * dotNL;          // add diffuse
@@ -1235,17 +1239,14 @@ void MathMod::CreateShaderProgram()
                 //gl_FragColor = (hsvactive == 1)? vec4(hsv2rgb(fragColor.xyz), fragColor.w) : fragColor;
                 gl_FragColor = fragColor;
 
-
-/*
-
-vec3 litRGB = lightAmbient.rgb * color1.rgb;
-float dotNL = max(dot(normal, light), 0.0);
-litRGB += lightDiffuse.rgb * color1.rgb * dotNL;
-float dotNH = max(dot(normal, halfv), 0.0);
-litRGB += (pow(dotNH, shininess) * lightSpecular.rgb) * color1.rgb;
-
-gl_FragColor = vec4(litRGB, color1.a);
-*/
+                /*
+                vec3 litRGB = lightAmbient.rgb * color1.rgb;
+                float dotNL = max(dot(normal, light), 0.0);
+                litRGB += lightDiffuse.rgb * color1.rgb * dotNL;
+                float dotNH = max(dot(normal, halfv), 0.0);
+                litRGB += (pow(dotNH, shininess) * lightSpecular.rgb) * color1.rgb;
+                gl_FragColor = vec4(litRGB, color1.a);
+                */
             }
             )";
 
