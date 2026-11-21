@@ -203,11 +203,19 @@ accordingly here.
 
 ## Caveats
 
-- **Modal dialogs block the API.** The app's error reporting uses modal
-  `QMessageBox.exec()`, which stalls the GUI event loop — while such a box is
-  open, HTTP requests time out. Close the dialog in the app window, then
-  retry. A malformed collection file passed to `ui_load_file` can trigger
-  one.
+- **Modal dialogs stall in-flight action responses.** The app's error
+  reporting uses modal `QMessageBox.exec()` (fparser errors via
+  `ShowErrormessage()`, JSON parse errors via `ShowErrorMessage()`, script
+  validation errors via `MemoryErrorMsg()`). A request whose action *opens*
+  such a dialog never gets its response — the GUI thread stays inside the
+  dialog's nested event loop until it is dismissed — so clients should
+  time out and treat that as "a dialog is probably open in the app window".
+  Other requests (e.g. `GET /state`) *are* still answered while the box is
+  up, because the nested loop dispatches socket events; `ui_state().windows`
+  lists any open `QMessageBox`, which is the quickest way to detect this.
+  Dismiss the dialog (OK in the app window) or restart the app before
+  issuing further actions. A malformed collection file passed to
+  `ui_load_file` can trigger one.
 - Actions run on the GUI thread; heavy ones (loading a huge collection,
   grabbing a large framebuffer, `ui_init_matrix` which re-runs the
   calculation) briefly delay UI responsiveness.

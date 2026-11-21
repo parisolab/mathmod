@@ -309,7 +309,11 @@ exactly). Registry: `pariso/commun.h` `InternalFunctions[]`
 Typical noise call shape: `NoiseW(x,y,z,(4),(2),(0))` — first 3 args
 spatial (often scaled), last 3 control (octaves/seed-style).
 `CmpId(i)` returns the *current component id* — used to make each
-component of a multi-component model behave differently.
+component of a multi-component model behave differently. In Fxyz/Fx
+(geometry) expressions it tracks the component being evaluated; in
+`Texture`/`Pigment` color expressions it is stale (always the last
+component index) — use the `cmpId` variable there instead (see
+§8 Quirks).
 
 ### 5.4 Complex support (`*_C` models)
 
@@ -451,6 +455,22 @@ companions; `Pariso_02` = `Param3D` "Blobby_Torus" + `Iso3D`
   0 = domain errors (2..4); `Vars` are point-major
   (`Vars[e*NbVar+v]`). See `fparser/tests/` for the verification
   harness.
+- **`CmpId(0)` does not work in `Texture`/`Pigment` color expressions**
+  (Iso3D models). The `CmpId` function reads the global `ComponentId`,
+  which is only updated during the per-component voxel loop
+  (`Iso3D::IsoBuild`); by the time colors are evaluated (mesh phase,
+  `Iso3D::CalculateColorsPoints`) it still holds the *last* component
+  index, so every component gets the last component's color branch.
+  Use the `cmpId` **variable** instead — it is in
+  `ColorFunctParameters` and `CalculateColorsPoints` sets it
+  per-vertex (Texture and Pigment paths).
+- **`max`/`min` are CSG operators on solid regions**: `max(f,g) <= 0`
+  is the *intersection* (AND — inside both), `min(f,g) <= 0` is the
+  *union* (OR — inside either). Combining disjoint spheres with a
+  `max(...)` chain yields an empty solid (value > 0 everywhere, no
+  zero crossing) → `Vertices[0]`, an invisible component. Both are
+  binary; nest them: `min(min(f,g),h)`. (The collection's own
+  `CSG`/`CSG_Spheres` models use these idioms correctly.)
 
 ## 9. How the app consumes the file (code map)
 
