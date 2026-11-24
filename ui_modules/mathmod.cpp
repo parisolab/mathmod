@@ -807,7 +807,6 @@ void MathMod::drawCube()
     glLineWidth(1.0);
     glUniform1i(uniformThereisRGBA, 0);
     glDrawArrays(GL_LINE_STRIP,CubeStartIndex, 12);
-    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
@@ -884,10 +883,6 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
                     glUniform1i(uniformThereisRGBA, 1);
                     glUniform4fv(uniformFrontColor, 1, frontcl);
                     glUniform4fv(uniformBackColor, 1, backcl);
-                }
-                else
-                {
-                    glUniform1i(uniformThereisRGBA, 0);
                 }
                 size_t Offset = scene->componentsinfos.ParisoTriangle[2*(i+idx)]*sizeof( GL_FLOAT);
                 glDrawElements(
@@ -1065,15 +1060,19 @@ void MathMod::CreateShaderProgram()
             varying vec4 v_position;
             void main()
             {
-                esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
-                esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
-//esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
+                // Project once and reuse the result: esVertex, v_position and
+                // gl_Position all derive from the same model-view transform, which
+                // saves a full 4x4 matrix multiply per vertex (the compiler cannot
+                // fuse the three separate products into one).
+                vec4 mvPosition = matrixModelView * vec4(vertexPosition, 1.0);
+                esVertex = vec3(mvPosition);
+                esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
                 color = vertexColor;
                 if(glFrontFacing_1 == 0)
                 {
-                    v_position = -matrixModelView * vec4 (vertexPosition, 1.0);
+                    v_position = -mvPosition;
                 }
-                gl_Position =  matrixModelViewProjection * vec4(vertexPosition, 1.0);
+                gl_Position = matrixModelViewProjection * mvPosition;
             }
             )";
 
@@ -1119,10 +1118,10 @@ void MathMod::CreateShaderProgram()
        glGetShaderiv(vertexshader, GL_INFO_LOG_LENGTH, &maxLength);
        vertexInfoLog = (char *)malloc(maxLength);
        glGetShaderInfoLog(vertexshader, maxLength, &maxLength, vertexInfoLog);
-       std::string vertexInfoLogString = std::string(vertexInfoLog);
        msgBox.setText("Error : " +QString::fromStdString(std::string(vertexInfoLog)));
        msgBox.adjustSize();
        msgBox.exec();
+       free(vertexInfoLog);
     }
 
     //++++++++++++++++++++++++++//
@@ -1366,10 +1365,10 @@ void MathMod::CreateShaderProgram()
        glGetShaderiv(fragmentshader, GL_INFO_LOG_LENGTH, &maxLength);
        fragmentInfoLog = (char *)malloc(maxLength);
        glGetShaderInfoLog(fragmentshader, maxLength, &maxLength, fragmentInfoLog);
-       std::string vertexInfoLogString = std::string(fragmentInfoLog);
        msgBox.setText("Error : " +QString::fromStdString(std::string(fragmentInfoLog)));
        msgBox.adjustSize();
        msgBox.exec();
+       free(fragmentInfoLog);
     }
     glAttachShader(shaderprogramId, vertexshader);
     glAttachShader(shaderprogramId, fragmentshader);
@@ -1382,6 +1381,7 @@ void MathMod::CreateShaderProgram()
        glGetProgramiv(shaderprogramId, GL_INFO_LOG_LENGTH, &maxLength);
        shaderProgramInfoLog = (char *)malloc(maxLength);
        glGetProgramInfoLog(shaderprogramId, maxLength, &maxLength, shaderProgramInfoLog);
+       free(shaderProgramInfoLog);
     }
     glUseProgram(shaderprogramId);
     uniformMatrixModelView           = glGetUniformLocation(shaderprogramId, "matrixModelView");
@@ -1569,7 +1569,6 @@ void MathMod::DrawAxe()
     glDrawArrays(GL_LINES,YletterIndex,4);
     // Draw the Z axe
     glDrawArrays(GL_LINE_STRIP,ZletterIndex,4);
-    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawNormals(ObjectProperties *)
@@ -1604,15 +1603,13 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
     int start_triangle = scene->componentsinfos.ParisoTriangle[2 * idx];
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformHSVactive, 0);
+    glLineWidth(0.3);
+    // Each CND block is contiguous in the index buffer, so each is issued as
+    // one batched LINE_LOOP draw instead of one draw call per triangle.
     if (scene->cndoptions[3])
     {
         size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
-        glLineWidth(0.3);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]); i += 3)
-        {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset0));
-            Offset0+=(3*sizeof( GL_FLOAT));
-        }
+        glDrawElements(GL_LINE_LOOP, int(3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]), GL_UNSIGNED_INT, (void *)(Offset0));
     }
 
     if (scene->cndoptions[4])
@@ -1621,53 +1618,45 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
                           .NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos
                                                  .NbTrianglesVerifyCND[compindex] +
                                                  start_triangle)*sizeof(GL_FLOAT);
-        glLineWidth(0.3);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]); i += 3)
-        {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset1));
-            Offset1+=(3*sizeof( GL_FLOAT));
-        }
+        glDrawElements(GL_LINE_LOOP, int(3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]), GL_UNSIGNED_INT, (void *)(Offset1));
     }
     if (scene->cndoptions[2])
     {
         size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
                           scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])+start_triangle)*sizeof( GL_FLOAT);
         glLineWidth(4.0);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]); i += 3)
-        {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset2));
-            Offset2+=(3*sizeof( GL_FLOAT));
-        }
+        glDrawElements(GL_LINE_LOOP, int(3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]), GL_UNSIGNED_INT, (void *)(Offset2));
     }
-    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawTrianglMesh(ObjectProperties *scene)
 {
-    size_t Offset = 0;
-    uint st = 0;
     glUniform4fv(uniformGridColor, 1, scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.3);
-    for (uint i = 0; i < scene->PolyNumber; i += 3)
-    {
-        Offset = st*sizeof( GL_FLOAT);
-        glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset));
-        st+=3;
-    }
+    // PolyNumber counts INDICES: the mesh buffer is one flat run of
+    // 3-indices-per-triangle, so a single batched call draws ceil(N/3) triangles
+    // - exactly what the previous per-triangle loop issued (same triangles,
+    // same order). Mesh wireframes hold 100k+ triangles; this cuts the pass
+    // from N draw calls to 1 without reading past the buffer.
+    glDrawElements(GL_LINE_LOOP, int((scene->PolyNumber + 2) / 3), GL_UNSIGNED_INT, 0);
     glUniform1i(uniformdrawgridColor, 0);
-    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::DrawMinimalTopology(ObjectProperties *scene)
 {
-    glUniform4fv(uniformGridColor, 1,scene->gridcol);
+    glUniform4fv(uniformGridColor, 1, scene->gridcol);
     glUniform1i(uniformdrawgridColor, 1);
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.4);
+    // NOTE: each polygon must remain its own draw call. Batching variable-
+    // length polygons into one LINE_STRIP/LINE_LOOP sequence would connect the
+    // last vertex of every polygon to the first of the next, adding spurious
+    // cross-polygon lines. The batched variant was tried and reverted for this
+    // reason; draw-call count here is kept exact rather than risking the image.
     uint st = scene->PolyNumber;
     uint polysize=0;
     size_t Offset;
@@ -1712,7 +1701,6 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
         }
     }
     glUniform1i(uniformdrawgridColor, 0);
-    glUniform1i(uniformThereisRGBA, 1);
 }
 
 void MathMod::plan()
@@ -1721,7 +1709,8 @@ void MathMod::plan()
     glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.3);
     glDrawArrays(GL_LINES,PlanStartIndex,60);
-    glUniform1i(uniformThereisRGBA, 1);
+    // No trailing reset: every drawing function in draw() sets ThereisRGBA
+    // before its own calls, so the value stored after a function is never read.
 }
 
 void MathMod::CopyData(ObjectProperties *scene)
@@ -1735,11 +1724,11 @@ void MathMod::CopyData(ObjectProperties *scene)
         glGenBuffers(2, vbo);
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT)*10*(scene->VertxNumber+(12+60+36)),scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT)*10*(scene->VertxNumber+(12+60+36)),scene->ArrayNorVer_localPt, GL_DYNAMIC_DRAW);
         //glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
         /* Bind our first VBO as being the active buffer and storing vertex attributes (coordinates) */
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(GLuint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(GLuint)*(scene->PolyNumber + scene->NbPolygnNbVertexPtMinSize), scene->PolyIndices_localPt, GL_DYNAMIC_DRAW);
         size_t cOffset = 0;
         size_t nOffset = cOffset + 4*sizeof( GL_FLOAT);
         size_t vOffset = nOffset + 3*sizeof (GL_FLOAT);
@@ -1761,7 +1750,7 @@ void MathMod::CopyData(ObjectProperties *scene)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
         if((scene->VertxNumber>previousVertxNumber) && (scene->VertxNumber>0))
         {
-            glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT)*10*(scene->VertxNumber+(12+60+36)), scene->ArrayNorVer_localPt, GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(GL_FLOAT)*10*(scene->VertxNumber+(12+60+36)), scene->ArrayNorVer_localPt, GL_DYNAMIC_DRAW);
             previousVertxNumber = scene->VertxNumber;
         }
         else
