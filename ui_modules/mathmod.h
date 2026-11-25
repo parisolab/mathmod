@@ -44,6 +44,15 @@
 #include <QMatrix4x4>
 #include <QPainter>
 #include <QGesture>
+#include <vector>
+#include <cstdint>
+
+// One triangle plus its centroid view-space depth: reusable scratch element
+// for the back-to-front transparency sort (MathMod::SortTransparentIndices).
+struct TriangleDepth {
+    uint32_t i0, i1, i2;
+    float depthZ;
+};
 
 class MathMod : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -217,6 +226,23 @@ public:
     float lastSortedViewRot[9] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     bool transparentSorted = false;
     uint lastSortedPolyNumber = 0;
+    // Batched wireframe index buffers: the per-triangle GL_LINE_LOOP draws
+    // (DrawTrianglMesh, DrawParisoCND) and the per-polygon draws
+    // (DrawMinimalTopology) are expanded into single contiguous GL_LINES index
+    // buffers (a loop a,b,c becomes the index pairs a,b / b,c / c,a), so each
+    // wireframe mode is one draw call instead of one draw call per
+    // triangle/polygon.
+    GLuint wireVbo = 0;
+    uint wireCount = 0;
+    GLuint minTopoVbo = 0;
+    uint minTopoCount = 0;
+    int minTopoTypeDrawing = 0;   // scene->typedrawing the minTopo buffer was built for
+    std::vector<uint> wireBuf;
+    std::vector<uint> minTopoBuf;
+    // Reusable scratch for SortTransparentIndices (grown as needed, so the
+    // per-rotation-frame sort performs no heap allocations).
+    std::vector<TriangleDepth> sortTriBuf;
+    std::vector<uint32_t> sortBucketCursor;
     qreal acc;
     QVector3D n;
 public:
@@ -263,6 +289,13 @@ public slots:
         const float* modelViewMatrix,    // Column-major 4x4 matrix (standard OpenGL layout)
         GLuint indexBufferId,            // GL_ELEMENT_ARRAY_BUFFER VBO
         size_t bufferByteOffset);        // Byte offset of the range in the VBO (= startIndex * sizeof(GLuint))
+    // (Re)build the batched wireframe index buffers from the CPU-side index
+    // arrays (see the wireVbo/minTopoVbo members below).
+    void BuildWireframeBuffers(ObjectProperties *scene, bool buildWire, bool buildMin);
+    // Make sure the batched wireframe buffers exist for the active display
+    // modes; force=true rebuilds them (after a mesh change or a transparency
+    // sort that reordered the indices).
+    void EnsureWireframeBuffers(ObjectProperties *scene, bool force);
     void CreateShaderProgram();
     void draw(ObjectProperties *);
     void plan();

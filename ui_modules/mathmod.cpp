@@ -819,6 +819,10 @@ void MathMod::DrawPariso(ObjectProperties *scene, uint ParisoTypeIndex)
     float frontcl[4], backcl[4];
     glEnable(GL_POLYGON_OFFSET_FILL);
     glPolygonOffset(scene->polyfactor, scene->polyunits);
+    // The fill never uses the grid color: set it explicitly instead of relying
+    // on the wireframe draw functions to leave it at 0 (a stale 1 here would
+    // tint the whole surface with gridcol, alpha 0.08).
+    glUniform1i(uniformdrawgridColor, 0);
     if (!scene->componentsinfos.ThereisRGBA[ParisoTypeIndex])
     {
         for (uint j = 0; j < 4; j++)
@@ -943,11 +947,6 @@ void MathMod::restarttimer(int newlatence)
 #include <algorithm>
 #include <cstdint>
 
-struct TriangleDepth {
-    uint32_t i0, i1, i2; // Use uint16_t if your GLES2 index buffer uses GL_UNSIGNED_SHORT
-    float depthZ;
-};
-
 // Call this whenever the model/view rotation changes while transparency is active.
 // Sorts one contiguous range of triangle indices back-to-front (farthest from
 // the camera first) so that alpha blending produces correct occlusion. The CPU-
@@ -975,17 +974,20 @@ void MathMod::SortTransparentIndices(
     const float m10 = modelViewMatrix[10];
     // Note: translation (m14) is constant for all vertices, so we can omit it for sorting!
 
-    std::vector<TriangleDepth> triangles(rangeTriangles);
-    uint* range = indices + startIndex;
-
+    // Pass 1: centroid view-space depth into a reusable scratch buffer (no
+    // per-call allocation), tracking the min/max for the histogram.
+    if (sortTriBuf.size() < rangeTriangles)
+        sortTriBuf.resize(rangeTriangles);
+    float zmin =  1e30f, zmax = -1e30f;
     for (size_t t = 0; t < rangeTriangles; ++t) {
-        uint32_t idx0 = range[t * 3 + 0];
-        uint32_t idx1 = range[t * 3 + 1];
-        uint32_t idx2 = range[t * 3 + 2];
+        TriangleDepth& tr = sortTriBuf[t];
+        tr.i0 = indices[startIndex + t * 3 + 0];
+        tr.i1 = indices[startIndex + t * 3 + 1];
+        tr.i2 = indices[startIndex + t * 3 + 2];
 
-        const float* v0 = vertices + idx0 * vertexStrideFloats + positionOffsetFloats;
-        const float* v1 = vertices + idx1 * vertexStrideFloats + positionOffsetFloats;
-        const float* v2 = vertices + idx2 * vertexStrideFloats + positionOffsetFloats;
+        const float* v0 = vertices + tr.i0 * vertexStrideFloats + positionOffsetFloats;
+        const float* v1 = vertices + tr.i1 * vertexStrideFloats + positionOffsetFloats;
+        const float* v2 = vertices + tr.i2 * vertexStrideFloats + positionOffsetFloats;
 
         // Sum of vertex positions (no need to divide by 3; scalar factor preserves order)
         float sumX = v0[0] + v1[0] + v2[0];
@@ -993,23 +995,51 @@ void MathMod::SortTransparentIndices(
         float sumZ = v0[2] + v1[2] + v2[2];
 
         // View-space Z proportional to centroid depth
-        float z = m2 * sumX + m6 * sumY + m10 * sumZ;
-
-        triangles[t] = { idx0, idx1, idx2, z };
+        tr.depthZ = m2 * sumX + m6 * sumY + m10 * sumZ;
+        if (tr.depthZ < zmin) zmin = tr.depthZ;
+        if (tr.depthZ > zmax) zmax = tr.depthZ;
     }
 
-    // Sort back-to-front: most negative Z (farthest from camera) comes first
-    std::sort(triangles.begin(), triangles.end(),
-              [](const TriangleDepth& a, const TriangleDepth& b) {
-                  return a.depthZ < b.depthZ;
-              });
+    // Degenerate range (a single depth level, or non-finite data): the current
+    // order is already "correct enough" — skip the sort and the re-upload.
+    if (!(zmax > zmin) || (zmax - zmin) < 1e-6f)
+        return;
 
-    // Write the sorted indices back in place (whole triangles move as units,
-    // so every 3-index group still forms a valid triangle / line loop)
+    // Histogram (bucket) sort in O(n): 1024 depth buckets instead of the
+    // O(n log n) comparison sort — much cheaper per rotation frame on large
+    // meshes. Ties inside a bucket keep their previous relative order, which
+    // is visually identical to an exact sort (they carry no meaningful depth
+    // difference).
+    static const uint32_t NBuckets = 1024;
+    if (sortBucketCursor.size() < NBuckets)
+        sortBucketCursor.resize(NBuckets);
+    uint32_t* cursor = sortBucketCursor.data();
+    std::fill_n(cursor, NBuckets, 0u);
+    const float scale = (float)(NBuckets - 1) / (zmax - zmin);
+    auto binOf = [zmin, scale](float d) -> uint32_t {
+        if (!(d >= zmin)) d = zmin;   // NaN / out-of-range guard
+        uint32_t b = (uint32_t)((d - zmin) * scale);
+        return (b < NBuckets) ? b : (NBuckets - 1);
+    };
+    for (size_t t = 0; t < rangeTriangles; ++t)
+        cursor[binOf(sortTriBuf[t].depthZ)]++;
+    uint32_t acc = 0;
+    for (uint32_t b = 0; b < NBuckets; ++b) {
+        uint32_t c = cursor[b];
+        cursor[b] = acc;
+        acc += c;
+    }
+
+    // Scatter: write the triangles directly into the index range in depth
+    // order (farthest first). Reads come from the scratch buffer, so writing
+    // into the (aliased) range is safe; whole triangles move as units, so
+    // every 3-index group still forms a valid triangle / line loop.
+    uint* range = indices + startIndex;
     for (size_t t = 0; t < rangeTriangles; ++t) {
-        range[t * 3 + 0] = triangles[t].i0;
-        range[t * 3 + 1] = triangles[t].i1;
-        range[t * 3 + 2] = triangles[t].i2;
+        uint* dst = range + (size_t)cursor[binOf(sortTriBuf[t].depthZ)]++ * 3;
+        dst[0] = sortTriBuf[t].i0;
+        dst[1] = sortTriBuf[t].i1;
+        dst[2] = sortTriBuf[t].i2;
     }
 
     // Upload the reordered range to the GPU
@@ -1017,6 +1047,108 @@ void MathMod::SortTransparentIndices(
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)bufferByteOffset,
                     (GLsizeiptr)(rangeTriangles * 3 * sizeof(uint32_t)),
                     range);
+}
+
+void MathMod::BuildWireframeBuffers(ObjectProperties *scene, bool buildWire, bool buildMin)
+{
+    if (buildWire)
+    {
+        // Every triangle loop (a,b,c) becomes the three independent line
+        // segments (a,b), (b,c), (c,a) stored as index pairs for GL_LINES:
+        // one contiguous buffer, one draw call, and no connector segments
+        // between triangles (a single GL_LINE_STRIP would join consecutive
+        // triangles with a spurious chord).
+        const uint ntri = scene->PolyNumber / 3;
+        wireBuf.clear();
+        wireBuf.reserve((size_t)ntri * 6);
+        const uint* src = scene->PolyIndices_localPt;
+        for (uint t = 0; t < ntri; t++)
+        {
+            wireBuf.push_back(src[3 * t + 0]);
+            wireBuf.push_back(src[3 * t + 1]);
+            wireBuf.push_back(src[3 * t + 1]);
+            wireBuf.push_back(src[3 * t + 2]);
+            wireBuf.push_back(src[3 * t + 2]);
+            wireBuf.push_back(src[3 * t + 0]);
+        }
+        if (wireBuf.empty())
+            wireCount = 0;
+        else
+        {
+            if (wireVbo == 0)
+                glGenBuffers(1, &wireVbo);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, wireVbo);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)wireBuf.size() * sizeof(uint),
+                         wireBuf.data(), GL_DYNAMIC_DRAW);
+            wireCount = (uint)wireBuf.size();
+        }
+    }
+    if (buildMin)
+    {
+        // Minimal topology polygons live after the triangle indices in the same
+        // CPU array. Each polygon becomes independent GL_LINES index pairs:
+        // a loop (p0..pk-1) gives the pairs (p0,p1)..(pk-2,pk-1),(pk-1,p0);
+        // a strip line gives (p0,p1)..(pk-2,pk-1). Pairs (instead of one long
+        // strip) keep polygons disconnected - no spurious chords between them.
+        const uint* mt = scene->PolyIndices_localPt + scene->PolyNumber;
+        const uint kl = scene->componentsinfos.NbParametricMeshLines;
+        const int td = scene->typedrawing;
+        minTopoBuf.clear();
+        minTopoBuf.reserve(2 * ((size_t)scene->NbPolygnNbVertexPtMinSize + scene->NbPolygnNbVertexPtMin));
+        uint off = 0;
+        for (uint i = 0; i < scene->NbPolygnNbVertexPtMin; i++)
+        {
+            const uint s = scene->PolyIndices_localPtMin[i];
+            const bool isLoop = (td == 1) || (td != -1 && i >= kl);
+            const uint npairs = isLoop ? s : (s > 1 ? s - 1 : 0);
+            for (uint j = 0; j < npairs; j++)
+            {
+                const uint next = (j + 1 < s) ? j + 1 : 0;
+                minTopoBuf.push_back(mt[off + j]);
+                minTopoBuf.push_back(mt[off + next]);
+            }
+            off += s;
+        }
+        if (minTopoBuf.empty())
+            minTopoCount = 0;
+        else
+        {
+            if (minTopoVbo == 0)
+                glGenBuffers(1, &minTopoVbo);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, minTopoVbo);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)minTopoBuf.size() * sizeof(uint),
+                         minTopoBuf.data(), GL_DYNAMIC_DRAW);
+            minTopoCount = (uint)minTopoBuf.size();
+            minTopoTypeDrawing = td;
+        }
+    }
+    // Restore the main element buffer binding for the rest of the frame.
+    if (vbo[1] != 0)
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+}
+
+void MathMod::EnsureWireframeBuffers(ObjectProperties *scene, bool force)
+{
+    // Does this scene have CND triangles drawn as line loops?
+    bool cndDrawn = false;
+    if (scene->activarecnd && (scene->cndoptions[2] || scene->cndoptions[3] || scene->cndoptions[4]))
+        for (size_t i = 0; i < scene->componentsinfos.NbComponentsType.size(); i++)
+            if (scene->componentsinfos.ThereisCND[i])
+            {
+                cndDrawn = true;
+                break;
+            }
+    const bool wireActive = (scene->triangles == 1) || cndDrawn;
+    const bool minActive  = (scene->mesh == 1);
+    if (!wireActive && !minActive)
+        return;
+    // A buffer is fresh when we were not forced to rebuild it, it exists, and
+    // (for the minimal-topology buffer) it was built for the current draw type.
+    const bool wireFresh = !force && wireCount != 0;
+    const bool minFresh  = !force && minTopoCount != 0 && minTopoTypeDrawing == scene->typedrawing;
+    if (wireFresh && minFresh)
+        return;
+    BuildWireframeBuffers(scene, wireActive && !wireFresh, minActive && !minFresh);
 }
 
 void MathMod::CreateShaderProgram()
@@ -1065,13 +1197,17 @@ void MathMod::CreateShaderProgram()
             varying vec4 v_position;
             void main()
             {
-                esVertex = vec3(matrixModelView * vec4(vertexPosition, 1.0));
+                // One model-view transform per vertex: reused for the varying and
+                // for the back-facing position term (negating the result instead
+                // of a second multiply with -matrixModelView).
+                vec4 mvPosition = matrixModelView * vec4(vertexPosition, 1.0);
+                esVertex = mvPosition.xyz;
                 esNormal = vec3(matrixNormal * vec4(vertexNormal, 1.0));
 //esNormal = vec3(matrixNormal * vec4(vertexNormal, 0.0));
                 color = vertexColor;
                 if(glFrontFacing_1 == 0)
                 {
-                    v_position = -matrixModelView * vec4 (vertexPosition, 1.0);
+                    v_position = -mvPosition;
                 }
                 gl_Position =  matrixModelViewProjection * vec4(vertexPosition, 1.0);
             }
@@ -1606,37 +1742,80 @@ void MathMod::DrawParisoCND(ObjectProperties *scene, uint compindex)
     glUniform1i(uniformHSVactive, 0);
     if (scene->cndoptions[3])
     {
-        size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
         glLineWidth(0.3);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]); i += 3)
+        if (wireCount > 0)
         {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset0));
-            Offset0+=(3*sizeof( GL_FLOAT));
+            // Batched: in the wireframe buffer each triangle loop a,b,c is the
+            // six GL_LINES index pairs a,b / b,c / c,a, so index offset I (a
+            // multiple of 3) maps to element offset 2*I and N triangles to
+            // 6*N elements.
+            const uint s = 2 * (3 * scene->componentsinfos.NbTrianglesNoCND[compindex]
+                                + start_triangle);
+            const uint n = 6 * scene->componentsinfos.NbTrianglesVerifyCND[compindex];
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, wireVbo);
+            glDrawElements(GL_LINES, n, GL_UNSIGNED_INT, (void*)(s * sizeof(uint)));
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+        }
+        else
+        {
+            size_t Offset0 = (3 * scene->componentsinfos.NbTrianglesNoCND[compindex] + start_triangle)*sizeof( GL_FLOAT);
+            for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]); i += 3)
+            {
+                glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset0));
+                Offset0+=(3*sizeof( GL_FLOAT));
+            }
         }
     }
 
     if (scene->cndoptions[4])
     {
-        size_t Offset1 = (3 * scene->componentsinfos
-                          .NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos
-                                                 .NbTrianglesVerifyCND[compindex] +
-                                                 start_triangle)*sizeof(GL_FLOAT);
         glLineWidth(0.3);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]); i += 3)
+        if (wireCount > 0)
         {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset1));
-            Offset1+=(3*sizeof( GL_FLOAT));
+            const uint s = 2 * (3 * scene->componentsinfos.NbTrianglesNoCND[compindex]
+                                + 3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]
+                                + start_triangle);
+            const uint n = 6 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex];
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, wireVbo);
+            glDrawElements(GL_LINES, n, GL_UNSIGNED_INT, (void*)(s * sizeof(uint)));
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+        }
+        else
+        {
+            size_t Offset1 = (3 * scene->componentsinfos
+                              .NbTrianglesNoCND[compindex] + 3 * scene->componentsinfos
+                                                     .NbTrianglesVerifyCND[compindex] +
+                                                     start_triangle)*sizeof(GL_FLOAT);
+            for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]); i += 3)
+            {
+                glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset1));
+                Offset1+=(3*sizeof( GL_FLOAT));
+            }
         }
     }
     if (scene->cndoptions[2])
     {
-        size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
-                          scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])+start_triangle)*sizeof( GL_FLOAT);
         glLineWidth(4.0);
-        for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]); i += 3)
+        if (wireCount > 0)
         {
-            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset2));
-            Offset2+=(3*sizeof( GL_FLOAT));
+            const uint s = 2 * (3 * scene->componentsinfos.NbTrianglesNoCND[compindex]
+                                + 3 * scene->componentsinfos.NbTrianglesVerifyCND[compindex]
+                                + 3 * scene->componentsinfos.NbTrianglesNotVerifyCND[compindex]
+                                + start_triangle);
+            const uint n = 6 * scene->componentsinfos.NbTrianglesBorderCND[compindex];
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, wireVbo);
+            glDrawElements(GL_LINES, n, GL_UNSIGNED_INT, (void*)(s * sizeof(uint)));
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+        }
+        else
+        {
+            size_t Offset2 = (3*scene->componentsinfos.NbTrianglesNoCND[compindex]+3*(scene->componentsinfos.NbTrianglesVerifyCND[compindex] +
+                          scene->componentsinfos.NbTrianglesNotVerifyCND[compindex])+start_triangle)*sizeof( GL_FLOAT);
+            for (uint i = 0; i < (3 * scene->componentsinfos.NbTrianglesBorderCND[compindex]); i += 3)
+            {
+                glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset2));
+                Offset2+=(3*sizeof( GL_FLOAT));
+            }
         }
     }
     glUniform1i(uniformThereisRGBA, 1);
@@ -1651,11 +1830,23 @@ void MathMod::DrawTrianglMesh(ObjectProperties *scene)
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.3);
-    for (uint i = 0; i < scene->PolyNumber; i += 3)
+    if (wireCount > 0)
     {
-        Offset = st*sizeof( GL_FLOAT);
-        glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset));
-        st+=3;
+        // All triangle edges expanded into one contiguous GL_LINES index
+        // buffer (each loop a,b,c becomes the pairs a,b / b,c / c,a): one
+        // draw call instead of one per triangle.
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, wireVbo);
+        glDrawElements(GL_LINES, wireCount, GL_UNSIGNED_INT, (void*)0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+    }
+    else
+    {
+        for (uint i = 0; i < scene->PolyNumber; i += 3)
+        {
+            Offset = st*sizeof( GL_FLOAT);
+            glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void *)(Offset));
+            st+=3;
+        }
     }
     glUniform1i(uniformdrawgridColor, 0);
     glUniform1i(uniformThereisRGBA, 1);
@@ -1668,6 +1859,17 @@ void MathMod::DrawMinimalTopology(ObjectProperties *scene)
     glUniform1i(uniformThereisRGBA, 0);
     glUniform1i(uniformHSVactive, 0);
     glLineWidth(0.4);
+    if (minTopoCount > 0)
+    {
+        // All polygons expanded into one contiguous GL_LINES index buffer:
+        // one draw call instead of one per polygon.
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, minTopoVbo);
+        glDrawElements(GL_LINES, minTopoCount, GL_UNSIGNED_INT, (void*)0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[1]);
+        glUniform1i(uniformdrawgridColor, 0);
+        glUniform1i(uniformThereisRGBA, 1);
+        return;
+    }
     uint st = scene->PolyNumber;
     uint polysize=0;
     size_t Offset;
@@ -1789,7 +1991,8 @@ void MathMod::draw(ObjectProperties *scene)
     if(!PutObjectInsideCubeOk)
         return;
 
-    if (scene->componentsinfos.Interleave)
+    const bool meshChanged = scene->componentsinfos.Interleave;
+    if (meshChanged)
     {
         CopyData(scene);
         scene->componentsinfos.Interleave = false;
@@ -1860,6 +2063,7 @@ void MathMod::draw(ObjectProperties *scene)
                 transparent = true;
                 break;
             }
+    bool indicesResorted = false;
     if (transparent)
     {
         glDepthMask(GL_FALSE);
@@ -1880,6 +2084,7 @@ void MathMod::draw(ObjectProperties *scene)
                 }
         if (rotChanged)
         {
+            indicesResorted = true;
             for (int c = 0; c < 3; c++)
                 for (int r = 0; r < 3; r++)
                     lastSortedViewRot[3 * c + r] = mv[3 * c + r];
@@ -1929,6 +2134,14 @@ void MathMod::draw(ObjectProperties *scene)
             }
         }
     }
+
+    // (Re)build the batched wireframe index buffers: after a mesh change, after
+    // a transparency sort reordered the indices, or lazily the first time a
+    // wireframe display mode is active.
+    if (meshChanged || indicesResorted)
+        EnsureWireframeBuffers(scene, true);
+    else
+        EnsureWireframeBuffers(scene, false);
 
     // Axe :
     if (scene->axe == 1)
